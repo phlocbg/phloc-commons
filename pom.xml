@@ -4,7 +4,7 @@
     <groupId>com.phloc</groupId>
     <artifactId>parent-pom</artifactId>
     <version>15</version>
-    <relativePath>http://phloc-parent-pom.googlecode.com/svn/trunk/pom.xml</relativePath>
+    <relativePath>../phloc-parent-pom/pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>phloc-commons</artifactId>
