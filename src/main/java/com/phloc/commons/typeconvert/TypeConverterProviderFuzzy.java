@@ -33,7 +33,7 @@ public final class TypeConverterProviderFuzzy implements ITypeConverterProvider
   {}
 
   @Nonnull
-  public static final TypeConverterProviderFuzzy getInstance ()
+  public static TypeConverterProviderFuzzy getInstance ()
   {
     return s_aInstance;
   }

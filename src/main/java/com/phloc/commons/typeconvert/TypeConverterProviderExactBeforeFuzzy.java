@@ -35,7 +35,7 @@ public final class TypeConverterProviderExactBeforeFuzzy implements ITypeConvert
   {}
 
   @Nonnull
-  public static final TypeConverterProviderExactBeforeFuzzy getInstance ()
+  public static TypeConverterProviderExactBeforeFuzzy getInstance ()
   {
     return s_aInstance;
   }
