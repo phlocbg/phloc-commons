@@ -33,7 +33,7 @@ public final class TypeConverterProviderExact implements ITypeConverterProvider
   {}
 
   @Nonnull
-  public static final TypeConverterProviderExact getInstance ()
+  public static TypeConverterProviderExact getInstance ()
   {
     return s_aInstance;
   }
