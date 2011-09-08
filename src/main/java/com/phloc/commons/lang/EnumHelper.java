@@ -117,6 +117,76 @@ public final class EnumHelper
   }
 
   /**
+   * Get the enum value with the passed string ID case insensitive
+   * 
+   * @param <ENUMTYPE>
+   *        The enum type
+   * @param aClass
+   *        The enum class
+   * @param sID
+   *        The ID to search
+   * @return <code>null</code> if no enum item with the given ID is present.
+   */
+  @Nullable
+  public static <ENUMTYPE extends Enum <ENUMTYPE> & IHasID <String>> ENUMTYPE getFromIDCaseInsensitiveOrNull (@Nonnull final Class <ENUMTYPE> aClass,
+                                                                                                              @Nullable final String sID)
+  {
+    return getFromIDCaseInsensitiveOrDefault (aClass, sID, null);
+  }
+
+  /**
+   * Get the enum value with the passed string ID case insensitive
+   * 
+   * @param <ENUMTYPE>
+   *        The enum type
+   * @param aClass
+   *        The enum class
+   * @param sID
+   *        The ID to search
+   * @param aDefault
+   *        The default value to be returned, if the ID was not found.
+   * @return The default parameter if no enum item with the given ID is present.
+   */
+  @Nullable
+  public static <ENUMTYPE extends Enum <ENUMTYPE> & IHasID <String>> ENUMTYPE getFromIDCaseInsensitiveOrDefault (@Nonnull final Class <ENUMTYPE> aClass,
+                                                                                                                 @Nullable final String sID,
+                                                                                                                 @Nullable final ENUMTYPE aDefault)
+  {
+    if (aClass == null)
+      throw new NullPointerException ("class");
+
+    if (sID != null)
+      for (final ENUMTYPE aElement : aClass.getEnumConstants ())
+        if (aElement.getID ().equalsIgnoreCase (sID))
+          return aElement;
+    return aDefault;
+  }
+
+  /**
+   * Get the enum value with the passed string ID (case insensitive). If no such
+   * ID is present, an {@link IllegalArgumentException} is thrown.
+   * 
+   * @param <ENUMTYPE>
+   *        The enum type
+   * @param aClass
+   *        The enum class
+   * @param sID
+   *        The ID to search
+   * @return The enum item with the given ID. Never <code>null</code>.
+   * @throws IllegalArgumentException
+   *         if no enum item with the given ID is present
+   */
+  @Nonnull
+  public static <ENUMTYPE extends Enum <ENUMTYPE> & IHasID <String>> ENUMTYPE getFromIDCaseInsensitiveOrThrow (@Nonnull final Class <ENUMTYPE> aClass,
+                                                                                                               @Nullable final String sID)
+  {
+    final ENUMTYPE aEnum = getFromIDCaseInsensitiveOrNull (aClass, sID);
+    if (aEnum == null)
+      throw new IllegalArgumentException ("Failed to resolve ID " + sID + " within class " + aClass);
+    return aEnum;
+  }
+
+  /**
    * Get the enum value with the passed ID
    * 
    * @param <ENUMTYPE>
