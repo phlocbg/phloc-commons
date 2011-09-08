@@ -93,6 +93,44 @@ public final class EnumHelperTest
   }
 
   @Test
+  public void testGetFromIDCaseInsensitiveString ()
+  {
+    for (final EErrorLevel e : EErrorLevel.values ())
+    {
+      assertSame (e, EnumHelper.getFromIDCaseInsensitiveOrNull (EErrorLevel.class, e.getID ()));
+      assertNull (EnumHelper.getFromIDCaseInsensitiveOrNull (EErrorLevel.class, e.getID () + 'X'));
+      assertNull (EnumHelper.getFromIDCaseInsensitiveOrNull (EErrorLevel.class, 'X' + e.getID ()));
+      assertSame (e, EnumHelper.getFromIDCaseInsensitiveOrDefault (EErrorLevel.class, e.getID (), EErrorLevel.INFO));
+      assertSame (e, EnumHelper.getFromIDCaseInsensitiveOrDefault (EErrorLevel.class,
+                                                                   e.getID ().toLowerCase (),
+                                                                   EErrorLevel.INFO));
+      assertSame (e, EnumHelper.getFromIDCaseInsensitiveOrDefault (EErrorLevel.class,
+                                                                   e.getID ().toUpperCase (),
+                                                                   EErrorLevel.INFO));
+      assertSame (EErrorLevel.INFO,
+                  EnumHelper.getFromIDCaseInsensitiveOrDefault (EErrorLevel.class, e.getID () + 'X', EErrorLevel.INFO));
+      assertSame (EErrorLevel.INFO,
+                  EnumHelper.getFromIDCaseInsensitiveOrDefault (EErrorLevel.class, 'X' + e.getID (), EErrorLevel.INFO));
+      assertSame (e, EnumHelper.getFromIDCaseInsensitiveOrThrow (EErrorLevel.class, e.getID ()));
+    }
+
+    try
+    {
+      EnumHelper.getFromIDCaseInsensitiveOrNull ((Class <EErrorLevel>) null, "X");
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+    try
+    {
+      EnumHelper.getFromIDCaseInsensitiveOrThrow (EErrorLevel.class, "blafoo");
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+  }
+
+  @Test
   public void testGetFromIDInt ()
   {
     for (final EHasSimpleID e : EHasSimpleID.values ())
