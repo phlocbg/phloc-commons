@@ -25,9 +25,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.state.ESuccess;
+import com.phloc.commons.string.StringHelper;
 
 /**
  * All kind of file handling stuff.
@@ -113,5 +115,13 @@ public final class SimpleFileIO
                                     @Nonnull final String sCharset)
   {
     return StreamUtils.writeStream (FileUtils.getOutputStream (aFile), sContent, sCharset);
+  }
+
+  @Nonnull
+  public static ESuccess writeFile (@Nonnull final File aFile,
+                                    @Nonnull final List <String> aContent,
+                                    @Nonnull final String sCharset)
+  {
+    return writeFile (aFile, StringHelper.implode (CGlobal.LINE_SEPARATOR, aContent), sCharset);
   }
 }
