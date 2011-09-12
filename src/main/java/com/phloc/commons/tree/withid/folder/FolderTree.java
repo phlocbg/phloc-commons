@@ -33,18 +33,31 @@ import com.phloc.commons.tree.withid.unique.BasicTreeWithGlobalUniqueID;
  * @param <VALUETYPE>
  *        The type of the elements contained in the tree
  * @param <COLLTYPE>
- *        the value collection to use
+ *        the collection type consisting of value elements
  * @author philip
  */
 public class FolderTree <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends
                                                                                       BasicTreeWithGlobalUniqueID <KEYTYPE, COLLTYPE, IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>> implements
                                                                                                                                                                                      IFolderTree <KEYTYPE, VALUETYPE, COLLTYPE>
 {
+  /**
+   * Constructor that creates a {@link DefaultFolderTreeItemFactory} using the
+   * passed key combinator.
+   * 
+   * @param aKeyCombinator
+   *        The key combinator to be used. May not be <code>null</code>.
+   */
   public FolderTree (@Nonnull final ICombinator <KEYTYPE> aKeyCombinator)
   {
     this (new DefaultFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE> (aKeyCombinator));
   }
 
+  /**
+   * Constructor
+   * 
+   * @param aFactory
+   *        The item factory to use. May not be <code>null</code>.
+   */
   public FolderTree (@Nonnull final IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE> aFactory)
   {
     super (aFactory);

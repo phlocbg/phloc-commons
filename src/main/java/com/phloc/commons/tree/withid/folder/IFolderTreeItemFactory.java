@@ -25,8 +25,12 @@ import com.phloc.commons.tree.withid.unique.ITreeItemWithUniqueIDFactory;
  * A factory interface that creates tree items.
  * 
  * @author philip
+ * @param <KEYTYPE>
+ *        Key type
  * @param <VALUETYPE>
- *        The value type to be contained in tree items.
+ *        Value type
+ * @param <COLLTYPE>
+ *        Collection type consisting of value elements
  */
 public interface IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends
                                                                                                       ITreeItemWithUniqueIDFactory <KEYTYPE, COLLTYPE, IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>>

@@ -24,9 +24,13 @@ import com.phloc.commons.tree.withid.unique.ITreeWithGlobalUniqueID;
 /**
  * Base interface for a simple tree.
  * 
- * @param <VALUETYPE>
- *        The type of the elements contained in the tree
  * @author philip
+ * @param <KEYTYPE>
+ *        Key type
+ * @param <VALUETYPE>
+ *        Value type
+ * @param <COLLTYPE>
+ *        Collection type consisting of value elements
  */
 public interface IFolderTree <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends
                                                                                            ITreeWithGlobalUniqueID <KEYTYPE, COLLTYPE, IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>>
