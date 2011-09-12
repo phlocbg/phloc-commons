@@ -28,8 +28,12 @@ import com.phloc.commons.tree.withid.IBasicTreeItemWithID;
  * folder has a list of file items (or leaves).
  * 
  * @author philip
+ * @param <KEYTYPE>
+ *        Key type
  * @param <VALUETYPE>
- *        The value type of the files
+ *        Value type
+ * @param <COLLTYPE>
+ *        Collection type consisting of value elements
  */
 public interface IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends
                                                                                                IBasicTreeItemWithID <KEYTYPE, COLLTYPE, IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>>

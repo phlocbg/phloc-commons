@@ -26,6 +26,17 @@ import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.tree.withid.BasicTreeItemWithID;
 
+/**
+ * Default implementation of the {@link IFolderTreeItem} interface.
+ * 
+ * @author philip
+ * @param <KEYTYPE>
+ *        Key type
+ * @param <VALUETYPE>
+ *        Value type
+ * @param <COLLTYPE>
+ *        Collection type consisting of value elements
+ */
 public class FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends
                                                                                           BasicTreeItemWithID <KEYTYPE, COLLTYPE, IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>> implements
                                                                                                                                                                                  IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>

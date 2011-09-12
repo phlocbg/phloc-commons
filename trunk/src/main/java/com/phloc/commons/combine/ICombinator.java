@@ -21,6 +21,8 @@ import java.io.Serializable;
 
 import javax.annotation.Nullable;
 
+import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
+
 /**
  * Base interface for combining any two objects together.
  * 
@@ -28,6 +30,7 @@ import javax.annotation.Nullable;
  * @param <DATATYPE>
  *        The type of the objects to be combined.
  */
+@MustImplementEqualsAndHashcode
 public interface ICombinator <DATATYPE> extends Serializable
 {
   /**

@@ -22,8 +22,21 @@ import java.util.Collection;
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.combine.ICombinator;
+import com.phloc.commons.hash.HashCodeGenerator;
+import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.tree.withid.unique.AbstractBasicTreeItemWithUniqueIDFactory;
 
+/**
+ * The default folder tree item factory implementation.
+ * 
+ * @author philip
+ * @param <KEYTYPE>
+ *        Key type
+ * @param <VALUETYPE>
+ *        Value type
+ * @param <COLLTYPE>
+ *        Collection type consisting of value elements
+ */
 public class DefaultFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends
                                                                                                         AbstractBasicTreeItemWithUniqueIDFactory <KEYTYPE, COLLTYPE, IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>> implements
                                                                                                                                                                                                                     IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE>
@@ -60,14 +73,23 @@ public class DefaultFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE extends 
   @Override
   public boolean equals (final Object o)
   {
-    // Ignore combinator!
-    return super.equals (o);
+    if (o == this)
+      return true;
+    if (!super.equals (o))
+      return false;
+    final DefaultFolderTreeItemFactory <?, ?, ?> rhs = (DefaultFolderTreeItemFactory <?, ?, ?>) o;
+    return m_aKeyCombinator.equals (rhs.m_aKeyCombinator);
   }
 
   @Override
   public int hashCode ()
   {
-    // Ignore combinator!
-    return super.hashCode ();
+    return HashCodeGenerator.getDerived (super.hashCode ()).append (m_aKeyCombinator).getHashCode ();
+  }
+
+  @Override
+  public String toString ()
+  {
+    return ToStringGenerator.getDerived (super.toString ()).append ("keyCombinator", m_aKeyCombinator).toString ();
   }
 }
