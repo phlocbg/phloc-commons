@@ -20,6 +20,7 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <release date="2011-09-12" version="3.1.0" />
   <entry date="2011-09-12" category="tech" action="fix">
     <change>
       <text locale="en">Fixed error in tree with unique ID, so that &quot;getItemWithID&quot; calls failed afterwards, because the item was removed from the factory and not added again</text>
@@ -92,7 +93,7 @@
   </entry>
   <entry date="2011-09-01" category="api" action="change">
     <change>
-      <text locale="en">Moved everything in package dyntypes and beans to separate projetc phloc-types</text>
+      <text locale="en">Moved everything in package dyntypes and beans to separate project phloc-types</text>
     </change>
   </entry>
   <entry date="2011-09-01" category="api" action="add">
