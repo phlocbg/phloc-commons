@@ -308,6 +308,7 @@ public class BasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends IBasicTre
 
     m_aChildMap.put (aDataID, aChild);
     m_aChildList.add (aChild);
+    m_aFactory.onAddItem (aChild);
     return EChange.CHANGED;
   }
 

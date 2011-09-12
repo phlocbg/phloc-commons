@@ -41,4 +41,9 @@ public class DefaultTreeItemWithIDFactory <KEYTYPE, VALUETYPE> implements
   {
     // it doesn't matter to us
   }
+
+  public void onAddItem (final ITreeItemWithID <KEYTYPE, VALUETYPE> aItem)
+  {
+    // it doesn't matter to us
+  }
 }

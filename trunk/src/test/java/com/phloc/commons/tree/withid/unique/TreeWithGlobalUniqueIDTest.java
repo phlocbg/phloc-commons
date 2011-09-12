@@ -150,4 +150,36 @@ public final class TreeWithGlobalUniqueIDTest
     assertTrue (aTestTree2.hasChildren (x12));
     assertEquals (3, aTestTree2.getChildren (x12).size ());
   }
+
+  @Test
+  public void testChangeParent ()
+  {
+    final TreeWithGlobalUniqueID <String, String> aTestTree = new TreeWithGlobalUniqueID <String, String> ();
+    final ITreeItemWithID <String, String> x1 = aTestTree.getRootItem ().createChildItem ("x1", "1");
+    final ITreeItemWithID <String, String> x2 = x1.createChildItem ("x2", "a");
+    final ITreeItemWithID <String, String> x3 = x1.createChildItem ("x3", "b");
+
+    assertNotNull (aTestTree.getItemWithID ("x1"));
+    assertNotNull (aTestTree.getItemWithID ("x2"));
+    assertNotNull (aTestTree.getItemWithID ("x3"));
+
+    // Check parent hierarchy
+    assertSame (x1, x2.getParent ());
+    assertSame (x1, x3.getParent ());
+
+    // Change parent and check
+    assertTrue (x3.changeParent (x2).isSuccess ());
+    assertSame (x1, x2.getParent ());
+    assertSame (x2, x3.getParent ());
+
+    // No change
+    assertTrue (x3.changeParent (x2).isSuccess ());
+    assertSame (x1, x2.getParent ());
+    assertSame (x2, x3.getParent ());
+
+    // Still all present?
+    assertNotNull (aTestTree.getItemWithID ("x1"));
+    assertNotNull (aTestTree.getItemWithID ("x2"));
+    assertNotNull (aTestTree.getItemWithID ("x3"));
+  }
 }

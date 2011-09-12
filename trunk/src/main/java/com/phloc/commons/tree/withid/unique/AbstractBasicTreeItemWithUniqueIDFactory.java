@@ -83,6 +83,12 @@ public abstract class AbstractBasicTreeItemWithUniqueIDFactory <KEYTYPE, VALUETY
     m_aItemStore.remove (aItem.getID ());
   }
 
+  public final void onAddItem (@Nonnull final ITEMTYPE aItem)
+  {
+    // Add item to item store
+    addToItemStore (aItem.getID (), aItem);
+  }
+
   @Nullable
   public final ITEMTYPE getItemOfDataID (@Nullable final KEYTYPE aDataID)
   {
