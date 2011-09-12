@@ -43,4 +43,13 @@ public interface IBasicTreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE exten
    *        The item that was removed.
    */
   void onRemoveItem (@Nonnull ITEMTYPE aItem);
+
+  /**
+   * To be called once a tree item is added to the owning tree. This method is
+   * mainly important for the tree with globally unique IDs.
+   * 
+   * @param aItem
+   *        The item that was added.
+   */
+  void onAddItem (@Nonnull ITEMTYPE aItem);
 }
