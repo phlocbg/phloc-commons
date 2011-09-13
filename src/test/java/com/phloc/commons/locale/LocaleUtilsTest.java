@@ -84,27 +84,41 @@ public final class LocaleUtilsTest extends AbstractPhlocTestCase
     catch (final NullPointerException ex)
     {}
 
+    // Neither language, country not variant
     List <Locale> aList = LocaleUtils.getCalculatedLocaleListForResolving (new Locale (""));
     assertNotNull (aList);
     assertEquals (0, aList.size ());
 
+    // Only the language
     aList = LocaleUtils.getCalculatedLocaleListForResolving (LocaleCache.get ("de"));
     assertNotNull (aList);
     assertEquals (1, aList.size ());
     assertEquals (LocaleCache.get ("de"), aList.get (0));
 
+    // Language + country
     aList = LocaleUtils.getCalculatedLocaleListForResolving (LocaleCache.get ("de", "AT"));
     assertNotNull (aList);
     assertEquals (2, aList.size ());
     assertEquals (LocaleCache.get ("de", "AT"), aList.get (0));
     assertEquals (LocaleCache.get ("de"), aList.get (1));
 
+    // Language + country + Variant
     aList = LocaleUtils.getCalculatedLocaleListForResolving (LocaleCache.get ("de", "AT", "Wien"));
     assertNotNull (aList);
     assertEquals (3, aList.size ());
     assertEquals (LocaleCache.get ("de", "AT", "Wien"), aList.get (0));
     assertEquals (LocaleCache.get ("de", "AT"), aList.get (1));
     assertEquals (LocaleCache.get ("de"), aList.get (2));
+
+    // No language - only country
+    aList = LocaleUtils.getCalculatedLocaleListForResolving (new Locale ("", "AT"));
+    assertNotNull (aList);
+    assertEquals (0, aList.size ());
+
+    // No language - only country + variant
+    aList = LocaleUtils.getCalculatedLocaleListForResolving (new Locale ("", "AT", "Wien"));
+    assertNotNull (aList);
+    assertEquals (0, aList.size ());
   }
 
   @Test

@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 import com.phloc.commons.GlobalDebug;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.locale.LocaleUtils;
 import com.phloc.commons.stats.IStatisticsHandlerKeyedCounter;
 import com.phloc.commons.stats.StatisticsManager;
 import com.phloc.commons.text.resource.ResourceBundleKey;
@@ -57,33 +58,50 @@ public final class EnumTextResolverWithPropertiesOverrideAndFallback extends
 
   @Override
   @Nullable
-  protected String getOverrideString (final String sID, final Locale aContentLocale)
+  protected String getOverrideString (final String sID, @Nonnull final Locale aContentLocale)
   {
-    final String sBundleName = PREFIX_OVERRIDE + aContentLocale.toString ();
-    final String ret = ResourceBundleKey.getString (sBundleName, aContentLocale, sID);
-    if (ret != null)
-      m_aUsedOverrideBundles.put (sBundleName, Boolean.TRUE);
-    return ret;
+    // Try all possible locales of the passed locale
+    for (final Locale aLocale : LocaleUtils.getCalculatedLocaleListForResolving (aContentLocale))
+    {
+      // Explicitly use a bundle name containing the locale in the base name to
+      // avoid strange fallback behaviour to the default locale
+      final String sBundleName = PREFIX_OVERRIDE + aLocale.toString ();
+      final String ret = ResourceBundleKey.getString (sBundleName, aLocale, sID);
+      if (ret != null)
+      {
+        // Match!
+        m_aUsedOverrideBundles.put (sBundleName, Boolean.TRUE);
+        return ret;
+      }
+    }
+    return null;
   }
 
   @Override
   @Nullable
   protected String getFallbackString (final String sID, final Locale aContentLocale)
   {
-    final String sBundleName = PREFIX_FALLBACK + aContentLocale.toString ();
-    String ret = ResourceBundleKey.getString (sBundleName, aContentLocale, sID);
-    if (ret == null)
+    // Try all possible locales of the passed locale
+    for (final Locale aLocale : LocaleUtils.getCalculatedLocaleListForResolving (aContentLocale))
     {
-      s_aStatsFailed.increment (sBundleName + ':' + sID);
-      if (GlobalDebug.isDebugMode ())
+      // Explicitly use a bundle name containing the locale in the base name to
+      // avoid strange fallback behaviour to the default locale
+      final String sBundleName = PREFIX_FALLBACK + aLocale.toString ();
+      final String ret = ResourceBundleKey.getString (sBundleName, aLocale, sID);
+      if (ret != null)
       {
-        s_aLogger.warn ("getFallbackString (" + sID + "; " + aContentLocale + ") failed!");
-        ret = "[fallback-" + sID.substring (sID.lastIndexOf ('.') + 1) + "-" + aContentLocale.toString () + "]";
+        m_aUsedFallbackBundles.put (sBundleName, Boolean.TRUE);
+        return ret;
       }
     }
-    else
-      m_aUsedFallbackBundles.put (sBundleName, Boolean.TRUE);
-    return ret;
+
+    s_aStatsFailed.increment (PREFIX_FALLBACK + aContentLocale.toString () + ':' + sID);
+    if (GlobalDebug.isDebugMode ())
+    {
+      s_aLogger.warn ("getFallbackString (" + sID + "; " + aContentLocale + ") failed!");
+      return "[fallback-" + sID.substring (sID.lastIndexOf ('.') + 1) + "-" + aContentLocale.toString () + "]";
+    }
+    return null;
   }
 
   @Nonnull
