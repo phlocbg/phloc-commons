@@ -247,7 +247,9 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
     }
 
     // Either leave tag open or close it
-    _append (bHasChildren ? ">" : "/>");
+    // Note: according to HTML compatibility guideline a space should be added
+    // before the self-closing
+    _append (bHasChildren ? ">" : " />");
   }
 
   @Override
