@@ -87,17 +87,23 @@ public final class DefaultTextResolverTest
   public void testGetText ()
   {
     final Locale aDE = TextProvider.DE;
+    final Locale aDE_AT = LocaleCache.get ("de", "AT");
     final Locale aEN = TextProvider.EN;
+    final Locale aEN_US = LocaleCache.get ("en", "US");
     final Locale aHR = LocaleCache.get ("hr", "HR");
     final Locale aSR = LocaleCache.get ("sr", "RS");
 
     // Regular
     assertEquals ("Text1de", EText.TEXT1.getDisplayText (aDE));
+    assertEquals ("Text1de", EText.TEXT1.getDisplayText (aDE_AT));
     assertEquals ("Text1en", EText.TEXT1.getDisplayText (aEN));
+    assertEquals ("Text1en", EText.TEXT1.getDisplayText (aEN_US));
 
     // German has override!
     assertEquals ("Text2de-override", EText.TEXT2.getDisplayText (aDE));
+    assertEquals ("Text2de-override", EText.TEXT2.getDisplayText (aDE_AT));
     assertEquals ("Text2en", EText.TEXT2.getDisplayText (aEN));
+    assertEquals ("Text2en", EText.TEXT2.getDisplayText (aEN_US));
 
     // Use fallback
     assertEquals ("Text1hr", EText.TEXT1.getDisplayText (aHR));

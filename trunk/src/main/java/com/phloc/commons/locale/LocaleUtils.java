@@ -30,7 +30,9 @@ import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
+import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.cache.AbstractNotifyingCache;
+import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.system.SystemHelper;
 
@@ -63,17 +65,22 @@ public final class LocaleUtils
       final String sLanguage = aBaseLocale.getLanguage ();
       if (sLanguage.length () > 0)
       {
+        // Use only the language
         ret.add (0, LocaleCache.get (sLanguage));
         final String sCountry = aBaseLocale.getCountry ();
         if (sCountry.length () > 0)
         {
+          // Use language + country
           ret.add (0, LocaleCache.get (sLanguage, sCountry));
           final String sVariant = aBaseLocale.getVariant ();
           if (sVariant.length () > 0)
+          {
+            // Use language + country + variant
             ret.add (0, LocaleCache.get (sLanguage, sCountry, sVariant));
+          }
         }
       }
-      return ret;
+      return ContainerHelper.makeUnmodifiable (ret);
     }
   }
 
@@ -144,11 +151,34 @@ public final class LocaleUtils
     return ret;
   }
 
+  /**
+   * Get a list with all valid locale permutations of the passed locale. If the
+   * passed locale has no language, always an empty list is returned.<br>
+   * Examples:
+   * <ul>
+   * <li>"de_AT" => ["de_AT", "de"]</li>
+   * <li>"en_US" => ["en_US", "en"]</li>
+   * <li>"de" => ["de"]</li>
+   * <li>"de_DE_Variant" => ["de_DE_Variant", "de_DE", "de"]</li>
+   * <li>"" => []</li>
+   * <li>"_AT" => []</li>
+   * <li>"_AT_Variant" => []</li>
+   * </ul>
+   * 
+   * @param aLocale
+   *        The locale to get the permutation from. May not be <code>null</code>
+   *        .
+   * @return A non-<code>null</code> unmodifiable list of all permutations of
+   *         the locale, with the most specific locale being first. The returned
+   *         list has never more than three entries. The returned list may have
+   *         no entries, if the passed locale has no language.
+   */
   @Nonnull
+  @ReturnsImmutableObject
   public static List <Locale> getCalculatedLocaleListForResolving (@Nonnull final Locale aLocale)
   {
     if (aLocale == null)
-      throw new NullPointerException ("baseLocale");
+      throw new NullPointerException ("locale");
 
     return s_aLocaleListResolver.getFromCache (aLocale);
   }
