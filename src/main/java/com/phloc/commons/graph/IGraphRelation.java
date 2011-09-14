@@ -17,39 +17,24 @@
  */
 package com.phloc.commons.graph;
 
-import java.util.Set;
-
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.phloc.commons.annotations.ReturnsMutableCopy;
 
 /**
- * Base interface for a read-only simple graph.
+ * Base interface for graph relation implementations.
  * 
  * @author philip
- * @param <VALUETYPE>
- *        The value type of the nodes.
  */
-public interface IReadonlySimpleGraph <VALUETYPE>
+public interface IGraphRelation <VALUETYPE> extends IGraphObject
 {
+  /**
+   * @return The from-node of this relation. Never <code>null</code>.
+   */
   @Nonnull
-  IGraphNode <VALUETYPE> getSingleStartNode ();
+  IGraphNode <VALUETYPE> getFrom ();
 
+  /**
+   * @return The to-node of this relation. Never <code>null</code>.
+   */
   @Nonnull
-  @ReturnsMutableCopy
-  Set <IGraphNode <VALUETYPE>> getAllStartNodes ();
-
-  @Nonnull
-  @ReturnsMutableCopy
-  Set <IGraphNode <VALUETYPE>> getAllEndNodes ();
-
-  @Nonnegative
-  int getNodeCount ();
-
-  @Nullable
-  IGraphNode <VALUETYPE> getNodeOfID (@Nullable String sID);
-
-  boolean containsCycles ();
+  IGraphNode <VALUETYPE> getTo ();
 }

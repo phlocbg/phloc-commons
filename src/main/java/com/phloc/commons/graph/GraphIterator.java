@@ -31,29 +31,37 @@ import com.phloc.commons.collections.NonBlockingStack;
 import com.phloc.commons.collections.iterate.IIterableIterator;
 
 @NotThreadSafe
-public final class GraphIterator <VALUETYPE> implements IIterableIterator <GraphNode <VALUETYPE>>
+public final class GraphIterator <VALUETYPE> implements IIterableIterator <IGraphNode <VALUETYPE>>
 {
   private static final class IterationNode <VALUETYPE>
   {
-    private final GraphNode <VALUETYPE> m_aNode;
-    private final Iterator <GraphRelation <VALUETYPE>> m_aOutgoingIt;
+    private final IGraphNode <VALUETYPE> m_aNode;
+    private final Iterator <IGraphRelation <VALUETYPE>> m_aOutgoingIt;
 
-    public IterationNode (@Nonnull final GraphNode <VALUETYPE> aNode)
+    private IterationNode (@Nonnull final IGraphNode <VALUETYPE> aNode)
     {
+      if (aNode == null)
+        throw new NullPointerException ("node");
       m_aNode = aNode;
       m_aOutgoingIt = aNode.getOutgoingRelations ().iterator ();
     }
 
     @Nonnull
-    public GraphNode <VALUETYPE> getNode ()
+    public IGraphNode <VALUETYPE> getNode ()
     {
       return m_aNode;
     }
 
     @Nonnull
-    public Iterator <GraphRelation <VALUETYPE>> getOutgoingIterator ()
+    public Iterator <IGraphRelation <VALUETYPE>> getOutgoingRelationIterator ()
     {
       return m_aOutgoingIt;
+    }
+
+    @Nonnull
+    public static <VALUETYPE> IterationNode <VALUETYPE> create (@Nonnull final IGraphNode <VALUETYPE> aNode)
+    {
+      return new IterationNode <VALUETYPE> (aNode);
     }
   }
 
@@ -74,11 +82,11 @@ public final class GraphIterator <VALUETYPE> implements IIterableIterator <Graph
    */
   private boolean m_bHasCycles = false;
 
-  public GraphIterator (@Nonnull final GraphNode <VALUETYPE> aStartNode)
+  public GraphIterator (@Nonnull final IGraphNode <VALUETYPE> aStartNode)
   {
     if (aStartNode == null)
       throw new NullPointerException ("startNode");
-    m_aNodeStack.push (new IterationNode <VALUETYPE> (aStartNode));
+    m_aNodeStack.push (IterationNode.create (aStartNode));
   }
 
   public boolean hasNext ()
@@ -87,14 +95,14 @@ public final class GraphIterator <VALUETYPE> implements IIterableIterator <Graph
   }
 
   @Nullable
-  public GraphNode <VALUETYPE> next ()
+  public IGraphNode <VALUETYPE> next ()
   {
     // If no nodes are left, there ain't no next!
     if (!hasNext ())
       throw new NoSuchElementException ();
 
     // get the node to return
-    final GraphNode <VALUETYPE> ret = m_aNodeStack.peek ().getNode ();
+    final IGraphNode <VALUETYPE> ret = m_aNodeStack.peek ().getNode ();
     m_aHandledNodes.add (ret.getID ());
 
     // find next node
@@ -103,10 +111,10 @@ public final class GraphIterator <VALUETYPE> implements IIterableIterator <Graph
       while (!m_aNodeStack.isEmpty () && !bFoundNewNode)
       {
         // check all outgoing relations
-        final Iterator <GraphRelation <VALUETYPE>> itPeek = m_aNodeStack.peek ().getOutgoingIterator ();
+        final Iterator <IGraphRelation <VALUETYPE>> itPeek = m_aNodeStack.peek ().getOutgoingRelationIterator ();
         while (itPeek.hasNext ())
         {
-          final GraphNode <VALUETYPE> aCurrentOutgoingNode = itPeek.next ().getTo ();
+          final IGraphNode <VALUETYPE> aCurrentOutgoingNode = itPeek.next ().getTo ();
 
           // check if the current node is already contained in the stack
           // If so, we have a cycle
@@ -121,7 +129,7 @@ public final class GraphIterator <VALUETYPE> implements IIterableIterator <Graph
           // Ensure that each node is returned only once!
           if (!m_aHandledNodes.contains (aCurrentOutgoingNode.getID ()))
           {
-            m_aNodeStack.push (new IterationNode <VALUETYPE> (aCurrentOutgoingNode));
+            m_aNodeStack.push (IterationNode.create (aCurrentOutgoingNode));
             bFoundNewNode = true;
             break;
           }
@@ -136,6 +144,10 @@ public final class GraphIterator <VALUETYPE> implements IIterableIterator <Graph
     return ret;
   }
 
+  /**
+   * @return <code>true</code> if the iterator determined a cycle while
+   *         iterating the graph
+   */
   public boolean hasCycles ()
   {
     return m_bHasCycles;
@@ -152,7 +164,7 @@ public final class GraphIterator <VALUETYPE> implements IIterableIterator <Graph
   }
 
   @Nonnull
-  public Iterator <GraphNode <VALUETYPE>> iterator ()
+  public Iterator <IGraphNode <VALUETYPE>> iterator ()
   {
     return this;
   }
@@ -167,7 +179,7 @@ public final class GraphIterator <VALUETYPE> implements IIterableIterator <Graph
    * @return The created graph node iterator and never <code>null</code>.
    */
   @Nonnull
-  public static <VALUETYPE> GraphIterator <VALUETYPE> create (@Nonnull final GraphNode <VALUETYPE> aStartNode)
+  public static <VALUETYPE> GraphIterator <VALUETYPE> create (@Nonnull final IGraphNode <VALUETYPE> aStartNode)
   {
     return new GraphIterator <VALUETYPE> (aStartNode);
   }

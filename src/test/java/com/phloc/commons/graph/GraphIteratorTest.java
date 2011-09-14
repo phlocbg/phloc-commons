@@ -56,7 +56,7 @@ public final class GraphIteratorTest extends AbstractGraphTestCase
     {}
 
     final IReadonlySimpleGraph <Integer> aGraph = _buildGraph ();
-    final GraphNode <Integer> aStart = aGraph.getSingleStartNode ();
+    final IGraphNode <Integer> aStart = aGraph.getSingleStartNode ();
     assertEquals (aStart.getID (), "0");
     final GraphIterator <Integer> it = GraphIterator.create (aStart);
 
@@ -96,7 +96,7 @@ public final class GraphIteratorTest extends AbstractGraphTestCase
   public void testStartIteratingInTheMiddleOneWay ()
   {
     final IReadonlySimpleGraph <Integer> aGraph = _buildGraph ();
-    final GraphNode <Integer> aStartNode = aGraph.getNodeOfID ("1");
+    final IGraphNode <Integer> aStartNode = aGraph.getNodeOfID ("1");
     final GraphIterator <Integer> it = GraphIterator.create (aStartNode);
     assertTrue (it.hasNext ());
     assertEquals (Integer.valueOf (2), it.next ().getValue ());
@@ -113,7 +113,7 @@ public final class GraphIteratorTest extends AbstractGraphTestCase
   public void testStartIteratingInTheMiddleTwoWays ()
   {
     final IReadonlySimpleGraph <Integer> aGraph = _buildGraph ();
-    final GraphNode <Integer> aStartNode = aGraph.getNodeOfID ("5");
+    final IGraphNode <Integer> aStartNode = aGraph.getNodeOfID ("5");
     final GraphIterator <Integer> it = GraphIterator.create (aStartNode);
     assertTrue (it.hasNext ());
     assertEquals (Integer.valueOf (6), it.next ().getValue ());
