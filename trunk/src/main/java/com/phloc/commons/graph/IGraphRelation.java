@@ -18,6 +18,7 @@
 package com.phloc.commons.graph;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Base interface for graph relation implementations.
@@ -33,8 +34,24 @@ public interface IGraphRelation <VALUETYPE> extends IGraphObject
   IGraphNode <VALUETYPE> getFrom ();
 
   /**
+   * This is a sanity method for <code>getFrom ().getValue ()</code>
+   * 
+   * @return <code>null</code> if the from-node has no value.
+   */
+  @Nullable
+  VALUETYPE getFromValue ();
+
+  /**
    * @return The to-node of this relation. Never <code>null</code>.
    */
   @Nonnull
   IGraphNode <VALUETYPE> getTo ();
+
+  /**
+   * This is a sanity method for <code>getTo ().getValue ()</code>
+   * 
+   * @return <code>null</code> if the to-node has no value.
+   */
+  @Nullable
+  VALUETYPE getToValue ();
 }

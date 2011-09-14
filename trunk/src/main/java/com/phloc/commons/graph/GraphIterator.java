@@ -29,10 +29,26 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.collections.NonBlockingStack;
 import com.phloc.commons.collections.iterate.IIterableIterator;
+import com.phloc.commons.filter.IFilter;
 
+/**
+ * A simple forward iterator for simple graphs.
+ * 
+ * @author philip
+ * @param <VALUETYPE>
+ *        Value type of the graph to iterate
+ */
 @NotThreadSafe
 public final class GraphIterator <VALUETYPE> implements IIterableIterator <IGraphNode <VALUETYPE>>
 {
+  /**
+   * This class represents a node in the current iteration process. It is
+   * relevant to easily keep the current iterator status and the node together.
+   * 
+   * @author philip
+   * @param <VALUETYPE>
+   *        Value type of the graph to iterate
+   */
   private static final class IterationNode <VALUETYPE>
   {
     private final IGraphNode <VALUETYPE> m_aNode;
@@ -72,6 +88,12 @@ public final class GraphIterator <VALUETYPE> implements IIterableIterator <IGrap
   private final NonBlockingStack <IterationNode <VALUETYPE>> m_aNodeStack = new NonBlockingStack <IterationNode <VALUETYPE>> ();
 
   /**
+   * Optional filter for graph relations to defined whether thy should be
+   * followed or not. May be <code>null</code>.
+   */
+  private IFilter <IGraphRelation <VALUETYPE>> m_aRelationFilter;
+
+  /**
    * This set keeps track of all the nodes we already visited. This is important
    * for cyclic dependencies.
    */
@@ -84,8 +106,18 @@ public final class GraphIterator <VALUETYPE> implements IIterableIterator <IGrap
 
   public GraphIterator (@Nonnull final IGraphNode <VALUETYPE> aStartNode)
   {
+    this (aStartNode, null);
+  }
+
+  public GraphIterator (@Nonnull final IGraphNode <VALUETYPE> aStartNode,
+                        @Nullable final IFilter <IGraphRelation <VALUETYPE>> aRelationFilter)
+  {
     if (aStartNode == null)
       throw new NullPointerException ("startNode");
+
+    m_aRelationFilter = aRelationFilter;
+
+    // Ensure that the start node is present
     m_aNodeStack.push (IterationNode.create (aStartNode));
   }
 
@@ -114,7 +146,15 @@ public final class GraphIterator <VALUETYPE> implements IIterableIterator <IGrap
         final Iterator <IGraphRelation <VALUETYPE>> itPeek = m_aNodeStack.peek ().getOutgoingRelationIterator ();
         while (itPeek.hasNext ())
         {
-          final IGraphNode <VALUETYPE> aCurrentOutgoingNode = itPeek.next ().getTo ();
+          final IGraphRelation <VALUETYPE> aCurrentRelation = itPeek.next ();
+
+          // Callback to check whether the current relation should be followed
+          // or not
+          if (m_aRelationFilter != null && !m_aRelationFilter.matchesFilter (aCurrentRelation))
+            continue;
+
+          // to-node of the current relation
+          final IGraphNode <VALUETYPE> aCurrentOutgoingNode = aCurrentRelation.getTo ();
 
           // check if the current node is already contained in the stack
           // If so, we have a cycle
@@ -129,13 +169,14 @@ public final class GraphIterator <VALUETYPE> implements IIterableIterator <IGrap
           // Ensure that each node is returned only once!
           if (!m_aHandledNodes.contains (aCurrentOutgoingNode.getID ()))
           {
+            // Okay, we have a new node
             m_aNodeStack.push (IterationNode.create (aCurrentOutgoingNode));
             bFoundNewNode = true;
             break;
           }
         }
 
-        // if we followed all relations of the current node, go to parent node
+        // if we followed all relations of the current node, go to previous node
         if (!bFoundNewNode)
           m_aNodeStack.pop ();
       }
@@ -182,5 +223,24 @@ public final class GraphIterator <VALUETYPE> implements IIterableIterator <IGrap
   public static <VALUETYPE> GraphIterator <VALUETYPE> create (@Nonnull final IGraphNode <VALUETYPE> aStartNode)
   {
     return new GraphIterator <VALUETYPE> (aStartNode);
+  }
+
+  /**
+   * Shortcut factory method to spare using the generics parameter manually.
+   * 
+   * @param <VALUETYPE>
+   *        Graph iterator element type
+   * @param aStartNode
+   *        The node to start iterating. May not be <code>null</code>.
+   * @param aRelationFilter
+   *        a relation filter to specify whether to follow a certain graph
+   *        relation or not. May be <code>null</code>.
+   * @return The created graph node iterator and never <code>null</code>.
+   */
+  @Nonnull
+  public static <VALUETYPE> GraphIterator <VALUETYPE> create (@Nonnull final IGraphNode <VALUETYPE> aStartNode,
+                                                              @Nullable final IFilter <IGraphRelation <VALUETYPE>> aRelationFilter)
+  {
+    return new GraphIterator <VALUETYPE> (aStartNode, aRelationFilter);
   }
 }
