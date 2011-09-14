@@ -59,10 +59,22 @@ public final class GraphRelation <VALUETYPE> extends AbstractGraphObject impleme
     return m_aFrom;
   }
 
+  @Nullable
+  public VALUETYPE getFromValue ()
+  {
+    return m_aFrom.getValue ();
+  }
+
   @Nonnull
   public IGraphNode <VALUETYPE> getTo ()
   {
     return m_aTo;
+  }
+
+  @Nullable
+  public VALUETYPE getToValue ()
+  {
+    return m_aTo.getValue ();
   }
 
   @Override
