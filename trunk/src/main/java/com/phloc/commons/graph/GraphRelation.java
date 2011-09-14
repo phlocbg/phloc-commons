@@ -30,19 +30,19 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @Immutable
-public final class GraphRelation <VALUETYPE> extends AbstractGraphObject
+public final class GraphRelation <VALUETYPE> extends AbstractGraphObject implements IGraphRelation <VALUETYPE>
 {
-  private final GraphNode <VALUETYPE> m_aFrom;
-  private final GraphNode <VALUETYPE> m_aTo;
+  private final IGraphNode <VALUETYPE> m_aFrom;
+  private final IGraphNode <VALUETYPE> m_aTo;
 
-  public GraphRelation (@Nonnull final GraphNode <VALUETYPE> aFrom, @Nonnull final GraphNode <VALUETYPE> aTo)
+  public GraphRelation (@Nonnull final IGraphNode <VALUETYPE> aFrom, @Nonnull final IGraphNode <VALUETYPE> aTo)
   {
     this (null, aFrom, aTo);
   }
 
   public GraphRelation (@Nullable final String sID,
-                        @Nonnull final GraphNode <VALUETYPE> aFrom,
-                        @Nonnull final GraphNode <VALUETYPE> aTo)
+                        @Nonnull final IGraphNode <VALUETYPE> aFrom,
+                        @Nonnull final IGraphNode <VALUETYPE> aTo)
   {
     super (sID);
     if (aFrom == null)
@@ -54,13 +54,13 @@ public final class GraphRelation <VALUETYPE> extends AbstractGraphObject
   }
 
   @Nonnull
-  public GraphNode <VALUETYPE> getFrom ()
+  public IGraphNode <VALUETYPE> getFrom ()
   {
     return m_aFrom;
   }
 
   @Nonnull
-  public GraphNode <VALUETYPE> getTo ()
+  public IGraphNode <VALUETYPE> getTo ()
   {
     return m_aTo;
   }
@@ -100,8 +100,8 @@ public final class GraphRelation <VALUETYPE> extends AbstractGraphObject
    * @return The created graph relation and never <code>null</code>.
    */
   @Nonnull
-  public static <VALUETYPE> GraphRelation <VALUETYPE> create (@Nonnull final GraphNode <VALUETYPE> aFrom,
-                                                              @Nonnull final GraphNode <VALUETYPE> aTo)
+  public static <VALUETYPE> GraphRelation <VALUETYPE> create (@Nonnull final IGraphNode <VALUETYPE> aFrom,
+                                                              @Nonnull final IGraphNode <VALUETYPE> aTo)
   {
     return new GraphRelation <VALUETYPE> (aFrom, aTo);
   }
@@ -122,8 +122,8 @@ public final class GraphRelation <VALUETYPE> extends AbstractGraphObject
    */
   @Nonnull
   public static <VALUETYPE> GraphRelation <VALUETYPE> create (@Nullable final String sID,
-                                                              @Nonnull final GraphNode <VALUETYPE> aFrom,
-                                                              @Nonnull final GraphNode <VALUETYPE> aTo)
+                                                              @Nonnull final IGraphNode <VALUETYPE> aFrom,
+                                                              @Nonnull final IGraphNode <VALUETYPE> aTo)
   {
     return new GraphRelation <VALUETYPE> (sID, aFrom, aTo);
   }

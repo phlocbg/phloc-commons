@@ -28,8 +28,10 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.annotations.ReturnsMutableCopy;
+import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.EChange;
+import com.phloc.commons.state.ETriState;
 import com.phloc.commons.state.IClearable;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -39,9 +41,10 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @NotThreadSafe
-public final class SimpleGraph <VALUETYPE> implements IReadonlySimpleGraph <VALUETYPE>, IClearable
+public class SimpleGraph <VALUETYPE> implements IReadonlySimpleGraph <VALUETYPE>, IClearable
 {
-  private final Map <String, GraphNode <VALUETYPE>> m_aNodes = new HashMap <String, GraphNode <VALUETYPE>> ();
+  private final Map <String, IGraphNode <VALUETYPE>> m_aNodes = new HashMap <String, IGraphNode <VALUETYPE>> ();
+  private ETriState m_eHasCycles = ETriState.UNDEFINED;
 
   /**
    * Create a new graph node and add it to the graph. A new ID is generated.
@@ -51,10 +54,10 @@ public final class SimpleGraph <VALUETYPE> implements IReadonlySimpleGraph <VALU
    * @return The created graph node. Never <code>null</code>.
    */
   @Nonnull
-  public GraphNode <VALUETYPE> addNode (@Nullable final VALUETYPE aValue)
+  public IGraphNode <VALUETYPE> addNode (@Nullable final VALUETYPE aValue)
   {
     // Create node with new ID
-    final GraphNode <VALUETYPE> aNode = GraphNode.create (aValue);
+    final IGraphNode <VALUETYPE> aNode = GraphNode.create (aValue);
     addNode (aNode);
     return aNode;
   }
@@ -72,14 +75,14 @@ public final class SimpleGraph <VALUETYPE> implements IReadonlySimpleGraph <VALU
    *         adding.
    */
   @Nullable
-  public GraphNode <VALUETYPE> addNode (@Nullable final String sID, @Nullable final VALUETYPE aValue)
+  public IGraphNode <VALUETYPE> addNode (@Nullable final String sID, @Nullable final VALUETYPE aValue)
   {
-    final GraphNode <VALUETYPE> aNode = GraphNode.create (sID, aValue);
+    final IGraphNode <VALUETYPE> aNode = GraphNode.create (sID, aValue);
     return addNode (aNode).isChanged () ? aNode : null;
   }
 
   @Nonnull
-  public EChange addNode (@Nonnull final GraphNode <VALUETYPE> aNode)
+  public EChange addNode (@Nonnull final IGraphNode <VALUETYPE> aNode)
   {
     if (aNode == null)
       throw new NullPointerException ("node");
@@ -88,26 +91,27 @@ public final class SimpleGraph <VALUETYPE> implements IReadonlySimpleGraph <VALU
     if (m_aNodes.containsKey (sID))
       return EChange.UNCHANGED;
     m_aNodes.put (sID, aNode);
+    m_eHasCycles = ETriState.UNDEFINED;
     return EChange.CHANGED;
   }
 
   @Nonnull
-  public GraphNode <VALUETYPE> getSingleStartNode ()
+  public IGraphNode <VALUETYPE> getSingleStartNode ()
   {
-    final Set <GraphNode <VALUETYPE>> aStartNodes = getAllStartNodes ();
+    final Set <IGraphNode <VALUETYPE>> aStartNodes = getAllStartNodes ();
     if (aStartNodes.size () > 1)
       throw new IllegalStateException ("Graph has more than one starting node");
     if (aStartNodes.isEmpty ())
       throw new IllegalStateException ("Graph has no starting node");
-    return aStartNodes.iterator ().next ();
+    return ContainerHelper.getFirstElement (aStartNodes);
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public Set <GraphNode <VALUETYPE>> getAllStartNodes ()
+  public Set <IGraphNode <VALUETYPE>> getAllStartNodes ()
   {
-    final Set <GraphNode <VALUETYPE>> aResult = new HashSet <GraphNode <VALUETYPE>> ();
-    for (final GraphNode <VALUETYPE> aNode : m_aNodes.values ())
+    final Set <IGraphNode <VALUETYPE>> aResult = new HashSet <IGraphNode <VALUETYPE>> ();
+    for (final IGraphNode <VALUETYPE> aNode : m_aNodes.values ())
       if (!aNode.hasIncomingRelations ())
         aResult.add (aNode);
     return aResult;
@@ -115,17 +119,17 @@ public final class SimpleGraph <VALUETYPE> implements IReadonlySimpleGraph <VALU
 
   @Nonnull
   @ReturnsMutableCopy
-  public Set <GraphNode <VALUETYPE>> getAllEndNodes ()
+  public Set <IGraphNode <VALUETYPE>> getAllEndNodes ()
   {
-    final Set <GraphNode <VALUETYPE>> aResult = new HashSet <GraphNode <VALUETYPE>> ();
-    for (final GraphNode <VALUETYPE> aNode : m_aNodes.values ())
+    final Set <IGraphNode <VALUETYPE>> aResult = new HashSet <IGraphNode <VALUETYPE>> ();
+    for (final IGraphNode <VALUETYPE> aNode : m_aNodes.values ())
       if (!aNode.hasOutgoingRelations ())
         aResult.add (aNode);
     return aResult;
   }
 
   @Nullable
-  public GraphNode <VALUETYPE> getNodeOfID (@Nullable final String sID)
+  public IGraphNode <VALUETYPE> getNodeOfID (@Nullable final String sID)
   {
     return m_aNodes.get (sID);
   }
@@ -142,26 +146,35 @@ public final class SimpleGraph <VALUETYPE> implements IReadonlySimpleGraph <VALU
     if (m_aNodes.isEmpty ())
       return EChange.UNCHANGED;
     m_aNodes.clear ();
+    m_eHasCycles = ETriState.FALSE;
     return EChange.CHANGED;
   }
 
   public boolean containsCycles ()
   {
-    Set <GraphNode <VALUETYPE>> aNodes = getAllStartNodes ();
-    if (aNodes.isEmpty ())
+    // Use cached result?
+    if (m_eHasCycles.isUndefined ())
     {
-      // we have no unique start nodes -> use all nodes
-      aNodes = new HashSet <GraphNode <VALUETYPE>> (m_aNodes.values ());
+      m_eHasCycles = ETriState.FALSE;
+      Set <IGraphNode <VALUETYPE>> aNodes = getAllStartNodes ();
+      if (aNodes.isEmpty ())
+      {
+        // we have no unique start nodes -> use all nodes
+        aNodes = new HashSet <IGraphNode <VALUETYPE>> (m_aNodes.values ());
+      }
+      for (final IGraphNode <VALUETYPE> aCurNode : aNodes)
+      {
+        final GraphIterator <VALUETYPE> it = GraphIterator.create (aCurNode);
+        while (it.hasNext () && !it.hasCycles ())
+          it.next ();
+        if (it.hasCycles ())
+        {
+          m_eHasCycles = ETriState.TRUE;
+          break;
+        }
+      }
     }
-    for (final GraphNode <VALUETYPE> aCurNode : aNodes)
-    {
-      final GraphIterator <VALUETYPE> it = GraphIterator.create (aCurNode);
-      while (it.hasNext () && !it.hasCycles ())
-        it.next ();
-      if (it.hasCycles ())
-        return true;
-    }
-    return false;
+    return m_eHasCycles.getAsBooleanValue (true);
   }
 
   @Override
@@ -171,6 +184,7 @@ public final class SimpleGraph <VALUETYPE> implements IReadonlySimpleGraph <VALU
       return true;
     if (!(o instanceof SimpleGraph <?>))
       return false;
+    // Do not use m_eHasCycles because this is just a state variable
     final SimpleGraph <?> rhs = (SimpleGraph <?>) o;
     return m_aNodes.equals (rhs.m_aNodes);
   }
@@ -178,12 +192,13 @@ public final class SimpleGraph <VALUETYPE> implements IReadonlySimpleGraph <VALU
   @Override
   public int hashCode ()
   {
+    // Do not use m_eHasCycles because this is just a state variable
     return new HashCodeGenerator (this).append (m_aNodes).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("nodes", m_aNodes).toString ();
+    return new ToStringGenerator (this).append ("nodes", m_aNodes).append ("hasCycles", m_eHasCycles).toString ();
   }
 }

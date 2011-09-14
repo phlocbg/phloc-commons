@@ -19,20 +19,20 @@ package com.phloc.commons.graph;
 
 abstract class AbstractGraphTestCase
 {
-  private static final GraphNode <Integer> _createGN (final int i)
+  private static final IGraphNode <Integer> _createGN (final int i)
   {
     return GraphNode.create (Integer.toString (i), Integer.valueOf (i + 1));
   }
 
   protected SimpleGraph <Integer> _buildGraph ()
   {
-    final GraphNode <Integer> node0 = _createGN (0);
-    final GraphNode <Integer> node1 = _createGN (1);
-    final GraphNode <Integer> node2 = _createGN (2);
-    final GraphNode <Integer> node3 = _createGN (3);
-    final GraphNode <Integer> node4 = _createGN (4);
-    final GraphNode <Integer> node5 = _createGN (5);
-    final GraphNode <Integer> node6 = _createGN (6);
+    final IGraphNode <Integer> node0 = _createGN (0);
+    final IGraphNode <Integer> node1 = _createGN (1);
+    final IGraphNode <Integer> node2 = _createGN (2);
+    final IGraphNode <Integer> node3 = _createGN (3);
+    final IGraphNode <Integer> node4 = _createGN (4);
+    final IGraphNode <Integer> node5 = _createGN (5);
+    final IGraphNode <Integer> node6 = _createGN (6);
     node0.addOutgoingRelation (node1);
     node1.addOutgoingRelation (node2);
     node2.addOutgoingRelation (node3);
@@ -55,8 +55,8 @@ abstract class AbstractGraphTestCase
 
   protected IReadonlySimpleGraph <Integer> _buildCycleGraphSimple ()
   {
-    final GraphNode <Integer> node0 = _createGN (0);
-    final GraphNode <Integer> node1 = _createGN (1);
+    final IGraphNode <Integer> node0 = _createGN (0);
+    final IGraphNode <Integer> node1 = _createGN (1);
     node0.addOutgoingRelation (node1);
     node1.addOutgoingRelation (node0);
     final SimpleGraph <Integer> aGraph = new SimpleGraph <Integer> ();
@@ -67,10 +67,10 @@ abstract class AbstractGraphTestCase
 
   protected IReadonlySimpleGraph <Integer> _buildCycleGraphSimple2 ()
   {
-    final GraphNode <Integer> node0 = _createGN (0);
-    final GraphNode <Integer> node1 = _createGN (1);
-    final GraphNode <Integer> node2 = _createGN (2);
-    final GraphNode <Integer> node3 = _createGN (3);
+    final IGraphNode <Integer> node0 = _createGN (0);
+    final IGraphNode <Integer> node1 = _createGN (1);
+    final IGraphNode <Integer> node2 = _createGN (2);
+    final IGraphNode <Integer> node3 = _createGN (3);
     node0.addOutgoingRelation (node1);
     node1.addOutgoingRelation (node2);
     node2.addOutgoingRelation (node3);

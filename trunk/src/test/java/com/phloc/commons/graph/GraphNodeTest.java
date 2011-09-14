@@ -86,7 +86,7 @@ public final class GraphNodeTest
     assertTrue (nt.isConnectedWith (nf));
     assertFalse (nt.isConnectedWith (nt));
 
-    Iterator <GraphRelation <String>> it = nf.getOutgoingRelations ().iterator ();
+    Iterator <IGraphRelation <String>> it = nf.getOutgoingRelations ().iterator ();
     assertNotNull (it);
     assertTrue (it.hasNext ());
     assertTrue (it.hasNext ());
@@ -119,7 +119,7 @@ public final class GraphNodeTest
     final GraphNode <String> nf = new GraphNode <String> ();
     final GraphNode <String> nt = new GraphNode <String> ();
     nf.addOutgoingRelation (GraphRelation.create (nf, nt));
-    Iterator <GraphRelation <String>> it = nf.getOutgoingRelations ().iterator ();
+    Iterator <IGraphRelation <String>> it = nf.getOutgoingRelations ().iterator ();
     assertNotNull (it);
     assertTrue (it.hasNext ());
     assertTrue (it.hasNext ());
@@ -152,7 +152,7 @@ public final class GraphNodeTest
     final GraphNode <String> nf = new GraphNode <String> ();
     final GraphNode <String> nt = new GraphNode <String> ();
     nt.addIncomingRelation (nf);
-    Iterator <GraphRelation <String>> it = nf.getOutgoingRelations ().iterator ();
+    Iterator <IGraphRelation <String>> it = nf.getOutgoingRelations ().iterator ();
     assertNotNull (it);
     assertTrue (it.hasNext ());
     assertTrue (it.hasNext ());
@@ -185,7 +185,7 @@ public final class GraphNodeTest
     final GraphNode <String> nf = new GraphNode <String> ();
     final GraphNode <String> nt = new GraphNode <String> ();
     nt.addIncomingRelation (GraphRelation.create (nf, nt));
-    Iterator <GraphRelation <String>> it = nf.getOutgoingRelations ().iterator ();
+    Iterator <IGraphRelation <String>> it = nf.getOutgoingRelations ().iterator ();
     assertNotNull (it);
     assertTrue (it.hasNext ());
     assertTrue (it.hasNext ());
@@ -217,7 +217,7 @@ public final class GraphNodeTest
   {
     final GraphNode <String> nf = new GraphNode <String> ();
     nf.addOutgoingRelation (nf);
-    Iterator <GraphRelation <String>> it = nf.getOutgoingRelations ().iterator ();
+    Iterator <IGraphRelation <String>> it = nf.getOutgoingRelations ().iterator ();
     assertNotNull (it);
     assertTrue (it.hasNext ());
     assertTrue (it.hasNext ());
