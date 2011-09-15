@@ -93,7 +93,8 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
   }
 
   @Nullable
-  public <DSTTYPE> DSTTYPE getAttributeWithConversion (@Nullable final String sAttrName, @Nonnull final Class <DSTTYPE> aDstClass)
+  public <DSTTYPE> DSTTYPE getAttributeWithConversion (@Nullable final String sAttrName,
+                                                       @Nonnull final Class <DSTTYPE> aDstClass)
   {
     final String sAttrVal = getAttribute (sAttrName);
     // Avoid having a conversion issue with empty strings!
@@ -156,6 +157,12 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
   public IMicroElement setAttribute (@Nonnull final String sAttrName, @Nullable final int nAttrValue)
   {
     return setAttribute (sAttrName, Integer.toString (nAttrValue));
+  }
+
+  @Nonnull
+  public IMicroElement setAttribute (@Nonnull final String sAttrName, @Nullable final long nAttrValue)
+  {
+    return setAttribute (sAttrName, Long.toString (nAttrValue));
   }
 
   @Nonnull

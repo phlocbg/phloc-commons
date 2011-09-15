@@ -64,8 +64,8 @@ public interface IMicroElement extends IMicroNode
   /**
    * Get the attribute value of the given attribute name. If this element has no
    * such attribute, <code>null</code> is returned. The attribute value is
-   * converted via the {@link com.phloc.commons.typeconvert.TypeConverter} to the
-   * desired destination class. If no such attribute is present,
+   * converted via the {@link com.phloc.commons.typeconvert.TypeConverter} to
+   * the desired destination class. If no such attribute is present,
    * <code>null</code> is returned.
    * 
    * @param sAttrName
@@ -114,6 +114,19 @@ public interface IMicroElement extends IMicroNode
    */
   @Nonnull
   IMicroElement setAttribute (@Nonnull String sAttrName, @Nullable int nAttrValue);
+
+  /**
+   * Set an attribute value of this element. This is a shortcut for
+   * <code>setAttribute(name, Long.toString (nValue))</code>.
+   * 
+   * @param sAttrName
+   *        Name of the attribute. May neither be <code>null</code> nor empty.
+   * @param nAttrValue
+   *        The new value to be set.
+   * @return this
+   */
+  @Nonnull
+  IMicroElement setAttribute (@Nonnull String sAttrName, @Nullable long nAttrValue);
 
   /**
    * Set an attribute value of this element. If the type of the value is not
@@ -274,8 +287,8 @@ public interface IMicroElement extends IMicroNode
   /**
    * Get the concatenated text content of all direct {@link IMicroText} child
    * nodes of this element. The value is converted via the
-   * {@link com.phloc.commons.typeconvert.TypeConverter} to the desired destination
-   * class.
+   * {@link com.phloc.commons.typeconvert.TypeConverter} to the desired
+   * destination class.
    * 
    * @return <code>null</code> if the element contains no text node as child
    */
