@@ -20,17 +20,22 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
-  <entry date="2011-09-13" category="api" action="change" incompatible="true">
+  <entry date="2011-09-15" category="api" action="add">
+    <change>
+      <text locale="en">Added IMicroElement.setAttribute(String,long) as a sanity method</text>
+    </change>
+  </entry>
+  <entry date="2011-09-14" category="api" action="change" incompatible="true">
     <change>
       <text locale="en">GraphIterator now supports filtering relations to identify which relations to follow in iteration and which not</text>
     </change>
   </entry>
-  <entry date="2011-09-13" category="api" action="change" incompatible="true">
+  <entry date="2011-09-14" category="api" action="change">
     <change>
       <text locale="en">Introduced IGraphNode and IGraphRelation interfaces and using them</text>
     </change>
   </entry>
-  <entry date="2011-09-13" category="api" action="change" incompatible="true">
+  <entry date="2011-09-14" category="api" action="change">
     <change>
       <text locale="en">Class SimpleGraph is no longer final</text>
     </change>
