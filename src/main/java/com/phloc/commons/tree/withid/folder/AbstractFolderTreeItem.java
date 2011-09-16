@@ -20,6 +20,7 @@ package com.phloc.commons.tree.withid.folder;
 import java.util.Collection;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.phloc.commons.combine.ICombinator;
 import com.phloc.commons.compare.CompareUtils;
@@ -56,6 +57,21 @@ public abstract class AbstractFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE exten
   public AbstractFolderTreeItem (@Nonnull final IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE> aFactory)
   {
     super (aFactory);
+    m_aKeyCombinator = aFactory.getKeyCombinator ();
+  }
+
+  /**
+   * Constructor for root object
+   * 
+   * @param aFactory
+   *        The item factory to use.
+   * @param aDataID
+   *        The data ID of the root item.
+   */
+  public AbstractFolderTreeItem (@Nonnull final IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE> aFactory,
+                                 @Nullable final KEYTYPE aDataID)
+  {
+    super (aFactory, aDataID);
     m_aKeyCombinator = aFactory.getKeyCombinator ();
   }
 
