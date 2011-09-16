@@ -26,50 +26,15 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.combine.CombinatorStringWithSeparator;
 import com.phloc.commons.io.file.FilenameHelper;
-import com.phloc.commons.tree.withid.BasicTreeItemWithID;
-import com.phloc.commons.tree.withid.IBasicTreeItemWithID;
-import com.phloc.commons.tree.withid.IBasicTreeItemWithIDFactory;
-import com.phloc.commons.tree.withid.unique.AbstractBasicTreeItemWithUniqueIDFactory;
-import com.phloc.commons.tree.withid.unique.BasicTreeWithGlobalUniqueID;
-
-interface IFileItem extends IBasicTreeItemWithID <String, List <File>, IFileItem>
-{}
-
-final class FileItem extends BasicTreeItemWithID <String, List <File>, IFileItem> implements IFileItem
-{
-  public FileItem (final IBasicTreeItemWithIDFactory <String, List <File>, IFileItem> aFactory)
-  {
-    super (aFactory);
-  }
-
-  public FileItem (final IFileItem aParent, final String sName)
-  {
-    super (aParent, sName);
-  }
-}
-
-final class FileItemFactory extends AbstractBasicTreeItemWithUniqueIDFactory <String, List <File>, IFileItem>
-{
-  public FileItemFactory ()// NOPMD
-  {}
-
-  @Override
-  protected IFileItem internalCreate (@Nonnull final IFileItem aParent, @Nonnull final String sName)
-  {
-    return new FileItem (aParent, sName);
-  }
-
-  public IFileItem createRoot ()
-  {
-    return new FileItem (this);
-  }
-}
+import com.phloc.commons.tree.withid.folder.DefaultFolderTree;
+import com.phloc.commons.tree.withid.folder.DefaultFolderTreeItem;
 
 @NotThreadSafe
-public class FileSystemFolderTree extends BasicTreeWithGlobalUniqueID <String, List <File>, IFileItem>
+public class FileSystemFolderTree extends DefaultFolderTree <String, File, List <File>>
 {
-  private static void _iterate (@Nonnull final IFileItem aTreeItem,
+  private static void _iterate (@Nonnull final DefaultFolderTreeItem <String, File, List <File>> aTreeItem,
                                 @Nonnull final File aDir,
                                 @Nullable final FileFilter aDirFilter,
                                 @Nullable final FileFilter aFileFilter)
@@ -93,8 +58,8 @@ public class FileSystemFolderTree extends BasicTreeWithGlobalUniqueID <String, L
               if (aDirFilter == null || aDirFilter.accept (aChild))
               {
                 // create item and recursively descend
-                final IFileItem aChildItem = aTreeItem.createChildItem (FilenameHelper.getCleanPath (aChild),
-                                                                        new ArrayList <File> ());
+                final DefaultFolderTreeItem <String, File, List <File>> aChildItem = aTreeItem.createChildItem (FilenameHelper.getCleanPath (aChild),
+                                                                                                                new ArrayList <File> ());
                 _iterate (aChildItem, aChild, aDirFilter, aFileFilter);
               }
             }
@@ -111,13 +76,14 @@ public class FileSystemFolderTree extends BasicTreeWithGlobalUniqueID <String, L
                                @Nullable final FileFilter aDirFilter,
                                @Nullable final FileFilter aFileFilter)
   {
-    super (new FileItemFactory ());
+    super (new CombinatorStringWithSeparator ("/"));
     if (aStartDir == null)
       throw new NullPointerException ("startDir");
     if (!aStartDir.isDirectory ())
       throw new IllegalArgumentException ("Start directory is not a directory!");
 
-    final IFileItem aStart = getRootItem ().createChildItem (aStartDir.getName (), new ArrayList <File> ());
+    final DefaultFolderTreeItem <String, File, List <File>> aStart = getRootItem ().createChildItem (aStartDir.getName (),
+                                                                                                     new ArrayList <File> ());
     _iterate (aStart, aStartDir, aDirFilter, aFileFilter);
   }
 }
