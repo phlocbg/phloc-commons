@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.phloc.commons.combine.ICombinator;
 
@@ -44,9 +45,9 @@ public class DefaultFolderTree <KEYTYPE, VALUETYPE, COLLTYPE extends Collection 
    * passed key combinator.
    * 
    * @param aKeyCombinator
-   *        The key combinator to be used. May not be <code>null</code>.
+   *        The key combinator to be used. May be <code>null</code>.
    */
-  public DefaultFolderTree (@Nonnull final ICombinator <KEYTYPE> aKeyCombinator)
+  public DefaultFolderTree (@Nullable final ICombinator <KEYTYPE> aKeyCombinator)
   {
     this (new DefaultFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE> (aKeyCombinator));
   }

@@ -26,7 +26,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.phloc.commons.combine.CombinatorStringWithSeparator;
+import com.phloc.commons.combine.CombinatorStringWithSeparatorIgnoreNull;
 import com.phloc.commons.io.file.FilenameHelper;
 import com.phloc.commons.tree.withid.folder.DefaultFolderTree;
 import com.phloc.commons.tree.withid.folder.DefaultFolderTreeItem;
@@ -58,7 +58,7 @@ public class FileSystemFolderTree extends DefaultFolderTree <String, File, List 
               if (aDirFilter == null || aDirFilter.accept (aChild))
               {
                 // create item and recursively descend
-                final DefaultFolderTreeItem <String, File, List <File>> aChildItem = aTreeItem.createChildItem (FilenameHelper.getCleanPath (aChild),
+                final DefaultFolderTreeItem <String, File, List <File>> aChildItem = aTreeItem.createChildItem (aChild.getName (),
                                                                                                                 new ArrayList <File> ());
                 _iterate (aChildItem, aChild, aDirFilter, aFileFilter);
               }
@@ -76,7 +76,7 @@ public class FileSystemFolderTree extends DefaultFolderTree <String, File, List 
                                @Nullable final FileFilter aDirFilter,
                                @Nullable final FileFilter aFileFilter)
   {
-    super (new CombinatorStringWithSeparator ("/"));
+    super (new CombinatorStringWithSeparatorIgnoreNull ("/"));
     if (aStartDir == null)
       throw new NullPointerException ("startDir");
     if (!aStartDir.isDirectory ())

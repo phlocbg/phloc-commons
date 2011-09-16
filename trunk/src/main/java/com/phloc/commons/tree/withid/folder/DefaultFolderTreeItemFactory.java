@@ -20,6 +20,7 @@ package com.phloc.commons.tree.withid.folder;
 import java.util.Collection;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.phloc.commons.combine.ICombinator;
 
@@ -37,19 +38,15 @@ import com.phloc.commons.combine.ICombinator;
 public class DefaultFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends
                                                                                                         AbstractFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>>
 {
-  public DefaultFolderTreeItemFactory (@Nonnull final ICombinator <KEYTYPE> aKeyCombinator)
+  public DefaultFolderTreeItemFactory (@Nullable final ICombinator <KEYTYPE> aKeyCombinator)
   {
     super (aKeyCombinator);
   }
 
-  /*
-   * This implementation is different, because the root object is also put into
-   * the item store.
-   */
   @Override
   protected final DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> internalCreateRoot ()
   {
-    return new DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> (getKeyCombinator (), this);
+    return new DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> (this, getKeyCombinator ());
   }
 
   @Override
@@ -57,6 +54,6 @@ public class DefaultFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE extends 
   protected DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> internalCreate (@Nonnull final DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> aParent,
                                                                                  @Nonnull final KEYTYPE aDataID)
   {
-    return new DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> (getKeyCombinator (), aParent, aDataID);
+    return new DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> (aParent, aDataID, getKeyCombinator ());
   }
 }
