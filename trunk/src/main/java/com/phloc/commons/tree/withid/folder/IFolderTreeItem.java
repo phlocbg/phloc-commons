@@ -34,6 +34,8 @@ import com.phloc.commons.tree.withid.IBasicTreeItemWithID;
  *        Value type
  * @param <COLLTYPE>
  *        Collection type consisting of value elements
+ * @param <ITEMTYPE>
+ *        the implementation item type
  */
 public interface IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>, ITEMTYPE extends IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>> extends
                                                                                                                                                                           IBasicTreeItemWithID <KEYTYPE, COLLTYPE, ITEMTYPE>

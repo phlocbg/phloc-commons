@@ -23,7 +23,6 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.combine.ICombinator;
-import com.phloc.commons.tree.withid.unique.BasicTreeWithGlobalUniqueID;
 
 /**
  * Root class for a simple tree. The elements of the tree are not sorted by any
@@ -37,9 +36,8 @@ import com.phloc.commons.tree.withid.unique.BasicTreeWithGlobalUniqueID;
  *        the collection type consisting of value elements
  * @author philip
  */
-public class FolderTree <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends
-                                                                                      BasicTreeWithGlobalUniqueID <KEYTYPE, COLLTYPE, FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>> implements
-                                                                                                                                                                                    IFolderTree <KEYTYPE, VALUETYPE, COLLTYPE, FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>>
+public class DefaultFolderTree <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends
+                                                                                             AbstractFolderTree <KEYTYPE, VALUETYPE, COLLTYPE, DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>>
 {
   /**
    * Constructor that creates a {@link DefaultFolderTreeItemFactory} using the
@@ -48,7 +46,7 @@ public class FolderTree <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUET
    * @param aKeyCombinator
    *        The key combinator to be used. May not be <code>null</code>.
    */
-  public FolderTree (@Nonnull final ICombinator <KEYTYPE> aKeyCombinator)
+  public DefaultFolderTree (@Nonnull final ICombinator <KEYTYPE> aKeyCombinator)
   {
     this (new DefaultFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE> (aKeyCombinator));
   }
@@ -59,13 +57,21 @@ public class FolderTree <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUET
    * @param aFactory
    *        The item factory to use. May not be <code>null</code>.
    */
-  public FolderTree (@Nonnull final IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>> aFactory)
+  public DefaultFolderTree (@Nonnull final IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>> aFactory)
   {
     super (aFactory);
   }
 
-  public static <K, V> FolderTree <K, V, Set <V>> createForSet (@Nonnull final ICombinator <K> aKeyCombinator)
+  /**
+   * Create a new {@link DefaultFolderTree} using a set as the container.
+   * 
+   * @param aKeyCombinator
+   *        The key combinator to be used
+   * @return The created default folder tree
+   */
+  @Nonnull
+  public static <K, V> DefaultFolderTree <K, V, Set <V>> createForSet (@Nonnull final ICombinator <K> aKeyCombinator)
   {
-    return new FolderTree <K, V, Set <V>> (aKeyCombinator);
+    return new DefaultFolderTree <K, V, Set <V>> (aKeyCombinator);
   }
 }

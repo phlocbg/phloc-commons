@@ -27,7 +27,7 @@ import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.tree.withid.BasicTreeItemWithID;
 
 /**
- * Default implementation of the {@link IFolderTreeItem} interface.
+ * Abstract generic implementation of the {@link IFolderTreeItem} interface.
  * 
  * @author philip
  * @param <KEYTYPE>
@@ -36,10 +36,12 @@ import com.phloc.commons.tree.withid.BasicTreeItemWithID;
  *        Value type
  * @param <COLLTYPE>
  *        Collection type consisting of value elements
+ * @param <ITEMTYPE>
+ *        the implementation item type
  */
-public class FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends
-                                                                                          BasicTreeItemWithID <KEYTYPE, COLLTYPE, FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>> implements
-                                                                                                                                                                                IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>>
+public abstract class AbstractFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>, ITEMTYPE extends AbstractFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>> extends
+                                                                                                                                                                                             BasicTreeItemWithID <KEYTYPE, COLLTYPE, ITEMTYPE> implements
+                                                                                                                                                                                                                                              IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>
 {
   // Combinator to create a global unique ID.
   private final ICombinator <KEYTYPE> m_aKeyCombinator;
@@ -52,8 +54,8 @@ public class FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VA
    * @param aFactory
    *        The item factory to use.
    */
-  public FolderTreeItem (@Nonnull final ICombinator <KEYTYPE> aKeyCombinator,
-                         @Nonnull final IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>> aFactory)
+  public AbstractFolderTreeItem (@Nonnull final ICombinator <KEYTYPE> aKeyCombinator,
+                                 @Nonnull final IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE> aFactory)
   {
     super (aFactory);
     if (aKeyCombinator == null)
@@ -72,9 +74,9 @@ public class FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VA
    * @param aDataID
    *        The ID of the new item. May not be <code>null</code>.
    */
-  public FolderTreeItem (@Nonnull final ICombinator <KEYTYPE> aKeyCombinator,
-                         @Nonnull final FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> aParent,
-                         @Nonnull final KEYTYPE aDataID)
+  public AbstractFolderTreeItem (@Nonnull final ICombinator <KEYTYPE> aKeyCombinator,
+                                 @Nonnull final ITEMTYPE aParent,
+                                 @Nonnull final KEYTYPE aDataID)
   {
     super (aParent, aDataID);
     if (aKeyCombinator == null)
@@ -85,7 +87,7 @@ public class FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VA
   @Nonnull
   public final KEYTYPE getGlobalUniqueDataID ()
   {
-    final FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> aParent = getParent ();
+    final ITEMTYPE aParent = getParent ();
     return aParent == null ? getID () : m_aKeyCombinator.combine (aParent.getGlobalUniqueDataID (), getID ());
   }
 
@@ -96,7 +98,7 @@ public class FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VA
       return true;
     if (!super.equals (o))
       return false;
-    final FolderTreeItem <?, ?, ?> rhs = (FolderTreeItem <?, ?, ?>) o;
+    final AbstractFolderTreeItem <?, ?, ?, ?> rhs = (AbstractFolderTreeItem <?, ?, ?, ?>) o;
     return m_aKeyCombinator.equals (rhs.m_aKeyCombinator);
   }
 

@@ -32,7 +32,7 @@ import com.phloc.commons.mock.AbstractPhlocTestCase;
 import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
- * Test class for class {@link FolderTree}.
+ * Test class for class {@link DefaultFolderTree}.
  * 
  * @author philip
  */
@@ -42,21 +42,21 @@ public final class FolderTreeTest extends AbstractPhlocTestCase
   public void testBasic ()
   {
     final ICombinator <String> aCombinator = new CombinatorStringWithSeparator ("/");
-    final FolderTree <String, Integer, Set <Integer>> ft = FolderTree.<String, Integer> createForSet (aCombinator);
+    final DefaultFolderTree <String, Integer, Set <Integer>> ft = DefaultFolderTree.<String, Integer> createForSet (aCombinator);
     assertNotNull (ft.getRootItem ());
 
-    final FolderTreeItem <String, Integer, Set <Integer>> i1 = ft.getRootItem ()
+    final DefaultFolderTreeItem <String, Integer, Set <Integer>> i1 = ft.getRootItem ()
                                                                  .createChildItem ("id1",
                                                                                    ContainerHelper.newSet (I1, I2, I3));
     assertNotNull (i1);
 
-    final FolderTreeItem <String, Integer, Set <Integer>> i2 = ft.getRootItem ()
+    final DefaultFolderTreeItem <String, Integer, Set <Integer>> i2 = ft.getRootItem ()
                                                                  .createChildItem ("id1",
                                                                                    ContainerHelper.newSet (I1, I2, I3));
     assertNotNull (i2);
     assertSame (i1, i2);
 
-    final FolderTreeItem <String, Integer, Set <Integer>> i3 = ft.getRootItem ()
+    final DefaultFolderTreeItem <String, Integer, Set <Integer>> i3 = ft.getRootItem ()
                                                                  .createChildItem ("id3",
                                                                                    ContainerHelper.newSet (I1, I3));
     assertNotNull (i3);
