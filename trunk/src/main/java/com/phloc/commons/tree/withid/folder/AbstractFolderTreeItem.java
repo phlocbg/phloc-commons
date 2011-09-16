@@ -20,7 +20,6 @@ package com.phloc.commons.tree.withid.folder;
 import java.util.Collection;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.phloc.commons.combine.ICombinator;
 import com.phloc.commons.compare.CompareUtils;
@@ -53,14 +52,11 @@ public abstract class AbstractFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE exten
    * 
    * @param aFactory
    *        The item factory to use.
-   * @param aKeyCombinator
-   *        The combinator for arbitrary keys.
    */
-  public AbstractFolderTreeItem (@Nonnull final IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE> aFactory,
-                                 @Nullable final ICombinator <KEYTYPE> aKeyCombinator)
+  public AbstractFolderTreeItem (@Nonnull final IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE> aFactory)
   {
     super (aFactory);
-    m_aKeyCombinator = aKeyCombinator;
+    m_aKeyCombinator = aFactory.getKeyCombinator ();
   }
 
   /**
@@ -71,15 +67,11 @@ public abstract class AbstractFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE exten
    *        no parent.
    * @param aDataID
    *        The ID of the new item. May not be <code>null</code>.
-   * @param aKeyCombinator
-   *        The combinator for arbitrary keys.
    */
-  public AbstractFolderTreeItem (@Nonnull final ITEMTYPE aParent,
-                                 @Nonnull final KEYTYPE aDataID,
-                                 @Nullable final ICombinator <KEYTYPE> aKeyCombinator)
+  public AbstractFolderTreeItem (@Nonnull final ITEMTYPE aParent, @Nonnull final KEYTYPE aDataID)
   {
     super (aParent, aDataID);
-    m_aKeyCombinator = aKeyCombinator;
+    m_aKeyCombinator = aParent.m_aKeyCombinator;
   }
 
   @Nonnull

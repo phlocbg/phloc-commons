@@ -20,9 +20,6 @@ package com.phloc.commons.tree.withid.folder;
 import java.util.Collection;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import com.phloc.commons.combine.ICombinator;
 
 /**
  * Default implementation of the {@link IFolderTreeItem} interface.
@@ -43,30 +40,25 @@ public class DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collect
    * 
    * @param aFactory
    *        The item factory to use.
-   * @param aKeyCombinator
-   *        The combinator for arbitrary keys.
    */
-  public DefaultFolderTreeItem (@Nonnull final IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>> aFactory,
-                                @Nullable final ICombinator <KEYTYPE> aKeyCombinator)
+  public DefaultFolderTreeItem (@Nonnull final IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>> aFactory)
   {
-    super (aFactory, aKeyCombinator);
+    super (aFactory);
   }
 
   /**
    * Constructor for normal elements
+   * 
    * @param aParent
    *        Parent item. May never be <code>null</code> since only the root has
    *        no parent.
    * @param aDataID
    *        The ID of the new item. May not be <code>null</code>.
-   * @param aKeyCombinator
-   *        The combinator for arbitrary keys.
    */
   public DefaultFolderTreeItem (@Nonnull final DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> aParent,
-                                @Nonnull final KEYTYPE aDataID,
-                                @Nullable final ICombinator <KEYTYPE> aKeyCombinator)
+                                @Nonnull final KEYTYPE aDataID)
   {
-    super (aParent, aDataID, aKeyCombinator);
+    super (aParent, aDataID);
   }
 
   @Override
