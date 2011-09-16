@@ -22,9 +22,6 @@ import java.util.Collection;
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.combine.ICombinator;
-import com.phloc.commons.hash.HashCodeGenerator;
-import com.phloc.commons.string.ToStringGenerator;
-import com.phloc.commons.tree.withid.unique.AbstractBasicTreeItemWithUniqueIDFactory;
 
 /**
  * The default folder tree item factory implementation.
@@ -38,28 +35,21 @@ import com.phloc.commons.tree.withid.unique.AbstractBasicTreeItemWithUniqueIDFac
  *        Collection type consisting of value elements
  */
 public class DefaultFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends
-                                                                                                        AbstractBasicTreeItemWithUniqueIDFactory <KEYTYPE, COLLTYPE, DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>> implements
-                                                                                                                                                                                                                          IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>>
+                                                                                                        AbstractFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>>
 {
-  private final ICombinator <KEYTYPE> m_aKeyCombinator;
-
   public DefaultFolderTreeItemFactory (@Nonnull final ICombinator <KEYTYPE> aKeyCombinator)
   {
-    if (aKeyCombinator == null)
-      throw new NullPointerException ("keyCombinator");
-    m_aKeyCombinator = aKeyCombinator;
+    super (aKeyCombinator);
   }
 
   /*
    * This implementation is different, because the root object is also put into
    * the item store.
    */
-  @Nonnull
-  public final DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> createRoot ()
+  @Override
+  protected final DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> internalCreateRoot ()
   {
-    final DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> aItem = new DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> (m_aKeyCombinator,
-                                                                                                                                 this);
-    return addToItemStore (aItem.getGlobalUniqueDataID (), aItem);
+    return new DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> (getKeyCombinator (), this);
   }
 
   @Override
@@ -67,29 +57,6 @@ public class DefaultFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE extends 
   protected DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> internalCreate (@Nonnull final DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> aParent,
                                                                                  @Nonnull final KEYTYPE aDataID)
   {
-    return new DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> (m_aKeyCombinator, aParent, aDataID);
-  }
-
-  @Override
-  public boolean equals (final Object o)
-  {
-    if (o == this)
-      return true;
-    if (!super.equals (o))
-      return false;
-    final DefaultFolderTreeItemFactory <?, ?, ?> rhs = (DefaultFolderTreeItemFactory <?, ?, ?>) o;
-    return m_aKeyCombinator.equals (rhs.m_aKeyCombinator);
-  }
-
-  @Override
-  public int hashCode ()
-  {
-    return HashCodeGenerator.getDerived (super.hashCode ()).append (m_aKeyCombinator).getHashCode ();
-  }
-
-  @Override
-  public String toString ()
-  {
-    return ToStringGenerator.getDerived (super.toString ()).append ("keyCombinator", m_aKeyCombinator).toString ();
+    return new DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> (getKeyCombinator (), aParent, aDataID);
   }
 }

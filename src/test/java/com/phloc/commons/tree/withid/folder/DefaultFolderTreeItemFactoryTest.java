@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.tree.withid.folder;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import java.util.List;
@@ -47,7 +48,7 @@ public final class DefaultFolderTreeItemFactoryTest
     final DefaultFolderTreeItemFactory <String, String, List <String>> ftif = new DefaultFolderTreeItemFactory <String, String, List <String>> (new CombinatorStringWithSeparator ("/"));
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (ftif,
                                                                     new DefaultFolderTreeItemFactory <String, String, List <String>> (new CombinatorStringWithSeparator ("/")));
-    ftif.createRoot ();
+    assertNotNull (ftif.createRoot ());
     PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (ftif,
                                                                         new DefaultFolderTreeItemFactory <String, String, List <String>> (new CombinatorStringWithSeparator ("/")));
   }

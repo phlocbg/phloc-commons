@@ -37,9 +37,9 @@ import com.phloc.commons.tree.withid.unique.BasicTreeWithGlobalUniqueID;
  *        the implementation item type
  * @author philip
  */
-public class AbstractFolderTree <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>, ITEMTYPE extends AbstractFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>> extends
-                                                                                                                                                                                BasicTreeWithGlobalUniqueID <KEYTYPE, COLLTYPE, ITEMTYPE> implements
-                                                                                                                                                                                                                                         IFolderTree <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>
+public abstract class AbstractFolderTree <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>, ITEMTYPE extends AbstractFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>> extends
+                                                                                                                                                                                         BasicTreeWithGlobalUniqueID <KEYTYPE, COLLTYPE, ITEMTYPE> implements
+                                                                                                                                                                                                                                                  IFolderTree <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>
 {
   /**
    * Constructor
