@@ -20,8 +20,10 @@ package com.phloc.commons.tree.withid.folder;
 import java.util.Collection;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.phloc.commons.combine.ICombinator;
+import com.phloc.commons.compare.CompareUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.tree.withid.unique.AbstractBasicTreeItemWithUniqueIDFactory;
@@ -45,14 +47,18 @@ public abstract class AbstractFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYP
 {
   private final ICombinator <KEYTYPE> m_aKeyCombinator;
 
-  public AbstractFolderTreeItemFactory (@Nonnull final ICombinator <KEYTYPE> aKeyCombinator)
+  public AbstractFolderTreeItemFactory (@Nullable final ICombinator <KEYTYPE> aKeyCombinator)
   {
-    if (aKeyCombinator == null)
-      throw new NullPointerException ("keyCombinator");
     m_aKeyCombinator = aKeyCombinator;
   }
 
-  @Nonnull
+  @Override
+  protected final KEYTYPE internalGetItemID (@Nonnull final ITEMTYPE aItem)
+  {
+    return aItem.getGlobalUniqueDataID ();
+  }
+
+  @Nullable
   public final ICombinator <KEYTYPE> getKeyCombinator ()
   {
     return m_aKeyCombinator;
@@ -79,7 +85,7 @@ public abstract class AbstractFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYP
     if (!super.equals (o))
       return false;
     final AbstractFolderTreeItemFactory <?, ?, ?, ?> rhs = (AbstractFolderTreeItemFactory <?, ?, ?, ?>) o;
-    return m_aKeyCombinator.equals (rhs.m_aKeyCombinator);
+    return CompareUtils.nullSafeEquals (m_aKeyCombinator, rhs.m_aKeyCombinator);
   }
 
   @Override
@@ -91,6 +97,8 @@ public abstract class AbstractFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYP
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("keyCombinator", m_aKeyCombinator).toString ();
+    return ToStringGenerator.getDerived (super.toString ())
+                            .appendIfNotNull ("keyCombinator", m_aKeyCombinator)
+                            .toString ();
   }
 }

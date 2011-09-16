@@ -20,6 +20,7 @@ package com.phloc.commons.tree.withid.folder;
 import java.util.Collection;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.phloc.commons.combine.ICombinator;
 
@@ -40,33 +41,32 @@ public class DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collect
   /**
    * Constructor for root object
    * 
-   * @param aKeyCombinator
-   *        The combinator for arbitrary keys.
    * @param aFactory
    *        The item factory to use.
+   * @param aKeyCombinator
+   *        The combinator for arbitrary keys.
    */
-  public DefaultFolderTreeItem (@Nonnull final ICombinator <KEYTYPE> aKeyCombinator,
-                                @Nonnull final IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>> aFactory)
+  public DefaultFolderTreeItem (@Nonnull final IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>> aFactory,
+                                @Nullable final ICombinator <KEYTYPE> aKeyCombinator)
   {
-    super (aKeyCombinator, aFactory);
+    super (aFactory, aKeyCombinator);
   }
 
   /**
    * Constructor for normal elements
-   * 
-   * @param aKeyCombinator
-   *        The combinator for arbitrary keys.
    * @param aParent
    *        Parent item. May never be <code>null</code> since only the root has
    *        no parent.
    * @param aDataID
    *        The ID of the new item. May not be <code>null</code>.
+   * @param aKeyCombinator
+   *        The combinator for arbitrary keys.
    */
-  public DefaultFolderTreeItem (@Nonnull final ICombinator <KEYTYPE> aKeyCombinator,
-                                @Nonnull final DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> aParent,
-                                @Nonnull final KEYTYPE aDataID)
+  public DefaultFolderTreeItem (@Nonnull final DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> aParent,
+                                @Nonnull final KEYTYPE aDataID,
+                                @Nullable final ICombinator <KEYTYPE> aKeyCombinator)
   {
-    super (aKeyCombinator, aParent, aDataID);
+    super (aParent, aDataID, aKeyCombinator);
   }
 
   @Override

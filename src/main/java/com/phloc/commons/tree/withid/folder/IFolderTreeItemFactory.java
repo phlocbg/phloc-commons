@@ -19,6 +19,9 @@ package com.phloc.commons.tree.withid.folder;
 
 import java.util.Collection;
 
+import javax.annotation.Nullable;
+
+import com.phloc.commons.combine.ICombinator;
 import com.phloc.commons.tree.withid.unique.ITreeItemWithUniqueIDFactory;
 
 /**
@@ -37,5 +40,9 @@ import com.phloc.commons.tree.withid.unique.ITreeItemWithUniqueIDFactory;
 public interface IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>, ITEMTYPE extends IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>> extends
                                                                                                                                                                                  ITreeItemWithUniqueIDFactory <KEYTYPE, COLLTYPE, ITEMTYPE>
 {
-  /* empty */
+  /**
+   * @return The key combinator to be used to create global unique IDs.
+   */
+  @Nullable
+  ICombinator <KEYTYPE> getKeyCombinator ();
 }

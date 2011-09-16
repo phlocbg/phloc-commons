@@ -20,8 +20,10 @@ package com.phloc.commons.tree.withid.folder;
 import java.util.Collection;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.phloc.commons.combine.ICombinator;
+import com.phloc.commons.compare.CompareUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.tree.withid.BasicTreeItemWithID;
@@ -49,44 +51,43 @@ public abstract class AbstractFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE exten
   /**
    * Constructor for root object
    * 
-   * @param aKeyCombinator
-   *        The combinator for arbitrary keys.
    * @param aFactory
    *        The item factory to use.
+   * @param aKeyCombinator
+   *        The combinator for arbitrary keys.
    */
-  public AbstractFolderTreeItem (@Nonnull final ICombinator <KEYTYPE> aKeyCombinator,
-                                 @Nonnull final IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE> aFactory)
+  public AbstractFolderTreeItem (@Nonnull final IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE> aFactory,
+                                 @Nullable final ICombinator <KEYTYPE> aKeyCombinator)
   {
     super (aFactory);
-    if (aKeyCombinator == null)
-      throw new NullPointerException ("keyCombinator");
     m_aKeyCombinator = aKeyCombinator;
   }
 
   /**
    * Constructor for normal elements
    * 
-   * @param aKeyCombinator
-   *        The combinator for arbitrary keys.
    * @param aParent
    *        Parent item. May never be <code>null</code> since only the root has
    *        no parent.
    * @param aDataID
    *        The ID of the new item. May not be <code>null</code>.
+   * @param aKeyCombinator
+   *        The combinator for arbitrary keys.
    */
-  public AbstractFolderTreeItem (@Nonnull final ICombinator <KEYTYPE> aKeyCombinator,
-                                 @Nonnull final ITEMTYPE aParent,
-                                 @Nonnull final KEYTYPE aDataID)
+  public AbstractFolderTreeItem (@Nonnull final ITEMTYPE aParent,
+                                 @Nonnull final KEYTYPE aDataID,
+                                 @Nullable final ICombinator <KEYTYPE> aKeyCombinator)
   {
     super (aParent, aDataID);
-    if (aKeyCombinator == null)
-      throw new NullPointerException ("keyCombinator");
     m_aKeyCombinator = aKeyCombinator;
   }
 
   @Nonnull
   public final KEYTYPE getGlobalUniqueDataID ()
   {
+    if (m_aKeyCombinator == null)
+      return getID ();
+
     final ITEMTYPE aParent = getParent ();
     return aParent == null ? getID () : m_aKeyCombinator.combine (aParent.getGlobalUniqueDataID (), getID ());
   }
@@ -99,7 +100,7 @@ public abstract class AbstractFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE exten
     if (!super.equals (o))
       return false;
     final AbstractFolderTreeItem <?, ?, ?, ?> rhs = (AbstractFolderTreeItem <?, ?, ?, ?>) o;
-    return m_aKeyCombinator.equals (rhs.m_aKeyCombinator);
+    return CompareUtils.nullSafeEquals (m_aKeyCombinator, rhs.m_aKeyCombinator);
   }
 
   @Override

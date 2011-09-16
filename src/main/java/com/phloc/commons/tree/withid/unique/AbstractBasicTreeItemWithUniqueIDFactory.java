@@ -24,6 +24,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.hash.HashCodeGenerator;
@@ -58,13 +59,27 @@ public abstract class AbstractBasicTreeItemWithUniqueIDFactory <KEYTYPE, VALUETY
   {
     // Is the ID already in use?
     if (m_aItemStore.containsKey (aDataID))
-      throw new IllegalArgumentException ("An item with ID " + aDataID + " is already contained!");
+      throw new IllegalArgumentException ("An item with ID '" + aDataID + "' is already contained!");
     m_aItemStore.put (aDataID, aItem);
     return aItem;
   }
 
   @Nonnull
   protected abstract ITEMTYPE internalCreate (@Nonnull final ITEMTYPE aParent, @Nonnull final KEYTYPE aDataID);
+
+  /**
+   * Get the ID of the passed tree item to use for internal storage.
+   * 
+   * @param aItem
+   *        The item who's ID is to be resolved.
+   * @return The ID of the item
+   */
+  @Nonnull
+  @OverrideOnDemand
+  protected KEYTYPE internalGetItemID (@Nonnull final ITEMTYPE aItem)
+  {
+    return aItem.getID ();
+  }
 
   @Nonnull
   public final ITEMTYPE create (@Nonnull final ITEMTYPE aParent, @Nonnull final KEYTYPE aDataID)
@@ -74,19 +89,19 @@ public abstract class AbstractBasicTreeItemWithUniqueIDFactory <KEYTYPE, VALUETY
 
     // Create and store the item via the default factory
     final ITEMTYPE aTreeItem = internalCreate (aParent, aDataID);
-    return addToItemStore (aDataID, aTreeItem);
+    return addToItemStore (internalGetItemID (aTreeItem), aTreeItem);
   }
 
-  public final void onRemoveItem (@Nonnull final ITEMTYPE aItem)
+  public final void onRemoveItem (@Nonnull final ITEMTYPE aTreeItem)
   {
     // Remove item from item store
-    m_aItemStore.remove (aItem.getID ());
+    m_aItemStore.remove (internalGetItemID (aTreeItem));
   }
 
-  public final void onAddItem (@Nonnull final ITEMTYPE aItem)
+  public final void onAddItem (@Nonnull final ITEMTYPE aTreeItem)
   {
     // Add item to item store
-    addToItemStore (aItem.getID (), aItem);
+    addToItemStore (internalGetItemID (aTreeItem), aTreeItem);
   }
 
   @Nullable
