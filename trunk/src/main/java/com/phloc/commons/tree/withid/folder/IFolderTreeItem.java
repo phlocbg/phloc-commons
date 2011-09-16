@@ -35,8 +35,8 @@ import com.phloc.commons.tree.withid.IBasicTreeItemWithID;
  * @param <COLLTYPE>
  *        Collection type consisting of value elements
  */
-public interface IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends
-                                                                                               IBasicTreeItemWithID <KEYTYPE, COLLTYPE, IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>>
+public interface IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>, ITEMTYPE extends IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>> extends
+                                                                                                                                                                          IBasicTreeItemWithID <KEYTYPE, COLLTYPE, ITEMTYPE>
 {
   /**
    * @return The globally unique ID of this folder. This can e.g. be an

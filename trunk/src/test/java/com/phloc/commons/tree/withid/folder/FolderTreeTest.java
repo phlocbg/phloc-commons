@@ -42,23 +42,23 @@ public final class FolderTreeTest extends AbstractPhlocTestCase
   public void testBasic ()
   {
     final ICombinator <String> aCombinator = new CombinatorStringWithSeparator ("/");
-    final FolderTree <String, Integer, Set <Integer>> ft = new FolderTree <String, Integer, Set <Integer>> (aCombinator);
+    final FolderTree <String, Integer, Set <Integer>> ft = FolderTree.<String, Integer> createForSet (aCombinator);
     assertNotNull (ft.getRootItem ());
 
-    final IFolderTreeItem <String, Integer, Set <Integer>> i1 = ft.getRootItem ()
-                                                                  .createChildItem ("id1",
-                                                                                    ContainerHelper.newSet (I1, I2, I3));
+    final FolderTreeItem <String, Integer, Set <Integer>> i1 = ft.getRootItem ()
+                                                                 .createChildItem ("id1",
+                                                                                   ContainerHelper.newSet (I1, I2, I3));
     assertNotNull (i1);
 
-    final IFolderTreeItem <String, Integer, Set <Integer>> i2 = ft.getRootItem ()
-                                                                  .createChildItem ("id1",
-                                                                                    ContainerHelper.newSet (I1, I2, I3));
+    final FolderTreeItem <String, Integer, Set <Integer>> i2 = ft.getRootItem ()
+                                                                 .createChildItem ("id1",
+                                                                                   ContainerHelper.newSet (I1, I2, I3));
     assertNotNull (i2);
     assertSame (i1, i2);
 
-    final IFolderTreeItem <String, Integer, Set <Integer>> i3 = ft.getRootItem ()
-                                                                  .createChildItem ("id3",
-                                                                                    ContainerHelper.newSet (I1, I3));
+    final FolderTreeItem <String, Integer, Set <Integer>> i3 = ft.getRootItem ()
+                                                                 .createChildItem ("id3",
+                                                                                   ContainerHelper.newSet (I1, I3));
     assertNotNull (i3);
     assertTrue (i1 != i3);
 
