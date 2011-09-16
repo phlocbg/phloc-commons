@@ -46,7 +46,7 @@ public class DefaultFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE extends 
   @Override
   protected final DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> internalCreateRoot ()
   {
-    return new DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> (this, getKeyCombinator ());
+    return new DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> (this);
   }
 
   @Override
@@ -54,6 +54,6 @@ public class DefaultFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE extends 
   protected DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> internalCreate (@Nonnull final DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> aParent,
                                                                                  @Nonnull final KEYTYPE aDataID)
   {
-    return new DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> (aParent, aDataID, getKeyCombinator ());
+    return new DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> (aParent, aDataID);
   }
 }
