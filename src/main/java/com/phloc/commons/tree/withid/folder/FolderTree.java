@@ -18,6 +18,7 @@
 package com.phloc.commons.tree.withid.folder;
 
 import java.util.Collection;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 
@@ -37,8 +38,8 @@ import com.phloc.commons.tree.withid.unique.BasicTreeWithGlobalUniqueID;
  * @author philip
  */
 public class FolderTree <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends
-                                                                                      BasicTreeWithGlobalUniqueID <KEYTYPE, COLLTYPE, IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>> implements
-                                                                                                                                                                                     IFolderTree <KEYTYPE, VALUETYPE, COLLTYPE>
+                                                                                      BasicTreeWithGlobalUniqueID <KEYTYPE, COLLTYPE, FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>> implements
+                                                                                                                                                                                    IFolderTree <KEYTYPE, VALUETYPE, COLLTYPE, FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>>
 {
   /**
    * Constructor that creates a {@link DefaultFolderTreeItemFactory} using the
@@ -58,8 +59,13 @@ public class FolderTree <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUET
    * @param aFactory
    *        The item factory to use. May not be <code>null</code>.
    */
-  public FolderTree (@Nonnull final IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE> aFactory)
+  public FolderTree (@Nonnull final IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>> aFactory)
   {
     super (aFactory);
+  }
+
+  public static <K, V> FolderTree <K, V, Set <V>> createForSet (@Nonnull final ICombinator <K> aKeyCombinator)
+  {
+    return new FolderTree <K, V, Set <V>> (aKeyCombinator);
   }
 }

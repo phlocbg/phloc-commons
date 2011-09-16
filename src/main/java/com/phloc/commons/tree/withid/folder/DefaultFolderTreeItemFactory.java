@@ -38,8 +38,8 @@ import com.phloc.commons.tree.withid.unique.AbstractBasicTreeItemWithUniqueIDFac
  *        Collection type consisting of value elements
  */
 public class DefaultFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends
-                                                                                                        AbstractBasicTreeItemWithUniqueIDFactory <KEYTYPE, COLLTYPE, IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>> implements
-                                                                                                                                                                                                                    IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE>
+                                                                                                        AbstractBasicTreeItemWithUniqueIDFactory <KEYTYPE, COLLTYPE, FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>> implements
+                                                                                                                                                                                                                   IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>>
 {
   private final ICombinator <KEYTYPE> m_aKeyCombinator;
 
@@ -55,17 +55,17 @@ public class DefaultFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE extends 
    * the item store.
    */
   @Nonnull
-  public final IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> createRoot ()
+  public final FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> createRoot ()
   {
-    final IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> aItem = new FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> (m_aKeyCombinator,
-                                                                                                                    this);
+    final FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> aItem = new FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> (m_aKeyCombinator,
+                                                                                                                   this);
     return addToItemStore (aItem.getGlobalUniqueDataID (), aItem);
   }
 
   @Override
   @Nonnull
-  protected IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> internalCreate (@Nonnull final IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> aParent,
-                                                                           @Nonnull final KEYTYPE aDataID)
+  protected FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> internalCreate (@Nonnull final FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> aParent,
+                                                                          @Nonnull final KEYTYPE aDataID)
   {
     return new FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> (m_aKeyCombinator, aParent, aDataID);
   }

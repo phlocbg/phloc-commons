@@ -38,8 +38,8 @@ import com.phloc.commons.tree.withid.BasicTreeItemWithID;
  *        Collection type consisting of value elements
  */
 public class FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends
-                                                                                          BasicTreeItemWithID <KEYTYPE, COLLTYPE, IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>> implements
-                                                                                                                                                                                 IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>
+                                                                                          BasicTreeItemWithID <KEYTYPE, COLLTYPE, FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>> implements
+                                                                                                                                                                                IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>>
 {
   // Combinator to create a global unique ID.
   private final ICombinator <KEYTYPE> m_aKeyCombinator;
@@ -53,7 +53,7 @@ public class FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VA
    *        The item factory to use.
    */
   public FolderTreeItem (@Nonnull final ICombinator <KEYTYPE> aKeyCombinator,
-                         @Nonnull final IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE> aFactory)
+                         @Nonnull final IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>> aFactory)
   {
     super (aFactory);
     if (aKeyCombinator == null)
@@ -73,7 +73,7 @@ public class FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VA
    *        The ID of the new item. May not be <code>null</code>.
    */
   public FolderTreeItem (@Nonnull final ICombinator <KEYTYPE> aKeyCombinator,
-                         @Nonnull final IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> aParent,
+                         @Nonnull final FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> aParent,
                          @Nonnull final KEYTYPE aDataID)
   {
     super (aParent, aDataID);
@@ -85,7 +85,7 @@ public class FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VA
   @Nonnull
   public final KEYTYPE getGlobalUniqueDataID ()
   {
-    final IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> aParent = getParent ();
+    final FolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> aParent = getParent ();
     return aParent == null ? getID () : m_aKeyCombinator.combine (aParent.getGlobalUniqueDataID (), getID ());
   }
 

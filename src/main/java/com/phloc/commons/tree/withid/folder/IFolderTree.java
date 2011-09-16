@@ -32,8 +32,8 @@ import com.phloc.commons.tree.withid.unique.ITreeWithGlobalUniqueID;
  * @param <COLLTYPE>
  *        Collection type consisting of value elements
  */
-public interface IFolderTree <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends
-                                                                                           ITreeWithGlobalUniqueID <KEYTYPE, COLLTYPE, IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>>
+public interface IFolderTree <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>, ITEMTYPE extends IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>> extends
+                                                                                                                                                                      ITreeWithGlobalUniqueID <KEYTYPE, COLLTYPE, ITEMTYPE>
 {
   /* empty */
 }
