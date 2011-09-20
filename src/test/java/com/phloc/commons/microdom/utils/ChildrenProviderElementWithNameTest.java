@@ -27,7 +27,6 @@ import org.junit.Test;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.impl.MicroFactory;
-import com.phloc.commons.microdom.utils.ChildrenProviderElementWithName;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 
 /**

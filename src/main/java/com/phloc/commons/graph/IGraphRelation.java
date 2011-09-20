@@ -24,6 +24,8 @@ import javax.annotation.Nullable;
  * Base interface for graph relation implementations.
  * 
  * @author philip
+ * @param <VALUETYPE>
+ *        The value type of the graph nodes.
  */
 public interface IGraphRelation <VALUETYPE> extends IGraphObject
 {

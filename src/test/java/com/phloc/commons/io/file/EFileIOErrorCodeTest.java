@@ -39,14 +39,16 @@ public final class EFileIOErrorCodeTest
     {
       assertSame (e, EFileIOErrorCode.valueOf (e.name ()));
       assertSame (e, e.getAsIOError (EFileIOOperation.COPY_DIR_RECURSIVE, new File (".")).getErrorCode ());
-      assertSame (e, e.getAsIOError (EFileIOOperation.COPY_DIR_RECURSIVE, new File ("."), new File (".")).getErrorCode ());
+      assertSame (e, e.getAsIOError (EFileIOOperation.COPY_DIR_RECURSIVE, new File ("."), new File ("."))
+                      .getErrorCode ());
       if (e.equals (EFileIOErrorCode.NO_ERROR))
         assertTrue (e.isSuccess ());
       else
         assertTrue (e.isFailure ());
     }
     assertSame (EFileIOErrorCode.SECURITY_ERROR,
-                EFileIOErrorCode.getAsIOError (EFileIOOperation.COPY_DIR_RECURSIVE, new SecurityException ()).getErrorCode ());
+                EFileIOErrorCode.getAsIOError (EFileIOOperation.COPY_DIR_RECURSIVE, new SecurityException ())
+                                .getErrorCode ());
 
     try
     {

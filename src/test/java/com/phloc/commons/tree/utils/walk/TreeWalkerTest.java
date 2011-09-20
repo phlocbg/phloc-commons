@@ -29,7 +29,6 @@ import com.phloc.commons.hierarchy.DefaultHierarchyWalkerCallback;
 import com.phloc.commons.mutable.MutableInt;
 import com.phloc.commons.tree.simple.DefaultTree;
 import com.phloc.commons.tree.simple.DefaultTreeItem;
-import com.phloc.commons.tree.utils.walk.TreeWalker;
 
 /**
  * Test class for class {@link TreeWalker}.

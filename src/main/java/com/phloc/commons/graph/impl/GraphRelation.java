@@ -31,7 +31,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author philip
  * @param <VALUETYPE>
- *        value type of the graph nodes
+ *        The value type of the graph nodes.
  */
 @Immutable
 public class GraphRelation <VALUETYPE> extends AbstractGraphObject implements IGraphRelation <VALUETYPE>

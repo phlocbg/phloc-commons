@@ -30,6 +30,8 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
  * Base interface for graph node implementations.
  * 
  * @author philip
+ * @param <VALUETYPE>
+ *        The value type of the graph nodes.
  */
 public interface IGraphNode <VALUETYPE> extends IGraphObject
 {

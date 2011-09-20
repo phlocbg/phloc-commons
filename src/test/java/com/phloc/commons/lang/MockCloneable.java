@@ -18,8 +18,8 @@
 package com.phloc.commons.lang;
 
 /**
- * This class needs to be in the same package as {@link CloneHelper} so that
- * the test works!<br>
+ * This class needs to be in the same package as {@link CloneHelper} so that the
+ * test works!<br>
  * Should invoke the {@link #clone()} method.
  * 
  * @author philip

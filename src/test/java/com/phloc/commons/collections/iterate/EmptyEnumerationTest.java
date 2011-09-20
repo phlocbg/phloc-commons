@@ -25,8 +25,6 @@ import java.util.NoSuchElementException;
 
 import org.junit.Test;
 
-import com.phloc.commons.collections.iterate.EmptyEnumeration;
-
 /**
  * Test class for class {@link EmptyEnumeration}.
  * 

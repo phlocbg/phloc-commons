@@ -27,7 +27,6 @@ import org.junit.Test;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.parent.MockHasParent;
 import com.phloc.commons.tree.utils.build.TreeWithIDBuilder;
-import com.phloc.commons.tree.utils.search.TreeWithIDSearcher;
 import com.phloc.commons.tree.withid.DefaultTreeItemWithID;
 import com.phloc.commons.tree.withid.DefaultTreeWithID;
 

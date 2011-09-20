@@ -126,7 +126,7 @@ public final class MockJAXBIssue
    * Sets the value of the title property.
    * 
    * @param value
-   *          allowed object is {@link String }
+   *        allowed object is {@link String }
    */
   public void setTitle (final BigDecimal value)
   {
@@ -147,7 +147,7 @@ public final class MockJAXBIssue
    * Sets the value of the subTitle property.
    * 
    * @param value
-   *          allowed object is {@link String }
+   *        allowed object is {@link String }
    */
   public void setSubTitle (final String value)
   {
@@ -168,7 +168,7 @@ public final class MockJAXBIssue
    * Sets the value of the dateDescription property.
    * 
    * @param value
-   *          allowed object is {@link String }
+   *        allowed object is {@link String }
    */
   public void setDateDescription (final String value)
   {
@@ -189,7 +189,7 @@ public final class MockJAXBIssue
    * Sets the value of the firstPage property.
    * 
    * @param value
-   *          allowed object is {@link MockJAXBIssue.FirstPage }
+   *        allowed object is {@link MockJAXBIssue.FirstPage }
    */
   public void setFirstPage (final MockJAXBIssue.FirstPage value)
   {
@@ -242,7 +242,7 @@ public final class MockJAXBIssue
    * Sets the value of the contentLanguage property.
    * 
    * @param value
-   *          allowed object is {@link String }
+   *        allowed object is {@link String }
    */
   public void setContentLanguage (final String value)
   {
@@ -263,7 +263,7 @@ public final class MockJAXBIssue
    * Sets the value of the menuLanguage property.
    * 
    * @param value
-   *          allowed object is {@link String }
+   *        allowed object is {@link String }
    */
   public void setMenuLanguage (final String value)
   {
@@ -284,7 +284,7 @@ public final class MockJAXBIssue
    * Sets the value of the menuLayout property.
    * 
    * @param value
-   *          allowed object is {@link String }
+   *        allowed object is {@link String }
    */
   public void setMenuLayout (final String value)
   {
@@ -337,7 +337,7 @@ public final class MockJAXBIssue
    * Sets the value of the directory property.
    * 
    * @param value
-   *          allowed object is {@link String }
+   *        allowed object is {@link String }
    */
   public void setDirectory (final String value)
   {
@@ -358,7 +358,7 @@ public final class MockJAXBIssue
    * Sets the value of the dateSort property.
    * 
    * @param value
-   *          allowed object is {@link String }
+   *        allowed object is {@link String }
    */
   public void setDateSort (final String value)
   {
@@ -379,7 +379,7 @@ public final class MockJAXBIssue
    * Sets the value of the dateFrom property.
    * 
    * @param value
-   *          allowed object is {@link String }
+   *        allowed object is {@link String }
    */
   public void setDateFrom (final String value)
   {
@@ -400,7 +400,7 @@ public final class MockJAXBIssue
    * Sets the value of the dateTo property.
    * 
    * @param value
-   *          allowed object is {@link String }
+   *        allowed object is {@link String }
    */
   public void setDateTo (final String value)
   {
@@ -468,7 +468,7 @@ public final class MockJAXBIssue
      * Sets the value of the value property.
      * 
      * @param value
-     *          allowed object is {@link String }
+     *        allowed object is {@link String }
      */
     public void setValue (final String value)
     {

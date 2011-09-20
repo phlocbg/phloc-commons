@@ -30,7 +30,6 @@ import com.phloc.commons.hierarchy.EHierarchyCallbackReturn;
 import com.phloc.commons.mutable.MutableInt;
 import com.phloc.commons.tree.simple.DefaultTree;
 import com.phloc.commons.tree.simple.DefaultTreeItem;
-import com.phloc.commons.tree.utils.walk.TreeWalkerDynamic;
 
 /**
  * Test class for class {@link TreeWalkerDynamic}.

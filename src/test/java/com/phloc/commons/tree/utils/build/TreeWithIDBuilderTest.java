@@ -33,7 +33,6 @@ import com.phloc.commons.parent.MockChildrenProvider;
 import com.phloc.commons.parent.MockHasChildren;
 import com.phloc.commons.parent.MockHasParent;
 import com.phloc.commons.parent.impl.ParentProviderHasParent;
-import com.phloc.commons.tree.utils.build.TreeWithIDBuilder;
 import com.phloc.commons.tree.withid.DefaultTreeWithID;
 
 /**
@@ -55,9 +54,9 @@ public final class TreeWithIDBuilderTest
   public void testBuildFromParent ()
   {
     final DefaultTreeWithID <String, MockHasParent> aTree = TreeWithIDBuilder.buildTree (ContainerHelper.newList (new MockHasParent ("a"),
-                                                                                                           new MockHasParent ("ab"),
-                                                                                                           new MockHasParent ("abc"),
-                                                                                                           new MockHasParent ("abd")));
+                                                                                                                  new MockHasParent ("ab"),
+                                                                                                                  new MockHasParent ("abc"),
+                                                                                                                  new MockHasParent ("abd")));
     assertNotNull (aTree.getRootItem ());
     assertNull (aTree.getRootItem ().getID ());
     assertEquals (1, aTree.getRootItem ().getChildCount ());
@@ -106,10 +105,10 @@ public final class TreeWithIDBuilderTest
   public void testBuildFromChildren ()
   {
     final DefaultTreeWithID <String, MockHasChildren> aTree = TreeWithIDBuilder.buildTree (new MockChildrenProvider (new MockHasChildren ("",
-                                                                                                                                   new MockHasChildren ("a",
-                                                                                                                                                        new MockHasChildren ("b",
-                                                                                                                                                                             new MockHasChildren ("c"),
-                                                                                                                                                                             new MockHasChildren ("d"))))));
+                                                                                                                                          new MockHasChildren ("a",
+                                                                                                                                                               new MockHasChildren ("b",
+                                                                                                                                                                                    new MockHasChildren ("c"),
+                                                                                                                                                                                    new MockHasChildren ("d"))))));
     assertNotNull (aTree.getRootItem ());
     assertNull (aTree.getRootItem ().getID ());
     assertEquals (1, aTree.getRootItem ().getChildCount ());
