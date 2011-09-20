@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.state.EChange;
-import com.phloc.commons.tree.IABasicTreeItem;
+import com.phloc.commons.tree.IBasicTreeItem;
 
 /**
  * Base interface both for normal tree items and tree items with ID.
@@ -35,7 +35,7 @@ import com.phloc.commons.tree.IABasicTreeItem;
  *        tree item implementation type
  */
 public interface ITreeItem <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> extends
-                                                                                         IABasicTreeItem <VALUETYPE, ITEMTYPE>
+                                                                                         IBasicTreeItem <VALUETYPE, ITEMTYPE>
 {
   /**
    * @return The factory used to create instances of this interface.

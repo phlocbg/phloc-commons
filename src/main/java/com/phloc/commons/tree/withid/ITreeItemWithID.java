@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 
 import com.phloc.commons.id.IHasID;
 import com.phloc.commons.state.EChange;
-import com.phloc.commons.tree.IABasicTreeItem;
+import com.phloc.commons.tree.IBasicTreeItem;
 
 /**
  * Represents a basic tree item with an ID. Never use this class directly but
@@ -39,7 +39,7 @@ import com.phloc.commons.tree.IABasicTreeItem;
  *        The implementation type.
  */
 public interface ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> extends
-                                                                                                                       IABasicTreeItem <VALUETYPE, ITEMTYPE>,
+                                                                                                                       IBasicTreeItem <VALUETYPE, ITEMTYPE>,
                                                                                                                        IHasID <KEYTYPE>
 {
   /**

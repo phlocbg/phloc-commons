@@ -21,9 +21,9 @@ import javax.annotation.Nonnull;
 
 import com.phloc.commons.compare.AbstractComparator;
 import com.phloc.commons.compare.CompareUtils;
-import com.phloc.commons.tree.IABasicTreeItem;
+import com.phloc.commons.tree.IBasicTreeItem;
 
-public class ComparatorTreeItemValueComparable <VALUETYPE extends Comparable <? super VALUETYPE>, ITEMTYPE extends IABasicTreeItem <VALUETYPE, ITEMTYPE>> extends
+public class ComparatorTreeItemValueComparable <VALUETYPE extends Comparable <? super VALUETYPE>, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> extends
                                                                                                                                                           AbstractComparator <ITEMTYPE>
 {
   @Override

@@ -42,7 +42,7 @@ public interface ITreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE exte
    * @return <code>null</code> if no such item is contained, the item otherwise.
    */
   @Nullable
-  ITEMTYPE getItemOfDataID (KEYTYPE aDataID);
+  ITEMTYPE getItemOfDataID (@Nullable KEYTYPE aDataID);
 
   /**
    * @return An unmodifiable collection that contains all items created by this

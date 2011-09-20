@@ -33,7 +33,7 @@ import com.phloc.commons.state.ESuccess;
  * @param <ITEMTYPE>
  *        tree item type
  */
-public interface IABasicTreeItem <VALUETYPE, ITEMTYPE extends IABasicTreeItem <VALUETYPE, ITEMTYPE>> extends
+public interface IBasicTreeItem <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> extends
                                                                                                      IHasParent <ITEMTYPE>,
                                                                                                      IHasChildrenSorted <ITEMTYPE>
 {

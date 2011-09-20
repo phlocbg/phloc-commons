@@ -22,7 +22,6 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
-import com.phloc.commons.tree.IBasicTree;
 
 /**
  * Base class for a tree having items with IDs. This implementation is
@@ -39,7 +38,7 @@ import com.phloc.commons.tree.IBasicTree;
  */
 @NotThreadSafe
 public class BasicTreeWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> implements
-                                                                                                                   IBasicTree <ITEMTYPE>
+                                                                                                                   ITreeWithID <KEYTYPE, VALUETYPE, ITEMTYPE>
 {
   // Root item.
   private final ITEMTYPE m_aRoot;
