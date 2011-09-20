@@ -37,11 +37,11 @@ import com.phloc.commons.state.ESuccess;
 import com.phloc.commons.string.ToStringGenerator;
 
 @NotThreadSafe
-public class BasicTreeItem <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> implements
-                                                                                              IBasicTreeItem <VALUETYPE, ITEMTYPE>
+public class BasicTreeItem <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> implements
+                                                                                         ITreeItem <VALUETYPE, ITEMTYPE>
 {
   // item factory
-  private final IBasicTreeItemFactory <VALUETYPE, ITEMTYPE> m_aFactory;
+  private final ITreeItemFactory <VALUETYPE, ITEMTYPE> m_aFactory;
 
   // parent tree item
   private ITEMTYPE m_aParent;
@@ -55,7 +55,7 @@ public class BasicTreeItem <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYP
   /**
    * Constructor for root object.
    */
-  public BasicTreeItem (@Nonnull final IBasicTreeItemFactory <VALUETYPE, ITEMTYPE> aFactory)
+  public BasicTreeItem (@Nonnull final ITreeItemFactory <VALUETYPE, ITEMTYPE> aFactory)
   {
     if (aFactory == null)
       throw new NullPointerException ("factory");
@@ -86,7 +86,7 @@ public class BasicTreeItem <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYP
   }
 
   @Nonnull
-  public final IBasicTreeItemFactory <VALUETYPE, ITEMTYPE> getFactory ()
+  public final ITreeItemFactory <VALUETYPE, ITEMTYPE> getFactory ()
   {
     return m_aFactory;
   }
@@ -185,7 +185,7 @@ public class BasicTreeItem <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYP
     if (aParent == null)
       throw new NullPointerException ("parent");
 
-    IBasicTreeItem <VALUETYPE, ITEMTYPE> aCur = this;
+    ITreeItem <VALUETYPE, ITEMTYPE> aCur = this;
     while (aCur != null)
     {
       // Do not use "equals" because it recursively compares all children!

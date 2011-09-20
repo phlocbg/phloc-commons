@@ -51,11 +51,11 @@ import com.phloc.commons.string.ToStringGenerator;
  *        tree item implementation type
  */
 @NotThreadSafe
-public class BasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends IBasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> implements
-                                                                                                                            IBasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>
+public class BasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> implements
+                                                                                                                       ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>
 {
   // item factory
-  private final IBasicTreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE> m_aFactory;
+  private final ITreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE> m_aFactory;
 
   // parent tree item
   private ITEMTYPE m_aParent;
@@ -73,7 +73,7 @@ public class BasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends IBasicTre
   /**
    * Constructor for root object
    */
-  public BasicTreeItemWithID (@Nonnull final IBasicTreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE> aFactory)
+  public BasicTreeItemWithID (@Nonnull final ITreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE> aFactory)
   {
     this (aFactory, null);
   }
@@ -81,7 +81,7 @@ public class BasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends IBasicTre
   /**
    * Constructor for root object
    */
-  public BasicTreeItemWithID (@Nonnull final IBasicTreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE> aFactory,
+  public BasicTreeItemWithID (@Nonnull final ITreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE> aFactory,
                               @Nullable final KEYTYPE aDataID)
   {
     if (aFactory == null)
@@ -115,7 +115,7 @@ public class BasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends IBasicTre
   }
 
   @Nonnull
-  public final IBasicTreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE> getFactory ()
+  public final ITreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE> getFactory ()
   {
     return m_aFactory;
   }
@@ -265,7 +265,7 @@ public class BasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends IBasicTre
     if (aParent == null)
       throw new NullPointerException ("parent");
 
-    IBasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE> aCur = this;
+    ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE> aCur = this;
     while (aCur != null)
     {
       // Do not use "equals" because it recursively compares all children!

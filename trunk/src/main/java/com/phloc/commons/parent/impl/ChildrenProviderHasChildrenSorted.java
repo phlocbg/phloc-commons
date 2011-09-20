@@ -36,8 +36,8 @@ import com.phloc.commons.parent.IHasChildrenSorted;
  */
 @Immutable
 public final class ChildrenProviderHasChildrenSorted <CHILDTYPE extends IHasChildrenSorted <CHILDTYPE>> extends
-                                                                                        ChildrenProviderHasChildren <CHILDTYPE> implements
-                                                                                                                       IChildrenProviderSorted <CHILDTYPE>
+                                                                                                        ChildrenProviderHasChildren <CHILDTYPE> implements
+                                                                                                                                               IChildrenProviderSorted <CHILDTYPE>
 {
   @Override
   @Nullable

@@ -22,7 +22,8 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public final class UnidirectionalConverterMapGet <KEYTYPE, VALUETYPE> implements IUnidirectionalConverter <KEYTYPE, VALUETYPE>
+public final class UnidirectionalConverterMapGet <KEYTYPE, VALUETYPE> implements
+                                                                      IUnidirectionalConverter <KEYTYPE, VALUETYPE>
 {
   private final Map <KEYTYPE, VALUETYPE> m_aMap;
 

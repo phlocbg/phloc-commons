@@ -33,7 +33,8 @@ import com.phloc.commons.parent.IHasChildren;
  * @param <CHILDTYPE>
  *        The data type of the child objects.
  */
-public class ChildrenProviderHasChildren <CHILDTYPE extends IHasChildren <CHILDTYPE>> implements IChildrenProvider <CHILDTYPE>
+public class ChildrenProviderHasChildren <CHILDTYPE extends IHasChildren <CHILDTYPE>> implements
+                                                                                      IChildrenProvider <CHILDTYPE>
 {
   public final boolean hasChildren (@Nullable final CHILDTYPE aCurrent)
   {

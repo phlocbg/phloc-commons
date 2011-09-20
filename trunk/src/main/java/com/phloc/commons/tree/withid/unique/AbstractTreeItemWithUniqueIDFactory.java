@@ -30,7 +30,7 @@ import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
-import com.phloc.commons.tree.withid.IBasicTreeItemWithID;
+import com.phloc.commons.tree.withid.ITreeItemWithID;
 
 /**
  * An abstract tree item factory that maintains a unique ID over all items. It
@@ -39,8 +39,8 @@ import com.phloc.commons.tree.withid.IBasicTreeItemWithID;
  * @author philip
  */
 @NotThreadSafe
-public abstract class AbstractTreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE extends IBasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> implements
-                                                                                                                                                     ITreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE>
+public abstract class AbstractTreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> implements
+                                                                                                                                                ITreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE>
 {
   private final Map <KEYTYPE, ITEMTYPE> m_aItemStore;
 

@@ -33,7 +33,8 @@ import com.phloc.commons.compare.ESortOrder;
  * @param <DATATYPE>
  *        The type of elements to be compared.
  */
-public final class ComparatorHasDisplayName <DATATYPE extends IHasDisplayName> extends AbstractCollationComparator <DATATYPE>
+public final class ComparatorHasDisplayName <DATATYPE extends IHasDisplayName> extends
+                                                                               AbstractCollationComparator <DATATYPE>
 {
   /**
    * Comparator with default sort order but special collation locale.

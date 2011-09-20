@@ -31,7 +31,8 @@ import javax.annotation.concurrent.NotThreadSafe;
  *        The key type
  */
 @NotThreadSafe
-public final class IDProviderFromHasID <VALUETYPE extends IHasID <IDTYPE>, IDTYPE> implements IIDProvider <VALUETYPE, IDTYPE>
+public final class IDProviderFromHasID <VALUETYPE extends IHasID <IDTYPE>, IDTYPE> implements
+                                                                                   IIDProvider <VALUETYPE, IDTYPE>
 {
   @Nonnull
   public IDTYPE getID (@Nonnull final VALUETYPE aObject)

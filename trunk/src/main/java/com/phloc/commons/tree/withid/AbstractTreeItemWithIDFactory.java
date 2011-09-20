@@ -33,8 +33,8 @@ import com.phloc.commons.annotations.OverrideOnDemand;
  *        tree item implementation type
  */
 @NotThreadSafe
-public abstract class AbstractTreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE extends IBasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> implements
-                                                                                                                                               IBasicTreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE>
+public abstract class AbstractTreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> implements
+                                                                                                                                          ITreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE>
 {
   @OverrideOnDemand
   public void onRemoveItem (final ITEMTYPE aItem)

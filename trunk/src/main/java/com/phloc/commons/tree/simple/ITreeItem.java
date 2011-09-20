@@ -34,14 +34,14 @@ import com.phloc.commons.tree.IABasicTreeItem;
  * @param <ITEMTYPE>
  *        tree item implementation type
  */
-public interface IBasicTreeItem <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> extends
-                                                                                                   IABasicTreeItem <VALUETYPE, ITEMTYPE>
+public interface ITreeItem <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> extends
+                                                                                         IABasicTreeItem <VALUETYPE, ITEMTYPE>
 {
   /**
    * @return The factory used to create instances of this interface.
    */
   @Nonnull
-  IBasicTreeItemFactory <VALUETYPE, ITEMTYPE> getFactory ();
+  ITreeItemFactory <VALUETYPE, ITEMTYPE> getFactory ();
 
   /**
    * Add an existing child to this tree item. Use only internally!

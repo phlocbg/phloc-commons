@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
 import com.phloc.commons.hierarchy.DefaultHierarchyWalkerDynamicCallback;
 import com.phloc.commons.hierarchy.EHierarchyCallbackReturn;
 import com.phloc.commons.mutable.MutableInt;
+import com.phloc.commons.tree.withid.utils.TreeWalkerDynamicWithID;
 
 /**
  * Test class for class {@link TreeWalkerDynamicWithID}.

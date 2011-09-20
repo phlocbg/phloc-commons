@@ -30,8 +30,8 @@ import org.junit.Test;
 import com.phloc.commons.hierarchy.DefaultHierarchyWalkerCallback;
 import com.phloc.commons.io.file.filter.FileFilterFileFromFilenameFilter;
 import com.phloc.commons.io.file.filter.FilenameFilterFactory;
-import com.phloc.commons.tree.withid.TreeWalkerWithID;
 import com.phloc.commons.tree.withid.folder.DefaultFolderTreeItem;
+import com.phloc.commons.tree.withid.utils.TreeWalkerWithID;
 
 /**
  * Test class for class {@link FileSystemFolderTree}.

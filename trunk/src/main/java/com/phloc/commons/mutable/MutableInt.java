@@ -28,7 +28,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Object wrapper around an int so that it can be passed a final object but is
  * mutable.
- *
+ * 
  * @author philip
  */
 @NotThreadSafe
@@ -48,7 +48,7 @@ public final class MutableInt implements Comparable <MutableInt>, ICloneable <Mu
 
   /**
    * Initialize with a certain value.
-   *
+   * 
    * @param nValue
    *        The value to be used.
    */
@@ -70,7 +70,7 @@ public final class MutableInt implements Comparable <MutableInt>, ICloneable <Mu
 
   /**
    * Increment by 1 and return the modified value.
-   *
+   * 
    * @return The by 1 incremented value.
    */
   public int inc ()

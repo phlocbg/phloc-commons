@@ -22,10 +22,10 @@ import java.util.Comparator;
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.compare.AbstractComparator;
-import com.phloc.commons.tree.withid.IBasicTreeItemWithID;
+import com.phloc.commons.tree.withid.ITreeItemWithID;
 
-public final class ComparatorTreeItemKey <KEYTYPE, VALUETYPE, ITEMTYPE extends IBasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> extends
-                                                                                                                                    AbstractComparator <ITEMTYPE>
+public final class ComparatorTreeItemKey <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> extends
+                                                                                                                               AbstractComparator <ITEMTYPE>
 {
   private final Comparator <? super KEYTYPE> m_aKeyComparator;
 

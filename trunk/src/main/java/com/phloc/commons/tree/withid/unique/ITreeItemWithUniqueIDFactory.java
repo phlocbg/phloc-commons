@@ -23,16 +23,16 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.annotations.ReturnsImmutableObject;
-import com.phloc.commons.tree.withid.IBasicTreeItemWithID;
-import com.phloc.commons.tree.withid.IBasicTreeItemWithIDFactory;
+import com.phloc.commons.tree.withid.ITreeItemWithID;
+import com.phloc.commons.tree.withid.ITreeItemWithIDFactory;
 
 /**
  * An abstract tree item factory that maintains a unique ID over all items!
  * 
  * @author philip
  */
-public interface ITreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE extends IBasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> extends
-                                                                                                                                         IBasicTreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE>
+public interface ITreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> extends
+                                                                                                                                    ITreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE>
 {
   /**
    * Try to retrieve the stored item with the given ID.

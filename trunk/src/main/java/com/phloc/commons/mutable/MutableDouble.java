@@ -29,7 +29,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Object wrapper around a long so that it can be passed a final object but is
  * mutable.
- *
+ * 
  * @author philip
  */
 @NotThreadSafe
@@ -65,7 +65,7 @@ public final class MutableDouble implements Comparable <MutableDouble>, ICloneab
 
   /**
    * Increment by 1 and return the modified value.
-   *
+   * 
    * @return The by 1 incremented value.
    */
   public double inc ()

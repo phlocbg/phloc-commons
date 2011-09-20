@@ -27,7 +27,7 @@ public class DefaultTreeItemWithID <KEYTYPE, VALUETYPE> extends
   /**
    * Constructor for root object
    */
-  public DefaultTreeItemWithID (@Nonnull final IBasicTreeItemWithIDFactory <KEYTYPE, VALUETYPE, DefaultTreeItemWithID <KEYTYPE, VALUETYPE>> aFactory)
+  public DefaultTreeItemWithID (@Nonnull final ITreeItemWithIDFactory <KEYTYPE, VALUETYPE, DefaultTreeItemWithID <KEYTYPE, VALUETYPE>> aFactory)
   {
     super (aFactory);
   }

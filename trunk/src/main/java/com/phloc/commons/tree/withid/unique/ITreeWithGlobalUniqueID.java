@@ -26,7 +26,7 @@ import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.parent.IChildrenProviderWithID;
 import com.phloc.commons.parent.IChildrenProviderWithUniqueID;
 import com.phloc.commons.tree.IBasicTree;
-import com.phloc.commons.tree.withid.IBasicTreeItemWithID;
+import com.phloc.commons.tree.withid.ITreeItemWithID;
 
 /**
  * A specialized version of the tree, where each item is required to have a
@@ -41,13 +41,13 @@ import com.phloc.commons.tree.withid.IBasicTreeItemWithID;
  * @param <ITEMTYPE>
  *        The type of the tree item that will be stored in this tree.
  */
-public interface ITreeWithGlobalUniqueID <KEYTYPE, VALUETYPE, ITEMTYPE extends IBasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> extends
-                                                                                                                                    IBasicTree <ITEMTYPE>,
-                                                                                                                                    IChildrenProviderWithID <KEYTYPE, ITEMTYPE>,
-                                                                                                                                    IChildrenProviderWithUniqueID <KEYTYPE, ITEMTYPE>
+public interface ITreeWithGlobalUniqueID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> extends
+                                                                                                                               IBasicTree <ITEMTYPE>,
+                                                                                                                               IChildrenProviderWithID <KEYTYPE, ITEMTYPE>,
+                                                                                                                               IChildrenProviderWithUniqueID <KEYTYPE, ITEMTYPE>
 {
   /**
-   * Get the {@link IBasicTreeItemWithID} that corresponds to the given ID.
+   * Get the {@link ITreeItemWithID} that corresponds to the given ID.
    * 
    * @param aDataID
    *        The ID of the tree item to search.

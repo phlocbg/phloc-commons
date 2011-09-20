@@ -42,7 +42,8 @@ public final class ReadonlyPair <DATA1TYPE, DATA2TYPE> implements IReadonlyPair 
   private final DATA1TYPE m_aFirst;
   private final DATA2TYPE m_aSecond;
 
-  public <T2 extends DATA1TYPE, U2 extends DATA2TYPE> ReadonlyPair (@Nullable final T2 aFirst, @Nullable final U2 aSecond)
+  public <T2 extends DATA1TYPE, U2 extends DATA2TYPE> ReadonlyPair (@Nullable final T2 aFirst,
+                                                                    @Nullable final U2 aSecond)
   {
     m_aFirst = aFirst;
     m_aSecond = aSecond;

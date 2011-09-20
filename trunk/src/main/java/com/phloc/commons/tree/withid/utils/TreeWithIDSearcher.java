@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.tree.withid;
+package com.phloc.commons.tree.withid.utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +27,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.hierarchy.DefaultHierarchyWalkerCallback;
 import com.phloc.commons.tree.IBasicTree;
+import com.phloc.commons.tree.withid.ITreeItemWithID;
 
 /**
  * A utility class that helps searching items within trees.
@@ -60,8 +61,8 @@ public final class TreeWithIDSearcher
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static <KEYTYPE, VALUETYPE, ITEMTYPE extends IBasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> List <ITEMTYPE> findAllItemsWithIDRecursive (final IBasicTree <ITEMTYPE> aTree,
-                                                                                                                                                        final KEYTYPE aSearchID)
+  public static <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> List <ITEMTYPE> findAllItemsWithIDRecursive (final IBasicTree <ITEMTYPE> aTree,
+                                                                                                                                                   final KEYTYPE aSearchID)
   {
     return findAllItemsWithIDRecursive (aTree.getRootItem (), aSearchID);
   }
@@ -83,8 +84,8 @@ public final class TreeWithIDSearcher
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static <KEYTYPE, VALUETYPE, ITEMTYPE extends IBasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> List <ITEMTYPE> findAllItemsWithIDRecursive (final ITEMTYPE aTreeItem,
-                                                                                                                                                        final KEYTYPE aSearchID)
+  public static <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> List <ITEMTYPE> findAllItemsWithIDRecursive (final ITEMTYPE aTreeItem,
+                                                                                                                                                   final KEYTYPE aSearchID)
   {
     final List <ITEMTYPE> aRetList = new ArrayList <ITEMTYPE> ();
     TreeWalkerWithID.walkSubTree (aTreeItem, new DefaultHierarchyWalkerCallback <ITEMTYPE> ()

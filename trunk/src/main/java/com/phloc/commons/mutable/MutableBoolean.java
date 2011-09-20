@@ -28,7 +28,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Object wrapper around a boolean so that it can be passed a final object but
  * is mutable.
- *
+ * 
  * @author philip
  */
 @NotThreadSafe

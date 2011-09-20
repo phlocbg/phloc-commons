@@ -38,7 +38,9 @@ import com.phloc.commons.state.ESuccess;
  * @param <DATATYPE>
  *        The type of the objects in the queue.
  */
-public abstract class AbstractConcurrentCollector <DATATYPE> implements INonThrowingRunnable, IConcurrentCollector <DATATYPE>
+public abstract class AbstractConcurrentCollector <DATATYPE> implements
+                                                             INonThrowingRunnable,
+                                                             IConcurrentCollector <DATATYPE>
 {
   /**
    * Default maximum queue size

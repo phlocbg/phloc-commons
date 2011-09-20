@@ -28,8 +28,6 @@ import org.junit.Test;
 import com.phloc.commons.compare.ComparatorString;
 import com.phloc.commons.tree.simple.DefaultTree;
 import com.phloc.commons.tree.simple.DefaultTreeItem;
-import com.phloc.commons.tree.withid.DefaultTreeItemWithID;
-import com.phloc.commons.tree.withid.DefaultTreeWithID;
 
 /**
  * Test class for class {@link TreeSorter}
@@ -67,53 +65,5 @@ public final class TreeSorterTest
     assertEquals ("sxs", i1.getChildAtIndex (0).getData ());
     assertEquals ("System32", i1.getChildAtIndex (1).getData ());
     assertEquals ("temp", i1.getChildAtIndex (2).getData ());
-  }
-
-  @Test
-  public void testTreeWithIDValue ()
-  {
-    final DefaultTreeWithID <String, String> aTree = new DefaultTreeWithID <String, String> ();
-    assertNotNull (aTree.getRootItem ());
-    final DefaultTreeItemWithID <String, String> i1 = aTree.getRootItem ().createChildItem ("r1", "Windows");
-    i1.createChildItem ("w1", "sxs");
-    i1.createChildItem ("w2", "temp");
-    i1.createChildItem ("w3", "System32");
-    final DefaultTreeItemWithID <String, String> i2 = aTree.getRootItem ().createChildItem ("r2", "Program Files");
-    i2.createChildItem ("p1", "Eclipse");
-    i2.createChildItem ("p2", "Apache Software Foundation");
-
-    // Sort all items by value
-    TreeSorter.sortByValues (aTree, new ComparatorString ());
-
-    assertEquals (2, aTree.getRootItem ().getChildCount ());
-    List <? extends DefaultTreeItemWithID <String, String>> aChildren = aTree.getRootItem ().getChildren ();
-    assertSame (i2, aChildren.get (0));
-    assertSame (i1, aChildren.get (1));
-    // Test Apache (children must also be sorted)
-    assertEquals (2, i2.getChildCount ());
-    assertEquals ("Apache Software Foundation", i2.getChildAtIndex (0).getData ());
-    assertEquals ("Eclipse", i2.getChildAtIndex (1).getData ());
-    // Test Windows
-    assertEquals (3, i1.getChildCount ());
-    assertEquals ("sxs", i1.getChildAtIndex (0).getData ());
-    assertEquals ("System32", i1.getChildAtIndex (1).getData ());
-    assertEquals ("temp", i1.getChildAtIndex (2).getData ());
-
-    // Sort all items by keys
-    TreeSorter.sortByKeys (aTree, new ComparatorString ());
-
-    assertEquals (2, aTree.getRootItem ().getChildCount ());
-    aChildren = aTree.getRootItem ().getChildren ();
-    assertSame (i1, aChildren.get (0));
-    assertSame (i2, aChildren.get (1));
-    // Test Windows
-    assertEquals (3, i1.getChildCount ());
-    assertEquals ("sxs", i1.getChildAtIndex (0).getData ());
-    assertEquals ("temp", i1.getChildAtIndex (1).getData ());
-    assertEquals ("System32", i1.getChildAtIndex (2).getData ());
-    // Test Apache (children must also be sorted)
-    assertEquals (2, i2.getChildCount ());
-    assertEquals ("Eclipse", i2.getChildAtIndex (0).getData ());
-    assertEquals ("Apache Software Foundation", i2.getChildAtIndex (1).getData ());
   }
 }

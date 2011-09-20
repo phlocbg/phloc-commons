@@ -21,8 +21,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 /**
- * Implementation of the {@link IBasicTreeItemFactory} for
- * {@link DefaultTreeItem} implementation
+ * Implementation of the {@link ITreeItemFactory} for {@link DefaultTreeItem}
+ * implementation
  * 
  * @author philip
  * @param <VALUETYPE>

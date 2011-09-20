@@ -164,7 +164,8 @@ public final class MicroTypeConverterRegistry
   }
 
   @Nullable
-  public static <DSTTYPE> DSTTYPE convertToNative (@Nullable final IMicroElement aElement, @Nonnull final Class <DSTTYPE> aDstClass) throws TypeConverterException
+  public static <DSTTYPE> DSTTYPE convertToNative (@Nullable final IMicroElement aElement,
+                                                   @Nonnull final Class <DSTTYPE> aDstClass) throws TypeConverterException
   {
     if (aDstClass == null)
       throw new NullPointerException ("destinationClass");

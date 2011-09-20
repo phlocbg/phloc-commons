@@ -36,7 +36,7 @@ public class DefaultTree <VALUETYPE> extends BasicTree <VALUETYPE, DefaultTreeIt
     this (new DefaultTreeItemFactory <VALUETYPE> ());
   }
 
-  public DefaultTree (@Nonnull final IBasicTreeItemFactory <VALUETYPE, DefaultTreeItem <VALUETYPE>> aFactory)
+  public DefaultTree (@Nonnull final ITreeItemFactory <VALUETYPE, DefaultTreeItem <VALUETYPE>> aFactory)
   {
     super (aFactory);
   }

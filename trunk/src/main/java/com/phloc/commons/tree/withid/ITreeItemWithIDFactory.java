@@ -31,9 +31,9 @@ import com.phloc.commons.factory.IHierarchicalRootFactory;
  * @param <VALUETYPE>
  *        The value type to be contained in tree items.
  */
-public interface IBasicTreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE extends IBasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> extends
-                                                                                                                                        IHierarchicalFactoryWithParameter <ITEMTYPE, KEYTYPE>,
-                                                                                                                                        IHierarchicalRootFactory <ITEMTYPE>
+public interface ITreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> extends
+                                                                                                                              IHierarchicalFactoryWithParameter <ITEMTYPE, KEYTYPE>,
+                                                                                                                              IHierarchicalRootFactory <ITEMTYPE>
 {
   /**
    * To be called once a tree item is removed from the owning tree. This method

@@ -29,7 +29,7 @@ import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.tree.withid.BasicTreeWithID;
-import com.phloc.commons.tree.withid.IBasicTreeItemWithID;
+import com.phloc.commons.tree.withid.ITreeItemWithID;
 
 /**
  * A managed tree is a specialized version of the tree, where each item is
@@ -43,9 +43,9 @@ import com.phloc.commons.tree.withid.IBasicTreeItemWithID;
  *        The type of the elements contained in the tree
  */
 @NotThreadSafe
-public class BasicTreeWithGlobalUniqueID <KEYTYPE, VALUETYPE, ITEMTYPE extends IBasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> extends
-                                                                                                                                    BasicTreeWithID <KEYTYPE, VALUETYPE, ITEMTYPE> implements
-                                                                                                                                                                                  ITreeWithGlobalUniqueID <KEYTYPE, VALUETYPE, ITEMTYPE>
+public class BasicTreeWithGlobalUniqueID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> extends
+                                                                                                                               BasicTreeWithID <KEYTYPE, VALUETYPE, ITEMTYPE> implements
+                                                                                                                                                                             ITreeWithGlobalUniqueID <KEYTYPE, VALUETYPE, ITEMTYPE>
 {
   private final ITreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE> m_aFactory;
 

@@ -37,7 +37,7 @@ import com.phloc.commons.regex.RegExHelper;
 
 /**
  * Contains a basic set of MimeType determination method.
- *
+ * 
  * @author philip
  */
 @Immutable
@@ -99,7 +99,7 @@ public final class MimeTypeDeterminator
   /**
    * Try to determine the MIME type from the given byte array. The array should
    * have at least 8 characters to perform all known tests.
-   *
+   * 
    * @param b
    *        The byte array. to parse.
    * @return {@link CMimeType#APPLICATION_OCTET_STREAM} if no specific MIME type

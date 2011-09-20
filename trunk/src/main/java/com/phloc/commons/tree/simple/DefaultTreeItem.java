@@ -26,7 +26,7 @@ public class DefaultTreeItem <VALUETYPE> extends BasicTreeItem <VALUETYPE, Defau
   /**
    * Constructor for root object.
    */
-  public DefaultTreeItem (@Nonnull final IBasicTreeItemFactory <VALUETYPE, DefaultTreeItem <VALUETYPE>> aFactory)
+  public DefaultTreeItem (@Nonnull final ITreeItemFactory <VALUETYPE, DefaultTreeItem <VALUETYPE>> aFactory)
   {
     super (aFactory);
   }

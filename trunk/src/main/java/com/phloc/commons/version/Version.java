@@ -34,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * This class represents a single version object. See OSGi v4 reference 3.2.4
  * Needs to be public for the JUnit test.
- *
+ * 
  * @author philip
  */
 @Immutable
@@ -57,7 +57,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
 
   /**
    * Create a new version with major version only.
-   *
+   * 
    * @param nMajor
    *        major version
    * @throws IllegalArgumentException
@@ -70,7 +70,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
 
   /**
    * Create a new version with major and minor version only.
-   *
+   * 
    * @param nMajor
    *        major version
    * @param nMinor
@@ -86,7 +86,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
   /**
    * Create a new version with major, minor and micro version number. The
    * qualifier remains null.
-   *
+   * 
    * @param nMajor
    *        major version
    * @param nMinor
@@ -111,7 +111,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
 
   /**
    * Create a new version with 3 integer values and a qualifier.
-   *
+   * 
    * @param nMajor
    *        major version
    * @param nMinor
@@ -154,7 +154,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
    * minor ::= number<br>
    * micro ::= number<br>
    * qualifier ::= ( alphanum | '_' | '-' )+
-   *
+   * 
    * @param sVersionString
    *        the version string to be interpreted as a version
    * @throws IllegalArgumentException
@@ -220,7 +220,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
 
   /**
    * Compares two Version objects.
-   *
+   * 
    * @param rhs
    *        the version to compare to
    * @return &lt; 0 if this is less than rhs; &gt; 0 if this is greater than

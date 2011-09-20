@@ -29,9 +29,9 @@ import com.phloc.commons.factory.IHierarchicalRootFactory;
  * @param <ITEMTYPE>
  *        item implementation type
  */
-public interface IBasicTreeItemFactory <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> extends
-                                                                                                          IHierarchicalFactory <ITEMTYPE>,
-                                                                                                          IHierarchicalRootFactory <ITEMTYPE>
+public interface ITreeItemFactory <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> extends
+                                                                                                IHierarchicalFactory <ITEMTYPE>,
+                                                                                                IHierarchicalRootFactory <ITEMTYPE>
 {
   /* empty */
 }

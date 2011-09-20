@@ -44,7 +44,6 @@ public enum EFileIOErrorCode implements ISuccessIndicator
   /** An object's parent could not be retrieved. */
   OBJECT_HAS_NO_PARENT;
 
-
   @Nonnull
   public FileIOError getAsIOError (@Nonnull final EFileIOOperation eOperation, @Nonnull final File aFile)
   {
@@ -82,7 +81,7 @@ public enum EFileIOErrorCode implements ISuccessIndicator
   /**
    * Static method to create a {@link FileIOError} for a
    * {@link SecurityException}.
-   *
+   * 
    * @return The non-<code>null</code> {@link FileIOError}.
    */
   @Nonnull
