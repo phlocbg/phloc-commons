@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.graph.simple;
+package com.phloc.commons.graph.impl;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -23,7 +23,6 @@ import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.graph.IGraphNode;
 import com.phloc.commons.graph.IGraphRelation;
-import com.phloc.commons.graph.impl.AbstractGraphObject;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -103,45 +102,5 @@ public class GraphRelation <VALUETYPE> extends AbstractGraphObject implements IG
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ()).append ("from", m_aFrom).append ("to", m_aTo).toString ();
-  }
-
-  /**
-   * Shortcut factory method to spare using the generics parameter manually.
-   * 
-   * @param <VALUETYPE>
-   *        Graph relation element type
-   * @param aFrom
-   *        The from node. May not be <code>null</code>.
-   * @param aTo
-   *        The to node. May not be <code>null</code>.
-   * @return The created graph relation and never <code>null</code>.
-   */
-  @Nonnull
-  public static <VALUETYPE> GraphRelation <VALUETYPE> create (@Nonnull final IGraphNode <VALUETYPE> aFrom,
-                                                              @Nonnull final IGraphNode <VALUETYPE> aTo)
-  {
-    return new GraphRelation <VALUETYPE> (aFrom, aTo);
-  }
-
-  /**
-   * Shortcut factory method to spare using the generics parameter manually.
-   * 
-   * @param <VALUETYPE>
-   *        Graph relation element type
-   * @param sID
-   *        The ID of the relation to be created. May be <code>null</code>. If
-   *        <code>null</code> than a new unique ID is created.
-   * @param aFrom
-   *        The from node. May not be <code>null</code>.
-   * @param aTo
-   *        The to node. May not be <code>null</code>.
-   * @return The created graph relation and never <code>null</code>.
-   */
-  @Nonnull
-  public static <VALUETYPE> GraphRelation <VALUETYPE> create (@Nullable final String sID,
-                                                              @Nonnull final IGraphNode <VALUETYPE> aFrom,
-                                                              @Nonnull final IGraphNode <VALUETYPE> aTo)
-  {
-    return new GraphRelation <VALUETYPE> (sID, aFrom, aTo);
   }
 }

@@ -48,20 +48,8 @@ public interface IGraphNode <VALUETYPE> extends IGraphObject
    * 
    * @param aRelation
    *        The relation to be added. May not be <code>null</code>.
-   * @return The passed relation
    */
-  @Nonnull
-  IGraphRelation <VALUETYPE> addIncomingRelation (@Nonnull IGraphRelation <VALUETYPE> aRelation);
-
-  /**
-   * Create a new incoming relation from the passed node to this node.
-   * 
-   * @param aFromNode
-   *        The source node. May not be <code>null</code>.
-   * @return The created relation.
-   */
-  @Nonnull
-  IGraphRelation <VALUETYPE> addIncomingRelation (@Nonnull IGraphNode <VALUETYPE> aFromNode);
+  void addIncomingRelation (@Nonnull IGraphRelation <VALUETYPE> aRelation);
 
   boolean hasIncomingRelations ();
 
@@ -87,20 +75,8 @@ public interface IGraphNode <VALUETYPE> extends IGraphObject
    * 
    * @param aRelation
    *        The relation to be added. May not be <code>null</code>.
-   * @return The passed relation
    */
-  @Nonnull
-  IGraphRelation <VALUETYPE> addOutgoingRelation (@Nonnull IGraphRelation <VALUETYPE> aRelation);
-
-  /**
-   * Create a new outgoing relation from this node to the passed node.
-   * 
-   * @param aToNode
-   *        The destination node. May not be <code>null</code>.
-   * @return The created relation.
-   */
-  @Nonnull
-  IGraphRelation <VALUETYPE> addOutgoingRelation (@Nonnull IGraphNode <VALUETYPE> aToNode);
+  void addOutgoingRelation (@Nonnull IGraphRelation <VALUETYPE> aRelation);
 
   boolean hasOutgoingRelations ();
 

@@ -41,7 +41,7 @@ import com.phloc.commons.graph.IGraphRelation;
  *        Value type of the graph to iterate
  */
 @NotThreadSafe
-public final class GraphIterator <VALUETYPE> implements IIterableIterator <IGraphNode <VALUETYPE>>
+public final class GraphIteratorForward <VALUETYPE> implements IIterableIterator <IGraphNode <VALUETYPE>>
 {
   /**
    * This class represents a node in the current iteration process. It is
@@ -106,13 +106,13 @@ public final class GraphIterator <VALUETYPE> implements IIterableIterator <IGrap
    */
   private boolean m_bHasCycles = false;
 
-  public GraphIterator (@Nonnull final IGraphNode <VALUETYPE> aStartNode)
+  public GraphIteratorForward (@Nonnull final IGraphNode <VALUETYPE> aStartNode)
   {
     this (aStartNode, null);
   }
 
-  public GraphIterator (@Nonnull final IGraphNode <VALUETYPE> aStartNode,
-                        @Nullable final IFilter <IGraphRelation <VALUETYPE>> aRelationFilter)
+  public GraphIteratorForward (@Nonnull final IGraphNode <VALUETYPE> aStartNode,
+                               @Nullable final IFilter <IGraphRelation <VALUETYPE>> aRelationFilter)
   {
     if (aStartNode == null)
       throw new NullPointerException ("startNode");
@@ -222,9 +222,9 @@ public final class GraphIterator <VALUETYPE> implements IIterableIterator <IGrap
    * @return The created graph node iterator and never <code>null</code>.
    */
   @Nonnull
-  public static <VALUETYPE> GraphIterator <VALUETYPE> create (@Nonnull final IGraphNode <VALUETYPE> aStartNode)
+  public static <VALUETYPE> GraphIteratorForward <VALUETYPE> create (@Nonnull final IGraphNode <VALUETYPE> aStartNode)
   {
-    return new GraphIterator <VALUETYPE> (aStartNode);
+    return new GraphIteratorForward <VALUETYPE> (aStartNode);
   }
 
   /**
@@ -240,9 +240,9 @@ public final class GraphIterator <VALUETYPE> implements IIterableIterator <IGrap
    * @return The created graph node iterator and never <code>null</code>.
    */
   @Nonnull
-  public static <VALUETYPE> GraphIterator <VALUETYPE> create (@Nonnull final IGraphNode <VALUETYPE> aStartNode,
-                                                              @Nullable final IFilter <IGraphRelation <VALUETYPE>> aRelationFilter)
+  public static <VALUETYPE> GraphIteratorForward <VALUETYPE> create (@Nonnull final IGraphNode <VALUETYPE> aStartNode,
+                                                                     @Nullable final IFilter <IGraphRelation <VALUETYPE>> aRelationFilter)
   {
-    return new GraphIterator <VALUETYPE> (aStartNode, aRelationFilter);
+    return new GraphIteratorForward <VALUETYPE> (aStartNode, aRelationFilter);
   }
 }

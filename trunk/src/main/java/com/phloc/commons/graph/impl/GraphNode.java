@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.graph.simple;
+package com.phloc.commons.graph.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,7 +36,6 @@ import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.compare.CompareUtils;
 import com.phloc.commons.graph.IGraphNode;
 import com.phloc.commons.graph.IGraphRelation;
-import com.phloc.commons.graph.impl.AbstractGraphObject;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -92,7 +91,7 @@ public class GraphNode <VALUETYPE> extends AbstractGraphObject implements IGraph
     return m_aValue;
   }
 
-  private void _addIncoming (@Nonnull final IGraphRelation <VALUETYPE> aNewRelation)
+  public void addIncomingRelation (@Nonnull final IGraphRelation <VALUETYPE> aNewRelation)
   {
     if (aNewRelation == null)
       throw new NullPointerException ("relation");
@@ -112,20 +111,6 @@ public class GraphNode <VALUETYPE> extends AbstractGraphObject implements IGraph
 
     // Add!
     _getIncoming ().put (aNewRelation.getID (), aNewRelation);
-  }
-
-  @Nonnull
-  public IGraphRelation <VALUETYPE> addIncomingRelation (@Nonnull final IGraphRelation <VALUETYPE> aRelation)
-  {
-    _addIncoming (aRelation);
-    ((GraphNode <VALUETYPE>) aRelation.getFrom ())._addOutgoing (aRelation);
-    return aRelation;
-  }
-
-  @Nonnull
-  public IGraphRelation <VALUETYPE> addIncomingRelation (@Nonnull final IGraphNode <VALUETYPE> aFromNode)
-  {
-    return addIncomingRelation (GraphRelation.create (aFromNode, this));
   }
 
   public boolean hasIncomingRelations ()
@@ -168,7 +153,7 @@ public class GraphNode <VALUETYPE> extends AbstractGraphObject implements IGraph
     return ret;
   }
 
-  private void _addOutgoing (@Nonnull final IGraphRelation <VALUETYPE> aNewRelation)
+  public void addOutgoingRelation (@Nonnull final IGraphRelation <VALUETYPE> aNewRelation)
   {
     if (aNewRelation == null)
       throw new NullPointerException ("relation");
@@ -188,20 +173,6 @@ public class GraphNode <VALUETYPE> extends AbstractGraphObject implements IGraph
 
     // Add!
     _getOutgoing ().put (aNewRelation.getID (), aNewRelation);
-  }
-
-  @Nonnull
-  public IGraphRelation <VALUETYPE> addOutgoingRelation (@Nonnull final IGraphRelation <VALUETYPE> aRelation)
-  {
-    _addOutgoing (aRelation);
-    ((GraphNode <VALUETYPE>) aRelation.getTo ())._addIncoming (aRelation);
-    return aRelation;
-  }
-
-  @Nonnull
-  public IGraphRelation <VALUETYPE> addOutgoingRelation (@Nonnull final IGraphNode <VALUETYPE> aToNode)
-  {
-    return addOutgoingRelation (GraphRelation.create (this, aToNode));
   }
 
   public boolean hasOutgoingRelations ()
@@ -285,37 +256,5 @@ public class GraphNode <VALUETYPE> extends AbstractGraphObject implements IGraph
                             .append ("incoming#", getIncomingRelationCount ())
                             .append ("outgoing#", getOutgoingRelationCount ())
                             .toString ();
-  }
-
-  /**
-   * Shortcut factory method to spare using the generics parameter manually.
-   * 
-   * @param <VALUETYPE>
-   *        Graph node element type
-   * @param aValue
-   *        Contained value. May be <code>null</code>.
-   * @return The created graph node and never <code>null</code>.
-   */
-  @Nonnull
-  public static <VALUETYPE> IGraphNode <VALUETYPE> create (@Nullable final VALUETYPE aValue)
-  {
-    return new GraphNode <VALUETYPE> (aValue);
-  }
-
-  /**
-   * Shortcut factory method to spare using the generics parameter manually.
-   * 
-   * @param <VALUETYPE>
-   *        Graph node element type
-   * @param sID
-   *        The ID of the graph node to use. May be <code>null</code>.
-   * @param aValue
-   *        Contained value. May be <code>null</code>.
-   * @return The created graph node and never <code>null</code>.
-   */
-  @Nonnull
-  public static <VALUETYPE> IGraphNode <VALUETYPE> create (@Nullable final String sID, @Nullable final VALUETYPE aValue)
-  {
-    return new GraphNode <VALUETYPE> (sID, aValue);
   }
 }

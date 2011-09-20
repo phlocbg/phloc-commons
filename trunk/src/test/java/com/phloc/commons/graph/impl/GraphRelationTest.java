@@ -15,15 +15,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.graph.simple;
+package com.phloc.commons.graph.impl;
 
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-import com.phloc.commons.graph.simple.GraphNode;
-import com.phloc.commons.graph.simple.GraphRelation;
 import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
@@ -37,7 +35,6 @@ public final class GraphRelationTest
   public void testCtor ()
   {
     new GraphRelation <String> (new GraphNode <String> (), new GraphNode <String> ());
-    GraphRelation.create (new GraphNode <String> (), new GraphNode <String> ());
 
     try
     {
@@ -69,18 +66,18 @@ public final class GraphRelationTest
   {
     final GraphNode <String> nf = new GraphNode <String> ();
     final GraphNode <String> nt = new GraphNode <String> ();
-    final GraphRelation <String> gr = GraphRelation.create (nf, nt);
+    final GraphRelation <String> gr = new GraphRelation <String> (nf, nt);
     assertSame (gr.getFrom (), nf);
     assertSame (gr.getTo (), nt);
 
-    PhlocTestUtils.testDefaultImplementationWithEqualContentObject (GraphRelation.create ("id1", nf, nt),
-                                                                    GraphRelation.create ("id1", nf, nt));
+    PhlocTestUtils.testDefaultImplementationWithEqualContentObject (new GraphRelation <String> ("id1", nf, nt),
+                                                                    new GraphRelation <String> ("id1", nf, nt));
     // different IDs
-    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (GraphRelation.create (nf, nt),
-                                                                        GraphRelation.create (nf, nt));
-    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (GraphRelation.create ("id1", nf, nt),
-                                                                        GraphRelation.create ("id1",
-                                                                                              nf,
-                                                                                              new GraphNode <String> ()));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (new GraphRelation <String> (nf, nt),
+                                                                        new GraphRelation <String> (nf, nt));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (new GraphRelation <String> ("id1", nf, nt),
+                                                                        new GraphRelation <String> ("id1",
+                                                                                                    nf,
+                                                                                                    new GraphNode <String> ()));
   }
 }

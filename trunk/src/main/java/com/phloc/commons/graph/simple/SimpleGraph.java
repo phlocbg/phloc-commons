@@ -31,7 +31,9 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.graph.IGraph;
 import com.phloc.commons.graph.IGraphNode;
-import com.phloc.commons.graph.iterate.GraphIterator;
+import com.phloc.commons.graph.IGraphObjectFactory;
+import com.phloc.commons.graph.IGraphRelation;
+import com.phloc.commons.graph.iterate.GraphIteratorForward;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.state.ETriState;
@@ -43,10 +45,23 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @NotThreadSafe
-public class Graph <VALUETYPE> implements IGraph <VALUETYPE>
+public class SimpleGraph <VALUETYPE> implements IGraph <VALUETYPE>
 {
   private final Map <String, IGraphNode <VALUETYPE>> m_aNodes = new HashMap <String, IGraphNode <VALUETYPE>> ();
   private ETriState m_eHasCycles = ETriState.UNDEFINED;
+  private IGraphObjectFactory <VALUETYPE> m_aFactory;
+
+  public SimpleGraph ()
+  {
+    this (new SimpleGraphObjectFactory <VALUETYPE> ());
+  }
+
+  public SimpleGraph (@Nonnull final IGraphObjectFactory <VALUETYPE> aFactory)
+  {
+    if (aFactory == null)
+      throw new NullPointerException ("factory");
+    m_aFactory = aFactory;
+  }
 
   /**
    * Create a new graph node and add it to the graph. A new ID is generated.
@@ -56,10 +71,10 @@ public class Graph <VALUETYPE> implements IGraph <VALUETYPE>
    * @return The created graph node. Never <code>null</code>.
    */
   @Nonnull
-  public IGraphNode <VALUETYPE> addNode (@Nullable final VALUETYPE aValue)
+  public IGraphNode <VALUETYPE> createNode (@Nullable final VALUETYPE aValue)
   {
     // Create node with new ID
-    final IGraphNode <VALUETYPE> aNode = GraphNode.create (aValue);
+    final IGraphNode <VALUETYPE> aNode = m_aFactory.createNode (aValue);
     addNode (aNode);
     return aNode;
   }
@@ -77,9 +92,9 @@ public class Graph <VALUETYPE> implements IGraph <VALUETYPE>
    *         adding.
    */
   @Nullable
-  public IGraphNode <VALUETYPE> addNode (@Nullable final String sID, @Nullable final VALUETYPE aValue)
+  public IGraphNode <VALUETYPE> createNode (@Nullable final String sID, @Nullable final VALUETYPE aValue)
   {
-    final IGraphNode <VALUETYPE> aNode = GraphNode.create (sID, aValue);
+    final IGraphNode <VALUETYPE> aNode = m_aFactory.createNode (sID, aValue);
     return addNode (aNode).isChanged () ? aNode : null;
   }
 
@@ -111,6 +126,29 @@ public class Graph <VALUETYPE> implements IGraph <VALUETYPE>
     // Cycle state is undefined
     m_eHasCycles = ETriState.UNDEFINED;
     return EChange.CHANGED;
+  }
+
+  @Nonnull
+  private IGraphRelation <VALUETYPE> _connect (@Nonnull final IGraphRelation <VALUETYPE> aRelation)
+  {
+    aRelation.getFrom ().addOutgoingRelation (aRelation);
+    aRelation.getTo ().addIncomingRelation (aRelation);
+    return aRelation;
+  }
+
+  @Nonnull
+  public IGraphRelation <VALUETYPE> createRelation (@Nonnull final IGraphNode <VALUETYPE> aFrom,
+                                                    @Nonnull final IGraphNode <VALUETYPE> aTo)
+  {
+    return _connect (m_aFactory.createRelation (aFrom, aTo));
+  }
+
+  @Nonnull
+  public IGraphRelation <VALUETYPE> createRelation (@Nullable final String sID,
+                                                    @Nonnull final IGraphNode <VALUETYPE> aFrom,
+                                                    @Nonnull final IGraphNode <VALUETYPE> aTo)
+  {
+    return _connect (m_aFactory.createRelation (sID, aFrom, aTo));
   }
 
   @Nonnull
@@ -184,7 +222,7 @@ public class Graph <VALUETYPE> implements IGraph <VALUETYPE>
       }
       for (final IGraphNode <VALUETYPE> aCurNode : aNodes)
       {
-        final GraphIterator <VALUETYPE> it = GraphIterator.create (aCurNode);
+        final GraphIteratorForward <VALUETYPE> it = GraphIteratorForward.create (aCurNode);
         while (it.hasNext () && !it.hasCycles ())
           it.next ();
         if (it.hasCycles ())
@@ -202,10 +240,10 @@ public class Graph <VALUETYPE> implements IGraph <VALUETYPE>
   {
     if (o == this)
       return true;
-    if (!(o instanceof Graph <?>))
+    if (!(o instanceof SimpleGraph <?>))
       return false;
     // Do not use m_eHasCycles because this is just a state variable
-    final Graph <?> rhs = (Graph <?>) o;
+    final SimpleGraph <?> rhs = (SimpleGraph <?>) o;
     return m_aNodes.equals (rhs.m_aNodes);
   }
 

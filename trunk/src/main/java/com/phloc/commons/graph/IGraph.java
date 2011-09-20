@@ -18,7 +18,6 @@
 package com.phloc.commons.graph;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.state.IClearable;
@@ -28,33 +27,8 @@ import com.phloc.commons.state.IClearable;
  * 
  * @author philip
  */
-public interface IGraph <VALUETYPE> extends IReadonlyGraph <VALUETYPE>, IClearable
+public interface IGraph <VALUETYPE> extends IReadonlyGraph <VALUETYPE>, IClearable, IGraphObjectFactory <VALUETYPE>
 {
-  /**
-   * Create a new graph node and add it to the graph. A new ID is generated.
-   * 
-   * @param aValue
-   *        The value to be added. May be <code>null</code>.
-   * @return The created graph node. Never <code>null</code>.
-   */
-  @Nonnull
-  IGraphNode <VALUETYPE> addNode (@Nullable VALUETYPE aValue);
-
-  /**
-   * Create a new graph node with the given ID and value.
-   * 
-   * @param sID
-   *        The ID of the graph node to be created. If the ID is
-   *        <code>null</code> a new graph ID is created.
-   * @param aValue
-   *        The value to be added. May be <code>null</code>.
-   * @return <code>null</code> if another graph node with the same ID is already
-   *         present - the non-<code>null</code> graph node upon successful
-   *         adding.
-   */
-  @Nullable
-  IGraphNode <VALUETYPE> addNode (@Nullable String sID, @Nullable VALUETYPE aValue);
-
   /**
    * Add an existing node to this graph.
    * 

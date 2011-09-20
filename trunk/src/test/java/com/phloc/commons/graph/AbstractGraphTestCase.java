@@ -17,73 +17,59 @@
  */
 package com.phloc.commons.graph;
 
-import com.phloc.commons.graph.simple.GraphNode;
-import com.phloc.commons.graph.simple.Graph;
+import com.phloc.commons.graph.simple.SimpleGraph;
 
 public abstract class AbstractGraphTestCase
 {
-  private static final IGraphNode <Integer> _createGN (final int i)
+  private static final IGraphNode <Integer> _createGN (final SimpleGraph <Integer> aGraph, final int i)
   {
-    return GraphNode.create (Integer.toString (i), Integer.valueOf (i + 1));
+    return aGraph.createNode (Integer.toString (i), Integer.valueOf (i + 1));
   }
 
-  protected Graph <Integer> _buildGraph ()
+  protected SimpleGraph <Integer> _buildGraph ()
   {
-    final IGraphNode <Integer> node0 = _createGN (0);
-    final IGraphNode <Integer> node1 = _createGN (1);
-    final IGraphNode <Integer> node2 = _createGN (2);
-    final IGraphNode <Integer> node3 = _createGN (3);
-    final IGraphNode <Integer> node4 = _createGN (4);
-    final IGraphNode <Integer> node5 = _createGN (5);
-    final IGraphNode <Integer> node6 = _createGN (6);
-    node0.addOutgoingRelation (node1);
-    node1.addOutgoingRelation (node2);
-    node2.addOutgoingRelation (node3);
-    node3.addOutgoingRelation (node4);
-    node0.addOutgoingRelation (node5);
-    node5.addOutgoingRelation (node3);
-    node5.addOutgoingRelation (node6);
-    node6.addOutgoingRelation (node3);
+    final SimpleGraph <Integer> aGraph = new SimpleGraph <Integer> ();
 
-    final Graph <Integer> aGraph = new Graph <Integer> ();
-    aGraph.addNode (node0);
-    aGraph.addNode (node1);
-    aGraph.addNode (node2);
-    aGraph.addNode (node3);
-    aGraph.addNode (node4);
-    aGraph.addNode (node5);
-    aGraph.addNode (node6);
+    final IGraphNode <Integer> node0 = _createGN (aGraph, 0);
+    final IGraphNode <Integer> node1 = _createGN (aGraph, 1);
+    final IGraphNode <Integer> node2 = _createGN (aGraph, 2);
+    final IGraphNode <Integer> node3 = _createGN (aGraph, 3);
+    final IGraphNode <Integer> node4 = _createGN (aGraph, 4);
+    final IGraphNode <Integer> node5 = _createGN (aGraph, 5);
+    final IGraphNode <Integer> node6 = _createGN (aGraph, 6);
+    aGraph.createRelation (node0, node1);
+    aGraph.createRelation (node1, node2);
+    aGraph.createRelation (node2, node3);
+    aGraph.createRelation (node3, node4);
+    aGraph.createRelation (node0, node5);
+    aGraph.createRelation (node5, node3);
+    aGraph.createRelation (node5, node6);
+    aGraph.createRelation (node6, node3);
+
     return aGraph;
   }
 
   protected IReadonlyGraph <Integer> _buildCycleGraphSimple ()
   {
-    final IGraphNode <Integer> node0 = _createGN (0);
-    final IGraphNode <Integer> node1 = _createGN (1);
-    node0.addOutgoingRelation (node1);
-    node1.addOutgoingRelation (node0);
-    final Graph <Integer> aGraph = new Graph <Integer> ();
-    aGraph.addNode (node0);
-    aGraph.addNode (node1);
+    final SimpleGraph <Integer> aGraph = new SimpleGraph <Integer> ();
+    final IGraphNode <Integer> node0 = _createGN (aGraph, 0);
+    final IGraphNode <Integer> node1 = _createGN (aGraph, 1);
+    aGraph.createRelation (node0, node1);
+    aGraph.createRelation (node1, node0);
     return aGraph;
   }
 
   protected IReadonlyGraph <Integer> _buildCycleGraphSimple2 ()
   {
-    final IGraphNode <Integer> node0 = _createGN (0);
-    final IGraphNode <Integer> node1 = _createGN (1);
-    final IGraphNode <Integer> node2 = _createGN (2);
-    final IGraphNode <Integer> node3 = _createGN (3);
-    node0.addOutgoingRelation (node1);
-    node1.addOutgoingRelation (node2);
-    node2.addOutgoingRelation (node3);
-    node3.addOutgoingRelation (node0);
-
-    final Graph <Integer> aGraph = new Graph <Integer> ();
-    aGraph.addNode (node0);
-    aGraph.addNode (node1);
-    aGraph.addNode (node2);
-    aGraph.addNode (node3);
+    final SimpleGraph <Integer> aGraph = new SimpleGraph <Integer> ();
+    final IGraphNode <Integer> node0 = _createGN (aGraph, 0);
+    final IGraphNode <Integer> node1 = _createGN (aGraph, 1);
+    final IGraphNode <Integer> node2 = _createGN (aGraph, 2);
+    final IGraphNode <Integer> node3 = _createGN (aGraph, 3);
+    aGraph.createRelation (node0, node1);
+    aGraph.createRelation (node1, node2);
+    aGraph.createRelation (node2, node3);
+    aGraph.createRelation (node3, node0);
     return aGraph;
   }
 }

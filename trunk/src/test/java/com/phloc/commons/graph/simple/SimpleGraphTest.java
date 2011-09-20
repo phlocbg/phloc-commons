@@ -27,22 +27,22 @@ import static org.junit.Assert.fail;
 import org.junit.Test;
 
 import com.phloc.commons.graph.AbstractGraphTestCase;
+import com.phloc.commons.graph.IGraphNode;
 import com.phloc.commons.graph.IReadonlyGraph;
-import com.phloc.commons.graph.simple.GraphNode;
-import com.phloc.commons.graph.simple.Graph;
+import com.phloc.commons.graph.impl.GraphNode;
 import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
- * Test class for class {@link Graph}.
+ * Test class for class {@link SimpleGraph}.
  * 
  * @author philip
  */
-public final class GraphTest extends AbstractGraphTestCase
+public final class SimpleGraphTest extends AbstractGraphTestCase
 {
   @Test
   public void testCtor ()
   {
-    final IReadonlyGraph <String> sg = new Graph <String> ();
+    final IReadonlyGraph <String> sg = new SimpleGraph <String> ();
     assertTrue (sg.getAllStartNodes ().isEmpty ());
     assertTrue (sg.getAllEndNodes ().isEmpty ());
     assertFalse (sg.containsCycles ());
@@ -61,7 +61,7 @@ public final class GraphTest extends AbstractGraphTestCase
   @Test
   public void testAddNode ()
   {
-    final Graph <String> sg = new Graph <String> ();
+    final SimpleGraph <String> sg = new SimpleGraph <String> ();
     assertEquals (0, sg.getNodeCount ());
     try
     {
@@ -103,16 +103,16 @@ public final class GraphTest extends AbstractGraphTestCase
     catch (final IllegalStateException ex)
     {}
 
-    assertNotNull (sg.addNode ("value"));
-    assertNotNull (sg.addNode ("value"));
-    assertNotNull (sg.addNode ("id4711", "value"));
-    assertNull (sg.addNode ("id4711", "value"));
+    assertNotNull (sg.createNode ("value"));
+    assertNotNull (sg.createNode ("value"));
+    assertNotNull (sg.createNode ("id4711", "value"));
+    assertNull (sg.createNode ("id4711", "value"));
   }
 
   @Test
   public void testClear ()
   {
-    final Graph <String> sg = new Graph <String> ();
+    final SimpleGraph <String> sg = new SimpleGraph <String> ();
 
     final GraphNode <String> n = new GraphNode <String> ();
     assertTrue (sg.addNode (n).isChanged ());
@@ -140,22 +140,20 @@ public final class GraphTest extends AbstractGraphTestCase
   @Test
   public void testCycles ()
   {
-    Graph <Integer> sg = _buildGraph ();
+    SimpleGraph <Integer> sg = _buildGraph ();
     assertFalse (sg.containsCycles ());
 
-    sg = new Graph <Integer> ();
-    final GraphNode <Integer> n1 = new GraphNode <Integer> ();
-    assertTrue (sg.addNode (n1).isChanged ());
-    final GraphNode <Integer> n2 = new GraphNode <Integer> ();
-    assertTrue (sg.addNode (n2).isChanged ());
-    n1.addOutgoingRelation (n2);
-    n2.addOutgoingRelation (n1);
+    sg = new SimpleGraph <Integer> ();
+    final IGraphNode <Integer> n1 = sg.createNode (null);
+    final IGraphNode <Integer> n2 = sg.createNode (null);
+    sg.createRelation (n1, n2);
+    sg.createRelation (n2, n1);
 
     assertTrue (sg.containsCycles ());
 
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (_buildGraph (), _buildGraph ());
-    PhlocTestUtils.testDefaultImplementationWithEqualContentObject (new Graph <Integer> (),
-                                                                    new Graph <Integer> ());
-    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (_buildGraph (), new Graph <Integer> ());
+    PhlocTestUtils.testDefaultImplementationWithEqualContentObject (new SimpleGraph <Integer> (),
+                                                                    new SimpleGraph <Integer> ());
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (_buildGraph (), new SimpleGraph <Integer> ());
   }
 }
