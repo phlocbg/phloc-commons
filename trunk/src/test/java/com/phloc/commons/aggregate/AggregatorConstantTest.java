@@ -17,7 +17,7 @@
  */
 package com.phloc.commons.aggregate;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
@@ -27,18 +27,21 @@ import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
- * Test class for class {@link AggregatorAlwaysNull}.
+ * Test class for class {@link AggregatorConstant}.
  * 
  * @author philip
  */
-public final class AggregatorAlwaysNullTest
+public final class AggregatorConstantTest
 {
   @Test
   public void testAll ()
   {
-    final AggregatorAlwaysNull <String, String> a1 = new AggregatorAlwaysNull <String, String> ();
-    PhlocTestUtils.testDefaultImplementationWithEqualContentObject (a1, new AggregatorAlwaysNull <String, String> ());
-    assertNull (a1.aggregate (ContainerHelper.newList ("a", "b")));
-    assertNull (a1.aggregate (new ArrayList <String> ()));
+    final AggregatorConstant <String, String> a1 = new AggregatorConstant <String, String> ("foo");
+    PhlocTestUtils.testDefaultImplementationWithEqualContentObject (a1, new AggregatorConstant <String, String> ("foo"));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (a1,
+                                                                        new AggregatorConstant <String, String> ("bar"));
+
+    assertEquals ("foo", a1.aggregate (ContainerHelper.newList ("a", "b")));
+    assertEquals ("foo", a1.aggregate (new ArrayList <String> ()));
   }
 }

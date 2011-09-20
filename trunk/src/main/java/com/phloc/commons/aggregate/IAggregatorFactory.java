@@ -19,6 +19,15 @@ package com.phloc.commons.aggregate;
 
 import com.phloc.commons.factory.IFactory;
 
+/**
+ * Base interface for a factory creating {@link IAggregator} objects.
+ * 
+ * @author philip
+ * @param <SRCTYPE>
+ *        Aggregation source type
+ * @param <DSTTYPE>
+ *        Aggregation destination type
+ */
 public interface IAggregatorFactory <SRCTYPE, DSTTYPE> extends IFactory <IAggregator <SRCTYPE, DSTTYPE>>
 {
   /* empty */
