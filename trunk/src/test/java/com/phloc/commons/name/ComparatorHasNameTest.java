@@ -38,8 +38,8 @@ public final class ComparatorHasNameTest extends AbstractPhlocTestCase
   public void testAll ()
   {
     final List <MockHasName> aList = ContainerHelper.newList (new MockHasName (10),
-                                                               new MockHasName (2),
-                                                               new MockHasName (5));
+                                                              new MockHasName (2),
+                                                              new MockHasName (5));
     List <MockHasName> l2 = ContainerHelper.getSorted (aList, new ComparatorHasName <IHasName> (L_DE));
     assertEquals (3, l2.size ());
     assertEquals ("10", l2.get (0).getName ());

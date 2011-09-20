@@ -44,7 +44,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author philip
  * @param <VALUETYPE>
- *        Value type contained in this node
+ *        The value type of the graph nodes.
  */
 @NotThreadSafe
 public class GraphNode <VALUETYPE> extends AbstractGraphObject implements IGraphNode <VALUETYPE>

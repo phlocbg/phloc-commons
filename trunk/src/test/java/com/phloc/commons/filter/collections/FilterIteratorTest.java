@@ -34,7 +34,6 @@ import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.collections.iterate.IterableIterator;
 import com.phloc.commons.filter.FilterNotNull;
 import com.phloc.commons.filter.IFilter;
-import com.phloc.commons.filter.collections.FilterIterator;
 import com.phloc.commons.mock.PhlocTestUtils;
 
 /**

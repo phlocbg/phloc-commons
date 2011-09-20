@@ -36,6 +36,6 @@ public final class ComparatorLocaleDisplayCountryNativeTest extends AbstractPhlo
   public void testSort ()
   {
     assertNotNull (ContainerHelper.getSorted (LocaleCache.getAllLocales (),
-                                               new ComparatorLocaleDisplayCountryNative (L_DE)));
+                                              new ComparatorLocaleDisplayCountryNative (L_DE)));
   }
 }

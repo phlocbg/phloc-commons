@@ -40,9 +40,11 @@ import com.phloc.commons.state.ETriState;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * A simple graph object with some sanity methods.
+ * A simple graph object that bidirectionally links graph nodes.
  * 
  * @author philip
+ * @param <VALUETYPE>
+ *        The value type of the graph nodes.
  */
 @NotThreadSafe
 public class SimpleGraph <VALUETYPE> implements IGraph <VALUETYPE>

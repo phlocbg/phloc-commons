@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.id;
 
-
 public final class MockHasIDString implements IHasID <String>
 {
   private final String m_sID;

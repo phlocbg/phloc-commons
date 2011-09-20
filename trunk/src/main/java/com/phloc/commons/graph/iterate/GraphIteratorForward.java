@@ -38,7 +38,7 @@ import com.phloc.commons.graph.IGraphRelation;
  * 
  * @author philip
  * @param <VALUETYPE>
- *        Value type of the graph to iterate
+ *        The value type of the graph nodes.
  */
 @NotThreadSafe
 public final class GraphIteratorForward <VALUETYPE> implements IIterableIterator <IGraphNode <VALUETYPE>>

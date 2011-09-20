@@ -26,7 +26,6 @@ import org.junit.Test;
 
 import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.typeconvert.TypeConverter;
-import com.phloc.commons.typeconvert.impl.CharsetTypeConverterRegistrar;
 
 /**
  * Test class for class {@link CharsetTypeConverterRegistrar}.

@@ -30,7 +30,7 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
  * 
  * @author philip
  * @param <VALUETYPE>
- *        The value type of the nodes.
+ *        The value type of the graph nodes.
  */
 public interface IReadonlyGraph <VALUETYPE>
 {

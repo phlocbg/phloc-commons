@@ -26,6 +26,8 @@ import com.phloc.commons.state.IClearable;
  * Interface for a modifiable graph.
  * 
  * @author philip
+ * @param <VALUETYPE>
+ *        The value type of the graph nodes.
  */
 public interface IGraph <VALUETYPE> extends IReadonlyGraph <VALUETYPE>, IClearable, IGraphObjectFactory <VALUETYPE>
 {

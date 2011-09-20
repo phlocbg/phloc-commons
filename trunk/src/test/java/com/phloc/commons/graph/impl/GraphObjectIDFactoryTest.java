@@ -22,7 +22,6 @@ import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
-import com.phloc.commons.graph.impl.GraphObjectIDFactory;
 import com.phloc.commons.idfactory.IIDFactory;
 import com.phloc.commons.idfactory.StringIDFromGlobalIntIDFactory;
 

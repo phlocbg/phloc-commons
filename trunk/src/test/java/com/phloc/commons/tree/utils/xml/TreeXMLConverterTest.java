@@ -33,8 +33,6 @@ import com.phloc.commons.name.MockHasName;
 import com.phloc.commons.tree.simple.DefaultTree;
 import com.phloc.commons.tree.simple.DefaultTreeItem;
 import com.phloc.commons.tree.utils.sort.ComparatorTreeItemValueComparable;
-import com.phloc.commons.tree.utils.xml.IConverterTreeXML;
-import com.phloc.commons.tree.utils.xml.TreeXMLConverter;
 import com.phloc.commons.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
 
 /**

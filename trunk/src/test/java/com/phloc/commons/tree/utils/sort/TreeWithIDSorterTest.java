@@ -26,7 +26,6 @@ import java.util.List;
 import org.junit.Test;
 
 import com.phloc.commons.compare.ComparatorString;
-import com.phloc.commons.tree.utils.sort.TreeWithIDSorter;
 import com.phloc.commons.tree.withid.DefaultTreeItemWithID;
 import com.phloc.commons.tree.withid.DefaultTreeWithID;
 

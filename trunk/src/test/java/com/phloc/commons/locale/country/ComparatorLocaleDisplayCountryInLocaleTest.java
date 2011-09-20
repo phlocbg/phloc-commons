@@ -36,6 +36,6 @@ public final class ComparatorLocaleDisplayCountryInLocaleTest extends AbstractPh
   public void testSort ()
   {
     assertNotNull (ContainerHelper.getSorted (LocaleCache.getAllLocales (),
-                                               new ComparatorLocaleDisplayCountryInLocale (L_DE, L_EN)));
+                                              new ComparatorLocaleDisplayCountryInLocale (L_DE, L_EN)));
   }
 }

@@ -28,7 +28,6 @@ import org.junit.Test;
 import com.phloc.commons.compare.ComparatorString;
 import com.phloc.commons.tree.simple.DefaultTree;
 import com.phloc.commons.tree.simple.DefaultTreeItem;
-import com.phloc.commons.tree.utils.sort.TreeSorter;
 
 /**
  * Test class for class {@link TreeSorter}
