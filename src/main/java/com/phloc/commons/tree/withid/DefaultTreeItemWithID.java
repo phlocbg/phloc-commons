@@ -18,15 +18,16 @@
 package com.phloc.commons.tree.withid;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.NotThreadSafe;
 
-public class TreeItemWithID <KEYTYPE, VALUETYPE> extends
-                                                 BasicTreeItemWithID <KEYTYPE, VALUETYPE, ITreeItemWithID <KEYTYPE, VALUETYPE>> implements
-                                                                                                                               ITreeItemWithID <KEYTYPE, VALUETYPE>
+@NotThreadSafe
+public class DefaultTreeItemWithID <KEYTYPE, VALUETYPE> extends
+                                                        BasicTreeItemWithID <KEYTYPE, VALUETYPE, DefaultTreeItemWithID <KEYTYPE, VALUETYPE>>
 {
   /**
    * Constructor for root object
    */
-  public TreeItemWithID (@Nonnull final IBasicTreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITreeItemWithID <KEYTYPE, VALUETYPE>> aFactory)
+  public DefaultTreeItemWithID (@Nonnull final IBasicTreeItemWithIDFactory <KEYTYPE, VALUETYPE, DefaultTreeItemWithID <KEYTYPE, VALUETYPE>> aFactory)
   {
     super (aFactory);
   }
@@ -40,7 +41,8 @@ public class TreeItemWithID <KEYTYPE, VALUETYPE> extends
    * @param aDataID
    *        The ID of the new item. May not be <code>null</code>.
    */
-  public TreeItemWithID (@Nonnull final ITreeItemWithID <KEYTYPE, VALUETYPE> aParent, @Nonnull final KEYTYPE aDataID)
+  public DefaultTreeItemWithID (@Nonnull final DefaultTreeItemWithID <KEYTYPE, VALUETYPE> aParent,
+                                @Nonnull final KEYTYPE aDataID)
   {
     super (aParent, aDataID);
   }

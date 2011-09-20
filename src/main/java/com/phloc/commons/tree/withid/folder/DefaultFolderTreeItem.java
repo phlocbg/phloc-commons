@@ -20,6 +20,7 @@ package com.phloc.commons.tree.withid.folder;
 import java.util.Collection;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.NotThreadSafe;
 
 /**
  * Default implementation of the {@link IFolderTreeItem} interface.
@@ -32,8 +33,9 @@ import javax.annotation.Nonnull;
  * @param <COLLTYPE>
  *        Collection type consisting of value elements
  */
+@NotThreadSafe
 public class DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends
-                                                                                                 AbstractFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>>
+                                                                                                 BasicFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>>
 {
   /**
    * Constructor for root object

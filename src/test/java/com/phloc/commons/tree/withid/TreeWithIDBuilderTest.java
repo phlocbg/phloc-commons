@@ -52,7 +52,7 @@ public final class TreeWithIDBuilderTest
   @Test
   public void testBuildFromParent ()
   {
-    final TreeWithID <String, MockHasParent> aTree = TreeWithIDBuilder.buildTree (ContainerHelper.newList (new MockHasParent ("a"),
+    final DefaultTreeWithID <String, MockHasParent> aTree = TreeWithIDBuilder.buildTree (ContainerHelper.newList (new MockHasParent ("a"),
                                                                                                            new MockHasParent ("ab"),
                                                                                                            new MockHasParent ("abc"),
                                                                                                            new MockHasParent ("abd")));
@@ -103,7 +103,7 @@ public final class TreeWithIDBuilderTest
   @Test
   public void testBuildFromChildren ()
   {
-    final TreeWithID <String, MockHasChildren> aTree = TreeWithIDBuilder.buildTree (new MockChildrenProvider (new MockHasChildren ("",
+    final DefaultTreeWithID <String, MockHasChildren> aTree = TreeWithIDBuilder.buildTree (new MockChildrenProvider (new MockHasChildren ("",
                                                                                                                                    new MockHasChildren ("a",
                                                                                                                                                         new MockHasChildren ("b",
                                                                                                                                                                              new MockHasChildren ("c"),
@@ -130,7 +130,7 @@ public final class TreeWithIDBuilderTest
   {
     final MockHasIDString [] x = new MockHasIDString [0];
     final IParentProvider <MockHasIDString> pp = new ParentProviderMockHasIDString ();
-    final TreeWithID <String, MockHasIDString> aTree = TreeWithIDBuilder.buildTree (x, pp);
+    final DefaultTreeWithID <String, MockHasIDString> aTree = TreeWithIDBuilder.buildTree (x, pp);
     assertNotNull (aTree);
 
     try

@@ -33,16 +33,16 @@ import com.phloc.commons.tree.sort.ComparatorTreeItemKeyComparable;
 import com.phloc.commons.tree.sort.ComparatorTreeItemValueComparable;
 
 /**
- * Test class for class {@link TreeItemWithID}.
+ * Test class for class {@link DefaultTreeItemWithID}.
  * 
  * @author philip
  */
-public final class TreeItemWithIDTest
+public final class DefaultTreeItemWithIDTest
 {
   @Test
   public void testBasic ()
   {
-    final TreeWithID <String, String> t = new TreeWithID <String, String> ();
+    final DefaultTreeWithID <String, String> t = new DefaultTreeWithID <String, String> ();
 
     // tree root
     assertNotNull (t.getRootItem ());
@@ -50,7 +50,7 @@ public final class TreeItemWithIDTest
     assertTrue (t.getRootItem ().isSameOrChildOf (t.getRootItem ()));
 
     // root item
-    final ITreeItemWithID <String, String> ti = t.getRootItem ().createChildItem ("root", "Hallo");
+    final DefaultTreeItemWithID <String, String> ti = t.getRootItem ().createChildItem ("root", "Hallo");
     assertNotNull (ti);
     assertEquals ("root", ti.getID ());
     assertEquals ("Hallo", ti.getData ());
@@ -63,7 +63,7 @@ public final class TreeItemWithIDTest
     assertFalse (t.getRootItem ().isSameOrChildOf (ti));
 
     // level 1
-    final ITreeItemWithID <String, String> ti1 = ti.createChildItem ("root1", "Welt");
+    final DefaultTreeItemWithID <String, String> ti1 = ti.createChildItem ("root1", "Welt");
     assertNotNull (ti1);
     assertEquals ("root1", ti1.getID ());
     assertEquals ("Welt", ti1.getData ());
@@ -87,14 +87,14 @@ public final class TreeItemWithIDTest
   @Test
   public void testAdd ()
   {
-    final TreeWithID <String, String> t = new TreeWithID <String, String> ();
+    final DefaultTreeWithID <String, String> t = new DefaultTreeWithID <String, String> ();
 
     // root item
-    final ITreeItemWithID <String, String> ti = t.getRootItem ().createChildItem ("root", "Hallo");
+    final DefaultTreeItemWithID <String, String> ti = t.getRootItem ().createChildItem ("root", "Hallo");
     assertNotNull (ti);
 
     // level 1
-    final ITreeItemWithID <String, String> ti1 = ti.createChildItem ("root1", "Welt");
+    final DefaultTreeItemWithID <String, String> ti1 = ti.createChildItem ("root1", "Welt");
     assertNotNull (ti1);
     assertEquals ("Welt", ti.getChildItemOfDataID ("root1").getData ());
 
@@ -119,12 +119,12 @@ public final class TreeItemWithIDTest
   @Test
   public void testDelete ()
   {
-    final TreeWithID <String, String> t = new TreeWithID <String, String> ();
+    final DefaultTreeWithID <String, String> t = new DefaultTreeWithID <String, String> ();
     // No children present
     assertFalse (t.getRootItem ().removeChild ("root1").isChanged ());
 
     // root item
-    final ITreeItemWithID <String, String> ti = t.getRootItem ().createChildItem ("root", "Hallo");
+    final DefaultTreeItemWithID <String, String> ti = t.getRootItem ().createChildItem ("root", "Hallo");
     assertNotNull (ti.createChildItem ("root1", "Welt"));
 
     // item not present
@@ -145,14 +145,14 @@ public final class TreeItemWithIDTest
   @Test
   public void testReorderByItem ()
   {
-    final TreeWithID <String, String> t = new TreeWithID <String, String> ();
+    final DefaultTreeWithID <String, String> t = new DefaultTreeWithID <String, String> ();
 
     // root item
-    final ITreeItemWithID <String, String> ti = t.getRootItem ().createChildItem ("root", "Hallo");
+    final DefaultTreeItemWithID <String, String> ti = t.getRootItem ().createChildItem ("root", "Hallo");
 
     // no items yet....
     assertFalse (ti.hasChildren ());
-    ti.reorderChildrenByItems (new ComparatorTreeItemValueComparable <String, ITreeItemWithID <String, String>> ());
+    ti.reorderChildrenByItems (new ComparatorTreeItemValueComparable <String, DefaultTreeItemWithID <String, String>> ());
     assertFalse (ti.hasChildren ());
 
     // add 2 items
@@ -168,7 +168,7 @@ public final class TreeItemWithIDTest
     assertEquals ("Welt1", ti.getChildren ().get (1).getData ());
 
     // reorder
-    ti.reorderChildrenByItems (new ComparatorTreeItemValueComparable <String, ITreeItemWithID <String, String>> ());
+    ti.reorderChildrenByItems (new ComparatorTreeItemValueComparable <String, DefaultTreeItemWithID <String, String>> ());
 
     // check new order
     assertEquals (2, ti.getChildCount ());
@@ -181,10 +181,10 @@ public final class TreeItemWithIDTest
   @Test
   public void testReorderByKey ()
   {
-    final TreeWithID <String, String> t = new TreeWithID <String, String> ();
+    final DefaultTreeWithID <String, String> t = new DefaultTreeWithID <String, String> ();
 
     // root item
-    final ITreeItemWithID <String, String> ti = t.getRootItem ().createChildItem ("root", "Hallo");
+    final DefaultTreeItemWithID <String, String> ti = t.getRootItem ().createChildItem ("root", "Hallo");
 
     // no items yet....
     assertFalse (ti.hasChildren ());
@@ -202,7 +202,7 @@ public final class TreeItemWithIDTest
     assertEquals ("Welt1", ti.getChildren ().get (1).getData ());
 
     // reorder
-    ti.reorderChildrenByItems (new ComparatorTreeItemKeyComparable <String, String, ITreeItemWithID <String, String>> ());
+    ti.reorderChildrenByItems (new ComparatorTreeItemKeyComparable <String, String, DefaultTreeItemWithID <String, String>> ());
 
     // check new order
     assertEquals (2, ti.getChildCount ());
@@ -215,20 +215,20 @@ public final class TreeItemWithIDTest
   @Test
   public void testCtor ()
   {
-    final TreeWithID <String, Object> t = new TreeWithID <String, Object> ();
+    final DefaultTreeWithID <String, Object> t = new DefaultTreeWithID <String, Object> ();
     assertNotNull (t.getRootItem ());
     assertTrue (t.toString ().length () > 0);
 
     try
     {
-      new TreeItemWithID <Object, Object> (null);
+      new DefaultTreeItemWithID <Object, Object> (null);
       fail ();
     }
     catch (final NullPointerException ex)
     {}
     try
     {
-      new TreeItemWithID <Object, Object> (null, "dataid");
+      new DefaultTreeItemWithID <Object, Object> (null, "dataid");
       fail ();
     }
     catch (final NullPointerException ex)
@@ -238,19 +238,19 @@ public final class TreeItemWithIDTest
   @Test
   public void testStdMethods ()
   {
-    final TreeWithID <String, String> t = new TreeWithID <String, String> ();
-    final TreeWithID <String, String> t2 = new TreeWithID <String, String> ();
+    final DefaultTreeWithID <String, String> t = new DefaultTreeWithID <String, String> ();
+    final DefaultTreeWithID <String, String> t2 = new DefaultTreeWithID <String, String> ();
     t2.getRootItem ().createChildItem ("dataid", "Data");
 
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (t.getRootItem (),
-                                                                    new TreeWithID <String, String> ().getRootItem ());
+                                                                    new DefaultTreeWithID <String, String> ().getRootItem ());
     PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (t.getRootItem (), t2.getRootItem ());
   }
 
   @Test
   public void testInvalid ()
   {
-    final TreeWithID <String, String> t = new TreeWithID <String, String> ();
+    final DefaultTreeWithID <String, String> t = new DefaultTreeWithID <String, String> ();
 
     try
     {
@@ -285,9 +285,9 @@ public final class TreeItemWithIDTest
   @Test
   public void testChangeParent ()
   {
-    final ITreeItemWithID <String, String> root = new TreeWithID <String, String> ().getRootItem ();
-    final ITreeItemWithID <String, String> root2 = root.createChildItem ("root", "root");
-    final ITreeItemWithID <String, String> child1 = root2.createChildItem ("child1", "child1");
+    final DefaultTreeItemWithID <String, String> root = new DefaultTreeWithID <String, String> ().getRootItem ();
+    final DefaultTreeItemWithID <String, String> root2 = root.createChildItem ("root", "root");
+    final DefaultTreeItemWithID <String, String> child1 = root2.createChildItem ("child1", "child1");
 
     // same parent
     assertTrue (child1.changeParent (root2).isSuccess ());

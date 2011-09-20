@@ -18,29 +18,30 @@
 package com.phloc.commons.tree.withid.unique;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.NotThreadSafe;
 
-import com.phloc.commons.tree.withid.ITreeItemWithID;
-import com.phloc.commons.tree.withid.TreeItemWithID;
+import com.phloc.commons.tree.withid.DefaultTreeItemWithID;
 
 /**
  * A special tree item factory that maintains a unique ID over all items!
  * 
  * @author philip
  */
+@NotThreadSafe
 public class DefaultTreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE> extends
-                                                                     AbstractBasicTreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, ITreeItemWithID <KEYTYPE, VALUETYPE>>
+                                                                     AbstractTreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, DefaultTreeItemWithID <KEYTYPE, VALUETYPE>>
 {
   @Override
   @Nonnull
-  protected ITreeItemWithID <KEYTYPE, VALUETYPE> internalCreate (@Nonnull final ITreeItemWithID <KEYTYPE, VALUETYPE> aParent,
-                                                                 @Nonnull final KEYTYPE aDataID)
+  protected DefaultTreeItemWithID <KEYTYPE, VALUETYPE> internalCreate (@Nonnull final DefaultTreeItemWithID <KEYTYPE, VALUETYPE> aParent,
+                                                                       @Nonnull final KEYTYPE aDataID)
   {
-    return new TreeItemWithID <KEYTYPE, VALUETYPE> (aParent, aDataID);
+    return new DefaultTreeItemWithID <KEYTYPE, VALUETYPE> (aParent, aDataID);
   }
 
   @Nonnull
-  public ITreeItemWithID <KEYTYPE, VALUETYPE> createRoot ()
+  public DefaultTreeItemWithID <KEYTYPE, VALUETYPE> createRoot ()
   {
-    return new TreeItemWithID <KEYTYPE, VALUETYPE> (this);
+    return new DefaultTreeItemWithID <KEYTYPE, VALUETYPE> (this);
   }
 }

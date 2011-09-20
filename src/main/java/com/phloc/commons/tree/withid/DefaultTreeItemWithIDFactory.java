@@ -18,32 +18,24 @@
 package com.phloc.commons.tree.withid;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.NotThreadSafe;
 
-public class DefaultTreeItemWithIDFactory <KEYTYPE, VALUETYPE> implements
-                                                               IBasicTreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITreeItemWithID <KEYTYPE, VALUETYPE>>
+@NotThreadSafe
+public class DefaultTreeItemWithIDFactory <KEYTYPE, VALUETYPE> extends
+                                                               AbstractTreeItemWithIDFactory <KEYTYPE, VALUETYPE, DefaultTreeItemWithID <KEYTYPE, VALUETYPE>>
 {
   @Nonnull
-  public ITreeItemWithID <KEYTYPE, VALUETYPE> createRoot ()
+  public DefaultTreeItemWithID <KEYTYPE, VALUETYPE> createRoot ()
   {
-    return new TreeItemWithID <KEYTYPE, VALUETYPE> (this);
+    return new DefaultTreeItemWithID <KEYTYPE, VALUETYPE> (this);
   }
 
   @Nonnull
-  public ITreeItemWithID <KEYTYPE, VALUETYPE> create (@Nonnull final ITreeItemWithID <KEYTYPE, VALUETYPE> aParent,
-                                                      @Nonnull final KEYTYPE aDataID)
+  public DefaultTreeItemWithID <KEYTYPE, VALUETYPE> create (@Nonnull final DefaultTreeItemWithID <KEYTYPE, VALUETYPE> aParent,
+                                                            @Nonnull final KEYTYPE aDataID)
   {
     if (aParent == null)
       throw new NullPointerException ("parent");
-    return new TreeItemWithID <KEYTYPE, VALUETYPE> (aParent, aDataID);
-  }
-
-  public void onRemoveItem (final ITreeItemWithID <KEYTYPE, VALUETYPE> aItem)
-  {
-    // it doesn't matter to us
-  }
-
-  public void onAddItem (final ITreeItemWithID <KEYTYPE, VALUETYPE> aItem)
-  {
-    // it doesn't matter to us
+    return new DefaultTreeItemWithID <KEYTYPE, VALUETYPE> (aParent, aDataID);
   }
 }

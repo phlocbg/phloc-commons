@@ -29,10 +29,10 @@ import org.junit.Test;
 
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.mock.PhlocTestUtils;
-import com.phloc.commons.tree.withid.ITreeItemWithID;
+import com.phloc.commons.tree.withid.DefaultTreeItemWithID;
 
 /**
- * Test class for class {@link TreeWithGlobalUniqueID}.
+ * Test class for class {@link DefaultTreeWithGlobalUniqueID}.
  * 
  * @author philip
  */
@@ -41,16 +41,16 @@ public final class TreeWithGlobalUniqueIDTest
   @Test
   public void testUniqueness ()
   {
-    final TreeWithGlobalUniqueID <String, String> aTestTree = new TreeWithGlobalUniqueID <String, String> ();
-    final ITreeItemWithID <String, String> x1 = aTestTree.getRootItem ().createChildItem ("x1", "1");
+    final DefaultTreeWithGlobalUniqueID <String, String> aTestTree = new DefaultTreeWithGlobalUniqueID <String, String> ();
+    final DefaultTreeItemWithID <String, String> x1 = aTestTree.getRootItem ().createChildItem ("x1", "1");
     x1.createChildItem ("x2", "a");
     x1.createChildItem ("x3", "b");
     x1.createChildItem ("x4", "c");
-    final ITreeItemWithID <String, String> x5 = aTestTree.getRootItem ().createChildItem ("x5", "2");
+    final DefaultTreeItemWithID <String, String> x5 = aTestTree.getRootItem ().createChildItem ("x5", "2");
     x5.createChildItem ("x6", "a");
-    final ITreeItemWithID <String, String> x7 = x5.createChildItem ("x7", "b");
+    final DefaultTreeItemWithID <String, String> x7 = x5.createChildItem ("x7", "b");
     x5.createChildItem ("x8", "c");
-    final ITreeItemWithID <String, String> x9 = aTestTree.getRootItem ().createChildItem ("x9", "3");
+    final DefaultTreeItemWithID <String, String> x9 = aTestTree.getRootItem ().createChildItem ("x9", "3");
     x9.createChildItem ("x10", "a");
     x9.createChildItem ("x11", "b");
     x9.createChildItem ("x12", "c");
@@ -74,10 +74,10 @@ public final class TreeWithGlobalUniqueIDTest
   @Test
   public void testRest ()
   {
-    final TreeWithGlobalUniqueID <String, String> aTestTree = new TreeWithGlobalUniqueID <String, String> ();
-    final ITreeItemWithID <String, String> x1 = aTestTree.getRootItem ().createChildItem ("x1", "1");
+    final DefaultTreeWithGlobalUniqueID <String, String> aTestTree = new DefaultTreeWithGlobalUniqueID <String, String> ();
+    final DefaultTreeItemWithID <String, String> x1 = aTestTree.getRootItem ().createChildItem ("x1", "1");
     x1.createChildItem ("x2", "a");
-    final ITreeItemWithID <String, String> x3 = x1.createChildItem ("x3", "b");
+    final DefaultTreeItemWithID <String, String> x3 = x1.createChildItem ("x3", "b");
     x1.createChildItem ("x4", "c");
 
     // getFactory
@@ -113,8 +113,8 @@ public final class TreeWithGlobalUniqueIDTest
     assertFalse (aTestTree.isItemSameOrDescendant ("x3", "x1"));
 
     // other tree
-    final TreeWithGlobalUniqueID <String, String> aTestTree2 = new TreeWithGlobalUniqueID <String, String> ();
-    final ITreeItemWithID <String, String> x12 = aTestTree2.getRootItem ().createChildItem ("x1", "1");
+    final DefaultTreeWithGlobalUniqueID <String, String> aTestTree2 = new DefaultTreeWithGlobalUniqueID <String, String> ();
+    final DefaultTreeItemWithID <String, String> x12 = aTestTree2.getRootItem ().createChildItem ("x1", "1");
     x12.createChildItem ("x2", "a");
     x12.createChildItem ("x3", "b");
     x12.createChildItem ("x4", "c");
@@ -131,13 +131,13 @@ public final class TreeWithGlobalUniqueIDTest
   @Test
   public void testChildProvder ()
   {
-    final TreeWithGlobalUniqueID <String, String> aTestTree2 = new TreeWithGlobalUniqueID <String, String> ();
+    final DefaultTreeWithGlobalUniqueID <String, String> aTestTree2 = new DefaultTreeWithGlobalUniqueID <String, String> ();
 
     assertEquals (0, aTestTree2.getChildCount (null));
     assertFalse (aTestTree2.hasChildren (null));
     assertTrue (ContainerHelper.isEmpty (aTestTree2.getChildren (null)));
 
-    final ITreeItemWithID <String, String> x12 = aTestTree2.getRootItem ().createChildItem ("x1", "1");
+    final DefaultTreeItemWithID <String, String> x12 = aTestTree2.getRootItem ().createChildItem ("x1", "1");
     x12.createChildItem ("x2", "a");
     x12.createChildItem ("x3", "b");
     x12.createChildItem ("x4", "c");
@@ -154,10 +154,10 @@ public final class TreeWithGlobalUniqueIDTest
   @Test
   public void testChangeParent ()
   {
-    final TreeWithGlobalUniqueID <String, String> aTestTree = new TreeWithGlobalUniqueID <String, String> ();
-    final ITreeItemWithID <String, String> x1 = aTestTree.getRootItem ().createChildItem ("x1", "1");
-    final ITreeItemWithID <String, String> x2 = x1.createChildItem ("x2", "a");
-    final ITreeItemWithID <String, String> x3 = x1.createChildItem ("x3", "b");
+    final DefaultTreeWithGlobalUniqueID <String, String> aTestTree = new DefaultTreeWithGlobalUniqueID <String, String> ();
+    final DefaultTreeItemWithID <String, String> x1 = aTestTree.getRootItem ().createChildItem ("x1", "1");
+    final DefaultTreeItemWithID <String, String> x2 = x1.createChildItem ("x2", "a");
+    final DefaultTreeItemWithID <String, String> x3 = x1.createChildItem ("x3", "b");
 
     assertNotNull (aTestTree.getItemWithID ("x1"));
     assertNotNull (aTestTree.getItemWithID ("x2"));

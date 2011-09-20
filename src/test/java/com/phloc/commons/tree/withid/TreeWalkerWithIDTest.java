@@ -37,7 +37,7 @@ import com.phloc.commons.mutable.MutableInt;
 public final class TreeWalkerWithIDTest
 {
   public static final class MockTreeWalkerCallback extends
-                                                  DefaultHierarchyWalkerCallback <ITreeItemWithID <String, Object>>
+                                                  DefaultHierarchyWalkerCallback <DefaultTreeItemWithID <String, Object>>
   {
     private final MutableInt m_aMI;
 
@@ -47,7 +47,7 @@ public final class TreeWalkerWithIDTest
     }
 
     @Override
-    public void onItemBeforeChildren (final ITreeItemWithID <String, Object> aItem)
+    public void onItemBeforeChildren (final DefaultTreeItemWithID <String, Object> aItem)
     {
       if (getLevel () < 0)
         throw new IllegalStateException ();
@@ -57,7 +57,7 @@ public final class TreeWalkerWithIDTest
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (TreeWalkerWithIDTest.class);
 
-  private static void _fillTreeWithID (final ITreeItemWithID <String, Object> aParentItem,
+  private static void _fillTreeWithID (final DefaultTreeItemWithID <String, Object> aParentItem,
                                        final int nLevels,
                                        final int nItemsPerLevel)
   {
@@ -65,17 +65,17 @@ public final class TreeWalkerWithIDTest
       for (int i = 0; i < nItemsPerLevel; ++i)
       {
         // Ensure that each item has its own unique ID within the subtree!
-        final ITreeItemWithID <String, Object> aChild = aParentItem.createChildItem (Integer.toString (i),
-                                                                                     Double.valueOf (Double.POSITIVE_INFINITY));
+        final DefaultTreeItemWithID <String, Object> aChild = aParentItem.createChildItem (Integer.toString (i),
+                                                                                           Double.valueOf (Double.POSITIVE_INFINITY));
         _fillTreeWithID (aChild, nLevels - 1, nItemsPerLevel);
         assertTrue (aChild.isSameOrChildOf (aParentItem));
         assertFalse (aParentItem.isSameOrChildOf (aChild));
       }
   }
 
-  private static TreeWithID <String, Object> _createTreeWithID (final int nLevels, final int nItemsPerLevel)
+  private static DefaultTreeWithID <String, Object> _createTreeWithID (final int nLevels, final int nItemsPerLevel)
   {
-    final TreeWithID <String, Object> t = new TreeWithID <String, Object> ();
+    final DefaultTreeWithID <String, Object> t = new DefaultTreeWithID <String, Object> ();
     _fillTreeWithID (t.getRootItem (), nLevels, nItemsPerLevel);
     return t;
   }
@@ -127,14 +127,14 @@ public final class TreeWalkerWithIDTest
 
       try
       {
-        TreeWalkerWithID.walkTree ((TreeWithID <String, Object>) null, new MockTreeWalkerCallback (mi));
+        TreeWalkerWithID.walkTree ((DefaultTreeWithID <String, Object>) null, new MockTreeWalkerCallback (mi));
         fail ();
       }
       catch (final NullPointerException ex)
       {}
       try
       {
-        TreeWalkerWithID.walkSubTree ((ITreeItemWithID <String, Object>) null, new MockTreeWalkerCallback (mi));
+        TreeWalkerWithID.walkSubTree ((DefaultTreeItemWithID <String, Object>) null, new MockTreeWalkerCallback (mi));
         fail ();
       }
       catch (final NullPointerException ex)
