@@ -32,7 +32,7 @@ public final class DefaultTreeItemFactoryTest
   public void testBasic ()
   {
     final DefaultTreeItemFactory <String> tif = new DefaultTreeItemFactory <String> ();
-    final ITreeItem <String> root = tif.createRoot ();
+    final DefaultTreeItem <String> root = tif.createRoot ();
     assertNotNull (root);
     assertNotNull (tif.create (root));
   }

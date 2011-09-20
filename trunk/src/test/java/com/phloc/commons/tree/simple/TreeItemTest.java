@@ -25,7 +25,7 @@ import org.junit.Test;
 import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
- * Test class for class {@link TreeItem}.
+ * Test class for class {@link DefaultTreeItem}.
  * 
  * @author philip
  */
@@ -35,9 +35,9 @@ public final class TreeItemTest
   public void testCtor ()
   {
     final DefaultTreeItemFactory <String> tif = new DefaultTreeItemFactory <String> ();
-    final ITreeItem <String> t = tif.createRoot ();
+    final DefaultTreeItem <String> t = tif.createRoot ();
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (t, tif.createRoot ());
-    final ITreeItem <String> c = t.createChildItem ("any");
+    final DefaultTreeItem <String> c = t.createChildItem ("any");
     PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (t, tif.createRoot ());
 
     assertTrue (t.isRootItem ());

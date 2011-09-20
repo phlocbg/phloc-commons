@@ -17,30 +17,11 @@
  */
 package com.phloc.commons.tree.simple;
 
-import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 @NotThreadSafe
-public class TreeItem <VALUETYPE> extends BasicTreeItem <VALUETYPE, ITreeItem <VALUETYPE>> implements ITreeItem <VALUETYPE>
+public abstract class AbstractTreeItemFactory <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> implements
+                                                                                                                 IBasicTreeItemFactory <VALUETYPE, ITEMTYPE>
 {
-  /**
-   * Constructor for root object.
-   */
-  public TreeItem (@Nonnull final ITreeItemFactory <VALUETYPE, ITreeItem <VALUETYPE>> aFactory)
-  {
-    super (aFactory);
-  }
-
-  /**
-   * Constructor for normal elements.
-   * 
-   * @param aParent
-   *        Parent item to use. May never be <code>null</code> since only the
-   *        root has no parent and for the root item a special no-argument
-   *        constructor is present.
-   */
-  public TreeItem (@Nonnull final ITreeItem <VALUETYPE> aParent)
-  {
-    super (aParent);
-  }
+  /* empty */
 }

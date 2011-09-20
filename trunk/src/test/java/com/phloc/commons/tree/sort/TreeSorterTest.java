@@ -26,8 +26,8 @@ import java.util.List;
 import org.junit.Test;
 
 import com.phloc.commons.compare.ComparatorString;
-import com.phloc.commons.tree.simple.ITreeItem;
-import com.phloc.commons.tree.simple.Tree;
+import com.phloc.commons.tree.simple.DefaultTree;
+import com.phloc.commons.tree.simple.DefaultTreeItem;
 import com.phloc.commons.tree.withid.DefaultTreeItemWithID;
 import com.phloc.commons.tree.withid.DefaultTreeWithID;
 
@@ -41,13 +41,13 @@ public final class TreeSorterTest
   @Test
   public void testTree ()
   {
-    final Tree <String> aTree = new Tree <String> ();
+    final DefaultTree <String> aTree = new DefaultTree <String> ();
     assertNotNull (aTree.getRootItem ());
-    final ITreeItem <String> i1 = aTree.getRootItem ().createChildItem ("Windows");
+    final DefaultTreeItem <String> i1 = aTree.getRootItem ().createChildItem ("Windows");
     i1.createChildItem ("sxs");
     i1.createChildItem ("temp");
     i1.createChildItem ("System32");
-    final ITreeItem <String> i2 = aTree.getRootItem ().createChildItem ("Program Files");
+    final DefaultTreeItem <String> i2 = aTree.getRootItem ().createChildItem ("Program Files");
     i2.createChildItem ("Eclipse");
     i2.createChildItem ("Apache Software Foundation");
 
@@ -55,7 +55,7 @@ public final class TreeSorterTest
     TreeSorter.sort (aTree, new ComparatorString ());
 
     assertEquals (2, aTree.getRootItem ().getChildCount ());
-    final List <? extends ITreeItem <String>> aChildren = aTree.getRootItem ().getChildren ();
+    final List <? extends DefaultTreeItem <String>> aChildren = aTree.getRootItem ().getChildren ();
     assertSame (i2, aChildren.get (0));
     assertSame (i1, aChildren.get (1));
     // Test Apache (children must also be sorted)

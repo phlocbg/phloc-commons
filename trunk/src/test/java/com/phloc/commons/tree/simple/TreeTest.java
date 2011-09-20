@@ -31,20 +31,20 @@ import com.phloc.commons.compare.CompareUtils;
 import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
- * Test class for class {@link Tree}.
+ * Test class for class {@link DefaultTree}.
  * 
  * @author philip
  */
 public final class TreeTest
 {
   private static final class ComparatorTreeItem <T extends Comparable <? super T>> extends
-                                                                                   AbstractComparator <ITreeItem <T>>
+                                                                                   AbstractComparator <DefaultTreeItem <T>>
   {
     ComparatorTreeItem ()
     {}
 
     @Override
-    protected int mainCompare (final ITreeItem <T> aItem1, final ITreeItem <T> aItem2)
+    protected int mainCompare (final DefaultTreeItem <T> aItem1, final DefaultTreeItem <T> aItem2)
     {
       return CompareUtils.nullSafeCompare (aItem1.getData (), aItem2.getData ());
     }
@@ -53,10 +53,10 @@ public final class TreeTest
   @Test
   public void testBasic ()
   {
-    final Tree <String> t = new Tree <String> ();
+    final DefaultTree <String> t = new DefaultTree <String> ();
 
     // root item
-    final ITreeItem <String> ti = t.getRootItem ().createChildItem ("Hallo");
+    final DefaultTreeItem <String> ti = t.getRootItem ().createChildItem ("Hallo");
     assertNotNull (ti);
     assertEquals ("Hallo", ti.getData ());
     assertFalse (ti.hasChildren ());
@@ -65,7 +65,7 @@ public final class TreeTest
     assertSame (t.getRootItem (), ti.getParent ());
 
     // level 1
-    final ITreeItem <String> ti1 = ti.createChildItem ("Welt");
+    final DefaultTreeItem <String> ti1 = ti.createChildItem ("Welt");
     assertNotNull (ti1);
     assertEquals ("Welt", ti1.getData ());
     assertFalse (ti1.hasChildren ());
@@ -81,20 +81,20 @@ public final class TreeTest
   @Test
   public void testEqualsHashCode ()
   {
-    final Tree <String> t = new Tree <String> ();
-    PhlocTestUtils.testDefaultImplementationWithEqualContentObject (t, new Tree <String> ());
+    final DefaultTree <String> t = new DefaultTree <String> ();
+    PhlocTestUtils.testDefaultImplementationWithEqualContentObject (t, new DefaultTree <String> ());
     t.getRootItem ().createChildItem ("data");
-    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (t, new Tree <String> ());
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (t, new DefaultTree <String> ());
   }
 
   @Test
   public void testDelete ()
   {
-    final Tree <String> t = new Tree <String> ();
+    final DefaultTree <String> t = new DefaultTree <String> ();
 
     // root item
-    final ITreeItem <String> ti = t.getRootItem ().createChildItem ("Hallo");
-    final ITreeItem <String> ti1 = ti.createChildItem ("Welt");
+    final DefaultTreeItem <String> ti = t.getRootItem ().createChildItem ("Hallo");
+    final DefaultTreeItem <String> ti1 = ti.createChildItem ("Welt");
 
     // item not present
     assertTrue (ti.removeChild (ti).isUnchanged ());
@@ -107,10 +107,10 @@ public final class TreeTest
   @Test
   public void testReorder ()
   {
-    final Tree <String> t = new Tree <String> ();
+    final DefaultTree <String> t = new DefaultTree <String> ();
 
     // root item
-    final ITreeItem <String> ti = t.getRootItem ().createChildItem ("Hallo");
+    final DefaultTreeItem <String> ti = t.getRootItem ().createChildItem ("Hallo");
 
     // no items yet....
     assertFalse (ti.hasChildren ());
@@ -139,12 +139,12 @@ public final class TreeTest
   @Test
   public void testChangeParent ()
   {
-    final Tree <String> t1 = new Tree <String> ();
-    final ITreeItem <String> t1i1 = t1.getRootItem ().createChildItem ("Hallo");
-    final ITreeItem <String> t1i2 = t1i1.createChildItem ("Hallo");
-    final Tree <String> t2 = new Tree <String> ();
-    final ITreeItem <String> t2i1 = t2.getRootItem ().createChildItem ("Hallo");
-    final ITreeItem <String> t2i2 = t2i1.createChildItem ("Hallo");
+    final DefaultTree <String> t1 = new DefaultTree <String> ();
+    final DefaultTreeItem <String> t1i1 = t1.getRootItem ().createChildItem ("Hallo");
+    final DefaultTreeItem <String> t1i2 = t1i1.createChildItem ("Hallo");
+    final DefaultTree <String> t2 = new DefaultTree <String> ();
+    final DefaultTreeItem <String> t2i1 = t2.getRootItem ().createChildItem ("Hallo");
+    final DefaultTreeItem <String> t2i2 = t2i1.createChildItem ("Hallo");
 
     // cannot work
     assertTrue (t2i1.changeParent (t2i1).isFailure ());
@@ -169,7 +169,7 @@ public final class TreeTest
   @Test
   public void testCtor ()
   {
-    final Tree <String> t = new Tree <String> ();
+    final DefaultTree <String> t = new DefaultTree <String> ();
     assertNotNull (t.getRootItem ());
     assertTrue (t.toString ().length () > 0);
   }

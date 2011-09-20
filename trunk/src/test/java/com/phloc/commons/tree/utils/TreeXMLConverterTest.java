@@ -30,8 +30,8 @@ import com.phloc.commons.microdom.serialize.MicroReader;
 import com.phloc.commons.microdom.utils.MicroUtils;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 import com.phloc.commons.name.MockHasName;
-import com.phloc.commons.tree.simple.ITreeItem;
-import com.phloc.commons.tree.simple.Tree;
+import com.phloc.commons.tree.simple.DefaultTree;
+import com.phloc.commons.tree.simple.DefaultTreeItem;
 import com.phloc.commons.tree.sort.ComparatorTreeItemValueComparable;
 import com.phloc.commons.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
 
@@ -64,7 +64,7 @@ public final class TreeXMLConverterTest extends AbstractPhlocTestCase
 
     // convert document to tree
     final DefaultTreeWithGlobalUniqueID <String, MockHasName> t1 = TreeXMLConverter.getXMLAsTreeWithUniqueStringID (aDoc1,
-                                                                                                             new MockHasNameConverter ());
+                                                                                                                    new MockHasNameConverter ());
     assertNotNull (t1);
 
     // convert tree again to document
@@ -73,7 +73,7 @@ public final class TreeXMLConverterTest extends AbstractPhlocTestCase
 
     // and convert the document again to a tree
     DefaultTreeWithGlobalUniqueID <String, MockHasName> t2 = TreeXMLConverter.getXMLAsTreeWithUniqueStringID (aDoc2,
-                                                                                                       new MockHasNameConverter ());
+                                                                                                              new MockHasNameConverter ());
     assertNotNull (t2);
     assertEquals (t1, t2);
 
@@ -93,12 +93,12 @@ public final class TreeXMLConverterTest extends AbstractPhlocTestCase
   @Test
   public void testTree ()
   {
-    final Tree <MockHasName> aTree = new Tree <MockHasName> ();
+    final DefaultTree <MockHasName> aTree = new DefaultTree <MockHasName> ();
     aTree.getRootItem ().createChildItem (new MockHasName ("name2"));
     aTree.getRootItem ().createChildItem (new MockHasName ("name1"));
 
     TreeXMLConverter.getTreeAsXML (aTree,
-                                   new ComparatorTreeItemValueComparable <MockHasName, ITreeItem <MockHasName>> (),
+                                   new ComparatorTreeItemValueComparable <MockHasName, DefaultTreeItem <MockHasName>> (),
                                    new MockHasNameConverter ());
   }
 }

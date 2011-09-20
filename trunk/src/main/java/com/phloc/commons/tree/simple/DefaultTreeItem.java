@@ -20,24 +20,27 @@ package com.phloc.commons.tree.simple;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
-/**
- * Root class for a simple tree. The elements of the tree are not sorted by any
- * means.
- * 
- * @param <VALUETYPE>
- *        The type of the elements contained in the tree
- * @author philip
- */
 @NotThreadSafe
-public class Tree <VALUETYPE> extends BasicTree <VALUETYPE, ITreeItem <VALUETYPE>>
+public class DefaultTreeItem <VALUETYPE> extends BasicTreeItem <VALUETYPE, DefaultTreeItem <VALUETYPE>>
 {
-  public Tree ()
-  {
-    this (new DefaultTreeItemFactory <VALUETYPE> ());
-  }
-
-  public Tree (@Nonnull final ITreeItemFactory <VALUETYPE, ITreeItem <VALUETYPE>> aFactory)
+  /**
+   * Constructor for root object.
+   */
+  public DefaultTreeItem (@Nonnull final IBasicTreeItemFactory <VALUETYPE, DefaultTreeItem <VALUETYPE>> aFactory)
   {
     super (aFactory);
+  }
+
+  /**
+   * Constructor for normal elements.
+   * 
+   * @param aParent
+   *        Parent item to use. May never be <code>null</code> since only the
+   *        root has no parent and for the root item a special no-argument
+   *        constructor is present.
+   */
+  public DefaultTreeItem (@Nonnull final DefaultTreeItem <VALUETYPE> aParent)
+  {
+    super (aParent);
   }
 }

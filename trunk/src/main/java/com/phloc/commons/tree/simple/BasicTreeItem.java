@@ -41,7 +41,7 @@ public class BasicTreeItem <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYP
                                                                                               IBasicTreeItem <VALUETYPE, ITEMTYPE>
 {
   // item factory
-  private final ITreeItemFactory <VALUETYPE, ITEMTYPE> m_aFactory;
+  private final IBasicTreeItemFactory <VALUETYPE, ITEMTYPE> m_aFactory;
 
   // parent tree item
   private ITEMTYPE m_aParent;
@@ -55,7 +55,7 @@ public class BasicTreeItem <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYP
   /**
    * Constructor for root object.
    */
-  public BasicTreeItem (@Nonnull final ITreeItemFactory <VALUETYPE, ITEMTYPE> aFactory)
+  public BasicTreeItem (@Nonnull final IBasicTreeItemFactory <VALUETYPE, ITEMTYPE> aFactory)
   {
     if (aFactory == null)
       throw new NullPointerException ("factory");
@@ -86,7 +86,7 @@ public class BasicTreeItem <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYP
   }
 
   @Nonnull
-  public final ITreeItemFactory <VALUETYPE, ITEMTYPE> getFactory ()
+  public final IBasicTreeItemFactory <VALUETYPE, ITEMTYPE> getFactory ()
   {
     return m_aFactory;
   }
