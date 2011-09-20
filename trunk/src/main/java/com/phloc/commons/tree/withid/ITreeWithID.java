@@ -15,24 +15,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.tree;
+package com.phloc.commons.tree.withid;
 
-import javax.annotation.Nonnull;
+import com.phloc.commons.tree.IBasicTree;
 
 /**
- * Base interface for a tree.
+ * Base interface for a tree with ID
  * 
- * @param <ITEMTYPE>
- *        The implementation type of the elements contained in the tree
  * @author philip
+ * @param <KEYTYPE>
+ *        tree item key type
+ * @param <VALUETYPE>
+ *        tree item value type
+ * @param <ITEMTYPE>
+ *        tree item implementation type
  */
-public interface IBasicTree <ITEMTYPE extends IBasicTreeItem <?, ?>>
+public interface ITreeWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> extends
+                                                                                                                   IBasicTree <ITEMTYPE>
 {
-  /**
-   * @return The root item of the tree. Never <code>null</code>. The root item
-   *         should not be displayed but it is the parent node of all displayed
-   *         root items.
-   */
-  @Nonnull
-  ITEMTYPE getRootItem ();
+  /* empty */
 }

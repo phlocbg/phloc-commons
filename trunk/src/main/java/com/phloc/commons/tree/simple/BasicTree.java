@@ -22,7 +22,6 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
-import com.phloc.commons.tree.IBasicTree;
 
 /**
  * Root class for a simple tree. The elements of the tree are not sorted by any
@@ -33,7 +32,8 @@ import com.phloc.commons.tree.IBasicTree;
  * @author philip
  */
 @NotThreadSafe
-public class BasicTree <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> implements IBasicTree <ITEMTYPE>
+public class BasicTree <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> implements
+                                                                                     ITree <VALUETYPE, ITEMTYPE>
 {
   // Root item.
   private final ITEMTYPE m_aRoot;

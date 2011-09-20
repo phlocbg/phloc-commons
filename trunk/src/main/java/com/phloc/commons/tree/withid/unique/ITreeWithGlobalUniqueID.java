@@ -25,8 +25,8 @@ import javax.annotation.Nullable;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.parent.IChildrenProviderWithID;
 import com.phloc.commons.parent.IChildrenProviderWithUniqueID;
-import com.phloc.commons.tree.IBasicTree;
 import com.phloc.commons.tree.withid.ITreeItemWithID;
+import com.phloc.commons.tree.withid.ITreeWithID;
 
 /**
  * A specialized version of the tree, where each item is required to have a
@@ -42,7 +42,7 @@ import com.phloc.commons.tree.withid.ITreeItemWithID;
  *        The type of the tree item that will be stored in this tree.
  */
 public interface ITreeWithGlobalUniqueID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> extends
-                                                                                                                               IBasicTree <ITEMTYPE>,
+                                                                                                                               ITreeWithID <KEYTYPE, VALUETYPE, ITEMTYPE>,
                                                                                                                                IChildrenProviderWithID <KEYTYPE, ITEMTYPE>,
                                                                                                                                IChildrenProviderWithUniqueID <KEYTYPE, ITEMTYPE>
 {
