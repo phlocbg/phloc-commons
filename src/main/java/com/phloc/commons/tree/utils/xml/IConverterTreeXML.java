@@ -15,21 +15,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.tree.simple;
-
-import com.phloc.commons.tree.IBasicTree;
+package com.phloc.commons.tree.utils.xml;
 
 /**
- * Base interface for a simple tree
+ * This interface collects both unidirectional converters and creates a
+ * bidirectional converter.
  * 
  * @author philip
  * @param <VALUETYPE>
- *        tree item value type
- * @param <ITEMTYPE>
- *        tree item implementation type
  */
-public interface ITree <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> extends
-                                                                                     IBasicTree <VALUETYPE, ITEMTYPE>
+public interface IConverterTreeXML <VALUETYPE> extends
+                                               IConverterTreeItemToMicroNode <VALUETYPE>,
+                                               IConverterMicroNodeToTreeItem <VALUETYPE>
 {
   /* empty */
 }

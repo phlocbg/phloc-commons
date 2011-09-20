@@ -29,8 +29,8 @@ import org.junit.Test;
 
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.mock.PhlocTestUtils;
-import com.phloc.commons.tree.sort.ComparatorTreeItemKeyComparable;
-import com.phloc.commons.tree.sort.ComparatorTreeItemValueComparable;
+import com.phloc.commons.tree.utils.sort.ComparatorTreeItemKeyComparable;
+import com.phloc.commons.tree.utils.sort.ComparatorTreeItemValueComparable;
 
 /**
  * Test class for class {@link DefaultTreeItemWithID}.

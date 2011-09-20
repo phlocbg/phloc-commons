@@ -15,21 +15,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.tree.simple;
+package com.phloc.commons.tree.utils.xml;
 
-import com.phloc.commons.tree.IBasicTree;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.phloc.commons.microdom.IMicroElement;
 
 /**
- * Base interface for a simple tree
+ * Interface used to convert a single tree item data value to a micro node.
  * 
  * @author philip
  * @param <VALUETYPE>
- *        tree item value type
- * @param <ITEMTYPE>
- *        tree item implementation type
+ *        The type of the tree item data
  */
-public interface ITree <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> extends
-                                                                                     IBasicTree <VALUETYPE, ITEMTYPE>
+public interface IConverterTreeItemToMicroNode <VALUETYPE>
 {
-  /* empty */
+  void appendDataValue (@Nonnull IMicroElement eDataElement, @Nullable VALUETYPE aObject);
 }

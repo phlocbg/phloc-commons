@@ -22,11 +22,13 @@ import javax.annotation.Nonnull;
 /**
  * Base interface for a tree.
  * 
+ * @param <VALUETYPE>
+ *        tree item value type
  * @param <ITEMTYPE>
- *        The implementation type of the elements contained in the tree
+ *        tree item implementation type
  * @author philip
  */
-public interface IBasicTree <ITEMTYPE extends IBasicTreeItem <?, ?>>
+public interface IBasicTree <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>>
 {
   /**
    * @return The root item of the tree. Never <code>null</code>. The root item

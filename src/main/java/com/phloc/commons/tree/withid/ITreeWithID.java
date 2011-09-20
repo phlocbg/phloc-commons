@@ -31,7 +31,7 @@ import com.phloc.commons.tree.IBasicTree;
  *        tree item implementation type
  */
 public interface ITreeWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> extends
-                                                                                                                   IBasicTree <ITEMTYPE>
+                                                                                                                   IBasicTree <VALUETYPE, ITEMTYPE>
 {
   /* empty */
 }
