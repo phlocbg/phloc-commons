@@ -30,7 +30,9 @@ import com.phloc.commons.tree.IABasicTreeItem;
  * 
  * @author philip
  * @param <VALUETYPE>
- *        Data type of the items.
+ *        tree item value type
+ * @param <ITEMTYPE>
+ *        tree item implementation type
  */
 public interface IBasicTreeItem <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> extends
                                                                                                    IABasicTreeItem <VALUETYPE, ITEMTYPE>
@@ -39,7 +41,7 @@ public interface IBasicTreeItem <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VAL
    * @return The factory used to create instances of this interface.
    */
   @Nonnull
-  ITreeItemFactory <VALUETYPE, ITEMTYPE> getFactory ();
+  IBasicTreeItemFactory <VALUETYPE, ITEMTYPE> getFactory ();
 
   /**
    * Add an existing child to this tree item. Use only internally!

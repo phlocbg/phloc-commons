@@ -17,14 +17,27 @@
  */
 package com.phloc.commons.tree.simple;
 
+import javax.annotation.Nonnull;
+import javax.annotation.concurrent.NotThreadSafe;
+
 /**
- * Base interface both for normal tree items and tree items with ID.
+ * Base class of {@link BasicTree} using {@link DefaultTreeItem} as the item
+ * implementation class
  * 
- * @author philip
  * @param <VALUETYPE>
- *        Data type of the items.
+ *        The type of the elements contained in the tree
+ * @author philip
  */
-public interface ITreeItem <VALUETYPE> extends IBasicTreeItem <VALUETYPE, ITreeItem <VALUETYPE>>
+@NotThreadSafe
+public class DefaultTree <VALUETYPE> extends BasicTree <VALUETYPE, DefaultTreeItem <VALUETYPE>>
 {
-  /* empty */
+  public DefaultTree ()
+  {
+    this (new DefaultTreeItemFactory <VALUETYPE> ());
+  }
+
+  public DefaultTree (@Nonnull final IBasicTreeItemFactory <VALUETYPE, DefaultTreeItem <VALUETYPE>> aFactory)
+  {
+    super (aFactory);
+  }
 }

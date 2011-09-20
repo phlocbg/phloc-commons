@@ -17,11 +17,13 @@
  */
 package com.phloc.commons.tree;
 
+import javax.annotation.Nonnull;
+
 /**
  * Base interface for a tree.
  * 
  * @param <ITEMTYPE>
- *        The type of the elements contained in the tree
+ *        The implementation type of the elements contained in the tree
  * @author philip
  */
 public interface IBasicTree <ITEMTYPE extends IABasicTreeItem <?, ?>>
@@ -31,5 +33,6 @@ public interface IBasicTree <ITEMTYPE extends IABasicTreeItem <?, ?>>
    *         should not be displayed but it is the parent node of all displayed
    *         root items.
    */
+  @Nonnull
   ITEMTYPE getRootItem ();
 }

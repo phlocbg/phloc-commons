@@ -38,21 +38,21 @@ public final class TreeWalkerDynamicTest
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (TreeWalkerDynamicTest.class);
 
-  private static void _fillTree (final ITreeItem <String> aParentItem, final int nLevels, final int nItemsPerLevel)
+  private static void _fillTree (final DefaultTreeItem <String> aParentItem, final int nLevels, final int nItemsPerLevel)
   {
     if (nLevels > 0)
       for (int i = 0; i < nItemsPerLevel; ++i)
       {
-        final ITreeItem <String> aChild = aParentItem.createChildItem ("any");
+        final DefaultTreeItem <String> aChild = aParentItem.createChildItem ("any");
         _fillTree (aChild, nLevels - 1, nItemsPerLevel);
         assertTrue (aChild.isSameOrChildOf (aParentItem));
         assertFalse (aParentItem.isSameOrChildOf (aChild));
       }
   }
 
-  private static Tree <String> _createTree (final int nLevels, final int nItemsPerLevel)
+  private static DefaultTree <String> _createTree (final int nLevels, final int nItemsPerLevel)
   {
-    final Tree <String> t = new Tree <String> ();
+    final DefaultTree <String> t = new DefaultTree <String> ();
     _fillTree (t.getRootItem (), nLevels, nItemsPerLevel);
     return t;
   }
@@ -83,10 +83,10 @@ public final class TreeWalkerDynamicTest
       // count at before children
       final MutableInt mi = new MutableInt ();
       TreeWalkerDynamic.walkTree (_createTree (nLevel, nItemsPerLevel),
-                                  new DefaultHierarchyWalkerDynamicCallback <ITreeItem <String>> ()
+                                  new DefaultHierarchyWalkerDynamicCallback <DefaultTreeItem <String>> ()
                                   {
                                     @Override
-                                    public EHierarchyCallbackReturn onItemBeforeChildren (final ITreeItem <String> aItem)
+                                    public EHierarchyCallbackReturn onItemBeforeChildren (final DefaultTreeItem <String> aItem)
                                     {
                                       if (getLevel () < 0)
                                         throw new IllegalStateException ();
@@ -99,10 +99,10 @@ public final class TreeWalkerDynamicTest
       // count at before children
       mi.set (0);
       TreeWalkerDynamic.walkSubTree (_createTree (nLevel, nItemsPerLevel).getRootItem (),
-                                     new DefaultHierarchyWalkerDynamicCallback <ITreeItem <String>> ()
+                                     new DefaultHierarchyWalkerDynamicCallback <DefaultTreeItem <String>> ()
                                      {
                                        @Override
-                                       public EHierarchyCallbackReturn onItemBeforeChildren (final ITreeItem <String> aItem)
+                                       public EHierarchyCallbackReturn onItemBeforeChildren (final DefaultTreeItem <String> aItem)
                                        {
                                          if (getLevel () < 0)
                                            throw new IllegalStateException ();
@@ -115,10 +115,10 @@ public final class TreeWalkerDynamicTest
       // count at after children
       mi.set (0);
       TreeWalkerDynamic.walkTree (_createTree (nLevel, nItemsPerLevel),
-                                  new DefaultHierarchyWalkerDynamicCallback <ITreeItem <String>> ()
+                                  new DefaultHierarchyWalkerDynamicCallback <DefaultTreeItem <String>> ()
                                   {
                                     @Override
-                                    public EHierarchyCallbackReturn onItemAfterChildren (final ITreeItem <String> aItem)
+                                    public EHierarchyCallbackReturn onItemAfterChildren (final DefaultTreeItem <String> aItem)
                                     {
                                       if (getLevel () < 0)
                                         throw new IllegalStateException ();
@@ -131,10 +131,10 @@ public final class TreeWalkerDynamicTest
       // count at after children
       mi.set (0);
       TreeWalkerDynamic.walkSubTree (_createTree (nLevel, nItemsPerLevel).getRootItem (),
-                                     new DefaultHierarchyWalkerDynamicCallback <ITreeItem <String>> ()
+                                     new DefaultHierarchyWalkerDynamicCallback <DefaultTreeItem <String>> ()
                                      {
                                        @Override
-                                       public EHierarchyCallbackReturn onItemAfterChildren (final ITreeItem <String> aItem)
+                                       public EHierarchyCallbackReturn onItemAfterChildren (final DefaultTreeItem <String> aItem)
                                        {
                                          if (getLevel () < 0)
                                            throw new IllegalStateException ();

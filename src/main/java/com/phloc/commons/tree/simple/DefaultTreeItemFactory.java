@@ -20,20 +20,28 @@ package com.phloc.commons.tree.simple;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
+/**
+ * Implementation of the {@link IBasicTreeItemFactory} for
+ * {@link DefaultTreeItem} implementation
+ * 
+ * @author philip
+ * @param <VALUETYPE>
+ */
 @NotThreadSafe
-public class DefaultTreeItemFactory <VALUETYPE> implements ITreeItemFactory <VALUETYPE, ITreeItem <VALUETYPE>>
+public class DefaultTreeItemFactory <VALUETYPE> extends
+                                                AbstractTreeItemFactory <VALUETYPE, DefaultTreeItem <VALUETYPE>>
 {
   @Nonnull
-  public ITreeItem <VALUETYPE> createRoot ()
+  public DefaultTreeItem <VALUETYPE> createRoot ()
   {
-    return new TreeItem <VALUETYPE> (this);
+    return new DefaultTreeItem <VALUETYPE> (this);
   }
 
   @Nonnull
-  public ITreeItem <VALUETYPE> create (@Nonnull final ITreeItem <VALUETYPE> aParent)
+  public DefaultTreeItem <VALUETYPE> create (@Nonnull final DefaultTreeItem <VALUETYPE> aParent)
   {
     if (aParent == null)
       throw new NullPointerException ("parent");
-    return new TreeItem <VALUETYPE> (aParent);
+    return new DefaultTreeItem <VALUETYPE> (aParent);
   }
 }

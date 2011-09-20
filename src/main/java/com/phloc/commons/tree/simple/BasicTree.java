@@ -33,12 +33,12 @@ import com.phloc.commons.tree.IBasicTree;
  * @author philip
  */
 @NotThreadSafe
-public class BasicTree <VALUETYPE, THISTYPE extends IBasicTreeItem <VALUETYPE, THISTYPE>> implements IBasicTree <THISTYPE>
+public class BasicTree <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> implements IBasicTree <ITEMTYPE>
 {
   // Root item.
-  private final THISTYPE m_aRoot;
+  private final ITEMTYPE m_aRoot;
 
-  public BasicTree (@Nonnull final ITreeItemFactory <VALUETYPE, THISTYPE> aFactory)
+  public BasicTree (@Nonnull final IBasicTreeItemFactory <VALUETYPE, ITEMTYPE> aFactory)
   {
     if (aFactory == null)
       throw new NullPointerException ("factory");
@@ -48,7 +48,7 @@ public class BasicTree <VALUETYPE, THISTYPE extends IBasicTreeItem <VALUETYPE, T
   }
 
   @Nonnull
-  public final THISTYPE getRootItem ()
+  public final ITEMTYPE getRootItem ()
   {
     return m_aRoot;
   }

@@ -19,11 +19,19 @@ package com.phloc.commons.tree.simple;
 
 import com.phloc.commons.factory.IHierarchicalFactory;
 import com.phloc.commons.factory.IHierarchicalRootFactory;
-import com.phloc.commons.tree.IABasicTreeItem;
 
-public interface ITreeItemFactory <VALUETYPE, ITEMTYPE extends IABasicTreeItem <VALUETYPE, ITEMTYPE>> extends
-                                                                                                      IHierarchicalFactory <ITEMTYPE>,
-                                                                                                      IHierarchicalRootFactory <ITEMTYPE>
+/**
+ * Interface for a tree item factory
+ * 
+ * @author philip
+ * @param <VALUETYPE>
+ *        item value type
+ * @param <ITEMTYPE>
+ *        item implementation type
+ */
+public interface IBasicTreeItemFactory <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> extends
+                                                                                                          IHierarchicalFactory <ITEMTYPE>,
+                                                                                                          IHierarchicalRootFactory <ITEMTYPE>
 {
   /* empty */
 }
