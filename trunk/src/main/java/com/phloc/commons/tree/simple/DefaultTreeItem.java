@@ -20,6 +20,12 @@ package com.phloc.commons.tree.simple;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
+/**
+ * Default implementation of the {@link ITreeItem} interface
+ * 
+ * @author philip
+ * @param <VALUETYPE>
+ */
 @NotThreadSafe
 public class DefaultTreeItem <VALUETYPE> extends BasicTreeItem <VALUETYPE, DefaultTreeItem <VALUETYPE>>
 {

@@ -24,12 +24,24 @@ import javax.annotation.Nonnull;
 import com.phloc.commons.compare.AbstractComparator;
 import com.phloc.commons.tree.withid.ITreeItemWithID;
 
-public final class ComparatorTreeItemKey <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> extends
-                                                                                                                               AbstractComparator <ITEMTYPE>
+/**
+ * Comparator for sorting {@link ITreeItemWithID} items by their ID using an
+ * explicit {@link Comparator}.
+ * 
+ * @author philip
+ * @param <KEYTYPE>
+ *        tree item key type
+ * @param <VALUETYPE>
+ *        tree item value type
+ * @param <ITEMTYPE>
+ *        tree item implementation type
+ */
+public class ComparatorTreeItemID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> extends
+                                                                                                                        AbstractComparator <ITEMTYPE>
 {
   private final Comparator <? super KEYTYPE> m_aKeyComparator;
 
-  public ComparatorTreeItemKey (@Nonnull final Comparator <? super KEYTYPE> aKeyComparator)
+  public ComparatorTreeItemID (@Nonnull final Comparator <? super KEYTYPE> aKeyComparator)
   {
     if (aKeyComparator == null)
       throw new NullPointerException ("keyComparator");
@@ -37,7 +49,7 @@ public final class ComparatorTreeItemKey <KEYTYPE, VALUETYPE, ITEMTYPE extends I
   }
 
   @Override
-  protected int mainCompare (@Nonnull final ITEMTYPE aTreeItem1, @Nonnull final ITEMTYPE aTreeItem2)
+  protected final int mainCompare (@Nonnull final ITEMTYPE aTreeItem1, @Nonnull final ITEMTYPE aTreeItem2)
   {
     return m_aKeyComparator.compare (aTreeItem1.getID (), aTreeItem2.getID ());
   }

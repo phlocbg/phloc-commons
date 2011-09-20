@@ -26,7 +26,7 @@ import com.phloc.commons.state.EChange;
 import com.phloc.commons.tree.IBasicTreeItem;
 
 /**
- * Base interface both for normal tree items and tree items with ID.
+ * Base interface for simple tree items
  * 
  * @author philip
  * @param <VALUETYPE>

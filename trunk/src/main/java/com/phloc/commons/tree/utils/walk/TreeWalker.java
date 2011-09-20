@@ -25,7 +25,7 @@ import com.phloc.commons.hierarchy.IHierarchyWalkerCallback;
 import com.phloc.commons.parent.IChildrenProvider;
 import com.phloc.commons.parent.impl.ChildrenProviderHasChildren;
 import com.phloc.commons.tree.IBasicTree;
-import com.phloc.commons.tree.simple.ITreeItem;
+import com.phloc.commons.tree.IBasicTreeItem;
 
 /**
  * Iterate all nodes of a tree, or a tree element using a custom callback
@@ -43,59 +43,61 @@ public final class TreeWalker
   private TreeWalker ()
   {}
 
-  private static <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> void _walkTree (@Nonnull final ITEMTYPE aTreeItem,
-                                                                                               @Nonnull final IChildrenProvider <ITEMTYPE> aChildrenResolver,
-                                                                                               @Nonnull final IHierarchyWalkerCallback <? super ITEMTYPE> aCallback)
+  private static <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> void _walkTree (@Nonnull final ITEMTYPE aTreeItem,
+                                                                                                    @Nonnull final IChildrenProvider <ITEMTYPE> aChildrenProvider,
+                                                                                                    @Nonnull final IHierarchyWalkerCallback <? super ITEMTYPE> aCallback)
   {
     aCallback.onItemBeforeChildren (aTreeItem);
-    if (aChildrenResolver.hasChildren (aTreeItem))
-      for (final ITEMTYPE aChildItem : aChildrenResolver.getChildren (aTreeItem))
+    if (aChildrenProvider.hasChildren (aTreeItem))
+      for (final ITEMTYPE aChildItem : aChildrenProvider.getChildren (aTreeItem))
       {
         aCallback.onLevelDown ();
         // recursive call
-        _walkTree (aChildItem, aChildrenResolver, aCallback);
+        _walkTree (aChildItem, aChildrenProvider, aCallback);
         aCallback.onLevelUp ();
       }
     aCallback.onItemAfterChildren (aTreeItem);
   }
 
-  public static <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> void walkTree (@Nonnull final IBasicTree <VALUETYPE, ITEMTYPE> aTree,
-                                                                                             @Nonnull final IHierarchyWalkerCallback <? super ITEMTYPE> aCallback)
+  public static <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> void walkTree (@Nonnull final IBasicTree <VALUETYPE, ITEMTYPE> aTree,
+                                                                                                  @Nonnull final IHierarchyWalkerCallback <? super ITEMTYPE> aCallback)
   {
     walkTree (aTree, new ChildrenProviderHasChildren <ITEMTYPE> (), aCallback);
   }
 
-  public static <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> void walkTree (@Nonnull final IBasicTree <VALUETYPE, ITEMTYPE> aTree,
-                                                                                             @Nonnull final IChildrenProvider <ITEMTYPE> aChildrenResolver,
-                                                                                             @Nonnull final IHierarchyWalkerCallback <? super ITEMTYPE> aCallback)
+  public static <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> void walkTree (@Nonnull final IBasicTree <VALUETYPE, ITEMTYPE> aTree,
+                                                                                                  @Nonnull final IChildrenProvider <ITEMTYPE> aChildrenProvider,
+                                                                                                  @Nonnull final IHierarchyWalkerCallback <? super ITEMTYPE> aCallback)
   {
     if (aTree == null)
       throw new NullPointerException ("tree");
 
-    walkSubTree (aTree.getRootItem (), aChildrenResolver, aCallback);
+    walkSubTree (aTree.getRootItem (), aChildrenProvider, aCallback);
   }
 
-  public static <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> void walkSubTree (@Nonnull final ITEMTYPE aTreeItem,
-                                                                                                @Nonnull final IHierarchyWalkerCallback <? super ITEMTYPE> aCallback)
+  public static <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> void walkSubTree (@Nonnull final ITEMTYPE aTreeItem,
+                                                                                                     @Nonnull final IHierarchyWalkerCallback <? super ITEMTYPE> aCallback)
   {
     walkSubTree (aTreeItem, new ChildrenProviderHasChildren <ITEMTYPE> (), aCallback);
   }
 
-  public static <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> void walkSubTree (@Nonnull final ITEMTYPE aTreeItem,
-                                                                                                @Nonnull final IChildrenProvider <ITEMTYPE> aChildrenResolver,
-                                                                                                @Nonnull final IHierarchyWalkerCallback <? super ITEMTYPE> aCallback)
+  public static <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> void walkSubTree (@Nonnull final ITEMTYPE aTreeItem,
+                                                                                                     @Nonnull final IChildrenProvider <ITEMTYPE> aChildrenProvider,
+                                                                                                     @Nonnull final IHierarchyWalkerCallback <? super ITEMTYPE> aCallback)
   {
     if (aTreeItem == null)
       throw new NullPointerException ("treeItem");
+    if (aChildrenProvider == null)
+      throw new NullPointerException ("childrenProvider");
     if (aCallback == null)
       throw new NullPointerException ("callback");
 
     aCallback.begin ();
     try
     {
-      if (aChildrenResolver.hasChildren (aTreeItem))
-        for (final ITEMTYPE aChildItem : aChildrenResolver.getChildren (aTreeItem))
-          _walkTree (aChildItem, aChildrenResolver, aCallback);
+      if (aChildrenProvider.hasChildren (aTreeItem))
+        for (final ITEMTYPE aChildItem : aChildrenProvider.getChildren (aTreeItem))
+          _walkTree (aChildItem, aChildrenProvider, aCallback);
     }
     finally
     {

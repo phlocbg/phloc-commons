@@ -37,8 +37,8 @@ import com.phloc.commons.compare.ESortOrder;
  * @param <DATA2TYPE>
  *        pair second type
  */
-public final class ComparatorPairSecond <DATA1TYPE, DATA2TYPE extends Comparable <? super DATA2TYPE>> extends
-                                                                                                      AbstractComparator <IReadonlyPair <DATA1TYPE, DATA2TYPE>>
+public class ComparatorPairSecond <DATA1TYPE, DATA2TYPE extends Comparable <? super DATA2TYPE>> extends
+                                                                                                AbstractComparator <IReadonlyPair <DATA1TYPE, DATA2TYPE>>
 {
   public ComparatorPairSecond ()
   {
@@ -51,8 +51,8 @@ public final class ComparatorPairSecond <DATA1TYPE, DATA2TYPE extends Comparable
   }
 
   @Override
-  protected int mainCompare (@Nonnull final IReadonlyPair <DATA1TYPE, DATA2TYPE> aPair1,
-                             @Nonnull final IReadonlyPair <DATA1TYPE, DATA2TYPE> aPair2)
+  protected final int mainCompare (@Nonnull final IReadonlyPair <DATA1TYPE, DATA2TYPE> aPair1,
+                                   @Nonnull final IReadonlyPair <DATA1TYPE, DATA2TYPE> aPair2)
   {
     return CompareUtils.nullSafeCompare (aPair1.getSecond (), aPair2.getSecond ());
   }

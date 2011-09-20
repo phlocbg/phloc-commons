@@ -25,11 +25,12 @@ import javax.annotation.concurrent.Immutable;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.hierarchy.DefaultHierarchyWalkerCallback;
 import com.phloc.commons.tree.IBasicTree;
-import com.phloc.commons.tree.utils.walk.TreeWalkerWithID;
+import com.phloc.commons.tree.utils.walk.TreeWalker;
 import com.phloc.commons.tree.withid.ITreeItemWithID;
+import com.phloc.commons.tree.withid.ITreeWithID;
 
 /**
- * Sort tree items by using a specified converter.
+ * Sort {@link ITreeWithID} instances recursively - either by ID or by value
  * 
  * @author philip
  */
@@ -43,8 +44,8 @@ public final class TreeWithIDSorter
   private TreeWithIDSorter ()
   {}
 
-  public static <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> void sortByValues (@Nonnull final IBasicTree <VALUETYPE, ITEMTYPE> aTree,
-                                                                                                                         @Nonnull final Comparator <? super VALUETYPE> aComparator)
+  public static <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> void sortByValue (@Nonnull final IBasicTree <VALUETYPE, ITEMTYPE> aTree,
+                                                                                                                        @Nonnull final Comparator <? super VALUETYPE> aComparator)
   {
     final ComparatorTreeItemValue <VALUETYPE, ITEMTYPE> aRealComp = new ComparatorTreeItemValue <VALUETYPE, ITEMTYPE> (aComparator);
 
@@ -52,7 +53,7 @@ public final class TreeWithIDSorter
     aTree.getRootItem ().reorderChildrenByItems (aRealComp);
 
     // and now start iterating
-    TreeWalkerWithID.walkTree (aTree, new DefaultHierarchyWalkerCallback <ITEMTYPE> ()
+    TreeWalker.walkTree (aTree, new DefaultHierarchyWalkerCallback <ITEMTYPE> ()
     {
       @Override
       public void onItemBeforeChildren (final ITEMTYPE aTreeItem)
@@ -62,16 +63,52 @@ public final class TreeWithIDSorter
     });
   }
 
-  public static <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> void sortByKeys (@Nonnull final IBasicTree <VALUETYPE, ITEMTYPE> aTree,
-                                                                                                                       @Nonnull final Comparator <? super KEYTYPE> aComparator)
+  public static <KEYTYPE, VALUETYPE extends Comparable <? super VALUETYPE>, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> void sortByValue (@Nonnull final IBasicTree <VALUETYPE, ITEMTYPE> aTree)
   {
-    final ComparatorTreeItemKey <KEYTYPE, VALUETYPE, ITEMTYPE> aRealComp = new ComparatorTreeItemKey <KEYTYPE, VALUETYPE, ITEMTYPE> (aComparator);
+    final ComparatorTreeItemValueComparable <VALUETYPE, ITEMTYPE> aRealComp = new ComparatorTreeItemValueComparable <VALUETYPE, ITEMTYPE> ();
 
     // sort root manually
     aTree.getRootItem ().reorderChildrenByItems (aRealComp);
 
     // and now start iterating
-    TreeWalkerWithID.walkTree (aTree, new DefaultHierarchyWalkerCallback <ITEMTYPE> ()
+    TreeWalker.walkTree (aTree, new DefaultHierarchyWalkerCallback <ITEMTYPE> ()
+    {
+      @Override
+      public void onItemBeforeChildren (final ITEMTYPE aTreeItem)
+      {
+        aTreeItem.reorderChildrenByItems (aRealComp);
+      }
+    });
+  }
+
+  public static <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> void sortByID (@Nonnull final IBasicTree <VALUETYPE, ITEMTYPE> aTree,
+                                                                                                                     @Nonnull final Comparator <? super KEYTYPE> aComparator)
+  {
+    final ComparatorTreeItemID <KEYTYPE, VALUETYPE, ITEMTYPE> aRealComp = new ComparatorTreeItemID <KEYTYPE, VALUETYPE, ITEMTYPE> (aComparator);
+
+    // sort root manually
+    aTree.getRootItem ().reorderChildrenByItems (aRealComp);
+
+    // and now start iterating
+    TreeWalker.walkTree (aTree, new DefaultHierarchyWalkerCallback <ITEMTYPE> ()
+    {
+      @Override
+      public void onItemBeforeChildren (final ITEMTYPE aTreeItem)
+      {
+        aTreeItem.reorderChildrenByItems (aRealComp);
+      }
+    });
+  }
+
+  public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> void sortByID (@Nonnull final IBasicTree <VALUETYPE, ITEMTYPE> aTree)
+  {
+    final ComparatorTreeItemIDComparable <KEYTYPE, VALUETYPE, ITEMTYPE> aRealComp = new ComparatorTreeItemIDComparable <KEYTYPE, VALUETYPE, ITEMTYPE> ();
+
+    // sort root manually
+    aTree.getRootItem ().reorderChildrenByItems (aRealComp);
+
+    // and now start iterating
+    TreeWalker.walkTree (aTree, new DefaultHierarchyWalkerCallback <ITEMTYPE> ()
     {
       @Override
       public void onItemBeforeChildren (final ITEMTYPE aTreeItem)

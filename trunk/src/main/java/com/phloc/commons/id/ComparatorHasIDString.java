@@ -24,13 +24,13 @@ import com.phloc.commons.compare.ESortOrder;
 
 /**
  * This is a collation {@link java.util.Comparator} for objects that implement
- * the {@link IHasID} interface with String.
+ * the {@link IHasID} interface with {@link String}.
  * 
  * @author philip
  * @param <DATATYPE>
  *        The type of elements to be compared.
  */
-public final class ComparatorHasIDString <DATATYPE extends IHasID <String>> extends AbstractComparator <DATATYPE>
+public class ComparatorHasIDString <DATATYPE extends IHasID <String>> extends AbstractComparator <DATATYPE>
 {
   public ComparatorHasIDString ()
   {}
@@ -41,7 +41,7 @@ public final class ComparatorHasIDString <DATATYPE extends IHasID <String>> exte
   }
 
   @Override
-  protected int mainCompare (final DATATYPE aElement1, final DATATYPE aElement2)
+  protected final int mainCompare (final DATATYPE aElement1, final DATATYPE aElement2)
   {
     return aElement1.getID ().compareTo (aElement2.getID ());
   }

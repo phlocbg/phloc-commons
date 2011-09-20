@@ -21,12 +21,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 /**
- * Base class of {@link BasicTree} using {@link DefaultTreeItem} as the item
- * implementation class
+ * Default implementation of the {@link ITree} interface using
+ * {@link DefaultTreeItem} tree items
  * 
- * @param <VALUETYPE>
- *        The type of the elements contained in the tree
  * @author philip
+ * @param <VALUETYPE>
+ *        tree item value type
  */
 @NotThreadSafe
 public class DefaultTree <VALUETYPE> extends BasicTree <VALUETYPE, DefaultTreeItem <VALUETYPE>>

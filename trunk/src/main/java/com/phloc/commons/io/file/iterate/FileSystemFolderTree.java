@@ -45,23 +45,21 @@ public class FileSystemFolderTree extends DefaultFolderTree <String, File, List 
         if (aChild.isFile ())
         {
           // file
+          // Check against the optional filter
           if (aFileFilter == null || aFileFilter.accept (aChild))
             aTreeItem.getData ().add (aChild);
         }
         else
-          if (aChild.isDirectory ())
+          if (aChild.isDirectory () && !FilenameHelper.isSystemInternalDirectory (aChild))
           {
             // directory
-            if (!FilenameHelper.isSystemInternalDirectory (aChild))
+            // Check against the optional filter
+            if (aDirFilter == null || aDirFilter.accept (aChild))
             {
-              // Check against the optional filter
-              if (aDirFilter == null || aDirFilter.accept (aChild))
-              {
-                // create item and recursively descend
-                final DefaultFolderTreeItem <String, File, List <File>> aChildItem = aTreeItem.createChildItem (aChild.getName (),
-                                                                                                                new ArrayList <File> ());
-                _iterate (aChildItem, aChild, aDirFilter, aFileFilter);
-              }
+              // create item and recursively descend
+              final DefaultFolderTreeItem <String, File, List <File>> aChildItem = aTreeItem.createChildItem (aChild.getName (),
+                                                                                                              new ArrayList <File> ());
+              _iterate (aChildItem, aChild, aDirFilter, aFileFilter);
             }
           }
       }

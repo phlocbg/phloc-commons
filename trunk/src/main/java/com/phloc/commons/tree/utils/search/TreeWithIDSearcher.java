@@ -27,7 +27,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.hierarchy.DefaultHierarchyWalkerCallback;
 import com.phloc.commons.tree.IBasicTree;
-import com.phloc.commons.tree.utils.walk.TreeWalkerWithID;
+import com.phloc.commons.tree.utils.walk.TreeWalker;
 import com.phloc.commons.tree.withid.ITreeItemWithID;
 
 /**
@@ -89,7 +89,7 @@ public final class TreeWithIDSearcher
                                                                                                                                                    final KEYTYPE aSearchID)
   {
     final List <ITEMTYPE> aRetList = new ArrayList <ITEMTYPE> ();
-    TreeWalkerWithID.walkSubTree (aTreeItem, new DefaultHierarchyWalkerCallback <ITEMTYPE> ()
+    TreeWalker.walkSubTree (aTreeItem, new DefaultHierarchyWalkerCallback <ITEMTYPE> ()
     {
       @Override
       public void onItemBeforeChildren (final ITEMTYPE aItem)

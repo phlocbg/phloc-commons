@@ -23,9 +23,22 @@ import javax.annotation.Nonnull;
 
 import com.phloc.commons.compare.AbstractComparator;
 import com.phloc.commons.tree.IBasicTreeItem;
+import com.phloc.commons.tree.simple.ITreeItem;
+import com.phloc.commons.tree.withid.ITreeItemWithID;
 
-public final class ComparatorTreeItemValue <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> extends
-                                                                                                               AbstractComparator <ITEMTYPE>
+/**
+ * Comparator for sorting {@link IBasicTreeItem} items by their value using an
+ * explicit {@link Comparator}.<br>
+ * Works for {@link ITreeItem} and {@link ITreeItemWithID}.
+ * 
+ * @author philip
+ * @param <VALUETYPE>
+ *        tree item value type
+ * @param <ITEMTYPE>
+ *        tree item implementation type
+ */
+public class ComparatorTreeItemValue <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> extends
+                                                                                                        AbstractComparator <ITEMTYPE>
 {
   private final Comparator <? super VALUETYPE> m_aValueComparator;
 
@@ -37,7 +50,7 @@ public final class ComparatorTreeItemValue <VALUETYPE, ITEMTYPE extends IBasicTr
   }
 
   @Override
-  protected int mainCompare (@Nonnull final ITEMTYPE aTreeItem1, @Nonnull final ITEMTYPE aTreeItem2)
+  protected final int mainCompare (@Nonnull final ITEMTYPE aTreeItem1, @Nonnull final ITEMTYPE aTreeItem2)
   {
     return m_aValueComparator.compare (aTreeItem1.getData (), aTreeItem2.getData ());
   }

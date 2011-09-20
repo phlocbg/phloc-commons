@@ -36,6 +36,15 @@ import com.phloc.commons.state.EChange;
 import com.phloc.commons.state.ESuccess;
 import com.phloc.commons.string.ToStringGenerator;
 
+/**
+ * Basic implementation of the {@link ITreeItem} interface
+ * 
+ * @author philip
+ * @param <VALUETYPE>
+ *        tree item value type
+ * @param <ITEMTYPE>
+ *        tree item implementation type
+ */
 @NotThreadSafe
 public class BasicTreeItem <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> implements
                                                                                          ITreeItem <VALUETYPE, ITEMTYPE>

@@ -27,9 +27,11 @@ import com.phloc.commons.string.ToStringGenerator;
  * Root class for a simple tree. The elements of the tree are not sorted by any
  * means.
  * 
- * @param <VALUETYPE>
- *        The type of the elements contained in the tree
  * @author philip
+ * @param <VALUETYPE>
+ *        tree item value type
+ * @param <ITEMTYPE>
+ *        tree item implementation type
  */
 @NotThreadSafe
 public class BasicTree <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> implements
