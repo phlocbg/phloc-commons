@@ -29,7 +29,7 @@ import com.phloc.commons.mock.PhlocTestUtils;
  * 
  * @author philip
  */
-public final class TreeItemTest
+public final class DefaultTreeItemTest
 {
   @Test
   public void testCtor ()

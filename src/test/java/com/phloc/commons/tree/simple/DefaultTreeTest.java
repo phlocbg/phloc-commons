@@ -35,7 +35,7 @@ import com.phloc.commons.mock.PhlocTestUtils;
  * 
  * @author philip
  */
-public final class TreeTest
+public final class DefaultTreeTest
 {
   private static final class ComparatorTreeItem <T extends Comparable <? super T>> extends
                                                                                    AbstractComparator <DefaultTreeItem <T>>
