@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.graph.simple;
+package com.phloc.commons.graph.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -29,8 +29,6 @@ import java.util.Iterator;
 import org.junit.Test;
 
 import com.phloc.commons.graph.IGraphRelation;
-import com.phloc.commons.graph.simple.GraphNode;
-import com.phloc.commons.graph.simple.GraphRelation;
 import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
@@ -72,21 +70,21 @@ public final class GraphNodeTest
   {
     final GraphNode <String> nf = new GraphNode <String> ();
     final GraphNode <String> nt = new GraphNode <String> ();
-    nf.addOutgoingRelation (nt);
+    nf.addOutgoingRelation (new GraphRelation <String> (nf, nt));
 
     assertEquals (0, nf.getAllFromNodes ().size ());
     assertEquals (1, nf.getAllToNodes ().size ());
-    assertEquals (1, nt.getAllFromNodes ().size ());
+    assertEquals (0, nt.getAllFromNodes ().size ());
     assertEquals (0, nt.getAllToNodes ().size ());
 
     assertEquals (0, nf.getAllFromValues ().size ());
     assertEquals (1, nf.getAllToValues ().size ());
-    assertEquals (1, nt.getAllFromValues ().size ());
+    assertEquals (0, nt.getAllFromValues ().size ());
     assertEquals (0, nt.getAllToValues ().size ());
 
     assertTrue (nf.isConnectedWith (nt));
     assertFalse (nf.isConnectedWith (nf));
-    assertTrue (nt.isConnectedWith (nf));
+    assertFalse (nt.isConnectedWith (nf));
     assertFalse (nt.isConnectedWith (nt));
 
     Iterator <IGraphRelation <String>> it = nf.getOutgoingRelations ().iterator ();
@@ -104,9 +102,6 @@ public final class GraphNodeTest
 
     it = nt.getIncomingRelations ().iterator ();
     assertNotNull (it);
-    assertTrue (it.hasNext ());
-    assertTrue (it.hasNext ());
-    assertEquals (it.next ().getFrom (), nf);
     assertFalse (it.hasNext ());
     assertFalse (it.hasNext ());
 
@@ -121,7 +116,7 @@ public final class GraphNodeTest
   {
     final GraphNode <String> nf = new GraphNode <String> ();
     final GraphNode <String> nt = new GraphNode <String> ();
-    nf.addOutgoingRelation (GraphRelation.create (nf, nt));
+    nf.addOutgoingRelation (new GraphRelation <String> (nf, nt));
     Iterator <IGraphRelation <String>> it = nf.getOutgoingRelations ().iterator ();
     assertNotNull (it);
     assertTrue (it.hasNext ());
@@ -137,9 +132,6 @@ public final class GraphNodeTest
 
     it = nt.getIncomingRelations ().iterator ();
     assertNotNull (it);
-    assertTrue (it.hasNext ());
-    assertTrue (it.hasNext ());
-    assertEquals (it.next ().getFrom (), nf);
     assertFalse (it.hasNext ());
     assertFalse (it.hasNext ());
 
@@ -154,12 +146,9 @@ public final class GraphNodeTest
   {
     final GraphNode <String> nf = new GraphNode <String> ();
     final GraphNode <String> nt = new GraphNode <String> ();
-    nt.addIncomingRelation (nf);
+    nt.addIncomingRelation (new GraphRelation <String> (nf, nt));
     Iterator <IGraphRelation <String>> it = nf.getOutgoingRelations ().iterator ();
     assertNotNull (it);
-    assertTrue (it.hasNext ());
-    assertTrue (it.hasNext ());
-    assertEquals (it.next ().getTo (), nt);
     assertFalse (it.hasNext ());
     assertFalse (it.hasNext ());
 
@@ -187,12 +176,9 @@ public final class GraphNodeTest
   {
     final GraphNode <String> nf = new GraphNode <String> ();
     final GraphNode <String> nt = new GraphNode <String> ();
-    nt.addIncomingRelation (GraphRelation.create (nf, nt));
+    nt.addIncomingRelation (new GraphRelation <String> (nf, nt));
     Iterator <IGraphRelation <String>> it = nf.getOutgoingRelations ().iterator ();
     assertNotNull (it);
-    assertTrue (it.hasNext ());
-    assertTrue (it.hasNext ());
-    assertEquals (it.next ().getTo (), nt);
     assertFalse (it.hasNext ());
     assertFalse (it.hasNext ());
 
@@ -219,7 +205,7 @@ public final class GraphNodeTest
   public void testSelfRelations ()
   {
     final GraphNode <String> nf = new GraphNode <String> ();
-    nf.addOutgoingRelation (nf);
+    nf.addOutgoingRelation (new GraphRelation <String> (nf, nf));
     Iterator <IGraphRelation <String>> it = nf.getOutgoingRelations ().iterator ();
     assertNotNull (it);
     assertTrue (it.hasNext ());
@@ -230,9 +216,6 @@ public final class GraphNodeTest
 
     it = nf.getIncomingRelations ().iterator ();
     assertNotNull (it);
-    assertTrue (it.hasNext ());
-    assertTrue (it.hasNext ());
-    assertEquals (it.next ().getFrom (), nf);
     assertFalse (it.hasNext ());
     assertFalse (it.hasNext ());
   }
@@ -242,14 +225,14 @@ public final class GraphNodeTest
   {
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (new GraphNode <String> ("id0", null),
                                                                     new GraphNode <String> ("id0", null));
-    PhlocTestUtils.testDefaultImplementationWithEqualContentObject (GraphNode.create ("id0", "any"),
-                                                                    GraphNode.create ("id0", "any"));
-    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (GraphNode.create ("any"),
-                                                                        GraphNode.create ("any2"));
-    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (GraphNode.create ("id0", "any"),
-                                                                        GraphNode.create ("id1", "any"));
-    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (GraphNode.create ("id0", "any"),
-                                                                        GraphNode.create ("id0", "any2"));
+    PhlocTestUtils.testDefaultImplementationWithEqualContentObject (new GraphNode <String> ("id0", "any"),
+                                                                    new GraphNode <String> ("id0", "any"));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (new GraphNode <String> ("any"),
+                                                                        new GraphNode <String> ("any2"));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (new GraphNode <String> ("id0", "any"),
+                                                                        new GraphNode <String> ("id1", "any"));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (new GraphNode <String> ("id0", "any"),
+                                                                        new GraphNode <String> ("id0", "any2"));
   }
 
   @Test
@@ -259,7 +242,7 @@ public final class GraphNodeTest
     {
       final GraphNode <String> n = new GraphNode <String> ();
       // null not allowed
-      n.addOutgoingRelation ((GraphNode <String>) null);
+      n.addOutgoingRelation ((IGraphRelation <String>) null);
       fail ();
     }
     catch (final NullPointerException ex)
@@ -269,27 +252,7 @@ public final class GraphNodeTest
     {
       final GraphNode <String> n = new GraphNode <String> ();
       // null not allowed
-      n.addOutgoingRelation ((GraphRelation <String>) null);
-      fail ();
-    }
-    catch (final NullPointerException ex)
-    {}
-
-    try
-    {
-      final GraphNode <String> n = new GraphNode <String> ();
-      // null not allowed
-      n.addIncomingRelation ((GraphNode <String>) null);
-      fail ();
-    }
-    catch (final NullPointerException ex)
-    {}
-
-    try
-    {
-      final GraphNode <String> n = new GraphNode <String> ();
-      // null not allowed
-      n.addIncomingRelation ((GraphRelation <String>) null);
+      n.addIncomingRelation ((IGraphRelation <String>) null);
       fail ();
     }
     catch (final NullPointerException ex)
@@ -299,7 +262,7 @@ public final class GraphNodeTest
     {
       final GraphNode <String> n = new GraphNode <String> ();
       // relation does not match node
-      n.addOutgoingRelation (GraphRelation.create (new GraphNode <String> (), new GraphNode <String> ()));
+      n.addOutgoingRelation (new GraphRelation <String> (new GraphNode <String> (), new GraphNode <String> ()));
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -309,7 +272,7 @@ public final class GraphNodeTest
     {
       final GraphNode <String> n = new GraphNode <String> ();
       // relation does not match node
-      n.addIncomingRelation (GraphRelation.create (new GraphNode <String> (), new GraphNode <String> ()));
+      n.addIncomingRelation (new GraphRelation <String> (new GraphNode <String> (), new GraphNode <String> ()));
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -318,7 +281,7 @@ public final class GraphNodeTest
     try
     {
       final GraphNode <String> n = new GraphNode <String> ();
-      final GraphRelation <String> r = GraphRelation.create (n, new GraphNode <String> ());
+      final GraphRelation <String> r = new GraphRelation <String> (n, new GraphNode <String> ());
       n.addOutgoingRelation (r);
       // exactly the same relation already added
       n.addOutgoingRelation (r);
@@ -330,7 +293,7 @@ public final class GraphNodeTest
     try
     {
       final GraphNode <String> n = new GraphNode <String> ();
-      final GraphRelation <String> r = GraphRelation.create (new GraphNode <String> (), n);
+      final GraphRelation <String> r = new GraphRelation <String> (new GraphNode <String> (), n);
       n.addIncomingRelation (r);
       // exactly the same relation already added
       n.addIncomingRelation (r);
@@ -343,13 +306,14 @@ public final class GraphNodeTest
     {
       final GraphNode <String> nf = new GraphNode <String> ();
       final GraphNode <String> nt = new GraphNode <String> ();
-      nf.addOutgoingRelation (nt);
+      final IGraphRelation <String> r = new GraphRelation <String> (nf, nt);
+      nf.addOutgoingRelation (r);
       assertFalse (nf.hasIncomingRelations ());
       assertTrue (nf.hasOutgoingRelations ());
-      assertTrue (nt.hasIncomingRelations ());
+      assertFalse (nt.hasIncomingRelations ());
       assertFalse (nt.hasOutgoingRelations ());
       // relation already contained
-      nf.addOutgoingRelation (nt);
+      nf.addOutgoingRelation (r);
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -359,45 +323,14 @@ public final class GraphNodeTest
     {
       final GraphNode <String> nf = new GraphNode <String> ();
       final GraphNode <String> nt = new GraphNode <String> ();
-      nf.addOutgoingRelation (nt);
+      final IGraphRelation <String> r = new GraphRelation <String> (nf, nt);
+      nt.addIncomingRelation (r);
       assertFalse (nf.hasIncomingRelations ());
-      assertTrue (nf.hasOutgoingRelations ());
+      assertFalse (nf.hasOutgoingRelations ());
       assertTrue (nt.hasIncomingRelations ());
       assertFalse (nt.hasOutgoingRelations ());
       // relation already contained
-      nt.addIncomingRelation (nf);
-      fail ();
-    }
-    catch (final IllegalArgumentException ex)
-    {}
-
-    try
-    {
-      final GraphNode <String> nf = new GraphNode <String> ();
-      final GraphNode <String> nt = new GraphNode <String> ();
-      nt.addIncomingRelation (nf);
-      assertFalse (nf.hasIncomingRelations ());
-      assertTrue (nf.hasOutgoingRelations ());
-      assertTrue (nt.hasIncomingRelations ());
-      assertFalse (nt.hasOutgoingRelations ());
-      // relation already contained
-      nt.addIncomingRelation (nf);
-      fail ();
-    }
-    catch (final IllegalArgumentException ex)
-    {}
-
-    try
-    {
-      final GraphNode <String> nf = new GraphNode <String> ();
-      final GraphNode <String> nt = new GraphNode <String> ();
-      nt.addIncomingRelation (nf);
-      assertFalse (nf.hasIncomingRelations ());
-      assertTrue (nf.hasOutgoingRelations ());
-      assertTrue (nt.hasIncomingRelations ());
-      assertFalse (nt.hasOutgoingRelations ());
-      // relation already contained
-      nf.addOutgoingRelation (nt);
+      nt.addIncomingRelation (r);
       fail ();
     }
     catch (final IllegalArgumentException ex)

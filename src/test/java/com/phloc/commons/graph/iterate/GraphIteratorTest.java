@@ -30,10 +30,10 @@ import org.junit.Test;
 import com.phloc.commons.graph.AbstractGraphTestCase;
 import com.phloc.commons.graph.IGraphNode;
 import com.phloc.commons.graph.IReadonlyGraph;
-import com.phloc.commons.graph.iterate.GraphIterator;
+import com.phloc.commons.graph.iterate.GraphIteratorForward;
 
 /**
- * Test class for class {@link GraphIterator}.
+ * Test class for class {@link GraphIteratorForward}.
  * 
  * @author philip
  */
@@ -45,7 +45,7 @@ public final class GraphIteratorTest extends AbstractGraphTestCase
     try
     {
       // null node not allowed
-      new GraphIterator <String> (null);
+      new GraphIteratorForward <String> (null);
       fail ();
     }
     catch (final NullPointerException ex)
@@ -54,7 +54,7 @@ public final class GraphIteratorTest extends AbstractGraphTestCase
     try
     {
       // null node not allowed
-      GraphIterator.<String> create (null);
+      GraphIteratorForward.<String> create (null);
       fail ();
     }
     catch (final NullPointerException ex)
@@ -63,7 +63,7 @@ public final class GraphIteratorTest extends AbstractGraphTestCase
     final IReadonlyGraph <Integer> aGraph = _buildGraph ();
     final IGraphNode <Integer> aStart = aGraph.getSingleStartNode ();
     assertEquals (aStart.getID (), "0");
-    final GraphIterator <Integer> it = GraphIterator.create (aStart);
+    final GraphIteratorForward <Integer> it = GraphIteratorForward.create (aStart);
 
     try
     {
@@ -102,7 +102,7 @@ public final class GraphIteratorTest extends AbstractGraphTestCase
   {
     final IReadonlyGraph <Integer> aGraph = _buildGraph ();
     final IGraphNode <Integer> aStartNode = aGraph.getNodeOfID ("1");
-    final GraphIterator <Integer> it = GraphIterator.create (aStartNode);
+    final GraphIteratorForward <Integer> it = GraphIteratorForward.create (aStartNode);
     assertTrue (it.hasNext ());
     assertEquals (Integer.valueOf (2), it.next ().getValue ());
     assertTrue (it.hasNext ());
@@ -119,7 +119,7 @@ public final class GraphIteratorTest extends AbstractGraphTestCase
   {
     final IReadonlyGraph <Integer> aGraph = _buildGraph ();
     final IGraphNode <Integer> aStartNode = aGraph.getNodeOfID ("5");
-    final GraphIterator <Integer> it = GraphIterator.create (aStartNode);
+    final GraphIteratorForward <Integer> it = GraphIteratorForward.create (aStartNode);
     assertTrue (it.hasNext ());
     assertEquals (Integer.valueOf (6), it.next ().getValue ());
     assertTrue (it.hasNext ());
@@ -135,7 +135,7 @@ public final class GraphIteratorTest extends AbstractGraphTestCase
   public void testCycleIterate1 ()
   {
     final IReadonlyGraph <Integer> aGraph = _buildCycleGraphSimple ();
-    final GraphIterator <Integer> it = GraphIterator.create (aGraph.getNodeOfID ("0"));
+    final GraphIteratorForward <Integer> it = GraphIteratorForward.create (aGraph.getNodeOfID ("0"));
     assertTrue (it.hasNext ());
     // first item has ID 0 and value 1
     assertEquals (Integer.valueOf (1), it.next ().getValue ());
@@ -149,7 +149,7 @@ public final class GraphIteratorTest extends AbstractGraphTestCase
   public void testCycleIterate2 ()
   {
     final IReadonlyGraph <Integer> aGraph = _buildCycleGraphSimple2 ();
-    final GraphIterator <Integer> it = GraphIterator.create (aGraph.getNodeOfID ("0"));
+    final GraphIteratorForward <Integer> it = GraphIteratorForward.create (aGraph.getNodeOfID ("0"));
     assertNotNull (it.iterator ());
     assertTrue (it.hasNext ());
     assertEquals (Integer.valueOf (1), it.next ().getValue ());
