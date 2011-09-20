@@ -21,12 +21,13 @@ import java.util.Collection;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.combine.ICombinator;
 import com.phloc.commons.compare.CompareUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
-import com.phloc.commons.tree.withid.unique.AbstractBasicTreeItemWithUniqueIDFactory;
+import com.phloc.commons.tree.withid.unique.AbstractTreeItemWithUniqueIDFactory;
 
 /**
  * The default folder tree item factory implementation.
@@ -41,9 +42,10 @@ import com.phloc.commons.tree.withid.unique.AbstractBasicTreeItemWithUniqueIDFac
  * @param <ITEMTYPE>
  *        the implementation item type
  */
-public abstract class AbstractFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>, ITEMTYPE extends AbstractFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>> extends
-                                                                                                                                                                                                    AbstractBasicTreeItemWithUniqueIDFactory <KEYTYPE, COLLTYPE, ITEMTYPE> implements
-                                                                                                                                                                                                                                                                          IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>
+@NotThreadSafe
+public abstract class AbstractFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>, ITEMTYPE extends BasicFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>> extends
+                                                                                                                                                                                                 AbstractTreeItemWithUniqueIDFactory <KEYTYPE, COLLTYPE, ITEMTYPE> implements
+                                                                                                                                                                                                                                                                       IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>
 {
   private final ICombinator <KEYTYPE> m_aKeyCombinator;
 

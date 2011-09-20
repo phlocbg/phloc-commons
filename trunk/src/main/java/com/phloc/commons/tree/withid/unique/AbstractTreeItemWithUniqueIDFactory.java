@@ -23,6 +23,7 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
@@ -37,17 +38,18 @@ import com.phloc.commons.tree.withid.IBasicTreeItemWithID;
  * 
  * @author philip
  */
-public abstract class AbstractBasicTreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE extends IBasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> implements
-                                                                                                                                                          ITreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE>
+@NotThreadSafe
+public abstract class AbstractTreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE extends IBasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> implements
+                                                                                                                                                     ITreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE>
 {
   private final Map <KEYTYPE, ITEMTYPE> m_aItemStore;
 
-  public AbstractBasicTreeItemWithUniqueIDFactory ()
+  public AbstractTreeItemWithUniqueIDFactory ()
   {
     this (new HashMap <KEYTYPE, ITEMTYPE> ());
   }
 
-  public AbstractBasicTreeItemWithUniqueIDFactory (@Nonnull final Map <KEYTYPE, ITEMTYPE> aItemStore)
+  public AbstractTreeItemWithUniqueIDFactory (@Nonnull final Map <KEYTYPE, ITEMTYPE> aItemStore)
   {
     if (aItemStore == null)
       throw new NullPointerException ("itemStore");
@@ -125,7 +127,7 @@ public abstract class AbstractBasicTreeItemWithUniqueIDFactory <KEYTYPE, VALUETY
       return true;
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    final AbstractBasicTreeItemWithUniqueIDFactory <?, ?, ?> rhs = (AbstractBasicTreeItemWithUniqueIDFactory <?, ?, ?>) o;
+    final AbstractTreeItemWithUniqueIDFactory <?, ?, ?> rhs = (AbstractTreeItemWithUniqueIDFactory <?, ?, ?>) o;
     return m_aItemStore.equals (rhs.m_aItemStore);
   }
 

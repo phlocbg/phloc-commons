@@ -26,6 +26,7 @@ import java.util.Map;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
@@ -37,6 +38,19 @@ import com.phloc.commons.state.EChange;
 import com.phloc.commons.state.ESuccess;
 import com.phloc.commons.string.ToStringGenerator;
 
+/**
+ * Basic tree item with ID implementation, independent of the implementation
+ * type.
+ * 
+ * @author philip
+ * @param <KEYTYPE>
+ *        tree item key type
+ * @param <VALUETYPE>
+ *        tree item value type
+ * @param <ITEMTYPE>
+ *        tree item implementation type
+ */
+@NotThreadSafe
 public class BasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends IBasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> implements
                                                                                                                             IBasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>
 {

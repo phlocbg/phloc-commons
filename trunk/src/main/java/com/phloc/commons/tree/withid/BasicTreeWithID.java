@@ -18,21 +18,26 @@
 package com.phloc.commons.tree.withid;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.tree.IBasicTree;
 
 /**
- * Root class for a simple tree. The elements of the tree are not sorted by any
- * means.
+ * Base class for a tree having items with IDs. This implementation is
+ * independent of the item implementation class. The elements of the tree are
+ * not sorted by any means.
  * 
- * @param <KEYTYPE>
- *        The type of the key elements for the tree.
- * @param <VALUETYPE>
- *        The type of the elements contained in the tree
  * @author philip
+ * @param <KEYTYPE>
+ *        tree item key type
+ * @param <VALUETYPE>
+ *        tree item value type
+ * @param <ITEMTYPE>
+ *        tree item implementation type
  */
+@NotThreadSafe
 public class BasicTreeWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends IBasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> implements
                                                                                                                         IBasicTree <ITEMTYPE>
 {

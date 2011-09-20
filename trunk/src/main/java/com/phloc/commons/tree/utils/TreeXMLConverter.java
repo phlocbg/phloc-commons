@@ -41,8 +41,8 @@ import com.phloc.commons.tree.simple.TreeWalker;
 import com.phloc.commons.tree.withid.BasicTreeWithID;
 import com.phloc.commons.tree.withid.IBasicTreeItemWithID;
 import com.phloc.commons.tree.withid.TreeWalkerWithID;
-import com.phloc.commons.tree.withid.TreeWithID;
-import com.phloc.commons.tree.withid.unique.TreeWithGlobalUniqueID;
+import com.phloc.commons.tree.withid.DefaultTreeWithID;
+import com.phloc.commons.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
 
 /**
  * Convert a tree to XML
@@ -193,7 +193,7 @@ public final class TreeXMLConverter
   }
 
   @Nonnull
-  public static <VALUETYPE> TreeWithGlobalUniqueID <String, VALUETYPE> getXMLAsTreeWithUniqueStringID (@Nonnull final IMicroDocument aDoc,
+  public static <VALUETYPE> DefaultTreeWithGlobalUniqueID <String, VALUETYPE> getXMLAsTreeWithUniqueStringID (@Nonnull final IMicroDocument aDoc,
                                                                                                        @Nonnull final IConverterMicroNodeToTreeItem <VALUETYPE> aDataConverter)
   {
     return TreeXMLConverter.<String, VALUETYPE> getXMLAsTreeWithUniqueID (aDoc,
@@ -202,21 +202,21 @@ public final class TreeXMLConverter
   }
 
   @Nonnull
-  public static <KEYTYPE, VALUETYPE> TreeWithGlobalUniqueID <KEYTYPE, VALUETYPE> getXMLAsTreeWithUniqueID (@Nonnull final IMicroDocument aDoc,
+  public static <KEYTYPE, VALUETYPE> DefaultTreeWithGlobalUniqueID <KEYTYPE, VALUETYPE> getXMLAsTreeWithUniqueID (@Nonnull final IMicroDocument aDoc,
                                                                                                            @Nonnull final IUnidirectionalConverter <String, KEYTYPE> aIDConverter,
                                                                                                            @Nonnull final IConverterMicroNodeToTreeItem <VALUETYPE> aDataConverter)
   {
-    final TreeWithGlobalUniqueID <KEYTYPE, VALUETYPE> aTree = new TreeWithGlobalUniqueID <KEYTYPE, VALUETYPE> ();
+    final DefaultTreeWithGlobalUniqueID <KEYTYPE, VALUETYPE> aTree = new DefaultTreeWithGlobalUniqueID <KEYTYPE, VALUETYPE> ();
     _getXMLAsTreeWithID (aDoc, aIDConverter, aDataConverter, aTree);
     return aTree;
   }
 
   @Nonnull
-  public static <KEYTYPE, VALUETYPE> TreeWithID <KEYTYPE, VALUETYPE> getXMLAsTreeWithID (@Nonnull final IMicroDocument aDoc,
+  public static <KEYTYPE, VALUETYPE> DefaultTreeWithID <KEYTYPE, VALUETYPE> getXMLAsTreeWithID (@Nonnull final IMicroDocument aDoc,
                                                                                          @Nonnull final IUnidirectionalConverter <String, KEYTYPE> aIDConverter,
                                                                                          @Nonnull final IConverterMicroNodeToTreeItem <VALUETYPE> aDataConverter)
   {
-    final TreeWithID <KEYTYPE, VALUETYPE> aTree = new TreeWithID <KEYTYPE, VALUETYPE> ();
+    final DefaultTreeWithID <KEYTYPE, VALUETYPE> aTree = new DefaultTreeWithID <KEYTYPE, VALUETYPE> ();
     _getXMLAsTreeWithID (aDoc, aIDConverter, aDataConverter, aTree);
     return aTree;
   }

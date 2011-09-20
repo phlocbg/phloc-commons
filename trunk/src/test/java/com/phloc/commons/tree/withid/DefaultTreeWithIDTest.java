@@ -25,26 +25,26 @@ import org.junit.Test;
 import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
- * Test class for class {@link TreeWithID}.
+ * Test class for class {@link DefaultTreeWithID}.
  * 
  * @author philip
  */
-public final class TreeWithIDTest
+public final class DefaultTreeWithIDTest
 {
   @Test
   public void testBasic ()
   {
-    final TreeWithID <String, String> t = new TreeWithID <String, String> ();
+    final DefaultTreeWithID <String, String> t = new DefaultTreeWithID <String, String> ();
     assertNotNull (t.getRootItem ());
 
-    PhlocTestUtils.testDefaultImplementationWithEqualContentObject (t, new TreeWithID <String, String> ());
-    final TreeWithID <String, String> t2 = new TreeWithID <String, String> ();
+    PhlocTestUtils.testDefaultImplementationWithEqualContentObject (t, new DefaultTreeWithID <String, String> ());
+    final DefaultTreeWithID <String, String> t2 = new DefaultTreeWithID <String, String> ();
     t2.getRootItem ().createChildItem ("dataid", "data");
     PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (t, t2);
 
     try
     {
-      new TreeWithID <String, String> (null);
+      new DefaultTreeWithID <String, String> (null);
       fail ();
     }
     catch (final NullPointerException ex)
@@ -53,10 +53,10 @@ public final class TreeWithIDTest
     try
     {
       // factory creating a null root
-      new TreeWithID <String, String> (new DefaultTreeItemWithIDFactory <String, String> ()
+      new DefaultTreeWithID <String, String> (new DefaultTreeItemWithIDFactory <String, String> ()
       {
         @Override
-        public ITreeItemWithID <String, String> createRoot ()
+        public DefaultTreeItemWithID <String, String> createRoot ()
         {
           return null;
         }
@@ -69,12 +69,12 @@ public final class TreeWithIDTest
     try
     {
       // factory creating a root item with a parent
-      new TreeWithID <String, String> (new DefaultTreeItemWithIDFactory <String, String> ()
+      new DefaultTreeWithID <String, String> (new DefaultTreeItemWithIDFactory <String, String> ()
       {
         @Override
-        public ITreeItemWithID <String, String> createRoot ()
+        public DefaultTreeItemWithID <String, String> createRoot ()
         {
-          return new TreeItemWithID <String, String> (super.createRoot (), "DataIDroot");
+          return new DefaultTreeItemWithID <String, String> (super.createRoot (), "DataIDroot");
         }
       });
       fail ();

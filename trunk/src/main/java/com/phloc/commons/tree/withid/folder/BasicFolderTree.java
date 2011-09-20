@@ -20,6 +20,7 @@ package com.phloc.commons.tree.withid.folder;
 import java.util.Collection;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.tree.withid.unique.BasicTreeWithGlobalUniqueID;
 
@@ -37,9 +38,10 @@ import com.phloc.commons.tree.withid.unique.BasicTreeWithGlobalUniqueID;
  *        the implementation item type
  * @author philip
  */
-public abstract class AbstractFolderTree <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>, ITEMTYPE extends AbstractFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>> extends
-                                                                                                                                                                                         BasicTreeWithGlobalUniqueID <KEYTYPE, COLLTYPE, ITEMTYPE> implements
-                                                                                                                                                                                                                                                  IFolderTree <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>
+@NotThreadSafe
+public class BasicFolderTree <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>, ITEMTYPE extends BasicFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>> extends
+                                                                                                                                                                          BasicTreeWithGlobalUniqueID <KEYTYPE, COLLTYPE, ITEMTYPE> implements
+                                                                                                                                                                                                                                   IFolderTree <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>
 {
   /**
    * Constructor
@@ -47,7 +49,7 @@ public abstract class AbstractFolderTree <KEYTYPE, VALUETYPE, COLLTYPE extends C
    * @param aFactory
    *        The item factory to use. May not be <code>null</code>.
    */
-  public AbstractFolderTree (@Nonnull final IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE> aFactory)
+  public BasicFolderTree (@Nonnull final IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE> aFactory)
   {
     super (aFactory);
   }

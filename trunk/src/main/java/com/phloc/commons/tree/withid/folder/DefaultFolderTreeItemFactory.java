@@ -21,6 +21,7 @@ import java.util.Collection;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.combine.ICombinator;
 
@@ -35,6 +36,7 @@ import com.phloc.commons.combine.ICombinator;
  * @param <COLLTYPE>
  *        Collection type consisting of value elements
  */
+@NotThreadSafe
 public class DefaultFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends
                                                                                                         AbstractFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>>
 {

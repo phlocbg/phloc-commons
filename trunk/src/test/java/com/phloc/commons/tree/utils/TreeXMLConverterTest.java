@@ -33,7 +33,7 @@ import com.phloc.commons.name.MockHasName;
 import com.phloc.commons.tree.simple.ITreeItem;
 import com.phloc.commons.tree.simple.Tree;
 import com.phloc.commons.tree.sort.ComparatorTreeItemValueComparable;
-import com.phloc.commons.tree.withid.unique.TreeWithGlobalUniqueID;
+import com.phloc.commons.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
 
 /**
  * Test class for class {@link TreeXMLConverter}.
@@ -63,7 +63,7 @@ public final class TreeXMLConverterTest extends AbstractPhlocTestCase
     assertNotNull (aDoc1);
 
     // convert document to tree
-    final TreeWithGlobalUniqueID <String, MockHasName> t1 = TreeXMLConverter.getXMLAsTreeWithUniqueStringID (aDoc1,
+    final DefaultTreeWithGlobalUniqueID <String, MockHasName> t1 = TreeXMLConverter.getXMLAsTreeWithUniqueStringID (aDoc1,
                                                                                                              new MockHasNameConverter ());
     assertNotNull (t1);
 
@@ -72,7 +72,7 @@ public final class TreeXMLConverterTest extends AbstractPhlocTestCase
     assertNotNull (aDoc2);
 
     // and convert the document again to a tree
-    TreeWithGlobalUniqueID <String, MockHasName> t2 = TreeXMLConverter.getXMLAsTreeWithUniqueStringID (aDoc2,
+    DefaultTreeWithGlobalUniqueID <String, MockHasName> t2 = TreeXMLConverter.getXMLAsTreeWithUniqueStringID (aDoc2,
                                                                                                        new MockHasNameConverter ());
     assertNotNull (t2);
     assertEquals (t1, t2);

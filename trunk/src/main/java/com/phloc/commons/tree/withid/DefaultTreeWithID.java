@@ -15,33 +15,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.tree.withid.unique;
+package com.phloc.commons.tree.withid;
 
+import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.phloc.commons.tree.withid.ITreeItemWithID;
-
 /**
- * A managed tree is a specialized version of the tree, where each item is
- * required to have a unique ID so that item searching can be performed quite
- * easily.
+ * Root class for a simple tree. The elements of the tree are not sorted by any
+ * means.
  * 
- * @author philip
  * @param <KEYTYPE>
  *        The type of the key elements for the tree.
  * @param <VALUETYPE>
  *        The type of the elements contained in the tree
+ * @author philip
  */
 @NotThreadSafe
-public class TreeWithGlobalUniqueID <KEYTYPE, VALUETYPE> extends
-                                                         BasicTreeWithGlobalUniqueID <KEYTYPE, VALUETYPE, ITreeItemWithID <KEYTYPE, VALUETYPE>>
+public class DefaultTreeWithID <KEYTYPE, VALUETYPE> extends
+                                                    BasicTreeWithID <KEYTYPE, VALUETYPE, DefaultTreeItemWithID <KEYTYPE, VALUETYPE>>
 {
-  public TreeWithGlobalUniqueID ()
+  public DefaultTreeWithID ()
   {
-    this (new DefaultTreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE> ());
+    this (new DefaultTreeItemWithIDFactory <KEYTYPE, VALUETYPE> ());
   }
 
-  public TreeWithGlobalUniqueID (final ITreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, ITreeItemWithID <KEYTYPE, VALUETYPE>> aFactory)
+  public DefaultTreeWithID (@Nonnull final IBasicTreeItemWithIDFactory <KEYTYPE, VALUETYPE, DefaultTreeItemWithID <KEYTYPE, VALUETYPE>> aFactory)
   {
     super (aFactory);
   }

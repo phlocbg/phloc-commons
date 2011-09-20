@@ -28,8 +28,8 @@ import org.junit.Test;
 import com.phloc.commons.compare.ComparatorString;
 import com.phloc.commons.tree.simple.ITreeItem;
 import com.phloc.commons.tree.simple.Tree;
-import com.phloc.commons.tree.withid.ITreeItemWithID;
-import com.phloc.commons.tree.withid.TreeWithID;
+import com.phloc.commons.tree.withid.DefaultTreeItemWithID;
+import com.phloc.commons.tree.withid.DefaultTreeWithID;
 
 /**
  * Test class for class {@link TreeSorter}
@@ -72,13 +72,13 @@ public final class TreeSorterTest
   @Test
   public void testTreeWithIDValue ()
   {
-    final TreeWithID <String, String> aTree = new TreeWithID <String, String> ();
+    final DefaultTreeWithID <String, String> aTree = new DefaultTreeWithID <String, String> ();
     assertNotNull (aTree.getRootItem ());
-    final ITreeItemWithID <String, String> i1 = aTree.getRootItem ().createChildItem ("r1", "Windows");
+    final DefaultTreeItemWithID <String, String> i1 = aTree.getRootItem ().createChildItem ("r1", "Windows");
     i1.createChildItem ("w1", "sxs");
     i1.createChildItem ("w2", "temp");
     i1.createChildItem ("w3", "System32");
-    final ITreeItemWithID <String, String> i2 = aTree.getRootItem ().createChildItem ("r2", "Program Files");
+    final DefaultTreeItemWithID <String, String> i2 = aTree.getRootItem ().createChildItem ("r2", "Program Files");
     i2.createChildItem ("p1", "Eclipse");
     i2.createChildItem ("p2", "Apache Software Foundation");
 
@@ -86,7 +86,7 @@ public final class TreeSorterTest
     TreeSorter.sortByValues (aTree, new ComparatorString ());
 
     assertEquals (2, aTree.getRootItem ().getChildCount ());
-    List <? extends ITreeItemWithID <String, String>> aChildren = aTree.getRootItem ().getChildren ();
+    List <? extends DefaultTreeItemWithID <String, String>> aChildren = aTree.getRootItem ().getChildren ();
     assertSame (i2, aChildren.get (0));
     assertSame (i1, aChildren.get (1));
     // Test Apache (children must also be sorted)

@@ -21,6 +21,7 @@ import java.util.Collection;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.combine.ICombinator;
 import com.phloc.commons.compare.CompareUtils;
@@ -29,7 +30,7 @@ import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.tree.withid.BasicTreeItemWithID;
 
 /**
- * Abstract generic implementation of the {@link IFolderTreeItem} interface.
+ * Base implementation of the {@link IFolderTreeItem} interface.
  * 
  * @author philip
  * @param <KEYTYPE>
@@ -41,9 +42,10 @@ import com.phloc.commons.tree.withid.BasicTreeItemWithID;
  * @param <ITEMTYPE>
  *        the implementation item type
  */
-public abstract class AbstractFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>, ITEMTYPE extends AbstractFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>> extends
-                                                                                                                                                                                             BasicTreeItemWithID <KEYTYPE, COLLTYPE, ITEMTYPE> implements
-                                                                                                                                                                                                                                              IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>
+@NotThreadSafe
+public class BasicFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>, ITEMTYPE extends BasicFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>> extends
+                                                                                                                                                                              BasicTreeItemWithID <KEYTYPE, COLLTYPE, ITEMTYPE> implements
+                                                                                                                                                                                                                               IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>
 {
   // Combinator to create a global unique ID.
   private final ICombinator <KEYTYPE> m_aKeyCombinator;
@@ -54,7 +56,7 @@ public abstract class AbstractFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE exten
    * @param aFactory
    *        The item factory to use.
    */
-  public AbstractFolderTreeItem (@Nonnull final IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE> aFactory)
+  public BasicFolderTreeItem (@Nonnull final IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE> aFactory)
   {
     super (aFactory);
     m_aKeyCombinator = aFactory.getKeyCombinator ();
@@ -68,8 +70,8 @@ public abstract class AbstractFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE exten
    * @param aDataID
    *        The data ID of the root item.
    */
-  public AbstractFolderTreeItem (@Nonnull final IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE> aFactory,
-                                 @Nullable final KEYTYPE aDataID)
+  public BasicFolderTreeItem (@Nonnull final IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE> aFactory,
+                              @Nullable final KEYTYPE aDataID)
   {
     super (aFactory, aDataID);
     m_aKeyCombinator = aFactory.getKeyCombinator ();
@@ -84,7 +86,7 @@ public abstract class AbstractFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE exten
    * @param aDataID
    *        The ID of the new item. May not be <code>null</code>.
    */
-  public AbstractFolderTreeItem (@Nonnull final ITEMTYPE aParent, @Nonnull final KEYTYPE aDataID)
+  public BasicFolderTreeItem (@Nonnull final ITEMTYPE aParent, @Nonnull final KEYTYPE aDataID)
   {
     super (aParent, aDataID);
     m_aKeyCombinator = aParent.m_aKeyCombinator;
@@ -107,7 +109,7 @@ public abstract class AbstractFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE exten
       return true;
     if (!super.equals (o))
       return false;
-    final AbstractFolderTreeItem <?, ?, ?, ?> rhs = (AbstractFolderTreeItem <?, ?, ?, ?>) o;
+    final BasicFolderTreeItem <?, ?, ?, ?> rhs = (BasicFolderTreeItem <?, ?, ?, ?>) o;
     return CompareUtils.nullSafeEquals (m_aKeyCombinator, rhs.m_aKeyCombinator);
   }
 
