@@ -17,18 +17,22 @@
  */
 package com.phloc.commons.tree.utils.sort;
 
-import javax.annotation.Nonnull;
-
-import com.phloc.commons.compare.AbstractComparator;
-import com.phloc.commons.compare.CompareUtils;
+import com.phloc.commons.id.ComparatorHasIDComparable;
 import com.phloc.commons.tree.withid.ITreeItemWithID;
 
-public class ComparatorTreeItemKeyComparable <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> extends
-                                                                                                                                                                        AbstractComparator <ITEMTYPE>
+/**
+ * Comparator for sorting {@link ITreeItemWithID} items by their comparable ID.
+ * 
+ * @author philip
+ * @param <KEYTYPE>
+ *        tree item key type
+ * @param <VALUETYPE>
+ *        tree item value type
+ * @param <ITEMTYPE>
+ *        tree item implementation type
+ */
+public class ComparatorTreeItemIDComparable <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> extends
+                                                                                                                                                                       ComparatorHasIDComparable <KEYTYPE, ITEMTYPE>
 {
-  @Override
-  protected int mainCompare (@Nonnull final ITEMTYPE aItem1, @Nonnull final ITEMTYPE aItem2)
-  {
-    return CompareUtils.nullSafeCompare (aItem1.getID (), aItem2.getID ());
-  }
+  /* empty */
 }

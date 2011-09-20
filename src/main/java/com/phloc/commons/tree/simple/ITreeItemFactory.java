@@ -21,7 +21,7 @@ import com.phloc.commons.factory.IHierarchicalFactory;
 import com.phloc.commons.factory.IHierarchicalRootFactory;
 
 /**
- * Interface for a tree item factory
+ * Interface for a simple tree item factory
  * 
  * @author philip
  * @param <VALUETYPE>

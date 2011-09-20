@@ -15,34 +15,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.id;
+package com.phloc.commons.compare;
+
+import java.util.Comparator;
 
 import javax.annotation.Nonnull;
 
-import com.phloc.commons.compare.AbstractComparator;
-import com.phloc.commons.compare.ESortOrder;
-
 /**
- * This is a collation {@link java.util.Comparator} for objects that implement
- * the {@link IHasID} interface with {@link Integer}.
+ * This is another *lol* class: a {@link Comparator} for {@link Comparable}
+ * objects.
  * 
  * @author philip
- * @param <DATATYPE>
- *        The type of elements to be compared.
  */
-public class ComparatorHasIDInteger <DATATYPE extends IHasID <Integer>> extends AbstractComparator <DATATYPE>
+public class ComparatorComparable <DATATYPE extends Comparable <? super DATATYPE>> extends
+                                                                                   AbstractComparator <DATATYPE>
 {
-  public ComparatorHasIDInteger ()
-  {}
+  public ComparatorComparable ()
+  {
+    super ();
+  }
 
-  public ComparatorHasIDInteger (@Nonnull final ESortOrder eSortOrder)
+  public ComparatorComparable (@Nonnull final ESortOrder eSortOrder)
   {
     super (eSortOrder);
   }
 
   @Override
-  protected final int mainCompare (final DATATYPE aObj1, final DATATYPE aObj2)
+  protected final int mainCompare (@Nonnull final DATATYPE aElement1, @Nonnull final DATATYPE aElement2)
   {
-    return aObj1.getID ().compareTo (aObj2.getID ());
+    return aElement1.compareTo (aElement2);
   }
 }

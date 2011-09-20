@@ -30,7 +30,7 @@ import org.junit.Test;
 import com.phloc.commons.hierarchy.DefaultHierarchyWalkerCallback;
 import com.phloc.commons.io.file.filter.FileFilterFileFromFilenameFilter;
 import com.phloc.commons.io.file.filter.FilenameFilterFactory;
-import com.phloc.commons.tree.utils.walk.TreeWalkerWithID;
+import com.phloc.commons.tree.utils.walk.TreeWalker;
 import com.phloc.commons.tree.withid.folder.DefaultFolderTreeItem;
 
 /**
@@ -62,27 +62,27 @@ public final class FileSystemFolderTreeTest
     FileSystemFolderTree aTree = new FileSystemFolderTree (new File (".").getAbsoluteFile (),
                                                            null,
                                                            new FileFilterFileFromFilenameFilter (FilenameFilterFactory.getEndsWithFilter (".java")));
-    TreeWalkerWithID.walkSubTree (aTree.getRootItem (),
-                                  new DefaultHierarchyWalkerCallback <DefaultFolderTreeItem <String, File, List <File>>> ()
-                                  {
-                                    @Override
-                                    public void onItemBeforeChildren (@Nonnull final DefaultFolderTreeItem <String, File, List <File>> aFolder)
-                                    {
-                                      for (final File aFile : aFolder.getData ())
-                                        assertTrue (aFile.isFile ());
-                                    }
-                                  });
+    TreeWalker.walkSubTree (aTree.getRootItem (),
+                            new DefaultHierarchyWalkerCallback <DefaultFolderTreeItem <String, File, List <File>>> ()
+                            {
+                              @Override
+                              public void onItemBeforeChildren (@Nonnull final DefaultFolderTreeItem <String, File, List <File>> aFolder)
+                              {
+                                for (final File aFile : aFolder.getData ())
+                                  assertTrue (aFile.isFile ());
+                              }
+                            });
 
     // Only dir filter
     aTree = new FileSystemFolderTree (new File (".").getAbsoluteFile (),
                                       new FileFilterFileFromFilenameFilter (FilenameFilterFactory.getEndsWithFilter ("src")),
                                       null);
-    TreeWalkerWithID.walkSubTree (aTree.getRootItem (),
-                                  new DefaultHierarchyWalkerCallback <DefaultFolderTreeItem <String, File, List <File>>> ());
+    TreeWalker.walkSubTree (aTree.getRootItem (),
+                            new DefaultHierarchyWalkerCallback <DefaultFolderTreeItem <String, File, List <File>>> ());
 
     // No filter
     aTree = new FileSystemFolderTree (new File (".").getAbsoluteFile ());
-    TreeWalkerWithID.walkSubTree (aTree.getRootItem (),
-                                  new DefaultHierarchyWalkerCallback <DefaultFolderTreeItem <String, File, List <File>>> ());
+    TreeWalker.walkSubTree (aTree.getRootItem (),
+                            new DefaultHierarchyWalkerCallback <DefaultFolderTreeItem <String, File, List <File>>> ());
   }
 }

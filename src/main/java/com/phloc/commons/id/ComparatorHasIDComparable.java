@@ -24,18 +24,19 @@ import com.phloc.commons.compare.ESortOrder;
 
 /**
  * This is a collation {@link java.util.Comparator} for objects that implement
- * the {@link IHasID} interface with {@link Integer}.
+ * the {@link IHasID} interface with a class that implements {@link Comparable}.
  * 
  * @author philip
  * @param <DATATYPE>
  *        The type of elements to be compared.
  */
-public class ComparatorHasIDInteger <DATATYPE extends IHasID <Integer>> extends AbstractComparator <DATATYPE>
+public class ComparatorHasIDComparable <IDTYPE extends Comparable <? super IDTYPE>, DATATYPE extends IHasID <IDTYPE>> extends
+                                                                                                                      AbstractComparator <DATATYPE>
 {
-  public ComparatorHasIDInteger ()
+  public ComparatorHasIDComparable ()
   {}
 
-  public ComparatorHasIDInteger (@Nonnull final ESortOrder eSortOrder)
+  public ComparatorHasIDComparable (@Nonnull final ESortOrder eSortOrder)
   {
     super (eSortOrder);
   }

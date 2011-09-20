@@ -28,12 +28,11 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.hierarchy.DefaultHierarchyWalkerCallback;
 import com.phloc.commons.mutable.MutableInt;
-import com.phloc.commons.tree.utils.walk.TreeWalkerWithID;
 import com.phloc.commons.tree.withid.DefaultTreeItemWithID;
 import com.phloc.commons.tree.withid.DefaultTreeWithID;
 
 /**
- * Test class for class {@link TreeWalkerWithID}.
+ * Test class for class {@link TreeWalker}.
  * 
  * @author philip
  */
@@ -108,43 +107,43 @@ public final class TreeWalkerWithIDTest
 
       // count at before children
       final MutableInt mi = new MutableInt ();
-      TreeWalkerWithID.walkTree (_createTreeWithID (nLevel, nItemsPerLevel), new MockTreeWalkerCallback (mi));
+      TreeWalker.walkTree (_createTreeWithID (nLevel, nItemsPerLevel), new MockTreeWalkerCallback (mi));
       assertEquals (nExpected, mi.intValue ());
 
       // count at before children
       mi.set (0);
-      TreeWalkerWithID.walkSubTree (_createTreeWithID (nLevel, nItemsPerLevel).getRootItem (),
-                                    new MockTreeWalkerCallback (mi));
+      TreeWalker.walkSubTree (_createTreeWithID (nLevel, nItemsPerLevel).getRootItem (),
+                              new MockTreeWalkerCallback (mi));
       assertEquals (nExpected, mi.intValue ());
 
       // count at after children
       mi.set (0);
-      TreeWalkerWithID.walkTree (_createTreeWithID (nLevel, nItemsPerLevel), new MockTreeWalkerCallback (mi));
+      TreeWalker.walkTree (_createTreeWithID (nLevel, nItemsPerLevel), new MockTreeWalkerCallback (mi));
       assertEquals (nExpected, mi.intValue ());
 
       // count at after children
       mi.set (0);
-      TreeWalkerWithID.walkSubTree (_createTreeWithID (nLevel, nItemsPerLevel).getRootItem (),
-                                    new MockTreeWalkerCallback (mi));
+      TreeWalker.walkSubTree (_createTreeWithID (nLevel, nItemsPerLevel).getRootItem (),
+                              new MockTreeWalkerCallback (mi));
       assertEquals (nExpected, mi.intValue ());
 
       try
       {
-        TreeWalkerWithID.walkTree ((DefaultTreeWithID <String, Object>) null, new MockTreeWalkerCallback (mi));
+        TreeWalker.walkTree ((DefaultTreeWithID <String, Object>) null, new MockTreeWalkerCallback (mi));
         fail ();
       }
       catch (final NullPointerException ex)
       {}
       try
       {
-        TreeWalkerWithID.walkSubTree ((DefaultTreeItemWithID <String, Object>) null, new MockTreeWalkerCallback (mi));
+        TreeWalker.walkSubTree ((DefaultTreeItemWithID <String, Object>) null, new MockTreeWalkerCallback (mi));
         fail ();
       }
       catch (final NullPointerException ex)
       {}
       try
       {
-        TreeWalkerWithID.walkSubTree (_createTreeWithID (nLevel, nItemsPerLevel).getRootItem (), null);
+        TreeWalker.walkSubTree (_createTreeWithID (nLevel, nItemsPerLevel).getRootItem (), null);
         fail ();
       }
       catch (final NullPointerException ex)

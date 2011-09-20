@@ -38,7 +38,6 @@ import com.phloc.commons.parent.impl.ChildrenProviderHasChildrenSorting;
 import com.phloc.commons.tree.IBasicTree;
 import com.phloc.commons.tree.simple.ITreeItem;
 import com.phloc.commons.tree.utils.walk.TreeWalker;
-import com.phloc.commons.tree.utils.walk.TreeWalkerWithID;
 import com.phloc.commons.tree.withid.BasicTreeWithID;
 import com.phloc.commons.tree.withid.DefaultTreeWithID;
 import com.phloc.commons.tree.withid.ITreeItemWithID;
@@ -98,30 +97,30 @@ public final class TreeXMLConverter
     final IMicroElement eRoot = aDoc.appendElement (ELEMENT_ROOT);
     final NonBlockingStack <IMicroElement> aParents = new NonBlockingStack <IMicroElement> ();
     aParents.push (eRoot);
-    TreeWalkerWithID.walkTree (aTree,
-                               new ChildrenProviderHasChildrenSorting <ITEMTYPE> (aItemComparator),
-                               new DefaultHierarchyWalkerCallback <ITEMTYPE> ()
-                               {
-                                 @Override
-                                 public void onItemBeforeChildren (final ITEMTYPE aItem)
-                                 {
-                                   // create item element
-                                   final IMicroElement eItem = aParents.peek ().appendElement (ELEMENT_ITEM);
-                                   eItem.setAttribute (ATTR_ID, aIDConverter.convert (aItem.getID ()));
+    TreeWalker.walkTree (aTree,
+                         new ChildrenProviderHasChildrenSorting <ITEMTYPE> (aItemComparator),
+                         new DefaultHierarchyWalkerCallback <ITEMTYPE> ()
+                         {
+                           @Override
+                           public void onItemBeforeChildren (final ITEMTYPE aItem)
+                           {
+                             // create item element
+                             final IMicroElement eItem = aParents.peek ().appendElement (ELEMENT_ITEM);
+                             eItem.setAttribute (ATTR_ID, aIDConverter.convert (aItem.getID ()));
 
-                                   // append data
-                                   final IMicroElement eData = eItem.appendElement (ELEMENT_DATA);
-                                   aDataConverter.appendDataValue (eData, aItem.getData ());
+                             // append data
+                             final IMicroElement eData = eItem.appendElement (ELEMENT_DATA);
+                             aDataConverter.appendDataValue (eData, aItem.getData ());
 
-                                   aParents.push (eItem);
-                                 }
+                             aParents.push (eItem);
+                           }
 
-                                 @Override
-                                 public void onItemAfterChildren (final ITEMTYPE aItem)
-                                 {
-                                   aParents.pop ();
-                                 }
-                               });
+                           @Override
+                           public void onItemAfterChildren (final ITEMTYPE aItem)
+                           {
+                             aParents.pop ();
+                           }
+                         });
     return aDoc;
   }
 

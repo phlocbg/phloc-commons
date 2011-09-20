@@ -51,7 +51,7 @@ public final class TreeWithIDSorterTest
     i2.createChildItem ("p2", "Apache Software Foundation");
 
     // Sort all items by value
-    TreeWithIDSorter.sortByValues (aTree, new ComparatorString ());
+    TreeWithIDSorter.sortByValue (aTree, new ComparatorString ());
 
     assertEquals (2, aTree.getRootItem ().getChildCount ());
     List <? extends DefaultTreeItemWithID <String, String>> aChildren = aTree.getRootItem ().getChildren ();
@@ -68,7 +68,7 @@ public final class TreeWithIDSorterTest
     assertEquals ("temp", i1.getChildAtIndex (2).getData ());
 
     // Sort all items by keys
-    TreeWithIDSorter.sortByKeys (aTree, new ComparatorString ());
+    TreeWithIDSorter.sortByID (aTree, new ComparatorString ());
 
     assertEquals (2, aTree.getRootItem ().getChildCount ());
     aChildren = aTree.getRootItem ().getChildren ();

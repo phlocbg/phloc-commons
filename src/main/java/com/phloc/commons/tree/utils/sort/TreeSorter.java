@@ -25,11 +25,12 @@ import javax.annotation.concurrent.Immutable;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.hierarchy.DefaultHierarchyWalkerCallback;
 import com.phloc.commons.tree.IBasicTree;
+import com.phloc.commons.tree.simple.ITree;
 import com.phloc.commons.tree.simple.ITreeItem;
 import com.phloc.commons.tree.utils.walk.TreeWalker;
 
 /**
- * Sort tree items by using a specified converter.
+ * Sort {@link ITree} instances recursively.
  * 
  * @author philip
  */
@@ -47,6 +48,24 @@ public final class TreeSorter
                                                                                          @Nonnull final Comparator <? super VALUETYPE> aComparator)
   {
     final ComparatorTreeItemValue <VALUETYPE, ITEMTYPE> aRealComp = new ComparatorTreeItemValue <VALUETYPE, ITEMTYPE> (aComparator);
+
+    // sort root manually
+    aTree.getRootItem ().reorderChildItems (aRealComp);
+
+    // and now start iterating
+    TreeWalker.walkTree (aTree, new DefaultHierarchyWalkerCallback <ITEMTYPE> ()
+    {
+      @Override
+      public void onItemBeforeChildren (final ITEMTYPE aTreeItem)
+      {
+        aTreeItem.reorderChildItems (aRealComp);
+      }
+    });
+  }
+
+  public static <VALUETYPE extends Comparable <? super VALUETYPE>, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> void sort (@Nonnull final IBasicTree <VALUETYPE, ITEMTYPE> aTree)
+  {
+    final ComparatorTreeItemValueComparable <VALUETYPE, ITEMTYPE> aRealComp = new ComparatorTreeItemValueComparable <VALUETYPE, ITEMTYPE> ();
 
     // sort root manually
     aTree.getRootItem ().reorderChildItems (aRealComp);

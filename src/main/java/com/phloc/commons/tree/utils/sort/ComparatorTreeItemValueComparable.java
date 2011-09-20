@@ -22,9 +22,22 @@ import javax.annotation.Nonnull;
 import com.phloc.commons.compare.AbstractComparator;
 import com.phloc.commons.compare.CompareUtils;
 import com.phloc.commons.tree.IBasicTreeItem;
+import com.phloc.commons.tree.simple.ITreeItem;
+import com.phloc.commons.tree.withid.ITreeItemWithID;
 
+/**
+ * Comparator for sorting {@link IBasicTreeItem} items by their value using an
+ * comparable value types.<br>
+ * Works for {@link ITreeItem} and {@link ITreeItemWithID}.
+ * 
+ * @author philip
+ * @param <VALUETYPE>
+ *        tree item value type
+ * @param <ITEMTYPE>
+ *        tree item implementation type
+ */
 public class ComparatorTreeItemValueComparable <VALUETYPE extends Comparable <? super VALUETYPE>, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> extends
-                                                                                                                                                          AbstractComparator <ITEMTYPE>
+                                                                                                                                                         AbstractComparator <ITEMTYPE>
 {
   @Override
   protected int mainCompare (@Nonnull final ITEMTYPE aItem1, @Nonnull final ITEMTYPE aItem2)

@@ -26,6 +26,7 @@ import javax.annotation.concurrent.NotThreadSafe;
  * 
  * @author philip
  * @param <VALUETYPE>
+ *        tree item value type
  */
 @NotThreadSafe
 public class DefaultTreeItemFactory <VALUETYPE> extends

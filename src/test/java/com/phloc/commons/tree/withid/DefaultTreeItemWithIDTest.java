@@ -29,7 +29,7 @@ import org.junit.Test;
 
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.mock.PhlocTestUtils;
-import com.phloc.commons.tree.utils.sort.ComparatorTreeItemKeyComparable;
+import com.phloc.commons.tree.utils.sort.ComparatorTreeItemIDComparable;
 import com.phloc.commons.tree.utils.sort.ComparatorTreeItemValueComparable;
 
 /**
@@ -202,7 +202,7 @@ public final class DefaultTreeItemWithIDTest
     assertEquals ("Welt1", ti.getChildren ().get (1).getData ());
 
     // reorder
-    ti.reorderChildrenByItems (new ComparatorTreeItemKeyComparable <String, String, DefaultTreeItemWithID <String, String>> ());
+    ti.reorderChildrenByItems (new ComparatorTreeItemIDComparable <String, String, DefaultTreeItemWithID <String, String>> ());
 
     // check new order
     assertEquals (2, ti.getChildCount ());

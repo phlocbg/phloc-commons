@@ -30,7 +30,7 @@ import com.phloc.commons.compare.ESortOrder;
  * @param <DATATYPE>
  *        The type of elements to be compared.
  */
-public final class ComparatorHasSimpleLongID <DATATYPE extends IHasSimpleLongID> extends AbstractComparator <DATATYPE>
+public class ComparatorHasSimpleLongID <DATATYPE extends IHasSimpleLongID> extends AbstractComparator <DATATYPE>
 {
   public ComparatorHasSimpleLongID ()
   {}
@@ -41,7 +41,7 @@ public final class ComparatorHasSimpleLongID <DATATYPE extends IHasSimpleLongID>
   }
 
   @Override
-  protected int mainCompare (final DATATYPE aElement1, final DATATYPE aElement2)
+  protected final int mainCompare (final DATATYPE aElement1, final DATATYPE aElement2)
   {
     final long nID1 = aElement1.getID ();
     final long nID2 = aElement2.getID ();

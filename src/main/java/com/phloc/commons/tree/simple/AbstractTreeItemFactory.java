@@ -19,6 +19,15 @@ package com.phloc.commons.tree.simple;
 
 import javax.annotation.concurrent.NotThreadSafe;
 
+/**
+ * Abstract implementation of the {@link ITreeItemFactory} interface
+ * 
+ * @author philip
+ * @param <VALUETYPE>
+ *        tree item value type
+ * @param <ITEMTYPE>
+ *        tree item implementation type
+ */
 @NotThreadSafe
 public abstract class AbstractTreeItemFactory <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> implements
                                                                                                             ITreeItemFactory <VALUETYPE, ITEMTYPE>
