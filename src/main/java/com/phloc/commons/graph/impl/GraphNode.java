@@ -239,12 +239,14 @@ public class GraphNode <VALUETYPE> extends AbstractGraphObject implements IGraph
     if (!super.equals (o))
       return false;
     final GraphNode <?> rhs = (GraphNode <?>) o;
+    // Comparing the relations may lead to infinite loops in case of cycles!
     return CompareUtils.nullSafeEquals (m_aValue, rhs.m_aValue);
   }
 
   @Override
   public int hashCode ()
   {
+    // Comparing the relations may lead to infinite loops in case of cycles!
     return HashCodeGenerator.getDerived (super.hashCode ()).append (m_aValue).getHashCode ();
   }
 
