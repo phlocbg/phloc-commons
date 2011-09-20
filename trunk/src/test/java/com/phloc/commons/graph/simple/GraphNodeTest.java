@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.graph;
+package com.phloc.commons.graph.simple;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -28,6 +28,9 @@ import java.util.Iterator;
 
 import org.junit.Test;
 
+import com.phloc.commons.graph.IGraphRelation;
+import com.phloc.commons.graph.simple.GraphNode;
+import com.phloc.commons.graph.simple.GraphRelation;
 import com.phloc.commons.mock.PhlocTestUtils;
 
 /**

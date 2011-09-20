@@ -17,14 +17,17 @@
  */
 package com.phloc.commons.graph;
 
-abstract class AbstractGraphTestCase
+import com.phloc.commons.graph.simple.GraphNode;
+import com.phloc.commons.graph.simple.Graph;
+
+public abstract class AbstractGraphTestCase
 {
   private static final IGraphNode <Integer> _createGN (final int i)
   {
     return GraphNode.create (Integer.toString (i), Integer.valueOf (i + 1));
   }
 
-  protected SimpleGraph <Integer> _buildGraph ()
+  protected Graph <Integer> _buildGraph ()
   {
     final IGraphNode <Integer> node0 = _createGN (0);
     final IGraphNode <Integer> node1 = _createGN (1);
@@ -42,7 +45,7 @@ abstract class AbstractGraphTestCase
     node5.addOutgoingRelation (node6);
     node6.addOutgoingRelation (node3);
 
-    final SimpleGraph <Integer> aGraph = new SimpleGraph <Integer> ();
+    final Graph <Integer> aGraph = new Graph <Integer> ();
     aGraph.addNode (node0);
     aGraph.addNode (node1);
     aGraph.addNode (node2);
@@ -53,19 +56,19 @@ abstract class AbstractGraphTestCase
     return aGraph;
   }
 
-  protected IReadonlySimpleGraph <Integer> _buildCycleGraphSimple ()
+  protected IReadonlyGraph <Integer> _buildCycleGraphSimple ()
   {
     final IGraphNode <Integer> node0 = _createGN (0);
     final IGraphNode <Integer> node1 = _createGN (1);
     node0.addOutgoingRelation (node1);
     node1.addOutgoingRelation (node0);
-    final SimpleGraph <Integer> aGraph = new SimpleGraph <Integer> ();
+    final Graph <Integer> aGraph = new Graph <Integer> ();
     aGraph.addNode (node0);
     aGraph.addNode (node1);
     return aGraph;
   }
 
-  protected IReadonlySimpleGraph <Integer> _buildCycleGraphSimple2 ()
+  protected IReadonlyGraph <Integer> _buildCycleGraphSimple2 ()
   {
     final IGraphNode <Integer> node0 = _createGN (0);
     final IGraphNode <Integer> node1 = _createGN (1);
@@ -76,7 +79,7 @@ abstract class AbstractGraphTestCase
     node2.addOutgoingRelation (node3);
     node3.addOutgoingRelation (node0);
 
-    final SimpleGraph <Integer> aGraph = new SimpleGraph <Integer> ();
+    final Graph <Integer> aGraph = new Graph <Integer> ();
     aGraph.addNode (node0);
     aGraph.addNode (node1);
     aGraph.addNode (node2);

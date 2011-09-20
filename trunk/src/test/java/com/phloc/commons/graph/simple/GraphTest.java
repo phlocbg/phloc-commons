@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.graph;
+package com.phloc.commons.graph.simple;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -26,19 +26,23 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
+import com.phloc.commons.graph.AbstractGraphTestCase;
+import com.phloc.commons.graph.IReadonlyGraph;
+import com.phloc.commons.graph.simple.GraphNode;
+import com.phloc.commons.graph.simple.Graph;
 import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
- * Test class for class {@link SimpleGraph}.
+ * Test class for class {@link Graph}.
  * 
  * @author philip
  */
-public final class SimpleGraphTest extends AbstractGraphTestCase
+public final class GraphTest extends AbstractGraphTestCase
 {
   @Test
   public void testCtor ()
   {
-    final IReadonlySimpleGraph <String> sg = new SimpleGraph <String> ();
+    final IReadonlyGraph <String> sg = new Graph <String> ();
     assertTrue (sg.getAllStartNodes ().isEmpty ());
     assertTrue (sg.getAllEndNodes ().isEmpty ());
     assertFalse (sg.containsCycles ());
@@ -57,7 +61,7 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
   @Test
   public void testAddNode ()
   {
-    final SimpleGraph <String> sg = new SimpleGraph <String> ();
+    final Graph <String> sg = new Graph <String> ();
     assertEquals (0, sg.getNodeCount ());
     try
     {
@@ -108,7 +112,7 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
   @Test
   public void testClear ()
   {
-    final SimpleGraph <String> sg = new SimpleGraph <String> ();
+    final Graph <String> sg = new Graph <String> ();
 
     final GraphNode <String> n = new GraphNode <String> ();
     assertTrue (sg.addNode (n).isChanged ());
@@ -136,10 +140,10 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
   @Test
   public void testCycles ()
   {
-    SimpleGraph <Integer> sg = _buildGraph ();
+    Graph <Integer> sg = _buildGraph ();
     assertFalse (sg.containsCycles ());
 
-    sg = new SimpleGraph <Integer> ();
+    sg = new Graph <Integer> ();
     final GraphNode <Integer> n1 = new GraphNode <Integer> ();
     assertTrue (sg.addNode (n1).isChanged ());
     final GraphNode <Integer> n2 = new GraphNode <Integer> ();
@@ -150,8 +154,8 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
     assertTrue (sg.containsCycles ());
 
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (_buildGraph (), _buildGraph ());
-    PhlocTestUtils.testDefaultImplementationWithEqualContentObject (new SimpleGraph <Integer> (),
-                                                                    new SimpleGraph <Integer> ());
-    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (_buildGraph (), new SimpleGraph <Integer> ());
+    PhlocTestUtils.testDefaultImplementationWithEqualContentObject (new Graph <Integer> (),
+                                                                    new Graph <Integer> ());
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (_buildGraph (), new Graph <Integer> ());
   }
 }

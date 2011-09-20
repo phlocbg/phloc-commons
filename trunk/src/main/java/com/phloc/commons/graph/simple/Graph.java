@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.graph;
+package com.phloc.commons.graph.simple;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -29,6 +29,9 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.graph.IGraph;
+import com.phloc.commons.graph.IGraphNode;
+import com.phloc.commons.graph.iterate.GraphIterator;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.state.ETriState;
@@ -40,7 +43,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @NotThreadSafe
-public class SimpleGraph <VALUETYPE> implements ISimpleGraph <VALUETYPE>
+public class Graph <VALUETYPE> implements IGraph <VALUETYPE>
 {
   private final Map <String, IGraphNode <VALUETYPE>> m_aNodes = new HashMap <String, IGraphNode <VALUETYPE>> ();
   private ETriState m_eHasCycles = ETriState.UNDEFINED;
@@ -199,10 +202,10 @@ public class SimpleGraph <VALUETYPE> implements ISimpleGraph <VALUETYPE>
   {
     if (o == this)
       return true;
-    if (!(o instanceof SimpleGraph <?>))
+    if (!(o instanceof Graph <?>))
       return false;
     // Do not use m_eHasCycles because this is just a state variable
-    final SimpleGraph <?> rhs = (SimpleGraph <?>) o;
+    final Graph <?> rhs = (Graph <?>) o;
     return m_aNodes.equals (rhs.m_aNodes);
   }
 
