@@ -15,13 +15,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.graph;
+package com.phloc.commons.graph.impl;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
+import com.phloc.commons.graph.impl.GraphObjectIDFactory;
 import com.phloc.commons.idfactory.IIDFactory;
 import com.phloc.commons.idfactory.StringIDFromGlobalIntIDFactory;
 
@@ -30,7 +31,7 @@ import com.phloc.commons.idfactory.StringIDFromGlobalIntIDFactory;
  * 
  * @author philip
  */
-public final class GraphObjectIDFactoryTest extends AbstractGraphTestCase
+public final class GraphObjectIDFactoryTest
 {
   @Test
   public void testAll ()

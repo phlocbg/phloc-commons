@@ -15,13 +15,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.graph;
+package com.phloc.commons.graph.simple;
 
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
+import com.phloc.commons.graph.simple.GraphNode;
+import com.phloc.commons.graph.simple.GraphRelation;
 import com.phloc.commons.mock.PhlocTestUtils;
 
 /**

@@ -28,7 +28,7 @@ import com.phloc.commons.state.IClearable;
  * 
  * @author philip
  */
-public interface ISimpleGraph <VALUETYPE> extends IReadonlySimpleGraph <VALUETYPE>, IClearable
+public interface IGraph <VALUETYPE> extends IReadonlyGraph <VALUETYPE>, IClearable
 {
   /**
    * Create a new graph node and add it to the graph. A new ID is generated.

@@ -32,7 +32,7 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
  * @param <VALUETYPE>
  *        The value type of the nodes.
  */
-public interface IReadonlySimpleGraph <VALUETYPE>
+public interface IReadonlyGraph <VALUETYPE>
 {
   @Nonnull
   IGraphNode <VALUETYPE> getSingleStartNode ();

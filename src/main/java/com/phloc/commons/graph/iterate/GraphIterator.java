@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.graph;
+package com.phloc.commons.graph.iterate;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -30,6 +30,8 @@ import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.collections.NonBlockingStack;
 import com.phloc.commons.collections.iterate.IIterableIterator;
 import com.phloc.commons.filter.IFilter;
+import com.phloc.commons.graph.IGraphNode;
+import com.phloc.commons.graph.IGraphRelation;
 
 /**
  * A simple forward iterator for simple graphs.

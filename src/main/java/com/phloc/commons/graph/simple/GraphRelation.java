@@ -15,12 +15,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.graph;
+package com.phloc.commons.graph.simple;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.graph.IGraphNode;
+import com.phloc.commons.graph.IGraphRelation;
+import com.phloc.commons.graph.impl.AbstractGraphObject;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
