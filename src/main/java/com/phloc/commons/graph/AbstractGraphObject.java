@@ -19,6 +19,7 @@ package com.phloc.commons.graph;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.collections.attrs.MapBasedAttributeContainer;
@@ -31,6 +32,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author philip
  */
+@NotThreadSafe
 public abstract class AbstractGraphObject extends MapBasedAttributeContainer implements IGraphObject
 {
   // the main ID

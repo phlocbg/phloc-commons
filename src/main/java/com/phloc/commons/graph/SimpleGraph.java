@@ -32,7 +32,6 @@ import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.state.ETriState;
-import com.phloc.commons.state.IClearable;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -41,7 +40,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @NotThreadSafe
-public class SimpleGraph <VALUETYPE> implements IReadonlySimpleGraph <VALUETYPE>, IClearable
+public class SimpleGraph <VALUETYPE> implements ISimpleGraph <VALUETYPE>
 {
   private final Map <String, IGraphNode <VALUETYPE>> m_aNodes = new HashMap <String, IGraphNode <VALUETYPE>> ();
   private ETriState m_eHasCycles = ETriState.UNDEFINED;
@@ -91,6 +90,22 @@ public class SimpleGraph <VALUETYPE> implements IReadonlySimpleGraph <VALUETYPE>
     if (m_aNodes.containsKey (sID))
       return EChange.UNCHANGED;
     m_aNodes.put (sID, aNode);
+
+    // Cycle state is undefined
+    m_eHasCycles = ETriState.UNDEFINED;
+    return EChange.CHANGED;
+  }
+
+  @Nonnull
+  public EChange removeNode (@Nonnull final IGraphNode <VALUETYPE> aNode)
+  {
+    if (aNode == null)
+      throw new NullPointerException ("node");
+
+    if (m_aNodes.remove (aNode.getID ()) == null)
+      return EChange.UNCHANGED;
+
+    // Cycle state is undefined
     m_eHasCycles = ETriState.UNDEFINED;
     return EChange.CHANGED;
   }
@@ -146,6 +161,8 @@ public class SimpleGraph <VALUETYPE> implements IReadonlySimpleGraph <VALUETYPE>
     if (m_aNodes.isEmpty ())
       return EChange.UNCHANGED;
     m_aNodes.clear ();
+
+    // No cycles in an empty graph :)
     m_eHasCycles = ETriState.FALSE;
     return EChange.CHANGED;
   }

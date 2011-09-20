@@ -25,12 +25,14 @@ import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * This class represents a connection between 2 graph nodes.
+ * Default implementation of the {@link IGraphRelation} interface
  * 
  * @author philip
+ * @param <VALUETYPE>
+ *        value type of the graph nodes
  */
 @Immutable
-public final class GraphRelation <VALUETYPE> extends AbstractGraphObject implements IGraphRelation <VALUETYPE>
+public class GraphRelation <VALUETYPE> extends AbstractGraphObject implements IGraphRelation <VALUETYPE>
 {
   private final IGraphNode <VALUETYPE> m_aFrom;
   private final IGraphNode <VALUETYPE> m_aTo;

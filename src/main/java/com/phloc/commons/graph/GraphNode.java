@@ -37,8 +37,15 @@ import com.phloc.commons.compare.CompareUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
+/**
+ * Default implementation if the {@link IGraphNode} interface
+ * 
+ * @author philip
+ * @param <VALUETYPE>
+ *        Value type contained in this node
+ */
 @NotThreadSafe
-public final class GraphNode <VALUETYPE> extends AbstractGraphObject implements IGraphNode <VALUETYPE>
+public class GraphNode <VALUETYPE> extends AbstractGraphObject implements IGraphNode <VALUETYPE>
 {
   private final VALUETYPE m_aValue;
   private Map <String, IGraphRelation <VALUETYPE>> m_aIncoming;
@@ -92,7 +99,7 @@ public final class GraphNode <VALUETYPE> extends AbstractGraphObject implements 
       throw new IllegalArgumentException ("The passed relation (" +
                                           aNewRelation +
                                           ") is already contained as an incoming relation");
-    // check if the relation to-node is already contained
+    // check if the relation from-node is already contained
     if (m_aIncoming != null)
       for (final IGraphRelation <VALUETYPE> aRelation : m_aIncoming.values ())
         if (aRelation.getFrom () == aNewRelation.getFrom ())
@@ -104,20 +111,23 @@ public final class GraphNode <VALUETYPE> extends AbstractGraphObject implements 
     _getIncoming ().put (aNewRelation.getID (), aNewRelation);
   }
 
-  public void addIncomingRelation (@Nonnull final IGraphRelation <VALUETYPE> aRelation)
+  @Nonnull
+  public IGraphRelation <VALUETYPE> addIncomingRelation (@Nonnull final IGraphRelation <VALUETYPE> aRelation)
   {
     _addIncoming (aRelation);
     ((GraphNode <VALUETYPE>) aRelation.getFrom ())._addOutgoing (aRelation);
+    return aRelation;
   }
 
-  public void addIncomingRelation (@Nonnull final IGraphNode <VALUETYPE> aFromNode)
+  @Nonnull
+  public IGraphRelation <VALUETYPE> addIncomingRelation (@Nonnull final IGraphNode <VALUETYPE> aFromNode)
   {
-    addIncomingRelation (GraphRelation.create (aFromNode, this));
+    return addIncomingRelation (GraphRelation.create (aFromNode, this));
   }
 
   public boolean hasIncomingRelations ()
   {
-    return m_aIncoming != null && !m_aIncoming.isEmpty ();
+    return !ContainerHelper.isEmpty (m_aIncoming);
   }
 
   @Nonnegative
@@ -177,20 +187,23 @@ public final class GraphNode <VALUETYPE> extends AbstractGraphObject implements 
     _getOutgoing ().put (aNewRelation.getID (), aNewRelation);
   }
 
-  public void addOutgoingRelation (@Nonnull final IGraphRelation <VALUETYPE> aRelation)
+  @Nonnull
+  public IGraphRelation <VALUETYPE> addOutgoingRelation (@Nonnull final IGraphRelation <VALUETYPE> aRelation)
   {
     _addOutgoing (aRelation);
     ((GraphNode <VALUETYPE>) aRelation.getTo ())._addIncoming (aRelation);
+    return aRelation;
   }
 
-  public void addOutgoingRelation (@Nonnull final IGraphNode <VALUETYPE> aToNode)
+  @Nonnull
+  public IGraphRelation <VALUETYPE> addOutgoingRelation (@Nonnull final IGraphNode <VALUETYPE> aToNode)
   {
-    addOutgoingRelation (GraphRelation.create (this, aToNode));
+    return addOutgoingRelation (GraphRelation.create (this, aToNode));
   }
 
   public boolean hasOutgoingRelations ()
   {
-    return m_aOutgoing != null && !m_aOutgoing.isEmpty ();
+    return !ContainerHelper.isEmpty (m_aOutgoing);
   }
 
   @Nonnegative
@@ -228,16 +241,19 @@ public final class GraphNode <VALUETYPE> extends AbstractGraphObject implements 
     return ret;
   }
 
-  public boolean isConnectedWith (final IGraphNode <VALUETYPE> aNode)
+  public boolean isConnectedWith (@Nullable final IGraphNode <VALUETYPE> aNode)
   {
-    if (m_aIncoming != null)
-      for (final IGraphRelation <VALUETYPE> aRel : m_aIncoming.values ())
-        if (aRel.getFrom () == aNode)
-          return true;
-    if (m_aOutgoing != null)
-      for (final IGraphRelation <VALUETYPE> aRel : m_aOutgoing.values ())
-        if (aRel.getTo () == aNode)
-          return true;
+    if (aNode != null)
+    {
+      if (m_aIncoming != null)
+        for (final IGraphRelation <VALUETYPE> aRel : m_aIncoming.values ())
+          if (aRel.getFrom () == aNode)
+            return true;
+      if (m_aOutgoing != null)
+        for (final IGraphRelation <VALUETYPE> aRel : m_aOutgoing.values ())
+          if (aRel.getTo () == aNode)
+            return true;
+    }
     return false;
   }
 
