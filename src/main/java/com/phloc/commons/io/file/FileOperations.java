@@ -108,7 +108,8 @@ public final class FileOperations
     try
     {
       return aDir.mkdirs () ? EFileIOErrorCode.NO_ERROR.getAsIOError (EFileIOOperation.CREATE_DIR_RECURSIVE, aDir)
-                           : EFileIOErrorCode.OPERATION_FAILED.getAsIOError (EFileIOOperation.CREATE_DIR_RECURSIVE, aDir);
+                           : EFileIOErrorCode.OPERATION_FAILED.getAsIOError (EFileIOOperation.CREATE_DIR_RECURSIVE,
+                                                                             aDir);
     }
     catch (final SecurityException ex)
     {
@@ -155,9 +156,10 @@ public final class FileOperations
     {
       // delete may return true even so it internally failed!
       return aDir.delete () && !aDir.exists ()
-                                              ? EFileIOErrorCode.NO_ERROR.getAsIOError (EFileIOOperation.DELETE_DIR, aDir)
+                                              ? EFileIOErrorCode.NO_ERROR.getAsIOError (EFileIOOperation.DELETE_DIR,
+                                                                                        aDir)
                                               : EFileIOErrorCode.OPERATION_FAILED.getAsIOError (EFileIOOperation.DELETE_DIR,
-                                                                                             aDir);
+                                                                                                aDir);
     }
     catch (final SecurityException ex)
     {
@@ -239,9 +241,9 @@ public final class FileOperations
       // delete may return true even so it internally failed!
       return aFile.delete () && !aFile.exists ()
                                                 ? EFileIOErrorCode.NO_ERROR.getAsIOError (EFileIOOperation.DELETE_FILE,
-                                                                                       aFile)
+                                                                                          aFile)
                                                 : EFileIOErrorCode.OPERATION_FAILED.getAsIOError (EFileIOOperation.DELETE_FILE,
-                                                                                               aFile);
+                                                                                                  aFile);
     }
     catch (final SecurityException ex)
     {
@@ -285,11 +287,11 @@ public final class FileOperations
     {
       return aSourceFile.renameTo (aTargetFile)
                                                ? EFileIOErrorCode.NO_ERROR.getAsIOError (EFileIOOperation.RENAME_FILE,
-                                                                                      aSourceFile,
-                                                                                      aTargetFile)
+                                                                                         aSourceFile,
+                                                                                         aTargetFile)
                                                : EFileIOErrorCode.OPERATION_FAILED.getAsIOError (EFileIOOperation.RENAME_FILE,
-                                                                                              aSourceFile,
-                                                                                              aTargetFile);
+                                                                                                 aSourceFile,
+                                                                                                 aTargetFile);
     }
     catch (final SecurityException ex)
     {
@@ -328,7 +330,9 @@ public final class FileOperations
 
     // Is the source a parent of target?
     if (FileUtils.isParentDirectory (aSourceDir, aTargetDir))
-      return EFileIOErrorCode.TARGET_IS_CHILD_OF_SOURCE.getAsIOError (EFileIOOperation.RENAME_DIR, aSourceDir, aTargetDir);
+      return EFileIOErrorCode.TARGET_IS_CHILD_OF_SOURCE.getAsIOError (EFileIOOperation.RENAME_DIR,
+                                                                      aSourceDir,
+                                                                      aTargetDir);
 
     // Ensure parent of target directory is present
     FileUtils.ensureParentDirectoryIsPresent (aTargetDir);
@@ -337,11 +341,11 @@ public final class FileOperations
     {
       return aSourceDir.renameTo (aTargetDir)
                                              ? EFileIOErrorCode.NO_ERROR.getAsIOError (EFileIOOperation.RENAME_DIR,
-                                                                                    aSourceDir,
-                                                                                    aTargetDir)
+                                                                                       aSourceDir,
+                                                                                       aTargetDir)
                                              : EFileIOErrorCode.OPERATION_FAILED.getAsIOError (EFileIOOperation.RENAME_DIR,
-                                                                                            aSourceDir,
-                                                                                            aTargetDir);
+                                                                                               aSourceDir,
+                                                                                               aTargetDir);
     }
     catch (final SecurityException ex)
     {
@@ -389,11 +393,11 @@ public final class FileOperations
     {
       return StreamUtils.copyInputStreamToOutputStream (aIS, aOS).isSuccess ()
                                                                               ? EFileIOErrorCode.NO_ERROR.getAsIOError (EFileIOOperation.COPY_FILE,
-                                                                                                                     aSourceFile,
-                                                                                                                     aTargetFile)
+                                                                                                                        aSourceFile,
+                                                                                                                        aTargetFile)
                                                                               : EFileIOErrorCode.OPERATION_FAILED.getAsIOError (EFileIOOperation.COPY_FILE,
-                                                                                                                             aSourceFile,
-                                                                                                                             aTargetFile);
+                                                                                                                                aSourceFile,
+                                                                                                                                aTargetFile);
     }
     finally
     {
@@ -430,8 +434,8 @@ public final class FileOperations
     // Is the source a parent of target?
     if (FileUtils.isParentDirectory (aSourceDir, aTargetDir))
       return EFileIOErrorCode.TARGET_IS_CHILD_OF_SOURCE.getAsIOError (EFileIOOperation.COPY_DIR_RECURSIVE,
-                                                                   aSourceDir,
-                                                                   aTargetDir);
+                                                                      aSourceDir,
+                                                                      aTargetDir);
 
     // Does the target directory already exist?
     if (aTargetDir.exists ())

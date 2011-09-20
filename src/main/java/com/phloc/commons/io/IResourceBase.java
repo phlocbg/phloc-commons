@@ -27,7 +27,7 @@ import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
 
 /**
  * Base interface for an abstract readable resource.
- *
+ * 
  * @author philip
  */
 @MustImplementEqualsAndHashcode

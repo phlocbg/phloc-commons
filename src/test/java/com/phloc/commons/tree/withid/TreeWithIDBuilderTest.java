@@ -33,6 +33,7 @@ import com.phloc.commons.parent.MockChildrenProvider;
 import com.phloc.commons.parent.MockHasChildren;
 import com.phloc.commons.parent.MockHasParent;
 import com.phloc.commons.parent.impl.ParentProviderHasParent;
+import com.phloc.commons.tree.withid.utils.TreeWithIDBuilder;
 
 /**
  * Test class for class {@link TreeWithIDBuilder}.

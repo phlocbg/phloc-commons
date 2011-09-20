@@ -33,11 +33,11 @@ public interface IWriterProvider extends IOutputStreamProvider
   /**
    * Get an {@link Writer} based on this output stream provider using the given
    * charset.
+   * 
    * @param sCharset
    *        The charset to use. May not be <code>null</code>.
    * @param eAppend
    *        Appending mode. May not be <code>null</code>.
-   * 
    * @return <code>null</code> if no output stream could be retrieved.
    */
   @Nullable

@@ -20,8 +20,8 @@ package com.phloc.commons.tree.simple;
 import javax.annotation.concurrent.NotThreadSafe;
 
 @NotThreadSafe
-public abstract class AbstractTreeItemFactory <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> implements
-                                                                                                                 IBasicTreeItemFactory <VALUETYPE, ITEMTYPE>
+public abstract class AbstractTreeItemFactory <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> implements
+                                                                                                            ITreeItemFactory <VALUETYPE, ITEMTYPE>
 {
   /* empty */
 }

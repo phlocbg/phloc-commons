@@ -42,7 +42,7 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * Implementation of the {@link IReadableResource} interface for URL objects.
- *
+ * 
  * @author philip
  */
 @Immutable
@@ -66,7 +66,7 @@ public final class URLResource implements IReadableResource
 
   /**
    * Check if the passed resource name is an explicit URL resource.
-   *
+   * 
    * @param sName
    *        The name to check. May be <code>null</code>.
    * @return <code>true</code> if the passed name is an explicit URL resource.

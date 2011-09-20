@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.typeconvert;
 
-
 /**
  * Marker interface for a type converter that is able to perform up-casts.
  * 

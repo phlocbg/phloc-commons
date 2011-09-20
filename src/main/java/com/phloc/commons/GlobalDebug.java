@@ -21,7 +21,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.concurrent.ThreadSafe;
 
-
 /**
  * Global class for handling the following typical application modes:
  * <ul>

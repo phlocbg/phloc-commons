@@ -109,7 +109,8 @@ public final class CompareUtils
    *        Second object to compare. May be <code>null</code>.
    * @return 0 if they are equal (or both <code>null</code>), -1 or +1.
    */
-  public static <DATATYPE extends Comparable <? super DATATYPE>> int nullSafeCompare (@Nullable final DATATYPE aObj1, @Nullable final DATATYPE aObj2)
+  public static <DATATYPE extends Comparable <? super DATATYPE>> int nullSafeCompare (@Nullable final DATATYPE aObj1,
+                                                                                      @Nullable final DATATYPE aObj2)
   {
     return aObj1 == aObj2 ? 0 : aObj1 == null ? -1 : aObj2 == null ? +1 : aObj1.compareTo (aObj2);
   }

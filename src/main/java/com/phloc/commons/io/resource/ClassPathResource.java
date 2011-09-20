@@ -39,7 +39,7 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * Wraps a class path object as a readable resource.
- *
+ * 
  * @author philip
  */
 @Immutable
@@ -78,7 +78,7 @@ public final class ClassPathResource implements IReadableResource
    * Check if the passed resource name is an explicit classpath resource. This
    * is the case, if the name starts either with {@link #CLASSPATH_PREFIX_LONG}
    * or {@link #CLASSPATH_PREFIX_SHORT}.
-   *
+   * 
    * @param sName
    *        The name to check. May be <code>null</code>.
    * @return <code>true</code> if the passed name is not <code>null</code> and

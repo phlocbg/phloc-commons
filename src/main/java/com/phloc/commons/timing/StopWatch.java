@@ -161,6 +161,8 @@ public final class StopWatch implements IStoppable
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("startDT", m_nStartDT).append ("duration", m_nDurationNanos).toString ();
+    return new ToStringGenerator (this).append ("startDT", m_nStartDT)
+                                       .append ("duration", m_nDurationNanos)
+                                       .toString ();
   }
 }

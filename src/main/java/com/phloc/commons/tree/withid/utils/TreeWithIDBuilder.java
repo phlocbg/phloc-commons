@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.tree.withid;
+package com.phloc.commons.tree.withid.utils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,6 +34,8 @@ import com.phloc.commons.parent.IChildrenProvider;
 import com.phloc.commons.parent.IHasParent;
 import com.phloc.commons.parent.IParentProvider;
 import com.phloc.commons.parent.impl.ParentProviderHasParent;
+import com.phloc.commons.tree.withid.DefaultTreeItemWithID;
+import com.phloc.commons.tree.withid.DefaultTreeWithID;
 
 /**
  * Utility classes for building a tree from flat collections.

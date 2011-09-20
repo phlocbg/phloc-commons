@@ -45,7 +45,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Implementation of the {@link IReadableResource} and {@link IWritableResource}
  * interfaces for file system objects.
- *
+ * 
  * @author philip
  */
 @Immutable

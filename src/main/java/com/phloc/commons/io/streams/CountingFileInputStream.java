@@ -31,7 +31,7 @@ import com.phloc.commons.stats.StatisticsManager;
 /**
  * A special {@link FileInputStream} sub class that keeps track of all read
  * bytes for the statistics handler.
- *
+ * 
  * @author philip
  */
 public class CountingFileInputStream extends FileInputStream

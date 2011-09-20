@@ -21,7 +21,8 @@ import javax.annotation.Nonnull;
 
 import com.phloc.commons.id.IHasID;
 
-public final class UnidirectionalConverterHasIDID <DATATYPE> implements IUnidirectionalConverter <IHasID <DATATYPE>, DATATYPE>
+public final class UnidirectionalConverterHasIDID <DATATYPE> implements
+                                                             IUnidirectionalConverter <IHasID <DATATYPE>, DATATYPE>
 {
   @Nonnull
   public DATATYPE convert (@Nonnull final IHasID <DATATYPE> aInput)

@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 
 /**
  * Base interface for the tri state.
- *
+ * 
  * @author philip
  */
 public interface ITriState
@@ -44,7 +44,7 @@ public interface ITriState
   /**
    * Convert the tri state value into a boolean value, depending on what
    * "undefined" means.
-   *
+   * 
    * @param bUndefinedValue
    *        The boolean representation of undefined.
    * @return <code>true</code> if {@link #isTrue()} is true, <code>false</code>
@@ -55,7 +55,7 @@ public interface ITriState
   /**
    * Convert the tri state value into a {@link Boolean} value, depending on what
    * "undefined" means.
-   *
+   * 
    * @param aUndefinedValue
    *        The {@link Boolean} representation of undefined.
    * @return {@link Boolean#TRUE} if {@link #isTrue()} is true,

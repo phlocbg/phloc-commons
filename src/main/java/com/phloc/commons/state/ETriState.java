@@ -27,7 +27,7 @@ import com.phloc.commons.lang.EnumHelper;
 /**
  * Represents an object that has one of 3 different states compared to a boolean
  * that has only 2 different states.
- *
+ * 
  * @author philip
  */
 public enum ETriState implements IHasID <String>, ITriState

@@ -34,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * A special {@link FileOutputStream} sub class that keeps track of all written
  * bytes for the statistics handler.
- *
+ * 
  * @author philip
  */
 public class CountingFileOutputStream extends FileOutputStream

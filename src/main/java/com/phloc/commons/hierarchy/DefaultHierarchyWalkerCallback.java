@@ -29,7 +29,8 @@ import com.phloc.commons.annotations.OverrideOnDemand;
  * @param <DATATYPE>
  *        The type of object in the hierarchy to be iterated
  */
-public class DefaultHierarchyWalkerCallback <DATATYPE> extends DefaultHierarchyWalker implements IHierarchyWalkerCallback <DATATYPE>
+public class DefaultHierarchyWalkerCallback <DATATYPE> extends DefaultHierarchyWalker implements
+                                                                                     IHierarchyWalkerCallback <DATATYPE>
 {
   public DefaultHierarchyWalkerCallback ()
   {

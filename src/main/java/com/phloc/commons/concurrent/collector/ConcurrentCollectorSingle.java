@@ -29,10 +29,10 @@ import com.phloc.commons.lang.GenericReflection;
 
 /**
  * Concurrent collector that performs action on each object separately
- *
+ * 
  * @author philip
  * @param <DATATYPE>
- *          The type of the objects in the queue.
+ *        The type of the objects in the queue.
  */
 public class ConcurrentCollectorSingle <DATATYPE> extends AbstractConcurrentCollector <DATATYPE>
 {
@@ -60,10 +60,10 @@ public class ConcurrentCollectorSingle <DATATYPE> extends AbstractConcurrentColl
 
   /**
    * Constructor.
-   *
+   * 
    * @param nMaxQueueSize
-   *          The maximum number of items that can be in the queue. Must be &gt;
-   *          0.
+   *        The maximum number of items that can be in the queue. Must be &gt;
+   *        0.
    */
   public ConcurrentCollectorSingle (@Nonnegative final int nMaxQueueSize,
                                     @Nullable final IThrowingCallback <DATATYPE> aPerformer)

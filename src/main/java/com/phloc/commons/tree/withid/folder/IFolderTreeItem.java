@@ -21,7 +21,7 @@ import java.util.Collection;
 
 import javax.annotation.Nonnull;
 
-import com.phloc.commons.tree.withid.IBasicTreeItemWithID;
+import com.phloc.commons.tree.withid.ITreeItemWithID;
 
 /**
  * This interface represents a single folder within a directory tree. Each
@@ -38,7 +38,7 @@ import com.phloc.commons.tree.withid.IBasicTreeItemWithID;
  *        the implementation item type
  */
 public interface IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>, ITEMTYPE extends IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>> extends
-                                                                                                                                                                          IBasicTreeItemWithID <KEYTYPE, COLLTYPE, ITEMTYPE>
+                                                                                                                                                                          ITreeItemWithID <KEYTYPE, COLLTYPE, ITEMTYPE>
 {
   /**
    * @return The globally unique ID of this folder. This can e.g. be an

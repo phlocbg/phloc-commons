@@ -24,7 +24,8 @@ import javax.annotation.Nonnull;
 import com.phloc.commons.compare.AbstractComparator;
 import com.phloc.commons.tree.IABasicTreeItem;
 
-public final class ComparatorTreeItemValue <VALUETYPE, ITEMTYPE extends IABasicTreeItem <VALUETYPE, ITEMTYPE>> extends AbstractComparator <ITEMTYPE>
+public final class ComparatorTreeItemValue <VALUETYPE, ITEMTYPE extends IABasicTreeItem <VALUETYPE, ITEMTYPE>> extends
+                                                                                                               AbstractComparator <ITEMTYPE>
 {
   private final Comparator <? super VALUETYPE> m_aValueComparator;
 

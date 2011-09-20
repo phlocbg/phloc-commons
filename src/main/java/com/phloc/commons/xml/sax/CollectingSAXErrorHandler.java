@@ -37,7 +37,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * An error handler implementation that stores all warnings, errors and fatal
  * errors.
- *
+ * 
  * @author philip
  */
 @ThreadSafe

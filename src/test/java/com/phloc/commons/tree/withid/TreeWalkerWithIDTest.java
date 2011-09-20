@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.hierarchy.DefaultHierarchyWalkerCallback;
 import com.phloc.commons.mutable.MutableInt;
+import com.phloc.commons.tree.withid.utils.TreeWalkerWithID;
 
 /**
  * Test class for class {@link TreeWalkerWithID}.

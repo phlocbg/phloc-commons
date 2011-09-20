@@ -38,15 +38,15 @@ import com.phloc.commons.tree.IABasicTreeItem;
  * @param <ITEMTYPE>
  *        The implementation type.
  */
-public interface IBasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends IBasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> extends
-                                                                                                                                 IABasicTreeItem <VALUETYPE, ITEMTYPE>,
-                                                                                                                                 IHasID <KEYTYPE>
+public interface ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> extends
+                                                                                                                       IABasicTreeItem <VALUETYPE, ITEMTYPE>,
+                                                                                                                       IHasID <KEYTYPE>
 {
   /**
    * @return The factory used to create instances of this interface.
    */
   @Nonnull
-  IBasicTreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE> getFactory ();
+  ITreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE> getFactory ();
 
   /**
    * @return The data ID of this item. May be <code>null</code> depending on the

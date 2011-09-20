@@ -38,13 +38,13 @@ import com.phloc.commons.tree.IBasicTree;
  *        tree item implementation type
  */
 @NotThreadSafe
-public class BasicTreeWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends IBasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> implements
-                                                                                                                        IBasicTree <ITEMTYPE>
+public class BasicTreeWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> implements
+                                                                                                                   IBasicTree <ITEMTYPE>
 {
   // Root item.
   private final ITEMTYPE m_aRoot;
 
-  public BasicTreeWithID (@Nonnull final IBasicTreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE> aFactory)
+  public BasicTreeWithID (@Nonnull final ITreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE> aFactory)
   {
     if (aFactory == null)
       throw new NullPointerException ("factory");

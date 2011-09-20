@@ -39,7 +39,7 @@ public class DefaultTreeWithID <KEYTYPE, VALUETYPE> extends
     this (new DefaultTreeItemWithIDFactory <KEYTYPE, VALUETYPE> ());
   }
 
-  public DefaultTreeWithID (@Nonnull final IBasicTreeItemWithIDFactory <KEYTYPE, VALUETYPE, DefaultTreeItemWithID <KEYTYPE, VALUETYPE>> aFactory)
+  public DefaultTreeWithID (@Nonnull final ITreeItemWithIDFactory <KEYTYPE, VALUETYPE, DefaultTreeItemWithID <KEYTYPE, VALUETYPE>> aFactory)
   {
     super (aFactory);
   }

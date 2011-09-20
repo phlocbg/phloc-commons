@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.tree.simple;
+package com.phloc.commons.tree.withid.utils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
@@ -25,28 +25,28 @@ import com.phloc.commons.hierarchy.EHierarchyCallbackReturn;
 import com.phloc.commons.hierarchy.IHierarchyWalkerDynamicCallback;
 import com.phloc.commons.parent.IChildrenProvider;
 import com.phloc.commons.parent.impl.ChildrenProviderHasChildren;
-import com.phloc.commons.tree.IBasicTree;
+import com.phloc.commons.tree.withid.BasicTreeWithID;
+import com.phloc.commons.tree.withid.ITreeItemWithID;
 
 /**
- * A specialized walker that iterates all elements in a tree and calls a
- * callback method.
+ * Dynamically walk tree with ID
  * 
  * @author philip
  */
 @Immutable
-public final class TreeWalkerDynamic
+public final class TreeWalkerDynamicWithID
 {
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")
-  private static final TreeWalkerDynamic s_aInstance = new TreeWalkerDynamic ();
+  private static final TreeWalkerDynamicWithID s_aInstance = new TreeWalkerDynamicWithID ();
 
-  private TreeWalkerDynamic ()
+  private TreeWalkerDynamicWithID ()
   {}
 
   @Nonnull
-  private static <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> EHierarchyCallbackReturn _walkTree (@Nonnull final ITEMTYPE aTreeItem,
-                                                                                                                        @Nonnull final IChildrenProvider <ITEMTYPE> aChildrenResolver,
-                                                                                                                        @Nonnull final IHierarchyWalkerDynamicCallback <? super ITEMTYPE> aCallback)
+  private static <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> EHierarchyCallbackReturn _walkTree (@Nonnull final ITEMTYPE aTreeItem,
+                                                                                                                                           @Nonnull final IChildrenProvider <ITEMTYPE> aChildrenResolver,
+                                                                                                                                           @Nonnull final IHierarchyWalkerDynamicCallback <? super ITEMTYPE> aCallback)
   {
     // prefix insertion
     final EHierarchyCallbackReturn eRetPrefix = aCallback.onItemBeforeChildren (aTreeItem);
@@ -108,15 +108,15 @@ public final class TreeWalkerDynamic
     return EHierarchyCallbackReturn.CONTINUE;
   }
 
-  public static <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> void walkTree (@Nonnull final IBasicTree <ITEMTYPE> aTree,
-                                                                                                  @Nonnull final IHierarchyWalkerDynamicCallback <? super ITEMTYPE> aCallback)
+  public static <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> void walkTree (@Nonnull final BasicTreeWithID <KEYTYPE, VALUETYPE, ITEMTYPE> aTree,
+                                                                                                                     @Nonnull final IHierarchyWalkerDynamicCallback <? super ITEMTYPE> aCallback)
   {
     walkTree (aTree, new ChildrenProviderHasChildren <ITEMTYPE> (), aCallback);
   }
 
-  public static <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> void walkTree (@Nonnull final IBasicTree <ITEMTYPE> aTree,
-                                                                                                  @Nonnull final IChildrenProvider <ITEMTYPE> aChildrenResolver,
-                                                                                                  @Nonnull final IHierarchyWalkerDynamicCallback <? super ITEMTYPE> aCallback)
+  public static <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> void walkTree (@Nonnull final BasicTreeWithID <KEYTYPE, VALUETYPE, ITEMTYPE> aTree,
+                                                                                                                     @Nonnull final IChildrenProvider <ITEMTYPE> aChildrenResolver,
+                                                                                                                     @Nonnull final IHierarchyWalkerDynamicCallback <? super ITEMTYPE> aCallback)
   {
     if (aTree == null)
       throw new NullPointerException ("tree");
@@ -124,20 +124,18 @@ public final class TreeWalkerDynamic
     walkSubTree (aTree.getRootItem (), aChildrenResolver, aCallback);
   }
 
-  public static <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> void walkSubTree (@Nonnull final ITEMTYPE aTreeItem,
-                                                                                                     @Nonnull final IHierarchyWalkerDynamicCallback <? super ITEMTYPE> aCallback)
+  public static <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> void walkSubTree (@Nonnull final ITEMTYPE aTreeItem,
+                                                                                                                        @Nonnull final IHierarchyWalkerDynamicCallback <? super ITEMTYPE> aCallback)
   {
     walkSubTree (aTreeItem, new ChildrenProviderHasChildren <ITEMTYPE> (), aCallback);
   }
 
-  public static <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> void walkSubTree (@Nonnull final ITEMTYPE aTreeItem,
-                                                                                                     @Nonnull final IChildrenProvider <ITEMTYPE> aChildrenResolver,
-                                                                                                     @Nonnull final IHierarchyWalkerDynamicCallback <? super ITEMTYPE> aCallback)
+  public static <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> void walkSubTree (@Nonnull final ITEMTYPE aTreeItem,
+                                                                                                                        @Nonnull final IChildrenProvider <ITEMTYPE> aChildrenResolver,
+                                                                                                                        @Nonnull final IHierarchyWalkerDynamicCallback <? super ITEMTYPE> aCallback)
   {
     if (aTreeItem == null)
       throw new NullPointerException ("treeItem");
-    if (aChildrenResolver == null)
-      throw new NullPointerException ("childrenResolver");
     if (aCallback == null)
       throw new NullPointerException ("callback");
 

@@ -45,7 +45,7 @@ import com.phloc.commons.tree.withid.unique.AbstractTreeItemWithUniqueIDFactory;
 @NotThreadSafe
 public abstract class AbstractFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>, ITEMTYPE extends BasicFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>> extends
                                                                                                                                                                                                  AbstractTreeItemWithUniqueIDFactory <KEYTYPE, COLLTYPE, ITEMTYPE> implements
-                                                                                                                                                                                                                                                                       IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>
+                                                                                                                                                                                                                                                                  IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>
 {
   private final ICombinator <KEYTYPE> m_aKeyCombinator;
 

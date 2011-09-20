@@ -33,7 +33,8 @@ import com.phloc.commons.compare.ESortOrder;
  * @param <DATATYPE>
  *        The type of elements to be compared.
  */
-public final class ComparatorHasDisplayText <DATATYPE extends IHasDisplayText> extends AbstractCollationComparator <DATATYPE>
+public final class ComparatorHasDisplayText <DATATYPE extends IHasDisplayText> extends
+                                                                               AbstractCollationComparator <DATATYPE>
 {
   private final Locale m_aContentLocale;
 

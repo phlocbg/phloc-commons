@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.tree.simple;
+package com.phloc.commons.tree.simple.utils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -27,6 +27,9 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.hierarchy.DefaultHierarchyWalkerCallback;
 import com.phloc.commons.mutable.MutableInt;
+import com.phloc.commons.tree.simple.DefaultTree;
+import com.phloc.commons.tree.simple.DefaultTreeItem;
+import com.phloc.commons.tree.simple.utils.TreeWalker;
 
 /**
  * Test class for class {@link TreeWalker}.
