@@ -27,7 +27,6 @@ import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.serialize.MicroReader;
-import com.phloc.commons.microdom.utils.MicroUtils;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 import com.phloc.commons.name.MockHasName;
 import com.phloc.commons.tree.simple.DefaultTree;
@@ -42,19 +41,6 @@ import com.phloc.commons.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
  */
 public final class TreeXMLConverterTest extends AbstractPhlocTestCase
 {
-  private static final class MockHasNameConverter implements IConverterTreeXML <MockHasName>
-  {
-    public void appendDataValue (final IMicroElement eDataElement, final MockHasName aAnyName)
-    {
-      eDataElement.appendElement ("name").appendText (aAnyName.getName ());
-    }
-
-    public MockHasName getAsDataValue (final IMicroElement eDataElement)
-    {
-      return new MockHasName (MicroUtils.getChildTextContent (eDataElement, "name"));
-    }
-  }
-
   @Test
   public void testReadWrite ()
   {
@@ -68,7 +54,7 @@ public final class TreeXMLConverterTest extends AbstractPhlocTestCase
     assertNotNull (t1);
 
     // convert tree again to document
-    final IMicroDocument aDoc2 = TreeXMLConverter.getTreeWithStringIDAsXML (t1, new MockHasNameConverter ());
+    final IMicroElement aDoc2 = TreeXMLConverter.getTreeWithStringIDAsXML (t1, new MockHasNameConverter ());
     assertNotNull (aDoc2);
 
     // and convert the document again to a tree

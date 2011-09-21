@@ -193,12 +193,19 @@ public interface IMicroElement extends IMicroNode
   boolean hasNamespaceURI (@Nullable String sNamespaceURI);
 
   /**
+   * Get the local name of the element. Is the same name as returned by
+   * {@link #getTagName()} but it is only present, if a namespace URI is
+   * present.
+   * 
    * @return May be <code>null</code> if no namespace is present.
    */
   @Nullable
   String getLocalName ();
 
   /**
+   * Get the name of the tag. It never contains XML schema prefixes or the like.
+   * Is the same as {@link #getLocalName()} if a namespace URI is present.
+   * 
    * @return May not be <code>null</code>.
    */
   @Nonnull
