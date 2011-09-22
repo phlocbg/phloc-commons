@@ -30,7 +30,11 @@ import java.lang.annotation.Target;
  * @author philip
  */
 @Retention (RetentionPolicy.CLASS)
-@Target ({ ElementType.TYPE, ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.ANNOTATION_TYPE })
+@Target ({ ElementType.TYPE,
+          ElementType.METHOD,
+          ElementType.CONSTRUCTOR,
+          ElementType.ANNOTATION_TYPE,
+          ElementType.FIELD })
 @Documented
 public @interface ShouldBeDeprecated
 {
