@@ -32,6 +32,25 @@ public abstract class AbstractMultiHashMap <KEYTYPE, VALUETYPE, COLLTYPE extends
                                                                                                          HashMap <KEYTYPE, COLLTYPE> implements
                                                                                                                                     IMultiMap <KEYTYPE, VALUETYPE, COLLTYPE>
 {
+  public AbstractMultiHashMap ()
+  {}
+
+  public AbstractMultiHashMap (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
+  {
+    putSingle (aKey, aValue);
+  }
+
+  public AbstractMultiHashMap (@Nullable final KEYTYPE aKey, @Nullable final COLLTYPE aCollection)
+  {
+    put (aKey, aCollection);
+  }
+
+  public AbstractMultiHashMap (@Nullable final Map <? extends KEYTYPE, ? extends COLLTYPE> aCont)
+  {
+    if (aCont != null)
+      putAll (aCont);
+  }
+
   @Nonnull
   protected abstract COLLTYPE createNewCollection ();
 

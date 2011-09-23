@@ -18,14 +18,34 @@
 package com.phloc.commons.collections.multimap;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 @NotThreadSafe
 public class MultiTreeMapVectorBased <KEYTYPE, VALUETYPE> extends AbstractMultiTreeMapListBased <KEYTYPE, VALUETYPE>
 {
+  public MultiTreeMapVectorBased ()
+  {}
+
+  public MultiTreeMapVectorBased (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
+  {
+    super (aKey, aValue);
+  }
+
+  public MultiTreeMapVectorBased (@Nullable final KEYTYPE aKey, @Nullable final List <VALUETYPE> aCollection)
+  {
+    super (aKey, aCollection);
+  }
+
+  public MultiTreeMapVectorBased (@Nullable final Map <? extends KEYTYPE, ? extends List <VALUETYPE>> aCont)
+  {
+    super (aCont);
+  }
+
   @Override
   @Nonnull
   protected final List <VALUETYPE> createNewCollection ()

@@ -20,7 +20,7 @@ package com.phloc.commons.collections.multimap;
 import java.util.Set;
 
 /**
- * Interface for a multi map that uses sets for the storage.
+ * Interface for a multi map that uses a {@link Set} for the storage.
  * 
  * @author philip
  * @param <KEYTYPE>

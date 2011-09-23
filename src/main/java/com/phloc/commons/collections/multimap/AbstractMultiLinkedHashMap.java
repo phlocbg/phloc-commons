@@ -32,6 +32,25 @@ public abstract class AbstractMultiLinkedHashMap <KEYTYPE, VALUETYPE, COLLTYPE e
                                                                                                                LinkedHashMap <KEYTYPE, COLLTYPE> implements
                                                                                                                                                 IMultiMap <KEYTYPE, VALUETYPE, COLLTYPE>
 {
+  public AbstractMultiLinkedHashMap ()
+  {}
+
+  public AbstractMultiLinkedHashMap (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
+  {
+    putSingle (aKey, aValue);
+  }
+
+  public AbstractMultiLinkedHashMap (@Nullable final KEYTYPE aKey, @Nullable final COLLTYPE aCollection)
+  {
+    put (aKey, aCollection);
+  }
+
+  public AbstractMultiLinkedHashMap (@Nullable final Map <? extends KEYTYPE, ? extends COLLTYPE> aCont)
+  {
+    if (aCont != null)
+      putAll (aCont);
+  }
+
   @Nonnull
   protected abstract COLLTYPE createNewCollection ();
 

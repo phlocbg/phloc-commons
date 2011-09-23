@@ -17,16 +17,6 @@
  */
 package com.phloc.commons.collections.multimap;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import org.junit.Test;
 
 /**
@@ -34,51 +24,18 @@ import org.junit.Test;
  * 
  * @author philip
  */
-public final class MultiLinkedHashMapTreeSetBasedTest
+public final class MultiLinkedHashMapTreeSetBasedTest extends AbstractMultiMapTestCase
 {
   @Test
   public void testAll ()
   {
-    final IMultiMapSetBased <String, String> aMultiMap = new MultiLinkedHashMapTreeSetBased <String, String> ();
-    aMultiMap.putSingle ("Philip", "Wien");
-    assertEquals (1, aMultiMap.size ());
-    aMultiMap.putSingle ("Boris", "Wien");
-    assertEquals (2, aMultiMap.size ());
-    aMultiMap.putSingle ("Philip", "Copenhagen");
-    assertEquals (2, aMultiMap.size ());
-
-    // insert duplicate
-    aMultiMap.putSingle ("Philip", "Copenhagen");
-    assertEquals (2, aMultiMap.size ());
-
-    Collection <String> aSet = aMultiMap.get ("Philip");
-    assertNotNull (aSet);
-    assertEquals (2, aSet.size ());
-
-    aSet = aMultiMap.get ("Boris");
-    assertNotNull (aSet);
-    assertEquals (1, aSet.size ());
-
-    aSet = aMultiMap.get ("Anyone");
-    assertNull (aSet);
-
-    final Map <String, String> aMap = new LinkedHashMap <String, String> ();
-    aMap.put ("Philip", "Vienna");
-    aMap.put ("Rene", "Essling");
-    assertEquals (2, aMap.size ());
-
-    aMultiMap.putAllIn (aMap);
-    assertEquals (3, aMultiMap.size ());
-
-    aSet = aMultiMap.get ("Philip");
-    assertNotNull (aSet);
-    assertEquals (3, aSet.size ());
-
-    assertTrue (aMultiMap.containsSingle ("Philip", "Wien"));
-    assertTrue (aMultiMap.removeSingle ("Philip", "Wien").isChanged ());
-    assertFalse (aMultiMap.containsSingle ("Philip", "Wien"));
-    assertFalse (aMultiMap.removeSingle ("Philip", "Wien").isChanged ());
-    assertFalse (aMultiMap.containsSingle ("Alice", "Wien"));
-    assertFalse (aMultiMap.removeSingle ("Alice", "Wien").isChanged ());
+    IMultiMapSetBased <String, String> aMultiMap = new MultiLinkedHashMapTreeSetBased <String, String> ();
+    testEmpty (aMultiMap);
+    aMultiMap = new MultiLinkedHashMapTreeSetBased <String, String> (getKey1 (), getValue1 ());
+    testOne (aMultiMap);
+    aMultiMap = new MultiLinkedHashMapTreeSetBased <String, String> (getKey1 (), getValueSet1 ());
+    testOne (aMultiMap);
+    aMultiMap = new MultiLinkedHashMapTreeSetBased <String, String> (getMapSet1 ());
+    testOne (aMultiMap);
   }
 }

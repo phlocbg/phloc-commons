@@ -18,15 +18,36 @@
 package com.phloc.commons.collections.multimap;
 
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 @NotThreadSafe
 public class MultiConcurrentHashMapLinkedHashSetBased <KEYTYPE, VALUETYPE> extends
                                                                            AbstractMultiConcurrentHashMapSetBased <KEYTYPE, VALUETYPE>
 {
+  public MultiConcurrentHashMapLinkedHashSetBased ()
+  {}
+
+  public MultiConcurrentHashMapLinkedHashSetBased (@Nonnull final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
+  {
+    super (aKey, aValue);
+  }
+
+  public MultiConcurrentHashMapLinkedHashSetBased (@Nonnull final KEYTYPE aKey,
+                                                   @Nullable final Set <VALUETYPE> aCollection)
+  {
+    super (aKey, aCollection);
+  }
+
+  public MultiConcurrentHashMapLinkedHashSetBased (@Nullable final Map <? extends KEYTYPE, ? extends Set <VALUETYPE>> aCont)
+  {
+    super (aCont);
+  }
+
   @Override
   @Nonnull
   protected final Set <VALUETYPE> createNewCollection ()
