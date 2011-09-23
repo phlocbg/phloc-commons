@@ -17,12 +17,45 @@
  */
 package com.phloc.commons.collections.multimap;
 
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+/**
+ * Abstract multi map based on {@link ConcurrentHashMap} and {@link Set} values.<br>
+ * Important note: <code>null</code> keys are not allowed here!
+ * 
+ * @author philip
+ * @param <KEYTYPE>
+ *        key type
+ * @param <VALUETYPE>
+ *        value type
+ */
 @NotThreadSafe
 public abstract class AbstractMultiConcurrentHashMapSetBased <KEYTYPE, VALUETYPE> extends
                                                                                   AbstractMultiConcurrentHashMap <KEYTYPE, VALUETYPE, Set <VALUETYPE>> implements
                                                                                                                                                       IMultiMapSetBased <KEYTYPE, VALUETYPE>
-{}
+{
+  public AbstractMultiConcurrentHashMapSetBased ()
+  {}
+
+  public AbstractMultiConcurrentHashMapSetBased (@Nonnull final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
+  {
+    super (aKey, aValue);
+  }
+
+  public AbstractMultiConcurrentHashMapSetBased (@Nonnull final KEYTYPE aKey,
+                                                 @Nullable final Set <VALUETYPE> aCollection)
+  {
+    super (aKey, aCollection);
+  }
+
+  public AbstractMultiConcurrentHashMapSetBased (@Nullable final Map <? extends KEYTYPE, ? extends Set <VALUETYPE>> aCont)
+  {
+    super (aCont);
+  }
+}

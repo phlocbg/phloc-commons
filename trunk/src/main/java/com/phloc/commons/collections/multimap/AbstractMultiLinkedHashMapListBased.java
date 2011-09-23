@@ -18,11 +18,32 @@
 package com.phloc.commons.collections.multimap;
 
 import java.util.List;
+import java.util.Map;
 
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 @NotThreadSafe
 public abstract class AbstractMultiLinkedHashMapListBased <KEYTYPE, VALUETYPE> extends
                                                                                AbstractMultiLinkedHashMap <KEYTYPE, VALUETYPE, List <VALUETYPE>> implements
                                                                                                                                                 IMultiMapListBased <KEYTYPE, VALUETYPE>
-{}
+{
+  public AbstractMultiLinkedHashMapListBased ()
+  {}
+
+  public AbstractMultiLinkedHashMapListBased (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
+  {
+    putSingle (aKey, aValue);
+  }
+
+  public AbstractMultiLinkedHashMapListBased (@Nullable final KEYTYPE aKey, @Nullable final List <VALUETYPE> aCollection)
+  {
+    put (aKey, aCollection);
+  }
+
+  public AbstractMultiLinkedHashMapListBased (@Nullable final Map <? extends KEYTYPE, ? extends List <VALUETYPE>> aCont)
+  {
+    if (aCont != null)
+      putAll (aCont);
+  }
+}

@@ -34,7 +34,7 @@ import com.phloc.commons.state.EChange;
  * @param <VALUETYPE>
  *        Element type
  * @param <COLLTYPE>
- *        Container type
+ *        Container type containing value types
  */
 public interface IMultiMap <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends
                                                                                          Map <KEYTYPE, COLLTYPE>

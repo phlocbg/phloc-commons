@@ -32,6 +32,25 @@ public abstract class AbstractMultiTreeMap <KEYTYPE, VALUETYPE, COLLTYPE extends
                                                                                                          TreeMap <KEYTYPE, COLLTYPE> implements
                                                                                                                                     IMultiMap <KEYTYPE, VALUETYPE, COLLTYPE>
 {
+  public AbstractMultiTreeMap ()
+  {}
+
+  public AbstractMultiTreeMap (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
+  {
+    putSingle (aKey, aValue);
+  }
+
+  public AbstractMultiTreeMap (@Nullable final KEYTYPE aKey, @Nullable final COLLTYPE aCollection)
+  {
+    put (aKey, aCollection);
+  }
+
+  public AbstractMultiTreeMap (@Nullable final Map <? extends KEYTYPE, ? extends COLLTYPE> aCont)
+  {
+    if (aCont != null)
+      putAll (aCont);
+  }
+
   @Nonnull
   protected abstract COLLTYPE createNewCollection ();
 

@@ -17,12 +17,32 @@
  */
 package com.phloc.commons.collections.multimap;
 
+import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 @NotThreadSafe
 public abstract class AbstractMultiTreeMapSetBased <KEYTYPE, VALUETYPE> extends
                                                                         AbstractMultiTreeMap <KEYTYPE, VALUETYPE, Set <VALUETYPE>> implements
                                                                                                                                   IMultiMapSetBased <KEYTYPE, VALUETYPE>
-{}
+{
+  public AbstractMultiTreeMapSetBased ()
+  {}
+
+  public AbstractMultiTreeMapSetBased (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
+  {
+    super (aKey, aValue);
+  }
+
+  public AbstractMultiTreeMapSetBased (@Nullable final KEYTYPE aKey, @Nullable final Set <VALUETYPE> aCollection)
+  {
+    super (aKey, aCollection);
+  }
+
+  public AbstractMultiTreeMapSetBased (@Nullable final Map <? extends KEYTYPE, ? extends Set <VALUETYPE>> aCont)
+  {
+    super (aCont);
+  }
+}

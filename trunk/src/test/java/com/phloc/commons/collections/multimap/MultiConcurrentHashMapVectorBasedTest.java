@@ -17,16 +17,6 @@
  */
 package com.phloc.commons.collections.multimap;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Collection;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import org.junit.Test;
 
 /**
@@ -34,49 +24,18 @@ import org.junit.Test;
  * 
  * @author philip
  */
-public final class MultiConcurrentHashMapVectorBasedTest
+public final class MultiConcurrentHashMapVectorBasedTest extends AbstractMultiMapTestCase
 {
   @Test
   public void testAll ()
   {
-    final MultiConcurrentHashMapVectorBased <String, String> aMultiMap = new MultiConcurrentHashMapVectorBased <String, String> ();
-    aMultiMap.putSingle ("Philip", "Wien");
-    assertEquals (1, aMultiMap.size ());
-    aMultiMap.putSingle ("Boris", "Wien");
-    assertEquals (2, aMultiMap.size ());
-    aMultiMap.putSingle ("Philip", "Copenhagen");
-    assertEquals (2, aMultiMap.size ());
-    aMultiMap.putSingle ("Philip", "Copenhagen");
-    assertEquals (2, aMultiMap.size ());
-
-    Collection <String> aList = aMultiMap.get ("Philip");
-    assertNotNull (aList);
-    assertEquals (3, aList.size ());
-
-    aList = aMultiMap.get ("Boris");
-    assertNotNull (aList);
-    assertEquals (1, aList.size ());
-
-    aList = aMultiMap.get ("Anyone");
-    assertNull (aList);
-
-    final Map <String, String> aMap = new ConcurrentHashMap <String, String> ();
-    aMap.put ("Philip", "Vienna");
-    aMap.put ("Rene", "Essling");
-    assertEquals (2, aMap.size ());
-
-    aMultiMap.putAllIn (aMap);
-    assertEquals (3, aMultiMap.size ());
-
-    aList = aMultiMap.get ("Philip");
-    assertNotNull (aList);
-    assertEquals (4, aList.size ());
-
-    assertTrue (aMultiMap.containsSingle ("Philip", "Wien"));
-    assertTrue (aMultiMap.removeSingle ("Philip", "Wien").isChanged ());
-    assertFalse (aMultiMap.containsSingle ("Philip", "Wien"));
-    assertFalse (aMultiMap.removeSingle ("Philip", "Wien").isChanged ());
-    assertFalse (aMultiMap.containsSingle ("Alice", "Wien"));
-    assertFalse (aMultiMap.removeSingle ("Alice", "Wien").isChanged ());
+    MultiConcurrentHashMapVectorBased <String, String> aMultiMap = new MultiConcurrentHashMapVectorBased <String, String> ();
+    testEmpty (aMultiMap);
+    aMultiMap = new MultiConcurrentHashMapVectorBased <String, String> (getKey1 (), getValue1 ());
+    testOne (aMultiMap);
+    aMultiMap = new MultiConcurrentHashMapVectorBased <String, String> (getKey1 (), getValueList1 ());
+    testOne (aMultiMap);
+    aMultiMap = new MultiConcurrentHashMapVectorBased <String, String> (getMapList1 ());
+    testOne (aMultiMap);
   }
 }

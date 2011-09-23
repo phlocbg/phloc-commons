@@ -27,16 +27,47 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.state.EChange;
 
+/**
+ * Abstract multi map based on {@link ConcurrentHashMap}.<br>
+ * Important note: <code>null</code> keys are not allowed here!
+ * 
+ * @author philip
+ * @param <KEYTYPE>
+ *        key type
+ * @param <VALUETYPE>
+ *        value type
+ * @param <COLLTYPE>
+ *        contained collection type
+ */
 @NotThreadSafe
 public abstract class AbstractMultiConcurrentHashMap <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends
                                                                                                                    ConcurrentHashMap <KEYTYPE, COLLTYPE> implements
                                                                                                                                                         IMultiMap <KEYTYPE, VALUETYPE, COLLTYPE>
 {
+  public AbstractMultiConcurrentHashMap ()
+  {}
+
+  public AbstractMultiConcurrentHashMap (@Nonnull final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
+  {
+    putSingle (aKey, aValue);
+  }
+
+  public AbstractMultiConcurrentHashMap (@Nonnull final KEYTYPE aKey, @Nullable final COLLTYPE aCollection)
+  {
+    put (aKey, aCollection);
+  }
+
+  public AbstractMultiConcurrentHashMap (@Nullable final Map <? extends KEYTYPE, ? extends COLLTYPE> aCont)
+  {
+    if (aCont != null)
+      putAll (aCont);
+  }
+
   @Nonnull
   protected abstract COLLTYPE createNewCollection ();
 
   @Nonnull
-  public final EChange putSingle (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
+  public final EChange putSingle (@Nonnull final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
   {
     COLLTYPE aCont = get (aKey);
     if (aCont == null)
@@ -57,13 +88,13 @@ public abstract class AbstractMultiConcurrentHashMap <KEYTYPE, VALUETYPE, COLLTY
   }
 
   @Nonnull
-  public final EChange removeSingle (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
+  public final EChange removeSingle (@Nonnull final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
   {
     final COLLTYPE aCont = get (aKey);
     return aCont == null ? EChange.UNCHANGED : EChange.valueOf (aCont.remove (aValue));
   }
 
-  public final boolean containsSingle (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
+  public final boolean containsSingle (@Nonnull final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
   {
     final COLLTYPE aCont = get (aKey);
     return aCont == null ? false : aCont.contains (aValue);

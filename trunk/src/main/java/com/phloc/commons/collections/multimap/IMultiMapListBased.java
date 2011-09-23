@@ -20,13 +20,13 @@ package com.phloc.commons.collections.multimap;
 import java.util.List;
 
 /**
- * Interface for a multi map that uses lists for the storage.
+ * Interface for a multi map that uses a {@link List} for the storage.
  * 
  * @author philip
  * @param <KEYTYPE>
  *        Key type
  * @param <VALUETYPE>
- *        Element type
+ *        Value type
  */
 public interface IMultiMapListBased <KEYTYPE, VALUETYPE> extends IMultiMap <KEYTYPE, VALUETYPE, List <VALUETYPE>>
 {
