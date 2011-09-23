@@ -159,6 +159,30 @@ public final class RegExHelper
   }
 
   /**
+   * Get the Java Matcher object for the passed pair of regular expression and
+   * value.
+   * 
+   * @param sRegEx
+   *        The regular expression to use. May neither be <code>null</code> nor
+   *        empty.
+   * @param nOptions
+   *        The pattern compilations options to be used.
+   * @param sValue
+   *        The value to create the matcher for. May not be <code>null</code>.
+   * @return A non-<code>null</code> matcher.
+   * @see Pattern#compile(String, int)
+   */
+  @Nonnull
+  public static Matcher getMatcher (@Nonnull @RegEx final String sRegEx,
+                                    @Nonnegative final int nOptions,
+                                    @Nonnull final String sValue)
+  {
+    if (sValue == null)
+      throw new NullPointerException ("value");
+    return RegExPool.getPattern (sRegEx, nOptions).matcher (sValue);
+  }
+
+  /**
    * A shortcut helper method to determine whether a string matches a certain
    * regular expression or not.
    * 
@@ -175,6 +199,28 @@ public final class RegExHelper
     return getMatcher (sRegEx, sValue).matches ();
   }
 
+  /**
+   * A shortcut helper method to determine whether a string matches a certain
+   * regular expression or not.
+   * 
+   * @param sRegEx
+   *        The regular expression to be used. The compiled regular expression
+   *        pattern is cached. May neither be <code>null</code> nor empty.
+   * @param nOptions
+   *        The pattern compilations options to be used.
+   * @param sValue
+   *        The string value to compare against the regular expression.
+   * @return <code>true</code> if the string matches the regular expression,
+   *         <code>false</code> otherwise.
+   * @see Pattern#compile(String, int)
+   */
+  public static boolean stringMatchesPattern (@Nonnull @RegEx final String sRegEx,
+                                              @Nonnegative final int nOptions,
+                                              @Nonnull final String sValue)
+  {
+    return getMatcher (sRegEx, nOptions, sValue).matches ();
+  }
+
   @Nonnull
   public static String stringReplacePattern (@Nonnull @RegEx final String sRegEx,
                                              @Nonnull final String sValue,
@@ -182,6 +228,16 @@ public final class RegExHelper
   {
     // Avoid NPE on invalid replacement parameter
     return getMatcher (sRegEx, sValue).replaceAll (StringHelper.getNotNull (sReplacement));
+  }
+
+  @Nonnull
+  public static String stringReplacePattern (@Nonnull @RegEx final String sRegEx,
+                                             @Nonnegative final int nOptions,
+                                             @Nonnull final String sValue,
+                                             @Nullable final String sReplacement)
+  {
+    // Avoid NPE on invalid replacement parameter
+    return getMatcher (sRegEx, nOptions, sValue).replaceAll (StringHelper.getNotNull (sReplacement));
   }
 
   /**
