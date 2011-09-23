@@ -72,15 +72,27 @@ public final class FilenameHelperTest
    * Test method getExtension
    */
   @Test
-  public void testGetExtension ()
+  public void testGetExtensionString ()
   {
-    assertEquals ("", FilenameHelper.getExtension (null));
+    assertEquals ("", FilenameHelper.getExtension ((String) null));
     assertEquals ("", FilenameHelper.getExtension (""));
     assertEquals ("", FilenameHelper.getExtension ("xyz"));
     assertEquals ("sh", FilenameHelper.getExtension ("xyz.sh"));
     assertEquals ("exe", FilenameHelper.getExtension ("ABC.exe"));
     assertEquals ("", FilenameHelper.getExtension ("a/b/c"));
     assertEquals ("exe", FilenameHelper.getExtension ("a/b/c.exe"));
+  }
+
+  @Test
+  public void testGetExtensionFile ()
+  {
+    assertEquals ("", FilenameHelper.getExtension ((File) null));
+    assertEquals ("", FilenameHelper.getExtension (new File ("")));
+    assertEquals ("", FilenameHelper.getExtension (new File ("xyz")));
+    assertEquals ("sh", FilenameHelper.getExtension (new File ("xyz.sh")));
+    assertEquals ("exe", FilenameHelper.getExtension (new File ("ABC.exe")));
+    assertEquals ("", FilenameHelper.getExtension (new File ("a/b/c")));
+    assertEquals ("exe", FilenameHelper.getExtension (new File ("a/b/c.exe")));
   }
 
   /**
@@ -298,7 +310,7 @@ public final class FilenameHelperTest
    * Test method hasExtension
    */
   @Test
-  public void testHasExtension ()
+  public void testHasExtensionString ()
   {
     assertTrue (FilenameHelper.hasExtension ("/usr/local/myfile.htm", "htm"));
     assertTrue (FilenameHelper.hasExtension ("/usr/local/myfile.htm", "HTM"));
@@ -307,8 +319,8 @@ public final class FilenameHelperTest
     assertTrue (FilenameHelper.hasExtension ("myfile.htm", "htm"));
     assertTrue (FilenameHelper.hasExtension (".htm", "htm"));
     assertFalse (FilenameHelper.hasExtension ("", "htm"));
-    assertFalse (FilenameHelper.hasExtension (null, "htm"));
-    assertFalse (FilenameHelper.hasExtension (null));
+    assertFalse (FilenameHelper.hasExtension ((String) null, "htm"));
+    assertFalse (FilenameHelper.hasExtension ((String) null));
     assertTrue (FilenameHelper.hasExtension ("noext", ""));
     assertFalse (FilenameHelper.hasExtension ("filewith.ext", ""));
     assertFalse (FilenameHelper.hasExtension ("filewith.ext", (String) null));
@@ -316,6 +328,31 @@ public final class FilenameHelperTest
     {
       // null extension array not allowed
       FilenameHelper.hasExtension ("myfile.htm", (String []) null);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+  }
+
+  @Test
+  public void testHasExtensionFile ()
+  {
+    assertTrue (FilenameHelper.hasExtension (new File ("/usr/local/myfile.htm"), "htm"));
+    assertTrue (FilenameHelper.hasExtension (new File ("/usr/local/myfile.htm"), "HTM"));
+    assertFalse (FilenameHelper.hasExtension (new File ("/usr/local/myfile.htm"), "html"));
+    assertTrue (FilenameHelper.hasExtension (new File ("/usr/local/myfile.htm"), "html", "htm"));
+    assertTrue (FilenameHelper.hasExtension (new File ("myfile.htm"), "htm"));
+    assertTrue (FilenameHelper.hasExtension (new File (".htm"), "htm"));
+    assertFalse (FilenameHelper.hasExtension (new File (""), "htm"));
+    assertFalse (FilenameHelper.hasExtension ((File) null, "htm"));
+    assertFalse (FilenameHelper.hasExtension ((File) null));
+    assertTrue (FilenameHelper.hasExtension (new File ("noext"), ""));
+    assertFalse (FilenameHelper.hasExtension (new File ("filewith.ext"), ""));
+    assertFalse (FilenameHelper.hasExtension (new File ("filewith.ext"), (String) null));
+    try
+    {
+      // null extension array not allowed
+      FilenameHelper.hasExtension (new File ("myfile.htm"), (String []) null);
       fail ();
     }
     catch (final NullPointerException ex)

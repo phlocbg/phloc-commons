@@ -164,6 +164,20 @@ public final class FilenameHelper
   }
 
   /**
+   * Get the extension of the passed file.
+   * 
+   * @param aFile
+   *        The file to extract the extension from. May be <code>null</code>.
+   * @return An empty string if no extension was found, the extension without
+   *         the leading dot otherwise. Never <code>null</code>.
+   */
+  @Nonnull
+  public static String getExtension (@Nullable final File aFile)
+  {
+    return aFile == null ? "" : getExtension (aFile.getName ());
+  }
+
+  /**
    * Get the extension of the passed filename.
    * 
    * @param sFilename
@@ -182,6 +196,32 @@ public final class FilenameHelper
   }
 
   /**
+   * Check if the passed file has one of the passed extensions. The comparison
+   * is done case insensitive even on Unix machines.
+   * 
+   * @param aFile
+   *        The file to check the extension from. May be <code>null</code> or
+   *        empty.
+   * @param aExtensions
+   *        An array of extensions (without the leading dot) which are matched
+   *        case insensitive. May not be <code>null</code>.
+   * @return <code>true</code> if the file has one of the passed extensions,
+   *         else <code>false</code>.
+   */
+  public static boolean hasExtension (@Nullable final File aFile, @Nonnull final String... aExtensions)
+  {
+    if (aExtensions == null)
+      throw new NullPointerException ("extensions");
+
+    // determine current extension.
+    final String sExt = getExtension (aFile);
+    for (final String sExtension : aExtensions)
+      if (sExt.equalsIgnoreCase (sExtension))
+        return true;
+    return false;
+  }
+
+  /**
    * Check if the passed filename has one of the passed extensions. The
    * comparison is done case insensitive even on Unix machines.
    * 
@@ -191,8 +231,8 @@ public final class FilenameHelper
    * @param aExtensions
    *        An array of extensions (without the leading dot) which are matched
    *        case insensitive. May not be <code>null</code>.
-   * @return <code>true</code>. if the filename has one of the passed
-   *         extensions, else <code>false</code>.
+   * @return <code>true</code> if the filename has one of the passed extensions,
+   *         else <code>false</code>.
    */
   public static boolean hasExtension (@Nullable final String sFilename, @Nonnull final String... aExtensions)
   {
