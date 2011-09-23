@@ -18,15 +18,13 @@
 package com.phloc.commons.regex;
 
 import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.RegEx;
 
-import com.phloc.commons.GlobalDebug;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.cache.AbstractNotifyingCacheWithMaxSize;
-import com.phloc.commons.string.StringHelper;
 
 /**
  * This class provides a pool for cached regular expressions. It caches up to a
@@ -34,7 +32,7 @@ import com.phloc.commons.string.StringHelper;
  * 
  * @author philip
  */
-public final class RegExPool extends AbstractNotifyingCacheWithMaxSize <String, Pattern>
+public final class RegExPool extends AbstractNotifyingCacheWithMaxSize <RegExPattern, Pattern>
 {
   public static final int MAX_CACHE_SIZE = 1000;
   private static final RegExPool s_aInstance = new RegExPool ();
@@ -44,54 +42,11 @@ public final class RegExPool extends AbstractNotifyingCacheWithMaxSize <String, 
     super (RegExPool.class.getName (), MAX_CACHE_SIZE);
   }
 
-  private static void _checkPatternConsistency (@Nonnull @RegEx final String sRegEx)
-  {
-    // Check if a '$' is escaped if no digits follow
-    int nIndex = 0;
-    while (nIndex >= 0)
-    {
-      nIndex = sRegEx.indexOf ('$', nIndex);
-      if (nIndex != -1)
-      {
-        // Is the "$" followed by an int (would indicate a replacement group)
-        if (!StringHelper.isInt (sRegEx.substring (nIndex + 1)))
-        {
-          if (nIndex + 1 < sRegEx.length () && sRegEx.charAt (nIndex + 1) == ')')
-          { // NOPMD
-            // "$" is the last char in a group "(...$)"
-          }
-          else
-            if (nIndex > 0 && sRegEx.charAt (nIndex - 1) == '\\')
-            { // NOPMD
-              // '$' is quoted
-            }
-            else
-              if (nIndex == sRegEx.length () - 1)
-              { // NOPMD
-                // '$' at end of String is OK!
-              }
-              else
-                throw new IllegalArgumentException ("The passed regex '" + sRegEx + "' contains an unquoted '$' sign!");
-        }
-        nIndex++;
-      }
-    }
-  }
-
   @Override
   @Nonnull
-  protected Pattern getValueToCache (@Nonnull @RegEx final String sRegEx)
+  protected Pattern getValueToCache (@Nonnull @RegEx final RegExPattern aRegEx)
   {
-    try
-    {
-      if (GlobalDebug.isDebugMode ())
-        _checkPatternConsistency (sRegEx);
-      return Pattern.compile (sRegEx);
-    }
-    catch (final PatternSyntaxException ex)
-    {
-      throw new IllegalArgumentException ("Passed regular expression '" + sRegEx + "' is illegal", ex);
-    }
+    return aRegEx.getAsPattern ();
   }
 
   /**
@@ -108,9 +63,26 @@ public final class RegExPool extends AbstractNotifyingCacheWithMaxSize <String, 
   @Nonnull
   public static Pattern getPattern (@Nonnull @Nonempty @RegEx final String sRegEx)
   {
-    if (StringHelper.hasNoText (sRegEx))
-      throw new IllegalArgumentException ("regex is empty");
+    return s_aInstance.getFromCache (new RegExPattern (sRegEx));
+  }
 
-    return s_aInstance.getFromCache (sRegEx);
+  /**
+   * Get the cached regular expression pattern.
+   * 
+   * @param sRegEx
+   *        The regular expression to retrieve. May neither be <code>null</code>
+   *        nor empty.
+   * @param nOptions
+   *        The options used for Pattern.compile
+   * @return The compiled regular expression pattern and never <code>null</code>
+   *         .
+   * @see Pattern#compile(String, int)
+   * @throws IllegalArgumentException
+   *         If the passed regular expression has an illegal syntax
+   */
+  @Nonnull
+  public static Pattern getPattern (@Nonnull @Nonempty @RegEx final String sRegEx, @Nonnegative final int nOptions)
+  {
+    return s_aInstance.getFromCache (new RegExPattern (sRegEx, nOptions));
   }
 }

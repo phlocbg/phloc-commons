@@ -25,6 +25,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.junit.Test;
 
@@ -69,6 +70,12 @@ public final class RegExHelperTest
     assertEquals ("ab", x[0]);
     assertEquals ("cd", x[1]);
     assertEquals ("ef", x[2]);
+
+    x = RegExHelper.split ("line1\nline2bline3", "b");
+    assertNotNull (x);
+    assertEquals (2, x.length);
+    assertEquals ("line1\nline2", x[0]);
+    assertEquals ("line3", x[1]);
 
     x = RegExHelper.split (null, "b");
     assertNotNull (x);
@@ -340,6 +347,9 @@ public final class RegExHelperTest
     assertTrue (RegExHelper.stringMatchesPattern ("[0-9]*", ""));
     assertTrue (RegExHelper.stringMatchesPattern ("abc", "abc"));
     assertTrue (RegExHelper.stringMatchesPattern ("abc+", "abcccccccccccc"));
+    assertFalse (RegExHelper.stringMatchesPattern (".*[0-9]+.*", "abc\nx1234y\nzzz"));
+    assertTrue (RegExHelper.stringMatchesPattern ("(?s).*[0-9]+.*", "abc\nx1234y\nzzz"));
+    assertTrue (RegExHelper.stringMatchesPattern (".*[0-9]+.*", Pattern.DOTALL, "abc\nx1234y\nzzz"));
 
     try
     {
