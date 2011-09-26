@@ -18,7 +18,7 @@
 package com.phloc.commons.io.streams;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.OutputStream;
 
 import javax.annotation.Nonnull;
 
@@ -28,38 +28,34 @@ import com.phloc.commons.messagedigest.NonBlockingMessageDigestGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * A wrapper around an {@link InputStream} that performs a hashing while
- * reading.
+ * A wrapper around an {@link OutputStream} that performs a hashing while
+ * writing.
  * 
  * @see IMessageDigestGenerator
  * @author philip
  */
-public class HashingInputStream extends WrappedInputStream
+public class HashingOutputStream extends WrappedOutputStream
 {
   private final IMessageDigestGenerator m_aMDGen;
 
-  public HashingInputStream (@Nonnull final InputStream aSourceIS, @Nonnull final EMessageDigestAlgorithm eMDAlgorithm)
+  public HashingOutputStream (@Nonnull final OutputStream aSourceOS, @Nonnull final EMessageDigestAlgorithm eMDAlgorithm)
   {
-    super (aSourceIS);
+    super (aSourceOS);
     m_aMDGen = new NonBlockingMessageDigestGenerator (eMDAlgorithm);
   }
 
   @Override
-  public int read () throws IOException
+  public void write (final int n) throws IOException
   {
-    final int ret = super.read ();
-    if (ret != -1)
-      m_aMDGen.update ((byte) ret);
-    return ret;
+    super.write (n);
+    m_aMDGen.update ((byte) n);
   }
 
   @Override
-  public int read (final byte b[], final int nOffset, final int nLength) throws IOException
+  public void write (final byte [] aBuf, final int nOfs, final int nLength) throws IOException
   {
-    final int ret = super.read (b, nOffset, nLength);
-    if (ret != -1)
-      m_aMDGen.update (b, nOffset, ret);
-    return ret;
+    super.write (aBuf, nOfs, nLength);
+    m_aMDGen.update (aBuf, nOfs, nLength);
   }
 
   /**
