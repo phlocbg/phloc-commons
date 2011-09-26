@@ -21,6 +21,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.math.BigDecimal;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.Collator;
@@ -71,6 +72,17 @@ public final class CompareUtilsTest extends AbstractPhlocTestCase
     assertTrue (CompareUtils.safeEquals (u1, u1));
     assertTrue (CompareUtils.safeEquals (u1, new URL ("http://www.phloc.com")));
     assertFalse (CompareUtils.safeEquals (u1, u2));
+  }
+
+  @Test
+  public void testSafeEquals_BigDecimal ()
+  {
+    final BigDecimal bd1 = new BigDecimal ("5.5");
+    final BigDecimal bd2 = new BigDecimal ("5.49999");
+    assertTrue (CompareUtils.safeEquals (bd1, bd1));
+    assertTrue (CompareUtils.safeEquals (bd1, new BigDecimal ("5.5000")));
+    assertTrue (CompareUtils.safeEquals (bd1, new BigDecimal ("5.50000000000000000")));
+    assertFalse (CompareUtils.safeEquals (bd1, bd2));
   }
 
   @Test

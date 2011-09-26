@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.compare;
 
+import java.math.BigDecimal;
 import java.net.URL;
 import java.text.Collator;
 import java.util.Arrays;
@@ -94,6 +95,25 @@ public final class CompareUtils
   public static boolean safeEquals (@Nonnull final URL aObj1, @Nonnull final URL aObj2)
   {
     return (aObj1 == aObj2) || aObj1.toExternalForm ().equals (aObj2.toExternalForm ());
+  }
+
+  /**
+   * Special equals implementation for BigDecimal because
+   * <code>BigDecimal.equals</code> returns false if they have a different scale
+   * so that "5.5" is not equal "5.50".</a>
+   * 
+   * @param aObj1
+   *        First BigDecimal. May not be <code>null</code>.
+   * @param aObj2
+   *        Second BigDecimal. May not be <code>null</code>.
+   * @return <code>true</code> if they are equals, <code>false</code> otherwise.
+   */
+  public static boolean safeEquals (@Nonnull final BigDecimal aObj1, @Nonnull final BigDecimal aObj2)
+  {
+    if (aObj1 == aObj2)
+      return true;
+    final int nMaxScale = Math.max (aObj1.scale (), aObj2.scale ());
+    return aObj1.setScale (nMaxScale).equals (aObj2.setScale (nMaxScale));
   }
 
   /**
