@@ -17,7 +17,10 @@
  */
 package com.phloc.test.java;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
@@ -25,20 +28,30 @@ import java.math.RoundingMode;
 
 import org.junit.Test;
 
+import com.phloc.commons.CGlobal;
+
 public final class FuncTestJavaBigDecimal
 {
   @Test
   public void testDivide ()
   {
-    final BigDecimal aBD100 = new BigDecimal (100);
+    final BigDecimal aBD100 = CGlobal.BIGDEC_100;
     final BigDecimal aPerc = new BigDecimal ("20.0");
     try
     {
+      // 100/120 -> indefinite precision
       aBD100.divide (aBD100.add (aPerc));
       fail ();
     }
     catch (final ArithmeticException ex)
     {}
     assertNotNull (aBD100.divide (aBD100.add (aPerc), 2, RoundingMode.HALF_UP));
+
+    // compareTo with different scale
+    assertEquals (0, new BigDecimal ("20").compareTo (new BigDecimal ("20.0")));
+
+    // equals with different scale
+    assertFalse (new BigDecimal ("20").equals (new BigDecimal ("20.0")));
+    assertTrue (new BigDecimal ("20").setScale (1).equals (new BigDecimal ("20.0")));
   }
 }
