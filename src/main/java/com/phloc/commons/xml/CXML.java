@@ -49,12 +49,17 @@ public final class CXML
   public static final String EVENT_DOMNODE_INSERTED = "DOMNodeInserted";
 
   // XML default names, namespaces and prefixes
+
+  // xmlns:*
   public static final char XML_PREFIX_NAMESPACE_SEP = ':';
   public static final String XML_PREFIX_NAMESPACE_SEP_STR = Character.toString (XML_PREFIX_NAMESPACE_SEP);
   public static final String XML_ATTR_XMLNS = XMLConstants.XMLNS_ATTRIBUTE;
-  public static final String XML_ATTR_XMLNS_WITH_SEP = XMLConstants.XMLNS_ATTRIBUTE + XML_PREFIX_NAMESPACE_SEP;
-  public static final String XML_ATTR_LANG = XMLConstants.XML_NS_PREFIX + XML_PREFIX_NAMESPACE_SEP + "lang";
-  public static final String XML_ATTR_BASE = XMLConstants.XML_NS_PREFIX + XML_PREFIX_NAMESPACE_SEP + "base";
+  public static final String XML_ATTR_XMLNS_WITH_SEP = XML_ATTR_XMLNS + XML_PREFIX_NAMESPACE_SEP;
+
+  // xml:*
+  public static final String XML_ATTR_XML_WITH_SEP = XMLConstants.XML_NS_PREFIX + XML_PREFIX_NAMESPACE_SEP;
+  public static final String XML_ATTR_LANG = XML_ATTR_XML_WITH_SEP + "lang";
+  public static final String XML_ATTR_BASE = XML_ATTR_XML_WITH_SEP + "base";
 
   // XML Schema (XS) and XML Schema Instance (XSI) stuff:
   public static final String XML_NS_XS = XMLConstants.W3C_XML_SCHEMA_NS_URI;
@@ -63,6 +68,15 @@ public final class CXML
   public static final String XML_NS_PREFIX_XSI = "xsi";
   public static final String XML_ATTR_XSI_SCHEMALOCATION = "schemaLocation";
   public static final String XML_ATTR_XSI_NONAMESPACESCHEMALOCATION = "noNamespaceSchemaLocation";
+
+  public static final String XMLNS_XS = XML_ATTR_XMLNS_WITH_SEP + XML_NS_PREFIX_XS;
+  public static final String XMLNS_XSI = XML_ATTR_XMLNS_WITH_SEP + XML_NS_PREFIX_XSI;
+  public static final String XSI_SCHEMALOCATION = XML_NS_PREFIX_XSI +
+                                                  XML_PREFIX_NAMESPACE_SEP +
+                                                  XML_ATTR_XSI_SCHEMALOCATION;
+  public static final String XSI_NONAMESPACESCHEMALOCATION = XML_NS_PREFIX_XSI +
+                                                             XML_PREFIX_NAMESPACE_SEP +
+                                                             XML_ATTR_XSI_NONAMESPACESCHEMALOCATION;
 
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")
