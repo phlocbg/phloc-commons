@@ -20,6 +20,11 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2011-09-30" category="api" action="add">
+    <change>
+      <text locale="en">Added some constants in CXML</text>
+    </change>
+  </entry>
   <entry date="2011-09-26" category="api" action="add">
     <change>
       <text locale="en">Added CompareUtils.safeEquals (BigDecimal, BigDecimal) to correctly handle comparison of BigDecimal values with different scales</text>
