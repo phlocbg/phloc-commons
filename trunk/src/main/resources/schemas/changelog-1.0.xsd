@@ -89,7 +89,12 @@
       </xs:enumeration>
       <xs:enumeration value="security">
         <xs:annotation>
-          <xs:documentation>A security improvement.</xs:documentation>
+          <xs:documentation>A security related issue.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="test">
+        <xs:annotation>
+          <xs:documentation>A testing related issue.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
     </xs:restriction>
