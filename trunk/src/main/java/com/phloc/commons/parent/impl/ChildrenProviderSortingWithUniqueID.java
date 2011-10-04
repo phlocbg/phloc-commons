@@ -38,10 +38,10 @@ import com.phloc.commons.parent.IChildrenProviderWithUniqueID;
 public class ChildrenProviderSortingWithUniqueID <KEYTYPE, CHILDTYPE> extends ChildrenProviderSorting <CHILDTYPE> implements
                                                                                                                  IChildrenProviderWithUniqueID <KEYTYPE, CHILDTYPE>
 {
-  public ChildrenProviderSortingWithUniqueID (@Nonnull final IChildrenProviderWithUniqueID <KEYTYPE, CHILDTYPE> aCR,
+  public ChildrenProviderSortingWithUniqueID (@Nonnull final IChildrenProviderWithUniqueID <KEYTYPE, CHILDTYPE> aCP,
                                               @Nonnull final Comparator <? super CHILDTYPE> aComparator)
   {
-    super (aCR, aComparator);
+    super (aCP, aComparator);
   }
 
   @SuppressWarnings ("unchecked")
