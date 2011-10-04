@@ -20,15 +20,11 @@ package com.phloc.commons.microdom.convert.impl;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.IsSPIImplementation;
-import com.phloc.commons.microdom.IMicroElement;
-import com.phloc.commons.microdom.convert.IMicroTypeConverter;
 import com.phloc.commons.microdom.convert.IMicroTypeConverterRegistrarSPI;
 import com.phloc.commons.microdom.convert.MicroTypeConverterRegistry;
-import com.phloc.commons.microdom.impl.MicroFactory;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.state.EContinue;
 import com.phloc.commons.state.EEnabled;
@@ -40,133 +36,64 @@ import com.phloc.commons.state.ESuccess;
 import com.phloc.commons.state.ETopBottom;
 import com.phloc.commons.state.ETriState;
 import com.phloc.commons.state.EValidity;
-import com.phloc.commons.typeconvert.TypeConverter;
 
 @Immutable
 @IsSPIImplementation
 public final class BasicMicroTypeConverterRegistrar implements IMicroTypeConverterRegistrarSPI
 {
-  private static final class StringBasedMicroTypeConverter implements IMicroTypeConverter
-  {
-    private final IMicroTypeConverter m_aStringConverter;
-    private final Class <?> m_aNativeClass;
-
-    private StringBasedMicroTypeConverter (@Nonnull final IMicroTypeConverter aStringConverter,
-                                           @Nonnull final Class <?> aNativeClass)
-    {
-      m_aStringConverter = aStringConverter;
-      m_aNativeClass = aNativeClass;
-    }
-
-    @Nonnull
-    public IMicroElement convertToMicroElement (final Object aObject, final String sNamespaceURI, final String sTagName)
-    {
-      final String sValue = TypeConverter.convertIfNecessary (aObject, String.class);
-      return m_aStringConverter.convertToMicroElement (sValue, sNamespaceURI, sTagName);
-    }
-
-    @Nonnull
-    public Object convertToNative (@Nonnull final IMicroElement aElement)
-    {
-      final String sValue = (String) m_aStringConverter.convertToNative (aElement);
-      return TypeConverter.convertIfNecessary (sValue, m_aNativeClass);
-    }
-  }
-
   public void registerMicroTypeConverter ()
   {
     // String converter
-    final IMicroTypeConverter aStringConverter = new IMicroTypeConverter ()
-    {
-      @Nonnull
-      public IMicroElement convertToMicroElement (final Object aObject,
-                                                  final String sNamespaceURI,
-                                                  final String sTagName)
-      {
-        final IMicroElement e = MicroFactory.newElement (sNamespaceURI, sTagName);
-        e.appendText ((String) aObject);
-        return e;
-      }
-
-      @Nonnull
-      public String convertToNative (@Nonnull final IMicroElement aElement)
-      {
-        return aElement.getTextContent ();
-      }
-    };
-    MicroTypeConverterRegistry.registerMicroElementTypeConverter (String.class, aStringConverter);
+    MicroTypeConverterRegistry.registerMicroElementTypeConverter (String.class, StringMicroTypeConverter.getInstance ());
 
     // Other base type based on the String converter
     MicroTypeConverterRegistry.registerMicroElementTypeConverter (Boolean.class,
-                                                                  new StringBasedMicroTypeConverter (aStringConverter,
-                                                                                                     Boolean.class));
+                                                                  new StringBasedMicroTypeConverter (Boolean.class));
     MicroTypeConverterRegistry.registerMicroElementTypeConverter (Byte.class,
-                                                                  new StringBasedMicroTypeConverter (aStringConverter,
-                                                                                                     Byte.class));
+                                                                  new StringBasedMicroTypeConverter (Byte.class));
     MicroTypeConverterRegistry.registerMicroElementTypeConverter (Character.class,
-                                                                  new StringBasedMicroTypeConverter (aStringConverter,
-                                                                                                     Character.class));
+                                                                  new StringBasedMicroTypeConverter (Character.class));
     MicroTypeConverterRegistry.registerMicroElementTypeConverter (Double.class,
-                                                                  new StringBasedMicroTypeConverter (aStringConverter,
-                                                                                                     Double.class));
+                                                                  new StringBasedMicroTypeConverter (Double.class));
     MicroTypeConverterRegistry.registerMicroElementTypeConverter (Float.class,
-                                                                  new StringBasedMicroTypeConverter (aStringConverter,
-                                                                                                     Float.class));
+                                                                  new StringBasedMicroTypeConverter (Float.class));
     MicroTypeConverterRegistry.registerMicroElementTypeConverter (Integer.class,
-                                                                  new StringBasedMicroTypeConverter (aStringConverter,
-                                                                                                     Integer.class));
+                                                                  new StringBasedMicroTypeConverter (Integer.class));
     MicroTypeConverterRegistry.registerMicroElementTypeConverter (Long.class,
-                                                                  new StringBasedMicroTypeConverter (aStringConverter,
-                                                                                                     Long.class));
+                                                                  new StringBasedMicroTypeConverter (Long.class));
     MicroTypeConverterRegistry.registerMicroElementTypeConverter (Short.class,
-                                                                  new StringBasedMicroTypeConverter (aStringConverter,
-                                                                                                     Short.class));
+                                                                  new StringBasedMicroTypeConverter (Short.class));
     MicroTypeConverterRegistry.registerMicroElementTypeConverter (BigDecimal.class,
-                                                                  new StringBasedMicroTypeConverter (aStringConverter,
-                                                                                                     BigDecimal.class));
+                                                                  new StringBasedMicroTypeConverter (BigDecimal.class));
     MicroTypeConverterRegistry.registerMicroElementTypeConverter (BigInteger.class,
-                                                                  new StringBasedMicroTypeConverter (aStringConverter,
-                                                                                                     BigInteger.class));
+                                                                  new StringBasedMicroTypeConverter (BigInteger.class));
     MicroTypeConverterRegistry.registerMicroElementTypeConverter (StringBuffer.class,
-                                                                  new StringBasedMicroTypeConverter (aStringConverter,
-                                                                                                     StringBuffer.class));
+                                                                  new StringBasedMicroTypeConverter (StringBuffer.class));
     MicroTypeConverterRegistry.registerMicroElementTypeConverter (StringBuilder.class,
-                                                                  new StringBasedMicroTypeConverter (aStringConverter,
-                                                                                                     StringBuilder.class));
+                                                                  new StringBasedMicroTypeConverter (StringBuilder.class));
 
     // State enums
     MicroTypeConverterRegistry.registerMicroElementTypeConverter (EChange.class,
-                                                                  new StringBasedMicroTypeConverter (aStringConverter,
-                                                                                                     EChange.class));
+                                                                  new StringBasedMicroTypeConverter (EChange.class));
     MicroTypeConverterRegistry.registerMicroElementTypeConverter (EContinue.class,
-                                                                  new StringBasedMicroTypeConverter (aStringConverter,
-                                                                                                     EContinue.class));
+                                                                  new StringBasedMicroTypeConverter (EContinue.class));
     MicroTypeConverterRegistry.registerMicroElementTypeConverter (EEnabled.class,
-                                                                  new StringBasedMicroTypeConverter (aStringConverter,
-                                                                                                     EEnabled.class));
+                                                                  new StringBasedMicroTypeConverter (EEnabled.class));
     MicroTypeConverterRegistry.registerMicroElementTypeConverter (EFinish.class,
-                                                                  new StringBasedMicroTypeConverter (aStringConverter,
-                                                                                                     EFinish.class));
+                                                                  new StringBasedMicroTypeConverter (EFinish.class));
     MicroTypeConverterRegistry.registerMicroElementTypeConverter (EInterrupt.class,
-                                                                  new StringBasedMicroTypeConverter (aStringConverter,
-                                                                                                     EInterrupt.class));
+                                                                  new StringBasedMicroTypeConverter (EInterrupt.class));
     MicroTypeConverterRegistry.registerMicroElementTypeConverter (ELeftRight.class,
-                                                                  new StringBasedMicroTypeConverter (aStringConverter,
-                                                                                                     ELeftRight.class));
+                                                                  new StringBasedMicroTypeConverter (ELeftRight.class));
     MicroTypeConverterRegistry.registerMicroElementTypeConverter (EMandatory.class,
-                                                                  new StringBasedMicroTypeConverter (aStringConverter,
-                                                                                                     EMandatory.class));
+                                                                  new StringBasedMicroTypeConverter (EMandatory.class));
     MicroTypeConverterRegistry.registerMicroElementTypeConverter (ESuccess.class,
-                                                                  new StringBasedMicroTypeConverter (aStringConverter,
-                                                                                                     ESuccess.class));
+                                                                  new StringBasedMicroTypeConverter (ESuccess.class));
     MicroTypeConverterRegistry.registerMicroElementTypeConverter (ETopBottom.class,
-                                                                  new StringBasedMicroTypeConverter (aStringConverter,
-                                                                                                     ETopBottom.class));
+                                                                  new StringBasedMicroTypeConverter (ETopBottom.class));
     MicroTypeConverterRegistry.registerMicroElementTypeConverter (ETriState.class,
-                                                                  new StringBasedMicroTypeConverter (aStringConverter,
-                                                                                                     ETriState.class));
+                                                                  new StringBasedMicroTypeConverter (ETriState.class));
     MicroTypeConverterRegistry.registerMicroElementTypeConverter (EValidity.class,
-                                                                  new StringBasedMicroTypeConverter (aStringConverter,
-                                                                                                     EValidity.class));
+                                                                  new StringBasedMicroTypeConverter (EValidity.class));
   }
 }
