@@ -43,6 +43,7 @@ public class ChildrenProviderHasChildrenWithID <KEYTYPE, CHILDTYPE extends IHasC
   {
     if (aCurrent != null)
     {
+      // Get all children (if any)
       final Collection <? extends CHILDTYPE> aChildren = aCurrent.getChildren ();
       if (aChildren != null)
         for (final CHILDTYPE aChild : aChildren)

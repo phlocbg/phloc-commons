@@ -30,7 +30,9 @@ import com.phloc.commons.parent.IChildrenProvider;
 
 /**
  * An {@link IChildrenProvider} that returns the children in
- * {@link #getChildren(Object)} sorted.
+ * {@link #getChildren(Object)} sorted.<br>
+ * The implementation wraps an existing children provider and uses and external
+ * comparator for sorting.
  * 
  * @author philip
  * @param <CHILDTYPE>
@@ -42,14 +44,22 @@ public class ChildrenProviderSorting <CHILDTYPE> implements IChildrenProvider <C
   protected final IChildrenProvider <CHILDTYPE> m_aCR;
   private final Comparator <? super CHILDTYPE> m_aComparator;
 
-  public ChildrenProviderSorting (@Nonnull final IChildrenProvider <CHILDTYPE> aCR,
+  /**
+   * Constructor.
+   * 
+   * @param aCP
+   *        The children provider to be wrapped
+   * @param aComparator
+   *        The comparator to be used for sorting children.
+   */
+  public ChildrenProviderSorting (@Nonnull final IChildrenProvider <CHILDTYPE> aCP,
                                   @Nonnull final Comparator <? super CHILDTYPE> aComparator)
   {
-    if (aCR == null)
+    if (aCP == null)
       throw new NullPointerException ("childrenProvider");
     if (aComparator == null)
       throw new NullPointerException ("comparator");
-    m_aCR = aCR;
+    m_aCR = aCP;
     m_aComparator = aComparator;
   }
 
@@ -68,7 +78,10 @@ public class ChildrenProviderSorting <CHILDTYPE> implements IChildrenProvider <C
   @Nullable
   public List <? extends CHILDTYPE> getChildren (@Nullable final CHILDTYPE aCurrent)
   {
+    // Get the unsorted collection of children
     final Collection <? extends CHILDTYPE> ret = m_aCR.getChildren (aCurrent);
+
+    // If there is anything to sort, do it now
     return ret == null ? null : ContainerHelper.getSorted (ret, m_aComparator);
   }
 }

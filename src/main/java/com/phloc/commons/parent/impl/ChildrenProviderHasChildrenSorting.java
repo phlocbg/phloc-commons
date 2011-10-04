@@ -55,7 +55,10 @@ public class ChildrenProviderHasChildrenSorting <CHILDTYPE extends IHasChildren 
   @Nullable
   public List <? extends CHILDTYPE> getChildren (@Nullable final CHILDTYPE aCurrent)
   {
+    // Get all children of the passed element
     final Collection <? extends CHILDTYPE> ret = aCurrent == null ? null : aCurrent.getChildren ();
+
+    // If there is anything to sort do it now
     return ret == null ? null : ContainerHelper.getSorted (ret, m_aComparator);
   }
 }
