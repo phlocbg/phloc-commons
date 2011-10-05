@@ -32,8 +32,14 @@ import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.error.EErrorLevel;
 import com.phloc.commons.string.ToStringGenerator;
 
+/**
+ * Keeps a set of {@link LogMessage} objects in memory, offering an API similar
+ * to SLF4J.
+ * 
+ * @author philip
+ */
 @NotThreadSafe
-public final class InMemoryLogger implements Iterable <LogMessage>, IHasSize
+public class InMemoryLogger implements Iterable <LogMessage>, IHasSize
 {
   private final List <LogMessage> m_aMessages = new ArrayList <LogMessage> ();
 
