@@ -27,7 +27,6 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.phloc.commons.annotations.Nonempty;
-import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.lang.ServiceLoaderBackport;
 import com.phloc.commons.microdom.IMicroElement;
@@ -44,8 +43,10 @@ import com.phloc.commons.typeconvert.TypeConverterRegistry;
  * @author philip
  */
 @ThreadSafe
-public final class MicroTypeConverterRegistry
+public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegistry
 {
+  private static final MicroTypeConverterRegistry s_aInstance = new MicroTypeConverterRegistry ();
+
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
 
   // WeakHashMap because key is a class
@@ -55,26 +56,30 @@ public final class MicroTypeConverterRegistry
   {
     // Register all custom micro type converter
     for (final IMicroTypeConverterRegistrarSPI aSPI : ServiceLoaderBackport.load (IMicroTypeConverterRegistrarSPI.class))
-      aSPI.registerMicroTypeConverter ();
+      aSPI.registerMicroTypeConverter (s_aInstance);
   }
-
-  @PresentForCodeCoverage
-  @SuppressWarnings ("unused")
-  private static final MicroTypeConverterRegistry s_aInstance = new MicroTypeConverterRegistry ();
 
   private MicroTypeConverterRegistry ()
   {}
 
+  public void registerMicroElementTypeConverter (@Nonnull final Class <?> aClass,
+                                                 @Nonnull final IMicroTypeConverter aConverter)
+  {
+    _registerMicroElementTypeConverter (aClass, aConverter);
+  }
+
   /**
-   * Register type converters from and to XML (IMicroElement).
+   * Register type converters from and to XML (IMicroElement). This method is
+   * private to avoid later modification of the available type converters,
+   * because this may lead to unexpected results.
    * 
    * @param aClass
    *        The class to be registered.
    * @param aConverter
    *        The type converter from and to XML
    */
-  public static void registerMicroElementTypeConverter (@Nonnull final Class <?> aClass,
-                                                        @Nonnull final IMicroTypeConverter aConverter)
+  private static void _registerMicroElementTypeConverter (@Nonnull final Class <?> aClass,
+                                                          @Nonnull final IMicroTypeConverter aConverter)
   {
     if (aClass == null)
       throw new NullPointerException ("class");
