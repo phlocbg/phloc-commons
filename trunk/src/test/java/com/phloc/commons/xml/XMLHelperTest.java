@@ -457,4 +457,22 @@ public final class XMLHelperTest extends AbstractPhlocTestCase
     catch (final IllegalArgumentException ex)
     {}
   }
+
+  @Test
+  public void testGetNamespaceURI ()
+  {
+    assertNull (XMLHelper.getNamespaceURI (null));
+
+    Document doc = XMLFactory.newDocument ();
+    assertNull (XMLHelper.getNamespaceURI (doc));
+    doc.appendChild (doc.createElement ("any"));
+    assertNull (XMLHelper.getNamespaceURI (doc));
+
+    doc = XMLFactory.newDocument ();
+    doc.appendChild (doc.createElementNS ("myuri", "any"));
+    assertEquals ("myuri", XMLHelper.getNamespaceURI (doc));
+    assertEquals ("myuri", XMLHelper.getNamespaceURI (doc.createElementNS ("myuri", "any")));
+    assertNull (XMLHelper.getNamespaceURI (doc.createAttribute ("attr")));
+    assertEquals ("myuri", XMLHelper.getNamespaceURI (doc.createAttributeNS ("myuri", "attr")));
+  }
 }
