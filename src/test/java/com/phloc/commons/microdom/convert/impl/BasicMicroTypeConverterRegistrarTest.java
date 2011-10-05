@@ -28,7 +28,7 @@ import org.junit.Test;
 
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.microdom.IMicroElement;
-import com.phloc.commons.microdom.convert.MicroTypeConverterRegistry;
+import com.phloc.commons.microdom.convert.MicroTypeConverter;
 import com.phloc.commons.microdom.serialize.MicroWriter;
 import com.phloc.commons.microdom.serialize.MicroWriterSettings;
 import com.phloc.commons.state.EChange;
@@ -107,7 +107,7 @@ public final class BasicMicroTypeConverterRegistrarTest
     for (final Object aObj : aDefinedObjs)
     {
       // Convert to XML
-      final IMicroElement aElement = MicroTypeConverterRegistry.convertToMicroElement (aObj, "any");
+      final IMicroElement aElement = MicroTypeConverter.convertToMicroElement (aObj, "any");
       assertNotNull (aElement);
       final String sXML = MicroWriter.getNodeAsString (aElement, MicroWriterSettings.DEFAULT_XML_SETTINGS);
       assertTrue (sXML.startsWith ("<any>"));
@@ -115,7 +115,7 @@ public final class BasicMicroTypeConverterRegistrarTest
       System.out.print (sXML);
 
       // Convert back to native
-      final Object aNative = MicroTypeConverterRegistry.convertToNative (aElement, aObj.getClass ());
+      final Object aNative = MicroTypeConverter.convertToNative (aElement, aObj.getClass ());
       assertNotNull (aNative);
       assertEquals (aObj, aNative);
     }
@@ -126,7 +126,7 @@ public final class BasicMicroTypeConverterRegistrarTest
     for (final Object aObj : aDefinedObjsStringEquals)
     {
       // Convert to XML
-      final IMicroElement aElement = MicroTypeConverterRegistry.convertToMicroElement (aObj, "any");
+      final IMicroElement aElement = MicroTypeConverter.convertToMicroElement (aObj, "any");
       assertNotNull (aElement);
       final String sXML = MicroWriter.getNodeAsString (aElement, MicroWriterSettings.DEFAULT_XML_SETTINGS);
       assertTrue (sXML.startsWith ("<any>"));
@@ -134,7 +134,7 @@ public final class BasicMicroTypeConverterRegistrarTest
       System.out.print (sXML);
 
       // Convert back to native
-      final Object aNative = MicroTypeConverterRegistry.convertToNative (aElement, aObj.getClass ());
+      final Object aNative = MicroTypeConverter.convertToNative (aElement, aObj.getClass ());
       assertNotNull (aNative);
       assertEquals (aObj.toString (), aNative.toString ());
     }

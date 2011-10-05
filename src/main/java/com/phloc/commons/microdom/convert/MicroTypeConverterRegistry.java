@@ -26,13 +26,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
-import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.lang.ServiceLoaderBackport;
 import com.phloc.commons.microdom.IMicroElement;
-import com.phloc.commons.string.StringHelper;
-import com.phloc.commons.typeconvert.TypeConverterException;
-import com.phloc.commons.typeconvert.TypeConverterException.EReason;
 import com.phloc.commons.typeconvert.TypeConverterRegistry;
 
 /**
@@ -105,7 +101,7 @@ public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegi
   }
 
   @Nullable
-  private static IMicroTypeConverter _getSrcConverter (final Class <?> aSrcClass)
+  public static IMicroTypeConverter getConverterToMicroElement (@Nullable final Class <?> aSrcClass)
   {
     s_aRWLock.readLock ().lock ();
     try
@@ -119,40 +115,11 @@ public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegi
   }
 
   @Nullable
-  public static IMicroElement convertToMicroElement (@Nullable final Object aObject,
-                                                     @Nonnull @Nonempty final String sTagName)
+  public static IMicroTypeConverter getConverterToNative (@Nonnull final Class <?> aDstClass)
   {
-    // Use a null namespace
-    return convertToMicroElement (aObject, null, sTagName);
-  }
+    if (aDstClass == null)
+      throw new NullPointerException ("dstClass");
 
-  @Nullable
-  public static IMicroElement convertToMicroElement (@Nullable final Object aObject,
-                                                     @Nullable final String sNamespaceURI,
-                                                     @Nonnull @Nonempty final String sTagName) throws TypeConverterException
-  {
-    if (StringHelper.hasNoText (sTagName))
-      throw new IllegalArgumentException ("tagName is empty");
-
-    if (aObject == null)
-      return null;
-
-    // Lookup converter
-    final Class <?> aSrcClass = aObject.getClass ();
-    final IMicroTypeConverter aConverter = _getSrcConverter (aSrcClass);
-    if (aConverter == null)
-      throw new TypeConverterException (aSrcClass, IMicroElement.class, EReason.NO_CONVERTER_FOUND);
-
-    // Perform conversion
-    final IMicroElement ret = aConverter.convertToMicroElement (aObject, sNamespaceURI, sTagName);
-    if (ret == null)
-      throw new TypeConverterException (aSrcClass, IMicroElement.class, EReason.CONVERSION_FAILED);
-    return ret;
-  }
-
-  @Nullable
-  private static IMicroTypeConverter _getDstConverter (final Class <?> aDstClass)
-  {
     s_aRWLock.readLock ().lock ();
     try
     {
@@ -166,28 +133,6 @@ public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegi
     {
       s_aRWLock.readLock ().unlock ();
     }
-  }
-
-  @Nullable
-  public static <DSTTYPE> DSTTYPE convertToNative (@Nullable final IMicroElement aElement,
-                                                   @Nonnull final Class <DSTTYPE> aDstClass) throws TypeConverterException
-  {
-    if (aDstClass == null)
-      throw new NullPointerException ("destinationClass");
-
-    if (aElement == null)
-      return null;
-
-    // Lookup converter
-    final IMicroTypeConverter aConverter = _getDstConverter (aDstClass);
-    if (aConverter == null)
-      throw new TypeConverterException (IMicroElement.class, aDstClass, EReason.NO_CONVERTER_FOUND);
-
-    // Perform conversion
-    final DSTTYPE ret = aDstClass.cast (aConverter.convertToNative (aElement));
-    if (ret == null)
-      throw new TypeConverterException (IMicroElement.class, aDstClass, EReason.CONVERSION_FAILED);
-    return ret;
   }
 
   /**

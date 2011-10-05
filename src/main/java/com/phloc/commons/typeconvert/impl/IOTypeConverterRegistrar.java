@@ -23,6 +23,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.IsSPIImplementation;
@@ -32,7 +33,7 @@ import com.phloc.commons.io.resource.FileSystemResource;
 import com.phloc.commons.io.resource.URLResource;
 import com.phloc.commons.typeconvert.ITypeConverter;
 import com.phloc.commons.typeconvert.ITypeConverterRegistrarSPI;
-import com.phloc.commons.typeconvert.TypeConverterRegistry;
+import com.phloc.commons.typeconvert.ITypeConverterRegistry;
 
 /**
  * Register the IO specific type converter
@@ -43,17 +44,17 @@ import com.phloc.commons.typeconvert.TypeConverterRegistry;
 @IsSPIImplementation
 public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSPI
 {
-  public void registerTypeConverter ()
+  public void registerTypeConverter (@Nonnull final ITypeConverterRegistry aRegistry)
   {
     // File
-    TypeConverterRegistry.registerTypeConverter (File.class, String.class, new ITypeConverter ()
+    aRegistry.registerTypeConverter (File.class, String.class, new ITypeConverter ()
     {
       public String convert (final Object aSource)
       {
         return ((File) aSource).getAbsolutePath ();
       }
     });
-    TypeConverterRegistry.registerTypeConverter (String.class, File.class, new ITypeConverter ()
+    aRegistry.registerTypeConverter (String.class, File.class, new ITypeConverter ()
     {
       public File convert (final Object aSource)
       {
@@ -76,16 +77,16 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
       }
     };
     // ClassPathResource
-    TypeConverterRegistry.registerTypeConverter (ClassPathResource.class, String.class, aConvertResourceToString);
-    TypeConverterRegistry.registerTypeConverter (String.class, ClassPathResource.class, new ITypeConverter ()
+    aRegistry.registerTypeConverter (ClassPathResource.class, String.class, aConvertResourceToString);
+    aRegistry.registerTypeConverter (String.class, ClassPathResource.class, new ITypeConverter ()
     {
       public ClassPathResource convert (final Object aSource)
       {
         return new ClassPathResource ((String) aSource);
       }
     });
-    TypeConverterRegistry.registerTypeConverter (ClassPathResource.class, URL.class, aConvertResourceToURL);
-    TypeConverterRegistry.registerTypeConverter (URL.class, ClassPathResource.class, new ITypeConverter ()
+    aRegistry.registerTypeConverter (ClassPathResource.class, URL.class, aConvertResourceToURL);
+    aRegistry.registerTypeConverter (URL.class, ClassPathResource.class, new ITypeConverter ()
     {
       public ClassPathResource convert (final Object aSource)
       {
@@ -94,16 +95,16 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
     });
 
     // FileSystemResource
-    TypeConverterRegistry.registerTypeConverter (FileSystemResource.class, String.class, aConvertResourceToString);
-    TypeConverterRegistry.registerTypeConverter (String.class, FileSystemResource.class, new ITypeConverter ()
+    aRegistry.registerTypeConverter (FileSystemResource.class, String.class, aConvertResourceToString);
+    aRegistry.registerTypeConverter (String.class, FileSystemResource.class, new ITypeConverter ()
     {
       public FileSystemResource convert (final Object aSource)
       {
         return new FileSystemResource ((String) aSource);
       }
     });
-    TypeConverterRegistry.registerTypeConverter (FileSystemResource.class, URL.class, aConvertResourceToURL);
-    TypeConverterRegistry.registerTypeConverter (URL.class, FileSystemResource.class, new ITypeConverter ()
+    aRegistry.registerTypeConverter (FileSystemResource.class, URL.class, aConvertResourceToURL);
+    aRegistry.registerTypeConverter (URL.class, FileSystemResource.class, new ITypeConverter ()
     {
       public FileSystemResource convert (final Object aSource)
       {
@@ -123,8 +124,8 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
     });
 
     // URLResource
-    TypeConverterRegistry.registerTypeConverter (URLResource.class, String.class, aConvertResourceToString);
-    TypeConverterRegistry.registerTypeConverter (String.class, URLResource.class, new ITypeConverter ()
+    aRegistry.registerTypeConverter (URLResource.class, String.class, aConvertResourceToString);
+    aRegistry.registerTypeConverter (String.class, URLResource.class, new ITypeConverter ()
     {
       public URLResource convert (final Object aSource)
       {
@@ -138,8 +139,8 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
         }
       }
     });
-    TypeConverterRegistry.registerTypeConverter (URLResource.class, URL.class, aConvertResourceToURL);
-    TypeConverterRegistry.registerTypeConverter (URL.class, URLResource.class, new ITypeConverter ()
+    aRegistry.registerTypeConverter (URLResource.class, URL.class, aConvertResourceToURL);
+    aRegistry.registerTypeConverter (URL.class, URLResource.class, new ITypeConverter ()
     {
       public URLResource convert (final Object aSource)
       {
