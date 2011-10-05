@@ -31,7 +31,7 @@ import com.phloc.commons.locale.LocaleCache;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.convert.IMicroTypeConverter;
 import com.phloc.commons.microdom.convert.IMicroTypeConverterRegistrarSPI;
-import com.phloc.commons.microdom.convert.MicroTypeConverterRegistry;
+import com.phloc.commons.microdom.convert.IMicroTypeConverterRegistry;
 import com.phloc.commons.microdom.impl.MicroFactory;
 import com.phloc.commons.text.ISimpleMultiLingualText;
 import com.phloc.commons.text.impl.MultiLingualText;
@@ -75,21 +75,20 @@ public final class MultiLingualTextMicroTypeConverterRegistrar implements IMicro
     }
   }
 
-  public void registerMicroTypeConverter ()
+  public void registerMicroTypeConverter (@Nonnull final IMicroTypeConverterRegistry aRegistry)
   {
     // Register the read-only version first!
-    MicroTypeConverterRegistry.registerMicroElementTypeConverter (ReadonlyMultiLingualText.class,
-                                                                  new AbstractMLTConverter ()
-                                                                  {
-                                                                    @Nonnull
-                                                                    public ReadonlyMultiLingualText convertToNative (@Nonnull final IMicroElement aElement)
-                                                                    {
-                                                                      return new ReadonlyMultiLingualText (convertToMLT (aElement));
-                                                                    }
-                                                                  });
+    aRegistry.registerMicroElementTypeConverter (ReadonlyMultiLingualText.class, new AbstractMLTConverter ()
+    {
+      @Nonnull
+      public ReadonlyMultiLingualText convertToNative (@Nonnull final IMicroElement aElement)
+      {
+        return new ReadonlyMultiLingualText (convertToMLT (aElement));
+      }
+    });
 
     // Register the writable version afterwards!
-    MicroTypeConverterRegistry.registerMicroElementTypeConverter (MultiLingualText.class, new AbstractMLTConverter ()
+    aRegistry.registerMicroElementTypeConverter (MultiLingualText.class, new AbstractMLTConverter ()
     {
       @Nonnull
       public MultiLingualText convertToNative (@Nonnull final IMicroElement aElement)

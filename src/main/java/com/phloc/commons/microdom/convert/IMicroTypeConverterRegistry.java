@@ -19,22 +19,22 @@ package com.phloc.commons.microdom.convert;
 
 import javax.annotation.Nonnull;
 
-import com.phloc.commons.annotations.IsSPIInterface;
-
 /**
- * SPI interface to be implemented by other modules wishing to register their
- * own micro-type converters.
+ * This is the callback interface implemented by
+ * {@link MicroTypeConverterRegistry} for registration via the SPI interface.
  * 
  * @author philip
  */
-@IsSPIInterface
-public interface IMicroTypeConverterRegistrarSPI
+public interface IMicroTypeConverterRegistry
 {
   /**
-   * Register all your dynamic micro type converters in the passed interface
+   * Register a new type converter.
    * 
-   * @param aRegistry
-   *        The registry to register your converters. Never <code>null</code>.
+   * @param aClass
+   *        The class for which the converter is meant. May not be
+   *        <code>null</code>.
+   * @param aConverter
+   *        The converter to be registered. May not be <code>null</code>.
    */
-  void registerMicroTypeConverter (@Nonnull IMicroTypeConverterRegistry aRegistry);
+  void registerMicroElementTypeConverter (@Nonnull Class <?> aClass, @Nonnull IMicroTypeConverter aConverter);
 }
