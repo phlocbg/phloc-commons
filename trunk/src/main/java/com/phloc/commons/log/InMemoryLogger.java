@@ -30,6 +30,8 @@ import com.phloc.commons.IHasSize;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.error.EErrorLevel;
+import com.phloc.commons.state.EChange;
+import com.phloc.commons.state.IClearable;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -39,7 +41,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @NotThreadSafe
-public class InMemoryLogger implements Iterable <LogMessage>, IHasSize
+public class InMemoryLogger implements Iterable <LogMessage>, IHasSize, IClearable
 {
   private final List <LogMessage> m_aMessages = new ArrayList <LogMessage> ();
 
@@ -100,6 +102,15 @@ public class InMemoryLogger implements Iterable <LogMessage>, IHasSize
   public boolean isEmpty ()
   {
     return m_aMessages.isEmpty ();
+  }
+
+  @Nonnull
+  public EChange clear ()
+  {
+    if (m_aMessages.isEmpty ())
+      return EChange.UNCHANGED;
+    m_aMessages.clear ();
+    return EChange.CHANGED;
   }
 
   @Override

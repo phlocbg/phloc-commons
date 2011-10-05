@@ -27,6 +27,11 @@ import com.phloc.commons.error.EErrorLevel;
 import com.phloc.commons.error.IHasErrorLevel;
 import com.phloc.commons.string.ToStringGenerator;
 
+/**
+ * Represents a single log message.
+ * 
+ * @author philip
+ */
 @Immutable
 public final class LogMessage implements IHasErrorLevel
 {
