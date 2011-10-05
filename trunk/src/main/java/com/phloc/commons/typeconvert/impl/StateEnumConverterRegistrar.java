@@ -34,7 +34,7 @@ import com.phloc.commons.state.ETriState;
 import com.phloc.commons.state.EValidity;
 import com.phloc.commons.typeconvert.ITypeConverter;
 import com.phloc.commons.typeconvert.ITypeConverterRegistrarSPI;
-import com.phloc.commons.typeconvert.TypeConverterRegistry;
+import com.phloc.commons.typeconvert.ITypeConverterRegistry;
 
 /**
  * Register the state specific type converter
@@ -45,7 +45,7 @@ import com.phloc.commons.typeconvert.TypeConverterRegistry;
 @IsSPIImplementation
 public final class StateEnumConverterRegistrar implements ITypeConverterRegistrarSPI
 {
-  public void registerTypeConverter ()
+  public void registerTypeConverter (@Nonnull final ITypeConverterRegistry aRegistry)
   {
     final ITypeConverter aEnumToStringConverter = new ITypeConverter ()
     {
@@ -57,8 +57,8 @@ public final class StateEnumConverterRegistrar implements ITypeConverterRegistra
     };
 
     // EChange
-    TypeConverterRegistry.registerTypeConverter (EChange.class, String.class, aEnumToStringConverter);
-    TypeConverterRegistry.registerTypeConverter (String.class, EChange.class, new ITypeConverter ()
+    aRegistry.registerTypeConverter (EChange.class, String.class, aEnumToStringConverter);
+    aRegistry.registerTypeConverter (String.class, EChange.class, new ITypeConverter ()
     {
       @Nonnull
       public EChange convert (final Object aSource)
@@ -68,8 +68,8 @@ public final class StateEnumConverterRegistrar implements ITypeConverterRegistra
     });
 
     // EContinue
-    TypeConverterRegistry.registerTypeConverter (EContinue.class, String.class, aEnumToStringConverter);
-    TypeConverterRegistry.registerTypeConverter (String.class, EContinue.class, new ITypeConverter ()
+    aRegistry.registerTypeConverter (EContinue.class, String.class, aEnumToStringConverter);
+    aRegistry.registerTypeConverter (String.class, EContinue.class, new ITypeConverter ()
     {
       @Nonnull
       public EContinue convert (final Object aSource)
@@ -79,8 +79,8 @@ public final class StateEnumConverterRegistrar implements ITypeConverterRegistra
     });
 
     // EEnabled
-    TypeConverterRegistry.registerTypeConverter (EEnabled.class, String.class, aEnumToStringConverter);
-    TypeConverterRegistry.registerTypeConverter (String.class, EEnabled.class, new ITypeConverter ()
+    aRegistry.registerTypeConverter (EEnabled.class, String.class, aEnumToStringConverter);
+    aRegistry.registerTypeConverter (String.class, EEnabled.class, new ITypeConverter ()
     {
       @Nonnull
       public EEnabled convert (final Object aSource)
@@ -90,8 +90,8 @@ public final class StateEnumConverterRegistrar implements ITypeConverterRegistra
     });
 
     // EFinish
-    TypeConverterRegistry.registerTypeConverter (EFinish.class, String.class, aEnumToStringConverter);
-    TypeConverterRegistry.registerTypeConverter (String.class, EFinish.class, new ITypeConverter ()
+    aRegistry.registerTypeConverter (EFinish.class, String.class, aEnumToStringConverter);
+    aRegistry.registerTypeConverter (String.class, EFinish.class, new ITypeConverter ()
     {
       @Nonnull
       public EFinish convert (final Object aSource)
@@ -101,8 +101,8 @@ public final class StateEnumConverterRegistrar implements ITypeConverterRegistra
     });
 
     // EInterrupt
-    TypeConverterRegistry.registerTypeConverter (EInterrupt.class, String.class, aEnumToStringConverter);
-    TypeConverterRegistry.registerTypeConverter (String.class, EInterrupt.class, new ITypeConverter ()
+    aRegistry.registerTypeConverter (EInterrupt.class, String.class, aEnumToStringConverter);
+    aRegistry.registerTypeConverter (String.class, EInterrupt.class, new ITypeConverter ()
     {
       @Nonnull
       public EInterrupt convert (final Object aSource)
@@ -112,8 +112,8 @@ public final class StateEnumConverterRegistrar implements ITypeConverterRegistra
     });
 
     // ELeftRight
-    TypeConverterRegistry.registerTypeConverter (ELeftRight.class, String.class, aEnumToStringConverter);
-    TypeConverterRegistry.registerTypeConverter (String.class, ELeftRight.class, new ITypeConverter ()
+    aRegistry.registerTypeConverter (ELeftRight.class, String.class, aEnumToStringConverter);
+    aRegistry.registerTypeConverter (String.class, ELeftRight.class, new ITypeConverter ()
     {
       @Nonnull
       public ELeftRight convert (final Object aSource)
@@ -123,8 +123,8 @@ public final class StateEnumConverterRegistrar implements ITypeConverterRegistra
     });
 
     // EMandatory
-    TypeConverterRegistry.registerTypeConverter (EMandatory.class, String.class, aEnumToStringConverter);
-    TypeConverterRegistry.registerTypeConverter (String.class, EMandatory.class, new ITypeConverter ()
+    aRegistry.registerTypeConverter (EMandatory.class, String.class, aEnumToStringConverter);
+    aRegistry.registerTypeConverter (String.class, EMandatory.class, new ITypeConverter ()
     {
       @Nonnull
       public EMandatory convert (final Object aSource)
@@ -134,8 +134,8 @@ public final class StateEnumConverterRegistrar implements ITypeConverterRegistra
     });
 
     // ESuccess
-    TypeConverterRegistry.registerTypeConverter (ESuccess.class, String.class, aEnumToStringConverter);
-    TypeConverterRegistry.registerTypeConverter (String.class, ESuccess.class, new ITypeConverter ()
+    aRegistry.registerTypeConverter (ESuccess.class, String.class, aEnumToStringConverter);
+    aRegistry.registerTypeConverter (String.class, ESuccess.class, new ITypeConverter ()
     {
       @Nonnull
       public ESuccess convert (final Object aSource)
@@ -145,8 +145,8 @@ public final class StateEnumConverterRegistrar implements ITypeConverterRegistra
     });
 
     // ETopBottom
-    TypeConverterRegistry.registerTypeConverter (ETopBottom.class, String.class, aEnumToStringConverter);
-    TypeConverterRegistry.registerTypeConverter (String.class, ETopBottom.class, new ITypeConverter ()
+    aRegistry.registerTypeConverter (ETopBottom.class, String.class, aEnumToStringConverter);
+    aRegistry.registerTypeConverter (String.class, ETopBottom.class, new ITypeConverter ()
     {
       @Nonnull
       public ETopBottom convert (final Object aSource)
@@ -156,8 +156,8 @@ public final class StateEnumConverterRegistrar implements ITypeConverterRegistra
     });
 
     // ETriState
-    TypeConverterRegistry.registerTypeConverter (ETriState.class, String.class, aEnumToStringConverter);
-    TypeConverterRegistry.registerTypeConverter (String.class, ETriState.class, new ITypeConverter ()
+    aRegistry.registerTypeConverter (ETriState.class, String.class, aEnumToStringConverter);
+    aRegistry.registerTypeConverter (String.class, ETriState.class, new ITypeConverter ()
     {
       @Nonnull
       public ETriState convert (final Object aSource)
@@ -167,8 +167,8 @@ public final class StateEnumConverterRegistrar implements ITypeConverterRegistra
     });
 
     // EValidity
-    TypeConverterRegistry.registerTypeConverter (EValidity.class, String.class, aEnumToStringConverter);
-    TypeConverterRegistry.registerTypeConverter (String.class, EValidity.class, new ITypeConverter ()
+    aRegistry.registerTypeConverter (EValidity.class, String.class, aEnumToStringConverter);
+    aRegistry.registerTypeConverter (String.class, EValidity.class, new ITypeConverter ()
     {
       @Nonnull
       public EValidity convert (final Object aSource)

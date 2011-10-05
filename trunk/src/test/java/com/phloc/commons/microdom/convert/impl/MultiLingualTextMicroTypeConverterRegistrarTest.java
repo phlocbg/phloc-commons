@@ -28,7 +28,7 @@ import org.junit.Test;
 
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.microdom.IMicroElement;
-import com.phloc.commons.microdom.convert.MicroTypeConverterRegistry;
+import com.phloc.commons.microdom.convert.MicroTypeConverter;
 import com.phloc.commons.mock.PhlocTestUtils;
 import com.phloc.commons.text.ISimpleMultiLingualText;
 import com.phloc.commons.text.impl.MultiLingualText;
@@ -49,13 +49,13 @@ public final class MultiLingualTextMicroTypeConverterRegistrarTest
     aMLT.setText (Locale.GERMAN, "Cumberlandstraße");
     aMLT.setText (Locale.CHINA, "Whatsoever");
 
-    final IMicroElement aElement = MicroTypeConverterRegistry.convertToMicroElement (aMLT, "mtext");
+    final IMicroElement aElement = MicroTypeConverter.convertToMicroElement (aMLT, "mtext");
     assertNotNull (aElement);
-    assertNull (MicroTypeConverterRegistry.convertToMicroElement (null, "mtext"));
+    assertNull (MicroTypeConverter.convertToMicroElement (null, "mtext"));
 
-    final MultiLingualText aMLT2 = MicroTypeConverterRegistry.convertToNative (aElement, MultiLingualText.class);
+    final MultiLingualText aMLT2 = MicroTypeConverter.convertToNative (aElement, MultiLingualText.class);
     assertEquals (aMLT, aMLT2);
-    assertNull (MicroTypeConverterRegistry.convertToNative (null, MultiLingualText.class));
+    assertNull (MicroTypeConverter.convertToNative (null, MultiLingualText.class));
 
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (aMLT, aMLT2);
   }
@@ -68,13 +68,12 @@ public final class MultiLingualTextMicroTypeConverterRegistrarTest
                                                                                                 new String [] { "Cumberlandstraße",
                                                                                                                "Whatspever" }));
 
-    final IMicroElement aElement = MicroTypeConverterRegistry.convertToMicroElement (aMLT, "mtext");
+    final IMicroElement aElement = MicroTypeConverter.convertToMicroElement (aMLT, "mtext");
     assertNotNull (aElement);
 
-    final ReadonlyMultiLingualText aMLT2 = MicroTypeConverterRegistry.convertToNative (aElement,
-                                                                                       ReadonlyMultiLingualText.class);
+    final ReadonlyMultiLingualText aMLT2 = MicroTypeConverter.convertToNative (aElement, ReadonlyMultiLingualText.class);
     assertEquals (aMLT, aMLT2);
-    assertNull (MicroTypeConverterRegistry.convertToNative (null, ReadonlyMultiLingualText.class));
+    assertNull (MicroTypeConverter.convertToNative (null, ReadonlyMultiLingualText.class));
 
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (aMLT, aMLT2);
   }
@@ -84,16 +83,15 @@ public final class MultiLingualTextMicroTypeConverterRegistrarTest
   {
     final ISimpleMultiLingualText aMLT = TextProvider.create_DE_EN ("de", "en");
 
-    final IMicroElement aElement = MicroTypeConverterRegistry.convertToMicroElement (aMLT, "mtext");
+    final IMicroElement aElement = MicroTypeConverter.convertToMicroElement (aMLT, "mtext");
     assertNotNull (aElement);
 
     // The result must be a ReadonlyMultiLingualText because it is the first
     // registered converter
-    final ISimpleMultiLingualText aMLT2 = MicroTypeConverterRegistry.convertToNative (aElement,
-                                                                                      ISimpleMultiLingualText.class);
+    final ISimpleMultiLingualText aMLT2 = MicroTypeConverter.convertToNative (aElement, ISimpleMultiLingualText.class);
     assertTrue (aMLT2 instanceof ReadonlyMultiLingualText);
     assertEquals (new ReadonlyMultiLingualText (aMLT), aMLT2);
-    assertNull (MicroTypeConverterRegistry.convertToNative (null, TextProvider.class));
+    assertNull (MicroTypeConverter.convertToNative (null, TextProvider.class));
 
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (new ReadonlyMultiLingualText (aMLT), aMLT2);
   }

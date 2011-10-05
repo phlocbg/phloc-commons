@@ -44,7 +44,7 @@ import com.phloc.commons.io.resource.URLResource;
 import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroElement;
-import com.phloc.commons.microdom.convert.MicroTypeConverterRegistry;
+import com.phloc.commons.microdom.convert.MicroTypeConverter;
 import com.phloc.commons.microdom.impl.MicroFactory;
 import com.phloc.commons.microdom.serialize.MicroReader;
 import com.phloc.commons.string.StringHelper;
@@ -153,7 +153,7 @@ public final class ChangeLogSerializer
         aErrorCallback.execute ("No change element present!");
         continue;
       }
-      final MultiLingualText aMLT = MicroTypeConverterRegistry.convertToNative (eChange, MultiLingualText.class);
+      final MultiLingualText aMLT = MicroTypeConverter.convertToNative (eChange, MultiLingualText.class);
       if (aMLT == null)
       {
         aErrorCallback.execute ("Failed to read multi lingual text in change element!");
@@ -245,9 +245,9 @@ public final class ChangeLogSerializer
       eEntry.setAttribute (ATTR_CATEGORY, aEntry.getCategory ().getID ());
       if (aEntry.isIncompatible ())
         eEntry.setAttribute (ATTR_INCOMPATIBLE, Boolean.TRUE.toString ());
-      eEntry.appendChild (MicroTypeConverterRegistry.convertToMicroElement (aEntry.getAllTexts (),
-                                                                            CChangeLog.CHANGELOG_NAMESPACE_10,
-                                                                            ELEMENT_CHANGE));
+      eEntry.appendChild (MicroTypeConverter.convertToMicroElement (aEntry.getAllTexts (),
+                                                                    CChangeLog.CHANGELOG_NAMESPACE_10,
+                                                                    ELEMENT_CHANGE));
       for (final String sIssue : aEntry.getAllIssues ())
         eEntry.appendElement (CChangeLog.CHANGELOG_NAMESPACE_10, ELEMENT_ISSUE).appendText (sIssue);
     }

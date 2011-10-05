@@ -26,7 +26,7 @@ import com.phloc.commons.annotations.IsSPIImplementation;
 import com.phloc.commons.locale.LocaleCache;
 import com.phloc.commons.typeconvert.ITypeConverter;
 import com.phloc.commons.typeconvert.ITypeConverterRegistrarSPI;
-import com.phloc.commons.typeconvert.TypeConverterRegistry;
+import com.phloc.commons.typeconvert.ITypeConverterRegistry;
 
 /**
  * Register the locale specific type converter
@@ -37,7 +37,7 @@ import com.phloc.commons.typeconvert.TypeConverterRegistry;
 @IsSPIImplementation
 public final class LocaleTypeConverterRegistrar implements ITypeConverterRegistrarSPI
 {
-  public void registerTypeConverter ()
+  public void registerTypeConverter (@Nonnull final ITypeConverterRegistry aRegistry)
   {
     final ITypeConverter aConverterToString = new ITypeConverter ()
     {
@@ -49,8 +49,8 @@ public final class LocaleTypeConverterRegistrar implements ITypeConverterRegistr
     };
 
     // Locale
-    TypeConverterRegistry.registerTypeConverter (Locale.class, String.class, aConverterToString);
-    TypeConverterRegistry.registerTypeConverter (String.class, Locale.class, new ITypeConverter ()
+    aRegistry.registerTypeConverter (Locale.class, String.class, aConverterToString);
+    aRegistry.registerTypeConverter (String.class, Locale.class, new ITypeConverter ()
     {
       public Locale convert (final Object aSource)
       {

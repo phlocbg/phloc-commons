@@ -26,7 +26,7 @@ import com.phloc.commons.annotations.IsSPIImplementation;
 import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.typeconvert.ITypeConverter;
 import com.phloc.commons.typeconvert.ITypeConverterRegistrarSPI;
-import com.phloc.commons.typeconvert.TypeConverterRegistry;
+import com.phloc.commons.typeconvert.ITypeConverterRegistry;
 
 /**
  * Register the locale specific type converter
@@ -37,7 +37,7 @@ import com.phloc.commons.typeconvert.TypeConverterRegistry;
 @IsSPIImplementation
 public final class CharsetTypeConverterRegistrar implements ITypeConverterRegistrarSPI
 {
-  public void registerTypeConverter ()
+  public void registerTypeConverter (@Nonnull final ITypeConverterRegistry aRegistry)
   {
     final ITypeConverter aConverterToString = new ITypeConverter ()
     {
@@ -49,8 +49,8 @@ public final class CharsetTypeConverterRegistrar implements ITypeConverterRegist
     };
 
     // Charset
-    TypeConverterRegistry.registerTypeConverter (Charset.class, String.class, aConverterToString);
-    TypeConverterRegistry.registerTypeConverter (String.class, Charset.class, new ITypeConverter ()
+    aRegistry.registerTypeConverter (Charset.class, String.class, aConverterToString);
+    aRegistry.registerTypeConverter (String.class, Charset.class, new ITypeConverter ()
     {
       public Charset convert (final Object aSource)
       {

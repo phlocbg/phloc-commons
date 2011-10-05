@@ -30,7 +30,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.GlobalDebug;
-import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.lang.ServiceLoaderBackport;
 import com.phloc.commons.mutable.Wrapper;
@@ -44,26 +43,24 @@ import com.phloc.commons.state.EContinue;
  * @author philip
  */
 @NotThreadSafe
-public final class TypeConverterRegistry
+public final class TypeConverterRegistry implements ITypeConverterRegistry
 {
+  private static final TypeConverterRegistry s_aInstance = new TypeConverterRegistry ();
+
   private static final Logger s_aLogger = LoggerFactory.getLogger (TypeConverterRegistry.class);
 
   // Use a weak hash map, because the key is a class
   private static final Map <Class <?>, Map <Class <?>, ITypeConverter>> s_aConverter = new WeakHashMap <Class <?>, Map <Class <?>, ITypeConverter>> ();
 
-  @PresentForCodeCoverage
-  @SuppressWarnings ("unused")
-  private static final TypeConverterRegistry s_aInstance = new TypeConverterRegistry ();
-
-  private TypeConverterRegistry ()
-  {}
-
   static
   {
     // Register all custom type converter
     for (final ITypeConverterRegistrarSPI aSPI : ServiceLoaderBackport.load (ITypeConverterRegistrarSPI.class))
-      aSPI.registerTypeConverter ();
+      aSPI.registerTypeConverter (s_aInstance);
   }
+
+  private TypeConverterRegistry ()
+  {}
 
   @Nonnull
   private static Map <Class <?>, ITypeConverter> _getConverterMap (@Nonnull final Class <?> aClass)
@@ -78,6 +75,13 @@ public final class TypeConverterRegistry
     return ret;
   }
 
+  public void registerTypeConverter (@Nonnull final Class <?> aSrcClass,
+                                     @Nonnull final Class <?> aDstClass,
+                                     @Nonnull final ITypeConverter aConverter)
+  {
+    _registerTypeConverter (aSrcClass, aDstClass, aConverter);
+  }
+
   /**
    * Register a default type converter.
    * 
@@ -90,9 +94,9 @@ public final class TypeConverterRegistry
    * @param aConverter
    *        The convert to use. May not be <code>null</code>.
    */
-  public static void registerTypeConverter (@Nonnull final Class <?> aSrcClass,
-                                            @Nonnull final Class <?> aDstClass,
-                                            @Nonnull final ITypeConverter aConverter)
+  private static void _registerTypeConverter (@Nonnull final Class <?> aSrcClass,
+                                              @Nonnull final Class <?> aDstClass,
+                                              @Nonnull final ITypeConverter aConverter)
   {
     if (aSrcClass == null)
       throw new NullPointerException ("srcClass");

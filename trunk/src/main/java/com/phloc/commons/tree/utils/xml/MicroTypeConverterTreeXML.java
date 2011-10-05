@@ -23,6 +23,7 @@ import javax.annotation.Nullable;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.compare.CompareUtils;
 import com.phloc.commons.microdom.IMicroElement;
+import com.phloc.commons.microdom.convert.MicroTypeConverter;
 import com.phloc.commons.microdom.convert.MicroTypeConverterRegistry;
 import com.phloc.commons.string.StringHelper;
 
@@ -82,9 +83,7 @@ public final class MicroTypeConverterTreeXML <DATATYPE> implements IConverterTre
   public void appendDataValue (@Nonnull final IMicroElement eDataElement, @Nullable final DATATYPE aObject)
   {
     // Append created element - or null if the passed object is null
-    eDataElement.appendChild (MicroTypeConverterRegistry.convertToMicroElement (aObject,
-                                                                                m_sNamespaceURI,
-                                                                                m_sElementName));
+    eDataElement.appendChild (MicroTypeConverter.convertToMicroElement (aObject, m_sNamespaceURI, m_sElementName));
   }
 
   @Nullable
@@ -98,6 +97,6 @@ public final class MicroTypeConverterTreeXML <DATATYPE> implements IConverterTre
       if (!m_sElementName.equals (eChildElement.getTagName ()))
         throw new IllegalStateException ("Tag name mismatch! Expected: " + m_sElementName);
     }
-    return MicroTypeConverterRegistry.convertToNative (eChildElement, m_aNativeClass);
+    return MicroTypeConverter.convertToNative (eChildElement, m_aNativeClass);
   }
 }

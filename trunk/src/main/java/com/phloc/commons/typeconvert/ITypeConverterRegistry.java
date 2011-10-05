@@ -19,22 +19,26 @@ package com.phloc.commons.typeconvert;
 
 import javax.annotation.Nonnull;
 
-import com.phloc.commons.annotations.IsSPIInterface;
-
 /**
- * SPI interface to be implemented by other modules wishing to register their
- * own type converters.
+ * Callback interface for registering new type converters.
  * 
  * @author philip
  */
-@IsSPIInterface
-public interface ITypeConverterRegistrarSPI
+public interface ITypeConverterRegistry
 {
   /**
-   * Register all your type converters.
+   * Register a default type converter.
    * 
-   * @param aRegistry
-   *        The destination registry. Never <code>null</code>.
+   * @param aSrcClass
+   *        A non-<code>null</code> source class to convert from. Must be an
+   *        instancable class.
+   * @param aDstClass
+   *        A non-<code>null</code> destination class to convert to. Must be an
+   *        instancable class. May not equal the source class.
+   * @param aConverter
+   *        The convert to use. May not be <code>null</code>.
    */
-  void registerTypeConverter (@Nonnull ITypeConverterRegistry aRegistry);
+  void registerTypeConverter (@Nonnull Class <?> aSrcClass,
+                              @Nonnull Class <?> aDstClass,
+                              @Nonnull ITypeConverter aConverter);
 }
