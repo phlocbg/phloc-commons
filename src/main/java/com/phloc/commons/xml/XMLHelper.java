@@ -623,4 +623,14 @@ public final class XMLHelper
       throw new IllegalArgumentException ("prefix is invalid: " + sPrefix);
     return CXML.XML_ATTR_XMLNS_WITH_SEP + sPrefix;
   }
+
+  @Nullable
+  public static String getNamespaceURI (@Nullable final Node aNode)
+  {
+    if (aNode instanceof Document)
+      return getNamespaceURI (((Document) aNode).getDocumentElement ());
+    if (aNode != null)
+      return aNode.getNamespaceURI ();
+    return null;
+  }
 }
