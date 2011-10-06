@@ -31,7 +31,8 @@ import javax.annotation.Nullable;
  * @param <PARAMTYPE>
  *        The parameter type.
  */
-public interface INonThrowingCallableWithParameter <DATATYPE, PARAMTYPE>
+public interface INonThrowingCallableWithParameter <DATATYPE, PARAMTYPE> extends
+                                                                         IThrowingCallableWithParameter <DATATYPE, PARAMTYPE>
 {
   /**
    * The call back method to be called.

@@ -23,6 +23,8 @@ import javax.annotation.Nonnull;
  * Callback interface to handle thrown exception objects.
  * 
  * @author philip
+ * @param <EXTYPE>
+ *        The exception type to be handled
  */
 public interface IExceptionHandler <EXTYPE extends Throwable>
 {
