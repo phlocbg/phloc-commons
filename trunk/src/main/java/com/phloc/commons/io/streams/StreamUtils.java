@@ -45,7 +45,7 @@ import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
-import com.phloc.commons.callback.INonThrowingCallback;
+import com.phloc.commons.callback.INonThrowingRunnableWithParameter;
 import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.io.IInputStreamProvider;
@@ -758,9 +758,9 @@ public final class StreamUtils
 
     // Read stream and collect all read lines in a list
     final List <String> ret = new ArrayList <String> ();
-    readStreamLines (aIS, sCharset, nLinesToSkip, nLinesToRead, new INonThrowingCallback <String> ()
+    readStreamLines (aIS, sCharset, nLinesToSkip, nLinesToRead, new INonThrowingRunnableWithParameter <String> ()
     {
-      public void execute (final String sLine)
+      public void run (final String sLine)
       {
         ret.add (sLine);
       }
@@ -769,8 +769,27 @@ public final class StreamUtils
   }
 
   /**
-   * Get the content of the passed stream as one big string in the passed
-   * character set.
+   * Read the complete content of the passed stream and pass each line
+   * separately to the passed callback.
+   * 
+   * @param aIS
+   *        The input stream to read from. May be <code>null</code>.
+   * @param sCharset
+   *        The character set to use. May not be <code>null</code>.
+   * @param aLineCallback
+   *        The callback that is invoked for all read lines. Each passed line
+   *        does NOT contain the line delimiter!
+   */
+  public static void readStreamLines (@WillClose @Nullable final InputStream aIS,
+                                      @Nonnull @Nonempty final String sCharset,
+                                      @Nonnull final INonThrowingRunnableWithParameter <String> aLineCallback)
+  {
+    readStreamLines (aIS, sCharset, 0, CGlobal.ILLEGAL_UINT, aLineCallback);
+  }
+
+  /**
+   * Read the content of the passed stream line by line and invoking a callback
+   * on all matching lines.
    * 
    * @param aIS
    *        The input stream to read from. May be <code>null</code>.
@@ -784,15 +803,15 @@ public final class StreamUtils
    *        indicate that all lines should be read. If the number passed here
    *        exceeds the number of lines in the file, nothing happens.
    * @param aLineCallback
-   *        The callback that is invoked for all read lines. Note: it is not
-   *        invoked for skipped lines!
+   *        The callback that is invoked for all read lines. Each passed line
+   *        does NOT contain the line delimiter! Note: it is not invoked for
+   *        skipped lines!
    */
-  @Nullable
   public static void readStreamLines (@WillClose @Nullable final InputStream aIS,
                                       @Nonnull @Nonempty final String sCharset,
                                       @Nonnegative final int nLinesToSkip,
                                       final int nLinesToRead,
-                                      @Nonnull final INonThrowingCallback <String> aLineCallback)
+                                      @Nonnull final INonThrowingRunnableWithParameter <String> aLineCallback)
   {
     if (StringHelper.hasNoText (sCharset))
       throw new IllegalArgumentException ("Empty charset passed!");
@@ -826,7 +845,7 @@ public final class StreamUtils
             {
               // Read all lines
               while ((sLine = aBR.readLine ()) != null)
-                aLineCallback.execute (sLine);
+                aLineCallback.run (sLine);
             }
             else
             {
@@ -834,7 +853,7 @@ public final class StreamUtils
               int nRead = 0;
               while ((sLine = aBR.readLine ()) != null)
               {
-                aLineCallback.execute (sLine);
+                aLineCallback.run (sLine);
                 ++nRead;
                 if (nRead >= nLinesToRead)
                   break;

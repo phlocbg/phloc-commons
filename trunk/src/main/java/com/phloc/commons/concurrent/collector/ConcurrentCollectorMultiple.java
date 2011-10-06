@@ -27,7 +27,7 @@ import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.phloc.commons.callback.IThrowingCallback;
+import com.phloc.commons.callback.IThrowingRunnableWithParameter;
 import com.phloc.commons.lang.GenericReflection;
 
 /**
@@ -45,7 +45,7 @@ public class ConcurrentCollectorMultiple <DATATYPE> extends AbstractConcurrentCo
   @Nonnegative
   private final int m_nMaxPerformCount;
 
-  private IThrowingCallback <List <DATATYPE>> m_aPerformer;
+  private IThrowingRunnableWithParameter <List <DATATYPE>> m_aPerformer;
 
   /**
    * Constructor that uses {@link #DEFAULT_MAX_QUEUE_SIZE} elements as the
@@ -61,7 +61,7 @@ public class ConcurrentCollectorMultiple <DATATYPE> extends AbstractConcurrentCo
    * maximum queue length and {@link #DEFAULT_MAX_PERFORM_COUNT} as the max
    * perform count.
    */
-  public ConcurrentCollectorMultiple (@Nullable final IThrowingCallback <List <DATATYPE>> aPerformer)
+  public ConcurrentCollectorMultiple (@Nullable final IThrowingRunnableWithParameter <List <DATATYPE>> aPerformer)
   {
     this (DEFAULT_MAX_QUEUE_SIZE, DEFAULT_MAX_PERFORM_COUNT, aPerformer);
   }
@@ -77,7 +77,7 @@ public class ConcurrentCollectorMultiple <DATATYPE> extends AbstractConcurrentCo
    */
   public ConcurrentCollectorMultiple (@Nonnegative final int nMaxQueueSize,
                                       @Nonnegative final int nMaxPerformCount,
-                                      @Nullable final IThrowingCallback <List <DATATYPE>> aPerformer)
+                                      @Nullable final IThrowingRunnableWithParameter <List <DATATYPE>> aPerformer)
   {
     super (nMaxQueueSize);
     if (nMaxPerformCount > nMaxQueueSize || nMaxPerformCount < 1)
@@ -87,7 +87,7 @@ public class ConcurrentCollectorMultiple <DATATYPE> extends AbstractConcurrentCo
       setPerformer (aPerformer);
   }
 
-  protected final void setPerformer (@Nonnull final IThrowingCallback <List <DATATYPE>> aPerformer)
+  protected final void setPerformer (@Nonnull final IThrowingRunnableWithParameter <List <DATATYPE>> aPerformer)
   {
     if (aPerformer == null)
       throw new NullPointerException ("performer");
@@ -102,7 +102,7 @@ public class ConcurrentCollectorMultiple <DATATYPE> extends AbstractConcurrentCo
       {
         // Perform the action on the objects, regardless of whether a
         // "stop queue message" was received or not
-        m_aPerformer.execute (aObjectsToPerform);
+        m_aPerformer.run (aObjectsToPerform);
       }
       catch (final Throwable t)
       {
