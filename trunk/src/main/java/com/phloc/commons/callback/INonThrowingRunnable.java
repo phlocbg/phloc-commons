@@ -23,7 +23,7 @@ package com.phloc.commons.callback;
  * 
  * @author philip
  */
-public interface INonThrowingRunnable extends Runnable
+public interface INonThrowingRunnable extends Runnable, IThrowingRunnable
 {
   /**
    * Run it.

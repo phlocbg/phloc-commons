@@ -21,7 +21,8 @@ import javax.annotation.Nullable;
 
 /**
  * Simple callback interface to allow generic iteration with a typed callback
- * function.
+ * function. This is similar to {@link IThrowingRunnable} except that a
+ * parameter is present.
  * 
  * @author philip
  * @param <DATATYPE>

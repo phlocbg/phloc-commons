@@ -22,19 +22,25 @@ import java.util.concurrent.Callable;
 import javax.annotation.Nullable;
 
 /**
- * Like the {@link Callable} interface but not throwing an exception!
+ * Like the {@link Callable} interface but including a parameter!
  * 
  * @author philip
  * @param <DATATYPE>
  *        The return type of the call.
+ * @param <PARAMTYPE>
+ *        The parameter type.
  */
-public interface INonThrowingCallable <DATATYPE> extends IThrowingCallable <DATATYPE>
+public interface IThrowingCallableWithParameter <DATATYPE, PARAMTYPE>
 {
   /**
    * The call back method to be called.
    * 
+   * @param aParameter
+   *        The parameter to be passed in. May be <code>null</code>.
    * @return Anything
+   * @throws Exception
+   *         in case something goes wrong
    */
   @Nullable
-  DATATYPE call ();
+  DATATYPE call (@Nullable PARAMTYPE aParameter) throws Exception;
 }
