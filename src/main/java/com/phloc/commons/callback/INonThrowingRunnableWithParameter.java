@@ -21,22 +21,20 @@ import javax.annotation.Nullable;
 
 /**
  * Simple callback interface to allow generic iteration with a typed callback
- * function. This is similar to {@link IThrowingRunnable} except that a
+ * function. This is similar to {@link INonThrowingRunnable} except that a
  * parameter is present.
  * 
  * @author philip
  * @param <DATATYPE>
  *        The type of the parameter that is required for executing the callback.
  */
-public interface IThrowingCallback <DATATYPE>
+public interface INonThrowingRunnableWithParameter <DATATYPE> extends IThrowingRunnableWithParameter <DATATYPE>
 {
   /**
    * The callback method that is invoked.
    * 
    * @param aCurrentObject
    *        The current object. May be {@link NullPointerException}.
-   * @throws Exception
-   *         In case something goes wrong
    */
-  void execute (@Nullable DATATYPE aCurrentObject) throws Exception;
+  void run (@Nullable DATATYPE aCurrentObject);
 }

@@ -23,6 +23,21 @@
   <release date="2011-10-06" version="3.3.0" />
   <entry date="2011-10-06" category="api" action="add">
     <change>
+      <text locale="en">Added a new overload of StreamUtils.readStreamLines</text>
+    </change>
+  </entry>
+  <entry date="2011-10-06" category="api" action="add">
+    <change>
+      <text locale="en">Added class DefaultExecutorServiceFactory as a simple default implementation of the IExecutorServiceFactory</text>
+    </change>
+  </entry>
+  <entry date="2011-10-06" category="api" action="change" incompatible="true">
+    <change>
+      <text locale="en">Renamed I(Non)ThrowingCallback to I(Non)ThrowingRunnableWithParameter for consistent naming. The method name was also changed from execute to run</text>
+    </change>
+  </entry>
+  <entry date="2011-10-06" category="api" action="add">
+    <change>
       <text locale="en">Added IThrowingCallable and IThrowingCallableWithParameter interface so that the hierarchy is complete</text>
     </change>
   </entry>

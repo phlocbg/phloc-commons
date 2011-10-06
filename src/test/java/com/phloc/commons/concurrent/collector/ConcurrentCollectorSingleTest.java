@@ -22,7 +22,7 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-import com.phloc.commons.callback.IThrowingCallback;
+import com.phloc.commons.callback.IThrowingRunnableWithParameter;
 
 /**
  * Test class for class {@link ConcurrentCollectorSingle}.
@@ -63,9 +63,9 @@ public final class ConcurrentCollectorSingleTest
     catch (final IllegalStateException ex)
     {}
 
-    ccm = new ConcurrentCollectorSingle <String> (5, new IThrowingCallback <String> ()
+    ccm = new ConcurrentCollectorSingle <String> (5, new IThrowingRunnableWithParameter <String> ()
     {
-      public void execute (final String aCurrentObject) throws Exception
+      public void run (final String aCurrentObject) throws Exception
       {}
     });
   }

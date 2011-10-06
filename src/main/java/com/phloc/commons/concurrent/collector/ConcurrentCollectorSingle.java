@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.phloc.commons.callback.IThrowingCallback;
+import com.phloc.commons.callback.IThrowingRunnableWithParameter;
 import com.phloc.commons.lang.GenericReflection;
 
 /**
@@ -38,7 +38,7 @@ public class ConcurrentCollectorSingle <DATATYPE> extends AbstractConcurrentColl
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (ConcurrentCollectorSingle.class);
 
-  private IThrowingCallback <DATATYPE> m_aPerformer;
+  private IThrowingRunnableWithParameter <DATATYPE> m_aPerformer;
 
   /**
    * Constructor that uses {@link #DEFAULT_MAX_QUEUE_SIZE} elements as the
@@ -53,7 +53,7 @@ public class ConcurrentCollectorSingle <DATATYPE> extends AbstractConcurrentColl
    * Constructor that uses {@link #DEFAULT_MAX_QUEUE_SIZE} elements as the
    * maximum queue length.
    */
-  public ConcurrentCollectorSingle (@Nullable final IThrowingCallback <DATATYPE> aPerformer)
+  public ConcurrentCollectorSingle (@Nullable final IThrowingRunnableWithParameter <DATATYPE> aPerformer)
   {
     this (DEFAULT_MAX_QUEUE_SIZE, aPerformer);
   }
@@ -66,14 +66,14 @@ public class ConcurrentCollectorSingle <DATATYPE> extends AbstractConcurrentColl
    *        0.
    */
   public ConcurrentCollectorSingle (@Nonnegative final int nMaxQueueSize,
-                                    @Nullable final IThrowingCallback <DATATYPE> aPerformer)
+                                    @Nullable final IThrowingRunnableWithParameter <DATATYPE> aPerformer)
   {
     super (nMaxQueueSize);
     if (aPerformer != null)
       setPerformer (aPerformer);
   }
 
-  protected final void setPerformer (@Nonnull final IThrowingCallback <DATATYPE> aPerformer)
+  protected final void setPerformer (@Nonnull final IThrowingRunnableWithParameter <DATATYPE> aPerformer)
   {
     if (aPerformer == null)
       throw new NullPointerException ("performer");
@@ -86,7 +86,7 @@ public class ConcurrentCollectorSingle <DATATYPE> extends AbstractConcurrentColl
     {
       // Perform the action on the objects, regardless of whether a
       // "stop queue message" was received or not
-      m_aPerformer.execute (aObject);
+      m_aPerformer.run (aObject);
     }
     catch (final Throwable t)
     {

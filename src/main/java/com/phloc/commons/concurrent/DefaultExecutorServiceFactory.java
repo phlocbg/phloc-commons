@@ -15,29 +15,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.concurrent.collector;
+package com.phloc.commons.concurrent;
 
-import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
-import com.phloc.commons.callback.IThrowingRunnableWithParameter;
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
 
-final class MockConcurrentCollectorMultiple extends ConcurrentCollectorMultiple <String> implements
-                                                                                        IThrowingRunnableWithParameter <List <String>>
+/**
+ * Factory for creating {@link ExecutorService} objects using the
+ * {@link Executors#newFixedThreadPool(int)} method.
+ * 
+ * @author philip
+ */
+public class DefaultExecutorServiceFactory implements IExecutorServiceFactory
 {
-  private int m_nPerformCount = 0;
-
-  public MockConcurrentCollectorMultiple ()
+  @Nonnull
+  public ExecutorService getExecutorService (@Nonnegative final int nParallelTasks)
   {
-    setPerformer (this);
-  }
-
-  public void run (final List <String> aObjects)
-  {
-    m_nPerformCount += aObjects.size ();
-  }
-
-  public int getPerformCount ()
-  {
-    return m_nPerformCount;
+    return Executors.newFixedThreadPool (nParallelTasks);
   }
 }

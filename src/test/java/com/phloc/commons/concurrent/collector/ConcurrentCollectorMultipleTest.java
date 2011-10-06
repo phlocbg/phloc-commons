@@ -24,7 +24,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.phloc.commons.callback.IThrowingCallback;
+import com.phloc.commons.callback.IThrowingRunnableWithParameter;
 
 /**
  * Test class for class {@link ConcurrentCollectorMultiple}.
@@ -79,9 +79,9 @@ public final class ConcurrentCollectorMultipleTest
     catch (final IllegalStateException ex)
     {}
 
-    ccm = new ConcurrentCollectorMultiple <String> (5, 5, new IThrowingCallback <List <String>> ()
+    ccm = new ConcurrentCollectorMultiple <String> (5, 5, new IThrowingRunnableWithParameter <List <String>> ()
     {
-      public void execute (final List <String> aCurrentObject) throws Exception
+      public void run (final List <String> aCurrentObject) throws Exception
       {}
     });
   }

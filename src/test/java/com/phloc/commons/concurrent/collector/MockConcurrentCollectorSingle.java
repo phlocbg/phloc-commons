@@ -17,10 +17,10 @@
  */
 package com.phloc.commons.concurrent.collector;
 
-import com.phloc.commons.callback.IThrowingCallback;
+import com.phloc.commons.callback.IThrowingRunnableWithParameter;
 
 final class MockConcurrentCollectorSingle extends ConcurrentCollectorSingle <String> implements
-                                                                                    IThrowingCallback <String>
+                                                                                    IThrowingRunnableWithParameter <String>
 {
   private int m_nPerformCount = 0;
 
@@ -29,7 +29,7 @@ final class MockConcurrentCollectorSingle extends ConcurrentCollectorSingle <Str
     setPerformer (this);
   }
 
-  public void execute (final String aObject)
+  public void run (final String aObject)
   {
     m_nPerformCount++;
   }

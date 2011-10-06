@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
-import com.phloc.commons.callback.INonThrowingCallback;
+import com.phloc.commons.callback.INonThrowingRunnableWithParameter;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.io.IInputStreamProvider;
 import com.phloc.commons.io.resource.URLResource;
@@ -78,9 +78,9 @@ public final class ChangeLogSerializer
   @SuppressWarnings ("unused")
   private static final ChangeLogSerializer s_aInstance = new ChangeLogSerializer ();
 
-  private static final INonThrowingCallback <String> s_aLoggingCallback = new INonThrowingCallback <String> ()
+  private static final INonThrowingRunnableWithParameter <String> s_aLoggingCallback = new INonThrowingRunnableWithParameter <String> ()
   {
-    public void execute (final String sError)
+    public void run (final String sError)
     {
       s_aLogger.error (sError);
     }
@@ -97,7 +97,7 @@ public final class ChangeLogSerializer
 
   @Nullable
   public static ChangeLog readChangeLog (@Nonnull final IInputStreamProvider aISP,
-                                         @Nonnull final INonThrowingCallback <String> aErrorCallback)
+                                         @Nonnull final INonThrowingRunnableWithParameter <String> aErrorCallback)
   {
     if (aErrorCallback == null)
       throw new NullPointerException ("errorCallback");
@@ -126,19 +126,19 @@ public final class ChangeLogSerializer
       }
       catch (final ParseException ex)
       {
-        aErrorCallback.execute ("Failed to parse entry date '" + sDate + "'");
+        aErrorCallback.run ("Failed to parse entry date '" + sDate + "'");
         continue;
       }
       final EChangeLogAction eAction = EChangeLogAction.getFromIDOrNull (sAction);
       if (eAction == null)
       {
-        aErrorCallback.execute ("Failed to parse change log action '" + sAction + "'");
+        aErrorCallback.run ("Failed to parse change log action '" + sAction + "'");
         continue;
       }
       final EChangeLogCategory eCategory = EChangeLogCategory.getFromIDOrNull (sCategory);
       if (eCategory == null)
       {
-        aErrorCallback.execute ("Failed to parse change log category '" + sCategory + "'");
+        aErrorCallback.run ("Failed to parse change log category '" + sCategory + "'");
         continue;
       }
       final boolean bIsIncompatible = StringHelper.hasText (sIncompatible) ? StringHelper.parseBool (sIncompatible)
@@ -150,13 +150,13 @@ public final class ChangeLogSerializer
       final IMicroElement eChange = eEntry.getFirstChildElement (CChangeLog.CHANGELOG_NAMESPACE_10, ELEMENT_CHANGE);
       if (eChange == null)
       {
-        aErrorCallback.execute ("No change element present!");
+        aErrorCallback.run ("No change element present!");
         continue;
       }
       final MultiLingualText aMLT = MicroTypeConverter.convertToNative (eChange, MultiLingualText.class);
       if (aMLT == null)
       {
-        aErrorCallback.execute ("Failed to read multi lingual text in change element!");
+        aErrorCallback.run ("Failed to read multi lingual text in change element!");
         continue;
       }
       aEntry.setText (aMLT);
@@ -193,7 +193,7 @@ public final class ChangeLogSerializer
 
   @Nonnull
   @ReturnsMutableCopy
-  public static Map <URI, ChangeLog> readAllChangeLogs (@Nonnull final INonThrowingCallback <String> aErrorCallback)
+  public static Map <URI, ChangeLog> readAllChangeLogs (@Nonnull final INonThrowingRunnableWithParameter <String> aErrorCallback)
   {
     try
     {
