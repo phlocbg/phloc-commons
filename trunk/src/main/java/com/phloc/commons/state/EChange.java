@@ -56,4 +56,10 @@ public enum EChange implements IChangeIndicator
   {
     return bChanged ? CHANGED : UNCHANGED;
   }
+
+  @Nonnull
+  public static EChange valueOf (@Nonnull final IChangeIndicator aChangeIndicator)
+  {
+    return valueOf (aChangeIndicator.isChanged ());
+  }
 }

@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.state;
 
+import javax.annotation.Nonnull;
+
 /**
  * Small enum for top and bottom
  * 
@@ -35,5 +37,11 @@ public enum ETopBottom implements ITopBottomIndicator
   public boolean isBottom ()
   {
     return this == BOTTOM;
+  }
+
+  @Nonnull
+  public static ETopBottom valueOf (@Nonnull final ITopBottomIndicator aTopBottomIndicator)
+  {
+    return aTopBottomIndicator.isTop () ? TOP : BOTTOM;
   }
 }

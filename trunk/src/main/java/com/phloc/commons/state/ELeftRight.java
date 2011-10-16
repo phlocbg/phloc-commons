@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.state;
 
+import javax.annotation.Nonnull;
+
 /**
  * Small enum for left and right
  * 
@@ -35,5 +37,11 @@ public enum ELeftRight implements ILeftRightIndicator
   public boolean isRight ()
   {
     return this == RIGHT;
+  }
+
+  @Nonnull
+  public static ELeftRight valueOf (@Nonnull final ILeftRightIndicator aLeftRightIndicator)
+  {
+    return aLeftRightIndicator.isLeft () ? LEFT : RIGHT;
   }
 }

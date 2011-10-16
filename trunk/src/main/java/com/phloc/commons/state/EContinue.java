@@ -56,4 +56,10 @@ public enum EContinue implements IContinueIndicator
   {
     return bContinue ? CONTINUE : BREAK;
   }
+
+  @Nonnull
+  public static EContinue valueOf (@Nonnull final IContinueIndicator aContinueIndicator)
+  {
+    return valueOf (aContinueIndicator.isContinue ());
+  }
 }
