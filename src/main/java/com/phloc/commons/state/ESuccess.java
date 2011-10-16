@@ -58,6 +58,12 @@ public enum ESuccess implements ISuccessIndicator
   }
 
   @Nonnull
+  public static ESuccess valueOf (@Nonnull final ISuccessIndicator aSuccessIndicator)
+  {
+    return valueOf (aSuccessIndicator.isSuccess ());
+  }
+
+  @Nonnull
   public static ESuccess valueOfChange (@Nonnull final IChangeIndicator aChange)
   {
     return valueOf (aChange.isChanged ());

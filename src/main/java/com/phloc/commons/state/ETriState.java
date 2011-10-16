@@ -90,6 +90,12 @@ public enum ETriState implements IHasID <String>, ITriState
     return aValue == null ? UNDEFINED : valueOf (aValue.booleanValue ());
   }
 
+  @Nonnull
+  public static ETriState valueOf (@Nonnull final ITriState aTriState)
+  {
+    return valueOf (aTriState.getAsBooleanObj (null));
+  }
+
   @Nullable
   public static ETriState getFromIDOrNull (@Nullable final String sID)
   {

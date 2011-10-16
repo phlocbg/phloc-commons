@@ -56,4 +56,10 @@ public enum EFinish implements IFinishIndicator
   {
     return bFinished ? FINISHED : UNFINISHED;
   }
+
+  @Nonnull
+  public static EFinish valueOf (@Nonnull final IFinishIndicator aFinishIndicator)
+  {
+    return valueOf (aFinishIndicator.isFinished ());
+  }
 }

@@ -56,4 +56,10 @@ public enum EValidity implements IValidityIndicator
   {
     return bValidity ? VALID : INVALID;
   }
+
+  @Nonnull
+  public static EValidity valueOf (@Nonnull final IValidityIndicator aValidityIndicator)
+  {
+    return valueOf (aValidityIndicator.isValid ());
+  }
 }

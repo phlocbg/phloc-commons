@@ -56,4 +56,10 @@ public enum EMandatory implements IMandatoryIndicator
   {
     return bMandatory ? MANDATORY : OPTIONAL;
   }
+
+  @Nonnull
+  public static EMandatory valueOf (@Nonnull final IMandatoryIndicator aMandatoryIndicator)
+  {
+    return valueOf (aMandatoryIndicator.isMandatory ());
+  }
 }
