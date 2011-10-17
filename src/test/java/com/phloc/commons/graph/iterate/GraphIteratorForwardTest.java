@@ -36,7 +36,7 @@ import com.phloc.commons.graph.IReadonlyGraph;
  * 
  * @author philip
  */
-public final class GraphIteratorTest extends AbstractGraphTestCase
+public final class GraphIteratorForwardTest extends AbstractGraphTestCase
 {
   @Test
   public void testGraphIterator ()

@@ -20,6 +20,7 @@ package com.phloc.commons.tree.utils.walk;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -30,6 +31,8 @@ import com.phloc.commons.hierarchy.EHierarchyCallbackReturn;
 import com.phloc.commons.mutable.MutableInt;
 import com.phloc.commons.tree.simple.DefaultTree;
 import com.phloc.commons.tree.simple.DefaultTreeItem;
+import com.phloc.commons.tree.withid.DefaultTreeItemWithID;
+import com.phloc.commons.tree.withid.DefaultTreeWithID;
 
 /**
  * Test class for class {@link TreeWalkerDynamic}.
@@ -145,6 +148,90 @@ public final class TreeWalkerDynamicTest
                                        }
                                      });
       assertEquals (nExpected, mi.intValue ());
+    }
+  }
+
+  private static void _fillTreeWithID (final DefaultTreeItemWithID <String, Object> aParentItem,
+                                       final int nLevels,
+                                       final int nItemsPerLevel)
+  {
+    if (nLevels > 0)
+      for (int i = 0; i < nItemsPerLevel; ++i)
+      {
+        // Ensure that each item has its own unique ID within the subtree!
+        final DefaultTreeItemWithID <String, Object> aChild = aParentItem.createChildItem (Integer.toString (i),
+                                                                                           Double.valueOf (Double.POSITIVE_INFINITY));
+        _fillTreeWithID (aChild, nLevels - 1, nItemsPerLevel);
+        assertTrue (aChild.isSameOrChildOf (aParentItem));
+        assertFalse (aParentItem.isSameOrChildOf (aChild));
+      }
+  }
+
+  private static DefaultTreeWithID <String, Object> _createTreeWithID (final int nLevels, final int nItemsPerLevel)
+  {
+    final DefaultTreeWithID <String, Object> t = new DefaultTreeWithID <String, Object> ();
+    _fillTreeWithID (t.getRootItem (), nLevels, nItemsPerLevel);
+    return t;
+  }
+
+  @Test
+  public void testTreeWithIDWalk ()
+  {
+    final int nItemsPerLevel = 5;
+    // 7 levels: fast
+    // 8 levels: ok
+    // 9 levels: out-of-memory
+    for (int nLevel = 1; nLevel < 8; ++nLevel)
+    {
+      // Item count is e.g.: 5^4 + 5^3 + 5^2 + 5^1
+      // Where 5 is the items-per-level and 4 is the level-count
+      final long nExpected = _powSum (nItemsPerLevel, nLevel);
+      s_aLogger.info ("Creating tree with " + nExpected + " items");
+
+      // count at before children
+      final MutableInt mi = new MutableInt ();
+      TreeWalkerDynamic.walkTree (_createTreeWithID (nLevel, nItemsPerLevel), new MockTreeWalkerDynamicCallback (mi));
+      assertEquals (nExpected, mi.intValue ());
+
+      // count at before children
+      mi.set (0);
+      TreeWalkerDynamic.walkSubTree (_createTreeWithID (nLevel, nItemsPerLevel).getRootItem (),
+                                     new MockTreeWalkerDynamicCallback (mi));
+      assertEquals (nExpected, mi.intValue ());
+
+      // count at after children
+      mi.set (0);
+      TreeWalkerDynamic.walkTree (_createTreeWithID (nLevel, nItemsPerLevel), new MockTreeWalkerDynamicCallback (mi));
+      assertEquals (nExpected, mi.intValue ());
+
+      // count at after children
+      mi.set (0);
+      TreeWalkerDynamic.walkSubTree (_createTreeWithID (nLevel, nItemsPerLevel).getRootItem (),
+                                     new MockTreeWalkerDynamicCallback (mi));
+      assertEquals (nExpected, mi.intValue ());
+
+      try
+      {
+        TreeWalkerDynamic.walkTree ((DefaultTreeWithID <String, Object>) null, new MockTreeWalkerDynamicCallback (mi));
+        fail ();
+      }
+      catch (final NullPointerException ex)
+      {}
+      try
+      {
+        TreeWalkerDynamic.walkSubTree ((DefaultTreeItemWithID <String, Object>) null,
+                                       new MockTreeWalkerDynamicCallback (mi));
+        fail ();
+      }
+      catch (final NullPointerException ex)
+      {}
+      try
+      {
+        TreeWalkerDynamic.walkSubTree (_createTreeWithID (nLevel, nItemsPerLevel).getRootItem (), null);
+        fail ();
+      }
+      catch (final NullPointerException ex)
+      {}
     }
   }
 }
