@@ -98,9 +98,28 @@ public final class CompareUtils
   }
 
   /**
+   * Special equals implementation for URLs because <code>URL.equals</code>
+   * performs a host lookup.<br>
+   * <a href=
+   * "http://michaelscharf.blogspot.com/2006/11/javaneturlequals-and-hashcode-make.html"
+   * >Click here for details</a>. This version is <code>null</code>-safe.
+   * 
+   * @param aObj1
+   *        First URL. May be <code>null</code>.
+   * @param aObj2
+   *        Second URL. May be <code>null</code>.
+   * @return <code>true</code> if they are equals, <code>false</code> otherwise.
+   */
+  public static boolean nullSafeEquals (@Nullable final URL aObj1, @Nullable final URL aObj2)
+  {
+    return (aObj1 == aObj2) ||
+           (aObj1 != null && aObj2 != null && aObj1.toExternalForm ().equals (aObj2.toExternalForm ()));
+  }
+
+  /**
    * Special equals implementation for BigDecimal because
    * <code>BigDecimal.equals</code> returns false if they have a different scale
-   * so that "5.5" is not equal "5.50".</a>
+   * so that "5.5" is not equal "5.50".
    * 
    * @param aObj1
    *        First BigDecimal. May not be <code>null</code>.
@@ -112,6 +131,28 @@ public final class CompareUtils
   {
     if (aObj1 == aObj2)
       return true;
+    final int nMaxScale = Math.max (aObj1.scale (), aObj2.scale ());
+    return aObj1.setScale (nMaxScale).equals (aObj2.setScale (nMaxScale));
+  }
+
+  /**
+   * Special equals implementation for BigDecimal because
+   * <code>BigDecimal.equals</code> returns false if they have a different scale
+   * so that "5.5" is not equal "5.50".<br>
+   * This version is <code>null</code>-safe.
+   * 
+   * @param aObj1
+   *        First BigDecimal. May be <code>null</code>.
+   * @param aObj2
+   *        Second BigDecimal. May be <code>null</code>.
+   * @return <code>true</code> if they are equals, <code>false</code> otherwise.
+   */
+  public static boolean nullSafeEquals (@Nullable final BigDecimal aObj1, @Nullable final BigDecimal aObj2)
+  {
+    if (aObj1 == aObj2)
+      return true;
+    if (aObj1 == null || aObj2 == null)
+      return false;
     final int nMaxScale = Math.max (aObj1.scale (), aObj2.scale ());
     return aObj1.setScale (nMaxScale).equals (aObj2.setScale (nMaxScale));
   }
