@@ -2188,4 +2188,23 @@ public final class ContainerHelper
   {
     return aList != null && nIndex >= 0 && nIndex < aList.size () ? aList.get (nIndex) : aDefault;
   }
+
+  /**
+   * Check if the passed collection contains at least one <code>null</code>
+   * element.
+   * 
+   * @param aCollection
+   *        The collection to check. May be <code>null</code>.
+   * @return <code>true</code> only if the passed collection is neither
+   *         <code>null</code> nor empty and if at least one <code>null</code>
+   *         element is contained.
+   */
+  public static boolean containsNullElement (@Nullable final Collection <?> aCollection)
+  {
+    if (aCollection != null)
+      for (final Object aObj : aCollection)
+        if (aObj == null)
+          return true;
+    return false;
+  }
 }

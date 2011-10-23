@@ -1318,12 +1318,15 @@ public final class StringHelper
     return aSB.toString ();
   }
 
+  @Nonnull
   private static <COLLTYPE extends Collection <String>> COLLTYPE _explode (@Nonnull final String sSep,
                                                                            @Nullable final String sElements,
                                                                            @Nonnull final COLLTYPE aCollection)
   {
     if (sSep == null)
       throw new NullPointerException ("separator");
+    if (aCollection == null)
+      throw new NullPointerException ("collection");
 
     if (hasText (sElements))
     {
