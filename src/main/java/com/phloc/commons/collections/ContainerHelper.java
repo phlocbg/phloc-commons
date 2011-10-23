@@ -38,6 +38,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.annotations.DevelopersNote;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
@@ -130,13 +131,26 @@ public final class ContainerHelper
     return aCollection == null ? null : Collections.unmodifiableSortedMap (aCollection);
   }
 
+  /**
+   * Get all elements that are only contained in the first contained, and not in
+   * the second. This method implements <code>aCont1 - aCont2</code>.
+   * 
+   * @param aCont1
+   *        The first container. May be <code>null</code> or empty.
+   * @param aCont2
+   *        The second container. May be <code>null</code> or empty.
+   * @return The difference and never <code>null</code>. Returns an empty set,
+   *         if the first container is empty. Returns a copy of the first
+   *         container, if the second container is empty. Returns
+   *         <code>aCont1 - aCont2</code> if both containers are non-empty.
+   */
   @Nullable
   @ReturnsMutableCopy
   public static <ELEMENTTYPE> Set <ELEMENTTYPE> getDifference (@Nullable final Collection <? extends ELEMENTTYPE> aCont1,
                                                                @Nullable final Collection <? extends ELEMENTTYPE> aCont2)
   {
     if (isEmpty (aCont1))
-      return newSet (aCont2);
+      return newSet ();
     if (isEmpty (aCont2))
       return newSet (aCont1);
 
@@ -145,8 +159,38 @@ public final class ContainerHelper
     return ret;
   }
 
+  /**
+   * Get all elements that are contained in the first AND in the second
+   * container.
+   * 
+   * @param aCont1
+   *        The first container. May be <code>null</code> or empty.
+   * @param aCont2
+   *        The second container. May be <code>null</code> or empty.
+   * @return An empty set, if either the first or the second container are
+   *         empty. Returns a set of elements that are contained in both
+   *         containers, if both containers are non-empty. The return value is
+   *         never <code>null</code>.
+   */
   @Nullable
   @ReturnsMutableCopy
+  public static <ELEMENTTYPE> Set <ELEMENTTYPE> getIntersected (@Nullable final Collection <? extends ELEMENTTYPE> aCont1,
+                                                                @Nullable final Collection <? extends ELEMENTTYPE> aCont2)
+  {
+    if (isEmpty (aCont1))
+      return newSet ();
+    if (isEmpty (aCont2))
+      return newSet ();
+
+    final Set <ELEMENTTYPE> ret = newSet (aCont1);
+    ret.retainAll (aCont2);
+    return ret;
+  }
+
+  @Nullable
+  @ReturnsMutableCopy
+  @Deprecated
+  @DevelopersNote ("This method is simply wrong. Use getIntersected instead!")
   public static <ELEMENTTYPE> Set <ELEMENTTYPE> getIntersection (@Nullable final Collection <? extends ELEMENTTYPE> aCont1,
                                                                  @Nullable final Collection <? extends ELEMENTTYPE> aCont2)
   {
