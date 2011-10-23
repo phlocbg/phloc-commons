@@ -30,7 +30,7 @@ import static com.phloc.commons.collections.ContainerHelper.getFilteredMap;
 import static com.phloc.commons.collections.ContainerHelper.getFirstElement;
 import static com.phloc.commons.collections.ContainerHelper.getFirstKey;
 import static com.phloc.commons.collections.ContainerHelper.getFirstValue;
-import static com.phloc.commons.collections.ContainerHelper.getIntersection;
+import static com.phloc.commons.collections.ContainerHelper.getIntersected;
 import static com.phloc.commons.collections.ContainerHelper.getIterator;
 import static com.phloc.commons.collections.ContainerHelper.getLastElement;
 import static com.phloc.commons.collections.ContainerHelper.getNotNull;
@@ -141,18 +141,20 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertFalse (ret.contains ("from"));
     assertTrue (ret.contains ("Vienna"));
 
+    assertEquals (4, getDifference (l1, new Vector <String> ()).size ());
     assertEquals (4, getDifference (l1, null).size ());
-    assertEquals (2, getDifference (null, l2).size ());
+    assertEquals (0, getDifference (new HashSet <String> (), l2).size ());
+    assertEquals (0, getDifference (null, l2).size ());
   }
 
   @Test
-  public void testGetIntersection ()
+  public void testGetIntersected ()
   {
     final List <String> l1 = newList ("Hallo", "Welt", "from", "Vienna");
     final List <String> l2 = newList ("Welt", "from");
 
     // Result should be "Hello" and "Vienna"
-    final Set <String> ret = getIntersection (l1, l2);
+    final Set <String> ret = getIntersected (l1, l2);
     assertNotNull (ret);
     assertEquals (ret.size (), 2);
     assertFalse (ret.contains ("Hello"));
@@ -160,8 +162,8 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertTrue (ret.contains ("from"));
     assertFalse (ret.contains ("Vienna"));
 
-    assertEquals (4, getIntersection (l1, null).size ());
-    assertEquals (2, getIntersection (null, l2).size ());
+    assertEquals (0, getIntersected (l1, null).size ());
+    assertEquals (0, getIntersected (null, l2).size ());
   }
 
   @Test
