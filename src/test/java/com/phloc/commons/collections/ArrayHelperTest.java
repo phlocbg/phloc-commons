@@ -17,6 +17,30 @@
  */
 package com.phloc.commons.collections;
 
+import static com.phloc.commons.collections.ArrayHelper.contains;
+import static com.phloc.commons.collections.ArrayHelper.containsNullElement;
+import static com.phloc.commons.collections.ArrayHelper.getAllExceptFirst;
+import static com.phloc.commons.collections.ArrayHelper.getAllExceptLast;
+import static com.phloc.commons.collections.ArrayHelper.getAsObjectArray;
+import static com.phloc.commons.collections.ArrayHelper.getComponentType;
+import static com.phloc.commons.collections.ArrayHelper.getConcatenated;
+import static com.phloc.commons.collections.ArrayHelper.getCopy;
+import static com.phloc.commons.collections.ArrayHelper.getFirst;
+import static com.phloc.commons.collections.ArrayHelper.getLast;
+import static com.phloc.commons.collections.ArrayHelper.getSafeElement;
+import static com.phloc.commons.collections.ArrayHelper.getSize;
+import static com.phloc.commons.collections.ArrayHelper.isArray;
+import static com.phloc.commons.collections.ArrayHelper.isArrayEquals;
+import static com.phloc.commons.collections.ArrayHelper.isEmpty;
+import static com.phloc.commons.collections.ArrayHelper.newArray;
+import static com.phloc.commons.collections.ArrayHelper.newBooleanArray;
+import static com.phloc.commons.collections.ArrayHelper.newByteArray;
+import static com.phloc.commons.collections.ArrayHelper.newCharArray;
+import static com.phloc.commons.collections.ArrayHelper.newDoubleArray;
+import static com.phloc.commons.collections.ArrayHelper.newFloatArray;
+import static com.phloc.commons.collections.ArrayHelper.newIntArray;
+import static com.phloc.commons.collections.ArrayHelper.newLongArray;
+import static com.phloc.commons.collections.ArrayHelper.newShortArray;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -43,10 +67,10 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
   @Test
   public void testGetComponentClass ()
   {
-    assertEquals (String.class, ArrayHelper.getComponentType (new String [0]));
+    assertEquals (String.class, getComponentType (new String [0]));
     try
     {
-      ArrayHelper.getComponentType (null);
+      getComponentType (null);
       fail ();
     }
     catch (final NullPointerException ex)
@@ -56,82 +80,82 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
   @Test
   public void testFirstElement ()
   {
-    assertEquals ("d", ArrayHelper.getFirst ("d", "c", "b", "a"));
-    assertNull (ArrayHelper.getFirst ((String []) null));
-    assertNull (ArrayHelper.getFirst (new String [0]));
+    assertEquals ("d", getFirst ("d", "c", "b", "a"));
+    assertNull (getFirst ((String []) null));
+    assertNull (getFirst (new String [0]));
   }
 
   @Test
   public void testLastElement ()
   {
-    assertEquals ("a", ArrayHelper.getLast ("d", "c", "b", "a"));
-    assertNull (ArrayHelper.getLast ((String []) null));
-    assertNull (ArrayHelper.getLast (new String [0]));
+    assertEquals ("a", getLast ("d", "c", "b", "a"));
+    assertNull (getLast ((String []) null));
+    assertNull (getLast (new String [0]));
   }
 
   @Test
   public void testIsEmpty ()
   {
-    assertTrue (ArrayHelper.isEmpty ((Object []) null));
-    assertTrue (ArrayHelper.isEmpty (new Boolean [0]));
+    assertTrue (isEmpty ((Object []) null));
+    assertTrue (isEmpty (new Boolean [0]));
 
-    assertTrue (ArrayHelper.isEmpty ((Object []) null));
-    assertFalse (ArrayHelper.isEmpty (new Object [] { "x", Boolean.FALSE }));
+    assertTrue (isEmpty ((Object []) null));
+    assertFalse (isEmpty (new Object [] { "x", Boolean.FALSE }));
 
-    assertTrue (ArrayHelper.isEmpty ((boolean []) null));
-    assertFalse (ArrayHelper.isEmpty (new boolean [] { true, false }));
+    assertTrue (isEmpty ((boolean []) null));
+    assertFalse (isEmpty (new boolean [] { true, false }));
 
-    assertTrue (ArrayHelper.isEmpty ((byte []) null));
-    assertFalse (ArrayHelper.isEmpty (new byte [] { (byte) 17, (byte) 18 }));
+    assertTrue (isEmpty ((byte []) null));
+    assertFalse (isEmpty (new byte [] { (byte) 17, (byte) 18 }));
 
-    assertTrue (ArrayHelper.isEmpty ((char []) null));
-    assertFalse (ArrayHelper.isEmpty (new char [] { 'a', 'Z' }));
+    assertTrue (isEmpty ((char []) null));
+    assertFalse (isEmpty (new char [] { 'a', 'Z' }));
 
-    assertTrue (ArrayHelper.isEmpty ((double []) null));
-    assertFalse (ArrayHelper.isEmpty (new double [] { 3.14, 75712.324 }));
+    assertTrue (isEmpty ((double []) null));
+    assertFalse (isEmpty (new double [] { 3.14, 75712.324 }));
 
-    assertTrue (ArrayHelper.isEmpty ((float []) null));
-    assertFalse (ArrayHelper.isEmpty (new float [] { 3.14f, 75712.324f }));
+    assertTrue (isEmpty ((float []) null));
+    assertFalse (isEmpty (new float [] { 3.14f, 75712.324f }));
 
-    assertTrue (ArrayHelper.isEmpty ((int []) null));
-    assertFalse (ArrayHelper.isEmpty (new int [] { 314, 75712324 }));
+    assertTrue (isEmpty ((int []) null));
+    assertFalse (isEmpty (new int [] { 314, 75712324 }));
 
-    assertTrue (ArrayHelper.isEmpty ((long []) null));
-    assertFalse (ArrayHelper.isEmpty (new long [] { 314L, 75712324L }));
+    assertTrue (isEmpty ((long []) null));
+    assertFalse (isEmpty (new long [] { 314L, 75712324L }));
 
-    assertTrue (ArrayHelper.isEmpty ((short []) null));
-    assertFalse (ArrayHelper.isEmpty (new short [] { 32, 223 }));
+    assertTrue (isEmpty ((short []) null));
+    assertFalse (isEmpty (new short [] { 32, 223 }));
   }
 
   @Test
   public void testSize ()
   {
-    assertEquals (0, ArrayHelper.getSize ((Object []) null));
-    assertEquals (2, ArrayHelper.getSize (new Object [] { "x", Boolean.FALSE }));
+    assertEquals (0, getSize ((Object []) null));
+    assertEquals (2, getSize (new Object [] { "x", Boolean.FALSE }));
 
-    assertEquals (0, ArrayHelper.getSize ((boolean []) null));
-    assertEquals (2, ArrayHelper.getSize (new boolean [] { true, false }));
+    assertEquals (0, getSize ((boolean []) null));
+    assertEquals (2, getSize (new boolean [] { true, false }));
 
-    assertEquals (0, ArrayHelper.getSize ((byte []) null));
-    assertEquals (2, ArrayHelper.getSize (new byte [] { (byte) 17, (byte) 18 }));
+    assertEquals (0, getSize ((byte []) null));
+    assertEquals (2, getSize (new byte [] { (byte) 17, (byte) 18 }));
 
-    assertEquals (0, ArrayHelper.getSize ((char []) null));
-    assertEquals (2, ArrayHelper.getSize (new char [] { 'a', 'Z' }));
+    assertEquals (0, getSize ((char []) null));
+    assertEquals (2, getSize (new char [] { 'a', 'Z' }));
 
-    assertEquals (0, ArrayHelper.getSize ((double []) null));
-    assertEquals (2, ArrayHelper.getSize (new double [] { 3.14, 75712.324 }));
+    assertEquals (0, getSize ((double []) null));
+    assertEquals (2, getSize (new double [] { 3.14, 75712.324 }));
 
-    assertEquals (0, ArrayHelper.getSize ((float []) null));
-    assertEquals (2, ArrayHelper.getSize (new float [] { 3.14f, 75712.324f }));
+    assertEquals (0, getSize ((float []) null));
+    assertEquals (2, getSize (new float [] { 3.14f, 75712.324f }));
 
-    assertEquals (0, ArrayHelper.getSize ((int []) null));
-    assertEquals (2, ArrayHelper.getSize (new int [] { 314, 75712324 }));
+    assertEquals (0, getSize ((int []) null));
+    assertEquals (2, getSize (new int [] { 314, 75712324 }));
 
-    assertEquals (0, ArrayHelper.getSize ((long []) null));
-    assertEquals (2, ArrayHelper.getSize (new long [] { 314L, 75712324L }));
+    assertEquals (0, getSize ((long []) null));
+    assertEquals (2, getSize (new long [] { 314L, 75712324L }));
 
-    assertEquals (0, ArrayHelper.getSize ((short []) null));
-    assertEquals (2, ArrayHelper.getSize (new short [] { 32, 223 }));
+    assertEquals (0, getSize ((short []) null));
+    assertEquals (2, getSize (new short [] { 32, 223 }));
   }
 
   @Test
@@ -139,98 +163,98 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
   {
     {
       final String [] x = new String [] { "Hallo", "Welt", "aus", "Kopenhagen" };
-      assertTrue (ArrayHelper.contains (x, "Hallo"));
-      assertTrue (ArrayHelper.contains (x, "Kopenhagen"));
-      assertFalse (ArrayHelper.contains (x, "hallo"));
-      assertFalse (ArrayHelper.contains (null, "hallo"));
-      assertFalse (ArrayHelper.contains (new String [0], "hallo"));
+      assertTrue (contains (x, "Hallo"));
+      assertTrue (contains (x, "Kopenhagen"));
+      assertFalse (contains (x, "hallo"));
+      assertFalse (contains (null, "hallo"));
+      assertFalse (contains (new String [0], "hallo"));
     }
 
     {
       final boolean [] x = new boolean [] { true, true };
-      assertTrue (ArrayHelper.contains (x, true));
-      assertFalse (ArrayHelper.contains (x, false));
-      assertFalse (ArrayHelper.contains ((boolean []) null, false));
+      assertTrue (contains (x, true));
+      assertFalse (contains (x, false));
+      assertFalse (contains ((boolean []) null, false));
     }
 
     {
       final byte [] x = new byte [] { 1, 2, 3 };
-      assertTrue (ArrayHelper.contains (x, (byte) 1));
-      assertFalse (ArrayHelper.contains (x, (byte) 4));
-      assertFalse (ArrayHelper.contains ((byte []) null, (byte) 1));
+      assertTrue (contains (x, (byte) 1));
+      assertFalse (contains (x, (byte) 4));
+      assertFalse (contains ((byte []) null, (byte) 1));
     }
 
     {
       final char [] x = new char [] { 1, 2, 3 };
-      assertTrue (ArrayHelper.contains (x, (char) 1));
-      assertFalse (ArrayHelper.contains (x, (char) 4));
-      assertFalse (ArrayHelper.contains ((char []) null, 'c'));
+      assertTrue (contains (x, (char) 1));
+      assertFalse (contains (x, (char) 4));
+      assertFalse (contains ((char []) null, 'c'));
     }
 
     {
       final double [] x = new double [] { 1, 2, 3 };
-      assertTrue (ArrayHelper.contains (x, 1.0));
-      assertFalse (ArrayHelper.contains (x, 1.1));
-      assertFalse (ArrayHelper.contains ((double []) null, 1.0));
+      assertTrue (contains (x, 1.0));
+      assertFalse (contains (x, 1.1));
+      assertFalse (contains ((double []) null, 1.0));
     }
 
     {
       final float [] x = new float [] { 1, 2, 3 };
-      assertTrue (ArrayHelper.contains (x, 1.0F));
-      assertFalse (ArrayHelper.contains (x, 1.1F));
-      assertFalse (ArrayHelper.contains ((float []) null, 1.5f));
+      assertTrue (contains (x, 1.0F));
+      assertFalse (contains (x, 1.1F));
+      assertFalse (contains ((float []) null, 1.5f));
     }
 
     {
       final int [] x = new int [] { 1, 2, 3 };
-      assertTrue (ArrayHelper.contains (x, 1));
-      assertFalse (ArrayHelper.contains (x, 4));
-      assertFalse (ArrayHelper.contains ((int []) null, 7));
+      assertTrue (contains (x, 1));
+      assertFalse (contains (x, 4));
+      assertFalse (contains ((int []) null, 7));
     }
 
     {
       final long [] x = new long [] { 1, 2, 3 };
-      assertTrue (ArrayHelper.contains (x, 1L));
-      assertFalse (ArrayHelper.contains (x, 4L));
-      assertFalse (ArrayHelper.contains ((long []) null, 7));
+      assertTrue (contains (x, 1L));
+      assertFalse (contains (x, 4L));
+      assertFalse (contains ((long []) null, 7));
     }
 
     {
       final short [] x = new short [] { 1, 2, 3 };
-      assertTrue (ArrayHelper.contains (x, (short) 1));
-      assertFalse (ArrayHelper.contains (x, (short) 4));
-      assertFalse (ArrayHelper.contains ((short []) null, (short) 6));
+      assertTrue (contains (x, (short) 1));
+      assertFalse (contains (x, (short) 4));
+      assertFalse (contains ((short []) null, (short) 6));
     }
   }
 
   @Test
   public void testIsArray ()
   {
-    assertTrue (ArrayHelper.isArray (new String [] { "Hallo" }));
-    assertTrue (ArrayHelper.isArray (new String [0]));
-    assertTrue (ArrayHelper.isArray (new boolean [1]));
-    assertTrue (ArrayHelper.isArray (new boolean [0]));
-    assertFalse (ArrayHelper.isArray ((boolean []) null));
-    assertFalse (ArrayHelper.isArray ((String) null));
-    assertFalse (ArrayHelper.isArray (Boolean.TRUE));
-    assertFalse (ArrayHelper.isArray ("Hi there"));
+    assertTrue (isArray (new String [] { "Hallo" }));
+    assertTrue (isArray (new String [0]));
+    assertTrue (isArray (new boolean [1]));
+    assertTrue (isArray (new boolean [0]));
+    assertFalse (isArray ((boolean []) null));
+    assertFalse (isArray ((String) null));
+    assertFalse (isArray (Boolean.TRUE));
+    assertFalse (isArray ("Hi there"));
   }
 
   @Test
   public void testArrayEquals ()
   {
-    assertTrue (ArrayHelper.isArrayEquals (null, null));
-    assertFalse (ArrayHelper.isArrayEquals (new boolean [0], null));
-    assertFalse (ArrayHelper.isArrayEquals (null, new boolean [0]));
-    assertTrue (ArrayHelper.isArrayEquals (new boolean [0], new boolean [0]));
-    assertFalse (ArrayHelper.isArrayEquals (new String [0], "Hello"));
-    assertFalse (ArrayHelper.isArrayEquals ("Hello", new String [0]));
-    assertFalse (ArrayHelper.isArrayEquals (new boolean [0], new byte [0]));
-    assertFalse (ArrayHelper.isArrayEquals (new boolean [0], new boolean [1]));
-    assertFalse (ArrayHelper.isArrayEquals (new boolean [1] [0], new boolean [1] [1]));
-    assertTrue (ArrayHelper.isArrayEquals (new boolean [1] [1], new boolean [1] [1]));
-    assertFalse (ArrayHelper.isArrayEquals (new String [] { "Hallo" }, new String [] { "Welt" }));
-    assertTrue (ArrayHelper.isArrayEquals (new String [] { "Hallo" }, new String [] { "Hallo" }));
+    assertTrue (isArrayEquals (null, null));
+    assertFalse (isArrayEquals (new boolean [0], null));
+    assertFalse (isArrayEquals (null, new boolean [0]));
+    assertTrue (isArrayEquals (new boolean [0], new boolean [0]));
+    assertFalse (isArrayEquals (new String [0], "Hello"));
+    assertFalse (isArrayEquals ("Hello", new String [0]));
+    assertFalse (isArrayEquals (new boolean [0], new byte [0]));
+    assertFalse (isArrayEquals (new boolean [0], new boolean [1]));
+    assertFalse (isArrayEquals (new boolean [1] [0], new boolean [1] [1]));
+    assertTrue (isArrayEquals (new boolean [1] [1], new boolean [1] [1]));
+    assertFalse (isArrayEquals (new String [] { "Hallo" }, new String [] { "Welt" }));
+    assertTrue (isArrayEquals (new String [] { "Hallo" }, new String [] { "Hallo" }));
   }
 
   @Test
@@ -238,92 +262,92 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
   {
     {
       final Object [] x = new Object [] { "Any", Integer.valueOf (1), " is ", Double.valueOf (1) };
-      assertNull (ArrayHelper.getCopy ((Object []) null));
-      assertTrue (ArrayHelper.isArrayEquals (x, ArrayHelper.getCopy (x)));
-      assertNull (ArrayHelper.getCopy ((Object []) null, 1));
-      assertArrayEquals (new Object [] { "Any" }, ArrayHelper.getCopy (x, 1));
-      assertNull (ArrayHelper.getCopy ((Object []) null, 1, 1));
-      assertEquals (x[1], ArrayHelper.getCopy (x, 1, 1)[0]);
+      assertNull (getCopy ((Object []) null));
+      assertTrue (isArrayEquals (x, getCopy (x)));
+      assertNull (getCopy ((Object []) null, 1));
+      assertArrayEquals (new Object [] { "Any" }, getCopy (x, 1));
+      assertNull (getCopy ((Object []) null, 1, 1));
+      assertEquals (x[1], getCopy (x, 1, 1)[0]);
     }
 
     {
-      assertNull (ArrayHelper.getCopy ((boolean []) null));
+      assertNull (getCopy ((boolean []) null));
       final boolean [] x = new boolean [] { true, true, true, false };
-      assertTrue (ArrayHelper.isArrayEquals (x, ArrayHelper.getCopy (x)));
-      assertNull (ArrayHelper.getCopy ((boolean []) null, 1, 1));
-      assertEquals (Boolean.valueOf (x[1]), Boolean.valueOf (ArrayHelper.getCopy (x, 1, 1)[0]));
-      assertNotNull (ArrayHelper.getCopy (x, 1));
-      assertNull (ArrayHelper.getCopy ((boolean []) null, 1));
+      assertTrue (isArrayEquals (x, getCopy (x)));
+      assertNull (getCopy ((boolean []) null, 1, 1));
+      assertEquals (Boolean.valueOf (x[1]), Boolean.valueOf (getCopy (x, 1, 1)[0]));
+      assertNotNull (getCopy (x, 1));
+      assertNull (getCopy ((boolean []) null, 1));
     }
 
     {
-      assertNull (ArrayHelper.getCopy ((byte []) null));
+      assertNull (getCopy ((byte []) null));
       final byte [] x = new byte [] { (byte) 17, (byte) 22, (byte) 255, (byte) 0 };
-      assertTrue (ArrayHelper.isArrayEquals (x, ArrayHelper.getCopy (x)));
-      assertNull (ArrayHelper.getCopy ((byte []) null, 1, 1));
-      assertEquals (x[1], ArrayHelper.getCopy (x, 1, 1)[0]);
-      assertNotNull (ArrayHelper.getCopy (x, 1));
-      assertNull (ArrayHelper.getCopy ((byte []) null, 1));
+      assertTrue (isArrayEquals (x, getCopy (x)));
+      assertNull (getCopy ((byte []) null, 1, 1));
+      assertEquals (x[1], getCopy (x, 1, 1)[0]);
+      assertNotNull (getCopy (x, 1));
+      assertNull (getCopy ((byte []) null, 1));
     }
 
     {
-      assertNull (ArrayHelper.getCopy ((char []) null));
+      assertNull (getCopy ((char []) null));
       final char [] x = new char [] { 'a', 'Z', '0', '#' };
-      assertTrue (ArrayHelper.isArrayEquals (x, ArrayHelper.getCopy (x)));
-      assertNull (ArrayHelper.getCopy ((char []) null, 1, 1));
-      assertEquals (x[1], ArrayHelper.getCopy (x, 1, 1)[0]);
-      assertNotNull (ArrayHelper.getCopy (x, 1));
-      assertNull (ArrayHelper.getCopy ((char []) null, 1));
+      assertTrue (isArrayEquals (x, getCopy (x)));
+      assertNull (getCopy ((char []) null, 1, 1));
+      assertEquals (x[1], getCopy (x, 1, 1)[0]);
+      assertNotNull (getCopy (x, 1));
+      assertNull (getCopy ((char []) null, 1));
     }
 
     {
-      assertNull (ArrayHelper.getCopy ((double []) null));
+      assertNull (getCopy ((double []) null));
       final double [] x = new double [] { 3.14, 22.45, -34, 255.99 };
-      assertTrue (ArrayHelper.isArrayEquals (x, ArrayHelper.getCopy (x)));
-      assertNull (ArrayHelper.getCopy ((double []) null, 1, 1));
-      assertEquals (x[1], ArrayHelper.getCopy (x, 1, 1)[0], 0);
-      assertNotNull (ArrayHelper.getCopy (x, 1));
-      assertNull (ArrayHelper.getCopy ((double []) null, 1));
+      assertTrue (isArrayEquals (x, getCopy (x)));
+      assertNull (getCopy ((double []) null, 1, 1));
+      assertEquals (x[1], getCopy (x, 1, 1)[0], 0);
+      assertNotNull (getCopy (x, 1));
+      assertNull (getCopy ((double []) null, 1));
     }
 
     {
-      assertNull (ArrayHelper.getCopy ((float []) null));
+      assertNull (getCopy ((float []) null));
       final float [] x = new float [] { 3.14f, 22.45f, -34f, 255.99f };
-      assertTrue (ArrayHelper.isArrayEquals (x, ArrayHelper.getCopy (x)));
-      assertNull (ArrayHelper.getCopy ((float []) null, 1, 1));
-      assertEquals (x[1], ArrayHelper.getCopy (x, 1, 1)[0], 0);
-      assertNotNull (ArrayHelper.getCopy (x, 1));
-      assertNull (ArrayHelper.getCopy ((float []) null, 1));
+      assertTrue (isArrayEquals (x, getCopy (x)));
+      assertNull (getCopy ((float []) null, 1, 1));
+      assertEquals (x[1], getCopy (x, 1, 1)[0], 0);
+      assertNotNull (getCopy (x, 1));
+      assertNull (getCopy ((float []) null, 1));
     }
 
     {
-      assertNull (ArrayHelper.getCopy ((int []) null));
+      assertNull (getCopy ((int []) null));
       final int [] x = new int [] { 314, 2245, -34, 25599 };
-      assertTrue (ArrayHelper.isArrayEquals (x, ArrayHelper.getCopy (x)));
-      assertNull (ArrayHelper.getCopy ((int []) null, 1, 1));
-      assertEquals (x[1], ArrayHelper.getCopy (x, 1, 1)[0]);
-      assertNotNull (ArrayHelper.getCopy (x, 1));
-      assertNull (ArrayHelper.getCopy ((int []) null, 1));
+      assertTrue (isArrayEquals (x, getCopy (x)));
+      assertNull (getCopy ((int []) null, 1, 1));
+      assertEquals (x[1], getCopy (x, 1, 1)[0]);
+      assertNotNull (getCopy (x, 1));
+      assertNull (getCopy ((int []) null, 1));
     }
 
     {
-      assertNull (ArrayHelper.getCopy ((long []) null));
+      assertNull (getCopy ((long []) null));
       final long [] x = new long [] { 314, 2245, -34, 25599 };
-      assertTrue (ArrayHelper.isArrayEquals (x, ArrayHelper.getCopy (x)));
-      assertNull (ArrayHelper.getCopy ((long []) null, 1, 1));
-      assertEquals (x[1], ArrayHelper.getCopy (x, 1, 1)[0]);
-      assertNotNull (ArrayHelper.getCopy (x, 1));
-      assertNull (ArrayHelper.getCopy ((long []) null, 1));
+      assertTrue (isArrayEquals (x, getCopy (x)));
+      assertNull (getCopy ((long []) null, 1, 1));
+      assertEquals (x[1], getCopy (x, 1, 1)[0]);
+      assertNotNull (getCopy (x, 1));
+      assertNull (getCopy ((long []) null, 1));
     }
 
     {
-      assertNull (ArrayHelper.getCopy ((short []) null));
+      assertNull (getCopy ((short []) null));
       final short [] x = new short [] { 14, 22, -34, 127 };
-      assertTrue (ArrayHelper.isArrayEquals (x, ArrayHelper.getCopy (x)));
-      assertNull (ArrayHelper.getCopy ((short []) null, 1, 1));
-      assertEquals (x[1], ArrayHelper.getCopy (x, 1, 1)[0]);
-      assertNotNull (ArrayHelper.getCopy (x, 1));
-      assertNull (ArrayHelper.getCopy ((short []) null, 1));
+      assertTrue (isArrayEquals (x, getCopy (x)));
+      assertNull (getCopy ((short []) null, 1, 1));
+      assertEquals (x[1], getCopy (x, 1, 1)[0]);
+      assertNotNull (getCopy (x, 1));
+      assertNull (getCopy ((short []) null, 1));
     }
   }
 
@@ -333,13 +357,11 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
   @Test
   public void testAsObjectArray ()
   {
-    assertNull (ArrayHelper.getAsObjectArray (null));
-    assertNull (ArrayHelper.getAsObjectArray (new ArrayList <String> ()));
-    assertArrayEquals (new Object [] { "Hallo" }, ArrayHelper.getAsObjectArray (ContainerHelper.newList ("Hallo")));
-    assertArrayEquals (new Object [] { "Hallo", "Welt" },
-                       ArrayHelper.getAsObjectArray (ContainerHelper.newList ("Hallo", "Welt")));
-    assertArrayEquals (new Object [] { I1, "Welt" },
-                       ArrayHelper.getAsObjectArray (ContainerHelper.<Object> newList (I1, "Welt")));
+    assertNull (getAsObjectArray (null));
+    assertNull (getAsObjectArray (new ArrayList <String> ()));
+    assertArrayEquals (new Object [] { "Hallo" }, getAsObjectArray (ContainerHelper.newList ("Hallo")));
+    assertArrayEquals (new Object [] { "Hallo", "Welt" }, getAsObjectArray (ContainerHelper.newList ("Hallo", "Welt")));
+    assertArrayEquals (new Object [] { I1, "Welt" }, getAsObjectArray (ContainerHelper.<Object> newList (I1, "Welt")));
   }
 
   /**
@@ -349,14 +371,14 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
   public void testSafeGetElement ()
   {
     final String [] x = new String [] { "a", "b", "c" };
-    assertEquals ("a", ArrayHelper.getSafeElement (x, 0));
-    assertEquals ("b", ArrayHelper.getSafeElement (x, 1));
-    assertEquals ("c", ArrayHelper.getSafeElement (x, 2));
-    assertNull (ArrayHelper.getSafeElement (x, 3));
-    assertNull (ArrayHelper.getSafeElement (x, 12345));
-    assertNull (ArrayHelper.getSafeElement (x, -1));
-    assertNull (ArrayHelper.getSafeElement (new String [0], 0));
-    assertNull (ArrayHelper.getSafeElement ((String []) null, 0));
+    assertEquals ("a", getSafeElement (x, 0));
+    assertEquals ("b", getSafeElement (x, 1));
+    assertEquals ("c", getSafeElement (x, 2));
+    assertNull (getSafeElement (x, 3));
+    assertNull (getSafeElement (x, 12345));
+    assertNull (getSafeElement (x, -1));
+    assertNull (getSafeElement (new String [0], 0));
+    assertNull (getSafeElement ((String []) null, 0));
   }
 
   /**
@@ -369,14 +391,14 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
     {
       final String [] a = new String [] { "a", "b" };
       final String [] b = new String [] { "c", "c2" };
-      assertArrayEquals (new String [] { "a", "b", "c", "c2" }, ArrayHelper.getConcatenated (a, b));
-      assertArrayEquals (new String [] { "c", "c2", "a", "b" }, ArrayHelper.getConcatenated (b, a));
-      assertArrayEquals (a, ArrayHelper.getConcatenated (a, (String []) null));
-      assertArrayEquals (b, ArrayHelper.getConcatenated ((String []) null, b));
-      assertArrayEquals (new String [] { "a", "b", "c" }, ArrayHelper.getConcatenated (a, "c"));
-      assertArrayEquals (new String [] { "c" }, ArrayHelper.getConcatenated ((String []) null, "c"));
-      assertArrayEquals (new String [] { "c", "a", "b" }, ArrayHelper.getConcatenated ("c", a));
-      assertArrayEquals (new String [] { "c" }, ArrayHelper.getConcatenated ("c", (String []) null));
+      assertArrayEquals (new String [] { "a", "b", "c", "c2" }, getConcatenated (a, b));
+      assertArrayEquals (new String [] { "c", "c2", "a", "b" }, getConcatenated (b, a));
+      assertArrayEquals (a, getConcatenated (a, (String []) null));
+      assertArrayEquals (b, getConcatenated ((String []) null, b));
+      assertArrayEquals (new String [] { "a", "b", "c" }, getConcatenated (a, "c"));
+      assertArrayEquals (new String [] { "c" }, getConcatenated ((String []) null, "c"));
+      assertArrayEquals (new String [] { "c", "a", "b" }, getConcatenated ("c", a));
+      assertArrayEquals (new String [] { "c" }, getConcatenated ("c", (String []) null));
     }
 
     {
@@ -384,155 +406,137 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
       final Integer [] b = new Integer [] { I3, I4 };
 
       // Generic
-      assertArrayEquals (new Integer [] { I1, I2, I3, I4 }, ArrayHelper.getConcatenated (a, b, Integer.class));
-      assertArrayEquals (new Integer [] { I1, I2, I3, I4 }, ArrayHelper.getConcatenated (a, b));
-      assertArrayEquals (new Integer [] { I3, I4, I1, I2 }, ArrayHelper.getConcatenated (b, a));
-      assertArrayEquals (a, ArrayHelper.getConcatenated (a, (Integer []) null));
-      assertArrayEquals (b, ArrayHelper.getConcatenated ((Integer []) null, b));
-      assertArrayEquals (new Integer [] { I1, I2, I5 }, ArrayHelper.getConcatenated (a, I5, Integer.class));
-      assertArrayEquals (new Integer [] { I5 }, ArrayHelper.getConcatenated ((Integer []) null, I5, Integer.class));
-      assertArrayEquals (new Integer [] { I6, I1, I2 }, ArrayHelper.getConcatenated (I6, a, Integer.class));
-      assertArrayEquals (new Integer [] { I6 }, ArrayHelper.getConcatenated (I6, (Integer []) null, Integer.class));
-      assertArrayEquals (new Integer [] { I1, I2, null },
-                         ArrayHelper.getConcatenated (a, (Integer) null, Integer.class));
-      assertArrayEquals (new Integer [] { null, I3, I4 },
-                         ArrayHelper.getConcatenated ((Integer) null, b, Integer.class));
+      assertArrayEquals (new Integer [] { I1, I2, I3, I4 }, getConcatenated (a, b, Integer.class));
+      assertArrayEquals (new Integer [] { I1, I2, I3, I4 }, getConcatenated (a, b));
+      assertArrayEquals (new Integer [] { I3, I4, I1, I2 }, getConcatenated (b, a));
+      assertArrayEquals (a, getConcatenated (a, (Integer []) null));
+      assertArrayEquals (b, getConcatenated ((Integer []) null, b));
+      assertArrayEquals (new Integer [] { I1, I2, I5 }, getConcatenated (a, I5, Integer.class));
+      assertArrayEquals (new Integer [] { I5 }, getConcatenated ((Integer []) null, I5, Integer.class));
+      assertArrayEquals (new Integer [] { I6, I1, I2 }, getConcatenated (I6, a, Integer.class));
+      assertArrayEquals (new Integer [] { I6 }, getConcatenated (I6, (Integer []) null, Integer.class));
+      assertArrayEquals (new Integer [] { I1, I2, null }, getConcatenated (a, (Integer) null, Integer.class));
+      assertArrayEquals (new Integer [] { null, I3, I4 }, getConcatenated ((Integer) null, b, Integer.class));
     }
 
     {
       assertTrue (Arrays.equals (new boolean [] { false, false, true },
-                                 ArrayHelper.getConcatenated (new boolean [] { false, false }, new boolean [] { true })));
+                                 getConcatenated (new boolean [] { false, false }, new boolean [] { true })));
       assertTrue (Arrays.equals (new boolean [] { false, false },
-                                 ArrayHelper.getConcatenated (new boolean [] { false, false }, (boolean []) null)));
-      assertTrue (Arrays.equals (new boolean [] { true },
-                                 ArrayHelper.getConcatenated ((boolean []) null, new boolean [] { true })));
+                                 getConcatenated (new boolean [] { false, false }, (boolean []) null)));
+      assertTrue (Arrays.equals (new boolean [] { true }, getConcatenated ((boolean []) null, new boolean [] { true })));
       assertTrue (Arrays.equals (new boolean [] { false, false, true },
-                                 ArrayHelper.getConcatenated (new boolean [] { false, false }, true)));
-      assertTrue (Arrays.equals (new boolean [] { true }, ArrayHelper.getConcatenated ((boolean []) null, true)));
+                                 getConcatenated (new boolean [] { false, false }, true)));
+      assertTrue (Arrays.equals (new boolean [] { true }, getConcatenated ((boolean []) null, true)));
       assertTrue (Arrays.equals (new boolean [] { false, false, true },
-                                 ArrayHelper.getConcatenated (false, new boolean [] { false, true })));
-      assertTrue (Arrays.equals (new boolean [] { false }, ArrayHelper.getConcatenated (false, (boolean []) null)));
+                                 getConcatenated (false, new boolean [] { false, true })));
+      assertTrue (Arrays.equals (new boolean [] { false }, getConcatenated (false, (boolean []) null)));
     }
 
     {
       assertTrue (Arrays.equals (new byte [] { 1, 2, 3, 4 },
-                                 ArrayHelper.getConcatenated (new byte [] { 1, 2 }, new byte [] { 3, 4 })));
-      assertTrue (Arrays.equals (new byte [] { 1, 2 },
-                                 ArrayHelper.getConcatenated (new byte [] { 1, 2 }, (byte []) null)));
-      assertTrue (Arrays.equals (new byte [] { 3, 4 },
-                                 ArrayHelper.getConcatenated ((byte []) null, new byte [] { 3, 4 })));
-      assertTrue (Arrays.equals (new byte [] { 1, 2, 3 }, ArrayHelper.getConcatenated (new byte [] { 1, 2 }, (byte) 3)));
-      assertTrue (Arrays.equals (new byte [] { 3 }, ArrayHelper.getConcatenated ((byte []) null, (byte) 3)));
-      assertTrue (Arrays.equals (new byte [] { 1, 2, 3 }, ArrayHelper.getConcatenated ((byte) 1, new byte [] { 2, 3 })));
-      assertTrue (Arrays.equals (new byte [] { 1 }, ArrayHelper.getConcatenated ((byte) 1, (byte []) null)));
+                                 getConcatenated (new byte [] { 1, 2 }, new byte [] { 3, 4 })));
+      assertTrue (Arrays.equals (new byte [] { 1, 2 }, getConcatenated (new byte [] { 1, 2 }, (byte []) null)));
+      assertTrue (Arrays.equals (new byte [] { 3, 4 }, getConcatenated ((byte []) null, new byte [] { 3, 4 })));
+      assertTrue (Arrays.equals (new byte [] { 1, 2, 3 }, getConcatenated (new byte [] { 1, 2 }, (byte) 3)));
+      assertTrue (Arrays.equals (new byte [] { 3 }, getConcatenated ((byte []) null, (byte) 3)));
+      assertTrue (Arrays.equals (new byte [] { 1, 2, 3 }, getConcatenated ((byte) 1, new byte [] { 2, 3 })));
+      assertTrue (Arrays.equals (new byte [] { 1 }, getConcatenated ((byte) 1, (byte []) null)));
     }
 
     {
       assertTrue (Arrays.equals (new char [] { 1, 2, 3, 4 },
-                                 ArrayHelper.getConcatenated (new char [] { 1, 2 }, new char [] { 3, 4 })));
-      assertTrue (Arrays.equals (new char [] { 1, 2 },
-                                 ArrayHelper.getConcatenated (new char [] { 1, 2 }, (char []) null)));
-      assertTrue (Arrays.equals (new char [] { 3, 4 },
-                                 ArrayHelper.getConcatenated ((char []) null, new char [] { 3, 4 })));
-      assertTrue (Arrays.equals (new char [] { 1, 2, 3 }, ArrayHelper.getConcatenated (new char [] { 1, 2 }, (char) 3)));
-      assertTrue (Arrays.equals (new char [] { 3 }, ArrayHelper.getConcatenated ((char []) null, (char) 3)));
-      assertTrue (Arrays.equals (new char [] { 1, 2, 3 }, ArrayHelper.getConcatenated ((char) 1, new char [] { 2, 3 })));
-      assertTrue (Arrays.equals (new char [] { 1 }, ArrayHelper.getConcatenated ((char) 1, (char []) null)));
+                                 getConcatenated (new char [] { 1, 2 }, new char [] { 3, 4 })));
+      assertTrue (Arrays.equals (new char [] { 1, 2 }, getConcatenated (new char [] { 1, 2 }, (char []) null)));
+      assertTrue (Arrays.equals (new char [] { 3, 4 }, getConcatenated ((char []) null, new char [] { 3, 4 })));
+      assertTrue (Arrays.equals (new char [] { 1, 2, 3 }, getConcatenated (new char [] { 1, 2 }, (char) 3)));
+      assertTrue (Arrays.equals (new char [] { 3 }, getConcatenated ((char []) null, (char) 3)));
+      assertTrue (Arrays.equals (new char [] { 1, 2, 3 }, getConcatenated ((char) 1, new char [] { 2, 3 })));
+      assertTrue (Arrays.equals (new char [] { 1 }, getConcatenated ((char) 1, (char []) null)));
     }
 
     {
       assertTrue (Arrays.equals (new double [] { 1, 2, 3, 4 },
-                                 ArrayHelper.getConcatenated (new double [] { 1, 2 }, new double [] { 3, 4 })));
-      assertTrue (Arrays.equals (new double [] { 1, 2 },
-                                 ArrayHelper.getConcatenated (new double [] { 1, 2 }, (double []) null)));
-      assertTrue (Arrays.equals (new double [] { 3, 4 },
-                                 ArrayHelper.getConcatenated ((double []) null, new double [] { 3, 4 })));
-      assertTrue (Arrays.equals (new double [] { 1, 2, 3 }, ArrayHelper.getConcatenated (new double [] { 1, 2 }, 3)));
-      assertTrue (Arrays.equals (new double [] { 3 }, ArrayHelper.getConcatenated ((double []) null, 3)));
-      assertTrue (Arrays.equals (new double [] { 1, 2, 3 }, ArrayHelper.getConcatenated (1, new double [] { 2, 3 })));
-      assertTrue (Arrays.equals (new double [] { 1 }, ArrayHelper.getConcatenated (1, (double []) null)));
+                                 getConcatenated (new double [] { 1, 2 }, new double [] { 3, 4 })));
+      assertTrue (Arrays.equals (new double [] { 1, 2 }, getConcatenated (new double [] { 1, 2 }, (double []) null)));
+      assertTrue (Arrays.equals (new double [] { 3, 4 }, getConcatenated ((double []) null, new double [] { 3, 4 })));
+      assertTrue (Arrays.equals (new double [] { 1, 2, 3 }, getConcatenated (new double [] { 1, 2 }, 3)));
+      assertTrue (Arrays.equals (new double [] { 3 }, getConcatenated ((double []) null, 3)));
+      assertTrue (Arrays.equals (new double [] { 1, 2, 3 }, getConcatenated (1, new double [] { 2, 3 })));
+      assertTrue (Arrays.equals (new double [] { 1 }, getConcatenated (1, (double []) null)));
     }
 
     {
       assertTrue (Arrays.equals (new float [] { 1, 2, 3, 4 },
-                                 ArrayHelper.getConcatenated (new float [] { 1, 2 }, new float [] { 3, 4 })));
-      assertTrue (Arrays.equals (new float [] { 1, 2 },
-                                 ArrayHelper.getConcatenated (new float [] { 1, 2 }, (float []) null)));
-      assertTrue (Arrays.equals (new float [] { 3, 4 },
-                                 ArrayHelper.getConcatenated ((float []) null, new float [] { 3, 4 })));
-      assertTrue (Arrays.equals (new float [] { 1, 2, 3 }, ArrayHelper.getConcatenated (new float [] { 1, 2 }, 3)));
-      assertTrue (Arrays.equals (new float [] { 3 }, ArrayHelper.getConcatenated ((float []) null, 3)));
-      assertTrue (Arrays.equals (new float [] { 1, 2, 3 }, ArrayHelper.getConcatenated (1, new float [] { 2, 3 })));
-      assertTrue (Arrays.equals (new float [] { 1 }, ArrayHelper.getConcatenated (1, (float []) null)));
+                                 getConcatenated (new float [] { 1, 2 }, new float [] { 3, 4 })));
+      assertTrue (Arrays.equals (new float [] { 1, 2 }, getConcatenated (new float [] { 1, 2 }, (float []) null)));
+      assertTrue (Arrays.equals (new float [] { 3, 4 }, getConcatenated ((float []) null, new float [] { 3, 4 })));
+      assertTrue (Arrays.equals (new float [] { 1, 2, 3 }, getConcatenated (new float [] { 1, 2 }, 3)));
+      assertTrue (Arrays.equals (new float [] { 3 }, getConcatenated ((float []) null, 3)));
+      assertTrue (Arrays.equals (new float [] { 1, 2, 3 }, getConcatenated (1, new float [] { 2, 3 })));
+      assertTrue (Arrays.equals (new float [] { 1 }, getConcatenated (1, (float []) null)));
     }
 
     {
-      assertTrue (Arrays.equals (new int [] { 1, 2, 3, 4 },
-                                 ArrayHelper.getConcatenated (new int [] { 1, 2 }, new int [] { 3, 4 })));
-      assertTrue (Arrays.equals (new int [] { 1, 2 }, ArrayHelper.getConcatenated (new int [] { 1, 2 }, (int []) null)));
-      assertTrue (Arrays.equals (new int [] { 3, 4 }, ArrayHelper.getConcatenated ((int []) null, new int [] { 3, 4 })));
-      assertTrue (Arrays.equals (new int [] { 1, 2, 3 }, ArrayHelper.getConcatenated (new int [] { 1, 2 }, 3)));
-      assertTrue (Arrays.equals (new int [] { 3 }, ArrayHelper.getConcatenated ((int []) null, 3)));
-      assertTrue (Arrays.equals (new int [] { 1, 2, 3 }, ArrayHelper.getConcatenated (1, new int [] { 2, 3 })));
-      assertTrue (Arrays.equals (new int [] { 1 }, ArrayHelper.getConcatenated (1, (int []) null)));
+      assertTrue (Arrays.equals (new int [] { 1, 2, 3, 4 }, getConcatenated (new int [] { 1, 2 }, new int [] { 3, 4 })));
+      assertTrue (Arrays.equals (new int [] { 1, 2 }, getConcatenated (new int [] { 1, 2 }, (int []) null)));
+      assertTrue (Arrays.equals (new int [] { 3, 4 }, getConcatenated ((int []) null, new int [] { 3, 4 })));
+      assertTrue (Arrays.equals (new int [] { 1, 2, 3 }, getConcatenated (new int [] { 1, 2 }, 3)));
+      assertTrue (Arrays.equals (new int [] { 3 }, getConcatenated ((int []) null, 3)));
+      assertTrue (Arrays.equals (new int [] { 1, 2, 3 }, getConcatenated (1, new int [] { 2, 3 })));
+      assertTrue (Arrays.equals (new int [] { 1 }, getConcatenated (1, (int []) null)));
     }
 
     {
       assertTrue (Arrays.equals (new long [] { 1, 2, 3, 4 },
-                                 ArrayHelper.getConcatenated (new long [] { 1, 2 }, new long [] { 3, 4 })));
-      assertTrue (Arrays.equals (new long [] { 1, 2 },
-                                 ArrayHelper.getConcatenated (new long [] { 1, 2 }, (long []) null)));
-      assertTrue (Arrays.equals (new long [] { 3, 4 },
-                                 ArrayHelper.getConcatenated ((long []) null, new long [] { 3, 4 })));
-      assertTrue (Arrays.equals (new long [] { 1, 2, 3 }, ArrayHelper.getConcatenated (new long [] { 1, 2 }, 3L)));
-      assertTrue (Arrays.equals (new long [] { 3 }, ArrayHelper.getConcatenated ((long []) null, 3L)));
-      assertTrue (Arrays.equals (new long [] { 1, 2, 3 }, ArrayHelper.getConcatenated (1L, new long [] { 2, 3 })));
-      assertTrue (Arrays.equals (new long [] { 1 }, ArrayHelper.getConcatenated (1L, (long []) null)));
+                                 getConcatenated (new long [] { 1, 2 }, new long [] { 3, 4 })));
+      assertTrue (Arrays.equals (new long [] { 1, 2 }, getConcatenated (new long [] { 1, 2 }, (long []) null)));
+      assertTrue (Arrays.equals (new long [] { 3, 4 }, getConcatenated ((long []) null, new long [] { 3, 4 })));
+      assertTrue (Arrays.equals (new long [] { 1, 2, 3 }, getConcatenated (new long [] { 1, 2 }, 3L)));
+      assertTrue (Arrays.equals (new long [] { 3 }, getConcatenated ((long []) null, 3L)));
+      assertTrue (Arrays.equals (new long [] { 1, 2, 3 }, getConcatenated (1L, new long [] { 2, 3 })));
+      assertTrue (Arrays.equals (new long [] { 1 }, getConcatenated (1L, (long []) null)));
     }
 
     {
       assertTrue (Arrays.equals (new short [] { 1, 2, 3, 4 },
-                                 ArrayHelper.getConcatenated (new short [] { 1, 2 }, new short [] { 3, 4 })));
-      assertTrue (Arrays.equals (new short [] { 1, 2 },
-                                 ArrayHelper.getConcatenated (new short [] { 1, 2 }, (short []) null)));
-      assertTrue (Arrays.equals (new short [] { 3, 4 },
-                                 ArrayHelper.getConcatenated ((short []) null, new short [] { 3, 4 })));
-      assertTrue (Arrays.equals (new short [] { 1, 2, 3 },
-                                 ArrayHelper.getConcatenated (new short [] { 1, 2 }, (short) 3)));
-      assertTrue (Arrays.equals (new short [] { 3 }, ArrayHelper.getConcatenated ((short []) null, (short) 3)));
-      assertTrue (Arrays.equals (new short [] { 1, 2, 3 },
-                                 ArrayHelper.getConcatenated ((short) 1, new short [] { 2, 3 })));
-      assertTrue (Arrays.equals (new short [] { 1 }, ArrayHelper.getConcatenated ((short) 1, (short []) null)));
+                                 getConcatenated (new short [] { 1, 2 }, new short [] { 3, 4 })));
+      assertTrue (Arrays.equals (new short [] { 1, 2 }, getConcatenated (new short [] { 1, 2 }, (short []) null)));
+      assertTrue (Arrays.equals (new short [] { 3, 4 }, getConcatenated ((short []) null, new short [] { 3, 4 })));
+      assertTrue (Arrays.equals (new short [] { 1, 2, 3 }, getConcatenated (new short [] { 1, 2 }, (short) 3)));
+      assertTrue (Arrays.equals (new short [] { 3 }, getConcatenated ((short []) null, (short) 3)));
+      assertTrue (Arrays.equals (new short [] { 1, 2, 3 }, getConcatenated ((short) 1, new short [] { 2, 3 })));
+      assertTrue (Arrays.equals (new short [] { 1 }, getConcatenated ((short) 1, (short []) null)));
     }
   }
 
   @Test
-  public void testNewArray ()
+  public void testNewArrayEmpty ()
   {
-    final String [] a = ArrayHelper.newArray (String.class, 3);
+    final String [] a = newArray (String.class, 3);
     assertNotNull (a);
-    assertTrue (ArrayHelper.isArray (a));
+    assertTrue (isArray (a));
     assertEquals (3, a.length);
     for (int i = 0; i < 3; ++i)
       assertNull (a[i]);
 
     try
     {
-      ArrayHelper.newArray ((Class <?>) null, 5);
+      newArray ((Class <?>) null, 5);
       fail ();
     }
     catch (final NullPointerException ex)
     {}
     try
     {
-      ArrayHelper.newArray (byte.class, 5);
+      newArray (byte.class, 5);
       fail ();
     }
     catch (final IllegalArgumentException ex)
     {}
     try
     {
-      ArrayHelper.newArray (String.class, -1);
+      newArray (String.class, -1);
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -542,25 +546,25 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewArrayFromCollection ()
   {
-    String [] x = ArrayHelper.newArray (ContainerHelper.newList ("s1", "s2", "s3"), String.class);
+    String [] x = newArray (ContainerHelper.newList ("s1", "s2", "s3"), String.class);
     assertNotNull (x);
     assertEquals (3, x.length);
 
-    x = ArrayHelper.newArray (new ArrayList <String> (), String.class);
+    x = newArray (new ArrayList <String> (), String.class);
     assertNull (x);
 
-    x = ArrayHelper.newArray ((List <String>) null, String.class);
+    x = newArray ((List <String>) null, String.class);
     assertNull (x);
   }
 
   @Test
   public void testNewArrayFromArray ()
   {
-    String [] x = ArrayHelper.newArray ("s1", "s2", "s3");
+    String [] x = newArray ("s1", "s2", "s3");
     assertNotNull (x);
     assertEquals (3, x.length);
 
-    x = ArrayHelper.newArray (new String [0]);
+    x = newArray (new String [0]);
     assertNotNull (x);
     assertEquals (0, x.length);
   }
@@ -568,16 +572,16 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewArraySizeValue ()
   {
-    String [] ret = ArrayHelper.newArray (1, "6", String.class);
+    String [] ret = newArray (1, "6", String.class);
     assertNotNull (ret);
     assertEquals (1, ret.length);
     assertEquals ("6", ret[0]);
 
-    ret = ArrayHelper.newArray (0, "Hello world", String.class);
+    ret = newArray (0, "Hello world", String.class);
     assertNotNull (ret);
     assertEquals (0, ret.length);
 
-    ret = ArrayHelper.newArray (10, "Hello world", String.class);
+    ret = newArray (10, "Hello world", String.class);
     assertNotNull (ret);
     assertEquals (10, ret.length);
     for (int i = 0; i < ret.length; ++i)
@@ -586,7 +590,7 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
     try
     {
       // negative size
-      ArrayHelper.newArray (-1, "6", String.class);
+      newArray (-1, "6", String.class);
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -594,7 +598,7 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
     try
     {
       // no class
-      ArrayHelper.newArray (1, "6", null);
+      newArray (1, "6", null);
       fail ();
     }
     catch (final NullPointerException ex)
@@ -612,18 +616,18 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
       final String [] x = new String [] { "s1", "s2", "s3" };
       final String [] y = new String [] { "s2", "s3" };
       final String [] z = new String [] { "s3" };
-      assertArrayEquals (y, ArrayHelper.getAllExceptFirst (x));
-      assertArrayEquals (x, ArrayHelper.getAllExceptFirst (x, 0));
-      assertArrayEquals (y, ArrayHelper.getAllExceptFirst (x, 1));
-      assertArrayEquals (z, ArrayHelper.getAllExceptFirst (x, 2));
-      assertNull (ArrayHelper.getAllExceptFirst (x, 3));
-      assertNull (ArrayHelper.getAllExceptFirst (x, 4));
-      assertNull (ArrayHelper.getAllExceptFirst (x[0]));
-      assertNull (ArrayHelper.getAllExceptFirst (new String [0]));
-      assertNull (ArrayHelper.getAllExceptFirst ((String []) null));
+      assertArrayEquals (y, getAllExceptFirst (x));
+      assertArrayEquals (x, getAllExceptFirst (x, 0));
+      assertArrayEquals (y, getAllExceptFirst (x, 1));
+      assertArrayEquals (z, getAllExceptFirst (x, 2));
+      assertNull (getAllExceptFirst (x, 3));
+      assertNull (getAllExceptFirst (x, 4));
+      assertNull (getAllExceptFirst (x[0]));
+      assertNull (getAllExceptFirst (new String [0]));
+      assertNull (getAllExceptFirst ((String []) null));
       try
       {
-        ArrayHelper.getAllExceptFirst (x, -1);
+        getAllExceptFirst (x, -1);
         fail ();
       }
       catch (final IllegalArgumentException ex)
@@ -635,18 +639,18 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
       final boolean [] x = new boolean [] { true, false, true };
       final boolean [] y = new boolean [] { false, true };
       final boolean [] z = new boolean [] { true };
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptFirst (x)));
-      assertTrue (Arrays.equals (x, ArrayHelper.getAllExceptFirst (x, 0)));
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptFirst (x, 1)));
-      assertTrue (Arrays.equals (z, ArrayHelper.getAllExceptFirst (x, 2)));
-      assertNull (ArrayHelper.getAllExceptFirst (x, 3));
-      assertNull (ArrayHelper.getAllExceptFirst (x, 4));
-      assertNull (ArrayHelper.getAllExceptFirst (new boolean [] { x[0] }));
-      assertNull (ArrayHelper.getAllExceptFirst (new boolean [0]));
-      assertNull (ArrayHelper.getAllExceptFirst ((boolean []) null));
+      assertTrue (Arrays.equals (y, getAllExceptFirst (x)));
+      assertTrue (Arrays.equals (x, getAllExceptFirst (x, 0)));
+      assertTrue (Arrays.equals (y, getAllExceptFirst (x, 1)));
+      assertTrue (Arrays.equals (z, getAllExceptFirst (x, 2)));
+      assertNull (getAllExceptFirst (x, 3));
+      assertNull (getAllExceptFirst (x, 4));
+      assertNull (getAllExceptFirst (new boolean [] { x[0] }));
+      assertNull (getAllExceptFirst (new boolean [0]));
+      assertNull (getAllExceptFirst ((boolean []) null));
       try
       {
-        ArrayHelper.getAllExceptFirst (x, -1);
+        getAllExceptFirst (x, -1);
         fail ();
       }
       catch (final IllegalArgumentException ex)
@@ -658,18 +662,18 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
       final byte [] x = new byte [] { 5, 9, 14 };
       final byte [] y = new byte [] { 9, 14 };
       final byte [] z = new byte [] { 14 };
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptFirst (x)));
-      assertTrue (Arrays.equals (x, ArrayHelper.getAllExceptFirst (x, 0)));
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptFirst (x, 1)));
-      assertTrue (Arrays.equals (z, ArrayHelper.getAllExceptFirst (x, 2)));
-      assertNull (ArrayHelper.getAllExceptFirst (x, 3));
-      assertNull (ArrayHelper.getAllExceptFirst (x, 4));
-      assertNull (ArrayHelper.getAllExceptFirst (new byte [] { x[0] }));
-      assertNull (ArrayHelper.getAllExceptFirst (new byte [0]));
-      assertNull (ArrayHelper.getAllExceptFirst ((byte []) null));
+      assertTrue (Arrays.equals (y, getAllExceptFirst (x)));
+      assertTrue (Arrays.equals (x, getAllExceptFirst (x, 0)));
+      assertTrue (Arrays.equals (y, getAllExceptFirst (x, 1)));
+      assertTrue (Arrays.equals (z, getAllExceptFirst (x, 2)));
+      assertNull (getAllExceptFirst (x, 3));
+      assertNull (getAllExceptFirst (x, 4));
+      assertNull (getAllExceptFirst (new byte [] { x[0] }));
+      assertNull (getAllExceptFirst (new byte [0]));
+      assertNull (getAllExceptFirst ((byte []) null));
       try
       {
-        ArrayHelper.getAllExceptFirst (x, -1);
+        getAllExceptFirst (x, -1);
         fail ();
       }
       catch (final IllegalArgumentException ex)
@@ -681,18 +685,18 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
       final char [] x = new char [] { 'a', 'B', 'c' };
       final char [] y = new char [] { 'B', 'c' };
       final char [] z = new char [] { 'c' };
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptFirst (x)));
-      assertTrue (Arrays.equals (x, ArrayHelper.getAllExceptFirst (x, 0)));
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptFirst (x, 1)));
-      assertTrue (Arrays.equals (z, ArrayHelper.getAllExceptFirst (x, 2)));
-      assertNull (ArrayHelper.getAllExceptFirst (x, 3));
-      assertNull (ArrayHelper.getAllExceptFirst (x, 4));
-      assertNull (ArrayHelper.getAllExceptFirst (new char [] { x[0] }));
-      assertNull (ArrayHelper.getAllExceptFirst (new char [0]));
-      assertNull (ArrayHelper.getAllExceptFirst ((char []) null));
+      assertTrue (Arrays.equals (y, getAllExceptFirst (x)));
+      assertTrue (Arrays.equals (x, getAllExceptFirst (x, 0)));
+      assertTrue (Arrays.equals (y, getAllExceptFirst (x, 1)));
+      assertTrue (Arrays.equals (z, getAllExceptFirst (x, 2)));
+      assertNull (getAllExceptFirst (x, 3));
+      assertNull (getAllExceptFirst (x, 4));
+      assertNull (getAllExceptFirst (new char [] { x[0] }));
+      assertNull (getAllExceptFirst (new char [0]));
+      assertNull (getAllExceptFirst ((char []) null));
       try
       {
-        ArrayHelper.getAllExceptFirst (x, -1);
+        getAllExceptFirst (x, -1);
         fail ();
       }
       catch (final IllegalArgumentException ex)
@@ -704,18 +708,18 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
       final double [] x = new double [] { -1.1, 0, 1.1 };
       final double [] y = new double [] { 0, 1.1 };
       final double [] z = new double [] { 1.1 };
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptFirst (x)));
-      assertTrue (Arrays.equals (x, ArrayHelper.getAllExceptFirst (x, 0)));
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptFirst (x, 1)));
-      assertTrue (Arrays.equals (z, ArrayHelper.getAllExceptFirst (x, 2)));
-      assertNull (ArrayHelper.getAllExceptFirst (x, 3));
-      assertNull (ArrayHelper.getAllExceptFirst (x, 4));
-      assertNull (ArrayHelper.getAllExceptFirst (new double [] { x[0] }));
-      assertNull (ArrayHelper.getAllExceptFirst (new double [0]));
-      assertNull (ArrayHelper.getAllExceptFirst ((double []) null));
+      assertTrue (Arrays.equals (y, getAllExceptFirst (x)));
+      assertTrue (Arrays.equals (x, getAllExceptFirst (x, 0)));
+      assertTrue (Arrays.equals (y, getAllExceptFirst (x, 1)));
+      assertTrue (Arrays.equals (z, getAllExceptFirst (x, 2)));
+      assertNull (getAllExceptFirst (x, 3));
+      assertNull (getAllExceptFirst (x, 4));
+      assertNull (getAllExceptFirst (new double [] { x[0] }));
+      assertNull (getAllExceptFirst (new double [0]));
+      assertNull (getAllExceptFirst ((double []) null));
       try
       {
-        ArrayHelper.getAllExceptFirst (x, -1);
+        getAllExceptFirst (x, -1);
         fail ();
       }
       catch (final IllegalArgumentException ex)
@@ -727,18 +731,18 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
       final float [] x = new float [] { -3.2f, -0.01f, 99.8f };
       final float [] y = new float [] { -0.01f, 99.8f };
       final float [] z = new float [] { 99.8f };
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptFirst (x)));
-      assertTrue (Arrays.equals (x, ArrayHelper.getAllExceptFirst (x, 0)));
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptFirst (x, 1)));
-      assertTrue (Arrays.equals (z, ArrayHelper.getAllExceptFirst (x, 2)));
-      assertNull (ArrayHelper.getAllExceptFirst (x, 3));
-      assertNull (ArrayHelper.getAllExceptFirst (x, 4));
-      assertNull (ArrayHelper.getAllExceptFirst (new float [] { x[0] }));
-      assertNull (ArrayHelper.getAllExceptFirst (new float [0]));
-      assertNull (ArrayHelper.getAllExceptFirst ((float []) null));
+      assertTrue (Arrays.equals (y, getAllExceptFirst (x)));
+      assertTrue (Arrays.equals (x, getAllExceptFirst (x, 0)));
+      assertTrue (Arrays.equals (y, getAllExceptFirst (x, 1)));
+      assertTrue (Arrays.equals (z, getAllExceptFirst (x, 2)));
+      assertNull (getAllExceptFirst (x, 3));
+      assertNull (getAllExceptFirst (x, 4));
+      assertNull (getAllExceptFirst (new float [] { x[0] }));
+      assertNull (getAllExceptFirst (new float [0]));
+      assertNull (getAllExceptFirst ((float []) null));
       try
       {
-        ArrayHelper.getAllExceptFirst (x, -1);
+        getAllExceptFirst (x, -1);
         fail ();
       }
       catch (final IllegalArgumentException ex)
@@ -750,18 +754,18 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
       final int [] x = new int [] { -5, 2, 9 };
       final int [] y = new int [] { 2, 9 };
       final int [] z = new int [] { 9 };
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptFirst (x)));
-      assertTrue (Arrays.equals (x, ArrayHelper.getAllExceptFirst (x, 0)));
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptFirst (x, 1)));
-      assertTrue (Arrays.equals (z, ArrayHelper.getAllExceptFirst (x, 2)));
-      assertNull (ArrayHelper.getAllExceptFirst (x, 3));
-      assertNull (ArrayHelper.getAllExceptFirst (x, 4));
-      assertNull (ArrayHelper.getAllExceptFirst (new int [] { x[0] }));
-      assertNull (ArrayHelper.getAllExceptFirst (new int [0]));
-      assertNull (ArrayHelper.getAllExceptFirst ((int []) null));
+      assertTrue (Arrays.equals (y, getAllExceptFirst (x)));
+      assertTrue (Arrays.equals (x, getAllExceptFirst (x, 0)));
+      assertTrue (Arrays.equals (y, getAllExceptFirst (x, 1)));
+      assertTrue (Arrays.equals (z, getAllExceptFirst (x, 2)));
+      assertNull (getAllExceptFirst (x, 3));
+      assertNull (getAllExceptFirst (x, 4));
+      assertNull (getAllExceptFirst (new int [] { x[0] }));
+      assertNull (getAllExceptFirst (new int [0]));
+      assertNull (getAllExceptFirst ((int []) null));
       try
       {
-        ArrayHelper.getAllExceptFirst (x, -1);
+        getAllExceptFirst (x, -1);
         fail ();
       }
       catch (final IllegalArgumentException ex)
@@ -773,18 +777,18 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
       final long [] x = new long [] { -6, 2, 10 };
       final long [] y = new long [] { 2, 10 };
       final long [] z = new long [] { 10 };
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptFirst (x)));
-      assertTrue (Arrays.equals (x, ArrayHelper.getAllExceptFirst (x, 0)));
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptFirst (x, 1)));
-      assertTrue (Arrays.equals (z, ArrayHelper.getAllExceptFirst (x, 2)));
-      assertNull (ArrayHelper.getAllExceptFirst (x, 3));
-      assertNull (ArrayHelper.getAllExceptFirst (x, 4));
-      assertNull (ArrayHelper.getAllExceptFirst (new long [] { x[0] }));
-      assertNull (ArrayHelper.getAllExceptFirst (new long [0]));
-      assertNull (ArrayHelper.getAllExceptFirst ((long []) null));
+      assertTrue (Arrays.equals (y, getAllExceptFirst (x)));
+      assertTrue (Arrays.equals (x, getAllExceptFirst (x, 0)));
+      assertTrue (Arrays.equals (y, getAllExceptFirst (x, 1)));
+      assertTrue (Arrays.equals (z, getAllExceptFirst (x, 2)));
+      assertNull (getAllExceptFirst (x, 3));
+      assertNull (getAllExceptFirst (x, 4));
+      assertNull (getAllExceptFirst (new long [] { x[0] }));
+      assertNull (getAllExceptFirst (new long [0]));
+      assertNull (getAllExceptFirst ((long []) null));
       try
       {
-        ArrayHelper.getAllExceptFirst (x, -1);
+        getAllExceptFirst (x, -1);
         fail ();
       }
       catch (final IllegalArgumentException ex)
@@ -796,18 +800,18 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
       final short [] x = new short [] { -100, -10, 1 };
       final short [] y = new short [] { -10, 1 };
       final short [] z = new short [] { 1 };
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptFirst (x)));
-      assertTrue (Arrays.equals (x, ArrayHelper.getAllExceptFirst (x, 0)));
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptFirst (x, 1)));
-      assertTrue (Arrays.equals (z, ArrayHelper.getAllExceptFirst (x, 2)));
-      assertNull (ArrayHelper.getAllExceptFirst (x, 3));
-      assertNull (ArrayHelper.getAllExceptFirst (x, 4));
-      assertNull (ArrayHelper.getAllExceptFirst (new short [] { x[0] }));
-      assertNull (ArrayHelper.getAllExceptFirst (new short [0]));
-      assertNull (ArrayHelper.getAllExceptFirst ((short []) null));
+      assertTrue (Arrays.equals (y, getAllExceptFirst (x)));
+      assertTrue (Arrays.equals (x, getAllExceptFirst (x, 0)));
+      assertTrue (Arrays.equals (y, getAllExceptFirst (x, 1)));
+      assertTrue (Arrays.equals (z, getAllExceptFirst (x, 2)));
+      assertNull (getAllExceptFirst (x, 3));
+      assertNull (getAllExceptFirst (x, 4));
+      assertNull (getAllExceptFirst (new short [] { x[0] }));
+      assertNull (getAllExceptFirst (new short [0]));
+      assertNull (getAllExceptFirst ((short []) null));
       try
       {
-        ArrayHelper.getAllExceptFirst (x, -1);
+        getAllExceptFirst (x, -1);
         fail ();
       }
       catch (final IllegalArgumentException ex)
@@ -826,18 +830,18 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
       final String [] x = new String [] { "s1", "s2", "s3" };
       final String [] y = new String [] { "s1", "s2" };
       final String [] z = new String [] { "s1" };
-      assertArrayEquals (y, ArrayHelper.getAllExceptLast (x));
-      assertArrayEquals (x, ArrayHelper.getAllExceptLast (x, 0));
-      assertArrayEquals (y, ArrayHelper.getAllExceptLast (x, 1));
-      assertArrayEquals (z, ArrayHelper.getAllExceptLast (x, 2));
-      assertNull (ArrayHelper.getAllExceptLast (x, 3));
-      assertNull (ArrayHelper.getAllExceptLast (x, 4));
-      assertNull (ArrayHelper.getAllExceptLast (x[0]));
-      assertNull (ArrayHelper.getAllExceptLast (new String [0]));
-      assertNull (ArrayHelper.getAllExceptLast ((String []) null));
+      assertArrayEquals (y, getAllExceptLast (x));
+      assertArrayEquals (x, getAllExceptLast (x, 0));
+      assertArrayEquals (y, getAllExceptLast (x, 1));
+      assertArrayEquals (z, getAllExceptLast (x, 2));
+      assertNull (getAllExceptLast (x, 3));
+      assertNull (getAllExceptLast (x, 4));
+      assertNull (getAllExceptLast (x[0]));
+      assertNull (getAllExceptLast (new String [0]));
+      assertNull (getAllExceptLast ((String []) null));
       try
       {
-        ArrayHelper.getAllExceptLast (x, -1);
+        getAllExceptLast (x, -1);
         fail ();
       }
       catch (final IllegalArgumentException ex)
@@ -849,18 +853,18 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
       final boolean [] x = new boolean [] { true, false, true };
       final boolean [] y = new boolean [] { true, false };
       final boolean [] z = new boolean [] { true };
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptLast (x)));
-      assertTrue (Arrays.equals (x, ArrayHelper.getAllExceptLast (x, 0)));
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptLast (x, 1)));
-      assertTrue (Arrays.equals (z, ArrayHelper.getAllExceptLast (x, 2)));
-      assertNull (ArrayHelper.getAllExceptLast (x, 3));
-      assertNull (ArrayHelper.getAllExceptLast (x, 4));
-      assertNull (ArrayHelper.getAllExceptLast (new boolean [] { x[0] }));
-      assertNull (ArrayHelper.getAllExceptLast (new boolean [0]));
-      assertNull (ArrayHelper.getAllExceptLast ((boolean []) null));
+      assertTrue (Arrays.equals (y, getAllExceptLast (x)));
+      assertTrue (Arrays.equals (x, getAllExceptLast (x, 0)));
+      assertTrue (Arrays.equals (y, getAllExceptLast (x, 1)));
+      assertTrue (Arrays.equals (z, getAllExceptLast (x, 2)));
+      assertNull (getAllExceptLast (x, 3));
+      assertNull (getAllExceptLast (x, 4));
+      assertNull (getAllExceptLast (new boolean [] { x[0] }));
+      assertNull (getAllExceptLast (new boolean [0]));
+      assertNull (getAllExceptLast ((boolean []) null));
       try
       {
-        ArrayHelper.getAllExceptLast (x, -1);
+        getAllExceptLast (x, -1);
         fail ();
       }
       catch (final IllegalArgumentException ex)
@@ -872,18 +876,18 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
       final byte [] x = new byte [] { 5, 9, 14 };
       final byte [] y = new byte [] { 5, 9 };
       final byte [] z = new byte [] { 5 };
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptLast (x)));
-      assertTrue (Arrays.equals (x, ArrayHelper.getAllExceptLast (x, 0)));
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptLast (x, 1)));
-      assertTrue (Arrays.equals (z, ArrayHelper.getAllExceptLast (x, 2)));
-      assertNull (ArrayHelper.getAllExceptLast (x, 3));
-      assertNull (ArrayHelper.getAllExceptLast (x, 4));
-      assertNull (ArrayHelper.getAllExceptLast (new byte [] { x[0] }));
-      assertNull (ArrayHelper.getAllExceptLast (new byte [0]));
-      assertNull (ArrayHelper.getAllExceptLast ((byte []) null));
+      assertTrue (Arrays.equals (y, getAllExceptLast (x)));
+      assertTrue (Arrays.equals (x, getAllExceptLast (x, 0)));
+      assertTrue (Arrays.equals (y, getAllExceptLast (x, 1)));
+      assertTrue (Arrays.equals (z, getAllExceptLast (x, 2)));
+      assertNull (getAllExceptLast (x, 3));
+      assertNull (getAllExceptLast (x, 4));
+      assertNull (getAllExceptLast (new byte [] { x[0] }));
+      assertNull (getAllExceptLast (new byte [0]));
+      assertNull (getAllExceptLast ((byte []) null));
       try
       {
-        ArrayHelper.getAllExceptLast (x, -1);
+        getAllExceptLast (x, -1);
         fail ();
       }
       catch (final IllegalArgumentException ex)
@@ -895,18 +899,18 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
       final char [] x = new char [] { 'a', 'B', 'c' };
       final char [] y = new char [] { 'a', 'B' };
       final char [] z = new char [] { 'a' };
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptLast (x)));
-      assertTrue (Arrays.equals (x, ArrayHelper.getAllExceptLast (x, 0)));
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptLast (x, 1)));
-      assertTrue (Arrays.equals (z, ArrayHelper.getAllExceptLast (x, 2)));
-      assertNull (ArrayHelper.getAllExceptLast (x, 3));
-      assertNull (ArrayHelper.getAllExceptLast (x, 4));
-      assertNull (ArrayHelper.getAllExceptLast (new char [] { x[0] }));
-      assertNull (ArrayHelper.getAllExceptLast (new char [0]));
-      assertNull (ArrayHelper.getAllExceptLast ((char []) null));
+      assertTrue (Arrays.equals (y, getAllExceptLast (x)));
+      assertTrue (Arrays.equals (x, getAllExceptLast (x, 0)));
+      assertTrue (Arrays.equals (y, getAllExceptLast (x, 1)));
+      assertTrue (Arrays.equals (z, getAllExceptLast (x, 2)));
+      assertNull (getAllExceptLast (x, 3));
+      assertNull (getAllExceptLast (x, 4));
+      assertNull (getAllExceptLast (new char [] { x[0] }));
+      assertNull (getAllExceptLast (new char [0]));
+      assertNull (getAllExceptLast ((char []) null));
       try
       {
-        ArrayHelper.getAllExceptLast (x, -1);
+        getAllExceptLast (x, -1);
         fail ();
       }
       catch (final IllegalArgumentException ex)
@@ -918,18 +922,18 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
       final double [] x = new double [] { -1.1, 0, 1.1 };
       final double [] y = new double [] { -1.1, 0 };
       final double [] z = new double [] { -1.1 };
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptLast (x)));
-      assertTrue (Arrays.equals (x, ArrayHelper.getAllExceptLast (x, 0)));
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptLast (x, 1)));
-      assertTrue (Arrays.equals (z, ArrayHelper.getAllExceptLast (x, 2)));
-      assertNull (ArrayHelper.getAllExceptLast (x, 3));
-      assertNull (ArrayHelper.getAllExceptLast (x, 4));
-      assertNull (ArrayHelper.getAllExceptLast (new double [] { x[0] }));
-      assertNull (ArrayHelper.getAllExceptLast (new double [0]));
-      assertNull (ArrayHelper.getAllExceptLast ((double []) null));
+      assertTrue (Arrays.equals (y, getAllExceptLast (x)));
+      assertTrue (Arrays.equals (x, getAllExceptLast (x, 0)));
+      assertTrue (Arrays.equals (y, getAllExceptLast (x, 1)));
+      assertTrue (Arrays.equals (z, getAllExceptLast (x, 2)));
+      assertNull (getAllExceptLast (x, 3));
+      assertNull (getAllExceptLast (x, 4));
+      assertNull (getAllExceptLast (new double [] { x[0] }));
+      assertNull (getAllExceptLast (new double [0]));
+      assertNull (getAllExceptLast ((double []) null));
       try
       {
-        ArrayHelper.getAllExceptLast (x, -1);
+        getAllExceptLast (x, -1);
         fail ();
       }
       catch (final IllegalArgumentException ex)
@@ -941,18 +945,18 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
       final float [] x = new float [] { -3.2f, -0.01f, 99.8f };
       final float [] y = new float [] { -3.2f, -0.01f };
       final float [] z = new float [] { -3.2f };
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptLast (x)));
-      assertTrue (Arrays.equals (x, ArrayHelper.getAllExceptLast (x, 0)));
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptLast (x, 1)));
-      assertTrue (Arrays.equals (z, ArrayHelper.getAllExceptLast (x, 2)));
-      assertNull (ArrayHelper.getAllExceptLast (x, 3));
-      assertNull (ArrayHelper.getAllExceptLast (x, 4));
-      assertNull (ArrayHelper.getAllExceptLast (new float [] { x[0] }));
-      assertNull (ArrayHelper.getAllExceptLast (new float [0]));
-      assertNull (ArrayHelper.getAllExceptLast ((float []) null));
+      assertTrue (Arrays.equals (y, getAllExceptLast (x)));
+      assertTrue (Arrays.equals (x, getAllExceptLast (x, 0)));
+      assertTrue (Arrays.equals (y, getAllExceptLast (x, 1)));
+      assertTrue (Arrays.equals (z, getAllExceptLast (x, 2)));
+      assertNull (getAllExceptLast (x, 3));
+      assertNull (getAllExceptLast (x, 4));
+      assertNull (getAllExceptLast (new float [] { x[0] }));
+      assertNull (getAllExceptLast (new float [0]));
+      assertNull (getAllExceptLast ((float []) null));
       try
       {
-        ArrayHelper.getAllExceptLast (x, -1);
+        getAllExceptLast (x, -1);
         fail ();
       }
       catch (final IllegalArgumentException ex)
@@ -964,18 +968,18 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
       final int [] x = new int [] { -5, 2, 9 };
       final int [] y = new int [] { -5, 2 };
       final int [] z = new int [] { -5 };
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptLast (x)));
-      assertTrue (Arrays.equals (x, ArrayHelper.getAllExceptLast (x, 0)));
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptLast (x, 1)));
-      assertTrue (Arrays.equals (z, ArrayHelper.getAllExceptLast (x, 2)));
-      assertNull (ArrayHelper.getAllExceptLast (x, 3));
-      assertNull (ArrayHelper.getAllExceptLast (x, 4));
-      assertNull (ArrayHelper.getAllExceptLast (new int [] { x[0] }));
-      assertNull (ArrayHelper.getAllExceptLast (new int [0]));
-      assertNull (ArrayHelper.getAllExceptLast ((int []) null));
+      assertTrue (Arrays.equals (y, getAllExceptLast (x)));
+      assertTrue (Arrays.equals (x, getAllExceptLast (x, 0)));
+      assertTrue (Arrays.equals (y, getAllExceptLast (x, 1)));
+      assertTrue (Arrays.equals (z, getAllExceptLast (x, 2)));
+      assertNull (getAllExceptLast (x, 3));
+      assertNull (getAllExceptLast (x, 4));
+      assertNull (getAllExceptLast (new int [] { x[0] }));
+      assertNull (getAllExceptLast (new int [0]));
+      assertNull (getAllExceptLast ((int []) null));
       try
       {
-        ArrayHelper.getAllExceptLast (x, -1);
+        getAllExceptLast (x, -1);
         fail ();
       }
       catch (final IllegalArgumentException ex)
@@ -987,18 +991,18 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
       final long [] x = new long [] { -6, 2, 10 };
       final long [] y = new long [] { -6, 2 };
       final long [] z = new long [] { -6 };
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptLast (x)));
-      assertTrue (Arrays.equals (x, ArrayHelper.getAllExceptLast (x, 0)));
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptLast (x, 1)));
-      assertTrue (Arrays.equals (z, ArrayHelper.getAllExceptLast (x, 2)));
-      assertNull (ArrayHelper.getAllExceptLast (x, 3));
-      assertNull (ArrayHelper.getAllExceptLast (x, 4));
-      assertNull (ArrayHelper.getAllExceptLast (new long [] { x[0] }));
-      assertNull (ArrayHelper.getAllExceptLast (new long [0]));
-      assertNull (ArrayHelper.getAllExceptLast ((long []) null));
+      assertTrue (Arrays.equals (y, getAllExceptLast (x)));
+      assertTrue (Arrays.equals (x, getAllExceptLast (x, 0)));
+      assertTrue (Arrays.equals (y, getAllExceptLast (x, 1)));
+      assertTrue (Arrays.equals (z, getAllExceptLast (x, 2)));
+      assertNull (getAllExceptLast (x, 3));
+      assertNull (getAllExceptLast (x, 4));
+      assertNull (getAllExceptLast (new long [] { x[0] }));
+      assertNull (getAllExceptLast (new long [0]));
+      assertNull (getAllExceptLast ((long []) null));
       try
       {
-        ArrayHelper.getAllExceptLast (x, -1);
+        getAllExceptLast (x, -1);
         fail ();
       }
       catch (final IllegalArgumentException ex)
@@ -1010,22 +1014,48 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
       final short [] x = new short [] { -100, -10, 1 };
       final short [] y = new short [] { -100, -10 };
       final short [] z = new short [] { -100 };
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptLast (x)));
-      assertTrue (Arrays.equals (x, ArrayHelper.getAllExceptLast (x, 0)));
-      assertTrue (Arrays.equals (y, ArrayHelper.getAllExceptLast (x, 1)));
-      assertTrue (Arrays.equals (z, ArrayHelper.getAllExceptLast (x, 2)));
-      assertNull (ArrayHelper.getAllExceptLast (x, 3));
-      assertNull (ArrayHelper.getAllExceptLast (x, 4));
-      assertNull (ArrayHelper.getAllExceptLast (new short [] { x[0] }));
-      assertNull (ArrayHelper.getAllExceptLast (new short [0]));
-      assertNull (ArrayHelper.getAllExceptLast ((short []) null));
+      assertTrue (Arrays.equals (y, getAllExceptLast (x)));
+      assertTrue (Arrays.equals (x, getAllExceptLast (x, 0)));
+      assertTrue (Arrays.equals (y, getAllExceptLast (x, 1)));
+      assertTrue (Arrays.equals (z, getAllExceptLast (x, 2)));
+      assertNull (getAllExceptLast (x, 3));
+      assertNull (getAllExceptLast (x, 4));
+      assertNull (getAllExceptLast (new short [] { x[0] }));
+      assertNull (getAllExceptLast (new short [0]));
+      assertNull (getAllExceptLast ((short []) null));
       try
       {
-        ArrayHelper.getAllExceptLast (x, -1);
+        getAllExceptLast (x, -1);
         fail ();
       }
       catch (final IllegalArgumentException ex)
       {}
     }
+  }
+
+  @Test
+  public void testContainsNullElement ()
+  {
+    assertFalse (containsNullElement ((String []) null));
+    assertFalse (containsNullElement (new Object [0]));
+
+    assertFalse (containsNullElement (newArray ("a")));
+    assertFalse (containsNullElement (newArray ("a", "b", "c")));
+    assertTrue (containsNullElement (newArray ((String) null, "a")));
+    assertTrue (containsNullElement (newArray ("a", (String) null)));
+    assertTrue (containsNullElement (newArray ((String) null)));
+  }
+
+  @Test
+  public void testNewPrimitiveArray ()
+  {
+    assertEquals (2, newBooleanArray (true, false).length);
+    assertEquals (2, newByteArray ((byte) 5, (byte) 6).length);
+    assertEquals (2, newCharArray ((char) 5, (char) 6).length);
+    assertEquals (2, newDoubleArray (5.2, 6.1).length);
+    assertEquals (2, newFloatArray (5.2f, 6.1f).length);
+    assertEquals (2, newIntArray (5, 6).length);
+    assertEquals (2, newLongArray (5L, 6L).length);
+    assertEquals (2, newShortArray ((short) 5, (short) 6).length);
   }
 }

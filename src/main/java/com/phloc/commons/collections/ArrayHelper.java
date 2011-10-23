@@ -2651,6 +2651,126 @@ public final class ArrayHelper
     return getCopy (aArray, 0, aArray.length - nElementsToSkip);
   }
 
+  /**
+   * Helper method to easily create an array from constant values.
+   * 
+   * @param aArray
+   *        The list of values for the array. May be <code>null</code>.
+   * @return The passed array. <code>null</code> if the passed array was
+   *         <code>null</code>.
+   */
+  @Nullable
+  @ReturnsMutableObject (reason = "use getCopy otherwise")
+  public static boolean [] newBooleanArray (@Nullable final boolean... aArray)
+  {
+    return aArray;
+  }
+
+  /**
+   * Helper method to easily create an array from constant values.
+   * 
+   * @param aArray
+   *        The list of values for the array. May be <code>null</code>.
+   * @return The passed array. <code>null</code> if the passed array was
+   *         <code>null</code>.
+   */
+  @Nullable
+  @ReturnsMutableObject (reason = "use getCopy otherwise")
+  public static byte [] newByteArray (@Nullable final byte... aArray)
+  {
+    return aArray;
+  }
+
+  /**
+   * Helper method to easily create an array from constant values.
+   * 
+   * @param aArray
+   *        The list of values for the array. May be <code>null</code>.
+   * @return The passed array. <code>null</code> if the passed array was
+   *         <code>null</code>.
+   */
+  @Nullable
+  @ReturnsMutableObject (reason = "use getCopy otherwise")
+  public static char [] newCharArray (@Nullable final char... aArray)
+  {
+    return aArray;
+  }
+
+  /**
+   * Helper method to easily create an array from constant values.
+   * 
+   * @param aArray
+   *        The list of values for the array. May be <code>null</code>.
+   * @return The passed array. <code>null</code> if the passed array was
+   *         <code>null</code>.
+   */
+  @Nullable
+  @ReturnsMutableObject (reason = "use getCopy otherwise")
+  public static double [] newDoubleArray (@Nullable final double... aArray)
+  {
+    return aArray;
+  }
+
+  /**
+   * Helper method to easily create an array from constant values.
+   * 
+   * @param aArray
+   *        The list of values for the array. May be <code>null</code>.
+   * @return The passed array. <code>null</code> if the passed array was
+   *         <code>null</code>.
+   */
+  @Nullable
+  @ReturnsMutableObject (reason = "use getCopy otherwise")
+  public static float [] newFloatArray (@Nullable final float... aArray)
+  {
+    return aArray;
+  }
+
+  /**
+   * Helper method to easily create an array from constant values.
+   * 
+   * @param aArray
+   *        The list of values for the array. May be <code>null</code>.
+   * @return The passed array. <code>null</code> if the passed array was
+   *         <code>null</code>.
+   */
+  @Nullable
+  @ReturnsMutableObject (reason = "use getCopy otherwise")
+  public static int [] newIntArray (@Nullable final int... aArray)
+  {
+    return aArray;
+  }
+
+  /**
+   * Helper method to easily create an array from constant values.
+   * 
+   * @param aArray
+   *        The list of values for the array. May be <code>null</code>.
+   * @return The passed array. <code>null</code> if the passed array was
+   *         <code>null</code>.
+   */
+  @Nullable
+  @ReturnsMutableObject (reason = "use getCopy otherwise")
+  public static long [] newLongArray (@Nullable final long... aArray)
+  {
+    return aArray;
+  }
+
+  /**
+   * Helper method to easily create an array from constant values.
+   * 
+   * @param aArray
+   *        The list of values for the array. May be <code>null</code>.
+   * @return The passed array. <code>null</code> if the passed array was
+   *         <code>null</code>.
+   */
+  @Nullable
+  @ReturnsMutableObject (reason = "use getCopy otherwise")
+  public static short [] newShortArray (@Nullable final short... aArray)
+  {
+    return aArray;
+  }
+
   @Nonnull
   public static <ELEMENTTYPE> ELEMENTTYPE [] newArray (@Nonnull final Class <? extends ELEMENTTYPE> aClass,
                                                        @Nonnegative final int nSize)
@@ -2688,7 +2808,7 @@ public final class ArrayHelper
    */
   @Nullable
   @ReturnsMutableCopy
-  public static <ELEMENTTYPE> ELEMENTTYPE [] newArray (@Nonnull final Collection <ELEMENTTYPE> aCollection,
+  public static <ELEMENTTYPE> ELEMENTTYPE [] newArray (@Nullable final Collection <ELEMENTTYPE> aCollection,
                                                        @Nonnull final Class <ELEMENTTYPE> aClass)
   {
     if (ContainerHelper.isEmpty (aCollection))
@@ -2860,5 +2980,23 @@ public final class ArrayHelper
 
     // No differences found!
     return true;
+  }
+
+  /**
+   * Check if the passed array contains at least one <code>null</code> element.
+   * 
+   * @param aArray
+   *        The collection to check. May be <code>null</code>.
+   * @return <code>true</code> only if the passed array is neither
+   *         <code>null</code> nor empty and if at least one <code>null</code>
+   *         element is contained.
+   */
+  public static <T> boolean containsNullElement (@Nullable final T [] aArray)
+  {
+    if (aArray != null)
+      for (final T aObj : aArray)
+        if (aObj == null)
+          return true;
+    return false;
   }
 }
