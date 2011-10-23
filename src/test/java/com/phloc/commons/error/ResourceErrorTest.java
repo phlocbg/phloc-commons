@@ -26,6 +26,7 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
+import com.phloc.commons.CGlobal;
 import com.phloc.commons.mock.MockException;
 import com.phloc.commons.mock.PhlocTestUtils;
 
@@ -82,7 +83,7 @@ public final class ResourceErrorTest
     ResourceError re = new ResourceError (loc, EErrorLevel.ERROR, "mock error");
     assertEquals (loc, re.getLocation ());
     assertEquals (EErrorLevel.ERROR, re.getErrorLevel ());
-    assertEquals ("mock error", re.getErrorText (null));
+    assertEquals ("mock error", re.getErrorText (CGlobal.LOCALE_ALL));
     assertNull (re.getLinkedException ());
     assertNotNull (re.getAsString ());
     assertFalse (re.isSuccess ());
@@ -93,7 +94,7 @@ public final class ResourceErrorTest
     re = new ResourceError (loc, EErrorLevel.WARN, "mock error", new MockException ());
     assertEquals (loc, re.getLocation ());
     assertEquals (EErrorLevel.WARN, re.getErrorLevel ());
-    assertEquals ("mock error", re.getErrorText (null));
+    assertEquals ("mock error", re.getErrorText (CGlobal.LOCALE_ALL));
     assertTrue (re.getLinkedException () instanceof MockException);
     assertNotNull (re.getAsString ());
     assertFalse (re.isSuccess ());
