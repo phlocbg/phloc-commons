@@ -52,7 +52,7 @@ import com.phloc.commons.typeconvert.TypeConverter;
  */
 @Immutable
 @IsSPIImplementation
-public final class BaseConverterRegistrar implements ITypeConverterRegistrarSPI
+public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrarSPI
 {
   /**
    * Register all type converters for the 15 base types:<br>
