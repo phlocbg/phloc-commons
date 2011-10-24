@@ -43,7 +43,7 @@ import com.phloc.commons.typeconvert.ITypeConverterRegistry;
  */
 @Immutable
 @IsSPIImplementation
-public final class StateEnumConverterRegistrar implements ITypeConverterRegistrarSPI
+public final class StateEnumTypeConverterRegistrar implements ITypeConverterRegistrarSPI
 {
   public void registerTypeConverter (@Nonnull final ITypeConverterRegistry aRegistry)
   {
