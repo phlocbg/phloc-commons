@@ -2499,4 +2499,156 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertTrue (containsNullElement (newList ((String) null)));
     assertTrue (containsNullElement (newList (null, Integer.valueOf (5))));
   }
+
+  @Test
+  public void testNewBooleanContainer ()
+  {
+    assertTrue (ContainerHelper.newBooleanList ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableBooleanList ().isEmpty ());
+    assertTrue (ContainerHelper.newBooleanSet ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableBooleanSet ().isEmpty ());
+    assertTrue (ContainerHelper.newBooleanOrderedSet ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableBooleanOrderedSet ().isEmpty ());
+
+    final boolean [] aValues = new boolean [] { true, true };
+    assertEquals (2, ContainerHelper.newBooleanList (aValues).size ());
+    assertEquals (2, ContainerHelper.newUnmodifiableBooleanList (aValues).size ());
+    assertEquals (1, ContainerHelper.newBooleanSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newUnmodifiableBooleanSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newBooleanOrderedSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newUnmodifiableBooleanOrderedSet (aValues).size ());
+  }
+
+  @Test
+  public void testNewByteContainer ()
+  {
+    assertTrue (ContainerHelper.newByteList ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableByteList ().isEmpty ());
+    assertTrue (ContainerHelper.newByteSet ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableByteSet ().isEmpty ());
+    assertTrue (ContainerHelper.newByteOrderedSet ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableByteOrderedSet ().isEmpty ());
+
+    final byte [] aValues = new byte [] { 3, 3 };
+    assertEquals (2, ContainerHelper.newByteList (aValues).size ());
+    assertEquals (2, ContainerHelper.newUnmodifiableByteList (aValues).size ());
+    assertEquals (1, ContainerHelper.newByteSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newUnmodifiableByteSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newByteOrderedSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newUnmodifiableByteOrderedSet (aValues).size ());
+  }
+
+  @Test
+  public void testNewCharContainer ()
+  {
+    assertTrue (ContainerHelper.newCharList ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableCharList ().isEmpty ());
+    assertTrue (ContainerHelper.newCharSet ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableCharSet ().isEmpty ());
+    assertTrue (ContainerHelper.newCharOrderedSet ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableCharOrderedSet ().isEmpty ());
+
+    final char [] aValues = new char [] { 'x', 'x' };
+    assertEquals (2, ContainerHelper.newCharList (aValues).size ());
+    assertEquals (2, ContainerHelper.newUnmodifiableCharList (aValues).size ());
+    assertEquals (1, ContainerHelper.newCharSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newUnmodifiableCharSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newCharOrderedSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newUnmodifiableCharOrderedSet (aValues).size ());
+  }
+
+  @Test
+  public void testNewDoubleContainer ()
+  {
+    assertTrue (ContainerHelper.newDoubleList ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableDoubleList ().isEmpty ());
+    assertTrue (ContainerHelper.newDoubleSet ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableDoubleSet ().isEmpty ());
+    assertTrue (ContainerHelper.newDoubleOrderedSet ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableDoubleOrderedSet ().isEmpty ());
+
+    final double [] aValues = new double [] { 1.1, 1.1 };
+    assertEquals (2, ContainerHelper.newDoubleList (aValues).size ());
+    assertEquals (2, ContainerHelper.newUnmodifiableDoubleList (aValues).size ());
+    assertEquals (1, ContainerHelper.newDoubleSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newUnmodifiableDoubleSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newDoubleOrderedSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newUnmodifiableDoubleOrderedSet (aValues).size ());
+  }
+
+  @Test
+  public void testNewFloatContainer ()
+  {
+    assertTrue (ContainerHelper.newFloatList ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableFloatList ().isEmpty ());
+    assertTrue (ContainerHelper.newFloatSet ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableFloatSet ().isEmpty ());
+    assertTrue (ContainerHelper.newFloatOrderedSet ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableFloatOrderedSet ().isEmpty ());
+
+    final float [] aValues = new float [] { 3.2f, 3.2f };
+    assertEquals (2, ContainerHelper.newFloatList (aValues).size ());
+    assertEquals (2, ContainerHelper.newUnmodifiableFloatList (aValues).size ());
+    assertEquals (1, ContainerHelper.newFloatSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newUnmodifiableFloatSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newFloatOrderedSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newUnmodifiableFloatOrderedSet (aValues).size ());
+  }
+
+  @Test
+  public void testNewIntContainer ()
+  {
+    assertTrue (ContainerHelper.newIntList ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableIntList ().isEmpty ());
+    assertTrue (ContainerHelper.newIntSet ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableIntSet ().isEmpty ());
+    assertTrue (ContainerHelper.newIntOrderedSet ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableIntOrderedSet ().isEmpty ());
+
+    final int [] aValues = new int [] { 5, 5 };
+    assertEquals (2, ContainerHelper.newIntList (aValues).size ());
+    assertEquals (2, ContainerHelper.newUnmodifiableIntList (aValues).size ());
+    assertEquals (1, ContainerHelper.newIntSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newUnmodifiableIntSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newIntOrderedSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newUnmodifiableIntOrderedSet (aValues).size ());
+  }
+
+  @Test
+  public void testNewLongContainer ()
+  {
+    assertTrue (ContainerHelper.newLongList ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableLongList ().isEmpty ());
+    assertTrue (ContainerHelper.newLongSet ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableLongSet ().isEmpty ());
+    assertTrue (ContainerHelper.newLongOrderedSet ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableLongOrderedSet ().isEmpty ());
+
+    final long [] aValues = new long [] { 17, 17 };
+    assertEquals (2, ContainerHelper.newLongList (aValues).size ());
+    assertEquals (2, ContainerHelper.newUnmodifiableLongList (aValues).size ());
+    assertEquals (1, ContainerHelper.newLongSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newUnmodifiableLongSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newLongOrderedSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newUnmodifiableLongOrderedSet (aValues).size ());
+  }
+
+  @Test
+  public void testNewShortContainer ()
+  {
+    assertTrue (ContainerHelper.newShortList ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableShortList ().isEmpty ());
+    assertTrue (ContainerHelper.newShortSet ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableShortSet ().isEmpty ());
+    assertTrue (ContainerHelper.newShortOrderedSet ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableShortOrderedSet ().isEmpty ());
+
+    final short [] aValues = new short [] { 5, 5 };
+    assertEquals (2, ContainerHelper.newShortList (aValues).size ());
+    assertEquals (2, ContainerHelper.newUnmodifiableShortList (aValues).size ());
+    assertEquals (1, ContainerHelper.newShortSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newUnmodifiableShortSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newShortOrderedSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newUnmodifiableShortOrderedSet (aValues).size ());
+  }
 }

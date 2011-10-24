@@ -597,6 +597,94 @@ public final class ContainerHelper
   }
 
   @Nonnull
+  @ReturnsMutableCopy
+  public static Set <Boolean> newBooleanSet (@Nullable final boolean... aValues)
+  {
+    final Set <Boolean> ret = new HashSet <Boolean> ();
+    if (aValues != null)
+      for (final boolean aValue : aValues)
+        ret.add (Boolean.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <Byte> newByteSet (@Nullable final byte... aValues)
+  {
+    final Set <Byte> ret = new HashSet <Byte> ();
+    if (aValues != null)
+      for (final byte aValue : aValues)
+        ret.add (Byte.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <Character> newCharSet (@Nullable final char... aValues)
+  {
+    final Set <Character> ret = new HashSet <Character> ();
+    if (aValues != null)
+      for (final char aValue : aValues)
+        ret.add (Character.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <Double> newDoubleSet (@Nullable final double... aValues)
+  {
+    final Set <Double> ret = new HashSet <Double> ();
+    if (aValues != null)
+      for (final double aValue : aValues)
+        ret.add (Double.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <Float> newFloatSet (@Nullable final float... aValues)
+  {
+    final Set <Float> ret = new HashSet <Float> ();
+    if (aValues != null)
+      for (final float aValue : aValues)
+        ret.add (Float.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <Integer> newIntSet (@Nullable final int... aValues)
+  {
+    final Set <Integer> ret = new HashSet <Integer> ();
+    if (aValues != null)
+      for (final int aValue : aValues)
+        ret.add (Integer.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <Long> newLongSet (@Nullable final long... aValues)
+  {
+    final Set <Long> ret = new HashSet <Long> ();
+    if (aValues != null)
+      for (final long aValue : aValues)
+        ret.add (Long.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <Short> newShortSet (@Nullable final short... aValues)
+  {
+    final Set <Short> ret = new HashSet <Short> ();
+    if (aValues != null)
+      for (final short aValue : aValues)
+        ret.add (Short.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
   @ReturnsImmutableObject
   public static <ELEMENTTYPE> Set <ELEMENTTYPE> newUnmodifiableSet ()
   {
@@ -650,6 +738,62 @@ public final class ContainerHelper
   public static <ELEMENTTYPE> Set <ELEMENTTYPE> newUnmodifiableSet (@Nullable final Enumeration <? extends ELEMENTTYPE> aEnum)
   {
     return makeUnmodifiable (newSet (aEnum));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static Set <Boolean> newUnmodifiableBooleanSet (@Nullable final boolean... aValues)
+  {
+    return makeUnmodifiable (newBooleanSet (aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static Set <Byte> newUnmodifiableByteSet (@Nullable final byte... aValues)
+  {
+    return makeUnmodifiable (newByteSet (aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static Set <Character> newUnmodifiableCharSet (@Nullable final char... aValues)
+  {
+    return makeUnmodifiable (newCharSet (aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static Set <Double> newUnmodifiableDoubleSet (@Nullable final double... aValues)
+  {
+    return makeUnmodifiable (newDoubleSet (aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static Set <Float> newUnmodifiableFloatSet (@Nullable final float... aValues)
+  {
+    return makeUnmodifiable (newFloatSet (aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static Set <Integer> newUnmodifiableIntSet (@Nullable final int... aValues)
+  {
+    return makeUnmodifiable (newIntSet (aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static Set <Long> newUnmodifiableLongSet (@Nullable final long... aValues)
+  {
+    return makeUnmodifiable (newLongSet (aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static Set <Short> newUnmodifiableShortSet (@Nullable final short... aValues)
+  {
+    return makeUnmodifiable (newShortSet (aValues));
   }
 
   @Nonnull
@@ -734,6 +878,94 @@ public final class ContainerHelper
   }
 
   @Nonnull
+  @ReturnsMutableCopy
+  public static Set <Boolean> newBooleanOrderedSet (@Nullable final boolean... aValues)
+  {
+    final Set <Boolean> ret = new LinkedHashSet <Boolean> ();
+    if (aValues != null)
+      for (final boolean aValue : aValues)
+        ret.add (Boolean.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <Byte> newByteOrderedSet (@Nullable final byte... aValues)
+  {
+    final Set <Byte> ret = new LinkedHashSet <Byte> ();
+    if (aValues != null)
+      for (final byte aValue : aValues)
+        ret.add (Byte.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <Character> newCharOrderedSet (@Nullable final char... aValues)
+  {
+    final Set <Character> ret = new LinkedHashSet <Character> ();
+    if (aValues != null)
+      for (final char aValue : aValues)
+        ret.add (Character.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <Double> newDoubleOrderedSet (@Nullable final double... aValues)
+  {
+    final Set <Double> ret = new LinkedHashSet <Double> ();
+    if (aValues != null)
+      for (final double aValue : aValues)
+        ret.add (Double.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <Float> newFloatOrderedSet (@Nullable final float... aValues)
+  {
+    final Set <Float> ret = new LinkedHashSet <Float> ();
+    if (aValues != null)
+      for (final float aValue : aValues)
+        ret.add (Float.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <Integer> newIntOrderedSet (@Nullable final int... aValues)
+  {
+    final Set <Integer> ret = new LinkedHashSet <Integer> ();
+    if (aValues != null)
+      for (final int aValue : aValues)
+        ret.add (Integer.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <Long> newLongOrderedSet (@Nullable final long... aValues)
+  {
+    final Set <Long> ret = new LinkedHashSet <Long> ();
+    if (aValues != null)
+      for (final long aValue : aValues)
+        ret.add (Long.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <Short> newShortOrderedSet (@Nullable final short... aValues)
+  {
+    final Set <Short> ret = new LinkedHashSet <Short> ();
+    if (aValues != null)
+      for (final short aValue : aValues)
+        ret.add (Short.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
   @ReturnsImmutableObject
   public static <ELEMENTTYPE> Set <ELEMENTTYPE> newUnmodifiableOrderedSet ()
   {
@@ -787,6 +1019,62 @@ public final class ContainerHelper
   public static <ELEMENTTYPE> Set <ELEMENTTYPE> newUnmodifiableOrderedSet (@Nullable final Enumeration <? extends ELEMENTTYPE> aEnum)
   {
     return makeUnmodifiable (newOrderedSet (aEnum));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static Set <Boolean> newUnmodifiableBooleanOrderedSet (@Nullable final boolean... aValues)
+  {
+    return makeUnmodifiable (newBooleanOrderedSet (aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static Set <Byte> newUnmodifiableByteOrderedSet (@Nullable final byte... aValues)
+  {
+    return makeUnmodifiable (newByteOrderedSet (aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static Set <Character> newUnmodifiableCharOrderedSet (@Nullable final char... aValues)
+  {
+    return makeUnmodifiable (newCharOrderedSet (aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static Set <Double> newUnmodifiableDoubleOrderedSet (@Nullable final double... aValues)
+  {
+    return makeUnmodifiable (newDoubleOrderedSet (aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static Set <Float> newUnmodifiableFloatOrderedSet (@Nullable final float... aValues)
+  {
+    return makeUnmodifiable (newFloatOrderedSet (aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static Set <Integer> newUnmodifiableIntOrderedSet (@Nullable final int... aValues)
+  {
+    return makeUnmodifiable (newIntOrderedSet (aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static Set <Long> newUnmodifiableLongOrderedSet (@Nullable final long... aValues)
+  {
+    return makeUnmodifiable (newLongOrderedSet (aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static Set <Short> newUnmodifiableShortOrderedSet (@Nullable final short... aValues)
+  {
+    return makeUnmodifiable (newShortOrderedSet (aValues));
   }
 
   @Nonnull
@@ -897,6 +1185,94 @@ public final class ContainerHelper
   }
 
   @Nonnull
+  @ReturnsMutableCopy
+  public static List <Boolean> newBooleanList (@Nullable final boolean... aValues)
+  {
+    final List <Boolean> ret = new ArrayList <Boolean> ();
+    if (aValues != null)
+      for (final boolean aValue : aValues)
+        ret.add (Boolean.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static List <Byte> newByteList (@Nullable final byte... aValues)
+  {
+    final List <Byte> ret = new ArrayList <Byte> ();
+    if (aValues != null)
+      for (final byte aValue : aValues)
+        ret.add (Byte.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static List <Character> newCharList (@Nullable final char... aValues)
+  {
+    final List <Character> ret = new ArrayList <Character> ();
+    if (aValues != null)
+      for (final char aValue : aValues)
+        ret.add (Character.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static List <Double> newDoubleList (@Nullable final double... aValues)
+  {
+    final List <Double> ret = new ArrayList <Double> ();
+    if (aValues != null)
+      for (final double aValue : aValues)
+        ret.add (Double.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static List <Float> newFloatList (@Nullable final float... aValues)
+  {
+    final List <Float> ret = new ArrayList <Float> ();
+    if (aValues != null)
+      for (final float aValue : aValues)
+        ret.add (Float.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static List <Integer> newIntList (@Nullable final int... aValues)
+  {
+    final List <Integer> ret = new ArrayList <Integer> ();
+    if (aValues != null)
+      for (final int aValue : aValues)
+        ret.add (Integer.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static List <Long> newLongList (@Nullable final long... aValues)
+  {
+    final List <Long> ret = new ArrayList <Long> ();
+    if (aValues != null)
+      for (final long aValue : aValues)
+        ret.add (Long.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static List <Short> newShortList (@Nullable final short... aValues)
+  {
+    final List <Short> ret = new ArrayList <Short> ();
+    if (aValues != null)
+      for (final short aValue : aValues)
+        ret.add (Short.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
   @ReturnsImmutableObject
   public static <ELEMENTTYPE> List <ELEMENTTYPE> newUnmodifiableList ()
   {
@@ -950,6 +1326,62 @@ public final class ContainerHelper
   public static <ELEMENTTYPE> List <ELEMENTTYPE> newUnmodifiableList (@Nullable final IIterableIterator <? extends ELEMENTTYPE> aIter)
   {
     return makeUnmodifiable (newList (aIter));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static List <Boolean> newUnmodifiableBooleanList (@Nullable final boolean... aValues)
+  {
+    return makeUnmodifiable (newBooleanList (aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static List <Byte> newUnmodifiableByteList (@Nullable final byte... aValues)
+  {
+    return makeUnmodifiable (newByteList (aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static List <Character> newUnmodifiableCharList (@Nullable final char... aValues)
+  {
+    return makeUnmodifiable (newCharList (aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static List <Double> newUnmodifiableDoubleList (@Nullable final double... aValues)
+  {
+    return makeUnmodifiable (newDoubleList (aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static List <Float> newUnmodifiableFloatList (@Nullable final float... aValues)
+  {
+    return makeUnmodifiable (newFloatList (aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static List <Integer> newUnmodifiableIntList (@Nullable final int... aValues)
+  {
+    return makeUnmodifiable (newIntList (aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static List <Long> newUnmodifiableLongList (@Nullable final long... aValues)
+  {
+    return makeUnmodifiable (newLongList (aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static List <Short> newUnmodifiableShortList (@Nullable final short... aValues)
+  {
+    return makeUnmodifiable (newShortList (aValues));
   }
 
   @Nonnull
