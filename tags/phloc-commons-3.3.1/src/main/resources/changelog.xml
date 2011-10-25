@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (C) 2006-2011 phloc systems
+    http://www.phloc.com
+    office[at]phloc[dot]com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <release date="2011-10-25" version="3.3.1" />
+  <entry date="2011-10-24" category="api" action="add">
+    <change>
+      <text locale="en">Added default type conversions from primitive arrays to List, Set and OrderedSet</text>
+    </change>
+  </entry>
+  <entry date="2011-10-24" category="api" action="add">
+    <change>
+      <text locale="en">Added new methods ContainerHelper.newXXXList/Set/OrderedSet for all primitive types</text>
+    </change>
+  </entry>
+  <entry date="2011-10-23" category="api" action="add">
+    <change>
+      <text locale="en">Added new methods ArrayHelper.newXXXArray for all primitive types</text>
+    </change>
+  </entry>
+  <entry date="2011-10-23" category="api" action="add">
+    <change>
+      <text locale="en">Added new methods ContainerHelper.containsNullElement and ArrayHelper.containsNullElement</text>
+    </change>
+  </entry>
+  <entry date="2011-10-23" category="tech" action="fix">
+    <change>
+      <text locale="en">Fixed bug in ContainerHelper.getDifference. If the first container is empty, an empty Set is now returned.</text>
+    </change>
+  </entry>
+  <entry date="2011-10-23" category="tech" action="fix">
+    <change>
+      <text locale="en">Fixed bug in ContainerHelper.getIntersection. If any of the 2 container is empty, an empty Set is now returned.</text>
+    </change>
+  </entry>
+  <entry date="2011-10-20" category="api" action="add">
+    <change>
+      <text locale="en">CompareUtils got special nullSafeEquals versions for URL and BigDecimal</text>
+    </change>
+  </entry>
+  <entry date="2011-10-16" category="api" action="add">
+    <change>
+      <text locale="en">Extended state enum API with valueOf for the respective interfaces</text>
+    </change>
+  </entry>
+  <release date="2011-10-06" version="3.3.0" />
+  <entry date="2011-10-06" category="api" action="add">
+    <change>
+      <text locale="en">Added a new overload of StreamUtils.readStreamLines</text>
+    </change>
+  </entry>
+  <entry date="2011-10-06" category="api" action="add">
+    <change>
+      <text locale="en">Added class DefaultExecutorServiceFactory as a simple default implementation of the IExecutorServiceFactory</text>
+    </change>
+  </entry>
+  <entry date="2011-10-06" category="api" action="change" incompatible="true">
+    <change>
+      <text locale="en">Renamed I(Non)ThrowingCallback to I(Non)ThrowingRunnableWithParameter for consistent naming. The method name was also changed from execute to run</text>
+    </change>
+  </entry>
+  <entry date="2011-10-06" category="api" action="add">
+    <change>
+      <text locale="en">Added IThrowingCallable and IThrowingCallableWithParameter interface so that the hierarchy is complete</text>
+    </change>
+  </entry>
+  <entry date="2011-10-06" category="api" action="add">
+    <change>
+      <text locale="en">INonThrowingRunnable is now derived from IThrowingRunnable</text>
+    </change>
+  </entry>
+  <entry date="2011-10-05" category="api" action="add">
+    <change>
+      <text locale="en">Added method clear and interface IClearable to class InMemoryLogger</text>
+    </change>
+  </entry>
+  <entry date="2011-10-05" category="api" action="change">
+    <change>
+      <text locale="en">Removed final modifier from class InMemoryLogger</text>
+    </change>
+  </entry>
+  <entry date="2011-10-05" category="api" action="add">
+    <change>
+      <text locale="en">Added XMLHelper getNamespaceURI method, to retrieve the namespace URI of an arbitrary node</text>
+    </change>
+  </entry>
+  <entry date="2011-10-05" category="tech" action="change" incompatible="true">
+    <change>
+      <text locale="en">Extracted MicroTypeConverter from MicroTypeConverterRegistry to have the same naming as the regular type converter</text>
+    </change>
+  </entry>
+  <entry date="2011-10-05" category="api" action="change" incompatible="true">
+    <change>
+      <text locale="en">Changed the ITypeConverterRegistrarSPI SPI interface to take a callback interface for easier integration</text>
+    </change>
+  </entry>
+  <entry date="2011-10-05" category="api" action="change" incompatible="true">
+    <change>
+      <text locale="en">Changed the IMicroTypeConverterRegistrarSPI SPI interface to take a callback interface for easier integration</text>
+    </change>
+  </entry>
+  <entry date="2011-10-04" category="api" action="add">
+    <change>
+      <text locale="en">Extracted classes StringMicroTypeConverter and StringBasedMicroTypeConverter and made them publically available</text>
+    </change>
+  </entry>
+  <entry date="2011-10-04" category="tech" action="add">
+    <change>
+      <text locale="en">Added the new changelog category 'test' for all test related issues</text>
+    </change>
+  </entry>
+  <entry date="2011-10-04" category="api" action="add">
+    <change>
+      <text locale="en">Added the abstract base class AbstractChildrenProviderWithUniqueIDHasChildren</text>
+    </change>
+  </entry>
+  <entry date="2011-09-30" category="api" action="add">
+    <change>
+      <text locale="en">NonBlockingMessageDigestGenerator got the static API getDigestFromInputStream to create a message digest from an InputStream</text>
+    </change>
+  </entry>
+  <entry date="2011-09-30" category="api" action="add">
+    <change>
+      <text locale="en">Added some constants in CXML</text>
+    </change>
+  </entry>
+  <entry date="2011-09-26" category="api" action="add">
+    <change>
+      <text locale="en">Added CompareUtils.safeEquals (BigDecimal, BigDecimal) to correctly handle comparison of BigDecimal values with different scales</text>
+    </change>
+  </entry>
+  <release date="2011-09-26" version="3.2.1" />
+  <entry date="2011-09-26" category="api" action="add">
+    <change>
+      <text locale="en">Added HashingOutputStream</text>
+    </change>
+  </entry>
+  <entry date="2011-09-26" category="tech" action="change">
+    <change>
+      <text locale="en">HashingInputStream uses now a NonBlockingMessageDigestGenerator</text>
+    </change>
+  </entry>
+  <entry date="2011-09-23" category="api" action="add">
+    <change>
+      <text locale="en">Extended the RegExPool and RegExHelper classes to also support options for pattern compilation (e.g. MULTILINE, DOTALL etc.)</text>
+    </change>
+  </entry>
+  <entry date="2011-09-23" category="api" action="add">
+    <change>
+      <text locale="en">Added new methods to FilenameHelper: getExtension(File) and hasExtension(File)</text>
+    </change>
+  </entry>
+  <entry date="2011-09-23" category="api" action="add">
+    <change>
+      <text locale="en">Added several new constructors to the IMulti*Map* implementations</text>
+    </change>
+  </entry>
+  <entry date="2011-09-22" category="tech" action="change">
+    <change>
+      <text locale="en">@ShouldBeDeprecated is now also allowed for fields</text>
+    </change>
+  </entry>
+  <entry date="2011-09-21" category="api" action="add">
+    <change>
+      <text locale="en">Added new class MicroTypeConverterTreeXML for converting trees to XML using the default MicroTypeConverterRegistry types</text>
+    </change>
+  </entry>
+  <entry date="2011-09-21" category="api" action="add">
+    <change>
+      <text locale="en">Improved API of TreeXMLConverter so that it can easily read from IMicroElement instead of IMicroDocument</text>
+    </change>
+  </entry>
+  <release date="2011-09-20" version="3.2.0" />
+  <entry date="2011-09-20" category="api" action="change" incompatible="true">
+    <change>
+      <text locale="en">Moved implementations of Graph objects into a separate package</text>
+    </change>
+  </entry>
+  <entry date="2011-09-20" category="api" action="change" incompatible="true">
+    <change>
+      <text locale="en">Removed TreeWalkerWithID and TreeWalkerDynamicWithID as they can be replaced with TreeWalker and TreeWalkerDynamic</text>
+    </change>
+  </entry>
+  <entry date="2011-09-20" category="api" action="change">
+    <change>
+      <text locale="en">Removed final from most Comparator implementations</text>
+    </change>
+  </entry>
+  <entry date="2011-09-20" category="api" action="add">
+    <change>
+      <text locale="en">Added new classes ComparatorComparable and ComparatorHasIDComparable</text>
+    </change>
+  </entry>
+  <entry date="2011-09-20" category="api" action="change" incompatible="true">
+    <change>
+      <text locale="en">Tree class hierarchy heavily changed so that all packages have the same naming for the same semantics</text>
+    </change>
+  </entry>
+  <entry date="2011-09-16" category="api" action="change" incompatible="true">
+    <change>
+      <text locale="en">FolderTree* implementations now automatically use the keyCombinator method from the FolderTreeFactory</text>
+    </change>
+  </entry>
+  <entry date="2011-09-16" category="api" action="change" incompatible="true">
+    <change>
+      <text locale="en">Made the keyCombinator of the FolderTree stuff optional. In that case the regular ID is returned instead of the concatenated ID</text>
+    </change>
+  </entry>
+  <entry date="2011-09-16" category="api" action="change" incompatible="true">
+    <change>
+      <text locale="en">FileSystemFolderTree is now derived from DefaultFolderTree</text>
+    </change>
+  </entry>
+  <entry date="2011-09-16" category="api" action="change" incompatible="true">
+    <change>
+      <text locale="en">Renamed "FolderTree*" implementations to "DefaultFolderTree*" and introduced abstract base implementations</text>
+    </change>
+  </entry>
+  <entry date="2011-09-16" category="api" action="change">
+    <change>
+      <text locale="en">Started making FolderTree more usable by being more flexible</text>
+    </change>
+  </entry>
+  <entry date="2011-09-15" category="api" action="add">
+    <change>
+      <text locale="en">Added IMicroElement.setAttribute(String,long) as a sanity method</text>
+    </change>
+  </entry>
+  <entry date="2011-09-14" category="api" action="change" incompatible="true">
+    <change>
+      <text locale="en">GraphIterator now supports filtering relations to identify which relations to follow in iteration and which not</text>
+    </change>
+  </entry>
+  <entry date="2011-09-14" category="api" action="change">
+    <change>
+      <text locale="en">Introduced IGraphNode and IGraphRelation interfaces and using them</text>
+    </change>
+  </entry>
+  <entry date="2011-09-14" category="api" action="change">
+    <change>
+      <text locale="en">Class SimpleGraph is no longer final</text>
+    </change>
+  </entry>
+  <release date="2011-09-13" version="3.1.1" />
+  <entry date="2011-09-13" category="tech" action="change">
+    <change>
+      <text locale="en">Added blank before self-closing tags in XML writing</text>
+    </change>
+  </entry>
+  <entry date="2011-09-13" category="tech" action="change">
+    <change>
+      <text locale="en">EnumTextResolverWithPropertiesOverrideAndFallback uses fallbacks for override and fallback determination</text>
+    </change>
+  </entry>
+  <entry date="2011-09-13" category="api" action="change">
+    <change>
+      <text locale="en">The list returned from LocaleUtils.getCalculatedLocaleListForResolving is now unmodifiable</text>
+    </change>
+  </entry>
+  <entry date="2011-09-12" category="api" action="add">
+    <change>
+      <text locale="en">Added SimpleFileIO.writeFile with a list of lines</text>
+    </change>
+  </entry>
+  <release date="2011-09-12" version="3.1.0" />
+  <entry date="2011-09-12" category="tech" action="fix">
+    <change>
+      <text locale="en">Fixed error in tree with unique ID, so that &quot;getItemWithID&quot; calls failed afterwards, because the item was removed from the factory and not added again</text>
+    </change>
+  </entry>
+  <entry date="2011-09-08" category="api" action="add">
+    <change>
+      <text locale="en">Extended EnumHelper API to support case insensitive String lookup</text>
+    </change>
+  </entry>
+  <entry date="2011-09-06" category="tech" action="add">
+    <change>
+      <text locale="en">Changelog entries now support the 'incompatible' attribute of type boolean</text>
+    </change>
+  </entry>
+  <entry date="2011-09-06" category="api" action="change">
+    <change>
+      <text locale="en">Changed Generics type names to be more 'speaking' (e.g. ELEMENTTYPE instead of T)</text>
+    </change>
+  </entry>
+  <entry date="2011-09-06" category="api" action="add">
+    <change>
+      <text locale="en">Extracted anonymous inner classes of ContainerHelper into named public classes</text>
+    </change>
+  </entry>
+  <entry date="2011-09-06" category="api" action="add">
+    <change>
+      <text locale="en">Added class AggregatorConstant</text>
+    </change>
+  </entry>
+  <entry date="2011-09-06" category="api" action="change" incompatible="true">
+    <change>
+      <text locale="en">Moved class to ChildrenProviderElementWithName to package com.phloc.commons.microdom.utils</text>
+    </change>
+  </entry>
+  <entry date="2011-09-05" category="api" action="add">
+    <change>
+      <text locale="en">Added insertAtIndex method to IMicroNode</text>
+    </change>
+  </entry>
+  <entry date="2011-09-02" category="api" action="add">
+    <change>
+      <text locale="en">Added IHasDisplayTextWithArgs interface</text>
+    </change>
+  </entry>
+  <entry date="2011-09-02" category="api" action="add">
+    <change>
+      <text locale="en">Added MicroDOMInputStreamProvider constructor using the default charset</text>
+    </change>
+  </entry>
+  <entry date="2011-09-01" category="api" action="add">
+    <change>
+      <text locale="en">Added new class ComparatorHasIDString, ComparatorHasSimpleIntID and ComparatorHasSimpleLongID</text>
+    </change>
+  </entry>
+  <entry date="2011-09-01" category="api" action="add">
+    <change>
+      <text locale="en">Added new class CDefault having constant default values for primitive and primitive wrapper types</text>
+    </change>
+  </entry>
+  <entry date="2011-09-01" category="tech" action="add">
+    <change>
+      <text locale="en">Added all default type conversions from and to AtomicBoolean</text>
+    </change>
+  </entry>
+  <entry date="2011-09-01" category="api" action="change">
+    <change>
+      <text locale="en">Removed all @Deprecated methods</text>
+    </change>
+  </entry>
+  <entry date="2011-09-01" category="api" action="change">
+    <change>
+      <text locale="en">Moved everything in package dyntypes and beans to separate project phloc-types</text>
+    </change>
+  </entry>
+  <entry date="2011-09-01" category="api" action="add">
+    <change>
+      <text locale="en">Added a static create method for class FactoryConstantValue</text>
+    </change>
+  </entry>
+  <release date="2011-08-31" version="3.0.12" />
+  <entry date="2011-08-31" category="api" action="add">
+    <change>
+      <text locale="en">Added a static getAsString method to AbstractReadonlyAttributeContainer for converting a parameter Object to a String</text>
+    </change>
+  </entry>
+  <entry date="2011-08-30" category="api" action="add">
+    <change>
+      <text locale="en">Added a non-blocking MessageDigestGenerator as well as an IMessageDigestGenerator interface</text>
+    </change>
+  </entry>
+  <entry date="2011-08-30" category="api" action="add">
+    <change>
+      <text locale="en">Added a callback when reading change logs for advanced handling of the error messages.</text>
+    </change>
+  </entry>
+  <entry date="2011-08-30" category="tech" action="fix">
+    <change>
+      <text locale="en">Added automatic splitting of CDATA sections that contain the illegal ]]&gt; elements</text>
+    </change>
+  </entry>
+  <release date="2011-08-29" version="3.0.11" />
+  <entry date="2011-08-29" category="tech" action="fix">
+    <change>
+      <text locale="en">Changed default XML encoding of &apos; to &amp;#39; because IE8 emits an error otherwise</text>
+    </change>
+  </entry>
+  <entry date="2011-08-27" category="api" action="add">
+    <change>
+      <text locale="en">Added possibility to clear ImageDataManager cache</text>
+    </change>
+  </entry>
+  <release date="2011-08-26" version="3.0.10" />
+  <entry date="2011-08-26" category="api" action="change">
+    <change>
+      <text locale="en">Changed some methods to start with &quot;getAs&quot; instead of &quot;as&quot;</text>
+    </change>
+  </entry>
+  <entry date="2011-08-25" category="tech" action="fix">
+    <change>
+      <text locale="en">Fixed bug in FilenameHelper makeValidFilename in case a forbidden character was contained more than once</text>
+    </change>
+  </entry>
+  <entry date="2011-08-25" category="api" action="add">
+    <change>
+      <text locale="en">Added StringHelper API startsWithAny and endsWithAny</text>
+    </change>
+  </entry>
+  <entry date="2011-08-25" category="api" action="add">
+    <change>
+      <text locale="en">Added FilenameHelper API getAbsoluteWithEnsuredParentDirectory and getRelativeToParentDirectory</text>
+    </change>
+  </entry>
+  <entry date="2011-08-22" category="api" action="fix">
+    <change>
+      <text locale="en">Automatic masking of XML character &apos; to &amp;apos;</text>
+    </change>
+  </entry>
+  <release date="2011-08-22" version="3.0.9" />
+  <entry date="2011-08-22" category="api" action="change">
+    <change>
+      <text locale="en">Each change log entry now knows its parent changelog.</text>
+    </change>
+  </entry>
+  <entry date="2011-08-21" category="api" action="add">
+    <change>
+      <text locale="en">Added XML serialization option to ignore comments</text>
+    </change>
+  </entry>
+  <release date="2011-08-19" version="3.0.8.1" />
+  <entry date="2011-08-19" category="api" action="add">
+    <change>
+      <text locale="en">Added IHasErrorLevel interface</text>
+    </change>
+  </entry>
+  <entry date="2011-08-19" category="api" action="change">
+    <change>
+      <text locale="en">Removed final from ResourceError class</text>
+    </change>
+  </entry>
+  <entry date="2011-08-19" category="api" action="change">
+    <change>
+      <text locale="en">Added another ResourceLocation constructor</text>
+    </change>
+  </entry>
+  <release date="2011-08-19" version="3.0.8" />
+  <entry date="2011-08-18" category="api" action="change">
+    <change>
+      <text locale="en">Resource error API improved with error/noError API</text>
+    </change>
+  </entry>
+  <entry date="2011-08-18" category="api" action="change">
+    <change>
+      <text locale="en">Trying to unify resource error group handling</text>
+    </change>
+  </entry>
+  <release date="2011-08-18" version="3.0.7" />
+  <entry date="2011-08-18" category="api" action="add">
+    <change>
+      <text locale="en">Added class XMLSchemaValidationHelper for easy XML schema validation</text>
+    </change>
+  </entry>
+  <entry date="2011-08-17" category="tech" action="add">
+    <change>
+      <text locale="en">Added missing type converters for AtomicInteger, AtomicLong, StringBuffer and StringBuilder</text>
+    </change>
+  </entry>
+  <release date="2011-08-17" version="3.0.6" />
+  <entry date="2011-08-16" category="tech" action="fix">
+    <change>
+      <text locale="en">Fixed NPE in JAXB validation event handler</text>
+    </change>
+  </entry>
+  <entry date="2011-08-16" category="tech" action="fix">
+    <change>
+      <text locale="en">Fixed error in emitting XML nodes with multiple different namespaces</text>
+    </change>
+  </entry>
+  <release date="2011-08-16" version="3.0.5" />
+  <entry date="2011-08-16" category="tech" action="add">
+    <change>
+      <text locale="en">Added default micro type converters for basic types and the enumeration types in the state package</text>
+    </change>
+  </entry>
+  <entry date="2011-08-12" category="tech" action="add">
+    <change>
+      <text locale="en">Added default type converters for the enumeration types in the state package</text>
+    </change>
+  </entry>
+  <entry date="2011-08-12" category="api" action="change">
+    <change>
+      <text locale="en">Changed the way how type converters are registered. Therefore the exact type converter can be used more often which results in better performance</text>
+    </change>
+  </entry>
+  <entry date="2011-08-12" category="api" action="change">
+    <change>
+      <text locale="en">MicroTypeConverterRegistry now explicitly throws TypeConverterException in case no converter was found or conversion failed</text>
+    </change>
+  </entry>
+  <entry date="2011-08-12" category="api" action="add">
+    <change>
+      <text locale="en">Added class HasDisplayTextWithArgs</text>
+    </change>
+  </entry>
+  <entry date="2011-08-11" category="api" action="add">
+    <change>
+      <text locale="en">Added createDirIfNotExisting and createDirRecursiveIfNotExisting to file operations</text>
+    </change>
+  </entry>
+  <release date="2011-08-10" version="3.0.4" />
+  <entry date="2011-08-09" category="api" action="add">
+    <change>
+      <text locale="en">Added interface ISeverityComparable for EErrorLevel</text>
+    </change>
+  </entry>
+  <entry date="2011-08-09" category="tech" action="fix">
+    <change>
+      <text locale="en">Ignoring comments in DTDs when reading MicroDOM XML</text>
+    </change>
+  </entry>
+  <entry date="2011-08-08" category="api" action="add">
+    <change>
+      <text locale="en">Extended MathHelper API adding longToInt</text>
+    </change>
+  </entry>
+  <release date="2011-08-04" version="3.0.3" />
+  <entry date="2011-08-04" category="tech" action="fix">
+    <change>
+      <text locale="en">Fixed heuristic in MicroReader determining ignorable whitespaces</text>
+    </change>
+  </entry>
+  <release date="2011-08-04" version="3.0.2" />
+  <entry date="2011-08-04" category="api" action="add">
+    <change>
+      <text locale="en">Added a new changelog action 'update' for the update of external components</text>
+    </change>
+  </entry>
+  <entry date="2011-08-04" category="api" action="add">
+    <change>
+      <text locale="en">Added a new changelog category 'security' for all security relevant issues</text>
+    </change>
+  </entry>
+  <entry date="2011-08-03" category="api" action="add">
+    <change>
+      <text locale="en">Added StringHelper.multiContains to check if a set of chars is contained in another set of chars</text>
+    </change>
+  </entry>
+  <entry date="2011-08-01" category="api" action="fix">
+    <change>
+      <text locale="en">The DynamicValue API now uses the TypeConverter more consistent and therefore also throws TypeConverterExceptions</text>
+    </change>
+  </entry>
+  <release date="2011-07-31" version="3.0.1" />
+  <entry date="2011-07-31" category="api" action="add">
+    <change>
+      <text locale="en">Made some more APIs Serializable</text>
+    </change>      
+  </entry>
+  <entry date="2011-07-31" category="api" action="add">
+    <change>
+      <text locale="en">Extended ContainerHelper API to support newUnmodifiableMap and newUnmodifiableOrderedMap</text>
+    </change>      
+  </entry>
+  <entry date="2011-07-31" category="api" action="add">
+    <change>
+      <text locale="en">Extended MicroReader API with a method to handle String+EntityResolver</text>
+    </change>      
+  </entry>
+  <entry date="2011-07-29" category="api" action="add">
+    <change>
+      <text locale="en">Extended ContainerHelper API to support getFirstElement, getFirstKey and getFirstValue on Maps</text>    
+    </change>      
+  </entry>
+  <entry date="2011-07-29" category="api" action="add">
+    <change>
+      <text locale="en">Added support for reading, modifying and writing change logs programatically</text>
+    </change>      
+  </entry>
+  <entry date="2011-07-29" category="api" action="add">
+    <change>
+      <text locale="en">Extended FileSystemRecursiveIterator to allow to customize, in which directories to recurse and in which not</text>
+    </change>      
+  </entry>
+  <entry date="2011-07-29" category="api" action="add">
+    <change>
+      <text locale="en">Extended IMicroNode API to support removeChildAtIndex and removeAllChildren</text>
+    </change>      
+  </entry>
+  <release date="2011-07-27" version="3.0.0" />
+</changelog>
