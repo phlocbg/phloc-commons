@@ -24,6 +24,8 @@ import org.junit.Test;
 
 import com.phloc.commons.mock.PhlocTestUtils;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+
 /**
  * Test class for class {@link ObjectType}.
  * 
@@ -32,6 +34,7 @@ import com.phloc.commons.mock.PhlocTestUtils;
 public final class ObjectTypeTest
 {
   @Test
+  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testAll ()
   {
     final ObjectType x = new ObjectType ("any");

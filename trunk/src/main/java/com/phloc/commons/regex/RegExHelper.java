@@ -91,6 +91,8 @@ public final class RegExHelper
                                  @Nonnull @RegEx final String sRegEx,
                                  @Nonnegative final int nLimit)
   {
+    if (sRegEx == null)
+      throw new IllegalArgumentException ("regexp");
     if (sText == null)
       return new String [0];
     return RegExPool.getPattern (sRegEx).split (sText, nLimit);

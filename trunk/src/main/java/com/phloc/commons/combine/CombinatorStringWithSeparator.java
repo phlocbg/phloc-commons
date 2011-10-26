@@ -18,6 +18,7 @@
 package com.phloc.commons.combine;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.Nonempty;
@@ -37,7 +38,7 @@ public final class CombinatorStringWithSeparator implements ICombinator <String>
     m_sSep = sSep;
   }
 
-  public String combine (@Nonnull final String sFirst, @Nonnull final String sSecond)
+  public String combine (@Nullable final String sFirst, @Nullable final String sSecond)
   {
     return sFirst + m_sSep + sSecond;
   }

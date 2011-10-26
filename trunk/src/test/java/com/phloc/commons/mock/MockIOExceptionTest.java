@@ -26,10 +26,15 @@ import org.junit.Test;
  */
 public final class MockIOExceptionTest
 {
-  @Test
-  public void testAll ()
+  @Test (expected = MockIOException.class)
+  public void testEmpty () throws MockIOException
   {
-    new MockIOException ();
-    new MockIOException ("msg");
+    throw new MockIOException ();
+  }
+
+  @Test (expected = MockIOException.class)
+  public void testWithMessage () throws MockIOException
+  {
+    throw new MockIOException ("msg");
   }
 }

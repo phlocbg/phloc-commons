@@ -23,6 +23,8 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+
 /**
  * Test class for class {@link StatisticsManager}.
  * 
@@ -31,6 +33,7 @@ import org.junit.Test;
 public final class StatisticsManagerTest
 {
   @Test
+  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testCacheHandler ()
   {
     assertNotNull (StatisticsManager.getCacheHandler (StatisticsManagerTest.class));
@@ -53,6 +56,7 @@ public final class StatisticsManagerTest
   }
 
   @Test
+  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testTimerHandler ()
   {
     assertNotNull (StatisticsManager.getTimerHandler (StatisticsManagerTest.class));
@@ -75,6 +79,7 @@ public final class StatisticsManagerTest
   }
 
   @Test
+  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testSizeHandler ()
   {
     assertNotNull (StatisticsManager.getSizeHandler (StatisticsManagerTest.class));
@@ -97,6 +102,7 @@ public final class StatisticsManagerTest
   }
 
   @Test
+  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testCounterHandler ()
   {
     assertNotNull (StatisticsManager.getCounterHandler (StatisticsManagerTest.class));
@@ -119,6 +125,7 @@ public final class StatisticsManagerTest
   }
 
   @Test
+  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testKeyedCounterHandler ()
   {
     assertNotNull (StatisticsManager.getKeyedCounterHandler (StatisticsManagerTest.class));

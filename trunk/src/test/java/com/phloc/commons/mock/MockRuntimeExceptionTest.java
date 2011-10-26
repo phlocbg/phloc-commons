@@ -26,12 +26,27 @@ import org.junit.Test;
  */
 public final class MockRuntimeExceptionTest
 {
-  @Test
-  public void testAll ()
+  @Test (expected = MockRuntimeException.class)
+  public void testEmpty ()
   {
-    new MockRuntimeException ();
-    new MockRuntimeException ("msg");
-    new MockRuntimeException (new Exception ());
-    new MockRuntimeException ("msg", new Exception ());
+    throw new MockRuntimeException ();
+  }
+
+  @Test (expected = MockRuntimeException.class)
+  public void testWithMessage ()
+  {
+    throw new MockRuntimeException ("msg");
+  }
+
+  @Test (expected = MockRuntimeException.class)
+  public void testWithException ()
+  {
+    throw new MockRuntimeException (new Exception ());
+  }
+
+  @Test (expected = MockRuntimeException.class)
+  public void testWithExceptionAndMessage ()
+  {
+    throw new MockRuntimeException ("msg", new Exception ());
   }
 }

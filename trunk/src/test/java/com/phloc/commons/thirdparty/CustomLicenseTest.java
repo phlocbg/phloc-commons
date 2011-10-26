@@ -26,6 +26,8 @@ import org.junit.Test;
 import com.phloc.commons.mock.PhlocTestUtils;
 import com.phloc.commons.version.Version;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+
 /**
  * Test class for class {@link CustomLicense}.
  * 
@@ -34,6 +36,7 @@ import com.phloc.commons.version.Version;
 public final class CustomLicenseTest
 {
   @Test
+  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testAll ()
   {
     final CustomLicense cl = new CustomLicense ("cl1", "License", new Version ("1.2"), "url");
