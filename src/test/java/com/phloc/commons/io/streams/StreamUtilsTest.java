@@ -45,6 +45,8 @@ import com.phloc.commons.io.streamprovider.ByteArrayInputStreamProvider;
 import com.phloc.commons.mock.MockIOException;
 import com.phloc.commons.mutable.MutableLong;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+
 /**
  * Test class for class {@link StreamUtils}.
  * 
@@ -132,6 +134,7 @@ public final class StreamUtilsTest
    * Test method copyInputStreamToOutputStream
    */
   @Test
+  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testCopyInputStreamToOutputStream ()
   {
     final byte [] aInput = "Hallo".getBytes ();
@@ -195,6 +198,7 @@ public final class StreamUtilsTest
   }
 
   @Test
+  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testGetAllBytes ()
   {
     final String sInput = "Hallo";
@@ -298,6 +302,7 @@ public final class StreamUtilsTest
   }
 
   @Test
+  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testCopyReaderToWriter ()
   {
     final String sInput = "Hallo";

@@ -30,6 +30,8 @@ import com.phloc.commons.CGlobal;
 import com.phloc.commons.mock.MockException;
 import com.phloc.commons.mock.PhlocTestUtils;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+
 /**
  * Test class for class {@link ResourceError}.
  * 
@@ -38,6 +40,7 @@ import com.phloc.commons.mock.PhlocTestUtils;
 public final class ResourceErrorTest
 {
   @Test
+  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testCtor ()
   {
     final IResourceLocation loc = new ResourceLocation ("res", null);

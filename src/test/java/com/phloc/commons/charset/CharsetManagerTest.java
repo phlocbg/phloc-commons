@@ -31,6 +31,8 @@ import org.junit.Test;
 import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
 import com.phloc.commons.io.streams.StreamUtils;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+
 /**
  * Test class for class {@link CharsetManager}.
  * 
@@ -39,6 +41,7 @@ import com.phloc.commons.io.streams.StreamUtils;
 public final class CharsetManagerTest
 {
   @Test
+  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testCharsetFromName ()
   {
     assertNotNull (CharsetManager.charsetFromName ("UTF-8"));

@@ -35,13 +35,15 @@ import com.phloc.commons.mock.PhlocTestUtils;
  */
 public final class HashingInputStreamTest
 {
+  private static final Random s_aRandom = new Random ();
+
   @Test
   public void testAll () throws IOException
   {
     // For all algorithms
     for (final EMessageDigestAlgorithm eMDAlgo : EMessageDigestAlgorithm.values ())
     {
-      final String sTestString = "test" + eMDAlgo.getAlgorithm () + "-xxx" + new Random ().nextDouble ();
+      final String sTestString = "test" + eMDAlgo.getAlgorithm () + "-xxx" + s_aRandom.nextDouble ();
 
       // First hash
       final HashingInputStream aHIS1 = new HashingInputStream (new NonBlockingByteArrayInputStream (sTestString.getBytes ()),

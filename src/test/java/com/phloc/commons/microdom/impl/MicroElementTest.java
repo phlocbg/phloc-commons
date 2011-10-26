@@ -41,6 +41,8 @@ import com.phloc.commons.mock.PhlocTestUtils;
 import com.phloc.commons.text.impl.MultiLingualText;
 import com.phloc.commons.typeconvert.TypeConverterException;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+
 /**
  * Test class for class {@link MicroElement}.
  * 
@@ -49,6 +51,7 @@ import com.phloc.commons.typeconvert.TypeConverterException;
 public final class MicroElementTest extends AbstractPhlocTestCase
 {
   @Test
+  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testCreation ()
   {
     try
@@ -469,6 +472,7 @@ public final class MicroElementTest extends AbstractPhlocTestCase
   }
 
   @Test
+  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testAttrs ()
   {
     final IMicroElement e = MicroFactory.newElement ("any");

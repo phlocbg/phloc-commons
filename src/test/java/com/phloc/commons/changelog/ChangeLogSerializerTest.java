@@ -41,6 +41,8 @@ import com.phloc.commons.xml.sax.ReadableResourceSAXInputSource;
 import com.phloc.commons.xml.schema.XMLSchemaCache;
 import com.phloc.commons.xml.serialize.XMLReader;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+
 /**
  * Test class for class {@link ChangeLogSerializer}.
  * 
@@ -49,6 +51,7 @@ import com.phloc.commons.xml.serialize.XMLReader;
 public final class ChangeLogSerializerTest
 {
   @Test
+  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testRead () throws SAXException
   {
     // Read valid

@@ -18,6 +18,7 @@
 package com.phloc.commons.concurrent.collector;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import java.util.List;
@@ -84,6 +85,7 @@ public final class ConcurrentCollectorMultipleTest
       public void run (final List <String> aCurrentObject) throws Exception
       {}
     });
+    assertNotNull (ccm);
   }
 
   @Test

@@ -29,6 +29,8 @@ import java.util.regex.Pattern;
 
 import org.junit.Test;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+
 /**
  * Test class for {@link RegExHelper}.
  * 
@@ -40,6 +42,7 @@ public final class RegExHelperTest
    * Test for method split
    */
   @Test
+  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testSplitNoLimit ()
   {
     String [] x = RegExHelper.split ("abc", "b");
@@ -108,6 +111,7 @@ public final class RegExHelperTest
    * Test for method split
    */
   @Test
+  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testSplitWithLimit ()
   {
     String [] x = RegExHelper.split ("abc", "b", 2);
@@ -160,9 +164,13 @@ public final class RegExHelperTest
     assertNotNull (x);
     assertEquals (0, x.length);
 
-    x = RegExHelper.split (null, null, 2);
-    assertNotNull (x);
-    assertEquals (0, x.length);
+    try
+    {
+      x = RegExHelper.split (null, null, 2);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
 
     try
     {
@@ -187,6 +195,7 @@ public final class RegExHelperTest
    * Test for method splitToList
    */
   @Test
+  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testSplitToListNoLimit ()
   {
     List <String> x = RegExHelper.splitToList ("abc", "b");
@@ -247,6 +256,7 @@ public final class RegExHelperTest
    * Test for method splitToList
    */
   @Test
+  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testSplitToListWithLimit ()
   {
     List <String> x = RegExHelper.splitToList ("abc", "b", 2);
@@ -298,8 +308,13 @@ public final class RegExHelperTest
     x = RegExHelper.splitToList (null, "b", 2);
     assertNotNull (x);
 
-    x = RegExHelper.splitToList (null, null, 2);
-    assertNotNull (x);
+    try
+    {
+      x = RegExHelper.splitToList (null, null, 2);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
 
     try
     {
@@ -339,6 +354,7 @@ public final class RegExHelperTest
    * Test for method stringMatchesPattern
    */
   @Test
+  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testStringMatchesPattern ()
   {
     assertTrue (RegExHelper.stringMatchesPattern ("[0-9]+", "1234"));
