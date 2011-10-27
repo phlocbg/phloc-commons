@@ -18,7 +18,7 @@
     limitations under the License.
 
 -->
-<translationitems>
+<translationitems count="419">
   <item id="com.phloc.commons.locale.ELocaleName.ID_LANGUAGE_ALL">
     <de>Alle Sprachen</de>
     <en>All languages</en>
