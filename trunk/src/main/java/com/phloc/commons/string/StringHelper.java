@@ -986,7 +986,7 @@ public final class StringHelper
    */
   public static char getHexChar (final int n)
   {
-    return Character.forDigit (n, 16);
+    return Character.forDigit (n, CGlobal.HEX_RADIX);
   }
 
   /**
@@ -1047,7 +1047,7 @@ public final class StringHelper
    */
   public static int getHexValue (@Nonnegative final char c)
   {
-    return Character.digit (c, 16);
+    return Character.digit (c, CGlobal.HEX_RADIX);
   }
 
   /**
