@@ -155,6 +155,26 @@ public final class CGStringHelperTest
   }
 
   @Test
+  public void testGetClassFromPath ()
+  {
+    assertEquals ("java.lang.String", CGStringHelper.getClassFromPath ("java/lang/String"));
+    assertEquals ("", CGStringHelper.getClassFromPath (""));
+    assertEquals ("x", CGStringHelper.getClassFromPath ("x"));
+    assertEquals ("x.y", CGStringHelper.getClassFromPath ("x/y"));
+    assertEquals ("x.y", CGStringHelper.getClassFromPath ("x\\y"));
+    assertEquals ("the.little.white.cat", CGStringHelper.getClassFromPath ("the\\little/white\\cat"));
+
+    try
+    {
+      // not allowed
+      CGStringHelper.getClassFromPath ((String) null);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+  }
+
+  @Test
   public void testGetObjectAddress ()
   {
     assertTrue (CGStringHelper.getObjectAddress (null).startsWith ("0x00000000"));

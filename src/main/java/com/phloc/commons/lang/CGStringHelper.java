@@ -21,12 +21,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.string.StringHelper;
-import com.phloc.commons.system.EProcessorArchitecture;
 
 /**
  * Special string helper especially for Java internal class name handling etc.
+ * CG = Code Generation.
  * 
  * @author philip
  */
@@ -212,6 +213,25 @@ public final class CGStringHelper
   }
 
   /**
+   * Get the class name of the passed path. The class name is retrieved by
+   * replacing all path separators (\ and /) with dots (.). This method does not
+   * handle the file extension, so it's up to the caller to skip of any file
+   * extension!
+   * 
+   * @param sPath
+   *        The path to be converted. May not be <code>null</code>.
+   * @return The class name.
+   */
+  @Nonnull
+  public static String getClassFromPath (@Nonnull final String sPath)
+  {
+    if (sPath == null)
+      throw new NullPointerException ("path");
+
+    return sPath.replace ('\\', '.').replace ('/', '.');
+  }
+
+  /**
    * Get the hex representation of the passed object's address. Note that this
    * method makes no differentiation between 32 and 64 bit architectures. The
    * result is always a hexadecimal value preceded by "0x" and followed by
@@ -222,14 +242,14 @@ public final class CGStringHelper
    *        <code>null</code>.
    * @return Depending on the current architecture. Always starting with "0x"
    *         and than containing the address.
-   * @see EProcessorArchitecture
    * @see System#identityHashCode(Object)
    */
   @Nonnull
+  @Nonempty
   public static String getObjectAddress (@Nullable final Object aObject)
   {
     if (aObject == null)
       return "0x00000000";
-    return "0x" + StringHelper.leadingZero (Integer.toHexString (System.identityHashCode (aObject)), 8);
+    return "0x" + StringHelper.hexStringLeadingZero (System.identityHashCode (aObject), 8);
   }
 }

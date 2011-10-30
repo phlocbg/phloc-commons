@@ -124,7 +124,7 @@ public class FileSystemRecursiveIterator implements IIterableIterator <File>
   }
 
   @UnsupportedOperation
-  public void remove ()
+  public final void remove ()
   {
     throw new UnsupportedOperationException ();
   }
