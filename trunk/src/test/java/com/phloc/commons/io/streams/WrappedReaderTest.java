@@ -30,6 +30,8 @@ import org.junit.Test;
 import com.phloc.commons.mock.PhlocTestUtils;
 import com.phloc.commons.string.StringHelper;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+
 /**
  * Test class for class {@link WrappedReader}.
  * 
@@ -38,6 +40,7 @@ import com.phloc.commons.string.StringHelper;
 public final class WrappedReaderTest
 {
   @Test
+  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testAll () throws IOException
   {
     final StringReader baos = new StringReader (StringHelper.getRepeated ('a', 100));
@@ -46,8 +49,8 @@ public final class WrappedReaderTest
     assertTrue (ws.ready ());
     ws.mark (0);
     ws.read ();
-    ws.read (new char [4]);
-    ws.read (new char [5], 1, 1);
+    assertEquals (4, ws.read (new char [4]));
+    assertEquals (1, ws.read (new char [5], 1, 1));
     ws.read (CharBuffer.allocate (1));
     assertEquals (4, ws.skip (4));
     assertEquals (89, ws.skip (100));
@@ -56,12 +59,18 @@ public final class WrappedReaderTest
     ws.close ();
     PhlocTestUtils.testToStringImplementation (ws);
 
+    WrappedReader aReader = null;
     try
     {
-      new WrappedReader (null);
+      aReader = new WrappedReader (null);
       fail ();
     }
     catch (final NullPointerException ex)
     {}
+    finally
+    {
+      if (aReader != null)
+        aReader.close ();
+    }
   }
 }

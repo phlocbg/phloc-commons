@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.io.streams;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -36,13 +38,13 @@ public final class CountingFileInputStreamTest
   {
     CountingFileInputStream aCIS = new CountingFileInputStream ("pom.xml");
     aCIS.read ();
-    aCIS.read (new byte [5], 1, 1);
+    assertEquals (1, aCIS.read (new byte [5], 1, 1));
     StreamUtils.copyInputStreamToOutputStream (aCIS, new NonBlockingByteArrayOutputStream ());
     PhlocTestUtils.testToStringImplementation (aCIS);
 
     aCIS = new CountingFileInputStream (new File ("pom.xml"));
     aCIS.read ();
-    aCIS.read (new byte [5], 1, 1);
+    assertEquals (1, aCIS.read (new byte [5], 1, 1));
     StreamUtils.copyInputStreamToOutputStream (aCIS, new NonBlockingByteArrayOutputStream ());
     PhlocTestUtils.testToStringImplementation (aCIS);
   }
