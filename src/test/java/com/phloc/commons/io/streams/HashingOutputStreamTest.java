@@ -19,6 +19,7 @@ package com.phloc.commons.io.streams;
 
 import static org.junit.Assert.assertArrayEquals;
 
+import java.io.IOException;
 import java.util.Random;
 
 import org.junit.Test;
@@ -33,30 +34,49 @@ import com.phloc.commons.mock.PhlocTestUtils;
  */
 public final class HashingOutputStreamTest
 {
+  private static final Random s_aRandom = new Random ();
+
   @Test
   public void testAll ()
   {
     // For all algorithms
     for (final EMessageDigestAlgorithm eMDAlgo : EMessageDigestAlgorithm.values ())
     {
-      final String sTestString = "test" + eMDAlgo.getAlgorithm () + "-xxx" + new Random ().nextDouble ();
+      HashingOutputStream aHIS2 = null;
+      HashingOutputStream aHIS1 = null;
+      try
+      {
+        final String sTestString = "test" + eMDAlgo.getAlgorithm () + "-xxx" + s_aRandom.nextDouble ();
 
-      // First hash
-      final HashingOutputStream aHIS1 = new HashingOutputStream (new NonBlockingByteArrayOutputStream (), eMDAlgo);
-      StreamUtils.copyInputStreamToOutputStreamAndCloseOS (new StringInputStream (sTestString),
-                                                           new NonBlockingByteArrayOutputStream ());
-      final byte [] aDigest1 = aHIS1.getDigest ();
+        // First hash
+        aHIS1 = new HashingOutputStream (new NonBlockingByteArrayOutputStream (), eMDAlgo);
+        StreamUtils.copyInputStreamToOutputStreamAndCloseOS (new StringInputStream (sTestString),
+                                                             new NonBlockingByteArrayOutputStream ());
+        final byte [] aDigest1 = aHIS1.getDigest ();
 
-      // Second hash
-      final HashingOutputStream aHIS2 = new HashingOutputStream (new NonBlockingByteArrayOutputStream (), eMDAlgo);
-      StreamUtils.copyInputStreamToOutputStreamAndCloseOS (new StringInputStream (sTestString),
-                                                           new NonBlockingByteArrayOutputStream ());
-      final byte [] aDigest2 = aHIS2.getDigest ();
+        // Second hash
+        aHIS2 = new HashingOutputStream (new NonBlockingByteArrayOutputStream (), eMDAlgo);
+        StreamUtils.copyInputStreamToOutputStreamAndCloseOS (new StringInputStream (sTestString),
+                                                             new NonBlockingByteArrayOutputStream ());
+        final byte [] aDigest2 = aHIS2.getDigest ();
 
-      // Must be equal
-      assertArrayEquals (aDigest1, aDigest2);
+        // Must be equal
+        assertArrayEquals (aDigest1, aDigest2);
 
-      PhlocTestUtils.testToStringImplementation (aHIS1);
+        PhlocTestUtils.testToStringImplementation (aHIS1);
+      }
+      finally
+      {
+        try
+        {
+          if (aHIS1 != null)
+            aHIS1.close ();
+          if (aHIS2 != null)
+            aHIS2.close ();
+        }
+        catch (final IOException ex)
+        {}
+      }
     }
   }
 }
