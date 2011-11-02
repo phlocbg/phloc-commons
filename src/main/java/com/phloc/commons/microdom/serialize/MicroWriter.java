@@ -106,8 +106,6 @@ public final class MicroWriter
     try
     {
       // start serializing
-      // For the pDAF3 Starkl view application this should be approx. 20KB
-      // Largest in ConfigTK so far was 640KB
       final NonBlockingByteArrayOutputStream aOS = new NonBlockingByteArrayOutputStream (50 * CGlobal.BYTES_PER_KILOBYTE);
       saveToStream (aNode, aOS, aSettings);
       s_aSizeHdl.addSize (aOS.size ());

@@ -68,7 +68,7 @@ public final class CompareUtilsTest extends AbstractPhlocTestCase
   public void testSafeEquals_URL () throws MalformedURLException
   {
     final URL u1 = new URL ("http://www.phloc.com");
-    final URL u2 = new URL ("http://www.starkl.at");
+    final URL u2 = new URL ("http://www.mydomain.at");
     assertTrue (CompareUtils.safeEquals (u1, u1));
     assertTrue (CompareUtils.safeEquals (u1, new URL ("http://www.phloc.com")));
     assertFalse (CompareUtils.safeEquals (u1, u2));
