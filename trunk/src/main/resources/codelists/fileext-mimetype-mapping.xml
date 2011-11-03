@@ -19,6 +19,7 @@
 
 -->
 <!-- 
+Based on freedesktop.org list v0.91
 Source: http://www.w3schools.com/media/media_mimeref.asp
 Source: http://www.mimetype.org/ 
 Source: http://www.freedesktop.org/wiki/Software/shared-mime-info
@@ -109,7 +110,7 @@ Source: http://www.freedesktop.org/wiki/Software/shared-mime-info
   <map key="cer" value="application/pkix-cert" />
   <map key="cert" value="application/x-x509-ca-cert" />
   <map key="cgm" value="image/cgm" />
-  <map key="chm" value="application/x-chm" />
+  <map key="chm" value="application/vnd.ms-htmlhelp" />
   <map key="chrt" value="application/x-kchart" />
   <map key="class" value="application/x-java" />
   <map key="clp" value="application/x-msclip" />
@@ -222,7 +223,7 @@ Source: http://www.freedesktop.org/wiki/Software/shared-mime-info
   <map key="g3" value="image/fax-g3" />
   <map key="gb" value="application/x-gameboy-rom" />
   <map key="gba" value="application/x-gba-rom" />
-  <map key="gcrd" value="text/directory" />
+  <map key="gcrd" value="text/vcard" />
   <map key="ged" value="application/x-gedcom" />
   <map key="gedcom" value="application/x-gedcom" />
   <map key="gem" value="application/x-tar" />
@@ -375,7 +376,7 @@ Source: http://www.freedesktop.org/wiki/Software/shared-mime-info
   <map key="man" value="application/x-troff-man" />
   <map key="manifest" value="text/cache-manifest" />
   <map key="mbox" value="application/mbox" />
-  <map key="md" value="application/x-genesis-rom" />
+  <map key="md" value="text/x-markdown" />
   <map key="mdb" value="application/vnd.ms-access" />
   <map key="mdi" value="image/vnd.ms-modi" />
   <map key="me" value="text/x-troff-me" />
@@ -577,7 +578,7 @@ Source: http://www.freedesktop.org/wiki/Software/shared-mime-info
   <map key="rdf" value="application/rdf+xml" />
   <map key="rdfs" value="application/rdf+xml" />
   <map key="reg" value="text/x-ms-regedit" />
-  <map key="rej" value="application/x-reject" />
+  <map key="rej" value="text/x-reject" />
   <map key="rgb" value="image/x-rgb" />
   <map key="rle" value="image/rle" />
   <map key="rm" value="application/vnd.rn-realmedia" />
@@ -735,7 +736,7 @@ Source: http://www.freedesktop.org/wiki/Software/shared-mime-info
   <map key="uni" value="audio/x-mod" />
   <map key="unv" value="application/i-deas" />
   <map key="uri" value="text/x-uri" />
-  <map key="url" value="text/x-uri" />
+  <map key="url" value="application/x-mswinurl" />
   <map key="ustar" value="application/x-ustar" />
   <map key="v" value="text/x-verilog" />
   <map key="vala" value="text/x-vala" />
@@ -743,7 +744,7 @@ Source: http://www.freedesktop.org/wiki/Software/shared-mime-info
   <map key="vcd" value="application/x-cdlink" />
   <map key="vcf" value="text/x-vcard" />
   <map key="vcs" value="text/calendar" />
-  <map key="vct" value="text/directory" />
+  <map key="vct" value="text/vcard" />
   <map key="vda" value="image/x-tga" />
   <map key="vhd" value="text/x-vhdl" />
   <map key="vhdl" value="text/x-vhdl" />
@@ -753,7 +754,7 @@ Source: http://www.freedesktop.org/wiki/Software/shared-mime-info
   <map key="vob" value="video/mpeg" />
   <map key="voc" value="audio/x-voc" />
   <map key="vor" value="application/vnd.stardivision.writer" />
-  <map key="vrm" value="x-world/x-vrml" />
+  <map key="vrm" value="model/vrml" />
   <map key="vrml" value="model/vrml" />
   <map key="vst" value="image/x-tga" />
   <map key="wav" value="audio/x-wav" />
@@ -841,4 +842,26 @@ Source: http://www.freedesktop.org/wiki/Software/shared-mime-info
   <map key="zabw" value="application/x-abiword" />
   <map key="zip" value="application/zip" />
   <map key="zoo" value="application/x-zoo" />
+  <map key="apk" value="application/vnd.android.package-archive" />
+  <map key="cap" value="application/vnd.tcpdump.pcap" />
+  <map key="dmp" value="application/vnd.tcpdump.pcap" />
+  <map key="m1u" value="video/vnd.mpegurl" />
+  <map key="m4u" value="video/vnd.mpegurl" />
+  <map key="markdown" value="text/x-markdown" />
+  <map key="mkd" value="text/x-markdown" />
+  <map key="mobi" value="application/x-mobipocket-ebook" />
+  <map key="mxu" value="video/vnd.mpegurl" />
+  <map key="nzb" value="application/x-nzb" />
+  <map key="pcap" value="application/vnd.tcpdump.pcap" />
+  <map key="php5" value="application/x-php" />
+  <map key="phps" value="application/x-php" />
+  <map key="qml" value="text/x-qml" />
+  <map key="scala" value="text/x-scala" />
+  <map key="sldm" value="application/vnd.ms-powerpoint.slide.macroEnabled.12" />
+  <map key="sldx" value="application/vnd.openxmlformats-officedocument.presentationml.slide" />
+  <map key="ss" value="text/x-scheme" />
+  <map key="vcard" value="text/vcard" />
+  <map key="vtt" value="text/vtt" />
+  <map key="wsgi" value="text/x-python" />
+  <map key="wwf" value="application/x-wwf" />
 </mapping>
