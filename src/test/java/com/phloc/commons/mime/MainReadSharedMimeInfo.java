@@ -78,7 +78,7 @@ public final class MainReadSharedMimeInfo
   public static void main (final String [] args)
   {
     final Map <String, String> aExtToMimeType = new HashMap <String, String> ();
-    final IMicroDocument aDoc = MicroReader.readMicroXML (new ClassPathResource ("shared-mime-info-0.90/freedesktop.org.xml"));
+    final IMicroDocument aDoc = MicroReader.readMicroXML (new ClassPathResource ("shared-mime-info-0.91/freedesktop.org.xml"));
     for (final IMicroElement eMimeType : aDoc.getDocumentElement ().getChildElements (NS, "mime-type"))
     {
       final String sMIMEType = eMimeType.getAttribute ("type");

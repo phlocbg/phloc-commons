@@ -312,7 +312,7 @@ public final class ContainerHelper
   public static <KEYTPYE, VALUETYPE> Map <KEYTPYE, VALUETYPE> newUnmodifiableMap (@Nullable final KEYTPYE aKey,
                                                                                   @Nullable final VALUETYPE aValue)
   {
-    return makeUnmodifiable (newMap (aKey, aValue));
+    return Collections.singletonMap (aKey, aValue);
   }
 
   @Nonnull
@@ -475,7 +475,7 @@ public final class ContainerHelper
   public static <KEYTPYE, VALUETYPE> Map <KEYTPYE, VALUETYPE> newUnmodifiableOrderedMap (@Nullable final KEYTPYE aKey,
                                                                                          @Nullable final VALUETYPE aValue)
   {
-    return makeUnmodifiable (newOrderedMap (aKey, aValue));
+    return Collections.singletonMap (aKey, aValue);
   }
 
   @Nonnull
@@ -695,7 +695,7 @@ public final class ContainerHelper
   @ReturnsImmutableObject
   public static <ELEMENTTYPE> Set <ELEMENTTYPE> newUnmodifiableSet (@Nullable final ELEMENTTYPE aValue)
   {
-    return makeUnmodifiable (newSet (aValue));
+    return Collections.singleton (aValue);
   }
 
   @Nonnull
@@ -976,7 +976,7 @@ public final class ContainerHelper
   @ReturnsImmutableObject
   public static <ELEMENTTYPE> Set <ELEMENTTYPE> newUnmodifiableOrderedSet (@Nullable final ELEMENTTYPE aValue)
   {
-    return makeUnmodifiable (newOrderedSet (aValue));
+    return Collections.singleton (aValue);
   }
 
   @Nonnull
@@ -1283,7 +1283,7 @@ public final class ContainerHelper
   @ReturnsImmutableObject
   public static <ELEMENTTYPE> List <ELEMENTTYPE> newUnmodifiableList (@Nullable final ELEMENTTYPE aValue)
   {
-    return makeUnmodifiable (newList (aValue));
+    return Collections.singletonList (aValue);
   }
 
   @Nonnull
