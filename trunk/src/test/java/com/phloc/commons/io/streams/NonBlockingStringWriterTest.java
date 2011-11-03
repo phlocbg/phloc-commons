@@ -51,7 +51,7 @@ public final class NonBlockingStringWriterTest
 
     try
     {
-      new NonBlockingStringWriter (-1);
+      new NonBlockingStringWriter (-1).close ();
       fail ();
     }
     catch (final IllegalArgumentException ex)

@@ -18,6 +18,7 @@
 package com.phloc.commons.combine;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.string.ToStringGenerator;
@@ -30,7 +31,7 @@ public final class CombinatorString implements ICombinator <String>
   private CombinatorString ()
   {}
 
-  public String combine (@Nonnull final String sFirst, @Nonnull final String sSecond)
+  public String combine (@Nullable final String sFirst, @Nullable final String sSecond)
   {
     return sFirst + sSecond;
   }

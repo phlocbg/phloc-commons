@@ -20,6 +20,7 @@ package com.phloc.test.java;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -40,8 +41,9 @@ public final class FuncTestJavaBigDecimal
     try
     {
       // 100/120 -> indefinite precision
-      aBD100.divide (aBD100.add (aPerc));
+      final BigDecimal aResult = aBD100.divide (aBD100.add (aPerc));
       fail ();
+      assertNull (aResult);
     }
     catch (final ArithmeticException ex)
     {}

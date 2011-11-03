@@ -35,6 +35,8 @@ import com.phloc.commons.io.EAppend;
 import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.io.streams.StreamUtils;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+
 /**
  * Test class for class {@link FileUtils}.
  * 
@@ -75,6 +77,7 @@ public final class FileUtilsTest
   }
 
   @Test
+  @SuppressWarnings (value = "DMI_HARDCODED_ABSOLUTE_FILENAME")
   public void testEnsureParentDirectoryIsPresent ()
   {
     // Root directory (no parent)
@@ -297,7 +300,7 @@ public final class FileUtilsTest
 
     // Create a new file
     final File f2 = new File ("deleteme.del");
-    f2.createNewFile ();
+    assertTrue (f2.createNewFile ());
     try
     {
       assertTrue (FileUtils.isFileNewer (f2, f));

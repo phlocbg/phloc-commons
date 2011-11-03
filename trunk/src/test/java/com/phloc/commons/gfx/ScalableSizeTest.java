@@ -18,6 +18,7 @@
 package com.phloc.commons.gfx;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
 
@@ -96,8 +97,9 @@ public final class ScalableSizeTest
     try
     {
       // <=0 not allowed
-      aID2.getBestMatchingSize (100, 0);
+      final ScalableSize aSize = aID2.getBestMatchingSize (100, 0);
       fail ();
+      assertNull (aSize);
     }
     catch (final IllegalArgumentException ex)
     {}

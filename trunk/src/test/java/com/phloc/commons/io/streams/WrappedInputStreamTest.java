@@ -54,7 +54,7 @@ public final class WrappedInputStreamTest
 
     try
     {
-      new WrappedInputStream (null);
+      new WrappedInputStream (null).close ();
       fail ();
     }
     catch (final NullPointerException ex)

@@ -52,7 +52,7 @@ public final class WrappedWriterTest
 
     try
     {
-      new WrappedWriter (null);
+      new WrappedWriter (null).close ();
       fail ();
     }
     catch (final NullPointerException ex)

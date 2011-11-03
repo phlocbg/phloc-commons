@@ -48,7 +48,7 @@ public final class WrappedOutputStreamTest
 
     try
     {
-      new WrappedOutputStream (null);
+      new WrappedOutputStream (null).close ();
       fail ();
     }
     catch (final NullPointerException ex)
