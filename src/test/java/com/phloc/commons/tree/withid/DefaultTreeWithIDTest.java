@@ -58,7 +58,7 @@ public final class DefaultTreeWithIDTest
         @Override
         public DefaultTreeItemWithID <String, String> createRoot ()
         {
-          return null;
+          return new DefaultTreeItemWithIDFactory <String, String> ().createRoot ();
         }
       });
       fail ();

@@ -27,6 +27,8 @@ import org.junit.Test;
 
 import com.phloc.commons.random.VerySecureRandom;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+
 /**
  * Test class for class {@link NonBlockingByteArrayInputStream}.
  * 
@@ -35,6 +37,7 @@ import com.phloc.commons.random.VerySecureRandom;
 public final class NonBlockingByteArrayInputStreamTest
 {
   @Test
+  @SuppressWarnings (value = "OS_OPEN_STREAM")
   public void testAll () throws IOException
   {
     final byte [] buf = new byte [100];
@@ -96,6 +99,7 @@ public final class NonBlockingByteArrayInputStreamTest
     try
     {
       bais.read ((byte []) null);
+      bais.close ();
       fail ();
     }
     catch (final NullPointerException ex)
@@ -103,6 +107,7 @@ public final class NonBlockingByteArrayInputStreamTest
     try
     {
       bais.read ((byte []) null, 0, 10);
+      bais.close ();
       fail ();
     }
     catch (final NullPointerException ex)
@@ -111,6 +116,7 @@ public final class NonBlockingByteArrayInputStreamTest
     try
     {
       bais.read (x, -1, 1);
+      bais.close ();
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -118,13 +124,15 @@ public final class NonBlockingByteArrayInputStreamTest
     try
     {
       bais.read (x, 1, -1);
+      bais.close ();
       fail ();
     }
     catch (final IllegalArgumentException ex)
     {}
     try
     {
-      bais.read (x, 90, 20);
+      assertTrue (bais.read (x, 90, 20) == 0);
+      bais.close ();
       fail ();
     }
     catch (final IllegalArgumentException ex)

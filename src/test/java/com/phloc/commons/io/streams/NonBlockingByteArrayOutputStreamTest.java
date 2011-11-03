@@ -37,7 +37,7 @@ public final class NonBlockingByteArrayOutputStreamTest
   {
     try
     {
-      new NonBlockingByteArrayOutputStream (-1);
+      new NonBlockingByteArrayOutputStream (-1).close ();
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -49,6 +49,7 @@ public final class NonBlockingByteArrayOutputStreamTest
     try
     {
       b.write (null, 0, 10);
+      b.close ();
       fail ();
     }
     catch (final NullPointerException ex)
@@ -56,6 +57,7 @@ public final class NonBlockingByteArrayOutputStreamTest
     try
     {
       b.write (buf, -1, 100);
+      b.close ();
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -63,6 +65,7 @@ public final class NonBlockingByteArrayOutputStreamTest
     try
     {
       b.write (buf, 101, 100);
+      b.close ();
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -70,6 +73,7 @@ public final class NonBlockingByteArrayOutputStreamTest
     try
     {
       b.write (buf, 0, -1);
+      b.close ();
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -77,6 +81,7 @@ public final class NonBlockingByteArrayOutputStreamTest
     try
     {
       b.write (buf, 90, 11);
+      b.close ();
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -90,6 +95,7 @@ public final class NonBlockingByteArrayOutputStreamTest
     try
     {
       b.writeTo (null);
+      b.close ();
       fail ();
     }
     catch (final NullPointerException ex)
