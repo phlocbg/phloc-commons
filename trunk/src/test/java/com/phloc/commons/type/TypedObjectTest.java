@@ -32,7 +32,7 @@ import com.phloc.commons.mock.PhlocTestUtils;
 public final class TypedObjectTest
 {
   @Test
-  public void testAll ()
+  public void testAll () throws Exception
   {
     final ObjectType ot1 = new ObjectType ("type1");
     final ObjectType ot2 = new ObjectType ("type2");
@@ -43,5 +43,8 @@ public final class TypedObjectTest
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (t1, TypedObject.create (t1));
     PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (t1, TypedObject.create (ot1, "id2"));
     PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (t1, TypedObject.create (ot2, "id1"));
+
+    // Serialization
+    PhlocTestUtils.testDefaultSerialization (t1);
   }
 }
