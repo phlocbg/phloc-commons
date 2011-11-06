@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.type;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
@@ -35,7 +37,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @Immutable
-public class ObjectType implements Comparable <ObjectType>
+public class ObjectType implements Comparable <ObjectType>, Serializable
 {
   private final String m_sName;
   private Integer m_aHashCode;
