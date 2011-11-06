@@ -24,8 +24,6 @@ import org.junit.Test;
 
 import com.phloc.commons.mock.PhlocTestUtils;
 
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
-
 /**
  * Test class for class {@link ObjectType}.
  * 
@@ -34,16 +32,20 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 public final class ObjectTypeTest
 {
   @Test
-  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
-  public void testAll ()
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  public void testAll () throws Exception
   {
     final ObjectType x = new ObjectType ("any");
     assertEquals ("any", x.getObjectTypeName ());
     assertEquals (0, x.compareTo (x));
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (x, new ObjectType ("any"));
+
     final ObjectType y = new ObjectType ("any2");
     assertEquals (-1, x.compareTo (y));
     PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (x, y);
+
+    // Serialization
+    PhlocTestUtils.testDefaultSerialization (x);
 
     try
     {
