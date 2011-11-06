@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.type;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
@@ -32,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
  *        The type of the ID.
  */
 @Immutable
-public final class TypedObject <IDTYPE> implements ITypedObject <IDTYPE>
+public final class TypedObject <IDTYPE> implements ITypedObject <IDTYPE>, Serializable
 {
   private final ObjectType m_aTypeID;
   private final IDTYPE m_aID;
