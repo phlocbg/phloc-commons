@@ -24,17 +24,15 @@ import org.junit.Test;
 
 import com.phloc.commons.mock.PhlocTestUtils;
 
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
-
 /**
  * Test class for class {@link CombinatorStringWithSeparator}.
- * 
+ *
  * @author philip
  */
 public final class CombinatorStringWithSeparatorTest
 {
   @Test
-  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testGetStringCombinatorWithSeparator ()
   {
     final ICombinator <String> c = new CombinatorStringWithSeparator (";");

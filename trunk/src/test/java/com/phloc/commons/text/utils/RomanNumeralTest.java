@@ -22,17 +22,15 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
-
 /**
  * Test class for class {@link RomanNumeral}.
- * 
+ *
  * @author philip
  */
 public final class RomanNumeralTest
 {
   @Test
-  @SuppressWarnings (value = "NP_NULL_PARAM_DEREF_NONVIRTUAL")
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NULL_PARAM_DEREF_NONVIRTUAL")
   public void testBasic ()
   {
     assertEquals ("V", RomanNumeral.intToRomanString (5));

@@ -28,17 +28,15 @@ import org.junit.Test;
 
 import com.phloc.commons.mock.PhlocTestUtils;
 
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
-
 /**
  * Test class for class {@link DefaultResourceProvider}.
- * 
+ *
  * @author philip
  */
 public final class DefaultResourceProviderTest
 {
   @Test
-  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testNoPrefix ()
   {
     final DefaultResourceProvider aDRP = new DefaultResourceProvider ();
