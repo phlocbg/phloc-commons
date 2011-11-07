@@ -26,6 +26,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.Reader;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
@@ -375,12 +376,13 @@ public final class ClassHelperTest
 
     // More sophisticated static class (with interfaces)
     aHierarchy = ClassHelper.getClassHierarchy (TypedObject.class);
-    assertEquals (5, aHierarchy.size ());
+    assertEquals (6, aHierarchy.size ());
     assertTrue (aHierarchy.contains (TypedObject.class));
     assertTrue (aHierarchy.contains (IHasType.class));
     assertTrue (aHierarchy.contains (ITypedObject.class));
     assertTrue (aHierarchy.contains (IHasID.class));
     assertTrue (aHierarchy.contains (Object.class));
+    assertTrue (aHierarchy.contains (Serializable.class));
 
     try
     {
