@@ -29,17 +29,15 @@ import org.junit.Test;
 
 import com.phloc.commons.io.file.FileOperations;
 
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
-
 /**
  * Test class for class {@link FilenameFilterFactory}.
- * 
+ *
  * @author philip
  */
 public final class FilenameFilterFactoryTest
 {
   @Test
-  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testGetEndsWithFilter ()
   {
     try
@@ -120,7 +118,7 @@ public final class FilenameFilterFactoryTest
   }
 
   @Test
-  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testGetMatchRegExFilter ()
   {
     try
@@ -143,7 +141,7 @@ public final class FilenameFilterFactoryTest
   }
 
   @Test
-  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testGetIgnoreMatchRegExFilter ()
   {
     try

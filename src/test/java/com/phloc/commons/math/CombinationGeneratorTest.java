@@ -30,11 +30,9 @@ import org.junit.Test;
 
 import com.phloc.commons.collections.ContainerHelper;
 
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
-
 /**
  * Test class for class {@link CombinationGenerator}.
- * 
+ *
  * @author philip
  */
 public final class CombinationGeneratorTest
@@ -72,7 +70,7 @@ public final class CombinationGeneratorTest
   }
 
   @Test
-  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testCtor ()
   {
     try

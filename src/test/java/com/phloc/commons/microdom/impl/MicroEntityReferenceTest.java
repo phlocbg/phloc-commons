@@ -30,17 +30,15 @@ import com.phloc.commons.microdom.IMicroEntityReference;
 import com.phloc.commons.microdom.MicroException;
 import com.phloc.commons.mock.PhlocTestUtils;
 
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
-
 /**
  * Test class for class {@link MicroEntityReference}.
- * 
+ *
  * @author philip
  */
 public final class MicroEntityReferenceTest
 {
   @Test
-  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testCreation ()
   {
     IMicroEntityReference e = MicroFactory.newEntityReference ("xyz");

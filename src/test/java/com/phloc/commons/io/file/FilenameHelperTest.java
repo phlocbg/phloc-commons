@@ -30,8 +30,6 @@ import org.junit.Test;
 
 import com.phloc.commons.charset.CSpecialChars;
 
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
-
 /**
  * Test class for class {@link FilenameHelper}.
  * 
@@ -337,7 +335,7 @@ public final class FilenameHelperTest
   }
 
   @Test
-  @SuppressWarnings (value = "DMI_HARDCODED_ABSOLUTE_FILENAME")
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "DMI_HARDCODED_ABSOLUTE_FILENAME")
   public void testHasExtensionFile ()
   {
     assertTrue (FilenameHelper.hasExtension (new File ("/usr/local/myfile.htm"), "htm"));

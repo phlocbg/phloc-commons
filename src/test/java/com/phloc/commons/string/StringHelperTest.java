@@ -44,17 +44,15 @@ import com.phloc.commons.mock.PhlocAssert;
 import com.phloc.commons.mutable.MutableInt;
 import com.phloc.commons.mutable.MutableLong;
 
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
-
 /**
  * Test class for class {@link StringHelper}.
- * 
+ *
  * @author philip
  */
 public final class StringHelperTest extends AbstractPhlocTestCase
 {
   @Test
-  @SuppressWarnings (value = "DM_BOOLEAN_CTOR")
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "DM_BOOLEAN_CTOR")
   public void testParseBool ()
   {
     assertTrue (StringHelper.parseBool ("true"));
@@ -81,7 +79,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
-  @SuppressWarnings (value = "DM_BOOLEAN_CTOR")
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "DM_BOOLEAN_CTOR")
   public void testParseBoolObj ()
   {
     assertEquals (Boolean.TRUE, StringHelper.parseBoolObj ("true"));
@@ -1537,7 +1535,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
-  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testReplaceAll ()
   {
     assertEquals ("abc", StringHelper.replaceAll ("abc", "d", "e"));
@@ -1576,7 +1574,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
-  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testReplaceAllSafe ()
   {
     assertEquals ("abc", StringHelper.replaceAllSafe ("abc", "d", "e"));
@@ -1609,7 +1607,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
-  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testReplaceAllRepeatedly ()
   {
     assertEquals ("abc", StringHelper.replaceAllRepeatedly ("abc", "d", "e"));

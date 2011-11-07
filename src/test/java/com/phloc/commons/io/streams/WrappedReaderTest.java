@@ -30,17 +30,15 @@ import org.junit.Test;
 import com.phloc.commons.mock.PhlocTestUtils;
 import com.phloc.commons.string.StringHelper;
 
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
-
 /**
  * Test class for class {@link WrappedReader}.
- * 
+ *
  * @author philip
  */
 public final class WrappedReaderTest
 {
   @Test
-  @SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testAll () throws IOException
   {
     final StringReader baos = new StringReader (StringHelper.getRepeated ('a', 100));

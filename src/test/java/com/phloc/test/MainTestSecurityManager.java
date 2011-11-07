@@ -20,8 +20,6 @@ package com.phloc.test;
 import java.lang.reflect.Field;
 import java.rmi.RMISecurityManager;
 
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
-
 public class MainTestSecurityManager
 {
   /**
@@ -29,11 +27,11 @@ public class MainTestSecurityManager
    * -Djava.security.manager
    * -Djava.security.policy=src/test/resources/grant-all.policy
    * -Djava.security.debug=all
-   * 
+   *
    * @param args
    * @throws Exception
    */
-  @SuppressWarnings (value = "DM_STRING_CTOR")
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "DM_STRING_CTOR")
   public static void main (final String args[]) throws Exception
   {
     if (false)

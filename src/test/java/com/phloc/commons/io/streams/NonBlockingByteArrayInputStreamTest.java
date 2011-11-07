@@ -27,17 +27,15 @@ import org.junit.Test;
 
 import com.phloc.commons.random.VerySecureRandom;
 
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
-
 /**
  * Test class for class {@link NonBlockingByteArrayInputStream}.
- * 
+ *
  * @author philip
  */
 public final class NonBlockingByteArrayInputStreamTest
 {
   @Test
-  @SuppressWarnings (value = "OS_OPEN_STREAM")
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "OS_OPEN_STREAM")
   public void testAll () throws IOException
   {
     final byte [] buf = new byte [100];
