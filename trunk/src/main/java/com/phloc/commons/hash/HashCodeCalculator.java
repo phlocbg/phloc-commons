@@ -23,6 +23,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.annotations.PresentForCodeCoverage;
+
 /**
  * This class provides the hash code generation for different data types.
  * 
@@ -31,6 +33,10 @@ import javax.annotation.concurrent.Immutable;
 @Immutable
 public final class HashCodeCalculator
 {
+  @PresentForCodeCoverage
+  @SuppressWarnings ("unused")
+  private static final HashCodeCalculator s_aInstance = new HashCodeCalculator ();
+
   /**
    * Each value is multiplied with this value. 31 because it can easily be
    * optimized to <code>(1 &lt;&lt; 5) - 1</code>.

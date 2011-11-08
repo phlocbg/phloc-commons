@@ -22,6 +22,16 @@
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
   <entry date="2011-11-08" category="api" action="add">
     <change>
+      <text locale="en">Created class EqualsUtils for easier equals implementation</text>
+    </change>
+  </entry>
+  <entry date="2011-11-08" category="api" action="add">
+    <change>
+      <text locale="en">Extended CompareUtils APIs for some more tricky types</text>
+    </change>
+  </entry>
+  <entry date="2011-11-08" category="api" action="add">
+    <change>
       <text locale="en">Added new class HashCodeCalculator to use the standardized hash code creation outside of the HashCodeGenerator</text>
     </change>
   </entry>

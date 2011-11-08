@@ -29,6 +29,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.IHasSize;
 import com.phloc.commons.annotations.OverrideOnDemand;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -109,7 +110,7 @@ public class LRUSet <ELEMENTTYPE> extends AbstractSet <ELEMENTTYPE> implements I
     if (!(o instanceof LRUSet <?>))
       return false;
     final LRUSet <?> rhs = (LRUSet <?>) o;
-    return m_aCache.equals (rhs.m_aCache);
+    return EqualsUtils.equals (m_aCache, rhs.m_aCache);
   }
 
   @Override
