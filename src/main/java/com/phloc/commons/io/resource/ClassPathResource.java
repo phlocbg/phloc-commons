@@ -28,6 +28,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.streams.StreamUtils;
@@ -420,21 +421,24 @@ public final class ClassPathResource implements IReadableResource
     if (!(o instanceof ClassPathResource))
       return false;
     final ClassPathResource rhs = (ClassPathResource) o;
-    return m_sPath.equals (rhs.m_sPath);
+    // URL and URLresolved are state variables
+    return EqualsUtils.equals (m_sPath, rhs.m_sPath) &&
+           EqualsUtils.nullSafeEquals (_getSpecifiedClassLoader (), rhs._getSpecifiedClassLoader ());
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_sPath).getHashCode ();
+    return new HashCodeGenerator (this).append (m_sPath).append (m_aClassLoader).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
     return new ToStringGenerator (null).append ("cpPath", m_sPath)
+                                       .appendIfNotNull ("classLoader", _getSpecifiedClassLoader ())
                                        .append ("urlResolved", m_bURLResolved)
-                                       .appendIfNotNull ("URL", m_aURL)
+                                       .append ("URL", m_aURL)
                                        .toString ();
   }
 }
