@@ -89,18 +89,35 @@ public final class ChangeLogSerializer
   private ChangeLogSerializer ()
   {}
 
+  /**
+   * Read the change log resource specified by the input stream provider using
+   * the default logging error handler.
+   * 
+   * @param aISP
+   *        The ISP to read from. Maybe <code>null</code> resulting in a
+   *        <code>null</code> return.
+   * @return <code>null</code> if the passed ISP was <code>null</code>.
+   */
   @Nullable
-  public static ChangeLog readChangeLog (@Nonnull final IInputStreamProvider aISP)
+  public static ChangeLog readChangeLog (@Nullable final IInputStreamProvider aISP)
   {
     return readChangeLog (aISP, s_aLoggingCallback);
   }
 
+  /**
+   * Read the change log resource specified by the input stream provider.
+   * 
+   * @param aISP
+   *        The ISP to read from. Maybe <code>null</code> resulting in a
+   *        <code>null</code> return.
+   * @param aErrorCallback
+   *        The callback that handles potential errors.
+   * @return <code>null</code> if the passed ISP was <code>null</code>.
+   */
   @Nullable
-  public static ChangeLog readChangeLog (@Nonnull final IInputStreamProvider aISP,
+  public static ChangeLog readChangeLog (@Nullable final IInputStreamProvider aISP,
                                          @Nonnull final INonThrowingRunnableWithParameter <String> aErrorCallback)
   {
-    if (aISP == null)
-      throw new NullPointerException ("inputStreamProvider");
     if (aErrorCallback == null)
       throw new NullPointerException ("errorCallback");
 
