@@ -26,6 +26,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.IHasSize;
 import com.phloc.commons.annotations.OverrideOnDemand;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.hash.IHashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
@@ -104,7 +105,7 @@ public class LRUCache <KEYTYPE, VALUETYPE> extends LinkedHashMap <KEYTYPE, VALUE
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final LRUCache <?, ?> rhs = (LRUCache <?, ?>) o;
-    return m_nMaxSize == rhs.m_nMaxSize;
+    return EqualsUtils.equals (m_nMaxSize, rhs.m_nMaxSize);
   }
 
   @Override

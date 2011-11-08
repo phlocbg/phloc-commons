@@ -122,7 +122,7 @@ public final class CompareUtilsTest extends AbstractPhlocTestCase
     assertTrue (CompareUtils.nullSafeEquals ((String) null, (String) null));
   }
 
-  public void _testNSE (final Float s1, final Float s2)
+  public void _testNSE (final BigDecimal s1, final BigDecimal s2)
   {
     assertTrue (CompareUtils.nullSafeEquals (s1, s1));
     assertFalse (CompareUtils.nullSafeEquals (s1, s2));
@@ -140,6 +140,26 @@ public final class CompareUtilsTest extends AbstractPhlocTestCase
     assertFalse (CompareUtils.nullSafeEquals (s1, null));
     assertFalse (CompareUtils.nullSafeEquals (null, s2));
     assertTrue (CompareUtils.nullSafeEquals ((Double) null, (Double) null));
+  }
+
+  public void _testNSE (final Float s1, final Float s2)
+  {
+    assertTrue (CompareUtils.nullSafeEquals (s1, s1));
+    assertFalse (CompareUtils.nullSafeEquals (s1, s2));
+    assertFalse (CompareUtils.nullSafeEquals (s2, s1));
+    assertFalse (CompareUtils.nullSafeEquals (s1, null));
+    assertFalse (CompareUtils.nullSafeEquals (null, s2));
+    assertTrue (CompareUtils.nullSafeEquals ((Float) null, (Float) null));
+  }
+
+  public void _testNSE (final URL s1, final URL s2)
+  {
+    assertTrue (CompareUtils.nullSafeEquals (s1, s1));
+    assertFalse (CompareUtils.nullSafeEquals (s1, s2));
+    assertFalse (CompareUtils.nullSafeEquals (s2, s1));
+    assertFalse (CompareUtils.nullSafeEquals (s1, null));
+    assertFalse (CompareUtils.nullSafeEquals (null, s2));
+    assertTrue (CompareUtils.nullSafeEquals ((Float) null, (Float) null));
   }
 
   public void _testNSE (final Object [] s1, final Object [] s2)
@@ -233,11 +253,13 @@ public final class CompareUtilsTest extends AbstractPhlocTestCase
   }
 
   @Test
-  public void testNullSafeEquals ()
+  public void testNullSafeEquals () throws MalformedURLException
   {
     _testNSE ("s1", "s2");
-    _testNSE (Float.valueOf (3.1415f), Float.valueOf (23.456f));
+    _testNSE (new BigDecimal ("12562136756"), new BigDecimal ("67673455"));
     _testNSE (Double.valueOf (3.1415d), Double.valueOf (23.456d));
+    _testNSE (Float.valueOf (3.1415f), Float.valueOf (23.456f));
+    _testNSE (new URL ("http://www.phloc.com"), new URL ("http://www.google.com"));
     _testNSE (new Object [] { "a" }, new Object [] { Integer.valueOf (4) });
     _testNSE (new boolean [] { true }, new boolean [] { false });
     _testNSE (new byte [] { 1 }, new byte [] { 2 });
