@@ -99,6 +99,8 @@ public final class ChangeLogSerializer
   public static ChangeLog readChangeLog (@Nonnull final IInputStreamProvider aISP,
                                          @Nonnull final INonThrowingRunnableWithParameter <String> aErrorCallback)
   {
+    if (aISP == null)
+      throw new NullPointerException ("inputStreamProvider");
     if (aErrorCallback == null)
       throw new NullPointerException ("errorCallback");
 
@@ -193,14 +195,33 @@ public final class ChangeLogSerializer
 
   @Nonnull
   @ReturnsMutableCopy
+  public static Map <URI, ChangeLog> readAllChangeLogs (@Nonnull final ClassLoader aClassLoader)
+  {
+    return readAllChangeLogs (s_aLoggingCallback, aClassLoader);
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
   public static Map <URI, ChangeLog> readAllChangeLogs (@Nonnull final INonThrowingRunnableWithParameter <String> aErrorCallback)
   {
+    return readAllChangeLogs (aErrorCallback, ClassHelper.getDefaultClassLoader ());
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Map <URI, ChangeLog> readAllChangeLogs (@Nonnull final INonThrowingRunnableWithParameter <String> aErrorCallback,
+                                                        @Nonnull final ClassLoader aClassLoader)
+  {
+    if (aErrorCallback == null)
+      throw new NullPointerException ("errorCallback");
+    if (aClassLoader == null)
+      throw new NullPointerException ("classLoader");
+
     try
     {
       final Map <URI, ChangeLog> ret = new HashMap <URI, ChangeLog> ();
       // Find all change log XML files in the classpath
-      for (final URL aURL : ContainerHelper.newList (ClassHelper.getDefaultClassLoader ()
-                                                                .getResources (CChangeLog.CHANGELOG_XML_FILENAME)))
+      for (final URL aURL : ContainerHelper.newList (aClassLoader.getResources (CChangeLog.CHANGELOG_XML_FILENAME)))
       {
         final ChangeLog aChangeLog = readChangeLog (new URLResource (aURL), aErrorCallback);
         if (aChangeLog != null)

@@ -20,14 +20,12 @@ package com.phloc.commons.io.resource;
 import java.io.File;
 import java.io.InputStream;
 import java.io.Reader;
+import java.lang.ref.WeakReference;
 import java.net.URL;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.hash.HashCodeGenerator;
@@ -50,13 +48,34 @@ public final class ClassPathResource implements IReadableResource
   /** Use this prefix to uniquely identify classpath resources - alternative */
   public static final String CLASSPATH_PREFIX_SHORT = "cp:";
 
-  private static final Logger s_aLogger = LoggerFactory.getLogger (ClassPathResource.class);
-
   private final String m_sPath;
+  private final WeakReference <ClassLoader> m_aClassLoader;
   private boolean m_bURLResolved = false;
   private URL m_aURL;
 
+  /**
+   * Create a new class path resource, using the specified path. Class loader
+   * handling is automatic.
+   * 
+   * @param sPath
+   *        The path to be used. May neither be <code>null</code> nor empty.
+   */
   public ClassPathResource (@Nonnull @Nonempty final String sPath)
+  {
+    this (sPath, null);
+  }
+
+  /**
+   * Create a new class path resource using the specified path and class loader
+   * (optional).
+   * 
+   * @param sPath
+   *        The path to be used. May neither be <code>null</code> nor empty.
+   * @param aClassLoader
+   *        The class loader to use. May be <code>null</code> indicating that
+   *        automatic class loader handling should be applied.
+   */
+  public ClassPathResource (@Nonnull @Nonempty final String sPath, @Nullable final ClassLoader aClassLoader)
   {
     if (StringHelper.hasNoText (sPath))
       throw new IllegalArgumentException ("No path specified");
@@ -72,6 +91,9 @@ public final class ClassPathResource implements IReadableResource
     // In case something was cut...
     if (StringHelper.hasNoText (m_sPath))
       throw new IllegalArgumentException ("No path specified after prefix: " + sPath);
+
+    // Ensure the ClassLoader can be garbage collected if necessary
+    m_aClassLoader = aClassLoader == null ? null : new WeakReference <ClassLoader> (aClassLoader);
   }
 
   /**
@@ -90,6 +112,12 @@ public final class ClassPathResource implements IReadableResource
            StringHelper.startsWith (sName, CLASSPATH_PREFIX_SHORT);
   }
 
+  @Nullable
+  private ClassLoader _getSpecifiedClassLoader ()
+  {
+    return m_aClassLoader == null ? null : m_aClassLoader.get ();
+  }
+
   @Nonnull
   public String getResourceID ()
   {
@@ -105,42 +133,103 @@ public final class ClassPathResource implements IReadableResource
   }
 
   @Nullable
-  public static InputStream getInputStream (@Nonnull @Nonempty final String sPath)
+  private static InputStream _asInputStream (@Nullable final URL aURL)
   {
-    if (StringHelper.hasNoText (sPath))
-      throw new IllegalArgumentException ("No path specified");
-
-    final String sRealPath = sPath.startsWith ("/") ? sPath : '/' + sPath;
-
-    // returns null if not found
-    InputStream ret = ClassHelper.getDefaultClassLoader ().getResourceAsStream (sRealPath);
-    if (ret == null)
-    {
-      // This is essential if we're running as a web application!!!
-      ret = ClassPathResource.class.getResourceAsStream (sRealPath);
-      if (ret == null)
-      {
-        // this is a fix for a user that needed to have the application
-        // loaded by the bootstrap classloader
-        ret = ClassLoader.getSystemClassLoader ().getResourceAsStream (sRealPath);
-
-        // Do NOT emit a warning here, because this class is used in logger
-        // initialization
-      }
-    }
-    return ret;
+    return aURL == null ? null : URLResource.getInputStream (aURL);
   }
 
+  /**
+   * Get the input stream for the specified path using automatic class loader
+   * handling. The class loaders are iterated in the following order:
+   * <ol>
+   * <li>Default class loader (usually the context class loader)</li>
+   * <li>The class loader of this class</li>
+   * <li>The system class loader</li>
+   * </ol>
+   * 
+   * @param sPath
+   *        The path to be resolved. May neither be <code>null</code> nor empty.
+   * @return <code>null</code> if the path could not be resolved.
+   */
+  @Nullable
+  public static InputStream getInputStream (@Nonnull @Nonempty final String sPath)
+  {
+    final URL aURL = getAsURL (sPath);
+    return _asInputStream (aURL);
+  }
+
+  /**
+   * Get the input stream of the passed resource using the specified class
+   * loader only.
+   * 
+   * @param sPath
+   *        The path to be resolved. May neither be <code>null</code> nor empty.
+   * @param aClassLoader
+   *        The class loader to be used. May not be <code>null</code>.
+   * @return <code>null</code> if the path could not be resolved using the
+   *         specified class loader.
+   */
+  @Nullable
+  public static InputStream getInputStream (@Nonnull @Nonempty final String sPath,
+                                            @Nonnull final ClassLoader aClassLoader)
+  {
+    final URL aURL = getAsURL (sPath, aClassLoader);
+    return _asInputStream (aURL);
+  }
+
+  /**
+   * Get the input stream for the specified path using automatic class loader
+   * handling. If no class loader was specified in the constructor, the class
+   * loaders are iterated in the following order:
+   * <ol>
+   * <li>Default class loader (usually the context class loader)</li>
+   * <li>The class loader of this class</li>
+   * <li>The system class loader</li>
+   * </ol>
+   */
   @Nullable
   public InputStream getInputStream ()
   {
-    return getInputStream (m_sPath);
+    final URL aURL = getAsURL ();
+    return _asInputStream (aURL);
+  }
+
+  /**
+   * Get the input stream to the this resource, using the passed class loader
+   * only.
+   * 
+   * @param aClassLoader
+   *        The class loader to be used. May not be <code>null</code>.
+   * @return <code>null</code> if the path could not be resolved.
+   */
+  @Nullable
+  public InputStream getInputStreamNoCache (@Nonnull final ClassLoader aClassLoader)
+  {
+    final URL aURL = getAsURLNoCache (aClassLoader);
+    return _asInputStream (aURL);
   }
 
   @Nullable
   public Reader getReader (@Nonnull final String sCharset)
   {
     return StreamUtils.createReader (getInputStream (), sCharset);
+  }
+
+  /**
+   * Create a {@link Reader} of this resource, using the specified class loader
+   * only.
+   * 
+   * @param aClassLoader
+   *        The class loader to be used. May not be <code>null</code>.
+   * @param sCharset
+   *        The charset to be used for the {@link Reader}. May not be
+   *        <code>null</code>.
+   * @return <code>null</code> if the path could not be resolved.
+   */
+  @Nullable
+  public Reader getReaderNoCache (@Nonnull final ClassLoader aClassLoader, @Nonnull final String sCharset)
+  {
+    return StreamUtils.createReader (getInputStreamNoCache (aClassLoader), sCharset);
   }
 
   public boolean exists ()
@@ -155,15 +244,29 @@ public final class ClassPathResource implements IReadableResource
     return getAsURL (m_sPath) != null;
   }
 
+  /**
+   * Get the URL for the specified path using automatic class loader handling.
+   * The class loaders are iterated in the following order:
+   * <ol>
+   * <li>Default class loader (usually the context class loader)</li>
+   * <li>The class loader of this class</li>
+   * <li>The system class loader</li>
+   * </ol>
+   * 
+   * @param sPath
+   *        The path to be resolved. May neither be <code>null</code> nor empty.
+   * @return <code>null</code> if the path could not be resolved.
+   */
   @Nullable
   public static URL getAsURL (@Nonnull @Nonempty final String sPath)
   {
     if (StringHelper.hasNoText (sPath))
       throw new IllegalArgumentException ("No path specified");
 
+    // Ensure the path starts with a "/"
     final String sRealPath = sPath.startsWith ("/") ? sPath : '/' + sPath;
 
-    // returns null if not found
+    // Use the default class loader. Returns null if not found
     URL ret = ClassHelper.getDefaultClassLoader ().getResource (sRealPath);
     if (ret == null)
     {
@@ -179,44 +282,108 @@ public final class ClassPathResource implements IReadableResource
     return ret;
   }
 
+  /**
+   * Get the input stream of the passed resource using the specified class
+   * loader only.
+   * 
+   * @param sPath
+   *        The path to be resolved. May neither be <code>null</code> nor empty.
+   * @param aClassLoader
+   *        The class loader to be used. May not be <code>null</code>.
+   * @return <code>null</code> if the path could not be resolved using the
+   *         specified class loader.
+   */
+  @Nullable
+  public static URL getAsURL (@Nonnull @Nonempty final String sPath, @Nonnull final ClassLoader aClassLoader)
+  {
+    if (aClassLoader == null)
+      throw new NullPointerException ("classLoader");
+    if (StringHelper.hasNoText (sPath))
+      throw new IllegalArgumentException ("No path specified");
+
+    // Ensure the path starts with a "/"
+    final String sRealPath = sPath.startsWith ("/") ? sPath : '/' + sPath;
+
+    // returns null if not found
+    return aClassLoader.getResource (sRealPath);
+  }
+
   @Nullable
   public URL getAsURL ()
   {
     if (!m_bURLResolved)
     {
-      m_aURL = getAsURL (m_sPath);
+      // Is a specific class loader defined?
+      final ClassLoader aClassLoader = _getSpecifiedClassLoader ();
+      m_aURL = aClassLoader == null ? getAsURL (m_sPath) : getAsURL (m_sPath, aClassLoader);
+
+      // Remember that we tried to resolve the URL - avoid retry
       m_bURLResolved = true;
     }
     return m_aURL;
   }
 
+  /**
+   * Convert the path to a URL without using caching. Otherwise the resolution
+   * of {@link #getAsURL()} using the constructor supplied class loader would
+   * possibly contradict with this resolution.
+   * 
+   * @param aClassLoader
+   *        The class loader to be used. May not be <code>null</code>.
+   * @return <code>null</code> if the path could not be resolved to a URL
+   */
   @Nullable
-  private static File _asFile (@Nullable final URL aURL, final String sPath)
+  public URL getAsURLNoCache (@Nonnull final ClassLoader aClassLoader)
   {
-    File aFile = aURL == null ? null : URLResource.getAsFile (aURL);
-    if (aFile == null)
-    {
-      // Happens when reading CRM customers from a CSV file without the original
-      // files existing
-      s_aLogger.warn ("Failed to convert '" + sPath + "' to an URL - using direct File access");
-      aFile = new File (sPath);
-    }
-    return aFile;
+    return getAsURL (m_sPath, aClassLoader);
   }
 
+  @Nullable
+  private static File _asFile (@Nullable final URL aURL)
+  {
+    return aURL == null ? null : URLResource.getAsFile (aURL);
+  }
+
+  /**
+   * Get the file for the specified path using automatic class loader handling.
+   * The class loaders are iterated in the following order:
+   * <ol>
+   * <li>Default class loader (usually the context class loader)</li>
+   * <li>The class loader of this class</li>
+   * <li>The system class loader</li>
+   * </ol>
+   * 
+   * @param sPath
+   *        The path to be resolved. May neither be <code>null</code> nor empty.
+   * @return <code>null</code> if the path could not be resolved.
+   */
   @Nullable
   public static File getAsFile (@Nonnull @Nonempty final String sPath)
   {
     final URL aURL = getAsURL (sPath);
-    return _asFile (aURL, sPath);
+    return _asFile (aURL);
   }
 
-  @Nonnull
+  @Nullable
+  public static File getAsFile (@Nonnull @Nonempty final String sPath, @Nonnull final ClassLoader aClassLoader)
+  {
+    final URL aURL = getAsURL (sPath, aClassLoader);
+    return _asFile (aURL);
+  }
+
+  @Nullable
   public File getAsFile ()
   {
     // Try to use the cached URL here - avoid double resolution
     final URL aURL = getAsURL ();
-    return _asFile (aURL, m_sPath);
+    return _asFile (aURL);
+  }
+
+  @Nullable
+  public File getAsFileNoCache (@Nonnull final ClassLoader aClassLoader)
+  {
+    final URL aURL = getAsURLNoCache (aClassLoader);
+    return _asFile (aURL);
   }
 
   public static boolean canRead (@Nonnull @Nonempty final String sPath)
@@ -224,15 +391,25 @@ public final class ClassPathResource implements IReadableResource
     return getAsURL (sPath) != null;
   }
 
+  public static boolean canRead (@Nonnull @Nonempty final String sPath, @Nonnull final ClassLoader aClassLoader)
+  {
+    return getAsURL (sPath, aClassLoader) != null;
+  }
+
   public boolean canRead ()
   {
     return getAsURL () != null;
   }
 
+  public boolean canReadNoCache (@Nonnull final ClassLoader aClassLoader)
+  {
+    return getAsURLNoCache (aClassLoader) != null;
+  }
+
   @Nonnull
   public ClassPathResource getReadableCloneForPath (@Nonnull final String sPath)
   {
-    return new ClassPathResource (sPath);
+    return new ClassPathResource (sPath, _getSpecifiedClassLoader ());
   }
 
   @Override

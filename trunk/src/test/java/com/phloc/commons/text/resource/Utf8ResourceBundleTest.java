@@ -26,6 +26,7 @@ import java.util.ResourceBundle;
 import org.junit.Test;
 
 import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 
 /**
@@ -42,7 +43,7 @@ public final class Utf8ResourceBundleTest extends AbstractPhlocTestCase
     assertNotNull (Utf8ResourceBundle.getBundle ("properties/test-utf8", L_DE));
     final ResourceBundle rb = Utf8ResourceBundle.getBundle ("properties/test-utf8",
                                                             L_DE,
-                                                            ResourceBundleKey.getClassLoader ());
+                                                            ClassHelper.getDefaultClassLoader ());
     assertNotNull (rb);
     assertTrue (rb instanceof Utf8PropertyResourceBundle);
     assertEquals (2, ContainerHelper.newList (rb.getKeys ()).size ());
