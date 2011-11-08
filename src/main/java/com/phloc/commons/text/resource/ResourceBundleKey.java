@@ -81,9 +81,21 @@ public final class ResourceBundleKey implements Serializable
   }
 
   @Nullable
+  public String getString (@Nonnull final Locale aContentLocale, @Nonnull final ClassLoader aClassLoader)
+  {
+    return getString (m_sBundleName, aContentLocale, m_sKey, aClassLoader);
+  }
+
+  @Nullable
   public String getUtf8String (@Nonnull final Locale aContentLocale)
   {
     return getUtf8String (m_sBundleName, aContentLocale, m_sKey);
+  }
+
+  @Nullable
+  public String getUtf8String (@Nonnull final Locale aContentLocale, @Nonnull final ClassLoader aClassLoader)
+  {
+    return getUtf8String (m_sBundleName, aContentLocale, m_sKey, aClassLoader);
   }
 
   @Override
@@ -109,20 +121,23 @@ public final class ResourceBundleKey implements Serializable
     return new ToStringGenerator (this).append ("bundleName", m_sBundleName).append ("key", m_sKey).toString ();
   }
 
-  @Nonnull
-  public static ClassLoader getClassLoader ()
-  {
-    return ClassHelper.getDefaultClassLoader ();
-  }
-
   @Nullable
   public static String getString (@Nonnull final String sBundleName,
                                   @Nonnull final Locale aContentLocale,
                                   @Nonnull @PropertyKey final String sKey)
   {
+    return getString (sBundleName, aContentLocale, sKey, ClassHelper.getDefaultClassLoader ());
+  }
+
+  @Nullable
+  public static String getString (@Nonnull final String sBundleName,
+                                  @Nonnull final Locale aContentLocale,
+                                  @Nonnull @PropertyKey final String sKey,
+                                  @Nonnull final ClassLoader aClassLoader)
+  {
     try
     {
-      return ResourceBundle.getBundle (sBundleName, aContentLocale, getClassLoader ()).getString (sKey);
+      return ResourceBundle.getBundle (sBundleName, aContentLocale, aClassLoader).getString (sKey);
     }
     catch (final MissingResourceException ex)
     {
@@ -135,9 +150,18 @@ public final class ResourceBundleKey implements Serializable
                                       @Nonnull final Locale aContentLocale,
                                       @Nonnull @PropertyKey final String sKey)
   {
+    return getUtf8String (sBundleName, aContentLocale, sKey, ClassHelper.getDefaultClassLoader ());
+  }
+
+  @Nullable
+  public static String getUtf8String (@Nonnull final String sBundleName,
+                                      @Nonnull final Locale aContentLocale,
+                                      @Nonnull @PropertyKey final String sKey,
+                                      @Nonnull final ClassLoader aClassLoader)
+  {
     try
     {
-      return Utf8ResourceBundle.getBundle (sBundleName, aContentLocale, getClassLoader ()).getString (sKey);
+      return Utf8ResourceBundle.getBundle (sBundleName, aContentLocale, aClassLoader).getString (sKey);
     }
     catch (final MissingResourceException ex)
     {
@@ -150,13 +174,18 @@ public final class ResourceBundleKey implements Serializable
    */
   public static void clearCache ()
   {
+    clearCache (ClassHelper.getDefaultClassLoader ());
+  }
+
+  public static void clearCache (@Nonnull final ClassLoader aClassLoader)
+  {
     // ResourceBundle.clearCache () is only available from Java >= 1.6
     if (EJavaVersion.JDK_16.isSupportedVersion ())
     {
       try
       {
         // Use the same classloader as in retrieval!
-        GenericReflection.invokeStaticMethod (ResourceBundle.class, "clearCache", getClassLoader ());
+        GenericReflection.invokeStaticMethod (ResourceBundle.class, "clearCache", aClassLoader);
       }
       catch (final NoSuchMethodException ex)
       {

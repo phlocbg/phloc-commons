@@ -36,7 +36,7 @@ import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
  * Test class for class {@link ClassPathResource}.
- *
+ * 
  * @author philip
  */
 public final class ClassPathResourceTest
@@ -86,7 +86,7 @@ public final class ClassPathResourceTest
     assertFalse (new ClassPathResource ("/test1 not existing.txt").existsNoCacheUsage ());
     assertFalse (new ClassPathResource ("/test1 not existing.txt").canRead ());
     assertNotNull (ClassPathResource.getAsFile ("/test1.txt"));
-    assertNotNull (ClassPathResource.getAsFile ("/test1 not existing.txt"));
+    assertNull (ClassPathResource.getAsFile ("/test1 not existing.txt"));
     assertTrue (ClassPathResource.canRead ("/test1.txt"));
     assertFalse (ClassPathResource.canRead ("/test1 not existing.txt"));
   }
@@ -194,8 +194,7 @@ public final class ClassPathResourceTest
     assertFalse (aCPISP.exists ());
     assertNull (aCPISP.getInputStream ());
     assertNull (aCPISP.getAsURL ());
-    assertNotNull (aCPISP.getAsFile ());
-    assertFalse (aCPISP.getAsFile ().exists ());
+    assertNull (aCPISP.getAsFile ());
 
     try
     {

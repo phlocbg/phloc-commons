@@ -20,6 +20,21 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2011-11-08" category="api" action="change">
+    <change>
+      <text locale="en">ResourceBundleKey and ChangeLogSerializer now have API overloads to use a custom ClassLoader</text>
+    </change>
+  </entry>
+  <entry date="2011-11-08" category="api" action="change">
+    <change>
+      <text locale="en">ClassPathResource is now using the URL based resolution (incl. caching) for InputStream retrieval</text>
+    </change>
+  </entry>
+  <entry date="2011-11-08" category="api" action="add">
+    <change>
+      <text locale="en">Extended the ClassPathResource to support custom class loaders where required</text>
+    </change>
+  </entry>
   <entry date="2011-11-08" category="api" action="add">
     <change>
       <text locale="en">Created class EqualsUtils for easier equals implementation</text>

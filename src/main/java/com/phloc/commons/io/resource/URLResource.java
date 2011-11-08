@@ -99,7 +99,7 @@ public final class URLResource implements IReadableResource
   }
 
   @Nullable
-  public static InputStream getInputStream (final URL aURL)
+  public static InputStream getInputStream (@Nonnull final URL aURL)
   {
     if (aURL == null)
       throw new NullPointerException ("URL");

@@ -66,8 +66,8 @@ public final class Utf8ResourceBundle
   @Nonnull
   public static ResourceBundle getBundle (@Nonnull final String sBaseName,
                                           @Nonnull final Locale aLocale,
-                                          @Nonnull final ClassLoader aLoader)
+                                          @Nonnull final ClassLoader aClassLoader)
   {
-    return _createUtf8PropertyResourceBundle (ResourceBundle.getBundle (sBaseName, aLocale, aLoader));
+    return _createUtf8PropertyResourceBundle (ResourceBundle.getBundle (sBaseName, aLocale, aClassLoader));
   }
 }
