@@ -88,6 +88,20 @@ public final class HashCodeGeneratorTest
     aHC.append (new short [] { 4701, -32767 });
     aHC.append (EChange.values ());
     aHC.append (new Object [] { EChange.CHANGED, BigDecimal.ONE, System.out });
+    aHC.append (ContainerHelper.newList (EChange.CHANGED, BigDecimal.ONE, System.out));
+
+    // Arrays as objects
+    aHC.append ((Object) new boolean [] { false, true });
+    aHC.append ((Object) new byte [] { 23, 0x44 });
+    aHC.append ((Object) "Hallo".toCharArray ());
+    aHC.append ((Object) new double [] { 3.1415924, 55.0001 });
+    aHC.append ((Object) new float [] { 3141.59f, 99f });
+    aHC.append ((Object) new int [] { -4711, 0, 65535, 65536 });
+    aHC.append ((Object) new long [] { 0x2f99887766554433L, -567895678900L });
+    aHC.append ((Object) new short [] { 4701, -32767 });
+    aHC.append ((Object) EChange.values ());
+    aHC.append ((Object) new Object [] { EChange.CHANGED, BigDecimal.ONE, System.out });
+    aHC.append ((Object) ContainerHelper.newList (EChange.CHANGED, BigDecimal.ONE, System.out));
 
     // Array objects filled and containing nulls
     aHC.append (new Enum [] { EChange.CHANGED, null, EChange.UNCHANGED });
@@ -198,7 +212,7 @@ public final class HashCodeGeneratorTest
     {
       public void run ()
       {
-        byte [] aBytes = new byte [10000];
+        final byte [] aBytes = new byte [10000];
         VerySecureRandom.getInstance ().nextBytes (aBytes);
         int i = 0;
         try
@@ -219,7 +233,6 @@ public final class HashCodeGeneratorTest
           b.set (true);
           System.out.println ("Found match!");
         }
-        aBytes = null;
       }
     };
 
