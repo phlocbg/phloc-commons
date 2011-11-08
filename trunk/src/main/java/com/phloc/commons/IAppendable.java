@@ -17,6 +17,8 @@
  */
 package com.phloc.commons;
 
+import java.util.Map;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -99,14 +101,6 @@ public interface IAppendable <THISTYPE extends IAppendable <THISTYPE>>
    * @return this
    */
   @Nonnull
-  THISTYPE append (@Nullable Enum <?> x);
-
-  /**
-   * @param x
-   *        value to be appended
-   * @return this
-   */
-  @Nonnull
   THISTYPE append (@Nullable Object x);
 
   /**
@@ -179,14 +173,6 @@ public interface IAppendable <THISTYPE extends IAppendable <THISTYPE>>
    * @return this
    */
   @Nonnull
-  THISTYPE append (@Nullable Enum <?> [] x);
-
-  /**
-   * @param x
-   *        value to be appended
-   * @return this
-   */
-  @Nonnull
   THISTYPE append (@Nullable Object [] x);
 
   /**
@@ -196,4 +182,12 @@ public interface IAppendable <THISTYPE extends IAppendable <THISTYPE>>
    */
   @Nonnull
   THISTYPE append (@Nullable Iterable <?> x);
+
+  /**
+   * @param x
+   *        value to be appended
+   * @return this
+   */
+  @Nonnull
+  THISTYPE append (@Nullable Map <?, ?> x);
 }
