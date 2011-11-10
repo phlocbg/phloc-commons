@@ -20,6 +20,11 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2011-11-10" category="api" action="fix">
+    <change>
+      <text locale="en">Fixed binary compatibility of HashCodeGenerator because 3.3.2 was incompatible with 3.3.1 because of removed overload for Enum&lt;?&gt;</text>
+    </change>
+  </entry>
   <release date="2011-11-08" version="3.3.2" />
   <entry date="2011-11-08" category="api" action="change">
     <change>

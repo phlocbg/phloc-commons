@@ -232,6 +232,21 @@ public final class HashCodeGenerator implements IHashCodeGenerator
   }
 
   /**
+   * Object hash code generation.
+   * 
+   * @param x
+   *        Array to add
+   * @return this
+   */
+  @Nonnull
+  public HashCodeGenerator append (@Nullable final Enum <?> x)
+  {
+    _checkClosed ();
+    m_nHC = HashCodeCalculator.append (m_nHC, x);
+    return this;
+  }
+
+  /**
    * Array hash code generation.
    * 
    * @param x
@@ -360,6 +375,21 @@ public final class HashCodeGenerator implements IHashCodeGenerator
    */
   @Nonnull
   public HashCodeGenerator append (@Nullable final Object [] x)
+  {
+    _checkClosed ();
+    m_nHC = HashCodeCalculator.append (m_nHC, x);
+    return this;
+  }
+
+  /**
+   * Array hash code generation.
+   * 
+   * @param x
+   *        Array to add
+   * @return this
+   */
+  @Nonnull
+  public HashCodeGenerator append (@Nullable final Enum <?> [] x)
   {
     _checkClosed ();
     m_nHC = HashCodeCalculator.append (m_nHC, x);
