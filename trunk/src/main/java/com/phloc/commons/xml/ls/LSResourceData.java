@@ -20,13 +20,13 @@ package com.phloc.commons.xml.ls;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.phloc.commons.compare.CompareUtils;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * This class encapsulates all data provided for resource resolving.
- * 
+ *
  * @author philip
  */
 @Immutable
@@ -89,11 +89,11 @@ public final class LSResourceData
     if (!(o instanceof LSResourceData))
       return false;
     final LSResourceData rhs = (LSResourceData) o;
-    return CompareUtils.nullSafeEquals (m_sType, rhs.m_sType) &&
-           CompareUtils.nullSafeEquals (m_sNamespaceURI, rhs.m_sNamespaceURI) &&
-           CompareUtils.nullSafeEquals (m_sPublicID, rhs.m_sPublicID) &&
-           CompareUtils.nullSafeEquals (m_sSystemID, rhs.m_sSystemID) &&
-           CompareUtils.nullSafeEquals (m_sBaseURI, rhs.m_sBaseURI);
+    return EqualsUtils.nullSafeEquals (m_sType, rhs.m_sType) &&
+           EqualsUtils.nullSafeEquals (m_sNamespaceURI, rhs.m_sNamespaceURI) &&
+           EqualsUtils.nullSafeEquals (m_sPublicID, rhs.m_sPublicID) &&
+           EqualsUtils.nullSafeEquals (m_sSystemID, rhs.m_sSystemID) &&
+           EqualsUtils.nullSafeEquals (m_sBaseURI, rhs.m_sBaseURI);
   }
 
   @Override

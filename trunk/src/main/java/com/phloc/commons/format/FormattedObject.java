@@ -20,7 +20,7 @@ package com.phloc.commons.format;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.phloc.commons.compare.CompareUtils;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -93,8 +93,8 @@ public class FormattedObject implements IFormattedObject
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final FormattedObject rhs = (FormattedObject) o;
-    return CompareUtils.nullSafeEquals (m_aValue, rhs.m_aValue) &&
-           CompareUtils.nullSafeEquals (m_aFormatter, rhs.m_aFormatter);
+    return EqualsUtils.nullSafeEquals (m_aValue, rhs.m_aValue) &&
+           EqualsUtils.nullSafeEquals (m_aFormatter, rhs.m_aFormatter);
   }
 
   @Override

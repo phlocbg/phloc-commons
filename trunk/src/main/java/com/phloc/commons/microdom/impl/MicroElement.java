@@ -30,7 +30,7 @@ import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
-import com.phloc.commons.compare.CompareUtils;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.microdom.IMicroText;
@@ -189,13 +189,13 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
 
   public boolean hasNamespaceURI (@Nullable final String sNamespaceURI)
   {
-    return CompareUtils.nullSafeEquals (m_sNamespaceURI, sNamespaceURI);
+    return EqualsUtils.nullSafeEquals (m_sNamespaceURI, sNamespaceURI);
   }
 
   @Nonnull
   public EChange setNamespaceURI (@Nullable final String sNamespaceURI)
   {
-    if (CompareUtils.nullSafeEquals (m_sNamespaceURI, sNamespaceURI))
+    if (EqualsUtils.nullSafeEquals (m_sNamespaceURI, sNamespaceURI))
       return EChange.UNCHANGED;
     m_sNamespaceURI = sNamespaceURI;
     return EChange.CHANGED;
@@ -509,9 +509,9 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     if (!super.isEqualContent (o))
       return false;
     final MicroElement rhs = (MicroElement) o;
-    return CompareUtils.nullSafeEquals (m_sNamespaceURI, rhs.m_sNamespaceURI) &&
+    return EqualsUtils.nullSafeEquals (m_sNamespaceURI, rhs.m_sNamespaceURI) &&
            m_sTagName.equals (rhs.m_sTagName) &&
-           CompareUtils.nullSafeEquals (m_aAttrs, rhs.m_aAttrs);
+           EqualsUtils.nullSafeEquals (m_aAttrs, rhs.m_aAttrs);
   }
 
   @Override

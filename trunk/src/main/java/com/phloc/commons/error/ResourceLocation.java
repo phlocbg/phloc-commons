@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.phloc.commons.compare.CompareUtils;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -108,10 +108,10 @@ public final class ResourceLocation implements IResourceLocation
     if (!(o instanceof ResourceLocation))
       return false;
     final ResourceLocation rhs = (ResourceLocation) o;
-    return CompareUtils.nullSafeEquals (m_sResourceID, rhs.m_sResourceID) &&
+    return EqualsUtils.nullSafeEquals (m_sResourceID, rhs.m_sResourceID) &&
            m_nLineNumber == rhs.m_nLineNumber &&
            m_nColumnNumber == rhs.m_nColumnNumber &&
-           CompareUtils.nullSafeEquals (m_sField, rhs.m_sField);
+           EqualsUtils.nullSafeEquals (m_sField, rhs.m_sField);
   }
 
   @Override

@@ -30,7 +30,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.IHasSize;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
-import com.phloc.commons.compare.CompareUtils;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -67,12 +67,12 @@ public final class SingleElementMap <KEYTYPE, VALUETYPE> implements Map <KEYTYPE
 
   public boolean containsKey (@Nullable final Object aKey)
   {
-    return m_bHasElement && CompareUtils.nullSafeEquals (m_aKey, aKey);
+    return m_bHasElement && EqualsUtils.nullSafeEquals (m_aKey, aKey);
   }
 
   public boolean containsValue (@Nullable final Object aValue)
   {
-    return m_bHasElement && CompareUtils.nullSafeEquals (m_aValue, aValue);
+    return m_bHasElement && EqualsUtils.nullSafeEquals (m_aValue, aValue);
   }
 
   @Nullable
@@ -90,7 +90,7 @@ public final class SingleElementMap <KEYTYPE, VALUETYPE> implements Map <KEYTYPE
   public VALUETYPE put (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aElement)
   {
     VALUETYPE aOldElement = null;
-    if (CompareUtils.nullSafeEquals (aKey, m_aKey))
+    if (EqualsUtils.nullSafeEquals (aKey, m_aKey))
     {
       // Key is the same as before -> return old value
       aOldElement = m_aValue;
@@ -167,8 +167,8 @@ public final class SingleElementMap <KEYTYPE, VALUETYPE> implements Map <KEYTYPE
       return false;
     final SingleElementMap <?, ?> rhs = (SingleElementMap <?, ?>) o;
     return m_bHasElement == rhs.m_bHasElement &&
-           CompareUtils.nullSafeEquals (m_aKey, rhs.m_aKey) &&
-           CompareUtils.nullSafeEquals (m_aValue, rhs.m_aValue);
+           EqualsUtils.nullSafeEquals (m_aKey, rhs.m_aKey) &&
+           EqualsUtils.nullSafeEquals (m_aValue, rhs.m_aValue);
   }
 
   @Override

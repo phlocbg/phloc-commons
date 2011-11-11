@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.Nonempty;
-import com.phloc.commons.compare.CompareUtils;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.microdom.IMicroEntityReference;
 import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.microdom.IMicroProcessingInstruction;
@@ -86,7 +86,7 @@ public final class MicroProcessingInstruction extends AbstractMicroNode implemen
     if (!(o instanceof MicroProcessingInstruction))
       return false;
     final MicroProcessingInstruction rhs = (MicroProcessingInstruction) o;
-    return m_sTarget.equals (rhs.m_sTarget) && CompareUtils.nullSafeEquals (m_sData, rhs.m_sData);
+    return m_sTarget.equals (rhs.m_sTarget) && EqualsUtils.nullSafeEquals (m_sData, rhs.m_sData);
   }
 
   @Override

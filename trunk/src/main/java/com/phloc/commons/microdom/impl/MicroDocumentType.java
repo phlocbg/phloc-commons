@@ -20,7 +20,7 @@ package com.phloc.commons.microdom.impl;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.phloc.commons.compare.CompareUtils;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.microdom.IMicroDocumentType;
 import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.string.StringHelper;
@@ -94,8 +94,8 @@ public final class MicroDocumentType extends AbstractMicroNode implements IMicro
       return false;
     final MicroDocumentType rhs = (MicroDocumentType) o;
     return m_sQualifiedName.equals (rhs.m_sQualifiedName) &&
-           CompareUtils.nullSafeEquals (m_sPublicID, rhs.m_sPublicID) &&
-           CompareUtils.nullSafeEquals (m_sSystemID, rhs.m_sSystemID);
+           EqualsUtils.nullSafeEquals (m_sPublicID, rhs.m_sPublicID) &&
+           EqualsUtils.nullSafeEquals (m_sSystemID, rhs.m_sSystemID);
   }
 
   @Override

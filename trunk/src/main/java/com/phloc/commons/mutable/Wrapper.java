@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.phloc.commons.compare.CompareUtils;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
@@ -88,7 +88,7 @@ public final class Wrapper <DATATYPE> implements IReadonlyWrapper <DATATYPE>
   @Nonnull
   public EChange set (@Nullable final DATATYPE aObj)
   {
-    if (CompareUtils.nullSafeEquals (m_aObj, aObj))
+    if (EqualsUtils.nullSafeEquals (m_aObj, aObj))
       return EChange.UNCHANGED;
     m_aObj = aObj;
     return EChange.CHANGED;
@@ -102,7 +102,7 @@ public final class Wrapper <DATATYPE> implements IReadonlyWrapper <DATATYPE>
     if (!(o instanceof Wrapper <?>))
       return false;
     final Wrapper <?> rhs = (Wrapper <?>) o;
-    return CompareUtils.nullSafeEquals (m_aObj, rhs.m_aObj);
+    return EqualsUtils.nullSafeEquals (m_aObj, rhs.m_aObj);
   }
 
   @Override

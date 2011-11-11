@@ -26,7 +26,7 @@ import javax.annotation.concurrent.Immutable;
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.SystemProperties;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
-import com.phloc.commons.compare.CompareUtils;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.string.StringHelper;
 
 /**
@@ -80,7 +80,7 @@ public enum EJavaVersion
   {
     m_dMinVersionIncl = CGlobal.ILLEGAL_DOUBLE;
     m_dMaxVersionExcl = CGlobal.ILLEGAL_DOUBLE;
-    m_bIsIt = CompareUtils.safeEquals (CGlobal.ILLEGAL_DOUBLE, JavaVersionConstants.CLASS_VERSION);
+    m_bIsIt = EqualsUtils.equals (CGlobal.ILLEGAL_DOUBLE, JavaVersionConstants.CLASS_VERSION);
   }
 
   /**

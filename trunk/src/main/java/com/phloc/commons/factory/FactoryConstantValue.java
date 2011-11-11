@@ -20,7 +20,7 @@ package com.phloc.commons.factory;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.phloc.commons.compare.CompareUtils;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 
 public final class FactoryConstantValue <DATATYPE> implements IFactory <DATATYPE>
@@ -46,7 +46,7 @@ public final class FactoryConstantValue <DATATYPE> implements IFactory <DATATYPE
     if (!(o instanceof FactoryConstantValue))
       return false;
     final FactoryConstantValue <?> rhs = (FactoryConstantValue <?>) o;
-    return CompareUtils.nullSafeEquals (m_aConstantValue, rhs.m_aConstantValue);
+    return EqualsUtils.nullSafeEquals (m_aConstantValue, rhs.m_aConstantValue);
   }
 
   @Override

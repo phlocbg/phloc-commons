@@ -29,7 +29,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.collections.ContainerHelper;
-import com.phloc.commons.compare.CompareUtils;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.lang.GenericReflection;
 import com.phloc.commons.state.EChange;
@@ -265,8 +265,8 @@ public class BasicTreeItem <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, IT
     if (!(o instanceof BasicTreeItem <?, ?>))
       return false;
     final BasicTreeItem <?, ?> rhs = (BasicTreeItem <?, ?>) o;
-    return CompareUtils.nullSafeEquals (m_aData, rhs.m_aData) &&
-           CompareUtils.nullSafeEquals (m_aChildren, rhs.m_aChildren);
+    return EqualsUtils.nullSafeEquals (m_aData, rhs.m_aData) &&
+           EqualsUtils.nullSafeEquals (m_aChildren, rhs.m_aChildren);
   }
 
   @Override
