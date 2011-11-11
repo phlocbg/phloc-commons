@@ -144,6 +144,7 @@ public final class CharsetManager
 
   @DevelopersNote ("Use a version with an explicit charset")
   @Nullable
+  @Deprecated
   public static String getAnsiStringInDefaultCharset (@Nullable final String s)
   {
     return getAsStringInOtherCharset (s, CCharset.CHARSET_ISO_8859_1, CCharset.DEFAULT_CHARSET);
@@ -167,7 +168,7 @@ public final class CharsetManager
     }
     catch (final UnsupportedEncodingException ex)
     {
-      throw new IllegalArgumentException ("Unknown charset: " + sCharsetName);
+      throw new IllegalArgumentException ("Unknown charset '" + sCharsetName + "'");
     }
   }
 
@@ -186,12 +187,29 @@ public final class CharsetManager
     return getAsString (aBuffer, nOfs, nLength, aCharset.name ());
   }
 
+  /**
+   * Get the number of bytes necessary to represent the passed string as an
+   * UTF-8 string.
+   * 
+   * @param s
+   *        The string to count the length. May be <code>null</code> or empty.
+   * @return A non-negative value.
+   */
   @Nonnegative
   public static int getUTF8ByteCount (@Nullable final String s)
   {
     return s == null ? 0 : getUTF8ByteCount (s.toCharArray ());
   }
 
+  /**
+   * Get the number of bytes necessary to represent the passed char array as an
+   * UTF-8 string.
+   * 
+   * @param aChars
+   *        The characters to count the length. May be <code>null</code> or
+   *        empty.
+   * @return A non-negative value.
+   */
   @Nonnegative
   public static int getUTF8ByteCount (@Nullable final char [] aChars)
   {
@@ -202,24 +220,34 @@ public final class CharsetManager
     return nCount;
   }
 
+  /**
+   * Get the number of bytes necessary to represent the passed character.
+   * 
+   * @param c
+   *        The character to be evaluated.
+   * @return A non-negative value.
+   */
   @Nonnegative
   public static int getUTF8ByteCount (@Nonnegative final int c)
   {
+    if (c < Character.MIN_VALUE || c > Character.MAX_VALUE)
+      throw new IllegalArgumentException ("Invalid parameter: " + c);
+
     // see JVM spec 4.4.7, p 111
     // http://java.sun.com/docs/books/jvms/second_edition/html/ClassFile.doc.html
     // #1297
     if (c == 0)
       return 2;
 
-    // Source: http://icu-project.org/apiref/icu4c/utf8_8h-source.html
+    // Source: http://icu-project.org/apiref/icu4c/utf8_8h_source.html
     if (c <= 0x7f)
       return 1;
     if (c <= 0x7ff)
       return 2;
     if (c <= 0xd7ff)
       return 3;
-    if (c <= 0xdfff || c > 0x10ffff)
-      return 0;
-    return c <= 0xffff ? 3 : 4;
+
+    // It's a surrogate...
+    return 0;
   }
 }

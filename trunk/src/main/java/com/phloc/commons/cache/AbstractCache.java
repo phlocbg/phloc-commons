@@ -34,25 +34,27 @@ import com.phloc.commons.stats.IStatisticsHandlerCache;
 import com.phloc.commons.stats.IStatisticsHandlerCounter;
 import com.phloc.commons.stats.StatisticsManager;
 import com.phloc.commons.string.StringHelper;
+import com.phloc.commons.string.ToStringGenerator;
 
 @NotThreadSafe
-public abstract class AbstractCache <K, V> implements ISimpleCache <K, V>
+public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache <KEYTYPE, VALUETYPE>
 {
-  private final String m_sCacheName;
   private final IStatisticsHandlerCache m_aCacheAccessStats;
   private final IStatisticsHandlerCounter m_aCacheRemoveStats;
   private final IStatisticsHandlerCounter m_aCacheClearStats;
-  private volatile Map <K, V> m_aCache;
+
+  private final String m_sCacheName;
+  private volatile Map <KEYTYPE, VALUETYPE> m_aCache;
 
   public AbstractCache (@Nonnull @Nonempty final String sCacheName)
   {
     if (StringHelper.hasNoText (sCacheName))
       throw new IllegalArgumentException ("cacheName");
 
-    m_sCacheName = sCacheName;
     m_aCacheAccessStats = StatisticsManager.getCacheHandler ("cache:" + sCacheName + "$access");
     m_aCacheRemoveStats = StatisticsManager.getCounterHandler ("cache:" + sCacheName + "$remove");
     m_aCacheClearStats = StatisticsManager.getCounterHandler ("cache:" + sCacheName + "$clear");
+    m_sCacheName = sCacheName;
   }
 
   @Nonnull
@@ -69,9 +71,9 @@ public abstract class AbstractCache <K, V> implements ISimpleCache <K, V>
    */
   @Nonnull
   @OverrideOnDemand
-  protected Map <K, V> createCache ()
+  protected Map <KEYTYPE, VALUETYPE> createCache ()
   {
-    return new WeakHashMap <K, V> ();
+    return new WeakHashMap <KEYTYPE, VALUETYPE> ();
   }
 
   /**
@@ -82,7 +84,7 @@ public abstract class AbstractCache <K, V> implements ISimpleCache <K, V>
    * @param aValue
    *        The cache value. May not be <code>null</code>.
    */
-  protected final void putInCache (@Nonnull final K aKey, @Nonnull final V aValue)
+  protected final void putInCache (@Nonnull final KEYTYPE aKey, @Nonnull final VALUETYPE aValue)
   {
     if (aKey == null)
       throw new NullPointerException ("cacheKey");
@@ -101,11 +103,11 @@ public abstract class AbstractCache <K, V> implements ISimpleCache <K, V>
 
   @Nullable
   @OverridingMethodsMustInvokeSuper
-  public V getFromCache (@Nullable final K aKey)
+  public VALUETYPE getFromCache (@Nullable final KEYTYPE aKey)
   {
     // Since null is not allowed as value, we don't need to check with
     // containsKey before get!
-    final V aValue = m_aCache == null ? null : m_aCache.get (aKey);
+    final VALUETYPE aValue = m_aCache == null ? null : m_aCache.get (aKey);
     if (aValue == null)
       m_aCacheAccessStats.cacheMiss ();
     else
@@ -115,7 +117,7 @@ public abstract class AbstractCache <K, V> implements ISimpleCache <K, V>
 
   @Nonnull
   @OverridingMethodsMustInvokeSuper
-  public EChange removeFromCache (@Nullable final K aKey)
+  public EChange removeFromCache (@Nullable final KEYTYPE aKey)
   {
     if (m_aCache == null || m_aCache.remove (aKey) == null)
       return EChange.UNCHANGED;
@@ -144,5 +146,11 @@ public abstract class AbstractCache <K, V> implements ISimpleCache <K, V>
   public boolean isEmpty ()
   {
     return ContainerHelper.isEmpty (m_aCache);
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("cacheName", m_sCacheName).append ("content", m_aCache).toString ();
   }
 }

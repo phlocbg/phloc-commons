@@ -24,19 +24,20 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.cache.LoggingLRUCache;
+import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * A special cache that can create the value to be cache automatically from the
  * key. It also has an upper limit of elements that can reside inside the cache.
  * 
  * @author philip
- * @param <K>
+ * @param <KEYTYPE>
  *        Cache key type
- * @param <V>
+ * @param <VALUETYPE>
  *        Cache value type
  */
 @NotThreadSafe
-public class SimpleCacheWithConversionAndMaxSize <K, V> extends SimpleCacheWithConversion <K, V>
+public class SimpleCacheWithConversionAndMaxSize <KEYTYPE, VALUETYPE> extends SimpleCacheWithConversion <KEYTYPE, VALUETYPE>
 {
   private final int m_nMaxSize;
 
@@ -59,8 +60,14 @@ public class SimpleCacheWithConversionAndMaxSize <K, V> extends SimpleCacheWithC
 
   @Override
   @Nonnull
-  protected final Map <K, V> createCache ()
+  protected final Map <KEYTYPE, VALUETYPE> createCache ()
   {
-    return new LoggingLRUCache <K, V> (getName (), m_nMaxSize);
+    return new LoggingLRUCache <KEYTYPE, VALUETYPE> (getName (), m_nMaxSize);
+  }
+
+  @Override
+  public String toString ()
+  {
+    return ToStringGenerator.getDerived (super.toString ()).append ("maxSize", m_nMaxSize).toString ();
   }
 }
