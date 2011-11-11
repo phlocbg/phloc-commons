@@ -19,6 +19,7 @@ package com.phloc.commons.compare;
 
 import java.math.BigDecimal;
 import java.net.URL;
+import java.util.Arrays;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -99,7 +100,7 @@ public final class EqualsUtils
 
   public static boolean nullSafeEquals (@Nullable final BigDecimal aObj1, @Nullable final BigDecimal aObj2)
   {
-    return aObj1 == null ? aObj2 == null : equals (aObj1, aObj2);
+    return CompareUtils.nullSafeEquals (aObj1, aObj2);
   }
 
   public static boolean equals (@Nonnull final Double aObj1, @Nonnull final Double aObj2)
@@ -109,7 +110,7 @@ public final class EqualsUtils
 
   public static boolean nullSafeEquals (@Nullable final Double aObj1, @Nullable final Double aObj2)
   {
-    return aObj1 == null ? aObj2 == null : equals (aObj1, aObj2);
+    return CompareUtils.nullSafeEquals (aObj1, aObj2);
   }
 
   public static boolean equals (@Nonnull final Float aObj1, @Nonnull final Float aObj2)
@@ -119,7 +120,7 @@ public final class EqualsUtils
 
   public static boolean nullSafeEquals (@Nullable final Float aObj1, @Nullable final Float aObj2)
   {
-    return aObj1 == null ? aObj2 == null : equals (aObj1, aObj2);
+    return CompareUtils.nullSafeEquals (aObj1, aObj2);
   }
 
   public static boolean equals (@Nonnull final StringBuffer aObj1, @Nonnull final StringBuffer aObj2)
@@ -129,7 +130,7 @@ public final class EqualsUtils
 
   public static boolean nullSafeEquals (@Nullable final StringBuffer aObj1, @Nullable final StringBuffer aObj2)
   {
-    return aObj1 == null ? aObj2 == null : equals (aObj1, aObj2);
+    return CompareUtils.nullSafeEquals (aObj1, aObj2);
   }
 
   public static boolean equals (@Nonnull final StringBuilder aObj1, @Nonnull final StringBuilder aObj2)
@@ -139,7 +140,7 @@ public final class EqualsUtils
 
   public static boolean nullSafeEquals (@Nullable final StringBuilder aObj1, @Nullable final StringBuilder aObj2)
   {
-    return aObj1 == null ? aObj2 == null : equals (aObj1, aObj2);
+    return CompareUtils.nullSafeEquals (aObj1, aObj2);
   }
 
   public static boolean equals (@Nonnull final URL aObj1, @Nonnull final URL aObj2)
@@ -149,12 +150,12 @@ public final class EqualsUtils
 
   public static boolean nullSafeEquals (@Nullable final URL aObj1, @Nullable final URL aObj2)
   {
-    return aObj1 == null ? aObj2 == null : equals (aObj1, aObj2);
+    return CompareUtils.nullSafeEquals (aObj1, aObj2);
   }
 
   public static boolean equals (@Nonnull final Object [] aObj1, @Nonnull final Object [] aObj2)
   {
-    return CompareUtils.safeEquals (aObj1, aObj2);
+    return Arrays.equals (aObj1, aObj2);
   }
 
   public static boolean nullSafeEquals (@Nullable final Object [] aObj1, @Nullable final Object [] aObj2)
@@ -224,7 +225,7 @@ public final class EqualsUtils
 
   public static boolean equals (@Nonnull final boolean [] aObj1, @Nonnull final boolean [] aObj2)
   {
-    return CompareUtils.safeEquals (aObj1, aObj2);
+    return Arrays.equals (aObj1, aObj2);
   }
 
   public static boolean nullSafeEquals (@Nullable final boolean [] aObj1, @Nullable final boolean [] aObj2)
@@ -234,7 +235,7 @@ public final class EqualsUtils
 
   public static boolean equals (@Nonnull final byte [] aObj1, @Nonnull final byte [] aObj2)
   {
-    return CompareUtils.safeEquals (aObj1, aObj2);
+    return Arrays.equals (aObj1, aObj2);
   }
 
   public static boolean nullSafeEquals (@Nullable final byte [] aObj1, @Nullable final byte [] aObj2)
@@ -244,7 +245,7 @@ public final class EqualsUtils
 
   public static boolean equals (@Nonnull final char [] aObj1, @Nonnull final char [] aObj2)
   {
-    return CompareUtils.safeEquals (aObj1, aObj2);
+    return Arrays.equals (aObj1, aObj2);
   }
 
   public static boolean nullSafeEquals (@Nullable final char [] aObj1, @Nullable final char [] aObj2)
@@ -254,7 +255,7 @@ public final class EqualsUtils
 
   public static boolean equals (@Nonnull final double [] aObj1, @Nonnull final double [] aObj2)
   {
-    return CompareUtils.safeEquals (aObj1, aObj2);
+    return Arrays.equals (aObj1, aObj2);
   }
 
   public static boolean nullSafeEquals (@Nullable final double [] aObj1, @Nullable final double [] aObj2)
@@ -264,7 +265,7 @@ public final class EqualsUtils
 
   public static boolean equals (@Nonnull final float [] aObj1, @Nonnull final float [] aObj2)
   {
-    return CompareUtils.safeEquals (aObj1, aObj2);
+    return Arrays.equals (aObj1, aObj2);
   }
 
   public static boolean nullSafeEquals (@Nullable final float [] aObj1, @Nullable final float [] aObj2)
@@ -274,7 +275,7 @@ public final class EqualsUtils
 
   public static boolean equals (@Nonnull final int [] aObj1, @Nonnull final int [] aObj2)
   {
-    return CompareUtils.safeEquals (aObj1, aObj2);
+    return Arrays.equals (aObj1, aObj2);
   }
 
   public static boolean nullSafeEquals (@Nullable final int [] aObj1, @Nullable final int [] aObj2)
@@ -284,7 +285,7 @@ public final class EqualsUtils
 
   public static boolean equals (@Nonnull final long [] aObj1, @Nonnull final long [] aObj2)
   {
-    return CompareUtils.safeEquals (aObj1, aObj2);
+    return Arrays.equals (aObj1, aObj2);
   }
 
   public static boolean nullSafeEquals (@Nullable final long [] aObj1, @Nullable final long [] aObj2)
@@ -294,7 +295,7 @@ public final class EqualsUtils
 
   public static boolean equals (@Nonnull final short [] aObj1, @Nonnull final short [] aObj2)
   {
-    return CompareUtils.safeEquals (aObj1, aObj2);
+    return Arrays.equals (aObj1, aObj2);
   }
 
   public static boolean nullSafeEquals (@Nullable final short [] aObj1, @Nullable final short [] aObj2)
