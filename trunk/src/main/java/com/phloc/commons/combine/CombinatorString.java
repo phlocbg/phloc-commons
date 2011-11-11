@@ -23,6 +23,11 @@ import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.string.ToStringGenerator;
 
+/**
+ * A simple combinator that simply concatenates 2 strings.
+ * 
+ * @author philip
+ */
 @Immutable
 public final class CombinatorString implements ICombinator <String>
 {
@@ -30,6 +35,12 @@ public final class CombinatorString implements ICombinator <String>
 
   private CombinatorString ()
   {}
+
+  @Nonnull
+  public static CombinatorString getInstance ()
+  {
+    return s_aInstance;
+  }
 
   public String combine (@Nullable final String sFirst, @Nullable final String sSecond)
   {
@@ -40,11 +51,5 @@ public final class CombinatorString implements ICombinator <String>
   public String toString ()
   {
     return new ToStringGenerator (this).toString ();
-  }
-
-  @Nonnull
-  public static CombinatorString getInstance ()
-  {
-    return s_aInstance;
   }
 }

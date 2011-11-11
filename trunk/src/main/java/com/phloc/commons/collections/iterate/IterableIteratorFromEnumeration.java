@@ -25,6 +25,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.annotations.UnsupportedOperation;
+import com.phloc.commons.string.ToStringGenerator;
 
 public final class IterableIteratorFromEnumeration <ELEMENTTYPE> implements IIterableIterator <ELEMENTTYPE>
 {
@@ -58,5 +59,11 @@ public final class IterableIteratorFromEnumeration <ELEMENTTYPE> implements IIte
   public Iterator <ELEMENTTYPE> iterator ()
   {
     return this;
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("enum", m_aEnum).toString ();
   }
 }

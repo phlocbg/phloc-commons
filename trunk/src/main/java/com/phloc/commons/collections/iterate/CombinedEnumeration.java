@@ -21,6 +21,15 @@ import java.util.Enumeration;
 
 import javax.annotation.Nullable;
 
+import com.phloc.commons.string.ToStringGenerator;
+
+/**
+ * A specific enumeration iterating over two consecutive enumerations.
+ * 
+ * @author philip
+ * @param <ELEMENTTYPE>
+ *        The type to be enumerated
+ */
 public final class CombinedEnumeration <ELEMENTTYPE> implements Enumeration <ELEMENTTYPE>
 {
   private final Enumeration <ELEMENTTYPE> m_aEnum1;
@@ -52,5 +61,11 @@ public final class CombinedEnumeration <ELEMENTTYPE> implements Enumeration <ELE
   public ELEMENTTYPE nextElement ()
   {
     return m_bFirstEnum ? m_aEnum1.nextElement () : m_aEnum2.nextElement ();
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("enum1", m_aEnum1).append ("enum2", m_aEnum2).toString ();
   }
 }

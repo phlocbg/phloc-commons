@@ -64,6 +64,7 @@ public final class SingleElementListIterator <ELEMENTTYPE> implements ListIterat
     return !m_bHasNext;
   }
 
+  @Nullable
   public ELEMENTTYPE next ()
   {
     if (m_bHasNext)
