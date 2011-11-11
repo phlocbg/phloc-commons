@@ -217,7 +217,7 @@
   <release date="2011-09-26" version="3.2.1" />
   <entry date="2011-09-26" category="api" action="add">
     <change>
-      <text locale="en">Added HashingOutputStream</text>
+      <text locale="en">Added class HashingOutputStream</text>
     </change>
   </entry>
   <entry date="2011-09-26" category="tech" action="change">
