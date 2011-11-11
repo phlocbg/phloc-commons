@@ -31,13 +31,13 @@ import com.phloc.commons.state.EChange;
  * getValueToCache(Object) method.
  * 
  * @author philip
- * @param <K>
+ * @param <KEYTYPE>
  *        Cache key type
- * @param <V>
+ * @param <VALUETYPE>
  *        Cache value type
  */
 @ThreadSafe
-public abstract class AbstractNotifyingCache <K, V> extends AbstractCache <K, V>
+public abstract class AbstractNotifyingCache <KEYTYPE, VALUETYPE> extends AbstractCache <KEYTYPE, VALUETYPE>
 {
   private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
 
@@ -55,12 +55,12 @@ public abstract class AbstractNotifyingCache <K, V> extends AbstractCache <K, V>
    * @return The value to be cached. May not be <code>null</code>.
    */
   @Nonnull
-  protected abstract V getValueToCache (@Nullable K aKey);
+  protected abstract VALUETYPE getValueToCache (@Nullable KEYTYPE aKey);
 
   @Override
-  public final V getFromCache (@Nullable final K aKey)
+  public final VALUETYPE getFromCache (@Nullable final KEYTYPE aKey)
   {
-    V aValue;
+    VALUETYPE aValue;
 
     // read existing value
     m_aRWLock.readLock ().lock ();
@@ -100,7 +100,7 @@ public abstract class AbstractNotifyingCache <K, V> extends AbstractCache <K, V>
 
   @Override
   @Nonnull
-  public final EChange removeFromCache (@Nullable final K aKey)
+  public final EChange removeFromCache (@Nullable final KEYTYPE aKey)
   {
     m_aRWLock.writeLock ().lock ();
     try

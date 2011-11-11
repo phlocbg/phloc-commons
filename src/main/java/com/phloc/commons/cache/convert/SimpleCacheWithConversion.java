@@ -28,13 +28,13 @@ import com.phloc.commons.convert.IUnidirectionalConverter;
  * key.
  * 
  * @author philip
- * @param <K>
+ * @param <KEYTYPE>
  *        Cache key type
- * @param <V>
+ * @param <VALUETYPE>
  *        Cache value type
  */
 @NotThreadSafe
-public class SimpleCacheWithConversion <K, V> extends AbstractCache <K, V>
+public class SimpleCacheWithConversion <KEYTYPE, VALUETYPE> extends AbstractCache <KEYTYPE, VALUETYPE>
 {
   public SimpleCacheWithConversion (@Nonnull final String sCacheName)
   {
@@ -54,10 +54,10 @@ public class SimpleCacheWithConversion <K, V> extends AbstractCache <K, V>
    * @return The cached value. Never <code>null</code>.
    */
   @Nonnull
-  public final V getFromCache (@Nonnull final K aKey, @Nonnull final IUnidirectionalConverter <K, V> aValueRetriever)
+  public final VALUETYPE getFromCache (@Nonnull final KEYTYPE aKey, @Nonnull final IUnidirectionalConverter <KEYTYPE, VALUETYPE> aValueRetriever)
   {
     // Already in the cache?
-    V aValue = super.getFromCache (aKey);
+    VALUETYPE aValue = super.getFromCache (aKey);
     if (aValue == null)
     {
       // Get the value to cache

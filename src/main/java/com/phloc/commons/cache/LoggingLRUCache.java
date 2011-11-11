@@ -21,6 +21,7 @@ import java.util.Map;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,12 +36,13 @@ import com.phloc.commons.string.ToStringGenerator;
  * A specific {@link LRUCache} that emits a warning once the cache is full.
  * 
  * @author philip
- * @param <K>
+ * @param <KEYTYPE>
  *        Cache key type
- * @param <V>
+ * @param <VALUETYPE>
  *        Cache value type
  */
-public final class LoggingLRUCache <K, V> extends LRUCache <K, V>
+@NotThreadSafe
+public final class LoggingLRUCache <KEYTYPE, VALUETYPE> extends LRUCache <KEYTYPE, VALUETYPE>
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (LoggingLRUCache.class);
 
@@ -62,7 +64,7 @@ public final class LoggingLRUCache <K, V> extends LRUCache <K, V>
   }
 
   @Override
-  protected void onRemoveEldestEntry (@Nonnull final Map.Entry <K, V> aEntry)
+  protected void onRemoveEldestEntry (@Nonnull final Map.Entry <KEYTYPE, VALUETYPE> aEntry)
   {
     s_aLogger.warn ("Cache '" +
                     m_sCacheName +

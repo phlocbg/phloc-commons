@@ -975,7 +975,7 @@ public final class StreamUtils
     }
     catch (final UnsupportedEncodingException ex)
     {
-      throw new IllegalArgumentException ("Failed to create Reader", ex);
+      throw new IllegalArgumentException ("Failed to create Reader for charset '" + sCharset + "'", ex);
     }
   }
 
@@ -988,7 +988,7 @@ public final class StreamUtils
     }
     catch (final UnsupportedEncodingException ex)
     {
-      throw new IllegalArgumentException ("Failed to create Writer", ex);
+      throw new IllegalArgumentException ("Failed to create Writer for charset '" + sCharset + "'", ex);
     }
   }
 }

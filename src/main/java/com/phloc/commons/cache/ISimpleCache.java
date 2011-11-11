@@ -28,12 +28,12 @@ import com.phloc.commons.state.EChange;
  * Interface for a very simple Map-like cache.
  * 
  * @author philip
- * @param <K>
+ * @param <KEYTYPE>
  *        Cache key type.
- * @param <V>
+ * @param <VALUETYPE>
  *        Cache value type.
  */
-public interface ISimpleCache <K, V> extends IHasName, IHasSize
+public interface ISimpleCache <KEYTYPE, VALUETYPE> extends IHasName, IHasSize
 {
   /**
    * Get the cached value associated with the passed key.
@@ -43,7 +43,7 @@ public interface ISimpleCache <K, V> extends IHasName, IHasSize
    * @return <code>null</code> if no such value is in the cache.
    */
   @Nullable
-  V getFromCache (@Nullable K aKey);
+  VALUETYPE getFromCache (@Nullable KEYTYPE aKey);
 
   /**
    * Remove the given key from the cache.
@@ -54,7 +54,7 @@ public interface ISimpleCache <K, V> extends IHasName, IHasSize
    *         the key was not within the cache,
    */
   @Nonnull
-  EChange removeFromCache (@Nullable K aKey);
+  EChange removeFromCache (@Nullable KEYTYPE aKey);
 
   /**
    * Remove all cached elements.

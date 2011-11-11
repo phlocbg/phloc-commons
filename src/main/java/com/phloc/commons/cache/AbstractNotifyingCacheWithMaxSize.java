@@ -23,19 +23,21 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.string.ToStringGenerator;
+
 /**
  * A caching class that has the ability to fill itself with the abstract
  * getValueToCache(Object) method and has an upper limit of elements that can
  * reside in the cache.
  * 
  * @author philip
- * @param <K>
+ * @param <KEYTYPE>
  *        Cache key type
- * @param <V>
+ * @param <VALUETYPE>
  *        Cache value type
  */
 @NotThreadSafe
-public abstract class AbstractNotifyingCacheWithMaxSize <K, V> extends AbstractNotifyingCache <K, V>
+public abstract class AbstractNotifyingCacheWithMaxSize <KEYTYPE, VALUETYPE> extends AbstractNotifyingCache <KEYTYPE, VALUETYPE>
 {
   private final int m_nMaxSize;
 
@@ -61,8 +63,14 @@ public abstract class AbstractNotifyingCacheWithMaxSize <K, V> extends AbstractN
    */
   @Override
   @Nonnull
-  protected final Map <K, V> createCache ()
+  protected final Map <KEYTYPE, VALUETYPE> createCache ()
   {
-    return new LoggingLRUCache <K, V> (getName (), m_nMaxSize);
+    return new LoggingLRUCache <KEYTYPE, VALUETYPE> (getName (), m_nMaxSize);
+  }
+
+  @Override
+  public String toString ()
+  {
+    return ToStringGenerator.getDerived (super.toString ()).append ("maxSize", m_nMaxSize).toString ();
   }
 }

@@ -34,6 +34,7 @@ import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.convert.IUnidirectionalConverter;
 import com.phloc.commons.io.IReadableResource;
+import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
 import com.phloc.commons.xml.transform.ResourceStreamSource;
 
@@ -125,6 +126,12 @@ public abstract class AbstractSchemaCache extends SimpleCacheWithConversion <Str
       throw new NullPointerException ("resources");
 
     return _getSchema (aResource.getResourceID (), new Source [] { new ResourceStreamSource (aResource) });
+  }
+
+  @Override
+  public String toString ()
+  {
+    return ToStringGenerator.getDerived (super.toString ()).append ("schemaTypeName", m_sSchemaTypeName).toString ();
   }
 
   /**
