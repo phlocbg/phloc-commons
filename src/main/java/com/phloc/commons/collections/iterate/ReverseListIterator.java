@@ -25,6 +25,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.annotations.UnsupportedOperation;
+import com.phloc.commons.string.ToStringGenerator;
 
 public final class ReverseListIterator <ELEMENTTYPE> implements Iterator <ELEMENTTYPE>
 {
@@ -56,5 +57,11 @@ public final class ReverseListIterator <ELEMENTTYPE> implements Iterator <ELEMEN
   public void remove ()
   {
     throw new UnsupportedOperationException ();
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("list", m_aList).append ("index", m_nIndex).toString ();
   }
 }

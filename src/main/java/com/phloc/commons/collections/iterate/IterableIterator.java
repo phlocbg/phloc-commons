@@ -36,6 +36,7 @@ import com.phloc.commons.string.ToStringGenerator;
 public class IterableIterator <ELEMENTTYPE> implements IIterableIterator <ELEMENTTYPE>
 {
   private static final IterableIterator <Object> s_aEmpty = new IterableIterator <Object> (EmptyIterator.getInstance ());
+
   private final Iterator <ELEMENTTYPE> m_aIter;
 
   protected IterableIterator (@Nonnull final ELEMENTTYPE [] aCont)

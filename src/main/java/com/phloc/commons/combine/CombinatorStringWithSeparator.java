@@ -26,6 +26,11 @@ import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
+/**
+ * A simple combinator that concatenates 2 strings using a common separator.
+ * 
+ * @author philip
+ */
 @Immutable
 public final class CombinatorStringWithSeparator implements ICombinator <String>
 {

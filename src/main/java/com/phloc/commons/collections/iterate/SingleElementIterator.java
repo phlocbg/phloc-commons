@@ -52,6 +52,7 @@ public final class SingleElementIterator <ELEMENTTYPE> implements Iterator <ELEM
     return m_bHasNext;
   }
 
+  @Nullable
   public ELEMENTTYPE next ()
   {
     if (m_bHasNext)

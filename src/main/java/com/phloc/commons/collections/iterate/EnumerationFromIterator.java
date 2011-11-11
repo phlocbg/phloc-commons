@@ -22,6 +22,8 @@ import java.util.Iterator;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.string.ToStringGenerator;
+
 public final class EnumerationFromIterator <ELEMENTTYPE> implements Enumeration <ELEMENTTYPE>
 {
   private final Iterator <ELEMENTTYPE> m_aIter;
@@ -39,6 +41,12 @@ public final class EnumerationFromIterator <ELEMENTTYPE> implements Enumeration 
   public ELEMENTTYPE nextElement ()
   {
     return m_aIter.next ();
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("iter", m_aIter).toString ();
   }
 
   @Nonnull
