@@ -29,7 +29,7 @@ import javax.annotation.concurrent.Immutable;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.annotations.ReturnsMutableObject;
-import com.phloc.commons.compare.CompareUtils;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.lang.GenericReflection;
 
@@ -293,7 +293,7 @@ public final class ArrayHelper
   {
     if (!isEmpty (aValues))
       for (final ELEMENTTYPE aValue : aValues)
-        if (CompareUtils.nullSafeEquals (aValue, aSearchValue))
+        if (EqualsUtils.nullSafeEquals (aValue, aSearchValue))
           return true;
     return false;
   }
@@ -369,7 +369,7 @@ public final class ArrayHelper
   {
     if (!isEmpty (aValues))
       for (final double aValue : aValues)
-        if (CompareUtils.safeEquals (aValue, aSearchValue))
+        if (EqualsUtils.equals (aValue, aSearchValue))
           return true;
     return false;
   }
@@ -388,7 +388,7 @@ public final class ArrayHelper
   {
     if (!isEmpty (aValues))
       for (final float aValue : aValues)
-        if (CompareUtils.safeEquals (aValue, aSearchValue))
+        if (EqualsUtils.equals (aValue, aSearchValue))
           return true;
     return false;
   }
@@ -2973,7 +2973,7 @@ public final class ArrayHelper
       else
       {
         // Use equals implementation
-        if (!CompareUtils.nullSafeEquals (aItem1, aItem2))
+        if (!EqualsUtils.nullSafeEquals (aItem1, aItem2))
           return false;
       }
     }

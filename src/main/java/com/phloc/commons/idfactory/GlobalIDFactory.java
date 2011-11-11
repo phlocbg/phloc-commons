@@ -28,7 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
-import com.phloc.commons.compare.CompareUtils;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.state.EChange;
 
 /**
@@ -67,7 +67,7 @@ public final class GlobalIDFactory
     s_aRWLock.writeLock ().lock ();
     try
     {
-      if (CompareUtils.nullSafeEquals (s_aIntIDFactory, aFactory))
+      if (EqualsUtils.nullSafeEquals (s_aIntIDFactory, aFactory))
         return EChange.UNCHANGED;
       if (s_aLogger.isInfoEnabled ())
         s_aLogger.info ("Setting in-memory int ID factory " + aFactory);
@@ -86,7 +86,7 @@ public final class GlobalIDFactory
     s_aRWLock.writeLock ().lock ();
     try
     {
-      if (CompareUtils.nullSafeEquals (s_aPersistentIntIDFactory, aFactory))
+      if (EqualsUtils.nullSafeEquals (s_aPersistentIntIDFactory, aFactory))
         return EChange.UNCHANGED;
       if (s_aLogger.isInfoEnabled ())
         s_aLogger.info ("Setting persistent int ID factory " + aFactory);
@@ -105,7 +105,7 @@ public final class GlobalIDFactory
     s_aRWLock.writeLock ().lock ();
     try
     {
-      if (CompareUtils.nullSafeEquals (s_aStringIDFactory, aFactory))
+      if (EqualsUtils.nullSafeEquals (s_aStringIDFactory, aFactory))
         return EChange.UNCHANGED;
       if (s_aLogger.isInfoEnabled ())
         s_aLogger.info ("Setting in-memory string ID factory " + aFactory);
@@ -124,7 +124,7 @@ public final class GlobalIDFactory
     s_aRWLock.writeLock ().lock ();
     try
     {
-      if (CompareUtils.nullSafeEquals (s_aPersistentStringIDFactory, aFactory))
+      if (EqualsUtils.nullSafeEquals (s_aPersistentStringIDFactory, aFactory))
         return EChange.UNCHANGED;
       if (s_aLogger.isInfoEnabled ())
         s_aLogger.info ("Setting persistent string ID factory " + aFactory);

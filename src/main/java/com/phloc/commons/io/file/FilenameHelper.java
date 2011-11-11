@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
-import com.phloc.commons.compare.CompareUtils;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.exceptions.InitializationException;
 import com.phloc.commons.regex.RegExHelper;
 import com.phloc.commons.string.StringHelper;
@@ -354,8 +354,8 @@ public final class FilenameHelper
   public static boolean isEqualIgnoreFileSeparator (@Nullable final String sAbsoluteFilename1,
                                                     @Nullable final String sAbsoluteFilename2)
   {
-    return CompareUtils.nullSafeEquals (getPathUsingUnixSeparator (sAbsoluteFilename1),
-                                        getPathUsingUnixSeparator (sAbsoluteFilename2));
+    return EqualsUtils.nullSafeEquals (getPathUsingUnixSeparator (sAbsoluteFilename1),
+                                       getPathUsingUnixSeparator (sAbsoluteFilename2));
   }
 
   /**

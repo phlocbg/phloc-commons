@@ -108,274 +108,141 @@ public final class CompareUtils
     return sStr1 == null ? -1 : sStr2 == null ? +1 : aCollator.compare (sStr1, sStr2);
   }
 
-  /**
-   * Check if two float values are equal. This is necessary, because in some
-   * cases, the "==" operator returns wrong results.
-   * 
-   * @param aObj1
-   *        First float
-   * @param aObj2
-   *        Second float
-   * @return <code>true</code> if they are equal.
-   */
+  @Deprecated
   public static boolean safeEquals (final float aObj1, final float aObj2)
   {
-    // Special overload for "float" required!
-    return (aObj1 == aObj2) || (Float.floatToIntBits (aObj1) == Float.floatToIntBits (aObj2));
+    return EqualsUtils.equals (aObj1, aObj2);
   }
 
-  /**
-   * Check if two double values are equal. This is necessary, because in some
-   * cases, the "==" operator returns wrong results.
-   * 
-   * @param aObj1
-   *        First double
-   * @param aObj2
-   *        Second double
-   * @return <code>true</code> if they are equal.
-   */
+  @Deprecated
   public static boolean safeEquals (final double aObj1, final double aObj2)
   {
-    // Special overload for "double" required!
-    return (aObj1 == aObj2) || (Double.doubleToLongBits (aObj1) == Double.doubleToLongBits (aObj2));
+    return EqualsUtils.equals (aObj1, aObj2);
   }
 
-  /**
-   * Compare both object for equality. If both objects are <code>null</code>
-   * they are considered equal as well.
-   * 
-   * @param aObj1
-   *        The first object to compare. May be <code>null</code>.
-   * @param aObj2
-   *        The second object to compare. May be <code>null</code>.
-   * @return <code>true</code> if both are null or both are equal,
-   *         <code>false</code> otherwise.
-   */
+  @Deprecated
   public static boolean nullSafeEquals (@Nullable final Object aObj1, @Nullable final Object aObj2)
   {
-    return aObj1 == null ? aObj2 == null : aObj1.equals (aObj2);
+    return EqualsUtils.nullSafeEquals (aObj1, aObj2);
   }
 
-  /**
-   * Special equals implementation for BigDecimal because
-   * <code>BigDecimal.equals</code> returns false if they have a different scale
-   * so that "5.5" is not equal "5.50".
-   * 
-   * @param aObj1
-   *        First BigDecimal. May not be <code>null</code>.
-   * @param aObj2
-   *        Second BigDecimal. May not be <code>null</code>.
-   * @return <code>true</code> if they are equals, <code>false</code> otherwise.
-   */
+  @Deprecated
+  public static boolean nullSafeEquals (@Nullable final Object [] aObj1, @Nullable final Object [] aObj2)
+  {
+    return EqualsUtils.nullSafeEquals (aObj1, aObj2);
+  }
+
+  @Deprecated
   public static boolean safeEquals (@Nonnull final BigDecimal aObj1, @Nonnull final BigDecimal aObj2)
   {
-    if (aObj1 == aObj2)
-      return true;
-    final int nMaxScale = Math.max (aObj1.scale (), aObj2.scale ());
-    return aObj1.setScale (nMaxScale).equals (aObj2.setScale (nMaxScale));
+    return EqualsUtils.equals (aObj1, aObj2);
   }
 
-  /**
-   * Special equals implementation for BigDecimal because
-   * <code>BigDecimal.equals</code> returns false if they have a different scale
-   * so that "5.5" is not equal "5.50".<br>
-   * This version is <code>null</code>-safe.
-   * 
-   * @param aObj1
-   *        First BigDecimal. May be <code>null</code>.
-   * @param aObj2
-   *        Second BigDecimal. May be <code>null</code>.
-   * @return <code>true</code> if they are equals, <code>false</code> otherwise.
-   */
+  @Deprecated
   public static boolean nullSafeEquals (@Nullable final BigDecimal aObj1, @Nullable final BigDecimal aObj2)
   {
-    return (aObj1 == aObj2) || (aObj1 != null && aObj2 != null && safeEquals (aObj1, aObj2));
+    return EqualsUtils.nullSafeEquals (aObj1, aObj2);
   }
 
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings ({ "RC_REF_COMPARISON" })
+  @Deprecated
   public static boolean safeEquals (@Nonnull final Double aObj1, @Nonnull final Double aObj2)
   {
-    // Special overload for "Double" required!
-    return aObj1.compareTo (aObj2) == 0;
+    return EqualsUtils.equals (aObj1, aObj2);
   }
 
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings ({ "RC_REF_COMPARISON" })
+  @Deprecated
   public static boolean nullSafeEquals (@Nullable final Double aObj1, @Nullable final Double aObj2)
   {
-    return (aObj1 == aObj2) || (aObj1 != null && aObj2 != null && safeEquals (aObj1, aObj2));
+    return EqualsUtils.nullSafeEquals (aObj1, aObj2);
   }
 
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings ({ "RC_REF_COMPARISON" })
+  @Deprecated
   public static boolean safeEquals (@Nonnull final Float aObj1, @Nonnull final Float aObj2)
   {
-    // Special overload for "Float" required!
-    return aObj1.compareTo (aObj2) == 0;
+    return EqualsUtils.equals (aObj1, aObj2);
   }
 
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings ({ "RC_REF_COMPARISON" })
+  @Deprecated
   public static boolean nullSafeEquals (@Nullable final Float aObj1, @Nullable final Float aObj2)
   {
-    return (aObj1 == aObj2) || (aObj1 != null && aObj2 != null && safeEquals (aObj1, aObj2));
+    return EqualsUtils.nullSafeEquals (aObj1, aObj2);
   }
 
+  @Deprecated
   public static boolean safeEquals (@Nonnull final StringBuffer aObj1, @Nonnull final StringBuffer aObj2)
   {
-    // StringBuffer does not implement equals!
-    return aObj1.toString ().equals (aObj2.toString ());
+    return EqualsUtils.equals (aObj1, aObj2);
   }
 
+  @Deprecated
   public static boolean nullSafeEquals (@Nullable final StringBuffer aObj1, @Nullable final StringBuffer aObj2)
   {
-    return (aObj1 == aObj2) || (aObj1 != null && aObj2 != null && safeEquals (aObj1, aObj2));
+    return EqualsUtils.nullSafeEquals (aObj1, aObj2);
   }
 
+  @Deprecated
   public static boolean safeEquals (@Nonnull final StringBuilder aObj1, @Nonnull final StringBuilder aObj2)
   {
-    // StringBuilder does not implement equals!
-    return aObj1.toString ().equals (aObj2.toString ());
+    return EqualsUtils.equals (aObj1, aObj2);
   }
 
+  @Deprecated
   public static boolean nullSafeEquals (@Nullable final StringBuilder aObj1, @Nullable final StringBuilder aObj2)
   {
-    return (aObj1 == aObj2) || (aObj1 != null && aObj2 != null && safeEquals (aObj1, aObj2));
+    return EqualsUtils.nullSafeEquals (aObj1, aObj2);
   }
 
-  /**
-   * Special equals implementation for URLs because <code>URL.equals</code>
-   * performs a host lookup.<br>
-   * <a href=
-   * "http://michaelscharf.blogspot.com/2006/11/javaneturlequals-and-hashcode-make.html"
-   * >Click here for details</a>
-   * 
-   * @param aObj1
-   *        First URL. May not be <code>null</code>.
-   * @param aObj2
-   *        Second URL. May not be <code>null</code>.
-   * @return <code>true</code> if they are equals, <code>false</code> otherwise.
-   */
+  @Deprecated
   public static boolean safeEquals (@Nonnull final URL aObj1, @Nonnull final URL aObj2)
   {
-    // Avoid using the host lookup
-    return aObj1.toExternalForm ().equals (aObj2.toExternalForm ());
+    return EqualsUtils.equals (aObj1, aObj2);
   }
 
-  /**
-   * Special equals implementation for URLs because <code>URL.equals</code>
-   * performs a host lookup.<br>
-   * <a href=
-   * "http://michaelscharf.blogspot.com/2006/11/javaneturlequals-and-hashcode-make.html"
-   * >Click here for details</a>. This version is <code>null</code>-safe.
-   * 
-   * @param aObj1
-   *        First URL. May be <code>null</code>.
-   * @param aObj2
-   *        Second URL. May be <code>null</code>.
-   * @return <code>true</code> if they are equals, <code>false</code> otherwise.
-   */
+  @Deprecated
   public static boolean nullSafeEquals (@Nullable final URL aObj1, @Nullable final URL aObj2)
   {
-    return (aObj1 == aObj2) || (aObj1 != null && aObj2 != null && safeEquals (aObj1, aObj2));
+    return EqualsUtils.nullSafeEquals (aObj1, aObj2);
   }
 
+  @Deprecated
   public static boolean safeEquals (@Nonnull final BigDecimal [] aObj1, @Nonnull final BigDecimal [] aObj2)
   {
-    if (aObj1 != aObj2)
-    {
-      if (aObj1 == null || aObj2 == null)
-        return false;
-      final int nLength = aObj1.length;
-      if (nLength != aObj2.length)
-        return false;
-      for (int i = 0; i < nLength; i++)
-        if (!nullSafeEquals (aObj1[i], aObj2[i]))
-          return false;
-    }
-    return true;
+    return EqualsUtils.equals (aObj1, aObj2);
   }
 
+  @Deprecated
   public static boolean safeEquals (@Nonnull final Float [] aObj1, @Nonnull final Float [] aObj2)
   {
-    if (aObj1 != aObj2)
-    {
-      if (aObj1 == null || aObj2 == null)
-        return false;
-      final int nLength = aObj1.length;
-      if (nLength != aObj2.length)
-        return false;
-      for (int i = 0; i < nLength; i++)
-        if (!nullSafeEquals (aObj1[i], aObj2[i]))
-          return false;
-    }
-    return true;
+    return EqualsUtils.equals (aObj1, aObj2);
   }
 
+  @Deprecated
   public static boolean safeEquals (@Nonnull final Double [] aObj1, @Nonnull final Double [] aObj2)
   {
-    if (aObj1 != aObj2)
-    {
-      if (aObj1 == null || aObj2 == null)
-        return false;
-      final int nLength = aObj1.length;
-      if (nLength != aObj2.length)
-        return false;
-      for (int i = 0; i < nLength; i++)
-        if (!nullSafeEquals (aObj1[i], aObj2[i]))
-          return false;
-    }
-    return true;
+    return EqualsUtils.equals (aObj1, aObj2);
   }
 
+  @Deprecated
   public static boolean safeEquals (@Nonnull final StringBuffer [] aObj1, @Nonnull final StringBuffer [] aObj2)
   {
-    if (aObj1 != aObj2)
-    {
-      if (aObj1 == null || aObj2 == null)
-        return false;
-      final int nLength = aObj1.length;
-      if (nLength != aObj2.length)
-        return false;
-      for (int i = 0; i < nLength; i++)
-        if (!nullSafeEquals (aObj1[i], aObj2[i]))
-          return false;
-    }
-    return true;
+    return EqualsUtils.equals (aObj1, aObj2);
   }
 
+  @Deprecated
   public static boolean safeEquals (@Nonnull final StringBuilder [] aObj1, @Nonnull final StringBuilder [] aObj2)
   {
-    if (aObj1 != aObj2)
-    {
-      if (aObj1 == null || aObj2 == null)
-        return false;
-      final int nLength = aObj1.length;
-      if (nLength != aObj2.length)
-        return false;
-      for (int i = 0; i < nLength; i++)
-        if (!nullSafeEquals (aObj1[i], aObj2[i]))
-          return false;
-    }
-    return true;
+    return EqualsUtils.equals (aObj1, aObj2);
   }
 
+  @Deprecated
   public static boolean safeEquals (@Nonnull final URL [] aObj1, @Nonnull final URL [] aObj2)
   {
-    if (aObj1 != aObj2)
-    {
-      if (aObj1 == null || aObj2 == null)
-        return false;
-      final int nLength = aObj1.length;
-      if (nLength != aObj2.length)
-        return false;
-      for (int i = 0; i < nLength; i++)
-        if (!nullSafeEquals (aObj1[i], aObj2[i]))
-          return false;
-    }
-    return true;
+    return EqualsUtils.equals (aObj1, aObj2);
   }
 
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings ({ "ES_COMPARING_PARAMETER_STRING_WITH_EQ" })
+  @Deprecated
   public static boolean nullSafeEqualsIgnoreCase (@Nullable final String sObj1, @Nullable final String sObj2)
   {
-    return sObj1 == null ? sObj2 == null : sObj1.equalsIgnoreCase (sObj2);
+    return EqualsUtils.nullSafeEqualsIgnoreCase (sObj1, sObj2);
   }
 }

@@ -20,7 +20,7 @@ package com.phloc.commons.factory;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.phloc.commons.compare.CompareUtils;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.lang.GenericReflection;
@@ -52,7 +52,7 @@ public final class FactoryNewInstance <DATATYPE> implements IFactory <DATATYPE>
     if (!(o instanceof FactoryNewInstance))
       return false;
     final FactoryNewInstance <?> rhs = (FactoryNewInstance <?>) o;
-    return CompareUtils.nullSafeEquals (m_aClass, rhs.m_aClass);
+    return EqualsUtils.nullSafeEquals (m_aClass, rhs.m_aClass);
   }
 
   @Override

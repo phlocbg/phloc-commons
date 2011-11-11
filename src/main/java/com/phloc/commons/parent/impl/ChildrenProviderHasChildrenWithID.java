@@ -21,7 +21,7 @@ import java.util.Collection;
 
 import javax.annotation.Nullable;
 
-import com.phloc.commons.compare.CompareUtils;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.id.IHasID;
 import com.phloc.commons.parent.IChildrenProviderWithID;
 import com.phloc.commons.parent.IHasChildren;
@@ -47,7 +47,7 @@ public class ChildrenProviderHasChildrenWithID <KEYTYPE, CHILDTYPE extends IHasC
       final Collection <? extends CHILDTYPE> aChildren = aCurrent.getChildren ();
       if (aChildren != null)
         for (final CHILDTYPE aChild : aChildren)
-          if (aChild != null && CompareUtils.nullSafeEquals (aChild.getID (), aID))
+          if (aChild != null && EqualsUtils.nullSafeEquals (aChild.getID (), aID))
             return aChild;
     }
     return null;

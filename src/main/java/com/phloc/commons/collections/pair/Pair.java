@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.phloc.commons.compare.CompareUtils;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
@@ -69,7 +69,7 @@ public final class Pair <DATA1TYPE, DATA2TYPE> implements IPair <DATA1TYPE, DATA
   @Nonnull
   public EChange setFirst (@Nullable final DATA1TYPE aFirst)
   {
-    if (CompareUtils.nullSafeEquals (aFirst, m_aFirst))
+    if (EqualsUtils.nullSafeEquals (aFirst, m_aFirst))
       return EChange.UNCHANGED;
     m_aFirst = aFirst;
     return EChange.CHANGED;
@@ -84,7 +84,7 @@ public final class Pair <DATA1TYPE, DATA2TYPE> implements IPair <DATA1TYPE, DATA
   @Nonnull
   public EChange setSecond (@Nullable final DATA2TYPE aSecond)
   {
-    if (CompareUtils.nullSafeEquals (aSecond, m_aSecond))
+    if (EqualsUtils.nullSafeEquals (aSecond, m_aSecond))
       return EChange.UNCHANGED;
     m_aSecond = aSecond;
     return EChange.CHANGED;
@@ -98,8 +98,7 @@ public final class Pair <DATA1TYPE, DATA2TYPE> implements IPair <DATA1TYPE, DATA
     if (!(o instanceof Pair <?, ?>))
       return false;
     final Pair <?, ?> rhs = (Pair <?, ?>) o;
-    return CompareUtils.nullSafeEquals (m_aFirst, rhs.m_aFirst) &&
-           CompareUtils.nullSafeEquals (m_aSecond, rhs.m_aSecond);
+    return EqualsUtils.nullSafeEquals (m_aFirst, rhs.m_aFirst) && EqualsUtils.nullSafeEquals (m_aSecond, rhs.m_aSecond);
   }
 
   @Override

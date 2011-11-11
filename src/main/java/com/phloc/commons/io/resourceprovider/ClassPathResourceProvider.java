@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.phloc.commons.compare.CompareUtils;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.IReadableResourceProvider;
@@ -72,7 +72,7 @@ public final class ClassPathResourceProvider implements IReadableResourceProvide
     if (!(o instanceof ClassPathResourceProvider))
       return false;
     final ClassPathResourceProvider rhs = (ClassPathResourceProvider) o;
-    return CompareUtils.nullSafeEquals (m_sPrefix, rhs.m_sPrefix);
+    return EqualsUtils.nullSafeEquals (m_sPrefix, rhs.m_sPrefix);
   }
 
   @Override

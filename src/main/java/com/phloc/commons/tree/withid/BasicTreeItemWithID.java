@@ -31,7 +31,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.collections.ContainerHelper;
-import com.phloc.commons.compare.CompareUtils;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.lang.GenericReflection;
 import com.phloc.commons.state.EChange;
@@ -41,7 +41,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Basic tree item with ID implementation, independent of the implementation
  * type.
- * 
+ *
  * @author philip
  * @param <KEYTYPE>
  *        tree item key type
@@ -92,7 +92,7 @@ public class BasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItem
 
   /**
    * Constructor for normal elements
-   * 
+   *
    * @param aParent
    *        Parent item. May never be <code>null</code> since only the root has
    *        no parent.
@@ -124,7 +124,7 @@ public class BasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItem
    * This method is called to validate a data ID object. This method may be
    * overloaded in derived classes. The default implementation accepts all
    * values.
-   * 
+   *
    * @param aDataID
    *        The value to validate.
    * @return <code>true</code> if the ID is valid, <code>false</code> otherwise.
@@ -139,7 +139,7 @@ public class BasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItem
    * This method is called to validate a data object. This method may be
    * overloaded in derived classes. The default implementation accepts all
    * values.
-   * 
+   *
    * @param aData
    *        The value to validate.
    * @return <code>true</code> if the ID is valid, <code>false</code> otherwise.
@@ -381,9 +381,9 @@ public class BasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItem
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final BasicTreeItemWithID <?, ?, ?> rhs = (BasicTreeItemWithID <?, ?, ?>) o;
-    return CompareUtils.nullSafeEquals (m_aDataID, rhs.m_aDataID) &&
-           CompareUtils.nullSafeEquals (m_aData, rhs.m_aData) &&
-           CompareUtils.nullSafeEquals (m_aChildMap, rhs.m_aChildMap);
+    return EqualsUtils.nullSafeEquals (m_aDataID, rhs.m_aDataID) &&
+           EqualsUtils.nullSafeEquals (m_aData, rhs.m_aData) &&
+           EqualsUtils.nullSafeEquals (m_aChildMap, rhs.m_aChildMap);
   }
 
   @Override

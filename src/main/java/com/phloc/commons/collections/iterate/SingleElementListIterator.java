@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.annotations.UnsupportedOperation;
-import com.phloc.commons.compare.CompareUtils;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -115,7 +115,7 @@ public final class SingleElementListIterator <ELEMENTTYPE> implements ListIterat
     if (!(o instanceof SingleElementListIterator <?>))
       return false;
     final SingleElementListIterator <?> rhs = (SingleElementListIterator <?>) o;
-    return m_bHasNext == rhs.m_bHasNext && CompareUtils.nullSafeEquals (m_aElement, rhs.m_aElement);
+    return m_bHasNext == rhs.m_bHasNext && EqualsUtils.nullSafeEquals (m_aElement, rhs.m_aElement);
   }
 
   @Override

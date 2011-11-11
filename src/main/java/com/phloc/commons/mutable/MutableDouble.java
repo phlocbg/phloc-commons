@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.ICloneable;
-import com.phloc.commons.compare.CompareUtils;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
@@ -92,7 +92,7 @@ public final class MutableDouble implements Comparable <MutableDouble>, ICloneab
   @Nonnull
   public EChange set (final double dValue)
   {
-    if (CompareUtils.safeEquals (dValue, m_dValue))
+    if (EqualsUtils.equals (dValue, m_dValue))
       return EChange.UNCHANGED;
     m_dValue = dValue;
     return EChange.CHANGED;
@@ -100,7 +100,7 @@ public final class MutableDouble implements Comparable <MutableDouble>, ICloneab
 
   public boolean is0 ()
   {
-    return CompareUtils.safeEquals (m_dValue, 0);
+    return EqualsUtils.equals (m_dValue, 0);
   }
 
   public boolean isNot0 ()
@@ -132,7 +132,7 @@ public final class MutableDouble implements Comparable <MutableDouble>, ICloneab
     if (!(o instanceof MutableDouble))
       return false;
     final MutableDouble rhs = (MutableDouble) o;
-    return CompareUtils.safeEquals (m_dValue, rhs.m_dValue);
+    return EqualsUtils.equals (m_dValue, rhs.m_dValue);
   }
 
   @Override

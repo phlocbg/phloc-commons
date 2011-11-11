@@ -24,14 +24,14 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.combine.ICombinator;
-import com.phloc.commons.compare.CompareUtils;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.tree.withid.BasicTreeItemWithID;
 
 /**
  * Base implementation of the {@link IFolderTreeItem} interface.
- * 
+ *
  * @author philip
  * @param <KEYTYPE>
  *        Key type
@@ -52,7 +52,7 @@ public class BasicFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collectio
 
   /**
    * Constructor for root object
-   * 
+   *
    * @param aFactory
    *        The item factory to use.
    */
@@ -64,7 +64,7 @@ public class BasicFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collectio
 
   /**
    * Constructor for root object
-   * 
+   *
    * @param aFactory
    *        The item factory to use.
    * @param aDataID
@@ -79,7 +79,7 @@ public class BasicFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collectio
 
   /**
    * Constructor for normal elements
-   * 
+   *
    * @param aParent
    *        Parent item. May never be <code>null</code> since only the root has
    *        no parent.
@@ -110,7 +110,7 @@ public class BasicFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collectio
     if (!super.equals (o))
       return false;
     final BasicFolderTreeItem <?, ?, ?, ?> rhs = (BasicFolderTreeItem <?, ?, ?, ?>) o;
-    return CompareUtils.nullSafeEquals (m_aKeyCombinator, rhs.m_aKeyCombinator);
+    return EqualsUtils.nullSafeEquals (m_aKeyCombinator, rhs.m_aKeyCombinator);
   }
 
   @Override

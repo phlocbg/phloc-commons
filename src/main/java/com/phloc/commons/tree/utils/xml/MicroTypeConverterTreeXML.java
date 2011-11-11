@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.annotations.Nonempty;
-import com.phloc.commons.compare.CompareUtils;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.convert.MicroTypeConverter;
 import com.phloc.commons.microdom.convert.MicroTypeConverterRegistry;
@@ -30,7 +30,7 @@ import com.phloc.commons.string.StringHelper;
 /**
  * A special implementation of {@link IConverterTreeXML} that uses the
  * conversion rules stored in the {@link MicroTypeConverterRegistry}.
- * 
+ *
  * @author philip
  * @param <DATATYPE>
  *        The data type to be converted
@@ -43,7 +43,7 @@ public final class MicroTypeConverterTreeXML <DATATYPE> implements IConverterTre
 
   /**
    * Constructor
-   * 
+   *
    * @param sElementName
    *        The element name to use. May neither be <code>null</code> nor empty
    * @param aNativeClass
@@ -58,7 +58,7 @@ public final class MicroTypeConverterTreeXML <DATATYPE> implements IConverterTre
 
   /**
    * Constructor
-   * 
+   *
    * @param sNamespaceURI
    *        The namespace URI for the created element. May be <code>null</code>.
    * @param sElementName
@@ -92,7 +92,7 @@ public final class MicroTypeConverterTreeXML <DATATYPE> implements IConverterTre
     final IMicroElement eChildElement = eDataElement.getFirstChildElement ();
     if (eChildElement != null)
     {
-      if (!CompareUtils.nullSafeEquals (m_sNamespaceURI, eChildElement.getNamespaceURI ()))
+      if (!EqualsUtils.nullSafeEquals (m_sNamespaceURI, eChildElement.getNamespaceURI ()))
         throw new IllegalStateException ("Namespace mismatch! Expected: " + m_sNamespaceURI);
       if (!m_sElementName.equals (eChildElement.getTagName ()))
         throw new IllegalStateException ("Tag name mismatch! Expected: " + m_sElementName);

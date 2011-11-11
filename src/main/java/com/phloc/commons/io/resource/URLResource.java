@@ -33,7 +33,7 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.phloc.commons.compare.CompareUtils;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.streams.StreamUtils;
@@ -216,7 +216,7 @@ public final class URLResource implements IReadableResource
     if (!(o instanceof URLResource))
       return false;
     final URLResource rhs = (URLResource) o;
-    return CompareUtils.safeEquals (m_aURL, rhs.m_aURL);
+    return EqualsUtils.equals (m_aURL, rhs.m_aURL);
   }
 
   @Override
