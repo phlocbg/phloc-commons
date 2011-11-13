@@ -134,6 +134,18 @@ public final class StopWatch implements IStoppable
   }
 
   /**
+   * Stop the stop watch and get the elapsed seconds since the start. If the
+   * stop watch was started and stopped multiple times, the duration is added.
+   * 
+   * @return The elapsed seconds or 0 if the stop watch was never started.
+   */
+  public long stopAndGetSeconds ()
+  {
+    stop ();
+    return getSeconds ();
+  }
+
+  /**
    * Stop the stop watch and get the elapsed milliseconds since the start. If
    * the stop watch was started and stopped multiple times, the duration is
    * added.
