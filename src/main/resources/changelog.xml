@@ -20,12 +20,17 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
-  <entry date="2011-11-11" category="tech" action="add">
+  <entry date="2011-11-14" category="api" action="add">
+    <change>
+      <text locale="en">New StopWatch method stopAndGetSeconds ()</text>
+    </change>
+  </entry>
+  <entry date="2011-11-14" category="tech" action="add">
     <change>
       <text locale="en">SimpleLSResourceResolver has now special handling if the system ID to be resolved is empty</text>
     </change>
   </entry>
-  <entry date="2011-11-11" category="tech" action="fix">
+  <entry date="2011-11-14" category="tech" action="fix">
     <change>
       <text locale="en">Fixed problems with SimpleLSResourceResolver default resource resolving when the passed base URI is not a URI</text>
     </change>
