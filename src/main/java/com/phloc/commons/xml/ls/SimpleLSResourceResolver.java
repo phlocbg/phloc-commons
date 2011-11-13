@@ -19,6 +19,7 @@ package com.phloc.commons.xml.ls;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 
@@ -36,6 +37,7 @@ import com.phloc.commons.io.file.FilenameHelper;
 import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.io.resource.FileSystemResource;
 import com.phloc.commons.io.resource.URLResource;
+import com.phloc.commons.string.StringHelper;
 
 /**
  * A simple LS resource resolver that can handle URLs, JAR files and file system
@@ -106,7 +108,24 @@ public class SimpleLSResourceResolver implements LSResourceResolver
 
     // Relative URL!
     // Get the parent folder that contains the including file (=BaseURI)
-    final File aParent = new File (new URL (sBaseURI).toURI ()).getParentFile ();
+    File aBase;
+    try
+    {
+      aBase = new File (new URL (sBaseURI).toURI ());
+    }
+    catch (final MalformedURLException ex)
+    {
+      // Happens when sBaseURI is e.g. "c:\windows\..."
+      aBase = new File (sBaseURI);
+    }
+
+    if (StringHelper.hasNoText (sSystemId))
+    {
+      // Nothing to resolve
+      return new FileSystemResource (aBase);
+    }
+
+    final File aParent = aBase.getParentFile ();
     final File aResFile = new File (aParent, sSystemId).getCanonicalFile ().getAbsoluteFile ();
     return new FileSystemResource (aResFile);
   }
