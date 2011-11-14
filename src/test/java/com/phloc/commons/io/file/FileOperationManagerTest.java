@@ -105,7 +105,7 @@ public final class FileOperationManagerTest
   @Test
   public void testCreateDirRecursive ()
   {
-    final IFileOperationManager aFOM = new FileOperationManager (new DefaultFileOperationCallback ());
+    final IFileOperationManager aFOM = new FileOperationManager (new LoggingFileOperationCallback ());
     final File aDir1 = new File ("TestDir");
     final File aDir11 = new File (aDir1, "TestSubDir");
     try

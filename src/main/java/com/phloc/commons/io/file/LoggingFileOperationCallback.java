@@ -25,10 +25,6 @@ import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.phloc.commons.io.file.EFileIOErrorCode;
-import com.phloc.commons.io.file.EFileIOOperation;
-import com.phloc.commons.io.file.IFileOperationCallback;
-
 /**
  * A logging implementation of the {@link IFileOperationCallback} interface.
  * 
@@ -45,9 +41,10 @@ public final class LoggingFileOperationCallback implements IFileOperationCallbac
     if (s_aLogger.isDebugEnabled ())
       s_aLogger.debug ("File operation " +
                        eOperation.name () +
-                       " succeeded on " +
+                       " succeeded on '" +
                        aFile1 +
-                       (aFile2 == null ? "" : " and " + aFile2));
+                       "'" +
+                       (aFile2 == null ? "" : " and '" + aFile2 + "'"));
   }
 
   public void onError (@Nonnull final EFileIOOperation eOperation,
@@ -60,8 +57,9 @@ public final class LoggingFileOperationCallback implements IFileOperationCallbac
                     eOperation.name () +
                     " failed with error code " +
                     eErrorCode.name () +
-                    " on " +
+                    " on '" +
                     aFile1 +
-                    (aFile2 == null ? "" : " and " + aFile2), aException);
+                    "'" +
+                    (aFile2 == null ? "" : " and '" + aFile2 + "'"), aException);
   }
 }
