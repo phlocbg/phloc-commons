@@ -61,8 +61,8 @@ public final class FileOperations
 
     try
     {
-      return aDir.mkdir () ? EFileIOErrorCode.NO_ERROR.getAsIOError (EFileIOOperation.CREATE_DIR, aDir)
-                          : EFileIOErrorCode.OPERATION_FAILED.getAsIOError (EFileIOOperation.CREATE_DIR, aDir);
+      final EFileIOErrorCode eError = aDir.mkdir () ? EFileIOErrorCode.NO_ERROR : EFileIOErrorCode.OPERATION_FAILED;
+      return eError.getAsIOError (EFileIOOperation.CREATE_DIR, aDir);
     }
     catch (final SecurityException ex)
     {
@@ -107,9 +107,8 @@ public final class FileOperations
 
     try
     {
-      return aDir.mkdirs () ? EFileIOErrorCode.NO_ERROR.getAsIOError (EFileIOOperation.CREATE_DIR_RECURSIVE, aDir)
-                           : EFileIOErrorCode.OPERATION_FAILED.getAsIOError (EFileIOOperation.CREATE_DIR_RECURSIVE,
-                                                                             aDir);
+      final EFileIOErrorCode eError = aDir.mkdirs () ? EFileIOErrorCode.NO_ERROR : EFileIOErrorCode.OPERATION_FAILED;
+      return eError.getAsIOError (EFileIOOperation.CREATE_DIR_RECURSIVE, aDir);
     }
     catch (final SecurityException ex)
     {
@@ -155,11 +154,9 @@ public final class FileOperations
     try
     {
       // delete may return true even so it internally failed!
-      return aDir.delete () && !aDir.exists ()
-                                              ? EFileIOErrorCode.NO_ERROR.getAsIOError (EFileIOOperation.DELETE_DIR,
-                                                                                        aDir)
-                                              : EFileIOErrorCode.OPERATION_FAILED.getAsIOError (EFileIOOperation.DELETE_DIR,
-                                                                                                aDir);
+      final EFileIOErrorCode eError = aDir.delete () && !aDir.exists () ? EFileIOErrorCode.NO_ERROR
+                                                                       : EFileIOErrorCode.OPERATION_FAILED;
+      return eError.getAsIOError (EFileIOOperation.DELETE_DIR, aDir);
     }
     catch (final SecurityException ex)
     {
@@ -213,7 +210,10 @@ public final class FileOperations
             return eCode;
         }
         else
+        {
+          // Neither directory no file - don't know how to handle
           return EFileIOErrorCode.OBJECT_CANNOT_BE_HANDLED.getAsIOError (EFileIOOperation.DELETE_DIR_RECURSIVE, aChild);
+        }
     }
 
     // Now this directory should be empty -> delete as if empty
@@ -239,11 +239,9 @@ public final class FileOperations
     try
     {
       // delete may return true even so it internally failed!
-      return aFile.delete () && !aFile.exists ()
-                                                ? EFileIOErrorCode.NO_ERROR.getAsIOError (EFileIOOperation.DELETE_FILE,
-                                                                                          aFile)
-                                                : EFileIOErrorCode.OPERATION_FAILED.getAsIOError (EFileIOOperation.DELETE_FILE,
-                                                                                                  aFile);
+      final EFileIOErrorCode eError = aFile.delete () && !aFile.exists () ? EFileIOErrorCode.NO_ERROR
+                                                                         : EFileIOErrorCode.OPERATION_FAILED;
+      return eError.getAsIOError (EFileIOOperation.DELETE_FILE, aFile);
     }
     catch (final SecurityException ex)
     {
@@ -285,13 +283,9 @@ public final class FileOperations
 
     try
     {
-      return aSourceFile.renameTo (aTargetFile)
-                                               ? EFileIOErrorCode.NO_ERROR.getAsIOError (EFileIOOperation.RENAME_FILE,
-                                                                                         aSourceFile,
-                                                                                         aTargetFile)
-                                               : EFileIOErrorCode.OPERATION_FAILED.getAsIOError (EFileIOOperation.RENAME_FILE,
-                                                                                                 aSourceFile,
-                                                                                                 aTargetFile);
+      final EFileIOErrorCode eError = aSourceFile.renameTo (aTargetFile) ? EFileIOErrorCode.NO_ERROR
+                                                                        : EFileIOErrorCode.OPERATION_FAILED;
+      return eError.getAsIOError (EFileIOOperation.RENAME_FILE, aSourceFile, aTargetFile);
     }
     catch (final SecurityException ex)
     {
@@ -339,13 +333,9 @@ public final class FileOperations
 
     try
     {
-      return aSourceDir.renameTo (aTargetDir)
-                                             ? EFileIOErrorCode.NO_ERROR.getAsIOError (EFileIOOperation.RENAME_DIR,
-                                                                                       aSourceDir,
-                                                                                       aTargetDir)
-                                             : EFileIOErrorCode.OPERATION_FAILED.getAsIOError (EFileIOOperation.RENAME_DIR,
-                                                                                               aSourceDir,
-                                                                                               aTargetDir);
+      final EFileIOErrorCode eError = aSourceDir.renameTo (aTargetDir) ? EFileIOErrorCode.NO_ERROR
+                                                                      : EFileIOErrorCode.OPERATION_FAILED;
+      return eError.getAsIOError (EFileIOOperation.RENAME_DIR, aSourceDir, aTargetDir);
     }
     catch (final SecurityException ex)
     {
@@ -391,13 +381,10 @@ public final class FileOperations
     final OutputStream aOS = FileUtils.getOutputStream (aTargetFile, EAppend.TRUNCATE);
     try
     {
-      return StreamUtils.copyInputStreamToOutputStream (aIS, aOS).isSuccess ()
-                                                                              ? EFileIOErrorCode.NO_ERROR.getAsIOError (EFileIOOperation.COPY_FILE,
-                                                                                                                        aSourceFile,
-                                                                                                                        aTargetFile)
-                                                                              : EFileIOErrorCode.OPERATION_FAILED.getAsIOError (EFileIOOperation.COPY_FILE,
-                                                                                                                                aSourceFile,
-                                                                                                                                aTargetFile);
+      final EFileIOErrorCode eError = StreamUtils.copyInputStreamToOutputStream (aIS, aOS).isSuccess ()
+                                                                                                       ? EFileIOErrorCode.NO_ERROR
+                                                                                                       : EFileIOErrorCode.OPERATION_FAILED;
+      return eError.getAsIOError (EFileIOOperation.COPY_FILE, aSourceFile, aTargetFile);
     }
     finally
     {
@@ -452,9 +439,11 @@ public final class FileOperations
     {
       if (aChild.isDirectory ())
       {
+        // Skip "." and ".."
         if (FilenameHelper.isSystemInternalDirectory (aChild.getName ()))
           continue;
 
+        // Copy directory
         eCode = copyDirRecursive (aChild, new File (aTargetDir, aChild.getName ()));
         if (eCode.isFailure ())
           return eCode;
@@ -462,12 +451,16 @@ public final class FileOperations
       else
         if (aChild.isFile ())
         {
+          // Copy a file
           eCode = copyFile (aChild, new File (aTargetDir, aChild.getName ()));
           if (eCode.isFailure ())
             return eCode;
         }
         else
+        {
+          // Neither directory not file - don't know how to handle
           return EFileIOErrorCode.OBJECT_CANNOT_BE_HANDLED.getAsIOError (EFileIOOperation.COPY_DIR_RECURSIVE, aChild);
+        }
     }
 
     // Done
