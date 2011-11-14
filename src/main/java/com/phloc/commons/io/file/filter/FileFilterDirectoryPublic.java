@@ -26,17 +26,16 @@ import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * A file filter that matches if the parent directory is public, meaning it does
- * not start with "." (hidden directory on Unix systems)
+ * A file filter that matches if the passed file is a directory and is public,
+ * meaning it does not start with "." (hidden directory on Unix systems)
  * 
  * @author philip
  */
-public final class FileFilterParentDirectoryPublic extends AbstractFileFilter
+public final class FileFilterDirectoryPublic extends AbstractFileFilter
 {
   public boolean accept (@Nullable final File aFile)
   {
-    final File aParentFile = aFile != null ? aFile.getAbsoluteFile ().getParentFile () : null;
-    return aParentFile != null && !StringHelper.startsWith (aParentFile.getName (), '.');
+    return aFile != null && aFile.isDirectory () && !StringHelper.startsWith (aFile.getName (), '.');
   }
 
   @Override
@@ -44,7 +43,7 @@ public final class FileFilterParentDirectoryPublic extends AbstractFileFilter
   {
     if (o == this)
       return true;
-    if (!(o instanceof FileFilterParentDirectoryPublic))
+    if (!(o instanceof FileFilterDirectoryPublic))
       return false;
     return true;
   }

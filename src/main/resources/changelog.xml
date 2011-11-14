@@ -20,6 +20,21 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2011-11-14" category="api" action="add">
+    <change>
+      <text locale="en">New FileFilter implementation FileFilterDirectoryPublic</text>
+    </change>
+  </entry>
+  <entry date="2011-11-14" category="api" action="change">
+    <change>
+      <text locale="en">Reworked FileFilter implementations to use a common base class and also implement IFilter&lt;File&gt;</text>
+    </change>
+  </entry>
+  <entry date="2011-11-14" category="api" action="add">
+    <change>
+      <text locale="en">FileSystemRecursiveIterator has now a constructor that takes a filter determining the recursion</text>
+    </change>
+  </entry>
   <entry date="2011-11-14" category="api" action="change">
     <change>
       <text locale="en">Simplified internal logic of FileOperations</text>

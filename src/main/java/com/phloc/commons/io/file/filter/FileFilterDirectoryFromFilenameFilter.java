@@ -18,20 +18,28 @@
 package com.phloc.commons.io.file.filter;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FilenameFilter;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
-public final class FileFilterDirectoryFromFilenameFilter implements FileFilter
+/**
+ * A special directory file filter that uses and external filename filter to
+ * determine the validity.
+ * 
+ * @author philip
+ */
+public final class FileFilterDirectoryFromFilenameFilter extends AbstractFileFilter
 {
   private final FilenameFilter m_aFnFilter;
 
-  public FileFilterDirectoryFromFilenameFilter (final FilenameFilter aFnFilter)
+  public FileFilterDirectoryFromFilenameFilter (@Nonnull final FilenameFilter aFnFilter)
   {
+    if (aFnFilter == null)
+      throw new NullPointerException ("filenameFilter");
     m_aFnFilter = aFnFilter;
   }
 
@@ -47,12 +55,14 @@ public final class FileFilterDirectoryFromFilenameFilter implements FileFilter
       return true;
     if (!(o instanceof FileFilterDirectoryFromFilenameFilter))
       return false;
+    // FilenameFilter does not implement equals
     return true;
   }
 
   @Override
   public int hashCode ()
   {
+    // FilenameFilter does not implement hashCode
     return new HashCodeGenerator (this).getHashCode ();
   }
 

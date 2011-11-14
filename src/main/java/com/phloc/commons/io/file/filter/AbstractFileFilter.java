@@ -18,43 +18,23 @@
 package com.phloc.commons.io.file.filter;
 
 import java.io.File;
+import java.io.FileFilter;
 
 import javax.annotation.Nullable;
 
-import com.phloc.commons.hash.HashCodeGenerator;
-import com.phloc.commons.string.ToStringGenerator;
+import com.phloc.commons.filter.IFilter;
 
 /**
- * A file filter that accepts only directories.
+ * Abstract base implementation of {@link FileFilter} with some conversion
+ * methods. Also implements {@link IFilter} and forwards the calls to the
+ * {@link FileFilter} API.
  * 
  * @author philip
  */
-public final class FileFilterDirectoryOnly extends AbstractFileFilter
+public abstract class AbstractFileFilter implements FileFilter, IFilter <File>
 {
-  public boolean accept (@Nullable final File aFile)
+  public final boolean matchesFilter (@Nullable final File aFile)
   {
-    return aFile != null && aFile.isDirectory ();
-  }
-
-  @Override
-  public boolean equals (final Object o)
-  {
-    if (o == this)
-      return true;
-    if (!(o instanceof FileFilterDirectoryOnly))
-      return false;
-    return true;
-  }
-
-  @Override
-  public int hashCode ()
-  {
-    return new HashCodeGenerator (this).getHashCode ();
-  }
-
-  @Override
-  public String toString ()
-  {
-    return new ToStringGenerator (this).toString ();
+    return accept (aFile);
   }
 }

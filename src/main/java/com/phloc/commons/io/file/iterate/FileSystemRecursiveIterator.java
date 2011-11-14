@@ -25,12 +25,15 @@ import java.util.NoSuchElementException;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.collections.iterate.IIterableIterator;
+import com.phloc.commons.filter.IFilter;
 import com.phloc.commons.filter.collections.FilterIterator;
 import com.phloc.commons.io.file.filter.FileFilterToIFilterAdapter;
 import com.phloc.commons.string.StringHelper;
@@ -49,8 +52,9 @@ import com.phloc.commons.string.ToStringGenerator;
 public class FileSystemRecursiveIterator implements IIterableIterator <File>
 {
   private final int m_nStartLevel;
-  private final List <File> m_aFilesLeft;
   private int m_nLevel = 0;
+  private final IFilter <File> m_aRecursionFilter;
+  private final List <File> m_aFilesLeft;
 
   @Nonnegative
   private static int _getLevel (@Nonnull final File aFile)
@@ -60,9 +64,24 @@ public class FileSystemRecursiveIterator implements IIterableIterator <File>
 
   public FileSystemRecursiveIterator (@Nonnull final File aBaseDir)
   {
+    this (aBaseDir, null);
+  }
+
+  /**
+   * Constructor for recursively iterating a file system directory.
+   * 
+   * @param aBaseDir
+   *        The base directory to start with. May not be <code>null</code>.
+   * @param aRecursionFilter
+   *        An optional filter that controls, into which sub-directories this
+   *        iterator should descend to. May be <code>null</code>.
+   */
+  public FileSystemRecursiveIterator (@Nonnull final File aBaseDir, @Nullable final IFilter <File> aRecursionFilter)
+  {
     if (aBaseDir == null)
       throw new NullPointerException ("directory");
     m_nStartLevel = _getLevel (aBaseDir);
+    m_aRecursionFilter = aRecursionFilter;
     m_aFilesLeft = ContainerHelper.newList (aBaseDir.listFiles ());
   }
 
@@ -89,7 +108,7 @@ public class FileSystemRecursiveIterator implements IIterableIterator <File>
   @OverrideOnDemand
   protected boolean recurseIntoDirectory (@Nonnull final File aDirectory)
   {
-    return true;
+    return m_aRecursionFilter == null || m_aRecursionFilter.matchesFilter (aDirectory);
   }
 
   @Nonnull
@@ -135,6 +154,22 @@ public class FileSystemRecursiveIterator implements IIterableIterator <File>
     return new ToStringGenerator (this).append ("files", m_aFilesLeft).toString ();
   }
 
+  /**
+   * Create a new iterator that recursively descends into sub-directories
+   * starting from the given base directory. Additionally a file filter can be
+   * added, that determines, which results to be returned and which not. The
+   * difference between the filter passed here and the filter that can be
+   * specified in the constructor is the following: the filter in the
+   * constructor defines into which sub-directories to descend. The file filter
+   * passed to this method only defines which elements should be returned and
+   * which not, independent of the iterated files (like a "view").
+   * 
+   * @param fBaseDir
+   *        The base directory to start iterating. May not be <code>null</code>.
+   * @param aFilter
+   *        The file filter to be used. May not be <code>null</code>.
+   * @return Never <code>null</code>.
+   */
   @Nonnull
   public static IIterableIterator <File> create (@Nonnull final File fBaseDir, @Nonnull final FileFilter aFilter)
   {
@@ -142,8 +177,26 @@ public class FileSystemRecursiveIterator implements IIterableIterator <File>
                                       new FileFilterToIFilterAdapter (aFilter));
   }
 
+  /**
+   * Create a new iterator that recursively descends into sub-directories
+   * starting from the given base directory. Additionally a list of file filters
+   * can be added, that determine, which results to be returned and which not.
+   * The difference between the filter passed here and the filter that can be
+   * specified in the constructor is the following: the filter in the
+   * constructor defines into which sub-directories to descend. The file filters
+   * passed to this method only define which elements should be returned and
+   * which not, independent of the iterated files (like a "view").
+   * 
+   * @param fBaseDir
+   *        The base directory to start iterating. May not be <code>null</code>.
+   * @param aFilters
+   *        The file filter to be used. May neither be <code>null</code> nor
+   *        empty.
+   * @return Never <code>null</code>.
+   */
   @Nonnull
-  public static IIterableIterator <File> create (@Nonnull final File fBaseDir, @Nonnull final FileFilter... aFilters)
+  public static IIterableIterator <File> create (@Nonnull final File fBaseDir,
+                                                 @Nonnull @Nonempty final FileFilter... aFilters)
   {
     return new FilterIterator <File> (new FileSystemRecursiveIterator (fBaseDir),
                                       FileFilterToIFilterAdapter.getANDChained (aFilters));
