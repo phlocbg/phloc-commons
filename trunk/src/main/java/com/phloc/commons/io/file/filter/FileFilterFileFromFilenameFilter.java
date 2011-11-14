@@ -18,20 +18,28 @@
 package com.phloc.commons.io.file.filter;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FilenameFilter;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
-public final class FileFilterFileFromFilenameFilter implements FileFilter
+/**
+ * A special file filter that uses and external filename filter to determine the
+ * validity.
+ * 
+ * @author philip
+ */
+public final class FileFilterFileFromFilenameFilter extends AbstractFileFilter
 {
   private final FilenameFilter m_aFnFilter;
 
-  public FileFilterFileFromFilenameFilter (final FilenameFilter aFnFilter)
+  public FileFilterFileFromFilenameFilter (@Nonnull final FilenameFilter aFnFilter)
   {
+    if (aFnFilter == null)
+      throw new NullPointerException ("filenameFilter");
     m_aFnFilter = aFnFilter;
   }
 

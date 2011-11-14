@@ -18,14 +18,18 @@
 package com.phloc.commons.io.file.filter;
 
 import java.io.File;
-import java.io.FileFilter;
 
 import javax.annotation.Nullable;
 
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
-public final class FileFilterFileOnly implements FileFilter
+/**
+ * A file filter that accepts only files.
+ * 
+ * @author philip
+ */
+public final class FileFilterFileOnly extends AbstractFileFilter
 {
   public boolean accept (@Nullable final File aFile)
   {
