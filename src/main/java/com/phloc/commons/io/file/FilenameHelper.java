@@ -395,6 +395,10 @@ public final class FilenameHelper
     if (StringHelper.hasNoText (sFilename))
       return false;
 
+    // path separator chars are not allowed in file names!
+    if (containsPathSeparatorChar (sFilename))
+      return false;
+
     // check for illegal last characters
     if (StringHelper.endsWithAny (sFilename, ILLEGAL_SUFFIXES))
       return false;
@@ -551,6 +555,15 @@ public final class FilenameHelper
   public static boolean endsWithPathSeparatorChar (@Nullable final CharSequence s)
   {
     return isPathSeparatorChar (StringHelper.getLastChar (s));
+  }
+
+  public static boolean containsPathSeparatorChar (@Nullable final CharSequence s)
+  {
+    if (s != null)
+      for (int i = 0; i < s.length (); i++)
+        if (isPathSeparatorChar (s.charAt (i)))
+          return true;
+    return false;
   }
 
   public static boolean isSystemInternalDirectory (@Nullable final File aFile)
