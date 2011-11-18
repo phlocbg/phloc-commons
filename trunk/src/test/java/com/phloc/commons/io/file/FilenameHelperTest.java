@@ -164,9 +164,6 @@ public final class FilenameHelperTest
     assertTrue (FilenameHelper.isValidFilename ("xyz"));
     assertTrue (FilenameHelper.isValidFilename ("xyz.sh"));
     assertTrue (FilenameHelper.isValidFilename ("ABC.exe"));
-    assertTrue (FilenameHelper.isValidFilename ("a/b/c"));
-    assertTrue (FilenameHelper.isValidFilename ("a/b/c.exe"));
-    assertTrue (FilenameHelper.isValidFilename ("a/b/c.exe/def.com"));
     assertFalse (FilenameHelper.isValidFilename ("CON"));
     assertFalse (FilenameHelper.isValidFilename ("con"));
     assertFalse (FilenameHelper.isValidFilename ("coN"));
@@ -174,6 +171,11 @@ public final class FilenameHelperTest
     assertFalse (FilenameHelper.isValidFilename ("con.def"));
     assertFalse (FilenameHelper.isValidFilename ("coN.def"));
     assertTrue (FilenameHelper.isValidFilename ("coNdef"));
+
+    // contains paths
+    assertFalse (FilenameHelper.isValidFilename ("a/b/c"));
+    assertFalse (FilenameHelper.isValidFilename ("a/b/c.exe"));
+    assertFalse (FilenameHelper.isValidFilename ("a/b/c.exe/def.com"));
 
     // illegal characters
     assertFalse (FilenameHelper.isValidFilename ("ab<c"));
@@ -304,6 +306,21 @@ public final class FilenameHelperTest
     assertFalse (FilenameHelper.endsWithPathSeparatorChar (" "));
     assertFalse (FilenameHelper.endsWithPathSeparatorChar (""));
     assertFalse (FilenameHelper.endsWithPathSeparatorChar (null));
+  }
+
+  /**
+   * Test method endsWithPathSeparatorChar
+   */
+  @Test
+  public void testContainsPathSeparatorChar ()
+  {
+    assertTrue (FilenameHelper.containsPathSeparatorChar ("local/"));
+    assertTrue (FilenameHelper.containsPathSeparatorChar ("\\windows"));
+    assertTrue (FilenameHelper.containsPathSeparatorChar ("~/desktop.ini"));
+    assertTrue (FilenameHelper.containsPathSeparatorChar ("data\\registry.dat"));
+    assertFalse (FilenameHelper.containsPathSeparatorChar (" "));
+    assertFalse (FilenameHelper.containsPathSeparatorChar (""));
+    assertFalse (FilenameHelper.containsPathSeparatorChar (null));
   }
 
   /**
