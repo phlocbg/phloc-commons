@@ -38,7 +38,7 @@ import com.phloc.commons.annotations.OverrideOnDemand;
 public abstract class AbstractPhlocTestCase
 {
   // For test case classes it is ok to have a protected logger
-  protected static final Logger s_aLogger = LoggerFactory.getLogger (AbstractPhlocTestCase.class);
+  protected final Logger s_aLogger = LoggerFactory.getLogger (getClass ());
 
   protected static final Integer I_1 = Integer.valueOf (-1);
   protected static final Integer I0 = Integer.valueOf (0);
@@ -62,9 +62,9 @@ public abstract class AbstractPhlocTestCase
   protected static final Locale L_FR = new Locale ("fr");
   protected static final Locale L_FR_FR = new Locale ("fr", "FR");
 
-  /** The application ID to use. */
-  private static final boolean ENABLE_GLOBAL_DEBUG = true;
-  private static final boolean ENABLE_GLOBAL_TRACE = false;
+  /** The global debug flags to use. */
+  protected static final boolean ENABLE_GLOBAL_DEBUG = true;
+  protected static final boolean ENABLE_GLOBAL_TRACE = false;
 
   /**
    * Note: Annotating a public static void no-argument method with \@BeforeClass
