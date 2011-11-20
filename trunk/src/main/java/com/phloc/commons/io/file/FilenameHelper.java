@@ -383,38 +383,19 @@ public final class FilenameHelper
    * forbidden suffixes.
    * 
    * @param sFilename
-   *        The filename to check. It may not contain any path or directory. May
-   *        be <code>null</code>.
+   *        The filename to check. May be <code>null</code>.
    * @return <code>false</code> if the passed filename is <code>null</code> or
    *         empty or invalid. <code>true</code> if the filename is not empty
    *         and valid.
    */
   public static boolean isValidFilename (@Nullable final String sFilename)
   {
-    return isValidFilename (sFilename, true);
-  }
-
-  /**
-   * Check if the passed file name is valid. It checks for illegal prefixes that
-   * affects compatibility to Windows, illegal characters within a filename and
-   * forbidden suffixes.
-   * 
-   * @param sFilename
-   *        The filename to check. May be <code>null</code>.
-   * @param bAllowPaths
-   *        Whether or not paths parts are allowed in the file name
-   * @return <code>false</code> if the passed filename is <code>null</code> or
-   *         empty or invalid. <code>true</code> if the filename is not empty
-   *         and valid.
-   */
-  public static boolean isValidFilename (@Nullable final String sFilename, final boolean bAllowPaths)
-  {
     // empty not allowed
     if (StringHelper.hasNoText (sFilename))
       return false;
 
-    // path separator chars are not allowed in file names!
-    if (!bAllowPaths && containsPathSeparatorChar (sFilename))
+    // path separator chars are not allowed in filenames!
+    if (containsPathSeparatorChar (sFilename))
       return false;
 
     // check for illegal last characters
@@ -575,11 +556,11 @@ public final class FilenameHelper
     return isPathSeparatorChar (StringHelper.getLastChar (s));
   }
 
-  public static boolean containsPathSeparatorChar (@Nullable final CharSequence s)
+  public static boolean containsPathSeparatorChar (@Nullable final String s)
   {
     if (s != null)
-      for (int i = 0; i < s.length (); i++)
-        if (isPathSeparatorChar (s.charAt (i)))
+      for (final char c : s.toCharArray ())
+        if (isPathSeparatorChar (c))
           return true;
     return false;
   }
