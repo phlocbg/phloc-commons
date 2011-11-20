@@ -17,8 +17,6 @@
  */
 package com.phloc.test.benchmark;
 
-// Copyright (c) 2001 Brent Boyer. All Rights Reserved.
-
 /**
  * This code benchmarks the performance of copying an array purely in Java
  * versus copying it with System.arraycopy.
