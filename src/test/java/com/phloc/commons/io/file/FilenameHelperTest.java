@@ -172,14 +172,12 @@ public final class FilenameHelperTest
     assertFalse (FilenameHelper.isValidFilename ("coN.def"));
     assertTrue (FilenameHelper.isValidFilename ("coNdef"));
 
-    // contains paths
-    assertFalse (FilenameHelper.isValidFilename ("a/b/c", false));
-    assertFalse (FilenameHelper.isValidFilename ("a/b/c.exe", false));
-    assertFalse (FilenameHelper.isValidFilename ("a/b/c.exe/def.com", false));
-
-    assertTrue (FilenameHelper.isValidFilename ("a/b/c"));
-    assertTrue (FilenameHelper.isValidFilename ("a/b/c.exe"));
-    assertTrue (FilenameHelper.isValidFilename ("a/b/c.exe/def.com"));
+    // Contains path
+    assertFalse (FilenameHelper.isValidFilename ("a/b"));
+    assertFalse (FilenameHelper.isValidFilename ("a\\b"));
+    assertFalse (FilenameHelper.isValidFilename ("a/b/c"));
+    assertFalse (FilenameHelper.isValidFilename ("a/b/c.exe"));
+    assertFalse (FilenameHelper.isValidFilename ("a/b/c.exe/def.com"));
 
     // illegal characters
     assertFalse (FilenameHelper.isValidFilename ("ab<c"));
