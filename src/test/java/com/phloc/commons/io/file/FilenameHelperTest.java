@@ -188,6 +188,77 @@ public final class FilenameHelperTest
     assertFalse (FilenameHelper.isValidFilename ("ab\"c"));
   }
 
+  @Test
+  public void testIsValidFilenameWithPaths ()
+  {
+    assertFalse (FilenameHelper.isValidFilenameWithPaths (null));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths (""));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths (" "));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("abc."));
+    assertTrue (FilenameHelper.isValidFilenameWithPaths (".abc"));
+    assertTrue (FilenameHelper.isValidFilenameWithPaths ("xyz"));
+    assertTrue (FilenameHelper.isValidFilenameWithPaths ("xyz.sh"));
+    assertTrue (FilenameHelper.isValidFilenameWithPaths ("ABC.exe"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("CON"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("con"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("coN"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("CON.def"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("con.def"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("coN.def"));
+    assertTrue (FilenameHelper.isValidFilenameWithPaths ("coNdef"));
+
+    // prefixed by path
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("abc/CON"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("abc/con"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("abc/coN"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("abc/CON.def"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("abc/con.def"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("abc/coN.def"));
+    assertTrue (FilenameHelper.isValidFilenameWithPaths ("abc/coNdef"));
+
+    // absolute path
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("/CON"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("/con"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("/coN"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("/CON.def"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("/con.def"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("/coN.def"));
+    assertTrue (FilenameHelper.isValidFilenameWithPaths ("/coNdef"));
+
+    // suffixed by path
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("CON/abc"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("con/abc"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("coN/abc"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("CON.def/abc"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("con.def/abc"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("coN.def/abc"));
+    assertTrue (FilenameHelper.isValidFilenameWithPaths ("coNdef/abc"));
+
+    // prefixed and suffixed by path
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("abc/CON/abc"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("abc/con/abc"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("abc/coN/abc"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("abc/CON.def/abc"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("abc/con.def/abc"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("abc/coN.def/abc"));
+    assertTrue (FilenameHelper.isValidFilenameWithPaths ("abc/coNdef/abc"));
+
+    // Contains path
+    assertTrue (FilenameHelper.isValidFilenameWithPaths ("a/b"));
+    assertTrue (FilenameHelper.isValidFilenameWithPaths ("a\\b"));
+    assertTrue (FilenameHelper.isValidFilenameWithPaths ("a/b/c"));
+    assertTrue (FilenameHelper.isValidFilenameWithPaths ("a/b/c.exe"));
+    assertTrue (FilenameHelper.isValidFilenameWithPaths ("a/b/c.exe/def.com"));
+
+    // illegal characters
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("ab<c"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("ab>c"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("ab:c"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("ab?c"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("ab*c"));
+    assertFalse (FilenameHelper.isValidFilenameWithPaths ("ab\"c"));
+  }
+
   /**
    * Test method makeValidFilename
    */

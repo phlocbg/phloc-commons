@@ -380,7 +380,9 @@ public final class FilenameHelper
   /**
    * Check if the passed file name is valid. It checks for illegal prefixes that
    * affects compatibility to Windows, illegal characters within a filename and
-   * forbidden suffixes.
+   * forbidden suffixes. This method fits only for filenames on one level. If
+   * you want to check a full path, use
+   * {@link #isValidFilenameWithPaths(String)}.
    * 
    * @param sFilename
    *        The filename to check. May be <code>null</code>.
@@ -420,6 +422,39 @@ public final class FilenameHelper
       if (sUCFilename.startsWith (sIllegalPrefix + "."))
         return false;
 
+    return true;
+  }
+
+  /**
+   * Check if the passed filename path is valid. In contrast to
+   * {@link #isValidFilename(String)} this method can also handle filenames
+   * incl. paths.
+   * 
+   * @param sFilename
+   *        The filename to be checked for validity.
+   * @return <code>true</code> if all path elements of the filename are valid,
+   *         <code>false</code> if at least one element is invalid
+   */
+  public static boolean isValidFilenameWithPaths (@Nullable final String sFilename)
+  {
+    if (StringHelper.hasNoText (sFilename))
+      return false;
+
+    // Iterate filename path by path
+    File aFile = new File (sFilename);
+    while (aFile != null)
+    {
+      final String sCurFilename = aFile.getName ();
+      final File aParentFile = aFile.getParentFile ();
+      if (sCurFilename.length () == 0 && aParentFile == null)
+      {
+        // The last part of an absolute path can be skipped!
+        break;
+      }
+      if (!isValidFilename (sCurFilename))
+        return false;
+      aFile = aParentFile;
+    }
     return true;
   }
 
