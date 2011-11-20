@@ -47,7 +47,7 @@ public abstract class AbstractBenchmarkTask
    * This constant specifies the minimum time that a task to be benchmarked must
    * run to assure accurate timing measurements. It must be set reasonably large
    * to deal with the low resolution clocks present on many platforms (e.g.
-   * typical windoze boxen have error around 10s of ms?). The units of this
+   * typical Windows machines have error around 10s of ms?). The units of this
    * constant are nanoseconds.
    */
   private static final long MIN_BENCHMARK_NANOSECS = 2 * CGlobal.NANOSECONDS_PER_SECOND;

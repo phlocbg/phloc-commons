@@ -558,11 +558,8 @@ public final class FilenameHelper
 
   public static boolean containsPathSeparatorChar (@Nullable final String s)
   {
-    if (s != null)
-      for (final char c : s.toCharArray ())
-        if (isPathSeparatorChar (c))
-          return true;
-    return false;
+    // This is a tick faster than iterating the s.toCharArray() chars
+    return s != null && (s.indexOf (UNIX_SEPARATOR) >= 0 || s.indexOf (WINDOWS_SEPARATOR) >= 0);
   }
 
   public static boolean isSystemInternalDirectory (@Nullable final File aFile)
