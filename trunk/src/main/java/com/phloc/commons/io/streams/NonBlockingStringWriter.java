@@ -24,6 +24,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.annotations.ReturnsMutableObject;
+
 /**
  * A version of the {@link java.io.StringWriter} class that uses
  * {@link StringBuilder} instead of {@link StringBuilder} and therefore does not
@@ -228,6 +230,17 @@ public class NonBlockingStringWriter extends Writer
   @Override
   public void close ()
   {}
+
+  /**
+   * @return The contained StringBuilder. Never <code>null</code>. Handle with
+   *         care!
+   */
+  @Nonnull
+  @ReturnsMutableObject (reason = "design")
+  public StringBuilder directGetStringBuilder ()
+  {
+    return m_aSB;
+  }
 
   /**
    * Return the buffer's current value as a string.
