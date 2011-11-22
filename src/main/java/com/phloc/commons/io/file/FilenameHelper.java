@@ -668,12 +668,29 @@ public final class FilenameHelper
     // first path element. This is necessary to correctly parse paths like
     // "file:core/../core/io/Resource.class", where the ".." should just
     // strip the first "core" directory while keeping the "file:" prefix.
-    final int nPrefixIndex = sPathToUse.indexOf (':');
+    // The same applies to http:// addresses where the domain should be kept!
     String sPrefix = "";
-    if (nPrefixIndex >= 0)
+    final int nProtoIdx = sPathToUse.indexOf ("://");
+    if (nProtoIdx > -1)
     {
-      sPrefix = sPathToUse.substring (0, nPrefixIndex + 1);
-      sPathToUse = sPathToUse.substring (nPrefixIndex + 1);
+      // Keep server name
+      // Start searching for the first slash after "://" (length=3)
+      final int nPrefixIndex = sPathToUse.indexOf ('/', nProtoIdx + 3);
+      if (nPrefixIndex >= 0)
+      {
+        sPrefix = sPathToUse.substring (0, nPrefixIndex + 1);
+        sPathToUse = sPathToUse.substring (nPrefixIndex + 1);
+      }
+    }
+    else
+    {
+      // Keep volume or protocol prefix
+      final int nPrefixIndex = sPathToUse.indexOf (':');
+      if (nPrefixIndex >= 0)
+      {
+        sPrefix = sPathToUse.substring (0, nPrefixIndex + 1);
+        sPathToUse = sPathToUse.substring (nPrefixIndex + 1);
+      }
     }
 
     // Is it an absolute Path?
@@ -737,6 +754,10 @@ public final class FilenameHelper
       throw new NullPointerException ("url");
     if (sPath == null)
       throw new NullPointerException ("path");
+
+    // If nothing is to be appended, just clean the base URL
+    if (StringHelper.hasNoText (sPath))
+      return getCleanPath (sURL);
 
     final String sRealURL = StringHelper.endsWith (sURL, '/') ? sURL : sURL + '/';
     final String sRealPath = StringHelper.startsWith (sPath, '/') ? sPath.substring (1) : sPath;
