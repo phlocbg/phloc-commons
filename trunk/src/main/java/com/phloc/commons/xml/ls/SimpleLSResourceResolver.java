@@ -82,18 +82,18 @@ public class SimpleLSResourceResolver implements LSResourceResolver
 
     if (sSystemId.contains ("://"))
     {
-      // It seems to be an absolute URL!
-      return new URLResource (new URL (sSystemId));
+      // Destination system ID seems to be an absolute URL!
+      return new URLResource (sSystemId);
     }
 
-    if (sBaseURI != null && sBaseURI.startsWith ("jar:file:"))
+    if (StringHelper.startsWith (sBaseURI, "jar:file:"))
     {
-      // Inside a jar file
+      // Base URI is inside a jar file
       final int i = sBaseURI.indexOf ('!');
       String sRelativePath = i < 0 ? sBaseURI : sBaseURI.substring (i + 1);
 
       // Skip any potentially leading path separator
-      if (sRelativePath.length () > 0 && FilenameHelper.isPathSeparatorChar (sRelativePath.charAt (0)))
+      if (FilenameHelper.startsWithPathSeparatorChar (sRelativePath))
         sRelativePath = sRelativePath.substring (1);
 
       // Create relative URL!
@@ -106,18 +106,28 @@ public class SimpleLSResourceResolver implements LSResourceResolver
       return new ClassPathResource (sPath);
     }
 
-    // Relative URL!
-    // Get the parent folder that contains the including file (=BaseURI)
-    File aBase;
+    URL aBaseURL = null;
     try
     {
-      aBase = new File (new URL (sBaseURI).toURI ());
+      // Try whether the base is a URI
+      aBaseURL = new URL (sBaseURI);
+      if (!aBaseURL.getProtocol ().equals (URLResource.PROTOCOL_FILE))
+      {
+        // Handle "file" protocol separately
+        return new URLResource (FilenameHelper.getCleanConcatenatedUrlPath (sBaseURI, sSystemId));
+      }
     }
     catch (final MalformedURLException ex)
     {
-      // Happens when sBaseURI is e.g. "c:\windows\..."
-      aBase = new File (sBaseURI);
+      // Base is not a URL
     }
+
+    // Base is not a URL
+    File aBase;
+    if (aBaseURL != null)
+      aBase = new File (aBaseURL.toURI ().getSchemeSpecificPart ());
+    else
+      aBase = new File (sBaseURI);
 
     if (StringHelper.hasNoText (sSystemId))
     {
@@ -125,8 +135,19 @@ public class SimpleLSResourceResolver implements LSResourceResolver
       return new FileSystemResource (aBase);
     }
 
+    // Get the system ID file
+    File aSystemId;
+    try
+    {
+      aSystemId = new File (new URL (sSystemId).toURI ().getSchemeSpecificPart ());
+    }
+    catch (final MalformedURLException ex)
+    {
+      aSystemId = new File (sSystemId);
+    }
+
     final File aParent = aBase.getParentFile ();
-    final File aResFile = new File (aParent, sSystemId).getCanonicalFile ().getAbsoluteFile ();
+    final File aResFile = new File (aParent, aSystemId.getPath ()).getCanonicalFile ().getAbsoluteFile ();
     return new FileSystemResource (aResFile);
   }
 
