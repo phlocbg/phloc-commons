@@ -68,11 +68,11 @@ public final class SimpleLSResourceResolverTest
     // Using files as the basis
     aRes = SimpleLSResourceResolver.doStandardResourceResolving ("dir/include.xml", "pom.xml");
     assertTrue (aRes instanceof FileSystemResource);
-    assertTrue (aRes.getPath (), aRes.getPath ().endsWith (new File ("phloc-commons/dir/include.xml").getPath ()));
+    assertTrue (aRes.getPath (), aRes.getPath ().endsWith (new File ("dir/include.xml").getPath ()));
 
     aRes = SimpleLSResourceResolver.doStandardResourceResolving ("dir/include.xml", "abc/pom.xml");
     assertTrue (aRes instanceof FileSystemResource);
-    assertTrue (aRes.getPath (), aRes.getPath ().endsWith (new File ("phloc-commons/abc/dir/include.xml").getPath ()));
+    assertTrue (aRes.getPath (), aRes.getPath ().endsWith (new File ("abc/dir/include.xml").getPath ()));
 
     aRes = SimpleLSResourceResolver.doStandardResourceResolving ("../dir/include.xml", "pom.xml");
     assertTrue (aRes instanceof FileSystemResource);
@@ -80,16 +80,16 @@ public final class SimpleLSResourceResolverTest
 
     aRes = SimpleLSResourceResolver.doStandardResourceResolving ("../dir/include.xml", "abc/pom.xml");
     assertTrue (aRes instanceof FileSystemResource);
-    assertTrue (aRes.getPath (), aRes.getPath ().endsWith (new File ("phloc-commons/dir/include.xml").getPath ()));
+    assertTrue (aRes.getPath (), aRes.getPath ().endsWith (new File ("dir/include.xml").getPath ()));
 
     // system ID has a protocol prefix
     aRes = SimpleLSResourceResolver.doStandardResourceResolving ("file:dir/include.xml", "pom.xml");
     assertTrue (aRes instanceof FileSystemResource);
-    assertTrue (aRes.getPath (), aRes.getPath ().endsWith (new File ("phloc-commons/dir/include.xml").getPath ()));
+    assertTrue (aRes.getPath (), aRes.getPath ().endsWith (new File ("dir/include.xml").getPath ()));
 
     aRes = SimpleLSResourceResolver.doStandardResourceResolving ("file:dir/include.xml", "abc/pom.xml");
     assertTrue (aRes instanceof FileSystemResource);
-    assertTrue (aRes.getPath (), aRes.getPath ().endsWith (new File ("phloc-commons/abc/dir/include.xml").getPath ()));
+    assertTrue (aRes.getPath (), aRes.getPath ().endsWith (new File ("abc/dir/include.xml").getPath ()));
 
     aRes = SimpleLSResourceResolver.doStandardResourceResolving ("file:../dir/include.xml", "pom.xml");
     assertTrue (aRes instanceof FileSystemResource);
@@ -97,7 +97,7 @@ public final class SimpleLSResourceResolverTest
 
     aRes = SimpleLSResourceResolver.doStandardResourceResolving ("file:../dir/include.xml", "abc/pom.xml");
     assertTrue (aRes instanceof FileSystemResource);
-    assertTrue (aRes.getPath (), aRes.getPath ().endsWith (new File ("phloc-commons/dir/include.xml").getPath ()));
+    assertTrue (aRes.getPath (), aRes.getPath ().endsWith (new File ("dir/include.xml").getPath ()));
 
     // system ID is a fixed URL
     aRes = SimpleLSResourceResolver.doStandardResourceResolving ("http://www.example.org/file.txt", "abc/pom.xml");
