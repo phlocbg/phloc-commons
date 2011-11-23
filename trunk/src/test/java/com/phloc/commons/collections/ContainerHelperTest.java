@@ -57,12 +57,14 @@ import static com.phloc.commons.collections.ContainerHelper.newObjectListFromArr
 import static com.phloc.commons.collections.ContainerHelper.newOrderedMap;
 import static com.phloc.commons.collections.ContainerHelper.newOrderedSet;
 import static com.phloc.commons.collections.ContainerHelper.newSet;
+import static com.phloc.commons.collections.ContainerHelper.newSortedSet;
 import static com.phloc.commons.collections.ContainerHelper.newStack;
 import static com.phloc.commons.collections.ContainerHelper.newUnmodifiableList;
 import static com.phloc.commons.collections.ContainerHelper.newUnmodifiableMap;
 import static com.phloc.commons.collections.ContainerHelper.newUnmodifiableOrderedMap;
 import static com.phloc.commons.collections.ContainerHelper.newUnmodifiableOrderedSet;
 import static com.phloc.commons.collections.ContainerHelper.newUnmodifiableSet;
+import static com.phloc.commons.collections.ContainerHelper.newUnmodifiableSortedSet;
 import static com.phloc.commons.collections.ContainerHelper.removeFirstElement;
 import static com.phloc.commons.collections.ContainerHelper.removeLastElement;
 import static org.junit.Assert.assertEquals;
@@ -980,6 +982,217 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   {
     final Iterator <String> it = newUnmodifiableSet ("Hallo", "Welt").iterator ();
     final Set <String> aUnmodifiableSet = newUnmodifiableSet (it);
+    assertNotNull (aUnmodifiableSet);
+    assertEquals (2, aUnmodifiableSet.size ());
+    assertTrue (aUnmodifiableSet.contains ("Hallo"));
+    assertTrue (aUnmodifiableSet.contains ("Welt"));
+  }
+
+  @Test
+  public void testNewSortedSet_Empty ()
+  {
+    final Set <String> aSet = newSortedSet ();
+    assertNotNull (aSet);
+    assertEquals (0, aSet.size ());
+  }
+
+  @Test
+  public void testNewSortedSet_SingleValue ()
+  {
+    Set <String> aSet = newSortedSet ("Hallo");
+    assertNotNull (aSet);
+    assertEquals (1, aSet.size ());
+    assertTrue (aSet.contains ("Hallo"));
+
+    aSet = newSortedSet ((String) null);
+    assertNotNull (aSet);
+    assertEquals (1, aSet.size ());
+    // TreeSet.contains (null) throws a NullPointerException
+    assertNull (ContainerHelper.getFirstElement (aSet));
+  }
+
+  @Test
+  public void testNewSortedSet_Array ()
+  {
+    Set <String> aSet = newSortedSet ("Hallo", "Welt");
+    assertNotNull (aSet);
+    assertEquals (2, aSet.size ());
+    assertTrue (aSet.contains ("Hallo"));
+    assertTrue (aSet.contains ("Welt"));
+
+    aSet = newSortedSet (new String [0]);
+    assertNotNull (aSet);
+
+    aSet = newSortedSet ((String []) null);
+    assertNotNull (aSet);
+  }
+
+  @Test
+  public void testNewSortedSetIterable ()
+  {
+    Set <String> aSet = newSortedSet ((Iterable <String>) newList ("Hallo", "Welt"));
+    assertNotNull (aSet);
+    assertEquals (2, aSet.size ());
+    assertTrue (aSet.contains ("Hallo"));
+    assertTrue (aSet.contains ("Welt"));
+
+    aSet = newSortedSet ((Iterable <String>) new ArrayList <String> ());
+    assertNotNull (aSet);
+    assertEquals (0, aSet.size ());
+  }
+
+  @Test
+  public void testNewSortedSetCollection ()
+  {
+    Set <String> aSet = newSortedSet (newList ("Hallo", "Welt"));
+    assertNotNull (aSet);
+    assertEquals (2, aSet.size ());
+    assertTrue (aSet.contains ("Hallo"));
+    assertTrue (aSet.contains ("Welt"));
+
+    aSet = newSortedSet (new ArrayList <String> ());
+    assertNotNull (aSet);
+    assertEquals (0, aSet.size ());
+  }
+
+  @Test
+  public void testNewSortedSetIIterableIterator ()
+  {
+    Set <String> aSet = newSortedSet (IterableIterator.create (newList ("Hallo", "Welt")));
+    assertNotNull (aSet);
+    assertEquals (2, aSet.size ());
+    assertTrue (aSet.contains ("Hallo"));
+    assertTrue (aSet.contains ("Welt"));
+
+    aSet = newSortedSet (IterableIterator.create (new ArrayList <String> ()));
+    assertNotNull (aSet);
+    assertEquals (0, aSet.size ());
+  }
+
+  @Test
+  public void testNewSortedSetEnumeration ()
+  {
+    Set <String> aSet = newSortedSet (getEnumeration (newList ("Hallo", "Welt")));
+    assertNotNull (aSet);
+    assertEquals (2, aSet.size ());
+    assertTrue (aSet.contains ("Hallo"));
+    assertTrue (aSet.contains ("Welt"));
+
+    aSet = newSortedSet (getEnumeration (new ArrayList <String> ()));
+    assertNotNull (aSet);
+    assertEquals (0, aSet.size ());
+  }
+
+  @Test
+  public void testNewSortedSetIterator ()
+  {
+    final Iterator <String> it = newSortedSet ("Hallo", "Welt").iterator ();
+    final Set <String> aUnmodifiableSet = newSortedSet (it);
+    assertNotNull (aUnmodifiableSet);
+    assertEquals (2, aUnmodifiableSet.size ());
+    assertTrue (aUnmodifiableSet.contains ("Hallo"));
+    assertTrue (aUnmodifiableSet.contains ("Welt"));
+  }
+
+  @Test
+  public void testNewUnmodifiableSortedSetEmpty ()
+  {
+    final Set <String> aUnmodifiableSet = newUnmodifiableSortedSet ();
+    assertNotNull (aUnmodifiableSet);
+    assertEquals (0, aUnmodifiableSet.size ());
+  }
+
+  @Test
+  public void testNewUnmodifiableSortedSetSingleValue ()
+  {
+    Set <String> aUnmodifiableSet = newUnmodifiableSortedSet ("Hallo");
+    assertNotNull (aUnmodifiableSet);
+    assertEquals (1, aUnmodifiableSet.size ());
+    assertTrue (aUnmodifiableSet.contains ("Hallo"));
+
+    aUnmodifiableSet = newUnmodifiableSortedSet ((String) null);
+    assertNotNull (aUnmodifiableSet);
+    assertEquals (1, aUnmodifiableSet.size ());
+    assertTrue (aUnmodifiableSet.contains (null));
+  }
+
+  @Test
+  public void testNewUnmodifiableSortedSetArray ()
+  {
+    Set <String> aUnmodifiableSet = newUnmodifiableSortedSet ("Hallo", "Welt");
+    assertNotNull (aUnmodifiableSet);
+    assertEquals (2, aUnmodifiableSet.size ());
+    assertTrue (aUnmodifiableSet.contains ("Hallo"));
+    assertTrue (aUnmodifiableSet.contains ("Welt"));
+
+    aUnmodifiableSet = newUnmodifiableSortedSet (new String [0]);
+    assertNotNull (aUnmodifiableSet);
+
+    aUnmodifiableSet = newUnmodifiableSortedSet ((String []) null);
+    assertNotNull (aUnmodifiableSet);
+  }
+
+  @Test
+  public void testNewUnmodifiableSortedSetIterable ()
+  {
+    Set <String> aUnmodifiableSet = newUnmodifiableSortedSet ((Iterable <String>) newList ("Hallo", "Welt"));
+    assertNotNull (aUnmodifiableSet);
+    assertEquals (2, aUnmodifiableSet.size ());
+    assertTrue (aUnmodifiableSet.contains ("Hallo"));
+    assertTrue (aUnmodifiableSet.contains ("Welt"));
+
+    aUnmodifiableSet = newUnmodifiableSortedSet ((Iterable <String>) new ArrayList <String> ());
+    assertNotNull (aUnmodifiableSet);
+    assertEquals (0, aUnmodifiableSet.size ());
+  }
+
+  @Test
+  public void testNewUnmodifiableSortedSetCollection ()
+  {
+    Set <String> aUnmodifiableSet = newUnmodifiableSortedSet (newList ("Hallo", "Welt"));
+    assertNotNull (aUnmodifiableSet);
+    assertEquals (2, aUnmodifiableSet.size ());
+    assertTrue (aUnmodifiableSet.contains ("Hallo"));
+    assertTrue (aUnmodifiableSet.contains ("Welt"));
+
+    aUnmodifiableSet = newUnmodifiableSortedSet (new ArrayList <String> ());
+    assertNotNull (aUnmodifiableSet);
+    assertEquals (0, aUnmodifiableSet.size ());
+  }
+
+  @Test
+  public void testNewUnmodifiableSortedSetIIterableIterator ()
+  {
+    Set <String> aUnmodifiableSet = newUnmodifiableSortedSet (IterableIterator.create (newList ("Hallo", "Welt")));
+    assertNotNull (aUnmodifiableSet);
+    assertEquals (2, aUnmodifiableSet.size ());
+    assertTrue (aUnmodifiableSet.contains ("Hallo"));
+    assertTrue (aUnmodifiableSet.contains ("Welt"));
+
+    aUnmodifiableSet = newUnmodifiableSortedSet (IterableIterator.create (new ArrayList <String> ()));
+    assertNotNull (aUnmodifiableSet);
+    assertEquals (0, aUnmodifiableSet.size ());
+  }
+
+  @Test
+  public void testNewUnmodifiableSortedSetEnumeration ()
+  {
+    Set <String> aUnmodifiableSet = newUnmodifiableSortedSet (getEnumeration (newList ("Hallo", "Welt")));
+    assertNotNull (aUnmodifiableSet);
+    assertEquals (2, aUnmodifiableSet.size ());
+    assertTrue (aUnmodifiableSet.contains ("Hallo"));
+    assertTrue (aUnmodifiableSet.contains ("Welt"));
+
+    aUnmodifiableSet = newUnmodifiableSortedSet (getEnumeration (new ArrayList <String> ()));
+    assertNotNull (aUnmodifiableSet);
+    assertEquals (0, aUnmodifiableSet.size ());
+  }
+
+  @Test
+  public void testNewUnmodifiableSortedSetIterator ()
+  {
+    final Iterator <String> it = newUnmodifiableSortedSet ("Hallo", "Welt").iterator ();
+    final Set <String> aUnmodifiableSet = newUnmodifiableSortedSet (it);
     assertNotNull (aUnmodifiableSet);
     assertEquals (2, aUnmodifiableSet.size ());
     assertTrue (aUnmodifiableSet.contains ("Hallo"));
@@ -2509,6 +2722,8 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertTrue (ContainerHelper.newUnmodifiableBooleanSet ().isEmpty ());
     assertTrue (ContainerHelper.newBooleanOrderedSet ().isEmpty ());
     assertTrue (ContainerHelper.newUnmodifiableBooleanOrderedSet ().isEmpty ());
+    assertTrue (ContainerHelper.newBooleanSortedSet ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableBooleanSortedSet ().isEmpty ());
 
     final boolean [] aValues = new boolean [] { true, true };
     assertEquals (2, ContainerHelper.newBooleanList (aValues).size ());
@@ -2517,6 +2732,8 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertEquals (1, ContainerHelper.newUnmodifiableBooleanSet (aValues).size ());
     assertEquals (1, ContainerHelper.newBooleanOrderedSet (aValues).size ());
     assertEquals (1, ContainerHelper.newUnmodifiableBooleanOrderedSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newBooleanSortedSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newUnmodifiableBooleanSortedSet (aValues).size ());
   }
 
   @Test
@@ -2528,6 +2745,8 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertTrue (ContainerHelper.newUnmodifiableByteSet ().isEmpty ());
     assertTrue (ContainerHelper.newByteOrderedSet ().isEmpty ());
     assertTrue (ContainerHelper.newUnmodifiableByteOrderedSet ().isEmpty ());
+    assertTrue (ContainerHelper.newByteSortedSet ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableByteSortedSet ().isEmpty ());
 
     final byte [] aValues = new byte [] { 3, 3 };
     assertEquals (2, ContainerHelper.newByteList (aValues).size ());
@@ -2536,6 +2755,8 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertEquals (1, ContainerHelper.newUnmodifiableByteSet (aValues).size ());
     assertEquals (1, ContainerHelper.newByteOrderedSet (aValues).size ());
     assertEquals (1, ContainerHelper.newUnmodifiableByteOrderedSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newByteSortedSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newUnmodifiableByteSortedSet (aValues).size ());
   }
 
   @Test
@@ -2547,6 +2768,8 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertTrue (ContainerHelper.newUnmodifiableCharSet ().isEmpty ());
     assertTrue (ContainerHelper.newCharOrderedSet ().isEmpty ());
     assertTrue (ContainerHelper.newUnmodifiableCharOrderedSet ().isEmpty ());
+    assertTrue (ContainerHelper.newCharSortedSet ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableCharSortedSet ().isEmpty ());
 
     final char [] aValues = new char [] { 'x', 'x' };
     assertEquals (2, ContainerHelper.newCharList (aValues).size ());
@@ -2555,6 +2778,8 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertEquals (1, ContainerHelper.newUnmodifiableCharSet (aValues).size ());
     assertEquals (1, ContainerHelper.newCharOrderedSet (aValues).size ());
     assertEquals (1, ContainerHelper.newUnmodifiableCharOrderedSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newCharSortedSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newUnmodifiableCharSortedSet (aValues).size ());
   }
 
   @Test
@@ -2566,6 +2791,8 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertTrue (ContainerHelper.newUnmodifiableDoubleSet ().isEmpty ());
     assertTrue (ContainerHelper.newDoubleOrderedSet ().isEmpty ());
     assertTrue (ContainerHelper.newUnmodifiableDoubleOrderedSet ().isEmpty ());
+    assertTrue (ContainerHelper.newDoubleSortedSet ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableDoubleSortedSet ().isEmpty ());
 
     final double [] aValues = new double [] { 1.1, 1.1 };
     assertEquals (2, ContainerHelper.newDoubleList (aValues).size ());
@@ -2574,6 +2801,8 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertEquals (1, ContainerHelper.newUnmodifiableDoubleSet (aValues).size ());
     assertEquals (1, ContainerHelper.newDoubleOrderedSet (aValues).size ());
     assertEquals (1, ContainerHelper.newUnmodifiableDoubleOrderedSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newDoubleSortedSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newUnmodifiableDoubleSortedSet (aValues).size ());
   }
 
   @Test
@@ -2585,6 +2814,8 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertTrue (ContainerHelper.newUnmodifiableFloatSet ().isEmpty ());
     assertTrue (ContainerHelper.newFloatOrderedSet ().isEmpty ());
     assertTrue (ContainerHelper.newUnmodifiableFloatOrderedSet ().isEmpty ());
+    assertTrue (ContainerHelper.newFloatSortedSet ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableFloatSortedSet ().isEmpty ());
 
     final float [] aValues = new float [] { 3.2f, 3.2f };
     assertEquals (2, ContainerHelper.newFloatList (aValues).size ());
@@ -2593,6 +2824,8 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertEquals (1, ContainerHelper.newUnmodifiableFloatSet (aValues).size ());
     assertEquals (1, ContainerHelper.newFloatOrderedSet (aValues).size ());
     assertEquals (1, ContainerHelper.newUnmodifiableFloatOrderedSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newFloatSortedSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newUnmodifiableFloatSortedSet (aValues).size ());
   }
 
   @Test
@@ -2604,6 +2837,8 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertTrue (ContainerHelper.newUnmodifiableIntSet ().isEmpty ());
     assertTrue (ContainerHelper.newIntOrderedSet ().isEmpty ());
     assertTrue (ContainerHelper.newUnmodifiableIntOrderedSet ().isEmpty ());
+    assertTrue (ContainerHelper.newIntSortedSet ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableIntSortedSet ().isEmpty ());
 
     final int [] aValues = new int [] { 5, 5 };
     assertEquals (2, ContainerHelper.newIntList (aValues).size ());
@@ -2612,6 +2847,8 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertEquals (1, ContainerHelper.newUnmodifiableIntSet (aValues).size ());
     assertEquals (1, ContainerHelper.newIntOrderedSet (aValues).size ());
     assertEquals (1, ContainerHelper.newUnmodifiableIntOrderedSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newIntSortedSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newUnmodifiableIntSortedSet (aValues).size ());
   }
 
   @Test
@@ -2623,6 +2860,8 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertTrue (ContainerHelper.newUnmodifiableLongSet ().isEmpty ());
     assertTrue (ContainerHelper.newLongOrderedSet ().isEmpty ());
     assertTrue (ContainerHelper.newUnmodifiableLongOrderedSet ().isEmpty ());
+    assertTrue (ContainerHelper.newLongSortedSet ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableLongSortedSet ().isEmpty ());
 
     final long [] aValues = new long [] { 17, 17 };
     assertEquals (2, ContainerHelper.newLongList (aValues).size ());
@@ -2631,6 +2870,8 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertEquals (1, ContainerHelper.newUnmodifiableLongSet (aValues).size ());
     assertEquals (1, ContainerHelper.newLongOrderedSet (aValues).size ());
     assertEquals (1, ContainerHelper.newUnmodifiableLongOrderedSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newLongSortedSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newUnmodifiableLongSortedSet (aValues).size ());
   }
 
   @Test
@@ -2642,6 +2883,8 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertTrue (ContainerHelper.newUnmodifiableShortSet ().isEmpty ());
     assertTrue (ContainerHelper.newShortOrderedSet ().isEmpty ());
     assertTrue (ContainerHelper.newUnmodifiableShortOrderedSet ().isEmpty ());
+    assertTrue (ContainerHelper.newShortSortedSet ().isEmpty ());
+    assertTrue (ContainerHelper.newUnmodifiableShortSortedSet ().isEmpty ());
 
     final short [] aValues = new short [] { 5, 5 };
     assertEquals (2, ContainerHelper.newShortList (aValues).size ());
@@ -2650,5 +2893,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertEquals (1, ContainerHelper.newUnmodifiableShortSet (aValues).size ());
     assertEquals (1, ContainerHelper.newShortOrderedSet (aValues).size ());
     assertEquals (1, ContainerHelper.newUnmodifiableShortOrderedSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newShortSortedSet (aValues).size ());
+    assertEquals (1, ContainerHelper.newUnmodifiableShortSortedSet (aValues).size ());
   }
 }

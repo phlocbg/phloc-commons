@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -794,6 +795,287 @@ public final class ContainerHelper
   public static Set <Short> newUnmodifiableShortSet (@Nullable final short... aValues)
   {
     return makeUnmodifiable (newShortSet (aValues));
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE> Set <ELEMENTTYPE> newSortedSet ()
+  {
+    return new TreeSet <ELEMENTTYPE> ();
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE> Set <ELEMENTTYPE> newSortedSet (@Nullable final ELEMENTTYPE aValue)
+  {
+    final Set <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> ();
+    ret.add (aValue);
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE> Set <ELEMENTTYPE> newSortedSet (@Nullable final ELEMENTTYPE... aValues)
+  {
+    if (ArrayHelper.isEmpty (aValues))
+      return new TreeSet <ELEMENTTYPE> ();
+
+    final Set <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> ();
+    for (final ELEMENTTYPE aValue : aValues)
+      ret.add (aValue);
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE> Set <ELEMENTTYPE> newSortedSet (@Nullable final Iterable <? extends ELEMENTTYPE> aCont)
+  {
+    final Set <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> ();
+    if (aCont != null)
+      for (final ELEMENTTYPE aValue : aCont)
+        ret.add (aValue);
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE> Set <ELEMENTTYPE> newSortedSet (@Nullable final Collection <? extends ELEMENTTYPE> aCont)
+  {
+    if (isEmpty (aCont))
+      return new TreeSet <ELEMENTTYPE> ();
+
+    return new TreeSet <ELEMENTTYPE> (aCont);
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE> Set <ELEMENTTYPE> newSortedSet (@Nullable final Iterator <? extends ELEMENTTYPE> aIter)
+  {
+    final Set <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> ();
+    if (aIter != null)
+      while (aIter.hasNext ())
+        ret.add (aIter.next ());
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE> Set <ELEMENTTYPE> newSortedSet (@Nullable final IIterableIterator <? extends ELEMENTTYPE> aIter)
+  {
+    if (aIter == null)
+      return new TreeSet <ELEMENTTYPE> ();
+    return newSortedSet (aIter.iterator ());
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE> Set <ELEMENTTYPE> newSortedSet (@Nullable final Enumeration <? extends ELEMENTTYPE> aEnum)
+  {
+    final Set <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> ();
+    if (aEnum != null)
+      while (aEnum.hasMoreElements ())
+        ret.add (aEnum.nextElement ());
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <Boolean> newBooleanSortedSet (@Nullable final boolean... aValues)
+  {
+    final Set <Boolean> ret = new TreeSet <Boolean> ();
+    if (aValues != null)
+      for (final boolean aValue : aValues)
+        ret.add (Boolean.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <Byte> newByteSortedSet (@Nullable final byte... aValues)
+  {
+    final Set <Byte> ret = new TreeSet <Byte> ();
+    if (aValues != null)
+      for (final byte aValue : aValues)
+        ret.add (Byte.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <Character> newCharSortedSet (@Nullable final char... aValues)
+  {
+    final Set <Character> ret = new TreeSet <Character> ();
+    if (aValues != null)
+      for (final char aValue : aValues)
+        ret.add (Character.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <Double> newDoubleSortedSet (@Nullable final double... aValues)
+  {
+    final Set <Double> ret = new TreeSet <Double> ();
+    if (aValues != null)
+      for (final double aValue : aValues)
+        ret.add (Double.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <Float> newFloatSortedSet (@Nullable final float... aValues)
+  {
+    final Set <Float> ret = new TreeSet <Float> ();
+    if (aValues != null)
+      for (final float aValue : aValues)
+        ret.add (Float.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <Integer> newIntSortedSet (@Nullable final int... aValues)
+  {
+    final Set <Integer> ret = new TreeSet <Integer> ();
+    if (aValues != null)
+      for (final int aValue : aValues)
+        ret.add (Integer.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <Long> newLongSortedSet (@Nullable final long... aValues)
+  {
+    final Set <Long> ret = new TreeSet <Long> ();
+    if (aValues != null)
+      for (final long aValue : aValues)
+        ret.add (Long.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <Short> newShortSortedSet (@Nullable final short... aValues)
+  {
+    final Set <Short> ret = new TreeSet <Short> ();
+    if (aValues != null)
+      for (final short aValue : aValues)
+        ret.add (Short.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static <ELEMENTTYPE> Set <ELEMENTTYPE> newUnmodifiableSortedSet ()
+  {
+    return Collections.<ELEMENTTYPE> emptySet ();
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static <ELEMENTTYPE> Set <ELEMENTTYPE> newUnmodifiableSortedSet (@Nullable final ELEMENTTYPE aValue)
+  {
+    return Collections.singleton (aValue);
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static <ELEMENTTYPE> Set <ELEMENTTYPE> newUnmodifiableSortedSet (@Nullable final ELEMENTTYPE... aValues)
+  {
+    return makeUnmodifiable (newSortedSet (aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static <ELEMENTTYPE> Set <ELEMENTTYPE> newUnmodifiableSortedSet (@Nullable final Iterable <? extends ELEMENTTYPE> aCont)
+  {
+    return makeUnmodifiable (newSortedSet (aCont));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static <ELEMENTTYPE> Set <ELEMENTTYPE> newUnmodifiableSortedSet (@Nullable final Collection <? extends ELEMENTTYPE> aCont)
+  {
+    return makeUnmodifiable (newSortedSet (aCont));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static <ELEMENTTYPE> Set <ELEMENTTYPE> newUnmodifiableSortedSet (@Nullable final Iterator <? extends ELEMENTTYPE> aIter)
+  {
+    return makeUnmodifiable (newSortedSet (aIter));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static <ELEMENTTYPE> Set <ELEMENTTYPE> newUnmodifiableSortedSet (@Nullable final IIterableIterator <? extends ELEMENTTYPE> aIter)
+  {
+    return makeUnmodifiable (newSortedSet (aIter));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static <ELEMENTTYPE> Set <ELEMENTTYPE> newUnmodifiableSortedSet (@Nullable final Enumeration <? extends ELEMENTTYPE> aEnum)
+  {
+    return makeUnmodifiable (newSortedSet (aEnum));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static Set <Boolean> newUnmodifiableBooleanSortedSet (@Nullable final boolean... aValues)
+  {
+    return makeUnmodifiable (newBooleanSortedSet (aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static Set <Byte> newUnmodifiableByteSortedSet (@Nullable final byte... aValues)
+  {
+    return makeUnmodifiable (newByteSortedSet (aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static Set <Character> newUnmodifiableCharSortedSet (@Nullable final char... aValues)
+  {
+    return makeUnmodifiable (newCharSortedSet (aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static Set <Double> newUnmodifiableDoubleSortedSet (@Nullable final double... aValues)
+  {
+    return makeUnmodifiable (newDoubleSortedSet (aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static Set <Float> newUnmodifiableFloatSortedSet (@Nullable final float... aValues)
+  {
+    return makeUnmodifiable (newFloatSortedSet (aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static Set <Integer> newUnmodifiableIntSortedSet (@Nullable final int... aValues)
+  {
+    return makeUnmodifiable (newIntSortedSet (aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static Set <Long> newUnmodifiableLongSortedSet (@Nullable final long... aValues)
+  {
+    return makeUnmodifiable (newLongSortedSet (aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static Set <Short> newUnmodifiableShortSortedSet (@Nullable final short... aValues)
+  {
+    return makeUnmodifiable (newShortSortedSet (aValues));
   }
 
   @Nonnull
