@@ -77,6 +77,12 @@ public final class CMimeType
   /** XHTML document. */
   public static final IMimeType APPLICATION_XHTML_XML = EMimeContentType.APPLICATION.buildMimeType ("xhtml+xml");
 
+  /** WAP XHTML document */
+  public static final IMimeType APPLICATION_WAP_XHTML_XML = EMimeContentType.APPLICATION.buildMimeType ("vnd.wap.xhtml+xml");
+
+  /** HTML document. */
+  public static final IMimeType APPLICATION_TEXT_HTML = EMimeContentType.APPLICATION.buildMimeType ("text+html");
+
   /** For MP3 files */
   public static final IMimeType AUDIO_MP3 = EMimeContentType.AUDIO.buildMimeType ("mpeg");
 
