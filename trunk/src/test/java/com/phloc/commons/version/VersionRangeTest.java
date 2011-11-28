@@ -268,7 +268,7 @@ public final class VersionRangeTest
   }
 
   @Test
-  public void testAsString ()
+  public void testGetAsString ()
   {
     final String [] aTrueTests = new String [] { "[1.2.3]",
                                                 "(1.2.3)",
@@ -290,6 +290,32 @@ public final class VersionRangeTest
     {
       final VersionRange vr = new VersionRange (element);
       assertFalse (vr.getAsString ().equals (element));
+    }
+  }
+
+  @Test
+  public void testGetAsStringPrintZeroElements ()
+  {
+    final String [] aTrueTests = new String [] { "[1.2.3]",
+                                                "(1.2.3)",
+                                                "[1.2.0)",
+                                                "(3.4.0]",
+                                                "[12.0.0,12.0.0]",
+                                                "(1.0.0,4.0.0]",
+                                                "[1.2.3,4.5.6)",
+                                                "(47.11.0.alpha,58.0.0]",
+                                                "[1.2.3,1.2.3]",
+                                                "[0.0.0)" };
+    for (final String element : aTrueTests)
+    {
+      final VersionRange vr = new VersionRange (element);
+      assertEquals (vr.getAsString (true), element);
+    }
+    final String [] aFalseTests = new String [] { " 1.0.0", "1.2.3", "[1.2.3, 4.5.0]", "00.0.0" };
+    for (final String element : aFalseTests)
+    {
+      final VersionRange vr = new VersionRange (element);
+      assertFalse (vr.getAsString (true).equals (element));
     }
   }
 

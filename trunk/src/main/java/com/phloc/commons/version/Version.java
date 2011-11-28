@@ -32,9 +32,10 @@ import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * This class represents a single version object. See OSGi v4 reference 3.2.4
- * Needs to be public for the JUnit test.
- *
+ * This class represents a single version object. It supports 4 elements: major
+ * version (integer), minor version (integer), micro version (integer) and a
+ * qualifier (string).
+ * 
  * @author philip
  */
 @Immutable
@@ -42,6 +43,9 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
 {
   /** default version if nothing is specified. */
   public static final String DEFAULT_VERSION_STRING = "0";
+
+  /** Default value for printing zero elements in getAsString */
+  public static final boolean DEFAULT_PRINT_ZERO_ELEMENTS = false;
 
   /** major version. */
   private final int m_nMajor;
@@ -57,7 +61,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
 
   /**
    * Create a new version with major version only.
-   *
+   * 
    * @param nMajor
    *        major version
    * @throws IllegalArgumentException
@@ -70,7 +74,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
 
   /**
    * Create a new version with major and minor version only.
-   *
+   * 
    * @param nMajor
    *        major version
    * @param nMinor
@@ -86,7 +90,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
   /**
    * Create a new version with major, minor and micro version number. The
    * qualifier remains null.
-   *
+   * 
    * @param nMajor
    *        major version
    * @param nMinor
@@ -111,7 +115,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
 
   /**
    * Create a new version with 3 integer values and a qualifier.
-   *
+   * 
    * @param nMajor
    *        major version
    * @param nMinor
@@ -154,7 +158,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
    * minor ::= number<br>
    * micro ::= number<br>
    * qualifier ::= ( alphanum | '_' | '-' )+
-   *
+   * 
    * @param sVersionString
    *        the version string to be interpreted as a version
    * @throws IllegalArgumentException
@@ -220,7 +224,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
 
   /**
    * Compares two Version objects.
-   *
+   * 
    * @param rhs
    *        the version to compare to
    * @return &lt; 0 if this is less than rhs; &gt; 0 if this is greater than
@@ -302,21 +306,39 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
   @Nonnull
   public String getAsString ()
   {
+    return getAsString (DEFAULT_PRINT_ZERO_ELEMENTS);
+  }
+
+  /**
+   * Get the string representation of the version number.
+   * 
+   * @param bPrintZeroElements
+   *        If <code>true</code> than trailing zeroes are printed, otherwise
+   *        printed zeroes are not printed.
+   * @return Never <code>null</code>.
+   */
+  @Nonnull
+  public String getAsString (final boolean bPrintZeroElements)
+  {
+    // Build from back to front
     final StringBuilder aSB = new StringBuilder (m_sQualifier != null ? m_sQualifier : "");
-    if (m_nMicro > 0 || aSB.length () > 0)
+    if (m_nMicro > 0 || aSB.length () > 0 || bPrintZeroElements)
     {
+      // Micro version
       if (aSB.length () > 0)
         aSB.insert (0, '.');
       aSB.insert (0, m_nMicro);
     }
-    if (m_nMinor > 0 || aSB.length () > 0)
+    if (m_nMinor > 0 || aSB.length () > 0 || bPrintZeroElements)
     {
+      // Minor version
       if (aSB.length () > 0)
         aSB.insert (0, '.');
       aSB.insert (0, m_nMinor);
     }
-    if (m_nMajor > 0 || aSB.length () > 0)
+    if (m_nMajor > 0 || aSB.length () > 0 || bPrintZeroElements)
     {
+      // Major version
       if (aSB.length () > 0)
         aSB.insert (0, '.');
       aSB.insert (0, m_nMajor);
