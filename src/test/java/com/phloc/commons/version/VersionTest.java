@@ -479,7 +479,7 @@ public final class VersionTest
   }
 
   @Test
-  public void testAsString ()
+  public void testGetAsString ()
   {
     Version v = new Version (1, 2, 3);
     assertEquals ("1.2.3", v.getAsString ());
@@ -536,6 +536,66 @@ public final class VersionTest
     v = new Version ("...2");
     assertEquals ("0.0.0.2", v.getAsString ());
     assertEquals (v, new Version (v.getAsString ()));
+  }
+
+  @Test
+  public void testGetAsStringBoolean ()
+  {
+    Version v = new Version (1, 2, 3);
+    assertEquals ("1.2.3", v.getAsString (true));
+    assertEquals (v, new Version (v.getAsString (true)));
+
+    v = new Version ("1.2.3.");
+    assertEquals ("1.2.3", v.getAsString (true));
+    assertEquals (v, new Version (v.getAsString (true)));
+
+    v = new Version ("1.2.3.alpha");
+    assertEquals ("1.2.3.alpha", v.getAsString (true));
+    assertEquals (v, new Version (v.getAsString (true)));
+
+    v = new Version ("1.2.0.alpha");
+    assertEquals ("1.2.0.alpha", v.getAsString (true));
+    assertEquals (v, new Version (v.getAsString (true)));
+
+    v = new Version ("1.2.3");
+    assertEquals ("1.2.3", v.getAsString (true));
+    assertEquals (v, new Version (v.getAsString (true)));
+
+    v = new Version ("1.2.0");
+    assertEquals ("1.2.0", v.getAsString (true));
+    assertEquals (v, new Version (v.getAsString (true)));
+
+    v = new Version ("1.0.2");
+    assertEquals ("1.0.2", v.getAsString (true));
+    assertEquals (v, new Version (v.getAsString (true)));
+
+    v = new Version ("4.5");
+    assertEquals ("4.5.0", v.getAsString (true));
+    assertEquals (v, new Version (v.getAsString (true)));
+
+    v = new Version ("4.0");
+    assertEquals ("4.0.0", v.getAsString (true));
+    assertEquals (v, new Version (v.getAsString (true)));
+
+    v = new Version ("6");
+    assertEquals ("6.0.0", v.getAsString (true));
+    assertEquals (v, new Version (v.getAsString (true)));
+
+    v = new Version (null);
+    assertEquals ("0.0.0", v.getAsString (true));
+    assertEquals (v, new Version (v.getAsString (true)));
+
+    v = new Version (".2");
+    assertEquals ("0.2.0", v.getAsString (true));
+    assertEquals (v, new Version (v.getAsString (true)));
+
+    v = new Version ("..2");
+    assertEquals ("0.0.2", v.getAsString (true));
+    assertEquals (v, new Version (v.getAsString (true)));
+
+    v = new Version ("...2");
+    assertEquals ("0.0.0.2", v.getAsString (true));
+    assertEquals (v, new Version (v.getAsString (true)));
   }
 
   @Test
