@@ -17,8 +17,6 @@
  */
 package com.phloc.commons.base64;
 
-import java.io.IOException;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
@@ -57,7 +55,7 @@ public final class Base64Helper
     {
       return Base64.decode (sEncoded);
     }
-    catch (final IOException ex)
+    catch (final Exception ex)
     {
       return null;
     }
@@ -77,7 +75,7 @@ public final class Base64Helper
     {
       return Base64.decode (aEncodedBytes);
     }
-    catch (final IOException ex)
+    catch (final Exception ex)
     {
       return null;
     }
@@ -97,7 +95,7 @@ public final class Base64Helper
     {
       return CharsetManager.getAsString (Base64.decode (sEncoded), sCharset);
     }
-    catch (final IOException ex)
+    catch (final Exception ex)
     {
       return null;
     }
@@ -117,7 +115,7 @@ public final class Base64Helper
     {
       return CharsetManager.getAsString (Base64.decode (aEncodedBytes), sCharset);
     }
-    catch (final IOException ex)
+    catch (final Exception ex)
     {
       return null;
     }

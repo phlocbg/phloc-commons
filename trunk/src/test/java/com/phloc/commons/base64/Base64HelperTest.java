@@ -18,6 +18,7 @@
 package com.phloc.commons.base64;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
@@ -42,5 +43,8 @@ public final class Base64HelperTest
     assertTrue (Arrays.equals (sSource.getBytes (), Base64Helper.safeDecode (sEncoded.getBytes ())));
     assertEquals (sSource, Base64Helper.safeDecodeAsString (sEncoded, CCharset.CHARSET_ISO_8859_1));
     assertEquals (sSource, Base64Helper.safeDecodeAsString (sEncoded.getBytes (), CCharset.CHARSET_ISO_8859_1));
+
+    // Invalid input
+    assertNull (Base64Helper.safeDecode ("xyz"));
   }
 }
