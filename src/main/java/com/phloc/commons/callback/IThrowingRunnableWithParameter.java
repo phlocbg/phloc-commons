@@ -25,10 +25,10 @@ import javax.annotation.Nullable;
  * parameter is present.
  * 
  * @author philip
- * @param <DATATYPE>
+ * @param <PARAMTYPE>
  *        The type of the parameter that is required for executing the callback.
  */
-public interface IThrowingRunnableWithParameter <DATATYPE>
+public interface IThrowingRunnableWithParameter <PARAMTYPE>
 {
   /**
    * The callback method that is invoked.
@@ -38,5 +38,5 @@ public interface IThrowingRunnableWithParameter <DATATYPE>
    * @throws Exception
    *         In case something goes wrong
    */
-  void run (@Nullable DATATYPE aCurrentObject) throws Exception;
+  void run (@Nullable PARAMTYPE aCurrentObject) throws Exception;
 }
