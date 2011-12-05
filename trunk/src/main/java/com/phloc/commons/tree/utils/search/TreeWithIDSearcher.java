@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
@@ -62,8 +63,8 @@ public final class TreeWithIDSearcher
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> List <ITEMTYPE> findAllItemsWithIDRecursive (final IBasicTree <VALUETYPE, ITEMTYPE> aTree,
-                                                                                                                                                   final KEYTYPE aSearchID)
+  public static <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> List <ITEMTYPE> findAllItemsWithIDRecursive (@Nonnull final IBasicTree <VALUETYPE, ITEMTYPE> aTree,
+                                                                                                                                                   @Nullable final KEYTYPE aSearchID)
   {
     return findAllItemsWithIDRecursive (aTree.getRootItem (), aSearchID);
   }
@@ -85,8 +86,8 @@ public final class TreeWithIDSearcher
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> List <ITEMTYPE> findAllItemsWithIDRecursive (final ITEMTYPE aTreeItem,
-                                                                                                                                                   final KEYTYPE aSearchID)
+  public static <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> List <ITEMTYPE> findAllItemsWithIDRecursive (@Nonnull final ITEMTYPE aTreeItem,
+                                                                                                                                                   @Nullable final KEYTYPE aSearchID)
   {
     final List <ITEMTYPE> aRetList = new ArrayList <ITEMTYPE> ();
     TreeWalker.walkSubTree (aTreeItem, new DefaultHierarchyWalkerCallback <ITEMTYPE> ()

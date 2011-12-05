@@ -44,6 +44,14 @@ public final class TreeSorter
   private TreeSorter ()
   {}
 
+  /**
+   * Sort each level of the passed tree with the specified comparator.
+   * 
+   * @param aTree
+   *        The tree to be sorted.
+   * @param aComparator
+   *        The comparator to be used for sorting the tree items on each level.
+   */
   public static <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> void sort (@Nonnull final IBasicTree <VALUETYPE, ITEMTYPE> aTree,
                                                                                          @Nonnull final Comparator <? super VALUETYPE> aComparator)
   {
@@ -63,6 +71,14 @@ public final class TreeSorter
     });
   }
 
+  /**
+   * Sort each level of the passed tree with the specified comparator. This
+   * method assumes that the values in the tree item implement the
+   * {@link Comparable} interface.
+   * 
+   * @param aTree
+   *        The tree to be sorted.
+   */
   public static <VALUETYPE extends Comparable <? super VALUETYPE>, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> void sort (@Nonnull final IBasicTree <VALUETYPE, ITEMTYPE> aTree)
   {
     final ComparatorTreeItemValueComparable <VALUETYPE, ITEMTYPE> aRealComp = new ComparatorTreeItemValueComparable <VALUETYPE, ITEMTYPE> ();
