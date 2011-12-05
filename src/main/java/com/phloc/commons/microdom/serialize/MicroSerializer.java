@@ -28,6 +28,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.WillNotClose;
+import javax.xml.namespace.NamespaceContext;
 
 import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.io.streams.StreamUtils;
@@ -57,12 +58,24 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
 {
   public MicroSerializer (@Nullable final String sEncoding)
   {
-    this (null, sEncoding);
+    this (null, sEncoding, null);
+  }
+
+  public MicroSerializer (@Nullable final String sEncoding, @Nullable final NamespaceContext aNamespaceCtx)
+  {
+    this (null, sEncoding, aNamespaceCtx);
   }
 
   public MicroSerializer (@Nullable final EXMLVersion eVersion, @Nullable final String sEncoding)
   {
-    super (eVersion, sEncoding);
+    this (eVersion, sEncoding, null);
+  }
+
+  public MicroSerializer (@Nullable final EXMLVersion eVersion,
+                          @Nullable final String sEncoding,
+                          @Nullable final NamespaceContext aNamespaceCtx)
+  {
+    super (eVersion, sEncoding, aNamespaceCtx);
   }
 
   private void _writeNode (@Nonnull final IXMLIterationHandler aXMLWriter,
@@ -222,7 +235,7 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
       // Do we have a new namespace to prefix?
       if (StringHelper.hasText (sElementNamespaceURI) && sNSPrefix == null && !sElementNamespaceURI.equals (sDefaultNS))
       {
-        sNSPrefix = m_aNSStack.createUniquePrefix ();
+        sNSPrefix = m_aNSStack.createUniquePrefix (sElementNamespaceURI);
         if (sNSPrefix == null)
           aAttrMap.put (CXML.XML_ATTR_XMLNS, sElementNamespaceURI);
         else

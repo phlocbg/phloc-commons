@@ -27,6 +27,7 @@ import java.util.TreeMap;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.WillNotClose;
+import javax.xml.namespace.NamespaceContext;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.CDATASection;
@@ -59,12 +60,24 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
 {
   public XMLSerializerPhloc (@Nullable final String sEncoding)
   {
-    this (null, sEncoding);
+    this (null, sEncoding, null);
+  }
+
+  public XMLSerializerPhloc (@Nullable final String sEncoding, @Nullable final NamespaceContext aNamespaceCtx)
+  {
+    this (null, sEncoding, aNamespaceCtx);
   }
 
   public XMLSerializerPhloc (@Nullable final EXMLVersion eVersion, @Nullable final String sEncoding)
   {
-    super (eVersion, sEncoding);
+    this (eVersion, sEncoding, null);
+  }
+
+  public XMLSerializerPhloc (@Nullable final EXMLVersion eVersion,
+                             @Nullable final String sEncoding,
+                             @Nullable final NamespaceContext aNamespaceCtx)
+  {
+    super (eVersion, sEncoding, aNamespaceCtx);
   }
 
   private void _writeNode (@Nonnull final IXMLIterationHandler aEmitter, @Nonnull final Node aNode)
@@ -179,7 +192,7 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
       // Do we have a new namespace to prefix?
       if (StringHelper.hasText (sElementNamespaceURI) && sNSPrefix == null && !sElementNamespaceURI.equals (sDefaultNS))
       {
-        sNSPrefix = m_aNSStack.createUniquePrefix ();
+        sNSPrefix = m_aNSStack.createUniquePrefix (sElementNamespaceURI);
         if (sNSPrefix == null)
           aAttrMap.put (CXML.XML_ATTR_XMLNS, sElementNamespaceURI);
         else

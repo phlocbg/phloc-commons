@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.WillClose;
 import javax.annotation.concurrent.Immutable;
+import javax.xml.namespace.NamespaceContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +33,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.state.ESuccess;
+import com.phloc.commons.xml.EXMLVersion;
 
 /**
  * This is a helper class to serialize DOM nodes to a String.
@@ -41,6 +43,9 @@ import com.phloc.commons.state.ESuccess;
 @Immutable
 public final class XMLWriter
 {
+  public static final EXMLVersion DEFAULT_XML_VERSION = EXMLVersion.DEFAULT;
+  public static final NamespaceContext DEFAULT_NAMESPACE_CTX = null;
+
   private static final Logger s_aLogger = LoggerFactory.getLogger (XMLWriter.class);
 
   @PresentForCodeCoverage
@@ -52,7 +57,8 @@ public final class XMLWriter
 
   /**
    * Serialized the given DOM node to the given {@link OutputStream} using the
-   * passed settings.
+   * passed settings. Uses default XML version 1.0 and no namespace URL/prefix
+   * mapping.
    * 
    * @param aNode
    *        The node to serialize. May not be <code>null</code>.
@@ -62,11 +68,13 @@ public final class XMLWriter
    *        Format to be emitted
    * @param eDocType
    *        Should the document type be emitted?
+   * @param eComments
+   *        Should the contained comments be emitted?
    * @param eIndent
-   *        if <code>true</code>, the different elements are indented
+   *        Should the output be pretty printed? May not be <code>null</code>.
    * @param sCharset
    *        The character set to use. May not be <code>null</code>.
-   * @return success or failure
+   * @return {@link ESuccess}
    */
   @Nonnull
   public static ESuccess writeToStream (@Nonnull final Node aNode,
@@ -77,10 +85,60 @@ public final class XMLWriter
                                         @Nonnull final EXMLSerializeIndent eIndent,
                                         @Nonnull final String sCharset)
   {
+    return writeToStream (aNode,
+                          aOS,
+                          DEFAULT_XML_VERSION,
+                          eFormat,
+                          eDocType,
+                          eComments,
+                          eIndent,
+                          sCharset,
+                          DEFAULT_NAMESPACE_CTX);
+  }
+
+  /**
+   * Serialized the given DOM node to the given {@link OutputStream} using the
+   * passed settings. mapping.
+   * 
+   * @param aNode
+   *        The node to serialize. May not be <code>null</code>.
+   * @param aOS
+   *        The output stream to serialize to. May not be <code>null</code>.
+   * @param eVersion
+   *        The XML version to use. May not be <code>null</code>.
+   * @param eFormat
+   *        Format to be emitted. May not be <code>null</code>.
+   * @param eDocType
+   *        Should the document type be emitted? May not be <code>null</code>.
+   * @param eComments
+   *        Should the contained comments be emitted? May not be
+   *        <code>null</code>.
+   * @param eIndent
+   *        Should the output be pretty printed? May not be <code>null</code>.
+   * @param sCharset
+   *        The character set to use. May not be <code>null</code>.
+   * @param aNamespaceCtx
+   *        The mapping from namespace URI to namespace prefix. May be
+   *        <code>null</code>.
+   * @return {@link ESuccess}
+   */
+  @Nonnull
+  public static ESuccess writeToStream (@Nonnull final Node aNode,
+                                        @Nonnull @WillClose final OutputStream aOS,
+                                        @Nonnull final EXMLVersion eVersion,
+                                        @Nonnull final EXMLSerializeFormat eFormat,
+                                        @Nonnull final EXMLSerializeDocType eDocType,
+                                        @Nonnull final EXMLSerializeComments eComments,
+                                        @Nonnull final EXMLSerializeIndent eIndent,
+                                        @Nonnull final String sCharset,
+                                        @Nullable final NamespaceContext aNamespaceCtx)
+  {
     if (aNode == null)
       throw new NullPointerException ("node");
     if (aOS == null)
       throw new NullPointerException ("outputStream");
+    if (eVersion == null)
+      throw new NullPointerException ("version");
     if (eFormat == null)
       throw new NullPointerException ("format");
     if (eDocType == null)
@@ -95,7 +153,7 @@ public final class XMLWriter
     try
     {
       // Charset is required for emitting it in the XML prolog!
-      final IXMLSerializer <Node> aSerializer = new XMLSerializerPhloc (sCharset);
+      final IXMLSerializer <Node> aSerializer = new XMLSerializerPhloc (eVersion, sCharset, aNamespaceCtx);
       aSerializer.setFormat (eFormat);
       aSerializer.setStandalone (true);
       aSerializer.setSerializeDocType (eDocType);
@@ -120,7 +178,21 @@ public final class XMLWriter
     return ESuccess.FAILURE;
   }
 
+  /**
+   * Write the passed DOM node to an output stream using the following default
+   * settings: serialization format XML, write document type (if present), write
+   * comments, pretty print XML.
+   * 
+   * @param aNode
+   *        The node to be written. May not be <code>null</code>.
+   * @param aOS
+   *        The output stream to write to. May not be <code>null</code>.
+   * @param sCharset
+   *        The charset to be used. May not be <code>null</code>.
+   * @return {@link ESuccess}
+   */
   @Nonnull
+  @Deprecated
   public static ESuccess writeXMLToStream (@Nonnull final Node aNode,
                                            @Nonnull @WillClose final OutputStream aOS,
                                            @Nonnull final String sCharset)
@@ -142,12 +214,36 @@ public final class XMLWriter
                                     @Nonnull final EXMLSerializeIndent eIndent,
                                     @Nonnull final String sCharset)
   {
+    return getAsString (aNode,
+                        DEFAULT_XML_VERSION,
+                        eFormat,
+                        eDocType,
+                        eComments,
+                        eIndent,
+                        sCharset,
+                        DEFAULT_NAMESPACE_CTX);
+  }
+
+  @Nullable
+  public static String getAsString (@Nonnull final Node aNode,
+                                    @Nonnull final EXMLVersion eVersion,
+                                    @Nonnull final EXMLSerializeFormat eFormat,
+                                    @Nonnull final EXMLSerializeDocType eDocType,
+                                    @Nonnull final EXMLSerializeComments eComments,
+                                    @Nonnull final EXMLSerializeIndent eIndent,
+                                    @Nonnull final String sCharset,
+                                    @Nullable final NamespaceContext aNamespaceCtx)
+  {
     NonBlockingByteArrayOutputStream aOS = null;
     try
     {
       // start serializing
       aOS = new NonBlockingByteArrayOutputStream (8192);
-      writeToStream (aNode, aOS, eFormat, eDocType, eComments, eIndent, sCharset);
+      if (writeToStream (aNode, aOS, eVersion, eFormat, eDocType, eComments, eIndent, sCharset, aNamespaceCtx).isFailure ())
+      {
+        // Some exception was thrown....
+        return null;
+      }
       return aOS.getAsString (sCharset);
     }
     finally
@@ -168,6 +264,7 @@ public final class XMLWriter
    * @return The XHTML string representation of the node.
    */
   @Nullable
+  @Deprecated
   public static String getXHTMLString (@Nonnull final Node aNode, @Nonnull final String sCharset)
   {
     return getXHTMLString (aNode, EXMLSerializeDocType.EMIT, EXMLSerializeIndent.INDENT_AND_ALIGN, sCharset);
@@ -175,7 +272,8 @@ public final class XMLWriter
 
   /**
    * Get the passed node as an XHTML string that is indented and contains the
-   * document type.
+   * document type. Comments are also emitted but no initial &lt;?xml... header
+   * is written.
    * 
    * @param aNode
    *        The node to be serialized.
@@ -188,6 +286,7 @@ public final class XMLWriter
    * @return The XHTML string representation of the node.
    */
   @Nullable
+  @Deprecated
   public static String getXHTMLString (@Nonnull final Node aNode,
                                        @Nonnull final EXMLSerializeDocType eDocType,
                                        @Nonnull final EXMLSerializeIndent eIndent,
@@ -209,7 +308,14 @@ public final class XMLWriter
   @Nullable
   public static String getXMLString (@Nonnull final Node aNode, @Nonnull final String sCharset)
   {
-    return getXMLString (aNode, EXMLSerializeDocType.EMIT, EXMLSerializeIndent.INDENT_AND_ALIGN, sCharset);
+    return getAsString (aNode,
+                        DEFAULT_XML_VERSION,
+                        EXMLSerializeFormat.XML,
+                        EXMLSerializeDocType.EMIT,
+                        EXMLSerializeComments.EMIT,
+                        EXMLSerializeIndent.INDENT_AND_ALIGN,
+                        sCharset,
+                        DEFAULT_NAMESPACE_CTX);
   }
 
   /**
@@ -232,7 +338,14 @@ public final class XMLWriter
                                      @Nonnull final EXMLSerializeIndent eIndent,
                                      @Nonnull final String sCharset)
   {
-    return getAsString (aNode, EXMLSerializeFormat.XML, eDocType, EXMLSerializeComments.EMIT, eIndent, sCharset);
+    return getAsString (aNode,
+                        DEFAULT_XML_VERSION,
+                        EXMLSerializeFormat.XML,
+                        eDocType,
+                        EXMLSerializeComments.EMIT,
+                        eIndent,
+                        sCharset,
+                        DEFAULT_NAMESPACE_CTX);
   }
 
   /**
@@ -258,6 +371,46 @@ public final class XMLWriter
                                      @Nonnull final EXMLSerializeIndent eIndent,
                                      @Nonnull final String sCharset)
   {
-    return getAsString (aNode, EXMLSerializeFormat.XML, eDocType, eComments, eIndent, sCharset);
+    return getAsString (aNode,
+                        DEFAULT_XML_VERSION,
+                        EXMLSerializeFormat.XML,
+                        eDocType,
+                        eComments,
+                        eIndent,
+                        sCharset,
+                        DEFAULT_NAMESPACE_CTX);
+  }
+
+  /**
+   * Get the passed node as an XML string that is indented and contains the
+   * document type.
+   * 
+   * @param aNode
+   *        The node to be serialized.
+   * @param eVersion
+   *        The XML version to be used.
+   * @param eDocType
+   *        Write doc type or not?
+   * @param eComments
+   *        Write comments or not?
+   * @param eIndent
+   *        Indent the output or not?
+   * @param sCharset
+   *        The charset to be used.
+   * @param aNamespaceCtx
+   *        The optional namespace URL to namespace prefix mapping to be used.
+   *        May be <code>null</code>.
+   * @return The XML string representation of the node.
+   */
+  @Nullable
+  public static String getXMLString (@Nonnull final Node aNode,
+                                     @Nonnull final EXMLVersion eVersion,
+                                     @Nonnull final EXMLSerializeDocType eDocType,
+                                     @Nonnull final EXMLSerializeComments eComments,
+                                     @Nonnull final EXMLSerializeIndent eIndent,
+                                     @Nonnull final String sCharset,
+                                     @Nullable final NamespaceContext aNamespaceCtx)
+  {
+    return getAsString (aNode, eVersion, EXMLSerializeFormat.XML, eDocType, eComments, eIndent, sCharset, aNamespaceCtx);
   }
 }

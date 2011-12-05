@@ -25,12 +25,12 @@ import java.util.Map;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.xml.namespace.NamespaceContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.CGlobal;
-import com.phloc.commons.GlobalDebug;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.string.StringHelper;
@@ -39,7 +39,7 @@ import com.phloc.commons.xml.CXML;
 import com.phloc.commons.xml.EXMLVersion;
 
 /**
- * Abstract serializer implementation that works with IMicroNode and
+ * Abstract XML serializer implementation that works with IMicroNode and
  * org.w3c.dom.Node objects.
  * 
  * @author philip
@@ -70,15 +70,15 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
           final String sAttrName = aEntry.getKey ();
           if (sAttrName.equals (CXML.XML_ATTR_XMLNS))
           {
-            // set default namespace
-            _addPrefixNamespaceMapping (null, aEntry.getValue ());
+            // set default namespace (xmlns)
+            addPrefixNamespaceMapping (null, aEntry.getValue ());
           }
           else
             if (sAttrName.startsWith (CXML.XML_ATTR_XMLNS_WITH_SEP))
             {
-              // prefixed namespace
-              _addPrefixNamespaceMapping (sAttrName.substring (CXML.XML_ATTR_XMLNS_WITH_SEP.length ()),
-                                          aEntry.getValue ());
+              // prefixed namespace (xmlns:...)
+              addPrefixNamespaceMapping (sAttrName.substring (CXML.XML_ATTR_XMLNS_WITH_SEP.length ()),
+                                         aEntry.getValue ());
             }
         }
     }
@@ -105,10 +105,10 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
       return null;
     }
 
-    private void _addPrefixNamespaceMapping (@Nullable final String sPrefix, @Nonnull @Nonempty final String sNamespace)
+    void addPrefixNamespaceMapping (@Nullable final String sPrefix, @Nonnull @Nonempty final String sNamespace)
     {
-      if (false && GlobalDebug.isDebugMode ())
-        s_aLogger.info ("Adding namespace mapping " + sPrefix + ":" + sNamespace);
+      if (s_aLogger.isTraceEnabled ())
+        s_aLogger.trace ("Adding namespace mapping " + sPrefix + ":" + sNamespace);
 
       // namespace prefix uniqueness check
       final String sExistingURI = getNamespaceOfPrefix (sPrefix);
@@ -152,6 +152,14 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
     {
       return (m_aURL2PrefixMap == null ? 0 : m_aURL2PrefixMap.size ()) + (m_sDefaultNamespaceURI == null ? 0 : 1);
     }
+
+    @Override
+    public String toString ()
+    {
+      return new ToStringGenerator (this).append ("defaultNSURL", m_sDefaultNamespaceURI)
+                                         .append ("url2prefix", m_aURL2PrefixMap)
+                                         .toString ();
+    }
   }
 
   /**
@@ -162,9 +170,12 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
   protected static final class NamespaceStack
   {
     private final List <NamespaceLevel> m_aStack = new ArrayList <NamespaceLevel> ();
+    private final NamespaceContext m_aNamespaceCtx;
 
-    public NamespaceStack () // NOPMD
-    {}
+    public NamespaceStack (@Nullable final NamespaceContext aNamespaceCtx)
+    {
+      m_aNamespaceCtx = aNamespaceCtx;
+    }
 
     public void push (@Nullable final Map <String, String> aAttrs)
     {
@@ -175,7 +186,8 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
 
     public void addNamespaceMapping (final String sPrefix, final String sNamespace)
     {
-      ContainerHelper.getLastElement (m_aStack)._addPrefixNamespaceMapping (sPrefix, sNamespace);
+      // Add the namespace to the current level
+      ContainerHelper.getFirstElement (m_aStack).addPrefixNamespaceMapping (sPrefix, sNamespace);
     }
 
     public void pop ()
@@ -234,7 +246,15 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
       return false;
     }
 
-    private boolean _containsPrefix (final String sPrefix)
+    /**
+     * Check if the whole prefix is used somewhere in the stack.
+     * 
+     * @param sPrefix
+     *        The prefix to be checked
+     * @return <code>true</code> if somewhere in the stack, the specified prefix
+     *         is already used
+     */
+    private boolean _containsPrefix (@Nonnull final String sPrefix)
     {
       // find existing prefix
       for (final NamespaceLevel aNSLevel : m_aStack)
@@ -246,15 +266,28 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
     /**
      * Create a new namespace prefix.
      * 
+     * @param sElementNamespaceURI
+     *        The namespace URI for which the prefix should be created.
      * @return <code>null</code> if the default namespace is available, the
      *         prefix otherwise.
      */
     @Nullable
-    public String createUniquePrefix ()
+    public String createUniquePrefix (@Nonnull @Nonempty final String sElementNamespaceURI)
     {
+      if (m_aNamespaceCtx != null)
+      {
+        // Is a mapping defined?
+        final String sPrefix = m_aNamespaceCtx.getPrefix (sElementNamespaceURI);
+        if (sPrefix != null)
+          return sPrefix;
+      }
+
       // Is the default namespace available?
       if (!_containsAnyNamespace ())
+      {
+        // Use the default namespace
         return null;
+      }
 
       // find a unique prefix
       int nCount = 0;
@@ -301,17 +334,20 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
   /**
    * Current stack of namespaces.
    */
-  protected final NamespaceStack m_aNSStack = new NamespaceStack ();
+  protected final NamespaceStack m_aNSStack;
 
-  public AbstractSerializerPhloc (@Nullable final String sEncoding)
+  public AbstractSerializerPhloc (@Nullable final String sEncoding, @Nullable final NamespaceContext aNamespaceCtx)
   {
-    this (null, sEncoding);
+    this (null, sEncoding, aNamespaceCtx);
   }
 
-  public AbstractSerializerPhloc (@Nullable final EXMLVersion eVersion, @Nullable final String sEncoding)
+  public AbstractSerializerPhloc (@Nullable final EXMLVersion eVersion,
+                                  @Nullable final String sEncoding,
+                                  @Nullable final NamespaceContext aNamespaceCtx)
   {
     m_sEncoding = sEncoding;
     m_eVersion = eVersion;
+    m_aNSStack = new NamespaceStack (aNamespaceCtx);
   }
 
   public final void setFormat (final EXMLSerializeFormat eFormat)

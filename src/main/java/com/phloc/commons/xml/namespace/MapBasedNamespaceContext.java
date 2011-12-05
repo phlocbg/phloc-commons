@@ -62,8 +62,11 @@ public final class MapBasedNamespaceContext extends AbstractNamespaceContext
    * @param sNamespaceURI
    *        The namespace URI to be mapped. May neither be <code>null</code> nor
    *        empty.
+   * @return this
    */
-  public void addMapping (@Nonnull final String sPrefix, @Nonnull @Nonempty final String sNamespaceURI)
+  @Nonnull
+  public MapBasedNamespaceContext addMapping (@Nonnull final String sPrefix,
+                                              @Nonnull @Nonempty final String sNamespaceURI)
   {
     if (sPrefix == null)
       throw new IllegalArgumentException ("prefix may not be empty");
@@ -76,6 +79,7 @@ public final class MapBasedNamespaceContext extends AbstractNamespaceContext
       m_sDefaultNamespaceURI = sNamespaceURI;
     m_aPrefix2NS.put (sPrefix, sNamespaceURI);
     m_aNS2Prefix.putSingle (sNamespaceURI, sPrefix);
+    return this;
   }
 
   @Override

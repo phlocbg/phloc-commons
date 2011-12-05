@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.WillClose;
 import javax.annotation.concurrent.Immutable;
+import javax.xml.namespace.NamespaceContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,6 +73,14 @@ public final class MicroWriter
                                    @Nonnull @WillClose final OutputStream aOS,
                                    @Nonnull final IMicroWriterSettings aSettings)
   {
+    saveToStream (aNode, aOS, aSettings, null);
+  }
+
+  public static void saveToStream (@Nonnull final IMicroNode aNode,
+                                   @Nonnull @WillClose final OutputStream aOS,
+                                   @Nonnull final IMicroWriterSettings aSettings,
+                                   @Nullable final NamespaceContext aNamespaceCtx)
+  {
     if (aOS == null)
       throw new NullPointerException ("outputStream");
     if (aNode == null)
@@ -82,7 +91,8 @@ public final class MicroWriter
     try
     {
       final IXMLSerializer <IMicroNode> aSerializer = new MicroSerializer (aSettings.getXMLVersion (),
-                                                                           aSettings.getCharset ());
+                                                                           aSettings.getCharset (),
+                                                                           aNamespaceCtx);
       aSerializer.setFormat (aSettings.getFormat ());
       aSerializer.setSerializeDocType (aSettings.getSerializeDocType ());
       aSerializer.setSerializeComments (aSettings.getSerializeComments ());
@@ -98,6 +108,14 @@ public final class MicroWriter
   @Nullable
   public static String getNodeAsString (@Nonnull final IMicroNode aNode, @Nonnull final IMicroWriterSettings aSettings)
   {
+    return getNodeAsString (aNode, aSettings, null);
+  }
+
+  @Nullable
+  public static String getNodeAsString (@Nonnull final IMicroNode aNode,
+                                        @Nonnull final IMicroWriterSettings aSettings,
+                                        @Nullable final NamespaceContext aNamespaceCtx)
+  {
     if (aNode == null)
       throw new NullPointerException ("node");
     if (aSettings == null)
@@ -107,7 +125,7 @@ public final class MicroWriter
     {
       // start serializing
       final NonBlockingByteArrayOutputStream aOS = new NonBlockingByteArrayOutputStream (50 * CGlobal.BYTES_PER_KILOBYTE);
-      saveToStream (aNode, aOS, aSettings);
+      saveToStream (aNode, aOS, aSettings, aNamespaceCtx);
       s_aSizeHdl.addSize (aOS.size ());
       return aOS.getAsString (aSettings.getCharset ());
     }
@@ -135,5 +153,22 @@ public final class MicroWriter
   public static String getXMLString (@Nonnull final IMicroNode aNode)
   {
     return getNodeAsString (aNode, MicroWriterSettings.DEFAULT_XML_SETTINGS);
+  }
+
+  /**
+   * Convert the passed micro node to an XML string using
+   * {@link MicroWriterSettings#DEFAULT_XML_SETTINGS}. This is a specialized
+   * version of {@link #getNodeAsString(IMicroNode, IMicroWriterSettings)}.
+   * 
+   * @param aNode
+   *        The node to be converted to a string. May not be <code>null</code> .
+   * @param aNamespaceCtx
+   *        The mapping from namespace URL to namespace prefix.
+   * @return The string representation of the passed node.
+   */
+  @Nullable
+  public static String getXMLString (@Nonnull final IMicroNode aNode, @Nullable final NamespaceContext aNamespaceCtx)
+  {
+    return getNodeAsString (aNode, MicroWriterSettings.DEFAULT_XML_SETTINGS, aNamespaceCtx);
   }
 }
