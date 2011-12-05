@@ -274,6 +274,8 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
     @Nullable
     public String createUniquePrefix (@Nonnull @Nonempty final String sElementNamespaceURI)
     {
+      // If a mapping is defined, it always takes precedence over the default
+      // namespace
       if (m_aNamespaceCtx != null)
       {
         // Is a mapping defined?

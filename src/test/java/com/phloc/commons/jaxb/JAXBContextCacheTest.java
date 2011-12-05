@@ -20,6 +20,7 @@ package com.phloc.commons.jaxb;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -82,7 +83,7 @@ public final class JAXBContextCacheTest
     assertNotNull (aCtx);
 
     // retrieve again
-    assertNotNull (JAXBContextCache.getInstance ().getFromCache (MockJAXBArchive.class));
+    assertSame (aCtx, JAXBContextCache.getInstance ().getFromCache (MockJAXBArchive.class));
 
     CollectingValidationEventHandler evh = new CollectingValidationEventHandler (new LoggingValidationEventHandler (null));
     final Unmarshaller um = aCtx.createUnmarshaller ();
