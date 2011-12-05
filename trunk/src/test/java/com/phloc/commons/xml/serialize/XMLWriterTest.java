@@ -30,7 +30,9 @@ import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 import com.phloc.commons.xml.DefaultXMLIterationHandler;
+import com.phloc.commons.xml.EXMLVersion;
 import com.phloc.commons.xml.XMLFactory;
+import com.phloc.commons.xml.namespace.MapBasedNamespaceContext;
 
 /**
  * Test class for {@link XMLWriter}
@@ -45,6 +47,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
   /**
    * Test the method getXHTMLString
    */
+  @SuppressWarnings ("deprecation")
   @Test
   public void testGetXHTMLString ()
   {
@@ -249,5 +252,56 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
     e.appendChild (doc.createCDATASection ("a<![CDATA[x]]>b"));
     assertEquals ("<a><![CDATA[a<![CDATA[x]]>]]&gt;<![CDATA[b]]></a>" + CGlobal.LINE_SEPARATOR,
                   XMLWriter.getXMLString (e, CCharset.CHARSET_UTF_8));
+  }
+
+  @Test
+  public void testWithNamespaceContext ()
+  {
+    final Document aDoc = XMLFactory.newDocument ();
+    final Element eRoot = (Element) aDoc.appendChild (aDoc.createElementNS ("ns1url", "root"));
+    eRoot.appendChild (aDoc.createElementNS ("ns2url", "child1"));
+    eRoot.appendChild (aDoc.createElementNS ("ns2url", "child2"));
+
+    String s = XMLWriter.getAsString (aDoc,
+                                      EXMLVersion.DEFAULT,
+                                      EXMLSerializeFormat.XML,
+                                      EXMLSerializeDocType.EMIT,
+                                      EXMLSerializeComments.EMIT,
+                                      EXMLSerializeIndent.NONE,
+                                      CCharset.CHARSET_ISO_8859_1,
+                                      null);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>" +
+                      CGlobal.LINE_SEPARATOR +
+                      "<root xmlns=\"ns1url\"><ns0:child1 xmlns:ns0=\"ns2url\" /><ns0:child2 xmlns:ns0=\"ns2url\" /></root>",
+                  s);
+
+    final MapBasedNamespaceContext aCtx = new MapBasedNamespaceContext ();
+    aCtx.addMapping ("a", "ns1url");
+    s = XMLWriter.getAsString (aDoc,
+                               EXMLVersion.DEFAULT,
+                               EXMLSerializeFormat.XML,
+                               EXMLSerializeDocType.EMIT,
+                               EXMLSerializeComments.EMIT,
+                               EXMLSerializeIndent.NONE,
+                               CCharset.CHARSET_ISO_8859_1,
+                               aCtx);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>" +
+                      CGlobal.LINE_SEPARATOR +
+                      "<a:root xmlns:a=\"ns1url\"><ns0:child1 xmlns:ns0=\"ns2url\" /><ns0:child2 xmlns:ns0=\"ns2url\" /></a:root>",
+                  s);
+
+    aCtx.addMapping ("xy", "ns2url");
+    s = XMLWriter.getAsString (aDoc,
+                               EXMLVersion.DEFAULT,
+                               EXMLSerializeFormat.XML,
+                               EXMLSerializeDocType.EMIT,
+                               EXMLSerializeComments.EMIT,
+                               EXMLSerializeIndent.NONE,
+                               CCharset.CHARSET_ISO_8859_1,
+                               aCtx);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>" +
+                      CGlobal.LINE_SEPARATOR +
+                      "<a:root xmlns:a=\"ns1url\"><xy:child1 xmlns:xy=\"ns2url\" /><xy:child2 xmlns:xy=\"ns2url\" /></a:root>",
+                  s);
   }
 }

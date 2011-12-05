@@ -20,13 +20,14 @@ package com.phloc.commons.xml;
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.name.IHasName;
 
 /**
  * Contains constants for parser features.
  * 
  * @author philip
  */
-public enum EXMLParserFeature
+public enum EXMLParserFeature implements IHasName
 {
   /**
    * Namespaces feature id (http://xml.org/sax/features/namespaces).
