@@ -48,10 +48,10 @@ public interface IMultiLingualText extends IReadonlyMultiLingualText, IClearable
    * already present, the old value is overwritten.
    * 
    * @param aContentLocale
-   *        The locale in which the text should be set. May be <code>null</code>
-   *        .
+   *        The locale in which the text should be set. May not be
+   *        <code>null</code> .
    * @param sText
-   *        The text to be set. May not be <code>null</code>.
+   *        The text to be set. May be <code>null</code>.
    * @return {@link EChange#CHANGED} if the text was set,
    *         {@link EChange#UNCHANGED} otherwise.
    */
