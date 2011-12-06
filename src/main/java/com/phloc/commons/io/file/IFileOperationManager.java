@@ -102,6 +102,17 @@ public interface IFileOperationManager extends Serializable
   FileIOError deleteDir (@Nonnull File aDir);
 
   /**
+   * Delete an existing directory if it is existing. The directory needs to be
+   * empty before it can be deleted.
+   * 
+   * @param aDir
+   *        The directory to be deleted. May not be <code>null</code>.
+   * @return A non-<code>null</code> error code.
+   */
+  @Nonnull
+  FileIOError deleteDirIfExisting (@Nonnull File aDir);
+
+  /**
    * Delete an existing directory including all child objects.
    * 
    * @param aDir
@@ -112,6 +123,16 @@ public interface IFileOperationManager extends Serializable
   FileIOError deleteDirRecursive (@Nonnull File aDir);
 
   /**
+   * Delete an existing directory including all child objects if it is existing.
+   * 
+   * @param aDir
+   *        The directory to be deleted. May not be <code>null</code>.
+   * @return A non-<code>null</code> error code.
+   */
+  @Nonnull
+  FileIOError deleteDirRecursiveIfExisting (@Nonnull File aDir);
+
+  /**
    * Delete an existing file.
    * 
    * @param aFile
@@ -120,6 +141,16 @@ public interface IFileOperationManager extends Serializable
    */
   @Nonnull
   FileIOError deleteFile (@Nonnull File aFile);
+
+  /**
+   * Delete a file if it is existing.
+   * 
+   * @param aFile
+   *        The file to be deleted. May not be <code>null</code>.
+   * @return A non-<code>null</code> error code.
+   */
+  @Nonnull
+  FileIOError deleteFileIfExisting (@Nonnull File aFile);
 
   /**
    * Rename a directory.
