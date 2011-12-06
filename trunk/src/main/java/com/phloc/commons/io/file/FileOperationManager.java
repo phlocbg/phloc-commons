@@ -116,6 +116,14 @@ public class FileOperationManager implements IFileOperationManager
   }
 
   @Nonnull
+  public FileIOError deleteDirIfExisting (@Nonnull final File aDir)
+  {
+    m_aLastError = FileOperations.deleteDirIfExisting (aDir);
+    _handleLastError (m_aLastError);
+    return m_aLastError;
+  }
+
+  @Nonnull
   public FileIOError deleteDirRecursive (@Nonnull final File aDir)
   {
     m_aLastError = FileOperations.deleteDirRecursive (aDir);
@@ -124,9 +132,25 @@ public class FileOperationManager implements IFileOperationManager
   }
 
   @Nonnull
+  public FileIOError deleteDirRecursiveIfExisting (@Nonnull final File aDir)
+  {
+    m_aLastError = FileOperations.deleteDirRecursiveIfExisting (aDir);
+    _handleLastError (m_aLastError);
+    return m_aLastError;
+  }
+
+  @Nonnull
   public FileIOError deleteFile (@Nonnull final File aFile)
   {
     m_aLastError = FileOperations.deleteFile (aFile);
+    _handleLastError (m_aLastError);
+    return m_aLastError;
+  }
+
+  @Nonnull
+  public FileIOError deleteFileIfExisting (@Nonnull final File aFile)
+  {
+    m_aLastError = FileOperations.deleteFileIfExisting (aFile);
     _handleLastError (m_aLastError);
     return m_aLastError;
   }

@@ -165,6 +165,23 @@ public final class FileOperations
   }
 
   /**
+   * Delete an existing directory if it is existing. The directory needs to be
+   * empty before it can be deleted.
+   * 
+   * @param aDir
+   *        The directory to be deleted. May not be <code>null</code>.
+   * @return A non-<code>null</code> error code.
+   */
+  @Nonnull
+  public static FileIOError deleteDirIfExisting (@Nonnull final File aDir)
+  {
+    final FileIOError aError = deleteDir (aDir);
+    if (aError.getErrorCode ().equals (EFileIOErrorCode.SOURCE_DOES_NOT_EXIST))
+      return EFileIOErrorCode.NO_ERROR.getAsIOError (EFileIOOperation.DELETE_DIR, aDir);
+    return aError;
+  }
+
+  /**
    * Delete an existing directory including all child objects.
    * 
    * @param aDir
@@ -221,6 +238,22 @@ public final class FileOperations
   }
 
   /**
+   * Delete an existing directory including all child objects if it is existing.
+   * 
+   * @param aDir
+   *        The directory to be deleted. May not be <code>null</code>.
+   * @return A non-<code>null</code> error code.
+   */
+  @Nonnull
+  public static FileIOError deleteDirRecursiveIfExisting (@Nonnull final File aDir)
+  {
+    final FileIOError aError = deleteDirRecursive (aDir);
+    if (aError.getErrorCode ().equals (EFileIOErrorCode.SOURCE_DOES_NOT_EXIST))
+      return EFileIOErrorCode.NO_ERROR.getAsIOError (EFileIOOperation.DELETE_DIR_RECURSIVE, aDir);
+    return aError;
+  }
+
+  /**
    * Delete an existing file.
    * 
    * @param aFile
@@ -247,6 +280,22 @@ public final class FileOperations
     {
       return EFileIOErrorCode.getAsIOError (EFileIOOperation.DELETE_FILE, ex);
     }
+  }
+
+  /**
+   * Delete a file if it is existing.
+   * 
+   * @param aFile
+   *        The file to be deleted. May not be <code>null</code>.
+   * @return A non-<code>null</code> error code.
+   */
+  @Nonnull
+  public static FileIOError deleteFileIfExisting (@Nonnull final File aFile)
+  {
+    final FileIOError aError = deleteFile (aFile);
+    if (aError.getErrorCode ().equals (EFileIOErrorCode.SOURCE_DOES_NOT_EXIST))
+      return EFileIOErrorCode.NO_ERROR.getAsIOError (EFileIOOperation.DELETE_FILE, aFile);
+    return aError;
   }
 
   /**

@@ -290,6 +290,29 @@ public final class FileOperationManagerTest
   }
 
   @Test
+  public void testDeleteFileIfExisting ()
+  {
+    final IFileOperationManager aFOM = new FileOperationManager ();
+    final File aFile = new File ("delfile.test");
+    try
+    {
+      assertFalse (FileUtils.existsFile (aFile));
+      _expectedSuccess (aFOM.deleteFileIfExisting (aFile));
+      assertEquals (EFileIOOperation.DELETE_FILE, aFOM.getLastOperation ());
+
+      SimpleFileIO.writeFile (aFile, "xxx".getBytes ());
+      _expectedSuccess (aFOM.deleteFileIfExisting (aFile));
+      assertEquals (EFileIOOperation.DELETE_FILE, aFOM.getLastOperation ());
+      assertFalse (FileUtils.existsFile (aFile));
+    }
+    finally
+    {
+      aFOM.deleteFile (aFile);
+      assertEquals (EFileIOOperation.DELETE_FILE, aFOM.getLastOperation ());
+    }
+  }
+
+  @Test
   public void testDeleteDir ()
   {
     final IFileOperationManager aFOM = new FileOperationManager ();
@@ -304,6 +327,30 @@ public final class FileOperationManagerTest
       _expectedError (aFOM.deleteFile (aDir), EFileIOErrorCode.SOURCE_DOES_NOT_EXIST);
       assertEquals (EFileIOOperation.DELETE_FILE, aFOM.getLastOperation ());
       _expectedSuccess (aFOM.deleteDir (aDir));
+      assertEquals (EFileIOOperation.DELETE_DIR, aFOM.getLastOperation ());
+    }
+    finally
+    {
+      aFOM.deleteDir (aDir);
+      assertEquals (EFileIOOperation.DELETE_DIR, aFOM.getLastOperation ());
+    }
+  }
+
+  @Test
+  public void testDeleteDirIfExisting ()
+  {
+    final IFileOperationManager aFOM = new FileOperationManager ();
+    final File aDir = new File ("deldir.test");
+    try
+    {
+      assertFalse (FileUtils.existsDir (aDir));
+      _expectedSuccess (aFOM.deleteDirIfExisting (aDir));
+      assertEquals (EFileIOOperation.DELETE_DIR, aFOM.getLastOperation ());
+      _expectedSuccess (aFOM.createDir (aDir));
+      assertEquals (EFileIOOperation.CREATE_DIR, aFOM.getLastOperation ());
+      _expectedSuccess (aFOM.deleteFileIfExisting (aDir));
+      assertEquals (EFileIOOperation.DELETE_FILE, aFOM.getLastOperation ());
+      _expectedSuccess (aFOM.deleteDirIfExisting (aDir));
       assertEquals (EFileIOOperation.DELETE_DIR, aFOM.getLastOperation ());
     }
     finally
