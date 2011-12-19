@@ -37,14 +37,14 @@ public final class MicroDocumentType extends AbstractMicroNode implements IMicro
   private final String m_sPublicID;
   private final String m_sSystemID;
 
-  MicroDocumentType (@Nonnull final IMicroDocumentType rhs)
+  public MicroDocumentType (@Nonnull final IMicroDocumentType rhs)
   {
     this (rhs.getQualifiedName (), rhs.getPublicID (), rhs.getSystemID ());
   }
 
-  MicroDocumentType (@Nonnull final String sQualifiedName,
-                     @Nullable final String sPublicID,
-                     @Nullable final String sSystemID)
+  public MicroDocumentType (@Nonnull final String sQualifiedName,
+                            @Nullable final String sPublicID,
+                            @Nullable final String sSystemID)
   {
     if (StringHelper.hasNoText (sQualifiedName))
       throw new IllegalArgumentException ("qualified name may not be empty");

@@ -40,7 +40,12 @@ public final class MicroProcessingInstruction extends AbstractMicroNode implemen
   private final String m_sTarget;
   private final String m_sData;
 
-  MicroProcessingInstruction (@Nonnull @Nonempty final String sTarget, @Nullable final String sData)
+  public MicroProcessingInstruction (@Nonnull @Nonempty final String sTarget)
+  {
+    this (sTarget, null);
+  }
+
+  public MicroProcessingInstruction (@Nonnull @Nonempty final String sTarget, @Nullable final String sData)
   {
     if (StringHelper.hasNoText (sTarget))
       throw new IllegalArgumentException ("The passed target is valid");

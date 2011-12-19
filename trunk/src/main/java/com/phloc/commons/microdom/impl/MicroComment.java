@@ -33,7 +33,7 @@ public final class MicroComment extends AbstractMicroNode implements IMicroComme
 {
   private final MicroDataAware m_aData;
 
-  MicroComment (@Nullable final CharSequence sText)
+  public MicroComment (@Nullable final CharSequence sText)
   {
     m_aData = new MicroDataAware (sText);
   }

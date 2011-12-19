@@ -36,7 +36,7 @@ public final class MicroEntityReference extends AbstractMicroNode implements IMi
 {
   private final String m_sName;
 
-  MicroEntityReference (@Nonnull @Nonempty final String sName)
+  public MicroEntityReference (@Nonnull @Nonempty final String sName)
   {
     if (StringHelper.hasNoText (sName))
       throw new IllegalArgumentException ("The passed entity reference name is invalid");

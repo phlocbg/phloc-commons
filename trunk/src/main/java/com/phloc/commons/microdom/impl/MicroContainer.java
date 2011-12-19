@@ -30,10 +30,10 @@ import com.phloc.commons.microdom.IMicroNode;
  */
 public final class MicroContainer extends AbstractMicroNodeWithChildren implements IMicroContainer
 {
-  MicroContainer ()
+  public MicroContainer ()
   {}
 
-  MicroContainer (@Nullable final IMicroNode... aChildNodes)
+  public MicroContainer (@Nullable final IMicroNode... aChildNodes)
   {
     if (aChildNodes != null)
       for (final IMicroNode aChildNode : aChildNodes)

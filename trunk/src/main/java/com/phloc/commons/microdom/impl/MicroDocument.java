@@ -36,10 +36,10 @@ import com.phloc.commons.xml.CXML;
  */
 public final class MicroDocument extends AbstractMicroNodeWithChildren implements IMicroDocument
 {
-  MicroDocument ()
+  public MicroDocument ()
   {}
 
-  MicroDocument (@Nullable final IMicroDocumentType aDocType)
+  public MicroDocument (@Nullable final IMicroDocumentType aDocType)
   {
     if (aDocType != null)
       appendChild (aDocType);

@@ -52,7 +52,12 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
   private final String m_sTagName;
   private Map <String, String> m_aAttrs;
 
-  MicroElement (@Nullable final String sNamespaceURI, @Nonnull @Nonempty final String sTagName)
+  public MicroElement (@Nonnull @Nonempty final String sTagName)
+  {
+    this (null, sTagName);
+  }
+
+  public MicroElement (@Nullable final String sNamespaceURI, @Nonnull @Nonempty final String sTagName)
   {
     if (StringHelper.hasNoText (sTagName))
       throw new IllegalArgumentException ("No valid tag name specified");
