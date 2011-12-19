@@ -77,7 +77,7 @@ public final class MicroFactory
   @Nonnull
   public static IMicroDocument newDocument ()
   {
-    return newDocument (null);
+    return new MicroDocument ();
   }
 
   @Nonnull
@@ -110,7 +110,7 @@ public final class MicroFactory
   @Nonnull
   public static IMicroText newText (@Nullable final CharSequence sText)
   {
-    return new MicroText (sText, false);
+    return new MicroText (sText);
   }
 
   @Nonnull
@@ -128,7 +128,7 @@ public final class MicroFactory
   @Nonnull
   public static IMicroElement newElement (@Nonnull final String sTagName)
   {
-    return newElement (null, sTagName);
+    return new MicroElement (sTagName);
   }
 
   @Nonnull
@@ -152,7 +152,7 @@ public final class MicroFactory
   @Nonnull
   public static IMicroProcessingInstruction newProcessingInstruction (@Nonnull @Nonempty final String sTarget)
   {
-    return newProcessingInstruction (sTarget, null);
+    return new MicroProcessingInstruction (sTarget);
   }
 
   @Nonnull

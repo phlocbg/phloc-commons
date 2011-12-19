@@ -31,10 +31,17 @@ import com.phloc.commons.string.ToStringGenerator;
  */
 public final class MicroText extends AbstractMicroNode implements IMicroText
 {
+  public static final boolean DEFAULT_IGNORABLE_WHITESPACE = false;
+
   private final MicroDataAware m_aData;
   private final boolean m_bIgnorableWhitespace;
 
-  MicroText (@Nullable final CharSequence sText, final boolean bIgnorableWhitespace)
+  public MicroText (@Nullable final CharSequence sText)
+  {
+    this (sText, DEFAULT_IGNORABLE_WHITESPACE);
+  }
+
+  public MicroText (@Nullable final CharSequence sText, final boolean bIgnorableWhitespace)
   {
     m_aData = new MicroDataAware (sText);
     m_bIgnorableWhitespace = bIgnorableWhitespace;

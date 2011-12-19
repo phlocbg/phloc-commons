@@ -33,7 +33,7 @@ public final class MicroCDATA extends AbstractMicroNode implements IMicroCDATA
 {
   private final MicroDataAware m_aData;
 
-  MicroCDATA (@Nullable final CharSequence sText)
+  public MicroCDATA (@Nullable final CharSequence sText)
   {
     m_aData = new MicroDataAware (sText);
   }
