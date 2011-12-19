@@ -22,7 +22,7 @@ import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.convert.IMicroTypeConverter;
-import com.phloc.commons.microdom.impl.MicroFactory;
+import com.phloc.commons.microdom.impl.MicroElement;
 
 /**
  * Default {@link IMicroTypeConverter} implementation for {@link String}
@@ -47,7 +47,7 @@ public final class StringMicroTypeConverter implements IMicroTypeConverter
   @Nonnull
   public IMicroElement convertToMicroElement (final Object aObject, final String sNamespaceURI, final String sTagName)
   {
-    final IMicroElement e = MicroFactory.newElement (sNamespaceURI, sTagName);
+    final IMicroElement e = new MicroElement (sNamespaceURI, sTagName);
     e.appendText ((String) aObject);
     return e;
   }

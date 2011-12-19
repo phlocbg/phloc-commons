@@ -23,7 +23,7 @@ import static org.junit.Assert.fail;
 import org.junit.Test;
 
 import com.phloc.commons.id.IHasID;
-import com.phloc.commons.microdom.impl.MicroFactory;
+import com.phloc.commons.microdom.impl.MicroElement;
 import com.phloc.commons.typeconvert.TypeConverterException;
 
 /**
@@ -58,7 +58,7 @@ public final class MicroTypeConverterTest
     try
     {
       // null class not allowed
-      MicroTypeConverter.convertToNative (MicroFactory.newElement ("any"), null);
+      MicroTypeConverter.convertToNative (new MicroElement ("any"), null);
       fail ();
     }
     catch (final NullPointerException ex)
@@ -67,7 +67,7 @@ public final class MicroTypeConverterTest
     try
     {
       // No converter present
-      MicroTypeConverter.convertToNative (MicroFactory.newElement ("any"), IHasID.class);
+      MicroTypeConverter.convertToNative (new MicroElement ("any"), IHasID.class);
       fail ();
     }
     catch (final TypeConverterException ex)

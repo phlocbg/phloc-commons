@@ -23,7 +23,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroElement;
-import com.phloc.commons.microdom.impl.MicroFactory;
+import com.phloc.commons.microdom.impl.MicroDocument;
 import com.phloc.commons.stats.IStatisticsHandlerCache;
 import com.phloc.commons.stats.IStatisticsHandlerCounter;
 import com.phloc.commons.stats.IStatisticsHandlerKeyedCounter;
@@ -65,7 +65,7 @@ public final class StatisticsExporter
 
   public static IMicroDocument getAsXMLDocument ()
   {
-    final IMicroDocument aDoc = MicroFactory.newDocument ();
+    final IMicroDocument aDoc = new MicroDocument ();
     final IMicroElement eRoot = aDoc.appendElement (ELEMENT_STATISTICS);
     StatisticsWalker.walkStatistics (new IStatisticsVisitor ()
     {

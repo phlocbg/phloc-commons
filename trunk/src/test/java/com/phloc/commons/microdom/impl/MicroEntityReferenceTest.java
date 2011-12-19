@@ -41,7 +41,7 @@ public final class MicroEntityReferenceTest
   @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testCreation ()
   {
-    IMicroEntityReference e = MicroFactory.newEntityReference ("xyz");
+    IMicroEntityReference e = new MicroEntityReference ("xyz");
     assertNotNull (e);
     assertEquals ("xyz", e.getName ());
     assertFalse (e.hasParent ());
@@ -58,24 +58,24 @@ public final class MicroEntityReferenceTest
 
     assertTrue (e.isEqualContent (e));
     assertFalse (e.isEqualContent (null));
-    assertFalse (e.isEqualContent (MicroFactory.newDocument ()));
+    assertFalse (e.isEqualContent (new MicroDocument ()));
 
-    e = MicroFactory.newEntityReference ("xyz");
+    e = new MicroEntityReference ("xyz");
     assertTrue (e.isEqualContent (e.getClone ()));
 
-    assertTrue (MicroFactory.newEntityReference ("xyz").isEqualContent (MicroFactory.newEntityReference ("xyz")));
-    assertFalse (MicroFactory.newEntityReference ("xyz").isEqualContent (MicroFactory.newEntityReference ("xy")));
+    assertTrue (new MicroEntityReference ("xyz").isEqualContent (new MicroEntityReference ("xyz")));
+    assertFalse (new MicroEntityReference ("xyz").isEqualContent (new MicroEntityReference ("xy")));
 
     try
     {
-      MicroFactory.newEntityReference (null);
+      new MicroEntityReference (null);
       fail ();
     }
     catch (final IllegalArgumentException ex)
     {}
     try
     {
-      MicroFactory.newEntityReference ("");
+      new MicroEntityReference ("");
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -85,12 +85,12 @@ public final class MicroEntityReferenceTest
   @Test
   public void testAddChildren ()
   {
-    final IMicroEntityReference e = MicroFactory.newEntityReference ("xyz");
+    final IMicroEntityReference e = new MicroEntityReference ("xyz");
 
     try
     {
       // Cannot add any child to a comment
-      e.appendChild (MicroFactory.newEntityReference ("other"));
+      e.appendChild (new MicroEntityReference ("other"));
       fail ();
     }
     catch (final MicroException ex)
@@ -99,7 +99,7 @@ public final class MicroEntityReferenceTest
     try
     {
       // Cannot add any child to a comment
-      e.insertAfter (MicroFactory.newEntityReference ("other"), MicroFactory.newEntityReference ("comment"));
+      e.insertAfter (new MicroEntityReference ("other"), new MicroEntityReference ("comment"));
       fail ();
     }
     catch (final MicroException ex)
@@ -108,7 +108,7 @@ public final class MicroEntityReferenceTest
     try
     {
       // Cannot add any child to a comment
-      e.insertBefore (MicroFactory.newEntityReference ("other"), MicroFactory.newEntityReference ("comment"));
+      e.insertBefore (new MicroEntityReference ("other"), new MicroEntityReference ("comment"));
       fail ();
     }
     catch (final MicroException ex)
@@ -117,7 +117,7 @@ public final class MicroEntityReferenceTest
     try
     {
       // Cannot add any child to this node
-      e.insertAtIndex (0, MicroFactory.newCDATA ("other"));
+      e.insertAtIndex (0, new MicroCDATA ("other"));
       fail ();
     }
     catch (final MicroException ex)

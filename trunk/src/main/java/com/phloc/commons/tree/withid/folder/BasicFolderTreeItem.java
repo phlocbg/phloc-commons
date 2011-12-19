@@ -31,7 +31,7 @@ import com.phloc.commons.tree.withid.BasicTreeItemWithID;
 
 /**
  * Base implementation of the {@link IFolderTreeItem} interface.
- *
+ * 
  * @author philip
  * @param <KEYTYPE>
  *        Key type
@@ -52,7 +52,7 @@ public class BasicFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collectio
 
   /**
    * Constructor for root object
-   *
+   * 
    * @param aFactory
    *        The item factory to use.
    */
@@ -64,7 +64,7 @@ public class BasicFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collectio
 
   /**
    * Constructor for root object
-   *
+   * 
    * @param aFactory
    *        The item factory to use.
    * @param aDataID
@@ -79,7 +79,7 @@ public class BasicFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collectio
 
   /**
    * Constructor for normal elements
-   *
+   * 
    * @param aParent
    *        Parent item. May never be <code>null</code> since only the root has
    *        no parent.

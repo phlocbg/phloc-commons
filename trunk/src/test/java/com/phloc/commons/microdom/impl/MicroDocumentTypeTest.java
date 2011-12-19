@@ -40,7 +40,7 @@ public final class MicroDocumentTypeTest
   @Test
   public void testAll ()
   {
-    final IMicroDocumentType e = MicroFactory.newDocumentType ("qname", "pid", "sid");
+    final IMicroDocumentType e = new MicroDocumentType ("qname", "pid", "sid");
     assertNotNull (e);
     assertEquals ("qname", e.getQualifiedName ());
     assertEquals ("pid", e.getPublicID ());
@@ -58,26 +58,26 @@ public final class MicroDocumentTypeTest
     assertFalse (e.isEqualContent (null));
     assertTrue (e.isEqualContent (e));
     assertTrue (e.isEqualContent (e.getClone ()));
-    assertTrue (MicroFactory.newDocumentType ("qname", "pid", "sid")
-                            .isEqualContent (MicroFactory.newDocumentType ("qname", "pid", "sid")));
-    assertTrue (MicroFactory.newDocumentType ("qname", null, null)
-                            .isEqualContent (MicroFactory.newDocumentType ("qname", null, null)));
-    assertFalse (MicroFactory.newDocumentType ("qname", "pid", "sid")
-                             .isEqualContent (MicroFactory.newDocumentType ("qname", "pid", "sid2")));
-    assertFalse (MicroFactory.newDocumentType ("qname", "pid", "sid")
-                             .isEqualContent (MicroFactory.newDocumentType ("qname", "pid", null)));
-    assertFalse (MicroFactory.newDocumentType ("qname", "pid", "sid")
-                             .isEqualContent (MicroFactory.newDocumentType ("qname", "pid2", "sid")));
-    assertFalse (MicroFactory.newDocumentType ("qname", "pid", "sid")
-                             .isEqualContent (MicroFactory.newDocumentType ("qname", null, "sid")));
-    assertFalse (MicroFactory.newDocumentType ("qname", "pid", "sid")
-                             .isEqualContent (MicroFactory.newDocumentType ("qname", null, null)));
-    assertFalse (MicroFactory.newDocumentType ("qname", "pid", "sid")
-                             .isEqualContent (MicroFactory.newDocumentType ("qname2", "pid", "sid")));
+    assertTrue (new MicroDocumentType ("qname", "pid", "sid")
+                            .isEqualContent (new MicroDocumentType ("qname", "pid", "sid")));
+    assertTrue (new MicroDocumentType ("qname", null, null)
+                            .isEqualContent (new MicroDocumentType ("qname", null, null)));
+    assertFalse (new MicroDocumentType ("qname", "pid", "sid")
+                             .isEqualContent (new MicroDocumentType ("qname", "pid", "sid2")));
+    assertFalse (new MicroDocumentType ("qname", "pid", "sid")
+                             .isEqualContent (new MicroDocumentType ("qname", "pid", null)));
+    assertFalse (new MicroDocumentType ("qname", "pid", "sid")
+                             .isEqualContent (new MicroDocumentType ("qname", "pid2", "sid")));
+    assertFalse (new MicroDocumentType ("qname", "pid", "sid")
+                             .isEqualContent (new MicroDocumentType ("qname", null, "sid")));
+    assertFalse (new MicroDocumentType ("qname", "pid", "sid")
+                             .isEqualContent (new MicroDocumentType ("qname", null, null)));
+    assertFalse (new MicroDocumentType ("qname", "pid", "sid")
+                             .isEqualContent (new MicroDocumentType ("qname2", "pid", "sid")));
 
     try
     {
-      MicroFactory.newDocumentType ("", "pid", "sid");
+      new MicroDocumentType ("", "pid", "sid");
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -86,7 +86,7 @@ public final class MicroDocumentTypeTest
     try
     {
       // Cannot add any child to this node
-      e.insertAtIndex (0, MicroFactory.newCDATA ("other"));
+      e.insertAtIndex (0, new MicroCDATA ("other"));
       fail ();
     }
     catch (final MicroException ex)

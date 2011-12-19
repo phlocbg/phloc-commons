@@ -26,6 +26,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.phloc.commons.microdom.IMicroContainer;
+import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
@@ -38,9 +39,9 @@ public final class MicroContainerTest
   @Test
   public void testCreation ()
   {
-    assertNotNull (MicroFactory.newContainer ());
+    assertNotNull (new MicroContainer ());
 
-    IMicroContainer e = MicroFactory.newContainer ();
+    IMicroContainer e = new MicroContainer ();
     assertNotNull (e);
     assertFalse (e.hasParent ());
     assertFalse (e.hasChildren ());
@@ -60,14 +61,15 @@ public final class MicroContainerTest
 
     assertTrue (e.isEqualContent (e));
     assertFalse (e.isEqualContent (null));
-    assertFalse (e.isEqualContent (MicroFactory.newDocument ()));
+    assertFalse (e.isEqualContent (new MicroDocument ()));
 
-    assertTrue (MicroFactory.newContainer ().isEqualContent (MicroFactory.newContainer ()));
-    e = MicroFactory.newContainer ();
+    assertTrue (new MicroContainer ().isEqualContent (new MicroContainer ()));
+    e = new MicroContainer ();
     e.appendText ("text");
-    assertFalse (MicroFactory.newContainer ().isEqualContent (e));
+    assertFalse (new MicroContainer ().isEqualContent (e));
+    IMicroNode [] aChildNodes = { new MicroText ("any") };
 
-    e = MicroFactory.newContainer (MicroFactory.newText ("any"));
+    e = new MicroContainer (aChildNodes);
     assertNotNull (e);
     assertTrue (e.hasChildren ());
     assertEquals (1, e.getChildCount ());
@@ -75,8 +77,8 @@ public final class MicroContainerTest
     assertTrue (e.getLastChild ().isText ());
 
     // Insert at index
-    e.insertAtIndex (0, MicroFactory.newCDATA ("other"));
-    e.insertAtIndex (500000, MicroFactory.newElement ("e"));
+    e.insertAtIndex (0, new MicroCDATA ("other"));
+    e.insertAtIndex (500000, new MicroElement ("e"));
 
     assertEquals (3, e.getChildCount ());
     assertTrue (e.getFirstChild ().isCDATA ());

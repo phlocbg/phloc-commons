@@ -40,7 +40,8 @@ import com.phloc.commons.microdom.IMicroDocumentType;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.microdom.IMicroText;
-import com.phloc.commons.microdom.impl.MicroFactory;
+import com.phloc.commons.microdom.impl.MicroDocument;
+import com.phloc.commons.microdom.impl.MicroDocumentType;
 import com.phloc.commons.string.StringHelper;
 
 /**
@@ -70,7 +71,7 @@ final class MicroSAXHandler implements EntityResolver, DTDHandler, ContentHandle
   {
     if (m_aParent == null)
     {
-      m_aDoc = MicroFactory.newDocument (m_aDocType);
+      m_aDoc = new MicroDocument (m_aDocType);
       m_aParent = m_aDoc;
     }
   }
@@ -88,7 +89,7 @@ final class MicroSAXHandler implements EntityResolver, DTDHandler, ContentHandle
   public void startDTD (final String sName, final String sPublicId, final String sSystemId) throws SAXException
   {
     if (m_aDocType == null)
-      m_aDocType = MicroFactory.newDocumentType (sName, sPublicId, sSystemId);
+      m_aDocType = new MicroDocumentType (sName, sPublicId, sSystemId);
     else
       s_aLogger.warn ("DocType already present!");
     m_bDTDMode = true;

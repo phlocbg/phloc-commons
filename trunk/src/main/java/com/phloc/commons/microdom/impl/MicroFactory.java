@@ -40,6 +40,7 @@ import com.phloc.commons.microdom.IMicroText;
  * @author philip
  */
 @Immutable
+@Deprecated
 public final class MicroFactory
 {
   @PresentForCodeCoverage
@@ -85,7 +86,7 @@ public final class MicroFactory
                                             @Nullable final String sPublicID,
                                             @Nullable final String sSystemID)
   {
-    return newDocument (newDocumentType (sQualifiedName, sPublicID, sSystemID));
+    return new MicroDocument (new MicroDocumentType (sQualifiedName, sPublicID, sSystemID));
   }
 
   @Nonnull

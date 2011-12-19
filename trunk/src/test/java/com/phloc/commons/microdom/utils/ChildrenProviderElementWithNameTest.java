@@ -26,7 +26,7 @@ import org.junit.Test;
 
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroElement;
-import com.phloc.commons.microdom.impl.MicroFactory;
+import com.phloc.commons.microdom.impl.MicroDocument;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 
 /**
@@ -38,7 +38,7 @@ public final class ChildrenProviderElementWithNameTest extends AbstractPhlocTest
 {
   private static IMicroDocument _buildTestDoc ()
   {
-    final IMicroDocument aDoc = MicroFactory.newDocument ();
+    final IMicroDocument aDoc = new MicroDocument ();
     final IMicroElement eRoot = aDoc.appendElement ("root");
     eRoot.appendElement ("any");
     eRoot.appendText ("Text");

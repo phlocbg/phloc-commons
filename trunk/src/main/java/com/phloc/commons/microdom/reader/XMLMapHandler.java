@@ -38,7 +38,7 @@ import com.phloc.commons.io.IOutputStreamProvider;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroElement;
-import com.phloc.commons.microdom.impl.MicroFactory;
+import com.phloc.commons.microdom.impl.MicroDocument;
 import com.phloc.commons.microdom.serialize.MicroReader;
 import com.phloc.commons.microdom.serialize.MicroWriter;
 import com.phloc.commons.microdom.serialize.MicroWriterSettings;
@@ -205,7 +205,7 @@ public final class XMLMapHandler
 
     try
     {
-      final IMicroDocument aDoc = MicroFactory.newDocument ();
+      final IMicroDocument aDoc = new MicroDocument ();
       final IMicroElement eRoot = aDoc.appendElement (ELEMENT_MAPPING);
       for (final Map.Entry <String, String> aEntry : aMap.entrySet ())
       {

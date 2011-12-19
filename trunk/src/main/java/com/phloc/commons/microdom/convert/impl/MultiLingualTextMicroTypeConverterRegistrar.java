@@ -32,7 +32,7 @@ import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.convert.IMicroTypeConverter;
 import com.phloc.commons.microdom.convert.IMicroTypeConverterRegistrarSPI;
 import com.phloc.commons.microdom.convert.IMicroTypeConverterRegistry;
-import com.phloc.commons.microdom.impl.MicroFactory;
+import com.phloc.commons.microdom.impl.MicroElement;
 import com.phloc.commons.text.ISimpleMultiLingualText;
 import com.phloc.commons.text.impl.MultiLingualText;
 import com.phloc.commons.text.impl.ReadonlyMultiLingualText;
@@ -52,7 +52,7 @@ public final class MultiLingualTextMicroTypeConverterRegistrar implements IMicro
                                                       @Nonnull @Nonempty final String sTagName)
     {
       final ISimpleMultiLingualText aMLT = (ISimpleMultiLingualText) aSource;
-      final IMicroElement eMText = MicroFactory.newElement (sNamespaceURI, sTagName);
+      final IMicroElement eMText = new MicroElement (sNamespaceURI, sTagName);
       for (final Locale aLocale : ContainerHelper.getSorted (aMLT.getAllLocales (), new ComparatorLocale ()))
       {
         final IMicroElement eText = eMText.appendElement (sNamespaceURI, ELEMENT_TEXT);

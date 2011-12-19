@@ -30,7 +30,7 @@ import com.phloc.commons.string.StringHelper;
 /**
  * A special implementation of {@link IConverterTreeXML} that uses the
  * conversion rules stored in the {@link MicroTypeConverterRegistry}.
- *
+ * 
  * @author philip
  * @param <DATATYPE>
  *        The data type to be converted
@@ -43,7 +43,7 @@ public final class MicroTypeConverterTreeXML <DATATYPE> implements IConverterTre
 
   /**
    * Constructor
-   *
+   * 
    * @param sElementName
    *        The element name to use. May neither be <code>null</code> nor empty
    * @param aNativeClass
@@ -58,7 +58,7 @@ public final class MicroTypeConverterTreeXML <DATATYPE> implements IConverterTre
 
   /**
    * Constructor
-   *
+   * 
    * @param sNamespaceURI
    *        The namespace URI for the created element. May be <code>null</code>.
    * @param sElementName

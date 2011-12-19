@@ -31,7 +31,7 @@ import com.phloc.commons.id.ComparatorHasIDString;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.IMicroNode;
-import com.phloc.commons.microdom.impl.MicroFactory;
+import com.phloc.commons.microdom.impl.MicroElement;
 import com.phloc.commons.microdom.utils.ChildrenProviderElementWithName;
 import com.phloc.commons.microdom.utils.MicroWalker;
 import com.phloc.commons.parent.impl.ChildrenProviderHasChildrenSorting;
@@ -93,7 +93,7 @@ public final class TreeXMLConverter
                                                                                                                                         @Nonnull final IUnidirectionalConverter <KEYTYPE, String> aIDConverter,
                                                                                                                                         @Nonnull final IConverterTreeItemToMicroNode <? super VALUETYPE> aDataConverter)
   {
-    final IMicroElement eRoot = MicroFactory.newElement (ELEMENT_ROOT);
+    final IMicroElement eRoot = new MicroElement (ELEMENT_ROOT);
     final NonBlockingStack <IMicroElement> aParents = new NonBlockingStack <IMicroElement> ();
     aParents.push (eRoot);
     TreeWalker.walkTree (aTree,
@@ -128,7 +128,7 @@ public final class TreeXMLConverter
                                                                                                           @Nonnull final Comparator <? super ITEMTYPE> aItemComparator,
                                                                                                           @Nonnull final IConverterTreeItemToMicroNode <? super VALUETYPE> aDataConverter)
   {
-    final IMicroElement eRoot = MicroFactory.newElement (ELEMENT_ROOT);
+    final IMicroElement eRoot = new MicroElement (ELEMENT_ROOT);
     final NonBlockingStack <IMicroElement> aParents = new NonBlockingStack <IMicroElement> ();
     aParents.push (eRoot);
     TreeWalker.walkTree (aTree,

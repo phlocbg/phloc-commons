@@ -31,7 +31,12 @@ import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.IMicroNode;
-import com.phloc.commons.microdom.impl.MicroFactory;
+import com.phloc.commons.microdom.impl.MicroCDATA;
+import com.phloc.commons.microdom.impl.MicroComment;
+import com.phloc.commons.microdom.impl.MicroContainer;
+import com.phloc.commons.microdom.impl.MicroDocument;
+import com.phloc.commons.microdom.impl.MicroElement;
+import com.phloc.commons.microdom.impl.MicroEntityReference;
 import com.phloc.commons.xml.EXMLVersion;
 import com.phloc.commons.xml.namespace.MapBasedNamespaceContext;
 import com.phloc.commons.xml.serialize.EXMLSerializeDocType;
@@ -82,11 +87,11 @@ public final class MicroWriterTest
     final IMicroDocument aDoc = MicroReader.readMicroXML (TEST_XML);
     _testGetNodeAsXHTMLString (aDoc);
     _testGetNodeAsXHTMLString (aDoc.getDocumentElement ());
-    _testGetNodeAsXHTMLString (MicroFactory.newDocument ());
-    _testGetNodeAsXHTMLString (MicroFactory.newElement ("xyz"));
-    _testGetNodeAsXHTMLString (MicroFactory.newContainer ());
-    _testGetNodeAsXHTMLString (MicroFactory.newComment ("useless"));
-    _testGetNodeAsXHTMLString (MicroFactory.newEntityReference ("xyz"));
+    _testGetNodeAsXHTMLString (new MicroDocument ());
+    _testGetNodeAsXHTMLString (new MicroElement ("xyz"));
+    _testGetNodeAsXHTMLString (new MicroContainer ());
+    _testGetNodeAsXHTMLString (new MicroComment ("useless"));
+    _testGetNodeAsXHTMLString (new MicroEntityReference ("xyz"));
     try
     {
       _testGetNodeAsXHTMLString (null);
@@ -121,11 +126,11 @@ public final class MicroWriterTest
     final IMicroDocument aDoc = MicroReader.readMicroXML (TEST_XML);
     _testGetNodeAsXMLString (aDoc);
     _testGetNodeAsXMLString (aDoc.getDocumentElement ());
-    _testGetNodeAsXMLString (MicroFactory.newElement ("xyz"));
-    _testGetNodeAsXMLString (MicroFactory.newContainer ());
-    _testGetNodeAsXMLString (MicroFactory.newComment ("useless"));
-    _testGetNodeAsXMLString (MicroFactory.newEntityReference ("xyz"));
-    _testGetNodeAsXMLString (MicroFactory.newCDATA ("xyz"));
+    _testGetNodeAsXMLString (new MicroElement ("xyz"));
+    _testGetNodeAsXMLString (new MicroContainer ());
+    _testGetNodeAsXMLString (new MicroComment ("useless"));
+    _testGetNodeAsXMLString (new MicroEntityReference ("xyz"));
+    _testGetNodeAsXMLString (new MicroCDATA ("xyz"));
     try
     {
       _testGetNodeAsXMLString (null);
@@ -165,14 +170,14 @@ public final class MicroWriterTest
     {}
     try
     {
-      MicroWriter.saveToStream (MicroFactory.newDocument (), null, MicroWriterSettings.DEFAULT_XML_SETTINGS);
+      MicroWriter.saveToStream (new MicroDocument (), null, MicroWriterSettings.DEFAULT_XML_SETTINGS);
       fail ();
     }
     catch (final NullPointerException ex)
     {}
     try
     {
-      MicroWriter.saveToStream (MicroFactory.newDocument (), new NonBlockingByteArrayOutputStream (), null);
+      MicroWriter.saveToStream (new MicroDocument (), new NonBlockingByteArrayOutputStream (), null);
       fail ();
     }
     catch (final NullPointerException ex)
@@ -199,18 +204,18 @@ public final class MicroWriterTest
     final MicroWriterSettings aSettings = new MicroWriterSettings ().setIndent (EXMLSerializeIndent.NONE);
 
     // Containing the forbidden CDATA end marker
-    IMicroElement e = MicroFactory.newElement ("a");
+    IMicroElement e = new MicroElement ("a");
     e.appendCDATA ("a]]>b");
     assertEquals ("<a><![CDATA[a]]>]]&gt;<![CDATA[b]]></a>", MicroWriter.getNodeAsString (e, aSettings));
 
     // Containing more than one forbidden CDATA end marker
-    e = MicroFactory.newElement ("a");
+    e = new MicroElement ("a");
     e.appendCDATA ("a]]>b]]>c");
     assertEquals ("<a><![CDATA[a]]>]]&gt;<![CDATA[b]]>]]&gt;<![CDATA[c]]></a>",
                   MicroWriter.getNodeAsString (e, aSettings));
 
     // Containing a complete CDATA section
-    e = MicroFactory.newElement ("a");
+    e = new MicroElement ("a");
     e.appendCDATA ("a<![CDATA[x]]>b");
     assertEquals ("<a><![CDATA[a<![CDATA[x]]>]]&gt;<![CDATA[b]]></a>", MicroWriter.getNodeAsString (e, aSettings));
   }
@@ -220,7 +225,7 @@ public final class MicroWriterTest
   {
     final MicroWriterSettings aSettings = new MicroWriterSettings ().setIndent (EXMLSerializeIndent.NONE)
                                                                     .setCharset (CCharset.CHARSET_ISO_8859_1);
-    final IMicroDocument aDoc = MicroFactory.newDocument ();
+    final IMicroDocument aDoc = new MicroDocument ();
     final IMicroElement eRoot = aDoc.appendElement ("ns1url", "root");
     eRoot.appendElement ("ns2url", "child1");
     eRoot.appendElement ("ns2url", "child2");

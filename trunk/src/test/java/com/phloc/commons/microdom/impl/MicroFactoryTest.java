@@ -25,7 +25,7 @@ import org.junit.Test;
 import com.phloc.commons.microdom.IMicroNode;
 
 /**
- * Test class for class {@link MicroFactory}.
+ * Test class for class MicroFactory
  * 
  * @author philip
  */
@@ -34,55 +34,56 @@ public final class MicroFactoryTest
   @Test
   public void testCreation ()
   {
-    IMicroNode aNode = MicroFactory.newDocumentType ("qname", "pid", "sid");
+    IMicroNode aNode = new MicroDocumentType ("qname", "pid", "sid");
     assertNotNull (aNode);
     assertTrue (aNode.isDocumentType ());
 
-    aNode = MicroFactory.newDocument ();
+    aNode = new MicroDocument ();
     assertNotNull (aNode);
     assertTrue (aNode.isDocument ());
 
-    aNode = MicroFactory.newDocument (MicroFactory.newDocumentType ("qname", "pid", "sid"));
+    aNode = new MicroDocument (new MicroDocumentType ("qname", "pid", "sid"));
     assertNotNull (aNode);
     assertTrue (aNode.isDocument ());
 
-    aNode = MicroFactory.newComment ("bla");
+    aNode = new MicroComment ("bla");
     assertNotNull (aNode);
     assertTrue (aNode.isComment ());
 
-    aNode = MicroFactory.newText ("bla");
+    aNode = new MicroText ("bla");
     assertNotNull (aNode);
     assertTrue (aNode.isText ());
 
-    aNode = MicroFactory.newCDATA ("bla");
+    aNode = new MicroCDATA ("bla");
     assertNotNull (aNode);
     assertTrue (aNode.isCDATA ());
 
-    aNode = MicroFactory.newEntityReference ("bla");
+    aNode = new MicroEntityReference ("bla");
     assertNotNull (aNode);
     assertTrue (aNode.isEntityReference ());
 
-    aNode = MicroFactory.newElement ("bla");
+    aNode = new MicroElement ("bla");
     assertNotNull (aNode);
     assertTrue (aNode.isElement ());
 
-    aNode = MicroFactory.newElement ("nsuri", "bla");
+    aNode = new MicroElement ("nsuri", "bla");
     assertNotNull (aNode);
     assertTrue (aNode.isElement ());
 
-    aNode = MicroFactory.newContainer ();
+    aNode = new MicroContainer ();
+    assertNotNull (aNode);
+    assertTrue (aNode.isContainer ());
+    final IMicroNode [] aChildNodes = { new MicroElement ("nsuri", "bla") };
+
+    aNode = new MicroContainer (aChildNodes);
     assertNotNull (aNode);
     assertTrue (aNode.isContainer ());
 
-    aNode = MicroFactory.newContainer (MicroFactory.newElement ("nsuri", "bla"));
-    assertNotNull (aNode);
-    assertTrue (aNode.isContainer ());
-
-    aNode = MicroFactory.newProcessingInstruction ("target");
+    aNode = new MicroProcessingInstruction ("target");
     assertNotNull (aNode);
     assertTrue (aNode.isProcessingInstruction ());
 
-    aNode = MicroFactory.newProcessingInstruction ("target", "data");
+    aNode = new MicroProcessingInstruction ("target", "data");
     assertNotNull (aNode);
     assertTrue (aNode.isProcessingInstruction ());
   }

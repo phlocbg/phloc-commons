@@ -27,7 +27,7 @@ import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroElement;
-import com.phloc.commons.microdom.impl.MicroFactory;
+import com.phloc.commons.microdom.impl.MicroDocument;
 import com.phloc.commons.timing.StopWatch;
 import com.phloc.commons.xml.DefaultXMLIterationHandler;
 import com.phloc.commons.xml.serialize.EXMLSerializeDocType;
@@ -91,7 +91,7 @@ public final class MicroSerializerTest
     final MicroSerializer aMS = new MicroSerializer (CCharset.CHARSET_ISO_8859_1);
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
     final boolean bWithText = false;
-    final IMicroDocument doc = _createLargeDoc (MicroFactory.newDocument (), bWithText);
+    final IMicroDocument doc = _createLargeDoc (new MicroDocument (), bWithText);
 
     int nMilliSecs = 0;
     int nRun = 0;

@@ -22,7 +22,7 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 
 import com.phloc.commons.microdom.IMicroDocument;
-import com.phloc.commons.microdom.impl.MicroFactory;
+import com.phloc.commons.microdom.impl.MicroDocument;
 
 /**
  * Test class for class {@link MicroDOMInputStreamProvider}.
@@ -34,7 +34,7 @@ public final class MicroDOMInputStreamProviderTest
   @Test
   public void testSimple ()
   {
-    final IMicroDocument aDoc = MicroFactory.newDocument ();
+    final IMicroDocument aDoc = new MicroDocument ();
     aDoc.appendElement ("test");
     assertNotNull (new MicroDOMInputStreamProvider (aDoc, MicroWriterSettings.DEFAULT_XML_CHARSET).getInputStream ());
   }
