@@ -117,4 +117,52 @@ public final class MathHelper
       return (int) nValue;
     return nFallback;
   }
+
+  public static int getMaxInt (final int nValue, final int... aValues)
+  {
+    int ret = nValue;
+    for (final int n : aValues)
+      ret = Math.max (ret, n);
+    return ret;
+  }
+
+  public static long getMaxLong (final long nValue, final long... aValues)
+  {
+    long ret = nValue;
+    for (final long n : aValues)
+      ret = Math.max (ret, n);
+    return ret;
+  }
+
+  public static double getMaxDouble (final double dValue, final double... aValues)
+  {
+    double ret = dValue;
+    for (final double d : aValues)
+      ret = Math.max (ret, d);
+    return ret;
+  }
+
+  public static int getMinInt (final int nValue, final int... aValues)
+  {
+    int ret = nValue;
+    for (final int n : aValues)
+      ret = Math.min (ret, n);
+    return ret;
+  }
+
+  public static long getMinLong (final long nValue, final long... aValues)
+  {
+    long ret = nValue;
+    for (final long n : aValues)
+      ret = Math.min (ret, n);
+    return ret;
+  }
+
+  public static double getMinDouble (final double dValue, final double... aValues)
+  {
+    double ret = dValue;
+    for (final double d : aValues)
+      ret = Math.min (ret, d);
+    return ret;
+  }
 }

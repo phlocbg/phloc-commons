@@ -109,4 +109,58 @@ public final class MathHelperTest
     assertEquals (5, MathHelper.longToInt (Long.MIN_VALUE, 5));
     assertEquals (5, MathHelper.longToInt (Long.MAX_VALUE, 5));
   }
+
+  @Test
+  public void testGetMaxInt ()
+  {
+    assertEquals (5, MathHelper.getMaxInt (5));
+    assertEquals (5, MathHelper.getMaxInt (5, 5, 5, 5));
+    assertEquals (5, MathHelper.getMaxInt (5, 3, 2, 1));
+    assertEquals (7, MathHelper.getMaxInt (5, 3, 7, 4));
+  }
+
+  @Test
+  public void testGetMaxLong ()
+  {
+    assertEquals (5, MathHelper.getMaxLong (5));
+    assertEquals (5, MathHelper.getMaxLong (5, 5, 5, 5));
+    assertEquals (5, MathHelper.getMaxLong (5, 3, 2, 1));
+    assertEquals (7, MathHelper.getMaxLong (5, 3, 7, 4));
+  }
+
+  @Test
+  public void testGetMaxDouble ()
+  {
+    PhlocAssert.assertEquals (5, MathHelper.getMaxDouble (5));
+    PhlocAssert.assertEquals (5, MathHelper.getMaxDouble (5, 5, 5, 5));
+    PhlocAssert.assertEquals (5, MathHelper.getMaxDouble (5, 3, 2, 1));
+    PhlocAssert.assertEquals (7, MathHelper.getMaxDouble (5, 3, 7, 4));
+  }
+
+  @Test
+  public void testGetMinInt ()
+  {
+    assertEquals (5, MathHelper.getMinInt (5));
+    assertEquals (5, MathHelper.getMinInt (5, 5, 5, 5));
+    assertEquals (1, MathHelper.getMinInt (5, 3, 2, 1));
+    assertEquals (3, MathHelper.getMinInt (5, 3, 7, 4));
+  }
+
+  @Test
+  public void testGetMinLong ()
+  {
+    assertEquals (5, MathHelper.getMinLong (5));
+    assertEquals (5, MathHelper.getMinLong (5, 5, 5, 5));
+    assertEquals (1, MathHelper.getMinLong (5, 3, 2, 1));
+    assertEquals (3, MathHelper.getMinLong (5, 3, 7, 4));
+  }
+
+  @Test
+  public void testGetMinDouble ()
+  {
+    PhlocAssert.assertEquals (5, MathHelper.getMinDouble (5));
+    PhlocAssert.assertEquals (5, MathHelper.getMinDouble (5, 5, 5, 5));
+    PhlocAssert.assertEquals (1, MathHelper.getMinDouble (5, 3, 2, 1));
+    PhlocAssert.assertEquals (3, MathHelper.getMinDouble (5, 3, 7, 4));
+  }
 }
