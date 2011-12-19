@@ -40,10 +40,10 @@ public final class MicroCommentTest
   @Test
   public void testCreation ()
   {
-    assertNotNull (MicroFactory.newComment (null));
-    assertNotNull (MicroFactory.newComment (""));
+    assertNotNull (new MicroComment (null));
+    assertNotNull (new MicroComment (""));
 
-    IMicroComment e = MicroFactory.newComment ("xyz");
+    IMicroComment e = new MicroComment ("xyz");
     assertNotNull (e);
     assertEquals ("xyz", e.getData ());
     assertFalse (e.hasParent ());
@@ -69,30 +69,30 @@ public final class MicroCommentTest
     e.prependData ("H");
     assertEquals ("Hallo Welt", e.getData ());
 
-    e = MicroFactory.newComment (null);
+    e = new MicroComment (null);
     assertNotNull (e);
     assertTrue (e.isEqualContent (e.getClone ()));
-    e = MicroFactory.newComment ("xyz");
+    e = new MicroComment ("xyz");
     assertNotNull (e);
     assertTrue (e.isEqualContent (e.getClone ()));
 
     assertTrue (e.isEqualContent (e));
     assertFalse (e.isEqualContent (null));
-    assertFalse (e.isEqualContent (MicroFactory.newDocument ()));
+    assertFalse (e.isEqualContent (new MicroDocument ()));
 
-    assertTrue (MicroFactory.newComment ("xyz").isEqualContent (MicroFactory.newComment ("xyz")));
-    assertFalse (MicroFactory.newComment ("xyz").isEqualContent (MicroFactory.newComment ("xy")));
+    assertTrue (new MicroComment ("xyz").isEqualContent (new MicroComment ("xyz")));
+    assertFalse (new MicroComment ("xyz").isEqualContent (new MicroComment ("xy")));
   }
 
   @Test
   public void testAddChildren ()
   {
-    final IMicroComment e = MicroFactory.newComment ("xyz");
+    final IMicroComment e = new MicroComment ("xyz");
 
     try
     {
       // Cannot add any child to a comment
-      e.appendChild (MicroFactory.newComment ("other"));
+      e.appendChild (new MicroComment ("other"));
       fail ();
     }
     catch (final MicroException ex)
@@ -101,7 +101,7 @@ public final class MicroCommentTest
     try
     {
       // Cannot add any child to a comment
-      e.insertAfter (MicroFactory.newComment ("other"), MicroFactory.newComment ("comment"));
+      e.insertAfter (new MicroComment ("other"), new MicroComment ("comment"));
       fail ();
     }
     catch (final MicroException ex)
@@ -110,7 +110,7 @@ public final class MicroCommentTest
     try
     {
       // Cannot add any child to a comment
-      e.insertBefore (MicroFactory.newComment ("other"), MicroFactory.newComment ("comment"));
+      e.insertBefore (new MicroComment ("other"), new MicroComment ("comment"));
       fail ();
     }
     catch (final MicroException ex)
@@ -119,7 +119,7 @@ public final class MicroCommentTest
     try
     {
       // No children -> no remove
-      e.removeChild (MicroFactory.newContainer ());
+      e.removeChild (new MicroContainer ());
       fail ();
     }
     catch (final MicroException ex)
@@ -127,7 +127,7 @@ public final class MicroCommentTest
     try
     {
       // Cannot add any child to this node
-      e.insertAtIndex (0, MicroFactory.newCDATA ("other"));
+      e.insertAtIndex (0, new MicroCDATA ("other"));
       fail ();
     }
     catch (final MicroException ex)

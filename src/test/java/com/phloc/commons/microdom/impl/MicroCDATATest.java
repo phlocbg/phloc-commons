@@ -40,10 +40,10 @@ public final class MicroCDATATest
   @Test
   public void testCreation ()
   {
-    assertNotNull (MicroFactory.newCDATA (null));
-    assertNotNull (MicroFactory.newCDATA (""));
+    assertNotNull (new MicroCDATA (null));
+    assertNotNull (new MicroCDATA (""));
 
-    IMicroCDATA e = MicroFactory.newCDATA ("xyz");
+    IMicroCDATA e = new MicroCDATA ("xyz");
     assertNotNull (e);
     assertEquals ("xyz", e.getData ());
     assertFalse (e.hasParent ());
@@ -69,30 +69,30 @@ public final class MicroCDATATest
     e.prependData ("H");
     assertEquals ("Hallo Welt", e.getData ());
 
-    e = MicroFactory.newCDATA ("xyz");
+    e = new MicroCDATA ("xyz");
     assertNotNull (e);
     assertTrue (e.isEqualContent (e.getClone ()));
-    e = MicroFactory.newCDATA (null);
+    e = new MicroCDATA (null);
     assertNotNull (e);
     assertTrue (e.isEqualContent (e.getClone ()));
 
     assertTrue (e.isEqualContent (e));
     assertFalse (e.isEqualContent (null));
-    assertFalse (e.isEqualContent (MicroFactory.newDocument ()));
+    assertFalse (e.isEqualContent (new MicroDocument ()));
 
-    assertTrue (MicroFactory.newCDATA ("xyz").isEqualContent (MicroFactory.newCDATA ("xyz")));
-    assertFalse (MicroFactory.newCDATA ("xyz").isEqualContent (MicroFactory.newCDATA ("xy")));
+    assertTrue (new MicroCDATA ("xyz").isEqualContent (new MicroCDATA ("xyz")));
+    assertFalse (new MicroCDATA ("xyz").isEqualContent (new MicroCDATA ("xy")));
   }
 
   @Test
   public void testAddChildren ()
   {
-    final IMicroCDATA e = MicroFactory.newCDATA ("xyz");
+    final IMicroCDATA e = new MicroCDATA ("xyz");
 
     try
     {
       // Cannot add any child to a comment
-      e.appendChild (MicroFactory.newCDATA ("other"));
+      e.appendChild (new MicroCDATA ("other"));
       fail ();
     }
     catch (final MicroException ex)
@@ -101,7 +101,7 @@ public final class MicroCDATATest
     try
     {
       // Cannot add any child to a comment
-      e.insertAfter (MicroFactory.newCDATA ("other"), MicroFactory.newCDATA ("comment"));
+      e.insertAfter (new MicroCDATA ("other"), new MicroCDATA ("comment"));
       fail ();
     }
     catch (final MicroException ex)
@@ -110,7 +110,7 @@ public final class MicroCDATATest
     try
     {
       // Cannot add any child to a comment
-      e.insertBefore (MicroFactory.newCDATA ("other"), MicroFactory.newCDATA ("comment"));
+      e.insertBefore (new MicroCDATA ("other"), new MicroCDATA ("comment"));
       fail ();
     }
     catch (final MicroException ex)
@@ -119,7 +119,7 @@ public final class MicroCDATATest
     try
     {
       // Cannot add any child to this node
-      e.insertAtIndex (0, MicroFactory.newCDATA ("other"));
+      e.insertAtIndex (0, new MicroCDATA ("other"));
       fail ();
     }
     catch (final MicroException ex)

@@ -34,8 +34,8 @@ import com.phloc.commons.state.ESuccess;
  *        tree item type
  */
 public interface IBasicTreeItem <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> extends
-                                                                                                     IHasParent <ITEMTYPE>,
-                                                                                                     IHasChildrenSorted <ITEMTYPE>
+                                                                                                   IHasParent <ITEMTYPE>,
+                                                                                                   IHasChildrenSorted <ITEMTYPE>
 {
   /**
    * @return the data associated with this node. May be <code>null</code>.

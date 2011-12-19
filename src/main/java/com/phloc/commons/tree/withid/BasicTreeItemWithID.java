@@ -41,7 +41,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Basic tree item with ID implementation, independent of the implementation
  * type.
- *
+ * 
  * @author philip
  * @param <KEYTYPE>
  *        tree item key type
@@ -92,7 +92,7 @@ public class BasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItem
 
   /**
    * Constructor for normal elements
-   *
+   * 
    * @param aParent
    *        Parent item. May never be <code>null</code> since only the root has
    *        no parent.
@@ -124,7 +124,7 @@ public class BasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItem
    * This method is called to validate a data ID object. This method may be
    * overloaded in derived classes. The default implementation accepts all
    * values.
-   *
+   * 
    * @param aDataID
    *        The value to validate.
    * @return <code>true</code> if the ID is valid, <code>false</code> otherwise.
@@ -139,7 +139,7 @@ public class BasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItem
    * This method is called to validate a data object. This method may be
    * overloaded in derived classes. The default implementation accepts all
    * values.
-   *
+   * 
    * @param aData
    *        The value to validate.
    * @return <code>true</code> if the ID is valid, <code>false</code> otherwise.

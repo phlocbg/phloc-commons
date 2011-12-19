@@ -45,7 +45,7 @@ import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.convert.MicroTypeConverter;
-import com.phloc.commons.microdom.impl.MicroFactory;
+import com.phloc.commons.microdom.impl.MicroDocument;
 import com.phloc.commons.microdom.serialize.MicroReader;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.text.impl.MultiLingualText;
@@ -267,7 +267,7 @@ public final class ChangeLogSerializer
       throw new NullPointerException ("changeLog");
 
     final DateFormat aDF = new SimpleDateFormat (DATE_FORMAT);
-    final IMicroDocument ret = MicroFactory.newDocument ();
+    final IMicroDocument ret = new MicroDocument ();
     final IMicroElement eRoot = ret.appendElement (CChangeLog.CHANGELOG_NAMESPACE_10, ELEMENT_CHANGELOG);
     eRoot.setAttribute (CXML.XML_ATTR_XMLNS_WITH_SEP + CXML.XML_NS_PREFIX_XSI, CXML.XML_NS_XSI);
     eRoot.setAttribute (CXML.XML_NS_PREFIX_XSI + ":schemaLocation", CChangeLog.CHANGELOG_SCHEMALOCATION_10);

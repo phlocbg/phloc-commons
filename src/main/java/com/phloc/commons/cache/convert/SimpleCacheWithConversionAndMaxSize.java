@@ -37,7 +37,8 @@ import com.phloc.commons.string.ToStringGenerator;
  *        Cache value type
  */
 @NotThreadSafe
-public class SimpleCacheWithConversionAndMaxSize <KEYTYPE, VALUETYPE> extends SimpleCacheWithConversion <KEYTYPE, VALUETYPE>
+public class SimpleCacheWithConversionAndMaxSize <KEYTYPE, VALUETYPE> extends
+                                                                      SimpleCacheWithConversion <KEYTYPE, VALUETYPE>
 {
   private final int m_nMaxSize;
 

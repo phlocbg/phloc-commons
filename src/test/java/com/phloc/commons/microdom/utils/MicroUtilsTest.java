@@ -41,7 +41,8 @@ import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.microdom.IMicroText;
-import com.phloc.commons.microdom.impl.MicroFactory;
+import com.phloc.commons.microdom.impl.MicroDocument;
+import com.phloc.commons.microdom.impl.MicroElement;
 import com.phloc.commons.name.MockHasDisplayName;
 import com.phloc.commons.xml.XMLFactory;
 
@@ -85,10 +86,10 @@ public final class MicroUtilsTest
   @Test
   public void testAppend ()
   {
-    final IMicroDocument aDoc = MicroFactory.newDocument ();
+    final IMicroDocument aDoc = new MicroDocument ();
     final IMicroElement eRoot = aDoc.appendElement ("root");
     MicroUtils.append (eRoot, "Any text");
-    MicroUtils.append (eRoot, MicroFactory.newElement ("child"));
+    MicroUtils.append (eRoot, new MicroElement ("child"));
     MicroUtils.append (eRoot, ContainerHelper.newList ("t1", "t2"));
     MicroUtils.append (eRoot, ArrayHelper.newArray ("t1", "t2"));
     try
@@ -110,7 +111,7 @@ public final class MicroUtilsTest
   @Test
   public void testGetPath ()
   {
-    final IMicroDocument aDoc = MicroFactory.newDocument ();
+    final IMicroDocument aDoc = new MicroDocument ();
     assertEquals ("#document", MicroUtils.getPath (aDoc, "/"));
     final IMicroElement eRoot = aDoc.appendElement ("root");
     assertEquals ("#document/root", MicroUtils.getPath (eRoot, "/"));
@@ -130,7 +131,7 @@ public final class MicroUtilsTest
   public void testGetDocumentRootElementTagName ()
   {
     assertNull (MicroUtils.getDocumentRootElementTagName (null));
-    final IMicroDocument aDoc = MicroFactory.newDocument ();
+    final IMicroDocument aDoc = new MicroDocument ();
     assertNull (MicroUtils.getDocumentRootElementTagName (aDoc));
     aDoc.appendElement ("root");
     assertEquals ("root", MicroUtils.getDocumentRootElementTagName (aDoc));
@@ -169,7 +170,7 @@ public final class MicroUtilsTest
   @Test
   public void testGetChildTextContent ()
   {
-    final IMicroElement e = MicroFactory.newElement ("x");
+    final IMicroElement e = new MicroElement ("x");
     assertNull (MicroUtils.getChildTextContent (e, "y"));
     final IMicroElement y = e.appendElement ("y");
     assertNull (MicroUtils.getChildTextContent (e, "y"));
@@ -184,7 +185,7 @@ public final class MicroUtilsTest
   @Test
   public void testGetChildTextContentWithConversion ()
   {
-    final IMicroElement e = MicroFactory.newElement ("x");
+    final IMicroElement e = new MicroElement ("x");
     assertNull (MicroUtils.getChildTextContentWithConversion (e, "y", BigInteger.class));
     final IMicroElement y = e.appendElement ("y");
     assertNull (MicroUtils.getChildTextContentWithConversion (e, "y", BigInteger.class));
@@ -200,7 +201,7 @@ public final class MicroUtilsTest
   public void testGetChildTextContentWithNS ()
   {
     final String sNSURI = "my-namespace-uri";
-    final IMicroElement e = MicroFactory.newElement (sNSURI, "x");
+    final IMicroElement e = new MicroElement (sNSURI, "x");
     assertNull (MicroUtils.getChildTextContent (e, sNSURI, "y"));
     final IMicroElement y = e.appendElement (sNSURI, "y");
     assertNull (MicroUtils.getChildTextContent (e, sNSURI, "y"));
@@ -216,7 +217,7 @@ public final class MicroUtilsTest
   public void testGetChildTextContentWithConversionAndNS ()
   {
     final String sNSURI = "my-namespace-uri";
-    final IMicroElement e = MicroFactory.newElement (sNSURI, "x");
+    final IMicroElement e = new MicroElement (sNSURI, "x");
     assertNull (MicroUtils.getChildTextContentWithConversion (e, sNSURI, "y", BigInteger.class));
     final IMicroElement y = e.appendElement (sNSURI, "y");
     assertNull (MicroUtils.getChildTextContentWithConversion (e, sNSURI, "y", BigInteger.class));

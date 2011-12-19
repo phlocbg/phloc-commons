@@ -41,7 +41,7 @@ public final class MicroProcessingInstructionTest
   @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testCreation ()
   {
-    IMicroProcessingInstruction e = MicroFactory.newProcessingInstruction ("xyz");
+    IMicroProcessingInstruction e = new MicroProcessingInstruction ("xyz");
     assertNotNull (e);
     assertEquals ("xyz", e.getTarget ());
     assertNull (e.getData ());
@@ -57,45 +57,45 @@ public final class MicroProcessingInstructionTest
     assertNotNull (e.getNodeValue ());
     PhlocTestUtils.testToStringImplementation (e);
 
-    e = MicroFactory.newProcessingInstruction ("xyz", "data");
+    e = new MicroProcessingInstruction ("xyz", "data");
     assertNotNull (e);
     assertEquals ("xyz", e.getTarget ());
     assertEquals ("data", e.getData ());
     assertFalse (e.hasChildren ());
     assertNull (e.getChildren ());
 
-    e = MicroFactory.newProcessingInstruction ("targ");
+    e = new MicroProcessingInstruction ("targ");
     assertNotNull (e);
     assertTrue (e.isEqualContent (e.getClone ()));
-    e = MicroFactory.newProcessingInstruction ("targ", "data");
+    e = new MicroProcessingInstruction ("targ", "data");
     assertNotNull (e);
     assertTrue (e.isEqualContent (e.getClone ()));
 
     assertTrue (e.isEqualContent (e));
     assertFalse (e.isEqualContent (null));
-    assertFalse (e.isEqualContent (MicroFactory.newDocument ()));
+    assertFalse (e.isEqualContent (new MicroDocument ()));
 
-    assertTrue (MicroFactory.newProcessingInstruction ("xyz")
-                            .isEqualContent (MicroFactory.newProcessingInstruction ("xyz")));
-    assertTrue (MicroFactory.newProcessingInstruction ("xyz", "data")
-                            .isEqualContent (MicroFactory.newProcessingInstruction ("xyz", "data")));
-    assertFalse (MicroFactory.newProcessingInstruction ("xyz")
-                             .isEqualContent (MicroFactory.newProcessingInstruction ("xy")));
-    assertFalse (MicroFactory.newProcessingInstruction ("xyz", "data")
-                             .isEqualContent (MicroFactory.newProcessingInstruction ("xyz", null)));
-    assertFalse (MicroFactory.newProcessingInstruction ("xyz", "data")
-                             .isEqualContent (MicroFactory.newProcessingInstruction ("xyz", "dat")));
+    assertTrue (new MicroProcessingInstruction ("xyz")
+                            .isEqualContent (new MicroProcessingInstruction ("xyz")));
+    assertTrue (new MicroProcessingInstruction ("xyz", "data")
+                            .isEqualContent (new MicroProcessingInstruction ("xyz", "data")));
+    assertFalse (new MicroProcessingInstruction ("xyz")
+                             .isEqualContent (new MicroProcessingInstruction ("xy")));
+    assertFalse (new MicroProcessingInstruction ("xyz", "data")
+                             .isEqualContent (new MicroProcessingInstruction ("xyz", null)));
+    assertFalse (new MicroProcessingInstruction ("xyz", "data")
+                             .isEqualContent (new MicroProcessingInstruction ("xyz", "dat")));
 
     try
     {
-      MicroFactory.newProcessingInstruction (null);
+      new MicroProcessingInstruction (null);
       fail ();
     }
     catch (final IllegalArgumentException ex)
     {}
     try
     {
-      MicroFactory.newProcessingInstruction ("");
+      new MicroProcessingInstruction ("");
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -105,12 +105,12 @@ public final class MicroProcessingInstructionTest
   @Test
   public void testAddChildren ()
   {
-    final IMicroProcessingInstruction e = MicroFactory.newProcessingInstruction ("xyz");
+    final IMicroProcessingInstruction e = new MicroProcessingInstruction ("xyz");
 
     try
     {
       // Cannot add any child to a comment
-      e.appendChild (MicroFactory.newProcessingInstruction ("other"));
+      e.appendChild (new MicroProcessingInstruction ("other"));
       fail ();
     }
     catch (final MicroException ex)
@@ -119,7 +119,7 @@ public final class MicroProcessingInstructionTest
     try
     {
       // Cannot add any child to a comment
-      e.insertAfter (MicroFactory.newProcessingInstruction ("other"), MicroFactory.newProcessingInstruction ("comment"));
+      e.insertAfter (new MicroProcessingInstruction ("other"), new MicroProcessingInstruction ("comment"));
       fail ();
     }
     catch (final MicroException ex)
@@ -128,8 +128,8 @@ public final class MicroProcessingInstructionTest
     try
     {
       // Cannot add any child to a comment
-      e.insertBefore (MicroFactory.newProcessingInstruction ("other"),
-                      MicroFactory.newProcessingInstruction ("comment"));
+      e.insertBefore (new MicroProcessingInstruction ("other"),
+                      new MicroProcessingInstruction ("comment"));
       fail ();
     }
     catch (final MicroException ex)
@@ -138,7 +138,7 @@ public final class MicroProcessingInstructionTest
     try
     {
       // Cannot add any child to this node
-      e.insertAtIndex (0, MicroFactory.newCDATA ("other"));
+      e.insertAtIndex (0, new MicroCDATA ("other"));
       fail ();
     }
     catch (final MicroException ex)

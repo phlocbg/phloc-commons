@@ -36,7 +36,14 @@ import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.IMicroNode;
-import com.phloc.commons.microdom.impl.MicroFactory;
+import com.phloc.commons.microdom.impl.MicroCDATA;
+import com.phloc.commons.microdom.impl.MicroComment;
+import com.phloc.commons.microdom.impl.MicroDocument;
+import com.phloc.commons.microdom.impl.MicroDocumentType;
+import com.phloc.commons.microdom.impl.MicroElement;
+import com.phloc.commons.microdom.impl.MicroEntityReference;
+import com.phloc.commons.microdom.impl.MicroProcessingInstruction;
+import com.phloc.commons.microdom.impl.MicroText;
 
 @Immutable
 public final class MicroUtils
@@ -65,9 +72,9 @@ public final class MicroUtils
         break;
 
       if (start != i)
-        ret.add (MicroFactory.newText (sText.substring (start, i)));
+        ret.add (new MicroText (sText.substring (start, i)));
 
-      ret.add (MicroFactory.newElement (BR_TAG));
+      ret.add (new MicroElement (BR_TAG));
 
       // 1 == strlen ("\n")
       start = i + 1;
@@ -75,7 +82,7 @@ public final class MicroUtils
 
     // append everything after the last "\n" (if something is remaining)
     if (start < sText.length ())
-      ret.add (MicroFactory.newText (sText.substring (start)));
+      ret.add (new MicroText (sText.substring (start)));
 
     return ret;
   }
@@ -182,7 +189,7 @@ public final class MicroUtils
     {
       case Node.DOCUMENT_NODE:
       {
-        ret = MicroFactory.newDocument ();
+        ret = new MicroDocument ();
         break;
       }
       case Node.DOCUMENT_TYPE_NODE:
@@ -190,12 +197,12 @@ public final class MicroUtils
         final DocumentType aDT = (DocumentType) aNode;
         // inline DTDs are not supported yet
         // aDT.getEntities ();
-        ret = MicroFactory.newDocumentType (aDT.getName (), aDT.getPublicId (), aDT.getSystemId ());
+        ret = new MicroDocumentType (aDT.getName (), aDT.getPublicId (), aDT.getSystemId ());
         break;
       }
       case Node.ELEMENT_NODE:
       {
-        final IMicroElement aElement = MicroFactory.newElement (aNode.getNodeName ());
+        final IMicroElement aElement = new MicroElement (aNode.getNodeName ());
         final NamedNodeMap aAttrs = aNode.getAttributes ();
         if (aAttrs != null)
         {
@@ -210,20 +217,20 @@ public final class MicroUtils
         break;
       }
       case Node.CDATA_SECTION_NODE:
-        ret = MicroFactory.newCDATA (aNode.getNodeValue ());
+        ret = new MicroCDATA (aNode.getNodeValue ());
         break;
       case Node.TEXT_NODE:
-        ret = MicroFactory.newText (aNode.getNodeValue ());
+        ret = new MicroText (aNode.getNodeValue ());
         break;
       case Node.COMMENT_NODE:
-        ret = MicroFactory.newComment (aNode.getNodeValue ());
+        ret = new MicroComment (aNode.getNodeValue ());
         break;
       case Node.ENTITY_REFERENCE_NODE:
-        ret = MicroFactory.newEntityReference (aNode.getNodeValue ());
+        ret = new MicroEntityReference (aNode.getNodeValue ());
         break;
       case Node.PROCESSING_INSTRUCTION_NODE:
         final ProcessingInstruction aPI = (ProcessingInstruction) aNode;
-        ret = MicroFactory.newProcessingInstruction (aPI.getTarget (), aPI.getData ());
+        ret = new MicroProcessingInstruction (aPI.getTarget (), aPI.getData ());
         break;
       case Node.ATTRIBUTE_NODE:
       case Node.ENTITY_NODE:

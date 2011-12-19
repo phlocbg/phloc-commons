@@ -22,7 +22,8 @@ import org.junit.Test;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroElement;
-import com.phloc.commons.microdom.impl.MicroFactory;
+import com.phloc.commons.microdom.impl.MicroDocument;
+import com.phloc.commons.microdom.impl.MicroDocumentType;
 import com.phloc.commons.microdom.serialize.MicroSerializer;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 
@@ -36,7 +37,7 @@ public final class DefaultXMLIterationHandlerTest extends AbstractPhlocTestCase
   @Test
   public void testAll ()
   {
-    final IMicroDocument aDoc = MicroFactory.newDocument ("qname", "pid", "sid");
+    final IMicroDocument aDoc = new MicroDocument (new MicroDocumentType ("qname", "pid", "sid"));
     final IMicroElement eRoot = aDoc.appendElement ("root");
     eRoot.appendElement ("nsuri", "child");
     eRoot.appendCDATA ("CDATA");

@@ -37,7 +37,8 @@ import com.phloc.commons.string.ToStringGenerator;
  *        Cache value type
  */
 @NotThreadSafe
-public abstract class AbstractNotifyingCacheWithMaxSize <KEYTYPE, VALUETYPE> extends AbstractNotifyingCache <KEYTYPE, VALUETYPE>
+public abstract class AbstractNotifyingCacheWithMaxSize <KEYTYPE, VALUETYPE> extends
+                                                                             AbstractNotifyingCache <KEYTYPE, VALUETYPE>
 {
   private final int m_nMaxSize;
 

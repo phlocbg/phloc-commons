@@ -25,7 +25,7 @@ import com.phloc.commons.CGlobal;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.io.EAppend;
 import com.phloc.commons.io.streamprovider.ByteArrayOutputStreamProvider;
-import com.phloc.commons.microdom.impl.MicroFactory;
+import com.phloc.commons.microdom.impl.MicroDocumentType;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 import com.phloc.commons.mock.PhlocTestUtils;
 
@@ -40,7 +40,7 @@ public final class XMLEmitterPhlocTest extends AbstractPhlocTestCase
   public void testMisc ()
   {
     assertEquals ("<!DOCTYPE qname PUBLIC \"pubid\" \"sysid\">" + CGlobal.LINE_SEPARATOR,
-                  XMLEmitterPhloc.getDocTypeHTMLRepresentation (MicroFactory.newDocumentType ("qname", "pubid", "sysid")));
+                  XMLEmitterPhloc.getDocTypeHTMLRepresentation (new MicroDocumentType ("qname", "pubid", "sysid")));
     PhlocTestUtils.testToStringImplementation (new XMLEmitterPhloc (new ByteArrayOutputStreamProvider ().getWriter (CCharset.CHARSET_ISO_8859_1,
                                                                                                                     EAppend.DEFAULT)));
   }

@@ -54,7 +54,8 @@ public class SimpleCacheWithConversion <KEYTYPE, VALUETYPE> extends AbstractCach
    * @return The cached value. Never <code>null</code>.
    */
   @Nonnull
-  public final VALUETYPE getFromCache (@Nonnull final KEYTYPE aKey, @Nonnull final IUnidirectionalConverter <KEYTYPE, VALUETYPE> aValueRetriever)
+  public final VALUETYPE getFromCache (@Nonnull final KEYTYPE aKey,
+                                       @Nonnull final IUnidirectionalConverter <KEYTYPE, VALUETYPE> aValueRetriever)
   {
     // Already in the cache?
     VALUETYPE aValue = super.getFromCache (aKey);

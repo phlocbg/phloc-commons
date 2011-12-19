@@ -41,8 +41,8 @@ public final class MicroEventTest
   @Test
   public void testBasic ()
   {
-    final IMicroElement e1 = MicroFactory.newElement ("a1");
-    final IMicroElement e2 = MicroFactory.newElement ("a1");
+    final IMicroElement e1 = new MicroElement ("a1");
+    final IMicroElement e2 = new MicroElement ("a1");
     MicroEvent e = new MicroEvent (EMicroEvent.NODE_INSERTED, e1, e2);
     assertEquals (EMicroEvent.NODE_INSERTED, e.getEventType ());
     assertSame (e1, e.getSourceNode ());
@@ -68,7 +68,7 @@ public final class MicroEventTest
   public void testInsertionEvent ()
   {
     final MockMicroEventListener aIEL = new MockMicroEventListener ();
-    final IMicroDocument aDoc = MicroFactory.newDocument ();
+    final IMicroDocument aDoc = new MicroDocument ();
     assertFalse (aDoc.unregisterEventTarget (EMicroEvent.NODE_INSERTED, aIEL).isChanged ());
     assertTrue (aDoc.registerEventTarget (EMicroEvent.NODE_INSERTED, aIEL).isChanged ());
     assertFalse (aDoc.registerEventTarget (EMicroEvent.NODE_INSERTED, aIEL).isChanged ());

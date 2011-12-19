@@ -42,7 +42,7 @@ public final class MicroDocumentTest
   @Test
   public void testNew ()
   {
-    final IMicroDocument e = MicroFactory.newDocument ();
+    final IMicroDocument e = new MicroDocument ();
     assertNotNull (e);
     assertNull (e.getDocType ());
     assertNull (e.getDocumentElement ());
@@ -52,14 +52,12 @@ public final class MicroDocumentTest
 
     assertTrue (e.isEqualContent (e));
     assertFalse (e.isEqualContent (null));
-    assertFalse (e.isEqualContent (MicroFactory.newText ("any")));
+    assertFalse (e.isEqualContent (new MicroText ("any")));
 
     assertTrue (e.isEqualContent (e.getClone ()));
-    assertTrue (MicroFactory.newDocument ().isEqualContent (MicroFactory.newDocument ()));
-    assertFalse (MicroFactory.newDocument ()
-                             .isEqualContent (MicroFactory.newDocument (MicroFactory.newDocumentType ("any",
-                                                                                                      "public",
-                                                                                                      "system"))));
+    assertTrue (new MicroDocument ().isEqualContent (new MicroDocument ()));
+    assertFalse (new MicroDocument ()
+                             .isEqualContent (new MicroDocument (new MicroDocumentType ("any", "public", "system"))));
 
     // Clone with children
     e.appendElement ("root");
@@ -69,7 +67,7 @@ public final class MicroDocumentTest
   @Test
   public void testNewWithDocType ()
   {
-    final IMicroDocument d = MicroFactory.newDocument ("html", "public ID", "system ID");
+    final IMicroDocument d = new MicroDocument (new MicroDocumentType ("html", "public ID", "system ID"));
     assertNotNull (d);
     assertNotNull (d.getDocType ());
     assertNull (d.getDocumentElement ());
@@ -81,7 +79,7 @@ public final class MicroDocumentTest
   @Test
   public void testAppendToRoot ()
   {
-    IMicroDocument d = MicroFactory.newDocument ();
+    IMicroDocument d = new MicroDocument ();
     assertNotNull (d.appendElement ("root"));
 
     try
@@ -102,7 +100,7 @@ public final class MicroDocumentTest
     catch (final MicroException ex)
     {}
 
-    d = MicroFactory.newDocument ();
+    d = new MicroDocument ();
     assertNotNull (d.appendComment ("This is a root comment"));
     assertNotNull (d.appendComment ("Well I forgot something"));
     assertNotNull (d.appendElement ("root"));
@@ -112,14 +110,14 @@ public final class MicroDocumentTest
   @Test
   public void testToString ()
   {
-    final IMicroDocument d = MicroFactory.newDocument ();
+    final IMicroDocument d = new MicroDocument ();
     PhlocTestUtils.testToStringImplementation (d);
   }
 
   @Test
   public void testIsStandalone ()
   {
-    final IMicroDocument aDoc = MicroFactory.newDocument ();
+    final IMicroDocument aDoc = new MicroDocument ();
     assertTrue (aDoc.isStandalone ());
     final IMicroElement eRoot = aDoc.appendElement ("root");
     assertTrue (aDoc.isStandalone ());

@@ -26,7 +26,7 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * This class encapsulates all data provided for resource resolving.
- *
+ * 
  * @author philip
  */
 @Immutable

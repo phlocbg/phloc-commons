@@ -54,27 +54,27 @@ public final class MicroElementTest extends AbstractPhlocTestCase
   {
     try
     {
-      MicroFactory.newElement (null);
+      new MicroElement (null);
       fail ();
     }
     catch (final IllegalArgumentException ex)
     {}
     try
     {
-      MicroFactory.newElement ("");
+      new MicroElement ("");
       fail ();
     }
     catch (final IllegalArgumentException ex)
     {}
     try
     {
-      MicroFactory.newElement ("space unallowed");
+      new MicroElement ("space unallowed");
       fail ();
     }
     catch (final IllegalArgumentException ex)
     {}
 
-    IMicroElement e = MicroFactory.newElement ("xyz");
+    IMicroElement e = new MicroElement ("xyz");
     assertNotNull (e);
     assertNull (e.getLocalName ());
     assertNull (e.getNamespaceURI ());
@@ -86,7 +86,7 @@ public final class MicroElementTest extends AbstractPhlocTestCase
     assertTrue (e.getChildElements ().isEmpty ());
     PhlocTestUtils.testToStringImplementation (e);
 
-    e = MicroFactory.newElement ("myns", "xyz");
+    e = new MicroElement ("myns", "xyz");
     assertNull (e.getAttribute ("attr"));
     assertNull (e.getAttributeWithConversion ("attr", String.class));
     assertFalse (e.removeAttribute ("attr").isChanged ());
@@ -113,38 +113,38 @@ public final class MicroElementTest extends AbstractPhlocTestCase
     assertTrue (e.removeAttribute ("attr").isChanged ());
     assertFalse (e.removeAttribute ("attr").isChanged ());
 
-    e = MicroFactory.newElement ("xyz");
+    e = new MicroElement ("xyz");
     assertTrue (e.isEqualContent (e.getClone ()));
-    e = MicroFactory.newElement ("xyz").setAttribute ("attr", 5);
+    e = new MicroElement ("xyz").setAttribute ("attr", 5);
     assertTrue (e.isEqualContent (e.getClone ()));
-    e = MicroFactory.newElement ("mynsuri", "xyz");
+    e = new MicroElement ("mynsuri", "xyz");
     assertTrue (e.isEqualContent (e.getClone ()));
-    e = MicroFactory.newElement ("myns", "xyz").setAttribute ("name", "value");
+    e = new MicroElement ("myns", "xyz").setAttribute ("name", "value");
     assertTrue (e.isEqualContent (e.getClone ()));
-    e = MicroFactory.newElement ("myns", "xyz");
+    e = new MicroElement ("myns", "xyz");
     e.appendText ("any");
     assertTrue (e.isEqualContent (e.getClone ()));
-    e = MicroFactory.newElement ("myns", "xyz");
+    e = new MicroElement ("myns", "xyz");
     e.appendElement ("x", "z");
     assertTrue (e.isEqualContent (e.getClone ()));
 
     assertTrue (e.isEqualContent (e));
     assertFalse (e.isEqualContent (null));
-    assertFalse (e.isEqualContent (MicroFactory.newDocument ()));
+    assertFalse (e.isEqualContent (new MicroDocument ()));
 
-    assertTrue (MicroFactory.newElement ("xyz").isEqualContent (MicroFactory.newElement ("xyz")));
-    assertTrue (MicroFactory.newElement ("myns", "xyz").isEqualContent (MicroFactory.newElement ("myns", "xyz")));
-    assertFalse (MicroFactory.newElement ("xyz").isEqualContent (MicroFactory.newElement ("xy")));
-    assertFalse (MicroFactory.newElement ("myns", "xyz").isEqualContent (MicroFactory.newElement ("myns", "xy")));
-    assertFalse (MicroFactory.newElement ("myns", "xyz").isEqualContent (MicroFactory.newElement ("myns2", "xyz")));
-    assertFalse (MicroFactory.newElement ("myns", "xyz").isEqualContent (MicroFactory.newElement (null, "xyz")));
-    assertFalse (MicroFactory.newElement ("myns", "xyz").isEqualContent (MicroFactory.newElement ("myns", "xyz")
+    assertTrue (new MicroElement ("xyz").isEqualContent (new MicroElement ("xyz")));
+    assertTrue (new MicroElement ("myns", "xyz").isEqualContent (new MicroElement ("myns", "xyz")));
+    assertFalse (new MicroElement ("xyz").isEqualContent (new MicroElement ("xy")));
+    assertFalse (new MicroElement ("myns", "xyz").isEqualContent (new MicroElement ("myns", "xy")));
+    assertFalse (new MicroElement ("myns", "xyz").isEqualContent (new MicroElement ("myns2", "xyz")));
+    assertFalse (new MicroElement ("myns", "xyz").isEqualContent (new MicroElement (null, "xyz")));
+    assertFalse (new MicroElement ("myns", "xyz").isEqualContent (new MicroElement ("myns", "xyz")
                                                                                      .setAttribute ("name", "value")));
 
-    e = MicroFactory.newElement ("ns1:element");
+    e = new MicroElement ("ns1:element");
     assertNull (e.getLocalName ());
     assertEquals ("ns1:element", e.getTagName ());
-    e = MicroFactory.newElement ("url", "ns1:element");
+    e = new MicroElement ("url", "ns1:element");
     assertEquals ("element", e.getLocalName ());
     assertEquals ("element", e.getTagName ());
   }
@@ -152,7 +152,7 @@ public final class MicroElementTest extends AbstractPhlocTestCase
   @Test
   public void testGetChildElements ()
   {
-    IMicroElement eRoot = MicroFactory.newElement ("root");
+    IMicroElement eRoot = new MicroElement ("root");
     assertNotNull (eRoot.getChildElements ());
     assertTrue (eRoot.getChildElements ().isEmpty ());
     assertFalse (eRoot.hasChildElements ());
@@ -194,7 +194,7 @@ public final class MicroElementTest extends AbstractPhlocTestCase
     assertNotNull (eRoot.getFirstChildElement ("level2a"));
 
     // special
-    eRoot = MicroFactory.newElement ("root");
+    eRoot = new MicroElement ("root");
     assertNull (eRoot.getFirstChildElement ());
     final IMicroContainer aCont = eRoot.appendContainer ();
     assertTrue (eRoot.hasChildren ());
@@ -209,7 +209,7 @@ public final class MicroElementTest extends AbstractPhlocTestCase
   @Test
   public void testSiblings ()
   {
-    final IMicroElement eRoot = MicroFactory.newElement ("root");
+    final IMicroElement eRoot = new MicroElement ("root");
     final IMicroElement e1 = eRoot.appendElement ("level1");
     e1.appendElement ("e11");
     final IMicroText eText = eRoot.appendText ("Mein text node");
@@ -227,7 +227,7 @@ public final class MicroElementTest extends AbstractPhlocTestCase
     assertSame (eComment, eElem.getPreviousSibling ());
 
     // Alternative test
-    final IMicroElement e = MicroFactory.newElement ("root");
+    final IMicroElement e = new MicroElement ("root");
     final IMicroElement c1 = e.appendElement ("c1");
     final IMicroElement c2 = e.appendElement ("c2");
     final IMicroElement c3 = e.appendElement ("c3");
@@ -244,7 +244,7 @@ public final class MicroElementTest extends AbstractPhlocTestCase
   @Test
   public void testGetParentElement ()
   {
-    final IMicroElement eRoot = MicroFactory.newElement ("root");
+    final IMicroElement eRoot = new MicroElement ("root");
     final IMicroElement e1 = eRoot.appendElement ("level1");
     final IMicroElement e11 = e1.appendElement ("e11");
     final IMicroText eText = eRoot.appendText ("Mein text node");
@@ -263,7 +263,7 @@ public final class MicroElementTest extends AbstractPhlocTestCase
   @Test
   public void testGetChildElementOfName ()
   {
-    final IMicroElement eRoot = MicroFactory.newElement ("root");
+    final IMicroElement eRoot = new MicroElement ("root");
     final IMicroElement e1 = eRoot.appendElement ("level1");
     final IMicroElement e11 = e1.appendElement ("e11");
     final IMicroElement e2 = eRoot.appendElement ("level2");
@@ -278,7 +278,7 @@ public final class MicroElementTest extends AbstractPhlocTestCase
   @Test
   public void testRemoveChild ()
   {
-    final IMicroElement eRoot = MicroFactory.newElement ("root");
+    final IMicroElement eRoot = new MicroElement ("root");
     final IMicroElement e1 = eRoot.appendElement ("level1");
     final IMicroElement e11 = e1.appendElement ("e11");
     final IMicroElement e2 = eRoot.appendElement ("level2");
@@ -300,7 +300,7 @@ public final class MicroElementTest extends AbstractPhlocTestCase
   @Test
   public void testRemoveChildAtIndex ()
   {
-    final IMicroElement eRoot = MicroFactory.newElement ("root");
+    final IMicroElement eRoot = new MicroElement ("root");
     final IMicroElement e1 = eRoot.appendElement ("level1");
     e1.appendElement ("e11");
     final IMicroElement e2 = eRoot.appendElement ("level2");
@@ -325,7 +325,7 @@ public final class MicroElementTest extends AbstractPhlocTestCase
   @Test
   public void testRemoveAllChildren ()
   {
-    final IMicroElement eRoot = MicroFactory.newElement ("root");
+    final IMicroElement eRoot = new MicroElement ("root");
 
     // No children yet
     assertFalse (eRoot.removeAllChildren ().isChanged ());
@@ -353,7 +353,7 @@ public final class MicroElementTest extends AbstractPhlocTestCase
   @Test
   public void testGetClone ()
   {
-    final IMicroElement eRoot = MicroFactory.newElement ("root");
+    final IMicroElement eRoot = new MicroElement ("root");
     IMicroElement eClone = eRoot.getClone ();
     assertEquals (eRoot.getTagName (), eClone.getTagName ());
     assertNull (eRoot.getNamespaceURI ());
@@ -379,7 +379,7 @@ public final class MicroElementTest extends AbstractPhlocTestCase
   {
     final String NSURI = "http://www.phloc.com/unittest";
     final String NSURI2 = "http://www.phloc.com/unittest/second";
-    final IMicroElement eRoot = MicroFactory.newElement ("root");
+    final IMicroElement eRoot = new MicroElement ("root");
     final IMicroElement a = eRoot.appendElement (NSURI, "a");
     final IMicroElement b = eRoot.appendElement (NSURI2, "b");
     final IMicroContainer aCont = eRoot.appendContainer ();
@@ -431,7 +431,7 @@ public final class MicroElementTest extends AbstractPhlocTestCase
   @Test
   public void testGetTextContent ()
   {
-    IMicroElement e = MicroFactory.newElement ("any");
+    IMicroElement e = new MicroElement ("any");
     assertNull (e.getTextContent ());
     e.appendText ("ab");
     assertEquals ("ab", e.getTextContent ());
@@ -450,7 +450,7 @@ public final class MicroElementTest extends AbstractPhlocTestCase
     e.appendText ("end");
     assertEquals ("abcdxxz1z2z3end", e.getTextContent ());
 
-    e = MicroFactory.newElement ("any");
+    e = new MicroElement ("any");
     assertNull (e.getTextContentWithConversion (Integer.class));
     e.appendText ("1234");
     assertEquals (1234, e.getTextContentWithConversion (Integer.class).intValue ());
@@ -459,7 +459,7 @@ public final class MicroElementTest extends AbstractPhlocTestCase
   @Test
   public void testNamespaces ()
   {
-    final IMicroElement e = MicroFactory.newElement ("any");
+    final IMicroElement e = new MicroElement ("any");
     assertNull (e.getNamespaceURI ());
     assertTrue (e.setNamespaceURI ("uri").isChanged ());
     assertEquals ("uri", e.getNamespaceURI ());
@@ -473,7 +473,7 @@ public final class MicroElementTest extends AbstractPhlocTestCase
   @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testAttrs ()
   {
-    final IMicroElement e = MicroFactory.newElement ("any");
+    final IMicroElement e = new MicroElement ("any");
     assertFalse (e.hasAttributes ());
     assertTrue (e.removeAllAttributes ().isUnchanged ());
     e.setAttribute ("attr", 5);
@@ -507,16 +507,16 @@ public final class MicroElementTest extends AbstractPhlocTestCase
   @Test
   public void testChildren ()
   {
-    final IMicroElement e = MicroFactory.newElement ("any");
+    final IMicroElement e = new MicroElement ("any");
     assertNull (e.appendChild (null));
     final IMicroElement eChild = e.appendElement ("child");
     assertNull (e.insertAfter (null, eChild));
     assertNull (e.insertBefore (null, eChild));
 
-    assertNotNull (e.insertAfter (MicroFactory.newElement ("after"), eChild));
-    assertNotNull (e.insertBefore (MicroFactory.newElement ("before"), eChild));
+    assertNotNull (e.insertAfter (new MicroElement ("after"), eChild));
+    assertNotNull (e.insertBefore (new MicroElement ("before"), eChild));
     assertEquals (3, e.getChildCount ());
-    assertNotNull (e.appendChild (MicroFactory.newElement ("end")));
+    assertNotNull (e.appendChild (new MicroElement ("end")));
     assertNotNull (e.appendIgnorableWhitespaceText ("    "));
     assertNotNull (e.appendEntityReference ("name"));
     assertNotNull (e.appendProcessingInstruction ("target", "data"));
@@ -557,7 +557,7 @@ public final class MicroElementTest extends AbstractPhlocTestCase
     assertTrue (aChild1.isElement ());
     assertEquals ("child", aChild1.getNodeName ());
     assertFalse (e.replaceChild (aChild1, aChild1).isChanged ());
-    final IMicroNode aChildNew = MicroFactory.newComment ("new");
+    final IMicroNode aChildNew = new MicroComment ("new");
     assertTrue (e.replaceChild (aChild1, aChildNew).isChanged ());
     assertTrue (e.getFirstChild ().isComment ());
     try
@@ -588,7 +588,7 @@ public final class MicroElementTest extends AbstractPhlocTestCase
   @Test
   public void testGetParentElementWithName ()
   {
-    final IMicroElement e = MicroFactory.newElement ("any");
+    final IMicroElement e = new MicroElement ("any");
     final IMicroElement eChild = e.appendElement ("child");
     final IMicroElement eChild2 = eChild.appendElement ("child2");
     final IMicroElement eChild3 = eChild2.appendElement ("child3");
@@ -615,7 +615,7 @@ public final class MicroElementTest extends AbstractPhlocTestCase
   @Test
   public void testDetach ()
   {
-    final IMicroElement e = MicroFactory.newElement ("root");
+    final IMicroElement e = new MicroElement ("root");
     assertFalse (e.hasParent ());
     assertSame (e, e.detachFromParent ());
     assertFalse (e.hasParent ());
@@ -634,24 +634,24 @@ public final class MicroElementTest extends AbstractPhlocTestCase
   @Test
   public void testIsEqualContent ()
   {
-    final IMicroElement eRoot = MicroFactory.newElement ("root");
+    final IMicroElement eRoot = new MicroElement ("root");
     final IMicroElement e1 = eRoot.appendElement ("c1a");
     e1.appendElement ("c2");
     eRoot.appendElement ("c1b");
     // No children at all
-    assertFalse (MicroFactory.newElement ("root").isEqualContent (MicroFactory.newElement ("root2")));
+    assertFalse (new MicroElement ("root").isEqualContent (new MicroElement ("root2")));
     // One with children one not
-    assertFalse (eRoot.isEqualContent (MicroFactory.newElement ("root2")));
-    assertFalse (MicroFactory.newElement ("root").isEqualContent (eRoot));
+    assertFalse (eRoot.isEqualContent (new MicroElement ("root2")));
+    assertFalse (new MicroElement ("root").isEqualContent (eRoot));
     // Different child count
     assertFalse (eRoot.isEqualContent (e1));
     // Same child count
     assertFalse (eRoot.isEqualContent (e1));
     // Same child count, first equal content than different content
-    final IMicroElement el1 = MicroFactory.newElement ("x");
+    final IMicroElement el1 = new MicroElement ("x");
     el1.appendElement ("y1");
     el1.appendElement ("y2");
-    final IMicroElement el2 = MicroFactory.newElement ("xx");
+    final IMicroElement el2 = new MicroElement ("xx");
     el2.appendElement ("y1");
     el2.appendElement ("z1");
     assertFalse (el1.isEqualContent (el2));
