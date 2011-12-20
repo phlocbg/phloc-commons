@@ -1390,6 +1390,34 @@ public final class ArrayHelper
   }
 
   /**
+   * Get a new array that combines the passed two arrays, maintaining the order.
+   * 
+   * @param aHeadArray
+   *        The first array. May be <code>null</code>.
+   * @param aTailArray
+   *        The second array. May be <code>null</code>.
+   * @return <code>null</code> if both array parameters are <code>null</code> -
+   *         a non-<code>null</code> array with all elements in the correct
+   *         order otherwise.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public static char [][] getConcatenated (@Nullable final char [][] aHeadArray, @Nullable final char []... aTailArray)
+  {
+    // If first array is invalid, simply
+    if (isEmpty (aHeadArray))
+      return getCopy (aTailArray);
+    if (isEmpty (aTailArray))
+      return getCopy (aHeadArray);
+
+    // Start concatenating
+    final char [][] ret = new char [aHeadArray.length + aTailArray.length] [];
+    System.arraycopy (aHeadArray, 0, ret, 0, aHeadArray.length);
+    System.arraycopy (aTailArray, 0, ret, aHeadArray.length, aTailArray.length);
+    return ret;
+  }
+
+  /**
    * Get a new array that combines the passed head element and the array. The
    * head element will be the first element of the created array.
    * 

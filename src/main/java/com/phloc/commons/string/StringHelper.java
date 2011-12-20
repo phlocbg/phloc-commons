@@ -2175,12 +2175,14 @@ public final class StringHelper
    * @param aTarget
    *        Where the replaced objects should be written to. May not be
    *        <code>null</code>.
+   * @return The number of replacements performed. Always &ge; 0.
    * @throws IOException
    */
-  public static void replaceMultipleTo (@Nullable final String sInput,
-                                        @Nonnull final char [] aPatterns,
-                                        @Nonnull final char [][] aReplacements,
-                                        @Nonnull final Writer aTarget) throws IOException
+  @Nonnegative
+  public static int replaceMultipleTo (@Nullable final String sInput,
+                                       @Nonnull final char [] aPatterns,
+                                       @Nonnull final char [][] aReplacements,
+                                       @Nonnull final Writer aTarget) throws IOException
   {
     if (aPatterns == null)
       throw new NullPointerException ("patterns");
@@ -2192,13 +2194,13 @@ public final class StringHelper
       throw new NullPointerException ("target");
 
     if (hasNoText (sInput))
-      return;
+      return 0;
 
     if (aPatterns.length == 0)
     {
       // No modifications required
       aTarget.write (sInput);
-      return;
+      return 0;
     }
 
     final char [] aInput = sInput.toCharArray ();
@@ -2206,6 +2208,7 @@ public final class StringHelper
     // for all input string characters
     int nFirstNonReplace = 0;
     int nInputIndex = 0;
+    int nReplacements = 0;
     for (final char cInput : aInput)
     {
       for (int nPatternIndex = 0; nPatternIndex < aPatterns.length; nPatternIndex++)
@@ -2216,6 +2219,7 @@ public final class StringHelper
             aTarget.write (aInput, nFirstNonReplace, nInputIndex - nFirstNonReplace);
           nFirstNonReplace = nInputIndex + 1;
           aTarget.write (aReplacements[nPatternIndex]);
+          ++nReplacements;
           break;
         }
       }
@@ -2223,6 +2227,7 @@ public final class StringHelper
     }
     if (nFirstNonReplace < nInputIndex)
       aTarget.write (aInput, nFirstNonReplace, nInputIndex - nFirstNonReplace);
+    return nReplacements;
   }
 
   /**
