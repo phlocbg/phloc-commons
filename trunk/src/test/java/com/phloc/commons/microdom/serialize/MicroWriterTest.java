@@ -251,4 +251,23 @@ public final class MicroWriterTest
                       "<a:root xmlns:a=\"ns1url\"><xy:child1 xmlns:xy=\"ns2url\" /><xy:child2 xmlns:xy=\"ns2url\" /></a:root>",
                   s);
   }
+
+  @Test
+  public void testNumericReferencesXML11 ()
+  {
+    for (int i = 0; i < 32; ++i)
+    {
+      final String sText = "abc" + ((char) i) + "def";
+      final IMicroDocument aDoc = new MicroDocument ();
+      aDoc.appendElement ("root").appendText (sText);
+      final String sXML = MicroWriter.getNodeAsString (aDoc,
+                                                       new MicroWriterSettings ().setXMLVersion (EXMLVersion.XML_11));
+      System.out.println (sXML);
+      final IMicroDocument aDoc2 = MicroReader.readMicroXML (sXML);
+      // Wont work for \u0000 because it is mapped to ""
+      // Does not work for \r because it is read as \n
+      if (i > 0 && i != '\r')
+        assertTrue (aDoc.isEqualContent (aDoc2));
+    }
+  }
 }

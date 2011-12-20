@@ -60,93 +60,100 @@ public final class XMLHelper
 {
   // Order is important!
   // Note: for performance reasons they are all char arrays!
-  private static final char [] MASK_PATTERNS = new char [] { '&', '<', '>', '"', '\'',
-                                                            // Control
-                                                            // characters
-                                                            0,
-                                                            1,
-                                                            2,
-                                                            3,
-                                                            4,
-                                                            5,
-                                                            6,
-                                                            7,
-                                                            8,
-                                                            // 9,
-                                                            // 10
-                                                            11,
-                                                            12,
-                                                            // 13
-                                                            14,
-                                                            15,
-                                                            16,
-                                                            17,
-                                                            18,
-                                                            19,
-                                                            20,
-                                                            21,
-                                                            22,
-                                                            23,
-                                                            24,
-                                                            25,
-                                                            26,
-                                                            27,
-                                                            28,
-                                                            29,
-                                                            30,
-                                                            31 };
+  private static final char [] MASK_PATTERNS_REGULAR = new char [] { '&', '<', '>', '"', '\'' };
 
-  /*
+  // Control characters (except 9 - \t and 10 - \n)
+  private static final char [] MASK_PATTERNS_CONTROL = new char [] { 0,
+                                                                    1,
+                                                                    2,
+                                                                    3,
+                                                                    4,
+                                                                    5,
+                                                                    6,
+                                                                    7,
+                                                                    8,
+                                                                    11,
+                                                                    12,
+                                                                    13,
+                                                                    14,
+                                                                    15,
+                                                                    16,
+                                                                    17,
+                                                                    18,
+                                                                    19,
+                                                                    20,
+                                                                    21,
+                                                                    22,
+                                                                    23,
+                                                                    24,
+                                                                    25,
+                                                                    26,
+                                                                    27,
+                                                                    28,
+                                                                    29,
+                                                                    30,
+                                                                    31 };
+  private static final char [] MASK_PATTERNS_ALL = ArrayHelper.getConcatenated (MASK_PATTERNS_REGULAR,
+                                                                                MASK_PATTERNS_CONTROL);
+
+  /**
    * IE8 emits an error when using &apos; - that's why the work around with
    * &#39; is used!
    */
-  private static final char [][] MASK_REPLACE = new char [] [] { "&amp;".toCharArray (),
-                                                                "&lt;".toCharArray (),
-                                                                "&gt;".toCharArray (),
-                                                                "&quot;".toCharArray (),
+  private static final char [][] MASK_REPLACE_REGULAR = new char [] [] { "&amp;".toCharArray (),
+                                                                        "&lt;".toCharArray (),
+                                                                        "&gt;".toCharArray (),
+                                                                        "&quot;".toCharArray (),
+                                                                        "&#39;".toCharArray () };
 
-                                                                "&#39;".toCharArray (),
-                                                                // Control
-                                                                // character
-                                                                // replacements
-                                                                "&#0;".toCharArray (),
-                                                                "&#1;".toCharArray (),
-                                                                "&#2;".toCharArray (),
-                                                                "&#3;".toCharArray (),
-                                                                "&#4;".toCharArray (),
-                                                                "&#5;".toCharArray (),
-                                                                "&#6;".toCharArray (),
-                                                                "&#7;".toCharArray (),
-                                                                "&#8;".toCharArray (),
-                                                                // 9 (\t)
-                                                                // 10 (\n)
-                                                                "&#11;".toCharArray (),
-                                                                "&#12;".toCharArray (),
-                                                                // 13 (\r)
-                                                                "&#14;".toCharArray (),
-                                                                "&#15;".toCharArray (),
-                                                                "&#16;".toCharArray (),
-                                                                "&#17;".toCharArray (),
-                                                                "&#18;".toCharArray (),
-                                                                "&#19;".toCharArray (),
-                                                                "&#20;".toCharArray (),
-                                                                "&#21;".toCharArray (),
-                                                                "&#22;".toCharArray (),
-                                                                "&#23;".toCharArray (),
-                                                                "&#24;".toCharArray (),
-                                                                "&#25;".toCharArray (),
-                                                                "&#26;".toCharArray (),
-                                                                "&#27;".toCharArray (),
-                                                                "&#28;".toCharArray (),
-                                                                "&#29;".toCharArray (),
-                                                                "&#30;".toCharArray (),
-                                                                "&#31;".toCharArray () };
+  /**
+   * Control character replacements<br>
+   * Note: &#0; cannot be read so it is emitted as ""<br>
+   * All other numeric mappings &#1; - &#31; can only be read by XML 1.1
+   */
+  private static final char [][] MASK_REPLACE_CONTROL = new char [] [] { "".toCharArray (),
+                                                                        "&#1;".toCharArray (),
+                                                                        "&#2;".toCharArray (),
+                                                                        "&#3;".toCharArray (),
+                                                                        "&#4;".toCharArray (),
+                                                                        "&#5;".toCharArray (),
+                                                                        "&#6;".toCharArray (),
+                                                                        "&#7;".toCharArray (),
+                                                                        "&#8;".toCharArray (),
+                                                                        "&#11;".toCharArray (),
+                                                                        "&#12;".toCharArray (),
+                                                                        "&#13;".toCharArray (),
+                                                                        "&#14;".toCharArray (),
+                                                                        "&#15;".toCharArray (),
+                                                                        "&#16;".toCharArray (),
+                                                                        "&#17;".toCharArray (),
+                                                                        "&#18;".toCharArray (),
+                                                                        "&#19;".toCharArray (),
+                                                                        "&#20;".toCharArray (),
+                                                                        "&#21;".toCharArray (),
+                                                                        "&#22;".toCharArray (),
+                                                                        "&#23;".toCharArray (),
+                                                                        "&#24;".toCharArray (),
+                                                                        "&#25;".toCharArray (),
+                                                                        "&#26;".toCharArray (),
+                                                                        "&#27;".toCharArray (),
+                                                                        "&#28;".toCharArray (),
+                                                                        "&#29;".toCharArray (),
+                                                                        "&#30;".toCharArray (),
+                                                                        "&#31;".toCharArray () };
+
+  private static final char [][] MASK_REPLACE_ALL = ArrayHelper.getConcatenated (MASK_REPLACE_REGULAR,
+                                                                                 MASK_REPLACE_CONTROL);
 
   static
   {
     // Check integrity
-    if (MASK_PATTERNS.length != MASK_REPLACE.length)
-      throw new IllegalStateException ("Arrays have different length!");
+    if (MASK_PATTERNS_REGULAR.length != MASK_REPLACE_REGULAR.length)
+      throw new IllegalStateException ("Regular arrays have different length!");
+    if (MASK_PATTERNS_CONTROL.length != MASK_REPLACE_CONTROL.length)
+      throw new IllegalStateException ("Control arrays have different length!");
+    if (MASK_PATTERNS_ALL.length != MASK_REPLACE_ALL.length)
+      throw new IllegalStateException ("Overall arrays have different length!");
   }
 
   @PresentForCodeCoverage
@@ -490,7 +497,7 @@ public final class XMLHelper
   @Nonnull
   public static char [] getMaskedXMLText (@Nullable final String s)
   {
-    return StringHelper.replaceMultiple (s, MASK_PATTERNS, MASK_REPLACE);
+    return StringHelper.replaceMultiple (s, MASK_PATTERNS_ALL, MASK_REPLACE_ALL);
   }
 
   @Nonnull
@@ -498,13 +505,15 @@ public final class XMLHelper
   {
     if (StringHelper.hasNoText (s))
       return 0;
-    final int nResLen = StringHelper.getReplaceMultipleResultLength (s.toCharArray (), MASK_PATTERNS, MASK_REPLACE);
+    final int nResLen = StringHelper.getReplaceMultipleResultLength (s.toCharArray (),
+                                                                     MASK_PATTERNS_ALL,
+                                                                     MASK_REPLACE_ALL);
     return nResLen == CGlobal.ILLEGAL_UINT ? s.length () : nResLen;
   }
 
   public static void maskXMLTextTo (@Nullable final String s, @Nonnull final Writer aWriter) throws IOException
   {
-    StringHelper.replaceMultipleTo (s, MASK_PATTERNS, MASK_REPLACE, aWriter);
+    StringHelper.replaceMultipleTo (s, MASK_PATTERNS_ALL, MASK_REPLACE_ALL, aWriter);
   }
 
   /**
