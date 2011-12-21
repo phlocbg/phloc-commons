@@ -231,7 +231,7 @@ public final class MicroWriterTest
     eRoot.appendElement ("ns2url", "child1");
     eRoot.appendElement ("ns2url", "child2");
 
-    String s = MicroWriter.getNodeAsString (aDoc, aSettings, null);
+    String s = MicroWriter.getNodeAsString (aDoc, aSettings);
     assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>" +
                       CGlobal.LINE_SEPARATOR +
                       "<root xmlns=\"ns1url\"><ns0:child1 xmlns:ns0=\"ns2url\" /><ns0:child2 xmlns:ns0=\"ns2url\" /></root>",
@@ -239,14 +239,15 @@ public final class MicroWriterTest
 
     final MapBasedNamespaceContext aCtx = new MapBasedNamespaceContext ();
     aCtx.addMapping ("a", "ns1url");
-    s = MicroWriter.getNodeAsString (aDoc, aSettings, aCtx);
+    aSettings.setNamespaceContext (aCtx);
+    s = MicroWriter.getNodeAsString (aDoc, aSettings);
     assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>" +
                       CGlobal.LINE_SEPARATOR +
                       "<a:root xmlns:a=\"ns1url\"><ns0:child1 xmlns:ns0=\"ns2url\" /><ns0:child2 xmlns:ns0=\"ns2url\" /></a:root>",
                   s);
 
     aCtx.addMapping ("xy", "ns2url");
-    s = MicroWriter.getNodeAsString (aDoc, aSettings, aCtx);
+    s = MicroWriter.getNodeAsString (aDoc, aSettings);
     assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>" +
                       CGlobal.LINE_SEPARATOR +
                       "<a:root xmlns:a=\"ns1url\"><xy:child1 xmlns:xy=\"ns2url\" /><xy:child2 xmlns:xy=\"ns2url\" /></a:root>",

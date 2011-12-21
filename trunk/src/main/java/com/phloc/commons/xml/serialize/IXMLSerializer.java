@@ -22,6 +22,8 @@ import java.io.OutputStream;
 import javax.annotation.Nonnull;
 import javax.annotation.WillNotClose;
 
+import com.phloc.commons.xml.EXMLIncorrectCharacterHandling;
+
 /**
  * Base interface for XML like serializers. Works both for IMicroNode and
  * org.w3c.dom.Node objects.
@@ -36,7 +38,7 @@ public interface IXMLSerializer <NODETYPE>
    * Serialize the XML declaration? defaults to true
    * 
    * @param eFormat
-   *        The format to be serialized
+   *        The format to be serialized. May not be <code>null</code>.
    */
   void setFormat (@Nonnull EXMLSerializeFormat eFormat);
 
@@ -53,7 +55,8 @@ public interface IXMLSerializer <NODETYPE>
    * Serialize the DocumentType (if present)? defaults to true
    * 
    * @param eDocType
-   *        Enable of disable emitting of the document type?
+   *        Enable of disable emitting of the document type? May not be
+   *        <code>null</code>.
    */
   void setSerializeDocType (@Nonnull EXMLSerializeDocType eDocType);
 
@@ -61,7 +64,8 @@ public interface IXMLSerializer <NODETYPE>
    * Serialize the comments (if present)? defaults to true
    * 
    * @param eComments
-   *        Enable of disable emitting of the comments?
+   *        Enable of disable emitting of the comments? May not be
+   *        <code>null</code>.
    */
   void setSerializeComments (@Nonnull EXMLSerializeComments eComments);
 
@@ -70,9 +74,17 @@ public interface IXMLSerializer <NODETYPE>
    * If true, alignment is set as well
    * 
    * @param eIndent
-   *        Indentation type
+   *        Indentation type. May not be <code>null</code>.
    */
   void setIndent (@Nonnull EXMLSerializeIndent eIndent);
+
+  /**
+   * Define how to handling incorrect characters on writing.
+   * 
+   * @param eIncorrectCharacterHandling
+   *        The incorrect handling to be used. May not be <code>null</code>.
+   */
+  void setIncorrectCharacterHandling (@Nonnull EXMLIncorrectCharacterHandling eIncorrectCharacterHandling);
 
   /**
    * Write the specified node to the specified OutputStream.
