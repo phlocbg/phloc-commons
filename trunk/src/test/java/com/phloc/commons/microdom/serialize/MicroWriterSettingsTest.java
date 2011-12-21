@@ -27,12 +27,13 @@ import org.junit.Test;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.mock.PhlocTestUtils;
+import com.phloc.commons.xml.EXMLIncorrectCharacterHandling;
 import com.phloc.commons.xml.EXMLVersion;
+import com.phloc.commons.xml.serialize.AbstractXMLWriterSettings;
 import com.phloc.commons.xml.serialize.EXMLSerializeComments;
 import com.phloc.commons.xml.serialize.EXMLSerializeDocType;
 import com.phloc.commons.xml.serialize.EXMLSerializeFormat;
 import com.phloc.commons.xml.serialize.EXMLSerializeIndent;
-import com.phloc.commons.xml.serialize.XMLWriterSettings;
 
 /**
  * Test class for class {@link MicroWriterSettings}.
@@ -48,7 +49,7 @@ public final class MicroWriterSettingsTest
     assertEquals (EXMLVersion.XML_10, mws.getXMLVersion ());
     assertEquals (EXMLSerializeDocType.EMIT, mws.getSerializeDocType ());
     assertEquals (EXMLSerializeComments.EMIT, mws.getSerializeComments ());
-    assertEquals (XMLWriterSettings.DEFAULT_XML_CHARSET, mws.getCharset ());
+    assertEquals (AbstractXMLWriterSettings.DEFAULT_XML_CHARSET, mws.getCharset ());
     assertEquals (EXMLSerializeFormat.XML, mws.getFormat ());
     assertEquals (EXMLSerializeIndent.INDENT_AND_ALIGN, mws.getIndent ());
 
@@ -56,7 +57,7 @@ public final class MicroWriterSettingsTest
     assertEquals (EXMLVersion.XML_10, mws.getXMLVersion ());
     assertEquals (EXMLSerializeDocType.EMIT, mws.getSerializeDocType ());
     assertEquals (EXMLSerializeComments.EMIT, mws.getSerializeComments ());
-    assertEquals (XMLWriterSettings.DEFAULT_XML_CHARSET, mws.getCharset ());
+    assertEquals (AbstractXMLWriterSettings.DEFAULT_XML_CHARSET, mws.getCharset ());
     assertEquals (EXMLSerializeFormat.XML, mws.getFormat ());
     assertEquals (EXMLSerializeIndent.INDENT_AND_ALIGN, mws.getIndent ());
 
@@ -95,17 +96,24 @@ public final class MicroWriterSettingsTest
             {
               mmws.setIndent (eIndent);
               assertEquals (eIndent, mmws.getIndent ());
-              for (final Charset aCS : CharsetManager.getAllCharsets ().values ())
+              for (final EXMLIncorrectCharacterHandling eIncorrectCharHandling : EXMLIncorrectCharacterHandling.values ())
               {
-                mmws.setCharset (aCS.name ());
-                assertEquals (aCS.name (), mmws.getCharset ());
-                PhlocTestUtils.testDefaultImplementationWithEqualContentObject (mmws,
-                                                                                new MicroWriterSettings ().setXMLVersion (eVersion)
-                                                                                                          .setSerializeDocType (eDocType)
-                                                                                                          .setSerializeComments (eComments)
-                                                                                                          .setFormat (eFormat)
-                                                                                                          .setIndent (eIndent)
-                                                                                                          .setCharset (aCS.name ()));
+                mmws.setIncorrectCharacterHandling (eIncorrectCharHandling);
+                assertEquals (eIncorrectCharHandling, mmws.getIncorrectCharacterHandling ());
+                for (final Charset aCS : CharsetManager.getAllCharsets ().values ())
+                {
+                  mmws.setCharset (aCS.name ());
+                  assertEquals (aCS.name (), mmws.getCharset ());
+                  PhlocTestUtils.testDefaultImplementationWithEqualContentObject (mmws,
+                                                                                  new MicroWriterSettings ().setXMLVersion (eVersion)
+                                                                                                            .setSerializeDocType (eDocType)
+                                                                                                            .setSerializeComments (eComments)
+                                                                                                            .setFormat (eFormat)
+                                                                                                            .setIndent (eIndent)
+                                                                                                            .setIncorrectCharacterHandling (eIncorrectCharHandling)
+                                                                                                            .setCharset (aCS.name ()));
+                }
+                assertEquals (eIncorrectCharHandling, mmws.getIncorrectCharacterHandling ());
               }
               assertEquals (eIndent, mmws.getIndent ());
             }

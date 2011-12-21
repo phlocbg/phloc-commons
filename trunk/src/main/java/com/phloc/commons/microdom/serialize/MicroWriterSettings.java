@@ -18,19 +18,12 @@
 package com.phloc.commons.microdom.serialize;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
-import javax.xml.namespace.NamespaceContext;
 
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
-import com.phloc.commons.xml.EXMLIncorrectCharacterHandling;
 import com.phloc.commons.xml.EXMLVersion;
-import com.phloc.commons.xml.serialize.EXMLSerializeComments;
-import com.phloc.commons.xml.serialize.EXMLSerializeDocType;
-import com.phloc.commons.xml.serialize.EXMLSerializeFormat;
-import com.phloc.commons.xml.serialize.EXMLSerializeIndent;
-import com.phloc.commons.xml.serialize.XMLWriterSettings;
+import com.phloc.commons.xml.serialize.AbstractXMLWriterSettings;
 
 /**
  * Default implementation of the {@link IMicroWriterSettings} interface.<br>
@@ -40,9 +33,9 @@ import com.phloc.commons.xml.serialize.XMLWriterSettings;
  * @author philip
  */
 @NotThreadSafe
-public final class MicroWriterSettings extends XMLWriterSettings implements IMicroWriterSettings
+public final class MicroWriterSettings extends AbstractXMLWriterSettings <MicroWriterSettings> implements
+                                                                                              IMicroWriterSettings
 {
-  @SuppressWarnings ("hiding")
   public static final IMicroWriterSettings DEFAULT_XML_SETTINGS = new MicroWriterSettings ();
 
   private EXMLVersion m_eXMLVersion = EXMLVersion.XML_10;
@@ -74,62 +67,6 @@ public final class MicroWriterSettings extends XMLWriterSettings implements IMic
   public EXMLVersion getXMLVersion ()
   {
     return m_eXMLVersion;
-  }
-
-  @Override
-  @Nonnull
-  public MicroWriterSettings setFormat (@Nonnull final EXMLSerializeFormat eFormat)
-  {
-    super.setFormat (eFormat);
-    return this;
-  }
-
-  @Override
-  @Nonnull
-  public MicroWriterSettings setSerializeDocType (@Nonnull final EXMLSerializeDocType eSerializeDocType)
-  {
-    super.setSerializeDocType (eSerializeDocType);
-    return this;
-  }
-
-  @Override
-  @Nonnull
-  public MicroWriterSettings setSerializeComments (@Nonnull final EXMLSerializeComments eSerializeComments)
-  {
-    super.setSerializeComments (eSerializeComments);
-    return this;
-  }
-
-  @Override
-  @Nonnull
-  public MicroWriterSettings setIndent (@Nonnull final EXMLSerializeIndent eIndent)
-  {
-    super.setIndent (eIndent);
-    return this;
-  }
-
-  @Override
-  @Nonnull
-  public MicroWriterSettings setIncorrectCharacterHandling (@Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharacterHandling)
-  {
-    super.setIncorrectCharacterHandling (eIncorrectCharacterHandling);
-    return this;
-  }
-
-  @Override
-  @Nonnull
-  public MicroWriterSettings setCharset (@Nonnull final String sCharset)
-  {
-    super.setCharset (sCharset);
-    return this;
-  }
-
-  @Override
-  @Nonnull
-  public MicroWriterSettings setNamespaceContext (@Nullable final NamespaceContext aNamespaceContext)
-  {
-    super.setNamespaceContext (aNamespaceContext);
-    return this;
   }
 
   @Override
