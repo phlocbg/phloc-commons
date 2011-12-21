@@ -19,7 +19,6 @@ package com.phloc.commons.xml;
 
 import org.junit.Test;
 
-import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.impl.MicroDocument;
@@ -48,7 +47,7 @@ public final class DefaultXMLIterationHandlerTest extends AbstractPhlocTestCase
     eRoot.appendIgnorableWhitespaceText (" ");
 
     final DefaultXMLIterationHandler hdl = new DefaultXMLIterationHandler ();
-    final MicroSerializer aMS = new MicroSerializer (CCharset.CHARSET_ISO_8859_1);
+    final MicroSerializer aMS = new MicroSerializer ();
     aMS.write (aDoc, hdl);
   }
 }

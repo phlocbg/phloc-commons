@@ -168,7 +168,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
       final String sResult = XMLWriter.getXMLString (doc, CCharset.CHARSET_UTF_8);
       assertEquals ("<?xml version=\"1.0\" encoding=\"" +
                     CCharset.CHARSET_UTF_8 +
-                    "\" standalone=\"yes\"?>" +
+                    "\"?>" +
                     sCRLF +
                     "<!DOCTYPE html PUBLIC \"" +
                     DOCTYPE_XHTML10_QNAME +
@@ -201,7 +201,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
                                                      CCharset.CHARSET_UTF_8);
       assertEquals ("<?xml version=\"1.0\" encoding=\"" +
                     CCharset.CHARSET_UTF_8 +
-                    "\" standalone=\"yes\"?>" +
+                    "\"?>" +
                     sCRLF +
                     "<html xmlns=\"" +
                     DOCTYPE_XHTML10_URI +
@@ -219,7 +219,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
 
     assertTrue (XMLWriter.writeXMLToStream (doc, new NonBlockingByteArrayOutputStream (), CCharset.CHARSET_ISO_8859_1)
                          .isSuccess ());
-    new XMLSerializerPhloc (CCharset.CHARSET_ISO_8859_1).write (doc, new DefaultXMLIterationHandler ());
+    new XMLSerializerPhloc ().write (doc, new DefaultXMLIterationHandler ());
 
     try
     {

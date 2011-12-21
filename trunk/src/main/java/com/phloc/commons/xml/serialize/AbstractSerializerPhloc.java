@@ -36,8 +36,6 @@ import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.xml.CXML;
-import com.phloc.commons.xml.EXMLIncorrectCharacterHandling;
-import com.phloc.commons.xml.EXMLVersion;
 
 /**
  * Abstract XML serializer implementation that works with IMicroNode and
@@ -300,39 +298,10 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
     }
   }
 
-  protected final String m_sEncoding;
-
-  protected final EXMLVersion m_eVersion;
-
   /**
-   * serialize XML declaration?
+   * The serialization settings
    */
-  protected EXMLSerializeFormat m_eFormat = EXMLSerializeFormat.XML;
-
-  /**
-   * serialize XML standalone attribute?
-   */
-  protected boolean m_bXMLDeclStandalone = true;
-
-  /**
-   * serialize doc type?
-   */
-  protected EXMLSerializeDocType m_eSerializeDocType = EXMLSerializeDocType.EMIT;
-
-  /**
-   * serialize comments?
-   */
-  protected EXMLSerializeComments m_eSerializeComments = EXMLSerializeComments.EMIT;
-
-  /**
-   * align file (each tag on a new line).
-   */
-  protected EXMLSerializeIndent m_eIndent = EXMLSerializeIndent.INDENT_AND_ALIGN;
-
-  /**
-   * How to handle incorrect characters.
-   */
-  protected EXMLIncorrectCharacterHandling m_eIncorrectCharacterHandling = EXMLIncorrectCharacterHandling.DEFAULT;
+  protected final IXMLWriterSettings m_aSettings;
 
   /**
    * helper variable: current indentation.
@@ -344,72 +313,20 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
    */
   protected final NamespaceStack m_aNSStack;
 
-  public AbstractSerializerPhloc (@Nullable final String sEncoding, @Nullable final NamespaceContext aNamespaceCtx)
+  public AbstractSerializerPhloc (@Nonnull final IXMLWriterSettings aSettings)
   {
-    this (null, sEncoding, aNamespaceCtx);
-  }
-
-  public AbstractSerializerPhloc (@Nullable final EXMLVersion eVersion,
-                                  @Nullable final String sEncoding,
-                                  @Nullable final NamespaceContext aNamespaceCtx)
-  {
-    m_sEncoding = sEncoding;
-    m_eVersion = eVersion;
-    m_aNSStack = new NamespaceStack (aNamespaceCtx);
-  }
-
-  public final void setFormat (final EXMLSerializeFormat eFormat)
-  {
-    if (eFormat == null)
-      throw new NullPointerException ("format");
-    m_eFormat = eFormat;
-  }
-
-  public final void setStandalone (final boolean bStandalone)
-  {
-    m_bXMLDeclStandalone = bStandalone;
-  }
-
-  public final void setSerializeDocType (@Nonnull final EXMLSerializeDocType eSerializeDocType)
-  {
-    if (eSerializeDocType == null)
-      throw new NullPointerException ("serializeDocType");
-    m_eSerializeDocType = eSerializeDocType;
-  }
-
-  public final void setSerializeComments (@Nonnull final EXMLSerializeComments eSerializeComments)
-  {
-    if (eSerializeComments == null)
-      throw new NullPointerException ("serializeComments");
-    m_eSerializeComments = eSerializeComments;
-  }
-
-  public final void setIndent (@Nonnull final EXMLSerializeIndent eIndent)
-  {
-    if (eIndent == null)
-      throw new NullPointerException ("indent");
-    m_eIndent = eIndent;
-  }
-
-  public final void setIncorrectCharacterHandling (@Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharacterHandling)
-  {
-    if (eIncorrectCharacterHandling == null)
-      throw new NullPointerException ("incorrectCharacterHandling");
-    m_eIncorrectCharacterHandling = eIncorrectCharacterHandling;
+    if (aSettings == null)
+      throw new NullPointerException ("settings");
+    m_aSettings = aSettings;
+    m_aNSStack = new NamespaceStack (aSettings.getNamespaceContext ());
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("format", m_eFormat)
-                                       .append ("xmlDeclStandalone", m_bXMLDeclStandalone)
-                                       .append ("serializeDocType", m_eSerializeDocType)
-                                       .append ("serializeComments", m_eSerializeComments)
-                                       .append ("indent", m_eIndent)
-                                       .append ("incorrectCharHandling", m_eIncorrectCharacterHandling)
+    return new ToStringGenerator (this).append ("settings", m_aSettings)
                                        .append ("sIndent", m_aIndent.toString ())
                                        .append ("namespaceStack", m_aNSStack)
-                                       .append ("encoding", m_sEncoding)
                                        .toString ();
   }
 }

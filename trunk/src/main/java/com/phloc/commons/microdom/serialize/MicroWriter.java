@@ -91,14 +91,7 @@ public final class MicroWriter
 
     try
     {
-      final IXMLSerializer <IMicroNode> aSerializer = new MicroSerializer (aSettings.getXMLVersion (),
-                                                                           aSettings.getCharset (),
-                                                                           aSettings.getNamespaceContext ());
-      aSerializer.setFormat (aSettings.getFormat ());
-      aSerializer.setSerializeDocType (aSettings.getSerializeDocType ());
-      aSerializer.setSerializeComments (aSettings.getSerializeComments ());
-      aSerializer.setIndent (aSettings.getIndent ());
-      aSerializer.setIncorrectCharacterHandling (aSettings.getIncorrectCharacterHandling ());
+      final IXMLSerializer <IMicroNode> aSerializer = new MicroSerializer (aSettings);
       aSerializer.write (aNode, aOS);
     }
     finally
