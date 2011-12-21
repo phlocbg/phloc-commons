@@ -115,10 +115,22 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
   {
     if (m_eFormat.hasXMLHeader ())
     {
-      final EXMLVersion eXMLVersion = EXMLVersion.getFromVersionOrDefault (aDocument.getXmlVersion (), m_eVersion);
-      aEmitter.onDocumentStart (eXMLVersion, m_sEncoding, aDocument.getXmlStandalone () ||
-                                                          m_bXMLDeclStandalone ||
-                                                          aDocument.getDoctype () == null);
+      String sXMLVersion = null;
+      boolean bIsDocumentStandalone = false;
+      try
+      {
+        sXMLVersion = aDocument.getXmlVersion ();
+        bIsDocumentStandalone = aDocument.getXmlStandalone ();
+      }
+      catch (final Throwable ex)
+      {
+        // Happens e.g. in dom4j 1.6.1:
+        // AbstractMethodError: getXmlVersion and getXmlStandalone
+      }
+      final EXMLVersion eXMLVersion = EXMLVersion.getFromVersionOrDefault (sXMLVersion, m_eVersion);
+      aEmitter.onDocumentStart (eXMLVersion,
+                                m_sEncoding,
+                                bIsDocumentStandalone || m_bXMLDeclStandalone || aDocument.getDoctype () == null);
     }
 
     final NodeList aNL = aDocument.getChildNodes ();

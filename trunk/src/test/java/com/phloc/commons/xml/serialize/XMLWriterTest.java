@@ -316,12 +316,23 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
   }
 
   @Test
-  public void testXML11 ()
+  public void testXMLVersionNumber ()
   {
-    final Document aDoc = XMLFactory.newDocument (EXMLVersion.XML_11);
+    Document aDoc = XMLFactory.newDocument (EXMLVersion.XML_10);
     aDoc.appendChild (aDoc.createElement ("any"));
-    final String sXML = XMLWriter.getXMLString (aDoc, CCharset.CHARSET_UTF_8);
-    assertEquals ("<?xml version=\"1.1\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n" + "<any />\r\n", sXML);
+    String sXML = XMLWriter.getXMLString (aDoc, CCharset.CHARSET_UTF_8);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
+                  CGlobal.LINE_SEPARATOR +
+                  "<any />" +
+                  CGlobal.LINE_SEPARATOR, sXML);
+
+    aDoc = XMLFactory.newDocument (EXMLVersion.XML_11);
+    aDoc.appendChild (aDoc.createElement ("any"));
+    sXML = XMLWriter.getXMLString (aDoc, CCharset.CHARSET_UTF_8);
+    assertEquals ("<?xml version=\"1.1\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
+                  CGlobal.LINE_SEPARATOR +
+                  "<any />" +
+                  CGlobal.LINE_SEPARATOR, sXML);
   }
 
   @Test
