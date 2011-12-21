@@ -44,7 +44,6 @@ import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.xml.CXML;
-import com.phloc.commons.xml.EXMLIncorrectCharacterHandling;
 import com.phloc.commons.xml.EXMLVersion;
 import com.phloc.commons.xml.IXMLIterationHandler;
 import com.phloc.commons.xml.XMLHelper;
@@ -252,16 +251,9 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
 
   public void write (@Nonnull final Node aNode, @Nonnull @WillNotClose final OutputStream aOS)
   {
-    write (aNode, aOS, EXMLIncorrectCharacterHandling.DEFAULT);
-  }
-
-  public void write (@Nonnull final Node aNode,
-                     @Nonnull @WillNotClose final OutputStream aOS,
-                     @Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharHandling)
-  {
     final Writer aWriter = new BufferedWriter (new OutputStreamWriter (aOS,
                                                                        CharsetManager.charsetFromName (m_aSettings.getCharset ())));
-    final IXMLIterationHandler aXMLWriter = new XMLEmitterPhloc (aWriter, eIncorrectCharHandling);
+    final IXMLIterationHandler aXMLWriter = new XMLEmitterPhloc (aWriter, m_aSettings.getIncorrectCharacterHandling ());
     _writeNode (aXMLWriter, aNode);
     // Flush is important for Writer!
     StreamUtils.flush (aWriter);
