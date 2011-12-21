@@ -87,7 +87,7 @@ public interface IXMLSerializer <NODETYPE>
   void setIncorrectCharacterHandling (@Nonnull EXMLIncorrectCharacterHandling eIncorrectCharacterHandling);
 
   /**
-   * Write the specified node to the specified OutputStream.
+   * Write the specified node to the specified {@link OutputStream}.
    * 
    * @param aNode
    *        The node to write. May not be <code>null</code>.

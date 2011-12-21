@@ -56,6 +56,14 @@ public final class MicroWriter
   private MicroWriter ()
   {}
 
+  @Deprecated
+  public static void saveToStream (@Nonnull final IMicroNode aNode,
+                                   @Nonnull @WillClose final OutputStream aOS,
+                                   @Nonnull final IXMLWriterSettings aSettings)
+  {
+    writeToStream (aNode, aOS, aSettings);
+  }
+
   /**
    * Write a Micro Node to an output stream.
    * 
@@ -70,9 +78,9 @@ public final class MicroWriter
    *        The settings to be used for the creation. May not be
    *        <code>null</code>.
    */
-  public static void saveToStream (@Nonnull final IMicroNode aNode,
-                                   @Nonnull @WillClose final OutputStream aOS,
-                                   @Nonnull final IXMLWriterSettings aSettings)
+  public static void writeToStream (@Nonnull final IMicroNode aNode,
+                                    @Nonnull @WillClose final OutputStream aOS,
+                                    @Nonnull final IXMLWriterSettings aSettings)
   {
     if (aOS == null)
       throw new NullPointerException ("outputStream");
@@ -111,7 +119,7 @@ public final class MicroWriter
     {
       // start serializing
       final NonBlockingByteArrayOutputStream aOS = new NonBlockingByteArrayOutputStream (50 * CGlobal.BYTES_PER_KILOBYTE);
-      saveToStream (aNode, aOS, aSettings);
+      writeToStream (aNode, aOS, aSettings);
       s_aSizeHdl.addSize (aOS.size ());
       return aOS.getAsString (aSettings.getCharset ());
     }

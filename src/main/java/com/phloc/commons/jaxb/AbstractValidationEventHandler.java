@@ -34,7 +34,6 @@ import com.phloc.commons.error.IResourceError;
 import com.phloc.commons.error.IResourceLocation;
 import com.phloc.commons.error.ResourceError;
 import com.phloc.commons.error.ResourceLocation;
-import com.phloc.commons.xml.serialize.AbstractXMLWriterSettings;
 import com.phloc.commons.xml.serialize.XMLWriter;
 
 /**
@@ -93,7 +92,7 @@ public abstract class AbstractValidationEventHandler implements ValidationEventH
       // Source node found?
       final Node aNode = aLocator.getNode ();
       if (aNode != null)
-        return XMLWriter.getXMLString (aNode, AbstractXMLWriterSettings.DEFAULT_XML_CHARSET);
+        return XMLWriter.getXMLString (aNode);
     }
     return null;
   }

@@ -213,7 +213,7 @@ public final class XMLMapHandler
         eMap.setAttribute (ATTR_KEY, aEntry.getKey ());
         eMap.setAttribute (ATTR_VALUE, aEntry.getValue ());
       }
-      MicroWriter.saveToStream (aDoc, aOS, XMLWriterSettings.DEFAULT_XML_SETTINGS);
+      MicroWriter.writeToStream (aDoc, aOS, XMLWriterSettings.DEFAULT_XML_SETTINGS);
       return ESuccess.SUCCESS;
     }
     finally

@@ -41,6 +41,6 @@ public class DOMInputStreamProvider extends StringInputStreamProvider
    */
   public DOMInputStreamProvider (@Nonnull final Node aNode, @Nonnull final String sCharset)
   {
-    super (XMLWriter.getXMLString (aNode, sCharset), sCharset);
+    super (XMLWriter.getNodeAsString (aNode, new XMLWriterSettings ().setCharset (sCharset)), sCharset);
   }
 }

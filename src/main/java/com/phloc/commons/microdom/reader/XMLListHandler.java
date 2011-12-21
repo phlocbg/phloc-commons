@@ -206,7 +206,7 @@ public final class XMLListHandler
         final IMicroElement eItem = eRoot.appendElement (ELEMENT_ITEM);
         eItem.setAttribute (ATTR_VALUE, sItem);
       }
-      MicroWriter.saveToStream (aDoc, aOS, XMLWriterSettings.DEFAULT_XML_SETTINGS);
+      MicroWriter.writeToStream (aDoc, aOS, XMLWriterSettings.DEFAULT_XML_SETTINGS);
       return ESuccess.SUCCESS;
     }
     finally
