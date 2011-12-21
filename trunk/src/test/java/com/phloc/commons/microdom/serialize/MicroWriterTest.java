@@ -165,21 +165,21 @@ public final class MicroWriterTest
   {
     try
     {
-      MicroWriter.saveToStream (null, new NonBlockingByteArrayOutputStream (), XMLWriterSettings.DEFAULT_XML_SETTINGS);
+      MicroWriter.writeToStream (null, new NonBlockingByteArrayOutputStream (), XMLWriterSettings.DEFAULT_XML_SETTINGS);
       fail ();
     }
     catch (final NullPointerException ex)
     {}
     try
     {
-      MicroWriter.saveToStream (new MicroDocument (), null, XMLWriterSettings.DEFAULT_XML_SETTINGS);
+      MicroWriter.writeToStream (new MicroDocument (), null, XMLWriterSettings.DEFAULT_XML_SETTINGS);
       fail ();
     }
     catch (final NullPointerException ex)
     {}
     try
     {
-      MicroWriter.saveToStream (new MicroDocument (), new NonBlockingByteArrayOutputStream (), null);
+      MicroWriter.writeToStream (new MicroDocument (), new NonBlockingByteArrayOutputStream (), null);
       fail ();
     }
     catch (final NullPointerException ex)
@@ -256,7 +256,7 @@ public final class MicroWriterTest
   }
 
   @Test
-  public void testNumericReferencesXML10 ()
+  public void testSpecialCharactersXML10 ()
   {
     for (char i = Character.MIN_VALUE; i < Character.MAX_VALUE; ++i)
       if (!XMLHelper.isInvalidXMLCharacter (i))
@@ -278,7 +278,7 @@ public final class MicroWriterTest
   }
 
   @Test
-  public void testNumericReferencesXML11 ()
+  public void testSpecialCharactersXML11 ()
   {
     for (char i = Character.MIN_VALUE; i < Character.MAX_VALUE; ++i)
       if (!XMLHelper.isInvalidXMLCharacter (i))

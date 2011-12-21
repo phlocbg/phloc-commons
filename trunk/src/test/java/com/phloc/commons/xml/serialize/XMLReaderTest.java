@@ -32,7 +32,6 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
@@ -290,7 +289,7 @@ public final class XMLReaderTest
     assertNotNull (doc);
 
     // Write again
-    assertNotNull (XMLWriter.getXMLString (doc, CCharset.CHARSET_ISO_8859_1));
+    assertNotNull (XMLWriter.getXMLString (doc));
   }
 
   @Test
@@ -301,7 +300,7 @@ public final class XMLReaderTest
     assertNotNull (doc);
 
     // Write again
-    assertNotNull (XMLWriter.getXMLString (doc, CCharset.CHARSET_ISO_8859_1));
+    assertNotNull (XMLWriter.getXMLString (doc));
   }
 
   @Test

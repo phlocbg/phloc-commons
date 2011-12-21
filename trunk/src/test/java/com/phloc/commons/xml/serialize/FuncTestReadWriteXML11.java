@@ -55,7 +55,7 @@ public final class FuncTestReadWriteXML11
     final IMicroElement eMain = aDoc.appendElement ("main_tag");
     for (int i = 0; i < total; ++i)
       eMain.appendElement ("test").appendText (String.format ("%04d", Integer.valueOf (i)));
-    MicroWriter.saveToStream (aDoc,
+    MicroWriter.writeToStream (aDoc,
                               FileUtils.getOutputStream (new File (filename)),
                               new XMLWriterSettings ().setXMLVersion (XMLVERSION));
   }
@@ -69,7 +69,7 @@ public final class FuncTestReadWriteXML11
     assertNotNull (aDoc);
 
     final String sFilename2 = "target/xml11test2.xml";
-    MicroWriter.saveToStream (aDoc,
+    MicroWriter.writeToStream (aDoc,
                               FileUtils.getOutputStream (new File (sFilename2)),
                               new XMLWriterSettings ().setXMLVersion (XMLVERSION));
     final IMicroDocument aDoc2 = MicroReader.readMicroXML (FileUtils.getInputStream (sFilename2));

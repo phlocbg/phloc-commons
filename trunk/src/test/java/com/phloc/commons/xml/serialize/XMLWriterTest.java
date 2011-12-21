@@ -236,7 +236,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
       XMLWriter.getXHTMLString (doc, null);
       fail ();
     }
-    catch (final NullPointerException ex)
+    catch (final IllegalArgumentException ex)
     {}
   }
 
@@ -248,20 +248,19 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
     // Containing the forbidden CDATA end marker
     Element e = doc.createElement ("a");
     e.appendChild (doc.createCDATASection ("a]]>b"));
-    assertEquals ("<a><![CDATA[a]]>]]&gt;<![CDATA[b]]></a>" + CGlobal.LINE_SEPARATOR,
-                  XMLWriter.getXMLString (e, CCharset.CHARSET_UTF_8));
+    assertEquals ("<a><![CDATA[a]]>]]&gt;<![CDATA[b]]></a>" + CGlobal.LINE_SEPARATOR, XMLWriter.getXMLString (e));
 
     // Containing more than one forbidden CDATA end marker
     e = doc.createElement ("a");
     e.appendChild (doc.createCDATASection ("a]]>b]]>c"));
     assertEquals ("<a><![CDATA[a]]>]]&gt;<![CDATA[b]]>]]&gt;<![CDATA[c]]></a>" + CGlobal.LINE_SEPARATOR,
-                  XMLWriter.getXMLString (e, CCharset.CHARSET_UTF_8));
+                  XMLWriter.getXMLString (e));
 
     // Containing a complete CDATA section
     e = doc.createElement ("a");
     e.appendChild (doc.createCDATASection ("a<![CDATA[x]]>b"));
     assertEquals ("<a><![CDATA[a<![CDATA[x]]>]]&gt;<![CDATA[b]]></a>" + CGlobal.LINE_SEPARATOR,
-                  XMLWriter.getXMLString (e, CCharset.CHARSET_UTF_8));
+                  XMLWriter.getXMLString (e));
   }
 
   @Test
@@ -272,14 +271,9 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
     eRoot.appendChild (aDoc.createElementNS ("ns2url", "child1"));
     eRoot.appendChild (aDoc.createElementNS ("ns2url", "child2"));
 
-    String s = XMLWriter.getAsString (aDoc,
-                                      EXMLVersion.XML_10,
-                                      EXMLSerializeFormat.XML,
-                                      EXMLSerializeDocType.EMIT,
-                                      EXMLSerializeComments.EMIT,
-                                      EXMLSerializeIndent.NONE,
-                                      CCharset.CHARSET_ISO_8859_1,
-                                      null);
+    final XMLWriterSettings aSettings = new XMLWriterSettings ().setCharset (CCharset.CHARSET_ISO_8859_1)
+                                                                .setIndent (EXMLSerializeIndent.NONE);
+    String s = XMLWriter.getNodeAsString (aDoc, aSettings);
     assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>" +
                       CGlobal.LINE_SEPARATOR +
                       "<root xmlns=\"ns1url\"><ns0:child1 xmlns:ns0=\"ns2url\" /><ns0:child2 xmlns:ns0=\"ns2url\" /></root>",
@@ -287,28 +281,15 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
 
     final MapBasedNamespaceContext aCtx = new MapBasedNamespaceContext ();
     aCtx.addMapping ("a", "ns1url");
-    s = XMLWriter.getAsString (aDoc,
-                               EXMLVersion.XML_10,
-                               EXMLSerializeFormat.XML,
-                               EXMLSerializeDocType.EMIT,
-                               EXMLSerializeComments.EMIT,
-                               EXMLSerializeIndent.NONE,
-                               CCharset.CHARSET_ISO_8859_1,
-                               aCtx);
+    aSettings.setNamespaceContext (aCtx);
+    s = XMLWriter.getNodeAsString (aDoc, aSettings);
     assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>" +
                       CGlobal.LINE_SEPARATOR +
                       "<a:root xmlns:a=\"ns1url\"><ns0:child1 xmlns:ns0=\"ns2url\" /><ns0:child2 xmlns:ns0=\"ns2url\" /></a:root>",
                   s);
 
     aCtx.addMapping ("xy", "ns2url");
-    s = XMLWriter.getAsString (aDoc,
-                               EXMLVersion.XML_10,
-                               EXMLSerializeFormat.XML,
-                               EXMLSerializeDocType.EMIT,
-                               EXMLSerializeComments.EMIT,
-                               EXMLSerializeIndent.NONE,
-                               CCharset.CHARSET_ISO_8859_1,
-                               aCtx);
+    s = XMLWriter.getNodeAsString (aDoc, aSettings);
     assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>" +
                       CGlobal.LINE_SEPARATOR +
                       "<a:root xmlns:a=\"ns1url\"><xy:child1 xmlns:xy=\"ns2url\" /><xy:child2 xmlns:xy=\"ns2url\" /></a:root>",
@@ -320,7 +301,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
   {
     Document aDoc = XMLFactory.newDocument (EXMLVersion.XML_10);
     aDoc.appendChild (aDoc.createElement ("any"));
-    String sXML = XMLWriter.getXMLString (aDoc, CCharset.CHARSET_UTF_8);
+    String sXML = XMLWriter.getXMLString (aDoc);
     assertEquals ("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
                   CGlobal.LINE_SEPARATOR +
                   "<any />" +
@@ -328,7 +309,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
 
     aDoc = XMLFactory.newDocument (EXMLVersion.XML_11);
     aDoc.appendChild (aDoc.createElement ("any"));
-    sXML = XMLWriter.getXMLString (aDoc, CCharset.CHARSET_UTF_8);
+    sXML = XMLWriter.getXMLString (aDoc);
     assertEquals ("<?xml version=\"1.1\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
                   CGlobal.LINE_SEPARATOR +
                   "<any />" +

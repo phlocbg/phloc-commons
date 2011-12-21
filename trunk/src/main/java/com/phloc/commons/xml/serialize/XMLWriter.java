@@ -77,6 +77,7 @@ public final class XMLWriter
    * @return {@link ESuccess}
    */
   @Nonnull
+  @Deprecated
   public static ESuccess writeToStream (@Nonnull final Node aNode,
                                         @Nonnull @WillClose final OutputStream aOS,
                                         @Nonnull final EXMLSerializeFormat eFormat,
@@ -123,6 +124,7 @@ public final class XMLWriter
    * @return {@link ESuccess}
    */
   @Nonnull
+  @Deprecated
   public static ESuccess writeToStream (@Nonnull final Node aNode,
                                         @Nonnull @WillClose final OutputStream aOS,
                                         @Nonnull final EXMLVersion eVersion,
@@ -133,32 +135,37 @@ public final class XMLWriter
                                         @Nonnull final String sCharset,
                                         @Nullable final NamespaceContext aNamespaceCtx)
   {
+    return writeToStream (aNode, aOS, new XMLWriterSettings ().setXMLVersion (eVersion)
+                                                              .setFormat (eFormat)
+                                                              .setSerializeDocType (eDocType)
+                                                              .setSerializeComments (eComments)
+                                                              .setIndent (eIndent)
+                                                              .setCharset (sCharset)
+                                                              .setNamespaceContext (aNamespaceCtx));
+  }
+
+  @Nonnull
+  public static ESuccess writeToStream (@Nonnull final Node aNode,
+                                        @Nonnull @WillClose final OutputStream aOS,
+                                        @Nonnull final IXMLWriterSettings aSettings)
+  {
     if (aNode == null)
       throw new NullPointerException ("node");
     if (aOS == null)
       throw new NullPointerException ("outputStream");
-    if (eVersion == null)
-      throw new NullPointerException ("version");
-    if (eFormat == null)
-      throw new NullPointerException ("format");
-    if (eDocType == null)
-      throw new NullPointerException ("docType");
-    if (eComments == null)
-      throw new NullPointerException ("comments");
-    if (eIndent == null)
-      throw new NullPointerException ("indent");
-    if (sCharset == null)
-      throw new NullPointerException ("charset");
+    if (aSettings == null)
+      throw new NullPointerException ("settings");
 
     try
     {
-      // Charset is required for emitting it in the XML prolog!
-      final IXMLSerializer <Node> aSerializer = new XMLSerializerPhloc (eVersion, sCharset, aNamespaceCtx);
-      aSerializer.setFormat (eFormat);
-      aSerializer.setStandalone (true);
-      aSerializer.setSerializeDocType (eDocType);
-      aSerializer.setSerializeComments (eComments);
-      aSerializer.setIndent (eIndent);
+      final IXMLSerializer <Node> aSerializer = new XMLSerializerPhloc (aSettings.getXMLVersion (),
+                                                                        aSettings.getCharset (),
+                                                                        aSettings.getNamespaceContext ());
+      aSerializer.setFormat (aSettings.getFormat ());
+      aSerializer.setSerializeDocType (aSettings.getSerializeDocType ());
+      aSerializer.setSerializeComments (aSettings.getSerializeComments ());
+      aSerializer.setIndent (aSettings.getIndent ());
+      aSerializer.setIncorrectCharacterHandling (aSettings.getIncorrectCharacterHandling ());
       aSerializer.write (aNode, aOS);
       return ESuccess.SUCCESS;
     }
@@ -207,6 +214,7 @@ public final class XMLWriter
   }
 
   @Nullable
+  @Deprecated
   public static String getAsString (@Nonnull final Node aNode,
                                     @Nonnull final EXMLSerializeFormat eFormat,
                                     @Nonnull final EXMLSerializeDocType eDocType,
@@ -225,6 +233,7 @@ public final class XMLWriter
   }
 
   @Nullable
+  @Deprecated
   public static String getAsString (@Nonnull final Node aNode,
                                     @Nonnull final EXMLVersion eVersion,
                                     @Nonnull final EXMLSerializeFormat eFormat,
@@ -234,23 +243,50 @@ public final class XMLWriter
                                     @Nonnull final String sCharset,
                                     @Nullable final NamespaceContext aNamespaceCtx)
   {
+    return getNodeAsString (aNode, new XMLWriterSettings ().setXMLVersion (eVersion)
+                                                           .setFormat (eFormat)
+                                                           .setSerializeDocType (eDocType)
+                                                           .setSerializeComments (eComments)
+                                                           .setIndent (eIndent)
+                                                           .setCharset (sCharset)
+                                                           .setNamespaceContext (aNamespaceCtx));
+  }
+
+  @Nullable
+  public static String getNodeAsString (@Nonnull final Node aNode, @Nonnull final IXMLWriterSettings aSettings)
+  {
     NonBlockingByteArrayOutputStream aOS = null;
     try
     {
       // start serializing
       aOS = new NonBlockingByteArrayOutputStream (8192);
-      if (writeToStream (aNode, aOS, eVersion, eFormat, eDocType, eComments, eIndent, sCharset, aNamespaceCtx).isFailure ())
+      if (writeToStream (aNode, aOS, aSettings).isFailure ())
       {
         // Some exception was thrown....
         return null;
       }
-      return aOS.getAsString (sCharset);
+      return aOS.getAsString (aSettings.getCharset ());
     }
     finally
     {
       // don't forget to close the stream!
       StreamUtils.close (aOS);
     }
+  }
+
+  /**
+   * Convert the passed micro node to an XML string using
+   * {@link XMLWriterSettings#DEFAULT_XML_SETTINGS}. This is a specialized
+   * version of {@link #getNodeAsString(Node, IXMLWriterSettings)}.
+   * 
+   * @param aNode
+   *        The node to be converted to a string. May not be <code>null</code> .
+   * @return The string representation of the passed node.
+   */
+  @Nullable
+  public static String getXMLString (@Nonnull final Node aNode)
+  {
+    return getNodeAsString (aNode, XMLWriterSettings.DEFAULT_XML_SETTINGS);
   }
 
   /**
@@ -306,6 +342,7 @@ public final class XMLWriter
    * @return The XML string representation of the node.
    */
   @Nullable
+  @Deprecated
   public static String getXMLString (@Nonnull final Node aNode, @Nonnull final String sCharset)
   {
     return getAsString (aNode,
@@ -333,6 +370,7 @@ public final class XMLWriter
    * @return The XML string representation of the node.
    */
   @Nullable
+  @Deprecated
   public static String getXMLString (@Nonnull final Node aNode,
                                      @Nonnull final EXMLSerializeDocType eDocType,
                                      @Nonnull final EXMLSerializeIndent eIndent,
@@ -365,6 +403,7 @@ public final class XMLWriter
    * @return The XML string representation of the node.
    */
   @Nullable
+  @Deprecated
   public static String getXMLString (@Nonnull final Node aNode,
                                      @Nonnull final EXMLSerializeDocType eDocType,
                                      @Nonnull final EXMLSerializeComments eComments,
@@ -403,6 +442,7 @@ public final class XMLWriter
    * @return The XML string representation of the node.
    */
   @Nullable
+  @Deprecated
   public static String getXMLString (@Nonnull final Node aNode,
                                      @Nonnull final EXMLVersion eVersion,
                                      @Nonnull final EXMLSerializeDocType eDocType,

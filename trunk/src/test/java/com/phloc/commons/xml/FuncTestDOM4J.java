@@ -29,7 +29,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 import com.phloc.commons.xml.serialize.XMLWriter;
 
@@ -45,7 +44,7 @@ public final class FuncTestDOM4J extends AbstractPhlocTestCase
   {
     final Document aXML = new DOMDocument ();
     final Element aRoot = aXML.createElement ("rootElement");
-    assertNotNull (XMLWriter.getXMLString (aRoot, CCharset.CHARSET_UTF_8));
+    assertNotNull (XMLWriter.getXMLString (aRoot));
   }
 
   @Test
@@ -57,6 +56,6 @@ public final class FuncTestDOM4J extends AbstractPhlocTestCase
     aChild.appendChild (new DOMText ("anyText"));
     aChild.appendChild (new DOMEntityReference ("abc"));
 
-    assertNotNull (XMLWriter.getXMLString (aXML, CCharset.CHARSET_UTF_8));
+    assertNotNull (XMLWriter.getXMLString (aXML));
   }
 }
