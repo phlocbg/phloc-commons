@@ -48,17 +48,19 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   private static final String CDATA_END = "]]>";
   private static final String CRLF = CGlobal.LINE_SEPARATOR;
 
-  // This is the old default handling
-  private static EXMLIncorrectCharacterHandling s_eInvalidCharHandling = EXMLIncorrectCharacterHandling.DEFAULT;
-
   private final Writer m_aWriter;
   private EXMLVersion m_eXMLVersion = EXMLVersion.DEFAULT;
+  private final EXMLIncorrectCharacterHandling m_eIncorrectCharHandling;
 
-  public XMLEmitterPhloc (@Nonnull @WillNotClose final Writer aWriter)
+  public XMLEmitterPhloc (@Nonnull @WillNotClose final Writer aWriter,
+                          @Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharHandling)
   {
     if (aWriter == null)
       throw new NullPointerException ("writer");
+    if (eIncorrectCharHandling == null)
+      throw new NullPointerException ("incorrectCharHandling");
     m_aWriter = aWriter;
+    m_eIncorrectCharHandling = eIncorrectCharHandling;
   }
 
   @Nonnull
@@ -94,7 +96,7 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   {
     try
     {
-      XMLHelper.maskXMLTextTo (m_eXMLVersion, s_eInvalidCharHandling, sValue, m_aWriter);
+      XMLHelper.maskXMLTextTo (m_eXMLVersion, m_eIncorrectCharHandling, sValue, m_aWriter);
       return this;
     }
     catch (final IOException ex)
@@ -203,7 +205,7 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
       throw new NullPointerException ("qualifiedElementName");
 
     final String sDocType = getDocTypeHTMLRepresentation (m_eXMLVersion,
-                                                          s_eInvalidCharHandling,
+                                                          m_eIncorrectCharHandling,
                                                           sQualifiedElementName,
                                                           sPublicID,
                                                           sSystemID);
@@ -308,6 +310,9 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("writer", m_aWriter).toString ();
+    return new ToStringGenerator (this).append ("writer", m_aWriter)
+                                       .append ("XMLversion", m_eXMLVersion)
+                                       .append ("incorrectCharHandling", m_eIncorrectCharHandling)
+                                       .toString ();
   }
 }
