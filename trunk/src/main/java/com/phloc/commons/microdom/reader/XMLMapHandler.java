@@ -41,8 +41,8 @@ import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.impl.MicroDocument;
 import com.phloc.commons.microdom.serialize.MicroReader;
 import com.phloc.commons.microdom.serialize.MicroWriter;
-import com.phloc.commons.microdom.serialize.MicroWriterSettings;
 import com.phloc.commons.state.ESuccess;
+import com.phloc.commons.xml.serialize.XMLWriterSettings;
 
 /**
  * Simple class that reads a generic String-to-String mapping from a classpath
@@ -213,7 +213,7 @@ public final class XMLMapHandler
         eMap.setAttribute (ATTR_KEY, aEntry.getKey ());
         eMap.setAttribute (ATTR_VALUE, aEntry.getValue ());
       }
-      MicroWriter.saveToStream (aDoc, aOS, MicroWriterSettings.DEFAULT_XML_SETTINGS);
+      MicroWriter.saveToStream (aDoc, aOS, XMLWriterSettings.DEFAULT_XML_SETTINGS);
       return ESuccess.SUCCESS;
     }
     finally

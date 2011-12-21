@@ -17,12 +17,8 @@
  */
 package com.phloc.commons.microdom.serialize;
 
-import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.phloc.commons.hash.HashCodeGenerator;
-import com.phloc.commons.string.ToStringGenerator;
-import com.phloc.commons.xml.EXMLVersion;
 import com.phloc.commons.xml.serialize.AbstractXMLWriterSettings;
 
 /**
@@ -32,13 +28,13 @@ import com.phloc.commons.xml.serialize.AbstractXMLWriterSettings;
  * 
  * @author philip
  */
+@SuppressWarnings ("deprecation")
 @NotThreadSafe
+@Deprecated
 public final class MicroWriterSettings extends AbstractXMLWriterSettings <MicroWriterSettings> implements
                                                                                               IMicroWriterSettings
 {
   public static final IMicroWriterSettings DEFAULT_XML_SETTINGS = new MicroWriterSettings ();
-
-  private EXMLVersion m_eXMLVersion = EXMLVersion.XML_10;
 
   /**
    * Creates a default settings object with the following settings:
@@ -53,44 +49,4 @@ public final class MicroWriterSettings extends AbstractXMLWriterSettings <MicroW
    */
   public MicroWriterSettings ()// NOPMD
   {}
-
-  @Nonnull
-  public MicroWriterSettings setXMLVersion (@Nonnull final EXMLVersion eVersion)
-  {
-    if (eVersion == null)
-      throw new NullPointerException ("version");
-    m_eXMLVersion = eVersion;
-    return this;
-  }
-
-  @Nonnull
-  public EXMLVersion getXMLVersion ()
-  {
-    return m_eXMLVersion;
-  }
-
-  @Override
-  public boolean equals (final Object o)
-  {
-    if (o == this)
-      return true;
-    if (!super.equals (o))
-      return false;
-    if (!(o instanceof MicroWriterSettings))
-      return false;
-    final MicroWriterSettings rhs = (MicroWriterSettings) o;
-    return m_eXMLVersion.equals (rhs.m_eXMLVersion);
-  }
-
-  @Override
-  public int hashCode ()
-  {
-    return HashCodeGenerator.getDerived (super.hashCode ()).append (m_eXMLVersion).getHashCode ();
-  }
-
-  @Override
-  public String toString ()
-  {
-    return ToStringGenerator.getDerived (super.toString ()).append ("xmlVersion", m_eXMLVersion).toString ();
-  }
 }

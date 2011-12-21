@@ -17,9 +17,6 @@
  */
 package com.phloc.commons.microdom.serialize;
 
-import javax.annotation.Nonnull;
-
-import com.phloc.commons.xml.EXMLVersion;
 import com.phloc.commons.xml.serialize.IXMLWriterSettings;
 
 /**
@@ -27,11 +24,6 @@ import com.phloc.commons.xml.serialize.IXMLWriterSettings;
  * 
  * @author philip
  */
+@Deprecated
 public interface IMicroWriterSettings extends IXMLWriterSettings
-{
-  /**
-   * @return The XML version to use. Default is <code>1.0</code>
-   */
-  @Nonnull
-  EXMLVersion getXMLVersion ();
-}
+{}

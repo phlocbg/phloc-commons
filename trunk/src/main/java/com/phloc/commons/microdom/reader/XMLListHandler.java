@@ -42,8 +42,8 @@ import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.impl.MicroDocument;
 import com.phloc.commons.microdom.serialize.MicroReader;
 import com.phloc.commons.microdom.serialize.MicroWriter;
-import com.phloc.commons.microdom.serialize.MicroWriterSettings;
 import com.phloc.commons.state.ESuccess;
+import com.phloc.commons.xml.serialize.XMLWriterSettings;
 
 /**
  * Simple class that reads a list from an XML input stream.<br>
@@ -206,7 +206,7 @@ public final class XMLListHandler
         final IMicroElement eItem = eRoot.appendElement (ELEMENT_ITEM);
         eItem.setAttribute (ATTR_VALUE, sItem);
       }
-      MicroWriter.saveToStream (aDoc, aOS, MicroWriterSettings.DEFAULT_XML_SETTINGS);
+      MicroWriter.saveToStream (aDoc, aOS, XMLWriterSettings.DEFAULT_XML_SETTINGS);
       return ESuccess.SUCCESS;
     }
     finally

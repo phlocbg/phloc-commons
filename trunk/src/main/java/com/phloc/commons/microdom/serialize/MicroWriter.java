@@ -35,6 +35,8 @@ import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.stats.IStatisticsHandlerSize;
 import com.phloc.commons.stats.StatisticsManager;
 import com.phloc.commons.xml.serialize.IXMLSerializer;
+import com.phloc.commons.xml.serialize.IXMLWriterSettings;
+import com.phloc.commons.xml.serialize.XMLWriterSettings;
 
 /**
  * Utility class for serializing micro document objects.
@@ -70,7 +72,7 @@ public final class MicroWriter
    */
   public static void saveToStream (@Nonnull final IMicroNode aNode,
                                    @Nonnull @WillClose final OutputStream aOS,
-                                   @Nonnull final IMicroWriterSettings aSettings)
+                                   @Nonnull final IXMLWriterSettings aSettings)
   {
     if (aOS == null)
       throw new NullPointerException ("outputStream");
@@ -98,7 +100,7 @@ public final class MicroWriter
   }
 
   @Nullable
-  public static String getNodeAsString (@Nonnull final IMicroNode aNode, @Nonnull final IMicroWriterSettings aSettings)
+  public static String getNodeAsString (@Nonnull final IMicroNode aNode, @Nonnull final IXMLWriterSettings aSettings)
   {
     if (aNode == null)
       throw new NullPointerException ("node");
@@ -126,8 +128,8 @@ public final class MicroWriter
 
   /**
    * Convert the passed micro node to an XML string using
-   * {@link MicroWriterSettings#DEFAULT_XML_SETTINGS}. This is a specialized
-   * version of {@link #getNodeAsString(IMicroNode, IMicroWriterSettings)}.
+   * {@link XMLWriterSettings#DEFAULT_XML_SETTINGS}. This is a specialized
+   * version of {@link #getNodeAsString(IMicroNode, IXMLWriterSettings)}.
    * 
    * @param aNode
    *        The node to be converted to a string. May not be <code>null</code> .
@@ -136,6 +138,6 @@ public final class MicroWriter
   @Nullable
   public static String getXMLString (@Nonnull final IMicroNode aNode)
   {
-    return getNodeAsString (aNode, MicroWriterSettings.DEFAULT_XML_SETTINGS);
+    return getNodeAsString (aNode, XMLWriterSettings.DEFAULT_XML_SETTINGS);
   }
 }

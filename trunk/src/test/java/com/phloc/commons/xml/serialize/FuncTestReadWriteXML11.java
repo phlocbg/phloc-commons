@@ -31,7 +31,6 @@ import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.impl.MicroDocument;
 import com.phloc.commons.microdom.serialize.MicroReader;
 import com.phloc.commons.microdom.serialize.MicroWriter;
-import com.phloc.commons.microdom.serialize.MicroWriterSettings;
 import com.phloc.commons.xml.EXMLVersion;
 import com.phloc.commons.xml.XMLFactory;
 
@@ -58,7 +57,7 @@ public final class FuncTestReadWriteXML11
       eMain.appendElement ("test").appendText (String.format ("%04d", Integer.valueOf (i)));
     MicroWriter.saveToStream (aDoc,
                               FileUtils.getOutputStream (new File (filename)),
-                              new MicroWriterSettings ().setXMLVersion (XMLVERSION));
+                              new XMLWriterSettings ().setXMLVersion (XMLVERSION));
   }
 
   @Test
@@ -72,7 +71,7 @@ public final class FuncTestReadWriteXML11
     final String sFilename2 = "target/xml11test2.xml";
     MicroWriter.saveToStream (aDoc,
                               FileUtils.getOutputStream (new File (sFilename2)),
-                              new MicroWriterSettings ().setXMLVersion (XMLVERSION));
+                              new XMLWriterSettings ().setXMLVersion (XMLVERSION));
     final IMicroDocument aDoc2 = MicroReader.readMicroXML (FileUtils.getInputStream (sFilename2));
     assertNotNull (aDoc2);
 
