@@ -60,11 +60,10 @@ public final class XMLHelper
 {
   // Order is important!
   // Note: for performance reasons they are all char arrays!
-  private static final char [] MASK_PATTERNS_REGULAR = new char [] { '&', '<', '>', '"', '\'' };
+  private static final char [] MASK_PATTERNS_REGULAR = new char [] { 0, '&', '<', '>', '"', '\'' };
 
   // Control characters (except 9 - \t and 10 - \n)
-  private static final char [] MASK_PATTERNS_CONTROL = new char [] { 0,
-                                                                    1,
+  private static final char [] MASK_PATTERNS_CONTROL = new char [] { 1,
                                                                     2,
                                                                     3,
                                                                     4,
@@ -98,9 +97,11 @@ public final class XMLHelper
 
   /**
    * IE8 emits an error when using &apos; - that's why the work around with
-   * &#39; is used!
+   * &#39; is used!<br>
+   * Note: &#0; cannot be read so it is emitted as ""<br>
    */
-  private static final char [][] MASK_REPLACE_REGULAR = new char [] [] { "&amp;".toCharArray (),
+  private static final char [][] MASK_REPLACE_REGULAR = new char [] [] { "".toCharArray (),
+                                                                        "&amp;".toCharArray (),
                                                                         "&lt;".toCharArray (),
                                                                         "&gt;".toCharArray (),
                                                                         "&quot;".toCharArray (),
@@ -108,11 +109,9 @@ public final class XMLHelper
 
   /**
    * Control character replacements<br>
-   * Note: &#0; cannot be read so it is emitted as ""<br>
    * All other numeric mappings &#1; - &#31; can only be read by XML 1.1
    */
-  private static final char [][] MASK_REPLACE_CONTROL = new char [] [] { "".toCharArray (),
-                                                                        "&#1;".toCharArray (),
+  private static final char [][] MASK_REPLACE_CONTROL = new char [] [] { "&#1;".toCharArray (),
                                                                         "&#2;".toCharArray (),
                                                                         "&#3;".toCharArray (),
                                                                         "&#4;".toCharArray (),
