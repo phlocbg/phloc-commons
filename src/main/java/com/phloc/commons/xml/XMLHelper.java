@@ -108,6 +108,42 @@ public final class XMLHelper
                                                                         "&#39;".toCharArray () };
 
   /**
+   * Control character replacements for removal<br>
+   * All other numeric mappings &#1; - &#31; can only be read by XML 1.1
+   */
+  private static final char [][] MASK_REPLACE_CONTROL_EMPTY = new char [] [] { "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray () };
+
+  private static final char [][] MASK_REPLACE_ALL_EMPTY = ArrayHelper.getConcatenated (MASK_REPLACE_REGULAR,
+                                                                                       MASK_REPLACE_CONTROL_EMPTY);
+
+  /**
    * Control character replacements<br>
    * All other numeric mappings &#1; - &#31; can only be read by XML 1.1
    */
@@ -143,6 +179,9 @@ public final class XMLHelper
   private static final char [][] MASK_REPLACE_ALL_XML11 = ArrayHelper.getConcatenated (MASK_REPLACE_REGULAR,
                                                                                        MASK_REPLACE_CONTROL_XML11);
 
+  // Default handling as it was previously
+  private static final EXMLIncorrectCharacterHandling DEFAULT_INCCORECT_CHAR_HANDLING = EXMLIncorrectCharacterHandling.WRITE_TO_FILE_NO_LOG;
+
   static
   {
     /**
@@ -171,8 +210,12 @@ public final class XMLHelper
     // Check integrity
     if (MASK_PATTERNS_REGULAR.length != MASK_REPLACE_REGULAR.length)
       throw new IllegalStateException ("Regular arrays have different length!");
+    if (MASK_PATTERNS_CONTROL.length != MASK_REPLACE_CONTROL_EMPTY.length)
+      throw new IllegalStateException ("Empty arrays have different length!");
     if (MASK_PATTERNS_CONTROL.length != MASK_REPLACE_CONTROL_XML11.length)
       throw new IllegalStateException ("Control arrays have different length!");
+    if (MASK_PATTERNS_ALL.length != MASK_REPLACE_ALL_EMPTY.length)
+      throw new IllegalStateException ("Empty arrays have different length!");
     if (MASK_PATTERNS_ALL.length != MASK_REPLACE_ALL_XML11.length)
       throw new IllegalStateException ("Overall arrays have different length!");
   }
@@ -520,12 +563,21 @@ public final class XMLHelper
   @DevelopersNote ("Use the version with the XML version")
   public static char [] getMaskedXMLText (@Nullable final String s)
   {
-    return getMaskedXMLText (EXMLVersion.XML_10, s);
+    return getMaskedXMLText (EXMLVersion.XML_10, DEFAULT_INCCORECT_CHAR_HANDLING, s);
   }
 
   @Nonnull
-  public static char [] getMaskedXMLText (@Nonnull final EXMLVersion eXMLVersion, @Nullable final String s)
+  public static char [] getMaskedXMLText (@Nonnull final EXMLVersion eXMLVersion,
+                                          @Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharHandling,
+                                          @Nullable final String s)
   {
+    if (eIncorrectCharHandling.isTestRequired () && containsInvalidXMLCharacter (s))
+    {
+      eIncorrectCharHandling.notifyOnInvalidXMLCharacter (s);
+      if (eIncorrectCharHandling.isReplaceWithNothing ())
+        return StringHelper.replaceMultiple (s, MASK_PATTERNS_ALL, MASK_REPLACE_ALL_EMPTY);
+    }
+
     if (eXMLVersion.equals (EXMLVersion.XML_10))
     {
       // XML 1.0 cannot handle numeric replacements like &#5;
@@ -539,16 +591,31 @@ public final class XMLHelper
   @DevelopersNote ("Use the version with the XML version")
   public static int getMaskedXMLTextLength (@Nullable final String s)
   {
-    return getMaskedXMLTextLength (EXMLVersion.XML_10, s);
+    return getMaskedXMLTextLength (EXMLVersion.XML_10, DEFAULT_INCCORECT_CHAR_HANDLING, s);
   }
 
   @Nonnegative
-  public static int getMaskedXMLTextLength (@Nonnull final EXMLVersion eXMLVersion, @Nullable final String s)
+  public static int getMaskedXMLTextLength (@Nonnull final EXMLVersion eXMLVersion,
+                                            @Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharHandling,
+                                            @Nullable final String s)
   {
     if (StringHelper.hasNoText (s))
       return 0;
 
     final char [] aChars = s.toCharArray ();
+
+    if (eIncorrectCharHandling.isTestRequired () && containsInvalidXMLCharacter (aChars))
+    {
+      eIncorrectCharHandling.notifyOnInvalidXMLCharacter (s);
+      if (eIncorrectCharHandling.isReplaceWithNothing ())
+      {
+        final int nResLen = StringHelper.getReplaceMultipleResultLength (aChars,
+                                                                         MASK_PATTERNS_ALL,
+                                                                         MASK_REPLACE_ALL_EMPTY);
+        return nResLen == CGlobal.ILLEGAL_UINT ? s.length () : nResLen;
+      }
+    }
+
     int nResLen;
     if (eXMLVersion.equals (EXMLVersion.XML_10))
       nResLen = StringHelper.getReplaceMultipleResultLength (aChars, MASK_PATTERNS_REGULAR, MASK_REPLACE_REGULAR);
@@ -561,13 +628,24 @@ public final class XMLHelper
   @DevelopersNote ("Use the version with the XML version")
   public static void maskXMLTextTo (@Nullable final String s, @Nonnull final Writer aWriter) throws IOException
   {
-    maskXMLTextTo (EXMLVersion.XML_10, s, aWriter);
+    maskXMLTextTo (EXMLVersion.XML_10, DEFAULT_INCCORECT_CHAR_HANDLING, s, aWriter);
   }
 
   public static void maskXMLTextTo (@Nonnull final EXMLVersion eXMLVersion,
+                                    @Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharHandling,
                                     @Nullable final String s,
                                     @Nonnull final Writer aWriter) throws IOException
   {
+    if (eIncorrectCharHandling.isTestRequired () && containsInvalidXMLCharacter (s))
+    {
+      eIncorrectCharHandling.notifyOnInvalidXMLCharacter (s);
+      if (eIncorrectCharHandling.isReplaceWithNothing ())
+      {
+        StringHelper.replaceMultipleTo (s, MASK_PATTERNS_ALL, MASK_REPLACE_ALL_EMPTY, aWriter);
+        return;
+      }
+    }
+
     if (eXMLVersion.equals (EXMLVersion.XML_10))
       StringHelper.replaceMultipleTo (s, MASK_PATTERNS_REGULAR, MASK_REPLACE_REGULAR, aWriter);
     else
@@ -712,30 +790,36 @@ public final class XMLHelper
    * @return <code>true</code> if the character is valid in XML,
    *         <code>false</code> otherwise.
    */
-  public static boolean isValidXMLCharacter (final char c)
+  public static boolean isInvalidXMLCharacter (final char c)
   {
     // Based on: http://www.w3.org/TR/2006/REC-xml11-20060816/#charsets
     // 0x0000 is always invalid
-    if (c >= '\u0000' && c <= '\u0008')
-      return false;
-    if (c >= '\u000b' && c <= '\u000c')
-      return false;
-    if (c >= '\u000e' && c <= '\u001f')
-      return false;
+    return (c >= '\u0000' && c <= '\u0008') || (c >= '\u000b' && c <= '\u000c') || (c >= '\u000e' && c <= '\u001f') ||
     // Therefore XML 1.1 adds NEL (#x85) to the list of line-end characters.
-    if (c >= '\u007f' && c <= '\u009f')
-      return false;
-    // For completeness, the Unicode line separator character, #x2028, is also
-    // supported.
-    if (c == '\u2028')
-      return false;
-    if (c >= '\ufdd0' && c <= '\ufddf')
-      return false;
-    // Surrogate blocks (no Java IDs found)
-    if (c >= '\ufffe' && c <= '\uffff')
-      return false;
-    // high: 0xd800-0xdbff
-    // low: 0xdc00-0xdfff
-    return !Character.isHighSurrogate (c) && !Character.isLowSurrogate (c);
+           (c >= '\u007f' && c <= '\u009f') ||
+           // For completeness, the Unicode line separator character, #x2028, is
+           // also supported.
+           (c == '\u2028') ||
+           (c >= '\ufdd0' && c <= '\ufddf') ||
+           // Surrogate blocks (no Java IDs found)
+           (c >= '\ufffe' && c <= '\uffff') ||
+           // high: 0xd800-0xdbff
+           // low: 0xdc00-0xdfff
+           Character.isHighSurrogate (c) ||
+           Character.isLowSurrogate (c);
+  }
+
+  public static boolean containsInvalidXMLCharacter (@Nullable final String s)
+  {
+    return s == null ? false : containsInvalidXMLCharacter (s.toCharArray ());
+  }
+
+  public static boolean containsInvalidXMLCharacter (@Nullable final char [] aChars)
+  {
+    if (aChars != null)
+      for (final char c : aChars)
+        if (isInvalidXMLCharacter (c))
+          return true;
+    return false;
   }
 }

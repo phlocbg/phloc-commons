@@ -33,6 +33,7 @@ import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.xml.CXML;
 import com.phloc.commons.xml.DefaultXMLIterationHandler;
+import com.phloc.commons.xml.EXMLIncorrectCharacterHandling;
 import com.phloc.commons.xml.EXMLVersion;
 import com.phloc.commons.xml.XMLHelper;
 
@@ -46,6 +47,10 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   private static final String CDATA_START = "<![CDATA[";
   private static final String CDATA_END = "]]>";
   private static final String CRLF = CGlobal.LINE_SEPARATOR;
+
+  // This is the old default handling
+  private static EXMLIncorrectCharacterHandling s_eInvalidCharHandling = EXMLIncorrectCharacterHandling.DEFAULT;
+
   private final Writer m_aWriter;
   private EXMLVersion m_eXMLVersion = EXMLVersion.DEFAULT;
 
@@ -89,7 +94,7 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   {
     try
     {
-      XMLHelper.maskXMLTextTo (m_eXMLVersion, sValue, m_aWriter);
+      XMLHelper.maskXMLTextTo (m_eXMLVersion, s_eInvalidCharHandling, sValue, m_aWriter);
       return this;
     }
     catch (final IOException ex)
@@ -118,14 +123,16 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   @DevelopersNote ("Use the version with the XMK version")
   public static String getDocTypeHTMLRepresentation (@Nonnull final IMicroDocumentType aDocType)
   {
-    return getDocTypeHTMLRepresentation (EXMLVersion.DEFAULT, aDocType);
+    return getDocTypeHTMLRepresentation (EXMLVersion.DEFAULT, EXMLIncorrectCharacterHandling.DEFAULT, aDocType);
   }
 
   @Nonnull
   public static String getDocTypeHTMLRepresentation (@Nonnull final EXMLVersion eXMLVersion,
+                                                     @Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharHandling,
                                                      @Nonnull final IMicroDocumentType aDocType)
   {
     return getDocTypeHTMLRepresentation (eXMLVersion,
+                                         eIncorrectCharHandling,
                                          aDocType.getQualifiedName (),
                                          aDocType.getPublicID (),
                                          aDocType.getSystemID ());
@@ -138,7 +145,11 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
                                                      @Nullable final String sPublicID,
                                                      @Nullable final String sSystemID)
   {
-    return getDocTypeHTMLRepresentation (EXMLVersion.DEFAULT, sQualifiedName, sPublicID, sSystemID);
+    return getDocTypeHTMLRepresentation (EXMLVersion.DEFAULT,
+                                         EXMLIncorrectCharacterHandling.DEFAULT,
+                                         sQualifiedName,
+                                         sPublicID,
+                                         sSystemID);
   }
 
   /**
@@ -155,6 +166,7 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
    */
   @Nonnull
   public static String getDocTypeHTMLRepresentation (@Nonnull final EXMLVersion eXMLVersion,
+                                                     @Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharHandling,
                                                      @Nonnull final String sQualifiedName,
                                                      @Nullable final String sPublicID,
                                                      @Nullable final String sSystemID)
@@ -166,16 +178,18 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
     {
       // Public and system ID present
       aSB.append (" PUBLIC \"")
-         .append (XMLHelper.getMaskedXMLText (eXMLVersion, sPublicID))
+         .append (XMLHelper.getMaskedXMLText (eXMLVersion, eIncorrectCharHandling, sPublicID))
          .append ("\" \"")
-         .append (XMLHelper.getMaskedXMLText (eXMLVersion, sSystemID))
+         .append (XMLHelper.getMaskedXMLText (eXMLVersion, eIncorrectCharHandling, sSystemID))
          .append ('"');
     }
     else
       if (sSystemID != null)
       {
         // Only system ID present
-        aSB.append (" SYSTEM \"").append (XMLHelper.getMaskedXMLText (eXMLVersion, sSystemID)).append ('"');
+        aSB.append (" SYSTEM \"")
+           .append (XMLHelper.getMaskedXMLText (eXMLVersion, eIncorrectCharHandling, sSystemID))
+           .append ('"');
       }
     return aSB.append ('>').append (CRLF).toString ();
   }
@@ -188,7 +202,11 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
     if (sQualifiedElementName == null)
       throw new NullPointerException ("qualifiedElementName");
 
-    final String sDocType = getDocTypeHTMLRepresentation (m_eXMLVersion, sQualifiedElementName, sPublicID, sSystemID);
+    final String sDocType = getDocTypeHTMLRepresentation (m_eXMLVersion,
+                                                          s_eInvalidCharHandling,
+                                                          sQualifiedElementName,
+                                                          sPublicID,
+                                                          sSystemID);
     _append (sDocType);
   }
 

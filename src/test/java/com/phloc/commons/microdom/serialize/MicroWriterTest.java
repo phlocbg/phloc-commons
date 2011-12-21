@@ -257,7 +257,7 @@ public final class MicroWriterTest
   public void testNumericReferencesXML10 ()
   {
     for (char i = Character.MIN_VALUE; i < Character.MAX_VALUE; ++i)
-      if (XMLHelper.isValidXMLCharacter (i))
+      if (!XMLHelper.isInvalidXMLCharacter (i))
       {
         final String sText = "abc" + i + "def";
         assertEquals (7, sText.length ());
@@ -279,7 +279,7 @@ public final class MicroWriterTest
   public void testNumericReferencesXML11 ()
   {
     for (char i = Character.MIN_VALUE; i < Character.MAX_VALUE; ++i)
-      if (XMLHelper.isValidXMLCharacter (i))
+      if (!XMLHelper.isInvalidXMLCharacter (i))
       {
         final String sText = "abc" + i + "def";
         assertEquals (7, sText.length ());
