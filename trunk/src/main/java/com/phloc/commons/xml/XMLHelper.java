@@ -41,6 +41,7 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.annotations.DevelopersNote;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.collections.ArrayHelper;
@@ -62,7 +63,7 @@ public final class XMLHelper
   // Note: for performance reasons they are all char arrays!
   private static final char [] MASK_PATTERNS_REGULAR = new char [] { 0, '&', '<', '>', '"', '\'' };
 
-  // Control characters (except 9 - \t and 10 - \n)
+  // Control characters (except 9 - \t and 10 - \n and 13 - \r)
   private static final char [] MASK_PATTERNS_CONTROL = new char [] { 1,
                                                                     2,
                                                                     3,
@@ -73,7 +74,6 @@ public final class XMLHelper
                                                                     8,
                                                                     11,
                                                                     12,
-                                                                    13,
                                                                     14,
                                                                     15,
                                                                     16,
@@ -111,47 +111,69 @@ public final class XMLHelper
    * Control character replacements<br>
    * All other numeric mappings &#1; - &#31; can only be read by XML 1.1
    */
-  private static final char [][] MASK_REPLACE_CONTROL = new char [] [] { "&#1;".toCharArray (),
-                                                                        "&#2;".toCharArray (),
-                                                                        "&#3;".toCharArray (),
-                                                                        "&#4;".toCharArray (),
-                                                                        "&#5;".toCharArray (),
-                                                                        "&#6;".toCharArray (),
-                                                                        "&#7;".toCharArray (),
-                                                                        "&#8;".toCharArray (),
-                                                                        "&#11;".toCharArray (),
-                                                                        "&#12;".toCharArray (),
-                                                                        "&#13;".toCharArray (),
-                                                                        "&#14;".toCharArray (),
-                                                                        "&#15;".toCharArray (),
-                                                                        "&#16;".toCharArray (),
-                                                                        "&#17;".toCharArray (),
-                                                                        "&#18;".toCharArray (),
-                                                                        "&#19;".toCharArray (),
-                                                                        "&#20;".toCharArray (),
-                                                                        "&#21;".toCharArray (),
-                                                                        "&#22;".toCharArray (),
-                                                                        "&#23;".toCharArray (),
-                                                                        "&#24;".toCharArray (),
-                                                                        "&#25;".toCharArray (),
-                                                                        "&#26;".toCharArray (),
-                                                                        "&#27;".toCharArray (),
-                                                                        "&#28;".toCharArray (),
-                                                                        "&#29;".toCharArray (),
-                                                                        "&#30;".toCharArray (),
-                                                                        "&#31;".toCharArray () };
+  private static final char [][] MASK_REPLACE_CONTROL_XML11 = new char [] [] { "&#1;".toCharArray (),
+                                                                              "&#2;".toCharArray (),
+                                                                              "&#3;".toCharArray (),
+                                                                              "&#4;".toCharArray (),
+                                                                              "&#5;".toCharArray (),
+                                                                              "&#6;".toCharArray (),
+                                                                              "&#7;".toCharArray (),
+                                                                              "&#8;".toCharArray (),
+                                                                              "&#11;".toCharArray (),
+                                                                              "&#12;".toCharArray (),
+                                                                              "&#14;".toCharArray (),
+                                                                              "&#15;".toCharArray (),
+                                                                              "&#16;".toCharArray (),
+                                                                              "&#17;".toCharArray (),
+                                                                              "&#18;".toCharArray (),
+                                                                              "&#19;".toCharArray (),
+                                                                              "&#20;".toCharArray (),
+                                                                              "&#21;".toCharArray (),
+                                                                              "&#22;".toCharArray (),
+                                                                              "&#23;".toCharArray (),
+                                                                              "&#24;".toCharArray (),
+                                                                              "&#25;".toCharArray (),
+                                                                              "&#26;".toCharArray (),
+                                                                              "&#27;".toCharArray (),
+                                                                              "&#28;".toCharArray (),
+                                                                              "&#29;".toCharArray (),
+                                                                              "&#30;".toCharArray (),
+                                                                              "&#31;".toCharArray () };
 
-  private static final char [][] MASK_REPLACE_ALL = ArrayHelper.getConcatenated (MASK_REPLACE_REGULAR,
-                                                                                 MASK_REPLACE_CONTROL);
+  private static final char [][] MASK_REPLACE_ALL_XML11 = ArrayHelper.getConcatenated (MASK_REPLACE_REGULAR,
+                                                                                       MASK_REPLACE_CONTROL_XML11);
 
   static
   {
+    /**
+     * Unicode code points in the following ranges are valid in XML 1.0
+     * documents:<br>
+     * U+0009, U+000A, U+000D: these are the only C0 controls accepted in XML
+     * 1.0<br>
+     * U+0020–U+D7FF, U+E000–U+FFFD: this excludes some (not all) non-characters
+     * in the BMP (all surrogates, U+FFFE and U+FFFF are forbidden)<br>
+     * U+10000–U+10FFFF: this includes all code points in supplementary planes,
+     * including non-characters.<br>
+     * <br>
+     * XML 1.1 extends the set of allowed characters to include all the above,
+     * plus the remaining characters in the range U+0001–U+001F. At the same
+     * time, however, it restricts the use of C0 and C1 control characters other
+     * than U+0009, U+000A, U+000D, and U+0085 by requiring them to be written
+     * in escaped form (for example U+0001 must be written as &#x01; or its
+     * equivalent). In the case of C1 characters, this restriction is a
+     * backwards incompatibility; it was introduced to allow common encoding
+     * errors to be detected.<br>
+     * <br>
+     * The code point U+0000 is the only character that is not permitted in any
+     * XML 1.0 or 1.1 document.
+     */
+
     // Check integrity
     if (MASK_PATTERNS_REGULAR.length != MASK_REPLACE_REGULAR.length)
       throw new IllegalStateException ("Regular arrays have different length!");
-    if (MASK_PATTERNS_CONTROL.length != MASK_REPLACE_CONTROL.length)
+    if (MASK_PATTERNS_CONTROL.length != MASK_REPLACE_CONTROL_XML11.length)
       throw new IllegalStateException ("Control arrays have different length!");
-    if (MASK_PATTERNS_ALL.length != MASK_REPLACE_ALL.length)
+    if (MASK_PATTERNS_ALL.length != MASK_REPLACE_ALL_XML11.length)
       throw new IllegalStateException ("Overall arrays have different length!");
   }
 
@@ -494,25 +516,62 @@ public final class XMLHelper
   }
 
   @Nonnull
+  @Deprecated
+  @DevelopersNote ("Use the version with the XML version")
   public static char [] getMaskedXMLText (@Nullable final String s)
   {
-    return StringHelper.replaceMultiple (s, MASK_PATTERNS_ALL, MASK_REPLACE_ALL);
+    return getMaskedXMLText (EXMLVersion.XML_10, s);
   }
 
   @Nonnull
+  public static char [] getMaskedXMLText (@Nonnull final EXMLVersion eXMLVersion, @Nullable final String s)
+  {
+    if (eXMLVersion.equals (EXMLVersion.XML_10))
+    {
+      // XML 1.0 cannot handle numeric replacements like &#5;
+      return StringHelper.replaceMultiple (s, MASK_PATTERNS_REGULAR, MASK_REPLACE_REGULAR);
+    }
+    return StringHelper.replaceMultiple (s, MASK_PATTERNS_ALL, MASK_REPLACE_ALL_XML11);
+  }
+
+  @Nonnegative
+  @Deprecated
+  @DevelopersNote ("Use the version with the XML version")
   public static int getMaskedXMLTextLength (@Nullable final String s)
+  {
+    return getMaskedXMLTextLength (EXMLVersion.XML_10, s);
+  }
+
+  @Nonnegative
+  public static int getMaskedXMLTextLength (@Nonnull final EXMLVersion eXMLVersion, @Nullable final String s)
   {
     if (StringHelper.hasNoText (s))
       return 0;
-    final int nResLen = StringHelper.getReplaceMultipleResultLength (s.toCharArray (),
-                                                                     MASK_PATTERNS_ALL,
-                                                                     MASK_REPLACE_ALL);
+
+    final char [] aChars = s.toCharArray ();
+    int nResLen;
+    if (eXMLVersion.equals (EXMLVersion.XML_10))
+      nResLen = StringHelper.getReplaceMultipleResultLength (aChars, MASK_PATTERNS_REGULAR, MASK_REPLACE_REGULAR);
+    else
+      nResLen = StringHelper.getReplaceMultipleResultLength (aChars, MASK_PATTERNS_ALL, MASK_REPLACE_ALL_XML11);
     return nResLen == CGlobal.ILLEGAL_UINT ? s.length () : nResLen;
   }
 
+  @Deprecated
+  @DevelopersNote ("Use the version with the XML version")
   public static void maskXMLTextTo (@Nullable final String s, @Nonnull final Writer aWriter) throws IOException
   {
-    StringHelper.replaceMultipleTo (s, MASK_PATTERNS_ALL, MASK_REPLACE_ALL, aWriter);
+    maskXMLTextTo (EXMLVersion.XML_10, s, aWriter);
+  }
+
+  public static void maskXMLTextTo (@Nonnull final EXMLVersion eXMLVersion,
+                                    @Nullable final String s,
+                                    @Nonnull final Writer aWriter) throws IOException
+  {
+    if (eXMLVersion.equals (EXMLVersion.XML_10))
+      StringHelper.replaceMultipleTo (s, MASK_PATTERNS_REGULAR, MASK_REPLACE_REGULAR, aWriter);
+    else
+      StringHelper.replaceMultipleTo (s, MASK_PATTERNS_ALL, MASK_REPLACE_ALL_XML11, aWriter);
   }
 
   /**
@@ -640,5 +699,43 @@ public final class XMLHelper
     if (aNode != null)
       return aNode.getNamespaceURI ();
     return null;
+  }
+
+  /**
+   * Check if the passed character is valid for XML content. Works for XML 1.0
+   * and XML 1.1.<br>
+   * Note: makes no difference between the runtime JAXP solution and the
+   * explicit Xerces version
+   * 
+   * @param c
+   *        The character to be checked.
+   * @return <code>true</code> if the character is valid in XML,
+   *         <code>false</code> otherwise.
+   */
+  public static boolean isValidXMLCharacter (final char c)
+  {
+    // Based on: http://www.w3.org/TR/2006/REC-xml11-20060816/#charsets
+    // 0x0000 is always invalid
+    if (c >= '\u0000' && c <= '\u0008')
+      return false;
+    if (c >= '\u000b' && c <= '\u000c')
+      return false;
+    if (c >= '\u000e' && c <= '\u001f')
+      return false;
+    // Therefore XML 1.1 adds NEL (#x85) to the list of line-end characters.
+    if (c >= '\u007f' && c <= '\u009f')
+      return false;
+    // For completeness, the Unicode line separator character, #x2028, is also
+    // supported.
+    if (c == '\u2028')
+      return false;
+    if (c >= '\ufdd0' && c <= '\ufddf')
+      return false;
+    // Surrogate blocks (no Java IDs found)
+    if (c >= '\ufffe' && c <= '\uffff')
+      return false;
+    // high: 0xd800-0xdbff
+    // low: 0xdc00-0xdfff
+    return !Character.isHighSurrogate (c) && !Character.isLowSurrogate (c);
   }
 }

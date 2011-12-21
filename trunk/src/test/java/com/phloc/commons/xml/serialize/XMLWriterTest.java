@@ -18,12 +18,19 @@
 package com.phloc.commons.xml.serialize;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.dom.DOMSource;
 
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.charset.CCharset;
@@ -32,7 +39,10 @@ import com.phloc.commons.mock.AbstractPhlocTestCase;
 import com.phloc.commons.xml.DefaultXMLIterationHandler;
 import com.phloc.commons.xml.EXMLVersion;
 import com.phloc.commons.xml.XMLFactory;
+import com.phloc.commons.xml.XMLHelper;
 import com.phloc.commons.xml.namespace.MapBasedNamespaceContext;
+import com.phloc.commons.xml.transform.StringStreamResult;
+import com.phloc.commons.xml.transform.XMLTransformerFactory;
 
 /**
  * Test class for {@link XMLWriter}
@@ -263,7 +273,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
     eRoot.appendChild (aDoc.createElementNS ("ns2url", "child2"));
 
     String s = XMLWriter.getAsString (aDoc,
-                                      EXMLVersion.DEFAULT,
+                                      EXMLVersion.XML_10,
                                       EXMLSerializeFormat.XML,
                                       EXMLSerializeDocType.EMIT,
                                       EXMLSerializeComments.EMIT,
@@ -278,7 +288,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
     final MapBasedNamespaceContext aCtx = new MapBasedNamespaceContext ();
     aCtx.addMapping ("a", "ns1url");
     s = XMLWriter.getAsString (aDoc,
-                               EXMLVersion.DEFAULT,
+                               EXMLVersion.XML_10,
                                EXMLSerializeFormat.XML,
                                EXMLSerializeDocType.EMIT,
                                EXMLSerializeComments.EMIT,
@@ -292,7 +302,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
 
     aCtx.addMapping ("xy", "ns2url");
     s = XMLWriter.getAsString (aDoc,
-                               EXMLVersion.DEFAULT,
+                               EXMLVersion.XML_10,
                                EXMLSerializeFormat.XML,
                                EXMLSerializeDocType.EMIT,
                                EXMLSerializeComments.EMIT,
@@ -303,5 +313,54 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
                       CGlobal.LINE_SEPARATOR +
                       "<a:root xmlns:a=\"ns1url\"><xy:child1 xmlns:xy=\"ns2url\" /><xy:child2 xmlns:xy=\"ns2url\" /></a:root>",
                   s);
+  }
+
+  @Test
+  public void testNumericReferencesXML10 () throws SAXException, TransformerException
+  {
+    for (char i = Character.MIN_VALUE; i < Character.MAX_VALUE; ++i)
+      if (XMLHelper.isValidXMLCharacter (i))
+      {
+        final String sText = "abc" + i + "def";
+        final Document aDoc = XMLFactory.newDocument (EXMLVersion.XML_11);
+        final Element eRoot = (Element) aDoc.appendChild (aDoc.createElement ("root"));
+        eRoot.appendChild (aDoc.createTextNode (sText));
+
+        // Use regular transformer
+        final Transformer aTransformer = XMLTransformerFactory.newTransformer ();
+        aTransformer.setOutputProperty (OutputKeys.ENCODING, CCharset.CHARSET_UTF_8);
+        aTransformer.setOutputProperty (OutputKeys.INDENT, "yes");
+        aTransformer.setOutputProperty (OutputKeys.VERSION, EXMLVersion.XML_10.getVersion ());
+        final StringStreamResult aRes = new StringStreamResult ();
+        aTransformer.transform (new DOMSource (aDoc), aRes);
+
+        final String sXML = aRes.getAsString ();
+        final Document aDoc2 = XMLReader.readXMLDOM (sXML);
+        assertNotNull (aDoc2);
+      }
+  }
+
+  @Test
+  public void testNumericReferencesXML11 () throws SAXException, TransformerException
+  {
+    for (char i = Character.MIN_VALUE; i < Character.MAX_VALUE; ++i)
+      if (XMLHelper.isValidXMLCharacter (i))
+      {
+        final String sText = "abc" + i + "def";
+        final Document aDoc = XMLFactory.newDocument (EXMLVersion.XML_11);
+        final Element eRoot = (Element) aDoc.appendChild (aDoc.createElement ("root"));
+        eRoot.appendChild (aDoc.createTextNode (sText));
+
+        final Transformer aTransformer = XMLTransformerFactory.newTransformer ();
+        aTransformer.setOutputProperty (OutputKeys.ENCODING, CCharset.CHARSET_UTF_8);
+        aTransformer.setOutputProperty (OutputKeys.INDENT, "no");
+        aTransformer.setOutputProperty (OutputKeys.VERSION, EXMLVersion.XML_11.getVersion ());
+        final StringStreamResult aRes = new StringStreamResult ();
+        aTransformer.transform (new DOMSource (aDoc), aRes);
+
+        final String sXML = aRes.getAsString ();
+        final Document aDoc2 = XMLReader.readXMLDOM (sXML);
+        assertNotNull (aDoc2);
+      }
   }
 }

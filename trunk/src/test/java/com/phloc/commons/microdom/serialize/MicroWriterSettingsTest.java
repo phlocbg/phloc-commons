@@ -44,7 +44,7 @@ public final class MicroWriterSettingsTest
   public void testDefault ()
   {
     IMicroWriterSettings mws = MicroWriterSettings.DEFAULT_XML_SETTINGS;
-    assertEquals (EXMLVersion.DEFAULT, mws.getXMLVersion ());
+    assertEquals (EXMLVersion.XML_10, mws.getXMLVersion ());
     assertEquals (EXMLSerializeDocType.EMIT, mws.getSerializeDocType ());
     assertEquals (EXMLSerializeComments.EMIT, mws.getSerializeComments ());
     assertEquals (MicroWriterSettings.DEFAULT_XML_CHARSET, mws.getCharset ());
@@ -52,7 +52,7 @@ public final class MicroWriterSettingsTest
     assertEquals (EXMLSerializeIndent.INDENT_AND_ALIGN, mws.getIndent ());
 
     mws = new MicroWriterSettings ();
-    assertEquals (EXMLVersion.DEFAULT, mws.getXMLVersion ());
+    assertEquals (EXMLVersion.XML_10, mws.getXMLVersion ());
     assertEquals (EXMLSerializeDocType.EMIT, mws.getSerializeDocType ());
     assertEquals (EXMLSerializeComments.EMIT, mws.getSerializeComments ());
     assertEquals (MicroWriterSettings.DEFAULT_XML_CHARSET, mws.getCharset ());

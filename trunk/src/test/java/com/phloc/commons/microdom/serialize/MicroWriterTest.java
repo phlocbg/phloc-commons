@@ -38,6 +38,7 @@ import com.phloc.commons.microdom.impl.MicroDocument;
 import com.phloc.commons.microdom.impl.MicroElement;
 import com.phloc.commons.microdom.impl.MicroEntityReference;
 import com.phloc.commons.xml.EXMLVersion;
+import com.phloc.commons.xml.XMLHelper;
 import com.phloc.commons.xml.namespace.MapBasedNamespaceContext;
 import com.phloc.commons.xml.serialize.EXMLSerializeDocType;
 import com.phloc.commons.xml.serialize.EXMLSerializeFormat;
@@ -253,21 +254,46 @@ public final class MicroWriterTest
   }
 
   @Test
+  public void testNumericReferencesXML10 ()
+  {
+    for (char i = Character.MIN_VALUE; i < Character.MAX_VALUE; ++i)
+      if (XMLHelper.isValidXMLCharacter (i))
+      {
+        final String sText = "abc" + i + "def";
+        assertEquals (7, sText.length ());
+        final IMicroDocument aDoc = new MicroDocument ();
+        aDoc.appendElement ("root").appendText (sText);
+        final String sXML = MicroWriter.getNodeAsString (aDoc,
+                                                         new MicroWriterSettings ().setXMLVersion (EXMLVersion.XML_10));
+        final IMicroDocument aDoc2 = MicroReader.readMicroXML (sXML);
+        assertNotNull ("Failed to read with byte " + (int) i, aDoc2);
+        assertEquals (i == 0 ? 6 : 7, aDoc2.getDocumentElement ().getTextContent ().length ());
+
+        // Wont work for \u0000 because it is mapped to ""
+        if (i > 0 && i != 13)
+          assertTrue ("0x" + Integer.toHexString (i), aDoc.isEqualContent (aDoc2));
+      }
+  }
+
+  @Test
   public void testNumericReferencesXML11 ()
   {
-    for (int i = 0; i < 32; ++i)
-    {
-      final String sText = "abc" + ((char) i) + "def";
-      final IMicroDocument aDoc = new MicroDocument ();
-      aDoc.appendElement ("root").appendText (sText);
-      final String sXML = MicroWriter.getNodeAsString (aDoc,
-                                                       new MicroWriterSettings ().setXMLVersion (EXMLVersion.XML_11));
-      System.out.println (sXML);
-      final IMicroDocument aDoc2 = MicroReader.readMicroXML (sXML);
-      // Wont work for \u0000 because it is mapped to ""
-      // Does not work for \r because it is read as \n
-      if (i > 0 && i != '\r')
-        assertTrue (aDoc.isEqualContent (aDoc2));
-    }
+    for (char i = Character.MIN_VALUE; i < Character.MAX_VALUE; ++i)
+      if (XMLHelper.isValidXMLCharacter (i))
+      {
+        final String sText = "abc" + i + "def";
+        assertEquals (7, sText.length ());
+        final IMicroDocument aDoc = new MicroDocument ();
+        aDoc.appendElement ("root").appendText (sText);
+        final String sXML = MicroWriter.getNodeAsString (aDoc,
+                                                         new MicroWriterSettings ().setXMLVersion (EXMLVersion.XML_11));
+        final IMicroDocument aDoc2 = MicroReader.readMicroXML (sXML);
+        assertNotNull ("Failed to read with byte " + (int) i, aDoc2);
+        assertEquals (i == 0 ? 6 : 7, aDoc2.getDocumentElement ().getTextContent ().length ());
+
+        // Wont work for \u0000 because it is mapped to ""
+        if (i > 0 && i != 13)
+          assertTrue ("0x" + Integer.toHexString (i), aDoc.isEqualContent (aDoc2));
+      }
   }
 }

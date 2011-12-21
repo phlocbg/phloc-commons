@@ -27,6 +27,7 @@ import javax.annotation.Nullable;
 import javax.annotation.WillNotClose;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.annotations.DevelopersNote;
 import com.phloc.commons.microdom.IMicroDocumentType;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
@@ -40,12 +41,13 @@ import com.phloc.commons.xml.XMLHelper;
  * 
  * @author philip
  */
-public class XMLEmitterPhloc extends DefaultXMLIterationHandler
+public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
 {
   private static final String CDATA_START = "<![CDATA[";
   private static final String CDATA_END = "]]>";
   private static final String CRLF = CGlobal.LINE_SEPARATOR;
   private final Writer m_aWriter;
+  private EXMLVersion m_eXMLVersion = EXMLVersion.DEFAULT;
 
   public XMLEmitterPhloc (@Nonnull @WillNotClose final Writer aWriter)
   {
@@ -87,7 +89,7 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
   {
     try
     {
-      XMLHelper.maskXMLTextTo (sValue, m_aWriter);
+      XMLHelper.maskXMLTextTo (m_eXMLVersion, sValue, m_aWriter);
       return this;
     }
     catch (final IOException ex)
@@ -101,8 +103,9 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
                                @Nullable final String sEncoding,
                                final boolean bStandalone)
   {
-    _append ("<?xml version=\"")._appendMasked ((eVersion != null ? eVersion : EXMLVersion.DEFAULT).getVersion ())
-                                ._append ('"');
+    if (eVersion != null)
+      m_eXMLVersion = eVersion;
+    _append ("<?xml version=\"")._appendMasked (m_eXMLVersion.getVersion ())._append ('"');
     if (sEncoding != null)
       _append (" encoding=\"")._appendMasked (sEncoding)._append ('"');
     if (bStandalone)
@@ -111,9 +114,31 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
   }
 
   @Nonnull
+  @Deprecated
+  @DevelopersNote ("Use the version with the XMK version")
   public static String getDocTypeHTMLRepresentation (@Nonnull final IMicroDocumentType aDocType)
   {
-    return getDocTypeHTMLRepresentation (aDocType.getQualifiedName (), aDocType.getPublicID (), aDocType.getSystemID ());
+    return getDocTypeHTMLRepresentation (EXMLVersion.DEFAULT, aDocType);
+  }
+
+  @Nonnull
+  public static String getDocTypeHTMLRepresentation (@Nonnull final EXMLVersion eXMLVersion,
+                                                     @Nonnull final IMicroDocumentType aDocType)
+  {
+    return getDocTypeHTMLRepresentation (eXMLVersion,
+                                         aDocType.getQualifiedName (),
+                                         aDocType.getPublicID (),
+                                         aDocType.getSystemID ());
+  }
+
+  @Nonnull
+  @Deprecated
+  @DevelopersNote ("Use the version with the XMK version")
+  public static String getDocTypeHTMLRepresentation (@Nonnull final String sQualifiedName,
+                                                     @Nullable final String sPublicID,
+                                                     @Nullable final String sSystemID)
+  {
+    return getDocTypeHTMLRepresentation (EXMLVersion.DEFAULT, sQualifiedName, sPublicID, sSystemID);
   }
 
   /**
@@ -129,7 +154,8 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
    * @return The string DOCTYPE representation.
    */
   @Nonnull
-  public static String getDocTypeHTMLRepresentation (@Nonnull final String sQualifiedName,
+  public static String getDocTypeHTMLRepresentation (@Nonnull final EXMLVersion eXMLVersion,
+                                                     @Nonnull final String sQualifiedName,
                                                      @Nullable final String sPublicID,
                                                      @Nullable final String sSystemID)
   {
@@ -140,16 +166,16 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
     {
       // Public and system ID present
       aSB.append (" PUBLIC \"")
-         .append (XMLHelper.getMaskedXMLText (sPublicID))
+         .append (XMLHelper.getMaskedXMLText (eXMLVersion, sPublicID))
          .append ("\" \"")
-         .append (XMLHelper.getMaskedXMLText (sSystemID))
+         .append (XMLHelper.getMaskedXMLText (eXMLVersion, sSystemID))
          .append ('"');
     }
     else
       if (sSystemID != null)
       {
         // Only system ID present
-        aSB.append (" SYSTEM \"").append (XMLHelper.getMaskedXMLText (sSystemID)).append ('"');
+        aSB.append (" SYSTEM \"").append (XMLHelper.getMaskedXMLText (eXMLVersion, sSystemID)).append ('"');
       }
     return aSB.append ('>').append (CRLF).toString ();
   }
@@ -162,7 +188,7 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
     if (sQualifiedElementName == null)
       throw new NullPointerException ("qualifiedElementName");
 
-    final String sDocType = getDocTypeHTMLRepresentation (sQualifiedElementName, sPublicID, sSystemID);
+    final String sDocType = getDocTypeHTMLRepresentation (m_eXMLVersion, sQualifiedElementName, sPublicID, sSystemID);
     _append (sDocType);
   }
 

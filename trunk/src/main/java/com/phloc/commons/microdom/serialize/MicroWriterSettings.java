@@ -44,7 +44,7 @@ public final class MicroWriterSettings implements IMicroWriterSettings
   public static final IMicroWriterSettings DEFAULT_XML_SETTINGS = new MicroWriterSettings ();
 
   private EXMLSerializeFormat m_eFormat = EXMLSerializeFormat.XML;
-  private EXMLVersion m_eXMLVersion = EXMLVersion.DEFAULT;
+  private EXMLVersion m_eXMLVersion = EXMLVersion.XML_10;
   private EXMLSerializeDocType m_eSerializeDocType = EXMLSerializeDocType.EMIT;
   private EXMLSerializeComments m_eSerializeComments = EXMLSerializeComments.EMIT;
   private EXMLSerializeIndent m_eIndent = EXMLSerializeIndent.INDENT_AND_ALIGN;
