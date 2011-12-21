@@ -22,6 +22,7 @@ import javax.annotation.Nullable;
 import javax.xml.namespace.NamespaceContext;
 
 import com.phloc.commons.xml.EXMLIncorrectCharacterHandling;
+import com.phloc.commons.xml.EXMLVersion;
 
 /**
  * Interface for the settings to be used for serializing XML nodes.
@@ -35,6 +36,12 @@ public interface IXMLWriterSettings
    */
   @Nonnull
   EXMLSerializeFormat getFormat ();
+
+  /**
+   * @return The XML version to use. Default is <code>1.0</code>
+   */
+  @Nonnull
+  EXMLVersion getXMLVersion ();
 
   /**
    * @return Write document type? Default is <code>true</code>.

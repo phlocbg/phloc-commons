@@ -30,7 +30,6 @@ import com.phloc.commons.CGlobal;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.convert.MicroTypeConverter;
 import com.phloc.commons.microdom.serialize.MicroWriter;
-import com.phloc.commons.microdom.serialize.MicroWriterSettings;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.state.EContinue;
 import com.phloc.commons.state.EEnabled;
@@ -109,7 +108,7 @@ public final class BasicMicroTypeConverterRegistrarTest
       // Convert to XML
       final IMicroElement aElement = MicroTypeConverter.convertToMicroElement (aObj, "any");
       assertNotNull (aElement);
-      final String sXML = MicroWriter.getNodeAsString (aElement, MicroWriterSettings.DEFAULT_XML_SETTINGS);
+      final String sXML = MicroWriter.getXMLString (aElement);
       assertTrue (sXML.startsWith ("<any>"));
       assertTrue (sXML.endsWith ("</any>" + CGlobal.LINE_SEPARATOR));
       System.out.print (sXML);
@@ -128,7 +127,7 @@ public final class BasicMicroTypeConverterRegistrarTest
       // Convert to XML
       final IMicroElement aElement = MicroTypeConverter.convertToMicroElement (aObj, "any");
       assertNotNull (aElement);
-      final String sXML = MicroWriter.getNodeAsString (aElement, MicroWriterSettings.DEFAULT_XML_SETTINGS);
+      final String sXML = MicroWriter.getXMLString (aElement);
       assertTrue (sXML.startsWith ("<any>"));
       assertTrue (sXML.endsWith ("</any>" + CGlobal.LINE_SEPARATOR));
       System.out.print (sXML);

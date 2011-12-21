@@ -43,6 +43,7 @@ import com.phloc.commons.xml.namespace.MapBasedNamespaceContext;
 import com.phloc.commons.xml.serialize.EXMLSerializeDocType;
 import com.phloc.commons.xml.serialize.EXMLSerializeFormat;
 import com.phloc.commons.xml.serialize.EXMLSerializeIndent;
+import com.phloc.commons.xml.serialize.XMLWriterSettings;
 
 /**
  * Test class for class {@link MicroWriter}.
@@ -66,7 +67,7 @@ public final class MicroWriterTest
   private static void _testGetNodeAsXHTMLString (final IMicroNode aNode)
   {
     // try all permutations
-    final MicroWriterSettings aSettings = new MicroWriterSettings ().setFormat (EXMLSerializeFormat.HTML);
+    final XMLWriterSettings aSettings = new XMLWriterSettings ().setFormat (EXMLSerializeFormat.HTML);
     for (int nCharSet = 0; nCharSet < 2; ++nCharSet)
     {
       aSettings.setCharset (nCharSet == 1 ? CCharset.CHARSET_ISO_8859_1 : CCharset.CHARSET_UTF_8);
@@ -105,7 +106,7 @@ public final class MicroWriterTest
   private static void _testGetNodeAsXMLString (final IMicroNode aNode)
   {
     // try all permutations
-    final MicroWriterSettings aSettings = new MicroWriterSettings ();
+    final XMLWriterSettings aSettings = new XMLWriterSettings ();
     for (int nCharSet = 0; nCharSet < 2; ++nCharSet)
     {
       aSettings.setCharset (nCharSet == 1 ? CCharset.CHARSET_ISO_8859_1 : CCharset.CHARSET_UTF_8);
@@ -142,7 +143,7 @@ public final class MicroWriterTest
 
     try
     {
-      MicroWriter.getNodeAsString (null, MicroWriterSettings.DEFAULT_XML_SETTINGS);
+      MicroWriter.getNodeAsString (null, XMLWriterSettings.DEFAULT_XML_SETTINGS);
       fail ();
     }
     catch (final NullPointerException ex)
@@ -156,7 +157,7 @@ public final class MicroWriterTest
     {}
 
     // Illegal charset
-    assertNull (MicroWriter.getNodeAsString (aDoc, new MicroWriterSettings ().setCharset ("sichaNed")));
+    assertNull (MicroWriter.getNodeAsString (aDoc, new XMLWriterSettings ().setCharset ("sichaNed")));
   }
 
   @Test
@@ -164,14 +165,14 @@ public final class MicroWriterTest
   {
     try
     {
-      MicroWriter.saveToStream (null, new NonBlockingByteArrayOutputStream (), MicroWriterSettings.DEFAULT_XML_SETTINGS);
+      MicroWriter.saveToStream (null, new NonBlockingByteArrayOutputStream (), XMLWriterSettings.DEFAULT_XML_SETTINGS);
       fail ();
     }
     catch (final NullPointerException ex)
     {}
     try
     {
-      MicroWriter.saveToStream (new MicroDocument (), null, MicroWriterSettings.DEFAULT_XML_SETTINGS);
+      MicroWriter.saveToStream (new MicroDocument (), null, XMLWriterSettings.DEFAULT_XML_SETTINGS);
       fail ();
     }
     catch (final NullPointerException ex)
@@ -191,7 +192,7 @@ public final class MicroWriterTest
     for (final EXMLVersion eVersion : EXMLVersion.values ())
     {
       final IMicroDocument aDoc = MicroReader.readMicroXML (TEST_XML);
-      final MicroWriterSettings aSettings = new MicroWriterSettings ();
+      final XMLWriterSettings aSettings = new XMLWriterSettings ();
       aSettings.setXMLVersion (eVersion);
       final String sXML = MicroWriter.getNodeAsString (aDoc, aSettings);
       assertNotNull (sXML);
@@ -202,7 +203,7 @@ public final class MicroWriterTest
   @Test
   public void testNestedCDATASections ()
   {
-    final MicroWriterSettings aSettings = new MicroWriterSettings ().setIndent (EXMLSerializeIndent.NONE);
+    final XMLWriterSettings aSettings = new XMLWriterSettings ().setIndent (EXMLSerializeIndent.NONE);
 
     // Containing the forbidden CDATA end marker
     IMicroElement e = new MicroElement ("a");
@@ -224,8 +225,8 @@ public final class MicroWriterTest
   @Test
   public void testWithNamespaceContext ()
   {
-    final MicroWriterSettings aSettings = new MicroWriterSettings ().setIndent (EXMLSerializeIndent.NONE)
-                                                                    .setCharset (CCharset.CHARSET_ISO_8859_1);
+    final XMLWriterSettings aSettings = new XMLWriterSettings ().setIndent (EXMLSerializeIndent.NONE)
+                                                                .setCharset (CCharset.CHARSET_ISO_8859_1);
     final IMicroDocument aDoc = new MicroDocument ();
     final IMicroElement eRoot = aDoc.appendElement ("ns1url", "root");
     eRoot.appendElement ("ns2url", "child1");
@@ -265,7 +266,7 @@ public final class MicroWriterTest
         final IMicroDocument aDoc = new MicroDocument ();
         aDoc.appendElement ("root").appendText (sText);
         final String sXML = MicroWriter.getNodeAsString (aDoc,
-                                                         new MicroWriterSettings ().setXMLVersion (EXMLVersion.XML_10));
+                                                         new XMLWriterSettings ().setXMLVersion (EXMLVersion.XML_10));
         final IMicroDocument aDoc2 = MicroReader.readMicroXML (sXML);
         assertNotNull ("Failed to read with byte " + (int) i, aDoc2);
         assertEquals (i == 0 ? 6 : 7, aDoc2.getDocumentElement ().getTextContent ().length ());
@@ -287,7 +288,7 @@ public final class MicroWriterTest
         final IMicroDocument aDoc = new MicroDocument ();
         aDoc.appendElement ("root").appendText (sText);
         final String sXML = MicroWriter.getNodeAsString (aDoc,
-                                                         new MicroWriterSettings ().setXMLVersion (EXMLVersion.XML_11));
+                                                         new XMLWriterSettings ().setXMLVersion (EXMLVersion.XML_11));
         final IMicroDocument aDoc2 = MicroReader.readMicroXML (sXML);
         assertNotNull ("Failed to read with byte " + (int) i, aDoc2);
         assertEquals (i == 0 ? 6 : 7, aDoc2.getDocumentElement ().getTextContent ().length ());

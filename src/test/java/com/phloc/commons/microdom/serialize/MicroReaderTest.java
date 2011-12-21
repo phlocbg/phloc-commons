@@ -45,6 +45,7 @@ import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
 import com.phloc.commons.xml.sax.StringSAXInputSource;
 import com.phloc.commons.xml.serialize.EXMLSerializeIndent;
 import com.phloc.commons.xml.serialize.XMLReader;
+import com.phloc.commons.xml.serialize.XMLWriterSettings;
 
 /**
  * Test class for class {@link MicroReader}.
@@ -136,7 +137,7 @@ public final class MicroReaderTest
     final IMicroDocument docXHTML = MicroReader.readMicroXML (new StringReader (sXHTML));
     assertNotNull (docXHTML);
     final String sResult = MicroWriter.getNodeAsString (docXHTML,
-                                                        new MicroWriterSettings ().setIndent (EXMLSerializeIndent.NONE));
+                                                        new XMLWriterSettings ().setIndent (EXMLSerializeIndent.NONE));
 
     assertEquals ("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
                   CGlobal.LINE_SEPARATOR +

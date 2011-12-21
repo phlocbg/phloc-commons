@@ -27,6 +27,7 @@ import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.xml.EXMLIncorrectCharacterHandling;
+import com.phloc.commons.xml.EXMLVersion;
 
 /**
  * Default implementation of the {@link IXMLWriterSettings} interface.<br>
@@ -41,6 +42,7 @@ public abstract class AbstractXMLWriterSettings <T extends AbstractXMLWriterSett
   public static final String DEFAULT_XML_CHARSET = CCharset.CHARSET_UTF_8;
 
   private EXMLSerializeFormat m_eFormat = EXMLSerializeFormat.XML;
+  private EXMLVersion m_eXMLVersion = EXMLVersion.XML_10;
   private EXMLSerializeDocType m_eSerializeDocType = EXMLSerializeDocType.EMIT;
   private EXMLSerializeComments m_eSerializeComments = EXMLSerializeComments.EMIT;
   private EXMLSerializeIndent m_eIndent = EXMLSerializeIndent.INDENT_AND_ALIGN;
@@ -70,7 +72,7 @@ public abstract class AbstractXMLWriterSettings <T extends AbstractXMLWriterSett
   }
 
   @Nonnull
-  public T setFormat (@Nonnull final EXMLSerializeFormat eFormat)
+  public final T setFormat (@Nonnull final EXMLSerializeFormat eFormat)
   {
     if (eFormat == null)
       throw new NullPointerException ("format");
@@ -85,7 +87,22 @@ public abstract class AbstractXMLWriterSettings <T extends AbstractXMLWriterSett
   }
 
   @Nonnull
-  public T setSerializeDocType (@Nonnull final EXMLSerializeDocType eSerializeDocType)
+  public final T setXMLVersion (@Nonnull final EXMLVersion eVersion)
+  {
+    if (eVersion == null)
+      throw new NullPointerException ("version");
+    m_eXMLVersion = eVersion;
+    return _thisAsT ();
+  }
+
+  @Nonnull
+  public final EXMLVersion getXMLVersion ()
+  {
+    return m_eXMLVersion;
+  }
+
+  @Nonnull
+  public final T setSerializeDocType (@Nonnull final EXMLSerializeDocType eSerializeDocType)
   {
     if (eSerializeDocType == null)
       throw new NullPointerException ("serializeDocType");
@@ -100,7 +117,7 @@ public abstract class AbstractXMLWriterSettings <T extends AbstractXMLWriterSett
   }
 
   @Nonnull
-  public T setSerializeComments (@Nonnull final EXMLSerializeComments eSerializeComments)
+  public final T setSerializeComments (@Nonnull final EXMLSerializeComments eSerializeComments)
   {
     if (eSerializeComments == null)
       throw new NullPointerException ("serializeComments");
@@ -115,7 +132,7 @@ public abstract class AbstractXMLWriterSettings <T extends AbstractXMLWriterSett
   }
 
   @Nonnull
-  public T setIndent (@Nonnull final EXMLSerializeIndent eIndent)
+  public final T setIndent (@Nonnull final EXMLSerializeIndent eIndent)
   {
     if (eIndent == null)
       throw new NullPointerException ("indent");
@@ -130,7 +147,7 @@ public abstract class AbstractXMLWriterSettings <T extends AbstractXMLWriterSett
   }
 
   @Nonnull
-  public T setIncorrectCharacterHandling (@Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharacterHandling)
+  public final T setIncorrectCharacterHandling (@Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharacterHandling)
   {
     if (eIncorrectCharacterHandling == null)
       throw new NullPointerException ("inccorectCharacterHandling");
@@ -145,7 +162,7 @@ public abstract class AbstractXMLWriterSettings <T extends AbstractXMLWriterSett
   }
 
   @Nonnull
-  public T setCharset (@Nonnull final String sCharset)
+  public final T setCharset (@Nonnull final String sCharset)
   {
     if (StringHelper.hasNoText (sCharset))
       throw new IllegalArgumentException ("illegal charset passed");
@@ -160,7 +177,7 @@ public abstract class AbstractXMLWriterSettings <T extends AbstractXMLWriterSett
   }
 
   @Nonnull
-  public T setNamespaceContext (@Nullable final NamespaceContext aNamespaceContext)
+  public final T setNamespaceContext (@Nullable final NamespaceContext aNamespaceContext)
   {
     m_aNamespaceContext = aNamespaceContext;
     return _thisAsT ();
@@ -182,6 +199,7 @@ public abstract class AbstractXMLWriterSettings <T extends AbstractXMLWriterSett
     final AbstractXMLWriterSettings <?> rhs = (AbstractXMLWriterSettings <?>) o;
     // namespace context does not necessarily implement equals/hashCode
     return m_eFormat.equals (rhs.m_eFormat) &&
+           m_eXMLVersion.equals (rhs.m_eXMLVersion) &&
            m_eSerializeDocType.equals (rhs.m_eSerializeDocType) &&
            m_eSerializeComments.equals (rhs.m_eSerializeComments) &&
            m_eIndent.equals (rhs.m_eIndent) &&
@@ -194,6 +212,7 @@ public abstract class AbstractXMLWriterSettings <T extends AbstractXMLWriterSett
   {
     // namespace context does not necessarily implement equals/hashCode
     return new HashCodeGenerator (this).append (m_eFormat)
+                                       .append (m_eXMLVersion)
                                        .append (m_eSerializeDocType)
                                        .append (m_eSerializeComments)
                                        .append (m_eIndent)
@@ -206,6 +225,7 @@ public abstract class AbstractXMLWriterSettings <T extends AbstractXMLWriterSett
   public String toString ()
   {
     return new ToStringGenerator (this).append ("format", m_eFormat)
+                                       .append ("xmlVersion", m_eXMLVersion)
                                        .append ("serializeDocType", m_eSerializeDocType)
                                        .append ("serializeComments", m_eSerializeComments)
                                        .append ("indent", m_eIndent)
