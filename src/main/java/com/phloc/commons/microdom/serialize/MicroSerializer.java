@@ -28,7 +28,6 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.WillNotClose;
-import javax.xml.namespace.NamespaceContext;
 
 import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.io.streams.StreamUtils;
@@ -44,10 +43,11 @@ import com.phloc.commons.microdom.IMicroProcessingInstruction;
 import com.phloc.commons.microdom.IMicroText;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.xml.CXML;
-import com.phloc.commons.xml.EXMLVersion;
 import com.phloc.commons.xml.IXMLIterationHandler;
 import com.phloc.commons.xml.serialize.AbstractSerializerPhloc;
+import com.phloc.commons.xml.serialize.IXMLWriterSettings;
 import com.phloc.commons.xml.serialize.XMLEmitterPhloc;
+import com.phloc.commons.xml.serialize.XMLWriterSettings;
 
 /**
  * Materializes micro nodes into a string representation.
@@ -56,26 +56,14 @@ import com.phloc.commons.xml.serialize.XMLEmitterPhloc;
  */
 public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
 {
-  public MicroSerializer (@Nullable final String sEncoding)
+  public MicroSerializer ()
   {
-    this (null, sEncoding, null);
+    this (XMLWriterSettings.DEFAULT_XML_SETTINGS);
   }
 
-  public MicroSerializer (@Nullable final String sEncoding, @Nullable final NamespaceContext aNamespaceCtx)
+  public MicroSerializer (@Nonnull final IXMLWriterSettings aSettings)
   {
-    this (null, sEncoding, aNamespaceCtx);
-  }
-
-  public MicroSerializer (@Nullable final EXMLVersion eVersion, @Nullable final String sEncoding)
-  {
-    this (eVersion, sEncoding, null);
-  }
-
-  public MicroSerializer (@Nullable final EXMLVersion eVersion,
-                          @Nullable final String sEncoding,
-                          @Nullable final NamespaceContext aNamespaceCtx)
-  {
-    super (eVersion, sEncoding, aNamespaceCtx);
+    super (aSettings);
   }
 
   private void _writeNode (@Nonnull final IXMLIterationHandler aXMLWriter,
@@ -144,8 +132,8 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
 
   private void _writeDocument (@Nonnull final IXMLIterationHandler aXMLWriter, final IMicroDocument aDocument)
   {
-    if (m_eFormat.hasXMLHeader ())
-      aXMLWriter.onDocumentStart (m_eVersion, m_sEncoding, aDocument.isStandalone ());
+    if (m_aSettings.getFormat ().hasXMLHeader ())
+      aXMLWriter.onDocumentStart (m_aSettings.getXMLVersion (), m_aSettings.getCharset (), aDocument.isStandalone ());
 
     if (aDocument.hasChildren ())
       _writeNodeList (aXMLWriter, aDocument.getChildren ());
@@ -153,7 +141,7 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
 
   private void _writeDocumentType (@Nonnull final IXMLIterationHandler aXMLWriter, final IMicroDocumentType aDocType)
   {
-    if (m_eSerializeDocType.emit ())
+    if (m_aSettings.getSerializeDocType ().emit ())
       aXMLWriter.onDocumentType (aDocType.getQualifiedName (), aDocType.getPublicID (), aDocType.getSystemID ());
   }
 
@@ -183,12 +171,12 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
 
   private void _writeComment (@Nonnull final IXMLIterationHandler aXMLWriter, @Nonnull final IMicroComment aComment)
   {
-    if (m_eSerializeComments.emit ())
+    if (m_aSettings.getSerializeComments ().emit ())
     {
-      if (m_eIndent.isIndent () && m_aIndent.length () > 0)
+      if (m_aSettings.getIndent ().isIndent () && m_aIndent.length () > 0)
         aXMLWriter.onContentElementWhitspace (m_aIndent);
       aXMLWriter.onComment (aComment.getData ().toString ());
-      if (m_eIndent.isAlign ())
+      if (m_aSettings.getIndent ().isAlign ())
         aXMLWriter.onContentElementWhitspace (NEWLINE);
     }
   }
@@ -251,7 +239,7 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
       }
 
       // indent only if predecessor was an element
-      if (m_eIndent.isIndent () && bIndentPrev && m_aIndent.length () > 0)
+      if (m_aSettings.getIndent ().isIndent () && bIndentPrev && m_aIndent.length () > 0)
         aXMLWriter.onContentElementWhitspace (m_aIndent);
 
       aXMLWriter.onElementStart (sNSPrefix, sTagName, aAttrMap, bHasChildren);
@@ -260,7 +248,7 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
       if (bHasChildren)
       {
         // do we have enclosing elements?
-        if (m_eIndent.isAlign () && bHasChildElement)
+        if (m_aSettings.getIndent ().isAlign () && bHasChildElement)
           aXMLWriter.onContentElementWhitspace (NEWLINE);
 
         // increment indent
@@ -274,13 +262,13 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
         m_aIndent.delete (m_aIndent.length () - INDENT.length (), m_aIndent.length ());
 
         // add closing tag
-        if (m_eIndent.isIndent () && bHasChildElement && m_aIndent.length () > 0)
+        if (m_aSettings.getIndent ().isIndent () && bHasChildElement && m_aIndent.length () > 0)
           aXMLWriter.onContentElementWhitspace (m_aIndent);
 
         aXMLWriter.onElementEnd (sNSPrefix, sTagName);
       }
 
-      if (m_eIndent.isAlign () && bIndentNext)
+      if (m_aSettings.getIndent ().isAlign () && bIndentNext)
         aXMLWriter.onContentElementWhitspace (NEWLINE);
     }
     finally
@@ -292,8 +280,8 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
   public void write (@Nonnull final IMicroNode aNode, @Nonnull @WillNotClose final OutputStream aOS)
   {
     final Writer aWriter = new BufferedWriter (new OutputStreamWriter (aOS,
-                                                                       CharsetManager.charsetFromName (m_sEncoding)));
-    final IXMLIterationHandler aXMLWriter = new XMLEmitterPhloc (aWriter, m_eIncorrectCharacterHandling);
+                                                                       CharsetManager.charsetFromName (m_aSettings.getCharset ())));
+    final IXMLIterationHandler aXMLWriter = new XMLEmitterPhloc (aWriter, m_aSettings.getIncorrectCharacterHandling ());
     // No previous and no next sibling
     _writeNode (aXMLWriter, null, aNode, null);
     // Flush is important for Writer!

@@ -158,14 +158,7 @@ public final class XMLWriter
 
     try
     {
-      final IXMLSerializer <Node> aSerializer = new XMLSerializerPhloc (aSettings.getXMLVersion (),
-                                                                        aSettings.getCharset (),
-                                                                        aSettings.getNamespaceContext ());
-      aSerializer.setFormat (aSettings.getFormat ());
-      aSerializer.setSerializeDocType (aSettings.getSerializeDocType ());
-      aSerializer.setSerializeComments (aSettings.getSerializeComments ());
-      aSerializer.setIndent (aSettings.getIndent ());
-      aSerializer.setIncorrectCharacterHandling (aSettings.getIncorrectCharacterHandling ());
+      final IXMLSerializer <Node> aSerializer = new XMLSerializerPhloc (aSettings);
       aSerializer.write (aNode, aOS);
       return ESuccess.SUCCESS;
     }

@@ -25,9 +25,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.WillNotClose;
-import javax.xml.namespace.NamespaceContext;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.CDATASection;
@@ -59,26 +57,14 @@ import com.phloc.commons.xml.XMLHelper;
  */
 public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
 {
-  public XMLSerializerPhloc (@Nullable final String sEncoding)
+  public XMLSerializerPhloc ()
   {
-    this (null, sEncoding, null);
+    this (XMLWriterSettings.DEFAULT_XML_SETTINGS);
   }
 
-  public XMLSerializerPhloc (@Nullable final String sEncoding, @Nullable final NamespaceContext aNamespaceCtx)
+  public XMLSerializerPhloc (@Nonnull final IXMLWriterSettings aSettings)
   {
-    this (null, sEncoding, aNamespaceCtx);
-  }
-
-  public XMLSerializerPhloc (@Nullable final EXMLVersion eVersion, @Nullable final String sEncoding)
-  {
-    this (eVersion, sEncoding, null);
-  }
-
-  public XMLSerializerPhloc (@Nullable final EXMLVersion eVersion,
-                             @Nullable final String sEncoding,
-                             @Nullable final NamespaceContext aNamespaceCtx)
-  {
-    super (eVersion, sEncoding, aNamespaceCtx);
+    super (aSettings);
   }
 
   private void _writeNode (@Nonnull final IXMLIterationHandler aEmitter, @Nonnull final Node aNode)
@@ -113,7 +99,7 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
 
   private void _writeDocument (@Nonnull final IXMLIterationHandler aEmitter, @Nonnull final Document aDocument)
   {
-    if (m_eFormat.hasXMLHeader ())
+    if (m_aSettings.getFormat ().hasXMLHeader ())
     {
       String sXMLVersion = null;
       boolean bIsDocumentStandalone = false;
@@ -127,10 +113,10 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
         // Happens e.g. in dom4j 1.6.1:
         // AbstractMethodError: getXmlVersion and getXmlStandalone
       }
-      final EXMLVersion eXMLVersion = EXMLVersion.getFromVersionOrDefault (sXMLVersion, m_eVersion);
+      final EXMLVersion eXMLVersion = EXMLVersion.getFromVersionOrDefault (sXMLVersion, m_aSettings.getXMLVersion ());
       aEmitter.onDocumentStart (eXMLVersion,
-                                m_sEncoding,
-                                bIsDocumentStandalone || m_bXMLDeclStandalone || aDocument.getDoctype () == null);
+                                m_aSettings.getCharset (),
+                                bIsDocumentStandalone || aDocument.getDoctype () == null);
     }
 
     final NodeList aNL = aDocument.getChildNodes ();
@@ -140,7 +126,7 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
 
   private void _writeDocumentType (@Nonnull final IXMLIterationHandler aEmitter, @Nonnull final DocumentType aDocType)
   {
-    if (m_eSerializeDocType.emit ())
+    if (m_aSettings.getSerializeDocType ().emit ())
       aEmitter.onDocumentType (aDocType.getName (), aDocType.getPublicId (), aDocType.getSystemId ());
   }
 
@@ -158,7 +144,7 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
 
   private void _writeComment (@Nonnull final IXMLIterationHandler aEmitter, @Nonnull final Comment aComment)
   {
-    if (m_eSerializeComments.emit ())
+    if (m_aSettings.getSerializeComments ().emit ())
       aEmitter.onComment (aComment.getData ());
   }
 
@@ -226,7 +212,7 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
       }
 
       // indent only if predecessor was an element
-      if (m_eIndent.isIndent () && bIndentPrev && m_aIndent.length () > 0)
+      if (m_aSettings.getIndent ().isIndent () && bIndentPrev && m_aIndent.length () > 0)
         aEmitter.onContentElementWhitspace (m_aIndent);
 
       aEmitter.onElementStart (sNSPrefix, sTagName, aAttrMap, bHasChildren);
@@ -235,7 +221,7 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
       if (bHasChildren)
       {
         // do we have enclosing elements?
-        if (m_eIndent.isAlign () && bHasChildElement)
+        if (m_aSettings.getIndent ().isAlign () && bHasChildElement)
           aEmitter.onContentElementWhitspace (NEWLINE);
 
         // increment indent
@@ -249,13 +235,13 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
         m_aIndent.delete (m_aIndent.length () - INDENT.length (), m_aIndent.length ());
 
         // add closing tag
-        if (m_eIndent.isIndent () && bHasChildElement && m_aIndent.length () > 0)
+        if (m_aSettings.getIndent ().isIndent () && bHasChildElement && m_aIndent.length () > 0)
           aEmitter.onContentElementWhitspace (m_aIndent);
 
         aEmitter.onElementEnd (sNSPrefix, sTagName);
       }
 
-      if (m_eIndent.isAlign () && bIndentNext)
+      if (m_aSettings.getIndent ().isAlign () && bIndentNext)
         aEmitter.onContentElementWhitspace (NEWLINE);
     }
     finally
@@ -274,7 +260,7 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
                      @Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharHandling)
   {
     final Writer aWriter = new BufferedWriter (new OutputStreamWriter (aOS,
-                                                                       CharsetManager.charsetFromName (m_sEncoding)));
+                                                                       CharsetManager.charsetFromName (m_aSettings.getCharset ())));
     final IXMLIterationHandler aXMLWriter = new XMLEmitterPhloc (aWriter, eIncorrectCharHandling);
     _writeNode (aXMLWriter, aNode);
     // Flush is important for Writer!

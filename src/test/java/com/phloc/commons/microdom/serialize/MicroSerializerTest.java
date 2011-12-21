@@ -23,16 +23,12 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.impl.MicroDocument;
 import com.phloc.commons.timing.StopWatch;
 import com.phloc.commons.xml.DefaultXMLIterationHandler;
-import com.phloc.commons.xml.serialize.EXMLSerializeDocType;
-import com.phloc.commons.xml.serialize.EXMLSerializeFormat;
-import com.phloc.commons.xml.serialize.EXMLSerializeIndent;
 
 /**
  * Test class for class {@link MicroSerializer}
@@ -42,24 +38,6 @@ import com.phloc.commons.xml.serialize.EXMLSerializeIndent;
 public final class MicroSerializerTest
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (MicroSerializerTest.class);
-
-  @Test
-  public void testSetter ()
-  {
-    final MicroSerializer aMS = new MicroSerializer (CCharset.CHARSET_ISO_8859_1);
-    for (final EXMLSerializeFormat eFormat : EXMLSerializeFormat.values ())
-    {
-      aMS.setFormat (eFormat);
-      for (final EXMLSerializeIndent eIndent : EXMLSerializeIndent.values ())
-      {
-        aMS.setIndent (eIndent);
-        for (final EXMLSerializeDocType eDocType : EXMLSerializeDocType.values ())
-        {
-          aMS.setSerializeDocType (eDocType);
-        }
-      }
-    }
-  }
 
   private IMicroDocument _createLargeDoc (final IMicroDocument doc, final boolean bWithText)
   {
@@ -88,7 +66,7 @@ public final class MicroSerializerTest
   @Test
   public void testLargeTree ()
   {
-    final MicroSerializer aMS = new MicroSerializer (CCharset.CHARSET_ISO_8859_1);
+    final MicroSerializer aMS = new MicroSerializer ();
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
     final boolean bWithText = false;
     final IMicroDocument doc = _createLargeDoc (new MicroDocument (), bWithText);

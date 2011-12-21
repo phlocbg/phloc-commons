@@ -49,4 +49,16 @@ public final class MicroWriterSettings extends AbstractXMLWriterSettings <MicroW
    */
   public MicroWriterSettings ()// NOPMD
   {}
+
+  @Override
+  public boolean equals (final Object o)
+  {
+    return super.equals (o);
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    return super.hashCode ();
+  }
 }

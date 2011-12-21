@@ -101,7 +101,7 @@ public final class MicroReaderTest
     assertEquals ("verrryoot", aDoc2.getDocumentElement ().getTagName ());
 
     final NonBlockingByteArrayOutputStream baos = new NonBlockingByteArrayOutputStream ();
-    new MicroSerializer (CCharset.CHARSET_UTF_8).write (aDoc, baos);
+    new MicroSerializer ().write (aDoc, baos);
     final String sCRLF = CGlobal.LINE_SEPARATOR;
     assertEquals ("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
                   sCRLF +
