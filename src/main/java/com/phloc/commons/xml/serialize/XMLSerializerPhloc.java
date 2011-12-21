@@ -114,7 +114,12 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
   private void _writeDocument (@Nonnull final IXMLIterationHandler aEmitter, @Nonnull final Document aDocument)
   {
     if (m_eFormat.hasXMLHeader ())
-      aEmitter.onDocumentStart (m_eVersion, m_sEncoding, m_bXMLDeclStandalone || aDocument.getDoctype () == null);
+    {
+      final EXMLVersion eXMLVersion = EXMLVersion.getFromVersionOrDefault (aDocument.getXmlVersion (), m_eVersion);
+      aEmitter.onDocumentStart (eXMLVersion, m_sEncoding, aDocument.getXmlStandalone () ||
+                                                          m_bXMLDeclStandalone ||
+                                                          aDocument.getDoctype () == null);
+    }
 
     final NodeList aNL = aDocument.getChildNodes ();
     for (int i = 0; i < aNL.getLength (); ++i)

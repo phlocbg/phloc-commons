@@ -316,6 +316,15 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
   }
 
   @Test
+  public void testXML11 ()
+  {
+    final Document aDoc = XMLFactory.newDocument (EXMLVersion.XML_11);
+    aDoc.appendChild (aDoc.createElement ("any"));
+    final String sXML = XMLWriter.getXMLString (aDoc, CCharset.CHARSET_UTF_8);
+    assertEquals ("<?xml version=\"1.1\" encoding=\"UTF-8\" standalone=\"yes\"?>\r\n" + "<any />\r\n", sXML);
+  }
+
+  @Test
   public void testNumericReferencesXML10 () throws SAXException, TransformerException
   {
     for (char i = Character.MIN_VALUE; i < Character.MAX_VALUE; ++i)

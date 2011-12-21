@@ -59,10 +59,18 @@ public enum EXMLVersion
   @Nullable
   public static EXMLVersion getFromVersionOrNull (@Nullable final String sVersion)
   {
+    return getFromVersionOrDefault (sVersion, null);
+  }
+
+  @Nullable
+  public static EXMLVersion getFromVersionOrDefault (@Nullable final String sVersion,
+                                                     @Nullable final EXMLVersion eDefault)
+  {
     if (StringHelper.hasText (sVersion))
       for (final EXMLVersion eVersion : values ())
         if (eVersion.getVersion ().equals (sVersion))
           return eVersion;
-    return null;
+    // Not found
+    return eDefault;
   }
 }
