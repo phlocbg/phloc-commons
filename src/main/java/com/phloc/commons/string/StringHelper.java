@@ -2057,8 +2057,13 @@ public final class StringHelper
    * replacements on the passed input array.
    * 
    * @param aInput
+   *        Input char array. May not be <code>null</code>.
    * @param aPatterns
+   *        The search patterns. May not be <code>null</code>.
    * @param aReplacements
+   *        The replacements to be performed. May not be <code>null</code>. The
+   *        first dimension of this array must have exactly the same amount of
+   *        elements as the patterns parameter array.
    * @return {@link CGlobal#ILLEGAL_UINT} if no replacement was needed, and
    *         therefore the length of the input array could be used.
    */
