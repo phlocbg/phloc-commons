@@ -18,17 +18,19 @@
 package com.phloc.commons.microdom.serialize;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
+import javax.xml.namespace.NamespaceContext;
 
-import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.hash.HashCodeGenerator;
-import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
+import com.phloc.commons.xml.EXMLIncorrectCharacterHandling;
 import com.phloc.commons.xml.EXMLVersion;
 import com.phloc.commons.xml.serialize.EXMLSerializeComments;
 import com.phloc.commons.xml.serialize.EXMLSerializeDocType;
 import com.phloc.commons.xml.serialize.EXMLSerializeFormat;
 import com.phloc.commons.xml.serialize.EXMLSerializeIndent;
+import com.phloc.commons.xml.serialize.XMLWriterSettings;
 
 /**
  * Default implementation of the {@link IMicroWriterSettings} interface.<br>
@@ -38,17 +40,12 @@ import com.phloc.commons.xml.serialize.EXMLSerializeIndent;
  * @author philip
  */
 @NotThreadSafe
-public final class MicroWriterSettings implements IMicroWriterSettings
+public final class MicroWriterSettings extends XMLWriterSettings implements IMicroWriterSettings
 {
-  public static final String DEFAULT_XML_CHARSET = CCharset.CHARSET_UTF_8;
+  @SuppressWarnings ("hiding")
   public static final IMicroWriterSettings DEFAULT_XML_SETTINGS = new MicroWriterSettings ();
 
-  private EXMLSerializeFormat m_eFormat = EXMLSerializeFormat.XML;
   private EXMLVersion m_eXMLVersion = EXMLVersion.XML_10;
-  private EXMLSerializeDocType m_eSerializeDocType = EXMLSerializeDocType.EMIT;
-  private EXMLSerializeComments m_eSerializeComments = EXMLSerializeComments.EMIT;
-  private EXMLSerializeIndent m_eIndent = EXMLSerializeIndent.INDENT_AND_ALIGN;
-  private String m_sCharset = DEFAULT_XML_CHARSET;
 
   /**
    * Creates a default settings object with the following settings:
@@ -65,21 +62,6 @@ public final class MicroWriterSettings implements IMicroWriterSettings
   {}
 
   @Nonnull
-  public MicroWriterSettings setFormat (@Nonnull final EXMLSerializeFormat eFormat)
-  {
-    if (eFormat == null)
-      throw new NullPointerException ("format");
-    m_eFormat = eFormat;
-    return this;
-  }
-
-  @Nonnull
-  public EXMLSerializeFormat getFormat ()
-  {
-    return m_eFormat;
-  }
-
-  @Nonnull
   public MicroWriterSettings setXMLVersion (@Nonnull final EXMLVersion eVersion)
   {
     if (eVersion == null)
@@ -94,62 +76,60 @@ public final class MicroWriterSettings implements IMicroWriterSettings
     return m_eXMLVersion;
   }
 
+  @Override
+  @Nonnull
+  public MicroWriterSettings setFormat (@Nonnull final EXMLSerializeFormat eFormat)
+  {
+    super.setFormat (eFormat);
+    return this;
+  }
+
+  @Override
   @Nonnull
   public MicroWriterSettings setSerializeDocType (@Nonnull final EXMLSerializeDocType eSerializeDocType)
   {
-    if (eSerializeDocType == null)
-      throw new NullPointerException ("serializeDocType");
-    m_eSerializeDocType = eSerializeDocType;
+    super.setSerializeDocType (eSerializeDocType);
     return this;
   }
 
-  public EXMLSerializeDocType getSerializeDocType ()
-  {
-    return m_eSerializeDocType;
-  }
-
+  @Override
   @Nonnull
   public MicroWriterSettings setSerializeComments (@Nonnull final EXMLSerializeComments eSerializeComments)
   {
-    if (eSerializeComments == null)
-      throw new NullPointerException ("serializeComments");
-    m_eSerializeComments = eSerializeComments;
+    super.setSerializeComments (eSerializeComments);
     return this;
   }
 
-  public EXMLSerializeComments getSerializeComments ()
-  {
-    return m_eSerializeComments;
-  }
-
+  @Override
   @Nonnull
   public MicroWriterSettings setIndent (@Nonnull final EXMLSerializeIndent eIndent)
   {
-    if (eIndent == null)
-      throw new NullPointerException ("indent");
-    m_eIndent = eIndent;
+    super.setIndent (eIndent);
     return this;
   }
 
+  @Override
   @Nonnull
-  public EXMLSerializeIndent getIndent ()
+  public MicroWriterSettings setIncorrectCharacterHandling (@Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharacterHandling)
   {
-    return m_eIndent;
+    super.setIncorrectCharacterHandling (eIncorrectCharacterHandling);
+    return this;
   }
 
+  @Override
   @Nonnull
   public MicroWriterSettings setCharset (@Nonnull final String sCharset)
   {
-    if (StringHelper.hasNoText (sCharset))
-      throw new IllegalArgumentException ("illegal charset passed");
-    m_sCharset = sCharset;
+    super.setCharset (sCharset);
     return this;
   }
 
+  @Override
   @Nonnull
-  public String getCharset ()
+  public MicroWriterSettings setNamespaceContext (@Nullable final NamespaceContext aNamespaceContext)
   {
-    return m_sCharset;
+    super.setNamespaceContext (aNamespaceContext);
+    return this;
   }
 
   @Override
@@ -157,38 +137,23 @@ public final class MicroWriterSettings implements IMicroWriterSettings
   {
     if (o == this)
       return true;
+    if (!super.equals (o))
+      return false;
     if (!(o instanceof MicroWriterSettings))
       return false;
     final MicroWriterSettings rhs = (MicroWriterSettings) o;
-    return m_eFormat.equals (rhs.m_eFormat) &&
-           m_eXMLVersion.equals (rhs.m_eXMLVersion) &&
-           m_eSerializeDocType.equals (rhs.m_eSerializeDocType) &&
-           m_eSerializeComments.equals (rhs.m_eSerializeComments) &&
-           m_eIndent.equals (rhs.m_eIndent) &&
-           m_sCharset.equals (rhs.m_sCharset);
+    return m_eXMLVersion.equals (rhs.m_eXMLVersion);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_eFormat)
-                                       .append (m_eXMLVersion)
-                                       .append (m_eIndent)
-                                       .append (m_eSerializeDocType)
-                                       .append (m_eSerializeComments)
-                                       .append (m_sCharset)
-                                       .getHashCode ();
+    return HashCodeGenerator.getDerived (super.hashCode ()).append (m_eXMLVersion).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("format", m_eFormat)
-                                       .append ("xmlVersion", m_eXMLVersion)
-                                       .append ("serializeDocType", m_eSerializeDocType)
-                                       .append ("serializeComments", m_eSerializeComments)
-                                       .append ("indent", m_eIndent)
-                                       .append ("charset", m_sCharset)
-                                       .toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("xmlVersion", m_eXMLVersion).toString ();
   }
 }

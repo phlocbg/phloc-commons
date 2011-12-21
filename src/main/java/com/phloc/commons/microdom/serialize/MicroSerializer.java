@@ -44,7 +44,6 @@ import com.phloc.commons.microdom.IMicroProcessingInstruction;
 import com.phloc.commons.microdom.IMicroText;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.xml.CXML;
-import com.phloc.commons.xml.EXMLIncorrectCharacterHandling;
 import com.phloc.commons.xml.EXMLVersion;
 import com.phloc.commons.xml.IXMLIterationHandler;
 import com.phloc.commons.xml.serialize.AbstractSerializerPhloc;
@@ -292,16 +291,9 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
 
   public void write (@Nonnull final IMicroNode aNode, @Nonnull @WillNotClose final OutputStream aOS)
   {
-    write (aNode, aOS, EXMLIncorrectCharacterHandling.DEFAULT);
-  }
-
-  public void write (@Nonnull final IMicroNode aNode,
-                     @Nonnull @WillNotClose final OutputStream aOS,
-                     @Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharHandling)
-  {
     final Writer aWriter = new BufferedWriter (new OutputStreamWriter (aOS,
                                                                        CharsetManager.charsetFromName (m_sEncoding)));
-    final IXMLIterationHandler aXMLWriter = new XMLEmitterPhloc (aWriter, eIncorrectCharHandling);
+    final IXMLIterationHandler aXMLWriter = new XMLEmitterPhloc (aWriter, m_eIncorrectCharacterHandling);
     // No previous and no next sibling
     _writeNode (aXMLWriter, null, aNode, null);
     // Flush is important for Writer!

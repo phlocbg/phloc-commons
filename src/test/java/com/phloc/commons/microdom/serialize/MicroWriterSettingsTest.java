@@ -32,6 +32,7 @@ import com.phloc.commons.xml.serialize.EXMLSerializeComments;
 import com.phloc.commons.xml.serialize.EXMLSerializeDocType;
 import com.phloc.commons.xml.serialize.EXMLSerializeFormat;
 import com.phloc.commons.xml.serialize.EXMLSerializeIndent;
+import com.phloc.commons.xml.serialize.XMLWriterSettings;
 
 /**
  * Test class for class {@link MicroWriterSettings}.
@@ -47,7 +48,7 @@ public final class MicroWriterSettingsTest
     assertEquals (EXMLVersion.XML_10, mws.getXMLVersion ());
     assertEquals (EXMLSerializeDocType.EMIT, mws.getSerializeDocType ());
     assertEquals (EXMLSerializeComments.EMIT, mws.getSerializeComments ());
-    assertEquals (MicroWriterSettings.DEFAULT_XML_CHARSET, mws.getCharset ());
+    assertEquals (XMLWriterSettings.DEFAULT_XML_CHARSET, mws.getCharset ());
     assertEquals (EXMLSerializeFormat.XML, mws.getFormat ());
     assertEquals (EXMLSerializeIndent.INDENT_AND_ALIGN, mws.getIndent ());
 
@@ -55,7 +56,7 @@ public final class MicroWriterSettingsTest
     assertEquals (EXMLVersion.XML_10, mws.getXMLVersion ());
     assertEquals (EXMLSerializeDocType.EMIT, mws.getSerializeDocType ());
     assertEquals (EXMLSerializeComments.EMIT, mws.getSerializeComments ());
-    assertEquals (MicroWriterSettings.DEFAULT_XML_CHARSET, mws.getCharset ());
+    assertEquals (XMLWriterSettings.DEFAULT_XML_CHARSET, mws.getCharset ());
     assertEquals (EXMLSerializeFormat.XML, mws.getFormat ());
     assertEquals (EXMLSerializeIndent.INDENT_AND_ALIGN, mws.getIndent ());
 

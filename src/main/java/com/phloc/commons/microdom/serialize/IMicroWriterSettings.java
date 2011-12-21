@@ -20,51 +20,18 @@ package com.phloc.commons.microdom.serialize;
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.xml.EXMLVersion;
-import com.phloc.commons.xml.serialize.EXMLSerializeComments;
-import com.phloc.commons.xml.serialize.EXMLSerializeDocType;
-import com.phloc.commons.xml.serialize.EXMLSerializeFormat;
-import com.phloc.commons.xml.serialize.EXMLSerializeIndent;
+import com.phloc.commons.xml.serialize.IXMLWriterSettings;
 
 /**
  * Interface for the settings to be used for serializing micro nodes.
  * 
  * @author philip
  */
-public interface IMicroWriterSettings
+public interface IMicroWriterSettings extends IXMLWriterSettings
 {
-  /**
-   * @return Create XML or HTML? Default is <code>XML</code>.
-   */
-  @Nonnull
-  EXMLSerializeFormat getFormat ();
-
   /**
    * @return The XML version to use. Default is <code>1.0</code>
    */
   @Nonnull
   EXMLVersion getXMLVersion ();
-
-  /**
-   * @return Write document type? Default is <code>true</code>.
-   */
-  @Nonnull
-  EXMLSerializeDocType getSerializeDocType ();
-
-  /**
-   * @return Write comments? Default is <code>true</code>.
-   */
-  @Nonnull
-  EXMLSerializeComments getSerializeComments ();
-
-  /**
-   * @return Indent code? Default is <code>indent and aligned</code>.
-   */
-  @Nonnull
-  EXMLSerializeIndent getIndent ();
-
-  /**
-   * @return The charset to use. May never be <code>null</code>.
-   */
-  @Nonnull
-  String getCharset ();
 }

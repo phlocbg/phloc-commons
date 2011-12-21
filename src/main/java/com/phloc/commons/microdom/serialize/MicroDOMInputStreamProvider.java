@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 
 import com.phloc.commons.io.streamprovider.StringInputStreamProvider;
 import com.phloc.commons.microdom.IMicroNode;
+import com.phloc.commons.xml.serialize.XMLWriterSettings;
 
 /**
  * A special input stream provider that takes an existing {@link IMicroNode} and
@@ -39,7 +40,7 @@ public class MicroDOMInputStreamProvider extends StringInputStreamProvider
    */
   public MicroDOMInputStreamProvider (@Nonnull final IMicroNode aNode)
   {
-    this (aNode, MicroWriterSettings.DEFAULT_XML_CHARSET);
+    this (aNode, XMLWriterSettings.DEFAULT_XML_CHARSET);
   }
 
   /**

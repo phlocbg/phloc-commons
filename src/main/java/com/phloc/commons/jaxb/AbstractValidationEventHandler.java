@@ -34,8 +34,8 @@ import com.phloc.commons.error.IResourceError;
 import com.phloc.commons.error.IResourceLocation;
 import com.phloc.commons.error.ResourceError;
 import com.phloc.commons.error.ResourceLocation;
-import com.phloc.commons.microdom.serialize.MicroWriterSettings;
 import com.phloc.commons.xml.serialize.XMLWriter;
+import com.phloc.commons.xml.serialize.XMLWriterSettings;
 
 /**
  * An abstract implementation of the JAXB {@link ValidationEventHandler}
@@ -93,7 +93,7 @@ public abstract class AbstractValidationEventHandler implements ValidationEventH
       // Source node found?
       final Node aNode = aLocator.getNode ();
       if (aNode != null)
-        return XMLWriter.getXMLString (aNode, MicroWriterSettings.DEFAULT_XML_CHARSET);
+        return XMLWriter.getXMLString (aNode, XMLWriterSettings.DEFAULT_XML_CHARSET);
     }
     return null;
   }

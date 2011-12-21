@@ -36,6 +36,7 @@ import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.xml.CXML;
+import com.phloc.commons.xml.EXMLIncorrectCharacterHandling;
 import com.phloc.commons.xml.EXMLVersion;
 
 /**
@@ -329,6 +330,11 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
   protected EXMLSerializeIndent m_eIndent = EXMLSerializeIndent.INDENT_AND_ALIGN;
 
   /**
+   * How to handle incorrect characters.
+   */
+  protected EXMLIncorrectCharacterHandling m_eIncorrectCharacterHandling = EXMLIncorrectCharacterHandling.DEFAULT;
+
+  /**
    * helper variable: current indentation.
    */
   protected final StringBuilder m_aIndent = new StringBuilder (32);
@@ -385,6 +391,13 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
     m_eIndent = eIndent;
   }
 
+  public final void setIncorrectCharacterHandling (@Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharacterHandling)
+  {
+    if (eIncorrectCharacterHandling == null)
+      throw new NullPointerException ("incorrectCharacterHandling");
+    m_eIncorrectCharacterHandling = eIncorrectCharacterHandling;
+  }
+
   @Override
   public String toString ()
   {
@@ -393,6 +406,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
                                        .append ("serializeDocType", m_eSerializeDocType)
                                        .append ("serializeComments", m_eSerializeComments)
                                        .append ("indent", m_eIndent)
+                                       .append ("incorrectCharHandling", m_eIncorrectCharacterHandling)
                                        .append ("sIndent", m_aIndent.toString ())
                                        .append ("namespaceStack", m_aNSStack)
                                        .append ("encoding", m_sEncoding)
