@@ -21,9 +21,13 @@ import static org.junit.Assert.assertNotNull;
 
 import org.dom4j.dom.DOMDocument;
 import org.dom4j.dom.DOMElement;
+import org.dom4j.dom.DOMEntityReference;
+import org.dom4j.dom.DOMNamespace;
+import org.dom4j.dom.DOMText;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
@@ -48,7 +52,11 @@ public final class FuncTestDOM4J extends AbstractPhlocTestCase
   public void testMisc2 ()
   {
     final DOMDocument aXML = new DOMDocument ();
-    aXML.appendChild (new DOMElement ("rootElement"));
+    final Node aChild = aXML.appendChild (new DOMElement ("rootElement", new DOMNamespace ("xyz",
+                                                                                           "http://www.example.org")));
+    aChild.appendChild (new DOMText ("anyText"));
+    aChild.appendChild (new DOMEntityReference ("abc"));
+
     assertNotNull (XMLWriter.getXMLString (aXML, CCharset.CHARSET_UTF_8));
   }
 }
