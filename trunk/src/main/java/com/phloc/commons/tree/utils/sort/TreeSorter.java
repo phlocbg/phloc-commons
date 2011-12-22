@@ -64,7 +64,7 @@ public final class TreeSorter
     TreeWalker.walkTree (aTree, new DefaultHierarchyWalkerCallback <ITEMTYPE> ()
     {
       @Override
-      public void onItemBeforeChildren (final ITEMTYPE aTreeItem)
+      public void onItemBeforeChildren (@Nonnull final ITEMTYPE aTreeItem)
       {
         aTreeItem.reorderChildItems (aRealComp);
       }
@@ -90,7 +90,7 @@ public final class TreeSorter
     TreeWalker.walkTree (aTree, new DefaultHierarchyWalkerCallback <ITEMTYPE> ()
     {
       @Override
-      public void onItemBeforeChildren (final ITEMTYPE aTreeItem)
+      public void onItemBeforeChildren (@Nonnull final ITEMTYPE aTreeItem)
       {
         aTreeItem.reorderChildItems (aRealComp);
       }

@@ -93,7 +93,7 @@ public final class TreeWithIDSearcher
     TreeWalker.walkSubTree (aTreeItem, new DefaultHierarchyWalkerCallback <ITEMTYPE> ()
     {
       @Override
-      public void onItemBeforeChildren (final ITEMTYPE aItem)
+      public void onItemBeforeChildren (@Nonnull final ITEMTYPE aItem)
       {
         if (aItem.getID ().equals (aSearchID))
           aRetList.add (aItem);

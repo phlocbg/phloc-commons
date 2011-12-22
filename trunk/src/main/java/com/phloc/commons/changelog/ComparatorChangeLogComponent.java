@@ -40,7 +40,7 @@ public final class ComparatorChangeLogComponent extends AbstractComparator <Chan
   }
 
   @Override
-  protected int mainCompare (final ChangeLog aChangeLog1, final ChangeLog aChangeLog2)
+  protected int mainCompare (@Nonnull final ChangeLog aChangeLog1, @Nonnull final ChangeLog aChangeLog2)
   {
     return aChangeLog1.getComponent ().compareTo (aChangeLog2.getComponent ());
   }

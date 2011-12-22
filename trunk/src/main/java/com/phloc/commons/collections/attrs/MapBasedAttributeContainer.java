@@ -62,7 +62,8 @@ public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContain
 
   public boolean containsAttribute (@Nullable final String sName)
   {
-    return m_aAttrs.containsKey (sName);
+    // ConcurrentHashMap cannot handle null keys
+    return sName != null && m_aAttrs.containsKey (sName);
   }
 
   @Nonnull
@@ -75,12 +76,17 @@ public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContain
   @Nullable
   public Object getAttributeObject (@Nullable final String sName)
   {
-    return m_aAttrs.get (sName);
+    // ConcurrentHashMap cannot handle null keys
+    return sName == null ? null : m_aAttrs.get (sName);
   }
 
   @Nonnull
-  public EChange setAttribute (@Nullable final String sName, @Nullable final Object aValue)
+  public EChange setAttribute (@Nonnull final String sName, @Nonnull final Object aValue)
   {
+    if (sName == null)
+      throw new NullPointerException ("name");
+    if (aValue == null)
+      throw new NullPointerException ("value");
     final Object aOldValue = m_aAttrs.put (sName, aValue);
     return EChange.valueOf (!EqualsUtils.nullSafeEquals (aOldValue, aValue));
   }
@@ -88,7 +94,7 @@ public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContain
   @Nonnull
   public EChange removeAttribute (@Nullable final String sName)
   {
-    return EChange.valueOf (m_aAttrs.remove (sName) != null);
+    return EChange.valueOf (sName != null && m_aAttrs.remove (sName) != null);
   }
 
   @Nonnull

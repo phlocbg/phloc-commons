@@ -66,7 +66,7 @@ public final class TreeWithIDSorter
     TreeWalker.walkTree (aTree, new DefaultHierarchyWalkerCallback <ITEMTYPE> ()
     {
       @Override
-      public void onItemBeforeChildren (final ITEMTYPE aTreeItem)
+      public void onItemBeforeChildren (@Nonnull final ITEMTYPE aTreeItem)
       {
         aTreeItem.reorderChildrenByItems (aRealComp);
       }
@@ -92,7 +92,7 @@ public final class TreeWithIDSorter
     TreeWalker.walkTree (aTree, new DefaultHierarchyWalkerCallback <ITEMTYPE> ()
     {
       @Override
-      public void onItemBeforeChildren (final ITEMTYPE aTreeItem)
+      public void onItemBeforeChildren (@Nonnull final ITEMTYPE aTreeItem)
       {
         aTreeItem.reorderChildrenByItems (aRealComp);
       }
@@ -120,7 +120,7 @@ public final class TreeWithIDSorter
     TreeWalker.walkTree (aTree, new DefaultHierarchyWalkerCallback <ITEMTYPE> ()
     {
       @Override
-      public void onItemBeforeChildren (final ITEMTYPE aTreeItem)
+      public void onItemBeforeChildren (@Nonnull final ITEMTYPE aTreeItem)
       {
         aTreeItem.reorderChildrenByItems (aRealComp);
       }
@@ -146,7 +146,7 @@ public final class TreeWithIDSorter
     TreeWalker.walkTree (aTree, new DefaultHierarchyWalkerCallback <ITEMTYPE> ()
     {
       @Override
-      public void onItemBeforeChildren (final ITEMTYPE aTreeItem)
+      public void onItemBeforeChildren (@Nonnull final ITEMTYPE aTreeItem)
       {
         aTreeItem.reorderChildrenByItems (aRealComp);
       }

@@ -412,7 +412,7 @@ public final class XMLHelper
   {
     return new ChildElementIterator (aStartNode, new IFilter <Element> ()
     {
-      public boolean matchesFilter (final Element aElement)
+      public boolean matchesFilter (@Nonnull final Element aElement)
       {
         return aElement.getNamespaceURI () == null;
       }
@@ -440,7 +440,7 @@ public final class XMLHelper
 
     return new ChildElementIterator (aStartNode, new IFilter <Element> ()
     {
-      public boolean matchesFilter (final Element aElement)
+      public boolean matchesFilter (@Nonnull final Element aElement)
       {
         return aElement.getNamespaceURI () == null && aElement.getTagName ().equals (sTagName);
       }
@@ -453,7 +453,7 @@ public final class XMLHelper
   {
     return new ChildElementIterator (aStartNode, new IFilter <Element> ()
     {
-      public boolean matchesFilter (final Element aElement)
+      public boolean matchesFilter (@Nonnull final Element aElement)
       {
         return hasNamespaceURI (aElement, sNamespaceURI);
       }
@@ -470,7 +470,7 @@ public final class XMLHelper
 
     return new ChildElementIterator (aStartNode, new IFilter <Element> ()
     {
-      public boolean matchesFilter (final Element aElement)
+      public boolean matchesFilter (@Nonnull final Element aElement)
       {
         // check namespace before checking local name
         return hasNamespaceURI (aElement, sNamespaceURI) &&

@@ -41,7 +41,7 @@ public class ComparatorHasSimpleIntID <DATATYPE extends IHasSimpleIntID> extends
   }
 
   @Override
-  protected final int mainCompare (final DATATYPE aElement1, final DATATYPE aElement2)
+  protected final int mainCompare (@Nonnull final DATATYPE aElement1, @Nonnull final DATATYPE aElement2)
   {
     final int nID1 = aElement1.getID ();
     final int nID2 = aElement2.getID ();

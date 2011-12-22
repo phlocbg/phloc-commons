@@ -46,15 +46,15 @@ public final class MimeTypeDeterminator
   // Maps file extension to MIME type
   private static final Map <String, String> s_aFileExtMap = new HashMap <String, String> ();
 
-  private static final byte [] MIME_ID_GIF87A = "GIF87a".getBytes ();
-  private static final byte [] MIME_ID_GIF89A = "GIF89a".getBytes ();
+  private static final byte [] MIME_ID_GIF87A = new byte [] { 'G', 'I', 'F', '8', '7', 'a' };
+  private static final byte [] MIME_ID_GIF89A = new byte [] { 'G', 'I', 'F', '8', '9', 'a' };
   private static final byte [] MIME_ID_JPG = new byte [] { (byte) 0xff, (byte) 0xd8 };
   private static final byte [] MIME_ID_PNG = new byte [] { (byte) 0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a };
-  private static final byte [] MIME_ID_TIFF_MOTOROLLA = "MM".getBytes ();
-  private static final byte [] MIME_ID_TIFF_INTEL = "II".getBytes ();
-  private static final byte [] MIME_ID_PSD = "8BPS".getBytes ();
-  private static final byte [] MIME_ID_XML = "<?xml".getBytes ();
-  private static final byte [] MIME_ID_PDF = "%PDF".getBytes ();
+  private static final byte [] MIME_ID_TIFF_MOTOROLLA = new byte [] { 'M', 'M' };
+  private static final byte [] MIME_ID_TIFF_INTEL = new byte [] { 'I', 'I' };
+  private static final byte [] MIME_ID_PSD = new byte [] { '8', 'B', 'P', 'S' };
+  private static final byte [] MIME_ID_XML = new byte [] { '<', '?', 'x', 'm', 'l' };
+  private static final byte [] MIME_ID_PDF = new byte [] { '%', 'P', 'D', 'F' };
 
   static
   {

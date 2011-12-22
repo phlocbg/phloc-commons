@@ -52,7 +52,7 @@ public abstract class AbstractMultiConcurrentHashMap <KEYTYPE, VALUETYPE, COLLTY
     putSingle (aKey, aValue);
   }
 
-  public AbstractMultiConcurrentHashMap (@Nonnull final KEYTYPE aKey, @Nullable final COLLTYPE aCollection)
+  public AbstractMultiConcurrentHashMap (@Nonnull final KEYTYPE aKey, @Nonnull final COLLTYPE aCollection)
   {
     put (aKey, aCollection);
   }
