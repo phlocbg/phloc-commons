@@ -32,6 +32,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.microdom.IMicroNode;
+import com.phloc.commons.state.ESuccess;
 import com.phloc.commons.stats.IStatisticsHandlerSize;
 import com.phloc.commons.stats.StatisticsManager;
 import com.phloc.commons.xml.serialize.IXMLSerializer;
@@ -65,6 +66,24 @@ public final class MicroWriter
   }
 
   /**
+   * Write a Micro Node to an output stream using the default settings.
+   * 
+   * @param aNode
+   *        The node to be serialized. May be any kind of node (incl.
+   *        documents). May not be <code>null</code>.
+   * @param aOS
+   *        The output stream to write to. May not be <code>null</code>. The
+   *        output stream is closed anyway directly after the operation finishes
+   *        (on success and on error).
+   * @return {@link ESuccess}
+   */
+  @Nonnull
+  public static ESuccess writeToStream (@Nonnull final IMicroNode aNode, @Nonnull @WillClose final OutputStream aOS)
+  {
+    return writeToStream (aNode, aOS, XMLWriterSettings.DEFAULT_XML_SETTINGS);
+  }
+
+  /**
    * Write a Micro Node to an output stream.
    * 
    * @param aNode
@@ -77,10 +96,12 @@ public final class MicroWriter
    * @param aSettings
    *        The settings to be used for the creation. May not be
    *        <code>null</code>.
+   * @return {@link ESuccess}
    */
-  public static void writeToStream (@Nonnull final IMicroNode aNode,
-                                    @Nonnull @WillClose final OutputStream aOS,
-                                    @Nonnull final IXMLWriterSettings aSettings)
+  @Nonnull
+  public static ESuccess writeToStream (@Nonnull final IMicroNode aNode,
+                                        @Nonnull @WillClose final OutputStream aOS,
+                                        @Nonnull final IXMLWriterSettings aSettings)
   {
     if (aOS == null)
       throw new NullPointerException ("outputStream");
@@ -93,6 +114,7 @@ public final class MicroWriter
     {
       final IXMLSerializer <IMicroNode> aSerializer = new MicroSerializer (aSettings);
       aSerializer.write (aNode, aOS);
+      return ESuccess.SUCCESS;
     }
     finally
     {
