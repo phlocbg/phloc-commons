@@ -50,7 +50,7 @@ public abstract class AbstractMultiConcurrentHashMapListBased <KEYTYPE, VALUETYP
   }
 
   public AbstractMultiConcurrentHashMapListBased (@Nonnull final KEYTYPE aKey,
-                                                  @Nullable final List <VALUETYPE> aCollection)
+                                                  @Nonnull final List <VALUETYPE> aCollection)
   {
     super (aKey, aCollection);
   }

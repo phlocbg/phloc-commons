@@ -48,8 +48,7 @@ public abstract class AbstractMultiConcurrentHashMapSetBased <KEYTYPE, VALUETYPE
     super (aKey, aValue);
   }
 
-  public AbstractMultiConcurrentHashMapSetBased (@Nonnull final KEYTYPE aKey,
-                                                 @Nullable final Set <VALUETYPE> aCollection)
+  public AbstractMultiConcurrentHashMapSetBased (@Nonnull final KEYTYPE aKey, @Nonnull final Set <VALUETYPE> aCollection)
   {
     super (aKey, aCollection);
   }
