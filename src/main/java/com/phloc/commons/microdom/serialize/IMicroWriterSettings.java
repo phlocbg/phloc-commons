@@ -20,7 +20,7 @@ package com.phloc.commons.microdom.serialize;
 import com.phloc.commons.xml.serialize.IXMLWriterSettings;
 
 /**
- * Interface for the settings to be used for serializing micro nodes.
+ * This interface is deprecated. Please use {@link IXMLWriterSettings} directly.
  * 
  * @author philip
  */

@@ -46,7 +46,7 @@ public abstract class AbstractXMLWriterSettings <T extends AbstractXMLWriterSett
   private EXMLSerializeDocType m_eSerializeDocType = EXMLSerializeDocType.EMIT;
   private EXMLSerializeComments m_eSerializeComments = EXMLSerializeComments.EMIT;
   private EXMLSerializeIndent m_eIndent = EXMLSerializeIndent.INDENT_AND_ALIGN;
-  private EXMLIncorrectCharacterHandling m_eIncorrectCharacterHandling = EXMLIncorrectCharacterHandling.DEFAULT;
+  private EXMLIncorrectCharacterHandling m_eIncorrectCharacterHandling = EXMLIncorrectCharacterHandling.WRITE_TO_FILE_NO_LOG;
   private String m_sCharset = DEFAULT_XML_CHARSET;
   private NamespaceContext m_aNamespaceContext;
 
@@ -54,15 +54,39 @@ public abstract class AbstractXMLWriterSettings <T extends AbstractXMLWriterSett
    * Creates a default settings object with the following settings:
    * <ul>
    * <li>XML output</li>
-   * <li>Indented</li>
-   * <li>Aligned</li>
+   * <li>XML version 1.0</li>
    * <li>with document type</li>
    * <li>with comments</li>
-   * <li>Default character set</li>
+   * <li>Indented and aligned</li>
+   * <li>Writing invalid characters to the file as is - may result in invalid
+   * XML files</li>
+   * <li>Default character set UTF-8</li>
+   * <li>No namespace context</li>
    * </ul>
    */
   public AbstractXMLWriterSettings ()// NOPMD
   {}
+
+  /**
+   * Copy constructor. Note: the namespace context is not deep-copied, so the
+   * original reference is reused!
+   * 
+   * @param aOther
+   *        The object to copy the settings from. May not be <code>null</code>.
+   */
+  public AbstractXMLWriterSettings (@Nonnull final IXMLWriterSettings aOther)
+  {
+    if (aOther == null)
+      throw new NullPointerException ("other");
+    setFormat (aOther.getFormat ());
+    setXMLVersion (aOther.getXMLVersion ());
+    setSerializeDocType (aOther.getSerializeDocType ());
+    setSerializeComments (aOther.getSerializeComments ());
+    setIndent (aOther.getIndent ());
+    setIncorrectCharacterHandling (aOther.getIncorrectCharacterHandling ());
+    setCharset (aOther.getCharset ());
+    setNamespaceContext (aOther.getNamespaceContext ());
+  }
 
   @SuppressWarnings ("unchecked")
   @Nonnull
@@ -71,6 +95,13 @@ public abstract class AbstractXMLWriterSettings <T extends AbstractXMLWriterSett
     return (T) this;
   }
 
+  /**
+   * Set the XML serialization format to use.
+   * 
+   * @param eFormat
+   *        The new format. May not be <code>null</code>.
+   * @return this
+   */
   @Nonnull
   public final T setFormat (@Nonnull final EXMLSerializeFormat eFormat)
   {
@@ -86,6 +117,13 @@ public abstract class AbstractXMLWriterSettings <T extends AbstractXMLWriterSett
     return m_eFormat;
   }
 
+  /**
+   * Set the preferred XML version to use.
+   * 
+   * @param eVersion
+   *        The XML version. May not be <code>null</code>.
+   * @return this
+   */
   @Nonnull
   public final T setXMLVersion (@Nonnull final EXMLVersion eVersion)
   {
@@ -101,6 +139,13 @@ public abstract class AbstractXMLWriterSettings <T extends AbstractXMLWriterSett
     return m_eXMLVersion;
   }
 
+  /**
+   * Set the way how to handle the doc type.
+   * 
+   * @param eSerializeDocType
+   *        Doc type handling. May not be <code>null</code>.
+   * @return this
+   */
   @Nonnull
   public final T setSerializeDocType (@Nonnull final EXMLSerializeDocType eSerializeDocType)
   {
@@ -116,6 +161,13 @@ public abstract class AbstractXMLWriterSettings <T extends AbstractXMLWriterSett
     return m_eSerializeDocType;
   }
 
+  /**
+   * Set the way how comments should be handled.
+   * 
+   * @param eSerializeComments
+   *        The comment handling. May not be <code>null</code>.
+   * @return this
+   */
   @Nonnull
   public final T setSerializeComments (@Nonnull final EXMLSerializeComments eSerializeComments)
   {
@@ -131,6 +183,13 @@ public abstract class AbstractXMLWriterSettings <T extends AbstractXMLWriterSett
     return m_eSerializeComments;
   }
 
+  /**
+   * Set the way how to indent/align
+   * 
+   * @param eIndent
+   *        Indent and align definition. May not be <code>null</code>.
+   * @return this
+   */
   @Nonnull
   public final T setIndent (@Nonnull final EXMLSerializeIndent eIndent)
   {
@@ -146,6 +205,13 @@ public abstract class AbstractXMLWriterSettings <T extends AbstractXMLWriterSett
     return m_eIndent;
   }
 
+  /**
+   * Set the way how to handle invalid characters.
+   * 
+   * @param eIncorrectCharacterHandling
+   *        The invalid character handling. May not be <code>null</code>.
+   * @return this
+   */
   @Nonnull
   public final T setIncorrectCharacterHandling (@Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharacterHandling)
   {
@@ -161,6 +227,13 @@ public abstract class AbstractXMLWriterSettings <T extends AbstractXMLWriterSett
     return m_eIncorrectCharacterHandling;
   }
 
+  /**
+   * Set the serialization charset.
+   * 
+   * @param sCharset
+   *        The charset to be used. May not be <code>null</code>.
+   * @return this
+   */
   @Nonnull
   public final T setCharset (@Nonnull final String sCharset)
   {
@@ -176,6 +249,13 @@ public abstract class AbstractXMLWriterSettings <T extends AbstractXMLWriterSett
     return m_sCharset;
   }
 
+  /**
+   * Set the namespace context to be used.
+   * 
+   * @param aNamespaceContext
+   *        The namespace context to be used. May be <code>null</code>.
+   * @return this
+   */
   @Nonnull
   public final T setNamespaceContext (@Nullable final NamespaceContext aNamespaceContext)
   {

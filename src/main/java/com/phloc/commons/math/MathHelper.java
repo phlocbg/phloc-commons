@@ -111,14 +111,17 @@ public final class MathHelper
     return new BigDecimal (nDividend).divide (new BigDecimal (nDivisor), eRoundingMode).longValue ();
   }
 
-  public static int longToInt (final long nValue, final int nFallback)
+  public static boolean canConvertLongToInt (final long nValue)
   {
-    if ((nValue & LONG_HIGH_BITS) == 0 || (nValue & LONG_HIGH_BITS) == LONG_HIGH_BITS)
-      return (int) nValue;
-    return nFallback;
+    return (nValue & LONG_HIGH_BITS) == 0 || (nValue & LONG_HIGH_BITS) == LONG_HIGH_BITS;
   }
 
-  public static int getMaxInt (final int nValue, final int... aValues)
+  public static int longToInt (final long nValue, final int nFallback)
+  {
+    return canConvertLongToInt (nValue) ? (int) nValue : nFallback;
+  }
+
+  public static int getMaxInt (final int nValue, @Nonnull final int... aValues)
   {
     int ret = nValue;
     for (final int n : aValues)
@@ -126,7 +129,7 @@ public final class MathHelper
     return ret;
   }
 
-  public static long getMaxLong (final long nValue, final long... aValues)
+  public static long getMaxLong (final long nValue, @Nonnull final long... aValues)
   {
     long ret = nValue;
     for (final long n : aValues)
@@ -134,7 +137,15 @@ public final class MathHelper
     return ret;
   }
 
-  public static double getMaxDouble (final double dValue, final double... aValues)
+  public static double getMaxFloat (final float fValue, @Nonnull final float... aValues)
+  {
+    float ret = fValue;
+    for (final float f : aValues)
+      ret = Math.max (ret, f);
+    return ret;
+  }
+
+  public static double getMaxDouble (final double dValue, @Nonnull final double... aValues)
   {
     double ret = dValue;
     for (final double d : aValues)
@@ -142,7 +153,7 @@ public final class MathHelper
     return ret;
   }
 
-  public static int getMinInt (final int nValue, final int... aValues)
+  public static int getMinInt (final int nValue, @Nonnull final int... aValues)
   {
     int ret = nValue;
     for (final int n : aValues)
@@ -150,7 +161,7 @@ public final class MathHelper
     return ret;
   }
 
-  public static long getMinLong (final long nValue, final long... aValues)
+  public static long getMinLong (final long nValue, @Nonnull final long... aValues)
   {
     long ret = nValue;
     for (final long n : aValues)
@@ -158,7 +169,15 @@ public final class MathHelper
     return ret;
   }
 
-  public static double getMinDouble (final double dValue, final double... aValues)
+  public static double getMinFloat (final float fValue, @Nonnull final float... aValues)
+  {
+    float ret = fValue;
+    for (final float f : aValues)
+      ret = Math.min (ret, f);
+    return ret;
+  }
+
+  public static double getMinDouble (final double dValue, @Nonnull final double... aValues)
   {
     double ret = dValue;
     for (final double d : aValues)

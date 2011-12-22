@@ -20,11 +20,10 @@ package com.phloc.commons.microdom.serialize;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.xml.serialize.AbstractXMLWriterSettings;
+import com.phloc.commons.xml.serialize.XMLWriterSettings;
 
 /**
- * Default implementation of the {@link IMicroWriterSettings} interface.<br>
- * Describes the export settings for the MicroWriter. Defaults to indented and
- * aligned XML in the UTF-8 charset.
+ * This class is deprecated. Please use {@link XMLWriterSettings} instead.
  * 
  * @author philip
  */
@@ -40,11 +39,14 @@ public final class MicroWriterSettings extends AbstractXMLWriterSettings <MicroW
    * Creates a default settings object with the following settings:
    * <ul>
    * <li>XML output</li>
-   * <li>Indented</li>
-   * <li>Aligned</li>
+   * <li>XML version 1.0</li>
    * <li>with document type</li>
    * <li>with comments</li>
-   * <li>Default character set</li>
+   * <li>Indented and aligned</li>
+   * <li>Writing invalid characters to the file as is - may result in invalid
+   * XML files</li>
+   * <li>Default character set UTF-8</li>
+   * <li>No namespace context</li>
    * </ul>
    */
   public MicroWriterSettings ()// NOPMD

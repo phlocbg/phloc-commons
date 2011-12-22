@@ -49,8 +49,8 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   private static final String CRLF = CGlobal.LINE_SEPARATOR;
 
   private final Writer m_aWriter;
-  private EXMLVersion m_eXMLVersion = EXMLVersion.DEFAULT;
   private final EXMLIncorrectCharacterHandling m_eIncorrectCharHandling;
+  private EXMLVersion m_eXMLVersion = EXMLVersion.DEFAULT;
 
   public XMLEmitterPhloc (@Nonnull @WillNotClose final Writer aWriter,
                           @Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharHandling)
@@ -224,7 +224,7 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   @Override
   public void onEntityReference (@Nonnull final String sEntityRef)
   {
-    _append ("&")._append (sEntityRef)._append (';');
+    _append ('&')._append (sEntityRef)._append (';');
   }
 
   @Override
