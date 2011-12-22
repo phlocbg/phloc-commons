@@ -144,6 +144,23 @@ public final class XMLWriter
                                                               .setNamespaceContext (aNamespaceCtx));
   }
 
+  /**
+   * Write a ode to an output stream using the default settings.
+   * 
+   * @param aNode
+   *        The node to be serialized. May be any kind of node (incl.
+   *        documents). May not be <code>null</code>.
+   * @param aOS
+   *        The output stream to write to. May not be <code>null</code>. The
+   *        output stream is closed anyway directly after the operation finishes
+   *        (on success and on error).
+   */
+  @Nonnull
+  public static ESuccess writeToStream (@Nonnull final Node aNode, @Nonnull @WillClose final OutputStream aOS)
+  {
+    return writeToStream (aNode, aOS, XMLWriterSettings.DEFAULT_XML_SETTINGS);
+  }
+
   @Nonnull
   public static ESuccess writeToStream (@Nonnull final Node aNode,
                                         @Nonnull @WillClose final OutputStream aOS,
