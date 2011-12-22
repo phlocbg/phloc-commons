@@ -38,7 +38,7 @@ public interface IXMLSerializer <NODETYPE>
    * @param aNode
    *        The node to write. May not be <code>null</code>.
    * @param aOS
-   *        The stream to serialize onto.
+   *        The stream to serialize onto. May not be <code>null</code>.
    */
   void write (@Nonnull NODETYPE aNode, @Nonnull @WillNotClose OutputStream aOS);
 }

@@ -17,7 +17,10 @@
  */
 package com.phloc.commons.xml.serialize;
 
+import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
+
+import com.phloc.commons.xml.EXMLIncorrectCharacterHandling;
 
 /**
  * Default implementation of the {@link IXMLWriterSettings} interface.<br>
@@ -29,10 +32,42 @@ import javax.annotation.concurrent.NotThreadSafe;
 @NotThreadSafe
 public final class XMLWriterSettings extends AbstractXMLWriterSettings <XMLWriterSettings>
 {
+  /** The default settings to use */
   public static final IXMLWriterSettings DEFAULT_XML_SETTINGS = new XMLWriterSettings ();
 
+  /**
+   * The suggested settings to be used. Difference from the default settings is
+   * the invalid character handling
+   */
+  public static final IXMLWriterSettings SUGGESTED_XML_SETTINGS = new XMLWriterSettings ().setIncorrectCharacterHandling (EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING);
+
+  /**
+   * Creates a default settings object with the following settings:
+   * <ul>
+   * <li>XML output</li>
+   * <li>XML version 1.0</li>
+   * <li>with document type</li>
+   * <li>with comments</li>
+   * <li>Indented and aligned</li>
+   * <li>Writing invalid characters to the file as is - may result in invalid
+   * XML files</li>
+   * <li>Default character set UTF-8</li>
+   * <li>No namespace context</li>
+   * </ul>
+   */
   public XMLWriterSettings ()
   {}
+
+  /**
+   * Copy constructor.
+   * 
+   * @param aOther
+   *        The object to copy the settings from. May not be <code>null</code>.
+   */
+  public XMLWriterSettings (@Nonnull final IXMLWriterSettings aOther)
+  {
+    super (aOther);
+  }
 
   @Override
   public boolean equals (final Object o)

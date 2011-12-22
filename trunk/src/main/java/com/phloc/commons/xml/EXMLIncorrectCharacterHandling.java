@@ -47,7 +47,8 @@ public enum EXMLIncorrectCharacterHandling
   /**
    * Write the invalid character to the file. This will result in a file that
    * cannot be read with the Java XML parser.<br>
-   * This is the fastest option
+   * This is the fastest option. This is how it was handled in phloc-commons
+   * &le; 3.3.6
    */
   WRITE_TO_FILE_NO_LOG (false, false)
   {

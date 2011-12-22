@@ -275,25 +275,31 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
                                                                 .setIndent (EXMLSerializeIndent.NONE);
     String s = XMLWriter.getNodeAsString (aDoc, aSettings);
     assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>" +
-                      CGlobal.LINE_SEPARATOR +
-                      "<root xmlns=\"ns1url\"><ns0:child1 xmlns:ns0=\"ns2url\" /><ns0:child2 xmlns:ns0=\"ns2url\" /></root>",
-                  s);
+                  CGlobal.LINE_SEPARATOR +
+                  "<root xmlns=\"ns1url\">" +
+                  "<ns0:child1 xmlns:ns0=\"ns2url\" />" +
+                  "<ns0:child2 xmlns:ns0=\"ns2url\" />" +
+                  "</root>", s);
 
     final MapBasedNamespaceContext aCtx = new MapBasedNamespaceContext ();
     aCtx.addMapping ("a", "ns1url");
     aSettings.setNamespaceContext (aCtx);
     s = XMLWriter.getNodeAsString (aDoc, aSettings);
     assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>" +
-                      CGlobal.LINE_SEPARATOR +
-                      "<a:root xmlns:a=\"ns1url\"><ns0:child1 xmlns:ns0=\"ns2url\" /><ns0:child2 xmlns:ns0=\"ns2url\" /></a:root>",
-                  s);
+                  CGlobal.LINE_SEPARATOR +
+                  "<a:root xmlns:a=\"ns1url\">" +
+                  "<ns0:child1 xmlns:ns0=\"ns2url\" />" +
+                  "<ns0:child2 xmlns:ns0=\"ns2url\" />" +
+                  "</a:root>", s);
 
     aCtx.addMapping ("xy", "ns2url");
     s = XMLWriter.getNodeAsString (aDoc, aSettings);
     assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>" +
-                      CGlobal.LINE_SEPARATOR +
-                      "<a:root xmlns:a=\"ns1url\"><xy:child1 xmlns:xy=\"ns2url\" /><xy:child2 xmlns:xy=\"ns2url\" /></a:root>",
-                  s);
+                  CGlobal.LINE_SEPARATOR +
+                  "<a:root xmlns:a=\"ns1url\">" +
+                  "<xy:child1 xmlns:xy=\"ns2url\" />" +
+                  "<xy:child2 xmlns:xy=\"ns2url\" />" +
+                  "</a:root>", s);
   }
 
   @Test

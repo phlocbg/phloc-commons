@@ -129,6 +129,15 @@ public final class MathHelperTest
   }
 
   @Test
+  public void testGetMaxFloat ()
+  {
+    PhlocAssert.assertEquals (5, MathHelper.getMaxFloat (5));
+    PhlocAssert.assertEquals (5, MathHelper.getMaxFloat (5, 5, 5, 5));
+    PhlocAssert.assertEquals (5, MathHelper.getMaxFloat (5, 3, 2, 1));
+    PhlocAssert.assertEquals (7, MathHelper.getMaxFloat (5, 3, 7, 4));
+  }
+
+  @Test
   public void testGetMaxDouble ()
   {
     PhlocAssert.assertEquals (5, MathHelper.getMaxDouble (5));
@@ -153,6 +162,15 @@ public final class MathHelperTest
     assertEquals (5, MathHelper.getMinLong (5, 5, 5, 5));
     assertEquals (1, MathHelper.getMinLong (5, 3, 2, 1));
     assertEquals (3, MathHelper.getMinLong (5, 3, 7, 4));
+  }
+
+  @Test
+  public void testGetMinFloat ()
+  {
+    PhlocAssert.assertEquals (5, MathHelper.getMinFloat (5));
+    PhlocAssert.assertEquals (5, MathHelper.getMinFloat (5, 5, 5, 5));
+    PhlocAssert.assertEquals (1, MathHelper.getMinFloat (5, 3, 2, 1));
+    PhlocAssert.assertEquals (3, MathHelper.getMinFloat (5, 3, 7, 4));
   }
 
   @Test

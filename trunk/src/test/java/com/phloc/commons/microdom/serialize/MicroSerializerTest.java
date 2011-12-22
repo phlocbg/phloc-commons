@@ -19,6 +19,8 @@ package com.phloc.commons.microdom.serialize;
 
 import static org.junit.Assert.assertTrue;
 
+import javax.annotation.Nonnull;
+
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +41,8 @@ public final class MicroSerializerTest
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (MicroSerializerTest.class);
 
-  private IMicroDocument _createLargeDoc (final IMicroDocument doc, final boolean bWithText)
+  @Nonnull
+  private IMicroDocument _createLargeDoc (@Nonnull final IMicroDocument doc, final boolean bWithText)
   {
     final IMicroElement aDocElement = doc.appendElement ("root");
     for (int i = 1; i <= 10; ++i)
