@@ -55,7 +55,7 @@ public final class ChildrenProviderElementWithName implements IChildrenProvider 
     m_sTagName = sTagName;
   }
 
-  public boolean hasChildren (final IMicroNode aCurrent)
+  public boolean hasChildren (@Nonnull final IMicroNode aCurrent)
   {
     // Not an element?
     if (!aCurrent.isElement ())
@@ -68,13 +68,13 @@ public final class ChildrenProviderElementWithName implements IChildrenProvider 
   }
 
   @Nonnegative
-  public int getChildCount (final IMicroNode aCurrent)
+  public int getChildCount (@Nonnull final IMicroNode aCurrent)
   {
     return getChildren (aCurrent).size ();
   }
 
   @Nonnull
-  public Collection <? extends IMicroNode> getChildren (final IMicroNode aCurrent)
+  public Collection <? extends IMicroNode> getChildren (@Nonnull final IMicroNode aCurrent)
   {
     // Not an element?
     if (!aCurrent.isElement ())

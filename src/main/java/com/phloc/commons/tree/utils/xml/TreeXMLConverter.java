@@ -20,6 +20,7 @@ package com.phloc.commons.tree.utils.xml;
 import java.util.Comparator;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
@@ -101,7 +102,7 @@ public final class TreeXMLConverter
                          new DefaultHierarchyWalkerCallback <ITEMTYPE> ()
                          {
                            @Override
-                           public void onItemBeforeChildren (final ITEMTYPE aItem)
+                           public void onItemBeforeChildren (@Nonnull final ITEMTYPE aItem)
                            {
                              // create item element
                              final IMicroElement eItem = aParents.peek ().appendElement (ELEMENT_ITEM);
@@ -115,7 +116,7 @@ public final class TreeXMLConverter
                            }
 
                            @Override
-                           public void onItemAfterChildren (final ITEMTYPE aItem)
+                           public void onItemAfterChildren (@Nullable final ITEMTYPE aItem)
                            {
                              aParents.pop ();
                            }

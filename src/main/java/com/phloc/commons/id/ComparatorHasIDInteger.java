@@ -41,7 +41,7 @@ public class ComparatorHasIDInteger <DATATYPE extends IHasID <Integer>> extends 
   }
 
   @Override
-  protected final int mainCompare (final DATATYPE aObj1, final DATATYPE aObj2)
+  protected final int mainCompare (@Nonnull final DATATYPE aObj1, @Nonnull final DATATYPE aObj2)
   {
     return aObj1.getID ().compareTo (aObj2.getID ());
   }

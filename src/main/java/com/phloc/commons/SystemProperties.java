@@ -55,23 +55,24 @@ public final class SystemProperties
   public static String getPropertyValue (@Nullable final String sKey)
   {
     String ret = null;
-    try
-    {
-      ret = System.getProperty (sKey);
-      if (ret == null && s_aWarnedPropertyNames.add (sKey))
+    if (sKey != null)
+      try
       {
-        // don't show anything for phloc ;-)
-        if (!sKey.contains ("phloc"))
+        ret = System.getProperty (sKey);
+        if (ret == null && s_aWarnedPropertyNames.add (sKey))
         {
-          // Warn about each property once
-          s_aLogger.warn ("System property '" + sKey + "' is not set!");
+          // don't show anything for phloc ;-)
+          if (!sKey.contains ("phloc"))
+          {
+            // Warn about each property once
+            s_aLogger.warn ("System property '" + sKey + "' is not set!");
+          }
         }
       }
-    }
-    catch (final SecurityException ex)
-    {
-      s_aLogger.warn ("Failed to get system property: " + ex.getMessage ());
-    }
+      catch (final SecurityException ex)
+      {
+        s_aLogger.warn ("Failed to get system property: " + ex.getMessage ());
+      }
     return ret;
   }
 

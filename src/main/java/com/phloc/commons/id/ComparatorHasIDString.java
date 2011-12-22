@@ -41,7 +41,7 @@ public class ComparatorHasIDString <DATATYPE extends IHasID <String>> extends Ab
   }
 
   @Override
-  protected final int mainCompare (final DATATYPE aElement1, final DATATYPE aElement2)
+  protected final int mainCompare (@Nonnull final DATATYPE aElement1, @Nonnull final DATATYPE aElement2)
   {
     return aElement1.getID ().compareTo (aElement2.getID ());
   }

@@ -41,7 +41,7 @@ public final class ComparatorChangeLogEntryDate extends AbstractComparator <Chan
   }
 
   @Override
-  protected int mainCompare (final ChangeLogEntry aEntry1, final ChangeLogEntry aEntry2)
+  protected int mainCompare (@Nonnull final ChangeLogEntry aEntry1, @Nonnull final ChangeLogEntry aEntry2)
   {
     final long n1 = aEntry1.getDate ().getTime ();
     final long n2 = aEntry2.getDate ().getTime ();

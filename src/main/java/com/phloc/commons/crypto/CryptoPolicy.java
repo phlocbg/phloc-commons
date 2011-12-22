@@ -31,6 +31,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
+import com.phloc.commons.charset.CCharset;
+import com.phloc.commons.charset.CharsetManager;
 
 /**
  * Helper class to see if unlimited strength crypto is available. If it is not,
@@ -88,7 +90,8 @@ public final class CryptoPolicy
       // Try the encryption on dummy string to make sure it works.
       // Not using padding so # bytes must be multiple of AES cipher
       // block size which is 16 bytes. Also, OK not to use UTF-8 here.
-      final byte [] aEncrypted = aCipher.doFinal ("1234567890123456".getBytes ());
+      final byte [] aEncrypted = aCipher.doFinal (CharsetManager.getAsBytes ("1234567890123456",
+                                                                             CCharset.CHARSET_ISO_8859_1));
       if (aEncrypted == null)
         throw new IllegalStateException ("Encryption of test string failed!");
       final ExemptionMechanism aExempt = aCipher.getExemptionMechanism ();
