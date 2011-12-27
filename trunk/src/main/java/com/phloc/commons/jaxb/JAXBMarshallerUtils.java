@@ -284,4 +284,19 @@ public final class JAXBMarshallerUtils
   {
     return _getBooleanProperty (aMarshaller, SUN_OBJECT_IDENTITY_CYCLE_DETECTION);
   }
+
+  /**
+   * Check if the passed Marshaller is a Sun JAXB v2 marshaller. Use this method
+   * to determined, whether the Sun specific methods may be invoked or not.
+   * 
+   * @param aMarshaller
+   *        The marshaller to be checked. May be <code>null</code>.
+   * @return <code>true</code> if the passed marshaller is not <code>null</code>
+   *         and is of the Sun class.
+   */
+  public static boolean isSunJAXB2Marshaller (@Nullable final Marshaller aMarshaller)
+  {
+    return aMarshaller != null &&
+           aMarshaller.getClass ().getName ().equals ("com.sun.xml.bind.v2.runtime.MarshallerImpl");
+  }
 }
