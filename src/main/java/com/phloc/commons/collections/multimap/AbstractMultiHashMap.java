@@ -27,6 +27,17 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.state.EChange;
 
+/**
+ * Abstract multi map based on {@link HashMap}.
+ * 
+ * @author philip
+ * @param <KEYTYPE>
+ *        key type
+ * @param <VALUETYPE>
+ *        value type
+ * @param <COLLTYPE>
+ *        contained collection type
+ */
 @NotThreadSafe
 public abstract class AbstractMultiHashMap <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends
                                                                                                          HashMap <KEYTYPE, COLLTYPE> implements

@@ -20,11 +20,23 @@ package com.phloc.commons.collections.multimap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+/**
+ * Multi map based on {@link ConcurrentHashMap} and {@link LinkedHashSet}
+ * values.<br>
+ * Important note: <code>null</code> keys are not allowed here!
+ * 
+ * @author philip
+ * @param <KEYTYPE>
+ *        key type
+ * @param <VALUETYPE>
+ *        value type
+ */
 @NotThreadSafe
 public class MultiConcurrentHashMapLinkedHashSetBased <KEYTYPE, VALUETYPE> extends
                                                                            AbstractMultiConcurrentHashMapSetBased <KEYTYPE, VALUETYPE>

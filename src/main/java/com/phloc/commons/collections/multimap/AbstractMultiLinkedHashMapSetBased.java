@@ -17,12 +17,22 @@
  */
 package com.phloc.commons.collections.multimap;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+/**
+ * Abstract multi map based on {@link LinkedHashMap} and {@link Set} values.<br>
+ * 
+ * @author philip
+ * @param <KEYTYPE>
+ *        key type
+ * @param <VALUETYPE>
+ *        value type
+ */
 @NotThreadSafe
 public abstract class AbstractMultiLinkedHashMapSetBased <KEYTYPE, VALUETYPE> extends
                                                                               AbstractMultiLinkedHashMap <KEYTYPE, VALUETYPE, Set <VALUETYPE>> implements

@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.collections.multimap;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -25,6 +26,15 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+/**
+ * Multi map based on {@link HashMap} and {@link HashSet} values.<br>
+ * 
+ * @author philip
+ * @param <KEYTYPE>
+ *        key type
+ * @param <VALUETYPE>
+ *        value type
+ */
 @NotThreadSafe
 public class MultiHashMapHashSetBased <KEYTYPE, VALUETYPE> extends AbstractMultiHashMapSetBased <KEYTYPE, VALUETYPE>
 {

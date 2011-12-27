@@ -20,11 +20,21 @@ package com.phloc.commons.collections.multimap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+/**
+ * Multi map based on {@link TreeMap} and {@link LinkedHashSet} values.<br>
+ * 
+ * @author philip
+ * @param <KEYTYPE>
+ *        key type
+ * @param <VALUETYPE>
+ *        value type
+ */
 @NotThreadSafe
 public class MultiTreeMapLinkedHashSetBased <KEYTYPE, VALUETYPE> extends
                                                                  AbstractMultiTreeMapSetBased <KEYTYPE, VALUETYPE>

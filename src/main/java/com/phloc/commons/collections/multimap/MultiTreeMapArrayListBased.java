@@ -20,11 +20,21 @@ package com.phloc.commons.collections.multimap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+/**
+ * Multi map based on {@link TreeMap} and {@link ArrayList} values.<br>
+ * 
+ * @author philip
+ * @param <KEYTYPE>
+ *        key type
+ * @param <VALUETYPE>
+ *        value type
+ */
 @NotThreadSafe
 public class MultiTreeMapArrayListBased <KEYTYPE, VALUETYPE> extends AbstractMultiTreeMapListBased <KEYTYPE, VALUETYPE>
 {

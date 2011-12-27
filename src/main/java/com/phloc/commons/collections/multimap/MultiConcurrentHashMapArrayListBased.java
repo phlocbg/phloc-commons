@@ -20,11 +20,22 @@ package com.phloc.commons.collections.multimap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
+/**
+ * Multi map based on {@link ConcurrentHashMap} and {@link ArrayList} values.<br>
+ * Important note: <code>null</code> keys are not allowed here!
+ * 
+ * @author philip
+ * @param <KEYTYPE>
+ *        key type
+ * @param <VALUETYPE>
+ *        value type
+ */
 @ThreadSafe
 public class MultiConcurrentHashMapArrayListBased <KEYTYPE, VALUETYPE> extends
                                                                        AbstractMultiConcurrentHashMapListBased <KEYTYPE, VALUETYPE>
