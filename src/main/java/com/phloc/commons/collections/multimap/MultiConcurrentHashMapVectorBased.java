@@ -37,7 +37,7 @@ public class MultiConcurrentHashMapVectorBased <KEYTYPE, VALUETYPE> extends
     super (aKey, aValue);
   }
 
-  public MultiConcurrentHashMapVectorBased (@Nonnull final KEYTYPE aKey, @Nullable final List <VALUETYPE> aCollection)
+  public MultiConcurrentHashMapVectorBased (@Nonnull final KEYTYPE aKey, @Nonnull final List <VALUETYPE> aCollection)
   {
     super (aKey, aCollection);
   }

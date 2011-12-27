@@ -37,7 +37,7 @@ public class MultiConcurrentHashMapArrayListBased <KEYTYPE, VALUETYPE> extends
     super (aKey, aValue);
   }
 
-  public MultiConcurrentHashMapArrayListBased (@Nonnull final KEYTYPE aKey, @Nullable final List <VALUETYPE> aCollection)
+  public MultiConcurrentHashMapArrayListBased (@Nonnull final KEYTYPE aKey, @Nonnull final List <VALUETYPE> aCollection)
   {
     super (aKey, aCollection);
   }

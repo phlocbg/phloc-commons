@@ -38,7 +38,7 @@ public class MultiConcurrentHashMapLinkedHashSetBased <KEYTYPE, VALUETYPE> exten
   }
 
   public MultiConcurrentHashMapLinkedHashSetBased (@Nonnull final KEYTYPE aKey,
-                                                   @Nullable final Set <VALUETYPE> aCollection)
+                                                   @Nonnull final Set <VALUETYPE> aCollection)
   {
     super (aKey, aCollection);
   }
