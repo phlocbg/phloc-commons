@@ -19,10 +19,20 @@ package com.phloc.commons.collections.multimap;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+/**
+ * Abstract multi map based on {@link TreeMap} and {@link Set} values.<br>
+ * 
+ * @author philip
+ * @param <KEYTYPE>
+ *        key type
+ * @param <VALUETYPE>
+ *        value type
+ */
 @NotThreadSafe
 public abstract class AbstractMultiTreeMapSetBased <KEYTYPE, VALUETYPE> extends
                                                                         AbstractMultiTreeMap <KEYTYPE, VALUETYPE, Set <VALUETYPE>> implements
