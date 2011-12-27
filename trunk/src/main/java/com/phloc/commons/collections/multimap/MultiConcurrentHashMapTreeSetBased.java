@@ -37,7 +37,7 @@ public class MultiConcurrentHashMapTreeSetBased <KEYTYPE, VALUETYPE> extends
     super (aKey, aValue);
   }
 
-  public MultiConcurrentHashMapTreeSetBased (@Nonnull final KEYTYPE aKey, @Nullable final Set <VALUETYPE> aCollection)
+  public MultiConcurrentHashMapTreeSetBased (@Nonnull final KEYTYPE aKey, @Nonnull final Set <VALUETYPE> aCollection)
   {
     super (aKey, aCollection);
   }
