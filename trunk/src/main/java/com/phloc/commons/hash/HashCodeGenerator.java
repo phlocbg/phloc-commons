@@ -30,7 +30,21 @@ import javax.annotation.concurrent.NotThreadSafe;
  * >this article</a> for details.<br>
  * After calling {@link #append(Object)} for all objects use
  * {@link #getHashCode()} to retrieve the calculated hash code. Once the hash
- * code was calculated no modifications are allowed.
+ * code was calculated no modifications are allowed.<br>
+ * <p>
+ * A real world example for a final class derived from {@link Object} or a base
+ * class looks like this: <code><pre>@Override
+ * public int hashCode () {
+ *   return new HashCodeGenerator (this).append (member1).append (member2).getHashCode ();
+ * }</pre></code>
+ * </p>
+ * <p>
+ * For a derived class, the typical code looks like this, assuming the base
+ * class also uses {@link HashCodeGenerator}: <code><pre>@Override
+ * public int hashCode () {
+ *   return HashCodeGenerator.getDerived (super.hashCode ()).append (member3).append (member4).getHashCode ();
+ * }</pre></code>
+ * </p>
  * 
  * @author philip
  */

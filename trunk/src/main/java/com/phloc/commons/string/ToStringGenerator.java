@@ -24,7 +24,24 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 /**
- * This is a utility class for easier "toString" method creations.
+ * This is a utility class for easier <code>toString</code> method creations. It
+ * assumes that the <code>toString</code> method is only used for the
+ * representation of the internal state and not for creating human readable
+ * formats.
+ * <p>
+ * A real world example for a final class derived from {@link Object} or a base
+ * class looks like this: <code><pre>@Override
+ * public String toString () {
+ *   return new ToStringGenerator (this).append ("member1", member1).append ("member2", member2).toString ();
+ * }</pre></code>
+ * </p>
+ * <p>
+ * For a derived class, the typical code looks like this, assuming that the base
+ * class also used the {@link ToStringGenerator}: <code><pre>@Override
+ * public String toString () {
+ *   return ToStringGenerator.getDerived (super.toString ()).append ("member3", member3).append ("member4", member4).toString ();
+ * }</pre></code>
+ * </p>
  * 
  * @author philip
  */
