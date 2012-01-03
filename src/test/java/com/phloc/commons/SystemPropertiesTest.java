@@ -26,20 +26,17 @@ import static org.junit.Assert.assertTrue;
 import java.util.Map;
 
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.mock.AbstractPhlocTestCase;
 
 /**
  * Test class for class {@link SystemProperties}
  * 
  * @author philip
  */
-public final class SystemPropertiesTest
+public final class SystemPropertiesTest extends AbstractPhlocTestCase
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (SystemPropertiesTest.class);
-
   @Test
   public void testGetAll ()
   {

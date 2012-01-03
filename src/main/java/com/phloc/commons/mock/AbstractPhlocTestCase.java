@@ -78,6 +78,10 @@ public abstract class AbstractPhlocTestCase
     // Init global stuff
     GlobalDebug.setDebugModeDirect (ENABLE_GLOBAL_DEBUG);
     GlobalDebug.setTraceModeDirect (ENABLE_GLOBAL_TRACE);
+
+    // Enable testing with a security manager here :)
+    if (false && System.getSecurityManager () == null)
+      System.setSecurityManager (new SecurityManager ());
   }
 
   @OverrideOnDemand

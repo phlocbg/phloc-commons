@@ -20,6 +20,7 @@ package com.phloc.commons;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
@@ -32,6 +33,11 @@ import org.slf4j.LoggerFactory;
 import com.phloc.commons.annotations.DevelopersNote;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
+import com.phloc.commons.priviledged.AccessControllerHelper;
+import com.phloc.commons.priviledged.PrivilegedActionSystemClearProperty;
+import com.phloc.commons.priviledged.PrivilegedActionSystemGetProperties;
+import com.phloc.commons.priviledged.PrivilegedActionSystemGetProperty;
+import com.phloc.commons.priviledged.PrivilegedActionSystemSetProperty;
 
 /**
  * This class wraps all the Java system properties like version number etc.
@@ -56,23 +62,18 @@ public final class SystemProperties
   {
     String ret = null;
     if (sKey != null)
-      try
+    {
+      ret = AccessControllerHelper.call (new PrivilegedActionSystemGetProperty (sKey));
+      if (ret == null && s_aWarnedPropertyNames.add (sKey))
       {
-        ret = System.getProperty (sKey);
-        if (ret == null && s_aWarnedPropertyNames.add (sKey))
+        // don't show anything for phloc ;-)
+        if (!sKey.contains ("phloc"))
         {
-          // don't show anything for phloc ;-)
-          if (!sKey.contains ("phloc"))
-          {
-            // Warn about each property once
-            s_aLogger.warn ("System property '" + sKey + "' is not set!");
-          }
+          // Warn about each property once
+          s_aLogger.warn ("System property '" + sKey + "' is not set!");
         }
       }
-      catch (final SecurityException ex)
-      {
-        s_aLogger.warn ("Failed to get system property: " + ex.getMessage ());
-      }
+    }
     return ret;
   }
 
@@ -91,14 +92,7 @@ public final class SystemProperties
     if (sValue == null)
       removePropertyValue (sKey);
     else
-      try
-      {
-        System.setProperty (sKey, sValue);
-      }
-      catch (final SecurityException ex)
-      {
-        s_aLogger.warn ("Failed to set system property '" + sKey + "' to '" + sValue + "': " + ex.getMessage ());
-      }
+      AccessControllerHelper.run (new PrivilegedActionSystemSetProperty (sKey, sValue));
   }
 
   /**
@@ -114,15 +108,7 @@ public final class SystemProperties
   @Nullable
   public static String removePropertyValue (@Nonnull final String sKey)
   {
-    try
-    {
-      return System.clearProperty (sKey);
-    }
-    catch (final SecurityException ex)
-    {
-      s_aLogger.warn ("Failed to remove system property '" + sKey + "': " + ex.getMessage ());
-      return null;
-    }
+    return AccessControllerHelper.call (new PrivilegedActionSystemClearProperty (sKey));
   }
 
   @Nullable
@@ -283,10 +269,7 @@ public final class SystemProperties
   @ReturnsMutableCopy
   public static Set <String> getAllPropertyNames ()
   {
-    final Set <String> ret = new HashSet <String> ();
-    for (final Object aKey : System.getProperties ().keySet ())
-      ret.add ((String) aKey);
-    return ret;
+    return new HashSet <String> (getAllProperties ().keySet ());
   }
 
   /**
@@ -298,11 +281,13 @@ public final class SystemProperties
   public static Map <String, String> getAllProperties ()
   {
     final Map <String, String> ret = new HashMap <String, String> ();
-    for (final Map.Entry <Object, Object> aEntry : System.getProperties ().entrySet ())
-    {
-      final String sKey = (String) aEntry.getKey ();
-      ret.put (sKey, (String) aEntry.getValue ());
-    }
+    final Properties aProperties = AccessControllerHelper.call (new PrivilegedActionSystemGetProperties ());
+    if (aProperties != null)
+      for (final Map.Entry <Object, Object> aEntry : aProperties.entrySet ())
+      {
+        final String sKey = (String) aEntry.getKey ();
+        ret.put (sKey, (String) aEntry.getValue ());
+      }
     return ret;
   }
 
@@ -317,6 +302,6 @@ public final class SystemProperties
   @Nonnull
   public static boolean containsPropertyName (final String sPropertyName)
   {
-    return System.getProperties ().containsKey (sPropertyName);
+    return getAllProperties ().containsKey (sPropertyName);
   }
 }

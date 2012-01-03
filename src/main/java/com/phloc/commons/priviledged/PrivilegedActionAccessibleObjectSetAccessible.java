@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.lang;
+package com.phloc.commons.priviledged;
 
 import java.lang.reflect.AccessibleObject;
 import java.security.PrivilegedAction;
@@ -28,17 +28,17 @@ import javax.annotation.Nullable;
  * 
  * @author philip
  */
-public final class PrivilegedActionSetAccessible implements PrivilegedAction <Object>
+public final class PrivilegedActionAccessibleObjectSetAccessible implements PrivilegedAction <Object>
 {
   private final AccessibleObject m_aObject;
   private final boolean m_bAccessible;
 
-  public PrivilegedActionSetAccessible (@Nonnull final AccessibleObject aObject)
+  public PrivilegedActionAccessibleObjectSetAccessible (@Nonnull final AccessibleObject aObject)
   {
     this (aObject, true);
   }
 
-  public PrivilegedActionSetAccessible (@Nonnull final AccessibleObject aObject, final boolean bAccessible)
+  public PrivilegedActionAccessibleObjectSetAccessible (@Nonnull final AccessibleObject aObject, final boolean bAccessible)
   {
     if (aObject == null)
       throw new NullPointerException ("method");
