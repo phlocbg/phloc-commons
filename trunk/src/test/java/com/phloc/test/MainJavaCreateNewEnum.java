@@ -21,8 +21,9 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.security.AccessController;
-import java.security.PrivilegedAction;
+
+import com.phloc.commons.priviledged.AccessControllerHelper;
+import com.phloc.commons.priviledged.PrivilegedActionAccessibleObjectSetAccessible;
 
 public class MainJavaCreateNewEnum
 {
@@ -49,14 +50,7 @@ public class MainJavaCreateNewEnum
     {
       if (m.getName ().equals ("acquireConstructorAccessor"))
       {
-        AccessController.doPrivileged (new PrivilegedAction <Object> ()
-        {
-          public Object run ()
-          {
-            m.setAccessible (true);
-            return null;
-          }
-        });
+        AccessControllerHelper.run (new PrivilegedActionAccessibleObjectSetAccessible (m));
         m.invoke (con, new Object [0]);
       }
     }
@@ -66,28 +60,14 @@ public class MainJavaCreateNewEnum
     {
       if (f.getName ().equals ("constructorAccessor"))
       {
-        AccessController.doPrivileged (new PrivilegedAction <Object> ()
-        {
-          public Object run ()
-          {
-            f.setAccessible (true);
-            return null;
-          }
-        });
+        AccessControllerHelper.run (new PrivilegedActionAccessibleObjectSetAccessible (f));
         ca = f.get (con);
       }
     }
     if (ca == null)
       throw new IllegalStateException ();
     final Method m = ca.getClass ().getMethod ("newInstance", new Class [] { Object [].class });
-    AccessController.doPrivileged (new PrivilegedAction <Object> ()
-    {
-      public Object run ()
-      {
-        m.setAccessible (true);
-        return null;
-      }
-    });
+    AccessControllerHelper.run (new PrivilegedActionAccessibleObjectSetAccessible (m));
     final Day v = (Day) m.invoke (ca, new Object [] { new Object [] { "VACATION", Integer.valueOf (4711) } });
     System.out.println (v.getClass () + ":" + v.name () + ":" + v.ordinal ());
   }
