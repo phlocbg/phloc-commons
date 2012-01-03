@@ -226,13 +226,13 @@ public final class GenericReflection
       {
         return aClass.newInstance ();
       }
-      catch (final Exception ex)
+      catch (final Throwable t)
       {
         /*
          * Catch all exceptions because any exception thrown from the
          * constructor may also end up in this catch block
          */
-        s_aLogger.error ("Failed to instantiate " + aClass, ex);
+        s_aLogger.error ("Failed to instantiate " + aClass, t);
       }
     return null;
   }
@@ -246,14 +246,14 @@ public final class GenericReflection
       {
         return aDesiredType.cast (forName (sClassName).newInstance ());
       }
-      catch (final Exception ex)
+      catch (final Throwable t)
       {
         /*
          * Catch all exceptions because any exception thrown from the
          * constructor (indirectly invoked by newInstance) may also end up in
          * this catch block
          */
-        s_aLogger.error ("Failed to instantiate '" + sClassName + "'", ex);
+        s_aLogger.error ("Failed to instantiate '" + sClassName + "'", t);
       }
     return null;
   }
@@ -268,14 +268,14 @@ public final class GenericReflection
       {
         return aDesiredType.cast (Class.forName (sClassName, true, aClassLoaderToUse).newInstance ());
       }
-      catch (final Exception ex)
+      catch (final Throwable t)
       {
         /*
          * Catch all exceptions because any exception thrown from the
          * constructor (indirectly invoked by newInstance) may also end up in
          * this catch block
          */
-        s_aLogger.error ("Failed to instantiate '" + sClassName + "' with CL " + aClassLoaderToUse, ex);
+        s_aLogger.error ("Failed to instantiate '" + sClassName + "' with CL " + aClassLoaderToUse, t);
       }
     return null;
   }
