@@ -97,6 +97,11 @@
           <xs:documentation>A testing related issue.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="data">
+        <xs:annotation>
+          <xs:documentation>A data related issue.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>   
   

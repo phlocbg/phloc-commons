@@ -37,7 +37,8 @@ public enum EChangeLogCategory implements IHasID <String>
   FEATURE ("feature"),
   BUSINESS_LOGIC ("businesslogic"),
   SECURITY ("security"),
-  TEST ("test");
+  TEST ("test"),
+  DATA ("data");
 
   private String m_sID;
 
