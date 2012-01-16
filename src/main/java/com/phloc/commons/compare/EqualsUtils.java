@@ -24,6 +24,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -532,6 +533,14 @@ public final class EqualsUtils
         final Collection <?> aColl2 = (Collection <?>) aObj2;
         if (aColl1.size () != aColl2.size ())
           return false;
+
+        if (aObj1 instanceof Set <?>)
+        {
+          // Special handling, because order is undefined
+          return aObj1.equals (aObj2);
+        }
+
+        // Lists and queues with defined order
         final Iterator <?> it1 = aColl1.iterator ();
         final Iterator <?> it2 = aColl2.iterator ();
         while (it1.hasNext ())
@@ -553,6 +562,9 @@ public final class EqualsUtils
         final Map <?, ?> aMap2 = (Map <?, ?>) aObj2;
         if (aMap1.size () != aMap2.size ())
           return false;
+
+        // The order may be different, even if the contained elements are
+        // identical (e.g. in case of has collisions in a HashMap)
         for (final Entry <?, ?> aEntry1 : aMap1.entrySet ())
         {
           final Object aKey1 = aEntry1.getKey ();
