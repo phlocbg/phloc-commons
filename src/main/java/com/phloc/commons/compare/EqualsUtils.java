@@ -549,22 +549,22 @@ public final class EqualsUtils
       if (aObj1 instanceof Map <?, ?>)
       {
         // Special handling for collections
-        final Map <?, ?> aColl1 = (Map <?, ?>) aObj1;
-        final Map <?, ?> aColl2 = (Map <?, ?>) aObj2;
-        if (aColl1.size () != aColl2.size ())
+        final Map <?, ?> aMap1 = (Map <?, ?>) aObj1;
+        final Map <?, ?> aMap2 = (Map <?, ?>) aObj2;
+        if (aMap1.size () != aMap2.size ())
           return false;
-        final Iterator <?> it1 = aColl1.entrySet ().iterator ();
-        final Iterator <?> it2 = aColl2.entrySet ().iterator ();
-        while (it1.hasNext ())
+        for (final Entry <?, ?> aEntry1 : aMap1.entrySet ())
         {
-          final Map.Entry <?, ?> aChild1 = (Entry <?, ?>) it1.next ();
-          final Map.Entry <?, ?> aChild2 = (Entry <?, ?>) it2.next ();
-
-          // Recursive call for key
-          if (!_equalsTypeSpecific (aChild1.getKey (), aChild2.getKey (), bNullable, bRecursivelyHandleCollections))
+          final Object aKey1 = aEntry1.getKey ();
+          final Object aValue2 = aMap2.get (aKey1);
+          if (aValue2 == null && !aMap2.containsKey (aKey1))
+          {
+            // No such key1 in collection2
             return false;
+          }
+
           // Recursive call for value
-          if (!_equalsTypeSpecific (aChild1.getValue (), aChild2.getValue (), bNullable, bRecursivelyHandleCollections))
+          if (!_equalsTypeSpecific (aEntry1.getValue (), aValue2, bNullable, bRecursivelyHandleCollections))
             return false;
         }
         return true;
