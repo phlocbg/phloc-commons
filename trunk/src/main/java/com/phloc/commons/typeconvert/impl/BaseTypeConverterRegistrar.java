@@ -32,8 +32,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.IsSPIImplementation;
-import com.phloc.commons.charset.CCharset;
-import com.phloc.commons.charset.CharsetManager;
+import com.phloc.commons.base64.Base64;
+import com.phloc.commons.base64.Base64Helper;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.lang.GenericReflection;
 import com.phloc.commons.regex.RegExHelper;
@@ -907,14 +907,14 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     {
       public String convert (final Object aSource)
       {
-        return CharsetManager.getAsString ((byte []) aSource, CCharset.CHARSET_ISO_8859_1);
+        return Base64.encodeBytes ((byte []) aSource);
       }
     });
     aRegistry.registerTypeConverter (String.class, byte [].class, new ITypeConverter ()
     {
       public byte [] convert (final Object aSource)
       {
-        return CharsetManager.getAsBytes ((String) aSource, CCharset.CHARSET_ISO_8859_1);
+        return Base64Helper.safeDecode ((String) aSource);
       }
     });
     aRegistry.registerTypeConverter (byte [].class, ArrayList.class, new ITypeConverter ()

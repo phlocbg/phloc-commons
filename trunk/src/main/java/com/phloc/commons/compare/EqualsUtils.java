@@ -20,12 +20,17 @@ package com.phloc.commons.compare;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
+import com.phloc.commons.lang.ClassHelper;
 
 /**
  * A small helper class that provides helper methods for easy
@@ -458,5 +463,167 @@ public final class EqualsUtils
   public static boolean nullSafeEqualsIgnoreCase (@Nullable final String sObj1, @Nullable final String sObj2)
   {
     return sObj1 == null ? sObj2 == null : sObj1.equalsIgnoreCase (sObj2);
+  }
+
+  private static boolean _equalsTypeSpecific (@Nullable final Object aObj1,
+                                              @Nullable final Object aObj2,
+                                              final boolean bNullable,
+                                              final boolean bRecursivelyHandleCollections)
+  {
+    if (aObj1 == aObj2)
+      return true;
+
+    if (bNullable && (aObj1 == null || aObj2 == null))
+      return false;
+
+    final Class <?> aClass = aObj1.getClass ();
+
+    // If types are not equal, objects cannot be equal
+    if (!aClass.equals (aObj2.getClass ()))
+      return false;
+
+    if (aClass.equals (BigDecimal.class))
+      return equals ((BigDecimal) aObj1, (BigDecimal) aObj2);
+    if (aClass.equals (BigDecimal [].class))
+      return equals ((BigDecimal []) aObj1, (BigDecimal []) aObj2);
+    if (aClass.equals (boolean [].class))
+      return equals ((boolean []) aObj1, (boolean []) aObj2);
+    if (aClass.equals (byte [].class))
+      return equals ((byte []) aObj1, (byte []) aObj2);
+    if (aClass.equals (char [].class))
+      return equals ((char []) aObj1, (char []) aObj2);
+    if (aClass.equals (Double.class))
+      return equals ((Double) aObj1, (Double) aObj2);
+    if (aClass.equals (double [].class))
+      return equals ((double []) aObj1, (double []) aObj2);
+    if (aClass.equals (Double [].class))
+      return equals ((Double []) aObj1, (Double []) aObj2);
+    if (aClass.equals (Float.class))
+      return equals ((Float) aObj1, (Float) aObj2);
+    if (aClass.equals (float [].class))
+      return equals ((float []) aObj1, (float []) aObj2);
+    if (aClass.equals (Float [].class))
+      return equals ((Float []) aObj1, (Float []) aObj2);
+    if (aClass.equals (int [].class))
+      return equals ((int []) aObj1, (int []) aObj2);
+    if (aClass.equals (long [].class))
+      return equals ((long []) aObj1, (long []) aObj2);
+    if (aClass.equals (short [].class))
+      return equals ((short []) aObj1, (short []) aObj2);
+    if (aClass.equals (StringBuffer.class))
+      return equals ((StringBuffer) aObj1, (StringBuffer) aObj2);
+    if (aClass.equals (StringBuffer [].class))
+      return equals ((StringBuffer []) aObj1, (StringBuffer []) aObj2);
+    if (aClass.equals (StringBuilder.class))
+      return equals ((StringBuilder) aObj1, (StringBuilder) aObj2);
+    if (aClass.equals (StringBuilder [].class))
+      return equals ((StringBuilder []) aObj1, (StringBuilder []) aObj2);
+    if (aClass.equals (URL.class))
+      return equals ((URL) aObj1, (URL) aObj2);
+    if (aClass.equals (URL [].class))
+      return equals ((URL []) aObj1, (URL []) aObj2);
+
+    if (bRecursivelyHandleCollections)
+    {
+      if (aObj1 instanceof Collection <?>)
+      {
+        // Special handling for collections
+        final Collection <?> aColl1 = (Collection <?>) aObj1;
+        final Collection <?> aColl2 = (Collection <?>) aObj2;
+        if (aColl1.size () != aColl2.size ())
+          return false;
+        final Iterator <?> it1 = aColl1.iterator ();
+        final Iterator <?> it2 = aColl2.iterator ();
+        while (it1.hasNext ())
+        {
+          final Object aChild1 = it1.next ();
+          final Object aChild2 = it2.next ();
+
+          // Recursive call
+          if (!_equalsTypeSpecific (aChild1, aChild2, bNullable, bRecursivelyHandleCollections))
+            return false;
+        }
+        return true;
+      }
+
+      if (aObj1 instanceof Map <?, ?>)
+      {
+        // Special handling for collections
+        final Map <?, ?> aColl1 = (Map <?, ?>) aObj1;
+        final Map <?, ?> aColl2 = (Map <?, ?>) aObj2;
+        if (aColl1.size () != aColl2.size ())
+          return false;
+        final Iterator <?> it1 = aColl1.entrySet ().iterator ();
+        final Iterator <?> it2 = aColl2.entrySet ().iterator ();
+        while (it1.hasNext ())
+        {
+          final Map.Entry <?, ?> aChild1 = (Entry <?, ?>) it1.next ();
+          final Map.Entry <?, ?> aChild2 = (Entry <?, ?>) it2.next ();
+
+          // Recursive call for key
+          if (!_equalsTypeSpecific (aChild1.getKey (), aChild2.getKey (), bNullable, bRecursivelyHandleCollections))
+            return false;
+          // Recursive call for value
+          if (!_equalsTypeSpecific (aChild1.getValue (), aChild2.getValue (), bNullable, bRecursivelyHandleCollections))
+            return false;
+        }
+        return true;
+      }
+    }
+
+    // For array -> use generic Arrays.equals
+    if (ClassHelper.isArrayClass (aClass))
+      return equals ((Object []) aObj1, (Object []) aObj2);
+
+    // All other classes use the default equals(Object,Object)
+    return equals (aObj1, aObj2);
+  }
+
+  /**
+   * This is a specific version of an equals implementation that looks for the
+   * type of the objects and than invokes the correct method. E.g. if the passed
+   * objects are both of type {@link URL} the special overload
+   * {@link #equals(URL, URL)} is invoked. Also if the passed element is a
+   * {@link Collection} or a {@link Map} than all contained elements are
+   * recursively checked, using this method.
+   * 
+   * @param aObj1
+   *        First object to compare. May not be <code>null</code>.
+   * @param aObj2
+   *        Second object to compare. May not be <code>null</code>.
+   * @return <code>true</code> if they are equal, <code>false</code> otherwise
+   */
+  public static boolean equalsTypeSpecific (@Nullable final Object aObj1, @Nullable final Object aObj2)
+  {
+    return _equalsTypeSpecific (aObj1, aObj2, false, true);
+  }
+
+  /**
+   * This is a specific version of an equals implementation that looks for the
+   * type of the objects and than invokes the correct method. E.g. if the passed
+   * objects are both of type {@link URL} the special overload
+   * {@link #equals(URL, URL)} is invoked. This version contains no specific
+   * handling for {@link Collection} and {@link Map} objects.
+   * 
+   * @param aObj1
+   *        First object to compare. May not be <code>null</code>.
+   * @param aObj2
+   *        Second object to compare. May not be <code>null</code>.
+   * @return <code>true</code> if they are equal, <code>false</code> otherwise
+   */
+  public static boolean equalsTypeSpecificNoCollections (@Nullable final Object aObj1, @Nullable final Object aObj2)
+  {
+    return _equalsTypeSpecific (aObj1, aObj2, false, false);
+  }
+
+  public static boolean nullSafeEqualsTypeSpecific (@Nullable final Object aObj1, @Nullable final Object aObj2)
+  {
+    return _equalsTypeSpecific (aObj1, aObj2, true, true);
+  }
+
+  public static boolean nullSafeEqualsTypeSpecificNoCollections (@Nullable final Object aObj1,
+                                                                 @Nullable final Object aObj2)
+  {
+    return _equalsTypeSpecific (aObj1, aObj2, true, false);
   }
 }
