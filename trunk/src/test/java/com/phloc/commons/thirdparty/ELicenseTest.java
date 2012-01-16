@@ -36,7 +36,7 @@ public final class ELicenseTest
     {
       assertNotNull (eLic.getID ());
       assertNotNull (eLic.getDisplayName ());
-      assertNotNull (eLic.getURL ());
+      eLic.getURL ();
       eLic.getVersion ();
       assertSame (eLic, ELicense.getFromIDOrNull (eLic.getID ()));
       assertSame (eLic, ELicense.valueOf (eLic.name ()));
