@@ -72,9 +72,10 @@ public abstract class AbstractNotifyingCache <KEYTYPE, VALUETYPE> extends Abstra
     {
       m_aRWLock.readLock ().unlock ();
     }
+
     if (aValue == null)
     {
-      // put in new value!
+      // No old value in the cache
       m_aRWLock.writeLock ().lock ();
       try
       {
@@ -83,11 +84,15 @@ public abstract class AbstractNotifyingCache <KEYTYPE, VALUETYPE> extends Abstra
         aValue = super.getFromCache (aKey);
         if (aValue == null)
         {
+          // Call the abstract method to create the value to cache
           aValue = getValueToCache (aKey);
+
           // Just a consistency check
           if (aValue == null)
-            throw new IllegalStateException ("The value to cache was null for key " + aKey);
-          putInCache (aKey, aValue);
+            throw new IllegalStateException ("The value to cache was null for key '" + aKey + "'");
+
+          // Put the new value into the cache
+          super.putInCache (aKey, aValue);
         }
       }
       finally
