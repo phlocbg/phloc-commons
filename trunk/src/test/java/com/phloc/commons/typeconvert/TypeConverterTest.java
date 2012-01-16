@@ -22,6 +22,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
@@ -41,6 +42,7 @@ import javax.annotation.Nonnull;
 import org.junit.Test;
 
 import com.phloc.commons.collections.ArrayHelper;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.locale.ELocaleName;
 import com.phloc.commons.locale.LocaleCache;
@@ -180,12 +182,15 @@ public final class TypeConverterTest extends AbstractPhlocTestCase
                                                   ESuccess.FAILURE,
                                                   ETopBottom.BOTTOM,
                                                   ETriState.UNDEFINED,
-                                                  EValidity.VALID };
+                                                  EValidity.VALID,
+                                                  "Jägalä".getBytes (),
+                                                  new StringBuffer ("Äh ja - wie is das jetzt?"),
+                                                  new StringBuilder ("Thät lüks greyt!") };
     for (final Object aSrcValue : aDefinedObjs)
     {
       final String sValue = TypeConverter.convertIfNecessary (aSrcValue, String.class);
       final Object aObj2 = TypeConverter.convertIfNecessary (sValue, aSrcValue.getClass ());
-      assertEquals (aSrcValue, aObj2);
+      assertTrue (EqualsUtils.equalsTypeSpecific (aSrcValue, aObj2));
     }
 
     // Test conversion if no explicit converter available for source class, but

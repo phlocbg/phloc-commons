@@ -27,6 +27,7 @@ import java.math.BigInteger;
 import org.junit.Test;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.convert.MicroTypeConverter;
 import com.phloc.commons.microdom.serialize.MicroWriter;
@@ -102,7 +103,10 @@ public final class BasicMicroTypeConverterRegistrarTest
                                                   ETriState.FALSE,
                                                   ETriState.UNDEFINED,
                                                   EValidity.VALID,
-                                                  EValidity.INVALID };
+                                                  EValidity.INVALID,
+                                                  "Jägalä".getBytes (),
+                                                  new StringBuffer ("Äh ja - wie is das jetzt?"),
+                                                  new StringBuilder ("Thät lüks greyt!") };
     for (final Object aObj : aDefinedObjs)
     {
       // Convert to XML
@@ -116,7 +120,7 @@ public final class BasicMicroTypeConverterRegistrarTest
       // Convert back to native
       final Object aNative = MicroTypeConverter.convertToNative (aElement, aObj.getClass ());
       assertNotNull (aNative);
-      assertEquals (aObj, aNative);
+      assertTrue (EqualsUtils.equalsTypeSpecific (aObj, aNative));
     }
 
     // These object don't implement equals!
