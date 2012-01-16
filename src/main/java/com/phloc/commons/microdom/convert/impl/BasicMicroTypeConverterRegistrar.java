@@ -62,6 +62,7 @@ public final class BasicMicroTypeConverterRegistrar implements IMicroTypeConvert
                                                  new StringBasedMicroTypeConverter (StringBuffer.class));
     aRegistry.registerMicroElementTypeConverter (StringBuilder.class,
                                                  new StringBasedMicroTypeConverter (StringBuilder.class));
+    aRegistry.registerMicroElementTypeConverter (byte [].class, new StringBasedMicroTypeConverter (byte [].class));
 
     // State enums
     aRegistry.registerMicroElementTypeConverter (EChange.class, new StringBasedMicroTypeConverter (EChange.class));

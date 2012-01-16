@@ -238,4 +238,16 @@ public final class EqualsUtilsTest extends AbstractPhlocTestCase
     assertFalse (EqualsUtils.nullSafeEqualsIgnoreCase (null, s2));
     assertTrue (EqualsUtils.nullSafeEqualsIgnoreCase (null, null));
   }
+
+  @Test
+  public void testEqualsTypeSpecific ()
+  {
+    final StringBuffer aSB1 = new StringBuffer ("Hi");
+    assertTrue (EqualsUtils.equalsTypeSpecific (aSB1, new StringBuffer ("Hi")));
+    assertFalse (EqualsUtils.equalsTypeSpecific (aSB1, new StringBuffer ("Hallo")));
+
+    assertTrue (EqualsUtils.nullSafeEqualsTypeSpecific (aSB1, new StringBuffer ("Hi")));
+    assertFalse (EqualsUtils.nullSafeEqualsTypeSpecific (aSB1, new StringBuffer ("Hallo")));
+    assertFalse (EqualsUtils.nullSafeEqualsTypeSpecific (aSB1, null));
+  }
 }
