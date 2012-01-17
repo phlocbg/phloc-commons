@@ -18,6 +18,7 @@
 package com.phloc.commons.xml.schema;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
@@ -88,13 +89,8 @@ public abstract class AbstractSchemaCache extends SimpleCacheWithConversion <Str
   }
 
   @Nonnull
-  public final Schema getSchema (@Nonnull @Nonempty final IReadableResource... aResources)
+  private Schema _getSchema (@Nonnull @Nonempty final Set <IReadableResource> aRealResources)
   {
-    if (ArrayHelper.isEmpty (aResources))
-      throw new IllegalArgumentException ("no resources provided!");
-
-    // Remove all duplicates while maintaining the order
-    final Set <IReadableResource> aRealResources = ContainerHelper.newOrderedSet (aResources);
     if (aRealResources.size () == 1)
     {
       // In reality it'sonly one resource...
@@ -117,6 +113,26 @@ public abstract class AbstractSchemaCache extends SimpleCacheWithConversion <Str
     }
 
     return _getSchema (aResourceID.toString (), aSources);
+  }
+
+  @Nonnull
+  public final Schema getSchema (@Nonnull @Nonempty final IReadableResource... aResources)
+  {
+    if (ArrayHelper.isEmpty (aResources))
+      throw new IllegalArgumentException ("no resources provided!");
+
+    // Remove all duplicates while maintaining the order
+    return _getSchema (ContainerHelper.newOrderedSet (aResources));
+  }
+
+  @Nonnull
+  public final Schema getSchema (@Nonnull @Nonempty final List <? extends IReadableResource> aResources)
+  {
+    if (ContainerHelper.isEmpty (aResources))
+      throw new IllegalArgumentException ("no resources provided!");
+
+    // Remove all duplicates while maintaining the order
+    return _getSchema (ContainerHelper.newOrderedSet (aResources));
   }
 
   @Nonnull
