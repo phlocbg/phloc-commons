@@ -70,10 +70,16 @@ public final class ManagedExecutorService
       }
       catch (final InterruptedException ex)
       {
-        s_aLogger.error ("Error waiting for Executor service to end", ex);
+        s_aLogger.error ("Error waiting for Executor service " + m_aES + " to end", ex);
         return EInterrupt.INTERRUPTED;
       }
     }
     return EInterrupt.NOT_INTERRUPTED;
+  }
+
+  @Nonnull
+  public static EInterrupt shutdownAndWaitUntilAllTasksAreFinished (@Nonnull final ExecutorService aES)
+  {
+    return new ManagedExecutorService (aES).shutdownAndWaitUntilAllTasksAreFinished ();
   }
 }
