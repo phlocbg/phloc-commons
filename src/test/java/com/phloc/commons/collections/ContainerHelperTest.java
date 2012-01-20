@@ -50,6 +50,7 @@ import static com.phloc.commons.collections.ContainerHelper.getSubList;
 import static com.phloc.commons.collections.ContainerHelper.getSwappedKeyValues;
 import static com.phloc.commons.collections.ContainerHelper.isEmpty;
 import static com.phloc.commons.collections.ContainerHelper.makeUnmodifiable;
+import static com.phloc.commons.collections.ContainerHelper.makeUnmodifiableNotNull;
 import static com.phloc.commons.collections.ContainerHelper.newList;
 import static com.phloc.commons.collections.ContainerHelper.newListPrefilled;
 import static com.phloc.commons.collections.ContainerHelper.newMap;
@@ -197,6 +198,36 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     final SortedMap <String, String> sm = new TreeMap <String, String> (m);
     assertNotNull (makeUnmodifiable (sm));
     assertTrue (sm != makeUnmodifiable (sm));
+  }
+
+  @Test
+  public void testMakeUnmodifiableNotNull ()
+  {
+    assertNotNull (makeUnmodifiableNotNull ((Collection <?>) null));
+    assertNotNull (makeUnmodifiableNotNull ((List <?>) null));
+    assertNotNull (makeUnmodifiableNotNull ((Set <?>) null));
+    assertNotNull (makeUnmodifiableNotNull ((SortedSet <?>) null));
+    assertNotNull (makeUnmodifiableNotNull ((Map <?, ?>) null));
+    assertNotNull (makeUnmodifiableNotNull ((SortedMap <?, ?>) null));
+
+    final Collection <String> c = newList ("s1", "s2");
+    assertNotNull (makeUnmodifiableNotNull (c));
+    assertTrue (c != makeUnmodifiableNotNull (c));
+    final List <String> l = newList ("s1", "s2");
+    assertNotNull (makeUnmodifiableNotNull (l));
+    assertTrue (l != makeUnmodifiableNotNull (l));
+    final Set <String> s = newSet ("s1", "s2");
+    assertNotNull (makeUnmodifiableNotNull (s));
+    assertTrue (s != makeUnmodifiableNotNull (s));
+    final SortedSet <String> ss = new TreeSet <String> (s);
+    assertNotNull (makeUnmodifiableNotNull (ss));
+    assertTrue (ss != makeUnmodifiableNotNull (ss));
+    final Map <String, String> m = newMap ("s1", "s2");
+    assertNotNull (makeUnmodifiableNotNull (m));
+    assertTrue (m != makeUnmodifiableNotNull (m));
+    final SortedMap <String, String> sm = new TreeMap <String, String> (m);
+    assertNotNull (makeUnmodifiableNotNull (sm));
+    assertTrue (sm != makeUnmodifiableNotNull (sm));
   }
 
   @Test
@@ -1007,8 +1038,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     aSet = newSortedSet ((String) null);
     assertNotNull (aSet);
     assertEquals (1, aSet.size ());
-    // TreeSet.contains (null) throws a NullPointerException
-    assertNull (ContainerHelper.getFirstElement (aSet));
+    assertTrue (aSet.contains (null));
   }
 
   @Test

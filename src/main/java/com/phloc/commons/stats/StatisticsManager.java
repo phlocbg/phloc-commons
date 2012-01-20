@@ -28,7 +28,7 @@ import javax.annotation.concurrent.ThreadSafe;
 
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
-import com.phloc.commons.annotations.ReturnsImmutableObject;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.string.StringHelper;
 
@@ -95,13 +95,13 @@ public final class StatisticsManager
   }
 
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public static Set <String> getAllCacheHandler ()
   {
     s_aRWLockCache.readLock ().lock ();
     try
     {
-      return ContainerHelper.makeUnmodifiable (s_aHdlCache.keySet ());
+      return ContainerHelper.newSet (s_aHdlCache.keySet ());
     }
     finally
     {
@@ -142,13 +142,13 @@ public final class StatisticsManager
   }
 
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public static Set <String> getAllTimerHandler ()
   {
     s_aRWLockTimer.readLock ().lock ();
     try
     {
-      return ContainerHelper.makeUnmodifiable (s_aHdlTimer.keySet ());
+      return ContainerHelper.newSet (s_aHdlTimer.keySet ());
     }
     finally
     {
@@ -189,13 +189,13 @@ public final class StatisticsManager
   }
 
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public static Set <String> getAllSizeHandler ()
   {
     s_aRWLockSize.readLock ().lock ();
     try
     {
-      return ContainerHelper.makeUnmodifiable (s_aHdlSize.keySet ());
+      return ContainerHelper.newSet (s_aHdlSize.keySet ());
     }
     finally
     {
@@ -236,13 +236,13 @@ public final class StatisticsManager
   }
 
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public static Set <String> getAllCounterHandler ()
   {
     s_aRWLockCounter.readLock ().lock ();
     try
     {
-      return ContainerHelper.makeUnmodifiable (s_aHdlCounter.keySet ());
+      return ContainerHelper.newSet (s_aHdlCounter.keySet ());
     }
     finally
     {
@@ -283,13 +283,13 @@ public final class StatisticsManager
   }
 
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public static Set <String> getAllKeyedCounterHandler ()
   {
     s_aRWLockKeyedCounter.readLock ().lock ();
     try
     {
-      return ContainerHelper.makeUnmodifiable (s_aHdlKeyedCounter.keySet ());
+      return ContainerHelper.newSet (s_aHdlKeyedCounter.keySet ());
     }
     finally
     {

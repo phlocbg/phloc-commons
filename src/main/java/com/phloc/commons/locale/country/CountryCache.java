@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
-import com.phloc.commons.annotations.ReturnsImmutableObject;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.locale.LocaleCache;
 import com.phloc.commons.state.EChange;
@@ -52,7 +52,7 @@ public final class CountryCache
 
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
 
-  /** Contains all known countries. */
+  /** Contains all known countries (as ISO 3166 2-letter codes). */
   private static final Set <String> s_aCountries = new HashSet <String> ();
 
   static
@@ -72,9 +72,12 @@ public final class CountryCache
   private CountryCache ()
   {}
 
+  @Nonnull
   private static String _getUnifiedCountry (@Nonnull final String sCountry)
   {
-    return sCountry.toUpperCase ();
+    // We can US locale, because the ISO 3166 codes don't contain non-ASCII
+    // chars
+    return sCountry.toUpperCase (Locale.US);
   }
 
   @Nonnull
@@ -123,13 +126,13 @@ public final class CountryCache
    * @return a set with all contained countries
    */
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public static Set <String> getAllCountries ()
   {
     s_aRWLock.readLock ().lock ();
     try
     {
-      return ContainerHelper.makeUnmodifiable (s_aCountries);
+      return ContainerHelper.newSet (s_aCountries);
     }
     finally
     {

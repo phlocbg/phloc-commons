@@ -17,19 +17,22 @@
  */
 package com.phloc.commons.text.impl;
 
-import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.phloc.commons.annotations.ReturnsImmutableObject;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.callback.IChangeNotify;
+import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.locale.LocaleCache;
 import com.phloc.commons.state.EChange;
@@ -79,6 +82,7 @@ public final class MultiLingualTextThreadSafe implements IMultiLingualText
     m_aMLT = new MultiLingualText (aMLT);
   }
 
+  @Nullable
   public String getText (final Locale aContentLocale)
   {
     m_aRWLock.readLock ().lock ();
@@ -92,6 +96,7 @@ public final class MultiLingualTextThreadSafe implements IMultiLingualText
     }
   }
 
+  @Nullable
   public String getTextWithLocaleFallback (final Locale aContentLocale)
   {
     m_aRWLock.readLock ().lock ();
@@ -105,6 +110,7 @@ public final class MultiLingualTextThreadSafe implements IMultiLingualText
     }
   }
 
+  @Nullable
   public String getTextWithArgs (final Locale aContentLocale, final Object... aArgs)
   {
     m_aRWLock.readLock ().lock ();
@@ -118,6 +124,7 @@ public final class MultiLingualTextThreadSafe implements IMultiLingualText
     }
   }
 
+  @Nullable
   public String getTextWithLocaleFallbackAndArgs (final Locale aContentLocale, final Object... aArgs)
   {
     m_aRWLock.readLock ().lock ();
@@ -192,7 +199,7 @@ public final class MultiLingualTextThreadSafe implements IMultiLingualText
     m_aRWLock.readLock ().lock ();
     try
     {
-      return m_aMLT.getMap ();
+      return ContainerHelper.newMap (m_aMLT.internalGetMap ());
     }
     finally
     {
@@ -228,13 +235,13 @@ public final class MultiLingualTextThreadSafe implements IMultiLingualText
   }
 
   @Nonnull
-  @ReturnsImmutableObject
-  public Collection <Locale> getAllLocales ()
+  @ReturnsMutableCopy
+  public Set <Locale> getAllLocales ()
   {
     m_aRWLock.readLock ().lock ();
     try
     {
-      return m_aMLT.getAllLocales ();
+      return ContainerHelper.newSet (m_aMLT.internalGetAllLocales ());
     }
     finally
     {

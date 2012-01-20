@@ -24,13 +24,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import javax.annotation.CheckForSigned;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.Nonempty;
-import com.phloc.commons.annotations.ReturnsImmutableObject;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.mutable.MutableInt;
 
@@ -64,14 +65,14 @@ final class StatisticsHandlerKeyedCounter implements IStatisticsHandlerKeyedCoun
     }
   }
 
-  @ReturnsImmutableObject
   @Nonnull
+  @ReturnsMutableCopy
   public Set <String> getAllKeys ()
   {
     m_aRWLock.readLock ().lock ();
     try
     {
-      return ContainerHelper.makeUnmodifiable (m_aKeyedCount.keySet ());
+      return ContainerHelper.newSet (m_aKeyedCount.keySet ());
     }
     finally
     {
@@ -79,6 +80,7 @@ final class StatisticsHandlerKeyedCounter implements IStatisticsHandlerKeyedCoun
     }
   }
 
+  @CheckForSigned
   public int getKeyCount (@Nullable final String sKey)
   {
     m_aRWLock.readLock ().lock ();

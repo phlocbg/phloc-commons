@@ -32,6 +32,7 @@ import javax.annotation.concurrent.ThreadSafe;
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
+import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.regex.RegExHelper;
 import com.phloc.commons.string.StringHelper;
 
@@ -213,7 +214,7 @@ public final class LocaleCache
     s_aRWLock.readLock ().lock ();
     try
     {
-      final Set <Locale> ret = new HashSet <Locale> (s_aLocales.values ());
+      final Set <Locale> ret = ContainerHelper.newSet (s_aLocales.values ());
       ret.remove (CGlobal.LOCALE_ALL);
       ret.remove (CGlobal.LOCALE_INDEPENDENT);
       return ret;
