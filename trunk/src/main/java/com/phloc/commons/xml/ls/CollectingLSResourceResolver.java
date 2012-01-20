@@ -29,7 +29,7 @@ import javax.annotation.concurrent.ThreadSafe;
 import org.w3c.dom.ls.LSInput;
 import org.w3c.dom.ls.LSResourceResolver;
 
-import com.phloc.commons.annotations.ReturnsImmutableObject;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 
 /**
@@ -55,13 +55,13 @@ public final class CollectingLSResourceResolver implements LSResourceResolver
   }
 
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public List <LSResourceData> getAllRequestedResources ()
   {
     m_aRWLock.readLock ().lock ();
     try
     {
-      return ContainerHelper.makeUnmodifiable (m_aList);
+      return ContainerHelper.newList (m_aList);
     }
     finally
     {

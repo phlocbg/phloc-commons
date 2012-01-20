@@ -136,6 +136,7 @@ public final class MessageDigestGenerator extends AbstractMessageDigestGenerator
   }
 
   @Nonnull
+  @ReturnsMutableCopy
   public byte [] getDigest (@Nonnegative final int nLength)
   {
     m_aRWLock.writeLock ().lock ();

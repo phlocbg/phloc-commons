@@ -26,7 +26,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
-import com.phloc.commons.annotations.ReturnsImmutableObject;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.lang.ServiceLoaderBackport;
 
@@ -77,13 +77,13 @@ public final class ThirdPartyModuleRegistry
   }
 
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public static Set <IThirdPartyModule> getAllRegisteredThirdPartyModules ()
   {
     s_aRWLock.readLock ().lock ();
     try
     {
-      return ContainerHelper.makeUnmodifiable (s_aModules);
+      return ContainerHelper.newSet (s_aModules);
     }
     finally
     {

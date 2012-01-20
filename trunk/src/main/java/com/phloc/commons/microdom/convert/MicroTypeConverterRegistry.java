@@ -26,6 +26,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
+import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.lang.ServiceLoaderBackport;
 import com.phloc.commons.microdom.IMicroElement;
@@ -144,7 +145,20 @@ public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegi
    */
   public static void iterateAllRegisteredMicroTypeConverters (@Nonnull final IMicroTypeConverterCallback aCallback)
   {
-    for (final Map.Entry <Class <?>, IMicroTypeConverter> aEntry : s_aMap.entrySet ())
+    // Create a copy of the map
+    Map <Class <?>, IMicroTypeConverter> aCopy;
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      aCopy = ContainerHelper.newMap (s_aMap);
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+
+    // And iterate the copy
+    for (final Map.Entry <Class <?>, IMicroTypeConverter> aEntry : aCopy.entrySet ())
       if (aCallback.call (aEntry.getKey (), aEntry.getValue ()).isBreak ())
         break;
   }

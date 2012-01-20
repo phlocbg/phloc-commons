@@ -18,10 +18,10 @@
 package com.phloc.commons.text.impl;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -31,6 +31,7 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import com.phloc.commons.GlobalDebug;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
+import com.phloc.commons.annotations.ReturnsMutableObject;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.locale.LocaleCache;
@@ -128,6 +129,13 @@ public class TextProvider extends AbstractTextProvider implements ISimpleMultiLi
     return internalAddText (EN, sEN);
   }
 
+  @Nonnull
+  @ReturnsMutableObject (reason = "Internal use only")
+  protected final Map <Locale, String> internalGetMap ()
+  {
+    return m_aTexts;
+  }
+
   @Override
   @Nullable
   protected final Locale internalGetLocaleToUseWithFallback (@Nonnull final Locale aContentLocale)
@@ -144,8 +152,15 @@ public class TextProvider extends AbstractTextProvider implements ISimpleMultiLi
   }
 
   @Nonnull
+  @ReturnsMutableObject (reason = "Internal use only")
+  public final Set <Locale> internalGetAllLocales ()
+  {
+    return m_aTexts.keySet ();
+  }
+
+  @Nonnull
   @ReturnsImmutableObject
-  public final Collection <Locale> getAllLocales ()
+  public final Set <Locale> getAllLocales ()
   {
     return ContainerHelper.makeUnmodifiable (m_aTexts.keySet ());
   }
