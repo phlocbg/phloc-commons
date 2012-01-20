@@ -1088,11 +1088,13 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewSortedSetIIterableIterator ()
   {
-    Set <String> aSet = newSortedSet (IterableIterator.create (newList ("Hallo", "Welt")));
+    SortedSet <String> aSet = newSortedSet (IterableIterator.create (newList ("Hallo", "Welt", null)));
     assertNotNull (aSet);
-    assertEquals (2, aSet.size ());
+    assertEquals (3, aSet.size ());
+    assertNull (aSet.first ());
     assertTrue (aSet.contains ("Hallo"));
     assertTrue (aSet.contains ("Welt"));
+    assertTrue (aSet.contains (null));
 
     aSet = newSortedSet (IterableIterator.create (new ArrayList <String> ()));
     assertNotNull (aSet);

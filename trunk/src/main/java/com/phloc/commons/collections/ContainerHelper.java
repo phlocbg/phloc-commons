@@ -55,7 +55,7 @@ import com.phloc.commons.collections.iterate.ReverseListIterator;
 import com.phloc.commons.collections.multimap.IMultiMap;
 import com.phloc.commons.collections.multimap.IMultiMapSetBased;
 import com.phloc.commons.collections.multimap.MultiHashMapHashSetBased;
-import com.phloc.commons.compare.ComparatorComparable;
+import com.phloc.commons.compare.ComparatorComparableNullAware;
 import com.phloc.commons.compare.ComparatorUtils;
 
 /**
@@ -850,14 +850,14 @@ public final class ContainerHelper
   @ReturnsMutableCopy
   public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> SortedSet <ELEMENTTYPE> newSortedSet ()
   {
-    return new TreeSet <ELEMENTTYPE> (new ComparatorComparable <ELEMENTTYPE> ());
+    return new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> SortedSet <ELEMENTTYPE> newSortedSet (@Nullable final ELEMENTTYPE aValue)
   {
-    final SortedSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparable <ELEMENTTYPE> ());
+    final SortedSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
     ret.add (aValue);
     return ret;
   }
@@ -866,7 +866,7 @@ public final class ContainerHelper
   @ReturnsMutableCopy
   public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> SortedSet <ELEMENTTYPE> newSortedSet (@Nullable final ELEMENTTYPE... aValues)
   {
-    final SortedSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparable <ELEMENTTYPE> ());
+    final SortedSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
     if (!ArrayHelper.isEmpty (aValues))
       for (final ELEMENTTYPE aValue : aValues)
         ret.add (aValue);
@@ -877,7 +877,7 @@ public final class ContainerHelper
   @ReturnsMutableCopy
   public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> SortedSet <ELEMENTTYPE> newSortedSet (@Nullable final Iterable <? extends ELEMENTTYPE> aCont)
   {
-    final SortedSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparable <ELEMENTTYPE> ());
+    final SortedSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
     if (aCont != null)
       for (final ELEMENTTYPE aValue : aCont)
         ret.add (aValue);
@@ -888,7 +888,7 @@ public final class ContainerHelper
   @ReturnsMutableCopy
   public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> SortedSet <ELEMENTTYPE> newSortedSet (@Nullable final Collection <? extends ELEMENTTYPE> aCont)
   {
-    final SortedSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparable <ELEMENTTYPE> ());
+    final SortedSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
     if (!isEmpty (aCont))
       ret.addAll (aCont);
     return ret;
@@ -898,7 +898,7 @@ public final class ContainerHelper
   @ReturnsMutableCopy
   public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> SortedSet <ELEMENTTYPE> newSortedSet (@Nullable final Iterator <? extends ELEMENTTYPE> aIter)
   {
-    final SortedSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparable <ELEMENTTYPE> ());
+    final SortedSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
     if (aIter != null)
       while (aIter.hasNext ())
         ret.add (aIter.next ());
@@ -910,7 +910,7 @@ public final class ContainerHelper
   public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> SortedSet <ELEMENTTYPE> newSortedSet (@Nullable final IIterableIterator <? extends ELEMENTTYPE> aIter)
   {
     if (aIter == null)
-      return new TreeSet <ELEMENTTYPE> (new ComparatorComparable <ELEMENTTYPE> ());
+      return new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
     return newSortedSet (aIter.iterator ());
   }
 
@@ -918,7 +918,7 @@ public final class ContainerHelper
   @ReturnsMutableCopy
   public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> SortedSet <ELEMENTTYPE> newSortedSet (@Nullable final Enumeration <? extends ELEMENTTYPE> aEnum)
   {
-    final SortedSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparable <ELEMENTTYPE> ());
+    final SortedSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
     if (aEnum != null)
       while (aEnum.hasMoreElements ())
         ret.add (aEnum.nextElement ());
@@ -929,7 +929,7 @@ public final class ContainerHelper
   @ReturnsMutableCopy
   public static SortedSet <Boolean> newBooleanSortedSet (@Nullable final boolean... aValues)
   {
-    final SortedSet <Boolean> ret = new TreeSet <Boolean> (new ComparatorComparable <Boolean> ());
+    final SortedSet <Boolean> ret = new TreeSet <Boolean> (new ComparatorComparableNullAware <Boolean> ());
     if (aValues != null)
       for (final boolean aValue : aValues)
         ret.add (Boolean.valueOf (aValue));
@@ -940,7 +940,7 @@ public final class ContainerHelper
   @ReturnsMutableCopy
   public static SortedSet <Byte> newByteSortedSet (@Nullable final byte... aValues)
   {
-    final SortedSet <Byte> ret = new TreeSet <Byte> (new ComparatorComparable <Byte> ());
+    final SortedSet <Byte> ret = new TreeSet <Byte> (new ComparatorComparableNullAware <Byte> ());
     if (aValues != null)
       for (final byte aValue : aValues)
         ret.add (Byte.valueOf (aValue));
@@ -951,7 +951,7 @@ public final class ContainerHelper
   @ReturnsMutableCopy
   public static SortedSet <Character> newCharSortedSet (@Nullable final char... aValues)
   {
-    final SortedSet <Character> ret = new TreeSet <Character> (new ComparatorComparable <Character> ());
+    final SortedSet <Character> ret = new TreeSet <Character> (new ComparatorComparableNullAware <Character> ());
     if (aValues != null)
       for (final char aValue : aValues)
         ret.add (Character.valueOf (aValue));
@@ -962,7 +962,7 @@ public final class ContainerHelper
   @ReturnsMutableCopy
   public static SortedSet <Double> newDoubleSortedSet (@Nullable final double... aValues)
   {
-    final SortedSet <Double> ret = new TreeSet <Double> (new ComparatorComparable <Double> ());
+    final SortedSet <Double> ret = new TreeSet <Double> (new ComparatorComparableNullAware <Double> ());
     if (aValues != null)
       for (final double aValue : aValues)
         ret.add (Double.valueOf (aValue));
@@ -973,7 +973,7 @@ public final class ContainerHelper
   @ReturnsMutableCopy
   public static SortedSet <Float> newFloatSortedSet (@Nullable final float... aValues)
   {
-    final SortedSet <Float> ret = new TreeSet <Float> (new ComparatorComparable <Float> ());
+    final SortedSet <Float> ret = new TreeSet <Float> (new ComparatorComparableNullAware <Float> ());
     if (aValues != null)
       for (final float aValue : aValues)
         ret.add (Float.valueOf (aValue));
@@ -984,7 +984,7 @@ public final class ContainerHelper
   @ReturnsMutableCopy
   public static SortedSet <Integer> newIntSortedSet (@Nullable final int... aValues)
   {
-    final SortedSet <Integer> ret = new TreeSet <Integer> (new ComparatorComparable <Integer> ());
+    final SortedSet <Integer> ret = new TreeSet <Integer> (new ComparatorComparableNullAware <Integer> ());
     if (aValues != null)
       for (final int aValue : aValues)
         ret.add (Integer.valueOf (aValue));
@@ -995,7 +995,7 @@ public final class ContainerHelper
   @ReturnsMutableCopy
   public static SortedSet <Long> newLongSortedSet (@Nullable final long... aValues)
   {
-    final SortedSet <Long> ret = new TreeSet <Long> (new ComparatorComparable <Long> ());
+    final SortedSet <Long> ret = new TreeSet <Long> (new ComparatorComparableNullAware <Long> ());
     if (aValues != null)
       for (final long aValue : aValues)
         ret.add (Long.valueOf (aValue));
@@ -1006,7 +1006,7 @@ public final class ContainerHelper
   @ReturnsMutableCopy
   public static SortedSet <Short> newShortSortedSet (@Nullable final short... aValues)
   {
-    final SortedSet <Short> ret = new TreeSet <Short> (new ComparatorComparable <Short> ());
+    final SortedSet <Short> ret = new TreeSet <Short> (new ComparatorComparableNullAware <Short> ());
     if (aValues != null)
       for (final short aValue : aValues)
         ret.add (Short.valueOf (aValue));
