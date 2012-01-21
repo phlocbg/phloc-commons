@@ -29,6 +29,7 @@ import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.collections.iterate.IIterableIterator;
 
 /**
  * Utility class for generating all possible combinations of elements for a
@@ -41,7 +42,7 @@ import com.phloc.commons.collections.ContainerHelper;
  * @param <DATATYPE>
  *        element type
  */
-public final class CombinationGenerator <DATATYPE> implements Iterator <List <DATATYPE>>
+public final class CombinationGenerator <DATATYPE> implements IIterableIterator <List <DATATYPE>>
 {
   private final List <DATATYPE> m_aElements;
   private final int [] m_aIndexResult;
@@ -76,7 +77,7 @@ public final class CombinationGenerator <DATATYPE> implements Iterator <List <DA
     final BigInteger aSlotFactorial = FactorialHelper.getAnyFactorialLinear (nSlotCount);
     final BigInteger aOverflowFactorial = FactorialHelper.getAnyFactorialLinear (m_aElements.size () - nSlotCount);
     m_aTotalCombinations = aElementFactorial.divide (aSlotFactorial.multiply (aOverflowFactorial));
-    // Can we use the fallback to long?
+    // Can we use the fallback to long? Is much faster than using BigInteger
     m_bUseLong = m_aTotalCombinations.compareTo (CGlobal.BIGINT_MAX_LONG) < 0;
     m_nTotalCombinations = m_bUseLong ? m_aTotalCombinations.longValue () : CGlobal.ILLEGAL_ULONG;
     reset ();
@@ -129,7 +130,7 @@ public final class CombinationGenerator <DATATYPE> implements Iterator <List <DA
   @ReturnsMutableCopy
   public List <DATATYPE> next ()
   {
-    // Not for the very first item
+    // Not for the very first item, as the first item is the original order
     final boolean bFirstItem = m_bUseLong ? m_nCombinationsLeft == m_nTotalCombinations
                                          : m_aCombinationsLeft.equals (m_aTotalCombinations);
     if (!bFirstItem)
@@ -166,5 +167,11 @@ public final class CombinationGenerator <DATATYPE> implements Iterator <List <DA
   public void remove ()
   {
     throw new UnsupportedOperationException ();
+  }
+
+  @Nonnull
+  public Iterator <List <DATATYPE>> iterator ()
+  {
+    return this;
   }
 }
