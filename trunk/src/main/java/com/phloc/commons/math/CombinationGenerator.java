@@ -76,6 +76,7 @@ public final class CombinationGenerator <DATATYPE> implements Iterator <List <DA
     final BigInteger aSlotFactorial = FactorialHelper.getAnyFactorialLinear (nSlotCount);
     final BigInteger aOverflowFactorial = FactorialHelper.getAnyFactorialLinear (m_aElements.size () - nSlotCount);
     m_aTotalCombinations = aElementFactorial.divide (aSlotFactorial.multiply (aOverflowFactorial));
+    // Can we use the fallback to long?
     m_bUseLong = m_aTotalCombinations.compareTo (CGlobal.BIGINT_MAX_LONG) < 0;
     m_nTotalCombinations = m_bUseLong ? m_aTotalCombinations.longValue () : CGlobal.ILLEGAL_ULONG;
     reset ();
@@ -98,7 +99,7 @@ public final class CombinationGenerator <DATATYPE> implements Iterator <List <DA
   @Nonnull
   public BigInteger getCombinationsLeft ()
   {
-    return m_aCombinationsLeft;
+    return m_bUseLong ? BigInteger.valueOf (m_nCombinationsLeft) : m_aCombinationsLeft;
   }
 
   /**
@@ -106,9 +107,7 @@ public final class CombinationGenerator <DATATYPE> implements Iterator <List <DA
    */
   public boolean hasNext ()
   {
-    if (m_bUseLong)
-      return m_nCombinationsLeft > 0;
-    return m_aCombinationsLeft.compareTo (BigInteger.ZERO) > 0;
+    return m_bUseLong ? m_nCombinationsLeft > 0 : m_aCombinationsLeft.compareTo (BigInteger.ZERO) > 0;
   }
 
   /**

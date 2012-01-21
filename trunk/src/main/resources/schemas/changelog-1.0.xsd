@@ -102,14 +102,20 @@
           <xs:documentation>A data related issue.</xs:documentation>
         </xs:annotation>
       </xs:enumeration>
+      <xs:enumeration value="performance">
+        <xs:annotation>
+          <xs:documentation>A performance related issue.</xs:documentation>
+        </xs:annotation>
+      </xs:enumeration>
     </xs:restriction>
   </xs:simpleType>   
   
   <xs:complexType name="TextElementType">
     <xs:simpleContent>
-      <xs:extension base="xs:string" />
+      <xs:extension base="xs:string">
+        <xs:attribute name="locale" type="xs:string" use="required"/>
+      </xs:extension>
     </xs:simpleContent>
-    <xs:attribute name="locale" type="xs:string" use="required"/>
   </xs:complexType>      
   
   <xs:complexType name="TextType">
