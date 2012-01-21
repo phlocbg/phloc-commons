@@ -66,6 +66,11 @@ public final class CGlobal
   public static final int ILLEGAL_UINT = -1;
 
   /**
+   * Represents an illegal unsigned long.
+   */
+  public static final long ILLEGAL_ULONG = -1L;
+
+  /**
    * Represents an illegal double.
    */
   public static final double ILLEGAL_DOUBLE = Double.NaN;
