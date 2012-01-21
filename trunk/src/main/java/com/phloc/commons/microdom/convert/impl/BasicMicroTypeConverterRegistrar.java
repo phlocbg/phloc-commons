@@ -19,6 +19,9 @@ package com.phloc.commons.microdom.convert.impl;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
@@ -48,6 +51,11 @@ public final class BasicMicroTypeConverterRegistrar implements IMicroTypeConvert
     aRegistry.registerMicroElementTypeConverter (String.class, StringMicroTypeConverter.getInstance ());
 
     // Other base type based on the String converter
+    aRegistry.registerMicroElementTypeConverter (AtomicBoolean.class,
+                                                 new StringBasedMicroTypeConverter (AtomicBoolean.class));
+    aRegistry.registerMicroElementTypeConverter (AtomicInteger.class,
+                                                 new StringBasedMicroTypeConverter (AtomicInteger.class));
+    aRegistry.registerMicroElementTypeConverter (AtomicLong.class, new StringBasedMicroTypeConverter (AtomicLong.class));
     aRegistry.registerMicroElementTypeConverter (Boolean.class, new StringBasedMicroTypeConverter (Boolean.class));
     aRegistry.registerMicroElementTypeConverter (Byte.class, new StringBasedMicroTypeConverter (Byte.class));
     aRegistry.registerMicroElementTypeConverter (Character.class, new StringBasedMicroTypeConverter (Character.class));
