@@ -43,7 +43,6 @@ import com.phloc.commons.collections.ContainerHelper;
 public final class CombinationGenerator <DATATYPE> implements Iterator <List <DATATYPE>>
 {
   private final List <DATATYPE> m_aElements;
-  private final int m_nSlotCount;
   private final int [] m_aIndexResult;
   private final BigInteger m_aTotalCombinations;
   private BigInteger m_aCombinationsLeft;
@@ -68,7 +67,6 @@ public final class CombinationGenerator <DATATYPE> implements Iterator <List <DA
       throw new IllegalArgumentException ("To few elements for specified slots: " + aElements.size ());
 
     m_aElements = new ArrayList <DATATYPE> (aElements);
-    m_nSlotCount = nSlotCount;
     m_aIndexResult = new int [nSlotCount];
     final BigInteger aElementFactorial = FactorialHelper.getAnyFactorialLinear (m_aElements.size ());
     final BigInteger aSlotFactorial = FactorialHelper.getAnyFactorialLinear (nSlotCount);
@@ -125,14 +123,17 @@ public final class CombinationGenerator <DATATYPE> implements Iterator <List <DA
   {
     if (!m_aCombinationsLeft.equals (m_aTotalCombinations))
     {
+      final int nElementCount = m_aElements.size ();
+      final int nSlotCount = m_aIndexResult.length;
+
       // Not for the very first item
-      int i = m_nSlotCount - 1;
-      while (m_aIndexResult[i] == (m_aElements.size () - m_nSlotCount + i))
+      int i = nSlotCount - 1;
+      while (m_aIndexResult[i] == (nElementCount - nSlotCount + i))
       {
         i--;
       }
       m_aIndexResult[i]++;
-      for (int j = i + 1; j < m_nSlotCount; j++)
+      for (int j = i + 1; j < nSlotCount; j++)
       {
         m_aIndexResult[j] = m_aIndexResult[i] + j - i;
       }
@@ -141,7 +142,8 @@ public final class CombinationGenerator <DATATYPE> implements Iterator <List <DA
     // One combination less
     m_aCombinationsLeft = m_aCombinationsLeft.subtract (BigInteger.ONE);
 
-    final List <DATATYPE> aResult = new ArrayList <DATATYPE> ();
+    // Build result list
+    final List <DATATYPE> aResult = new ArrayList <DATATYPE> (m_aIndexResult.length);
     for (final int nIndex : m_aIndexResult)
       aResult.add (m_aElements.get (nIndex));
     return aResult;
