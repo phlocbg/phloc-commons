@@ -90,7 +90,8 @@ public final class CombinationGeneratorFlexibleTest
   public void testHugeDataSet ()
   {
     final StopWatch aSW = new StopWatch (true);
-    // Takes approx. 1052ms on PH main machine (2012-01-21)
+    // Takes approx. 490ms on PH main machine (2012-01-21)
+    // With one element more the time is at approx. 1500ms
     CombinationGeneratorFlexible.getCombinations (ContainerHelper.newList ("a",
                                                                            "b",
                                                                            "c",
