@@ -91,4 +91,12 @@ public final class CombinationGeneratorFlexible <DATATYPE>
     }
     return aAllResults;
   }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <DATATYPE> Set <List <DATATYPE>> getCombinations (@Nonnull final List <DATATYPE> aElements,
+                                                                  final boolean bAllowEmpty)
+  {
+    return new CombinationGeneratorFlexible <DATATYPE> (aElements.size (), bAllowEmpty).getCombinations (aElements);
+  }
 }

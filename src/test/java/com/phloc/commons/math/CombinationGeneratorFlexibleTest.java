@@ -29,6 +29,7 @@ import java.util.Set;
 import org.junit.Test;
 
 import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.timing.StopWatch;
 
 /**
  * Test class for class {@link CombinationGeneratorFlexible}.
@@ -83,5 +84,33 @@ public final class CombinationGeneratorFlexibleTest
     }
     catch (final IllegalArgumentException ex)
     {}
+  }
+
+  @Test
+  public void testHugeDataSet ()
+  {
+    final StopWatch aSW = new StopWatch (true);
+    // Takes approx. 1052ms on PH main machine (2012-01-21)
+    CombinationGeneratorFlexible.getCombinations (ContainerHelper.newList ("a",
+                                                                           "b",
+                                                                           "c",
+                                                                           "d",
+                                                                           "e",
+                                                                           "f",
+                                                                           "g",
+                                                                           "h",
+                                                                           "i",
+                                                                           "j",
+                                                                           "k",
+                                                                           "l",
+                                                                           "m",
+                                                                           "a",
+                                                                           "b",
+                                                                           "c",
+                                                                           "d",
+                                                                           "e",
+                                                                           "f",
+                                                                           "g"), true);
+    System.out.println (aSW.stopAndGetMillis () + " ms");
   }
 }
