@@ -1944,10 +1944,8 @@ public final class ContainerHelper
   @ReturnsMutableObject (reason = "design")
   public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> List <ELEMENTTYPE> getSortedInline (@Nullable final List <ELEMENTTYPE> aList)
   {
-    if (isEmpty (aList))
-      return aList;
-
-    Collections.sort (aList);
+    if (!isEmpty (aList))
+      Collections.sort (aList);
     return aList;
   }
 
@@ -1959,10 +1957,8 @@ public final class ContainerHelper
     if (aComparator == null)
       throw new NullPointerException ("comparator");
 
-    if (isEmpty (aList))
-      return aList;
-
-    Collections.sort (aList, aComparator);
+    if (!isEmpty (aList))
+      Collections.sort (aList, aComparator);
     return aList;
   }
 
