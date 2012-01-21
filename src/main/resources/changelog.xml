@@ -20,6 +20,7 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <release date="2012-01-21" version="3.3.9" />
   <entry date="2012-01-20" category="api" action="change">
     <change>
       <text locale="en">All thread-safe implementations wont return an unmodifiable view of the underlying data structures but a copy instead</text>
