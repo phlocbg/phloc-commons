@@ -42,11 +42,11 @@ import com.phloc.commons.collections.ContainerHelper;
  */
 public final class CombinationGenerator <DATATYPE> implements Iterator <List <DATATYPE>>
 {
-  private final List <DATATYPE> m_aElements = new ArrayList <DATATYPE> ();
+  private final List <DATATYPE> m_aElements;
   private final int m_nSlotCount;
   private final int [] m_aIndexResult;
-  private BigInteger m_aCombinationsLeft;
   private final BigInteger m_aTotalCombinations;
+  private BigInteger m_aCombinationsLeft;
 
   /**
    * Ctor
@@ -67,13 +67,13 @@ public final class CombinationGenerator <DATATYPE> implements Iterator <List <DA
     if (nSlotCount > aElements.size ())
       throw new IllegalArgumentException ("To few elements for specified slots: " + aElements.size ());
 
-    m_aElements.addAll (aElements);
+    m_aElements = new ArrayList <DATATYPE> (aElements);
     m_nSlotCount = nSlotCount;
     m_aIndexResult = new int [nSlotCount];
     final BigInteger aElementFactorial = FactorialHelper.getAnyFactorialLinear (m_aElements.size ());
     final BigInteger aSlotFactorial = FactorialHelper.getAnyFactorialLinear (nSlotCount);
-    final BigInteger nOverflowFactorial = FactorialHelper.getAnyFactorialLinear (m_aElements.size () - nSlotCount);
-    m_aTotalCombinations = aElementFactorial.divide (aSlotFactorial.multiply (nOverflowFactorial));
+    final BigInteger aOverflowFactorial = FactorialHelper.getAnyFactorialLinear (m_aElements.size () - nSlotCount);
+    m_aTotalCombinations = aElementFactorial.divide (aSlotFactorial.multiply (aOverflowFactorial));
     reset ();
   }
 
@@ -127,11 +127,11 @@ public final class CombinationGenerator <DATATYPE> implements Iterator <List <DA
     {
       // Not for the very first item
       int i = m_nSlotCount - 1;
-      while (m_aIndexResult[i] == m_aElements.size () - m_nSlotCount + i)
+      while (m_aIndexResult[i] == (m_aElements.size () - m_nSlotCount + i))
       {
         i--;
       }
-      m_aIndexResult[i] = m_aIndexResult[i] + 1;
+      m_aIndexResult[i]++;
       for (int j = i + 1; j < m_nSlotCount; j++)
       {
         m_aIndexResult[j] = m_aIndexResult[i] + j - i;
