@@ -25,6 +25,7 @@ import java.util.List;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.collections.ContainerHelper;
@@ -46,6 +47,9 @@ public final class CombinationGenerator <DATATYPE> implements Iterator <List <DA
   private final int [] m_aIndexResult;
   private final BigInteger m_aTotalCombinations;
   private BigInteger m_aCombinationsLeft;
+  private final boolean m_bUseLong;
+  private final long m_nTotalCombinations;
+  private long m_nCombinationsLeft;
 
   /**
    * Ctor
@@ -72,6 +76,8 @@ public final class CombinationGenerator <DATATYPE> implements Iterator <List <DA
     final BigInteger aSlotFactorial = FactorialHelper.getAnyFactorialLinear (nSlotCount);
     final BigInteger aOverflowFactorial = FactorialHelper.getAnyFactorialLinear (m_aElements.size () - nSlotCount);
     m_aTotalCombinations = aElementFactorial.divide (aSlotFactorial.multiply (aOverflowFactorial));
+    m_bUseLong = m_aTotalCombinations.compareTo (CGlobal.BIGINT_MAX_LONG) < 0;
+    m_nTotalCombinations = m_bUseLong ? m_aTotalCombinations.longValue () : CGlobal.ILLEGAL_ULONG;
     reset ();
   }
 
@@ -83,6 +89,7 @@ public final class CombinationGenerator <DATATYPE> implements Iterator <List <DA
     for (int i = 0; i < m_aIndexResult.length; i++)
       m_aIndexResult[i] = i;
     m_aCombinationsLeft = m_aTotalCombinations;
+    m_nCombinationsLeft = m_nTotalCombinations;
   }
 
   /**
@@ -99,6 +106,8 @@ public final class CombinationGenerator <DATATYPE> implements Iterator <List <DA
    */
   public boolean hasNext ()
   {
+    if (m_bUseLong)
+      return m_nCombinationsLeft > 0;
     return m_aCombinationsLeft.compareTo (BigInteger.ZERO) > 0;
   }
 
@@ -121,12 +130,14 @@ public final class CombinationGenerator <DATATYPE> implements Iterator <List <DA
   @ReturnsMutableCopy
   public List <DATATYPE> next ()
   {
-    if (!m_aCombinationsLeft.equals (m_aTotalCombinations))
+    // Not for the very first item
+    final boolean bFirstItem = m_bUseLong ? m_nCombinationsLeft == m_nTotalCombinations
+                                         : m_aCombinationsLeft.equals (m_aTotalCombinations);
+    if (!bFirstItem)
     {
       final int nElementCount = m_aElements.size ();
       final int nSlotCount = m_aIndexResult.length;
 
-      // Not for the very first item
       int i = nSlotCount - 1;
       while (m_aIndexResult[i] == (nElementCount - nSlotCount + i))
       {
@@ -140,7 +151,10 @@ public final class CombinationGenerator <DATATYPE> implements Iterator <List <DA
     }
 
     // One combination less
-    m_aCombinationsLeft = m_aCombinationsLeft.subtract (BigInteger.ONE);
+    if (m_bUseLong)
+      m_nCombinationsLeft--;
+    else
+      m_aCombinationsLeft = m_aCombinationsLeft.subtract (BigInteger.ONE);
 
     // Build result list
     final List <DATATYPE> aResult = new ArrayList <DATATYPE> (m_aIndexResult.length);
