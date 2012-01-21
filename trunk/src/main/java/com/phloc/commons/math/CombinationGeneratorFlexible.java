@@ -76,18 +76,17 @@ public final class CombinationGeneratorFlexible <DATATYPE>
       throw new NullPointerException ("elements");
 
     final Set <List <DATATYPE>> aAllResults = new HashSet <List <DATATYPE>> ();
-    for (int nSlots = m_bAllowEmpty ? 0 : 1; nSlots <= m_nSlotCount; nSlots++)
+    for (int nSlotCount = m_bAllowEmpty ? 0 : 1; nSlotCount <= m_nSlotCount; nSlotCount++)
     {
       if (aElements.isEmpty ())
       {
         aAllResults.add (new ArrayList <DATATYPE> ());
         break;
       }
-      final CombinationGenerator <DATATYPE> aSubGenerator = new CombinationGenerator <DATATYPE> (aElements, nSlots);
-      while (aSubGenerator.hasNext ())
-      {
-        aAllResults.add (aSubGenerator.next ());
-      }
+
+      // Add all permutations for the current slot count
+      for (final List <DATATYPE> aPermutations : new CombinationGenerator <DATATYPE> (aElements, nSlotCount))
+        aAllResults.add (aPermutations);
     }
     return aAllResults;
   }
