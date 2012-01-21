@@ -1022,7 +1022,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewSortedSet_Empty ()
   {
-    final Set <String> aSet = newSortedSet ();
+    final SortedSet <String> aSet = newSortedSet ();
     assertNotNull (aSet);
     assertEquals (0, aSet.size ());
   }
@@ -1030,7 +1030,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewSortedSet_SingleValue ()
   {
-    Set <String> aSet = newSortedSet ("Hallo");
+    SortedSet <String> aSet = newSortedSet ("Hallo");
     assertNotNull (aSet);
     assertEquals (1, aSet.size ());
     assertTrue (aSet.contains ("Hallo"));
@@ -1044,7 +1044,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewSortedSet_Array ()
   {
-    Set <String> aSet = newSortedSet ("Hallo", "Welt");
+    SortedSet <String> aSet = newSortedSet ("Hallo", "Welt");
     assertNotNull (aSet);
     assertEquals (2, aSet.size ());
     assertTrue (aSet.contains ("Hallo"));
@@ -1060,7 +1060,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewSortedSetIterable ()
   {
-    Set <String> aSet = newSortedSet ((Iterable <String>) newList ("Hallo", "Welt"));
+    SortedSet <String> aSet = newSortedSet ((Iterable <String>) newList ("Hallo", "Welt"));
     assertNotNull (aSet);
     assertEquals (2, aSet.size ());
     assertTrue (aSet.contains ("Hallo"));
@@ -1074,7 +1074,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewSortedSetCollection ()
   {
-    Set <String> aSet = newSortedSet (newList ("Hallo", "Welt"));
+    SortedSet <String> aSet = newSortedSet (newList ("Hallo", "Welt"));
     assertNotNull (aSet);
     assertEquals (2, aSet.size ());
     assertTrue (aSet.contains ("Hallo"));
@@ -1104,7 +1104,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewSortedSetEnumeration ()
   {
-    Set <String> aSet = newSortedSet (getEnumeration (newList ("Hallo", "Welt")));
+    SortedSet <String> aSet = newSortedSet (getEnumeration (newList ("Hallo", "Welt")));
     assertNotNull (aSet);
     assertEquals (2, aSet.size ());
     assertTrue (aSet.contains ("Hallo"));
@@ -1119,7 +1119,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   public void testNewSortedSetIterator ()
   {
     final Iterator <String> it = newSortedSet ("Hallo", "Welt").iterator ();
-    final Set <String> aUnmodifiableSet = newSortedSet (it);
+    final SortedSet <String> aUnmodifiableSet = newSortedSet (it);
     assertNotNull (aUnmodifiableSet);
     assertEquals (2, aUnmodifiableSet.size ());
     assertTrue (aUnmodifiableSet.contains ("Hallo"));
@@ -1129,7 +1129,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableSortedSetEmpty ()
   {
-    final Set <String> aUnmodifiableSet = newUnmodifiableSortedSet ();
+    final SortedSet <String> aUnmodifiableSet = newUnmodifiableSortedSet ();
     assertNotNull (aUnmodifiableSet);
     assertEquals (0, aUnmodifiableSet.size ());
   }
@@ -1137,7 +1137,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableSortedSetSingleValue ()
   {
-    Set <String> aUnmodifiableSet = newUnmodifiableSortedSet ("Hallo");
+    SortedSet <String> aUnmodifiableSet = newUnmodifiableSortedSet ("Hallo");
     assertNotNull (aUnmodifiableSet);
     assertEquals (1, aUnmodifiableSet.size ());
     assertTrue (aUnmodifiableSet.contains ("Hallo"));
@@ -1151,7 +1151,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableSortedSetArray ()
   {
-    Set <String> aUnmodifiableSet = newUnmodifiableSortedSet ("Hallo", "Welt");
+    SortedSet <String> aUnmodifiableSet = newUnmodifiableSortedSet ("Hallo", "Welt");
     assertNotNull (aUnmodifiableSet);
     assertEquals (2, aUnmodifiableSet.size ());
     assertTrue (aUnmodifiableSet.contains ("Hallo"));
@@ -1167,7 +1167,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableSortedSetIterable ()
   {
-    Set <String> aUnmodifiableSet = newUnmodifiableSortedSet ((Iterable <String>) newList ("Hallo", "Welt"));
+    SortedSet <String> aUnmodifiableSet = newUnmodifiableSortedSet ((Iterable <String>) newList ("Hallo", "Welt"));
     assertNotNull (aUnmodifiableSet);
     assertEquals (2, aUnmodifiableSet.size ());
     assertTrue (aUnmodifiableSet.contains ("Hallo"));
@@ -1181,7 +1181,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableSortedSetCollection ()
   {
-    Set <String> aUnmodifiableSet = newUnmodifiableSortedSet (newList ("Hallo", "Welt"));
+    SortedSet <String> aUnmodifiableSet = newUnmodifiableSortedSet (newList ("Hallo", "Welt"));
     assertNotNull (aUnmodifiableSet);
     assertEquals (2, aUnmodifiableSet.size ());
     assertTrue (aUnmodifiableSet.contains ("Hallo"));
@@ -1195,7 +1195,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableSortedSetIIterableIterator ()
   {
-    Set <String> aUnmodifiableSet = newUnmodifiableSortedSet (IterableIterator.create (newList ("Hallo", "Welt")));
+    SortedSet <String> aUnmodifiableSet = newUnmodifiableSortedSet (IterableIterator.create (newList ("Hallo", "Welt")));
     assertNotNull (aUnmodifiableSet);
     assertEquals (2, aUnmodifiableSet.size ());
     assertTrue (aUnmodifiableSet.contains ("Hallo"));
@@ -1209,7 +1209,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableSortedSetEnumeration ()
   {
-    Set <String> aUnmodifiableSet = newUnmodifiableSortedSet (getEnumeration (newList ("Hallo", "Welt")));
+    SortedSet <String> aUnmodifiableSet = newUnmodifiableSortedSet (getEnumeration (newList ("Hallo", "Welt")));
     assertNotNull (aUnmodifiableSet);
     assertEquals (2, aUnmodifiableSet.size ());
     assertTrue (aUnmodifiableSet.contains ("Hallo"));
@@ -1224,7 +1224,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   public void testNewUnmodifiableSortedSetIterator ()
   {
     final Iterator <String> it = newUnmodifiableSortedSet ("Hallo", "Welt").iterator ();
-    final Set <String> aUnmodifiableSet = newUnmodifiableSortedSet (it);
+    final SortedSet <String> aUnmodifiableSet = newUnmodifiableSortedSet (it);
     assertNotNull (aUnmodifiableSet);
     assertEquals (2, aUnmodifiableSet.size ());
     assertTrue (aUnmodifiableSet.contains ("Hallo"));
