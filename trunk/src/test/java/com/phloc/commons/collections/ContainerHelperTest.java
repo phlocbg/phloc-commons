@@ -1022,7 +1022,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewSortedSet_Empty ()
   {
-    final SortedSet <String> aSet = newSortedSet ();
+    final SortedSet <String> aSet = ContainerHelper.<String> newSortedSet ();
     assertNotNull (aSet);
     assertEquals (0, aSet.size ());
   }
