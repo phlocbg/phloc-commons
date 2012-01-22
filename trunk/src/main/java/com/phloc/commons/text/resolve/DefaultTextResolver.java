@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
-import com.phloc.commons.annotations.ReturnsImmutableObject;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.text.ITextProvider;
 
 /**
@@ -45,6 +45,16 @@ public final class DefaultTextResolver
 
   private DefaultTextResolver ()
   {}
+
+  public static boolean isUseResourceBundleCache ()
+  {
+    return s_aResolver.isUseResourceBundleCache ();
+  }
+
+  public static void setUseResourceBundleCache (final boolean bUseResourceBundleCache)
+  {
+    s_aResolver.setUseResourceBundleCache (bUseResourceBundleCache);
+  }
 
   /**
    * Get the text of the given element in the given locale.
@@ -90,14 +100,14 @@ public final class DefaultTextResolver
   }
 
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public static Set <String> getAllUsedOverrideBundleNames ()
   {
     return s_aResolver.getAllUsedOverrideBundleNames ();
   }
 
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public static Set <String> getAllUsedFallbackBundleNames ()
   {
     return s_aResolver.getAllUsedFallbackBundleNames ();
