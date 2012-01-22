@@ -123,6 +123,6 @@ public abstract class AbstractEnumTextResolverWithOverrideAndFallback implements
     // The same as getText
     final String ret = _getText (aEnum, aTP, aContentLocale, true);
     // And if something was found, resolve the arguments
-    return ret == null ? null : TextFormatter.getFormattedText (ret, aArgs);
+    return TextFormatter.getFormattedText (ret, aArgs);
   }
 }
