@@ -17,9 +17,12 @@
  */
 package com.phloc.commons.text.resolve;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -30,6 +33,7 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.GlobalDebug;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.locale.LocaleUtils;
 import com.phloc.commons.stats.IStatisticsHandlerKeyedCounter;
@@ -53,8 +57,10 @@ public final class EnumTextResolverWithPropertiesOverrideAndFallback extends
   private static final Logger s_aLogger = LoggerFactory.getLogger (EnumTextResolverWithPropertiesOverrideAndFallback.class);
   private static final IStatisticsHandlerKeyedCounter s_aStatsFailed = StatisticsManager.getKeyedCounterHandler (EnumTextResolverWithPropertiesOverrideAndFallback.class.getName () +
                                                                                                                  "$failed");
-  private final ConcurrentHashMap <String, Boolean> m_aUsedOverrideBundles = new ConcurrentHashMap <String, Boolean> ();
-  private final ConcurrentHashMap <String, Boolean> m_aUsedFallbackBundles = new ConcurrentHashMap <String, Boolean> ();
+
+  private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
+  private final Map <String, Boolean> m_aUsedOverrideBundles = new HashMap <String, Boolean> ();
+  private final Map <String, Boolean> m_aUsedFallbackBundles = new HashMap <String, Boolean> ();
 
   @Override
   @Nullable
@@ -70,7 +76,15 @@ public final class EnumTextResolverWithPropertiesOverrideAndFallback extends
       if (ret != null)
       {
         // Match!
-        m_aUsedOverrideBundles.put (sBundleName, Boolean.TRUE);
+        m_aRWLock.writeLock ().lock ();
+        try
+        {
+          m_aUsedOverrideBundles.put (sBundleName, Boolean.TRUE);
+        }
+        finally
+        {
+          m_aRWLock.writeLock ().unlock ();
+        }
         return ret;
       }
     }
@@ -90,7 +104,15 @@ public final class EnumTextResolverWithPropertiesOverrideAndFallback extends
       final String ret = ResourceBundleUtils.getString (sBundleName, aLocale, sID);
       if (ret != null)
       {
-        m_aUsedFallbackBundles.put (sBundleName, Boolean.TRUE);
+        m_aRWLock.writeLock ().lock ();
+        try
+        {
+          m_aUsedFallbackBundles.put (sBundleName, Boolean.TRUE);
+        }
+        finally
+        {
+          m_aRWLock.writeLock ().unlock ();
+        }
         return ret;
       }
     }
@@ -104,25 +126,57 @@ public final class EnumTextResolverWithPropertiesOverrideAndFallback extends
     return null;
   }
 
+  /**
+   * @return A set with all resource keys used in overriding. Never
+   *         <code>null</code>.
+   */
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public Set <String> getAllUsedOverrideBundleNames ()
   {
-    return ContainerHelper.makeUnmodifiable (m_aUsedOverrideBundles.keySet ());
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return ContainerHelper.newSet (m_aUsedOverrideBundles.keySet ());
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
   }
 
+  /**
+   * @return A set with all resource keys used as fallback. Never
+   *         <code>null</code>.
+   */
   @Nonnull
   @ReturnsImmutableObject
   public Set <String> getAllUsedFallbackBundleNames ()
   {
-    return ContainerHelper.makeUnmodifiable (m_aUsedFallbackBundles.keySet ());
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return ContainerHelper.newSet (m_aUsedFallbackBundles.keySet ());
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
   }
 
   public void clearCache ()
   {
-    ResourceBundleUtils.clearCache ();
-    m_aUsedOverrideBundles.clear ();
-    m_aUsedFallbackBundles.clear ();
-    s_aLogger.info ("Cache was cleared: " + getClass ().getName ());
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      ResourceBundleUtils.clearCache ();
+      m_aUsedOverrideBundles.clear ();
+      m_aUsedFallbackBundles.clear ();
+      s_aLogger.info ("Cache was cleared: " + getClass ().getName ());
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
   }
 }
