@@ -18,7 +18,6 @@
 package com.phloc.commons.text.resource;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
@@ -64,7 +63,7 @@ public final class ResourceBundleKeyTest extends AbstractPhlocTestCase
                                                                         new ResourceBundleKey ("properties/test-iso8859",
                                                                                                "key2"));
 
-    ResourceBundleKey.clearCache ();
+    ResourceBundleUtils.clearCache ();
   }
 
   @Test
@@ -83,23 +82,5 @@ public final class ResourceBundleKeyTest extends AbstractPhlocTestCase
     assertEquals ("properties/test-utf8", key.getBundleName ());
     assertEquals ("key1", key.getKey ());
     assertEquals ("äöü", key.getUtf8String (L_DE));
-  }
-
-  @Test
-  public void testGetString ()
-  {
-    assertEquals ("äöü", ResourceBundleKey.getString ("properties/test-iso8859", L_DE, "key1"));
-    assertNull (ResourceBundleKey.getString ("properties/test-iso8859-noway", L_DE, "key1"));
-    assertEquals ("äöü", ResourceBundleKey.getString ("properties/test-iso8859", L_FR, "key1"));
-    assertNull (ResourceBundleKey.getString ("properties/test-iso8859", L_DE, "key-noway"));
-  }
-
-  @Test
-  public void testGetUtf8String ()
-  {
-    assertEquals ("äöü", ResourceBundleKey.getUtf8String ("properties/test-utf8", L_DE, "key1"));
-    assertNull (ResourceBundleKey.getUtf8String ("properties/test-utf8-noway", L_DE, "key1"));
-    assertEquals ("äöü", ResourceBundleKey.getUtf8String ("properties/test-utf8", L_FR, "key1"));
-    assertNull (ResourceBundleKey.getUtf8String ("properties/test-utf8", L_DE, "key-noway"));
   }
 }

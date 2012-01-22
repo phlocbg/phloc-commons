@@ -18,23 +18,18 @@
 package com.phloc.commons.text.resource;
 
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Locale;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.PropertyKey;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.annotations.DevelopersNote;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.hash.HashCodeGenerator;
-import com.phloc.commons.lang.ClassHelper;
-import com.phloc.commons.lang.GenericReflection;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
-import com.phloc.commons.system.EJavaVersion;
 
 /**
  * The key of a resource bundle.
@@ -122,83 +117,65 @@ public final class ResourceBundleKey implements Serializable
   }
 
   @Nullable
+  @Deprecated
+  @DevelopersNote ("Use the ones in class ResourceBundleUtils")
   public static String getString (@Nonnull final String sBundleName,
                                   @Nonnull final Locale aContentLocale,
                                   @Nonnull @PropertyKey final String sKey)
   {
-    return getString (sBundleName, aContentLocale, sKey, ClassHelper.getDefaultClassLoader ());
+    return ResourceBundleUtils.getString (ResourceBundleUtils.getResourceBundle (sBundleName, aContentLocale), sKey);
   }
 
   @Nullable
+  @Deprecated
+  @DevelopersNote ("Use the ones in class ResourceBundleUtils")
   public static String getString (@Nonnull final String sBundleName,
                                   @Nonnull final Locale aContentLocale,
                                   @Nonnull @PropertyKey final String sKey,
                                   @Nonnull final ClassLoader aClassLoader)
   {
-    try
-    {
-      return ResourceBundle.getBundle (sBundleName, aContentLocale, aClassLoader).getString (sKey);
-    }
-    catch (final MissingResourceException ex)
-    {
-      return null;
-    }
+    return ResourceBundleUtils.getString (ResourceBundleUtils.getResourceBundle (sBundleName,
+                                                                                 aContentLocale,
+                                                                                 aClassLoader), sKey);
   }
 
   @Nullable
+  @Deprecated
+  @DevelopersNote ("Use the ones in class ResourceBundleUtils")
   public static String getUtf8String (@Nonnull final String sBundleName,
                                       @Nonnull final Locale aContentLocale,
                                       @Nonnull @PropertyKey final String sKey)
   {
-    return getUtf8String (sBundleName, aContentLocale, sKey, ClassHelper.getDefaultClassLoader ());
+    return ResourceBundleUtils.getString (ResourceBundleUtils.getUtf8ResourceBundle (sBundleName, aContentLocale), sKey);
   }
 
   @Nullable
+  @Deprecated
+  @DevelopersNote ("Use the ones in class ResourceBundleUtils")
   public static String getUtf8String (@Nonnull final String sBundleName,
                                       @Nonnull final Locale aContentLocale,
                                       @Nonnull @PropertyKey final String sKey,
                                       @Nonnull final ClassLoader aClassLoader)
   {
-    try
-    {
-      return Utf8ResourceBundle.getBundle (sBundleName, aContentLocale, aClassLoader).getString (sKey);
-    }
-    catch (final MissingResourceException ex)
-    {
-      return null;
-    }
+    return ResourceBundleUtils.getString (ResourceBundleUtils.getUtf8ResourceBundle (sBundleName,
+                                                                                     aContentLocale,
+                                                                                     aClassLoader), sKey);
   }
 
   /**
    * Clear the complete resource bundle cache using the default class loader!
    */
+  @Deprecated
+  @DevelopersNote ("Use the ones in class ResourceBundleUtils")
   public static void clearCache ()
   {
-    clearCache (ClassHelper.getDefaultClassLoader ());
+    ResourceBundleUtils.clearCache ();
   }
 
+  @Deprecated
+  @DevelopersNote ("Use the ones in class ResourceBundleUtils")
   public static void clearCache (@Nonnull final ClassLoader aClassLoader)
   {
-    // ResourceBundle.clearCache () is only available from Java >= 1.6
-    if (EJavaVersion.JDK_16.isSupportedVersion ())
-    {
-      try
-      {
-        // Use the same classloader as in retrieval!
-        GenericReflection.invokeStaticMethod (ResourceBundle.class, "clearCache", aClassLoader);
-      }
-      catch (final NoSuchMethodException ex)
-      {
-        // Failed
-      }
-      catch (final IllegalAccessException e)
-      {
-        // Failed
-      }
-      catch (final InvocationTargetException e)
-      {
-        // Failed
-      }
-    }
+    ResourceBundleUtils.clearCache (aClassLoader);
   }
 }
