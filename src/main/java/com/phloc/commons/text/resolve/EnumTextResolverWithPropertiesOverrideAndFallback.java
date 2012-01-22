@@ -34,7 +34,7 @@ import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.locale.LocaleUtils;
 import com.phloc.commons.stats.IStatisticsHandlerKeyedCounter;
 import com.phloc.commons.stats.StatisticsManager;
-import com.phloc.commons.text.resource.ResourceBundleKey;
+import com.phloc.commons.text.resource.ResourceBundleUtils;
 
 /**
  * Text resolving class that performs the fallback handling for locales other
@@ -66,7 +66,7 @@ public final class EnumTextResolverWithPropertiesOverrideAndFallback extends
       // Explicitly use a bundle name containing the locale in the base name to
       // avoid strange fallback behaviour to the default locale
       final String sBundleName = PREFIX_OVERRIDE + aLocale.toString ();
-      final String ret = ResourceBundleKey.getString (sBundleName, aLocale, sID);
+      final String ret = ResourceBundleUtils.getString (sBundleName, aLocale, sID);
       if (ret != null)
       {
         // Match!
@@ -87,7 +87,7 @@ public final class EnumTextResolverWithPropertiesOverrideAndFallback extends
       // Explicitly use a bundle name containing the locale in the base name to
       // avoid strange fallback behaviour to the default locale
       final String sBundleName = PREFIX_FALLBACK + aLocale.toString ();
-      final String ret = ResourceBundleKey.getString (sBundleName, aLocale, sID);
+      final String ret = ResourceBundleUtils.getString (sBundleName, aLocale, sID);
       if (ret != null)
       {
         m_aUsedFallbackBundles.put (sBundleName, Boolean.TRUE);
@@ -120,7 +120,7 @@ public final class EnumTextResolverWithPropertiesOverrideAndFallback extends
 
   public void clearCache ()
   {
-    ResourceBundleKey.clearCache ();
+    ResourceBundleUtils.clearCache ();
     m_aUsedOverrideBundles.clear ();
     m_aUsedFallbackBundles.clear ();
     s_aLogger.info ("Cache was cleared: " + getClass ().getName ());
