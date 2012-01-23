@@ -21,6 +21,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.ICloneable;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.EChange;
@@ -35,7 +37,7 @@ import com.phloc.commons.string.ToStringGenerator;
  *        The type of object to be wrapped.
  */
 @NotThreadSafe
-public final class Wrapper <DATATYPE> implements IReadonlyWrapper <DATATYPE>
+public final class Wrapper <DATATYPE> implements IWrapper <DATATYPE>, ICloneable <Wrapper <DATATYPE>>
 {
   private DATATYPE m_aObj;
 
@@ -69,22 +71,12 @@ public final class Wrapper <DATATYPE> implements IReadonlyWrapper <DATATYPE>
     m_aObj = rhs.get ();
   }
 
-  /**
-   * @return The currently wrapped object. May be <code>null</code>.
-   */
   @Nullable
   public DATATYPE get ()
   {
     return m_aObj;
   }
 
-  /**
-   * Change the wrapped object.
-   * 
-   * @param aObj
-   *        The new object to be wrapped. May be <code>null</code>.
-   * @return {@link EChange}
-   */
   @Nonnull
   public EChange set (@Nullable final DATATYPE aObj)
   {
@@ -92,6 +84,13 @@ public final class Wrapper <DATATYPE> implements IReadonlyWrapper <DATATYPE>
       return EChange.UNCHANGED;
     m_aObj = aObj;
     return EChange.CHANGED;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public Wrapper <DATATYPE> getClone ()
+  {
+    return new Wrapper <DATATYPE> (m_aObj);
   }
 
   @Override
