@@ -1,3 +1,20 @@
+/**
+ * Copyright (C) 2006-2012 phloc systems
+ * http://www.phloc.com
+ * office[at]phloc[dot]com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.phloc.commons.state.impl;
 
 import javax.annotation.Nonnull;
@@ -56,6 +73,60 @@ public final class SuccessWithValue <DATATYPE> implements ISuccessIndicator, IRe
   public DATATYPE get ()
   {
     return m_aObj;
+  }
+
+  /**
+   * Get the store value if this is a success. Otherwise the passed failure
+   * value is returned.
+   * 
+   * @param aFailureValue
+   *        The failure value to be used. May be <code>null</code>.
+   * @return Either the stored value or the failure value. May be
+   *         <code>null</code>.
+   */
+  @Nullable
+  public DATATYPE getIfSuccess (@Nullable final DATATYPE aFailureValue)
+  {
+    return m_eSuccess.isSuccess () ? m_aObj : aFailureValue;
+  }
+
+  /**
+   * Get the store value if this is a success. Otherwise <code>null</code> is
+   * returned.
+   * 
+   * @return Either the stored value or <code>null</code>.
+   */
+  @Nullable
+  public DATATYPE getIfSuccessOrNull ()
+  {
+    return getIfSuccess (null);
+  }
+
+  /**
+   * Get the store value if this is a failure. Otherwise the passed success
+   * value is returned.
+   * 
+   * @param aSuccessValue
+   *        The failure value to be used. May be <code>null</code>.
+   * @return Either the stored value or the failure value. May be
+   *         <code>null</code>.
+   */
+  @Nullable
+  public DATATYPE getIfFailure (@Nullable final DATATYPE aSuccessValue)
+  {
+    return m_eSuccess.isFailure () ? m_aObj : aSuccessValue;
+  }
+
+  /**
+   * Get the store value if this is a failure. Otherwise <code>null</code> is
+   * returned.
+   * 
+   * @return Either the stored value or <code>null</code>.
+   */
+  @Nullable
+  public DATATYPE getIfFailureOrNull ()
+  {
+    return getIfFailure (null);
   }
 
   @Override
