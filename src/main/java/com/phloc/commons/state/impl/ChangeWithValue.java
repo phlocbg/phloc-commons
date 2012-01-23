@@ -1,3 +1,20 @@
+/**
+ * Copyright (C) 2006-2012 phloc systems
+ * http://www.phloc.com
+ * office[at]phloc[dot]com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.phloc.commons.state.impl;
 
 import javax.annotation.Nonnull;
@@ -56,6 +73,60 @@ public final class ChangeWithValue <DATATYPE> implements IChangeIndicator, IRead
   public DATATYPE get ()
   {
     return m_aObj;
+  }
+
+  /**
+   * Get the store value if this is a change. Otherwise the passed unchanged
+   * value is returned.
+   * 
+   * @param aUnchangedValue
+   *        The unchanged value to be used. May be <code>null</code>.
+   * @return Either the stored value or the unchanged value. May be
+   *         <code>null</code>.
+   */
+  @Nullable
+  public DATATYPE getIfChanged (@Nullable final DATATYPE aUnchangedValue)
+  {
+    return m_eChange.isChanged () ? m_aObj : aUnchangedValue;
+  }
+
+  /**
+   * Get the store value if this is a changed. Otherwise <code>null</code> is
+   * returned.
+   * 
+   * @return Either the stored value or <code>null</code>.
+   */
+  @Nullable
+  public DATATYPE getIfChangedOrNull ()
+  {
+    return getIfChanged (null);
+  }
+
+  /**
+   * Get the store value if this is unchanged. Otherwise the passed changed
+   * value is returned.
+   * 
+   * @param aChangedValue
+   *        The changed value to be used. May be <code>null</code>.
+   * @return Either the stored value or the changed value. May be
+   *         <code>null</code>.
+   */
+  @Nullable
+  public DATATYPE getIfUnchanged (@Nullable final DATATYPE aChangedValue)
+  {
+    return m_eChange.isUnchanged () ? m_aObj : aChangedValue;
+  }
+
+  /**
+   * Get the store value if this is unchanged. Otherwise <code>null</code> is
+   * returned.
+   * 
+   * @return Either the stored value or <code>null</code>.
+   */
+  @Nullable
+  public DATATYPE getIfUnchangedOrNull ()
+  {
+    return getIfUnchanged (null);
   }
 
   @Override
