@@ -20,6 +20,11 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2012-01-23" category="api" action="add">
+    <change>
+      <text locale="en">Added new interface IWrapper and made the Wrapper implementation cloneable</text>
+    </change>
+  </entry>
   <release date="2012-01-22" version="3.3.10" />
   <entry date="2012-01-22" category="tech" action="change">
     <change>
