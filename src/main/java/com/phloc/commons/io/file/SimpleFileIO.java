@@ -94,6 +94,26 @@ public final class SimpleFileIO
     return aFile == null ? null : StreamUtils.readStreamLines (FileUtils.getInputStream (aFile), sCharset);
   }
 
+  /**
+   * Get the content of the passed file as a list of lines, whereas each line
+   * does not contain a separator.
+   * 
+   * @param aFile
+   *        The file to read. May be <code>null</code>.
+   * @param sCharset
+   *        The character set to use. May not be <code>null</code>.
+   * @param aTargetList
+   *        The target list to be filled. May not be <code>null</code>.
+   */
+  @Nullable
+  public static void readFileLines (@Nullable final File aFile,
+                                    @Nonnull final String sCharset,
+                                    @Nonnull final List <String> aTargetList)
+  {
+    if (aFile != null)
+      StreamUtils.readStreamLines (FileUtils.getInputStream (aFile), sCharset, aTargetList);
+  }
+
   @Nonnull
   public static ESuccess writeFile (@Nonnull final File aFile, @Nonnull final byte [] aContent)
   {
