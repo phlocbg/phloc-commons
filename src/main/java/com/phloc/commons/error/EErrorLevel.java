@@ -70,21 +70,35 @@ public enum EErrorLevel implements
     return m_sID;
   }
 
+  /*
+   * Only SUCCESS is considered to be a success
+   */
   public boolean isSuccess ()
   {
     return this == SUCCESS;
   }
 
+  /*
+   * Everything except SUCCESS is considered a failure!
+   */
   public boolean isFailure ()
   {
     return this != SUCCESS;
   }
 
+  /**
+   * @return <code>true</code> if the severity of this item is &ge; than
+   *         {@link #ERROR}.
+   */
   public boolean isError ()
   {
     return isMoreOrEqualSevereThan (ERROR);
   }
 
+  /**
+   * @return <code>true</code> if the severity of this item is &lt; than
+   *         {@link #ERROR}.
+   */
   public boolean isNoError ()
   {
     return isLessSevereThan (ERROR);
