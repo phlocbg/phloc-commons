@@ -736,6 +736,33 @@ public final class StreamUtils
    *        The input stream to read from. May be <code>null</code>.
    * @param sCharset
    *        The character set to use. May not be <code>null</code>.
+   * @param aTargetList
+   *        The list to be filled with the lines. May not be <code>null</code>.
+   */
+  @Nullable
+  @ReturnsMutableCopy
+  public static void readStreamLines (@WillClose @Nullable final InputStream aIS,
+                                      @Nonnull @Nonempty final String sCharset,
+                                      @Nonnull final List <String> aTargetList)
+  {
+    if (aIS != null)
+      readStreamLines (aIS, sCharset, 0, CGlobal.ILLEGAL_UINT, new INonThrowingRunnableWithParameter <String> ()
+      {
+        public void run (final String sLine)
+        {
+          aTargetList.add (sLine);
+        }
+      });
+  }
+
+  /**
+   * Get the content of the passed stream as a list of lines in the passed
+   * character set.
+   * 
+   * @param aIS
+   *        The input stream to read from. May be <code>null</code>.
+   * @param sCharset
+   *        The character set to use. May not be <code>null</code>.
    * @param nLinesToSkip
    *        The 0-based index of the first line to read. Pass in 0 to indicate
    *        to read everything.
