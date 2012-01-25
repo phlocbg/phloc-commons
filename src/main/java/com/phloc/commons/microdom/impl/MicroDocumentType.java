@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.microdom.EMicroNodeType;
 import com.phloc.commons.microdom.IMicroDocumentType;
 import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.string.StringHelper;
@@ -54,6 +55,12 @@ public final class MicroDocumentType extends AbstractMicroNode implements IMicro
     m_sQualifiedName = sQualifiedName;
     m_sPublicID = sPublicID;
     m_sSystemID = sSystemID;
+  }
+
+  @Nonnull
+  public EMicroNodeType getType ()
+  {
+    return EMicroNodeType.DOCUMENT_TYPE;
   }
 
   @Nonnull

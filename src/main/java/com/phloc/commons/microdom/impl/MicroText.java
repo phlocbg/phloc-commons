@@ -20,6 +20,8 @@ package com.phloc.commons.microdom.impl;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.microdom.EMicroNodeType;
 import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.microdom.IMicroText;
 import com.phloc.commons.string.ToStringGenerator;
@@ -54,6 +56,13 @@ public final class MicroText extends AbstractMicroNode implements IMicroText
   }
 
   @Nonnull
+  public EMicroNodeType getType ()
+  {
+    return EMicroNodeType.TEXT;
+  }
+
+  @Nonnull
+  @Nonempty
   public String getNodeName ()
   {
     return "#text";

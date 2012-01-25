@@ -22,6 +22,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.microdom.EMicroNodeType;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroDocumentType;
 import com.phloc.commons.microdom.IMicroElement;
@@ -43,6 +44,12 @@ public final class MicroDocument extends AbstractMicroNodeWithChildren implement
   {
     if (aDocType != null)
       appendChild (aDocType);
+  }
+
+  @Nonnull
+  public EMicroNodeType getType ()
+  {
+    return EMicroNodeType.DOCUMENT;
   }
 
   public String getNodeName ()

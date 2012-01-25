@@ -61,6 +61,11 @@ public final class CGlobal
   public static final int HEX_RADIX = 16;
 
   /**
+   * Represents an illegal unsigned short.
+   */
+  public static final short ILLEGAL_USHORT = -1;
+
+  /**
    * Represents an illegal unsigned integer.
    */
   public static final int ILLEGAL_UINT = -1;
@@ -69,6 +74,11 @@ public final class CGlobal
    * Represents an illegal unsigned long.
    */
   public static final long ILLEGAL_ULONG = -1L;
+
+  /**
+   * Represents an illegal float.
+   */
+  public static final float ILLEGAL_FLOAT = Float.NaN;
 
   /**
    * Represents an illegal double.
@@ -143,19 +153,19 @@ public final class CGlobal
   public static final long MILLISECONDS_PER_HOUR = MINUTES_PER_HOUR * MILLISECONDS_PER_MINUTE;
 
   /** Micro seconds per milli second. */
-  public static final long MICROSECONDS_PER_MILLISECOND = 1000;
+  public static final long MICROSECONDS_PER_MILLISECOND = 1000L;
 
   /** Micro seconds per second. */
-  public static final long MICROSECONDS_PER_SECOND = 1000000;
+  public static final long MICROSECONDS_PER_SECOND = 1000000L;
 
   /** Nano seconds per micro second. */
-  public static final long NANOSECONDS_PER_MICROSECOND = 1000;
+  public static final long NANOSECONDS_PER_MICROSECOND = 1000L;
 
   /** Nano seconds per milli second. */
-  public static final long NANOSECONDS_PER_MILLISECOND = 1000000;
+  public static final long NANOSECONDS_PER_MILLISECOND = 1000000L;
 
   /** Nano seconds per second. */
-  public static final long NANOSECONDS_PER_SECOND = 1000000000;
+  public static final long NANOSECONDS_PER_SECOND = 1000000000L;
 
   /** The BigInteger for the largest possible long value */
   public static final BigInteger BIGINT_MAX_LONG = new BigInteger (Long.toString (Long.MAX_VALUE));
@@ -165,6 +175,9 @@ public final class CGlobal
 
   /** The BigInteger representation of -1 */
   public static final BigInteger BIGINT_MINUS_ONE = new BigInteger ("-1");
+
+  /** The BigInteger representation of 10 */
+  public static final BigInteger BIGINT_10 = new BigInteger ("10");
 
   /** The BigInteger representation of 100 */
   public static final BigInteger BIGINT_100 = new BigInteger ("100");
@@ -183,6 +196,9 @@ public final class CGlobal
 
   /** The BigDecimal representation of -1 */
   public static final BigDecimal BIGDEC_MINUS_ONE = new BigDecimal ("-1");
+
+  /** The BigDecimal representation of 10 */
+  public static final BigDecimal BIGDEC_10 = new BigDecimal ("10");
 
   /** The BigDecimal representation of 100 */
   public static final BigDecimal BIGDEC_100 = new BigDecimal ("100");

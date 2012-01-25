@@ -23,6 +23,7 @@ import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.microdom.EMicroNodeType;
 import com.phloc.commons.microdom.IMicroEntityReference;
 import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.microdom.IMicroProcessingInstruction;
@@ -51,6 +52,12 @@ public final class MicroProcessingInstruction extends AbstractMicroNode implemen
       throw new IllegalArgumentException ("The passed target is valid");
     m_sTarget = sTarget;
     m_sData = sData;
+  }
+
+  @Nonnull
+  public EMicroNodeType getType ()
+  {
+    return EMicroNodeType.PROCESSING_INSTRUCTION;
   }
 
   @Nonnull
