@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.microdom.EMicroNodeType;
 import com.phloc.commons.microdom.IMicroEntityReference;
 import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.string.StringHelper;
@@ -41,6 +42,12 @@ public final class MicroEntityReference extends AbstractMicroNode implements IMi
     if (StringHelper.hasNoText (sName))
       throw new IllegalArgumentException ("The passed entity reference name is invalid");
     m_sName = sName;
+  }
+
+  @Nonnull
+  public EMicroNodeType getType ()
+  {
+    return EMicroNodeType.ENTITY_REFERENCE;
   }
 
   @Nonnull

@@ -20,6 +20,7 @@ package com.phloc.commons.microdom.impl;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.microdom.EMicroNodeType;
 import com.phloc.commons.microdom.IMicroCDATA;
 import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.string.ToStringGenerator;
@@ -41,6 +42,12 @@ public final class MicroCDATA extends AbstractMicroNode implements IMicroCDATA
   private MicroCDATA (@Nonnull final MicroDataAware aData)
   {
     m_aData = aData.getClone ();
+  }
+
+  @Nonnull
+  public EMicroNodeType getType ()
+  {
+    return EMicroNodeType.CDATA;
   }
 
   @Nonnull

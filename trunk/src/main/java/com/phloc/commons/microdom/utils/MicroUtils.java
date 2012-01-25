@@ -233,9 +233,13 @@ public final class MicroUtils
         ret = new MicroProcessingInstruction (aPI.getTarget (), aPI.getData ());
         break;
       case Node.ATTRIBUTE_NODE:
+        throw new IllegalArgumentException ("Unknown/unsupported node type: ATTRIBUTE_NODE");
       case Node.ENTITY_NODE:
+        throw new IllegalArgumentException ("Unknown/unsupported node type: ENTITY_NODE");
       case Node.DOCUMENT_FRAGMENT_NODE:
+        throw new IllegalArgumentException ("Unknown/unsupported node type: DOCUMENT_FRAGMENT_NODE");
       case Node.NOTATION_NODE:
+        throw new IllegalArgumentException ("Unknown/unsupported node type: NOTATION_NODE");
       default:
         throw new IllegalArgumentException ("Unknown/unsupported node type: " + nNodeType);
     }

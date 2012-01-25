@@ -31,6 +31,7 @@ import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.microdom.EMicroNodeType;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.microdom.IMicroText;
@@ -74,6 +75,13 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
   }
 
   @Nonnull
+  public EMicroNodeType getType ()
+  {
+    return EMicroNodeType.ELEMENT;
+  }
+
+  @Nonnull
+  @Nonempty
   public String getNodeName ()
   {
     return m_sTagName;

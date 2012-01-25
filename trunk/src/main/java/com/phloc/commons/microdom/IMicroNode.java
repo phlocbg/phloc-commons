@@ -360,6 +360,12 @@ public interface IMicroNode extends
   EChange replaceChild (@Nonnull IMicroNode aOldChild, @Nonnull IMicroNode aNewChild);
 
   /**
+   * @return The node type. Never <code>null</code>.
+   */
+  @Nonnull
+  EMicroNodeType getType ();
+
+  /**
    * @return <code>true</code> if this node can safely be casted to
    *         {@link IMicroDocument}.
    */

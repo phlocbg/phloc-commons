@@ -20,6 +20,7 @@ package com.phloc.commons.microdom.impl;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.microdom.EMicroNodeType;
 import com.phloc.commons.microdom.IMicroContainer;
 import com.phloc.commons.microdom.IMicroNode;
 
@@ -38,6 +39,12 @@ public final class MicroContainer extends AbstractMicroNodeWithChildren implemen
     if (aChildNodes != null)
       for (final IMicroNode aChildNode : aChildNodes)
         appendChild (aChildNode);
+  }
+
+  @Nonnull
+  public EMicroNodeType getType ()
+  {
+    return EMicroNodeType.CONTAINER;
   }
 
   @Nonnull
