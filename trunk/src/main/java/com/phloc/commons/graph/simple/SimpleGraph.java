@@ -176,6 +176,17 @@ public class SimpleGraph <VALUETYPE> implements IGraph <VALUETYPE>
   }
 
   @Nonnull
+  public IGraphNode <VALUETYPE> getSingleEndNode ()
+  {
+    final Set <IGraphNode <VALUETYPE>> aEndNodes = getAllEndNodes ();
+    if (aEndNodes.size () > 1)
+      throw new IllegalStateException ("Graph has more than one ending node");
+    if (aEndNodes.isEmpty ())
+      throw new IllegalStateException ("Graph has no ending node");
+    return ContainerHelper.getFirstElement (aEndNodes);
+  }
+
+  @Nonnull
   @ReturnsMutableCopy
   public Set <IGraphNode <VALUETYPE>> getAllEndNodes ()
   {

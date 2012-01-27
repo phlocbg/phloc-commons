@@ -42,6 +42,9 @@ public interface IReadonlyGraph <VALUETYPE>
   Set <IGraphNode <VALUETYPE>> getAllStartNodes ();
 
   @Nonnull
+  IGraphNode <VALUETYPE> getSingleEndNode ();
+
+  @Nonnull
   @ReturnsMutableCopy
   Set <IGraphNode <VALUETYPE>> getAllEndNodes ();
 

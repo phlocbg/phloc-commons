@@ -34,14 +34,14 @@ import com.phloc.commons.graph.IGraphNode;
 import com.phloc.commons.graph.IGraphRelation;
 
 /**
- * A simple forward iterator for simple graphs (following the outgoing nodes).
+ * A simple backward iterator for simple graphs (following the incoming nodes).
  * 
  * @author philip
  * @param <VALUETYPE>
  *        The value type of the graph nodes.
  */
 @NotThreadSafe
-public final class GraphIteratorForward <VALUETYPE> implements IIterableIterator <IGraphNode <VALUETYPE>>
+public final class GraphIteratorBackward <VALUETYPE> implements IIterableIterator <IGraphNode <VALUETYPE>>
 {
   /**
    * This class represents a node in the current iteration process. It is
@@ -54,14 +54,14 @@ public final class GraphIteratorForward <VALUETYPE> implements IIterableIterator
   private static final class IterationNode <VALUETYPE>
   {
     private final IGraphNode <VALUETYPE> m_aNode;
-    private final Iterator <IGraphRelation <VALUETYPE>> m_aOutgoingIt;
+    private final Iterator <IGraphRelation <VALUETYPE>> m_aIncomingIt;
 
     private IterationNode (@Nonnull final IGraphNode <VALUETYPE> aNode)
     {
       if (aNode == null)
         throw new NullPointerException ("node");
       m_aNode = aNode;
-      m_aOutgoingIt = aNode.getOutgoingRelations ().iterator ();
+      m_aIncomingIt = aNode.getIncomingRelations ().iterator ();
     }
 
     @Nonnull
@@ -71,9 +71,9 @@ public final class GraphIteratorForward <VALUETYPE> implements IIterableIterator
     }
 
     @Nonnull
-    public Iterator <IGraphRelation <VALUETYPE>> getOutgoingRelationIterator ()
+    public Iterator <IGraphRelation <VALUETYPE>> getIncomingRelationIterator ()
     {
-      return m_aOutgoingIt;
+      return m_aIncomingIt;
     }
 
     @Nonnull
@@ -85,7 +85,7 @@ public final class GraphIteratorForward <VALUETYPE> implements IIterableIterator
 
   /**
    * Current stack. It contains the current node plus an iterator of the
-   * outgoing relations of the node
+   * incoming relations of the node
    */
   private final NonBlockingStack <IterationNode <VALUETYPE>> m_aNodeStack = new NonBlockingStack <IterationNode <VALUETYPE>> ();
 
@@ -106,13 +106,13 @@ public final class GraphIteratorForward <VALUETYPE> implements IIterableIterator
    */
   private boolean m_bHasCycles = false;
 
-  public GraphIteratorForward (@Nonnull final IGraphNode <VALUETYPE> aStartNode)
+  public GraphIteratorBackward (@Nonnull final IGraphNode <VALUETYPE> aStartNode)
   {
     this (aStartNode, null);
   }
 
-  public GraphIteratorForward (@Nonnull final IGraphNode <VALUETYPE> aStartNode,
-                               @Nullable final IFilter <IGraphRelation <VALUETYPE>> aRelationFilter)
+  public GraphIteratorBackward (@Nonnull final IGraphNode <VALUETYPE> aStartNode,
+                                @Nullable final IFilter <IGraphRelation <VALUETYPE>> aRelationFilter)
   {
     if (aStartNode == null)
       throw new NullPointerException ("startNode");
@@ -144,8 +144,8 @@ public final class GraphIteratorForward <VALUETYPE> implements IIterableIterator
       boolean bFoundNewNode = false;
       while (!m_aNodeStack.isEmpty () && !bFoundNewNode)
       {
-        // check all outgoing relations
-        final Iterator <IGraphRelation <VALUETYPE>> itPeek = m_aNodeStack.peek ().getOutgoingRelationIterator ();
+        // check all incoming relations
+        final Iterator <IGraphRelation <VALUETYPE>> itPeek = m_aNodeStack.peek ().getIncomingRelationIterator ();
         while (itPeek.hasNext ())
         {
           final IGraphRelation <VALUETYPE> aCurrentRelation = itPeek.next ();
@@ -155,13 +155,13 @@ public final class GraphIteratorForward <VALUETYPE> implements IIterableIterator
           if (m_aRelationFilter != null && !m_aRelationFilter.matchesFilter (aCurrentRelation))
             continue;
 
-          // to-node of the current relation
-          final IGraphNode <VALUETYPE> aCurrentOutgoingNode = aCurrentRelation.getTo ();
+          // from-node of the current relation
+          final IGraphNode <VALUETYPE> aCurrentIncomingNode = aCurrentRelation.getFrom ();
 
           // check if the current node is already contained in the stack
           // If so, we have a cycle
           for (final IterationNode <VALUETYPE> aStackElement : m_aNodeStack)
-            if (aStackElement.getNode () == aCurrentOutgoingNode)
+            if (aStackElement.getNode () == aCurrentIncomingNode)
             {
               // we found a cycle!
               m_bHasCycles = true;
@@ -169,10 +169,10 @@ public final class GraphIteratorForward <VALUETYPE> implements IIterableIterator
             }
 
           // Ensure that each node is returned only once!
-          if (!m_aHandledNodes.contains (aCurrentOutgoingNode.getID ()))
+          if (!m_aHandledNodes.contains (aCurrentIncomingNode.getID ()))
           {
             // Okay, we have a new node
-            m_aNodeStack.push (IterationNode.create (aCurrentOutgoingNode));
+            m_aNodeStack.push (IterationNode.create (aCurrentIncomingNode));
             bFoundNewNode = true;
             break;
           }
@@ -222,9 +222,9 @@ public final class GraphIteratorForward <VALUETYPE> implements IIterableIterator
    * @return The created graph node iterator and never <code>null</code>.
    */
   @Nonnull
-  public static <VALUETYPE> GraphIteratorForward <VALUETYPE> create (@Nonnull final IGraphNode <VALUETYPE> aStartNode)
+  public static <VALUETYPE> GraphIteratorBackward <VALUETYPE> create (@Nonnull final IGraphNode <VALUETYPE> aStartNode)
   {
-    return new GraphIteratorForward <VALUETYPE> (aStartNode);
+    return new GraphIteratorBackward <VALUETYPE> (aStartNode);
   }
 
   /**
@@ -240,9 +240,9 @@ public final class GraphIteratorForward <VALUETYPE> implements IIterableIterator
    * @return The created graph node iterator and never <code>null</code>.
    */
   @Nonnull
-  public static <VALUETYPE> GraphIteratorForward <VALUETYPE> create (@Nonnull final IGraphNode <VALUETYPE> aStartNode,
-                                                                     @Nullable final IFilter <IGraphRelation <VALUETYPE>> aRelationFilter)
+  public static <VALUETYPE> GraphIteratorBackward <VALUETYPE> create (@Nonnull final IGraphNode <VALUETYPE> aStartNode,
+                                                                      @Nullable final IFilter <IGraphRelation <VALUETYPE>> aRelationFilter)
   {
-    return new GraphIteratorForward <VALUETYPE> (aStartNode, aRelationFilter);
+    return new GraphIteratorBackward <VALUETYPE> (aStartNode, aRelationFilter);
   }
 }
