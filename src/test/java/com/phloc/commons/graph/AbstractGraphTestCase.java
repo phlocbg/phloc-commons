@@ -17,15 +17,19 @@
  */
 package com.phloc.commons.graph;
 
+import javax.annotation.Nonnull;
+
 import com.phloc.commons.graph.simple.SimpleGraph;
 
 public abstract class AbstractGraphTestCase
 {
+  @Nonnull
   private static final IGraphNode <Integer> _createGN (final SimpleGraph <Integer> aGraph, final int i)
   {
     return aGraph.createNode (Integer.toString (i), Integer.valueOf (i + 1));
   }
 
+  @Nonnull
   protected SimpleGraph <Integer> _buildGraph ()
   {
     final SimpleGraph <Integer> aGraph = new SimpleGraph <Integer> ();
@@ -49,6 +53,7 @@ public abstract class AbstractGraphTestCase
     return aGraph;
   }
 
+  @Nonnull
   protected IReadonlyGraph <Integer> _buildCycleGraphSimple ()
   {
     final SimpleGraph <Integer> aGraph = new SimpleGraph <Integer> ();
@@ -59,6 +64,7 @@ public abstract class AbstractGraphTestCase
     return aGraph;
   }
 
+  @Nonnull
   protected IReadonlyGraph <Integer> _buildCycleGraphSimple2 ()
   {
     final SimpleGraph <Integer> aGraph = new SimpleGraph <Integer> ();
