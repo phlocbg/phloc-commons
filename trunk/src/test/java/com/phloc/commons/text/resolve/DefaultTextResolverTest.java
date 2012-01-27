@@ -90,7 +90,6 @@ public final class DefaultTextResolverTest
     final Locale aDE_AT = LocaleCache.get ("de", "AT");
     final Locale aEN = TextProvider.EN;
     final Locale aEN_US = LocaleCache.get ("en", "US");
-    final Locale aHR = LocaleCache.get ("hr", "HR");
     final Locale aSR = LocaleCache.get ("sr", "RS");
 
     // Regular
@@ -105,10 +104,6 @@ public final class DefaultTextResolverTest
     assertEquals ("Text2en", EText.TEXT2.getDisplayText (aEN));
     assertEquals ("Text2en", EText.TEXT2.getDisplayText (aEN_US));
 
-    // Use fallback
-    assertEquals ("Text1hr", EText.TEXT1.getDisplayText (aHR));
-    assertEquals (null, EText.TEXT2.getDisplayText (aHR));
-
     // No fallback properties file present
     assertNull (EText.TEXT1.getDisplayText (aSR));
     assertNull (EText.TEXT2.getDisplayText (aSR));
@@ -116,7 +111,6 @@ public final class DefaultTextResolverTest
     // Check bundle names
     assertTrue (DefaultTextResolver.getAllUsedOverrideBundleNames ().contains ("properties/override-de"));
     assertFalse (DefaultTextResolver.getAllUsedOverrideBundleNames ().contains ("properties/override-en"));
-    assertTrue (DefaultTextResolver.getAllUsedFallbackBundleNames ().contains ("properties/hr_HR"));
     assertFalse (DefaultTextResolver.getAllUsedFallbackBundleNames ().contains ("properties/sr_RS"));
   }
 
