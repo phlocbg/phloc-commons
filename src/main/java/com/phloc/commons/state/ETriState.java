@@ -73,6 +73,12 @@ public enum ETriState implements IHasID <String>, ITriState
   }
 
   @Nullable
+  public Boolean getAsBooleanObj (@Nullable final boolean aUndefinedValue)
+  {
+    return getAsBooleanObj (Boolean.valueOf (aUndefinedValue));
+  }
+
+  @Nullable
   public Boolean getAsBooleanObj (@Nullable final Boolean aUndefinedValue)
   {
     return this == UNDEFINED ? aUndefinedValue : m_aBoolean;
