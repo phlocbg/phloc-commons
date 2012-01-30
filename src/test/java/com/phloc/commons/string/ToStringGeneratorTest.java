@@ -20,6 +20,7 @@ package com.phloc.commons.string;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 
@@ -174,5 +175,15 @@ public final class ToStringGeneratorTest
                                 .appendIfNotNull ("short[]", (short []) null)
                                 .appendIfNotNull ("String[]", (String []) null)
                                 .toString ();
+  }
+
+  @Test
+  public void testCircularReference ()
+  {
+    final ToStringGenerator aTSG = new ToStringGenerator (this);
+    aTSG.append ("anything", "else");
+    aTSG.append ("meMyselfAndI", this);
+    System.out.println (aTSG.toString ());
+    assertTrue (aTSG.toString ().endsWith (": anything=else; meMyselfAndI=this]"));
   }
 }
