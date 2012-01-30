@@ -48,10 +48,14 @@ import javax.annotation.concurrent.NotThreadSafe;
 @NotThreadSafe
 public final class ToStringGenerator
 {
+  public static final String CONSTANT_NULL = "null";
+  public static final String CONSTANT_THIS = "this";
+  public static final String CONSTANT_PASSWORD = "****";
   private static final int FIRST_FIELD = 1;
   private static final int APPENDED_CLOSING_BRACKET = 2;
 
   private final StringBuilder m_aSB = new StringBuilder ("[");
+  private final Object m_aSrc;
   private int m_nIndex = 0;
 
   public ToStringGenerator (@Nullable final Object aSrc)
@@ -64,6 +68,7 @@ public final class ToStringGenerator
            .append ("@0x")
            .append (StringHelper.hexStringLeadingZero (System.identityHashCode (aSrc), 8));
     }
+    m_aSrc = aSrc;
   }
 
   private void _beforeAddField ()
@@ -219,7 +224,7 @@ public final class ToStringGenerator
   @Nonnull
   public ToStringGenerator appendPassword (@Nonnull final String sField)
   {
-    return append (sField, "****");
+    return append (sField, CONSTANT_PASSWORD);
   }
 
   @Nonnull
@@ -229,10 +234,17 @@ public final class ToStringGenerator
   }
 
   @Nonnull
+  private String _getObjectValue (@Nullable final Object aValue)
+  {
+    return aValue == null ? CONSTANT_NULL : aValue == m_aSrc ? CONSTANT_THIS : aValue.toString ();
+  }
+
+  @Nonnull
   public ToStringGenerator append (@Nonnull final String sField, @Nullable final Object aValue)
   {
     if (aValue != null && aValue.getClass ().isArray ())
     {
+      // Passed value is an array
       final Class <?> aCompType = aValue.getClass ().getComponentType ();
       if (aCompType.equals (boolean.class))
         return append (sField, (boolean []) aValue);
@@ -253,7 +265,8 @@ public final class ToStringGenerator
       return append (sField, (Object []) aValue);
     }
     _beforeAddField ();
-    m_aSB.append (sField).append ('=').append (aValue);
+    // Avoid endless loop with base object
+    m_aSB.append (sField).append ('=').append (_getObjectValue (aValue));
     return this;
   }
 
@@ -261,7 +274,29 @@ public final class ToStringGenerator
   public ToStringGenerator append (@Nonnull final String sField, @Nullable final Object [] aValue)
   {
     _beforeAddField ();
-    m_aSB.append (sField).append ('=').append (Arrays.toString (aValue));
+    m_aSB.append (sField).append ('=');
+    if (aValue == null)
+      m_aSB.append (CONSTANT_NULL);
+    else
+    {
+      final int nMax = aValue.length - 1;
+      if (nMax == -1)
+        m_aSB.append ("[]");
+      else
+      {
+        m_aSB.append ('[');
+        for (int i = 0;; i++)
+        {
+          // Avoid endless loop with base object
+          m_aSB.append (_getObjectValue (aValue[i]));
+          if (i == nMax)
+            break;
+          m_aSB.append (", ");
+        }
+        m_aSB.append (']');
+      }
+    }
+
     return this;
   }
 
