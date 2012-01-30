@@ -282,7 +282,7 @@ public enum ECountry implements IHasDisplayText, IHasID <String>
   LY (ECountryName.LY),
   MA (ECountryName.MA),
   MC (ECountryName.MC),
-  MD_CH (ECountryName.MD_CH),
+  MD_CH (ECountrySubName.MD_CH),
   MD (ECountryName.MD),
   ME (ECountryName.ME),
   MG (ECountryName.MG),

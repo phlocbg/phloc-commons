@@ -172,7 +172,6 @@ public enum ECountryName implements IHasDisplayText
   LY ("Libysch-Arabische Dschamahirija", "Libyan Arab Jamahiriya"),
   MA ("Marokko", "Morocco"),
   MC ("Monaco", "Monaco"),
-  MD_CH ("Chişinău", "Chişinău"),
   MD ("Moldau, Rep.", "Moldova, Republic Of"),
   ME ("Montenegro", "Montenegro"),
   MG ("Madagaskar", "Madagascar"),
