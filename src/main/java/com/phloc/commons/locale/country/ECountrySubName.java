@@ -144,6 +144,7 @@ public enum ECountrySubName implements IHasDisplayText
   IN_UP ("Uttar Pradesh", "Uttar Pradesh"),
   IN_WB ("West Bengal", "West Bengal"),
   IT_BZ ("Südtirol", "South Tyrol"),
+  MD_CH ("Chişinău", "Chişinău"),
   UK_AL ("Alderney", "Alderney"),
   UK_EN ("England", "England"),
   UK_GU ("Guernsey", "Guernsey"),
