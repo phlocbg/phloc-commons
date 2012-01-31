@@ -47,6 +47,7 @@ public final class XMLTransformerFactory
     s_aFactory = createTransformerFactory (LoggingTransformErrorListener.getInstance (),
                                            new DefaultTransformURIResolver ());
   }
+
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")
   private static final XMLTransformerFactory s_aInstance = new XMLTransformerFactory ();

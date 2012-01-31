@@ -20,6 +20,7 @@ package com.phloc.commons.stats;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -41,10 +42,9 @@ import com.phloc.commons.string.StringHelper;
 @ThreadSafe
 public final class StatisticsManager
 {
-  /*
-   * No static logger for this class -> used in XML reader -> used by logging
-   * initialization
-   */
+  public static final boolean DEFAULT_JMX_ENABLED = true;
+
+  private static final AtomicBoolean s_aJMXEnabled = new AtomicBoolean (DEFAULT_JMX_ENABLED);
   private static final ReadWriteLock s_aRWLockCache = new ReentrantReadWriteLock ();
   private static final ReadWriteLock s_aRWLockTimer = new ReentrantReadWriteLock ();
   private static final ReadWriteLock s_aRWLockSize = new ReentrantReadWriteLock ();
@@ -62,6 +62,16 @@ public final class StatisticsManager
 
   private StatisticsManager ()
   {}
+
+  public static boolean isJMXEnabled ()
+  {
+    return s_aJMXEnabled.get ();
+  }
+
+  public static void setJMXEnabled (final boolean bEnabled)
+  {
+    s_aJMXEnabled.set (bEnabled);
+  }
 
   @Nonnull
   public static IStatisticsHandlerCache getCacheHandler (@Nonnull final Class <?> aClass)
@@ -85,7 +95,8 @@ public final class StatisticsManager
       if (aHdl == null)
       {
         aHdl = new StatisticsHandlerCache ();
-        JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
+        if (isJMXEnabled ())
+          JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
         s_aHdlCache.put (sName, aHdl);
       }
       return aHdl;
@@ -133,7 +144,8 @@ public final class StatisticsManager
       if (aHdl == null)
       {
         aHdl = new StatisticsHandlerTimer ();
-        JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
+        if (isJMXEnabled ())
+          JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
         s_aHdlTimer.put (sName, aHdl);
       }
       return aHdl;
@@ -181,7 +193,8 @@ public final class StatisticsManager
       if (aHdl == null)
       {
         aHdl = new StatisticsHandlerSize ();
-        JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
+        if (isJMXEnabled ())
+          JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
         s_aHdlSize.put (sName, aHdl);
       }
       return aHdl;
@@ -229,7 +242,8 @@ public final class StatisticsManager
       if (aHdl == null)
       {
         aHdl = new StatisticsHandlerCounter ();
-        JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
+        if (isJMXEnabled ())
+          JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
         s_aHdlCounter.put (sName, aHdl);
       }
       return aHdl;
@@ -277,7 +291,8 @@ public final class StatisticsManager
       if (aHdl == null)
       {
         aHdl = new StatisticsHandlerKeyedCounter ();
-        JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
+        if (isJMXEnabled ())
+          JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
         s_aHdlKeyedCounter.put (sName, aHdl);
       }
       return aHdl;
