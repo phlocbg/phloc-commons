@@ -25,6 +25,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 
 /**
@@ -52,14 +53,14 @@ public final class ClassPathHelperTest
     // Use default separator
     NonBlockingByteArrayOutputStream baos = new NonBlockingByteArrayOutputStream ();
     ClassPathHelper.printClassPathEntries (new PrintStream (baos));
-    assertTrue (baos.getAsString ().length () > 0);
-    assertTrue (baos.getAsString ().indexOf ("\n") > 0);
+    assertTrue (baos.getAsString (CCharset.CHARSET_ISO_8859_1).length () > 0);
+    assertTrue (baos.getAsString (CCharset.CHARSET_ISO_8859_1).indexOf ("\n") > 0);
 
     // Use special separator
     baos = new NonBlockingByteArrayOutputStream ();
     ClassPathHelper.printClassPathEntries (new PrintStream (baos), "$$$");
-    assertTrue (baos.getAsString ().length () > 0);
-    assertTrue (baos.getAsString ().indexOf ("$$$") > 0);
+    assertTrue (baos.getAsString (CCharset.CHARSET_ISO_8859_1).length () > 0);
+    assertTrue (baos.getAsString (CCharset.CHARSET_ISO_8859_1).indexOf ("$$$") > 0);
     assertTrue (baos.getAsString ("UTF-8").indexOf ("$$$") > 0);
   }
 }

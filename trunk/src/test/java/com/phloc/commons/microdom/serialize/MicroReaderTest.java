@@ -118,7 +118,7 @@ public final class MicroReaderTest
                   "  </root>" +
                   sCRLF +
                   "</verrryoot>" +
-                  sCRLF, baos.getAsString ());
+                  sCRLF, baos.getAsString (CCharset.CHARSET_UTF_8));
 
     final String sXHTML = "<content>"
                           + "<div class=\"css1\">"

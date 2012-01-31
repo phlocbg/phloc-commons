@@ -25,6 +25,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.io.EAppend;
 import com.phloc.commons.io.file.FileOperations;
 
@@ -43,7 +44,7 @@ public final class CountingFileOutputStreamTest
     {
       CountingFileOutputStream aCFOS = new CountingFileOutputStream (f);
       assertEquals (0, aCFOS.getBytesWritten ());
-      StreamUtils.copyInputStreamToOutputStream (new StringInputStream ("abc"), aCFOS);
+      StreamUtils.copyInputStreamToOutputStream (new StringInputStream ("abc", CCharset.CHARSET_ISO_8859_1), aCFOS);
       aCFOS.write ('a');
       aCFOS.write ("axy".getBytes ());
       assertEquals (7, aCFOS.getBytesWritten ());

@@ -24,6 +24,7 @@ import java.util.Random;
 
 import org.junit.Test;
 
+import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.messagedigest.EMessageDigestAlgorithm;
 import com.phloc.commons.mock.PhlocTestUtils;
 
@@ -50,13 +51,15 @@ public final class HashingOutputStreamTest
 
         // First hash
         aHIS1 = new HashingOutputStream (new NonBlockingByteArrayOutputStream (), eMDAlgo);
-        StreamUtils.copyInputStreamToOutputStreamAndCloseOS (new StringInputStream (sTestString),
+        StreamUtils.copyInputStreamToOutputStreamAndCloseOS (new StringInputStream (sTestString,
+                                                                                    CCharset.CHARSET_ISO_8859_1),
                                                              new NonBlockingByteArrayOutputStream ());
         final byte [] aDigest1 = aHIS1.getDigest ();
 
         // Second hash
         aHIS2 = new HashingOutputStream (new NonBlockingByteArrayOutputStream (), eMDAlgo);
-        StreamUtils.copyInputStreamToOutputStreamAndCloseOS (new StringInputStream (sTestString),
+        StreamUtils.copyInputStreamToOutputStreamAndCloseOS (new StringInputStream (sTestString,
+                                                                                    CCharset.CHARSET_ISO_8859_1),
                                                              new NonBlockingByteArrayOutputStream ());
         final byte [] aDigest2 = aHIS2.getDigest ();
 
