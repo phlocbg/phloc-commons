@@ -3,7 +3,6 @@ package com.phloc.commons.cache;
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.IHasSize;
-import com.phloc.commons.name.IHasName;
 import com.phloc.commons.state.EChange;
 
 /**
@@ -11,7 +10,7 @@ import com.phloc.commons.state.EChange;
  * 
  * @author philip
  */
-public interface SimpleCacheMBean extends IHasName, IHasSize
+public interface SimpleCacheMBean extends IHasSize
 {
   /**
    * Remove all cached elements.

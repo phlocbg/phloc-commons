@@ -20,6 +20,7 @@ package com.phloc.commons.cache;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.name.IHasName;
 import com.phloc.commons.state.EChange;
 
 /**
@@ -31,7 +32,7 @@ import com.phloc.commons.state.EChange;
  * @param <VALUETYPE>
  *        Cache value type.
  */
-public interface ISimpleCache <KEYTYPE, VALUETYPE> extends SimpleCacheMBean
+public interface ISimpleCache <KEYTYPE, VALUETYPE> extends SimpleCacheMBean, IHasName
 {
   /**
    * Get the cached value associated with the passed key.

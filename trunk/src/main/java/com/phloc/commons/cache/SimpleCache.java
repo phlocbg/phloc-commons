@@ -19,11 +19,6 @@ final class SimpleCache implements SimpleCacheMBean
     m_aCache = aCache;
   }
 
-  public String getName ()
-  {
-    return m_aCache.getName ();
-  }
-
   public int size ()
   {
     return m_aCache.size ();
