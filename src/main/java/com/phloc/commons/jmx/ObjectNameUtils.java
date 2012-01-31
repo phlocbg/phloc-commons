@@ -19,6 +19,8 @@ package com.phloc.commons.jmx;
 
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
@@ -30,6 +32,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.exceptions.LoggedRuntimeException;
 import com.phloc.commons.lang.CGStringHelper;
+import com.phloc.commons.string.StringHelper;
 
 @Immutable
 public final class ObjectNameUtils
@@ -38,8 +41,54 @@ public final class ObjectNameUtils
   @PresentForCodeCoverage
   private static final ObjectNameUtils s_aInstance = new ObjectNameUtils ();
 
+  private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
+  private static String s_sDefaultJMXDomain = CJMX.PHLOC_JMX_DOMAIN;
+
   private ObjectNameUtils ()
   {}
+
+  /**
+   * Set the default JMX domain
+   * 
+   * @param sDefaultJMXDomain
+   *        The new JMX domain. May neither be <code>null</code> nor empty nor
+   *        may it contains ":" or " "
+   */
+  public static void setDefaultJMXDomain (@Nonnull @Nonempty final String sDefaultJMXDomain)
+  {
+    if (StringHelper.hasNoText (sDefaultJMXDomain))
+      throw new IllegalArgumentException ("defaultJMXDomain is empty");
+    if (sDefaultJMXDomain.indexOf (':') >= 0 || sDefaultJMXDomain.indexOf (' ') >= 0)
+      throw new IllegalArgumentException ("defaultJMXDomain contains invalid chars: " + sDefaultJMXDomain);
+
+    s_aRWLock.writeLock ().lock ();
+    try
+    {
+      s_sDefaultJMXDomain = sDefaultJMXDomain;
+    }
+    finally
+    {
+      s_aRWLock.writeLock ().unlock ();
+    }
+  }
+
+  /**
+   * @return The default JMX domain to be used for {@link ObjectName} instances
+   */
+  @Nonnull
+  @Nonempty
+  public static String getDefaultJMXDomain ()
+  {
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      return s_sDefaultJMXDomain;
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
 
   @Nonnull
   public static ObjectName create (@Nonnull @Nonempty final Hashtable <String, String> aParams)
@@ -48,7 +97,7 @@ public final class ObjectNameUtils
       throw new IllegalArgumentException ("JMX objectName parameters may not be empty!");
     try
     {
-      return new ObjectName (CJMX.PHLOC_JMX_DOMAIN, aParams);
+      return new ObjectName (getDefaultJMXDomain (), aParams);
     }
     catch (final JMException ex)
     {
