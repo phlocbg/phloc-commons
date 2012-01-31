@@ -30,6 +30,7 @@ import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.jmx.JMXUtils;
 import com.phloc.commons.string.StringHelper;
 
 /**
@@ -84,6 +85,7 @@ public final class StatisticsManager
       if (aHdl == null)
       {
         aHdl = new StatisticsHandlerCache ();
+        JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
         s_aHdlCache.put (sName, aHdl);
       }
       return aHdl;
@@ -131,6 +133,7 @@ public final class StatisticsManager
       if (aHdl == null)
       {
         aHdl = new StatisticsHandlerTimer ();
+        JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
         s_aHdlTimer.put (sName, aHdl);
       }
       return aHdl;
@@ -178,6 +181,7 @@ public final class StatisticsManager
       if (aHdl == null)
       {
         aHdl = new StatisticsHandlerSize ();
+        JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
         s_aHdlSize.put (sName, aHdl);
       }
       return aHdl;
@@ -225,6 +229,7 @@ public final class StatisticsManager
       if (aHdl == null)
       {
         aHdl = new StatisticsHandlerCounter ();
+        JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
         s_aHdlCounter.put (sName, aHdl);
       }
       return aHdl;
@@ -272,6 +277,7 @@ public final class StatisticsManager
       if (aHdl == null)
       {
         aHdl = new StatisticsHandlerKeyedCounter ();
+        JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
         s_aHdlKeyedCounter.put (sName, aHdl);
       }
       return aHdl;

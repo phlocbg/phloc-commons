@@ -19,7 +19,7 @@ package com.phloc.commons.stats;
 
 import javax.annotation.Nonnegative;
 
-public interface IStatisticsHandlerSize extends IStatisticsHandlerNumeric
+public interface IStatisticsHandlerSize extends StatisticsHandlerSizeMBean
 {
   void addSize (@Nonnegative long nSize);
 }

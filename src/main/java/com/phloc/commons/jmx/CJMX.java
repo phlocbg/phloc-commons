@@ -15,12 +15,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.stats;
+package com.phloc.commons.jmx;
 
+import javax.annotation.concurrent.Immutable;
 
-public interface IStatisticsHandlerCache extends StatisticsHandlerCacheMBean
+import com.phloc.commons.annotations.PresentForCodeCoverage;
+
+/**
+ * Constants for JMX usage
+ * 
+ * @author philip
+ */
+@Immutable
+public final class CJMX
 {
-  void cacheHit ();
+  /** JMX domain for phloc products */
+  public static final String PHLOC_JMX_DOMAIN = "com.phloc";
 
-  void cacheMiss ();
+  /** Standard JMX property */
+  public static final String PROPERTY_TYPE = "type";
+
+  /** Standard JMX property */
+  public static final String PROPERTY_NAME = "name";
+
+  @PresentForCodeCoverage
+  @SuppressWarnings ("unused")
+  private static final CJMX s_aInstance = new CJMX ();
+
+  private CJMX ()
+  {}
 }
