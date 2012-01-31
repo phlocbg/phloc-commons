@@ -24,6 +24,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
@@ -43,7 +44,7 @@ public final class WrappedOutputStreamTest
     ws.write ("cde".getBytes (), 1, 1);
     ws.flush ();
     ws.close ();
-    assertEquals ("abcd", baos.getAsString ());
+    assertEquals ("abcd", baos.getAsString (CCharset.CHARSET_ISO_8859_1));
     PhlocTestUtils.testToStringImplementation (ws);
 
     try

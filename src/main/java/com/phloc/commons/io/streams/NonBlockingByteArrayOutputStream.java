@@ -209,7 +209,9 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements
    * 
    * @return String decoded from the buffer's contents.
    */
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings ("DM_DEFAULT_ENCODING")
   @Nonnull
+  @Deprecated
   public String getAsString ()
   {
     return new String (m_aBuf, 0, m_nCount);

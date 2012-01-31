@@ -34,6 +34,7 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
+import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.io.streams.StringInputStream;
@@ -154,7 +155,7 @@ public final class MicroUtilsTest
     final DocumentBuilderFactory aDBF = XMLFactory.createDefaultDocumentBuilderFactory ();
     aDBF.setCoalescing (false);
     aDBF.setIgnoringComments (false);
-    final Document doc = aDBF.newDocumentBuilder ().parse (new StringInputStream (sXML));
+    final Document doc = aDBF.newDocumentBuilder ().parse (new StringInputStream (sXML, CCharset.CHARSET_ISO_8859_1));
     assertNotNull (doc);
     final IMicroNode aNode = MicroUtils.convertToMicroNode (doc);
     assertNotNull (aNode);

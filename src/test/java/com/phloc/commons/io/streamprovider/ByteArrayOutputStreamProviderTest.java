@@ -43,7 +43,8 @@ public final class ByteArrayOutputStreamProviderTest
     final ByteArrayOutputStreamProvider aOSP = new ByteArrayOutputStreamProvider ();
     final OutputStream aOS = aOSP.getOutputStream (EAppend.DEFAULT);
     assertNotNull (aOS);
-    StreamUtils.copyInputStreamToOutputStreamAndCloseOS (new StringInputStream ("Hiho"), aOS);
+    StreamUtils.copyInputStreamToOutputStreamAndCloseOS (new StringInputStream ("Hiho", CCharset.CHARSET_ISO_8859_1),
+                                                         aOS);
     assertEquals ("Hiho", aOSP.getAsString (CCharset.CHARSET_ISO_8859_1));
     assertArrayEquals ("Hiho".getBytes (), aOSP.getBytes ());
     StreamUtils.close (aOSP.getWriter (CCharset.CHARSET_UTF_8, EAppend.DEFAULT));

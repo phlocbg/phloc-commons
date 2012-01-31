@@ -28,6 +28,8 @@ import com.phloc.commons.charset.CharsetManager;
  */
 public class StringInputStream extends NonBlockingByteArrayInputStream
 {
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings ("DM_DEFAULT_ENCODING")
+  @Deprecated
   public StringInputStream (@Nonnull final String sInput)
   {
     super (sInput.getBytes ());

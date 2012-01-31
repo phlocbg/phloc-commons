@@ -21,6 +21,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.phloc.commons.charset.CCharset;
+
 /**
  * Test class for class {@link StringInputStream}.
  * 
@@ -33,8 +35,8 @@ public final class StringInputStreamTest
   {
     final String sTestString = "test äöü 123 - This counts!";
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
-    StreamUtils.copyInputStreamToOutputStream (new StringInputStream (sTestString), aBAOS);
-    assertEquals (sTestString, aBAOS.getAsString ());
+    StreamUtils.copyInputStreamToOutputStream (new StringInputStream (sTestString, CCharset.CHARSET_ISO_8859_1), aBAOS);
+    assertEquals (sTestString, aBAOS.getAsString (CCharset.CHARSET_ISO_8859_1));
     aBAOS.reset ();
     StreamUtils.copyInputStreamToOutputStream (new StringInputStream (sTestString, "UTF-16"), aBAOS);
     assertEquals (sTestString, aBAOS.getAsString ("UTF-16"));
