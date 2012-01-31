@@ -19,6 +19,7 @@ package com.phloc.commons.math;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -26,6 +27,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.collections.ContainerHelper;
@@ -62,7 +64,7 @@ public final class CombinationGenerator <DATATYPE> implements IIterableIterator 
    *        the number of slots to use (must not be greater than the element
    *        count!)
    */
-  public CombinationGenerator (@Nonnull final List <DATATYPE> aElements, @Nonnegative final int nSlotCount)
+  public CombinationGenerator (@Nonnull @Nonempty final List <DATATYPE> aElements, @Nonnegative final int nSlotCount)
   {
     if (ContainerHelper.isEmpty (aElements))
       throw new IllegalArgumentException ("No elements passed");
@@ -173,5 +175,46 @@ public final class CombinationGenerator <DATATYPE> implements IIterableIterator 
   public Iterator <List <DATATYPE>> iterator ()
   {
     return this;
+  }
+
+  /**
+   * Get a list of all permutations of the input elements.
+   * 
+   * @param aInput
+   *        Input list.
+   * @param nSlotCount
+   *        Slot count.
+   * @return The list of all permutations. Beware: the resulting list may be
+   *         quite large and may contain duplicates if the input list contains
+   *         duplicate elements!
+   */
+  @Nonnull
+  public static <DATATYPE> List <List <DATATYPE>> getAllPermutations (@Nonnull @Nonempty final List <DATATYPE> aInput,
+                                                                      @Nonnegative final int nSlotCount)
+  {
+    final List <List <DATATYPE>> aResultList = new ArrayList <List <DATATYPE>> ();
+    addAllPermutations (aInput, nSlotCount, aResultList);
+    return aResultList;
+  }
+
+  /**
+   * Fill a list with all permutations of the input elements.
+   * 
+   * @param aInput
+   *        Input list.
+   * @param nSlotCount
+   *        Slot count.
+   * @param aResultList
+   *        The list to be filled with all permutations. Beware: this list may
+   *        be quite large and may contain duplicates if the input list contains
+   *        duplicate elements! Note: this list is not cleared before filling
+   */
+  @Nonnull
+  public static <DATATYPE> void addAllPermutations (@Nonnull @Nonempty final List <DATATYPE> aInput,
+                                                    @Nonnegative final int nSlotCount,
+                                                    @Nonnull final Collection <List <DATATYPE>> aResultList)
+  {
+    for (final List <DATATYPE> aPermutation : new CombinationGenerator <DATATYPE> (aInput, nSlotCount))
+      aResultList.add (aPermutation);
   }
 }

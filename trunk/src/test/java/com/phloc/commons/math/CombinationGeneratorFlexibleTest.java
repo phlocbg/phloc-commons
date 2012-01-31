@@ -23,9 +23,11 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.phloc.commons.collections.ContainerHelper;
@@ -113,5 +115,25 @@ public final class CombinationGeneratorFlexibleTest
                                                                            "f",
                                                                            "g"), true);
     System.out.println (aSW.stopAndGetMillis () + " ms");
+  }
+
+  @Ignore ("Simply wrong assumption")
+  @Test
+  public void testRedundancy ()
+  {
+    final List <String> aInputList = ContainerHelper.newList ("a", "b", "c", "d", "e", "f", "g", "h");
+
+    // Build all permutations of the input list, using all available slots
+    final Set <List <String>> aSimplePermutations = new HashSet <List <String>> ();
+    CombinationGenerator.addAllPermutations (aInputList, aInputList.size (), aSimplePermutations);
+
+    // Flexible combination generator
+    final Set <List <String>> aFlexiblePermutations = CombinationGeneratorFlexible.getCombinations (aInputList, true);
+    assertTrue (aFlexiblePermutations.size () >= aSimplePermutations.size ());
+
+    // Now the assumptions: I assume that all permutations from the flexible
+    // generator are also contained in all permutations
+    for (final List <String> aList : aFlexiblePermutations)
+      assertTrue (aList.toString (), aSimplePermutations.contains (aList));
   }
 }

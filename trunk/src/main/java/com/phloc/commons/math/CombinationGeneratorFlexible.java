@@ -81,12 +81,12 @@ public final class CombinationGeneratorFlexible <DATATYPE>
       if (aElements.isEmpty ())
       {
         aAllResults.add (new ArrayList <DATATYPE> ());
-        break;
       }
-
-      // Add all permutations for the current slot count
-      for (final List <DATATYPE> aPermutations : new CombinationGenerator <DATATYPE> (aElements, nSlotCount))
-        aAllResults.add (aPermutations);
+      else
+      {
+        // Add all permutations for the current slot count
+        CombinationGenerator.addAllPermutations (aElements, nSlotCount, aAllResults);
+      }
     }
     return aAllResults;
   }
