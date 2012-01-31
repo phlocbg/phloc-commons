@@ -69,7 +69,7 @@ public enum EXMLIncorrectCharacterHandling
     @Override
     public void notifyOnInvalidXMLCharacter (@Nonnull @Nonempty final String s)
     {
-      // Do nothing
+      s_aLogger.warn ("XML content contains invalid character data: '" + s + "'");
     }
   },
 
@@ -82,7 +82,7 @@ public enum EXMLIncorrectCharacterHandling
     @Override
     public void notifyOnInvalidXMLCharacter (@Nonnull @Nonempty final String s)
     {
-      s_aLogger.warn ("XML content contains invalid character data: '" + s + "'");
+      // Do nothing
     }
   },
 
@@ -107,6 +107,15 @@ public enum EXMLIncorrectCharacterHandling
   private boolean m_bIsTestRequired;
   private boolean m_bReplaceWithNothing;
 
+  /**
+   * Constructor
+   * 
+   * @param bIsTestRequired
+   *        Is a special test required?
+   * @param bReplaceWithNothing
+   *        Should the invalid character be replaced with nothing? May only be
+   *        <code>true</code> if bIsTestRequired is <code>true</code>
+   */
   private EXMLIncorrectCharacterHandling (final boolean bIsTestRequired, final boolean bReplaceWithNothing)
   {
     m_bIsTestRequired = bIsTestRequired;
