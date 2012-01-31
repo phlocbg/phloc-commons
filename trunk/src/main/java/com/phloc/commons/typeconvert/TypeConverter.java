@@ -87,6 +87,54 @@ public final class TypeConverter
     return false;
   }
 
+  @Nullable
+  public static <DSTTYPE> DSTTYPE convert (@Nullable final boolean aSrcValue, @Nonnull final Class <DSTTYPE> aDstClass)
+  {
+    return convertIfNecessary (Boolean.valueOf (aSrcValue), aDstClass);
+  }
+
+  @Nullable
+  public static <DSTTYPE> DSTTYPE convert (@Nullable final byte aSrcValue, @Nonnull final Class <DSTTYPE> aDstClass)
+  {
+    return convertIfNecessary (Byte.valueOf (aSrcValue), aDstClass);
+  }
+
+  @Nullable
+  public static <DSTTYPE> DSTTYPE convert (@Nullable final char aSrcValue, @Nonnull final Class <DSTTYPE> aDstClass)
+  {
+    return convertIfNecessary (Character.valueOf (aSrcValue), aDstClass);
+  }
+
+  @Nullable
+  public static <DSTTYPE> DSTTYPE convert (@Nullable final double aSrcValue, @Nonnull final Class <DSTTYPE> aDstClass)
+  {
+    return convertIfNecessary (Double.valueOf (aSrcValue), aDstClass);
+  }
+
+  @Nullable
+  public static <DSTTYPE> DSTTYPE convert (@Nullable final float aSrcValue, @Nonnull final Class <DSTTYPE> aDstClass)
+  {
+    return convertIfNecessary (Float.valueOf (aSrcValue), aDstClass);
+  }
+
+  @Nullable
+  public static <DSTTYPE> DSTTYPE convert (@Nullable final int aSrcValue, @Nonnull final Class <DSTTYPE> aDstClass)
+  {
+    return convertIfNecessary (Integer.valueOf (aSrcValue), aDstClass);
+  }
+
+  @Nullable
+  public static <DSTTYPE> DSTTYPE convert (@Nullable final long aSrcValue, @Nonnull final Class <DSTTYPE> aDstClass)
+  {
+    return convertIfNecessary (Long.valueOf (aSrcValue), aDstClass);
+  }
+
+  @Nullable
+  public static <DSTTYPE> DSTTYPE convert (@Nullable final short aSrcValue, @Nonnull final Class <DSTTYPE> aDstClass)
+  {
+    return convertIfNecessary (Short.valueOf (aSrcValue), aDstClass);
+  }
+
   /**
    * Convert the passed source value to the destination class, if a conversion
    * is necessary. By default the fuzzy type converter provider is used.

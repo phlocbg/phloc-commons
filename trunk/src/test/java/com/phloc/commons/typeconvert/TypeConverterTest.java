@@ -392,4 +392,40 @@ public final class TypeConverterTest extends AbstractPhlocTestCase
     assertFalse (TypeConverter.convertIfNecessary (aShorts, HashSet.class).isEmpty ());
     assertFalse (TypeConverter.convertIfNecessary (aShorts, LinkedHashSet.class).isEmpty ());
   }
+
+  @Test
+  public void testPrimitives ()
+  {
+    // boolean
+    assertEquals ("true", TypeConverter.convert (true, String.class));
+    assertEquals ("false", TypeConverter.convert (false, String.class));
+
+    // byte
+    assertEquals ("5", TypeConverter.convert ((byte) 5, String.class));
+    assertEquals ("-6", TypeConverter.convert ((byte) -6, String.class));
+
+    // byte
+    assertEquals ("a", TypeConverter.convert ('a', String.class));
+    assertEquals ("@", TypeConverter.convert ('@', String.class));
+
+    // double
+    assertEquals ("3.1", TypeConverter.convert (3.1, String.class));
+    assertEquals ("-6.9", TypeConverter.convert (-6.9, String.class));
+
+    // float
+    assertEquals ("3.1", TypeConverter.convert (3.1f, String.class));
+    assertEquals ("-6.9", TypeConverter.convert (-6.9f, String.class));
+
+    // int
+    assertEquals ("5", TypeConverter.convert (5, String.class));
+    assertEquals ("-6", TypeConverter.convert (-6, String.class));
+
+    // long
+    assertEquals ("5", TypeConverter.convert (5L, String.class));
+    assertEquals ("-6", TypeConverter.convert (-6L, String.class));
+
+    // short
+    assertEquals ("5", TypeConverter.convert ((short) 5, String.class));
+    assertEquals ("-6", TypeConverter.convert ((short) -6, String.class));
+  }
 }
