@@ -69,7 +69,7 @@ public enum EXMLIncorrectCharacterHandling
     @Override
     public void notifyOnInvalidXMLCharacter (@Nonnull @Nonempty final String s)
     {
-      s_aLogger.warn ("XML content contains invalid character data: '" + s + "'");
+      s_aLogger.warn ("XML content contains invalid character data (no replacement): '" + s + "'");
     }
   },
 
@@ -94,7 +94,7 @@ public enum EXMLIncorrectCharacterHandling
     @Override
     public void notifyOnInvalidXMLCharacter (@Nonnull @Nonempty final String s)
     {
-      s_aLogger.warn ("XML content contains invalid character data: '" + s + "'");
+      s_aLogger.warn ("XML content contains invalid character data (will replace): '" + s + "'");
     }
   };
 

@@ -192,6 +192,10 @@ public final class XMLHelperTest extends AbstractPhlocTestCase
     assertArrayEquals (new char [0], XMLHelper.getMaskedXMLText (EXMLVersion.XML_11,
                                                                  EXMLIncorrectCharacterHandling.DO_NOT_WRITE_NO_LOG,
                                                                  "\u0001"));
+    assertArrayEquals ("abc".toCharArray (),
+                       XMLHelper.getMaskedXMLText (EXMLVersion.XML_10,
+                                                   EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING,
+                                                   "ab\u0001c"));
 
     // Throw exception
     try
