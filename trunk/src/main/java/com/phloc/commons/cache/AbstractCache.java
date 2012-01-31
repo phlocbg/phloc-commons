@@ -19,6 +19,7 @@ package com.phloc.commons.cache;
 
 import java.util.Map;
 import java.util.WeakHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -40,6 +41,10 @@ import com.phloc.commons.string.ToStringGenerator;
 @NotThreadSafe
 public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache <KEYTYPE, VALUETYPE>
 {
+  public static final boolean DEFAULT_JMX_ENABLED = true;
+
+  private static final AtomicBoolean s_aJMXEnabled = new AtomicBoolean (DEFAULT_JMX_ENABLED);
+
   private final IStatisticsHandlerCache m_aCacheAccessStats;
   private final IStatisticsHandlerCounter m_aCacheRemoveStats;
   private final IStatisticsHandlerCounter m_aCacheClearStats;
@@ -56,7 +61,18 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
     m_aCacheRemoveStats = StatisticsManager.getCounterHandler ("cache:" + sCacheName + "$remove");
     m_aCacheClearStats = StatisticsManager.getCounterHandler ("cache:" + sCacheName + "$clear");
     m_sCacheName = sCacheName;
-    JMXUtils.exposeMBeanWithAutoName (new SimpleCache (this), sCacheName);
+    if (isJMXEnabled ())
+      JMXUtils.exposeMBeanWithAutoName (new SimpleCache (this), sCacheName);
+  }
+
+  public static boolean isJMXEnabled ()
+  {
+    return s_aJMXEnabled.get ();
+  }
+
+  public static void setJMXEnabled (final boolean bEnabled)
+  {
+    s_aJMXEnabled.set (bEnabled);
   }
 
   @Nonnull
