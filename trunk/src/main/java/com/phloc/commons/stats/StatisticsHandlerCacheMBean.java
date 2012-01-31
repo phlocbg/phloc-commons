@@ -17,10 +17,18 @@
  */
 package com.phloc.commons.stats;
 
+import javax.annotation.Nonnegative;
 
-public interface IStatisticsHandlerCache extends StatisticsHandlerCacheMBean
+/**
+ * MBean interface for {@link IStatisticsHandlerCache}
+ * 
+ * @author philip
+ */
+public interface StatisticsHandlerCacheMBean extends IStatisticsHandler
 {
-  void cacheHit ();
+  @Nonnegative
+  int getHits ();
 
-  void cacheMiss ();
+  @Nonnegative
+  int getMisses ();
 }

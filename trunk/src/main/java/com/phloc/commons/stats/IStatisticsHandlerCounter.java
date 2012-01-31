@@ -17,7 +17,7 @@
  */
 package com.phloc.commons.stats;
 
-public interface IStatisticsHandlerCounter extends IStatisticsHandler
+public interface IStatisticsHandlerCounter extends StatisticsHandlerCounterMBean
 {
   void increment ();
 

@@ -29,6 +29,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.jmx.JMXUtils;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.stats.IStatisticsHandlerCache;
 import com.phloc.commons.stats.IStatisticsHandlerCounter;
@@ -55,6 +56,7 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
     m_aCacheRemoveStats = StatisticsManager.getCounterHandler ("cache:" + sCacheName + "$remove");
     m_aCacheClearStats = StatisticsManager.getCounterHandler ("cache:" + sCacheName + "$clear");
     m_sCacheName = sCacheName;
+    JMXUtils.exposeMBeanWithAutoName (new SimpleCache (this), sCacheName);
   }
 
   @Nonnull

@@ -20,8 +20,6 @@ package com.phloc.commons.cache;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.phloc.commons.IHasSize;
-import com.phloc.commons.name.IHasName;
 import com.phloc.commons.state.EChange;
 
 /**
@@ -33,7 +31,7 @@ import com.phloc.commons.state.EChange;
  * @param <VALUETYPE>
  *        Cache value type.
  */
-public interface ISimpleCache <KEYTYPE, VALUETYPE> extends IHasName, IHasSize
+public interface ISimpleCache <KEYTYPE, VALUETYPE> extends SimpleCacheMBean
 {
   /**
    * Get the cached value associated with the passed key.
@@ -55,12 +53,4 @@ public interface ISimpleCache <KEYTYPE, VALUETYPE> extends IHasName, IHasSize
    */
   @Nonnull
   EChange removeFromCache (@Nullable KEYTYPE aKey);
-
-  /**
-   * Remove all cached elements.
-   * 
-   * @return {@link EChange}.
-   */
-  @Nonnull
-  EChange clearCache ();
 }
