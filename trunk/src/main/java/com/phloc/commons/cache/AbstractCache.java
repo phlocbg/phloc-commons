@@ -41,7 +41,7 @@ import com.phloc.commons.string.ToStringGenerator;
 @NotThreadSafe
 public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache <KEYTYPE, VALUETYPE>
 {
-  public static final boolean DEFAULT_JMX_ENABLED = true;
+  public static final boolean DEFAULT_JMX_ENABLED = false;
 
   private static final AtomicBoolean s_aJMXEnabled = new AtomicBoolean (DEFAULT_JMX_ENABLED);
 
