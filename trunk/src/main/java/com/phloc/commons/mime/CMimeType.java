@@ -119,6 +119,9 @@ public final class CMimeType
   /** HTML document. */
   public static final IMimeType TEXT_HTML = EMimeContentType.TEXT.buildMimeType ("html");
 
+  /** HTML5 sandboxed document. */
+  public static final IMimeType TEXT_HTML_SANDBOXED = EMimeContentType.TEXT.buildMimeType ("html-sandboxed");
+
   /** JavaScript document. */
   public static final IMimeType TEXT_JAVASCRIPT = EMimeContentType.TEXT.buildMimeType ("javascript");
 
