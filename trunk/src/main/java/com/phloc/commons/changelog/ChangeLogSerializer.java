@@ -131,74 +131,89 @@ public final class ChangeLogSerializer
                                          eRoot.getAttribute (ATTR_COMPONENT));
 
     // Add all entries
-    for (final IMicroElement eEntry : eRoot.getChildElements (CChangeLog.CHANGELOG_NAMESPACE_10, ELEMENT_ENTRY))
+    for (final IMicroElement eElement : eRoot.getChildElements ())
     {
-      final String sDate = eEntry.getAttribute (ATTR_DATE);
-      final String sAction = eEntry.getAttribute (ATTR_ACTION);
-      final String sCategory = eEntry.getAttribute (ATTR_CATEGORY);
-      final String sIncompatible = eEntry.getAttribute (ATTR_INCOMPATIBLE);
+      if (!CChangeLog.CHANGELOG_NAMESPACE_10.equals (eElement.getNamespaceURI ()))
+      {
+        aErrorCallback.run ("Element '" +
+                            eElement.getTagName () +
+                            "' has the wrong namespace URI '" +
+                            eElement.getNamespaceURI () +
+                            "'");
+        continue;
+      }
 
-      Date aDate = null;
-      try
+      final String sTagName = eElement.getTagName ();
+      if (ELEMENT_ENTRY.equals (sTagName))
       {
-        aDate = aDF.parse (sDate);
-      }
-      catch (final ParseException ex)
-      {
-        aErrorCallback.run ("Failed to parse entry date '" + sDate + "'");
-        continue;
-      }
-      final EChangeLogAction eAction = EChangeLogAction.getFromIDOrNull (sAction);
-      if (eAction == null)
-      {
-        aErrorCallback.run ("Failed to parse change log action '" + sAction + "'");
-        continue;
-      }
-      final EChangeLogCategory eCategory = EChangeLogCategory.getFromIDOrNull (sCategory);
-      if (eCategory == null)
-      {
-        aErrorCallback.run ("Failed to parse change log category '" + sCategory + "'");
-        continue;
-      }
-      final boolean bIsIncompatible = StringHelper.hasText (sIncompatible) ? StringHelper.parseBool (sIncompatible)
-                                                                          : false;
+        final String sDate = eElement.getAttribute (ATTR_DATE);
+        final String sAction = eElement.getAttribute (ATTR_ACTION);
+        final String sCategory = eElement.getAttribute (ATTR_CATEGORY);
+        final String sIncompatible = eElement.getAttribute (ATTR_INCOMPATIBLE);
 
-      final ChangeLogEntry aEntry = new ChangeLogEntry (ret, aDate, eAction, eCategory, bIsIncompatible);
-      ret.addEntry (aEntry);
+        Date aDate = null;
+        try
+        {
+          aDate = aDF.parse (sDate);
+        }
+        catch (final ParseException ex)
+        {
+          aErrorCallback.run ("Failed to parse entry date '" + sDate + "'");
+          continue;
+        }
+        final EChangeLogAction eAction = EChangeLogAction.getFromIDOrNull (sAction);
+        if (eAction == null)
+        {
+          aErrorCallback.run ("Failed to parse change log action '" + sAction + "'");
+          continue;
+        }
+        final EChangeLogCategory eCategory = EChangeLogCategory.getFromIDOrNull (sCategory);
+        if (eCategory == null)
+        {
+          aErrorCallback.run ("Failed to parse change log category '" + sCategory + "'");
+          continue;
+        }
+        final boolean bIsIncompatible = StringHelper.hasText (sIncompatible) ? StringHelper.parseBool (sIncompatible)
+                                                                            : false;
 
-      final IMicroElement eChange = eEntry.getFirstChildElement (CChangeLog.CHANGELOG_NAMESPACE_10, ELEMENT_CHANGE);
-      if (eChange == null)
-      {
-        aErrorCallback.run ("No change element present!");
-        continue;
-      }
-      final MultiLingualText aMLT = MicroTypeConverter.convertToNative (eChange, MultiLingualText.class);
-      if (aMLT == null)
-      {
-        aErrorCallback.run ("Failed to read multi lingual text in change element!");
-        continue;
-      }
-      aEntry.setText (aMLT);
-      for (final IMicroElement eIssue : eEntry.getChildElements (CChangeLog.CHANGELOG_NAMESPACE_10, ELEMENT_ISSUE))
-        aEntry.addIssue (eIssue.getTextContent ());
-    }
+        final ChangeLogEntry aEntry = new ChangeLogEntry (ret, aDate, eAction, eCategory, bIsIncompatible);
+        ret.addEntry (aEntry);
 
-    // Add all releases
-    for (final IMicroElement eRelease : eRoot.getChildElements (CChangeLog.CHANGELOG_NAMESPACE_10, ELEMENT_RELEASE))
-    {
-      final String sDate = eRelease.getAttribute (ATTR_DATE);
-      final String sVersion = eRelease.getAttribute (ATTR_VERSION);
-      Date aDate = null;
-      try
-      {
-        aDate = aDF.parse (sDate);
+        final IMicroElement eChange = eElement.getFirstChildElement (CChangeLog.CHANGELOG_NAMESPACE_10, ELEMENT_CHANGE);
+        if (eChange == null)
+        {
+          aErrorCallback.run ("No change element present!");
+          continue;
+        }
+        final MultiLingualText aMLT = MicroTypeConverter.convertToNative (eChange, MultiLingualText.class);
+        if (aMLT == null)
+        {
+          aErrorCallback.run ("Failed to read multi lingual text in change element!");
+          continue;
+        }
+        aEntry.setText (aMLT);
+        for (final IMicroElement eIssue : eElement.getChildElements (CChangeLog.CHANGELOG_NAMESPACE_10, ELEMENT_ISSUE))
+          aEntry.addIssue (eIssue.getTextContent ());
       }
-      catch (final ParseException ex)
-      {
-        s_aLogger.warn ("Failed to parse release date '" + sDate + "'");
-        continue;
-      }
-      ret.addRelease (new ChangeLogRelease (aDate, new Version (sVersion)));
+      else
+        if (ELEMENT_RELEASE.equals (sTagName))
+        {
+          final String sDate = eElement.getAttribute (ATTR_DATE);
+          final String sVersion = eElement.getAttribute (ATTR_VERSION);
+          Date aDate = null;
+          try
+          {
+            aDate = aDF.parse (sDate);
+          }
+          catch (final ParseException ex)
+          {
+            s_aLogger.warn ("Failed to parse release date '" + sDate + "'");
+            continue;
+          }
+          ret.addRelease (new ChangeLogRelease (aDate, new Version (sVersion)));
+        }
+        else
+          aErrorCallback.run ("Changelog contains unsupported element '" + sTagName + "!");
     }
     return ret;
   }
