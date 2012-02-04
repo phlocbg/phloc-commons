@@ -66,6 +66,19 @@ public enum ESortOrder implements ISortOrderIndicator
     return this == DESCENDING;
   }
 
+  /**
+   * Get the alternate sort order. If the current sort order is ascending, the
+   * result will be descending and if this is descending, the return will be
+   * ascending.
+   * 
+   * @return Never <code>null</code>.
+   */
+  @Nonnull
+  public ESortOrder getAlternate ()
+  {
+    return isAscending () ? DESCENDING : ASCENDING;
+  }
+
   @Nonnull
   public static ESortOrder getFromValueOrDefault (final int nValue)
   {
