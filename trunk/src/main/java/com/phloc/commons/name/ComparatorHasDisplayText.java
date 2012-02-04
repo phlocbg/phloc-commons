@@ -74,7 +74,7 @@ public final class ComparatorHasDisplayText <DATATYPE extends IHasDisplayText> e
   }
 
   @Override
-  protected String internalGetAsString (final DATATYPE aObject)
+  protected String asString (final DATATYPE aObject)
   {
     return aObject.getDisplayText (m_aContentLocale);
   }

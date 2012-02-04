@@ -110,12 +110,12 @@ public abstract class AbstractCollationComparator <DATATYPE> extends AbstractCom
    * @return The string representation of the object. May be <code>null</code>.
    */
   @Nullable
-  protected abstract String internalGetAsString (@Nonnull DATATYPE aObject);
+  protected abstract String asString (@Nonnull DATATYPE aObject);
 
   @Nullable
   private String _nullSafeGetAsString (@Nullable final DATATYPE aObject)
   {
-    return aObject == null ? null : internalGetAsString (aObject);
+    return aObject == null ? null : asString (aObject);
   }
 
   @Override

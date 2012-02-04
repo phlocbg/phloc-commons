@@ -61,7 +61,7 @@ public class ComparatorString extends AbstractCollationComparator <String>
   }
 
   @Override
-  protected String internalGetAsString (@Nullable final String sValue)
+  protected String asString (@Nullable final String sValue)
   {
     return sValue;
   }
