@@ -1101,7 +1101,7 @@ public final class ArrayHelper
    * @return <code>null</code> if both array parameters are <code>null</code> -
    *         a non-<code>null</code> array with all elements in the correct
    *         order otherwise.
-   * @deprecated use {@link #getConcatenated(Object[], Object...)} directly
+   * @deprecated use {@link #getConcatenated(Object[], Object[])} directly
    */
   @Deprecated
   @Nullable

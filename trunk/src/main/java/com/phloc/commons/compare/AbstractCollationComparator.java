@@ -109,21 +109,20 @@ public abstract class AbstractCollationComparator <DATATYPE> extends AbstractCom
    *        on the elements to be sorted.
    * @return The string representation of the object. May be <code>null</code>.
    */
-  // TODO rename to "getAsString" in next non-minor release
   @Nullable
-  protected abstract String asString (@Nonnull DATATYPE aObject);
+  protected abstract String internalGetAsString (@Nonnull DATATYPE aObject);
 
   @Nullable
-  private String _getAsSafeString (@Nullable final DATATYPE aObject)
+  private String _nullSafeGetAsString (@Nullable final DATATYPE aObject)
   {
-    return aObject == null ? null : asString (aObject);
+    return aObject == null ? null : internalGetAsString (aObject);
   }
 
   @Override
   protected final int mainCompare (@Nullable final DATATYPE aElement1, @Nullable final DATATYPE aElement2)
   {
-    final String s1 = _getAsSafeString (aElement1);
-    final String s2 = _getAsSafeString (aElement2);
+    final String s1 = _nullSafeGetAsString (aElement1);
+    final String s2 = _nullSafeGetAsString (aElement2);
     return CompareUtils.nullSafeCompare (s1, s2, m_aCollator);
   }
 

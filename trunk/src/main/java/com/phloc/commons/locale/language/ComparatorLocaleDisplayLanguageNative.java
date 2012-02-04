@@ -38,7 +38,7 @@ public final class ComparatorLocaleDisplayLanguageNative extends AbstractCollati
   }
 
   @Override
-  protected String asString (@Nonnull final Locale aLocale)
+  protected String internalGetAsString (@Nonnull final Locale aLocale)
   {
     return aLocale.getDisplayLanguage (aLocale);
   }

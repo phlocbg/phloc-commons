@@ -54,7 +54,7 @@ public class ComparatorAsString extends AbstractCollationComparator <Object>
   }
 
   @Override
-  protected String asString (@Nullable final Object aValue)
+  protected String internalGetAsString (@Nullable final Object aValue)
   {
     return StringHelper.toString (aValue, "");
   }
