@@ -42,7 +42,7 @@ public final class ComparatorLocale extends AbstractCollationComparator <Locale>
   }
 
   @Override
-  protected String internalGetAsString (@Nonnull final Locale aLocale)
+  protected String asString (@Nonnull final Locale aLocale)
   {
     return aLocale.toString ();
   }

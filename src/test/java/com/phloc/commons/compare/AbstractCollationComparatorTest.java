@@ -54,7 +54,7 @@ public final class AbstractCollationComparatorTest
     }
 
     @Override
-    protected String internalGetAsString (final String sObject)
+    protected String asString (final String sObject)
     {
       return sObject;
     }

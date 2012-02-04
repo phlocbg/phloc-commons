@@ -38,7 +38,7 @@ public final class ComparatorLocaleDisplayCountry extends AbstractCollationCompa
   }
 
   @Override
-  protected String internalGetAsString (@Nonnull final Locale aLocale)
+  protected String asString (@Nonnull final Locale aLocale)
   {
     return aLocale.getDisplayCountry ();
   }
