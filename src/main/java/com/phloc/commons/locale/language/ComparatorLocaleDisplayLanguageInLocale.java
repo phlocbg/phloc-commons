@@ -42,7 +42,7 @@ public final class ComparatorLocaleDisplayLanguageInLocale extends AbstractColla
   }
 
   @Override
-  protected String asString (@Nonnull final Locale aLocale)
+  protected String internalGetAsString (@Nonnull final Locale aLocale)
   {
     return aLocale.getDisplayLanguage (m_aContentLocale);
   }

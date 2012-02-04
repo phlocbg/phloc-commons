@@ -40,7 +40,7 @@ public final class ComparatorFileAbsolutePath extends AbstractCollationComparato
   }
 
   @Override
-  protected String asString (@Nonnull final File aObject)
+  protected String internalGetAsString (@Nonnull final File aObject)
   {
     return aObject.getAbsolutePath ();
   }

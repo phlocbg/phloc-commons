@@ -46,7 +46,7 @@ public final class ComparatorHasName <DATATYPE extends IHasName> extends Abstrac
   }
 
   @Override
-  protected String asString (final DATATYPE aObject)
+  protected String internalGetAsString (final DATATYPE aObject)
   {
     return aObject.getName ();
   }

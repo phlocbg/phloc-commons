@@ -37,7 +37,7 @@ public final class ComparatorLocaleDisplayNameNative extends AbstractCollationCo
   }
 
   @Override
-  protected String asString (@Nonnull final Locale aLocale)
+  protected String internalGetAsString (@Nonnull final Locale aLocale)
   {
     return LocaleUtils.getLocaleNativeDisplayName (aLocale);
   }

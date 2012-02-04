@@ -38,7 +38,7 @@ public final class ComparatorLocaleLanguage extends AbstractCollationComparator 
   }
 
   @Override
-  protected String asString (@Nonnull final Locale aLocale)
+  protected String internalGetAsString (@Nonnull final Locale aLocale)
   {
     return aLocale.getLanguage ();
   }
