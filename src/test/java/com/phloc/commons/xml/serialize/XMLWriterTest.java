@@ -300,6 +300,24 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
                   "<xy:child1 xmlns:xy=\"ns2url\" />" +
                   "<xy:child2 xmlns:xy=\"ns2url\" />" +
                   "</a:root>", s);
+
+    aSettings.setUseDoubleQuotesForAttributes (false);
+    s = XMLWriter.getNodeAsString (aDoc, aSettings);
+    assertEquals ("<?xml version='1.0' encoding='ISO-8859-1' standalone='yes'?>" +
+                  CGlobal.LINE_SEPARATOR +
+                  "<a:root xmlns:a='ns1url'>" +
+                  "<xy:child1 xmlns:xy='ns2url' />" +
+                  "<xy:child2 xmlns:xy='ns2url' />" +
+                  "</a:root>", s);
+
+    aSettings.setSpaceOnSelfClosedElement (false);
+    s = XMLWriter.getNodeAsString (aDoc, aSettings);
+    assertEquals ("<?xml version='1.0' encoding='ISO-8859-1' standalone='yes'?>" +
+                  CGlobal.LINE_SEPARATOR +
+                  "<a:root xmlns:a='ns1url'>" +
+                  "<xy:child1 xmlns:xy='ns2url'/>" +
+                  "<xy:child2 xmlns:xy='ns2url'/>" +
+                  "</a:root>", s);
   }
 
   @Test

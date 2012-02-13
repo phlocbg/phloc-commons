@@ -281,7 +281,7 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
   {
     final Writer aWriter = new BufferedWriter (new OutputStreamWriter (aOS,
                                                                        CharsetManager.charsetFromName (m_aSettings.getCharset ())));
-    final IXMLIterationHandler aXMLWriter = new XMLEmitterPhloc (aWriter, m_aSettings.getIncorrectCharacterHandling ());
+    final IXMLIterationHandler aXMLWriter = new XMLEmitterPhloc (aWriter, m_aSettings);
     // No previous and no next sibling
     _writeNode (aXMLWriter, null, aNode, null);
     // Flush is important for Writer!

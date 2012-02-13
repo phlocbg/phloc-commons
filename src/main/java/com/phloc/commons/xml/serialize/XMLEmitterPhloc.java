@@ -49,18 +49,19 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   private static final String CRLF = CGlobal.LINE_SEPARATOR;
 
   private final Writer m_aWriter;
-  private final EXMLIncorrectCharacterHandling m_eIncorrectCharHandling;
+  private final IXMLWriterSettings m_aSettings;
   private EXMLVersion m_eXMLVersion = EXMLVersion.DEFAULT;
+  private final char m_cTextBoundary;
 
-  public XMLEmitterPhloc (@Nonnull @WillNotClose final Writer aWriter,
-                          @Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharHandling)
+  public XMLEmitterPhloc (@Nonnull @WillNotClose final Writer aWriter, @Nonnull final IXMLWriterSettings aSettings)
   {
     if (aWriter == null)
       throw new NullPointerException ("writer");
-    if (eIncorrectCharHandling == null)
-      throw new NullPointerException ("incorrectCharHandling");
+    if (aSettings == null)
+      throw new NullPointerException ("settings");
     m_aWriter = aWriter;
-    m_eIncorrectCharHandling = eIncorrectCharHandling;
+    m_aSettings = aSettings;
+    m_cTextBoundary = aSettings.isUseDoubleQuotesForAttributes () ? '"' : '\'';
   }
 
   @Nonnull
@@ -96,13 +97,19 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   {
     try
     {
-      XMLHelper.maskXMLTextTo (m_eXMLVersion, m_eIncorrectCharHandling, sValue, m_aWriter);
+      XMLHelper.maskXMLTextTo (m_eXMLVersion, m_aSettings.getIncorrectCharacterHandling (), sValue, m_aWriter);
       return this;
     }
     catch (final IOException ex)
     {
       throw new IllegalStateException (ex);
     }
+  }
+
+  @Nonnull
+  private XMLEmitterPhloc _appendAttr (@Nullable final String sValue)
+  {
+    return _append (m_cTextBoundary)._appendMasked (sValue)._append (m_cTextBoundary);
   }
 
   @Override
@@ -112,11 +119,11 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   {
     if (eVersion != null)
       m_eXMLVersion = eVersion;
-    _append ("<?xml version=\"")._appendMasked (m_eXMLVersion.getVersion ())._append ('"');
+    _append ("<?xml version=")._appendAttr (m_eXMLVersion.getVersion ());
     if (sEncoding != null)
-      _append (" encoding=\"")._appendMasked (sEncoding)._append ('"');
+      _append (" encoding=")._appendAttr (sEncoding);
     if (bStandalone)
-      _append (" standalone=\"yes\"");
+      _append (" standalone=")._appendAttr ("yes");
     _append ("?>")._append (CRLF);
   }
 
@@ -205,7 +212,7 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
       throw new NullPointerException ("qualifiedElementName");
 
     final String sDocType = getDocTypeHTMLRepresentation (m_eXMLVersion,
-                                                          m_eIncorrectCharHandling,
+                                                          m_aSettings.getIncorrectCharacterHandling (),
                                                           sQualifiedElementName,
                                                           sPublicID,
                                                           sSystemID);
@@ -288,14 +295,14 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
       // Emit all attributes
       for (final Map.Entry <String, String> aEntry : aAttrs.entrySet ())
       {
-        _append (' ')._append (aEntry.getKey ())._append ("=\"")._appendMasked (aEntry.getValue ())._append ('"');
+        _append (' ')._append (aEntry.getKey ())._append ('=')._appendAttr (aEntry.getValue ());
       }
     }
 
     // Either leave tag open or close it
     // Note: according to HTML compatibility guideline a space should be added
     // before the self-closing
-    _append (bHasChildren ? ">" : " />");
+    _append (bHasChildren ? ">" : m_aSettings.isSpaceOnSelfClosedElement () ? " />" : "/>");
   }
 
   @Override
@@ -311,8 +318,8 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   public String toString ()
   {
     return new ToStringGenerator (this).append ("writer", m_aWriter)
-                                       .append ("XMLversion", m_eXMLVersion)
-                                       .append ("incorrectCharHandling", m_eIncorrectCharHandling)
+                                       .append ("settings", m_aSettings)
+                                       .append ("version", m_eXMLVersion)
                                        .toString ();
   }
 }

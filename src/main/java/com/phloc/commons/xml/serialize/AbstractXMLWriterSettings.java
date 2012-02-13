@@ -40,6 +40,8 @@ import com.phloc.commons.xml.EXMLVersion;
 public abstract class AbstractXMLWriterSettings <T extends AbstractXMLWriterSettings <T>> implements IXMLWriterSettings
 {
   public static final String DEFAULT_XML_CHARSET = CCharset.CHARSET_UTF_8;
+  public static final boolean DEFAULT_USE_DOUBLE_QUOTES_FOR_ATTRIBUTES = true;
+  public static final boolean DEFAULT_SPACE_ON_SELF_CLOSED_ELEMENT = true;
 
   private EXMLSerializeFormat m_eFormat = EXMLSerializeFormat.XML;
   private EXMLVersion m_eXMLVersion = EXMLVersion.XML_10;
@@ -49,6 +51,8 @@ public abstract class AbstractXMLWriterSettings <T extends AbstractXMLWriterSett
   private EXMLIncorrectCharacterHandling m_eIncorrectCharacterHandling = EXMLIncorrectCharacterHandling.WRITE_TO_FILE_NO_LOG;
   private String m_sCharset = DEFAULT_XML_CHARSET;
   private NamespaceContext m_aNamespaceContext;
+  private boolean m_bUseDoubleQuotesForAttributes = DEFAULT_USE_DOUBLE_QUOTES_FOR_ATTRIBUTES;
+  private boolean m_bSpaceOnSelfClosedElement = DEFAULT_SPACE_ON_SELF_CLOSED_ELEMENT;
 
   /**
    * Creates a default settings object with the following settings:
@@ -269,6 +273,32 @@ public abstract class AbstractXMLWriterSettings <T extends AbstractXMLWriterSett
     return m_aNamespaceContext;
   }
 
+  @Nonnull
+  public final T setUseDoubleQuotesForAttributes (final boolean bUseDoubleQuotesForAttributes)
+  {
+    m_bUseDoubleQuotesForAttributes = bUseDoubleQuotesForAttributes;
+    return _thisAsT ();
+  }
+
+  @Nullable
+  public final boolean isUseDoubleQuotesForAttributes ()
+  {
+    return m_bUseDoubleQuotesForAttributes;
+  }
+
+  @Nonnull
+  public final T setSpaceOnSelfClosedElement (final boolean bSpaceOnSelfClosedElement)
+  {
+    m_bSpaceOnSelfClosedElement = bSpaceOnSelfClosedElement;
+    return _thisAsT ();
+  }
+
+  @Nullable
+  public final boolean isSpaceOnSelfClosedElement ()
+  {
+    return m_bSpaceOnSelfClosedElement;
+  }
+
   @Override
   public boolean equals (final Object o)
   {
@@ -284,7 +314,9 @@ public abstract class AbstractXMLWriterSettings <T extends AbstractXMLWriterSett
            m_eSerializeComments.equals (rhs.m_eSerializeComments) &&
            m_eIndent.equals (rhs.m_eIndent) &&
            m_eIncorrectCharacterHandling.equals (rhs.m_eIncorrectCharacterHandling) &&
-           m_sCharset.equals (rhs.m_sCharset);
+           m_sCharset.equals (rhs.m_sCharset) &&
+           m_bUseDoubleQuotesForAttributes == rhs.m_bUseDoubleQuotesForAttributes &&
+           m_bSpaceOnSelfClosedElement == rhs.m_bSpaceOnSelfClosedElement;
   }
 
   @Override
@@ -298,6 +330,8 @@ public abstract class AbstractXMLWriterSettings <T extends AbstractXMLWriterSett
                                        .append (m_eIndent)
                                        .append (m_eIncorrectCharacterHandling)
                                        .append (m_sCharset)
+                                       .append (m_bUseDoubleQuotesForAttributes)
+                                       .append (m_bSpaceOnSelfClosedElement)
                                        .getHashCode ();
   }
 
@@ -312,6 +346,8 @@ public abstract class AbstractXMLWriterSettings <T extends AbstractXMLWriterSett
                                        .append ("incorrectCharHandling", m_eIncorrectCharacterHandling)
                                        .append ("charset", m_sCharset)
                                        .append ("namespaceContext", m_aNamespaceContext)
+                                       .append ("doubleQuotesForAttrs", m_bUseDoubleQuotesForAttributes)
+                                       .append ("spaceOnSelfClosedElement", m_bSpaceOnSelfClosedElement)
                                        .toString ();
   }
 }

@@ -80,4 +80,20 @@ public interface IXMLWriterSettings
    */
   @Nullable
   NamespaceContext getNamespaceContext ();
+
+  /**
+   * @return <code>true</code> if attribute values should be enclosed in double
+   *         quotes, <code>false</code> if single quotes should be used.
+   */
+  boolean isUseDoubleQuotesForAttributes ();
+
+  /**
+   * Determine if a self closed element (an element having no children) should
+   * be emitted with a space at the end (<code>&lt;br /&gt;</code>) or not (
+   * <code>&lt;br/&gt;</code>)
+   * 
+   * @return <code>true</code> if a space should be emitted, <code>false</code>
+   *         if no space should be emitted.
+   */
+  boolean isSpaceOnSelfClosedElement ();
 }
