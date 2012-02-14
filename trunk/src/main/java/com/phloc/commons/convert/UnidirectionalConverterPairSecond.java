@@ -32,7 +32,7 @@ public final class UnidirectionalConverterPairSecond <DATA1TYPE, DATA2TYPE> impl
                                                                             IUnidirectionalConverter <IReadonlyPair <DATA1TYPE, DATA2TYPE>, DATA2TYPE>
 {
   @Nullable
-  public DATA2TYPE convert (@Nonnull final IReadonlyPair <DATA1TYPE, DATA2TYPE> aPair)
+  public DATA2TYPE convert (@Nullable final IReadonlyPair <DATA1TYPE, DATA2TYPE> aPair)
   {
     return aPair == null ? null : aPair.getSecond ();
   }
