@@ -18,9 +18,11 @@
 package com.phloc.commons.concurrent;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.phloc.commons.compare.AbstractNumericComparator;
+import com.phloc.commons.CGlobal;
+import com.phloc.commons.compare.AbstractIntegerComparator;
 import com.phloc.commons.compare.ESortOrder;
 
 /**
@@ -29,7 +31,7 @@ import com.phloc.commons.compare.ESortOrder;
  * @author philip
  */
 @NotThreadSafe
-public final class ComparatorThreadID extends AbstractNumericComparator <Thread>
+public final class ComparatorThreadID extends AbstractIntegerComparator <Thread>
 {
   public ComparatorThreadID ()
   {
@@ -42,8 +44,8 @@ public final class ComparatorThreadID extends AbstractNumericComparator <Thread>
   }
 
   @Override
-  protected double asDouble (@Nonnull final Thread aThread)
+  protected long asLong (@Nullable final Thread aThread)
   {
-    return aThread.getId ();
+    return aThread == null ? CGlobal.ILLEGAL_ULONG : aThread.getId ();
   }
 }
