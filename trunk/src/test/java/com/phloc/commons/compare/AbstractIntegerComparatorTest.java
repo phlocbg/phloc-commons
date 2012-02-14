@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.compare;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -29,16 +30,15 @@ import org.junit.Test;
 
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.collections.ContainerHelper;
-import com.phloc.commons.mock.PhlocAssert;
 
 /**
- * Test class for {@link AbstractNumericComparator}
+ * Test class for {@link AbstractIntegerComparator}
  * 
  * @author philip
  */
-public final class AbstractNumericComparatorTest
+public final class AbstractIntegerComparatorTest
 {
-  private static final class ComparatorMockNumeric extends AbstractNumericComparator <Double>
+  private static final class ComparatorMockNumeric extends AbstractIntegerComparator <Integer>
   {
     ComparatorMockNumeric ()
     {}
@@ -49,58 +49,58 @@ public final class AbstractNumericComparatorTest
     }
 
     @Override
-    protected double asDouble (@Nullable final Double aValue)
+    protected long asLong (@Nullable final Integer aInt)
     {
-      return aValue == null ? CGlobal.ILLEGAL_DOUBLE : aValue.doubleValue ();
+      return aInt == null ? CGlobal.ILLEGAL_ULONG : aInt.longValue ();
     }
   }
 
   @Test
   public void testAll ()
   {
-    final Double [] x = new Double [] { Double.valueOf (3),
-                                       Double.valueOf (3),
-                                       Double.valueOf (-56),
-                                       Double.valueOf (1) };
+    final Integer [] x = new Integer [] { Integer.valueOf (3),
+                                         Integer.valueOf (3),
+                                         Integer.valueOf (-56),
+                                         Integer.valueOf (1) };
 
     // default: sort ascending
-    List <Double> l = ContainerHelper.getSorted (x, new ComparatorMockNumeric ());
+    List <Integer> l = ContainerHelper.getSorted (x, new ComparatorMockNumeric ());
     assertNotNull (l);
-    PhlocAssert.assertEquals (-56, l.get (0).doubleValue ());
-    PhlocAssert.assertEquals (1, l.get (1).doubleValue ());
-    PhlocAssert.assertEquals (3, l.get (2).doubleValue ());
-    PhlocAssert.assertEquals (3, l.get (3).doubleValue ());
+    assertEquals (-56, l.get (0).intValue ());
+    assertEquals (1, l.get (1).intValue ());
+    assertEquals (3, l.get (2).intValue ());
+    assertEquals (3, l.get (3).intValue ());
 
     // Explicitly sort ascending
     l = ContainerHelper.getSorted (x, new ComparatorMockNumeric (ESortOrder.ASCENDING));
     assertNotNull (l);
-    PhlocAssert.assertEquals (-56, l.get (0).doubleValue ());
-    PhlocAssert.assertEquals (1, l.get (1).doubleValue ());
-    PhlocAssert.assertEquals (3, l.get (2).doubleValue ());
-    PhlocAssert.assertEquals (3, l.get (3).doubleValue ());
+    assertEquals (-56, l.get (0).intValue ());
+    assertEquals (1, l.get (1).intValue ());
+    assertEquals (3, l.get (2).intValue ());
+    assertEquals (3, l.get (3).intValue ());
 
     // Explicitly sort descending
     l = ContainerHelper.getSorted (x, new ComparatorMockNumeric (ESortOrder.DESCENDING));
     assertNotNull (l);
-    PhlocAssert.assertEquals (3, l.get (0).doubleValue ());
-    PhlocAssert.assertEquals (3, l.get (1).doubleValue ());
-    PhlocAssert.assertEquals (1, l.get (2).doubleValue ());
-    PhlocAssert.assertEquals (-56, l.get (3).doubleValue ());
+    assertEquals (3, l.get (0).intValue ());
+    assertEquals (3, l.get (1).intValue ());
+    assertEquals (1, l.get (2).intValue ());
+    assertEquals (-56, l.get (3).intValue ());
 
     // change dynamically
     final ComparatorMockNumeric c = new ComparatorMockNumeric (ESortOrder.ASCENDING);
     l = ContainerHelper.getSorted (x, c);
-    PhlocAssert.assertEquals (-56, l.get (0).doubleValue ());
-    PhlocAssert.assertEquals (1, l.get (1).doubleValue ());
-    PhlocAssert.assertEquals (3, l.get (2).doubleValue ());
-    PhlocAssert.assertEquals (3, l.get (3).doubleValue ());
+    assertEquals (-56, l.get (0).intValue ());
+    assertEquals (1, l.get (1).intValue ());
+    assertEquals (3, l.get (2).intValue ());
+    assertEquals (3, l.get (3).intValue ());
 
     // change to descending
     l = ContainerHelper.getSorted (x, c.setSortOrder (ESortOrder.DESCENDING));
-    PhlocAssert.assertEquals (3, l.get (0).doubleValue ());
-    PhlocAssert.assertEquals (3, l.get (1).doubleValue ());
-    PhlocAssert.assertEquals (1, l.get (2).doubleValue ());
-    PhlocAssert.assertEquals (-56, l.get (3).doubleValue ());
+    assertEquals (3, l.get (0).intValue ());
+    assertEquals (3, l.get (1).intValue ());
+    assertEquals (1, l.get (2).intValue ());
+    assertEquals (-56, l.get (3).intValue ());
   }
 
   /**
