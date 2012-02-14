@@ -102,7 +102,7 @@ public final class TreeXMLConverter
                          new DefaultHierarchyWalkerCallback <ITEMTYPE> ()
                          {
                            @Override
-                           public void onItemBeforeChildren (@Nonnull final ITEMTYPE aItem)
+                           public void onItemBeforeChildren (@Nullable final ITEMTYPE aItem)
                            {
                              if (aItem != null)
                              {
