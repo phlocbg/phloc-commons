@@ -18,18 +18,25 @@
 package com.phloc.commons.convert;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
+/**
+ * A unidirectional converter that converts an {@link Integer} object to a
+ * {@link String}.
+ * 
+ * @author philip
+ */
 public final class UnidirectionalConverterIntegerString implements IUnidirectionalConverter <Integer, String>
 {
-
   private static final UnidirectionalConverterIntegerString s_aInstance = new UnidirectionalConverterIntegerString ();
 
   private UnidirectionalConverterIntegerString ()
   {}
 
-  public String convert (@Nonnull final Integer aInput)
+  @Nullable
+  public String convert (@Nullable final Integer aInput)
   {
-    return aInput.toString ();
+    return aInput == null ? null : aInput.toString ();
   }
 
   @Nonnull

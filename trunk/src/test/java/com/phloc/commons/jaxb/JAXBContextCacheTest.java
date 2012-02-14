@@ -27,11 +27,14 @@ import static org.junit.Assert.fail;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.namespace.QName;
 
 import org.junit.Test;
 
 import com.phloc.commons.io.resource.ClassPathResource;
+import com.phloc.commons.io.streams.NonBlockingStringWriter;
 import com.phloc.commons.mock.PhlocTestUtils;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.xml.transform.ResourceStreamSource;
@@ -63,7 +66,7 @@ public final class JAXBContextCacheTest
       JAXBContextCache.getInstance ().getFromCache ((Package) null);
       fail ();
     }
-    catch (final NullPointerException ex)
+    catch (final IllegalStateException ex)
     {}
 
     try
@@ -124,5 +127,17 @@ public final class JAXBContextCacheTest
     // And remove manually
     assertTrue (JAXBContextCache.getInstance ().removeFromCache (MockJAXBArchive.class.getPackage ()).isChanged ());
     assertFalse (JAXBContextCache.getInstance ().removeFromCache (MockJAXBArchive.class.getPackage ()).isChanged ());
+  }
+
+  @Test
+  public void testJavaLang () throws JAXBException
+  {
+    final String sMsg = "Hello world";
+    final JAXBContext aCtx = JAXBContextCache.getInstance ().getFromCache (String.class);
+    final Marshaller m = aCtx.createMarshaller ();
+    final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
+    m.marshal (new JAXBElement <String> (new QName ("element"), String.class, sMsg), aSW);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><element>" + sMsg + "</element>",
+                  aSW.toString ());
   }
 }

@@ -18,9 +18,16 @@
 package com.phloc.commons.convert;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.phloc.commons.name.IHasName;
 
+/**
+ * A unidirectional converter that extracts the name from an object implementing
+ * {@link IHasName}.
+ * 
+ * @author philip
+ */
 public final class UnidirectionalConverterHasNameString implements IUnidirectionalConverter <IHasName, String>
 {
   private static final UnidirectionalConverterHasNameString s_aInstance = new UnidirectionalConverterHasNameString ();
@@ -28,9 +35,10 @@ public final class UnidirectionalConverterHasNameString implements IUnidirection
   private UnidirectionalConverterHasNameString ()
   {}
 
-  public String convert (@Nonnull final IHasName aInput)
+  @Nullable
+  public String convert (@Nullable final IHasName aInput)
   {
-    return aInput.getName ();
+    return aInput == null ? null : aInput.getName ();
   }
 
   @Nonnull
