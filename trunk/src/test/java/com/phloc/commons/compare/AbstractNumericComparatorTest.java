@@ -24,8 +24,11 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import org.junit.Test;
 
+import com.phloc.commons.CGlobal;
 import com.phloc.commons.collections.ContainerHelper;
 
 /**
@@ -35,7 +38,7 @@ import com.phloc.commons.collections.ContainerHelper;
  */
 public final class AbstractNumericComparatorTest
 {
-  private static final class ComparatorMockNumeric extends AbstractNumericComparator <Integer>
+  private static final class ComparatorMockNumeric extends AbstractIntegerComparator <Integer>
   {
     ComparatorMockNumeric ()
     {}
@@ -46,9 +49,9 @@ public final class AbstractNumericComparatorTest
     }
 
     @Override
-    protected double asDouble (final Integer aInt)
+    protected long asLong (@Nullable final Integer aInt)
     {
-      return aInt.doubleValue ();
+      return aInt == null ? CGlobal.ILLEGAL_ULONG : aInt.longValue ();
     }
   }
 

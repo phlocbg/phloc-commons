@@ -21,22 +21,23 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
- * Abstract comparator class that supports a sort order. This comparator may
- * only be applied on non-<code>null</code> values.
+ * Abstract comparator class that supports a sort order. This comparator may be
+ * used for <code>null</code> and non-<code>null</code> values.
  * 
  * @author philip
  * @param <DATATYPE>
  */
-public abstract class AbstractComparator <DATATYPE> implements Comparator <DATATYPE>, Serializable
+public abstract class AbstractComparatorNullAware <DATATYPE> implements Comparator <DATATYPE>, Serializable
 {
   private ESortOrder m_eSortOrder;
 
   /**
    * Comparator with default sort order.
    */
-  public AbstractComparator ()
+  public AbstractComparatorNullAware ()
   {
     this (ESortOrder.DEFAULT);
   }
@@ -47,7 +48,7 @@ public abstract class AbstractComparator <DATATYPE> implements Comparator <DATAT
    * @param eSortOrder
    *        The sort order to use. May not be <code>null</code>.
    */
-  public AbstractComparator (@Nonnull final ESortOrder eSortOrder)
+  public AbstractComparatorNullAware (@Nonnull final ESortOrder eSortOrder)
   {
     if (eSortOrder == null)
       throw new NullPointerException ("sortOrder");
@@ -62,7 +63,7 @@ public abstract class AbstractComparator <DATATYPE> implements Comparator <DATAT
    * @return this
    */
   @Nonnull
-  public final AbstractComparator <DATATYPE> setSortOrder (@Nonnull final ESortOrder eSortOrder)
+  public final AbstractComparatorNullAware <DATATYPE> setSortOrder (@Nonnull final ESortOrder eSortOrder)
   {
     if (eSortOrder == null)
       throw new NullPointerException ("sortOrder");
@@ -81,15 +82,15 @@ public abstract class AbstractComparator <DATATYPE> implements Comparator <DATAT
 
   /**
    * @param aElement1
-   *        First element to compare. May not be <code>null</code>.
+   *        First element to compare. May be <code>null</code>.
    * @param aElement2
-   *        Second element to compare. May not be <code>null</code>.
+   *        Second element to compare. May be <code>null</code>.
    * @return a negative integer, zero, or a positive integer as the first
    *         argument is less than, equal to, or greater than the second.
    */
-  protected abstract int mainCompare (@Nonnull final DATATYPE aElement1, @Nonnull final DATATYPE aElement2);
+  protected abstract int mainCompare (@Nullable final DATATYPE aElement1, @Nullable final DATATYPE aElement2);
 
-  public final int compare (@Nonnull final DATATYPE aElement1, @Nonnull final DATATYPE aElement2)
+  public final int compare (@Nullable final DATATYPE aElement1, @Nullable final DATATYPE aElement2)
   {
     return (m_eSortOrder.isAscending () ? 1 : -1) * mainCompare (aElement1, aElement2);
   }

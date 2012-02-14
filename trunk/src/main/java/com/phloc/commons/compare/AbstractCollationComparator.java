@@ -33,7 +33,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @param <DATATYPE>
  *        the type of object to be compared
  */
-public abstract class AbstractCollationComparator <DATATYPE> extends AbstractComparator <DATATYPE>
+public abstract class AbstractCollationComparator <DATATYPE> extends AbstractComparatorNullAware <DATATYPE>
 {
   private final Collator m_aCollator;
 

@@ -21,17 +21,17 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
- * Abstract comparator that handles values that can be represented as double
+ * Abstract comparator that handles values that can be represented as long
  * values.
  * 
  * @author philip
  * @param <DATATYPE>
  *        The data type to be compared. Must somehow have a value that can be
- *        compared as a double value.
+ *        compared as a long value.
  */
-public abstract class AbstractNumericComparator <DATATYPE> extends AbstractComparatorNullAware <DATATYPE>
+public abstract class AbstractIntegerComparator <DATATYPE> extends AbstractComparatorNullAware <DATATYPE>
 {
-  public AbstractNumericComparator ()
+  public AbstractIntegerComparator ()
   {
     super ();
   }
@@ -42,18 +42,18 @@ public abstract class AbstractNumericComparator <DATATYPE> extends AbstractCompa
    * @param eSortOrder
    *        The sort order to use. May not be <code>null</code>.
    */
-  public AbstractNumericComparator (@Nonnull final ESortOrder eSortOrder)
+  public AbstractIntegerComparator (@Nonnull final ESortOrder eSortOrder)
   {
     super (eSortOrder);
   }
 
-  protected abstract double asDouble (@Nullable DATATYPE aObject);
+  protected abstract long asLong (@Nullable DATATYPE aObject);
 
   @Override
   protected final int mainCompare (@Nullable final DATATYPE aElement1, @Nullable final DATATYPE aElement2)
   {
-    final double d1 = asDouble (aElement1);
-    final double d2 = asDouble (aElement2);
-    return Double.compare (d1, d2);
+    final long n1 = asLong (aElement1);
+    final long n2 = asLong (aElement2);
+    return n1 < n2 ? -1 : n1 == n2 ? 0 : +1;
   }
 }

@@ -24,13 +24,13 @@ import javax.annotation.Nullable;
 
 /**
  * This is another *lol* class: a {@link Comparator} for {@link Comparable}
- * objects. In comparsion to {@link ComparatorComparable} this class can handle
+ * objects. In comparison to {@link ComparatorComparable} this class can handle
  * <code>null</code> values.
  * 
  * @author philip
  */
 public class ComparatorComparableNullAware <DATATYPE extends Comparable <? super DATATYPE>> extends
-                                                                                            AbstractComparator <DATATYPE>
+                                                                                            AbstractComparatorNullAware <DATATYPE>
 {
   public static final boolean DEFAULT_NULL_VALUES_COME_FIRST = true;
   private boolean m_bNullValuesComeFirst;
