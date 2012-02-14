@@ -54,11 +54,11 @@ public final class JAXBContextCache extends AbstractNotifyingCache <Package, JAX
   }
 
   @Override
-  @Nonnull
-  protected JAXBContext getValueToCache (@Nonnull final Package aPackage)
+  @Nullable
+  protected JAXBContext getValueToCache (@Nullable final Package aPackage)
   {
     if (aPackage == null)
-      throw new NullPointerException ("package");
+      return null;
 
     if (GlobalDebug.isDebugMode () && s_aLogger.isInfoEnabled ())
       s_aLogger.info ("Creating JAXB context for package " + aPackage.getName ());
@@ -83,6 +83,25 @@ public final class JAXBContextCache extends AbstractNotifyingCache <Package, JAX
     if (aClass == null)
       throw new NullPointerException ("class");
 
-    return getFromCache (aClass.getPackage ());
+    final Package aPackage = aClass.getPackage ();
+    if (aPackage.getAnnotation (XmlSchema.class) == null)
+    {
+      // E.g. an internal class - try anyway!
+      if (GlobalDebug.isDebugMode () && s_aLogger.isInfoEnabled ())
+        s_aLogger.info ("Creating JAXB context for class " + aClass.getName ());
+
+      try
+      {
+        return JAXBContext.newInstance (aClass);
+      }
+      catch (final JAXBException ex)
+      {
+        final String sMsg = "Failed to create JAXB context for class " + aClass.getName ();
+        s_aLogger.error (sMsg);
+        throw new IllegalArgumentException (sMsg, ex);
+      }
+    }
+
+    return getFromCache (aPackage);
   }
 }

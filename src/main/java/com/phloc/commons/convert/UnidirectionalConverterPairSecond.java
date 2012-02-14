@@ -22,13 +22,19 @@ import javax.annotation.Nullable;
 
 import com.phloc.commons.collections.pair.IReadonlyPair;
 
+/**
+ * A unidirectional converter that extracts the second element from an
+ * {@link IReadonlyPair}.
+ * 
+ * @author philip
+ */
 public final class UnidirectionalConverterPairSecond <DATA1TYPE, DATA2TYPE> implements
                                                                             IUnidirectionalConverter <IReadonlyPair <DATA1TYPE, DATA2TYPE>, DATA2TYPE>
 {
   @Nullable
   public DATA2TYPE convert (@Nonnull final IReadonlyPair <DATA1TYPE, DATA2TYPE> aPair)
   {
-    return aPair.getSecond ();
+    return aPair == null ? null : aPair.getSecond ();
   }
 
   /**

@@ -18,16 +18,25 @@
 package com.phloc.commons.convert;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.phloc.commons.id.IHasID;
 
+/**
+ * A unidirectional converter that extracts the ID from an object implementing
+ * {@link IHasID}.
+ * 
+ * @author philip
+ * @param <DATATYPE>
+ *        The ID type
+ */
 public final class UnidirectionalConverterHasIDID <DATATYPE> implements
                                                              IUnidirectionalConverter <IHasID <DATATYPE>, DATATYPE>
 {
-  @Nonnull
-  public DATATYPE convert (@Nonnull final IHasID <DATATYPE> aInput)
+  @Nullable
+  public DATATYPE convert (@Nullable final IHasID <DATATYPE> aInput)
   {
-    return aInput.getID ();
+    return aInput == null ? null : aInput.getID ();
   }
 
   @Nonnull
