@@ -21,6 +21,7 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.RegEx;
 
 import com.phloc.commons.annotations.Nonempty;
@@ -43,10 +44,10 @@ public final class RegExPool extends AbstractNotifyingCacheWithMaxSize <RegExPat
   }
 
   @Override
-  @Nonnull
-  protected Pattern getValueToCache (@Nonnull @RegEx final RegExPattern aRegEx)
+  @Nullable
+  protected Pattern getValueToCache (@Nullable @RegEx final RegExPattern aRegEx)
   {
-    return aRegEx.getAsPattern ();
+    return aRegEx == null ? null : aRegEx.getAsPattern ();
   }
 
   /**

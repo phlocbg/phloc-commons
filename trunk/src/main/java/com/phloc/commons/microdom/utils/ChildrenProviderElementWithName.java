@@ -55,10 +55,10 @@ public final class ChildrenProviderElementWithName implements IChildrenProvider 
     m_sTagName = sTagName;
   }
 
-  public boolean hasChildren (@Nonnull final IMicroNode aCurrent)
+  public boolean hasChildren (@Nullable final IMicroNode aCurrent)
   {
     // Not an element?
-    if (!aCurrent.isElement ())
+    if (aCurrent == null || !aCurrent.isElement ())
       return false;
 
     // Namespace URI defined?
@@ -68,16 +68,16 @@ public final class ChildrenProviderElementWithName implements IChildrenProvider 
   }
 
   @Nonnegative
-  public int getChildCount (@Nonnull final IMicroNode aCurrent)
+  public int getChildCount (@Nullable final IMicroNode aCurrent)
   {
-    return getChildren (aCurrent).size ();
+    return aCurrent == null ? 0 : getChildren (aCurrent).size ();
   }
 
   @Nonnull
-  public Collection <? extends IMicroNode> getChildren (@Nonnull final IMicroNode aCurrent)
+  public Collection <? extends IMicroNode> getChildren (@Nullable final IMicroNode aCurrent)
   {
     // Not an element?
-    if (!aCurrent.isElement ())
+    if (aCurrent == null || !aCurrent.isElement ())
       return new ArrayList <IMicroNode> ();
 
     // Namespace URI defined?

@@ -104,21 +104,25 @@ public final class TreeXMLConverter
                            @Override
                            public void onItemBeforeChildren (@Nonnull final ITEMTYPE aItem)
                            {
-                             // create item element
-                             final IMicroElement eItem = aParents.peek ().appendElement (ELEMENT_ITEM);
-                             eItem.setAttribute (ATTR_ID, aIDConverter.convert (aItem.getID ()));
+                             if (aItem != null)
+                             {
+                               // create item element
+                               final IMicroElement eItem = aParents.peek ().appendElement (ELEMENT_ITEM);
+                               eItem.setAttribute (ATTR_ID, aIDConverter.convert (aItem.getID ()));
 
-                             // append data
-                             final IMicroElement eData = eItem.appendElement (ELEMENT_DATA);
-                             aDataConverter.appendDataValue (eData, aItem.getData ());
+                               // append data
+                               final IMicroElement eData = eItem.appendElement (ELEMENT_DATA);
+                               aDataConverter.appendDataValue (eData, aItem.getData ());
 
-                             aParents.push (eItem);
+                               aParents.push (eItem);
+                             }
                            }
 
                            @Override
                            public void onItemAfterChildren (@Nullable final ITEMTYPE aItem)
                            {
-                             aParents.pop ();
+                             if (aItem != null)
+                               aParents.pop ();
                            }
                          });
     return eRoot;
@@ -137,22 +141,26 @@ public final class TreeXMLConverter
                          new DefaultHierarchyWalkerCallback <ITEMTYPE> ()
                          {
                            @Override
-                           public void onItemBeforeChildren (@Nonnull final ITEMTYPE aItem)
+                           public void onItemBeforeChildren (@Nullable final ITEMTYPE aItem)
                            {
-                             // create item element
-                             final IMicroElement eItem = aParents.peek ().appendElement (ELEMENT_ITEM);
+                             if (aItem != null)
+                             {
+                               // create item element
+                               final IMicroElement eItem = aParents.peek ().appendElement (ELEMENT_ITEM);
 
-                             // append data
-                             final IMicroElement eData = eItem.appendElement (ELEMENT_DATA);
-                             aDataConverter.appendDataValue (eData, aItem.getData ());
+                               // append data
+                               final IMicroElement eData = eItem.appendElement (ELEMENT_DATA);
+                               aDataConverter.appendDataValue (eData, aItem.getData ());
 
-                             aParents.push (eItem);
+                               aParents.push (eItem);
+                             }
                            }
 
                            @Override
-                           public void onItemAfterChildren (@Nonnull final ITEMTYPE aItem)
+                           public void onItemAfterChildren (@Nullable final ITEMTYPE aItem)
                            {
-                             aParents.pop ();
+                             if (aItem != null)
+                               aParents.pop ();
                            }
                          });
     return eRoot;
@@ -170,22 +178,27 @@ public final class TreeXMLConverter
                           new DefaultHierarchyWalkerCallback <IMicroNode> ()
                           {
                             @Override
-                            public void onItemBeforeChildren (@Nonnull final IMicroNode aItem)
+                            public void onItemBeforeChildren (@Nullable final IMicroNode aItem)
                             {
-                              final IMicroElement eItem = (IMicroElement) aItem;
-                              final KEYTYPE aTreeItemID = aIDConverter.convert (eItem.getAttribute (ATTR_ID));
+                              if (aItem != null)
+                              {
+                                final IMicroElement eItem = (IMicroElement) aItem;
+                                final KEYTYPE aTreeItemID = aIDConverter.convert (eItem.getAttribute (ATTR_ID));
 
-                              final IMicroElement eData = eItem.getFirstChildElement (ELEMENT_DATA);
-                              final VALUETYPE aTreeItemValue = aDataConverter.getAsDataValue (eData);
+                                final IMicroElement eData = eItem.getFirstChildElement (ELEMENT_DATA);
+                                final VALUETYPE aTreeItemValue = aDataConverter.getAsDataValue (eData);
 
-                              final ITEMTYPE aTreeItem = aParents.peek ().createChildItem (aTreeItemID, aTreeItemValue);
-                              aParents.push (aTreeItem);
+                                final ITEMTYPE aTreeItem = aParents.peek ().createChildItem (aTreeItemID,
+                                                                                             aTreeItemValue);
+                                aParents.push (aTreeItem);
+                              }
                             }
 
                             @Override
-                            public void onItemAfterChildren (@Nonnull final IMicroNode aItem)
+                            public void onItemAfterChildren (@Nullable final IMicroNode aItem)
                             {
-                              aParents.pop ();
+                              if (aItem != null)
+                                aParents.pop ();
                             }
                           });
   }

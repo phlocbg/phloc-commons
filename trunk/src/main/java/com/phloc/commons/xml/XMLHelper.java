@@ -412,9 +412,9 @@ public final class XMLHelper
   {
     return new ChildElementIterator (aStartNode, new IFilter <Element> ()
     {
-      public boolean matchesFilter (@Nonnull final Element aElement)
+      public boolean matchesFilter (@Nullable final Element aElement)
       {
-        return aElement.getNamespaceURI () == null;
+        return aElement != null && aElement.getNamespaceURI () == null;
       }
     });
   }
@@ -440,9 +440,9 @@ public final class XMLHelper
 
     return new ChildElementIterator (aStartNode, new IFilter <Element> ()
     {
-      public boolean matchesFilter (@Nonnull final Element aElement)
+      public boolean matchesFilter (@Nullable final Element aElement)
       {
-        return aElement.getNamespaceURI () == null && aElement.getTagName ().equals (sTagName);
+        return aElement != null && aElement.getNamespaceURI () == null && aElement.getTagName ().equals (sTagName);
       }
     });
   }
@@ -453,7 +453,7 @@ public final class XMLHelper
   {
     return new ChildElementIterator (aStartNode, new IFilter <Element> ()
     {
-      public boolean matchesFilter (@Nonnull final Element aElement)
+      public boolean matchesFilter (@Nullable final Element aElement)
       {
         return hasNamespaceURI (aElement, sNamespaceURI);
       }
@@ -470,7 +470,7 @@ public final class XMLHelper
 
     return new ChildElementIterator (aStartNode, new IFilter <Element> ()
     {
-      public boolean matchesFilter (@Nonnull final Element aElement)
+      public boolean matchesFilter (@Nullable final Element aElement)
       {
         // check namespace before checking local name
         return hasNamespaceURI (aElement, sNamespaceURI) &&
@@ -479,9 +479,9 @@ public final class XMLHelper
     });
   }
 
-  public static boolean hasNamespaceURI (@Nonnull final Node aNode, @Nullable final String sNamespaceURI)
+  public static boolean hasNamespaceURI (@Nullable final Node aNode, @Nullable final String sNamespaceURI)
   {
-    final String sNSURI = aNode.getNamespaceURI ();
+    final String sNSURI = aNode == null ? null : aNode.getNamespaceURI ();
     return sNSURI != null && sNSURI.equals (sNamespaceURI);
   }
 
