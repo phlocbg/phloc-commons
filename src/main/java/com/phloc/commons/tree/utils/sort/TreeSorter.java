@@ -20,6 +20,7 @@ package com.phloc.commons.tree.utils.sort;
 import java.util.Comparator;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
@@ -64,9 +65,10 @@ public final class TreeSorter
     TreeWalker.walkTree (aTree, new DefaultHierarchyWalkerCallback <ITEMTYPE> ()
     {
       @Override
-      public void onItemBeforeChildren (@Nonnull final ITEMTYPE aTreeItem)
+      public void onItemBeforeChildren (@Nullable final ITEMTYPE aTreeItem)
       {
-        aTreeItem.reorderChildItems (aRealComp);
+        if (aTreeItem != null)
+          aTreeItem.reorderChildItems (aRealComp);
       }
     });
   }
@@ -90,9 +92,10 @@ public final class TreeSorter
     TreeWalker.walkTree (aTree, new DefaultHierarchyWalkerCallback <ITEMTYPE> ()
     {
       @Override
-      public void onItemBeforeChildren (@Nonnull final ITEMTYPE aTreeItem)
+      public void onItemBeforeChildren (@Nullable final ITEMTYPE aTreeItem)
       {
-        aTreeItem.reorderChildItems (aRealComp);
+        if (aTreeItem != null)
+          aTreeItem.reorderChildItems (aRealComp);
       }
     });
   }

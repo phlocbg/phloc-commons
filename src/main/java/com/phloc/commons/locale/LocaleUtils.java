@@ -57,9 +57,12 @@ public final class LocaleUtils
     }
 
     @Override
-    @Nonnull
-    protected List <Locale> getValueToCache (@Nonnull final Locale aBaseLocale)
+    @Nullable
+    protected List <Locale> getValueToCache (@Nullable final Locale aBaseLocale)
     {
+      if (aBaseLocale == null)
+        return null;
+
       // List has a maximum of 3 entries
       final List <Locale> ret = new ArrayList <Locale> (3);
       final String sLanguage = aBaseLocale.getLanguage ();
