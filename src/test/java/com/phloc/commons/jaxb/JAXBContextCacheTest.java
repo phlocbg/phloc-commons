@@ -36,7 +36,6 @@ import org.junit.Test;
 import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.io.streams.NonBlockingStringWriter;
 import com.phloc.commons.mock.PhlocTestUtils;
-import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.xml.transform.ResourceStreamSource;
 
 /**
@@ -67,15 +66,6 @@ public final class JAXBContextCacheTest
       fail ();
     }
     catch (final IllegalStateException ex)
-    {}
-
-    try
-    {
-      // Not a JAXB class
-      JAXBContextCache.getInstance ().getFromCache (StringHelper.class);
-      fail ();
-    }
-    catch (final IllegalArgumentException ex)
     {}
   }
 
