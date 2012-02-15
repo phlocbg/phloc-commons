@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<translationitems count="2">
+  <item id="com.phloc.commons.locale.ELocaleName.ID_LANGUAGE_ALL">
+    <cs>Všechny jazyky</cs>
+  </item>
+  <item id="com.phloc.commons.locale.ELocaleName.ID_LANGUAGE_INDEPENDENT">
+    <cs>Jazykově nezávislé</cs>
+  </item>
+</translationitems>
