@@ -18,6 +18,7 @@
 package com.phloc.commons.typeconvert;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.phloc.commons.annotations.NoTranslationRequired;
 import com.phloc.commons.annotations.Nonempty;
@@ -56,28 +57,69 @@ public final class TypeConverterException extends RuntimeException
   private final Class <?> m_aDstClass;
   private final EReason m_eReason;
 
+  /**
+   * Constructor without a cause exception.
+   * 
+   * @param aSrcClass
+   *        The conversion source class. May not be <code>null</code>.
+   * @param aDstClass
+   *        The conversion destination class. May not be <code>null</code>.
+   * @param eReason
+   *        The reason code why the transformation failed. May not be
+   *        <code>null</code>.
+   */
   public TypeConverterException (@Nonnull final Class <?> aSrcClass,
                                  @Nonnull final Class <?> aDstClass,
                                  @Nonnull final EReason eReason)
   {
-    super (eReason.getMessage (aSrcClass, aDstClass));
+    this (aSrcClass, aDstClass, eReason, null);
+  }
+
+  /**
+   * Constructor with a cause exception.
+   * 
+   * @param aSrcClass
+   *        The conversion source class. May not be <code>null</code>.
+   * @param aDstClass
+   *        The conversion destination class. May not be <code>null</code>.
+   * @param eReason
+   *        The reason code why the transformation failed. May not be
+   *        <code>null</code>.
+   * @param aCause
+   *        A causing exception. May be <code>null</code>.
+   */
+  public TypeConverterException (@Nonnull final Class <?> aSrcClass,
+                                 @Nonnull final Class <?> aDstClass,
+                                 @Nonnull final EReason eReason,
+                                 @Nullable final Throwable aCause)
+  {
+    super (eReason.getMessage (aSrcClass, aDstClass), aCause);
     m_aSrcClass = aSrcClass;
     m_aDstClass = aDstClass;
     m_eReason = eReason;
   }
 
+  /**
+   * @return The conversion source class. Never <code>null</code>.
+   */
   @Nonnull
   public Class <?> getSrcClass ()
   {
     return m_aSrcClass;
   }
 
+  /**
+   * @return The conversion destination class. Never <code>null</code>.
+   */
   @Nonnull
   public Class <?> getDstClass ()
   {
     return m_aDstClass;
   }
 
+  /**
+   * @return The conversion failing reason. Never <code>null</code>.
+   */
   @Nonnull
   public EReason getReason ()
   {
