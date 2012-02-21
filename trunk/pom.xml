@@ -35,6 +35,10 @@
     </repository>
   </distributionManagement>
   
+  <properties>
+    <jaxb.version>2.2.5</jaxb.version>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -77,7 +81,7 @@
     <dependency>
       <groupId>com.sun.xml.bind</groupId>
       <artifactId>jaxb-impl</artifactId>
-      <version>2.2.4-1</version>
+      <version>${jaxb.version}</version>
       <optional>true</optional>
     </dependency>
     
@@ -108,9 +112,7 @@
         <extensions>true</extensions>
         <configuration>
           <instructions>
-            <Export-Package>
-              com.phloc.commons.*
-            </Export-Package>
+            <Export-Package>com.phloc.commons.*</Export-Package>
           </instructions>
         </configuration>
       </plugin>
