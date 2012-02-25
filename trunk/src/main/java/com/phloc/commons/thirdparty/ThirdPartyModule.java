@@ -36,6 +36,8 @@ import com.phloc.commons.version.Version;
 @Immutable
 public final class ThirdPartyModule implements IThirdPartyModule
 {
+  public static final boolean DEFAULT_OPTIONAL = false;
+
   private final String m_sDisplayName;
   private final String m_sCopyrightOwner;
   private final ILicense m_aLicense;
@@ -47,7 +49,7 @@ public final class ThirdPartyModule implements IThirdPartyModule
                            @Nonnull @Nonempty final String sCopyrightOwner,
                            @Nonnull final ILicense aLicense)
   {
-    this (sDisplayName, sCopyrightOwner, aLicense, false);
+    this (sDisplayName, sCopyrightOwner, aLicense, DEFAULT_OPTIONAL);
   }
 
   public ThirdPartyModule (@Nonnull @Nonempty final String sDisplayName,
@@ -64,7 +66,7 @@ public final class ThirdPartyModule implements IThirdPartyModule
                            @Nullable final Version aVersion,
                            @Nullable final String sWebsiteURL)
   {
-    this (sDisplayName, sCopyrightOwner, aLicense, aVersion, sWebsiteURL, false);
+    this (sDisplayName, sCopyrightOwner, aLicense, aVersion, sWebsiteURL, DEFAULT_OPTIONAL);
   }
 
   public ThirdPartyModule (@Nonnull @Nonempty final String sDisplayName,
