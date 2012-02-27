@@ -30,6 +30,8 @@ import org.junit.Test;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.mock.PhlocTestUtils;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+
 /**
  * Test class for class {@link SingleElementList}.
  * 
@@ -229,6 +231,7 @@ public final class SingleElementListTest
   }
 
   @Test
+  @SuppressWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   public void testIterate ()
   {
     SingleElementList <String> aList = SingleElementList.create ("Hallo");

@@ -58,6 +58,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
    * Test the method getXHTMLString
    */
   @SuppressWarnings ("deprecation")
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings ("NP_NONNULL_PARAM_VIOLATION")
   @Test
   public void testGetXHTMLString ()
   {

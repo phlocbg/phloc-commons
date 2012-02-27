@@ -45,9 +45,11 @@ import com.phloc.commons.io.streamprovider.ByteArrayInputStreamProvider;
 import com.phloc.commons.mock.MockIOException;
 import com.phloc.commons.mutable.MutableLong;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+
 /**
  * Test class for class {@link StreamUtils}.
- *
+ * 
  * @author philip
  */
 public final class StreamUtilsTest
@@ -229,6 +231,7 @@ public final class StreamUtilsTest
   }
 
   @Test
+  @SuppressWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   public void testReadLines ()
   {
     assertNull (StreamUtils.readStreamLines ((IReadableResource) null, CCharset.CHARSET_ISO_8859_1));
@@ -361,6 +364,7 @@ public final class StreamUtilsTest
   }
 
   @Test
+  @SuppressWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   public void testWriteStream ()
   {
     final byte [] buf = "abcde".getBytes ();

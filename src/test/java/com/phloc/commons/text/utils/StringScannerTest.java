@@ -25,6 +25,8 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+
 /**
  * Test class for class {@link StringScanner}.
  * 
@@ -33,6 +35,7 @@ import org.junit.Test;
 public final class StringScannerTest
 {
   @Test
+  @SuppressWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   public void testAll ()
   {
     final String sInput = "  abc [def][ghi][xx[yy] [zz]]AbAbBBXrest";

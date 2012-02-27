@@ -25,6 +25,8 @@ import org.junit.Test;
 
 import com.phloc.commons.random.VerySecureRandom;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+
 /**
  * Test class for class {@link NonBlockingByteArrayOutputStream}.
  * 
@@ -33,6 +35,7 @@ import com.phloc.commons.random.VerySecureRandom;
 public final class NonBlockingByteArrayOutputStreamTest
 {
   @Test
+  @SuppressWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   public void testAll () throws IOException
   {
     try

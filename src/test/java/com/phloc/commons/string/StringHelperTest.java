@@ -44,9 +44,11 @@ import com.phloc.commons.mock.PhlocAssert;
 import com.phloc.commons.mutable.MutableInt;
 import com.phloc.commons.mutable.MutableLong;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+
 /**
  * Test class for class {@link StringHelper}.
- *
+ * 
  * @author philip
  */
 public final class StringHelperTest extends AbstractPhlocTestCase
@@ -840,6 +842,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
+  @SuppressWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   public void testImplodeArray ()
   {
     final String [] aArray = new String [] { "a", "b", "c" };

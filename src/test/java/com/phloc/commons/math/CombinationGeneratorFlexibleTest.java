@@ -33,6 +33,8 @@ import org.junit.Test;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.timing.StopWatch;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+
 /**
  * Test class for class {@link CombinationGeneratorFlexible}.
  * 
@@ -41,6 +43,7 @@ import com.phloc.commons.timing.StopWatch;
 public final class CombinationGeneratorFlexibleTest
 {
   @Test
+  @SuppressWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   public void testStringCombination ()
   {
     final List <String> aElements = ContainerHelper.newList ("A", "B", "B");
@@ -77,6 +80,7 @@ public final class CombinationGeneratorFlexibleTest
   }
 
   @Test
+  @SuppressWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   public void testCtor ()
   {
     try
