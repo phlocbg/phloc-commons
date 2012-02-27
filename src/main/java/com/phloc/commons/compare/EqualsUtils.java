@@ -25,6 +25,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -244,6 +247,96 @@ public final class EqualsUtils
     return (aObj1 == aObj2) || (aObj1 != null && aObj2 != null && equals (aObj1, aObj2));
   }
 
+  /**
+   * Special equals implementation for AtomicBoolean because it does not
+   * implement equals.
+   * 
+   * @param aObj1
+   *        First AtomicBoolean. May not be <code>null</code>.
+   * @param aObj2
+   *        Second AtomicBoolean. May not be <code>null</code>.
+   * @return <code>true</code> if they are equals, <code>false</code> otherwise.
+   */
+  public static boolean equals (@Nonnull final AtomicBoolean aObj1, @Nonnull final AtomicBoolean aObj2)
+  {
+    return aObj1.get () == aObj2.get ();
+  }
+
+  /**
+   * Special equals implementation for AtomicBoolean because it does not
+   * implement equals.
+   * 
+   * @param aObj1
+   *        First AtomicBoolean. May be <code>null</code>.
+   * @param aObj2
+   *        Second AtomicBoolean. May be <code>null</code>.
+   * @return <code>true</code> if they are equals, <code>false</code> otherwise.
+   */
+  public static boolean nullSafeEquals (@Nullable final AtomicBoolean aObj1, @Nullable final AtomicBoolean aObj2)
+  {
+    return (aObj1 == aObj2) || (aObj1 != null && aObj2 != null && equals (aObj1, aObj2));
+  }
+
+  /**
+   * Special equals implementation for AtomicInteger because it does not
+   * implement equals.
+   * 
+   * @param aObj1
+   *        First AtomicInteger. May not be <code>null</code>.
+   * @param aObj2
+   *        Second AtomicInteger. May not be <code>null</code>.
+   * @return <code>true</code> if they are equals, <code>false</code> otherwise.
+   */
+  public static boolean equals (@Nonnull final AtomicInteger aObj1, @Nonnull final AtomicInteger aObj2)
+  {
+    return aObj1.get () == aObj2.get ();
+  }
+
+  /**
+   * Special equals implementation for AtomicInteger because it does not
+   * implement equals.
+   * 
+   * @param aObj1
+   *        First AtomicInteger. May be <code>null</code>.
+   * @param aObj2
+   *        Second AtomicInteger. May be <code>null</code>.
+   * @return <code>true</code> if they are equals, <code>false</code> otherwise.
+   */
+  public static boolean nullSafeEquals (@Nullable final AtomicInteger aObj1, @Nullable final AtomicInteger aObj2)
+  {
+    return (aObj1 == aObj2) || (aObj1 != null && aObj2 != null && equals (aObj1, aObj2));
+  }
+
+  /**
+   * Special equals implementation for AtomicLong because it does not implement
+   * equals.
+   * 
+   * @param aObj1
+   *        First AtomicLong. May not be <code>null</code>.
+   * @param aObj2
+   *        Second AtomicLong. May not be <code>null</code>.
+   * @return <code>true</code> if they are equals, <code>false</code> otherwise.
+   */
+  public static boolean equals (@Nonnull final AtomicLong aObj1, @Nonnull final AtomicLong aObj2)
+  {
+    return aObj1.get () == aObj2.get ();
+  }
+
+  /**
+   * Special equals implementation for AtomicLong because it does not implement
+   * equals.
+   * 
+   * @param aObj1
+   *        First AtomicLong. May be <code>null</code>.
+   * @param aObj2
+   *        Second AtomicLong. May be <code>null</code>.
+   * @return <code>true</code> if they are equals, <code>false</code> otherwise.
+   */
+  public static boolean nullSafeEquals (@Nullable final AtomicLong aObj1, @Nullable final AtomicLong aObj2)
+  {
+    return (aObj1 == aObj2) || (aObj1 != null && aObj2 != null && equals (aObj1, aObj2));
+  }
+
   public static boolean equals (@Nullable final Object [] aObj1, @Nullable final Object [] aObj2)
   {
     return Arrays.equals (aObj1, aObj2);
@@ -380,6 +473,69 @@ public final class EqualsUtils
     return aObj1 == null ? aObj2 == null : equals (aObj1, aObj2);
   }
 
+  public static boolean equals (@Nonnull final AtomicBoolean [] aObj1, @Nonnull final AtomicBoolean [] aObj2)
+  {
+    if (aObj1 != aObj2)
+    {
+      if (aObj1 == null || aObj2 == null)
+        return false;
+      final int nLength = aObj1.length;
+      if (nLength != aObj2.length)
+        return false;
+      for (int i = 0; i < nLength; i++)
+        if (!nullSafeEquals (aObj1[i], aObj2[i]))
+          return false;
+    }
+    return true;
+  }
+
+  public static boolean nullSafeEquals (@Nullable final AtomicBoolean [] aObj1, @Nullable final AtomicBoolean [] aObj2)
+  {
+    return aObj1 == null ? aObj2 == null : equals (aObj1, aObj2);
+  }
+
+  public static boolean equals (@Nonnull final AtomicInteger [] aObj1, @Nonnull final AtomicInteger [] aObj2)
+  {
+    if (aObj1 != aObj2)
+    {
+      if (aObj1 == null || aObj2 == null)
+        return false;
+      final int nLength = aObj1.length;
+      if (nLength != aObj2.length)
+        return false;
+      for (int i = 0; i < nLength; i++)
+        if (!nullSafeEquals (aObj1[i], aObj2[i]))
+          return false;
+    }
+    return true;
+  }
+
+  public static boolean nullSafeEquals (@Nullable final AtomicInteger [] aObj1, @Nullable final AtomicInteger [] aObj2)
+  {
+    return aObj1 == null ? aObj2 == null : equals (aObj1, aObj2);
+  }
+
+  public static boolean equals (@Nonnull final AtomicLong [] aObj1, @Nonnull final AtomicLong [] aObj2)
+  {
+    if (aObj1 != aObj2)
+    {
+      if (aObj1 == null || aObj2 == null)
+        return false;
+      final int nLength = aObj1.length;
+      if (nLength != aObj2.length)
+        return false;
+      for (int i = 0; i < nLength; i++)
+        if (!nullSafeEquals (aObj1[i], aObj2[i]))
+          return false;
+    }
+    return true;
+  }
+
+  public static boolean nullSafeEquals (@Nullable final AtomicLong [] aObj1, @Nullable final AtomicLong [] aObj2)
+  {
+    return aObj1 == null ? aObj2 == null : equals (aObj1, aObj2);
+  }
+
   public static boolean equals (@Nonnull final boolean [] aObj1, @Nonnull final boolean [] aObj2)
   {
     return Arrays.equals (aObj1, aObj2);
@@ -483,6 +639,18 @@ public final class EqualsUtils
     if (!aClass.equals (aObj2.getClass ()))
       return false;
 
+    if (aClass.equals (AtomicBoolean.class))
+      return equals ((AtomicBoolean) aObj1, (AtomicBoolean) aObj2);
+    if (aClass.equals (AtomicBoolean [].class))
+      return equals ((AtomicBoolean []) aObj1, (AtomicBoolean []) aObj2);
+    if (aClass.equals (AtomicInteger.class))
+      return equals ((AtomicInteger) aObj1, (AtomicInteger) aObj2);
+    if (aClass.equals (AtomicInteger [].class))
+      return equals ((AtomicInteger []) aObj1, (AtomicInteger []) aObj2);
+    if (aClass.equals (AtomicLong.class))
+      return equals ((AtomicLong) aObj1, (AtomicLong) aObj2);
+    if (aClass.equals (AtomicLong [].class))
+      return equals ((AtomicLong []) aObj1, (AtomicLong []) aObj2);
     if (aClass.equals (BigDecimal.class))
       return equals ((BigDecimal) aObj1, (BigDecimal) aObj2);
     if (aClass.equals (BigDecimal [].class))

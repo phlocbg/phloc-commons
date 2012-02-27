@@ -21,7 +21,7 @@ import java.io.File;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
-import javax.annotation.concurrent.NotThreadSafe;
+import javax.annotation.concurrent.ThreadSafe;
 
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.hash.HashCodeGenerator;
@@ -34,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author philip
  */
-@NotThreadSafe
+@ThreadSafe
 public class FileIntIDFactory extends AbstractPersistingIntIDFactory
 {
   @Nonnull
@@ -58,6 +58,9 @@ public class FileIntIDFactory extends AbstractPersistingIntIDFactory
     m_aFile = aFile;
   }
 
+  /*
+   * Note: this method must only be called from within a locked section!
+   */
   @Override
   protected final int readAndUpdateIDCounter (@Nonnegative final int nReserveCount)
   {
