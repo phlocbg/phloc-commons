@@ -17,8 +17,11 @@
  */
 package com.phloc.commons.idfactory;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 import javax.annotation.Nonnegative;
-import javax.annotation.concurrent.NotThreadSafe;
+import javax.annotation.concurrent.ThreadSafe;
 
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
@@ -31,9 +34,10 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author philip
  */
-@NotThreadSafe
+@ThreadSafe
 public abstract class AbstractPersistingIntIDFactory implements IIntIDFactory
 {
+  private final Lock m_aLock = new ReentrantLock ();
   private final int m_nReserveCount;
   private int m_nID = 0;
   private int m_nLastID = -1;
@@ -48,6 +52,7 @@ public abstract class AbstractPersistingIntIDFactory implements IIntIDFactory
   @Nonnegative
   protected final int getReserveCount ()
   {
+    // As reserve count is final, we don't need to lock access to it!
     return m_nReserveCount;
   }
 
@@ -76,28 +81,37 @@ public abstract class AbstractPersistingIntIDFactory implements IIntIDFactory
    */
   protected abstract int readAndUpdateIDCounter (@Nonnegative int nReserveCount);
 
-  private void _updateIDRange ()
-  {
-    final int nID = readAndUpdateIDCounter (m_nReserveCount);
-
-    // the existing ID may not be < than the previously used ID!
-    if (m_nLastID >= 0 && nID < m_nID)
-      throw new IllegalStateException ("The read value " + nID + " is smaller than the last known ID " + m_nID + "!");
-
-    m_nID = nID;
-    m_nLastID = nID + m_nReserveCount;
-  }
-
   /*
-   * Note: this implementation is not synchronized because the method calling
-   * this method must be synchronized.
-   * @see com.phloc.commons.id.IIntIDProvider#getNewID()
+   * Note: this implementation must be synchronized because the method calling
+   * this only uses a readLock!
    */
   public final int getNewID ()
   {
-    if (m_nID >= m_nLastID)
-      _updateIDRange ();
-    return m_nID++;
+    m_aLock.lock ();
+    try
+    {
+      if (m_nID >= m_nLastID)
+      {
+        // Read new IDs
+        final int nNewID = readAndUpdateIDCounter (m_nReserveCount);
+
+        // the existing ID may not be < than the previously used ID!
+        if (m_nLastID >= 0 && nNewID < m_nID)
+          throw new IllegalStateException ("The read value " +
+                                           nNewID +
+                                           " is smaller than the last known ID " +
+                                           m_nID +
+                                           "!");
+
+        m_nID = nNewID;
+        m_nLastID = nNewID + m_nReserveCount;
+      }
+      return m_nID++;
+    }
+    finally
+    {
+      m_aLock.unlock ();
+    }
   }
 
   @Override

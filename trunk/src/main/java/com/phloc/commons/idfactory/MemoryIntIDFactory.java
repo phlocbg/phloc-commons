@@ -17,7 +17,10 @@
  */
 package com.phloc.commons.idfactory;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import javax.annotation.Nonnegative;
+import javax.annotation.concurrent.ThreadSafe;
 
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
@@ -27,13 +30,14 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author philip
  */
+@ThreadSafe
 public final class MemoryIntIDFactory implements IIntIDFactory
 {
   @Nonnegative
   public static final int DEFAULT_START_ID = 10000;
 
   @Nonnegative
-  private int m_nID;
+  private final AtomicInteger m_aID;
 
   public MemoryIntIDFactory ()
   {
@@ -45,13 +49,13 @@ public final class MemoryIntIDFactory implements IIntIDFactory
   {
     if (nStartID < 0)
       throw new IllegalArgumentException ("Passed start ID is invalid: " + nStartID);
-    m_nID = nStartID;
+    m_aID = new AtomicInteger (nStartID);
   }
 
   @Nonnegative
   public int getNewID ()
   {
-    return m_nID++;
+    return m_aID.getAndIncrement ();
   }
 
   @Override
@@ -61,19 +65,20 @@ public final class MemoryIntIDFactory implements IIntIDFactory
       return true;
     if (!(o instanceof MemoryIntIDFactory))
       return false;
+    // AtomicInteger does not implement equals and hashCode!
     final MemoryIntIDFactory rhs = (MemoryIntIDFactory) o;
-    return m_nID == rhs.m_nID;
+    return m_aID.get () == rhs.m_aID.get ();
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_nID).getHashCode ();
+    return new HashCodeGenerator (this).append (m_aID.get ()).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("ID", m_nID).toString ();
+    return new ToStringGenerator (this).append ("ID", m_aID).toString ();
   }
 }
