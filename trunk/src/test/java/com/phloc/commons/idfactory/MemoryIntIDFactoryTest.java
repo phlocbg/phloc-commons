@@ -24,6 +24,8 @@ import org.junit.Test;
 
 import com.phloc.commons.mock.PhlocTestUtils;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+
 /**
  * Test class for class {@link MemoryIntIDFactory}.
  * 
@@ -32,6 +34,7 @@ import com.phloc.commons.mock.PhlocTestUtils;
 public final class MemoryIntIDFactoryTest
 {
   @Test
+  @SuppressWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   public void testAll ()
   {
     final MemoryIntIDFactory x = new MemoryIntIDFactory (9);

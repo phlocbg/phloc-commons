@@ -29,6 +29,8 @@ import org.junit.Test;
 
 import com.phloc.commons.mock.PhlocTestUtils;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+
 /**
  * Test class for class {@link ArrayEnumeration}.
  * 
@@ -37,6 +39,7 @@ import com.phloc.commons.mock.PhlocTestUtils;
 public final class ArrayEnumerationTest
 {
   @Test
+  @SuppressWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   public void testAll ()
   {
     ArrayEnumeration <String> ae = new ArrayEnumeration <String> ("Hallo", "Welt", "from", "Copenhagen");

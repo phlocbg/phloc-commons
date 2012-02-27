@@ -27,6 +27,8 @@ import org.junit.Test;
 
 import com.phloc.commons.callback.IThrowingRunnableWithParameter;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+
 /**
  * Test class for class {@link ConcurrentCollectorMultiple}.
  * 
@@ -35,6 +37,7 @@ import com.phloc.commons.callback.IThrowingRunnableWithParameter;
 public final class ConcurrentCollectorMultipleTest
 {
   @Test
+  @SuppressWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   public void testCtor ()
   {
     try

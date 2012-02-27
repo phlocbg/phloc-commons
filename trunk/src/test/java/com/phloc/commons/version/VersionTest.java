@@ -27,6 +27,8 @@ import org.junit.Test;
 
 import com.phloc.commons.mock.PhlocTestUtils;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+
 /**
  * Test class for class {@link Version}.
  * 
@@ -35,6 +37,7 @@ import com.phloc.commons.mock.PhlocTestUtils;
 public final class VersionTest
 {
   @Test
+  @SuppressWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   public void testVersionIntIntInt ()
   {
     // use 0.0.0

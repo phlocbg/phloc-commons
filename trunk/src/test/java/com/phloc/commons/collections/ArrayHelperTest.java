@@ -57,6 +57,8 @@ import org.junit.Test;
 
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+
 /**
  * Test class for {@link ArrayHelper}
  * 
@@ -384,7 +386,7 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
   /**
    * Test for method concatenate
    */
-  @SuppressWarnings ("deprecation")
+  @java.lang.SuppressWarnings ("deprecation")
   @Test
   public void testGetConcatenated ()
   {
@@ -570,6 +572,7 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
+  @SuppressWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   public void testNewArraySizeValue ()
   {
     String [] ret = newArray (1, "6", String.class);
