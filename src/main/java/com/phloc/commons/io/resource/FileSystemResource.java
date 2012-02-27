@@ -87,7 +87,12 @@ public final class FileSystemResource implements IReadWriteResource
     catch (final IOException ex)
     {
       // Something obviously went wrong
-      s_aLogger.warn ("Failed to canonicalize file '" + aAbsFile.toString () + "'");
+      s_aLogger.warn ("Failed to canonicalize file '" +
+                      aAbsFile.toString () +
+                      "': " +
+                      ex.getClass ().getName () +
+                      " - " +
+                      ex.getMessage ());
     }
 
     m_aFile = aAbsFile;
@@ -145,7 +150,7 @@ public final class FileSystemResource implements IReadWriteResource
     }
     catch (final MalformedURLException ex)
     {
-      s_aLogger.warn ("Failed to convert file to URL: " + aFile);
+      s_aLogger.warn ("Failed to convert file to URL: " + aFile, ex);
       return null;
     }
   }
