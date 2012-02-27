@@ -17,14 +17,34 @@
  */
 package com.phloc.commons.stats;
 
+import java.util.Set;
+
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.phloc.commons.annotations.ReturnsImmutableObject;
 
 /**
- * Modifying interface of {@link StatisticsHandlerTimerMBean}
+ * Base interface for keyed statistic handlers
  * 
  * @author philip
  */
-public interface IStatisticsHandlerTimer extends StatisticsHandlerTimerMBean
+public interface IStatisticsHandlerKeyed extends IStatisticsHandler
 {
-  void addTime (@Nonnull long nMillis);
+  /**
+   * @return A collection of all keys that have a value assigned.
+   */
+  @Nonnull
+  @ReturnsImmutableObject
+  Set <String> getAllKeys ();
+
+  /**
+   * Get the count of a certain key.
+   * 
+   * @param sKey
+   *        The key to retrieve the count from
+   * @return {@link com.phloc.commons.CGlobal#ILLEGAL_UINT} if no such key is
+   *         present.
+   */
+  int getKeyCount (@Nullable String sKey);
 }

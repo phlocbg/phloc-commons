@@ -25,6 +25,11 @@ import javax.annotation.concurrent.ThreadSafe;
 
 import com.phloc.commons.annotations.Nonempty;
 
+/**
+ * Default implementation of {@link IStatisticsHandlerCache}
+ * 
+ * @author philip
+ */
 @ThreadSafe
 final class StatisticsHandlerCache implements IStatisticsHandlerCache
 {

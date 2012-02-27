@@ -19,6 +19,11 @@ package com.phloc.commons.stats;
 
 import javax.annotation.Nonnegative;
 
+/**
+ * Modifying version of {@link StatisticsHandlerSizeMBean}
+ * 
+ * @author philip
+ */
 public interface IStatisticsHandlerSize extends StatisticsHandlerSizeMBean
 {
   void addSize (@Nonnegative long nSize);

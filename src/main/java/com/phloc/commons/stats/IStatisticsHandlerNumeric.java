@@ -23,6 +23,11 @@ import javax.annotation.Nonnull;
 
 import com.phloc.commons.CGlobal;
 
+/**
+ * Base interface for size and timer handler.
+ * 
+ * @author philip
+ */
 public interface IStatisticsHandlerNumeric extends IStatisticsHandler
 {
   /**

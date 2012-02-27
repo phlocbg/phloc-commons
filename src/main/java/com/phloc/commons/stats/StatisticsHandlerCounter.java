@@ -24,6 +24,11 @@ import javax.annotation.concurrent.ThreadSafe;
 
 import com.phloc.commons.annotations.Nonempty;
 
+/**
+ * Default implementation of {@link IStatisticsHandlerCounter}
+ * 
+ * @author philip
+ */
 @ThreadSafe
 final class StatisticsHandlerCounter implements IStatisticsHandlerCounter
 {

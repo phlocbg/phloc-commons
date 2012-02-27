@@ -28,6 +28,11 @@ import javax.annotation.concurrent.ThreadSafe;
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.Nonempty;
 
+/**
+ * Abstract base class for numeric statistic handler
+ * 
+ * @author philip
+ */
 @ThreadSafe
 abstract class AbstractStatisticsHandlerNumeric implements IStatisticsHandlerNumeric
 {

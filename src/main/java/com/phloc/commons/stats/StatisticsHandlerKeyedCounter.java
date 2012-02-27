@@ -35,6 +35,11 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.mutable.MutableInt;
 
+/**
+ * Default implementation of {@link IStatisticsHandlerKeyedCounter}
+ * 
+ * @author philip
+ */
 @ThreadSafe
 final class StatisticsHandlerKeyedCounter implements IStatisticsHandlerKeyedCounter
 {
@@ -49,15 +54,20 @@ final class StatisticsHandlerKeyedCounter implements IStatisticsHandlerKeyedCoun
 
   public void increment (@Nullable final String sKey)
   {
+    increment (sKey, 1);
+  }
+
+  public void increment (@Nullable final String sKey, final int nByHowMany)
+  {
     m_aCount.incrementAndGet ();
     m_aRWLock.writeLock ().lock ();
     try
     {
       final MutableInt aPerKey = m_aKeyedCount.get (sKey);
       if (aPerKey == null)
-        m_aKeyedCount.put (sKey, new MutableInt (1));
+        m_aKeyedCount.put (sKey, new MutableInt (nByHowMany));
       else
-        aPerKey.inc (1);
+        aPerKey.inc (nByHowMany);
     }
     finally
     {
