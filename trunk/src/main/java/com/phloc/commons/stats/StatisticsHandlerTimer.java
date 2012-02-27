@@ -23,6 +23,11 @@ import javax.annotation.concurrent.ThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Default implementation of {@link IStatisticsHandlerTimer}
+ * 
+ * @author philip
+ */
 @ThreadSafe
 final class StatisticsHandlerTimer extends AbstractStatisticsHandlerNumeric implements IStatisticsHandlerTimer
 {

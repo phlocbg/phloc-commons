@@ -17,7 +17,11 @@
  */
 package com.phloc.commons.stats;
 
-
+/**
+ * Modifying interface of {@link StatisticsHandlerCacheMBean}
+ * 
+ * @author philip
+ */
 public interface IStatisticsHandlerCache extends StatisticsHandlerCacheMBean
 {
   void cacheHit ();
