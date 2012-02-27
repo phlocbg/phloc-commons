@@ -112,7 +112,7 @@ public final class URLResource implements IReadableResource
     }
     catch (final IOException ex)
     {
-      s_aLogger.warn ("Failed to open input stream for " + aURL);
+      s_aLogger.warn ("Failed to open input stream for '" + aURL + "'", ex);
       return null;
     }
   }

@@ -242,7 +242,7 @@ public final class FileUtils
     catch (final IllegalStateException ex)
     {
       // Happens e.g. when the parent directory is "  "
-      s_aLogger.warn ("Failed to create parent directory of '" + aFile + "'");
+      s_aLogger.warn ("Failed to create parent directory of '" + aFile + "'", ex);
       return null;
     }
 
@@ -253,7 +253,14 @@ public final class FileUtils
     }
     catch (final FileNotFoundException ex)
     {
-      s_aLogger.warn ("Failed to create output stream for '" + aFile + "'; append: " + eAppend);
+      s_aLogger.warn ("Failed to create output stream for '" +
+                      aFile +
+                      "'; append: " +
+                      eAppend +
+                      ": " +
+                      ex.getClass ().getName () +
+                      " - " +
+                      ex.getMessage ());
       return null;
     }
   }
