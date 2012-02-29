@@ -33,7 +33,7 @@ public enum EXMLIncorrectCharacterHandling
 {
   /**
    * Throw an {@link IllegalArgumentException} in case of incorrect XML
-   * characters
+   * characters.
    */
   THROW_EXCEPTION (true, false)
   {
@@ -48,7 +48,8 @@ public enum EXMLIncorrectCharacterHandling
    * Write the invalid character to the file. This will result in a file that
    * cannot be read with the Java XML parser.<br>
    * This is the fastest option. This is how it was handled in phloc-commons
-   * &le; 3.3.6
+   * &le; 3.3.6. This option will most probably result in unreadable XML files
+   * as no replacement takes place!
    */
   WRITE_TO_FILE_NO_LOG (false, false)
   {
@@ -62,7 +63,8 @@ public enum EXMLIncorrectCharacterHandling
   /**
    * Write the invalid character to the file. This will result in a file that
    * cannot be read with the Java XML parser.<br>
-   * This is the second fastest option
+   * This is the second fastest option but will most probably result in
+   * unreadable XML files as no replacement takes place!
    */
   WRITE_TO_FILE_LOG_WARNING (false, false)
   {
@@ -75,7 +77,7 @@ public enum EXMLIncorrectCharacterHandling
 
   /**
    * Do not write the invalid character to XML and do not log anything. This
-   * means silently ignore the problem.
+   * means silently fixing the problem as the replacement is written.
    */
   DO_NOT_WRITE_NO_LOG (true, true)
   {
@@ -87,7 +89,8 @@ public enum EXMLIncorrectCharacterHandling
   },
 
   /**
-   * Do not write the invalid character to XML but log a warning.
+   * Do not write the invalid character to XML but at least log a warning. Will
+   * trigger character replacement.
    */
   DO_NOT_WRITE_LOG_WARNING (true, true)
   {
