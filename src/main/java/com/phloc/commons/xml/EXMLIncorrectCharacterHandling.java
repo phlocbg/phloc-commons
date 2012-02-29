@@ -17,12 +17,15 @@
  */
 package com.phloc.commons.xml;
 
+import java.util.Set;
+
 import javax.annotation.Nonnull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.collections.ContainerHelper;
 
 /**
  * Define what to do, when an invalid character is to be serialized to XML.
@@ -38,9 +41,13 @@ public enum EXMLIncorrectCharacterHandling
   THROW_EXCEPTION (true, false)
   {
     @Override
-    public void notifyOnInvalidXMLCharacter (@Nonnull @Nonempty final String s) throws IllegalArgumentException
+    public void notifyOnInvalidXMLCharacter (@Nonnull @Nonempty final String sText,
+                                             @Nonnull final Set <Character> aInvalidChars) throws IllegalArgumentException
     {
-      throw new IllegalArgumentException ("XML content contains invalid character data: '" + s + "'");
+      throw new IllegalArgumentException ("XML content contains invalid character data: '" +
+                                          sText +
+                                          "'. Invalid chars are: " +
+                                          _getAsString (aInvalidChars));
     }
   },
 
@@ -54,7 +61,8 @@ public enum EXMLIncorrectCharacterHandling
   WRITE_TO_FILE_NO_LOG (false, false)
   {
     @Override
-    public void notifyOnInvalidXMLCharacter (@Nonnull @Nonempty final String s)
+    public void notifyOnInvalidXMLCharacter (@Nonnull @Nonempty final String sText,
+                                             @Nonnull final Set <Character> aInvalidChars)
     {
       // Do nothing
     }
@@ -69,9 +77,13 @@ public enum EXMLIncorrectCharacterHandling
   WRITE_TO_FILE_LOG_WARNING (false, false)
   {
     @Override
-    public void notifyOnInvalidXMLCharacter (@Nonnull @Nonempty final String s)
+    public void notifyOnInvalidXMLCharacter (@Nonnull @Nonempty final String sText,
+                                             @Nonnull final Set <Character> aInvalidChars)
     {
-      s_aLogger.warn ("XML content contains invalid character data (no replacement): '" + s + "'");
+      s_aLogger.warn ("XML content contains invalid character data (no replacement): '" +
+                      sText +
+                      "'. Invalid chars are: " +
+                      _getAsString (aInvalidChars));
     }
   },
 
@@ -82,7 +94,8 @@ public enum EXMLIncorrectCharacterHandling
   DO_NOT_WRITE_NO_LOG (true, true)
   {
     @Override
-    public void notifyOnInvalidXMLCharacter (@Nonnull @Nonempty final String s)
+    public void notifyOnInvalidXMLCharacter (@Nonnull @Nonempty final String sText,
+                                             @Nonnull final Set <Character> aInvalidChars)
     {
       // Do nothing
     }
@@ -95,9 +108,13 @@ public enum EXMLIncorrectCharacterHandling
   DO_NOT_WRITE_LOG_WARNING (true, true)
   {
     @Override
-    public void notifyOnInvalidXMLCharacter (@Nonnull @Nonempty final String s)
+    public void notifyOnInvalidXMLCharacter (@Nonnull @Nonempty final String sText,
+                                             @Nonnull final Set <Character> aInvalidChars)
     {
-      s_aLogger.warn ("XML content contains invalid character data (will replace): '" + s + "'");
+      s_aLogger.warn ("XML content contains invalid character data (will replace): '" +
+                      sText +
+                      "'. Invalid chars are: " +
+                      _getAsString (aInvalidChars));
     }
   };
 
@@ -143,11 +160,29 @@ public enum EXMLIncorrectCharacterHandling
     return m_bReplaceWithNothing;
   }
 
+  @Nonnull
+  private static String _getAsString (@Nonnull final Set <Character> aInvalidChars)
+  {
+    if (ContainerHelper.isEmpty (aInvalidChars))
+      return "NONE";
+    final StringBuilder aSB = new StringBuilder ();
+    for (final Character aChar : aInvalidChars)
+    {
+      if (aSB.length () > 0)
+        aSB.append (", ");
+      aSB.append ("0x").append (Integer.toHexString (aChar.charValue ()));
+    }
+    return aSB.toString ();
+  }
+
   /**
    * Called in case XML data contains an invalid character
    * 
-   * @param s
+   * @param sText
    *        The XML string where the error occurs.
+   * @param aInvalidChars
+   *        The invalid characters detected within the text
    */
-  public abstract void notifyOnInvalidXMLCharacter (@Nonnull @Nonempty String s);
+  public abstract void notifyOnInvalidXMLCharacter (@Nonnull @Nonempty String sText,
+                                                    @Nonnull Set <Character> aInvalidChars);
 }
