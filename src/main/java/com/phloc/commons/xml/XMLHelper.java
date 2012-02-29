@@ -64,16 +64,12 @@ public final class XMLHelper
   private static final char [] MASK_PATTERNS_REGULAR = new char [] { 0, '&', '<', '>', '"', '\'' };
 
   // Control characters (except 9 - \t and 10 - \n and 13 - \r)
-  private static final char [] MASK_PATTERNS_CONTROL = new char [] { 1,
-                                                                    2,
-                                                                    3,
-                                                                    4,
-                                                                    5,
-                                                                    6,
-                                                                    7,
-                                                                    8,
+  private static final char [] MASK_PATTERNS_CONTROL = new char [] { 1, 2, 3, 4, 5, 6, 7, 8,
+                                                                    // 9 and 10
+                                                                    // are OK
                                                                     11,
                                                                     12,
+                                                                    // 13 is OK
                                                                     14,
                                                                     15,
                                                                     16,
@@ -91,7 +87,8 @@ public final class XMLHelper
                                                                     28,
                                                                     29,
                                                                     30,
-                                                                    31 };
+                                                                    31,
+                                                                    '\u2028' };
   private static final char [] MASK_PATTERNS_ALL = ArrayHelper.getConcatenated (MASK_PATTERNS_REGULAR,
                                                                                 MASK_PATTERNS_CONTROL);
 
@@ -138,7 +135,8 @@ public final class XMLHelper
                                                                               "".toCharArray (),
                                                                               "".toCharArray (),
                                                                               "".toCharArray (),
-                                                                              "".toCharArray () };
+                                                                              "".toCharArray (),
+                                                                              "\n".toCharArray () };
 
   private static final char [][] MASK_REPLACE_ALL_EMPTY = ArrayHelper.getConcatenated (MASK_REPLACE_REGULAR,
                                                                                        MASK_REPLACE_CONTROL_EMPTY);
@@ -174,7 +172,8 @@ public final class XMLHelper
                                                                               "&#28;".toCharArray (),
                                                                               "&#29;".toCharArray (),
                                                                               "&#30;".toCharArray (),
-                                                                              "&#31;".toCharArray () };
+                                                                              "&#31;".toCharArray (),
+                                                                              "&#2028;".toCharArray () };
 
   private static final char [][] MASK_REPLACE_ALL_XML11 = ArrayHelper.getConcatenated (MASK_REPLACE_REGULAR,
                                                                                        MASK_REPLACE_CONTROL_XML11);

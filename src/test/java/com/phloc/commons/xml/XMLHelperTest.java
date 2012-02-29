@@ -229,8 +229,17 @@ public final class XMLHelperTest extends AbstractPhlocTestCase
                                                    "1 & \u0001"));
     assertArrayEquals ("1 &amp; ".toCharArray (),
                        XMLHelper.getMaskedXMLText (EXMLVersion.XML_11,
-                                                   EXMLIncorrectCharacterHandling.DO_NOT_WRITE_NO_LOG,
+                                                   EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING,
                                                    "1 & \u0001"));
+
+    assertArrayEquals ("ab\nc".toCharArray (),
+                       XMLHelper.getMaskedXMLText (EXMLVersion.XML_10,
+                                                   EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING,
+                                                   "ab\u2028c"));
+    assertArrayEquals ("ab\nc".toCharArray (),
+                       XMLHelper.getMaskedXMLText (EXMLVersion.XML_11,
+                                                   EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING,
+                                                   "ab\u2028c"));
   }
 
   @Test
