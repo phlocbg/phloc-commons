@@ -20,9 +20,11 @@ package com.phloc.commons.xml;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -570,11 +572,15 @@ public final class XMLHelper
                                           @Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharHandling,
                                           @Nullable final String s)
   {
-    if (eIncorrectCharHandling.isTestRequired () && containsInvalidXMLCharacter (s))
+    if (eIncorrectCharHandling.isTestRequired () && s != null)
     {
-      eIncorrectCharHandling.notifyOnInvalidXMLCharacter (s);
-      if (eIncorrectCharHandling.isReplaceWithNothing ())
-        return StringHelper.replaceMultiple (s, MASK_PATTERNS_ALL, MASK_REPLACE_ALL_EMPTY);
+      final char [] aChars = s.toCharArray ();
+      if (containsInvalidXMLCharacter (aChars))
+      {
+        eIncorrectCharHandling.notifyOnInvalidXMLCharacter (s, getAllInvalidXMLCharacters (aChars));
+        if (eIncorrectCharHandling.isReplaceWithNothing ())
+          return StringHelper.replaceMultiple (s, MASK_PATTERNS_ALL, MASK_REPLACE_ALL_EMPTY);
+      }
     }
 
     if (eXMLVersion.equals (EXMLVersion.XML_10))
@@ -602,10 +608,9 @@ public final class XMLHelper
       return 0;
 
     final char [] aChars = s.toCharArray ();
-
     if (eIncorrectCharHandling.isTestRequired () && containsInvalidXMLCharacter (aChars))
     {
-      eIncorrectCharHandling.notifyOnInvalidXMLCharacter (s);
+      eIncorrectCharHandling.notifyOnInvalidXMLCharacter (s, getAllInvalidXMLCharacters (aChars));
       if (eIncorrectCharHandling.isReplaceWithNothing ())
       {
         final int nResLen = StringHelper.getReplaceMultipleResultLength (aChars,
@@ -632,23 +637,27 @@ public final class XMLHelper
 
   public static void maskXMLTextTo (@Nonnull final EXMLVersion eXMLVersion,
                                     @Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharHandling,
-                                    @Nullable final String s,
+                                    @Nullable final String sText,
                                     @Nonnull final Writer aWriter) throws IOException
   {
-    if (eIncorrectCharHandling.isTestRequired () && containsInvalidXMLCharacter (s))
+    if (eIncorrectCharHandling.isTestRequired () && sText != null)
     {
-      eIncorrectCharHandling.notifyOnInvalidXMLCharacter (s);
-      if (eIncorrectCharHandling.isReplaceWithNothing ())
+      final char [] aChars = sText.toCharArray ();
+      if (containsInvalidXMLCharacter (aChars))
       {
-        StringHelper.replaceMultipleTo (s, MASK_PATTERNS_ALL, MASK_REPLACE_ALL_EMPTY, aWriter);
-        return;
+        eIncorrectCharHandling.notifyOnInvalidXMLCharacter (sText, getAllInvalidXMLCharacters (aChars));
+        if (eIncorrectCharHandling.isReplaceWithNothing ())
+        {
+          StringHelper.replaceMultipleTo (sText, MASK_PATTERNS_ALL, MASK_REPLACE_ALL_EMPTY, aWriter);
+          return;
+        }
       }
     }
 
     if (eXMLVersion.equals (EXMLVersion.XML_10))
-      StringHelper.replaceMultipleTo (s, MASK_PATTERNS_REGULAR, MASK_REPLACE_REGULAR, aWriter);
+      StringHelper.replaceMultipleTo (sText, MASK_PATTERNS_REGULAR, MASK_REPLACE_REGULAR, aWriter);
     else
-      StringHelper.replaceMultipleTo (s, MASK_PATTERNS_ALL, MASK_REPLACE_ALL_XML11, aWriter);
+      StringHelper.replaceMultipleTo (sText, MASK_PATTERNS_ALL, MASK_REPLACE_ALL_XML11, aWriter);
   }
 
   /**
@@ -820,5 +829,24 @@ public final class XMLHelper
         if (isInvalidXMLCharacter (c))
           return true;
     return false;
+  }
+
+  @Nullable
+  public static Set <Character> getAllInvalidXMLCharacters (@Nullable final String s)
+  {
+    return s == null ? null : getAllInvalidXMLCharacters (s.toCharArray ());
+  }
+
+  @Nullable
+  public static Set <Character> getAllInvalidXMLCharacters (@Nullable final char [] aChars)
+  {
+    if (ArrayHelper.isEmpty (aChars))
+      return null;
+
+    final Set <Character> aRes = new HashSet <Character> ();
+    for (final char c : aChars)
+      if (isInvalidXMLCharacter (c))
+        aRes.add (Character.valueOf (c));
+    return aRes;
   }
 }
