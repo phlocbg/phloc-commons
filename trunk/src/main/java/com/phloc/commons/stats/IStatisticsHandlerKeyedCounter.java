@@ -42,5 +42,5 @@ public interface IStatisticsHandlerKeyedCounter extends StatisticsHandlerKeyedCo
    * @param nByHowMany
    *        The amount to increment. May be negative as well
    */
-  void increment (@Nullable String sKey, int nByHowMany);
+  void increment (@Nullable String sKey, long nByHowMany);
 }

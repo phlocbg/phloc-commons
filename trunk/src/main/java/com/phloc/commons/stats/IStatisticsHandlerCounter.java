@@ -24,7 +24,16 @@ package com.phloc.commons.stats;
  */
 public interface IStatisticsHandlerCounter extends StatisticsHandlerCounterMBean
 {
+  /**
+   * Increment the counter by 1
+   */
   void increment ();
 
-  void increment (int nByHowMany);
+  /**
+   * Increment the counter by an arbitrary number
+   * 
+   * @param nByHowMany
+   *        The number to be added. May be negative as well.
+   */
+  void increment (long nByHowMany);
 }

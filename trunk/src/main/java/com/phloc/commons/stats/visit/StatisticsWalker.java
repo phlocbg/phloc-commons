@@ -27,6 +27,7 @@ import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.stats.IStatisticsHandlerCache;
 import com.phloc.commons.stats.IStatisticsHandlerCounter;
 import com.phloc.commons.stats.IStatisticsHandlerKeyedCounter;
+import com.phloc.commons.stats.IStatisticsHandlerKeyedTimer;
 import com.phloc.commons.stats.IStatisticsHandlerSize;
 import com.phloc.commons.stats.IStatisticsHandlerTimer;
 import com.phloc.commons.stats.StatisticsManager;
@@ -59,47 +60,50 @@ public final class StatisticsWalker
 
     // For all cache handler
     List <String> aHandlers = ContainerHelper.getSorted (StatisticsManager.getAllCacheHandler ());
-    if (aHandlers != null)
-      for (final String sName : aHandlers)
-      {
-        final IStatisticsHandlerCache aHandler = StatisticsManager.getCacheHandler (sName);
-        aVisitor.onCache (sName, aHandler);
-      }
+    for (final String sName : aHandlers)
+    {
+      final IStatisticsHandlerCache aHandler = StatisticsManager.getCacheHandler (sName);
+      aVisitor.onCache (sName, aHandler);
+    }
 
     // For all timer handler
     aHandlers = ContainerHelper.getSorted (StatisticsManager.getAllTimerHandler ());
-    if (aHandlers != null)
-      for (final String sName : aHandlers)
-      {
-        final IStatisticsHandlerTimer aHandler = StatisticsManager.getTimerHandler (sName);
-        aVisitor.onTimer (sName, aHandler);
-      }
+    for (final String sName : aHandlers)
+    {
+      final IStatisticsHandlerTimer aHandler = StatisticsManager.getTimerHandler (sName);
+      aVisitor.onTimer (sName, aHandler);
+    }
+
+    // For all keyed timer handler
+    aHandlers = ContainerHelper.getSorted (StatisticsManager.getAllKeyedTimerHandler ());
+    for (final String sName : aHandlers)
+    {
+      final IStatisticsHandlerKeyedTimer aHandler = StatisticsManager.getKeyedTimerHandler (sName);
+      aVisitor.onKeyedTimer (sName, aHandler);
+    }
 
     // For all size handler
     aHandlers = ContainerHelper.getSorted (StatisticsManager.getAllSizeHandler ());
-    if (aHandlers != null)
-      for (final String sName : aHandlers)
-      {
-        final IStatisticsHandlerSize aHandler = StatisticsManager.getSizeHandler (sName);
-        aVisitor.onSize (sName, aHandler);
-      }
+    for (final String sName : aHandlers)
+    {
+      final IStatisticsHandlerSize aHandler = StatisticsManager.getSizeHandler (sName);
+      aVisitor.onSize (sName, aHandler);
+    }
 
     // For all counter handler
     aHandlers = ContainerHelper.getSorted (StatisticsManager.getAllCounterHandler ());
-    if (aHandlers != null)
-      for (final String sName : aHandlers)
-      {
-        final IStatisticsHandlerCounter aHandler = StatisticsManager.getCounterHandler (sName);
-        aVisitor.onCounter (sName, aHandler);
-      }
+    for (final String sName : aHandlers)
+    {
+      final IStatisticsHandlerCounter aHandler = StatisticsManager.getCounterHandler (sName);
+      aVisitor.onCounter (sName, aHandler);
+    }
 
     // For all keyed counter handler
     aHandlers = ContainerHelper.getSorted (StatisticsManager.getAllKeyedCounterHandler ());
-    if (aHandlers != null)
-      for (final String sName : aHandlers)
-      {
-        final IStatisticsHandlerKeyedCounter aHandler = StatisticsManager.getKeyedCounterHandler (sName);
-        aVisitor.onKeyedCounter (sName, aHandler);
-      }
+    for (final String sName : aHandlers)
+    {
+      final IStatisticsHandlerKeyedCounter aHandler = StatisticsManager.getKeyedCounterHandler (sName);
+      aVisitor.onKeyedCounter (sName, aHandler);
+    }
   }
 }

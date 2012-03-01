@@ -47,11 +47,13 @@ public final class StatisticsManager
   private static final AtomicBoolean s_aJMXEnabled = new AtomicBoolean (DEFAULT_JMX_ENABLED);
   private static final ReadWriteLock s_aRWLockCache = new ReentrantReadWriteLock ();
   private static final ReadWriteLock s_aRWLockTimer = new ReentrantReadWriteLock ();
+  private static final ReadWriteLock s_aRWLockKeyedTimer = new ReentrantReadWriteLock ();
   private static final ReadWriteLock s_aRWLockSize = new ReentrantReadWriteLock ();
   private static final ReadWriteLock s_aRWLockCounter = new ReentrantReadWriteLock ();
   private static final ReadWriteLock s_aRWLockKeyedCounter = new ReentrantReadWriteLock ();
   private static final Map <String, StatisticsHandlerCache> s_aHdlCache = new HashMap <String, StatisticsHandlerCache> ();
   private static final Map <String, StatisticsHandlerTimer> s_aHdlTimer = new HashMap <String, StatisticsHandlerTimer> ();
+  private static final Map <String, StatisticsHandlerKeyedTimer> s_aHdlKeyedTimer = new HashMap <String, StatisticsHandlerKeyedTimer> ();
   private static final Map <String, StatisticsHandlerSize> s_aHdlSize = new HashMap <String, StatisticsHandlerSize> ();
   private static final Map <String, StatisticsHandlerCounter> s_aHdlCounter = new HashMap <String, StatisticsHandlerCounter> ();
   private static final Map <String, StatisticsHandlerKeyedCounter> s_aHdlKeyedCounter = new HashMap <String, StatisticsHandlerKeyedCounter> ();
@@ -168,6 +170,55 @@ public final class StatisticsManager
     finally
     {
       s_aRWLockTimer.readLock ().unlock ();
+    }
+  }
+
+  @Nonnull
+  public static IStatisticsHandlerKeyedTimer getKeyedTimerHandler (@Nonnull final Class <?> aClass)
+  {
+    if (aClass == null)
+      throw new NullPointerException ("class");
+
+    return getKeyedTimerHandler (aClass.getName ());
+  }
+
+  @Nonnull
+  public static IStatisticsHandlerKeyedTimer getKeyedTimerHandler (@Nonnull @Nonempty final String sName)
+  {
+    if (StringHelper.hasNoText (sName))
+      throw new IllegalArgumentException ("name");
+
+    s_aRWLockKeyedTimer.writeLock ().lock ();
+    try
+    {
+      StatisticsHandlerKeyedTimer aHdl = s_aHdlKeyedTimer.get (sName);
+      if (aHdl == null)
+      {
+        aHdl = new StatisticsHandlerKeyedTimer ();
+        if (isJMXEnabled ())
+          JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
+        s_aHdlKeyedTimer.put (sName, aHdl);
+      }
+      return aHdl;
+    }
+    finally
+    {
+      s_aRWLockKeyedTimer.writeLock ().unlock ();
+    }
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <String> getAllKeyedTimerHandler ()
+  {
+    s_aRWLockKeyedTimer.readLock ().lock ();
+    try
+    {
+      return ContainerHelper.newSet (s_aHdlKeyedTimer.keySet ());
+    }
+    finally
+    {
+      s_aRWLockKeyedTimer.readLock ().unlock ();
     }
   }
 

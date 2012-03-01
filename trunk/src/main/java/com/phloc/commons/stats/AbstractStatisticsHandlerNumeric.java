@@ -21,6 +21,7 @@ import java.math.BigInteger;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import javax.annotation.CheckForSigned;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
@@ -38,8 +39,8 @@ abstract class AbstractStatisticsHandlerNumeric implements IStatisticsHandlerNum
 {
   private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
   private int m_nInvocationCount = 0;
-  private long m_nMin = CGlobal.ILLEGAL_UINT;
-  private long m_nMax = CGlobal.ILLEGAL_UINT;
+  private long m_nMin = CGlobal.ILLEGAL_ULONG;
+  private long m_nMax = CGlobal.ILLEGAL_ULONG;
   private BigInteger m_aSum = BigInteger.ZERO;
 
   @Nonnegative
@@ -62,9 +63,9 @@ abstract class AbstractStatisticsHandlerNumeric implements IStatisticsHandlerNum
     try
     {
       m_nInvocationCount++;
-      if (m_nMin == CGlobal.ILLEGAL_UINT || nValue < m_nMin)
+      if (m_nMin == CGlobal.ILLEGAL_ULONG || nValue < m_nMin)
         m_nMin = nValue;
-      if (m_nMax == CGlobal.ILLEGAL_UINT || nValue > m_nMax)
+      if (m_nMax == CGlobal.ILLEGAL_ULONG || nValue > m_nMax)
         m_nMax = nValue;
       m_aSum = m_aSum.add (BigInteger.valueOf (nValue));
     }
@@ -88,6 +89,7 @@ abstract class AbstractStatisticsHandlerNumeric implements IStatisticsHandlerNum
     }
   }
 
+  @CheckForSigned
   public final long getMin ()
   {
     m_aRWLock.readLock ().lock ();
@@ -101,13 +103,14 @@ abstract class AbstractStatisticsHandlerNumeric implements IStatisticsHandlerNum
     }
   }
 
+  @CheckForSigned
   public final long getAverage ()
   {
     m_aRWLock.readLock ().lock ();
     try
     {
       if (m_nInvocationCount == 0)
-        return CGlobal.ILLEGAL_UINT;
+        return CGlobal.ILLEGAL_ULONG;
       return m_aSum.divide (BigInteger.valueOf (m_nInvocationCount)).longValue ();
     }
     finally
@@ -116,6 +119,7 @@ abstract class AbstractStatisticsHandlerNumeric implements IStatisticsHandlerNum
     }
   }
 
+  @CheckForSigned
   public long getMax ()
   {
     m_aRWLock.readLock ().lock ();

@@ -17,10 +17,18 @@
  */
 package com.phloc.commons.stats;
 
+import javax.annotation.CheckForSigned;
+
 /**
  * MBean interface for {@link IStatisticsHandlerCounter}
  * 
  * @author philip
  */
 public interface StatisticsHandlerCounterMBean extends IStatisticsHandler
-{}
+{
+  /**
+   * @return The total count. May be negative if negative values were added.
+   */
+  @CheckForSigned
+  long getCount ();
+}

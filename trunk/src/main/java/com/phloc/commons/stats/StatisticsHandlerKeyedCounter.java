@@ -25,6 +25,7 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.CheckForSigned;
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
@@ -33,7 +34,7 @@ import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
-import com.phloc.commons.mutable.MutableInt;
+import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * Default implementation of {@link IStatisticsHandlerKeyedCounter}
@@ -43,31 +44,69 @@ import com.phloc.commons.mutable.MutableInt;
 @ThreadSafe
 final class StatisticsHandlerKeyedCounter implements IStatisticsHandlerKeyedCounter
 {
-  private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
-  private final AtomicInteger m_aCount = new AtomicInteger ();
-  private final Map <String, MutableInt> m_aKeyedCount = new HashMap <String, MutableInt> ();
+  private static final class Value
+  {
+    private int m_nInvocationCount;
+    private long m_nCount;
 
+    public Value (final long nInitialValue)
+    {
+      m_nInvocationCount = 1;
+      m_nCount = nInitialValue;
+    }
+
+    public void increment (final long nByHowMany)
+    {
+      m_nInvocationCount++;
+      m_nCount += nByHowMany;
+    }
+
+    public int getInvocationCount ()
+    {
+      return m_nInvocationCount;
+    }
+
+    public long getCount ()
+    {
+      return m_nCount;
+    }
+
+    @Override
+    public String toString ()
+    {
+      // No object needed for ctor
+      return new ToStringGenerator (null).append ("invocations", m_nInvocationCount)
+                                         .append ("count", m_nCount)
+                                         .toString ();
+    }
+  }
+
+  private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
+  private final AtomicInteger m_aInvocationCount = new AtomicInteger ();
+  private final Map <String, Value> m_aMap = new HashMap <String, Value> ();
+
+  @Nonnegative
   public int getInvocationCount ()
   {
-    return m_aCount.intValue ();
+    return m_aInvocationCount.intValue ();
   }
 
   public void increment (@Nullable final String sKey)
   {
-    increment (sKey, 1);
+    increment (sKey, 1L);
   }
 
-  public void increment (@Nullable final String sKey, final int nByHowMany)
+  public void increment (@Nullable final String sKey, final long nByHowMany)
   {
-    m_aCount.incrementAndGet ();
+    m_aInvocationCount.incrementAndGet ();
     m_aRWLock.writeLock ().lock ();
     try
     {
-      final MutableInt aPerKey = m_aKeyedCount.get (sKey);
+      final Value aPerKey = m_aMap.get (sKey);
       if (aPerKey == null)
-        m_aKeyedCount.put (sKey, new MutableInt (nByHowMany));
+        m_aMap.put (sKey, new Value (nByHowMany));
       else
-        aPerKey.inc (nByHowMany);
+        aPerKey.increment (nByHowMany);
     }
     finally
     {
@@ -82,7 +121,7 @@ final class StatisticsHandlerKeyedCounter implements IStatisticsHandlerKeyedCoun
     m_aRWLock.readLock ().lock ();
     try
     {
-      return ContainerHelper.newSet (m_aKeyedCount.keySet ());
+      return ContainerHelper.newSet (m_aMap.keySet ());
     }
     finally
     {
@@ -91,13 +130,28 @@ final class StatisticsHandlerKeyedCounter implements IStatisticsHandlerKeyedCoun
   }
 
   @CheckForSigned
-  public int getKeyCount (@Nullable final String sKey)
+  public long getCount (@Nullable final String sKey)
   {
     m_aRWLock.readLock ().lock ();
     try
     {
-      final MutableInt aCount = m_aKeyedCount.get (sKey);
-      return aCount == null ? CGlobal.ILLEGAL_UINT : aCount.intValue ();
+      final Value aCount = m_aMap.get (sKey);
+      return aCount == null ? CGlobal.ILLEGAL_ULONG : aCount.getCount ();
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  @CheckForSigned
+  public int getInvocationCount (@Nullable final String sKey)
+  {
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      final Value aCount = m_aMap.get (sKey);
+      return aCount == null ? CGlobal.ILLEGAL_UINT : aCount.getInvocationCount ();
     }
     finally
     {
@@ -109,6 +163,6 @@ final class StatisticsHandlerKeyedCounter implements IStatisticsHandlerKeyedCoun
   @Nonempty
   public String getAsString ()
   {
-    return "invocations=" + getInvocationCount () + "; keyed=" + m_aKeyedCount.entrySet ();
+    return "invocations=" + getInvocationCount () + "; keyed=" + m_aMap.entrySet ();
   }
 }

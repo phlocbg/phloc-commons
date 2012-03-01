@@ -17,22 +17,24 @@
  */
 package com.phloc.commons.stats;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nullable;
 
 /**
- * MBean interface for {@link IStatisticsHandlerKeyedCounter}
+ * Modifying interface of {@link StatisticsHandlerKeyedTimerMBean}
  * 
  * @author philip
  */
-public interface StatisticsHandlerKeyedCounterMBean extends IStatisticsHandlerKeyed
+public interface IStatisticsHandlerKeyedTimer extends StatisticsHandlerKeyedTimerMBean
 {
   /**
-   * Get the count of a certain key.
+   * Add a single execution time.
    * 
    * @param sKey
-   *        The key to retrieve the count from
-   * @return {@link com.phloc.commons.CGlobal#ILLEGAL_ULONG} if no such key is
-   *         present.
+   *        The key to be incremented.
+   * @param nMillis
+   *        The milli seconds it took to execute something. Should not be
+   *        negative.
    */
-  long getCount (@Nullable String sKey);
+  void addTime (@Nullable String sKey, @Nonnegative long nMillis);
 }

@@ -26,5 +26,11 @@ import javax.annotation.Nonnegative;
  */
 public interface IStatisticsHandlerSize extends StatisticsHandlerSizeMBean
 {
+  /**
+   * Add a new size
+   * 
+   * @param nSize
+   *        The size to be added. Must be &ge; 0 as sizes cannot be negative.
+   */
   void addSize (@Nonnegative long nSize);
 }

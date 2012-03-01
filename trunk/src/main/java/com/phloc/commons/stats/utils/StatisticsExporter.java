@@ -27,6 +27,7 @@ import com.phloc.commons.microdom.impl.MicroDocument;
 import com.phloc.commons.stats.IStatisticsHandlerCache;
 import com.phloc.commons.stats.IStatisticsHandlerCounter;
 import com.phloc.commons.stats.IStatisticsHandlerKeyedCounter;
+import com.phloc.commons.stats.IStatisticsHandlerKeyedTimer;
 import com.phloc.commons.stats.IStatisticsHandlerSize;
 import com.phloc.commons.stats.IStatisticsHandlerTimer;
 import com.phloc.commons.stats.visit.IStatisticsVisitor;
@@ -45,6 +46,7 @@ public final class StatisticsExporter
   public static final String ATTR_HITS = "hits";
   public static final String ATTR_MISSES = "misses";
   public static final String ELEMENT_TIMER = "timer";
+  public static final String ELEMENT_KEYEDTIMER = "keyedtimer";
   public static final String ELEMENT_SIZE = "size";
   public static final String ATTR_MIN = "min";
   public static final String ATTR_AVERAGE = "average";
@@ -55,6 +57,7 @@ public final class StatisticsExporter
   public static final String ELEMENT_KEY = "key";
   public static final String ATTR_NAME = "name";
   public static final String ATTR_INVOCATIONCOUNT = "invocationcount";
+  public static final String ATTR_COUNT = "count";
 
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")
@@ -91,6 +94,27 @@ public final class StatisticsExporter
                .setAttribute (ATTR_SUM, aHandler.getSum ().toString ());
       }
 
+      public void onKeyedTimer (final String sName, final IStatisticsHandlerKeyedTimer aHandler)
+      {
+        if (aHandler.getInvocationCount () > 0)
+        {
+          final IMicroElement eKeyedTimer = eRoot.appendElement (ELEMENT_KEYEDTIMER)
+                                                 .setAttribute (ATTR_NAME, sName)
+                                                 .setAttribute (ATTR_INVOCATIONCOUNT,
+                                                                Integer.toString (aHandler.getInvocationCount ()));
+          for (final String sKey : ContainerHelper.getSorted (aHandler.getAllKeys ()))
+          {
+            eKeyedTimer.appendElement (ELEMENT_KEY)
+                       .setAttribute (ATTR_NAME, sKey)
+                       .setAttribute (ATTR_INVOCATIONCOUNT, Integer.toString (aHandler.getInvocationCount (sKey)))
+                       .setAttribute (ATTR_MIN, Long.toString (aHandler.getMin (sKey)))
+                       .setAttribute (ATTR_AVERAGE, Long.toString (aHandler.getAverage (sKey)))
+                       .setAttribute (ATTR_MAX, Long.toString (aHandler.getMax (sKey)))
+                       .setAttribute (ATTR_SUM, aHandler.getSum (sKey).toString ());
+          }
+        }
+      }
+
       public void onSize (final String sName, final IStatisticsHandlerSize aHandler)
       {
         if (aHandler.getInvocationCount () > 0)
@@ -108,7 +132,8 @@ public final class StatisticsExporter
         if (aHandler.getInvocationCount () > 0)
           eRoot.appendElement (ELEMENT_COUNTER)
                .setAttribute (ATTR_NAME, sName)
-               .setAttribute (ATTR_INVOCATIONCOUNT, Integer.toString (aHandler.getInvocationCount ()));
+               .setAttribute (ATTR_INVOCATIONCOUNT, Integer.toString (aHandler.getInvocationCount ()))
+               .setAttribute (ATTR_COUNT, Long.toString (aHandler.getCount ()));
       }
 
       public void onKeyedCounter (final String sName, final IStatisticsHandlerKeyedCounter aHandler)
@@ -123,7 +148,8 @@ public final class StatisticsExporter
           {
             eKeyedCounter.appendElement (ELEMENT_KEY)
                          .setAttribute (ATTR_NAME, sKey)
-                         .setAttribute (ATTR_INVOCATIONCOUNT, Integer.toString (aHandler.getKeyCount (sKey)));
+                         .setAttribute (ATTR_INVOCATIONCOUNT, Integer.toString (aHandler.getInvocationCount (sKey)))
+                         .setAttribute (ATTR_COUNT, Long.toString (aHandler.getCount (sKey)));
           }
         }
       }

@@ -17,7 +17,7 @@
  */
 package com.phloc.commons.stats;
 
-import javax.annotation.Nonnull;
+import javax.annotation.Nonnegative;
 
 /**
  * Modifying interface of {@link StatisticsHandlerTimerMBean}
@@ -26,5 +26,12 @@ import javax.annotation.Nonnull;
  */
 public interface IStatisticsHandlerTimer extends StatisticsHandlerTimerMBean
 {
-  void addTime (@Nonnull long nMillis);
+  /**
+   * Add a single execution time.
+   * 
+   * @param nMillis
+   *        The milli seconds it took to execute something. Should not be
+   *        negative.
+   */
+  void addTime (@Nonnegative long nMillis);
 }

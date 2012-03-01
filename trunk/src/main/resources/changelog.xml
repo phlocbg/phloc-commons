@@ -20,6 +20,16 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2012-03-01" category="api" action="add">
+    <change>
+      <text locale="en">Added new statistics type 'KeyedTimer' incl. visit and export</text>
+    </change>
+  </entry>
+  <entry date="2012-03-01" category="api" action="change" incompatible="true">
+    <change>
+      <text locale="en">Changed the API of they statistics keyed counter slightly</text>
+    </change>
+  </entry>
   <entry date="2012-02-29" category="tech" action="fix">
     <change>
       <text locale="en">Added XML character replacement for character 0x2028 (Unicode newline)</text>

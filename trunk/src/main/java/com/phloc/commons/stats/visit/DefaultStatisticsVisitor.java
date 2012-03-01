@@ -21,6 +21,7 @@ import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.stats.IStatisticsHandlerCache;
 import com.phloc.commons.stats.IStatisticsHandlerCounter;
 import com.phloc.commons.stats.IStatisticsHandlerKeyedCounter;
+import com.phloc.commons.stats.IStatisticsHandlerKeyedTimer;
 import com.phloc.commons.stats.IStatisticsHandlerSize;
 import com.phloc.commons.stats.IStatisticsHandlerTimer;
 
@@ -38,6 +39,10 @@ public class DefaultStatisticsVisitor implements IStatisticsVisitor
 
   @OverrideOnDemand
   public void onTimer (final String sName, final IStatisticsHandlerTimer aHandler)
+  {}
+
+  @OverrideOnDemand
+  public void onKeyedTimer (final String sName, final IStatisticsHandlerKeyedTimer aHandler)
   {}
 
   @OverrideOnDemand

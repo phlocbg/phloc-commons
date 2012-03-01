@@ -19,9 +19,11 @@ package com.phloc.commons.stats;
 
 import java.util.Set;
 
+import javax.annotation.CheckForSigned;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
 
 /**
@@ -39,12 +41,13 @@ public interface IStatisticsHandlerKeyed extends IStatisticsHandler
   Set <String> getAllKeys ();
 
   /**
-   * Get the count of a certain key.
+   * Get the invocation count for a single key.
    * 
    * @param sKey
-   *        The key to retrieve the count from
-   * @return {@link com.phloc.commons.CGlobal#ILLEGAL_UINT} if no such key is
-   *         present.
+   *        The key to be queried. May be <code>null</code>.
+   * @return The invocation count for a single key or
+   *         {@link CGlobal#ILLEGAL_UINT} if no such key exists
    */
-  int getKeyCount (@Nullable String sKey);
+  @CheckForSigned
+  int getInvocationCount (@Nullable String sKey);
 }
