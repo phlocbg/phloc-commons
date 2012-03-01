@@ -17,22 +17,12 @@
  */
 package com.phloc.commons.stats;
 
-import javax.annotation.Nullable;
-
 /**
- * MBean interface for {@link IStatisticsHandlerKeyedCounter}
+ * MBean interface for {@link IStatisticsHandlerKeyedTimer}
  * 
  * @author philip
  */
-public interface StatisticsHandlerKeyedCounterMBean extends IStatisticsHandlerKeyed
+public interface StatisticsHandlerKeyedTimerMBean extends IStatisticsHandlerKeyedNumeric
 {
-  /**
-   * Get the count of a certain key.
-   * 
-   * @param sKey
-   *        The key to retrieve the count from
-   * @return {@link com.phloc.commons.CGlobal#ILLEGAL_ULONG} if no such key is
-   *         present.
-   */
-  long getCount (@Nullable String sKey);
+  /* empty */
 }

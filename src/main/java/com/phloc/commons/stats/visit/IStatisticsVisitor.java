@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 import com.phloc.commons.stats.IStatisticsHandlerCache;
 import com.phloc.commons.stats.IStatisticsHandlerCounter;
 import com.phloc.commons.stats.IStatisticsHandlerKeyedCounter;
+import com.phloc.commons.stats.IStatisticsHandlerKeyedTimer;
 import com.phloc.commons.stats.IStatisticsHandlerSize;
 import com.phloc.commons.stats.IStatisticsHandlerTimer;
 
@@ -35,6 +36,8 @@ public interface IStatisticsVisitor
   void onCache (@Nonnull String sName, @Nonnull IStatisticsHandlerCache aHandler);
 
   void onTimer (@Nonnull String sName, @Nonnull IStatisticsHandlerTimer aHandler);
+
+  void onKeyedTimer (@Nonnull String sName, @Nonnull IStatisticsHandlerKeyedTimer aHandler);
 
   void onSize (@Nonnull String sName, @Nonnull IStatisticsHandlerSize aHandler);
 

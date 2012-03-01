@@ -25,7 +25,7 @@ import org.junit.Test;
 
 /**
  * Test class for class {@link StatisticsManager}.
- *
+ * 
  * @author philip
  */
 public final class StatisticsManagerTest
@@ -70,6 +70,29 @@ public final class StatisticsManagerTest
     try
     {
       StatisticsManager.getTimerHandler ((String) null);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+  }
+
+  @Test
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  public void testKeyedTimerHandler ()
+  {
+    assertNotNull (StatisticsManager.getKeyedTimerHandler (StatisticsManagerTest.class));
+    assertNotNull (StatisticsManager.getKeyedTimerHandler (StatisticsManagerTest.class));
+    assertFalse (StatisticsManager.getAllKeyedTimerHandler ().isEmpty ());
+    try
+    {
+      StatisticsManager.getKeyedTimerHandler ((Class <?>) null);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+    try
+    {
+      StatisticsManager.getKeyedTimerHandler ((String) null);
       fail ();
     }
     catch (final IllegalArgumentException ex)

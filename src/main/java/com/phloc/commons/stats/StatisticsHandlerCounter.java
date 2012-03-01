@@ -18,7 +18,10 @@
 package com.phloc.commons.stats;
 
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
+import javax.annotation.CheckForSigned;
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
 
@@ -32,20 +35,30 @@ import com.phloc.commons.annotations.Nonempty;
 @ThreadSafe
 final class StatisticsHandlerCounter implements IStatisticsHandlerCounter
 {
-  private final AtomicInteger m_aCount = new AtomicInteger ();
+  private final AtomicInteger m_aInvocationCount = new AtomicInteger ();
+  private final AtomicLong m_aCount = new AtomicLong ();
 
+  @Nonnegative
   public int getInvocationCount ()
   {
-    return m_aCount.intValue ();
+    return m_aInvocationCount.intValue ();
+  }
+
+  @CheckForSigned
+  public long getCount ()
+  {
+    return m_aCount.longValue ();
   }
 
   public void increment ()
   {
+    m_aInvocationCount.incrementAndGet ();
     m_aCount.incrementAndGet ();
   }
 
-  public void increment (final int nByHowMany)
+  public void increment (final long nByHowMany)
   {
+    m_aInvocationCount.incrementAndGet ();
     m_aCount.addAndGet (nByHowMany);
   }
 
@@ -53,6 +66,6 @@ final class StatisticsHandlerCounter implements IStatisticsHandlerCounter
   @Nonempty
   public String getAsString ()
   {
-    return "count=" + getInvocationCount ();
+    return "invocations=" + getInvocationCount () + ";count=" + getCount ();
   }
 }

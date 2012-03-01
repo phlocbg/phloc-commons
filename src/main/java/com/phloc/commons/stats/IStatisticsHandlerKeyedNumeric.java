@@ -20,7 +20,7 @@ package com.phloc.commons.stats;
 import java.math.BigInteger;
 
 import javax.annotation.CheckForSigned;
-import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.phloc.commons.CGlobal;
 
@@ -29,33 +29,41 @@ import com.phloc.commons.CGlobal;
  * 
  * @author philip
  */
-public interface IStatisticsHandlerNumeric extends IStatisticsHandler
+public interface IStatisticsHandlerKeyedNumeric extends IStatisticsHandlerKeyed
 {
   /**
-   * @return The sum of aggregated values.
+   * @param sKey
+   *        The key to be queried.
+   * @return The sum of aggregated values. <code>null</code> if no such key
+   *         exists.
    */
-  @Nonnull
-  BigInteger getSum ();
+  @Nullable
+  BigInteger getSum (@Nullable String sKey);
 
   /**
-   * @return The smallest value. Returns {@link CGlobal#ILLEGAL_ULONG} if the
-   *         invocation count is 0.
+   * @param sKey
+   *        The key to be queried.
+   * @return The smallest value. Returns {@link CGlobal#ILLEGAL_ULONG} if no
+   *         such key exists.
    */
   @CheckForSigned
-  long getMin ();
+  long getMin (@Nullable String sKey);
 
   /**
+   * @param sKey
+   *        The key to be queried.
    * @return The average value (=sum/invocationCount). Returns
-   *         {@link CGlobal#ILLEGAL_ULONG} if the invocation count is 0 to avoid
-   *         a division by 0.
+   *         {@link CGlobal#ILLEGAL_ULONG} if no such key exists.
    */
   @CheckForSigned
-  long getAverage ();
+  long getAverage (@Nullable String sKey);
 
   /**
-   * @return The biggest value. Returns {@link CGlobal#ILLEGAL_ULONG} if the
-   *         invocation count is 0.
+   * @param sKey
+   *        The key to be queried.
+   * @return The biggest value. Returns {@link CGlobal#ILLEGAL_ULONG} if no such
+   *         key exists.
    */
   @CheckForSigned
-  long getMax ();
+  long getMax (@Nullable String sKey);
 }
