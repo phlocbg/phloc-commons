@@ -124,6 +124,29 @@ public final class StatisticsManagerTest
 
   @Test
   @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  public void testKeyedSizeHandler ()
+  {
+    assertNotNull (StatisticsManager.getKeyedSizeHandler (StatisticsManagerTest.class));
+    assertNotNull (StatisticsManager.getKeyedSizeHandler (StatisticsManagerTest.class));
+    assertFalse (StatisticsManager.getAllKeyedSizeHandler ().isEmpty ());
+    try
+    {
+      StatisticsManager.getKeyedSizeHandler ((Class <?>) null);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+    try
+    {
+      StatisticsManager.getKeyedSizeHandler ((String) null);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+  }
+
+  @Test
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testCounterHandler ()
   {
     assertNotNull (StatisticsManager.getCounterHandler (StatisticsManagerTest.class));

@@ -49,12 +49,14 @@ public final class StatisticsManager
   private static final ReadWriteLock s_aRWLockTimer = new ReentrantReadWriteLock ();
   private static final ReadWriteLock s_aRWLockKeyedTimer = new ReentrantReadWriteLock ();
   private static final ReadWriteLock s_aRWLockSize = new ReentrantReadWriteLock ();
+  private static final ReadWriteLock s_aRWLockKeyedSize = new ReentrantReadWriteLock ();
   private static final ReadWriteLock s_aRWLockCounter = new ReentrantReadWriteLock ();
   private static final ReadWriteLock s_aRWLockKeyedCounter = new ReentrantReadWriteLock ();
   private static final Map <String, StatisticsHandlerCache> s_aHdlCache = new HashMap <String, StatisticsHandlerCache> ();
   private static final Map <String, StatisticsHandlerTimer> s_aHdlTimer = new HashMap <String, StatisticsHandlerTimer> ();
   private static final Map <String, StatisticsHandlerKeyedTimer> s_aHdlKeyedTimer = new HashMap <String, StatisticsHandlerKeyedTimer> ();
   private static final Map <String, StatisticsHandlerSize> s_aHdlSize = new HashMap <String, StatisticsHandlerSize> ();
+  private static final Map <String, StatisticsHandlerKeyedSize> s_aHdlKeyedSize = new HashMap <String, StatisticsHandlerKeyedSize> ();
   private static final Map <String, StatisticsHandlerCounter> s_aHdlCounter = new HashMap <String, StatisticsHandlerCounter> ();
   private static final Map <String, StatisticsHandlerKeyedCounter> s_aHdlKeyedCounter = new HashMap <String, StatisticsHandlerKeyedCounter> ();
 
@@ -268,6 +270,55 @@ public final class StatisticsManager
     finally
     {
       s_aRWLockSize.readLock ().unlock ();
+    }
+  }
+
+  @Nonnull
+  public static IStatisticsHandlerKeyedSize getKeyedSizeHandler (@Nonnull final Class <?> aClass)
+  {
+    if (aClass == null)
+      throw new NullPointerException ("class");
+
+    return getKeyedSizeHandler (aClass.getName ());
+  }
+
+  @Nonnull
+  public static IStatisticsHandlerKeyedSize getKeyedSizeHandler (@Nonnull @Nonempty final String sName)
+  {
+    if (StringHelper.hasNoText (sName))
+      throw new IllegalArgumentException ("name");
+
+    s_aRWLockKeyedSize.writeLock ().lock ();
+    try
+    {
+      StatisticsHandlerKeyedSize aHdl = s_aHdlKeyedSize.get (sName);
+      if (aHdl == null)
+      {
+        aHdl = new StatisticsHandlerKeyedSize ();
+        if (isJMXEnabled ())
+          JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
+        s_aHdlKeyedSize.put (sName, aHdl);
+      }
+      return aHdl;
+    }
+    finally
+    {
+      s_aRWLockKeyedSize.writeLock ().unlock ();
+    }
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <String> getAllKeyedSizeHandler ()
+  {
+    s_aRWLockKeyedSize.readLock ().lock ();
+    try
+    {
+      return ContainerHelper.newSet (s_aHdlKeyedSize.keySet ());
+    }
+    finally
+    {
+      s_aRWLockKeyedSize.readLock ().unlock ();
     }
   }
 
