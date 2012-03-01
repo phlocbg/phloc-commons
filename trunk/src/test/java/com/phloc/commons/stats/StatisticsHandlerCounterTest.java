@@ -37,7 +37,7 @@ public final class StatisticsHandlerCounterTest
     sh.increment ();
     assertEquals (1, sh.getInvocationCount ());
     sh.increment (2);
-    assertEquals (3, sh.getInvocationCount ());
+    assertEquals (2, sh.getInvocationCount ());
     assertNotNull (sh.getAsString ());
   }
 }
