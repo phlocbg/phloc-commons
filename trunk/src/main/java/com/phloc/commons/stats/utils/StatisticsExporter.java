@@ -27,6 +27,7 @@ import com.phloc.commons.microdom.impl.MicroDocument;
 import com.phloc.commons.stats.IStatisticsHandlerCache;
 import com.phloc.commons.stats.IStatisticsHandlerCounter;
 import com.phloc.commons.stats.IStatisticsHandlerKeyedCounter;
+import com.phloc.commons.stats.IStatisticsHandlerKeyedSize;
 import com.phloc.commons.stats.IStatisticsHandlerKeyedTimer;
 import com.phloc.commons.stats.IStatisticsHandlerSize;
 import com.phloc.commons.stats.IStatisticsHandlerTimer;
@@ -48,6 +49,7 @@ public final class StatisticsExporter
   public static final String ELEMENT_TIMER = "timer";
   public static final String ELEMENT_KEYEDTIMER = "keyedtimer";
   public static final String ELEMENT_SIZE = "size";
+  public static final String ELEMENT_KEYEDSIZE = "keyedsize";
   public static final String ATTR_MIN = "min";
   public static final String ATTR_AVERAGE = "average";
   public static final String ATTR_MAX = "max";
@@ -125,6 +127,27 @@ public final class StatisticsExporter
                .setAttribute (ATTR_AVERAGE, Long.toString (aHandler.getAverage ()))
                .setAttribute (ATTR_MAX, Long.toString (aHandler.getMax ()))
                .setAttribute (ATTR_SUM, aHandler.getSum ().toString ());
+      }
+
+      public void onKeyedSize (final String sName, final IStatisticsHandlerKeyedSize aHandler)
+      {
+        if (aHandler.getInvocationCount () > 0)
+        {
+          final IMicroElement eKeyedSize = eRoot.appendElement (ELEMENT_KEYEDSIZE)
+                                                .setAttribute (ATTR_NAME, sName)
+                                                .setAttribute (ATTR_INVOCATIONCOUNT,
+                                                               Integer.toString (aHandler.getInvocationCount ()));
+          for (final String sKey : ContainerHelper.getSorted (aHandler.getAllKeys ()))
+          {
+            eKeyedSize.appendElement (ELEMENT_KEY)
+                      .setAttribute (ATTR_NAME, sKey)
+                      .setAttribute (ATTR_INVOCATIONCOUNT, Integer.toString (aHandler.getInvocationCount (sKey)))
+                      .setAttribute (ATTR_MIN, Long.toString (aHandler.getMin (sKey)))
+                      .setAttribute (ATTR_AVERAGE, Long.toString (aHandler.getAverage (sKey)))
+                      .setAttribute (ATTR_MAX, Long.toString (aHandler.getMax (sKey)))
+                      .setAttribute (ATTR_SUM, aHandler.getSum (sKey).toString ());
+          }
+        }
       }
 
       public void onCounter (final String sName, final IStatisticsHandlerCounter aHandler)

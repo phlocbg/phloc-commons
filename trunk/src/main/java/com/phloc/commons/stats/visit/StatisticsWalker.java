@@ -27,6 +27,7 @@ import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.stats.IStatisticsHandlerCache;
 import com.phloc.commons.stats.IStatisticsHandlerCounter;
 import com.phloc.commons.stats.IStatisticsHandlerKeyedCounter;
+import com.phloc.commons.stats.IStatisticsHandlerKeyedSize;
 import com.phloc.commons.stats.IStatisticsHandlerKeyedTimer;
 import com.phloc.commons.stats.IStatisticsHandlerSize;
 import com.phloc.commons.stats.IStatisticsHandlerTimer;
@@ -88,6 +89,14 @@ public final class StatisticsWalker
     {
       final IStatisticsHandlerSize aHandler = StatisticsManager.getSizeHandler (sName);
       aVisitor.onSize (sName, aHandler);
+    }
+
+    // For all keyed size handler
+    aHandlers = ContainerHelper.getSorted (StatisticsManager.getAllKeyedSizeHandler ());
+    for (final String sName : aHandlers)
+    {
+      final IStatisticsHandlerKeyedSize aHandler = StatisticsManager.getKeyedSizeHandler (sName);
+      aVisitor.onKeyedSize (sName, aHandler);
     }
 
     // For all counter handler
