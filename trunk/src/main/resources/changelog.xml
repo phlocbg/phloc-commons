@@ -22,6 +22,11 @@
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
   <entry date="2012-03-01" category="api" action="add">
     <change>
+      <text locale="en">Added new interface IHasVersionRange</text>
+    </change>
+  </entry>
+  <entry date="2012-03-01" category="api" action="add">
+    <change>
       <text locale="en">Added new statistics type 'KeyedSize' incl. visit and export</text>
     </change>
   </entry>
