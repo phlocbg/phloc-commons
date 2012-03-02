@@ -418,7 +418,8 @@ public final class HashCodeCalculator
       return append (nPrevHashCode, HASHCODE_NULL);
 
     // Append class to ensure change for 0-element arrays
-    int ret = append (nPrevHashCode, x.getClass ());
+    int ret = append (nPrevHashCode, x.getClass ().hashCode ());
+    ret = append (ret, x.length);
     for (final Object aObject : x)
       ret = append (ret, aObject);
     return ret;
