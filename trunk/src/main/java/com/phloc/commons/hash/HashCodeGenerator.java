@@ -52,7 +52,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 public final class HashCodeGenerator implements IHashCodeGenerator
 {
   /** Use a prime number as the start. */
-  private static final int HASHCODE_INITIAL = 17;
+  public static final int INITIAL_HASHCODE = 17;
 
   /**
    * Once the hash code generation has been queried, no further changes may be
@@ -61,7 +61,7 @@ public final class HashCodeGenerator implements IHashCodeGenerator
   private boolean m_bClosed = false;
 
   /** The current hash code value. */
-  private int m_nHC = HASHCODE_INITIAL;
+  private int m_nHC = INITIAL_HASHCODE;
 
   /**
    * This is a sanity constructor that allows for any object to be passed in the

@@ -19,20 +19,25 @@ package com.phloc.commons.math;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.collections.iterate.IIterableIterator;
+import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.lang.GenericReflection;
+import com.phloc.commons.math.CombinationGeneratorOptimized.CombinationResultList;
 
 /**
  * Utility class for generating all possible combinations of elements for a
@@ -41,12 +46,76 @@ import com.phloc.commons.lang.GenericReflection;
  * solutions. This generator will only return complete result sets filling all
  * slots.
  * 
- * @author Boris Gregorcic
+ * @author Boris Gregorcic, philip
  * @param <DATATYPE>
  *        element type
  */
-public final class CombinationGenerator <DATATYPE> implements IIterableIterator <List <DATATYPE>>
+public final class CombinationGeneratorOptimized <DATATYPE> implements
+                                                            IIterableIterator <CombinationResultList <DATATYPE>>
 {
+  @MustImplementEqualsAndHashcode
+  public static final class CombinationResultList <DATATYPE>
+  {
+    private static final CombinationResultList <Object> s_aEmpty = new CombinationResultList <Object> (0).finish ();
+
+    private final Object [] m_aData;
+    private int m_nIndex = 0;
+    private Integer m_aHashCode;
+
+    public CombinationResultList (@Nonnegative final int nLength)
+    {
+      m_aData = new Object [nLength];
+    }
+
+    public void add (@Nullable final Object aObject)
+    {
+      m_aData[m_nIndex++] = aObject;
+    }
+
+    @Nonnull
+    public CombinationResultList <DATATYPE> finish ()
+    {
+      if (m_nIndex != m_aData.length)
+        throw new IllegalStateException ("Not all elements where added!");
+
+      return this;
+    }
+
+    @Override
+    public boolean equals (final Object o)
+    {
+      if (o == this)
+        return true;
+      if (!(o instanceof CombinationResultList <?>))
+        return false;
+      // Try to be as performant as possible, even if this is potentially wrong!
+      final CombinationResultList <?> rhs = (CombinationResultList <?>) o;
+      return Arrays.equals (m_aData, rhs.m_aData);
+    }
+
+    @Override
+    public int hashCode ()
+    {
+      if (m_aHashCode == null)
+      {
+        int nHC = HashCodeGenerator.INITIAL_HASHCODE * 31 + m_aData.length;
+        for (int i = 0; i < m_aData.length; ++i)
+        {
+          final Object aObject = m_aData[i];
+          nHC = nHC * 31 + (aObject == null ? 1231 : aObject.hashCode ());
+        }
+        m_aHashCode = Integer.valueOf (nHC);
+      }
+      return m_aHashCode.intValue ();
+    }
+
+    @Nonnull
+    public static <T> CombinationResultList <T> getEmpty ()
+    {
+      return GenericReflection.<CombinationResultList <Object>, CombinationResultList <T>> uncheckedCast (s_aEmpty);
+    }
+  }
+
   private final Object [] m_aElements;
   private final int [] m_aIndexResult;
   private final BigInteger m_aTotalCombinations;
@@ -65,7 +134,8 @@ public final class CombinationGenerator <DATATYPE> implements IIterableIterator 
    *        the number of slots to use (must not be greater than the element
    *        count!)
    */
-  public CombinationGenerator (@Nonnull @Nonempty final List <DATATYPE> aElements, @Nonnegative final int nSlotCount)
+  public CombinationGeneratorOptimized (@Nonnull @Nonempty final List <DATATYPE> aElements,
+                                        @Nonnegative final int nSlotCount)
   {
     if (ContainerHelper.isEmpty (aElements))
       throw new IllegalArgumentException ("No elements passed");
@@ -131,7 +201,7 @@ public final class CombinationGenerator <DATATYPE> implements IIterableIterator 
    */
   @Nonnull
   @ReturnsMutableCopy
-  public List <DATATYPE> next ()
+  public CombinationResultList <DATATYPE> next ()
   {
     // Not for the very first item, as the first item is the original order
     final boolean bFirstItem = m_bUseLong ? m_nCombinationsLeft == m_nTotalCombinations
@@ -160,10 +230,10 @@ public final class CombinationGenerator <DATATYPE> implements IIterableIterator 
       m_aCombinationsLeft = m_aCombinationsLeft.subtract (BigInteger.ONE);
 
     // Build result list
-    final List <DATATYPE> aResult = new ArrayList <DATATYPE> (m_aIndexResult.length);
-    for (final int nIndex : m_aIndexResult)
-      aResult.add (GenericReflection.<Object, DATATYPE> uncheckedCast (m_aElements[nIndex]));
-    return aResult;
+    final CombinationResultList <DATATYPE> aResult = new CombinationResultList <DATATYPE> (m_aIndexResult.length);
+    for (final int nIndexResult : m_aIndexResult)
+      aResult.add (m_aElements[nIndexResult]);
+    return aResult.finish ();
   }
 
   @UnsupportedOperation
@@ -173,7 +243,7 @@ public final class CombinationGenerator <DATATYPE> implements IIterableIterator 
   }
 
   @Nonnull
-  public Iterator <List <DATATYPE>> iterator ()
+  public Iterator <CombinationResultList <DATATYPE>> iterator ()
   {
     return this;
   }
@@ -190,10 +260,10 @@ public final class CombinationGenerator <DATATYPE> implements IIterableIterator 
    *         duplicate elements!
    */
   @Nonnull
-  public static <DATATYPE> List <List <DATATYPE>> getAllPermutations (@Nonnull @Nonempty final List <DATATYPE> aInput,
-                                                                      @Nonnegative final int nSlotCount)
+  public static <DATATYPE> List <CombinationResultList <DATATYPE>> getAllPermutations (@Nonnull @Nonempty final List <DATATYPE> aInput,
+                                                                                       @Nonnegative final int nSlotCount)
   {
-    final List <List <DATATYPE>> aResultList = new ArrayList <List <DATATYPE>> ();
+    final List <CombinationResultList <DATATYPE>> aResultList = new ArrayList <CombinationResultList <DATATYPE>> ();
     addAllPermutations (aInput, nSlotCount, aResultList);
     return aResultList;
   }
@@ -213,9 +283,10 @@ public final class CombinationGenerator <DATATYPE> implements IIterableIterator 
   @Nonnull
   public static <DATATYPE> void addAllPermutations (@Nonnull @Nonempty final List <DATATYPE> aInput,
                                                     @Nonnegative final int nSlotCount,
-                                                    @Nonnull final Collection <List <DATATYPE>> aResultList)
+                                                    @Nonnull final Collection <CombinationResultList <DATATYPE>> aResultList)
   {
-    for (final List <DATATYPE> aPermutation : new CombinationGenerator <DATATYPE> (aInput, nSlotCount))
+    for (final CombinationResultList <DATATYPE> aPermutation : new CombinationGeneratorOptimized <DATATYPE> (aInput,
+                                                                                                             nSlotCount))
       aResultList.add (aPermutation);
   }
 }
