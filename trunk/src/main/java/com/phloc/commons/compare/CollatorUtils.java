@@ -20,11 +20,7 @@ package com.phloc.commons.compare;
 import java.text.Collator;
 import java.text.ParseException;
 import java.text.RuleBasedCollator;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -34,6 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
+import com.phloc.commons.cache.AbstractNotifyingCache;
 
 /**
  * Helper class to easily create commonly used {@link Collator} objects.
@@ -44,8 +41,47 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 public final class CollatorUtils
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (CollatorUtils.class);
-  private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
-  private static final Map <Locale, Collator> s_aCache = new HashMap <Locale, Collator> ();
+
+  private static final class Cache extends AbstractNotifyingCache <Locale, Collator>
+  {
+    public Cache ()
+    {
+      super (CollatorUtils.class.getName ());
+    }
+
+    @Override
+    @Nonnull
+    protected Collator getValueToCache (final Locale aLocale)
+    {
+      final Locale aCollatorLocale = aLocale != null ? aLocale : Locale.getDefault ();
+      final Collator c = Collator.getInstance (aCollatorLocale);
+      if (!(c instanceof RuleBasedCollator))
+        throw new IllegalStateException ("Collator.getInstance did not return a RulleBasedCollator!");
+
+      try
+      {
+        final String sRules = ((RuleBasedCollator) c).getRules ();
+        if (sRules.indexOf ("<'.'<") < 0)
+        {
+          // Nothing to replace - use collator as it is
+          s_aLogger.warn ("Failed to identify the Collator rule part to be replaced. Locale used = " + aCollatorLocale);
+          return c;
+        }
+
+        final String sNewRules = sRules.replace ("<'.'<", "<' '<'.'<");
+        final RuleBasedCollator ret = new RuleBasedCollator (sNewRules);
+        ret.setStrength (Collator.TERTIARY);
+        ret.setDecomposition (Collator.FULL_DECOMPOSITION);
+        return ret;
+      }
+      catch (final ParseException ex)
+      {
+        throw new IllegalStateException ("Failed to parse collator rule set", ex);
+      }
+    }
+  }
+
+  private static final Cache s_aCache = new Cache ();
 
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")
@@ -53,36 +89,6 @@ public final class CollatorUtils
 
   private CollatorUtils ()
   {}
-
-  @Nonnull
-  private static Collator _createCollatorSpaceBeforeDot (@Nullable final Locale aLocale)
-  {
-    final Locale aCollatorLocale = aLocale != null ? aLocale : Locale.getDefault ();
-    final Collator c = Collator.getInstance (aCollatorLocale);
-    if (!(c instanceof RuleBasedCollator))
-      throw new IllegalStateException ("Collator.getInstance did not return a RulleBasedCollator!");
-
-    try
-    {
-      final String sRules = ((RuleBasedCollator) c).getRules ();
-      if (sRules.indexOf ("<'.'<") < 0)
-      {
-        // Nothing to replace - use collator as it is
-        s_aLogger.warn ("Failed to identify the Collator rule part to be replaced. Locale used = " + aCollatorLocale);
-        return c;
-      }
-
-      final String sNewRules = sRules.replace ("<'.'<", "<' '<'.'<");
-      final RuleBasedCollator ret = new RuleBasedCollator (sNewRules);
-      ret.setStrength (Collator.TERTIARY);
-      ret.setDecomposition (Collator.FULL_DECOMPOSITION);
-      return ret;
-    }
-    catch (final ParseException ex)
-    {
-      throw new IllegalStateException ("Failed to parse collator rule set", ex);
-    }
-  }
 
   /**
    * Create a collator that is based on the standard collator but sorts spaces
@@ -98,35 +104,6 @@ public final class CollatorUtils
   @Nonnull
   public static Collator getCollatorSpaceBeforeDot (@Nullable final Locale aLocale)
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      // In cache?
-      final Collator c = s_aCache.get (aLocale);
-      if (c != null)
-        return (Collator) c.clone ();
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
-
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
-      // Try again if now in cache
-      Collator c = s_aCache.get (aLocale);
-      if (c == null)
-      {
-        // Create new collator
-        c = _createCollatorSpaceBeforeDot (aLocale);
-        s_aCache.put (aLocale, c);
-      }
-      return (Collator) c.clone ();
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    return (Collator) s_aCache.getFromCache (aLocale).clone ();
   }
 }
