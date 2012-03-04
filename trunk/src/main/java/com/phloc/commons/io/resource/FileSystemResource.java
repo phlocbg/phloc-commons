@@ -82,6 +82,8 @@ public final class FileSystemResource implements IReadWriteResource
     try
     {
       // Try to remove all ".." etc paths
+      // Note: this is a bottleneck on unix systems, as
+      // java.io.UnixFileSyszem.canonicalize is blocking
       aAbsFile = aAbsFile.getCanonicalFile ();
     }
     catch (final IOException ex)
