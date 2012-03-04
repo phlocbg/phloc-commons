@@ -20,11 +20,15 @@ package com.phloc.commons.compare;
 import java.text.Collator;
 import java.text.ParseException;
 import java.text.RuleBasedCollator;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.ThreadSafe;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,10 +40,12 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
  * 
  * @author philip
  */
-@Immutable
+@ThreadSafe
 public final class CollatorUtils
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (CollatorUtils.class);
+  private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
+  private static final Map <Locale, Collator> s_aCache = new HashMap <Locale, Collator> ();
 
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")
@@ -48,19 +54,8 @@ public final class CollatorUtils
   private CollatorUtils ()
   {}
 
-  /**
-   * Create a collator that is based on the standard collator but sorts spaces
-   * before dots, because spaces are more important word separators than dots.
-   * Another example is the correct sorting of things like "1.1 a" vs.
-   * "1.1.1 b". This is the default collator used for sorting by default!
-   * 
-   * @param aLocale
-   *        The locale for which the collator is to be retrieved. May be
-   *        <code>null</code> to indicate the usage of the default locale.
-   * @return The created {@link RuleBasedCollator} and never <code>null</code>.
-   */
   @Nonnull
-  public static Collator getCollatorSpaceBeforeDot (@Nullable final Locale aLocale)
+  private static Collator _createCollatorSpaceBeforeDot (@Nullable final Locale aLocale)
   {
     final Locale aCollatorLocale = aLocale != null ? aLocale : Locale.getDefault ();
     final Collator c = Collator.getInstance (aCollatorLocale);
@@ -86,6 +81,52 @@ public final class CollatorUtils
     catch (final ParseException ex)
     {
       throw new IllegalStateException ("Failed to parse collator rule set", ex);
+    }
+  }
+
+  /**
+   * Create a collator that is based on the standard collator but sorts spaces
+   * before dots, because spaces are more important word separators than dots.
+   * Another example is the correct sorting of things like "1.1 a" vs.
+   * "1.1.1 b". This is the default collator used for sorting by default!
+   * 
+   * @param aLocale
+   *        The locale for which the collator is to be retrieved. May be
+   *        <code>null</code> to indicate the usage of the default locale.
+   * @return The created {@link RuleBasedCollator} and never <code>null</code>.
+   */
+  @Nonnull
+  public static Collator getCollatorSpaceBeforeDot (@Nullable final Locale aLocale)
+  {
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      // In cache?
+      final Collator c = s_aCache.get (aLocale);
+      if (c != null)
+        return (Collator) c.clone ();
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+
+    s_aRWLock.writeLock ().lock ();
+    try
+    {
+      // Try again if now in cache
+      Collator c = s_aCache.get (aLocale);
+      if (c == null)
+      {
+        // Create new collator
+        c = _createCollatorSpaceBeforeDot (aLocale);
+        s_aCache.put (aLocale, c);
+      }
+      return (Collator) c.clone ();
+    }
+    finally
+    {
+      s_aRWLock.writeLock ().unlock ();
     }
   }
 }
