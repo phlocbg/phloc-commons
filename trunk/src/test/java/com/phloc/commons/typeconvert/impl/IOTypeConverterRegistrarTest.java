@@ -27,6 +27,7 @@ import java.net.URL;
 import org.junit.Test;
 
 import com.phloc.commons.io.IReadableResource;
+import com.phloc.commons.io.file.FileUtils;
 import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.io.resource.FileSystemResource;
 import com.phloc.commons.io.resource.URLResource;
@@ -70,7 +71,7 @@ public final class IOTypeConverterRegistrarTest
     assertEquals (f, TypeConverter.convertIfNecessary (s, File.class));
 
     // FileSystemResource <--> URL
-    final URL u = f.getCanonicalFile ().toURI ().toURL ();
+    final URL u = FileUtils.getCanonicalFile (f).toURI ().toURL ();
     final FileSystemResource fs = TypeConverter.convertIfNecessary (u, FileSystemResource.class);
     try
     {

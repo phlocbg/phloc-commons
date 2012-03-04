@@ -18,7 +18,6 @@
 package com.phloc.commons.io.resource;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
@@ -39,6 +38,7 @@ import com.phloc.commons.io.IReadWriteResource;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.IWritableResource;
 import com.phloc.commons.io.file.FileUtils;
+import com.phloc.commons.io.file.FilenameHelper;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -77,28 +77,15 @@ public final class FileSystemResource implements IReadWriteResource
     if (aFile == null)
       throw new NullPointerException ("file");
 
-    // Make absolute
-    File aAbsFile = aFile.getAbsoluteFile ();
-    try
-    {
-      // Try to remove all ".." etc paths
-      // Note: this is a bottleneck on unix systems, as
-      // java.io.UnixFileSyszem.canonicalize is blocking
-      aAbsFile = aAbsFile.getCanonicalFile ();
-    }
-    catch (final IOException ex)
-    {
-      // Something obviously went wrong
-      s_aLogger.warn ("Failed to canonicalize file '" +
-                      aAbsFile.toString () +
-                      "': " +
-                      ex.getClass ().getName () +
-                      " - " +
-                      ex.getMessage ());
-    }
+    // Make absolute and try to remove all ".." etc paths
+    // Note: using getCleanPath with String is much faster compared to
+    // getCleanPath with a File parameter, as on Unix the
+    // UnixFileSystem.canonicalize method is a bottleneck
+    final String sPath = FilenameHelper.getCleanPath (aFile.getAbsolutePath ());
+    m_aFile = new File (sPath);
 
-    m_aFile = aAbsFile;
-    // Cache absolute path for performance reasons
+    // Note: cache absolute path for performance reasons
+    // Note: this path always uses the platform dependent path separator
     m_sPath = m_aFile.getAbsolutePath ();
   }
 

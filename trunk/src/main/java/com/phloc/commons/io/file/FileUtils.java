@@ -115,6 +115,12 @@ public final class FileUtils
     return EChange.CHANGED;
   }
 
+  @Nullable
+  public static File getCanonicalFile (@Nullable final File aFile) throws IOException
+  {
+    return aFile == null ? null : aFile.getCanonicalFile ();
+  }
+
   /**
    * Check if the searched directory is a parent object of the start directory
    * 
@@ -136,8 +142,8 @@ public final class FileUtils
     File aRealStartDirectory = aStartDirectory.getAbsoluteFile ();
     try
     {
-      aRealSearchDirectory = aRealSearchDirectory.getCanonicalFile ();
-      aRealStartDirectory = aRealStartDirectory.getCanonicalFile ();
+      aRealSearchDirectory = getCanonicalFile (aRealSearchDirectory);
+      aRealStartDirectory = getCanonicalFile (aRealStartDirectory);
     }
     catch (final IOException ex)
     {
