@@ -27,6 +27,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.ReturnsMutableCopy;
+import com.phloc.commons.callback.INonThrowingRunnableWithParameter;
 
 /**
  * Utility class for generating all possible combinations of elements for a
@@ -62,7 +63,38 @@ public final class CombinationGeneratorFlexible <DATATYPE>
   }
 
   /**
-   * Generates all combinations without duplicates.
+   * Iterate all combination, no matter they are unique or not.
+   * 
+   * @param aElements
+   *        List of elements.
+   * @param aCallback
+   *        Callback to invoke
+   */
+  public void iterateAllCombinations (@Nonnull final List <DATATYPE> aElements,
+                                      @Nonnull final INonThrowingRunnableWithParameter <List <DATATYPE>> aCallback)
+  {
+    if (aElements == null)
+      throw new NullPointerException ("elements");
+    if (aCallback == null)
+      throw new NullPointerException ("callback");
+
+    for (int nSlotCount = m_bAllowEmpty ? 0 : 1; nSlotCount <= m_nSlotCount; nSlotCount++)
+    {
+      if (aElements.isEmpty ())
+      {
+        aCallback.run (new ArrayList <DATATYPE> ());
+      }
+      else
+      {
+        // Add all permutations for the current slot count
+        for (final List <DATATYPE> aPermutation : new CombinationGenerator <DATATYPE> (aElements, nSlotCount))
+          aCallback.run (aPermutation);
+      }
+    }
+  }
+
+  /**
+   * Generate all combinations without duplicates.
    * 
    * @param aElements
    *        the elements to distribute to the specified slots (may be empty!)
@@ -76,19 +108,24 @@ public final class CombinationGeneratorFlexible <DATATYPE>
       throw new NullPointerException ("elements");
 
     final Set <List <DATATYPE>> aAllResults = new HashSet <List <DATATYPE>> ();
-    for (int nSlotCount = m_bAllowEmpty ? 0 : 1; nSlotCount <= m_nSlotCount; nSlotCount++)
+    iterateAllCombinations (aElements, new INonThrowingRunnableWithParameter <List <DATATYPE>> ()
     {
-      if (aElements.isEmpty ())
+      public void run (final List <DATATYPE> aCurrentObject)
       {
-        aAllResults.add (new ArrayList <DATATYPE> ());
+        aAllResults.add (aCurrentObject);
       }
-      else
-      {
-        // Add all permutations for the current slot count
-        CombinationGenerator.addAllPermutations (aElements, nSlotCount, aAllResults);
-      }
-    }
+    });
     return aAllResults;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <DATATYPE> void iterateAllCombinations (@Nonnull final List <DATATYPE> aElements,
+                                                        final boolean bAllowEmpty,
+                                                        @Nonnull final INonThrowingRunnableWithParameter <List <DATATYPE>> aCallback)
+  {
+    new CombinationGeneratorFlexible <DATATYPE> (aElements.size (), bAllowEmpty).iterateAllCombinations (aElements,
+                                                                                                         aCallback);
   }
 
   @Nonnull
