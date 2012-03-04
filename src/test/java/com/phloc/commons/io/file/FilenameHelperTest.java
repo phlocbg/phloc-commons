@@ -24,7 +24,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
-import java.io.IOException;
 
 import org.junit.Test;
 
@@ -504,10 +503,9 @@ public final class FilenameHelperTest
   }
 
   @Test
-  public void testGetCleanPath_File () throws IOException
+  public void testGetCleanPath_File ()
   {
-    final String sBasePath = FilenameHelper.getPathUsingUnixSeparator (new File ("").getCanonicalFile ()
-                                                                                    .getAbsolutePath ());
+    final String sBasePath = FilenameHelper.getCleanPath (new File (""));
     assertEquals (sBasePath + "/target/file", FilenameHelper.getCleanPath (new File ("target/file")));
     assertEquals (sBasePath + "/target/file", FilenameHelper.getCleanPath (new File ("target/./file")));
     assertEquals (sBasePath + "/target/file", FilenameHelper.getCleanPath (new File ("./target/./file/.")));

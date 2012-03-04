@@ -147,8 +147,9 @@ public class SimpleLSResourceResolver implements LSResourceResolver
     }
 
     final File aParent = aBase.getParentFile ();
-    final File aResFile = new File (aParent, aSystemId.getPath ()).getCanonicalFile ().getAbsoluteFile ();
-    return new FileSystemResource (aResFile);
+    final File aRealFile = new File (aParent, aSystemId.getPath ());
+    // FileSystemResource is canonicalized inside
+    return new FileSystemResource (aRealFile);
   }
 
   @OverrideOnDemand

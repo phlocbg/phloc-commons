@@ -683,6 +683,12 @@ public final class FilenameHelper
         sPrefix = sPathToUse.substring (0, nPrefixIndex + 1);
         sPathToUse = sPathToUse.substring (nPrefixIndex + 1);
       }
+      else
+      {
+        // We have e.g. a URL like "http://www.phloc.com"
+        // -> Nothing to
+        return sPathToUse;
+      }
     }
     else
     {

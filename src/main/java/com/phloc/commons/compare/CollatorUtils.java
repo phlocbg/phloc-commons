@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.cache.AbstractNotifyingCache;
+import com.phloc.commons.system.SystemHelper;
 
 /**
  * Helper class to easily create commonly used {@link Collator} objects.
@@ -57,12 +58,11 @@ public final class CollatorUtils
 
     @Override
     @Nonnull
-    protected Collator getValueToCache (final Locale aLocale)
+    protected Collator getValueToCache (@Nonnull final Locale aLocale)
     {
-      final Locale aCollatorLocale = aLocale != null ? aLocale : Locale.getDefault ();
       // Collator.getInstance is synchronized and therefore extremely slow ->
       // that's why we put a cache around it!
-      final Collator c = Collator.getInstance (aCollatorLocale);
+      final Collator c = Collator.getInstance (aLocale);
       if (!(c instanceof RuleBasedCollator))
         throw new IllegalStateException ("Collator.getInstance did not return a RulleBasedCollator!");
 
@@ -72,7 +72,7 @@ public final class CollatorUtils
         if (sRules.indexOf ("<'.'<") < 0)
         {
           // Nothing to replace - use collator as it is
-          s_aLogger.warn ("Failed to identify the Collator rule part to be replaced. Locale used = " + aCollatorLocale);
+          s_aLogger.warn ("Failed to identify the Collator rule part to be replaced. Locale used: " + aLocale);
           return c;
         }
 
@@ -113,6 +113,7 @@ public final class CollatorUtils
   public static Collator getCollatorSpaceBeforeDot (@Nullable final Locale aLocale)
   {
     // Always create a clone!
-    return (Collator) s_aCache.getFromCache (aLocale).clone ();
+    final Locale aRealLocale = aLocale == null ? SystemHelper.getSystemLocale () : aLocale;
+    return (Collator) s_aCache.getFromCache (aRealLocale).clone ();
   }
 }
