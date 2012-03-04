@@ -23,6 +23,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.text.Collator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Vector;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -49,6 +50,9 @@ public final class CollatorUtilsTest extends AbstractPhlocTestCase
     assertNotNull (c2);
     assertTrue (c != c2);
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (c, c2);
+
+    // Unknown locale
+    assertNotNull (CollatorUtils.getCollatorSpaceBeforeDot (new Locale ("xy", "87")));
 
     final List <Collator> res = new Vector <Collator> ();
     final int nMax = 100;
