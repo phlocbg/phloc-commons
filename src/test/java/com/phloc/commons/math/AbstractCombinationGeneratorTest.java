@@ -48,9 +48,5 @@ public abstract class AbstractCombinationGeneratorTest extends AbstractPhlocTest
                                                                                         "d",
                                                                                         "e",
                                                                                         "f",
-                                                                                        "g",
-                                                                                        // New:
-                                                                                        "hh",
-                                                                                        "i",
-                                                                                        "j");
+                                                                                        "g");
 }
