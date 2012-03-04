@@ -361,7 +361,8 @@ public final class FilenameHelper
   /**
    * Avoid 0 byte attack. E.g. file name "test.java\u0000.txt" is internally
    * represented as "test.java" but ends with ".txt".<br>
-   * Note: the passed file name is <b>NOT</b> decoded.
+   * Note: the passed file name is <b>NOT</b> decoded (e.g. %20 stays %20 and
+   * will not be converted to a space).
    * 
    * @param sFilename
    *        The file name to check. May be <code>null</code>.
@@ -634,6 +635,7 @@ public final class FilenameHelper
     try
     {
       // This works only if the file exists
+      // Note: getCanonicalPath may be a bottleneck on Unix based file systems!
       return getPathUsingUnixSeparator (aFile.getCanonicalPath ());
     }
     catch (final IOException ex)
@@ -661,7 +663,7 @@ public final class FilenameHelper
     // Remove all relative paths and insecure characters
     String sPathToUse = getSecureFilename (sPath);
 
-    // Use only a single type of path separator
+    // Use only a single type of path separator namely "/"
     sPathToUse = getPathUsingUnixSeparator (sPathToUse);
 
     // Strip prefix from path to analyze, to not treat it as part of the
@@ -700,6 +702,7 @@ public final class FilenameHelper
       sPathToUse = sPathToUse.substring (1);
     }
 
+    // Start splitting into paths
     final List <String> aElements = new ArrayList <String> ();
     int nParentFolders = 0;
     final String [] aPathArray = RegExHelper.split (sPathToUse, UNIX_SEPARATOR_STR);
@@ -708,7 +711,9 @@ public final class FilenameHelper
     for (int i = aPathArray.length - 1; i >= 0; i--)
     {
       final String sElement = aPathArray[i];
-      if (PATH_CURRENT.equals (sElement))
+
+      // Empty paths and paths reflecting the current directory (".") areignored
+      if (sElement.length () == 0 || PATH_CURRENT.equals (sElement))
         continue;
 
       if (PATH_PARENT.equals (sElement))

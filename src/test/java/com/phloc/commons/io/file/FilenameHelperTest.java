@@ -511,6 +511,7 @@ public final class FilenameHelperTest
     assertEquals (sBasePath + "/target/file", FilenameHelper.getCleanPath (new File ("target/file")));
     assertEquals (sBasePath + "/target/file", FilenameHelper.getCleanPath (new File ("target/./file")));
     assertEquals (sBasePath + "/target/file", FilenameHelper.getCleanPath (new File ("./target/./file/.")));
+    assertEquals (sBasePath + "/target/file", FilenameHelper.getCleanPath (new File ("./target/////./file/.////")));
     assertEquals (sBasePath + "/target/file", FilenameHelper.getCleanPath (new File ("target/sub/../file")));
 
     try
@@ -529,6 +530,7 @@ public final class FilenameHelperTest
     assertEquals ("target/file", FilenameHelper.getCleanPath ("target/file"));
     assertEquals ("target/file", FilenameHelper.getCleanPath ("target/./file"));
     assertEquals ("target/file", FilenameHelper.getCleanPath ("./target/./file/."));
+    assertEquals ("target/file", FilenameHelper.getCleanPath ("./target/////./file/.////"));
     assertEquals ("target/file", FilenameHelper.getCleanPath ("target/sub/../file"));
     assertEquals ("../x/target/file", FilenameHelper.getCleanPath (".././x/./target/./sub/.././file"));
   }

@@ -42,6 +42,12 @@ public final class CollatorUtils
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (CollatorUtils.class);
 
+  /**
+   * Local cache from Locale to Collator because Collator.getInstance is
+   * synchronized!
+   * 
+   * @author philip
+   */
   private static final class Cache extends AbstractNotifyingCache <Locale, Collator>
   {
     public Cache ()
@@ -54,6 +60,8 @@ public final class CollatorUtils
     protected Collator getValueToCache (final Locale aLocale)
     {
       final Locale aCollatorLocale = aLocale != null ? aLocale : Locale.getDefault ();
+      // Collator.getInstance is synchronized and therefore extremely slow ->
+      // that's why we put a cache around it!
       final Collator c = Collator.getInstance (aCollatorLocale);
       if (!(c instanceof RuleBasedCollator))
         throw new IllegalStateException ("Collator.getInstance did not return a RulleBasedCollator!");
@@ -104,6 +112,7 @@ public final class CollatorUtils
   @Nonnull
   public static Collator getCollatorSpaceBeforeDot (@Nullable final Locale aLocale)
   {
+    // Always create a clone!
     return (Collator) s_aCache.getFromCache (aLocale).clone ();
   }
 }
