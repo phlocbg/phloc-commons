@@ -45,6 +45,7 @@ public final class URLResourceTest extends AbstractPhlocTestCase
   public void testCtor () throws MalformedURLException
   {
     assertNotNull (new URLResource ("http://www.phloc.com"));
+    assertNotNull (new URLResource ("http://www.phloc.com/"));
     assertNotNull (new URLResource ("http://www.phloc.com#anchor"));
     assertNotNull (new URLResource ("http://www.phloc.com?param=value"));
     assertNotNull (new URLResource ("http://www.phloc.com?param=value#anchor"));
