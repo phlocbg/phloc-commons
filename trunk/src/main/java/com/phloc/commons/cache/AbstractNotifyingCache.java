@@ -66,7 +66,7 @@ public abstract class AbstractNotifyingCache <KEYTYPE, VALUETYPE> extends Abstra
     m_aRWLock.readLock ().lock ();
     try
     {
-      aValue = super.getFromCache (aKey);
+      aValue = super.getFromCacheNoStats (aKey);
     }
     finally
     {
@@ -81,7 +81,8 @@ public abstract class AbstractNotifyingCache <KEYTYPE, VALUETYPE> extends Abstra
       {
         // Read again, in case the value was set between the two locking
         // sections
-        aValue = super.getFromCache (aKey);
+        // Note: do not increase statistics in this second try
+        aValue = super.getFromCacheNoStats (aKey);
         if (aValue == null)
         {
           // Call the abstract method to create the value to cache
@@ -93,13 +94,19 @@ public abstract class AbstractNotifyingCache <KEYTYPE, VALUETYPE> extends Abstra
 
           // Put the new value into the cache
           super.putInCache (aKey, aValue);
+          m_aCacheAccessStats.cacheMiss ();
         }
+        else
+          m_aCacheAccessStats.cacheHit ();
       }
       finally
       {
         m_aRWLock.writeLock ().unlock ();
       }
     }
+    else
+      m_aCacheAccessStats.cacheHit ();
+
     return aValue;
   }
 

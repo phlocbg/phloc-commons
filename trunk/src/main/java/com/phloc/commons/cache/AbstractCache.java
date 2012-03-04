@@ -45,7 +45,7 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
 
   private static final AtomicBoolean s_aJMXEnabled = new AtomicBoolean (DEFAULT_JMX_ENABLED);
 
-  private final IStatisticsHandlerCache m_aCacheAccessStats;
+  protected final IStatisticsHandlerCache m_aCacheAccessStats;
   private final IStatisticsHandlerCounter m_aCacheRemoveStats;
   private final IStatisticsHandlerCounter m_aCacheClearStats;
 
@@ -121,11 +121,18 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
 
   @Nullable
   @OverridingMethodsMustInvokeSuper
-  public VALUETYPE getFromCache (@Nullable final KEYTYPE aKey)
+  protected final VALUETYPE getFromCacheNoStats (@Nullable final KEYTYPE aKey)
   {
     // Since null is not allowed as value, we don't need to check with
     // containsKey before get!
-    final VALUETYPE aValue = m_aCache == null ? null : m_aCache.get (aKey);
+    return m_aCache == null ? null : m_aCache.get (aKey);
+  }
+
+  @Nullable
+  @OverridingMethodsMustInvokeSuper
+  public VALUETYPE getFromCache (@Nullable final KEYTYPE aKey)
+  {
+    final VALUETYPE aValue = getFromCacheNoStats (aKey);
     if (aValue == null)
       m_aCacheAccessStats.cacheMiss ();
     else

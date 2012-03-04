@@ -41,16 +41,17 @@ import com.phloc.commons.system.SystemHelper;
 @ThreadSafe
 public final class CollatorUtils
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (CollatorUtils.class);
-
   /**
    * Local cache from Locale to Collator because Collator.getInstance is
    * synchronized!
    * 
    * @author philip
    */
+  @ThreadSafe
   private static final class Cache extends AbstractNotifyingCache <Locale, Collator>
   {
+    private static final Logger s_aLogger = LoggerFactory.getLogger (Cache.class);
+
     public Cache ()
     {
       super (CollatorUtils.class.getName ());
@@ -63,8 +64,16 @@ public final class CollatorUtils
       // Collator.getInstance is synchronized and therefore extremely slow ->
       // that's why we put a cache around it!
       final Collator c = Collator.getInstance (aLocale);
+      if (c == null)
+      {
+        s_aLogger.error ("Failed to get Collator for Locale " + aLocale + " - using Collator for default locale!");
+        return Collator.getInstance (SystemHelper.getSystemLocale ());
+      }
       if (!(c instanceof RuleBasedCollator))
-        throw new IllegalStateException ("Collator.getInstance did not return a RulleBasedCollator!");
+      {
+        s_aLogger.warn ("Collator.getInstance did not return a RulleBasedCollator but a " + c.getClass ().getName ());
+        return c;
+      }
 
       try
       {
@@ -84,7 +93,7 @@ public final class CollatorUtils
       }
       catch (final ParseException ex)
       {
-        throw new IllegalStateException ("Failed to parse collator rule set", ex);
+        throw new IllegalStateException ("Failed to parse collator rule set for locale " + aLocale, ex);
       }
     }
   }
@@ -112,8 +121,10 @@ public final class CollatorUtils
   @Nonnull
   public static Collator getCollatorSpaceBeforeDot (@Nullable final Locale aLocale)
   {
-    // Always create a clone!
+    // Ensure to not pass null locale in
     final Locale aRealLocale = aLocale == null ? SystemHelper.getSystemLocale () : aLocale;
+
+    // Always create a clone!
     return (Collator) s_aCache.getFromCache (aRealLocale).clone ();
   }
 }
