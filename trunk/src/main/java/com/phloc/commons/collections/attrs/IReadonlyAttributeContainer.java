@@ -18,6 +18,7 @@
 package com.phloc.commons.collections.attrs;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.Set;
@@ -204,4 +205,10 @@ public interface IReadonlyAttributeContainer extends Serializable
    */
   @Nonnull
   Set <String> getAllAttributeNames ();
+
+  /**
+   * @return A non-null collection of all attribute values
+   */
+  @Nonnull
+  Collection <Object> getAllAttributeValues ();
 }

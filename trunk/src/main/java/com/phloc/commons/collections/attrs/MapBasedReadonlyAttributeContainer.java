@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.collections.attrs;
 
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -64,6 +65,12 @@ public final class MapBasedReadonlyAttributeContainer extends AbstractReadonlyAt
   }
 
   @Nonnull
+  public Enumeration <String> getAttributeNames ()
+  {
+    return ContainerHelper.getEnumeration (m_aAttrs.keySet ());
+  }
+
+  @Nonnull
   @ReturnsImmutableObject
   public Set <String> getAllAttributeNames ()
   {
@@ -71,9 +78,10 @@ public final class MapBasedReadonlyAttributeContainer extends AbstractReadonlyAt
   }
 
   @Nonnull
-  public Enumeration <String> getAttributeNames ()
+  @ReturnsImmutableObject
+  public Collection <Object> getAllAttributeValues ()
   {
-    return ContainerHelper.getEnumeration (m_aAttrs.keySet ());
+    return ContainerHelper.makeUnmodifiable (m_aAttrs.values ());
   }
 
   @Nullable
