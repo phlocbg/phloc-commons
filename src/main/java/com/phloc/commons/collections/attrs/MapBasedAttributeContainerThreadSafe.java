@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.collections.attrs;
 
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.Set;
@@ -160,6 +161,22 @@ public class MapBasedAttributeContainerThreadSafe extends MapBasedAttributeConta
     try
     {
       return ContainerHelper.newSet (m_aAttrs.keySet ());
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  @Override
+  @Nonnull
+  @ReturnsMutableCopy
+  public Collection <Object> getAllAttributeValues ()
+  {
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return ContainerHelper.newList (m_aAttrs.values ());
     }
     finally
     {
