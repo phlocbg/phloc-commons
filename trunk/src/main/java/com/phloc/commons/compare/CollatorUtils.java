@@ -48,19 +48,25 @@ public final class CollatorUtils
    * @author philip
    */
   @ThreadSafe
-  private static final class Cache extends AbstractNotifyingCache <Locale, Collator>
+  private static final class CollatorCache extends AbstractNotifyingCache <Locale, Collator>
   {
-    private static final Logger s_aLogger = LoggerFactory.getLogger (Cache.class);
+    private static final Logger s_aLogger = LoggerFactory.getLogger (CollatorCache.class);
 
-    public Cache ()
+    public CollatorCache ()
     {
       super (CollatorUtils.class.getName ());
     }
 
     @Override
     @Nonnull
-    protected Collator getValueToCache (@Nonnull final Locale aLocale)
+    protected Collator getValueToCache (@Nullable final Locale aLocale)
     {
+      if (aLocale == null)
+      {
+        s_aLogger.error ("Very weird: no locale passed in. Falling back to system locale.");
+        return Collator.getInstance (SystemHelper.getSystemLocale ());
+      }
+
       // Collator.getInstance is synchronized and therefore extremely slow ->
       // that's why we put a cache around it!
       final Collator c = Collator.getInstance (aLocale);
@@ -98,7 +104,7 @@ public final class CollatorUtils
     }
   }
 
-  private static final Cache s_aCache = new Cache ();
+  private static final CollatorCache s_aCache = new CollatorCache ();
 
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")
