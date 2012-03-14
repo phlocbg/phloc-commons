@@ -36,7 +36,8 @@ import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * Base class for all kind of string-object mapping container.
+ * Base class for all kind of string-object mapping container. This
+ * implementation is not thread-safe!
  * 
  * @author philip
  */
@@ -58,6 +59,13 @@ public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContain
     if (aMap == null)
       throw new NullPointerException ("map");
     m_aAttrs.putAll (aMap);
+  }
+
+  public MapBasedAttributeContainer (@Nonnull final IReadonlyAttributeContainer aCont)
+  {
+    if (aCont == null)
+      throw new NullPointerException ("cont");
+    m_aAttrs.putAll (aCont.getAllAttributes ());
   }
 
   public boolean containsAttribute (@Nullable final String sName)
