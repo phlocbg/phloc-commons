@@ -42,6 +42,8 @@ import com.phloc.commons.io.IInputStreamProvider;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.state.EChange;
+import com.phloc.commons.stats.IStatisticsHandlerCache;
+import com.phloc.commons.stats.StatisticsManager;
 
 /**
  * This service class is used to cache information about images. It is used to
@@ -54,6 +56,7 @@ import com.phloc.commons.state.EChange;
 public final class ImageDataManager
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (ImageDataManager.class);
+  private static final IStatisticsHandlerCache s_aStatsHdl = StatisticsManager.getCacheHandler (ImageDataManager.class);
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
   private static final Map <IReadableResource, ScalableSize> s_aImageData = new LRUCache <IReadableResource, ScalableSize> (1000);
   private static final Set <IReadableResource> s_aNonExistingResources = new HashSet <IReadableResource> ();
@@ -141,11 +144,17 @@ public final class ImageDataManager
       // Valid image data?
       final ScalableSize aData = s_aImageData.get (aRes);
       if (aData != null)
+      {
+        s_aStatsHdl.cacheHit ();
         return aData;
+      }
 
       // Known non-existing image data?
       if (s_aNonExistingResources.contains (aRes))
+      {
+        s_aStatsHdl.cacheHit ();
         return null;
+      }
     }
     finally
     {
@@ -163,6 +172,7 @@ public final class ImageDataManager
         s_aNonExistingResources.add (aRes);
       else
         s_aImageData.put (aRes, aData);
+      s_aStatsHdl.cacheMiss ();
       return aData;
     }
     finally
