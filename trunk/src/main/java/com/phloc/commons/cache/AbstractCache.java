@@ -42,6 +42,7 @@ import com.phloc.commons.string.ToStringGenerator;
 public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache <KEYTYPE, VALUETYPE>
 {
   public static final boolean DEFAULT_JMX_ENABLED = false;
+  public static final String STATISTICS_PREFIX = "cache:";
 
   private static final AtomicBoolean s_aJMXEnabled = new AtomicBoolean (DEFAULT_JMX_ENABLED);
 
@@ -57,9 +58,9 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
     if (StringHelper.hasNoText (sCacheName))
       throw new IllegalArgumentException ("cacheName");
 
-    m_aCacheAccessStats = StatisticsManager.getCacheHandler ("cache:" + sCacheName + "$access");
-    m_aCacheRemoveStats = StatisticsManager.getCounterHandler ("cache:" + sCacheName + "$remove");
-    m_aCacheClearStats = StatisticsManager.getCounterHandler ("cache:" + sCacheName + "$clear");
+    m_aCacheAccessStats = StatisticsManager.getCacheHandler (STATISTICS_PREFIX + sCacheName + "$access");
+    m_aCacheRemoveStats = StatisticsManager.getCounterHandler (STATISTICS_PREFIX + sCacheName + "$remove");
+    m_aCacheClearStats = StatisticsManager.getCounterHandler (STATISTICS_PREFIX + sCacheName + "$clear");
     m_sCacheName = sCacheName;
     if (isJMXEnabled ())
       JMXUtils.exposeMBeanWithAutoName (new SimpleCache (this), sCacheName);
