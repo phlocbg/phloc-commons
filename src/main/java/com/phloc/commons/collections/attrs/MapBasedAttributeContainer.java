@@ -31,7 +31,6 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.phloc.commons.IHasSize;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.collections.ContainerHelper;
-import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
@@ -95,25 +94,18 @@ public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContain
     if (sName == null)
       throw new NullPointerException ("name");
 
-    // Special case: null handling
-    if (aValue == null && !m_aAttrs.containsKey (sName))
-    {
-      m_aAttrs.put (sName, aValue);
-      return EChange.CHANGED;
-    }
+    if (aValue == null)
+      return removeAttribute (sName);
+
     final Object aOldValue = m_aAttrs.put (sName, aValue);
-    return EChange.valueOf (!EqualsUtils.nullSafeEquals (aOldValue, aValue));
+    return EChange.valueOf (!aValue.equals (aOldValue));
   }
 
   @Nonnull
   public EChange removeAttribute (@Nullable final String sName)
   {
-    if (sName == null || !m_aAttrs.containsKey (sName))
-      return EChange.UNCHANGED;
-
     // Returned value may be null
-    m_aAttrs.remove (sName);
-    return EChange.CHANGED;
+    return EChange.valueOf (sName != null && m_aAttrs.remove (sName) != null);
   }
 
   @Nonnull

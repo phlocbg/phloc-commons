@@ -36,7 +36,8 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * Default implementation of the {@link IReadonlyAttributeContainer} based on a
- * hash map.
+ * hash map. This implementation may carry <code>null</code> values but that is
+ * not recommended.
  * 
  * @author philip
  */
