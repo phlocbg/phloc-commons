@@ -77,11 +77,8 @@ public final class MapBasedAttributeContainerTest
     assertFalse (x.removeAttribute ("key").isChanged ());
 
     // Check null values
-    assertTrue (x.setAttribute ("null1", null).isChanged ());
     assertTrue (x.setAttribute ("null1", null).isUnchanged ());
     assertNull (x.getAttributeObject ("null1"));
-    assertTrue (x.containsAttribute ("null1"));
-    assertTrue (x.removeAttribute ("null1").isChanged ());
     assertFalse (x.containsAttribute ("null1"));
     assertTrue (x.removeAttribute ("null1").isUnchanged ());
 
