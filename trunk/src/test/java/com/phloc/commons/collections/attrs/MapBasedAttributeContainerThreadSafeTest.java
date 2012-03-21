@@ -20,6 +20,7 @@ package com.phloc.commons.collections.attrs;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -74,6 +75,15 @@ public final class MapBasedAttributeContainerThreadSafeTest
     assertTrue (x.getAttributeNames ().hasMoreElements ());
     assertTrue (x.removeAttribute ("key").isChanged ());
     assertFalse (x.removeAttribute ("key").isChanged ());
+
+    // Check null values
+    assertTrue (x.setAttribute ("null1", null).isChanged ());
+    assertTrue (x.setAttribute ("null1", null).isUnchanged ());
+    assertNull (x.getAttributeObject ("null1"));
+    assertTrue (x.containsAttribute ("null1"));
+    assertTrue (x.removeAttribute ("null1").isChanged ());
+    assertFalse (x.containsAttribute ("null1"));
+    assertTrue (x.removeAttribute ("null1").isUnchanged ());
 
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (new MapBasedAttributeContainerThreadSafe (),
                                                                     new MapBasedAttributeContainerThreadSafe ());
