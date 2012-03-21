@@ -19,9 +19,9 @@ package com.phloc.commons.collections.attrs;
 
 import java.util.Collection;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -50,7 +50,7 @@ public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContain
   /**
    * attribute storage.
    */
-  protected final Map <String, Object> m_aAttrs = new ConcurrentHashMap <String, Object> ();
+  protected final Map <String, Object> m_aAttrs = new HashMap <String, Object> ();
 
   public MapBasedAttributeContainer ()
   {}
@@ -90,12 +90,17 @@ public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContain
   }
 
   @Nonnull
-  public EChange setAttribute (@Nonnull final String sName, @Nonnull final Object aValue)
+  public EChange setAttribute (@Nonnull final String sName, @Nullable final Object aValue)
   {
     if (sName == null)
       throw new NullPointerException ("name");
-    if (aValue == null)
-      throw new NullPointerException ("value");
+
+    // Special case: null handling
+    if (aValue == null && !m_aAttrs.containsKey (sName))
+    {
+      m_aAttrs.put (sName, aValue);
+      return EChange.CHANGED;
+    }
     final Object aOldValue = m_aAttrs.put (sName, aValue);
     return EChange.valueOf (!EqualsUtils.nullSafeEquals (aOldValue, aValue));
   }
@@ -103,7 +108,12 @@ public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContain
   @Nonnull
   public EChange removeAttribute (@Nullable final String sName)
   {
-    return EChange.valueOf (sName != null && m_aAttrs.remove (sName) != null);
+    if (sName == null || !m_aAttrs.containsKey (sName))
+      return EChange.UNCHANGED;
+
+    // Returned value may be null
+    m_aAttrs.remove (sName);
+    return EChange.CHANGED;
   }
 
   @Nonnull

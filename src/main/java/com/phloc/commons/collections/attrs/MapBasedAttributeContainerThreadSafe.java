@@ -109,7 +109,7 @@ public class MapBasedAttributeContainerThreadSafe extends MapBasedAttributeConta
 
   @Override
   @Nonnull
-  public EChange setAttribute (@Nonnull final String sName, @Nonnull final Object aValue)
+  public EChange setAttribute (@Nonnull final String sName, @Nullable final Object aValue)
   {
     m_aRWLock.writeLock ().lock ();
     try
@@ -139,6 +139,7 @@ public class MapBasedAttributeContainerThreadSafe extends MapBasedAttributeConta
 
   @Override
   @Nonnull
+  @ReturnsMutableCopy
   public Enumeration <String> getAttributeNames ()
   {
     m_aRWLock.readLock ().lock ();
