@@ -154,25 +154,45 @@ public final class PhlocTestUtils
     _assertFalse ("This test may not be used with the same object!", aObject == aObject2);// NOPMD
   }
 
-  public static <DATATYPE> void testDefaultImplementationWithEqualContentObject (@Nonnull final DATATYPE aObject,
+  /**
+   * Check if two different objects (who may not be the same) are equal to each
+   * other. Checks toString, equals and hashCode.
+   * 
+   * @param aObject1
+   *        First object. May not be <code>null</code>.
+   * @param aObject2
+   *        Second object. May not be <code>null</code>.
+   */
+  public static <DATATYPE> void testDefaultImplementationWithEqualContentObject (@Nonnull final DATATYPE aObject1,
                                                                                  @Nonnull final DATATYPE aObject2)// NOPMD
   {
-    _testEqualsImplementationWithEqualContentObject (aObject, aObject2);
-    _testHashcodeImplementationWithEqualContentObject (aObject, aObject2);
-    _testToStringImplementationWithEqualContentObject (aObject, aObject2);
+    _testEqualsImplementationWithEqualContentObject (aObject1, aObject2);
+    _testHashcodeImplementationWithEqualContentObject (aObject1, aObject2);
+    _testToStringImplementationWithEqualContentObject (aObject1, aObject2);
   }
 
-  public static <DATATYPE> void testDefaultImplementationWithDifferentContentObject (@Nonnull final DATATYPE aObject,
+  /**
+   * Check if two different objects are different to each other. Checks
+   * toString, equals and hashCode.
+   * 
+   * @param aObject1
+   *        First object. May not be <code>null</code>.
+   * @param aObject2
+   *        Second object. May not be <code>null</code>.
+   */
+  public static <DATATYPE> void testDefaultImplementationWithDifferentContentObject (@Nonnull final DATATYPE aObject1,
                                                                                      @Nonnull final DATATYPE aObject2)// NOPMD
   {
-    _testEqualsImplementationWithDifferentContentObject (aObject, aObject2);
-    _testHashcodeImplementationWithDifferentContentObject (aObject, aObject2);
-    _testToStringImplementationWithDifferentContentObject (aObject, aObject2);
+    _testEqualsImplementationWithDifferentContentObject (aObject1, aObject2);
+    _testHashcodeImplementationWithDifferentContentObject (aObject1, aObject2);
+    _testToStringImplementationWithDifferentContentObject (aObject1, aObject2);
   }
 
   /**
    * Test the serializability of objects. First writes the object to a byte
-   * array stream, and then tries to rebuild it from there.
+   * array stream, and then tries to rebuild it from there. After reading it
+   * performs an equals check using
+   * {@link #testDefaultImplementationWithEqualContentObject(Object, Object)}
    * 
    * @param <DATATYPE>
    *        The type of object to be serialized.
@@ -201,6 +221,15 @@ public final class PhlocTestUtils
     return aReadObject;
   }
 
+  /**
+   * Test if the implementation {@link ICloneable} is OK. It creates a clone and
+   * than uses
+   * {@link #testDefaultImplementationWithEqualContentObject(Object, Object)} to
+   * check for equality.
+   * 
+   * @param aClonable
+   *        The clonable object to test
+   */
   public static <DATATYPE> void testGetClone (@Nonnull final ICloneable <? extends DATATYPE> aClonable)
   {
     final DATATYPE aClone = aClonable.getClone ();
