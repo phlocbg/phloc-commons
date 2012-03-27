@@ -27,6 +27,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.IHasSize;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 
 /**
@@ -35,7 +36,7 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
  * 
  * @author philip
  */
-public interface IReadonlyAttributeContainer extends Serializable
+public interface IReadonlyAttributeContainer extends IHasSize, Serializable
 {
   /**
    * Check if an attribute of the given name is contained.
