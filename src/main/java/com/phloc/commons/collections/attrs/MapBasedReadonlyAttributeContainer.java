@@ -28,7 +28,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.phloc.commons.IHasSize;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.hash.HashCodeGenerator;
@@ -42,7 +41,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @NotThreadSafe
-public final class MapBasedReadonlyAttributeContainer extends AbstractReadonlyAttributeContainer implements IHasSize
+public final class MapBasedReadonlyAttributeContainer extends AbstractReadonlyAttributeContainer
 {
   private final Map <String, Object> m_aAttrs;
 
