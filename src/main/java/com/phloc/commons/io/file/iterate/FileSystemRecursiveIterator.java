@@ -19,6 +19,7 @@ package com.phloc.commons.io.file.iterate;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FilenameFilter;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -156,49 +157,102 @@ public class FileSystemRecursiveIterator implements IIterableIterator <File>
 
   /**
    * Create a new iterator that recursively descends into sub-directories
-   * starting from the given base directory. Additionally a file filter can be
-   * added, that determines, which results to be returned and which not. The
-   * difference between the filter passed here and the filter that can be
-   * specified in the constructor is the following: the filter in the
-   * constructor defines into which sub-directories to descend. The file filter
-   * passed to this method only defines which elements should be returned and
-   * which not, independent of the iterated files (like a "view").
+   * starting from the given base directory. Additionally a {@link FileFilter}
+   * can be added, that determines, which results to be returned and which not.
+   * The difference between the filter passed here and the filter that can be
+   * specified in the constructor is the following: the {@link IFilter} in the
+   * constructor defines into which sub-directories to descend. The
+   * {@link FilenameFilter} passed to this method only defines which elements
+   * should be returned and which not, independent of the iterated files (like a
+   * "view").
    * 
    * @param fBaseDir
    *        The base directory to start iterating. May not be <code>null</code>.
-   * @param aFilter
+   * @param aFilenameFilter
    *        The file filter to be used. May not be <code>null</code>.
    * @return Never <code>null</code>.
    */
   @Nonnull
-  public static IIterableIterator <File> create (@Nonnull final File fBaseDir, @Nonnull final FileFilter aFilter)
+  public static IIterableIterator <File> create (@Nonnull final File fBaseDir,
+                                                 @Nonnull final FilenameFilter aFilenameFilter)
   {
     return new FilterIterator <File> (new FileSystemRecursiveIterator (fBaseDir),
-                                      new FileFilterToIFilterAdapter (aFilter));
+                                      new FileFilterToIFilterAdapter (aFilenameFilter));
   }
 
   /**
    * Create a new iterator that recursively descends into sub-directories
-   * starting from the given base directory. Additionally a list of file filters
-   * can be added, that determine, which results to be returned and which not.
-   * The difference between the filter passed here and the filter that can be
-   * specified in the constructor is the following: the filter in the
-   * constructor defines into which sub-directories to descend. The file filters
-   * passed to this method only define which elements should be returned and
-   * which not, independent of the iterated files (like a "view").
+   * starting from the given base directory. Additionally a list of
+   * {@link FilenameFilter}s can be added, that determine, which results to be
+   * returned and which not. The difference between the filter passed here and
+   * the filter that can be specified in the constructor is the following: the
+   * {@link IFilter} in the constructor defines into which sub-directories to
+   * descend. The {@link FilenameFilter}s passed to this method only define
+   * which elements should be returned and which not, independent of the
+   * iterated files (like a "view").
    * 
    * @param fBaseDir
    *        The base directory to start iterating. May not be <code>null</code>.
-   * @param aFilters
+   * @param aFilenameFilters
    *        The file filter to be used. May neither be <code>null</code> nor
    *        empty.
    * @return Never <code>null</code>.
    */
   @Nonnull
   public static IIterableIterator <File> create (@Nonnull final File fBaseDir,
-                                                 @Nonnull @Nonempty final FileFilter... aFilters)
+                                                 @Nonnull @Nonempty final FilenameFilter... aFilenameFilters)
   {
     return new FilterIterator <File> (new FileSystemRecursiveIterator (fBaseDir),
-                                      FileFilterToIFilterAdapter.getANDChained (aFilters));
+                                      FileFilterToIFilterAdapter.getANDChained (aFilenameFilters));
+  }
+
+  /**
+   * Create a new iterator that recursively descends into sub-directories
+   * starting from the given base directory. Additionally a {@link FileFilter}
+   * can be added, that determines, which results to be returned and which not.
+   * The difference between the filter passed here and the filter that can be
+   * specified in the constructor is the following: the {@link IFilter} in the
+   * constructor defines into which sub-directories to descend. The
+   * {@link FileFilter} passed to this method only defines which elements should
+   * be returned and which not, independent of the iterated files (like a
+   * "view").
+   * 
+   * @param fBaseDir
+   *        The base directory to start iterating. May not be <code>null</code>.
+   * @param aFileFilter
+   *        The file filter to be used. May not be <code>null</code>.
+   * @return Never <code>null</code>.
+   */
+  @Nonnull
+  public static IIterableIterator <File> create (@Nonnull final File fBaseDir, @Nonnull final FileFilter aFileFilter)
+  {
+    return new FilterIterator <File> (new FileSystemRecursiveIterator (fBaseDir),
+                                      new FileFilterToIFilterAdapter (aFileFilter));
+  }
+
+  /**
+   * Create a new iterator that recursively descends into sub-directories
+   * starting from the given base directory. Additionally a list of
+   * {@link FileFilter}s can be added, that determine, which results to be
+   * returned and which not. The difference between the filter passed here and
+   * the filter that can be specified in the constructor is the following: the
+   * {@link IFilter} in the constructor defines into which sub-directories to
+   * descend. The {@link FileFilter}s passed to this method only define which
+   * elements should be returned and which not, independent of the iterated
+   * files (like a "view").
+   * 
+   * @param fBaseDir
+   *        The base directory to start iterating. May not be <code>null</code>.
+   * @param aFileFilters
+   *        The file filter to be used. May neither be <code>null</code> nor
+   *        empty.
+   * @return Never <code>null</code>.
+   */
+  @Nonnull
+  public static IIterableIterator <File> create (@Nonnull final File fBaseDir,
+                                                 @Nonnull @Nonempty final FileFilter... aFileFilters)
+  {
+    return new FilterIterator <File> (new FileSystemRecursiveIterator (fBaseDir),
+                                      FileFilterToIFilterAdapter.getANDChained (aFileFilters));
   }
 }

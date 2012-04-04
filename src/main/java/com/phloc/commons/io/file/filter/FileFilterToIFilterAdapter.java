@@ -41,29 +41,29 @@ import com.phloc.commons.string.ToStringGenerator;
 @Immutable
 public final class FileFilterToIFilterAdapter implements IFilter <File>
 {
-  private final FileFilter m_aFF;
+  private final FileFilter m_aFileFilter;
 
   public FileFilterToIFilterAdapter (@Nonnull final FilenameFilter aFilenameFilter)
   {
     this (new FileFilterFromFilenameFilter (aFilenameFilter));
   }
 
-  public FileFilterToIFilterAdapter (@Nonnull final FileFilter aFF)
+  public FileFilterToIFilterAdapter (@Nonnull final FileFilter aFileFilter)
   {
-    if (aFF == null)
+    if (aFileFilter == null)
       throw new NullPointerException ("fileFilter");
-    m_aFF = aFF;
+    m_aFileFilter = aFileFilter;
   }
 
   public boolean matchesFilter (@Nullable final File aFile)
   {
-    return m_aFF.accept (aFile);
+    return m_aFileFilter.accept (aFile);
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("fileFilter", m_aFF).toString ();
+    return new ToStringGenerator (this).append ("fileFilter", m_aFileFilter).toString ();
   }
 
   @Nonnull
@@ -73,8 +73,20 @@ public final class FileFilterToIFilterAdapter implements IFilter <File>
       throw new IllegalArgumentException ("fileFilters");
 
     final List <IFilter <File>> aFilters = new ArrayList <IFilter <File>> ();
-    for (final FileFilter aFF : aFileFilters)
-      aFilters.add (new FileFilterToIFilterAdapter (aFF));
+    for (final FileFilter aFileFilter : aFileFilters)
+      aFilters.add (new FileFilterToIFilterAdapter (aFileFilter));
+    return new FilterChainAND <File> (aFilters);
+  }
+
+  @Nonnull
+  public static IFilter <File> getANDChained (@Nonnull final FilenameFilter... aFilenameFilters)
+  {
+    if (ArrayHelper.isEmpty (aFilenameFilters))
+      throw new IllegalArgumentException ("filenameFilters");
+
+    final List <IFilter <File>> aFilters = new ArrayList <IFilter <File>> ();
+    for (final FilenameFilter aFilenameFilter : aFilenameFilters)
+      aFilters.add (new FileFilterToIFilterAdapter (aFilenameFilter));
     return new FilterChainAND <File> (aFilters);
   }
 
@@ -85,8 +97,20 @@ public final class FileFilterToIFilterAdapter implements IFilter <File>
       throw new IllegalArgumentException ("fileFilters");
 
     final List <IFilter <File>> aFilters = new ArrayList <IFilter <File>> ();
-    for (final FileFilter aFF : aFileFilters)
-      aFilters.add (new FileFilterToIFilterAdapter (aFF));
+    for (final FileFilter aFileFilter : aFileFilters)
+      aFilters.add (new FileFilterToIFilterAdapter (aFileFilter));
+    return new FilterChainOR <File> (aFilters);
+  }
+
+  @Nonnull
+  public static IFilter <File> getORChained (@Nonnull final FilenameFilter... aFilenameFilters)
+  {
+    if (ArrayHelper.isEmpty (aFilenameFilters))
+      throw new IllegalArgumentException ("fileFilters");
+
+    final List <IFilter <File>> aFilters = new ArrayList <IFilter <File>> ();
+    for (final FilenameFilter aFilenameFilter : aFilenameFilters)
+      aFilters.add (new FileFilterToIFilterAdapter (aFilenameFilter));
     return new FilterChainOR <File> (aFilters);
   }
 }

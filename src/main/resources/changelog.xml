@@ -23,6 +23,11 @@
   <release date="2012-04-04" version="3.4.9" />
   <entry date="2012-04-04" category="api" action="add">
     <change>
+      <text locale="en">Extended FileSystemIterator and FileSystemRecursiveIterator factory methods to also work with FilenameFilter</text>
+    </change>
+  </entry>
+  <entry date="2012-04-04" category="api" action="add">
+    <change>
       <text locale="en">Added a constructor to FileFilterToIFilterAdapter that takes a FilenameFilter</text>
     </change>
   </entry>
