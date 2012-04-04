@@ -280,14 +280,14 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   }
 
   @Override
-  public void onElementStart (@Nullable final String sNSPrefix,
+  public void onElementStart (@Nullable final String sNamespacePrefix,
                               @Nonnull final String sTagName,
                               @Nullable final Map <String, String> aAttrs,
                               final boolean bHasChildren)
   {
     _append ('<');
-    if (sNSPrefix != null)
-      _append (sNSPrefix)._append (CXML.XML_PREFIX_NAMESPACE_SEP);
+    if (StringHelper.hasText (sNamespacePrefix))
+      _append (sNamespacePrefix)._append (CXML.XML_PREFIX_NAMESPACE_SEP);
     _append (sTagName);
     if (aAttrs != null && !aAttrs.isEmpty ())
     {
@@ -306,11 +306,11 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   }
 
   @Override
-  public void onElementEnd (@Nullable final String sNSPrefix, @Nonnull final String sTagName)
+  public void onElementEnd (@Nullable final String sNamespacePrefix, @Nonnull final String sTagName)
   {
     _append ("</");
-    if (sNSPrefix != null)
-      _append (sNSPrefix)._append (CXML.XML_PREFIX_NAMESPACE_SEP);
+    if (StringHelper.hasText (sNamespacePrefix))
+      _append (sNamespacePrefix)._append (CXML.XML_PREFIX_NAMESPACE_SEP);
     _append (sTagName)._append ('>');
   }
 

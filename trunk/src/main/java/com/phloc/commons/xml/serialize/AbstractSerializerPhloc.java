@@ -267,8 +267,8 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
      * 
      * @param sElementNamespaceURI
      *        The namespace URI for which the prefix should be created.
-     * @return <code>null</code> if the default namespace is available, the
-     *         prefix otherwise.
+     * @return <code>null</code> or empty if the default namespace is available,
+     *         the prefix otherwise.
      */
     @Nullable
     public String createUniquePrefix (@Nonnull @Nonempty final String sElementNamespaceURI)

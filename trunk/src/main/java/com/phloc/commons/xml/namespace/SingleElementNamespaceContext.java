@@ -40,7 +40,14 @@ public final class SingleElementNamespaceContext extends AbstractNamespaceContex
   private final String m_sPrefix;
   private final String m_sNamespaceURI;
 
-  public SingleElementNamespaceContext (final String sNamespaceURI)
+  /**
+   * Create a namespace context with the default (empty) prefix
+   * 
+   * @param sNamespaceURI
+   *        The namespace URI to use. May neither be <code>null</code> nor
+   *        empty.
+   */
+  public SingleElementNamespaceContext (@Nonnull @Nonempty final String sNamespaceURI)
   {
     this (XMLConstants.DEFAULT_NS_PREFIX, sNamespaceURI);
   }
