@@ -19,6 +19,7 @@ package com.phloc.commons.io.file.filter;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +42,11 @@ import com.phloc.commons.string.ToStringGenerator;
 public final class FileFilterToIFilterAdapter implements IFilter <File>
 {
   private final FileFilter m_aFF;
+
+  public FileFilterToIFilterAdapter (@Nonnull final FilenameFilter aFilenameFilter)
+  {
+    this (new FileFilterFromFilenameFilter (aFilenameFilter));
+  }
 
   public FileFilterToIFilterAdapter (@Nonnull final FileFilter aFF)
   {

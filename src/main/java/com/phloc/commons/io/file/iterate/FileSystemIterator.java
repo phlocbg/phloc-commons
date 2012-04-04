@@ -56,7 +56,8 @@ public final class FileSystemIterator extends IterableIterator <File>
   }
 
   /**
-   * Create a new non-recursive file system iterator that uses a certain filter.
+   * Create a new non-recursive file system iterator that uses a certain
+   * {@link FileFilter}.
    * 
    * @param fBaseDir
    *        The directory to iterate. May not be <code>null</code>.
@@ -71,8 +72,8 @@ public final class FileSystemIterator extends IterableIterator <File>
   }
 
   /**
-   * Create a new non-recursive file system iterator that uses multiples filters
-   * that all need to match.
+   * Create a new non-recursive file system iterator that uses multiple
+   * {@link FileFilter} objects that all need to match.
    * 
    * @param fBaseDir
    *        The directory to iterate. May not be <code>null</code>.

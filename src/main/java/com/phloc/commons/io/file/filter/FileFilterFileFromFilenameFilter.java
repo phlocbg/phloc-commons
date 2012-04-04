@@ -28,24 +28,24 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * A special file filter that uses and external filename filter to determine the
- * validity.
+ * validity. This filter only works for files.
  * 
  * @author philip
  */
 public final class FileFilterFileFromFilenameFilter extends AbstractFileFilter
 {
-  private final FilenameFilter m_aFnFilter;
+  private final FilenameFilter m_aFilenameFilter;
 
-  public FileFilterFileFromFilenameFilter (@Nonnull final FilenameFilter aFnFilter)
+  public FileFilterFileFromFilenameFilter (@Nonnull final FilenameFilter aFilenameFilter)
   {
-    if (aFnFilter == null)
+    if (aFilenameFilter == null)
       throw new NullPointerException ("filenameFilter");
-    m_aFnFilter = aFnFilter;
+    m_aFilenameFilter = aFilenameFilter;
   }
 
   public boolean accept (@Nullable final File aFile)
   {
-    return aFile != null && aFile.isFile () && m_aFnFilter.accept (aFile.getParentFile (), aFile.getName ());
+    return aFile != null && aFile.isFile () && m_aFilenameFilter.accept (aFile.getParentFile (), aFile.getName ());
   }
 
   @Override
@@ -55,6 +55,7 @@ public final class FileFilterFileFromFilenameFilter extends AbstractFileFilter
       return true;
     if (!(o instanceof FileFilterFileFromFilenameFilter))
       return false;
+    // FilenameFilter does not necessarily implement equals/hashCode :(
     return true;
   }
 
@@ -67,6 +68,6 @@ public final class FileFilterFileFromFilenameFilter extends AbstractFileFilter
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("filter", m_aFnFilter).toString ();
+    return new ToStringGenerator (this).append ("filenameFilter", m_aFilenameFilter).toString ();
   }
 }
