@@ -224,7 +224,7 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
       if (StringHelper.hasText (sElementNamespaceURI) && sNSPrefix == null && !sElementNamespaceURI.equals (sDefaultNS))
       {
         sNSPrefix = m_aNSStack.createUniquePrefix (sElementNamespaceURI);
-        if (sNSPrefix == null)
+        if (StringHelper.hasNoText (sNSPrefix))
           aAttrMap.put (CXML.XML_ATTR_XMLNS, sElementNamespaceURI);
         else
           aAttrMap.put (CXML.XML_ATTR_XMLNS_WITH_SEP + sNSPrefix, sElementNamespaceURI);

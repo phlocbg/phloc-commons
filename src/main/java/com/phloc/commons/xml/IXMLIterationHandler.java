@@ -112,8 +112,8 @@ public interface IXMLIterationHandler
   /**
    * Start of an element.
    * 
-   * @param sNSURI
-   *        Optional namespace URI. May be <code>null</code>.
+   * @param sNamespacePrefix
+   *        Optional namespace prefix. May be <code>null</code>.
    * @param sTagName
    *        Tag name
    * @param aAttrs
@@ -121,7 +121,7 @@ public interface IXMLIterationHandler
    * @param bHasChildren
    *        <code>true</code> if the current element has children
    */
-  void onElementStart (@Nullable String sNSURI,
+  void onElementStart (@Nullable String sNamespacePrefix,
                        @Nonnull String sTagName,
                        @Nullable Map <String, String> aAttrs,
                        boolean bHasChildren);
@@ -129,10 +129,10 @@ public interface IXMLIterationHandler
   /**
    * End of an element.
    * 
-   * @param sNSURI
-   *        Optional namespace URI. May be <code>null</code>.
+   * @param sNamespacePrefix
+   *        Optional namespace prefix. May be <code>null</code>.
    * @param sTagName
    *        Tag name
    */
-  void onElementEnd (@Nullable String sNSURI, @Nonnull String sTagName);
+  void onElementEnd (@Nullable String sNamespacePrefix, @Nonnull String sTagName);
 }

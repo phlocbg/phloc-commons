@@ -60,12 +60,12 @@ public class DefaultXMLIterationHandler implements IXMLIterationHandler
   public void onCDATA (@Nullable final String sText)
   {}
 
-  public void onElementStart (@Nullable final String sNSPrefix,
+  public void onElementStart (@Nullable final String sNamespacePrefix,
                               @Nonnull final String sTagName,
                               @Nullable final Map <String, String> aAttrs,
                               final boolean bHasChildren)
   {}
 
-  public void onElementEnd (@Nullable final String sNSPrefix, @Nonnull final String sTagName)
+  public void onElementEnd (@Nullable final String sNamespacePrefix, @Nonnull final String sTagName)
   {}
 }
