@@ -24,6 +24,7 @@ import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FilenameFilter;
 
 import org.junit.Test;
 
@@ -32,7 +33,7 @@ import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
  * Test class for class {@link FileFilterToIFilterAdapter}.
- *
+ * 
  * @author philip
  */
 public final class FileFilterToIFilterAdapterTest
@@ -43,7 +44,15 @@ public final class FileFilterToIFilterAdapterTest
   {
     try
     {
-      new FileFilterToIFilterAdapter (null);
+      new FileFilterToIFilterAdapter ((FilenameFilter) null);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+
+    try
+    {
+      new FileFilterToIFilterAdapter ((FileFilter) null);
       fail ();
     }
     catch (final NullPointerException ex)

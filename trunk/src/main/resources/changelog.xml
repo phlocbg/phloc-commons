@@ -21,6 +21,16 @@
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
   <release date="2012-04-04" version="3.4.9" />
+  <entry date="2012-04-04" category="api" action="add">
+    <change>
+      <text locale="en">Added a constructor to FileFilterToIFilterAdapter that takes a FilenameFilter</text>
+    </change>
+  </entry>
+  <entry date="2012-04-04" category="api" action="add">
+    <change>
+      <text locale="en">Added new class FileFilterFromFilenameFilter that works for any type of file</text>
+    </change>
+  </entry>
   <entry date="2012-04-04" category="tech" action="fix">
     <change>
       <text locale="en">Fixed XML serialization issue, if an empty namespace prefix was used in a NamespaceContext</text>

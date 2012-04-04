@@ -27,16 +27,16 @@ import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * A special directory file filter that uses and external filename filter to
- * determine the validity. This filter only works for directories.
+ * A special file filter that uses and external filename filter to determine the
+ * validity. This filter works for all types of {@link File} objects.
  * 
  * @author philip
  */
-public final class FileFilterDirectoryFromFilenameFilter extends AbstractFileFilter
+public final class FileFilterFromFilenameFilter extends AbstractFileFilter
 {
   private final FilenameFilter m_aFilenameFilter;
 
-  public FileFilterDirectoryFromFilenameFilter (@Nonnull final FilenameFilter aFilenameFilter)
+  public FileFilterFromFilenameFilter (@Nonnull final FilenameFilter aFilenameFilter)
   {
     if (aFilenameFilter == null)
       throw new NullPointerException ("filenameFilter");
@@ -45,7 +45,7 @@ public final class FileFilterDirectoryFromFilenameFilter extends AbstractFileFil
 
   public boolean accept (@Nullable final File aFile)
   {
-    return aFile != null && aFile.isDirectory () && m_aFilenameFilter.accept (aFile.getParentFile (), aFile.getName ());
+    return aFile != null && m_aFilenameFilter.accept (aFile.getParentFile (), aFile.getName ());
   }
 
   @Override
@@ -53,7 +53,7 @@ public final class FileFilterDirectoryFromFilenameFilter extends AbstractFileFil
   {
     if (o == this)
       return true;
-    if (!(o instanceof FileFilterDirectoryFromFilenameFilter))
+    if (!(o instanceof FileFilterFromFilenameFilter))
       return false;
     // FilenameFilter does not necessarily implement equals/hashCode :(
     return true;
@@ -62,7 +62,6 @@ public final class FileFilterDirectoryFromFilenameFilter extends AbstractFileFil
   @Override
   public int hashCode ()
   {
-    // FilenameFilter does not implement hashCode
     return new HashCodeGenerator (this).getHashCode ();
   }
 
