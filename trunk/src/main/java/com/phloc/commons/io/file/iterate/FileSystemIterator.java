@@ -19,6 +19,7 @@ package com.phloc.commons.io.file.iterate;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FilenameFilter;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
@@ -57,18 +58,54 @@ public final class FileSystemIterator extends IterableIterator <File>
 
   /**
    * Create a new non-recursive file system iterator that uses a certain
-   * {@link FileFilter}.
+   * {@link FilenameFilter}.
    * 
    * @param fBaseDir
    *        The directory to iterate. May not be <code>null</code>.
-   * @param aFilter
+   * @param aFilenameFilter
    *        The filter to use. May not be <code>null</code>.
    * @return The matching iterator.
    */
   @Nonnull
-  public static IIterableIterator <File> create (@Nonnull final File fBaseDir, @Nonnull final FileFilter aFilter)
+  public static IIterableIterator <File> create (@Nonnull final File fBaseDir,
+                                                 @Nonnull final FilenameFilter aFilenameFilter)
   {
-    return new FilterIterator <File> (new FileSystemIterator (fBaseDir), new FileFilterToIFilterAdapter (aFilter));
+    return new FilterIterator <File> (new FileSystemIterator (fBaseDir),
+                                      new FileFilterToIFilterAdapter (aFilenameFilter));
+  }
+
+  /**
+   * Create a new non-recursive file system iterator that uses multiple
+   * {@link FilenameFilter} objects that all need to match.
+   * 
+   * @param fBaseDir
+   *        The directory to iterate. May not be <code>null</code>.
+   * @param aFilenameFilters
+   *        The filters to use. May not be <code>null</code>.
+   * @return The matching iterator.
+   */
+  @Nonnull
+  public static IIterableIterator <File> create (@Nonnull final File fBaseDir,
+                                                 @Nonnull final FilenameFilter... aFilenameFilters)
+  {
+    return new FilterIterator <File> (new FileSystemIterator (fBaseDir),
+                                      FileFilterToIFilterAdapter.getANDChained (aFilenameFilters));
+  }
+
+  /**
+   * Create a new non-recursive file system iterator that uses a certain
+   * {@link FileFilter}.
+   * 
+   * @param fBaseDir
+   *        The directory to iterate. May not be <code>null</code>.
+   * @param aFileFilter
+   *        The filter to use. May not be <code>null</code>.
+   * @return The matching iterator.
+   */
+  @Nonnull
+  public static IIterableIterator <File> create (@Nonnull final File fBaseDir, @Nonnull final FileFilter aFileFilter)
+  {
+    return new FilterIterator <File> (new FileSystemIterator (fBaseDir), new FileFilterToIFilterAdapter (aFileFilter));
   }
 
   /**
@@ -77,14 +114,14 @@ public final class FileSystemIterator extends IterableIterator <File>
    * 
    * @param fBaseDir
    *        The directory to iterate. May not be <code>null</code>.
-   * @param aFilters
+   * @param aFileFilters
    *        The filters to use. May not be <code>null</code>.
    * @return The matching iterator.
    */
   @Nonnull
-  public static IIterableIterator <File> create (@Nonnull final File fBaseDir, @Nonnull final FileFilter... aFilters)
+  public static IIterableIterator <File> create (@Nonnull final File fBaseDir, @Nonnull final FileFilter... aFileFilters)
   {
     return new FilterIterator <File> (new FileSystemIterator (fBaseDir),
-                                      FileFilterToIFilterAdapter.getANDChained (aFilters));
+                                      FileFilterToIFilterAdapter.getANDChained (aFileFilters));
   }
 }
