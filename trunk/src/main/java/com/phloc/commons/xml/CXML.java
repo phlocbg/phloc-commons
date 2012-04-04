@@ -61,15 +61,26 @@ public final class CXML
   public static final String XML_ATTR_LANG = XML_ATTR_XML_WITH_SEP + "lang";
   public static final String XML_ATTR_BASE = XML_ATTR_XML_WITH_SEP + "base";
 
-  // XML Schema (XS) and XML Schema Instance (XSI) stuff:
+  // XML Schema Definition (XS and XSD) stuff:
+  @Deprecated
   public static final String XML_NS_XS = XMLConstants.W3C_XML_SCHEMA_NS_URI;
-  public static final String XML_NS_XSI = XMLConstants.W3C_XML_SCHEMA_INSTANCE_NS_URI;
+  public static final String XML_NS_XSD = XMLConstants.W3C_XML_SCHEMA_NS_URI;
+
+  @Deprecated
   public static final String XML_NS_PREFIX_XS = "xs";
+  public static final String XML_NS_PREFIX_XSD = "xsd";
+
+  @Deprecated
+  public static final String XMLNS_XS = XML_ATTR_XMLNS_WITH_SEP + XML_NS_PREFIX_XS;
+  public static final String XMLNS_XSD = XML_ATTR_XMLNS_WITH_SEP + XML_NS_PREFIX_XSD;
+
+  // XML Schema Instance (XSI) stuff:
+  public static final String XML_NS_XSI = XMLConstants.W3C_XML_SCHEMA_INSTANCE_NS_URI;
   public static final String XML_NS_PREFIX_XSI = "xsi";
   public static final String XML_ATTR_XSI_SCHEMALOCATION = "schemaLocation";
   public static final String XML_ATTR_XSI_NONAMESPACESCHEMALOCATION = "noNamespaceSchemaLocation";
+  public static final String XML_ATTR_XSD_TARGETNAMESPACE = "targetNamespace";
 
-  public static final String XMLNS_XS = XML_ATTR_XMLNS_WITH_SEP + XML_NS_PREFIX_XS;
   public static final String XMLNS_XSI = XML_ATTR_XMLNS_WITH_SEP + XML_NS_PREFIX_XSI;
   public static final String XSI_SCHEMALOCATION = XML_NS_PREFIX_XSI +
                                                   XML_PREFIX_NAMESPACE_SEP +
