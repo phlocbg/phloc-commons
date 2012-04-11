@@ -396,8 +396,17 @@ public final class StreamUtils
     return getAllBytes (aISP.getInputStream ());
   }
 
+  /**
+   * Get a byte buffer with all the available content of the passed input
+   * stream.
+   * 
+   * @param aIS
+   *        The source input stream. May not be <code>null</code>.
+   * @return A new {@link NonBlockingByteArrayOutputStream} with all available
+   *         content inside.
+   */
   @Nonnull
-  private static NonBlockingByteArrayOutputStream _getCopy (@Nonnull @WillClose final InputStream aIS)
+  public static NonBlockingByteArrayOutputStream getCopy (@Nonnull @WillClose final InputStream aIS)
   {
     final int nAvailable = Math.max (DEFAULT_BUFSIZE, getAvailable (aIS));
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream (nAvailable);
@@ -419,7 +428,7 @@ public final class StreamUtils
     if (aIS == null)
       return null;
 
-    return _getCopy (aIS).toByteArray ();
+    return getCopy (aIS).toByteArray ();
   }
 
   /**
@@ -462,7 +471,7 @@ public final class StreamUtils
     if (aIS == null)
       return null;
 
-    return _getCopy (aIS).getAsString (sCharset);
+    return getCopy (aIS).getAsString (sCharset);
   }
 
   /**
