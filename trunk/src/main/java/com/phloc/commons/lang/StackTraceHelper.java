@@ -227,20 +227,36 @@ public final class StackTraceHelper
    * Check if the passed stack trace array contains a unit test element. Known
    * unit test frameworks are JUnit and TestNG.
    * 
-   * @param aStackTrace
-   *        The stack trace array to be scanned. May not be <code>null</code>.
+   * @param t
+   *        The {@link Throwable} whose stack trace should be scanned for unit
+   *        test classes. May be <code>null</code>.
    * @return <code>true</code> if at least one stack trace element is from a
    *         known unit test framework.
    */
-  public static boolean containsUnitTestElement (@Nonnull final StackTraceElement [] aStackTrace)
+  public static boolean containsUnitTestElement (@Nullable final Throwable t)
   {
-    for (final StackTraceElement aStackTraceElement : aStackTrace)
-    {
-      final String sStackTraceLine = aStackTraceElement.toString ();
-      for (final String sUnitTestPackage : STACKTRACE_OMIT_UNITTEST)
-        if (sStackTraceLine.startsWith (sUnitTestPackage))
-          return true;
-    }
+    return t == null ? false : containsUnitTestElement (t.getStackTrace ());
+  }
+
+  /**
+   * Check if the passed stack trace array contains a unit test element. Known
+   * unit test frameworks are JUnit and TestNG.
+   * 
+   * @param aStackTrace
+   *        The stack trace array to be scanned. May be <code>null</code>.
+   * @return <code>true</code> if at least one stack trace element is from a
+   *         known unit test framework.
+   */
+  public static boolean containsUnitTestElement (@Nullable final StackTraceElement [] aStackTrace)
+  {
+    if (aStackTrace != null)
+      for (final StackTraceElement aStackTraceElement : aStackTrace)
+      {
+        final String sStackTraceLine = aStackTraceElement.toString ();
+        for (final String sUnitTestPackage : STACKTRACE_OMIT_UNITTEST)
+          if (sStackTraceLine.startsWith (sUnitTestPackage))
+            return true;
+      }
     return false;
   }
 }
