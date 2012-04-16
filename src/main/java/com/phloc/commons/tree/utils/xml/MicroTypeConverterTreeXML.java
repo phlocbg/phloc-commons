@@ -99,4 +99,39 @@ public final class MicroTypeConverterTreeXML <DATATYPE> implements IConverterTre
     }
     return MicroTypeConverter.convertToNative (eChildElement, m_aNativeClass);
   }
+
+  /**
+   * Factory method.
+   * 
+   * @param sElementName
+   *        The element name to use. May neither be <code>null</code> nor empty
+   * @param aNativeClass
+   *        The data type class - required for reading. May be in an interface
+   *        as well.
+   */
+  @Nonnull
+  public static <DATATYPE> MicroTypeConverterTreeXML <DATATYPE> create (@Nonnull @Nonempty final String sElementName,
+                                                                        @Nonnull final Class <? extends DATATYPE> aNativeClass)
+  {
+    return new MicroTypeConverterTreeXML <DATATYPE> (sElementName, aNativeClass);
+  }
+
+  /**
+   * Factory method
+   * 
+   * @param sNamespaceURI
+   *        The namespace URI for the created element. May be <code>null</code>.
+   * @param sElementName
+   *        The element name to use. May neither be <code>null</code> nor empty
+   * @param aNativeClass
+   *        The data type class - required for reading. May be in an interface
+   *        as well.
+   */
+  @Nonnull
+  public static <DATATYPE> MicroTypeConverterTreeXML <DATATYPE> create (@Nullable final String sNamespaceURI,
+                                                                        @Nonnull @Nonempty final String sElementName,
+                                                                        @Nonnull final Class <? extends DATATYPE> aNativeClass)
+  {
+    return new MicroTypeConverterTreeXML <DATATYPE> (sNamespaceURI, sElementName, aNativeClass);
+  }
 }
