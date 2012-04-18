@@ -41,7 +41,7 @@ import com.phloc.commons.idfactory.IIDFactory;
 public final class GraphObjectIDFactory
 {
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
-  private static IIDFactory <String> s_aIDFactory = null;
+  private static IIDFactory <String> s_aIDFactory;
 
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")

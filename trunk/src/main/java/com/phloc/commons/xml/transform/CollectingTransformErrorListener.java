@@ -87,6 +87,14 @@ public final class CollectingTransformErrorListener extends AbstractTransformErr
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("errors", m_aErrors).toString ();
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return ToStringGenerator.getDerived (super.toString ()).append ("errors", m_aErrors).toString ();
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
   }
 }

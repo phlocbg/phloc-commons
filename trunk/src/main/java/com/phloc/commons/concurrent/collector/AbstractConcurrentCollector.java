@@ -69,8 +69,8 @@ public abstract class AbstractConcurrentCollector <DATATYPE> implements
    */
   public AbstractConcurrentCollector (@Nonnegative final int nMaxQueueSize)
   {
-    if (nMaxQueueSize < 1)
-      throw new IllegalArgumentException ("max queue size is illegal");
+    if (nMaxQueueSize <= 0)
+      throw new IllegalArgumentException ("max queue size is illegal: " + nMaxQueueSize);
     m_aQueue = new ArrayBlockingQueue <Object> (nMaxQueueSize);
   }
 
