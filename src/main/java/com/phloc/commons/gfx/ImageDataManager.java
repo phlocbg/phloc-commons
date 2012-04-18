@@ -196,8 +196,11 @@ public final class ImageDataManager
       s_aRWLock.writeLock ().lock ();
       try
       {
+        // Existing resource?
         if (s_aImageData.remove (aRes) != null)
           return EChange.CHANGED;
+
+        // Non-existing resource?
         if (s_aNonExistingResources.remove (aRes))
           return EChange.CHANGED;
       }
@@ -222,6 +225,7 @@ public final class ImageDataManager
     {
       if (s_aImageData.isEmpty () && s_aNonExistingResources.isEmpty ())
         return EChange.UNCHANGED;
+
       s_aImageData.clear ();
       s_aNonExistingResources.clear ();
       s_aLogger.info ("Cache was cleared: " + ImageDataManager.class.getName ());

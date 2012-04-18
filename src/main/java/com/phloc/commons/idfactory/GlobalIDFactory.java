@@ -44,8 +44,9 @@ public final class GlobalIDFactory
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (GlobalIDFactory.class);
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
+
   private static IIntIDFactory s_aIntIDFactory = new MemoryIntIDFactory ();
-  private static IIntIDFactory s_aPersistentIntIDFactory = null;
+  private static IIntIDFactory s_aPersistentIntIDFactory;
   private static IIDFactory <String> s_aStringIDFactory = new StringIDFromGlobalIntIDFactory ();
   private static IIDFactory <String> s_aPersistentStringIDFactory = new StringIDFromGlobalPersistentIntIDFactory ();
 
@@ -58,7 +59,15 @@ public final class GlobalIDFactory
 
   public static boolean hasPersistentIntIDFactory ()
   {
-    return s_aPersistentIntIDFactory != null;
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      return s_aPersistentIntIDFactory != null;
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
   }
 
   @Nonnull

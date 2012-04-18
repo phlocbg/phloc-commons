@@ -139,6 +139,7 @@ public final class MessageDigestGenerator extends AbstractMessageDigestGenerator
   @ReturnsMutableCopy
   public byte [] getDigest (@Nonnegative final int nLength)
   {
+    // Using a writeLock because it calculates the main digest on first call
     m_aRWLock.writeLock ().lock ();
     try
     {

@@ -28,6 +28,7 @@ import javax.annotation.CheckForSigned;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.phloc.commons.CGlobal;
@@ -44,6 +45,7 @@ import com.phloc.commons.string.ToStringGenerator;
 @ThreadSafe
 final class StatisticsHandlerKeyedCounter implements IStatisticsHandlerKeyedCounter
 {
+  @NotThreadSafe
   private static final class Value
   {
     private int m_nInvocationCount;
@@ -61,6 +63,7 @@ final class StatisticsHandlerKeyedCounter implements IStatisticsHandlerKeyedCoun
       m_nCount += nByHowMany;
     }
 
+    @Nonnegative
     public int getInvocationCount ()
     {
       return m_nInvocationCount;
@@ -163,6 +166,14 @@ final class StatisticsHandlerKeyedCounter implements IStatisticsHandlerKeyedCoun
   @Nonempty
   public String getAsString ()
   {
-    return "invocations=" + getInvocationCount () + "; keyed=" + m_aMap.entrySet ();
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return "invocations=" + getInvocationCount () + "; keyed=" + m_aMap.entrySet ();
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
   }
 }

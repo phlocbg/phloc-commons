@@ -29,6 +29,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.lang.ServiceLoaderBackport;
+import com.phloc.commons.state.EChange;
 
 /**
  * This class manages all registered third party modules
@@ -60,7 +61,8 @@ public final class ThirdPartyModuleRegistry
   private ThirdPartyModuleRegistry ()
   {}
 
-  public static void registerThirdPartyModule (@Nonnull final IThirdPartyModule aModule)
+  @Nonnull
+  public static EChange registerThirdPartyModule (@Nonnull final IThirdPartyModule aModule)
   {
     if (aModule == null)
       throw new NullPointerException ("module");
@@ -68,7 +70,7 @@ public final class ThirdPartyModuleRegistry
     s_aRWLock.writeLock ().lock ();
     try
     {
-      s_aModules.add (aModule);
+      return EChange.valueOf (s_aModules.add (aModule));
     }
     finally
     {

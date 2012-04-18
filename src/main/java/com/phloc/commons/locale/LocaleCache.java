@@ -183,16 +183,22 @@ public final class LocaleCache
     {
       s_aRWLock.readLock ().unlock ();
     }
+
     if (aLocale == null)
     {
-      // not yet in cache, create a new one
-      // -> may lead to illegal locales, but simpler than the error handling
-      // for all the possible illegal values
-      aLocale = new Locale (sRealLanguage, sRealCountry, sRealVariant);
       s_aRWLock.writeLock ().lock ();
       try
       {
-        s_aLocales.put (sLocaleKey, aLocale);
+        // Try fetching again in writeLock
+        aLocale = s_aLocales.get (sLocaleKey);
+        if (aLocale == null)
+        {
+          // not yet in cache, create a new one
+          // -> may lead to illegal locales, but simpler than the error handling
+          // for all the possible illegal values
+          aLocale = new Locale (sRealLanguage, sRealCountry, sRealVariant);
+          s_aLocales.put (sLocaleKey, aLocale);
+        }
       }
       finally
       {

@@ -232,12 +232,42 @@ public class MapBasedAttributeContainerThreadSafe extends MapBasedAttributeConta
   @Override
   public boolean equals (final Object o)
   {
-    return super.equals (o);
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return super.equals (o);
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
   }
 
   @Override
   public int hashCode ()
   {
-    return super.hashCode ();
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return super.hashCode ();
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  @Override
+  public String toString ()
+  {
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return super.toString ();
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
   }
 }

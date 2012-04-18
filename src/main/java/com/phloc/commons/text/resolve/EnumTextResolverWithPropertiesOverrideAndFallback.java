@@ -18,6 +18,7 @@
 package com.phloc.commons.text.resolve;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -62,7 +63,7 @@ public final class EnumTextResolverWithPropertiesOverrideAndFallback extends
                                                                                                                  "$failed");
 
   private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
-  private final Map <String, Boolean> m_aUsedOverrideBundles = new HashMap <String, Boolean> ();
+  private final Set <String> m_aUsedOverrideBundles = new HashSet <String> ();
   private final Map <String, Boolean> m_aUsedFallbackBundles = new HashMap <String, Boolean> ();
   private boolean m_bUseResourceBundleCache = DEFAULT_USE_RESOURCE_BUNDLE_CACHE;
   private final Map <String, ResourceBundle> m_aResourceBundleCache = new HashMap <String, ResourceBundle> ();
@@ -169,7 +170,7 @@ public final class EnumTextResolverWithPropertiesOverrideAndFallback extends
         m_aRWLock.writeLock ().lock ();
         try
         {
-          m_aUsedOverrideBundles.put (sBundleName, Boolean.TRUE);
+          m_aUsedOverrideBundles.add (sBundleName);
         }
         finally
         {
@@ -227,7 +228,7 @@ public final class EnumTextResolverWithPropertiesOverrideAndFallback extends
     m_aRWLock.readLock ().lock ();
     try
     {
-      return ContainerHelper.newSet (m_aUsedOverrideBundles.keySet ());
+      return ContainerHelper.newSet (m_aUsedOverrideBundles);
     }
     finally
     {
