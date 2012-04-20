@@ -33,6 +33,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.lang.ClassHelper;
 
@@ -208,6 +211,57 @@ public final class EqualsUtils
   public static boolean nullSafeEquals (@Nullable final StringBuilder aObj1, @Nullable final StringBuilder aObj2)
   {
     return (aObj1 == aObj2) || (aObj1 != null && aObj2 != null && equals (aObj1, aObj2));
+  }
+
+  private static boolean _equals (@Nullable final Node aObj1, @Nullable final Node aObj2, final boolean bNullSafe)
+  {
+    if (aObj1 == aObj2)
+      return true;
+
+    if (bNullSafe && (aObj1 == null || aObj2 == null))
+      return false;
+
+    if (!aObj1.getClass ().equals (aObj2.getClass ()))
+      return false;
+    if (aObj1.getNodeType () != aObj2.getNodeType ())
+      return false;
+    if (!nullSafeEquals (aObj1.getNodeName (), aObj2.getNodeName ()))
+      return false;
+    if (!nullSafeEquals (aObj1.getLocalName (), aObj2.getLocalName ()))
+      return false;
+    if (!nullSafeEquals (aObj1.getNamespaceURI (), aObj2.getNamespaceURI ()))
+      return false;
+    if (!nullSafeEquals (aObj1.getPrefix (), aObj2.getPrefix ()))
+      return false;
+    if (!nullSafeEquals (aObj1.getNodeValue (), aObj2.getNodeValue ()))
+      return false;
+
+    // For all children
+    final NodeList aNL1 = aObj1.getChildNodes ();
+    final NodeList aNL2 = aObj2.getChildNodes ();
+
+    if (aNL1.getLength () != aNL2.getLength ())
+      return false;
+
+    for (int i = 0; i < aNL1.getLength (); ++i)
+    {
+      final Node aChild1 = aNL1.item (i);
+      final Node aChild2 = aNL2.item (i);
+      if (!_equals (aChild1, aChild2, bNullSafe))
+        return false;
+    }
+
+    return true;
+  }
+
+  public static boolean equals (@Nonnull final Node aObj1, @Nonnull final Node aObj2)
+  {
+    return _equals (aObj1, aObj2, false);
+  }
+
+  public static boolean nullSafeEquals (@Nullable final Node aObj1, @Nullable final Node aObj2)
+  {
+    return _equals (aObj1, aObj2, true);
   }
 
   /**
@@ -452,6 +506,27 @@ public final class EqualsUtils
     return aObj1 == null ? aObj2 == null : equals (aObj1, aObj2);
   }
 
+  public static boolean equals (@Nonnull final Node [] aObj1, @Nonnull final Node [] aObj2)
+  {
+    if (aObj1 != aObj2)
+    {
+      if (aObj1 == null || aObj2 == null)
+        return false;
+      final int nLength = aObj1.length;
+      if (nLength != aObj2.length)
+        return false;
+      for (int i = 0; i < nLength; i++)
+        if (!nullSafeEquals (aObj1[i], aObj2[i]))
+          return false;
+    }
+    return true;
+  }
+
+  public static boolean nullSafeEquals (@Nullable final Node [] aObj1, @Nullable final Node [] aObj2)
+  {
+    return aObj1 == null ? aObj2 == null : equals (aObj1, aObj2);
+  }
+
   public static boolean equals (@Nonnull final URL [] aObj1, @Nonnull final URL [] aObj2)
   {
     if (aObj1 != aObj2)
@@ -687,6 +762,10 @@ public final class EqualsUtils
       return equals ((StringBuilder) aObj1, (StringBuilder) aObj2);
     if (aClass.equals (StringBuilder [].class))
       return equals ((StringBuilder []) aObj1, (StringBuilder []) aObj2);
+    if (aClass.equals (Node.class))
+      return equals ((Node) aObj1, (Node) aObj2);
+    if (aClass.equals (Node [].class))
+      return equals ((Node []) aObj1, (Node []) aObj2);
     if (aClass.equals (URL.class))
       return equals ((URL) aObj1, (URL) aObj2);
     if (aClass.equals (URL [].class))

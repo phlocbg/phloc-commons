@@ -20,6 +20,11 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2012-04-20" category="api" action="add">
+    <change>
+      <text locale="en">Added special hashCode and equals support for org.w3c.dom.Node objects</text>
+    </change>
+  </entry>
   <entry date="2012-04-18" category="tech" action="update">
     <change>
       <text locale="en">Fixed some specific issues with ReadWriteLock usage</text>

@@ -22,6 +22,8 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.w3c.dom.Node;
+
 /**
  * Defines a generic interface for appending objects to something.
  * 
@@ -206,4 +208,12 @@ public interface IAppendable <THISTYPE extends IAppendable <THISTYPE>>
    */
   @Nonnull
   THISTYPE append (@Nullable Map <?, ?> x);
+
+  /**
+   * @param x
+   *        value to be appended
+   * @return this
+   */
+  @Nonnull
+  THISTYPE append (@Nullable Node x);
 }
