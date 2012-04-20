@@ -23,6 +23,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 
 /**
@@ -222,6 +225,8 @@ public final class HashCodeCalculator
       return append (nPrevHashCode, (StringBuilder) x);
     if (x instanceof StringBuffer)
       return append (nPrevHashCode, (StringBuffer) x);
+    if (x instanceof Node)
+      return append (nPrevHashCode, (Node) x);
 
     return append (nPrevHashCode, x.hashCode ());
   }
@@ -496,6 +501,40 @@ public final class HashCodeCalculator
     {
       ret = append (ret, aEntry.getKey ());
       ret = append (ret, aEntry.getValue ());
+    }
+    return ret;
+  }
+
+  /**
+   * Type specific hash code generation because parameter class has no
+   * overloaded equals method.
+   * 
+   * @param nPrevHashCode
+   *        The previous hash code used as the basis for calculation
+   * @param x
+   *        object to add
+   * @return The updated hash code
+   */
+  @Nonnull
+  public static int append (final int nPrevHashCode, @Nullable final Node x)
+  {
+    if (x == null)
+      return append (nPrevHashCode, HASHCODE_NULL);
+
+    int ret = append (nPrevHashCode, x.getClass ());
+    ret = append (ret, x.getNodeType ());
+    ret = append (ret, x.getNodeName ());
+    ret = append (ret, x.getLocalName ());
+    ret = append (ret, x.getNamespaceURI ());
+    ret = append (ret, x.getPrefix ());
+    ret = append (ret, x.getNodeValue ());
+
+    // For all children
+    final NodeList aNL = x.getChildNodes ();
+    for (int i = 0; i < aNL.getLength (); ++i)
+    {
+      final Node aChild = aNL.item (i);
+      ret = append (ret, aChild);
     }
     return ret;
   }

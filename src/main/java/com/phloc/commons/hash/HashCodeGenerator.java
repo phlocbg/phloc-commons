@@ -23,6 +23,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import org.w3c.dom.Node;
+
 /**
  * A small hash code creation class based on the article found in the net. See
  * <a href=
@@ -462,6 +464,19 @@ public final class HashCodeGenerator implements IHashCodeGenerator
    */
   @Nonnull
   public HashCodeGenerator append (@Nullable final Map <?, ?> x)
+  {
+    _checkClosed ();
+    m_nHC = HashCodeCalculator.append (m_nHC, x);
+    return this;
+  }
+
+  /**
+   * @param x
+   *        to be included in the hash code generation.
+   * @return this
+   */
+  @Nonnull
+  public HashCodeGenerator append (@Nullable final Node x)
   {
     _checkClosed ();
     m_nHC = HashCodeCalculator.append (m_nHC, x);
