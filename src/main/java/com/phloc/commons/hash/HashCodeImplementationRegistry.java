@@ -17,8 +17,6 @@
  */
 package com.phloc.commons.hash;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -27,7 +25,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.lang.ServiceLoaderBackport;
 import com.phloc.commons.state.EChange;
@@ -167,11 +164,6 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
     return aImpl == null ? aObj.hashCode () : aImpl.getHashCode (aObj);
   }
 
-  public boolean hasHashCodeImplementation (@Nullable final Class <?> aClass)
-  {
-    return getBestMatchingHashCodeImplementation (aClass) != null;
-  }
-
   @Nullable
   public IHashCodeImplementation getBestMatchingHashCodeImplementation (@Nullable final Class <?> aClass)
   {
@@ -204,6 +196,8 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
       {
         // If the matching implementation is for an interface and the
         // implementation class implements hashCode, use the one from the class
+        // Example: a converter for "Map" is registered, but "LRUCache" comes
+        // with its own "hashCode" implementation
         if (ClassHelper.isInterface (aMatchingConverterClass) && _implementsHashCodeItself (aClass))
           return null;
 
@@ -220,30 +214,5 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
 
     // Definitely no special implementation
     return null;
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public List <IHashCodeImplementation> getAllHashCodeImplementations (@Nullable final Class <?> aClass)
-  {
-    final List <IHashCodeImplementation> ret = new ArrayList <IHashCodeImplementation> ();
-    if (aClass != null)
-    {
-      m_aRWLock.readLock ().lock ();
-      try
-      {
-        for (final Class <?> aCurClass : ClassHelper.getClassHierarchy (aClass, true))
-        {
-          final IHashCodeImplementation aImpl = m_aMap.get (aCurClass);
-          if (aImpl != null)
-            ret.add (aImpl);
-        }
-      }
-      finally
-      {
-        m_aRWLock.readLock ().unlock ();
-      }
-    }
-    return ret;
   }
 }

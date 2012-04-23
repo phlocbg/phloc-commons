@@ -17,8 +17,6 @@
  */
 package com.phloc.commons.equals;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -27,7 +25,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.lang.ServiceLoaderBackport;
 import com.phloc.commons.state.EChange;
@@ -196,11 +193,6 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
     return bAreEqual;
   }
 
-  public boolean hasEqualsImplementation (@Nullable final Class <?> aClass)
-  {
-    return getBestMatchingEqualsImplementation (aClass) != null;
-  }
-
   @Nullable
   public IEqualsImplementation getBestMatchingEqualsImplementation (@Nullable final Class <?> aClass)
   {
@@ -233,6 +225,8 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
       {
         // If the matching implementation is for an interface and the
         // implementation class implements equals, use the one from the class
+        // Example: a converter for "Map" is registered, but "LRUCache" comes
+        // with its own "equals" implementation
         if (ClassHelper.isInterface (aMatchingConverterClass) && _implementsEqualsItself (aClass))
           return null;
 
@@ -249,30 +243,5 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
 
     // Definitely no special implementation
     return null;
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public List <IEqualsImplementation> getAllEqualsImplementations (@Nullable final Class <?> aClass)
-  {
-    final List <IEqualsImplementation> ret = new ArrayList <IEqualsImplementation> ();
-    if (aClass != null)
-    {
-      m_aRWLock.readLock ().lock ();
-      try
-      {
-        for (final Class <?> aCurClass : ClassHelper.getClassHierarchy (aClass, true))
-        {
-          final IEqualsImplementation aImpl = m_aMap.get (aCurClass);
-          if (aImpl != null)
-            ret.add (aImpl);
-        }
-      }
-      finally
-      {
-        m_aRWLock.readLock ().unlock ();
-      }
-    }
-    return ret;
   }
 }
