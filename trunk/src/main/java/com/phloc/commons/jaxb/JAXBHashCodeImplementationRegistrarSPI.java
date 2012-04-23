@@ -35,12 +35,12 @@ public final class JAXBHashCodeImplementationRegistrarSPI implements IHashCodeIm
       public int getHashCode (final Object aObj)
       {
         final JAXBElement <?> aRealObj = (JAXBElement <?>) aObj;
-        return new HashCodeGenerator (aRealObj).append (aRealObj.getDeclaredType ())
-                                               .append (aRealObj.getName ())
-                                               .append (aRealObj.getScope ())
-                                               .append (aRealObj.isNil ())
-                                               .append (aRealObj.getValue ())
-                                               .getHashCode ();
+        return new HashCodeGenerator (aRealObj.getClass ()).append (aRealObj.getDeclaredType ())
+                                                           .append (aRealObj.getName ())
+                                                           .append (aRealObj.getScope ())
+                                                           .append (aRealObj.isNil ())
+                                                           .append (aRealObj.getValue ())
+                                                           .getHashCode ();
       }
     });
   }

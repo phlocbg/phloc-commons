@@ -177,7 +177,7 @@ public final class HashCodeCalculator
    * @param nPrevHashCode
    *        The previous hash code used as the basis for calculation
    * @param x
-   *        Object to add
+   *        Object to add. May be <code>null</code>.
    * @return The updated hash code
    */
   @Nonnull
