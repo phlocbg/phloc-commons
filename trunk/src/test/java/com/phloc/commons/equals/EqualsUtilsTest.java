@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.compare;
+package com.phloc.commons.equals;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -26,6 +26,7 @@ import java.net.URL;
 
 import org.junit.Test;
 
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 
 /**
@@ -84,132 +85,132 @@ public final class EqualsUtilsTest extends AbstractPhlocTestCase
 
   public void _testNSE (final String s1, final String s2)
   {
-    assertTrue (EqualsUtils.nullSafeEquals (s1, s1));
-    assertFalse (EqualsUtils.nullSafeEquals (s1, s2));
-    assertFalse (EqualsUtils.nullSafeEquals (s2, s1));
-    assertFalse (EqualsUtils.nullSafeEquals (s1, null));
-    assertFalse (EqualsUtils.nullSafeEquals (null, s2));
-    assertTrue (EqualsUtils.nullSafeEquals ((String) null, (String) null));
+    assertTrue (EqualsUtils.equals (s1, s1));
+    assertFalse (EqualsUtils.equals (s1, s2));
+    assertFalse (EqualsUtils.equals (s2, s1));
+    assertFalse (EqualsUtils.equals (s1, null));
+    assertFalse (EqualsUtils.equals (null, s2));
+    assertTrue (EqualsUtils.equals ((String) null, (String) null));
   }
 
   public void _testNSE (final BigDecimal s1, final BigDecimal s2)
   {
-    assertTrue (EqualsUtils.nullSafeEquals (s1, s1));
-    assertFalse (EqualsUtils.nullSafeEquals (s1, s2));
-    assertFalse (EqualsUtils.nullSafeEquals (s2, s1));
-    assertFalse (EqualsUtils.nullSafeEquals (s1, null));
-    assertFalse (EqualsUtils.nullSafeEquals (null, s2));
-    assertTrue (EqualsUtils.nullSafeEquals ((Float) null, (Float) null));
+    assertTrue (EqualsUtils.equals (s1, s1));
+    assertFalse (EqualsUtils.equals (s1, s2));
+    assertFalse (EqualsUtils.equals (s2, s1));
+    assertFalse (EqualsUtils.equals (s1, null));
+    assertFalse (EqualsUtils.equals (null, s2));
+    assertTrue (EqualsUtils.equals ((Float) null, (Float) null));
   }
 
   public void _testNSE (final Double s1, final Double s2)
   {
-    assertTrue (EqualsUtils.nullSafeEquals (s1, s1));
-    assertFalse (EqualsUtils.nullSafeEquals (s1, s2));
-    assertFalse (EqualsUtils.nullSafeEquals (s2, s1));
-    assertFalse (EqualsUtils.nullSafeEquals (s1, null));
-    assertFalse (EqualsUtils.nullSafeEquals (null, s2));
-    assertTrue (EqualsUtils.nullSafeEquals ((Double) null, (Double) null));
+    assertTrue (EqualsUtils.equals (s1, s1));
+    assertFalse (EqualsUtils.equals (s1, s2));
+    assertFalse (EqualsUtils.equals (s2, s1));
+    assertFalse (EqualsUtils.equals (s1, null));
+    assertFalse (EqualsUtils.equals (null, s2));
+    assertTrue (EqualsUtils.equals ((Double) null, (Double) null));
   }
 
   public void _testNSE (final Float s1, final Float s2)
   {
-    assertTrue (EqualsUtils.nullSafeEquals (s1, s1));
-    assertFalse (EqualsUtils.nullSafeEquals (s1, s2));
-    assertFalse (EqualsUtils.nullSafeEquals (s2, s1));
-    assertFalse (EqualsUtils.nullSafeEquals (s1, null));
-    assertFalse (EqualsUtils.nullSafeEquals (null, s2));
-    assertTrue (EqualsUtils.nullSafeEquals ((Float) null, (Float) null));
+    assertTrue (EqualsUtils.equals (s1, s1));
+    assertFalse (EqualsUtils.equals (s1, s2));
+    assertFalse (EqualsUtils.equals (s2, s1));
+    assertFalse (EqualsUtils.equals (s1, null));
+    assertFalse (EqualsUtils.equals (null, s2));
+    assertTrue (EqualsUtils.equals ((Float) null, (Float) null));
   }
 
   public void _testNSE (final URL s1, final URL s2)
   {
-    assertTrue (EqualsUtils.nullSafeEquals (s1, s1));
-    assertFalse (EqualsUtils.nullSafeEquals (s1, s2));
-    assertFalse (EqualsUtils.nullSafeEquals (s2, s1));
-    assertFalse (EqualsUtils.nullSafeEquals (s1, null));
-    assertFalse (EqualsUtils.nullSafeEquals (null, s2));
-    assertTrue (EqualsUtils.nullSafeEquals ((Float) null, (Float) null));
+    assertTrue (EqualsUtils.equals (s1, s1));
+    assertFalse (EqualsUtils.equals (s1, s2));
+    assertFalse (EqualsUtils.equals (s2, s1));
+    assertFalse (EqualsUtils.equals (s1, null));
+    assertFalse (EqualsUtils.equals (null, s2));
+    assertTrue (EqualsUtils.equals ((Float) null, (Float) null));
   }
 
   public void _testNSE (final boolean [] s1, final boolean [] s2)
   {
-    assertTrue (EqualsUtils.nullSafeEquals (s1, s1));
-    assertFalse (EqualsUtils.nullSafeEquals (s1, s2));
-    assertFalse (EqualsUtils.nullSafeEquals (s2, s1));
-    assertFalse (EqualsUtils.nullSafeEquals (s1, null));
-    assertFalse (EqualsUtils.nullSafeEquals (null, s2));
-    assertTrue (EqualsUtils.nullSafeEquals ((boolean []) null, (boolean []) null));
+    assertTrue (EqualsUtils.equals (s1, s1));
+    assertFalse (EqualsUtils.equals (s1, s2));
+    assertFalse (EqualsUtils.equals (s2, s1));
+    assertFalse (EqualsUtils.equals (s1, null));
+    assertFalse (EqualsUtils.equals (null, s2));
+    assertTrue (EqualsUtils.equals ((boolean []) null, (boolean []) null));
   }
 
   public void _testNSE (final byte [] s1, final byte [] s2)
   {
-    assertTrue (EqualsUtils.nullSafeEquals (s1, s1));
-    assertFalse (EqualsUtils.nullSafeEquals (s1, s2));
-    assertFalse (EqualsUtils.nullSafeEquals (s2, s1));
-    assertFalse (EqualsUtils.nullSafeEquals (s1, null));
-    assertFalse (EqualsUtils.nullSafeEquals (null, s2));
-    assertTrue (EqualsUtils.nullSafeEquals ((byte []) null, (byte []) null));
+    assertTrue (EqualsUtils.equals (s1, s1));
+    assertFalse (EqualsUtils.equals (s1, s2));
+    assertFalse (EqualsUtils.equals (s2, s1));
+    assertFalse (EqualsUtils.equals (s1, null));
+    assertFalse (EqualsUtils.equals (null, s2));
+    assertTrue (EqualsUtils.equals ((byte []) null, (byte []) null));
   }
 
   public void _testNSE (final char [] s1, final char [] s2)
   {
-    assertTrue (EqualsUtils.nullSafeEquals (s1, s1));
-    assertFalse (EqualsUtils.nullSafeEquals (s1, s2));
-    assertFalse (EqualsUtils.nullSafeEquals (s2, s1));
-    assertFalse (EqualsUtils.nullSafeEquals (s1, null));
-    assertFalse (EqualsUtils.nullSafeEquals (null, s2));
-    assertTrue (EqualsUtils.nullSafeEquals ((char []) null, (char []) null));
+    assertTrue (EqualsUtils.equals (s1, s1));
+    assertFalse (EqualsUtils.equals (s1, s2));
+    assertFalse (EqualsUtils.equals (s2, s1));
+    assertFalse (EqualsUtils.equals (s1, null));
+    assertFalse (EqualsUtils.equals (null, s2));
+    assertTrue (EqualsUtils.equals ((char []) null, (char []) null));
   }
 
   public void _testNSE (final double [] s1, final double [] s2)
   {
-    assertTrue (EqualsUtils.nullSafeEquals (s1, s1));
-    assertFalse (EqualsUtils.nullSafeEquals (s1, s2));
-    assertFalse (EqualsUtils.nullSafeEquals (s2, s1));
-    assertFalse (EqualsUtils.nullSafeEquals (s1, null));
-    assertFalse (EqualsUtils.nullSafeEquals (null, s2));
-    assertTrue (EqualsUtils.nullSafeEquals ((double []) null, (double []) null));
+    assertTrue (EqualsUtils.equals (s1, s1));
+    assertFalse (EqualsUtils.equals (s1, s2));
+    assertFalse (EqualsUtils.equals (s2, s1));
+    assertFalse (EqualsUtils.equals (s1, null));
+    assertFalse (EqualsUtils.equals (null, s2));
+    assertTrue (EqualsUtils.equals ((double []) null, (double []) null));
   }
 
   public void _testNSE (final float [] s1, final float [] s2)
   {
-    assertTrue (EqualsUtils.nullSafeEquals (s1, s1));
-    assertFalse (EqualsUtils.nullSafeEquals (s1, s2));
-    assertFalse (EqualsUtils.nullSafeEquals (s2, s1));
-    assertFalse (EqualsUtils.nullSafeEquals (s1, null));
-    assertFalse (EqualsUtils.nullSafeEquals (null, s2));
-    assertTrue (EqualsUtils.nullSafeEquals ((float []) null, (float []) null));
+    assertTrue (EqualsUtils.equals (s1, s1));
+    assertFalse (EqualsUtils.equals (s1, s2));
+    assertFalse (EqualsUtils.equals (s2, s1));
+    assertFalse (EqualsUtils.equals (s1, null));
+    assertFalse (EqualsUtils.equals (null, s2));
+    assertTrue (EqualsUtils.equals ((float []) null, (float []) null));
   }
 
   public void _testNSE (final int [] s1, final int [] s2)
   {
-    assertTrue (EqualsUtils.nullSafeEquals (s1, s1));
-    assertFalse (EqualsUtils.nullSafeEquals (s1, s2));
-    assertFalse (EqualsUtils.nullSafeEquals (s2, s1));
-    assertFalse (EqualsUtils.nullSafeEquals (s1, null));
-    assertFalse (EqualsUtils.nullSafeEquals (null, s2));
-    assertTrue (EqualsUtils.nullSafeEquals ((int []) null, (int []) null));
+    assertTrue (EqualsUtils.equals (s1, s1));
+    assertFalse (EqualsUtils.equals (s1, s2));
+    assertFalse (EqualsUtils.equals (s2, s1));
+    assertFalse (EqualsUtils.equals (s1, null));
+    assertFalse (EqualsUtils.equals (null, s2));
+    assertTrue (EqualsUtils.equals ((int []) null, (int []) null));
   }
 
   public void _testNSE (final long [] s1, final long [] s2)
   {
-    assertTrue (EqualsUtils.nullSafeEquals (s1, s1));
-    assertFalse (EqualsUtils.nullSafeEquals (s1, s2));
-    assertFalse (EqualsUtils.nullSafeEquals (s2, s1));
-    assertFalse (EqualsUtils.nullSafeEquals (s1, null));
-    assertFalse (EqualsUtils.nullSafeEquals (null, s2));
-    assertTrue (EqualsUtils.nullSafeEquals ((long []) null, (long []) null));
+    assertTrue (EqualsUtils.equals (s1, s1));
+    assertFalse (EqualsUtils.equals (s1, s2));
+    assertFalse (EqualsUtils.equals (s2, s1));
+    assertFalse (EqualsUtils.equals (s1, null));
+    assertFalse (EqualsUtils.equals (null, s2));
+    assertTrue (EqualsUtils.equals ((long []) null, (long []) null));
   }
 
   public void _testNSE (final short [] s1, final short [] s2)
   {
-    assertTrue (EqualsUtils.nullSafeEquals (s1, s1));
-    assertFalse (EqualsUtils.nullSafeEquals (s1, s2));
-    assertFalse (EqualsUtils.nullSafeEquals (s2, s1));
-    assertFalse (EqualsUtils.nullSafeEquals (s1, null));
-    assertFalse (EqualsUtils.nullSafeEquals (null, s2));
-    assertTrue (EqualsUtils.nullSafeEquals ((short []) null, (short []) null));
+    assertTrue (EqualsUtils.equals (s1, s1));
+    assertFalse (EqualsUtils.equals (s1, s2));
+    assertFalse (EqualsUtils.equals (s2, s1));
+    assertFalse (EqualsUtils.equals (s1, null));
+    assertFalse (EqualsUtils.equals (null, s2));
+    assertTrue (EqualsUtils.equals ((short []) null, (short []) null));
   }
 
   @Test
@@ -246,8 +247,8 @@ public final class EqualsUtilsTest extends AbstractPhlocTestCase
     assertTrue (EqualsUtils.equals (aSB1, new StringBuffer ("Hi")));
     assertFalse (EqualsUtils.equals (aSB1, new StringBuffer ("Hallo")));
 
-    assertTrue (EqualsUtils.nullSafeEquals (aSB1, new StringBuffer ("Hi")));
-    assertFalse (EqualsUtils.nullSafeEquals (aSB1, new StringBuffer ("Hallo")));
-    assertFalse (EqualsUtils.nullSafeEquals (aSB1, null));
+    assertTrue (EqualsUtils.equals (aSB1, new StringBuffer ("Hi")));
+    assertFalse (EqualsUtils.equals (aSB1, new StringBuffer ("Hallo")));
+    assertFalse (EqualsUtils.equals (aSB1, null));
   }
 }

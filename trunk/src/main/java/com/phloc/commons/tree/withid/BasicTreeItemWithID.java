@@ -31,7 +31,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.collections.ContainerHelper;
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.lang.GenericReflection;
 import com.phloc.commons.state.EChange;
@@ -381,9 +381,9 @@ public class BasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItem
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final BasicTreeItemWithID <?, ?, ?> rhs = (BasicTreeItemWithID <?, ?, ?>) o;
-    return EqualsUtils.nullSafeEquals (m_aDataID, rhs.m_aDataID) &&
-           EqualsUtils.nullSafeEquals (m_aData, rhs.m_aData) &&
-           EqualsUtils.nullSafeEquals (m_aChildMap, rhs.m_aChildMap);
+    return EqualsUtils.equals (m_aDataID, rhs.m_aDataID) &&
+           EqualsUtils.equals (m_aData, rhs.m_aData) &&
+           EqualsUtils.equals (m_aChildMap, rhs.m_aChildMap);
   }
 
   @Override

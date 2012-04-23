@@ -29,7 +29,7 @@ import javax.annotation.concurrent.Immutable;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.annotations.ReturnsMutableObject;
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.lang.GenericReflection;
 
@@ -293,7 +293,7 @@ public final class ArrayHelper
   {
     if (!isEmpty (aValues))
       for (final ELEMENTTYPE aValue : aValues)
-        if (EqualsUtils.nullSafeEquals (aValue, aSearchValue))
+        if (EqualsUtils.equals (aValue, aSearchValue))
           return true;
     return false;
   }
@@ -3001,7 +3001,7 @@ public final class ArrayHelper
       else
       {
         // Use equals implementation
-        if (!EqualsUtils.nullSafeEquals (aItem1, aItem2))
+        if (!EqualsUtils.equals (aItem1, aItem2))
           return false;
       }
     }

@@ -27,7 +27,7 @@ import java.math.BigInteger;
 import org.junit.Test;
 
 import com.phloc.commons.CGlobal;
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.convert.MicroTypeConverter;
 import com.phloc.commons.microdom.serialize.MicroWriter;

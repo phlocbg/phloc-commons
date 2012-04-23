@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -90,9 +90,9 @@ public final class ReadonlyTriple <DATA1TYPE, DATA2TYPE, DATA3TYPE> implements
     if (!(o instanceof ReadonlyTriple <?, ?, ?>))
       return false;
     final ReadonlyTriple <?, ?, ?> rhs = (ReadonlyTriple <?, ?, ?>) o;
-    return EqualsUtils.nullSafeEquals (m_aFirst, rhs.m_aFirst) &&
-           EqualsUtils.nullSafeEquals (m_aSecond, rhs.m_aSecond) &&
-           EqualsUtils.nullSafeEquals (m_aThird, rhs.m_aThird);
+    return EqualsUtils.equals (m_aFirst, rhs.m_aFirst) &&
+           EqualsUtils.equals (m_aSecond, rhs.m_aSecond) &&
+           EqualsUtils.equals (m_aThird, rhs.m_aThird);
   }
 
   @Override

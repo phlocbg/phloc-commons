@@ -29,7 +29,7 @@ import java.util.Map.Entry;
 
 import org.junit.Test;
 
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
@@ -79,7 +79,7 @@ public final class SoftHashMapTest
       if (!(o instanceof Map.Entry))
         return false;
       final Map.Entry <?, ?> e = (Map.Entry <?, ?>) o;
-      return EqualsUtils.nullSafeEquals (m_aKey, e.getKey ()) && EqualsUtils.nullSafeEquals (m_aValue, e.getValue ());
+      return EqualsUtils.equals (m_aKey, e.getKey ()) && EqualsUtils.equals (m_aValue, e.getValue ());
     }
 
     @Override

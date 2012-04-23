@@ -28,7 +28,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.Nonempty;
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.streams.StreamUtils;
@@ -423,7 +423,7 @@ public final class ClassPathResource implements IReadableResource
     final ClassPathResource rhs = (ClassPathResource) o;
     // URL and URLresolved are state variables
     return EqualsUtils.equals (m_sPath, rhs.m_sPath) &&
-           EqualsUtils.nullSafeEquals (_getSpecifiedClassLoader (), rhs._getSpecifiedClassLoader ());
+           EqualsUtils.equals (_getSpecifiedClassLoader (), rhs._getSpecifiedClassLoader ());
   }
 
   @Override

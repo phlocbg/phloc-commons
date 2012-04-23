@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
@@ -72,7 +72,7 @@ public final class Triple <DATA1TYPE, DATA2TYPE, DATA3TYPE> implements ITriple <
   @Nonnull
   public EChange setFirst (@Nullable final DATA1TYPE aFirst)
   {
-    if (EqualsUtils.nullSafeEquals (aFirst, m_aFirst))
+    if (EqualsUtils.equals (aFirst, m_aFirst))
       return EChange.UNCHANGED;
     m_aFirst = aFirst;
     return EChange.CHANGED;
@@ -87,7 +87,7 @@ public final class Triple <DATA1TYPE, DATA2TYPE, DATA3TYPE> implements ITriple <
   @Nonnull
   public EChange setSecond (@Nullable final DATA2TYPE aSecond)
   {
-    if (EqualsUtils.nullSafeEquals (aSecond, m_aSecond))
+    if (EqualsUtils.equals (aSecond, m_aSecond))
       return EChange.UNCHANGED;
     m_aSecond = aSecond;
     return EChange.CHANGED;
@@ -102,7 +102,7 @@ public final class Triple <DATA1TYPE, DATA2TYPE, DATA3TYPE> implements ITriple <
   @Nonnull
   public EChange setThird (@Nullable final DATA3TYPE aThird)
   {
-    if (EqualsUtils.nullSafeEquals (aThird, m_aThird))
+    if (EqualsUtils.equals (aThird, m_aThird))
       return EChange.UNCHANGED;
     m_aThird = aThird;
     return EChange.CHANGED;
@@ -116,9 +116,9 @@ public final class Triple <DATA1TYPE, DATA2TYPE, DATA3TYPE> implements ITriple <
     if (!(o instanceof Triple <?, ?, ?>))
       return false;
     final Triple <?, ?, ?> rhs = (Triple <?, ?, ?>) o;
-    return EqualsUtils.nullSafeEquals (m_aFirst, rhs.m_aFirst) &&
-           EqualsUtils.nullSafeEquals (m_aSecond, rhs.m_aSecond) &&
-           EqualsUtils.nullSafeEquals (m_aThird, rhs.m_aThird);
+    return EqualsUtils.equals (m_aFirst, rhs.m_aFirst) &&
+           EqualsUtils.equals (m_aSecond, rhs.m_aSecond) &&
+           EqualsUtils.equals (m_aThird, rhs.m_aThird);
   }
 
   @Override

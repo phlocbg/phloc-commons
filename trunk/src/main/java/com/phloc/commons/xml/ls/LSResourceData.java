@@ -20,7 +20,7 @@ package com.phloc.commons.xml.ls;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -89,11 +89,11 @@ public final class LSResourceData
     if (!(o instanceof LSResourceData))
       return false;
     final LSResourceData rhs = (LSResourceData) o;
-    return EqualsUtils.nullSafeEquals (m_sType, rhs.m_sType) &&
-           EqualsUtils.nullSafeEquals (m_sNamespaceURI, rhs.m_sNamespaceURI) &&
-           EqualsUtils.nullSafeEquals (m_sPublicID, rhs.m_sPublicID) &&
-           EqualsUtils.nullSafeEquals (m_sSystemID, rhs.m_sSystemID) &&
-           EqualsUtils.nullSafeEquals (m_sBaseURI, rhs.m_sBaseURI);
+    return EqualsUtils.equals (m_sType, rhs.m_sType) &&
+           EqualsUtils.equals (m_sNamespaceURI, rhs.m_sNamespaceURI) &&
+           EqualsUtils.equals (m_sPublicID, rhs.m_sPublicID) &&
+           EqualsUtils.equals (m_sSystemID, rhs.m_sSystemID) &&
+           EqualsUtils.equals (m_sBaseURI, rhs.m_sBaseURI);
   }
 
   @Override

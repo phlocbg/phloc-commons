@@ -32,7 +32,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.IHasSize;
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 
 /**
  * A hash map that uses SoftReferences to store the elements
@@ -154,8 +154,8 @@ public final class SoftHashMap <KEYTYPE, VALUETYPE> extends AbstractMap <KEYTYPE
                 if (!(o instanceof Map.Entry <?, ?>))
                   return false;
                 final Map.Entry <?, ?> rhs = (Map.Entry <?, ?>) o;
-                return EqualsUtils.nullSafeEquals (getKey (), rhs.getKey ()) &&
-                       EqualsUtils.nullSafeEquals (getValue (), rhs.getValue ());
+                return EqualsUtils.equals (getKey (), rhs.getKey ()) &&
+                       EqualsUtils.equals (getValue (), rhs.getValue ());
               }
 
               @Override

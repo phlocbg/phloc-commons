@@ -28,7 +28,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.callback.IChangeNotify;
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.locale.LocaleCache;
 import com.phloc.commons.locale.LocaleUtils;
 import com.phloc.commons.state.EChange;
@@ -122,7 +122,7 @@ public final class MultiLingualText extends TextProvider implements IMultiLingua
       final String sOldText = super.internalGetText (aContentLocale);
 
       // Did anything change?
-      if (EqualsUtils.nullSafeEquals (sOldText, sText))
+      if (EqualsUtils.equals (sOldText, sText))
         return EChange.UNCHANGED;
 
       if (!_beforeChange ())

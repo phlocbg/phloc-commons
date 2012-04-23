@@ -23,7 +23,7 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.name.IHasDisplayName;
 import com.phloc.commons.name.IHasDisplayText;
@@ -94,7 +94,7 @@ public final class ConstantTextProvider extends AbstractTextProvider implements
     if (!(o instanceof ConstantTextProvider))
       return false;
     final ConstantTextProvider rhs = (ConstantTextProvider) o;
-    return EqualsUtils.nullSafeEquals (m_sFixedText, rhs.m_sFixedText);
+    return EqualsUtils.equals (m_sFixedText, rhs.m_sFixedText);
   }
 
   @Override

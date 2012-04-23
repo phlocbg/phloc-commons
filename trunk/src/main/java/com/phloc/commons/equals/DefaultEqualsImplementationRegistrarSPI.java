@@ -32,7 +32,6 @@ import javax.xml.bind.JAXBElement;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.phloc.commons.compare.EqualsUtils;
 
 public class DefaultEqualsImplementationRegistrarSPI implements IEqualsImplementationRegistrarSPI
 {

@@ -48,7 +48,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.collections.iterate.IIterableIterator;
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.filter.IFilter;
 import com.phloc.commons.string.StringHelper;
 
@@ -471,7 +471,7 @@ public final class XMLHelper
       {
         // check namespace before checking local name
         return hasNamespaceURI (aElement, sNamespaceURI) &&
-               EqualsUtils.nullSafeEquals (aElement.getLocalName (), sLocalName);
+               EqualsUtils.equals (aElement.getLocalName (), sLocalName);
       }
     });
   }

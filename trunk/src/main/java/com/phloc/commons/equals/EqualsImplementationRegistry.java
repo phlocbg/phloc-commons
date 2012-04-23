@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.equals;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +30,7 @@ import javax.annotation.Nullable;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.lang.ServiceLoaderBackport;
+import com.phloc.commons.state.EChange;
 
 public final class EqualsImplementationRegistry implements IEqualsImplementationRegistry
 {
@@ -67,9 +67,6 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
 
   private EqualsImplementationRegistry ()
   {
-    // register special handler for Object array
-    registerEqualsImplementation (Object [].class, new ArrayEqualsImplementation ());
-
     // Register all implementations via SPI
     for (final IEqualsImplementationRegistrarSPI aRegistrar : ServiceLoaderBackport.load (IEqualsImplementationRegistrarSPI.class))
       aRegistrar.registerEqualsImplementations (this);
@@ -99,11 +96,20 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
                                             aClass +
                                             " is already implemented!");
       m_aMap.put (aClass, aImpl);
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
+  }
 
-      // Get the corresponding array class and register a default converter
-      @SuppressWarnings ("unchecked")
-      final Class <Object []> aArrayClass = (Class <Object []>) Array.newInstance (aClass, 0).getClass ();
-      m_aMap.put (aArrayClass, new ArrayEqualsImplementation ());
+  @Nonnull
+  public EChange unregisterEqualsImplementation (@Nonnull final Class <?> aClass)
+  {
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      return EChange.valueOf (m_aMap.remove (aClass) != null);
     }
     finally
     {

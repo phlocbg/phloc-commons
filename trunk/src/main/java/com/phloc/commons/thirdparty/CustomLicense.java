@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.Nonempty;
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
@@ -105,8 +105,8 @@ public final class CustomLicense implements ILicense
     final CustomLicense rhs = (CustomLicense) o;
     return m_sID.equals (rhs.m_sID) &&
            m_sName.equals (rhs.m_sName) &&
-           EqualsUtils.nullSafeEquals (m_aVersion, rhs.m_aVersion) &&
-           EqualsUtils.nullSafeEquals (m_sWebSiteURL, rhs.m_sWebSiteURL);
+           EqualsUtils.equals (m_aVersion, rhs.m_aVersion) &&
+           EqualsUtils.equals (m_sWebSiteURL, rhs.m_sWebSiteURL);
   }
 
   @Override

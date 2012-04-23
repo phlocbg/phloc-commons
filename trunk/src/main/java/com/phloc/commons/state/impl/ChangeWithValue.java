@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.mutable.IReadonlyWrapper;
 import com.phloc.commons.state.EChange;
@@ -137,7 +137,7 @@ public final class ChangeWithValue <DATATYPE> implements IChangeIndicator, IRead
     if (!(o instanceof ChangeWithValue <?>))
       return false;
     final ChangeWithValue <?> rhs = (ChangeWithValue <?>) o;
-    return m_eChange.equals (rhs.m_eChange) && EqualsUtils.nullSafeEquals (m_aObj, rhs.m_aObj);
+    return m_eChange.equals (rhs.m_eChange) && EqualsUtils.equals (m_aObj, rhs.m_aObj);
   }
 
   @Override

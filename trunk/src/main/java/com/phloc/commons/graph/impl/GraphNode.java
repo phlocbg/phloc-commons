@@ -33,7 +33,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.graph.IGraphNode;
 import com.phloc.commons.graph.IGraphRelation;
 import com.phloc.commons.hash.HashCodeGenerator;
@@ -240,7 +240,7 @@ public class GraphNode <VALUETYPE> extends AbstractGraphObject implements IGraph
       return false;
     final GraphNode <?> rhs = (GraphNode <?>) o;
     // Comparing the relations may lead to infinite loops in case of cycles!
-    return EqualsUtils.nullSafeEquals (m_aValue, rhs.m_aValue);
+    return EqualsUtils.equals (m_aValue, rhs.m_aValue);
   }
 
   @Override

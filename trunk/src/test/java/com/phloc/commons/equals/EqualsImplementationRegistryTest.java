@@ -24,8 +24,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import com.phloc.commons.compare.EqualsUtils;
-import com.phloc.commons.equals.EqualsImplementationRegistry;
+import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 import com.phloc.commons.xml.XMLFactory;
 
@@ -46,6 +45,15 @@ public final class EqualsImplementationRegistryTest extends AbstractPhlocTestCas
     final Document d2 = XMLFactory.newDocument ();
     final Node aRoot2 = d2.appendChild (d2.createElementNS ("urn:my:phloc:test-namespace", "root"));
     ((Element) aRoot2.appendChild (d2.createElement ("child"))).setAttribute ("any", "works");
+
+    // Regular
     assertTrue (EqualsUtils.equals (d1, d2));
+
+    // 1 level array
+    assertTrue (EqualsUtils.equals (ArrayHelper.newArray (d1), ArrayHelper.newArray (d2)));
+
+    // 2 level array
+    assertTrue (EqualsUtils.equals (ArrayHelper.newArray (ArrayHelper.newArray (d1)),
+                                    ArrayHelper.newArray (ArrayHelper.newArray (d2))));
   }
 }

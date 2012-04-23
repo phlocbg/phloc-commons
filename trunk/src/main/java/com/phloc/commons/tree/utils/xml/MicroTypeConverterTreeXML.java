@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.annotations.Nonempty;
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.convert.MicroTypeConverter;
 import com.phloc.commons.microdom.convert.MicroTypeConverterRegistry;
@@ -92,7 +92,7 @@ public final class MicroTypeConverterTreeXML <DATATYPE> implements IConverterTre
     final IMicroElement eChildElement = eDataElement.getFirstChildElement ();
     if (eChildElement != null)
     {
-      if (!EqualsUtils.nullSafeEquals (m_sNamespaceURI, eChildElement.getNamespaceURI ()))
+      if (!EqualsUtils.equals (m_sNamespaceURI, eChildElement.getNamespaceURI ()))
         throw new IllegalStateException ("Namespace mismatch! Expected: " + m_sNamespaceURI);
       if (!m_sElementName.equals (eChildElement.getTagName ()))
         throw new IllegalStateException ("Tag name mismatch! Expected: " + m_sElementName);

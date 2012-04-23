@@ -24,7 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.collections.ContainerHelper;
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.id.IHasID;
 
 public final class MockHasChildren implements IHasChildren <MockHasChildren>, IHasID <String>
@@ -61,7 +61,7 @@ public final class MockHasChildren implements IHasChildren <MockHasChildren>, IH
   public MockHasChildren getChildWithID (final String sID)
   {
     for (final MockHasChildren aChild : m_aList)
-      if (EqualsUtils.nullSafeEquals (aChild.m_sID, sID))
+      if (EqualsUtils.equals (aChild.m_sID, sID))
         return aChild;
     return null;
   }

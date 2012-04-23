@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.combine.ICombinator;
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.tree.withid.unique.AbstractTreeItemWithUniqueIDFactory;
@@ -87,7 +87,7 @@ public abstract class AbstractFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYP
     if (!super.equals (o))
       return false;
     final AbstractFolderTreeItemFactory <?, ?, ?, ?> rhs = (AbstractFolderTreeItemFactory <?, ?, ?, ?>) o;
-    return EqualsUtils.nullSafeEquals (m_aKeyCombinator, rhs.m_aKeyCombinator);
+    return EqualsUtils.equals (m_aKeyCombinator, rhs.m_aKeyCombinator);
   }
 
   @Override
