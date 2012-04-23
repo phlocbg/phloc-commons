@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.IWritableResource;
@@ -123,7 +123,7 @@ public final class FileSystemResourceProvider implements IWritableResourceProvid
     if (!(o instanceof FileSystemResourceProvider))
       return false;
     final FileSystemResourceProvider rhs = (FileSystemResourceProvider) o;
-    return EqualsUtils.nullSafeEquals (m_aBasePath, rhs.m_aBasePath);
+    return EqualsUtils.equals (m_aBasePath, rhs.m_aBasePath);
   }
 
   @Override

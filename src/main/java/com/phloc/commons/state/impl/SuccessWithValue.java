@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.mutable.IReadonlyWrapper;
 import com.phloc.commons.state.ESuccess;
@@ -137,7 +137,7 @@ public final class SuccessWithValue <DATATYPE> implements ISuccessIndicator, IRe
     if (!(o instanceof SuccessWithValue <?>))
       return false;
     final SuccessWithValue <?> rhs = (SuccessWithValue <?>) o;
-    return m_eSuccess.equals (rhs.m_eSuccess) && EqualsUtils.nullSafeEquals (m_aObj, rhs.m_aObj);
+    return m_eSuccess.equals (rhs.m_eSuccess) && EqualsUtils.equals (m_aObj, rhs.m_aObj);
   }
 
   @Override

@@ -26,7 +26,7 @@ import javax.annotation.concurrent.Immutable;
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.SystemProperties;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.string.StringHelper;
 
 /**

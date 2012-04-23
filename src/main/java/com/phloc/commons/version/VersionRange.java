@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.IHasStringRepresentation;
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.regex.RegExHelper;
 import com.phloc.commons.string.StringHelper;
@@ -365,7 +365,7 @@ public final class VersionRange implements Comparable <VersionRange>, IHasString
     return m_bIncludeFloor == rhs.m_bIncludeFloor &&
            m_aFloorVersion.equals (rhs.m_aFloorVersion) &&
            m_bIncludeCeil == rhs.m_bIncludeCeil &&
-           EqualsUtils.nullSafeEquals (m_aCeilVersion, rhs.m_aCeilVersion);
+           EqualsUtils.equals (m_aCeilVersion, rhs.m_aCeilVersion);
   }
 
   @Override

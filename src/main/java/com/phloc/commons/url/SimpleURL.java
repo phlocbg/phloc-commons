@@ -26,7 +26,7 @@ import javax.annotation.Nullable;
 import com.phloc.commons.ICloneable;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.collections.ContainerHelper;
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
@@ -216,8 +216,8 @@ public final class SimpleURL implements ISimpleURL, ICloneable <SimpleURL>
       return false;
     final SimpleURL rhs = (SimpleURL) o;
     return m_sPath.equals (rhs.m_sPath) &&
-           EqualsUtils.nullSafeEquals (m_aParams, rhs.m_aParams) &&
-           EqualsUtils.nullSafeEquals (m_sAnchor, rhs.m_sAnchor);
+           EqualsUtils.equals (m_aParams, rhs.m_aParams) &&
+           EqualsUtils.equals (m_sAnchor, rhs.m_sAnchor);
   }
 
   @Override

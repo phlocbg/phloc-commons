@@ -24,7 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.ISuccessIndicator;
 import com.phloc.commons.string.ToStringGenerator;
@@ -160,9 +160,9 @@ public final class FileIOError implements ISuccessIndicator, Serializable
     final FileIOError rhs = (FileIOError) o;
     return m_eOperation == rhs.m_eOperation &&
            m_eCode == rhs.m_eCode &&
-           EqualsUtils.nullSafeEquals (m_aFile1, rhs.m_aFile1) &&
-           EqualsUtils.nullSafeEquals (m_aFile2, rhs.m_aFile2) &&
-           EqualsUtils.nullSafeEquals (m_aException, rhs.m_aException);
+           EqualsUtils.equals (m_aFile1, rhs.m_aFile1) &&
+           EqualsUtils.equals (m_aFile2, rhs.m_aFile2) &&
+           EqualsUtils.equals (m_aException, rhs.m_aException);
   }
 
   @Override

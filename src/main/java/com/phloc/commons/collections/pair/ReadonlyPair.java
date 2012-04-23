@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -75,7 +75,7 @@ public final class ReadonlyPair <DATA1TYPE, DATA2TYPE> implements IReadonlyPair 
     if (!(o instanceof ReadonlyPair <?, ?>))
       return false;
     final ReadonlyPair <?, ?> rhs = (ReadonlyPair <?, ?>) o;
-    return EqualsUtils.nullSafeEquals (m_aFirst, rhs.m_aFirst) && EqualsUtils.nullSafeEquals (m_aSecond, rhs.m_aSecond);
+    return EqualsUtils.equals (m_aFirst, rhs.m_aFirst) && EqualsUtils.equals (m_aSecond, rhs.m_aSecond);
   }
 
   @Override

@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.Nonempty;
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
@@ -137,8 +137,8 @@ public final class ThirdPartyModule implements IThirdPartyModule
     return m_sDisplayName.equals (rhs.m_sDisplayName) &&
            m_sCopyrightOwner.equals (rhs.m_sCopyrightOwner) &&
            m_aLicense.equals (rhs.m_aLicense) &&
-           EqualsUtils.nullSafeEquals (m_aVersion, rhs.m_aVersion) &&
-           EqualsUtils.nullSafeEquals (m_sWebSiteURL, rhs.m_sWebSiteURL) &&
+           EqualsUtils.equals (m_aVersion, rhs.m_aVersion) &&
+           EqualsUtils.equals (m_sWebSiteURL, rhs.m_sWebSiteURL) &&
            m_bOptional == rhs.m_bOptional;
   }
 

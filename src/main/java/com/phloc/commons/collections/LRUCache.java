@@ -26,7 +26,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.IHasSize;
 import com.phloc.commons.annotations.OverrideOnDemand;
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.hash.IHashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;

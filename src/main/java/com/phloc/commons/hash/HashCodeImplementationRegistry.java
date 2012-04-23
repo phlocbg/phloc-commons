@@ -30,6 +30,7 @@ import javax.annotation.Nullable;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.lang.ServiceLoaderBackport;
+import com.phloc.commons.state.EChange;
 
 public final class HashCodeImplementationRegistry implements IHashCodeImplementationRegistry
 {
@@ -62,9 +63,6 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
 
   private HashCodeImplementationRegistry ()
   {
-    // Special handling for Object[]
-    registerHashCodeImplementation (Object [].class, new ArrayHashCodeImplementation ());
-
     // Register all implementations via SPI
     for (final IHashCodeImplementationRegistrarSPI aRegistrar : ServiceLoaderBackport.load (IHashCodeImplementationRegistrarSPI.class))
       aRegistrar.registerHashCodeImplementations (this);
@@ -95,6 +93,20 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
                                             aClass +
                                             " is already implemented!");
       m_aMap.put (aClass, aImpl);
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
+  }
+
+  @Nonnull
+  public EChange unregisterHashCodeImplementation (@Nonnull final Class <?> aClass)
+  {
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      return EChange.valueOf (m_aMap.remove (aClass) != null);
     }
     finally
     {

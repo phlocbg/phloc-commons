@@ -25,7 +25,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -101,7 +101,7 @@ public final class ArrayEnumeration <ELEMENTTYPE> implements Enumeration <ELEMEN
     if (!(o instanceof ArrayEnumeration <?>))
       return false;
     final ArrayEnumeration <?> rhs = (ArrayEnumeration <?>) o;
-    return EqualsUtils.nullSafeEquals (m_aArray, rhs.m_aArray) && m_nIndex == rhs.m_nIndex;
+    return EqualsUtils.equals (m_aArray, rhs.m_aArray) && m_nIndex == rhs.m_nIndex;
   }
 
   @Override

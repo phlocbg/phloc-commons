@@ -42,7 +42,7 @@ import javax.annotation.Nonnull;
 import org.junit.Test;
 
 import com.phloc.commons.collections.ArrayHelper;
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.locale.ELocaleName;
 import com.phloc.commons.locale.LocaleCache;

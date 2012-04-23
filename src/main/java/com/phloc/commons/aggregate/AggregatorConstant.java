@@ -22,7 +22,7 @@ import java.util.Collection;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -55,7 +55,7 @@ public final class AggregatorConstant <SRCTYPE, DSTTYPE> implements IAggregator 
     if (!(o instanceof AggregatorConstant <?, ?>))
       return false;
     final AggregatorConstant <?, ?> rhs = (AggregatorConstant <?, ?>) o;
-    return EqualsUtils.nullSafeEquals (m_aValue, rhs.m_aValue);
+    return EqualsUtils.equals (m_aValue, rhs.m_aValue);
   }
 
   @Override

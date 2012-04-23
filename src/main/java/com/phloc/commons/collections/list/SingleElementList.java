@@ -35,7 +35,7 @@ import com.phloc.commons.collections.iterate.EmptyIterator;
 import com.phloc.commons.collections.iterate.EmptyListIterator;
 import com.phloc.commons.collections.iterate.SingleElementIterator;
 import com.phloc.commons.collections.iterate.SingleElementListIterator;
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.lang.GenericReflection;
 import com.phloc.commons.string.ToStringGenerator;
@@ -109,7 +109,7 @@ public class SingleElementList <ELEMENTTYPE> implements List <ELEMENTTYPE>, IHas
 
   public boolean contains (@Nullable final Object aElement)
   {
-    return m_bHasElement ? EqualsUtils.nullSafeEquals (m_aElement, aElement) : false;
+    return m_bHasElement ? EqualsUtils.equals (m_aElement, aElement) : false;
   }
 
   public boolean containsAll (@Nonnull final Collection <?> aElements)
@@ -274,7 +274,7 @@ public class SingleElementList <ELEMENTTYPE> implements List <ELEMENTTYPE>, IHas
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final SingleElementList <?> rhs = (SingleElementList <?>) o;
-    return m_bHasElement == rhs.m_bHasElement && EqualsUtils.nullSafeEquals (m_aElement, rhs.m_aElement);
+    return m_bHasElement == rhs.m_bHasElement && EqualsUtils.equals (m_aElement, rhs.m_aElement);
   }
 
   @Override

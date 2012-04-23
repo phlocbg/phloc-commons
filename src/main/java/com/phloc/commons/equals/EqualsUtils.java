@@ -15,14 +15,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.compare;
+package com.phloc.commons.equals;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
-import com.phloc.commons.equals.EqualsImplementationRegistry;
 
 /**
  * A small helper class that provides helper methods for easy
@@ -107,9 +106,10 @@ public final class EqualsUtils
     return EqualsImplementationRegistry.areEqual (aObj1, aObj2);
   }
 
+  @Deprecated
   public static boolean nullSafeEquals (@Nullable final Object aObj1, @Nullable final Object aObj2)
   {
-    return EqualsImplementationRegistry.areEqual (aObj1, aObj2);
+    return equals (aObj1, aObj2);
   }
 
   @edu.umd.cs.findbugs.annotations.SuppressWarnings ({ "ES_COMPARING_PARAMETER_STRING_WITH_EQ" })

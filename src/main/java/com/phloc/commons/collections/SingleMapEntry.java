@@ -22,7 +22,7 @@ import java.util.Map;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -79,7 +79,7 @@ public final class SingleMapEntry <KEYTYPE, VALUETYPE> implements Map.Entry <KEY
     if (!(o instanceof SingleMapEntry <?, ?>))
       return false;
     final SingleMapEntry <?, ?> rhs = (SingleMapEntry <?, ?>) o;
-    return EqualsUtils.nullSafeEquals (m_aKey, rhs.m_aKey) && EqualsUtils.nullSafeEquals (m_aValue, rhs.m_aValue);
+    return EqualsUtils.equals (m_aKey, rhs.m_aKey) && EqualsUtils.equals (m_aValue, rhs.m_aValue);
   }
 
   @Override

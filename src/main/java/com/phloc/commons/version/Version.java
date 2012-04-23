@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.IHasStringRepresentation;
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.regex.RegExHelper;
 import com.phloc.commons.string.StringHelper;
@@ -357,7 +357,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
     return m_nMajor == rhs.m_nMajor &&
            m_nMinor == rhs.m_nMinor &&
            m_nMicro == rhs.m_nMicro &&
-           EqualsUtils.nullSafeEquals (m_sQualifier, rhs.m_sQualifier);
+           EqualsUtils.equals (m_sQualifier, rhs.m_sQualifier);
   }
 
   @Override

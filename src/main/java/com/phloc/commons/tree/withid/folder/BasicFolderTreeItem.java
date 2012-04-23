@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.combine.ICombinator;
-import com.phloc.commons.compare.EqualsUtils;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.tree.withid.BasicTreeItemWithID;
@@ -110,7 +110,7 @@ public class BasicFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collectio
     if (!super.equals (o))
       return false;
     final BasicFolderTreeItem <?, ?, ?, ?> rhs = (BasicFolderTreeItem <?, ?, ?, ?>) o;
-    return EqualsUtils.nullSafeEquals (m_aKeyCombinator, rhs.m_aKeyCombinator);
+    return EqualsUtils.equals (m_aKeyCombinator, rhs.m_aKeyCombinator);
   }
 
   @Override
