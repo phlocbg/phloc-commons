@@ -125,15 +125,6 @@ public final class CharsetManagerTest
     {}
   }
 
-  @SuppressWarnings ("deprecation")
-  @Test
-  public void testGetAnsiStringInDefaultCharset ()
-  {
-    final String s = "äbc";
-    assertEquals (3, CharsetManager.getAnsiStringInDefaultCharset (s).length ());
-    assertNull (CharsetManager.getAnsiStringInDefaultCharset (null));
-  }
-
   @Test
   public void testGreek () throws Exception
   {

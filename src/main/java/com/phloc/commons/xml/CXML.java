@@ -62,16 +62,8 @@ public final class CXML
   public static final String XML_ATTR_BASE = XML_ATTR_XML_WITH_SEP + "base";
 
   // XML Schema Definition (XS and XSD) stuff:
-  @Deprecated
-  public static final String XML_NS_XS = XMLConstants.W3C_XML_SCHEMA_NS_URI;
   public static final String XML_NS_XSD = XMLConstants.W3C_XML_SCHEMA_NS_URI;
-
-  @Deprecated
-  public static final String XML_NS_PREFIX_XS = "xs";
   public static final String XML_NS_PREFIX_XSD = "xsd";
-
-  @Deprecated
-  public static final String XMLNS_XS = XML_ATTR_XMLNS_WITH_SEP + XML_NS_PREFIX_XS;
   public static final String XMLNS_XSD = XML_ATTR_XMLNS_WITH_SEP + XML_NS_PREFIX_XSD;
 
   // XML Schema Instance (XSI) stuff:

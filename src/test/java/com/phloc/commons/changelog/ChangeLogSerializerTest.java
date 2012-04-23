@@ -38,8 +38,8 @@ import com.phloc.commons.mock.PhlocTestUtils;
 import com.phloc.commons.version.Version;
 import com.phloc.commons.xml.sax.ReadableResourceSAXInputSource;
 import com.phloc.commons.xml.schema.XMLSchemaCache;
-import com.phloc.commons.xml.serialize.AbstractXMLWriterSettings;
 import com.phloc.commons.xml.serialize.XMLReader;
+import com.phloc.commons.xml.serialize.XMLWriterSettings;
 
 /**
  * Test class for class {@link ChangeLogSerializer}.
@@ -104,12 +104,12 @@ public final class ChangeLogSerializerTest
 
     // 3. read again -> must be equal
     final ChangeLog aCL2 = ChangeLogSerializer.readChangeLog (new MicroDOMInputStreamProvider (aDoc,
-                                                                                               AbstractXMLWriterSettings.DEFAULT_XML_CHARSET));
+                                                                                               XMLWriterSettings.DEFAULT_XML_CHARSET));
     assertNotNull (aCL2);
 
     // 4. read again with XML Schema
     final Document aW3CDoc = XMLReader.readXMLDOM (new ReadableResourceSAXInputSource (new MicroDOMInputStreamProvider (aDoc,
-                                                                                                                        AbstractXMLWriterSettings.DEFAULT_XML_CHARSET),
+                                                                                                                        XMLWriterSettings.DEFAULT_XML_CHARSET),
                                                                                        null),
                                                    XMLSchemaCache.getInstance ()
                                                                  .getFromCache (CChangeLog.CHANGELOG_XSD_10));

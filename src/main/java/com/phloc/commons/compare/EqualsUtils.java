@@ -17,10 +17,6 @@
  */
 package com.phloc.commons.compare;
 
-import java.net.URL;
-import java.util.Collection;
-import java.util.Map;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
@@ -120,56 +116,5 @@ public final class EqualsUtils
   public static boolean nullSafeEqualsIgnoreCase (@Nullable final String sObj1, @Nullable final String sObj2)
   {
     return sObj1 == null ? sObj2 == null : sObj1.equalsIgnoreCase (sObj2);
-  }
-
-  /**
-   * This is a specific version of an equals implementation that looks for the
-   * type of the objects and than invokes the correct method. E.g. if the passed
-   * objects are both of type {@link URL} the special implementation is invoked.
-   * Also if the passed element is a {@link Collection} or a {@link Map} than
-   * all contained elements are recursively checked, using this method.
-   * 
-   * @param aObj1
-   *        First object to compare. May not be <code>null</code>.
-   * @param aObj2
-   *        Second object to compare. May not be <code>null</code>.
-   * @return <code>true</code> if they are equal, <code>false</code> otherwise
-   */
-  @Deprecated
-  public static boolean equalsTypeSpecific (@Nullable final Object aObj1, @Nullable final Object aObj2)
-  {
-    return equals (aObj1, aObj2);
-  }
-
-  /**
-   * This is a specific version of an equals implementation that looks for the
-   * type of the objects and than invokes the correct method. E.g. if the passed
-   * objects are both of type {@link URL} the special implementation is invoked.
-   * This version contains no specific handling for {@link Collection} and
-   * {@link Map} objects.
-   * 
-   * @param aObj1
-   *        First object to compare. May not be <code>null</code>.
-   * @param aObj2
-   *        Second object to compare. May not be <code>null</code>.
-   * @return <code>true</code> if they are equal, <code>false</code> otherwise
-   */
-  @Deprecated
-  public static boolean equalsTypeSpecificNoCollections (@Nullable final Object aObj1, @Nullable final Object aObj2)
-  {
-    return equals (aObj1, aObj2);
-  }
-
-  @Deprecated
-  public static boolean nullSafeEqualsTypeSpecific (@Nullable final Object aObj1, @Nullable final Object aObj2)
-  {
-    return equals (aObj1, aObj2);
-  }
-
-  @Deprecated
-  public static boolean nullSafeEqualsTypeSpecificNoCollections (@Nullable final Object aObj1,
-                                                                 @Nullable final Object aObj2)
-  {
-    return equals (aObj1, aObj2);
   }
 }

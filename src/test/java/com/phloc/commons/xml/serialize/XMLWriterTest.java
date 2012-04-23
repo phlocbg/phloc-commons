@@ -20,7 +20,6 @@ package com.phloc.commons.xml.serialize;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
@@ -57,7 +56,6 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
   /**
    * Test the method getXHTMLString
    */
-  @SuppressWarnings ("deprecation")
   @edu.umd.cs.findbugs.annotations.SuppressWarnings ("NP_NONNULL_PARAM_VIOLATION")
   @Test
   public void testGetXHTMLString ()
@@ -78,10 +76,8 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
 
     // test including doc type
     {
-      final String sResult = XMLWriter.getXHTMLString (doc,
-                                                       EXMLSerializeDocType.EMIT,
-                                                       EXMLSerializeIndent.INDENT_AND_ALIGN,
-                                                       CCharset.CHARSET_UTF_8);
+      final String sResult = XMLWriter.getNodeAsString (doc,
+                                                        new XMLWriterSettings ().setFormat (EXMLSerializeFormat.HTML));
       assertEquals ("<!DOCTYPE html PUBLIC \"" +
                     DOCTYPE_XHTML10_QNAME +
                     "\"" +
@@ -102,15 +98,15 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
                     sCRLF +
                     "</html>" +
                     sCRLF, sResult);
-      assertEquals (sResult, XMLWriter.getXHTMLString (doc, CCharset.CHARSET_UTF_8));
+      assertEquals (sResult,
+                    XMLWriter.getNodeAsString (doc, new XMLWriterSettings ().setFormat (EXMLSerializeFormat.HTML)));
     }
 
     // test without doc type
     {
-      final String sResult = XMLWriter.getXHTMLString (doc,
-                                                       EXMLSerializeDocType.IGNORE,
-                                                       EXMLSerializeIndent.INDENT_AND_ALIGN,
-                                                       CCharset.CHARSET_UTF_8);
+      final String sResult = XMLWriter.getNodeAsString (doc,
+                                                        new XMLWriterSettings ().setFormat (EXMLSerializeFormat.HTML)
+                                                                                .setSerializeDocType (EXMLSerializeDocType.IGNORE));
       assertEquals ("<html xmlns=\"" +
                     DOCTYPE_XHTML10_URI +
                     "\">" +
@@ -126,15 +122,16 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
     }
 
     {
-      final String sResult = XMLWriter.getXHTMLString (doc,
-                                                       EXMLSerializeDocType.IGNORE,
-                                                       EXMLSerializeIndent.NONE,
-                                                       CCharset.CHARSET_UTF_8);
+      final String sResult = XMLWriter.getNodeAsString (doc,
+                                                        new XMLWriterSettings ().setFormat (EXMLSerializeFormat.HTML)
+                                                                                .setSerializeDocType (EXMLSerializeDocType.IGNORE)
+                                                                                .setIndent (EXMLSerializeIndent.NONE));
       assertEquals ("<html xmlns=\"" + DOCTYPE_XHTML10_URI + "\"><head>Hallo</head>" + sSerTagName + "</html>", sResult);
-      assertEquals (sResult, XMLWriter.getXHTMLString (doc,
-                                                       EXMLSerializeDocType.IGNORE,
-                                                       EXMLSerializeIndent.NONE,
-                                                       CCharset.CHARSET_UTF_8));
+      assertEquals (sResult,
+                    XMLWriter.getNodeAsString (doc,
+                                               new XMLWriterSettings ().setFormat (EXMLSerializeFormat.HTML)
+                                                                       .setSerializeDocType (EXMLSerializeDocType.IGNORE)
+                                                                       .setIndent (EXMLSerializeIndent.NONE)));
     }
 
     // add text element
@@ -146,10 +143,10 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
 
     // test including doc type
     {
-      final String sResult = XMLWriter.getXHTMLString (doc,
-                                                       EXMLSerializeDocType.IGNORE,
-                                                       EXMLSerializeIndent.INDENT_AND_ALIGN,
-                                                       CCharset.CHARSET_UTF_8);
+      final String sResult = XMLWriter.getNodeAsString (doc,
+                                                        new XMLWriterSettings ().setFormat (EXMLSerializeFormat.HTML)
+                                                                                .setSerializeDocType (EXMLSerializeDocType.IGNORE)
+                                                                                .setIndent (EXMLSerializeIndent.INDENT_AND_ALIGN));
       assertEquals ("<html xmlns=\"" +
                     DOCTYPE_XHTML10_URI +
                     "\">" +
@@ -166,7 +163,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
 
     // test as XML (with doc type and indent)
     {
-      final String sResult = XMLWriter.getXMLString (doc, CCharset.CHARSET_UTF_8);
+      final String sResult = XMLWriter.getXMLString (doc);
       assertEquals ("<?xml version=\"1.0\" encoding=\"" +
                     CCharset.CHARSET_UTF_8 +
                     "\"?>" +
@@ -195,11 +192,10 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
 
     // test as XML (without doc type and comments but indented)
     {
-      final String sResult = XMLWriter.getXMLString (doc,
-                                                     EXMLSerializeDocType.IGNORE,
-                                                     EXMLSerializeComments.IGNORE,
-                                                     EXMLSerializeIndent.INDENT_AND_ALIGN,
-                                                     CCharset.CHARSET_UTF_8);
+      final String sResult = XMLWriter.getNodeAsString (doc,
+                                                        new XMLWriterSettings ().setSerializeDocType (EXMLSerializeDocType.IGNORE)
+                                                                                .setSerializeComments (EXMLSerializeComments.IGNORE)
+                                                                                .setIndent (EXMLSerializeIndent.INDENT_AND_ALIGN));
       assertEquals ("<?xml version=\"1.0\" encoding=\"" +
                     CCharset.CHARSET_UTF_8 +
                     "\"?>" +
@@ -218,27 +214,8 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
                     sCRLF, sResult);
     }
 
-    assertTrue (XMLWriter.writeXMLToStream (doc, new NonBlockingByteArrayOutputStream (), CCharset.CHARSET_ISO_8859_1)
-                         .isSuccess ());
+    assertTrue (XMLWriter.writeToStream (doc, new NonBlockingByteArrayOutputStream ()).isSuccess ());
     new XMLSerializerPhloc ().write (doc, new DefaultXMLIterationHandler ());
-
-    try
-    {
-      // null node not allowed
-      XMLWriter.getXHTMLString (null, CCharset.CHARSET_UTF_8);
-      fail ();
-    }
-    catch (final NullPointerException ex)
-    {}
-
-    try
-    {
-      // null charset not allowed
-      XMLWriter.getXHTMLString (doc, null);
-      fail ();
-    }
-    catch (final IllegalArgumentException ex)
-    {}
   }
 
   @Test

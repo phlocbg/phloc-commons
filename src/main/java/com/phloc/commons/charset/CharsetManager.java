@@ -28,7 +28,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.phloc.commons.annotations.DevelopersNote;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
@@ -140,14 +139,6 @@ public final class CharsetManager
       return sText;
 
     return getAsString (getAsBytes (sText, sCurrentCharset), sNewCharset);
-  }
-
-  @DevelopersNote ("Use a version with an explicit charset")
-  @Nullable
-  @Deprecated
-  public static String getAnsiStringInDefaultCharset (@Nullable final String s)
-  {
-    return getAsStringInOtherCharset (s, CCharset.CHARSET_ISO_8859_1, CCharset.DEFAULT_CHARSET);
   }
 
   @Nonnull
