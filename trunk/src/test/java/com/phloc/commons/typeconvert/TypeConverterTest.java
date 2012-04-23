@@ -190,7 +190,7 @@ public final class TypeConverterTest extends AbstractPhlocTestCase
     {
       final String sValue = TypeConverter.convertIfNecessary (aSrcValue, String.class);
       final Object aObj2 = TypeConverter.convertIfNecessary (sValue, aSrcValue.getClass ());
-      assertTrue (EqualsUtils.equalsTypeSpecific (aSrcValue, aObj2));
+      assertTrue (EqualsUtils.equals (aSrcValue, aObj2));
     }
 
     // Test conversion if no explicit converter available for source class, but

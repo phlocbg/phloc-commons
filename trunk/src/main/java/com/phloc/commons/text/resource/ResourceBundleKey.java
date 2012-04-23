@@ -25,7 +25,6 @@ import javax.annotation.Nullable;
 import javax.annotation.PropertyKey;
 import javax.annotation.concurrent.Immutable;
 
-import com.phloc.commons.annotations.DevelopersNote;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.StringHelper;
@@ -72,25 +71,25 @@ public final class ResourceBundleKey implements Serializable
   @Nullable
   public String getString (@Nonnull final Locale aContentLocale)
   {
-    return getString (m_sBundleName, aContentLocale, m_sKey);
+    return ResourceBundleUtils.getString (m_sBundleName, aContentLocale, m_sKey);
   }
 
   @Nullable
   public String getString (@Nonnull final Locale aContentLocale, @Nonnull final ClassLoader aClassLoader)
   {
-    return getString (m_sBundleName, aContentLocale, m_sKey, aClassLoader);
+    return ResourceBundleUtils.getString (m_sBundleName, aContentLocale, m_sKey, aClassLoader);
   }
 
   @Nullable
   public String getUtf8String (@Nonnull final Locale aContentLocale)
   {
-    return getUtf8String (m_sBundleName, aContentLocale, m_sKey);
+    return ResourceBundleUtils.getUtf8String (m_sBundleName, aContentLocale, m_sKey);
   }
 
   @Nullable
   public String getUtf8String (@Nonnull final Locale aContentLocale, @Nonnull final ClassLoader aClassLoader)
   {
-    return getUtf8String (m_sBundleName, aContentLocale, m_sKey, aClassLoader);
+    return ResourceBundleUtils.getUtf8String (m_sBundleName, aContentLocale, m_sKey, aClassLoader);
   }
 
   @Override
@@ -114,68 +113,5 @@ public final class ResourceBundleKey implements Serializable
   public String toString ()
   {
     return new ToStringGenerator (this).append ("bundleName", m_sBundleName).append ("key", m_sKey).toString ();
-  }
-
-  @Nullable
-  @Deprecated
-  @DevelopersNote ("Use the ones in class ResourceBundleUtils")
-  public static String getString (@Nonnull final String sBundleName,
-                                  @Nonnull final Locale aContentLocale,
-                                  @Nonnull @PropertyKey final String sKey)
-  {
-    return ResourceBundleUtils.getString (ResourceBundleUtils.getResourceBundle (sBundleName, aContentLocale), sKey);
-  }
-
-  @Nullable
-  @Deprecated
-  @DevelopersNote ("Use the ones in class ResourceBundleUtils")
-  public static String getString (@Nonnull final String sBundleName,
-                                  @Nonnull final Locale aContentLocale,
-                                  @Nonnull @PropertyKey final String sKey,
-                                  @Nonnull final ClassLoader aClassLoader)
-  {
-    return ResourceBundleUtils.getString (ResourceBundleUtils.getResourceBundle (sBundleName,
-                                                                                 aContentLocale,
-                                                                                 aClassLoader), sKey);
-  }
-
-  @Nullable
-  @Deprecated
-  @DevelopersNote ("Use the ones in class ResourceBundleUtils")
-  public static String getUtf8String (@Nonnull final String sBundleName,
-                                      @Nonnull final Locale aContentLocale,
-                                      @Nonnull @PropertyKey final String sKey)
-  {
-    return ResourceBundleUtils.getString (ResourceBundleUtils.getUtf8ResourceBundle (sBundleName, aContentLocale), sKey);
-  }
-
-  @Nullable
-  @Deprecated
-  @DevelopersNote ("Use the ones in class ResourceBundleUtils")
-  public static String getUtf8String (@Nonnull final String sBundleName,
-                                      @Nonnull final Locale aContentLocale,
-                                      @Nonnull @PropertyKey final String sKey,
-                                      @Nonnull final ClassLoader aClassLoader)
-  {
-    return ResourceBundleUtils.getString (ResourceBundleUtils.getUtf8ResourceBundle (sBundleName,
-                                                                                     aContentLocale,
-                                                                                     aClassLoader), sKey);
-  }
-
-  /**
-   * Clear the complete resource bundle cache using the default class loader!
-   */
-  @Deprecated
-  @DevelopersNote ("Use the ones in class ResourceBundleUtils")
-  public static void clearCache ()
-  {
-    ResourceBundleUtils.clearCache ();
-  }
-
-  @Deprecated
-  @DevelopersNote ("Use the ones in class ResourceBundleUtils")
-  public static void clearCache (@Nonnull final ClassLoader aClassLoader)
-  {
-    ResourceBundleUtils.clearCache (aClassLoader);
   }
 }

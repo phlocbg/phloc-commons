@@ -27,7 +27,6 @@ import javax.annotation.Nullable;
 import javax.annotation.WillNotClose;
 
 import com.phloc.commons.CGlobal;
-import com.phloc.commons.annotations.DevelopersNote;
 import com.phloc.commons.microdom.IMicroDocumentType;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
@@ -128,14 +127,6 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   }
 
   @Nonnull
-  @Deprecated
-  @DevelopersNote ("Use the version with the XMK version")
-  public static String getDocTypeHTMLRepresentation (@Nonnull final IMicroDocumentType aDocType)
-  {
-    return getDocTypeHTMLRepresentation (EXMLVersion.DEFAULT, EXMLIncorrectCharacterHandling.DEFAULT, aDocType);
-  }
-
-  @Nonnull
   public static String getDocTypeHTMLRepresentation (@Nonnull final EXMLVersion eXMLVersion,
                                                      @Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharHandling,
                                                      @Nonnull final IMicroDocumentType aDocType)
@@ -145,20 +136,6 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
                                          aDocType.getQualifiedName (),
                                          aDocType.getPublicID (),
                                          aDocType.getSystemID ());
-  }
-
-  @Nonnull
-  @Deprecated
-  @DevelopersNote ("Use the version with the XMK version")
-  public static String getDocTypeHTMLRepresentation (@Nonnull final String sQualifiedName,
-                                                     @Nullable final String sPublicID,
-                                                     @Nullable final String sSystemID)
-  {
-    return getDocTypeHTMLRepresentation (EXMLVersion.DEFAULT,
-                                         EXMLIncorrectCharacterHandling.DEFAULT,
-                                         sQualifiedName,
-                                         sPublicID,
-                                         sSystemID);
   }
 
   /**

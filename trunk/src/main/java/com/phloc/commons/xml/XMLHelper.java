@@ -43,7 +43,6 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
 import com.phloc.commons.CGlobal;
-import com.phloc.commons.annotations.DevelopersNote;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.collections.ArrayHelper;
@@ -179,9 +178,6 @@ public final class XMLHelper
 
   private static final char [][] MASK_REPLACE_ALL_XML11 = ArrayHelper.getConcatenated (MASK_REPLACE_REGULAR,
                                                                                        MASK_REPLACE_CONTROL_XML11);
-
-  // Default handling as it was previously
-  private static final EXMLIncorrectCharacterHandling DEFAULT_INCCORECT_CHAR_HANDLING = EXMLIncorrectCharacterHandling.WRITE_TO_FILE_NO_LOG;
 
   static
   {
@@ -560,14 +556,6 @@ public final class XMLHelper
   }
 
   @Nonnull
-  @Deprecated
-  @DevelopersNote ("Use the version with the XML version")
-  public static char [] getMaskedXMLText (@Nullable final String s)
-  {
-    return getMaskedXMLText (EXMLVersion.XML_10, DEFAULT_INCCORECT_CHAR_HANDLING, s);
-  }
-
-  @Nonnull
   public static char [] getMaskedXMLText (@Nonnull final EXMLVersion eXMLVersion,
                                           @Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharHandling,
                                           @Nullable final String s)
@@ -589,14 +577,6 @@ public final class XMLHelper
       return StringHelper.replaceMultiple (s, MASK_PATTERNS_REGULAR, MASK_REPLACE_REGULAR);
     }
     return StringHelper.replaceMultiple (s, MASK_PATTERNS_ALL, MASK_REPLACE_ALL_XML11);
-  }
-
-  @Nonnegative
-  @Deprecated
-  @DevelopersNote ("Use the version with the XML version")
-  public static int getMaskedXMLTextLength (@Nullable final String s)
-  {
-    return getMaskedXMLTextLength (EXMLVersion.XML_10, DEFAULT_INCCORECT_CHAR_HANDLING, s);
   }
 
   @Nonnegative
@@ -626,13 +606,6 @@ public final class XMLHelper
     else
       nResLen = StringHelper.getReplaceMultipleResultLength (aChars, MASK_PATTERNS_ALL, MASK_REPLACE_ALL_XML11);
     return nResLen == CGlobal.ILLEGAL_UINT ? s.length () : nResLen;
-  }
-
-  @Deprecated
-  @DevelopersNote ("Use the version with the XML version")
-  public static void maskXMLTextTo (@Nullable final String s, @Nonnull final Writer aWriter) throws IOException
-  {
-    maskXMLTextTo (EXMLVersion.XML_10, DEFAULT_INCCORECT_CHAR_HANDLING, s, aWriter);
   }
 
   public static void maskXMLTextTo (@Nonnull final EXMLVersion eXMLVersion,

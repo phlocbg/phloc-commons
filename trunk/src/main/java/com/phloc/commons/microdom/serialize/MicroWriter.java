@@ -57,14 +57,6 @@ public final class MicroWriter
   private MicroWriter ()
   {}
 
-  @Deprecated
-  public static void saveToStream (@Nonnull final IMicroNode aNode,
-                                   @Nonnull @WillClose final OutputStream aOS,
-                                   @Nonnull final IXMLWriterSettings aSettings)
-  {
-    writeToStream (aNode, aOS, aSettings);
-  }
-
   /**
    * Write a Micro Node to an output stream using the default settings.
    * 

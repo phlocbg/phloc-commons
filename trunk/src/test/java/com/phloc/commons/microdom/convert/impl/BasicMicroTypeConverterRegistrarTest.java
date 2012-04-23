@@ -120,7 +120,7 @@ public final class BasicMicroTypeConverterRegistrarTest
       // Convert back to native
       final Object aNative = MicroTypeConverter.convertToNative (aElement, aObj.getClass ());
       assertNotNull (aNative);
-      assertTrue (EqualsUtils.equalsTypeSpecific (aObj, aNative));
+      assertTrue (EqualsUtils.equals (aObj, aNative));
     }
 
     // These object don't implement equals!

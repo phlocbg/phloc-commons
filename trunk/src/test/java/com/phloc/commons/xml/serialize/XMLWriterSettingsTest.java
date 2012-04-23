@@ -42,14 +42,14 @@ public final class XMLWriterSettingsTest
     IXMLWriterSettings mws = XMLWriterSettings.DEFAULT_XML_SETTINGS;
     assertEquals (EXMLSerializeDocType.EMIT, mws.getSerializeDocType ());
     assertEquals (EXMLSerializeComments.EMIT, mws.getSerializeComments ());
-    assertEquals (AbstractXMLWriterSettings.DEFAULT_XML_CHARSET, mws.getCharset ());
+    assertEquals (XMLWriterSettings.DEFAULT_XML_CHARSET, mws.getCharset ());
     assertEquals (EXMLSerializeFormat.XML, mws.getFormat ());
     assertEquals (EXMLSerializeIndent.INDENT_AND_ALIGN, mws.getIndent ());
 
     mws = new XMLWriterSettings ();
     assertEquals (EXMLSerializeDocType.EMIT, mws.getSerializeDocType ());
     assertEquals (EXMLSerializeComments.EMIT, mws.getSerializeComments ());
-    assertEquals (AbstractXMLWriterSettings.DEFAULT_XML_CHARSET, mws.getCharset ());
+    assertEquals (XMLWriterSettings.DEFAULT_XML_CHARSET, mws.getCharset ());
     assertEquals (EXMLSerializeFormat.XML, mws.getFormat ());
     assertEquals (EXMLSerializeIndent.INDENT_AND_ALIGN, mws.getIndent ());
 
