@@ -24,7 +24,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 import javax.annotation.Nonnull;
-import javax.xml.bind.JAXBElement;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -98,21 +97,6 @@ public final class DefaultHashCodeImplementationRegistrarSPI implements IHashCod
       public int getHashCode (final Object aObj)
       {
         return HashCodeCalculator.append (0, ((AtomicLong) aObj).get ());
-      }
-    });
-
-    // JAXBElement does not implement hashCode!
-    aRegistry.registerHashCodeImplementation (JAXBElement.class, new IHashCodeImplementation ()
-    {
-      public int getHashCode (final Object aObj)
-      {
-        final JAXBElement <?> aRealObj = (JAXBElement <?>) aObj;
-        return new HashCodeGenerator (aRealObj).append (aRealObj.getDeclaredType ())
-                                               .append (aRealObj.getName ())
-                                               .append (aRealObj.getScope ())
-                                               .append (aRealObj.isNil ())
-                                               .append (aRealObj.getValue ())
-                                               .getHashCode ();
       }
     });
 
