@@ -17,14 +17,9 @@
  */
 package com.phloc.commons.hash;
 
-import java.util.Map;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
-
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 
@@ -36,21 +31,21 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 @Immutable
 public final class HashCodeCalculator
 {
-  @PresentForCodeCoverage
-  @SuppressWarnings ("unused")
-  private static final HashCodeCalculator s_aInstance = new HashCodeCalculator ();
-
   /**
    * Each value is multiplied with this value. 31 because it can easily be
    * optimized to <code>(1 &lt;&lt; 5) - 1</code>.
    */
-  private static final int MULTIPLIER = 31;
+  public static final int MULTIPLIER = 31;
 
   /**
    * The hash code value to be used for <code>null</code> values. Do not use 0
    * as e.g. <code>BigDecimal ("0")</code> also results in a 0 hash code.
    */
-  private static final int HASHCODE_NULL = 129;
+  public static final int HASHCODE_NULL = 129;
+
+  @PresentForCodeCoverage
+  @SuppressWarnings ("unused")
+  private static final HashCodeCalculator s_aInstance = new HashCodeCalculator ();
 
   private HashCodeCalculator ()
   {}
@@ -182,360 +177,12 @@ public final class HashCodeCalculator
    * @param nPrevHashCode
    *        The previous hash code used as the basis for calculation
    * @param x
-   *        Array to add
+   *        Object to add
    * @return The updated hash code
    */
   @Nonnull
   public static int append (final int nPrevHashCode, @Nullable final Object x)
   {
-    if (x == null)
-      return append (nPrevHashCode, HASHCODE_NULL);
-
-    if (x.getClass ().isArray ())
-    {
-      // Handle contained array type correctly
-      final Class <?> aComponentType = x.getClass ().getComponentType ();
-      if (aComponentType.equals (boolean.class))
-        return append (nPrevHashCode, (boolean []) x);
-      if (aComponentType.equals (byte.class))
-        return append (nPrevHashCode, (byte []) x);
-      if (aComponentType.equals (char.class))
-        return append (nPrevHashCode, (char []) x);
-      if (aComponentType.equals (double.class))
-        return append (nPrevHashCode, (double []) x);
-      if (aComponentType.equals (float.class))
-        return append (nPrevHashCode, (float []) x);
-      if (aComponentType.equals (int.class))
-        return append (nPrevHashCode, (int []) x);
-      if (aComponentType.equals (long.class))
-        return append (nPrevHashCode, (long []) x);
-      if (aComponentType.equals (short.class))
-        return append (nPrevHashCode, (short []) x);
-
-      // Generic object array
-      return append (nPrevHashCode, (Object []) x);
-    }
-
-    // Special cases
-    if (x instanceof Iterable <?>)
-      return append (nPrevHashCode, (Iterable <?>) x);
-    if (x instanceof Map <?, ?>)
-      return append (nPrevHashCode, (Map <?, ?>) x);
-    if (x instanceof StringBuilder)
-      return append (nPrevHashCode, (StringBuilder) x);
-    if (x instanceof StringBuffer)
-      return append (nPrevHashCode, (StringBuffer) x);
-    if (x instanceof Node)
-      return append (nPrevHashCode, (Node) x);
-
-    return append (nPrevHashCode, x.hashCode ());
-  }
-
-  /**
-   * Array hash code generation.
-   * 
-   * @param nPrevHashCode
-   *        The previous hash code used as the basis for calculation
-   * @param x
-   *        Array to add
-   * @return The updated hash code
-   */
-  @Nonnull
-  public static int append (final int nPrevHashCode, @Nullable final boolean [] x)
-  {
-    if (x == null)
-      return append (nPrevHashCode, HASHCODE_NULL);
-
-    // Append class to ensure change for 0-element arrays
-    int ret = append (nPrevHashCode, x.getClass ());
-    for (final boolean aObject : x)
-      ret = append (ret, aObject);
-    return ret;
-  }
-
-  /**
-   * Array hash code generation.
-   * 
-   * @param nPrevHashCode
-   *        The previous hash code used as the basis for calculation
-   * @param x
-   *        Array to add
-   * @return The updated hash code
-   */
-  @Nonnull
-  public static int append (final int nPrevHashCode, @Nullable final byte [] x)
-  {
-    if (x == null)
-      return append (nPrevHashCode, HASHCODE_NULL);
-
-    // Append class to ensure change for 0-element arrays
-    int ret = append (nPrevHashCode, x.getClass ());
-    for (final byte aObject : x)
-      ret = append (ret, aObject);
-    return ret;
-  }
-
-  /**
-   * Array hash code generation.
-   * 
-   * @param nPrevHashCode
-   *        The previous hash code used as the basis for calculation
-   * @param x
-   *        Array to add
-   * @return The updated hash code
-   */
-  @Nonnull
-  public static int append (final int nPrevHashCode, @Nullable final char [] x)
-  {
-    if (x == null)
-      return append (nPrevHashCode, HASHCODE_NULL);
-
-    // Append class to ensure change for 0-element arrays
-    int ret = append (nPrevHashCode, x.getClass ());
-    for (final char aObject : x)
-      ret = append (ret, aObject);
-    return ret;
-  }
-
-  /**
-   * Array hash code generation.
-   * 
-   * @param nPrevHashCode
-   *        The previous hash code used as the basis for calculation
-   * @param x
-   *        Array to add
-   * @return The updated hash code
-   */
-  @Nonnull
-  public static int append (final int nPrevHashCode, @Nullable final double [] x)
-  {
-    if (x == null)
-      return append (nPrevHashCode, HASHCODE_NULL);
-
-    // Append class to ensure change for 0-element arrays
-    int ret = append (nPrevHashCode, x.getClass ());
-    for (final double aObject : x)
-      ret = append (ret, aObject);
-    return ret;
-  }
-
-  /**
-   * Array hash code generation.
-   * 
-   * @param nPrevHashCode
-   *        The previous hash code used as the basis for calculation
-   * @param x
-   *        Array to add
-   * @return The updated hash code
-   */
-  @Nonnull
-  public static int append (final int nPrevHashCode, @Nullable final float [] x)
-  {
-    if (x == null)
-      return append (nPrevHashCode, HASHCODE_NULL);
-
-    // Append class to ensure change for 0-element arrays
-    int ret = append (nPrevHashCode, x.getClass ());
-    for (final float aObject : x)
-      ret = append (ret, aObject);
-    return ret;
-  }
-
-  /**
-   * Array hash code generation.
-   * 
-   * @param nPrevHashCode
-   *        The previous hash code used as the basis for calculation
-   * @param x
-   *        Array to add
-   * @return The updated hash code
-   */
-  @Nonnull
-  public static int append (final int nPrevHashCode, @Nullable final int [] x)
-  {
-    if (x == null)
-      return append (nPrevHashCode, HASHCODE_NULL);
-
-    // Append class to ensure change for 0-element arrays
-    int ret = append (nPrevHashCode, x.getClass ());
-    for (final int aObject : x)
-      ret = append (ret, aObject);
-    return ret;
-  }
-
-  /**
-   * Array hash code generation.
-   * 
-   * @param nPrevHashCode
-   *        The previous hash code used as the basis for calculation
-   * @param x
-   *        Array to add
-   * @return The updated hash code
-   */
-  @Nonnull
-  public static int append (final int nPrevHashCode, @Nullable final long [] x)
-  {
-    if (x == null)
-      return append (nPrevHashCode, HASHCODE_NULL);
-
-    // Append class to ensure change for 0-element arrays
-    int ret = append (nPrevHashCode, x.getClass ());
-    for (final long aObject : x)
-      ret = append (ret, aObject);
-    return ret;
-  }
-
-  /**
-   * Array hash code generation.
-   * 
-   * @param nPrevHashCode
-   *        The previous hash code used as the basis for calculation
-   * @param x
-   *        Array to add
-   * @return The updated hash code
-   */
-  @Nonnull
-  public static int append (final int nPrevHashCode, @Nullable final short [] x)
-  {
-    if (x == null)
-      return append (nPrevHashCode, HASHCODE_NULL);
-
-    // Append class to ensure change for 0-element arrays
-    int ret = append (nPrevHashCode, x.getClass ());
-    for (final short aObject : x)
-      ret = append (ret, aObject);
-    return ret;
-  }
-
-  /**
-   * Array hash code generation.
-   * 
-   * @param nPrevHashCode
-   *        The previous hash code used as the basis for calculation
-   * @param x
-   *        Array to add
-   * @return The updated hash code
-   */
-  @Nonnull
-  public static int append (final int nPrevHashCode, @Nullable final Object [] x)
-  {
-    if (x == null)
-      return append (nPrevHashCode, HASHCODE_NULL);
-
-    // Append class to ensure change for 0-element arrays
-    int ret = append (nPrevHashCode, x.getClass ().hashCode ());
-    ret = append (ret, x.length);
-    for (final Object aObject : x)
-      ret = append (ret, aObject);
-    return ret;
-  }
-
-  /**
-   * Type specific hash code generation because parameter class has no
-   * overloaded equals method.
-   * 
-   * @param nPrevHashCode
-   *        The previous hash code used as the basis for calculation
-   * @param x
-   *        object to add
-   * @return The updated hash code
-   */
-  @Nonnull
-  public static int append (final int nPrevHashCode, @Nullable final StringBuffer x)
-  {
-    return append (nPrevHashCode, x == null ? HASHCODE_NULL : x.toString ().hashCode ());
-  }
-
-  /**
-   * Type specific hash code generation because parameter class has no
-   * overloaded equals method.
-   * 
-   * @param nPrevHashCode
-   *        The previous hash code used as the basis for calculation
-   * @param x
-   *        object to add
-   * @return The updated hash code
-   */
-  @Nonnull
-  public static int append (final int nPrevHashCode, @Nullable final StringBuilder x)
-  {
-    return append (nPrevHashCode, x == null ? HASHCODE_NULL : x.toString ().hashCode ());
-  }
-
-  /**
-   * @param nPrevHashCode
-   *        The previous hash code used as the basis for calculation
-   * @param x
-   *        to be included in the hash code generation.
-   * @return The updated hash code
-   */
-  @Nonnull
-  public static int append (final int nPrevHashCode, @Nullable final Iterable <?> x)
-  {
-    if (x == null)
-      return append (nPrevHashCode, HASHCODE_NULL);
-
-    // Append class to ensure change for 0-element objects
-    int ret = append (nPrevHashCode, x.hashCode ());
-    for (final Object aItem : x)
-      ret = append (ret, aItem);
-    return ret;
-  }
-
-  /**
-   * @param nPrevHashCode
-   *        The previous hash code used as the basis for calculation
-   * @param x
-   *        to be included in the hash code generation.
-   * @return The updated hash code
-   */
-  @Nonnull
-  public static int append (final int nPrevHashCode, @Nullable final Map <?, ?> x)
-  {
-    if (x == null)
-      return append (nPrevHashCode, HASHCODE_NULL);
-
-    // Append class to ensure change for 0-element objects
-    int ret = append (nPrevHashCode, x.hashCode ());
-    for (final Map.Entry <?, ?> aEntry : x.entrySet ())
-    {
-      ret = append (ret, aEntry.getKey ());
-      ret = append (ret, aEntry.getValue ());
-    }
-    return ret;
-  }
-
-  /**
-   * Type specific hash code generation because parameter class has no
-   * overloaded equals method.
-   * 
-   * @param nPrevHashCode
-   *        The previous hash code used as the basis for calculation
-   * @param x
-   *        object to add
-   * @return The updated hash code
-   */
-  @Nonnull
-  public static int append (final int nPrevHashCode, @Nullable final Node x)
-  {
-    if (x == null)
-      return append (nPrevHashCode, HASHCODE_NULL);
-
-    int ret = append (nPrevHashCode, x.getClass ());
-    ret = append (ret, x.getNodeType ());
-    ret = append (ret, x.getNodeName ());
-    ret = append (ret, x.getLocalName ());
-    ret = append (ret, x.getNamespaceURI ());
-    ret = append (ret, x.getPrefix ());
-    ret = append (ret, x.getNodeValue ());
-
-    // For all children
-    final NodeList aNL = x.getChildNodes ();
-    for (int i = 0; i < aNL.getLength (); ++i)
-    {
-      final Node aChild = aNL.item (i);
-      ret = append (ret, aChild);
-    }
-    return ret;
+    return append (nPrevHashCode, HashCodeImplementationRegistry.getHashCode (x));
   }
 }
