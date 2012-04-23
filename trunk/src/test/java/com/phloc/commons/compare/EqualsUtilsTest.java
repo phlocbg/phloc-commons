@@ -243,11 +243,11 @@ public final class EqualsUtilsTest extends AbstractPhlocTestCase
   public void testEqualsTypeSpecific ()
   {
     final StringBuffer aSB1 = new StringBuffer ("Hi");
-    assertTrue (EqualsUtils.equalsTypeSpecific (aSB1, new StringBuffer ("Hi")));
-    assertFalse (EqualsUtils.equalsTypeSpecific (aSB1, new StringBuffer ("Hallo")));
+    assertTrue (EqualsUtils.equals (aSB1, new StringBuffer ("Hi")));
+    assertFalse (EqualsUtils.equals (aSB1, new StringBuffer ("Hallo")));
 
-    assertTrue (EqualsUtils.nullSafeEqualsTypeSpecific (aSB1, new StringBuffer ("Hi")));
-    assertFalse (EqualsUtils.nullSafeEqualsTypeSpecific (aSB1, new StringBuffer ("Hallo")));
-    assertFalse (EqualsUtils.nullSafeEqualsTypeSpecific (aSB1, null));
+    assertTrue (EqualsUtils.nullSafeEquals (aSB1, new StringBuffer ("Hi")));
+    assertFalse (EqualsUtils.nullSafeEquals (aSB1, new StringBuffer ("Hallo")));
+    assertFalse (EqualsUtils.nullSafeEquals (aSB1, null));
   }
 }

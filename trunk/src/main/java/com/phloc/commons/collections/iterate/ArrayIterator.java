@@ -27,6 +27,7 @@ import javax.annotation.Nullable;
 
 import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.collections.ArrayHelper;
+import com.phloc.commons.compare.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -87,7 +88,7 @@ public final class ArrayIterator <ELEMENTTYPE> implements Iterator <ELEMENTTYPE>
     if (!(o instanceof ArrayIterator <?>))
       return false;
     final ArrayIterator <?> rhs = (ArrayIterator <?>) o;
-    return Arrays.equals (m_aArray, rhs.m_aArray) && m_nIndex == rhs.m_nIndex;
+    return EqualsUtils.equals (m_aArray, rhs.m_aArray) && m_nIndex == rhs.m_nIndex;
   }
 
   @Override

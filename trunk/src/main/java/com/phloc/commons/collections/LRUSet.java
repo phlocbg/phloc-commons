@@ -56,6 +56,18 @@ public class LRUSet <ELEMENTTYPE> extends AbstractSet <ELEMENTTYPE> implements I
       {
         LRUSet.this.onRemoveEldestEntry (aEldest.getKey ());
       }
+
+      @Override
+      public boolean equals (final Object o)
+      {
+        return super.equals (o);
+      }
+
+      @Override
+      public int hashCode ()
+      {
+        return super.hashCode ();
+      }
     };
   }
 

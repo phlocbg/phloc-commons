@@ -99,6 +99,8 @@ public class LRUCache <KEYTYPE, VALUETYPE> extends LinkedHashMap <KEYTYPE, VALUE
   @Override
   public boolean equals (final Object o)
   {
+    if (o == this)
+      return true;
     if (!super.equals (o))
       return false;
     // Special case because LinkedHashMap implementation is a bit bogus
