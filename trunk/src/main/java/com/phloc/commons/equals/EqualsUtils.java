@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.equals;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
@@ -101,7 +100,7 @@ public final class EqualsUtils
     return aObj1 == aObj2;
   }
 
-  public static boolean equals (@Nonnull final Object aObj1, @Nonnull final Object aObj2)
+  public static boolean equals (@Nullable final Object aObj1, @Nullable final Object aObj2)
   {
     return EqualsImplementationRegistry.areEqual (aObj1, aObj2);
   }
