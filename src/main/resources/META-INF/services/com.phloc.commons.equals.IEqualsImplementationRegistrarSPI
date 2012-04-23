@@ -1,1 +1,2 @@
 com.phloc.commons.equals.DefaultEqualsImplementationRegistrarSPI
+com.phloc.commons.jaxb.JAXBEqualsImplementationRegistrarSPI

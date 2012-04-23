@@ -27,13 +27,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 import javax.annotation.Nonnull;
-import javax.xml.bind.JAXBElement;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-
-public class DefaultEqualsImplementationRegistrarSPI implements IEqualsImplementationRegistrarSPI
+public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImplementationRegistrarSPI
 {
   public void registerEqualsImplementations (@Nonnull final IEqualsImplementationRegistry aRegistry)
   {
@@ -180,21 +178,6 @@ public class DefaultEqualsImplementationRegistrarSPI implements IEqualsImplement
         final AtomicLong aRealObj1 = (AtomicLong) aObj1;
         final AtomicLong aRealObj2 = (AtomicLong) aObj2;
         return aRealObj1.get () == aRealObj2.get ();
-      }
-    });
-
-    // JAXBElement does not implement equals!
-    aRegistry.registerEqualsImplementation (JAXBElement.class, new IEqualsImplementation ()
-    {
-      public boolean areEqual (final Object aObj1, final Object aObj2)
-      {
-        final JAXBElement <?> aRealObj1 = (JAXBElement <?>) aObj1;
-        final JAXBElement <?> aRealObj2 = (JAXBElement <?>) aObj2;
-        return EqualsImplementationRegistry.areEqual (aRealObj1.getDeclaredType (), aRealObj2.getDeclaredType ()) &&
-               EqualsImplementationRegistry.areEqual (aRealObj1.getName (), aRealObj2.getName ()) &&
-               EqualsImplementationRegistry.areEqual (aRealObj1.getScope (), aRealObj2.getScope ()) &&
-               EqualsUtils.equals (aRealObj1.isNil (), aRealObj2.isNil ()) &&
-               EqualsImplementationRegistry.areEqual (aRealObj1.getValue (), aRealObj2.getValue ());
       }
     });
 
