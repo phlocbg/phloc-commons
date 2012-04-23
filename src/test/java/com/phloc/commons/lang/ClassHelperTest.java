@@ -29,7 +29,7 @@ import java.io.Reader;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.List;
+import java.util.Collection;
 
 import org.junit.Test;
 
@@ -364,7 +364,7 @@ public final class ClassHelperTest
   public void testGetClassHierarchy ()
   {
     // Very basic class
-    List <Class <?>> aHierarchy = ClassHelper.getClassHierarchy (Object.class);
+    Collection <Class <?>> aHierarchy = ClassHelper.getClassHierarchy (Object.class);
     assertEquals (1, aHierarchy.size ());
     assertTrue (aHierarchy.contains (Object.class));
 

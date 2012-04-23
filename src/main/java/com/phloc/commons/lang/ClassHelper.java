@@ -21,6 +21,8 @@ import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -30,6 +32,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
@@ -291,15 +294,53 @@ public final class ClassHelper
            BigInteger.class.isAssignableFrom (aClass);
   }
 
+  /**
+   * Get the complete super class hierarchy of the passed class including all
+   * super classes and all interfaces of the passed class and of all parent
+   * classes.
+   * 
+   * @param aClass
+   *        The source class to get the list from.
+   * @return A non-<code>null</code> and non-empty list containing the passed
+   *         class and all super classes, and all super-interfaces. This list
+   *         may contain duplicates in case a certain interface is implemented
+   *         more than once!
+   */
   @Nonnull
+  @Nonempty
   @ReturnsMutableCopy
-  public static List <Class <?>> getClassHierarchy (@Nonnull final Class <?> aClass)
+  public static Collection <Class <?>> getClassHierarchy (@Nonnull final Class <?> aClass)
+  {
+    return getClassHierarchy (aClass, false);
+  }
+
+  /**
+   * Get the complete super class hierarchy of the passed class including all
+   * super classes and all interfaces of the passed class and of all parent
+   * classes.
+   * 
+   * @param aClass
+   *        The source class to get the list from.
+   * @param bUniqueClasses
+   *        if <code>true</code> the returned type is a {@link LinkedHashSet} of
+   *        all classes, otherwise the result is an {@link ArrayList} that
+   *        potentially contains duplicates!
+   * @return A non-<code>null</code> and non-empty collection containing the
+   *         passed class and all super classes, and all super-interfaces. This
+   *         collection may contain duplicates in case a certain interface is
+   *         implemented more than once and bUniqueClasses is <code>false</code>
+   *         !
+   */
+  @Nonnull
+  @Nonempty
+  @ReturnsMutableCopy
+  public static Collection <Class <?>> getClassHierarchy (@Nonnull final Class <?> aClass, final boolean bUniqueClasses)
   {
     if (aClass == null)
       throw new NullPointerException ("class");
 
     final List <Class <?>> aOpenSrc = new ArrayList <Class <?>> ();
-    final List <Class <?>> ret = new ArrayList <Class <?>> ();
+    final Collection <Class <?>> ret = bUniqueClasses ? new LinkedHashSet <Class <?>> () : new ArrayList <Class <?>> ();
     // Check the whole class hierarchy of the source class
     aOpenSrc.add (aClass);
     while (!aOpenSrc.isEmpty ())
