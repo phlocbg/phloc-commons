@@ -286,10 +286,13 @@ public final class TypeConverterTest extends AbstractPhlocTestCase
   @Test
   public void testNoConverterButAssignable ()
   {
+    // No type converter present, but objects are assignable
     final MockImplementation aImpl = new MockImplementation ();
-    final IMockInterface aObj = TypeConverter.convertIfNecessary (aImpl, IMockInterface.class);
-    assertNotNull (aObj);
-    assertSame (aImpl, aObj);
+    assertSame (aImpl, TypeConverter.convertIfNecessary (aImpl, IMockInterface.class));
+
+    final MockSubImplementation aSubImpl = new MockSubImplementation ();
+    assertSame (aSubImpl, TypeConverter.convertIfNecessary (aSubImpl, IMockInterface.class));
+    assertSame (aSubImpl, TypeConverter.convertIfNecessary (aSubImpl, MockImplementation.class));
   }
 
   @Test
