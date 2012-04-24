@@ -86,9 +86,21 @@ public final class ContainerHelper
   }
 
   @Nonnull
+  public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> SortedSet <? extends ELEMENTTYPE> getNotNull (final SortedSet <? extends ELEMENTTYPE> aCollection)
+  {
+    return aCollection == null ? ContainerHelper.<ELEMENTTYPE> newSortedSet () : aCollection;
+  }
+
+  @Nonnull
   public static <KEYTYPE, VALUETYPE> Map <? extends KEYTYPE, ? extends VALUETYPE> getNotNull (final Map <? extends KEYTYPE, ? extends VALUETYPE> aCollection)
   {
     return aCollection == null ? ContainerHelper.<KEYTYPE, VALUETYPE> newMap () : aCollection;
+  }
+
+  @Nonnull
+  public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> SortedMap <? extends KEYTYPE, ? extends VALUETYPE> getNotNull (final SortedMap <? extends KEYTYPE, ? extends VALUETYPE> aCollection)
+  {
+    return aCollection == null ? ContainerHelper.<KEYTYPE, VALUETYPE> newSortedMap () : aCollection;
   }
 
   @Nullable
@@ -128,7 +140,7 @@ public final class ContainerHelper
 
   @Nullable
   @ReturnsImmutableObject
-  public static <KEYTPYE, VALUETYPE> SortedMap <KEYTPYE, VALUETYPE> makeUnmodifiable (@Nullable final SortedMap <KEYTPYE, ? extends VALUETYPE> aCollection)
+  public static <KEYTYPE, VALUETYPE> SortedMap <KEYTYPE, VALUETYPE> makeUnmodifiable (@Nullable final SortedMap <KEYTYPE, ? extends VALUETYPE> aCollection)
   {
     return aCollection == null ? null : Collections.unmodifiableSortedMap (aCollection);
   }
@@ -175,9 +187,11 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsImmutableObject
-  public static <KEYTYPE, VALUETYPE> SortedMap <KEYTYPE, VALUETYPE> makeUnmodifiableNotNull (@Nonnull final SortedMap <KEYTYPE, ? extends VALUETYPE> aCollection)
+  public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> SortedMap <KEYTYPE, VALUETYPE> makeUnmodifiableNotNull (@Nonnull final SortedMap <KEYTYPE, ? extends VALUETYPE> aCollection)
   {
-    return Collections.unmodifiableSortedMap (aCollection == null ? new TreeMap <KEYTYPE, VALUETYPE> () : aCollection);
+    return Collections.unmodifiableSortedMap (aCollection == null
+                                                                 ? ContainerHelper.<KEYTYPE, VALUETYPE> newSortedMap ()
+                                                                 : aCollection);
   }
 
   /**
@@ -238,17 +252,17 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsMutableCopy
-  public static <KEYTPYE, VALUETYPE> Map <KEYTPYE, VALUETYPE> newMap ()
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newMap ()
   {
-    return new HashMap <KEYTPYE, VALUETYPE> (0);
+    return new HashMap <KEYTYPE, VALUETYPE> (0);
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public static <KEYTPYE, VALUETYPE> Map <KEYTPYE, VALUETYPE> newMap (@Nullable final KEYTPYE aKey,
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newMap (@Nullable final KEYTYPE aKey,
                                                                       @Nullable final VALUETYPE aValue)
   {
-    final Map <KEYTPYE, VALUETYPE> ret = new HashMap <KEYTPYE, VALUETYPE> (1);
+    final Map <KEYTYPE, VALUETYPE> ret = new HashMap <KEYTYPE, VALUETYPE> (1);
     ret.put (aKey, aValue);
     return ret;
   }
@@ -271,18 +285,18 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsMutableCopy
-  public static <KEYTPYE, VALUETYPE> Map <KEYTPYE, VALUETYPE> newMap (@Nullable final KEYTPYE [] aKeys,
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newMap (@Nullable final KEYTYPE [] aKeys,
                                                                       @Nullable final VALUETYPE [] aValues)
   {
     // Are both empty?
     if (ArrayHelper.isEmpty (aKeys) && ArrayHelper.isEmpty (aValues))
-      return new HashMap <KEYTPYE, VALUETYPE> (0);
+      return new HashMap <KEYTYPE, VALUETYPE> (0);
 
     // keys OR values may be null here
     if (ArrayHelper.getSize (aKeys) != ArrayHelper.getSize (aValues))
       throw new IllegalArgumentException ("The passed arrays have different length!");
 
-    final Map <KEYTPYE, VALUETYPE> ret = new HashMap <KEYTPYE, VALUETYPE> (aKeys.length);
+    final Map <KEYTYPE, VALUETYPE> ret = new HashMap <KEYTYPE, VALUETYPE> (aKeys.length);
     for (int i = 0; i < aKeys.length; ++i)
       ret.put (aKeys[i], aValues[i]);
     return ret;
@@ -290,19 +304,19 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsMutableCopy
-  public static <KEYTPYE, VALUETYPE> Map <KEYTPYE, VALUETYPE> newMap (@Nullable final Collection <? extends KEYTPYE> aKeys,
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newMap (@Nullable final Collection <? extends KEYTYPE> aKeys,
                                                                       @Nullable final Collection <? extends VALUETYPE> aValues)
   {
     // Are both empty?
     if (isEmpty (aKeys) && isEmpty (aValues))
-      return new HashMap <KEYTPYE, VALUETYPE> (0);
+      return new HashMap <KEYTYPE, VALUETYPE> (0);
 
     // keys OR values may be null here
     if (getSize (aKeys) != getSize (aValues))
       throw new IllegalArgumentException ("Number of keys is different from number of values");
 
-    final Map <KEYTPYE, VALUETYPE> ret = new HashMap <KEYTPYE, VALUETYPE> (aKeys.size ());
-    final Iterator <? extends KEYTPYE> itk = aKeys.iterator ();
+    final Map <KEYTYPE, VALUETYPE> ret = new HashMap <KEYTYPE, VALUETYPE> (aKeys.size ());
+    final Iterator <? extends KEYTYPE> itk = aKeys.iterator ();
     final Iterator <? extends VALUETYPE> itv = aValues.iterator ();
     while (itk.hasNext ())
       ret.put (itk.next (), itv.next ());
@@ -311,37 +325,37 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsMutableCopy
-  public static <KEYTPYE, VALUETYPE> Map <KEYTPYE, VALUETYPE> newMap (@Nullable final Map <? extends KEYTPYE, ? extends VALUETYPE> aMap)
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newMap (@Nullable final Map <? extends KEYTYPE, ? extends VALUETYPE> aMap)
   {
     if (isEmpty (aMap))
-      return new HashMap <KEYTPYE, VALUETYPE> (0);
+      return new HashMap <KEYTYPE, VALUETYPE> (0);
 
-    return new HashMap <KEYTPYE, VALUETYPE> (aMap);
+    return new HashMap <KEYTYPE, VALUETYPE> (aMap);
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public static <KEYTPYE, VALUETYPE> Map <KEYTPYE, VALUETYPE> newMap (@Nullable final Collection <? extends Map.Entry <KEYTPYE, VALUETYPE>> aCollection)
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newMap (@Nullable final Collection <? extends Map.Entry <KEYTYPE, VALUETYPE>> aCollection)
   {
     if (isEmpty (aCollection))
-      return new HashMap <KEYTPYE, VALUETYPE> (0);
+      return new HashMap <KEYTYPE, VALUETYPE> (0);
 
-    final Map <KEYTPYE, VALUETYPE> ret = new HashMap <KEYTPYE, VALUETYPE> (aCollection.size ());
-    for (final Map.Entry <KEYTPYE, VALUETYPE> aEntry : aCollection)
+    final Map <KEYTYPE, VALUETYPE> ret = new HashMap <KEYTYPE, VALUETYPE> (aCollection.size ());
+    for (final Map.Entry <KEYTYPE, VALUETYPE> aEntry : aCollection)
       ret.put (aEntry.getKey (), aEntry.getValue ());
     return ret;
   }
 
   @Nonnull
   @ReturnsImmutableObject
-  public static <KEYTPYE, VALUETYPE> Map <KEYTPYE, VALUETYPE> newUnmodifiableMap ()
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newUnmodifiableMap ()
   {
-    return Collections.<KEYTPYE, VALUETYPE> emptyMap ();
+    return Collections.<KEYTYPE, VALUETYPE> emptyMap ();
   }
 
   @Nonnull
   @ReturnsImmutableObject
-  public static <KEYTPYE, VALUETYPE> Map <KEYTPYE, VALUETYPE> newUnmodifiableMap (@Nullable final KEYTPYE aKey,
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newUnmodifiableMap (@Nullable final KEYTYPE aKey,
                                                                                   @Nullable final VALUETYPE aValue)
   {
     return Collections.singletonMap (aKey, aValue);
@@ -356,7 +370,7 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsImmutableObject
-  public static <KEYTPYE, VALUETYPE> Map <KEYTPYE, VALUETYPE> newUnmodifiableMap (@Nullable final KEYTPYE [] aKeys,
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newUnmodifiableMap (@Nullable final KEYTYPE [] aKeys,
                                                                                   @Nullable final VALUETYPE [] aValues)
   {
     return makeUnmodifiable (newMap (aKeys, aValues));
@@ -364,7 +378,7 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsImmutableObject
-  public static <KEYTPYE, VALUETYPE> Map <KEYTPYE, VALUETYPE> newUnmodifiableMap (@Nullable final Collection <? extends KEYTPYE> aKeys,
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newUnmodifiableMap (@Nullable final Collection <? extends KEYTYPE> aKeys,
                                                                                   @Nullable final Collection <? extends VALUETYPE> aValues)
   {
     return makeUnmodifiable (newMap (aKeys, aValues));
@@ -372,31 +386,31 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsImmutableObject
-  public static <KEYTPYE, VALUETYPE> Map <KEYTPYE, VALUETYPE> newUnmodifiableMap (@Nullable final Map <? extends KEYTPYE, ? extends VALUETYPE> aMap)
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newUnmodifiableMap (@Nullable final Map <? extends KEYTYPE, ? extends VALUETYPE> aMap)
   {
     return makeUnmodifiable (aMap);
   }
 
   @Nonnull
   @ReturnsImmutableObject
-  public static <KEYTPYE, VALUETYPE> Map <KEYTPYE, VALUETYPE> newUnmodifiableMap (@Nullable final Collection <? extends Map.Entry <KEYTPYE, VALUETYPE>> aCollection)
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newUnmodifiableMap (@Nullable final Collection <? extends Map.Entry <KEYTYPE, VALUETYPE>> aCollection)
   {
     return makeUnmodifiable (newMap (aCollection));
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public static <KEYTPYE, VALUETYPE> Map <KEYTPYE, VALUETYPE> newOrderedMap ()
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newOrderedMap ()
   {
-    return new LinkedHashMap <KEYTPYE, VALUETYPE> (0);
+    return new LinkedHashMap <KEYTYPE, VALUETYPE> (0);
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public static <KEYTPYE, VALUETYPE> Map <KEYTPYE, VALUETYPE> newOrderedMap (@Nullable final KEYTPYE aKey,
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newOrderedMap (@Nullable final KEYTYPE aKey,
                                                                              @Nullable final VALUETYPE aValue)
   {
-    final Map <KEYTPYE, VALUETYPE> ret = new LinkedHashMap <KEYTPYE, VALUETYPE> (1);
+    final Map <KEYTYPE, VALUETYPE> ret = new LinkedHashMap <KEYTYPE, VALUETYPE> (1);
     ret.put (aKey, aValue);
     return ret;
   }
@@ -421,7 +435,7 @@ public final class ContainerHelper
    * Retrieve a map that is ordered in the way the parameter arrays are passed
    * in. Note that key and value arrays need to have the same length.
    * 
-   * @param <KEYTPYE>
+   * @param <KEYTYPE>
    *        The key type.
    * @param <VALUETYPE>
    *        The value type.
@@ -434,18 +448,18 @@ public final class ContainerHelper
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static <KEYTPYE, VALUETYPE> Map <KEYTPYE, VALUETYPE> newOrderedMap (@Nullable final KEYTPYE [] aKeys,
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newOrderedMap (@Nullable final KEYTYPE [] aKeys,
                                                                              @Nullable final VALUETYPE [] aValues)
   {
     // Are both empty?
     if (ArrayHelper.isEmpty (aKeys) && ArrayHelper.isEmpty (aValues))
-      return new LinkedHashMap <KEYTPYE, VALUETYPE> (0);
+      return new LinkedHashMap <KEYTYPE, VALUETYPE> (0);
 
     // keys OR values may be null here
     if (ArrayHelper.getSize (aKeys) != ArrayHelper.getSize (aValues))
       throw new IllegalArgumentException ("The passed arrays have different length!");
 
-    final Map <KEYTPYE, VALUETYPE> ret = new LinkedHashMap <KEYTPYE, VALUETYPE> (aKeys.length);
+    final Map <KEYTYPE, VALUETYPE> ret = new LinkedHashMap <KEYTYPE, VALUETYPE> (aKeys.length);
     for (int i = 0; i < aKeys.length; ++i)
       ret.put (aKeys[i], aValues[i]);
     return ret;
@@ -453,19 +467,19 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsMutableCopy
-  public static <KEYTPYE, VALUETYPE> Map <KEYTPYE, VALUETYPE> newOrderedMap (@Nullable final Collection <? extends KEYTPYE> aKeys,
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newOrderedMap (@Nullable final Collection <? extends KEYTYPE> aKeys,
                                                                              @Nullable final Collection <? extends VALUETYPE> aValues)
   {
     // Are both empty?
     if (isEmpty (aKeys) && isEmpty (aValues))
-      return new LinkedHashMap <KEYTPYE, VALUETYPE> (0);
+      return new LinkedHashMap <KEYTYPE, VALUETYPE> (0);
 
     // keys OR values may be null here
     if (getSize (aKeys) != getSize (aValues))
       throw new IllegalArgumentException ("Number of keys is different from number of values");
 
-    final Map <KEYTPYE, VALUETYPE> ret = new LinkedHashMap <KEYTPYE, VALUETYPE> (aKeys.size ());
-    final Iterator <? extends KEYTPYE> itk = aKeys.iterator ();
+    final Map <KEYTYPE, VALUETYPE> ret = new LinkedHashMap <KEYTYPE, VALUETYPE> (aKeys.size ());
+    final Iterator <? extends KEYTYPE> itk = aKeys.iterator ();
     final Iterator <? extends VALUETYPE> itv = aValues.iterator ();
     while (itk.hasNext ())
       ret.put (itk.next (), itv.next ());
@@ -474,37 +488,37 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsMutableCopy
-  public static <KEYTPYE, VALUETYPE> Map <KEYTPYE, VALUETYPE> newOrderedMap (@Nullable final Map <? extends KEYTPYE, ? extends VALUETYPE> aMap)
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newOrderedMap (@Nullable final Map <? extends KEYTYPE, ? extends VALUETYPE> aMap)
   {
     if (isEmpty (aMap))
-      return new LinkedHashMap <KEYTPYE, VALUETYPE> (0);
+      return new LinkedHashMap <KEYTYPE, VALUETYPE> (0);
 
-    return new LinkedHashMap <KEYTPYE, VALUETYPE> (aMap);
+    return new LinkedHashMap <KEYTYPE, VALUETYPE> (aMap);
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public static <KEYTPYE, VALUETYPE> Map <KEYTPYE, VALUETYPE> newOrderedMap (@Nullable final Collection <? extends Map.Entry <KEYTPYE, VALUETYPE>> aCollection)
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newOrderedMap (@Nullable final Collection <? extends Map.Entry <KEYTYPE, VALUETYPE>> aCollection)
   {
     if (isEmpty (aCollection))
-      return new LinkedHashMap <KEYTPYE, VALUETYPE> (0);
+      return new LinkedHashMap <KEYTYPE, VALUETYPE> (0);
 
-    final Map <KEYTPYE, VALUETYPE> ret = new LinkedHashMap <KEYTPYE, VALUETYPE> (aCollection.size ());
-    for (final Map.Entry <KEYTPYE, VALUETYPE> aEntry : aCollection)
+    final Map <KEYTYPE, VALUETYPE> ret = new LinkedHashMap <KEYTYPE, VALUETYPE> (aCollection.size ());
+    for (final Map.Entry <KEYTYPE, VALUETYPE> aEntry : aCollection)
       ret.put (aEntry.getKey (), aEntry.getValue ());
     return ret;
   }
 
   @Nonnull
   @ReturnsImmutableObject
-  public static <KEYTPYE, VALUETYPE> Map <KEYTPYE, VALUETYPE> newUnmodifiableOrderedMap ()
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newUnmodifiableOrderedMap ()
   {
-    return Collections.<KEYTPYE, VALUETYPE> emptyMap ();
+    return Collections.<KEYTYPE, VALUETYPE> emptyMap ();
   }
 
   @Nonnull
   @ReturnsImmutableObject
-  public static <KEYTPYE, VALUETYPE> Map <KEYTPYE, VALUETYPE> newUnmodifiableOrderedMap (@Nullable final KEYTPYE aKey,
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newUnmodifiableOrderedMap (@Nullable final KEYTYPE aKey,
                                                                                          @Nullable final VALUETYPE aValue)
   {
     return Collections.singletonMap (aKey, aValue);
@@ -519,7 +533,7 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsImmutableObject
-  public static <KEYTPYE, VALUETYPE> Map <KEYTPYE, VALUETYPE> newUnmodifiableOrderedMap (@Nullable final KEYTPYE [] aKeys,
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newUnmodifiableOrderedMap (@Nullable final KEYTYPE [] aKeys,
                                                                                          @Nullable final VALUETYPE [] aValues)
   {
     return makeUnmodifiable (newOrderedMap (aKeys, aValues));
@@ -527,7 +541,7 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsImmutableObject
-  public static <KEYTPYE, VALUETYPE> Map <KEYTPYE, VALUETYPE> newUnmodifiableOrderedMap (@Nullable final Collection <? extends KEYTPYE> aKeys,
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newUnmodifiableOrderedMap (@Nullable final Collection <? extends KEYTYPE> aKeys,
                                                                                          @Nullable final Collection <? extends VALUETYPE> aValues)
   {
     return makeUnmodifiable (newOrderedMap (aKeys, aValues));
@@ -535,16 +549,166 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsImmutableObject
-  public static <KEYTPYE, VALUETYPE> Map <KEYTPYE, VALUETYPE> newUnmodifiableOrderedMap (@Nullable final Map <? extends KEYTPYE, ? extends VALUETYPE> aOrderedMap)
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newUnmodifiableOrderedMap (@Nullable final Map <? extends KEYTYPE, ? extends VALUETYPE> aOrderedMap)
   {
     return makeUnmodifiable (aOrderedMap);
   }
 
   @Nonnull
   @ReturnsImmutableObject
-  public static <KEYTPYE, VALUETYPE> Map <KEYTPYE, VALUETYPE> newUnmodifiableOrderedMap (@Nullable final Collection <? extends Map.Entry <KEYTPYE, VALUETYPE>> aCollection)
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> newUnmodifiableOrderedMap (@Nullable final Collection <? extends Map.Entry <KEYTYPE, VALUETYPE>> aCollection)
   {
     return makeUnmodifiable (newOrderedMap (aCollection));
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> TreeMap <KEYTYPE, VALUETYPE> newSortedMap ()
+  {
+    return new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparableNullAware <KEYTYPE> ());
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> TreeMap <KEYTYPE, VALUETYPE> newSortedMap (@Nullable final KEYTYPE aKey,
+                                                                                                                     @Nullable final VALUETYPE aValue)
+  {
+    final TreeMap <KEYTYPE, VALUETYPE> ret = new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparableNullAware <KEYTYPE> ());
+    ret.put (aKey, aValue);
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> TreeMap <ELEMENTTYPE, ELEMENTTYPE> newSortedMap (@Nullable final ELEMENTTYPE... aValues)
+  {
+    if (ArrayHelper.isEmpty (aValues))
+      return new TreeMap <ELEMENTTYPE, ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
+
+    if ((aValues.length % 2) != 0)
+      throw new IllegalArgumentException ("The passed array needs an even number of elements!");
+
+    final TreeMap <ELEMENTTYPE, ELEMENTTYPE> ret = new TreeMap <ELEMENTTYPE, ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
+    for (int i = 0; i < aValues.length; i += 2)
+      ret.put (aValues[i], aValues[i + 1]);
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> TreeMap <KEYTYPE, VALUETYPE> newSortedMap (@Nullable final KEYTYPE [] aKeys,
+                                                                                                                     @Nullable final VALUETYPE [] aValues)
+  {
+    // Are both empty?
+    if (ArrayHelper.isEmpty (aKeys) && ArrayHelper.isEmpty (aValues))
+      return new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparableNullAware <KEYTYPE> ());
+
+    // keys OR values may be null here
+    if (ArrayHelper.getSize (aKeys) != ArrayHelper.getSize (aValues))
+      throw new IllegalArgumentException ("The passed arrays have different length!");
+
+    final TreeMap <KEYTYPE, VALUETYPE> ret = new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparableNullAware <KEYTYPE> ());
+    for (int i = 0; i < aKeys.length; ++i)
+      ret.put (aKeys[i], aValues[i]);
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> TreeMap <KEYTYPE, VALUETYPE> newSortedMap (@Nullable final Collection <? extends KEYTYPE> aKeys,
+                                                                                                                     @Nullable final Collection <? extends VALUETYPE> aValues)
+  {
+    // Are both empty?
+    if (isEmpty (aKeys) && isEmpty (aValues))
+      return new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparableNullAware <KEYTYPE> ());
+
+    // keys OR values may be null here
+    if (getSize (aKeys) != getSize (aValues))
+      throw new IllegalArgumentException ("Number of keys is different from number of values");
+
+    final TreeMap <KEYTYPE, VALUETYPE> ret = new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparableNullAware <KEYTYPE> ());
+    final Iterator <? extends KEYTYPE> itk = aKeys.iterator ();
+    final Iterator <? extends VALUETYPE> itv = aValues.iterator ();
+    while (itk.hasNext ())
+      ret.put (itk.next (), itv.next ());
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> TreeMap <KEYTYPE, VALUETYPE> newSortedMap (@Nullable final Map <? extends KEYTYPE, ? extends VALUETYPE> aMap)
+  {
+    if (isEmpty (aMap))
+      return new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparableNullAware <KEYTYPE> ());
+
+    final TreeMap <KEYTYPE, VALUETYPE> ret = new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparableNullAware <KEYTYPE> ());
+    ret.putAll (aMap);
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> TreeMap <KEYTYPE, VALUETYPE> newSortedMap (@Nullable final Collection <? extends Map.Entry <KEYTYPE, VALUETYPE>> aCollection)
+  {
+    if (isEmpty (aCollection))
+      return new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparableNullAware <KEYTYPE> ());
+
+    final TreeMap <KEYTYPE, VALUETYPE> ret = new TreeMap <KEYTYPE, VALUETYPE> (new ComparatorComparableNullAware <KEYTYPE> ());
+    for (final Map.Entry <KEYTYPE, VALUETYPE> aEntry : aCollection)
+      ret.put (aEntry.getKey (), aEntry.getValue ());
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> SortedMap <KEYTYPE, VALUETYPE> newUnmodifiableSortedMap ()
+  {
+    return makeUnmodifiable (ContainerHelper.<KEYTYPE, VALUETYPE> newSortedMap ());
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> SortedMap <KEYTYPE, VALUETYPE> newUnmodifiableSortedMap (@Nullable final KEYTYPE aKey,
+                                                                                                                                   @Nullable final VALUETYPE aValue)
+  {
+    return makeUnmodifiable (newSortedMap (aKey, aValue));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> SortedMap <ELEMENTTYPE, ELEMENTTYPE> newUnmodifiableSortedMap (@Nullable final ELEMENTTYPE... aValues)
+  {
+    return makeUnmodifiable (newSortedMap (aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> SortedMap <KEYTYPE, VALUETYPE> newUnmodifiableSortedMap (@Nullable final KEYTYPE [] aKeys,
+                                                                                                                                   @Nullable final VALUETYPE [] aValues)
+  {
+    return makeUnmodifiable (newSortedMap (aKeys, aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> SortedMap <KEYTYPE, VALUETYPE> newUnmodifiableSortedMap (@Nullable final Collection <? extends KEYTYPE> aKeys,
+                                                                                                                                   @Nullable final Collection <? extends VALUETYPE> aValues)
+  {
+    return makeUnmodifiable (newSortedMap (aKeys, aValues));
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> SortedMap <KEYTYPE, VALUETYPE> newUnmodifiableSortedMap (@Nullable final SortedMap <KEYTYPE, ? extends VALUETYPE> aMap)
+  {
+    return makeUnmodifiable (aMap);
+  }
+
+  @Nonnull
+  @ReturnsImmutableObject
+  public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> SortedMap <KEYTYPE, VALUETYPE> newUnmodifiableSortedMap (@Nullable final Collection <? extends Map.Entry <KEYTYPE, VALUETYPE>> aCollection)
+  {
+    return makeUnmodifiable (newSortedMap (aCollection));
   }
 
   @Nonnull
@@ -830,7 +994,7 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsMutableCopy
-  public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> SortedSet <ELEMENTTYPE> newSortedSet ()
+  public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> TreeSet <ELEMENTTYPE> newSortedSet ()
   {
     return new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
   }
@@ -838,18 +1002,18 @@ public final class ContainerHelper
   @Nonnull
   @ReturnsMutableCopy
   @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = { "NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE" }, justification = "When using the constructor with the Comparator it works with null values!")
-  public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> SortedSet <ELEMENTTYPE> newSortedSet (@Nullable final ELEMENTTYPE aValue)
+  public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> TreeSet <ELEMENTTYPE> newSortedSet (@Nullable final ELEMENTTYPE aValue)
   {
-    final SortedSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
+    final TreeSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
     ret.add (aValue);
     return ret;
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> SortedSet <ELEMENTTYPE> newSortedSet (@Nullable final ELEMENTTYPE... aValues)
+  public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> TreeSet <ELEMENTTYPE> newSortedSet (@Nullable final ELEMENTTYPE... aValues)
   {
-    final SortedSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
+    final TreeSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
     if (!ArrayHelper.isEmpty (aValues))
       for (final ELEMENTTYPE aValue : aValues)
         ret.add (aValue);
@@ -858,9 +1022,9 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsMutableCopy
-  public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> SortedSet <ELEMENTTYPE> newSortedSet (@Nullable final Iterable <? extends ELEMENTTYPE> aCont)
+  public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> TreeSet <ELEMENTTYPE> newSortedSet (@Nullable final Iterable <? extends ELEMENTTYPE> aCont)
   {
-    final SortedSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
+    final TreeSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
     if (aCont != null)
       for (final ELEMENTTYPE aValue : aCont)
         ret.add (aValue);
@@ -869,9 +1033,9 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsMutableCopy
-  public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> SortedSet <ELEMENTTYPE> newSortedSet (@Nullable final Collection <? extends ELEMENTTYPE> aCont)
+  public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> TreeSet <ELEMENTTYPE> newSortedSet (@Nullable final Collection <? extends ELEMENTTYPE> aCont)
   {
-    final SortedSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
+    final TreeSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
     if (!isEmpty (aCont))
       ret.addAll (aCont);
     return ret;
@@ -879,9 +1043,9 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsMutableCopy
-  public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> SortedSet <ELEMENTTYPE> newSortedSet (@Nullable final Iterator <? extends ELEMENTTYPE> aIter)
+  public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> TreeSet <ELEMENTTYPE> newSortedSet (@Nullable final Iterator <? extends ELEMENTTYPE> aIter)
   {
-    final SortedSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
+    final TreeSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
     if (aIter != null)
       while (aIter.hasNext ())
         ret.add (aIter.next ());
@@ -890,7 +1054,7 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsMutableCopy
-  public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> SortedSet <ELEMENTTYPE> newSortedSet (@Nullable final IIterableIterator <? extends ELEMENTTYPE> aIter)
+  public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> TreeSet <ELEMENTTYPE> newSortedSet (@Nullable final IIterableIterator <? extends ELEMENTTYPE> aIter)
   {
     if (aIter == null)
       return new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
@@ -899,9 +1063,9 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsMutableCopy
-  public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> SortedSet <ELEMENTTYPE> newSortedSet (@Nullable final Enumeration <? extends ELEMENTTYPE> aEnum)
+  public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> TreeSet <ELEMENTTYPE> newSortedSet (@Nullable final Enumeration <? extends ELEMENTTYPE> aEnum)
   {
-    final SortedSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
+    final TreeSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
     if (aEnum != null)
       while (aEnum.hasMoreElements ())
         ret.add (aEnum.nextElement ());
@@ -910,9 +1074,9 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsMutableCopy
-  public static SortedSet <Boolean> newBooleanSortedSet (@Nullable final boolean... aValues)
+  public static TreeSet <Boolean> newBooleanSortedSet (@Nullable final boolean... aValues)
   {
-    final SortedSet <Boolean> ret = new TreeSet <Boolean> (new ComparatorComparableNullAware <Boolean> ());
+    final TreeSet <Boolean> ret = new TreeSet <Boolean> (new ComparatorComparableNullAware <Boolean> ());
     if (aValues != null)
       for (final boolean aValue : aValues)
         ret.add (Boolean.valueOf (aValue));
@@ -921,9 +1085,9 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsMutableCopy
-  public static SortedSet <Byte> newByteSortedSet (@Nullable final byte... aValues)
+  public static TreeSet <Byte> newByteSortedSet (@Nullable final byte... aValues)
   {
-    final SortedSet <Byte> ret = new TreeSet <Byte> (new ComparatorComparableNullAware <Byte> ());
+    final TreeSet <Byte> ret = new TreeSet <Byte> (new ComparatorComparableNullAware <Byte> ());
     if (aValues != null)
       for (final byte aValue : aValues)
         ret.add (Byte.valueOf (aValue));
@@ -932,9 +1096,9 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsMutableCopy
-  public static SortedSet <Character> newCharSortedSet (@Nullable final char... aValues)
+  public static TreeSet <Character> newCharSortedSet (@Nullable final char... aValues)
   {
-    final SortedSet <Character> ret = new TreeSet <Character> (new ComparatorComparableNullAware <Character> ());
+    final TreeSet <Character> ret = new TreeSet <Character> (new ComparatorComparableNullAware <Character> ());
     if (aValues != null)
       for (final char aValue : aValues)
         ret.add (Character.valueOf (aValue));
@@ -943,9 +1107,9 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsMutableCopy
-  public static SortedSet <Double> newDoubleSortedSet (@Nullable final double... aValues)
+  public static TreeSet <Double> newDoubleSortedSet (@Nullable final double... aValues)
   {
-    final SortedSet <Double> ret = new TreeSet <Double> (new ComparatorComparableNullAware <Double> ());
+    final TreeSet <Double> ret = new TreeSet <Double> (new ComparatorComparableNullAware <Double> ());
     if (aValues != null)
       for (final double aValue : aValues)
         ret.add (Double.valueOf (aValue));
@@ -954,9 +1118,9 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsMutableCopy
-  public static SortedSet <Float> newFloatSortedSet (@Nullable final float... aValues)
+  public static TreeSet <Float> newFloatSortedSet (@Nullable final float... aValues)
   {
-    final SortedSet <Float> ret = new TreeSet <Float> (new ComparatorComparableNullAware <Float> ());
+    final TreeSet <Float> ret = new TreeSet <Float> (new ComparatorComparableNullAware <Float> ());
     if (aValues != null)
       for (final float aValue : aValues)
         ret.add (Float.valueOf (aValue));
@@ -965,9 +1129,9 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsMutableCopy
-  public static SortedSet <Integer> newIntSortedSet (@Nullable final int... aValues)
+  public static TreeSet <Integer> newIntSortedSet (@Nullable final int... aValues)
   {
-    final SortedSet <Integer> ret = new TreeSet <Integer> (new ComparatorComparableNullAware <Integer> ());
+    final TreeSet <Integer> ret = new TreeSet <Integer> (new ComparatorComparableNullAware <Integer> ());
     if (aValues != null)
       for (final int aValue : aValues)
         ret.add (Integer.valueOf (aValue));
@@ -976,9 +1140,9 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsMutableCopy
-  public static SortedSet <Long> newLongSortedSet (@Nullable final long... aValues)
+  public static TreeSet <Long> newLongSortedSet (@Nullable final long... aValues)
   {
-    final SortedSet <Long> ret = new TreeSet <Long> (new ComparatorComparableNullAware <Long> ());
+    final TreeSet <Long> ret = new TreeSet <Long> (new ComparatorComparableNullAware <Long> ());
     if (aValues != null)
       for (final long aValue : aValues)
         ret.add (Long.valueOf (aValue));
@@ -987,9 +1151,9 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsMutableCopy
-  public static SortedSet <Short> newShortSortedSet (@Nullable final short... aValues)
+  public static TreeSet <Short> newShortSortedSet (@Nullable final short... aValues)
   {
-    final SortedSet <Short> ret = new TreeSet <Short> (new ComparatorComparableNullAware <Short> ());
+    final TreeSet <Short> ret = new TreeSet <Short> (new ComparatorComparableNullAware <Short> ());
     if (aValues != null)
       for (final short aValue : aValues)
         ret.add (Short.valueOf (aValue));
@@ -1949,7 +2113,7 @@ public final class ContainerHelper
    * Get a map sorted by aIter's keys. Because no comparator is defined, the key
    * type needs to implement the {@link java.lang.Comparable} interface.
    * 
-   * @param <KEYTPYE>
+   * @param <KEYTYPE>
    *        map key type
    * @param <VALUETYPE>
    *        map value type
@@ -1958,14 +2122,14 @@ public final class ContainerHelper
    * @return the sorted map or the original map, if it was empty
    */
   @Nullable
-  public static <KEYTPYE extends Comparable <? super KEYTPYE>, VALUETYPE> Map <KEYTPYE, VALUETYPE> getSortedByKey (@Nullable final Map <KEYTPYE, VALUETYPE> aMap)
+  public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> Map <KEYTYPE, VALUETYPE> getSortedByKey (@Nullable final Map <KEYTYPE, VALUETYPE> aMap)
   {
     if (isEmpty (aMap))
       return aMap;
 
     // get sorted entry list
-    final List <Map.Entry <KEYTPYE, VALUETYPE>> aList = newList (aMap.entrySet ());
-    Collections.sort (aList, ComparatorUtils.<KEYTPYE, VALUETYPE> getComparatorMapEntryKey ());
+    final List <Map.Entry <KEYTYPE, VALUETYPE>> aList = newList (aMap.entrySet ());
+    Collections.sort (aList, ComparatorUtils.<KEYTYPE, VALUETYPE> getComparatorMapEntryKey ());
     return newOrderedMap (aList);
   }
 
@@ -1973,7 +2137,7 @@ public final class ContainerHelper
    * Get a map sorted by aIter's keys. The comparison order is defined by the
    * passed comparator object.
    * 
-   * @param <KEYTPYE>
+   * @param <KEYTYPE>
    *        map key type
    * @param <VALUETYPE>
    *        map value type
@@ -1984,8 +2148,8 @@ public final class ContainerHelper
    * @return the sorted map or the original map, if it was empty
    */
   @Nullable
-  public static <KEYTPYE, VALUETYPE> Map <KEYTPYE, VALUETYPE> getSortedByKey (@Nullable final Map <KEYTPYE, VALUETYPE> aMap,
-                                                                              @Nonnull final Comparator <? super KEYTPYE> aKeyComparator)
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> getSortedByKey (@Nullable final Map <KEYTYPE, VALUETYPE> aMap,
+                                                                              @Nonnull final Comparator <? super KEYTYPE> aKeyComparator)
   {
     if (aKeyComparator == null)
       throw new NullPointerException ("keyComparator");
@@ -1994,8 +2158,8 @@ public final class ContainerHelper
       return aMap;
 
     // get sorted Map.Entry list by Entry.getValue ()
-    final List <Map.Entry <KEYTPYE, VALUETYPE>> aList = newList (aMap.entrySet ());
-    Collections.sort (aList, ComparatorUtils.<KEYTPYE, VALUETYPE> getComparatorMapEntryKey (aKeyComparator));
+    final List <Map.Entry <KEYTYPE, VALUETYPE>> aList = newList (aMap.entrySet ());
+    Collections.sort (aList, ComparatorUtils.<KEYTYPE, VALUETYPE> getComparatorMapEntryKey (aKeyComparator));
     return newOrderedMap (aList);
   }
 
@@ -2003,7 +2167,7 @@ public final class ContainerHelper
    * Get a map sorted by aIter's values. Because no comparator is defined, the
    * value type needs to implement the {@link java.lang.Comparable} interface.
    * 
-   * @param <KEYTPYE>
+   * @param <KEYTYPE>
    *        map key type
    * @param <VALUETYPE>
    *        map value type
@@ -2012,14 +2176,14 @@ public final class ContainerHelper
    * @return the sorted map or the original map, if it was empty
    */
   @Nullable
-  public static <KEYTPYE, VALUETYPE extends Comparable <? super VALUETYPE>> Map <KEYTPYE, VALUETYPE> getSortedByValue (@Nullable final Map <KEYTPYE, VALUETYPE> aMap)
+  public static <KEYTYPE, VALUETYPE extends Comparable <? super VALUETYPE>> Map <KEYTYPE, VALUETYPE> getSortedByValue (@Nullable final Map <KEYTYPE, VALUETYPE> aMap)
   {
     if (isEmpty (aMap))
       return aMap;
 
     // get sorted entry list
-    final List <Map.Entry <KEYTPYE, VALUETYPE>> aList = newList (aMap.entrySet ());
-    Collections.sort (aList, ComparatorUtils.<KEYTPYE, VALUETYPE> getComparatorMapEntryValue ());
+    final List <Map.Entry <KEYTYPE, VALUETYPE>> aList = newList (aMap.entrySet ());
+    Collections.sort (aList, ComparatorUtils.<KEYTYPE, VALUETYPE> getComparatorMapEntryValue ());
     return newOrderedMap (aList);
   }
 
@@ -2027,7 +2191,7 @@ public final class ContainerHelper
    * Get a map sorted by aIter's values. The comparison order is defined by the
    * passed comparator object.
    * 
-   * @param <KEYTPYE>
+   * @param <KEYTYPE>
    *        map key type
    * @param <VALUETYPE>
    *        map value type
@@ -2038,7 +2202,7 @@ public final class ContainerHelper
    * @return the sorted map or the original map, if it was empty
    */
   @Nullable
-  public static <KEYTPYE, VALUETYPE> Map <KEYTPYE, VALUETYPE> getSortedByValue (@Nullable final Map <KEYTPYE, VALUETYPE> aMap,
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> getSortedByValue (@Nullable final Map <KEYTYPE, VALUETYPE> aMap,
                                                                                 @Nonnull final Comparator <? super VALUETYPE> aValueComparator)
   {
     if (aValueComparator == null)
@@ -2048,8 +2212,8 @@ public final class ContainerHelper
       return aMap;
 
     // get sorted Map.Entry list by Entry.getValue ()
-    final List <Map.Entry <KEYTPYE, VALUETYPE>> aList = newList (aMap.entrySet ());
-    Collections.sort (aList, ComparatorUtils.<KEYTPYE, VALUETYPE> getComparatorMapEntryValue (aValueComparator));
+    final List <Map.Entry <KEYTYPE, VALUETYPE>> aList = newList (aMap.entrySet ());
+    Collections.sort (aList, ComparatorUtils.<KEYTYPE, VALUETYPE> getComparatorMapEntryValue (aValueComparator));
     return newOrderedMap (aList);
   }
 
@@ -2272,19 +2436,19 @@ public final class ContainerHelper
   }
 
   @Nullable
-  public static <KEYTPYE, VALUETYPE> Map.Entry <KEYTPYE, VALUETYPE> getFirstElement (@Nullable final Map <KEYTPYE, VALUETYPE> aMap)
+  public static <KEYTYPE, VALUETYPE> Map.Entry <KEYTYPE, VALUETYPE> getFirstElement (@Nullable final Map <KEYTYPE, VALUETYPE> aMap)
   {
     return isEmpty (aMap) ? null : aMap.entrySet ().iterator ().next ();
   }
 
   @Nullable
-  public static <KEYTPYE, VALUETYPE> KEYTPYE getFirstKey (@Nullable final Map <KEYTPYE, VALUETYPE> aMap)
+  public static <KEYTYPE, VALUETYPE> KEYTYPE getFirstKey (@Nullable final Map <KEYTYPE, VALUETYPE> aMap)
   {
     return isEmpty (aMap) ? null : getFirstElement (aMap.keySet ());
   }
 
   @Nullable
-  public static <KEYTPYE, VALUETYPE> VALUETYPE getFirstValue (@Nullable final Map <KEYTPYE, VALUETYPE> aMap)
+  public static <KEYTYPE, VALUETYPE> VALUETYPE getFirstValue (@Nullable final Map <KEYTYPE, VALUETYPE> aMap)
   {
     return isEmpty (aMap) ? null : getFirstElement (aMap.values ());
   }
@@ -2820,7 +2984,7 @@ public final class ContainerHelper
   /**
    * Get a map where keys and values are exchanged.
    * 
-   * @param <KEYTPYE>
+   * @param <KEYTYPE>
    *        Original key type.
    * @param <VALUETYPE>
    *        Original value type.
@@ -2830,13 +2994,13 @@ public final class ContainerHelper
    */
   @Nullable
   @ReturnsMutableCopy
-  public static <KEYTPYE, VALUETYPE> Map <VALUETYPE, KEYTPYE> getSwappedKeyValues (@Nullable final Map <KEYTPYE, VALUETYPE> aMap)
+  public static <KEYTYPE, VALUETYPE> Map <VALUETYPE, KEYTYPE> getSwappedKeyValues (@Nullable final Map <KEYTYPE, VALUETYPE> aMap)
   {
     if (isEmpty (aMap))
       return null;
 
-    final Map <VALUETYPE, KEYTPYE> ret = new HashMap <VALUETYPE, KEYTPYE> (aMap.size ());
-    for (final Map.Entry <KEYTPYE, VALUETYPE> aEntry : aMap.entrySet ())
+    final Map <VALUETYPE, KEYTYPE> ret = new HashMap <VALUETYPE, KEYTYPE> (aMap.size ());
+    for (final Map.Entry <KEYTYPE, VALUETYPE> aEntry : aMap.entrySet ())
       ret.put (aEntry.getValue (), aEntry.getKey ());
     return ret;
   }
@@ -2844,7 +3008,7 @@ public final class ContainerHelper
   /**
    * Get a map where the lookup (1K..nV) has been reversed to (1V..nK)
    * 
-   * @param <KEYTPYE>
+   * @param <KEYTYPE>
    *        Original key type
    * @param <VALUETYPE>
    *        Original value type
@@ -2854,13 +3018,13 @@ public final class ContainerHelper
    */
   @Nullable
   @ReturnsMutableCopy
-  public static <KEYTPYE, VALUETYPE> IMultiMapSetBased <VALUETYPE, KEYTPYE> getReverseLookupSet (@Nullable final IMultiMap <KEYTPYE, VALUETYPE, ? extends Collection <VALUETYPE>> aMap)
+  public static <KEYTYPE, VALUETYPE> IMultiMapSetBased <VALUETYPE, KEYTYPE> getReverseLookupSet (@Nullable final IMultiMap <KEYTYPE, VALUETYPE, ? extends Collection <VALUETYPE>> aMap)
   {
     if (isEmpty (aMap))
       return null;
 
-    final IMultiMapSetBased <VALUETYPE, KEYTPYE> ret = new MultiHashMapHashSetBased <VALUETYPE, KEYTPYE> ();
-    for (final Map.Entry <KEYTPYE, ? extends Collection <VALUETYPE>> aEntry : aMap.entrySet ())
+    final IMultiMapSetBased <VALUETYPE, KEYTYPE> ret = new MultiHashMapHashSetBased <VALUETYPE, KEYTYPE> ();
+    for (final Map.Entry <KEYTYPE, ? extends Collection <VALUETYPE>> aEntry : aMap.entrySet ())
       for (final VALUETYPE aValue : aEntry.getValue ())
         ret.putSingle (aValue, aEntry.getKey ());
     return ret;
@@ -2869,7 +3033,7 @@ public final class ContainerHelper
   /**
    * Get a map where the lookup (1K..nV) has been reversed to (1V..nK)
    * 
-   * @param <KEYTPYE>
+   * @param <KEYTYPE>
    *        Original key type
    * @param <VALUETYPE>
    *        Original value type
@@ -2879,13 +3043,13 @@ public final class ContainerHelper
    */
   @Nullable
   @ReturnsMutableCopy
-  public static <KEYTPYE, VALUETYPE> IMultiMapSetBased <VALUETYPE, KEYTPYE> getReverseLookup (@Nullable final IMultiMapSetBased <KEYTPYE, VALUETYPE> aMap)
+  public static <KEYTYPE, VALUETYPE> IMultiMapSetBased <VALUETYPE, KEYTYPE> getReverseLookup (@Nullable final IMultiMapSetBased <KEYTYPE, VALUETYPE> aMap)
   {
     if (isEmpty (aMap))
       return null;
 
-    final IMultiMapSetBased <VALUETYPE, KEYTPYE> aRet = new MultiHashMapHashSetBased <VALUETYPE, KEYTPYE> ();
-    for (final Map.Entry <KEYTPYE, Set <VALUETYPE>> aEntry : aMap.entrySet ())
+    final IMultiMapSetBased <VALUETYPE, KEYTYPE> aRet = new MultiHashMapHashSetBased <VALUETYPE, KEYTYPE> ();
+    for (final Map.Entry <KEYTYPE, Set <VALUETYPE>> aEntry : aMap.entrySet ())
       for (final VALUETYPE aValue : aEntry.getValue ())
         aRet.putSingle (aValue, aEntry.getKey ());
     return aRet;

@@ -58,6 +58,7 @@ import static com.phloc.commons.collections.ContainerHelper.newObjectListFromArr
 import static com.phloc.commons.collections.ContainerHelper.newOrderedMap;
 import static com.phloc.commons.collections.ContainerHelper.newOrderedSet;
 import static com.phloc.commons.collections.ContainerHelper.newSet;
+import static com.phloc.commons.collections.ContainerHelper.newSortedMap;
 import static com.phloc.commons.collections.ContainerHelper.newSortedSet;
 import static com.phloc.commons.collections.ContainerHelper.newStack;
 import static com.phloc.commons.collections.ContainerHelper.newUnmodifiableList;
@@ -65,6 +66,7 @@ import static com.phloc.commons.collections.ContainerHelper.newUnmodifiableMap;
 import static com.phloc.commons.collections.ContainerHelper.newUnmodifiableOrderedMap;
 import static com.phloc.commons.collections.ContainerHelper.newUnmodifiableOrderedSet;
 import static com.phloc.commons.collections.ContainerHelper.newUnmodifiableSet;
+import static com.phloc.commons.collections.ContainerHelper.newUnmodifiableSortedMap;
 import static com.phloc.commons.collections.ContainerHelper.newUnmodifiableSortedSet;
 import static com.phloc.commons.collections.ContainerHelper.removeFirstElement;
 import static com.phloc.commons.collections.ContainerHelper.removeLastElement;
@@ -511,6 +513,287 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     // Simple test for newUnmodifiableMap (Map)
     assertEquals (aMap, newUnmodifiableMap (aMap));
     assertEquals (aMap, newUnmodifiableMap (aMap.entrySet ()));
+  }
+
+  @Test
+  public void testNewSortedMap_Empty ()
+  {
+    assertNotNull (newSortedMap ());
+    assertTrue (newSortedMap ().isEmpty ());
+  }
+
+  @Test
+  public void testNewSortedMap_KeyValue ()
+  {
+    final SortedMap <String, Integer> aSortedMap = newSortedMap ("Hallo", I5);
+    assertNotNull (aSortedMap);
+    assertEquals (aSortedMap.size (), 1);
+    assertNotNull (aSortedMap.get ("Hallo"));
+    assertEquals (I5, aSortedMap.get ("Hallo"));
+  }
+
+  @Test
+  public void testNewSortedMap_Array ()
+  {
+    assertNotNull (newSortedMap ((String []) null));
+    assertTrue (newSortedMap ((String []) null).isEmpty ());
+
+    try
+    {
+      // odd number of parameters not allowed
+      newSortedMap ("Hallo", "Welt", "from");
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+
+    final SortedMap <String, String> aSortedMap = newSortedMap ("Hallo", "Welt", "from", "Vienna");
+    assertNotNull (aSortedMap);
+    assertEquals (aSortedMap.size (), 2);
+    assertNotNull (aSortedMap.get ("Hallo"));
+    assertEquals (aSortedMap.get ("Hallo"), "Welt");
+    assertNotNull (aSortedMap.get ("from"));
+    assertEquals (aSortedMap.get ("from"), "Vienna");
+  }
+
+  @Test
+  public void testNewSortedMap_ArrayArray ()
+  {
+    try
+    {
+      // null keys not allowed
+      newSortedMap ((String []) null, new String [] { "a" });
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+
+    try
+    {
+      // null values not allowed
+      newSortedMap (new String [] { "a" }, (Object []) null);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+
+    try
+    {
+      // different length not allowed
+      newSortedMap (new String [0], new String [1]);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+
+    SortedMap <Integer, String> aSortedMap = newSortedMap (new Integer [] { I2, I4 }, new String [] { "Hallo", "Welt" });
+    assertNotNull (aSortedMap);
+    assertEquals (2, aSortedMap.size ());
+    assertNotNull (aSortedMap.get (I2));
+    assertEquals ("Hallo", aSortedMap.get (I2));
+    assertNotNull (aSortedMap.get (I4));
+    assertEquals ("Welt", aSortedMap.get (I4));
+
+    aSortedMap = newSortedMap (new Integer [] {}, new String [] {});
+    assertNotNull (aSortedMap);
+    assertEquals (0, aSortedMap.size ());
+  }
+
+  @Test
+  public void testNewSortedMap_CollectionCollection ()
+  {
+    final List <String> aKeys = newList ("d", "c", "b", "a");
+    final List <Integer> aValues = newList (Integer.valueOf (4),
+                                            Integer.valueOf (3),
+                                            Integer.valueOf (2),
+                                            Integer.valueOf (1));
+    try
+    {
+      // null keys not allowed
+      newSortedMap ((List <String>) null, aValues);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+
+    try
+    {
+      // null values not allowed
+      newSortedMap (aKeys, null);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+
+    SortedMap <String, Integer> aSortedMap = newSortedMap (aKeys, aValues);
+    assertNotNull (aSortedMap);
+    assertTrue (aSortedMap.keySet ().containsAll (aKeys));
+    assertTrue (aSortedMap.values ().containsAll (aValues));
+
+    try
+    {
+      // There are more values than keys
+      aValues.add (Integer.valueOf (42));
+      newSortedMap (aKeys, aValues);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+
+    // Simple test for newSortedMap (SortedMap)
+    assertEquals (aSortedMap, newSortedMap (aSortedMap));
+    assertEquals (aSortedMap, newSortedMap (aSortedMap.entrySet ()));
+
+    aKeys.clear ();
+    aValues.clear ();
+    aSortedMap = newSortedMap (aKeys, aValues);
+    assertNotNull (aSortedMap);
+    assertTrue (aSortedMap.isEmpty ());
+
+    // Simple test for newSortedMap (SortedMap)
+    assertEquals (aSortedMap, newSortedMap (aSortedMap));
+    assertEquals (aSortedMap, newSortedMap (aSortedMap.entrySet ()));
+  }
+
+  @Test
+  public void testNewUnmodifiableSortedMap_Empty ()
+  {
+    assertNotNull (newUnmodifiableSortedMap ());
+    assertTrue (newUnmodifiableSortedMap ().isEmpty ());
+  }
+
+  @Test
+  public void testNewUnmodifiableSortedMap_KeyValue ()
+  {
+    final SortedMap <String, Integer> aSortedMap = newUnmodifiableSortedMap ("Hallo", I5);
+    assertNotNull (aSortedMap);
+    assertEquals (aSortedMap.size (), 1);
+    assertNotNull (aSortedMap.get ("Hallo"));
+    assertEquals (I5, aSortedMap.get ("Hallo"));
+  }
+
+  @Test
+  public void testNewUnmodifiableSortedMap_Array ()
+  {
+    assertNotNull (newUnmodifiableSortedMap ((String []) null));
+    assertTrue (newUnmodifiableSortedMap ((String []) null).isEmpty ());
+
+    try
+    {
+      // odd number of parameters not allowed
+      newUnmodifiableSortedMap ("Hallo", "Welt", "from");
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+
+    final SortedMap <String, String> aSortedMap = newUnmodifiableSortedMap ("Hallo", "Welt", "from", "Vienna");
+    assertNotNull (aSortedMap);
+    assertEquals (aSortedMap.size (), 2);
+    assertNotNull (aSortedMap.get ("Hallo"));
+    assertEquals (aSortedMap.get ("Hallo"), "Welt");
+    assertNotNull (aSortedMap.get ("from"));
+    assertEquals (aSortedMap.get ("from"), "Vienna");
+  }
+
+  @Test
+  public void testNewUnmodifiableSortedMap_ArrayArray ()
+  {
+    try
+    {
+      // null keys not allowed
+      newUnmodifiableSortedMap ((String []) null, new String [] { "a" });
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+
+    try
+    {
+      // null values not allowed
+      newUnmodifiableSortedMap (new String [] { "a" }, (Object []) null);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+
+    try
+    {
+      // different length not allowed
+      newUnmodifiableSortedMap (new String [0], new String [1]);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+
+    SortedMap <Integer, String> aSortedMap = newUnmodifiableSortedMap (new Integer [] { I2, I4 },
+                                                                       new String [] { "Hallo", "Welt" });
+    assertNotNull (aSortedMap);
+    assertEquals (2, aSortedMap.size ());
+    assertNotNull (aSortedMap.get (I2));
+    assertEquals ("Hallo", aSortedMap.get (I2));
+    assertNotNull (aSortedMap.get (I4));
+    assertEquals ("Welt", aSortedMap.get (I4));
+
+    aSortedMap = newUnmodifiableSortedMap (new Integer [] {}, new String [] {});
+    assertNotNull (aSortedMap);
+    assertEquals (0, aSortedMap.size ());
+  }
+
+  @Test
+  public void testNewUnmodifiableSortedMap_CollectionCollection ()
+  {
+    final List <String> aKeys = newList ("d", "c", "b", "a");
+    final List <Integer> aValues = newList (Integer.valueOf (4),
+                                            Integer.valueOf (3),
+                                            Integer.valueOf (2),
+                                            Integer.valueOf (1));
+    try
+    {
+      // null keys not allowed
+      newUnmodifiableSortedMap ((List <String>) null, aValues);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+
+    try
+    {
+      // null values not allowed
+      newUnmodifiableSortedMap (aKeys, null);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+
+    SortedMap <String, Integer> aSortedMap = newUnmodifiableSortedMap (aKeys, aValues);
+    assertNotNull (aSortedMap);
+    assertTrue (aSortedMap.keySet ().containsAll (aKeys));
+    assertTrue (aSortedMap.values ().containsAll (aValues));
+
+    try
+    {
+      // There are more values than keys
+      aValues.add (Integer.valueOf (42));
+      newUnmodifiableSortedMap (aKeys, aValues);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+
+    // Simple test for newUnmodifiableSortedMap (SortedMap)
+    assertEquals (aSortedMap, newUnmodifiableSortedMap (aSortedMap));
+    assertEquals (aSortedMap, newUnmodifiableSortedMap (aSortedMap.entrySet ()));
+
+    aKeys.clear ();
+    aValues.clear ();
+    aSortedMap = newUnmodifiableSortedMap (aKeys, aValues);
+    assertNotNull (aSortedMap);
+    assertTrue (aSortedMap.isEmpty ());
+
+    // Simple test for newUnmodifiableSortedMap (SortedMap)
+    assertEquals (aSortedMap, newUnmodifiableSortedMap (aSortedMap));
+    assertEquals (aSortedMap, newUnmodifiableSortedMap (aSortedMap.entrySet ()));
   }
 
   @Test
