@@ -518,8 +518,8 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewSortedMap_Empty ()
   {
-    assertNotNull (newSortedMap ());
-    assertTrue (newSortedMap ().isEmpty ());
+    assertNotNull (ContainerHelper.<String, String> newSortedMap ());
+    assertTrue (ContainerHelper.<String, String> newSortedMap ().isEmpty ());
   }
 
   @Test
@@ -658,8 +658,8 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testNewUnmodifiableSortedMap_Empty ()
   {
-    assertNotNull (newUnmodifiableSortedMap ());
-    assertTrue (newUnmodifiableSortedMap ().isEmpty ());
+    assertNotNull (ContainerHelper.<String, String> newUnmodifiableSortedMap ());
+    assertTrue (ContainerHelper.<String, String> newUnmodifiableSortedMap ().isEmpty ());
   }
 
   @Test
