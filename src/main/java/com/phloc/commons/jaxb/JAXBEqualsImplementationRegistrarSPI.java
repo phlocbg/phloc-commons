@@ -20,6 +20,7 @@ package com.phloc.commons.jaxb;
 import javax.annotation.Nonnull;
 import javax.xml.bind.JAXBElement;
 
+import com.phloc.commons.annotations.IsSPIImplementation;
 import com.phloc.commons.equals.EqualsImplementationRegistry;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.equals.IEqualsImplementation;
@@ -31,6 +32,7 @@ import com.phloc.commons.equals.IEqualsImplementationRegistry;
  * 
  * @author philip
  */
+@IsSPIImplementation
 public final class JAXBEqualsImplementationRegistrarSPI implements IEqualsImplementationRegistrarSPI
 {
   public void registerEqualsImplementations (@Nonnull final IEqualsImplementationRegistry aRegistry)
