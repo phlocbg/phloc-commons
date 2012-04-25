@@ -28,6 +28,9 @@ import javax.annotation.Nonnull;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.phloc.commons.annotations.IsSPIImplementation;
+
+@IsSPIImplementation
 public final class DefaultHashCodeImplementationRegistrarSPI implements IHashCodeImplementationRegistrarSPI
 {
   public void registerHashCodeImplementations (@Nonnull final IHashCodeImplementationRegistry aRegistry)

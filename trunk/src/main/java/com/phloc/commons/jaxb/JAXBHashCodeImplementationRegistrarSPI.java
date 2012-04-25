@@ -20,11 +20,13 @@ package com.phloc.commons.jaxb;
 import javax.annotation.Nonnull;
 import javax.xml.bind.JAXBElement;
 
+import com.phloc.commons.annotations.IsSPIImplementation;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.hash.IHashCodeImplementation;
 import com.phloc.commons.hash.IHashCodeImplementationRegistrarSPI;
 import com.phloc.commons.hash.IHashCodeImplementationRegistry;
 
+@IsSPIImplementation
 public final class JAXBHashCodeImplementationRegistrarSPI implements IHashCodeImplementationRegistrarSPI
 {
   public void registerHashCodeImplementations (@Nonnull final IHashCodeImplementationRegistry aRegistry)
