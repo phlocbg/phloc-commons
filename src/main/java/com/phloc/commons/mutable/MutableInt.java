@@ -113,9 +113,24 @@ public final class MutableInt implements Comparable <MutableInt>, ICloneable <Mu
     return m_nValue != 0;
   }
 
+  public boolean isSmaller0 ()
+  {
+    return m_nValue < 0;
+  }
+
+  public boolean isSmallerOrEqual0 ()
+  {
+    return m_nValue <= 0;
+  }
+
   public boolean isGreater0 ()
   {
     return m_nValue > 0;
+  }
+
+  public boolean isGreaterOrEqual0 ()
+  {
+    return m_nValue >= 0;
   }
 
   public boolean isEven ()

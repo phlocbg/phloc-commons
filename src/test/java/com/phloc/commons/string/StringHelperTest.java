@@ -41,6 +41,7 @@ import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.io.streams.NonBlockingStringWriter;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 import com.phloc.commons.mock.PhlocAssert;
+import com.phloc.commons.mutable.MutableByte;
 import com.phloc.commons.mutable.MutableInt;
 import com.phloc.commons.mutable.MutableLong;
 
@@ -106,6 +107,117 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     assertEquals (Boolean.TRUE, StringHelper.parseBoolObj (Integer.valueOf (0), Boolean.TRUE));
     assertEquals (Boolean.TRUE, StringHelper.parseBoolObj (Integer.valueOf (1), Boolean.TRUE));
     assertNull (StringHelper.parseBoolObj (Integer.valueOf (0), null));
+  }
+
+  @Test
+  public void testParseByte ()
+  {
+    // Object
+    assertEquals (1, StringHelper.parseByte ((Object) "1", (byte) 0));
+    assertEquals (0, StringHelper.parseByte ((Object) "1.2", (byte) 0));
+    assertEquals (0, StringHelper.parseByte ((Object) "0", (byte) 0));
+    assertEquals (0, StringHelper.parseByte ((Object) "0000", (byte) 0));
+    assertEquals (0, StringHelper.parseByte ((Object) "-129", (byte) 0));
+    assertEquals (-128, StringHelper.parseByte ((Object) "-128", (byte) 0));
+    assertEquals (-1, StringHelper.parseByte ((Object) "-1", (byte) 0));
+    assertEquals (44, StringHelper.parseByte ((Object) "44", (byte) 0));
+    assertEquals (127, StringHelper.parseByte ((Object) "127", (byte) 0));
+    assertEquals (0, StringHelper.parseByte ((Object) "128", (byte) 0));
+    assertEquals (0, StringHelper.parseByte ((Object) "257", (byte) 0));
+    assertEquals (0, StringHelper.parseByte ((Object) "445566abcdef", (byte) 0));
+    assertEquals (0, StringHelper.parseByte ((Object) "abcdef445566", (byte) 0));
+    assertEquals (0, StringHelper.parseByte ((Object) "", (byte) 0));
+    assertEquals (0, StringHelper.parseByte ((Object) null, (byte) 0));
+
+    assertEquals (0, StringHelper.parseByte (new MutableByte (5), (byte) 0));
+
+    assertEquals (1, StringHelper.parseByte (Byte.valueOf ((byte) 1), (byte) 0));
+    assertEquals (1, StringHelper.parseByte (Double.valueOf (1), (byte) 0));
+    assertEquals (1, StringHelper.parseByte (BigDecimal.ONE, (byte) 0));
+
+    // String
+    assertEquals (1, StringHelper.parseByte ("1", (byte) 0));
+    assertEquals (0, StringHelper.parseByte ("1.2", (byte) 0));
+    assertEquals (0, StringHelper.parseByte ("0", (byte) 0));
+    assertEquals (0, StringHelper.parseByte ("0000", (byte) 0));
+    assertEquals (0, StringHelper.parseByte ("-129", (byte) 0));
+    assertEquals (-128, StringHelper.parseByte ("-128", (byte) 0));
+    assertEquals (-1, StringHelper.parseByte ("-1", (byte) 0));
+    assertEquals (44, StringHelper.parseByte ("44", (byte) 0));
+    assertEquals (127, StringHelper.parseByte ("127", (byte) 0));
+    assertEquals (0, StringHelper.parseByte ("128", (byte) 0));
+    assertEquals (0, StringHelper.parseByte ("257", (byte) 0));
+    assertEquals (0, StringHelper.parseByte ("445566", (byte) 0));
+    assertEquals (0, StringHelper.parseByte ("445566abcdef", (byte) 0));
+    assertEquals (0, StringHelper.parseByte ("abcdef445566", (byte) 0));
+    assertEquals (0, StringHelper.parseByte ("", (byte) 0));
+    assertEquals (0, StringHelper.parseByte (null, (byte) 0));
+
+    final byte nDefault = 17;
+    assertEquals (1, StringHelper.parseByte ("1", nDefault));
+    assertEquals (nDefault, StringHelper.parseByte ("1.2", nDefault));
+    assertEquals (0, StringHelper.parseByte ("0", nDefault));
+    assertEquals (0, StringHelper.parseByte ("0000", nDefault));
+    assertEquals (-1, StringHelper.parseByte ("-1", nDefault));
+    assertEquals (nDefault, StringHelper.parseByte ("445566", nDefault));
+    assertEquals (nDefault, StringHelper.parseByte ("445566abcdef", nDefault));
+    assertEquals (nDefault, StringHelper.parseByte ("abcdef445566", nDefault));
+    assertEquals (nDefault, StringHelper.parseByte ("", nDefault));
+    assertEquals (nDefault, StringHelper.parseByte (null, nDefault));
+  }
+
+  @Test
+  public void testParseByteObj ()
+  {
+    final Byte b_1 = Byte.valueOf ((byte) -1);
+    final Byte b0 = Byte.valueOf ((byte) 0);
+    final Byte b1 = Byte.valueOf ((byte) 1);
+
+    // Object
+    assertEquals (b1, StringHelper.parseByteObj ((Object) "1"));
+    assertNull (StringHelper.parseByteObj ((Object) "abc"));
+    assertEquals (b1, StringHelper.parseByteObj ((Object) "1", b0));
+    assertEquals (b0, StringHelper.parseByteObj ((Object) "1.2", b0));
+    assertEquals (b0, StringHelper.parseByteObj ((Object) "0", b0));
+    assertEquals (b0, StringHelper.parseByteObj ((Object) "0000", b0));
+    assertEquals (b_1, StringHelper.parseByteObj ((Object) "-1", b0));
+    assertEquals (Byte.valueOf ((byte) 44), StringHelper.parseByteObj ((Object) "44", b0));
+    assertEquals (b0, StringHelper.parseByteObj ((Object) "445566abcdef", b0));
+    assertEquals (b0, StringHelper.parseByteObj ((Object) "abcdef445566", b0));
+    assertEquals (b0, StringHelper.parseByteObj ((Object) "", b0));
+    assertEquals (b0, StringHelper.parseByteObj ((Object) null, b0));
+
+    assertEquals (b0, StringHelper.parseByteObj (new MutableByte (5), b0));
+
+    assertEquals (b1, StringHelper.parseByteObj (Byte.valueOf ((byte) 1), b0));
+    assertEquals (b1, StringHelper.parseByteObj (Double.valueOf (1), b0));
+    assertEquals (b1, StringHelper.parseByteObj (BigDecimal.ONE, b0));
+
+    // String
+    assertEquals (b1, StringHelper.parseByteObj ("1"));
+    assertNull (StringHelper.parseByteObj ("abc"));
+    assertEquals (b1, StringHelper.parseByteObj ("1", b0));
+    assertEquals (b0, StringHelper.parseByteObj ("1.2", b0));
+    assertEquals (b0, StringHelper.parseByteObj ("0", b0));
+    assertEquals (b0, StringHelper.parseByteObj ("0000", b0));
+    assertEquals (b_1, StringHelper.parseByteObj ("-1", b0));
+    assertEquals (Byte.valueOf ((byte) 44), StringHelper.parseByteObj ("44", b0));
+    assertEquals (b0, StringHelper.parseByteObj ("445566abcdef", b0));
+    assertEquals (b0, StringHelper.parseByteObj ("abcdef445566", b0));
+    assertEquals (b0, StringHelper.parseByteObj ("", b0));
+    assertEquals (b0, StringHelper.parseByteObj (null, b0));
+
+    final Byte aDefault = Byte.valueOf ((byte) 17);
+    assertEquals (b1, StringHelper.parseByteObj ("1", aDefault));
+    assertEquals (aDefault, StringHelper.parseByteObj ("1.2", aDefault));
+    assertEquals (b0, StringHelper.parseByteObj ("0", aDefault));
+    assertEquals (b0, StringHelper.parseByteObj ("0000", aDefault));
+    assertEquals (b_1, StringHelper.parseByteObj ("-1", aDefault));
+    assertEquals (Byte.valueOf ((byte) 44), StringHelper.parseByteObj ("44", aDefault));
+    assertEquals (aDefault, StringHelper.parseByteObj ("445566abcdef", aDefault));
+    assertEquals (aDefault, StringHelper.parseByteObj ("abcdef445566", aDefault));
+    assertEquals (aDefault, StringHelper.parseByteObj ("", aDefault));
+    assertEquals (aDefault, StringHelper.parseByteObj (null, aDefault));
   }
 
   @Test

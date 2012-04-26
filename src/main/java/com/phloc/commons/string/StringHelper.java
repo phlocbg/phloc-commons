@@ -185,14 +185,178 @@ public final class StringHelper
   }
 
   /**
+   * Parse the given String as byte with radix 10.
+   * 
+   * @param aObject
+   *        The Object to parse. May be <code>null</code>.
+   * @param nDefault
+   *        The default value to be returned if the passed object could not be
+   *        converted to a valid value.
+   * @return The default value if the string does not represent a valid value.
+   */
+  public static byte parseByte (@Nullable final Object aObject, final byte nDefault)
+  {
+    return parseByte (aObject, DEFAULT_RADIX, nDefault);
+  }
+
+  /**
+   * Parse the given String as byte.
+   * 
+   * @param aObject
+   *        The Object to parse. May be <code>null</code>.
+   * @param nRadix
+   *        The radix to use.
+   * @param nDefault
+   *        The default value to be returned if the passed object could not be
+   *        converted to a valid value.
+   * @return The default value if the string does not represent a valid value.
+   */
+  public static byte parseByte (@Nullable final Object aObject, final int nRadix, final byte nDefault)
+  {
+    if (aObject instanceof Number)
+      return ((Number) aObject).byteValue ();
+    return parseByte (String.valueOf (aObject), nRadix, nDefault);
+  }
+
+  /**
+   * Parse the given String as byte with radix 10.
+   * 
+   * @param sStr
+   *        The String to parse. May be <code>null</code>.
+   * @param nDefault
+   *        The value to be returned if the string cannot be converted to a
+   *        valid value.
+   * @return The passed default parameter if the string does not represent a
+   *         valid value.
+   */
+  public static byte parseByte (@Nullable final String sStr, final byte nDefault)
+  {
+    return parseByte (sStr, DEFAULT_RADIX, nDefault);
+  }
+
+  /**
+   * Parse the given String as byte.
+   * 
+   * @param sStr
+   *        The String to parse. May be <code>null</code>.
+   * @param nRadix
+   *        The radix to use.
+   * @param nDefault
+   *        The value to be returned if the string cannot be converted to a
+   *        valid value.
+   * @return The passed default parameter if the string does not represent a
+   *         valid value.
+   */
+  public static byte parseByte (@Nullable final String sStr, final int nRadix, final byte nDefault)
+  {
+    if (sStr != null)
+      try
+      {
+        return Byte.parseByte (sStr, nRadix);
+      }
+      catch (final NumberFormatException ex)// NOPMD
+      {
+        // Fall through
+      }
+    return nDefault;
+  }
+
+  /**
+   * Parse the given object as {@link Byte}.
+   * 
+   * @param aObject
+   *        The object to parse.
+   * @return <code>null</code> if the object does not represent a valid value.
+   */
+  @Nullable
+  public static Byte parseByteObj (@Nullable final Object aObject)
+  {
+    return parseByteObj (aObject, null);
+  }
+
+  @Nullable
+  public static Byte parseByteObj (@Nullable final Object aObject, @Nullable final Byte aDefault)
+  {
+    return parseByteObj (aObject, DEFAULT_RADIX, aDefault);
+  }
+
+  @Nullable
+  public static Byte parseByteObj (@Nullable final Object aObject, final int nRadix, @Nullable final Byte aDefault)
+  {
+    if (aObject == null)
+      return aDefault;
+    if (aObject instanceof Number)
+      return Byte.valueOf (((Number) aObject).byteValue ());
+    return parseByteObj (String.valueOf (aObject), nRadix, aDefault);
+  }
+
+  /**
+   * Parse the given String as {@link Byte}.
+   * 
+   * @param sStr
+   *        The String to parse.
+   * @return <code>null</code> if the string does not represent a valid value.
+   */
+  @Nullable
+  public static Byte parseByteObj (@Nullable final String sStr)
+  {
+    return parseByteObj (sStr, null);
+  }
+
+  /**
+   * Parse the given String as {@link Byte} with radix 10.
+   * 
+   * @param sStr
+   *        The String to parse.
+   * @param aDefault
+   *        The default value to be returned if the passed string could not be
+   *        converted to a valid value.
+   * @return <code>aDefault</code> if the string does not represent a valid
+   *         value.
+   */
+  @Nullable
+  public static Byte parseByteObj (@Nullable final String sStr, @Nullable final Byte aDefault)
+  {
+    return parseByteObj (sStr, DEFAULT_RADIX, aDefault);
+  }
+
+  /**
+   * Parse the given String as {@link Byte}.
+   * 
+   * @param sStr
+   *        The String to parse.
+   * @param nRadix
+   *        The radix to use.
+   * @param aDefault
+   *        The default value to be returned if the passed string could not be
+   *        converted to a valid value.
+   * @return <code>aDefault</code> if the string does not represent a valid
+   *         value.
+   */
+  @Nullable
+  public static Byte parseByteObj (@Nullable final String sStr, final int nRadix, @Nullable final Byte aDefault)
+  {
+    if (sStr != null)
+      try
+      {
+        return Byte.valueOf (sStr, nRadix);
+      }
+      catch (final NumberFormatException ex)// NOPMD
+      {
+        // Fall through
+      }
+    return aDefault;
+  }
+
+  /**
    * Parse the given String as int with radix 10.
    * 
    * @param aObject
    *        The Object to parse. May be <code>null</code>.
    * @param nDefault
    *        The default value to be returned if the passed object could not be
-   *        converted to an integer.
-   * @return The default value if the string does not represent a valid integer.
+   *        converted to a valid value.
+   * @return The default value if the string does not represent a valid value.
    */
   public static int parseInt (@Nullable final Object aObject, final int nDefault)
   {
@@ -208,8 +372,8 @@ public final class StringHelper
    *        The radix to use.
    * @param nDefault
    *        The default value to be returned if the passed object could not be
-   *        converted to an integer.
-   * @return The default value if the string does not represent a valid integer.
+   *        converted to a valid value.
+   * @return The default value if the string does not represent a valid value.
    */
   public static int parseInt (@Nullable final Object aObject, final int nRadix, final int nDefault)
   {
@@ -224,10 +388,10 @@ public final class StringHelper
    * @param sStr
    *        The String to parse. May be <code>null</code>.
    * @param nDefault
-   *        The value to be returned if the string cannot be converted to an
-   *        int.
+   *        The value to be returned if the string cannot be converted to a
+   *        valid value.
    * @return The passed default parameter if the string does not represent a
-   *         valid integer.
+   *         valid value.
    */
   public static int parseInt (@Nullable final String sStr, final int nDefault)
   {
@@ -242,10 +406,10 @@ public final class StringHelper
    * @param nRadix
    *        The radix to use.
    * @param nDefault
-   *        The value to be returned if the string cannot be converted to an
-   *        int.
+   *        The value to be returned if the string cannot be converted to a
+   *        valid value.
    * @return The passed default parameter if the string does not represent a
-   *         valid integer.
+   *         valid value.
    */
   public static int parseInt (@Nullable final String sStr, final int nRadix, final int nDefault)
   {
@@ -266,7 +430,7 @@ public final class StringHelper
    * 
    * @param aObject
    *        The object to parse.
-   * @return <code>null</code> if the object does not represent a valid integer.
+   * @return <code>null</code> if the object does not represent a valid value.
    */
   @Nullable
   public static Integer parseIntObj (@Nullable final Object aObject)
@@ -295,7 +459,7 @@ public final class StringHelper
    * 
    * @param sStr
    *        The String to parse.
-   * @return <code>null</code> if the string does not represent a valid integer.
+   * @return <code>null</code> if the string does not represent a valid value.
    */
   @Nullable
   public static Integer parseIntObj (@Nullable final String sStr)
@@ -310,9 +474,9 @@ public final class StringHelper
    *        The String to parse.
    * @param aDefault
    *        The default value to be returned if the passed string could not be
-   *        converted to an Integer.
+   *        converted to a valid value.
    * @return <code>aDefault</code> if the string does not represent a valid
-   *         integer.
+   *         value.
    */
   @Nullable
   public static Integer parseIntObj (@Nullable final String sStr, @Nullable final Integer aDefault)
@@ -329,9 +493,9 @@ public final class StringHelper
    *        The radix to use.
    * @param aDefault
    *        The default value to be returned if the passed string could not be
-   *        converted to an Integer.
+   *        converted to a valid value.
    * @return <code>aDefault</code> if the string does not represent a valid
-   *         integer.
+   *         value.
    */
   @Nullable
   public static Integer parseIntObj (@Nullable final String sStr, final int nRadix, @Nullable final Integer aDefault)
@@ -355,8 +519,8 @@ public final class StringHelper
    *        The object to parse.
    * @param nDefault
    *        The default value to be returned if the passed object could not be
-   *        converted to a long.
-   * @return The default value if the object does not represent a valid long.
+   *        converted to a valid value.
+   * @return The default value if the object does not represent a valid value.
    */
   public static long parseLong (@Nullable final Object aObject, final long nDefault)
   {
@@ -372,8 +536,8 @@ public final class StringHelper
    *        The radix to use.
    * @param nDefault
    *        The default value to be returned if the passed object could not be
-   *        converted to a long.
-   * @return The default value if the object does not represent a valid long.
+   *        converted to a valid value.
+   * @return The default value if the object does not represent a valid value.
    */
   public static long parseLong (@Nullable final Object aObject, final int nRadix, final long nDefault)
   {
@@ -391,8 +555,8 @@ public final class StringHelper
    *        The string to parse.
    * @param nDefault
    *        The default value to be returned if the passed object could not be
-   *        converted to a valid long value.
-   * @return The default if the string does not represent a valid long.
+   *        converted to a valid value.
+   * @return The default if the string does not represent a valid value.
    */
   public static long parseLong (@Nullable final String sStr, final long nDefault)
   {
@@ -408,8 +572,8 @@ public final class StringHelper
    *        The radix to use.
    * @param nDefault
    *        The default value to be returned if the passed object could not be
-   *        converted to a valid long value.
-   * @return The default if the string does not represent a valid long.
+   *        converted to a valid value.
+   * @return The default if the string does not represent a valid value.
    */
   public static long parseLong (@Nullable final String sStr, final int nRadix, final long nDefault)
   {
@@ -452,7 +616,7 @@ public final class StringHelper
    * 
    * @param sStr
    *        The string to parse.
-   * @return <code>null</code> if the string does not represent a valid long.
+   * @return <code>null</code> if the string does not represent a valid value.
    */
   @Nullable
   public static Long parseLongObj (@Nullable final String sStr)
@@ -490,8 +654,8 @@ public final class StringHelper
    *        The object to parse.
    * @param dDefault
    *        The default value to be returned if the passed object could not be
-   *        converted to a double.
-   * @return The default value if the object does not represent a valid double.
+   *        converted to a valid value.
+   * @return The default value if the object does not represent a valid value.
    */
   public static double parseDouble (@Nullable final Object aObject, final double dDefault)
   {
@@ -509,8 +673,8 @@ public final class StringHelper
    *        The string to parse.
    * @param dDefault
    *        The default value to be returned if the passed object could not be
-   *        converted to a double.
-   * @return The default value if the string does not represent a valid double.
+   *        converted to a valid value.
+   * @return The default value if the string does not represent a valid value.
    */
   public static double parseDouble (@Nullable final String sStr, final double dDefault)
   {
@@ -563,8 +727,8 @@ public final class StringHelper
    *        The object to parse.
    * @param fDefault
    *        The default value to be returned if the passed object could not be
-   *        converted to a float.
-   * @return The default value if the object does not represent a valid double.
+   *        converted to a valid value.
+   * @return The default value if the object does not represent a valid value.
    */
   public static float parseFloat (@Nullable final Object aObject, final float fDefault)
   {
@@ -582,8 +746,8 @@ public final class StringHelper
    *        The string to parse.
    * @param fDefault
    *        The default value to be returned if the passed object could not be
-   *        converted to a float.
-   * @return The default value if the string does not represent a valid float.
+   *        converted to a valid value.
+   * @return The default value if the string does not represent a valid value.
    */
   public static float parseFloat (@Nullable final String sStr, final float fDefault)
   {
@@ -633,8 +797,7 @@ public final class StringHelper
    * 
    * @param sStr
    *        The String to parse.
-   * @return <code>null</code> if the string does not represent a valid big
-   *         integer.
+   * @return <code>null</code> if the string does not represent a valid value.
    */
   @Nullable
   public static BigInteger parseBigInteger (@Nullable final String sStr)
@@ -649,8 +812,7 @@ public final class StringHelper
    *        The String to parse.
    * @param nRadix
    *        The radix to use.
-   * @return <code>null</code> if the string does not represent a valid big
-   *         integer.
+   * @return <code>null</code> if the string does not represent a valid value.
    */
   @Nullable
   public static BigInteger parseBigInteger (@Nullable final String sStr, @Nonnegative final int nRadix)
@@ -666,9 +828,9 @@ public final class StringHelper
    *        The String to parse.
    * @param aDefault
    *        The default value to be returned if the passed string could not be
-   *        converted to an Integer.
-   * @return <code>aDefault</code> if the string does not represent a valid big
-   *         integer.
+   *        converted to a valid value.
+   * @return <code>aDefault</code> if the string does not represent a valid
+   *         value.
    */
   @Nullable
   public static BigInteger parseBigInteger (@Nullable final String sStr, @Nullable final BigInteger aDefault)
@@ -685,9 +847,9 @@ public final class StringHelper
    *        The radix to use.
    * @param aDefault
    *        The default value to be returned if the passed string could not be
-   *        converted to an Integer.
-   * @return <code>aDefault</code> if the string does not represent a valid big
-   *         integer.
+   *        converted to a valid value.
+   * @return <code>aDefault</code> if the string does not represent a valid
+   *         value.
    */
   @Nullable
   public static BigInteger parseBigInteger (@Nullable final String sStr,
@@ -711,8 +873,7 @@ public final class StringHelper
    * 
    * @param sStr
    *        The String to parse.
-   * @return <code>null</code> if the string does not represent a valid big
-   *         decimal.
+   * @return <code>null</code> if the string does not represent a valid value.
    */
   @Nullable
   public static BigDecimal parseBigDecimal (@Nullable final String sStr)
@@ -727,9 +888,9 @@ public final class StringHelper
    *        The String to parse.
    * @param aDefault
    *        The default value to be returned if the passed string could not be
-   *        converted to an Integer.
-   * @return <code>aDefault</code> if the string does not represent a valid big
-   *         decimal.
+   *        converted to a valid value.
+   * @return <code>aDefault</code> if the string does not represent a valid
+   *         value.
    */
   @Nullable
   public static BigDecimal parseBigDecimal (@Nullable final String sStr, @Nullable final BigDecimal aDefault)
@@ -752,7 +913,7 @@ public final class StringHelper
    * 
    * @param sStr
    *        the string to check
-   * @return <code>true</code> if the value can be converted to an int value
+   * @return <code>true</code> if the value can be converted to a valid value
    */
   public static boolean isInt (@Nullable final String sStr)
   {
@@ -775,7 +936,7 @@ public final class StringHelper
    * 
    * @param sStr
    *        the string to check
-   * @return <code>true</code> if the value can be converted to a long value
+   * @return <code>true</code> if the value can be converted to a valid value
    */
   public static boolean isLong (@Nullable final String sStr)
   {
@@ -798,8 +959,7 @@ public final class StringHelper
    * 
    * @param sStr
    *        the string to check
-   * @return <code>true</code> if the value can be converted to an unsigned long
-   *         value
+   * @return <code>true</code> if the value can be converted to a valid value
    */
   public static boolean isUnsignedInt (@Nullable final String sStr)
   {
@@ -822,8 +982,7 @@ public final class StringHelper
    * 
    * @param sStr
    *        the string to check
-   * @return <code>true</code> if the value can be converted to an unsigned long
-   *         value
+   * @return <code>true</code> if the value can be converted to a valid value
    */
   public static boolean isUnsignedLong (@Nullable final String sStr)
   {
@@ -846,7 +1005,7 @@ public final class StringHelper
    * 
    * @param sStr
    *        the string to check
-   * @return <code>true</code> if the value can be converted to a double value
+   * @return <code>true</code> if the value can be converted to a valid value
    */
   public static boolean isDouble (@Nullable final String sStr)
   {
@@ -875,7 +1034,7 @@ public final class StringHelper
    */
   public static boolean hasNoTextAfterTrim (@Nullable final String s)
   {
-    return hasNoText (trim (s));
+    return s == null || s.trim ().length () == 0;
   }
 
   /**
@@ -901,7 +1060,7 @@ public final class StringHelper
    */
   public static boolean hasTextAfterTrim (@Nullable final String s)
   {
-    return hasText (trim (s));
+    return s != null && s.trim ().length () > 0;
   }
 
   @Nullable
