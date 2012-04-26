@@ -141,7 +141,7 @@ public final class LocaleFormatterTest extends AbstractPhlocTestCase
     assertEquals (CGlobal.BIGDEC_MINUS_ONE,
                   LocaleFormatter.parseBigDecimal ("... und denken", L_EN, CGlobal.BIGDEC_MINUS_ONE));
     final ChoiceFormat aCF = new ChoiceFormat ("-1#negative|0#zero|1.0#one");
-    assertEquals (BigDecimal.ZERO, LocaleFormatter.parseBigDecimal ("zero", aCF, CGlobal.BIGDEC_MINUS_ONE));
+    assertEquals (BigDecimal.valueOf (0.0), LocaleFormatter.parseBigDecimal ("zero", aCF, CGlobal.BIGDEC_MINUS_ONE));
 
     try
     {
