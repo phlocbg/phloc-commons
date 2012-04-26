@@ -99,7 +99,7 @@ public final class CombinationGeneratorFlexibleTest extends AbstractCombinationG
     // Takes approx. 490ms on PH main machine (2012-01-21)
     // With one element more the time is at approx. 1500ms
     final Set <List <String>> aResult = CombinationGeneratorFlexible.getCombinations (HUGE_LIST, true);
-    s_aLogger.info ("Regular: " + aSW.stopAndGetMillis () + " ms with " + aResult.size () + " elements");
+    m_aLogger.info ("Regular: " + aSW.stopAndGetMillis () + " ms with " + aResult.size () + " elements");
   }
 
   @Ignore ("Simply wrong assumption")

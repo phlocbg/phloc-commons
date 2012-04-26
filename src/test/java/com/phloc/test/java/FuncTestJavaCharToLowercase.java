@@ -36,7 +36,7 @@ public final class FuncTestJavaCharToLowercase extends AbstractPhlocTestCase
 
       if (cUp != c)
         if (false)
-          s_aLogger.info ("c(" + (char) c + ") ==> (" + cUp + ")");
+          m_aLogger.info ("c(" + (char) c + ") ==> (" + cUp + ")");
     }
   }
 }

@@ -42,7 +42,7 @@ public final class SystemPropertiesTest extends AbstractPhlocTestCase
   {
     for (final Map.Entry <String, String> aEntry : ContainerHelper.getSortedByKey (SystemProperties.getAllProperties ())
                                                                   .entrySet ())
-      s_aLogger.info ("[all] " + aEntry.getKey () + "=" + aEntry.getValue ());
+      m_aLogger.info ("[all] " + aEntry.getKey () + "=" + aEntry.getValue ());
 
     for (final String sKey : SystemProperties.getAllPropertyNames ())
       assertNotNull (SystemProperties.getPropertyValue (sKey));
