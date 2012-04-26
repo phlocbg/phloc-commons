@@ -21,46 +21,63 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.ICloneable;
-import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * Object wrapper around a long so that it can be passed a final object but is
+ * Object wrapper around an short so that it can be passed a final object but is
  * mutable.
  * 
  * @author philip
  */
 @NotThreadSafe
-public final class MutableDouble implements Comparable <MutableDouble>, ICloneable <MutableDouble>
+public final class MutableShort implements Comparable <MutableShort>, ICloneable <MutableShort>
 {
-  public static final double DEFAULT_VALUE = 0;
+  public static final short DEFAULT_VALUE = 0;
 
-  private double m_dValue;
+  private short m_nValue;
 
   /**
-   * Initialize with default value {@value #DEFAULT_VALUE}
+   * Initialize with default value {@value #DEFAULT_VALUE}.
    */
-  public MutableDouble ()
+  public MutableShort ()
   {
     this (DEFAULT_VALUE);
   }
 
-  public MutableDouble (final double dValue)
+  /**
+   * Initialize with a certain int value. If the value does not fit into a
+   * short, the value is cut!
+   * 
+   * @param nValue
+   *        The value to be used.
+   */
+  public MutableShort (final int nValue)
   {
-    m_dValue = dValue;
+    this ((short) nValue);
   }
 
-  public double doubleValue ()
+  /**
+   * Initialize with a certain value.
+   * 
+   * @param nValue
+   *        The value to be used.
+   */
+  public MutableShort (final short nValue)
   {
-    return m_dValue;
+    m_nValue = nValue;
+  }
+
+  public short shortValue ()
+  {
+    return m_nValue;
   }
 
   @Nonnull
-  public Double getAsDouble ()
+  public Short getAsShort ()
   {
-    return Double.valueOf (m_dValue);
+    return Short.valueOf (m_nValue);
   }
 
   /**
@@ -68,75 +85,86 @@ public final class MutableDouble implements Comparable <MutableDouble>, ICloneab
    * 
    * @return The by 1 incremented value.
    */
-  public double inc ()
+  public int inc ()
   {
     return inc (1);
   }
 
-  public double inc (final double dDelta)
+  public int inc (final int nDelta)
   {
-    m_dValue += dDelta;
-    return m_dValue;
+    m_nValue += nDelta;
+    return m_nValue;
   }
 
-  public double dec ()
+  public int dec ()
   {
     return inc (-1);
   }
 
-  public double dec (final double nDelta)
+  public int dec (final int nDelta)
   {
     return inc (-nDelta);
   }
 
   @Nonnull
-  public EChange set (final double dValue)
+  public EChange set (final int nValue)
   {
-    if (EqualsUtils.equals (dValue, m_dValue))
+    return set ((short) nValue);
+  }
+
+  @Nonnull
+  public EChange set (final short nValue)
+  {
+    if (m_nValue == nValue)
       return EChange.UNCHANGED;
-    m_dValue = dValue;
+    m_nValue = nValue;
     return EChange.CHANGED;
   }
 
   public boolean is0 ()
   {
-    return EqualsUtils.equals (m_dValue, 0);
+    return m_nValue == 0;
   }
 
   public boolean isNot0 ()
   {
-    return !is0 ();
+    return m_nValue != 0;
   }
 
   public boolean isSmaller0 ()
   {
-    return Double.compare (m_dValue, 0) < 0;
+    return m_nValue < 0;
   }
 
   public boolean isSmallerOrEqual0 ()
   {
-    return Double.compare (m_dValue, 0) <= 0;
+    return m_nValue <= 0;
   }
 
   public boolean isGreater0 ()
   {
-    return Double.compare (m_dValue, 0) > 0;
+    return m_nValue > 0;
   }
 
   public boolean isGreaterOrEqual0 ()
   {
-    return Double.compare (m_dValue, 0) >= 0;
+    return m_nValue >= 0;
   }
 
-  public int compareTo (final MutableDouble rhs)
+  public boolean isEven ()
   {
-    return Double.compare (m_dValue, rhs.m_dValue);
+    return (m_nValue % 2) == 0;
+  }
+
+  public int compareTo (final MutableShort rhs)
+  {
+    return m_nValue == rhs.m_nValue ? 0 : m_nValue < rhs.m_nValue ? -1 : +1;
   }
 
   @Nonnull
-  public MutableDouble getClone ()
+  public MutableShort getClone ()
   {
-    return new MutableDouble (m_dValue);
+    return new MutableShort (m_nValue);
   }
 
   @Override
@@ -144,21 +172,21 @@ public final class MutableDouble implements Comparable <MutableDouble>, ICloneab
   {
     if (o == this)
       return true;
-    if (!(o instanceof MutableDouble))
+    if (!(o instanceof MutableShort))
       return false;
-    final MutableDouble rhs = (MutableDouble) o;
-    return EqualsUtils.equals (m_dValue, rhs.m_dValue);
+    final MutableShort rhs = (MutableShort) o;
+    return m_nValue == rhs.m_nValue;
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_dValue).getHashCode ();
+    return new HashCodeGenerator (this).append (m_nValue).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("value", m_dValue).toString ();
+    return new ToStringGenerator (this).append ("value", m_nValue).toString ();
   }
 }
