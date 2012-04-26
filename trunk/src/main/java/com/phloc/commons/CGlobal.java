@@ -189,10 +189,10 @@ public final class CGlobal
   public static final BigDecimal BIGDEC_MIN_LONG = new BigDecimal (Long.toString (Long.MIN_VALUE));
 
   /** The BigDecimal for the largest possible double value */
-  public static final BigDecimal BIGDEC_MAX_DOUBLE = new BigDecimal (Double.MAX_VALUE);
+  public static final BigDecimal BIGDEC_MAX_DOUBLE = BigDecimal.valueOf (Double.MAX_VALUE);
 
   /** The BigDecimal for the smallest possible double value */
-  public static final BigDecimal BIGDEC_MIN_DOUBLE = new BigDecimal (Double.MIN_VALUE);
+  public static final BigDecimal BIGDEC_MIN_DOUBLE = BigDecimal.valueOf (Double.MIN_VALUE);
 
   /** The BigDecimal representation of -1 */
   public static final BigDecimal BIGDEC_MINUS_ONE = new BigDecimal ("-1");

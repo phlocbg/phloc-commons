@@ -232,7 +232,7 @@ public final class LocaleFormatter
       // Unsafe version!
       final Number aNum = parse (sStr, aNF);
       if (aNum != null)
-        ret = new BigDecimal (aNum.doubleValue ());
+        ret = BigDecimal.valueOf (aNum.doubleValue ());
     }
     return ret == null ? aDefault : ret;
   }
