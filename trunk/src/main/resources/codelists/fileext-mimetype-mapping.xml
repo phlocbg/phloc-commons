@@ -19,7 +19,7 @@
 
 -->
 <!-- 
-Based on freedesktop.org list v0.91
+Based on freedesktop.org list v1.0
 Source: http://www.w3schools.com/media/media_mimeref.asp
 Source: http://www.mimetype.org/ 
 Source: http://www.freedesktop.org/wiki/Software/shared-mime-info
@@ -864,4 +864,8 @@ Source: http://www.freedesktop.org/wiki/Software/shared-mime-info
   <map key="vtt" value="text/vtt" />
   <map key="wsgi" value="text/x-python" />
   <map key="wwf" value="application/x-wwf" />
+  <map key="meta4" value="application/metalink4+xml" />
+  <map key="vsd" value="application/vnd.visio" />
+  <map key="vss" value="application/vnd.visio" />
+  <map key="vsw" value="application/vnd.visio" />
 </mapping>
