@@ -1903,6 +1903,23 @@ public final class ContainerHelper
   }
 
   /**
+   * Create a new stack from the given collection.
+   * 
+   * @param <ELEMENTTYPE>
+   *        The type of elements contained in the stack.
+   * @param aValues
+   *        The values that are to be pushed on the stack. The last element will
+   *        be the top element on the stack. May not be <code>null</code> .
+   * @return A non-<code>null</code> stack object.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE> NonBlockingStack <ELEMENTTYPE> newStack (@Nullable final Collection <? extends ELEMENTTYPE> aValues)
+  {
+    return new NonBlockingStack <ELEMENTTYPE> (aValues);
+  }
+
+  /**
    * Convert the given iterator to a sorted list.
    * 
    * @param <ELEMENTTYPE>
