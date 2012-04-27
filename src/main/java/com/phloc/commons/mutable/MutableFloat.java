@@ -27,40 +27,40 @@ import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * Object wrapper around a double so that it can be passed a final object but is
+ * Object wrapper around a float so that it can be passed a final object but is
  * mutable.
  * 
  * @author philip
  */
 @NotThreadSafe
-public final class MutableDouble implements Comparable <MutableDouble>, ICloneable <MutableDouble>
+public final class MutableFloat implements Comparable <MutableFloat>, ICloneable <MutableFloat>
 {
-  public static final double DEFAULT_VALUE = 0;
+  public static final float DEFAULT_VALUE = 0.0f;
 
-  private double m_dValue;
+  private float m_fValue;
 
   /**
    * Initialize with default value {@value #DEFAULT_VALUE}
    */
-  public MutableDouble ()
+  public MutableFloat ()
   {
     this (DEFAULT_VALUE);
   }
 
-  public MutableDouble (final double dValue)
+  public MutableFloat (final float fValue)
   {
-    m_dValue = dValue;
+    m_fValue = fValue;
   }
 
-  public double doubleValue ()
+  public float floatValue ()
   {
-    return m_dValue;
+    return m_fValue;
   }
 
   @Nonnull
-  public Double getAsDouble ()
+  public Float getAsFloat ()
   {
-    return Double.valueOf (m_dValue);
+    return Float.valueOf (m_fValue);
   }
 
   /**
@@ -68,39 +68,39 @@ public final class MutableDouble implements Comparable <MutableDouble>, ICloneab
    * 
    * @return The by 1 incremented value.
    */
-  public double inc ()
+  public float inc ()
   {
-    return inc (1);
+    return inc (1f);
   }
 
-  public double inc (final double dDelta)
+  public float inc (final float fDelta)
   {
-    m_dValue += dDelta;
-    return m_dValue;
+    m_fValue += fDelta;
+    return m_fValue;
   }
 
-  public double dec ()
+  public float dec ()
   {
-    return inc (-1);
+    return inc (-1f);
   }
 
-  public double dec (final double dDelta)
+  public float dec (final float fDelta)
   {
-    return inc (-dDelta);
+    return inc (-fDelta);
   }
 
   @Nonnull
-  public EChange set (final double dValue)
+  public EChange set (final float fValue)
   {
-    if (EqualsUtils.equals (dValue, m_dValue))
+    if (EqualsUtils.equals (fValue, m_fValue))
       return EChange.UNCHANGED;
-    m_dValue = dValue;
+    m_fValue = fValue;
     return EChange.CHANGED;
   }
 
   public boolean is0 ()
   {
-    return EqualsUtils.equals (m_dValue, 0);
+    return EqualsUtils.equals (m_fValue, 0f);
   }
 
   public boolean isNot0 ()
@@ -110,33 +110,33 @@ public final class MutableDouble implements Comparable <MutableDouble>, ICloneab
 
   public boolean isSmaller0 ()
   {
-    return Double.compare (m_dValue, 0) < 0;
+    return Double.compare (m_fValue, 0f) < 0;
   }
 
   public boolean isSmallerOrEqual0 ()
   {
-    return Double.compare (m_dValue, 0) <= 0;
+    return Double.compare (m_fValue, 0f) <= 0;
   }
 
   public boolean isGreater0 ()
   {
-    return Double.compare (m_dValue, 0) > 0;
+    return Double.compare (m_fValue, 0f) > 0;
   }
 
   public boolean isGreaterOrEqual0 ()
   {
-    return Double.compare (m_dValue, 0) >= 0;
+    return Double.compare (m_fValue, 0f) >= 0;
   }
 
-  public int compareTo (final MutableDouble rhs)
+  public int compareTo (final MutableFloat rhs)
   {
-    return Double.compare (m_dValue, rhs.m_dValue);
+    return Double.compare (m_fValue, rhs.m_fValue);
   }
 
   @Nonnull
-  public MutableDouble getClone ()
+  public MutableFloat getClone ()
   {
-    return new MutableDouble (m_dValue);
+    return new MutableFloat (m_fValue);
   }
 
   @Override
@@ -144,21 +144,21 @@ public final class MutableDouble implements Comparable <MutableDouble>, ICloneab
   {
     if (o == this)
       return true;
-    if (!(o instanceof MutableDouble))
+    if (!(o instanceof MutableFloat))
       return false;
-    final MutableDouble rhs = (MutableDouble) o;
-    return EqualsUtils.equals (m_dValue, rhs.m_dValue);
+    final MutableFloat rhs = (MutableFloat) o;
+    return EqualsUtils.equals (m_fValue, rhs.m_fValue);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_dValue).getHashCode ();
+    return new HashCodeGenerator (this).append (m_fValue).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("value", m_dValue).toString ();
+    return new ToStringGenerator (this).append ("value", m_fValue).toString ();
   }
 }

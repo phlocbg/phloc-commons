@@ -26,58 +26,58 @@ import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * Object wrapper around a short so that it can be passed a final object but is
+ * Object wrapper around a char so that it can be passed a final object but is
  * mutable.
  * 
  * @author philip
  */
 @NotThreadSafe
-public final class MutableShort implements Comparable <MutableShort>, ICloneable <MutableShort>
+public final class MutableChar implements Comparable <MutableChar>, ICloneable <MutableChar>
 {
-  public static final short DEFAULT_VALUE = 0;
+  public static final char DEFAULT_VALUE = 0;
 
-  private short m_nValue;
+  private char m_cValue;
 
   /**
    * Initialize with default value {@value #DEFAULT_VALUE}.
    */
-  public MutableShort ()
+  public MutableChar ()
   {
     this (DEFAULT_VALUE);
   }
 
   /**
-   * Initialize with a certain int value. If the value does not fit into a
-   * short, the value is cut!
+   * Initialize with a certain int value. If the value does not fit into a char,
+   * the value is cut!
    * 
-   * @param nValue
+   * @param cValue
    *        The value to be used.
    */
-  public MutableShort (final int nValue)
+  public MutableChar (final int cValue)
   {
-    this ((short) nValue);
+    this ((char) cValue);
   }
 
   /**
    * Initialize with a certain value.
    * 
-   * @param nValue
+   * @param cValue
    *        The value to be used.
    */
-  public MutableShort (final short nValue)
+  public MutableChar (final char cValue)
   {
-    m_nValue = nValue;
+    m_cValue = cValue;
   }
 
-  public short shortValue ()
+  public char charValue ()
   {
-    return m_nValue;
+    return m_cValue;
   }
 
   @Nonnull
-  public Short getAsShort ()
+  public Character getAsCharacter ()
   {
-    return Short.valueOf (m_nValue);
+    return Character.valueOf (m_cValue);
   }
 
   /**
@@ -92,8 +92,8 @@ public final class MutableShort implements Comparable <MutableShort>, ICloneable
 
   public int inc (final int nDelta)
   {
-    m_nValue += nDelta;
-    return m_nValue;
+    m_cValue += nDelta;
+    return m_cValue;
   }
 
   public int dec ()
@@ -107,64 +107,64 @@ public final class MutableShort implements Comparable <MutableShort>, ICloneable
   }
 
   @Nonnull
-  public EChange set (final int nValue)
+  public EChange set (final int cValue)
   {
-    return set ((short) nValue);
+    return set ((char) cValue);
   }
 
   @Nonnull
-  public EChange set (final short nValue)
+  public EChange set (final char cValue)
   {
-    if (m_nValue == nValue)
+    if (m_cValue == cValue)
       return EChange.UNCHANGED;
-    m_nValue = nValue;
+    m_cValue = cValue;
     return EChange.CHANGED;
   }
 
   public boolean is0 ()
   {
-    return m_nValue == 0;
+    return m_cValue == 0;
   }
 
   public boolean isNot0 ()
   {
-    return m_nValue != 0;
+    return m_cValue != 0;
   }
 
   public boolean isSmaller0 ()
   {
-    return m_nValue < 0;
+    return m_cValue < 0;
   }
 
   public boolean isSmallerOrEqual0 ()
   {
-    return m_nValue <= 0;
+    return m_cValue <= 0;
   }
 
   public boolean isGreater0 ()
   {
-    return m_nValue > 0;
+    return m_cValue > 0;
   }
 
   public boolean isGreaterOrEqual0 ()
   {
-    return m_nValue >= 0;
+    return m_cValue >= 0;
   }
 
   public boolean isEven ()
   {
-    return (m_nValue % 2) == 0;
+    return (m_cValue % 2) == 0;
   }
 
-  public int compareTo (final MutableShort rhs)
+  public int compareTo (final MutableChar rhs)
   {
-    return m_nValue == rhs.m_nValue ? 0 : m_nValue < rhs.m_nValue ? -1 : +1;
+    return m_cValue == rhs.m_cValue ? 0 : m_cValue < rhs.m_cValue ? -1 : +1;
   }
 
   @Nonnull
-  public MutableShort getClone ()
+  public MutableChar getClone ()
   {
-    return new MutableShort (m_nValue);
+    return new MutableChar (m_cValue);
   }
 
   @Override
@@ -172,21 +172,21 @@ public final class MutableShort implements Comparable <MutableShort>, ICloneable
   {
     if (o == this)
       return true;
-    if (!(o instanceof MutableShort))
+    if (!(o instanceof MutableChar))
       return false;
-    final MutableShort rhs = (MutableShort) o;
-    return m_nValue == rhs.m_nValue;
+    final MutableChar rhs = (MutableChar) o;
+    return m_cValue == rhs.m_cValue;
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_nValue).getHashCode ();
+    return new HashCodeGenerator (this).append (m_cValue).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("value", m_nValue).toString ();
+    return new ToStringGenerator (this).append ("value", m_cValue).toString ();
   }
 }
