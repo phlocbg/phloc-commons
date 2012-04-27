@@ -20,6 +20,7 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <release date="2012-04-27" version="3.5.1" />
   <entry date="2012-04-27" category="tech" action="update">
     <change>
       <text locale="en">Updated to freedesktop.org shared MIME type list v1.0</text>
