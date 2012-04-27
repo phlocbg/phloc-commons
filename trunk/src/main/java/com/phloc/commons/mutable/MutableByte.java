@@ -26,7 +26,7 @@ import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * Object wrapper around an byte so that it can be passed a final object but is
+ * Object wrapper around a byte so that it can be passed a final object but is
  * mutable.
  * 
  * @author philip
