@@ -32,7 +32,7 @@ import com.phloc.commons.state.EChange;
  * 
  * @author philip
  */
-public interface IMicroElement extends IMicroNode
+public interface IMicroElement extends IMicroNodeWithChildren
 {
   /**
    * @return <code>true</code> if this element has at least one attribute,

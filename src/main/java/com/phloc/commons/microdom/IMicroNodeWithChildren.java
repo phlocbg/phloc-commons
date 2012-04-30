@@ -20,13 +20,13 @@ package com.phloc.commons.microdom;
 import javax.annotation.Nonnull;
 
 /**
- * This interface is just a hull for a node that has no properties itself but
- * contains children. This is a node representing a list of nodes.
+ * A special marker interface that is implemented by classes, that really
+ * support having children!
  * 
  * @author philip
  */
-public interface IMicroContainer extends IMicroNodeWithChildren
+public interface IMicroNodeWithChildren extends IMicroNode
 {
   @Nonnull
-  IMicroContainer getClone ();
+  IMicroNodeWithChildren getClone ();
 }
