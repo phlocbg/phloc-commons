@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
  * 
  * @author philip
  */
-public interface IMicroDocument extends IMicroNode
+public interface IMicroDocument extends IMicroNodeWithChildren
 {
   /**
    * @return <code>true</code> if the document is standalone (having neither DTD
