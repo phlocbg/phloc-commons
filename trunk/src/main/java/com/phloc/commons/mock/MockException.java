@@ -22,7 +22,7 @@ package com.phloc.commons.mock;
  * 
  * @author philip
  */
-public class MockException extends Exception
+public class MockException extends Exception implements IMockException
 {
   public MockException ()
   {}
