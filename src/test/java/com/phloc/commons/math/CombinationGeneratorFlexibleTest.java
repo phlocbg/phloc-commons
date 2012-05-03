@@ -40,7 +40,7 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
  * 
  * @author philip
  */
-public final class CombinationGeneratorFlexibleTest extends AbstractCombinationGeneratorTest
+public final class CombinationGeneratorFlexibleTest extends AbstractCombinationGeneratorTestCase
 {
   @Test
   @SuppressWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
