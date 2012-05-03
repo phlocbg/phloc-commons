@@ -27,7 +27,7 @@ import com.phloc.commons.mock.AbstractPhlocTestCase;
  * 
  * @author philip
  */
-public abstract class AbstractCombinationGeneratorTest extends AbstractPhlocTestCase
+public abstract class AbstractCombinationGeneratorTestCase extends AbstractPhlocTestCase
 {
   protected static final List <String> HUGE_LIST = ContainerHelper.newUnmodifiableList ("a",
                                                                                         "b",

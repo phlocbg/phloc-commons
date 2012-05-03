@@ -39,7 +39,7 @@ import com.phloc.commons.mock.AbstractPhlocTestCase;
  * 
  * @author philip
  */
-public class XMLResourceBundleTest extends AbstractPhlocTestCase
+public final class XMLResourceBundleTest extends AbstractPhlocTestCase
 {
   @Test
   public void testAll () throws IOException
