@@ -32,8 +32,10 @@ import org.xml.sax.InputSource;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.io.IInputStreamProvider;
-import com.phloc.commons.io.file.FileUtils;
+import com.phloc.commons.io.IReadableResource;
+import com.phloc.commons.io.resource.FileSystemResource;
 import com.phloc.commons.microdom.IMicroDocument;
+import com.phloc.commons.xml.sax.ReadableResourceSAXInputSource;
 import com.phloc.commons.xml.serialize.XMLReader;
 
 /**
@@ -122,7 +124,22 @@ public final class MicroReader
   {
     if (aFile == null)
       return null;
-    return readMicroXML (FileUtils.getInputStream (aFile), aSpecialEntityResolver);
+    return readMicroXML (new FileSystemResource (aFile), aSpecialEntityResolver);
+  }
+
+  @Nullable
+  public static IMicroDocument readMicroXML (@Nullable final IReadableResource aRes)
+  {
+    return readMicroXML (aRes, null);
+  }
+
+  @Nullable
+  public static IMicroDocument readMicroXML (@Nullable final IReadableResource aRes,
+                                             @Nullable final EntityResolver aSpecialEntityResolver)
+  {
+    if (aRes == null)
+      return null;
+    return readMicroXML (new ReadableResourceSAXInputSource (aRes), aSpecialEntityResolver);
   }
 
   @Nullable
