@@ -91,6 +91,12 @@ public class IterableIterator <ELEMENTTYPE> implements IIterableIterator <ELEMEN
   }
 
   @Nonnull
+  public static <ELEMENTTYPE> IIterableIterator <ELEMENTTYPE> create (@Nonnull final ELEMENTTYPE [] aCont)
+  {
+    return new IterableIterator <ELEMENTTYPE> (aCont);
+  }
+
+  @Nonnull
   public static <ELEMENTTYPE> IIterableIterator <ELEMENTTYPE> create (@Nonnull final Iterable <ELEMENTTYPE> aCont)
   {
     return new IterableIterator <ELEMENTTYPE> (aCont);
@@ -100,11 +106,5 @@ public class IterableIterator <ELEMENTTYPE> implements IIterableIterator <ELEMEN
   public static <ELEMENTTYPE> IIterableIterator <ELEMENTTYPE> create (@Nonnull final Iterator <ELEMENTTYPE> aIter)
   {
     return new IterableIterator <ELEMENTTYPE> (aIter);
-  }
-
-  @Nonnull
-  public static <ELEMENTTYPE> IIterableIterator <ELEMENTTYPE> create (@Nonnull final ELEMENTTYPE [] aCont)
-  {
-    return new IterableIterator <ELEMENTTYPE> (aCont);
   }
 }

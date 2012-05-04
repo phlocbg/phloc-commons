@@ -27,6 +27,13 @@ import javax.annotation.Nullable;
 import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.string.ToStringGenerator;
 
+/**
+ * A reverse iterator for an existing list
+ * 
+ * @author philip
+ * @param <ELEMENTTYPE>
+ *        The element type to be iterated
+ */
 public final class ReverseListIterator <ELEMENTTYPE> implements Iterator <ELEMENTTYPE>
 {
   private final List <ELEMENTTYPE> m_aList;
@@ -34,6 +41,9 @@ public final class ReverseListIterator <ELEMENTTYPE> implements Iterator <ELEMEN
 
   public ReverseListIterator (@Nonnull final List <ELEMENTTYPE> aList)
   {
+    if (aList == null)
+      throw new NullPointerException ("list");
+
     m_aList = aList;
     m_nIndex = aList.size () - 1;
   }
