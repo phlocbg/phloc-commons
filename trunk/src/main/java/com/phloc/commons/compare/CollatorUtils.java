@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.cache.AbstractNotifyingCache;
+import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.system.SystemHelper;
 
 /**
@@ -91,7 +92,7 @@ public final class CollatorUtils
           return c;
         }
 
-        final String sNewRules = sRules.replace ("<'.'<", "<' '<'.'<");
+        final String sNewRules = StringHelper.replaceAll (sRules, "<'.'<", "<' '<'.'<");
         final RuleBasedCollator ret = new RuleBasedCollator (sNewRules);
         ret.setStrength (Collator.TERTIARY);
         ret.setDecomposition (Collator.FULL_DECOMPOSITION);
