@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.jaxb.validation;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.xml.bind.ValidationEventHandler;
 
@@ -36,8 +35,9 @@ public interface IValidationEventHandlerFactory extends
    * 
    * @param aOldEventHandler
    *        The previous event handler that optionally may be encapsulated.
-   * @return The created validation event handler and never <code>null</code>.
+   * @return The created validation event handler. Maybe <code>null</code> to
+   *         indicate that the default event handler should be used.
    */
-  @Nonnull
+  @Nullable
   ValidationEventHandler create (@Nullable ValidationEventHandler aOldEventHandler);
 }
