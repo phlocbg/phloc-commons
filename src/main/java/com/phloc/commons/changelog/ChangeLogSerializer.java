@@ -91,7 +91,7 @@ public final class ChangeLogSerializer
 
   /**
    * Read the change log resource specified by the input stream provider using
-   * the default logging error handler.
+   * the default logging callback.
    * 
    * @param aISP
    *        The ISP to read from. Maybe <code>null</code> resulting in a
