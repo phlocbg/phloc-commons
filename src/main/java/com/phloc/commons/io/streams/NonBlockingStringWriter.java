@@ -250,4 +250,16 @@ public class NonBlockingStringWriter extends Writer
   {
     return m_aSB.toString ();
   }
+
+  /**
+   * Return the buffer's current value as a string.
+   */
+  @Nonnull
+  public char [] toCharArray ()
+  {
+    final int nChars = m_aSB.length ();
+    final char [] ret = new char [nChars];
+    m_aSB.getChars (0, nChars, ret, 0);
+    return ret;
+  }
 }

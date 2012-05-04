@@ -627,7 +627,7 @@ public final class StreamUtils
   }
 
   @Nonnull
-  private static NonBlockingStringWriter _getCopy (@Nonnull @WillClose final Reader aReader)
+  public static NonBlockingStringWriter getCopy (@Nonnull @WillClose final Reader aReader)
   {
     final NonBlockingStringWriter aWriter = new NonBlockingStringWriter (DEFAULT_BUFSIZE);
     copyReaderToWriterAndCloseWriter (aReader, aWriter);
@@ -648,7 +648,7 @@ public final class StreamUtils
     if (aReader == null)
       return null;
 
-    return _getCopy (aReader).toString ().toCharArray ();
+    return getCopy (aReader).toCharArray ();
   }
 
   /**
@@ -665,7 +665,7 @@ public final class StreamUtils
     if (aReader == null)
       return null;
 
-    return _getCopy (aReader).toString ();
+    return getCopy (aReader).toString ();
   }
 
   /**

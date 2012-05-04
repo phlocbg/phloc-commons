@@ -20,6 +20,7 @@ package com.phloc.commons.math;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
@@ -183,5 +184,47 @@ public final class MathHelper
     for (final double d : aValues)
       ret = Math.min (ret, d);
     return ret;
+  }
+
+  /**
+   * This is a fix for <code>Math.abs</code> as it would return
+   * {@link Integer#MIN_VALUE} for {@link Integer#MIN_VALUE} which is very
+   * unexpected. Instead an exception is thrown.
+   * 
+   * @param nValue
+   *        Input value
+   * @return The output value
+   * @throws IllegalArgumentException
+   *         if the input value is {@link Integer#MIN_VALUE}
+   */
+  @Nonnegative
+  public static int abs (final int nValue)
+  {
+    // As Integer.MIN_VALUE is -2^31 and Integer.MAX_VALUE is 2^31-1 it means
+    // that there is not integer value matching 2^31!!!
+    if (nValue == Integer.MIN_VALUE)
+      throw new IllegalArgumentException ("There is not absolute value for Integer.MIN_VALUE!");
+    return Math.abs (nValue);
+  }
+
+  /**
+   * This is a fix for <code>Math.abs</code> as it would return
+   * {@link Long#MIN_VALUE} for {@link Long#MIN_VALUE} which is very unexpected.
+   * Instead an exception is thrown.
+   * 
+   * @param nValue
+   *        Input value
+   * @return The output value
+   * @throws IllegalArgumentException
+   *         if the input value is {@link Long#MIN_VALUE}
+   */
+  @Nonnegative
+  public static long abs (final long nValue)
+  {
+    // As Long.MIN_VALUE is -2^63 and Integer.MAX_VALUE is 2^63-1 it means
+    // that there is not integer value matching 2^63!!!
+    if (nValue == Long.MIN_VALUE)
+      throw new IllegalArgumentException ("There is not absolute value for Long.MIN_VALUE!");
+    return Math.abs (nValue);
   }
 }
