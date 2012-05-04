@@ -46,7 +46,7 @@ public final class NonBlockingStringWriterTest
     assertEquals ("abcdefg", ws.toString ());
     ws.append ('0').append ("12").append ("234", 1, 2);
     assertEquals ("abcdefg0123", ws.toString ());
-    assertEquals ("abcdefg0123", ws.getBuffer ().toString ());
+    assertEquals ("abcdefg0123", ws.directGetStringBuilder ().toString ());
     ws.append (null).append (null, 1, 2);
     assertEquals ("abcdefg0123nullu", ws.toString ());
     ws.flush ();

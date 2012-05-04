@@ -23,20 +23,23 @@ import java.io.InputStream;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * A wrapper around an {@link InputStream} that counts the number of read bytes.
+ * A wrapper around an {@link InputStream} that debugs read and skip actions.
  * 
  * @author philip
  */
-public class CountingInputStream extends WrappedInputStream
+public class DebugInputStream extends WrappedInputStream
 {
-  private long m_nBytesRead = 0;
-  private long m_nPosition = 0;
-  private long m_nMark = 0;
+  private static final Logger s_aLogger = LoggerFactory.getLogger (DebugInputStream.class);
 
-  public CountingInputStream (@Nonnull final InputStream aSourceIS)
+  private long m_nPosition = 0;
+
+  public DebugInputStream (@Nonnull final InputStream aSourceIS)
   {
     super (aSourceIS);
   }
@@ -47,8 +50,8 @@ public class CountingInputStream extends WrappedInputStream
     final int ret = super.read ();
     if (ret != -1)
     {
-      m_nBytesRead++;
       m_nPosition++;
+      s_aLogger.info ("Read 1 byte; now at " + m_nPosition);
     }
     return ret;
   }
@@ -59,8 +62,8 @@ public class CountingInputStream extends WrappedInputStream
     final int ret = super.read (b, nOffset, nLength);
     if (ret != -1)
     {
-      m_nBytesRead += ret;
       m_nPosition += ret;
+      s_aLogger.info ("Read " + ret + " byte(s); now at " + m_nPosition);
     }
     return ret;
   }
@@ -70,51 +73,16 @@ public class CountingInputStream extends WrappedInputStream
   {
     final long nSkipped = super.skip (n);
     if (nSkipped > 0)
+    {
       m_nPosition += nSkipped;
+      s_aLogger.info ("Skipped " + nSkipped + " byte(s); now at " + m_nPosition);
+    }
     return nSkipped;
-  }
-
-  @Override
-  public synchronized void mark (@Nonnegative final int nReadlimit)// NOPMD
-  {
-    // May throw an exception!
-    super.mark (nReadlimit);
-    m_nMark = m_nPosition;
-  }
-
-  @Override
-  public synchronized void reset () throws IOException// NOPMD
-  {
-    // May throw an exception!
-    super.reset ();
-    m_nPosition = m_nMark;
-  }
-
-  /**
-   * @return The number of read bytes.
-   */
-  @Nonnegative
-  public long getBytesRead ()
-  {
-    return m_nBytesRead;
-  }
-
-  /**
-   * @return The current position in the input stream (taking skip and
-   *         mark/reset into account)
-   */
-  @Nonnegative
-  public long getPosition ()
-  {
-    return m_nPosition;
   }
 
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ())
-                            .append ("bytesRead", m_nBytesRead)
-                            .append ("position", m_nPosition)
-                            .toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("position", m_nPosition).toString ();
   }
 }

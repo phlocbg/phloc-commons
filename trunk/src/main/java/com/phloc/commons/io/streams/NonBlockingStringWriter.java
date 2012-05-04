@@ -24,6 +24,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.annotations.DevelopersNote;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.annotations.ReturnsMutableObject;
 
 /**
@@ -210,9 +212,11 @@ public class NonBlockingStringWriter extends Writer
    * @return StringBuilder holding the current buffer value.
    */
   @Nonnull
+  @Deprecated
+  @DevelopersNote ("Unsafe! Usine directGetStringBuilder because it indicates what happens!")
   public StringBuilder getBuffer ()
   {
-    return m_aSB;
+    return directGetStringBuilder ();
   }
 
   /**
@@ -243,23 +247,24 @@ public class NonBlockingStringWriter extends Writer
   }
 
   /**
-   * Return the buffer's current value as a string.
-   */
-  @Override
-  public String toString ()
-  {
-    return m_aSB.toString ();
-  }
-
-  /**
-   * Return the buffer's current value as a string.
+   * @return Return the buffer's current value as a string.
    */
   @Nonnull
+  @ReturnsMutableCopy
   public char [] toCharArray ()
   {
     final int nChars = m_aSB.length ();
     final char [] ret = new char [nChars];
     m_aSB.getChars (0, nChars, ret, 0);
     return ret;
+  }
+
+  /**
+   * Return the buffer's current value as a string.
+   */
+  @Override
+  public String toString ()
+  {
+    return m_aSB.toString ();
   }
 }

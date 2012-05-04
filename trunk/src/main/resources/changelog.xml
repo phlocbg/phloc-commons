@@ -20,7 +20,27 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2012-05-04" category="api" action="add">
+    <change>
+      <text locale="en">Added new helper classes DebugInputStream and DebugOutputStream</text>
+    </change>
+  </entry>
+  <entry date="2012-05-04" category="api" action="add">
+    <change>
+      <text locale="en">Extended CountingInputStream to retrieve the current position within the input stream</text>
+    </change>
+  </entry>
+  <entry date="2012-05-04" category="api" action="add">
+    <change>
+      <text locale="en">Added new StreamUtils methods skipFully and readFully</text>
+    </change>
+  </entry>
   <entry date="2012-05-04" category="api" action="change">
+    <change>
+      <text locale="en">Deprecated NonBlockingStringWriter.getBuffer. Instead directGetStringBuilder should be used!</text>
+    </change>
+  </entry>
+  <entry date="2012-05-04" category="api" action="add">
     <change>
       <text locale="en">Added new method NonBlockingStringWriter.toCharArray()</text>
     </change>

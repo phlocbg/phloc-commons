@@ -30,6 +30,8 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.concurrent.Immutable;
+
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +39,8 @@ import org.slf4j.LoggerFactory;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.hash.HashCodeGenerator;
+import com.phloc.commons.io.streams.StreamUtils;
 
 /**
  * Reads a TTF font file and provides access to kerning information. Thanks to
@@ -44,48 +48,97 @@ import com.phloc.commons.collections.ContainerHelper;
  * 
  * @author Nathan Sweet <misc@n4te.com>
  */
-public class FuncTestKerning
+public final class FuncTestKerning
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (FuncTestJavaPrinterTrayFinder.class);
 
+  @Immutable
+  public static final class KerningKey
+  {
+    private final int m_nFirstGlyphCode;
+    private final int m_nSecondGlyphCode;
+
+    public KerningKey (final int nFirstGlyphCode, final int nSecondGlyphCode)
+    {
+      m_nFirstGlyphCode = nFirstGlyphCode;
+      m_nSecondGlyphCode = nSecondGlyphCode;
+    }
+
+    public int getFirstGlyphCode ()
+    {
+      return m_nFirstGlyphCode;
+    }
+
+    public int getSecondGlyphCode ()
+    {
+      return m_nSecondGlyphCode;
+    }
+
+    @Override
+    public boolean equals (final Object o)
+    {
+      if (this == o)
+        return true;
+      if (!(o instanceof KerningKey))
+        return false;
+      final KerningKey rhs = (KerningKey) o;
+      return m_nFirstGlyphCode == rhs.m_nFirstGlyphCode && m_nSecondGlyphCode == rhs.m_nSecondGlyphCode;
+    }
+
+    @Override
+    public int hashCode ()
+    {
+      return new HashCodeGenerator (this).append (m_nFirstGlyphCode).append (m_nSecondGlyphCode).getHashCode ();
+    }
+  }
+
   private static final class Kerning
   {
-    private final Map <Key, Integer> m_aKerning;
-    private int m_dUnitsPerEm;
-    private long bytePosition;
+    private final Map <KerningKey, Integer> m_aKerning;
+    private int m_nUnitsPerEm;
+    private long m_nBytePosition;
     private long m_nHeadOffset = -1;
     private long m_nKernOffset = -1;
 
     /**
-     * @param input
+     * @param aIS
      *        The data for the TTF font.
      * @throws IOException
      *         If the font could not be read.
      */
-    public Kerning (final InputStream input) throws IOException
+    public Kerning (final InputStream aIS) throws IOException
     {
-      if (input == null)
-        throw new IllegalArgumentException ("input cannot be null.");
-      _readTableDirectory (input);
-      if (m_nHeadOffset == -1)
-        throw new IOException ("HEAD table not found.");
-      if (m_nKernOffset == -1)
+      if (aIS == null)
+        throw new IllegalArgumentException ("aIS cannot be null.");
+
+      final InputStream aDIS = aIS;
+      try
       {
-        m_aKerning = ContainerHelper.newUnmodifiableMap ();
-        return;
+        _readTableDirectory (aDIS);
+        if (m_nHeadOffset == -1)
+          throw new IOException ("HEAD table not found.");
+        if (m_nKernOffset == -1)
+        {
+          s_aLogger.info ("No kerning information present!");
+          m_aKerning = ContainerHelper.newUnmodifiableMap ();
+          return;
+        }
+        m_aKerning = new HashMap <KerningKey, Integer> (2048);
+        if (m_nHeadOffset < m_nKernOffset)
+        {
+          _readHEAD (aDIS);
+          _readKERN (aDIS);
+        }
+        else
+        {
+          _readKERN (aDIS);
+          _readHEAD (aDIS);
+        }
       }
-      m_aKerning = new HashMap <Key, Integer> (2048);
-      if (m_nHeadOffset < m_nKernOffset)
+      finally
       {
-        readHEAD (input);
-        readKERN (input);
+        StreamUtils.close (aDIS);
       }
-      else
-      {
-        readKERN (input);
-        readHEAD (input);
-      }
-      input.close ();
     }
 
     /**
@@ -93,159 +146,119 @@ public class FuncTestKerning
      * Unicode codepoint can be retrieved with
      * {@link GlyphVector#getGlyphCode(int)}.
      */
-    public float getValue (final int firstGlyphCode, final int secondGlyphCode, final int size)
+    public float getValue (final int nFirstGlyphCode, final int nSecondGlyphCode, final float fFontSize)
     {
-      final Integer value = m_aKerning.get (new Key (firstGlyphCode, secondGlyphCode));
-      if (value == null)
-        return 0;
-      return value.intValue () * (float) size / m_dUnitsPerEm;
+      final Integer aValue = m_aKerning.get (new KerningKey (nFirstGlyphCode, nSecondGlyphCode));
+      if (aValue == null)
+        return 0f;
+      return aValue.intValue () * fFontSize / m_nUnitsPerEm;
     }
 
-    private void _readTableDirectory (final InputStream input) throws IOException
+    private void _readTableDirectory (final InputStream aIS) throws IOException
     {
-      skip (input, 4);
-      final int tableCount = readUnsignedShort (input);
-      skip (input, 6);
+      _skip (aIS, 4);
+      final int nTableCount = _readUnsignedShort (aIS);
+      _skip (aIS, 6);
 
       final byte [] tagBytes = new byte [4];
-      for (int i = 0; i < tableCount; i++)
+      for (int i = 0; i < nTableCount; i++)
       {
-        tagBytes[0] = readByte (input);
-        tagBytes[1] = readByte (input);
-        tagBytes[2] = readByte (input);
-        tagBytes[3] = readByte (input);
-        skip (input, 4);
-        final long offset = readUnsignedLong (input);
-        skip (input, 4);
-
+        m_nBytePosition += tagBytes.length;
+        StreamUtils.readFully (aIS, tagBytes);
         final String tag = CharsetManager.getAsString (tagBytes, CCharset.CHARSET_ISO_8859_1);
+
+        _skip (aIS, 4);
+        final long nOffset = _readUnsignedInt (aIS);
+        _skip (aIS, 4);
+
         if (tag.equals ("head"))
         {
-          m_nHeadOffset = offset;
+          m_nHeadOffset = nOffset;
           if (m_nKernOffset != -1)
             break;
         }
         else
           if (tag.equals ("kern"))
           {
-            m_nKernOffset = offset;
+            m_nKernOffset = nOffset;
             if (m_nHeadOffset != -1)
               break;
           }
       }
     }
 
-    private void readHEAD (final InputStream input) throws IOException
+    private void _readHEAD (final InputStream aIS) throws IOException
     {
-      seek (input, m_nHeadOffset + 2 * 4 + 2 * 4 + 2);
-      m_dUnitsPerEm = readUnsignedShort (input);
+      _seek (aIS, m_nHeadOffset + 2 * 4 + 2 * 4 + 2);
+      m_nUnitsPerEm = _readUnsignedShort (aIS);
+      if (false)
+        s_aLogger.info ("Units per EM = " + m_nUnitsPerEm + " @ " + m_nBytePosition);
     }
 
-    private void readKERN (final InputStream input) throws IOException
+    private void _readKERN (final InputStream aIS) throws IOException
     {
-      seek (input, m_nKernOffset + 2);
-      for (int n = readUnsignedShort (input); n > 0; n--)
+      if (false)
+        s_aLogger.info ("Going to KERN");
+      _seek (aIS, m_nKernOffset + 2);
+      for (int n = _readUnsignedShort (aIS); n > 0; n--)
       {
-        skip (input, 2 * 2);
-        int k = readUnsignedShort (input);
+        _skip (aIS, 2 * 2);
+        int k = _readUnsignedShort (aIS);
         if (!((k & 1) != 0) || (k & 2) != 0 || (k & 4) != 0)
           return;
         if (k >> 8 != 0)
           continue;
-        k = readUnsignedShort (input);
-        skip (input, 3 * 2);
+        k = _readUnsignedShort (aIS);
+        _skip (aIS, 3 * 2);
+        if (false)
+          s_aLogger.info ("Reading " + k + " kernings");
         while (k-- > 0)
         {
-          final int firstGlyphCode = readUnsignedShort (input);
-          final int secondGlyphCode = readUnsignedShort (input);
-          final int value = readShort (input);
-          if (value != 0)
-            m_aKerning.put (new Key (firstGlyphCode, secondGlyphCode), Integer.valueOf (value));
+          final int nFirstGlyphCode = _readUnsignedShort (aIS);
+          final int nSecondGlyphCode = _readUnsignedShort (aIS);
+          final int nValue = _readShort (aIS);
+          if (nValue != 0)
+            m_aKerning.put (new KerningKey (nFirstGlyphCode, nSecondGlyphCode), Integer.valueOf (nValue));
         }
       }
     }
 
-    private int readUnsignedByte (final InputStream input) throws IOException
+    private int _readUnsignedByte (final InputStream aIS) throws IOException
     {
-      bytePosition++;
-      final int b = input.read ();
+      m_nBytePosition++;
+      final int b = aIS.read ();
       if (b == -1)
         throw new EOFException ("Unexpected end of file.");
       return b;
     }
 
-    private byte readByte (final InputStream input) throws IOException
+    private int _readUnsignedShort (final InputStream aIS) throws IOException
     {
-      return (byte) readUnsignedByte (input);
+      return (_readUnsignedByte (aIS) << 8) + _readUnsignedByte (aIS);
     }
 
-    private int readUnsignedShort (final InputStream input) throws IOException
+    private short _readShort (final InputStream aIS) throws IOException
     {
-      return (readUnsignedByte (input) << 8) + readUnsignedByte (input);
+      return (short) _readUnsignedShort (aIS);
     }
 
-    private short readShort (final InputStream input) throws IOException
+    private long _readUnsignedInt (final InputStream aIS) throws IOException
     {
-      return (short) readUnsignedShort (input);
+      return (((long) _readUnsignedShort (aIS)) << 16) | _readUnsignedShort (aIS);
     }
 
-    private long readUnsignedLong (final InputStream input) throws IOException
+    private void _skip (final InputStream aIS, final int bytes) throws IOException
     {
-      long value = readUnsignedByte (input);
-      value = (value << 8) + readUnsignedByte (input);
-      value = (value << 8) + readUnsignedByte (input);
-      value = (value << 8) + readUnsignedByte (input);
-      return value;
+      StreamUtils.skipFully (aIS, bytes);
+      m_nBytePosition += bytes;
     }
 
-    private void skip (final InputStream input, final int bytes) throws IOException
+    private void _seek (final InputStream aIS, final long position) throws IOException
     {
-      if (input.skip (bytes) != bytes)
-        throw new IllegalStateException ("skip failed");
-      bytePosition += bytes;
-    }
-
-    private void seek (final InputStream input, final long position) throws IOException
-    {
-      if (input.skip (position - bytePosition) != (position - bytePosition))
-        throw new IllegalStateException ("skip failed");
-      bytePosition = position;
-    }
-
-    private static final class Key
-    {
-      private final int m_nFirstGlyphCode, m_nSecondGlyphCode;
-
-      public Key (final int firstGlyphCode, final int secondGlyphCode)
-      {
-        m_nFirstGlyphCode = firstGlyphCode;
-        m_nSecondGlyphCode = secondGlyphCode;
-      }
-
-      @Override
-      public int hashCode ()
-      {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + m_nFirstGlyphCode;
-        result = prime * result + m_nSecondGlyphCode;
-        return result;
-      }
-
-      @Override
-      public boolean equals (final Object obj)
-      {
-        if (this == obj)
-          return true;
-        if (!(obj instanceof Key))
-          return false;
-        final Key other = (Key) obj;
-        if (m_nFirstGlyphCode != other.m_nFirstGlyphCode)
-          return false;
-        if (m_nSecondGlyphCode != other.m_nSecondGlyphCode)
-          return false;
-        return true;
-      }
+      if (false)
+        s_aLogger.info ("position=" + position + "; pos=" + m_nBytePosition);
+      StreamUtils.skipFully (aIS, position - m_nBytePosition);
+      m_nBytePosition = position;
     }
   }
 
@@ -254,19 +267,24 @@ public class FuncTestKerning
   {
     // required to get graphics up and running...
     GraphicsEnvironment.getLocalGraphicsEnvironment ();
-    final Map <TextAttribute, Object> textAttributes = new HashMap <TextAttribute, Object> ();
-    textAttributes.put (TextAttribute.FAMILY, "Arial");
-    textAttributes.put (TextAttribute.SIZE, Float.valueOf (25f));
-    final Font font = Font.getFont (textAttributes);
-    final char [] chars = "T,".toCharArray ();
-    final GlyphVector vector = font.layoutGlyphVector (new FontRenderContext (new AffineTransform (), false, true),
-                                                       chars,
-                                                       0,
-                                                       chars.length,
-                                                       Font.LAYOUT_LEFT_TO_RIGHT);
-    final int tCode = vector.getGlyphCode (0);
-    final int commaCode = vector.getGlyphCode (1);
-    final Kerning kerning = new Kerning (new FileInputStream (System.getenv ("windir") + "/fonts/ARIAL.TTF"));
-    s_aLogger.info (Float.toString (kerning.getValue (tCode, commaCode, 25)));
+    final int nFontSize = 25;
+
+    final Map <TextAttribute, Object> aTextAttributes = new HashMap <TextAttribute, Object> ();
+    aTextAttributes.put (TextAttribute.FAMILY, "Arial");
+    aTextAttributes.put (TextAttribute.SIZE, Float.valueOf (nFontSize));
+    final Font aFont = Font.getFont (aTextAttributes);
+
+    final char [] aChars = "T,".toCharArray ();
+    final GlyphVector aGlyphVector = aFont.layoutGlyphVector (new FontRenderContext (new AffineTransform (),
+                                                                                     false,
+                                                                                     true),
+                                                              aChars,
+                                                              0,
+                                                              aChars.length,
+                                                              Font.LAYOUT_LEFT_TO_RIGHT);
+    final int tCode = aGlyphVector.getGlyphCode (0);
+    final int commaCode = aGlyphVector.getGlyphCode (1);
+    final Kerning aKerning = new Kerning (new FileInputStream (System.getenv ("windir") + "/fonts/ARIAL.TTF"));
+    s_aLogger.info (Float.toString (aKerning.getValue (tCode, commaCode, nFontSize)));
   }
 }
