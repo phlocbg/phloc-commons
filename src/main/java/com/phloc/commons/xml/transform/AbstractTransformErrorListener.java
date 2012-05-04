@@ -40,15 +40,29 @@ public abstract class AbstractTransformErrorListener implements ErrorListener
 {
   private final ErrorListener m_aWrappedErrorListener;
 
+  public AbstractTransformErrorListener ()
+  {
+    this (null);
+  }
+
   public AbstractTransformErrorListener (@Nullable final ErrorListener aWrappedErrorListener)
   {
     m_aWrappedErrorListener = aWrappedErrorListener;
   }
 
+  /**
+   * @return The wrapped error listener. May be <code>null</code>.
+   */
+  @Nullable
+  public ErrorListener getWrappedErrorListener ()
+  {
+    return m_aWrappedErrorListener;
+  }
+
   @Nonnull
-  private static IResourceError _buildError (final TransformerException ex,
-                                             final EErrorLevel eErrorLevel,
-                                             final String sPrefix)
+  private static IResourceError _buildError (@Nonnull final TransformerException ex,
+                                             @Nonnull final EErrorLevel eErrorLevel,
+                                             @Nonnull final String sPrefix)
   {
     final SourceLocator aLocator = ex.getLocator ();
     final String sResourceID = aLocator == null ? null : StringHelper.concatenateOnDemand (aLocator.getPublicId (),
@@ -71,7 +85,7 @@ public abstract class AbstractTransformErrorListener implements ErrorListener
    */
   protected abstract void log (@Nonnull final IResourceError aResError);
 
-  public final void warning (final TransformerException ex) throws TransformerException
+  public final void warning (@Nonnull final TransformerException ex) throws TransformerException
   {
     log (_buildError (ex, EErrorLevel.WARN, "Transformation warning"));
 
@@ -79,7 +93,7 @@ public abstract class AbstractTransformErrorListener implements ErrorListener
       m_aWrappedErrorListener.warning (ex);
   }
 
-  public final void error (final TransformerException ex) throws TransformerException
+  public final void error (@Nonnull final TransformerException ex) throws TransformerException
   {
     log (_buildError (ex, EErrorLevel.ERROR, "Transformation error"));
 
@@ -87,7 +101,7 @@ public abstract class AbstractTransformErrorListener implements ErrorListener
       m_aWrappedErrorListener.error (ex);
   }
 
-  public final void fatalError (final TransformerException ex) throws TransformerException
+  public final void fatalError (@Nonnull final TransformerException ex) throws TransformerException
   {
     log (_buildError (ex, EErrorLevel.FATAL_ERROR, "Transformation fatal error"));
 

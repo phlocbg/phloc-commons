@@ -61,6 +61,15 @@ public abstract class AbstractSAXErrorHandler implements ErrorHandler
   }
 
   /**
+   * @return The wrapped error handler. May be <code>null</code>.
+   */
+  @Nullable
+  public ErrorHandler getWrappedErrorHandler ()
+  {
+    return m_aWrappedErrorHandler;
+  }
+
+  /**
    * Utility method to convert a {@link SAXParseException} into a readable
    * string.
    * 
@@ -68,6 +77,7 @@ public abstract class AbstractSAXErrorHandler implements ErrorHandler
    *        The exception to convert. May not be <code>null</code>.
    * @return The String representation.
    */
+  @Nonnull
   protected static final IResourceError getSaxParseError (@Nonnull final EErrorLevel eErrorLevel,
                                                           @Nonnull final SAXParseException ex)
   {

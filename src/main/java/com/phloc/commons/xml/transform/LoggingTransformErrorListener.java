@@ -41,7 +41,7 @@ public final class LoggingTransformErrorListener extends AbstractTransformErrorL
 
   private LoggingTransformErrorListener ()
   {
-    this (null);
+    super ();
   }
 
   public LoggingTransformErrorListener (@Nullable final ErrorListener aWrappedErrorListener)

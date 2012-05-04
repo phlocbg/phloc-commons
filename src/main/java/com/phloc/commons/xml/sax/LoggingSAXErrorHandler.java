@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.xml.sax;
 
+import javax.annotation.Nonnull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXParseException;
@@ -43,7 +45,7 @@ public final class LoggingSAXErrorHandler extends AbstractSAXErrorHandler
   }
 
   @Override
-  protected void log (final EErrorLevel eErrorLevel, final SAXParseException aException)
+  protected void log (@Nonnull final EErrorLevel eErrorLevel, final SAXParseException aException)
   {
     LogUtils.log (s_aLogger, eErrorLevel, "SAX " + getSaxParseError (eErrorLevel, aException).getAsString ());
   }
