@@ -52,7 +52,7 @@
   </entry>
   <entry date="2012-05-04" category="api" action="add">
     <change>
-      <text locale="en">Added new MathHelper methods abs(int) and abs(long) handling problems with Integer.MIN_VALUE and Long.MIN_VALUE</text>
+      <text locale="en">Added new MathHelper methods abs(int|long|float|double) handling problems with Integer.MIN_VALUE and Long.MIN_VALUE</text>
     </change>
   </entry>
   <entry date="2012-05-04" category="api" action="add">
