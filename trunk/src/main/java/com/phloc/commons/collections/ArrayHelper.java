@@ -312,7 +312,7 @@ public final class ArrayHelper
   {
     if (!isEmpty (aValues))
       for (final boolean aValue : aValues)
-        if (aValue == aSearchValue)
+        if (EqualsUtils.equals (aValue, aSearchValue))
           return true;
     return false;
   }
@@ -331,7 +331,7 @@ public final class ArrayHelper
   {
     if (!isEmpty (aValues))
       for (final byte aValue : aValues)
-        if (aValue == aSearchValue)
+        if (EqualsUtils.equals (aValue, aSearchValue))
           return true;
     return false;
   }
@@ -350,7 +350,7 @@ public final class ArrayHelper
   {
     if (!isEmpty (aValues))
       for (final char aValue : aValues)
-        if (aValue == aSearchValue)
+        if (EqualsUtils.equals (aValue, aSearchValue))
           return true;
     return false;
   }
@@ -407,7 +407,7 @@ public final class ArrayHelper
   {
     if (!isEmpty (aValues))
       for (final int aValue : aValues)
-        if (aValue == aSearchValue)
+        if (EqualsUtils.equals (aValue, aSearchValue))
           return true;
     return false;
   }
@@ -426,7 +426,7 @@ public final class ArrayHelper
   {
     if (!isEmpty (aValues))
       for (final long aValue : aValues)
-        if (aValue == aSearchValue)
+        if (EqualsUtils.equals (aValue, aSearchValue))
           return true;
     return false;
   }
@@ -445,7 +445,7 @@ public final class ArrayHelper
   {
     if (!isEmpty (aValues))
       for (final short aValue : aValues)
-        if (aValue == aSearchValue)
+        if (EqualsUtils.equals (aValue, aSearchValue))
           return true;
     return false;
   }
@@ -2836,7 +2836,7 @@ public final class ArrayHelper
    */
   @Nullable
   @ReturnsMutableCopy
-  public static <ELEMENTTYPE> ELEMENTTYPE [] newArray (@Nullable final Collection <ELEMENTTYPE> aCollection,
+  public static <ELEMENTTYPE> ELEMENTTYPE [] newArray (@Nullable final Collection <? extends ELEMENTTYPE> aCollection,
                                                        @Nonnull final Class <ELEMENTTYPE> aClass)
   {
     if (ContainerHelper.isEmpty (aCollection))
