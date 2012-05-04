@@ -45,6 +45,34 @@ public final class CompareUtils
   {}
 
   /**
+   * Special version for doubles
+   * 
+   * @param d1
+   *        First value
+   * @param d2
+   *        Second value
+   * @return -1, 0 or + 1
+   */
+  public static int compare (final double d1, final double d2)
+  {
+    return Double.compare (d1, d2);
+  }
+
+  /**
+   * Special version for floats
+   * 
+   * @param f1
+   *        First value
+   * @param f2
+   *        Second value
+   * @return -1, 0 or + 1
+   */
+  public static int compare (final float f1, final float f2)
+  {
+    return Float.compare (f1, f2);
+  }
+
+  /**
    * Compare the passed items and handle <code>null</code> values correctly. A
    * <code>null</code> value is always smaller than a non-<code>null</code>
    * value.

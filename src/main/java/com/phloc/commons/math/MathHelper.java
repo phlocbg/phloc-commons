@@ -193,7 +193,7 @@ public final class MathHelper
    * 
    * @param nValue
    *        Input value
-   * @return The output value
+   * @return the absolute value of the argument.
    * @throws IllegalArgumentException
    *         if the input value is {@link Integer#MIN_VALUE}
    */
@@ -214,7 +214,7 @@ public final class MathHelper
    * 
    * @param nValue
    *        Input value
-   * @return The output value
+   * @return the absolute value of the argument.
    * @throws IllegalArgumentException
    *         if the input value is {@link Long#MIN_VALUE}
    */
@@ -226,5 +226,35 @@ public final class MathHelper
     if (nValue == Long.MIN_VALUE)
       throw new IllegalArgumentException ("There is not absolute value for Long.MIN_VALUE!");
     return Math.abs (nValue);
+  }
+
+  /**
+   * This is a sanity method wrapping <code>Math.abs (float)</code>, so that you
+   * don't have to think whether you need to invoke the abs method from this
+   * class or the one from Math directly.
+   * 
+   * @param fValue
+   *        Input value
+   * @return the absolute value of the argument.
+   */
+  @Nonnegative
+  public static float abs (final float fValue)
+  {
+    return Math.abs (fValue);
+  }
+
+  /**
+   * This is a sanity method wrapping <code>Math.abs (double)</code>, so that
+   * you don't have to think whether you need to invoke the abs method from this
+   * class or the one from Math directly.
+   * 
+   * @param dValue
+   *        Input value
+   * @return the absolute value of the argument.
+   */
+  @Nonnegative
+  public static double abs (final double dValue)
+  {
+    return Math.abs (dValue);
   }
 }

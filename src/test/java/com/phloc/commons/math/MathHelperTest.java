@@ -181,4 +181,58 @@ public final class MathHelperTest
     PhlocAssert.assertEquals (1, MathHelper.getMinDouble (5, 3, 2, 1));
     PhlocAssert.assertEquals (3, MathHelper.getMinDouble (5, 3, 7, 4));
   }
+
+  @Test
+  public void testAbsInt ()
+  {
+    assertEquals (0, MathHelper.abs (0));
+    assertEquals (5, MathHelper.abs (-5));
+    assertEquals (5, MathHelper.abs (5));
+    assertEquals (Integer.MAX_VALUE, MathHelper.abs (Integer.MIN_VALUE + 1));
+
+    try
+    {
+      MathHelper.abs (Integer.MIN_VALUE);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+  }
+
+  @Test
+  public void testAbsLong ()
+  {
+    assertEquals (0, MathHelper.abs (0L));
+    assertEquals (5, MathHelper.abs (-5L));
+    assertEquals (5, MathHelper.abs (5L));
+    assertEquals (Long.MAX_VALUE, MathHelper.abs (Long.MIN_VALUE + 1));
+
+    try
+    {
+      MathHelper.abs (Long.MIN_VALUE);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+  }
+
+  @Test
+  public void testAbsFloat ()
+  {
+    PhlocAssert.assertEquals (0F, MathHelper.abs (0F));
+    PhlocAssert.assertEquals (5F, MathHelper.abs (-5F));
+    PhlocAssert.assertEquals (5F, MathHelper.abs (5F));
+    PhlocAssert.assertEquals (Float.MAX_VALUE, MathHelper.abs (-Float.MAX_VALUE));
+    PhlocAssert.assertEquals (Float.MIN_VALUE, MathHelper.abs (Float.MIN_VALUE));
+  }
+
+  @Test
+  public void testAbsDouble ()
+  {
+    PhlocAssert.assertEquals (0D, MathHelper.abs (0D));
+    PhlocAssert.assertEquals (5D, MathHelper.abs (-5D));
+    PhlocAssert.assertEquals (5D, MathHelper.abs (5D));
+    PhlocAssert.assertEquals (Double.MAX_VALUE, MathHelper.abs (-Double.MAX_VALUE));
+    PhlocAssert.assertEquals (Double.MIN_VALUE, MathHelper.abs (Double.MIN_VALUE));
+  }
 }

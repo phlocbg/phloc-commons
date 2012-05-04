@@ -20,7 +20,6 @@ package com.phloc.commons.mock;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
-import com.phloc.commons.string.StringHelper;
 
 /**
  * Extensions for the default JUnit assertions.
@@ -53,13 +52,15 @@ public final class PhlocAssert
 
   public static void assertEquals (final String sUserMsg, final double x, final double y)
   {
+    // Do not call MathHelper.abs in here, because this class should be as close
+    // to the runtime as possible!
     if (Double.compare (x, y) != 0 && Math.abs (x - y) > DOUBLE_ALLOWED_ROUNDING_DIFFERENCE)
       throw new IllegalArgumentException ("<" +
                                           x +
                                           "> is not equal to <" +
                                           y +
                                           ">" +
-                                          (StringHelper.hasText (sUserMsg) ? ": " + sUserMsg : ""));
+                                          (sUserMsg != null && sUserMsg.length () > 0 ? ": " + sUserMsg : ""));
   }
 
   public static void assertEquals (final float x, final float y)
@@ -76,12 +77,14 @@ public final class PhlocAssert
 
   public static void assertEquals (final String sUserMsg, final float x, final float y)
   {
+    // Do not call MathHelper.abs in here, because this class should be as close
+    // to the runtime as possible!
     if (Float.compare (x, y) != 0 && Math.abs (x - y) > DOUBLE_ALLOWED_ROUNDING_DIFFERENCE)
       throw new IllegalArgumentException ("<" +
                                           x +
                                           "> is not equal to <" +
                                           y +
                                           ">" +
-                                          (StringHelper.hasText (sUserMsg) ? ": " + sUserMsg : ""));
+                                          (sUserMsg != null && sUserMsg.length () > 0 ? ": " + sUserMsg : ""));
   }
 }
