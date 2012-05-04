@@ -17,7 +17,7 @@
  */
 package com.phloc.commons.jaxb.validation;
 
-import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.xml.bind.ValidationEventHandler;
 
 /**
@@ -30,14 +30,12 @@ public class ConstantValidationEventHandlerFactory implements IValidationEventHa
 {
   private final ValidationEventHandler m_aEventHandler;
 
-  public ConstantValidationEventHandlerFactory (@Nonnull final ValidationEventHandler aEventHandler)
+  public ConstantValidationEventHandlerFactory (@Nullable final ValidationEventHandler aEventHandler)
   {
-    if (aEventHandler == null)
-      throw new NullPointerException ("eventHandler");
     m_aEventHandler = aEventHandler;
   }
 
-  @Nonnull
+  @Nullable
   public ValidationEventHandler create (final ValidationEventHandler aOldEventHandler)
   {
     return m_aEventHandler;

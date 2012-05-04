@@ -27,7 +27,7 @@
   </entry>
   <entry date="2012-05-04" category="api" action="add">
     <change>
-      <text locale="en">Added new class ConstantValidationEventHandlerFactory</text>
+      <text locale="en">Added new class ConstantValidationEventHandlerFactory and CollectingLoggingValidationEventHandlerFactory</text>
     </change>
   </entry>
   <release date="2012-05-04" version="3.5.3" />
