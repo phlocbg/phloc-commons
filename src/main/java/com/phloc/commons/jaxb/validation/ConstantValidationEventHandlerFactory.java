@@ -21,31 +21,25 @@ import javax.annotation.Nonnull;
 import javax.xml.bind.ValidationEventHandler;
 
 /**
- * Implementation of {@link IValidationEventHandlerFactory} creating
- * {@link LoggingValidationEventHandler} objects.
+ * Implementation of {@link IValidationEventHandlerFactory} using a constant
+ * {@link ValidationEventHandler} object.
  * 
  * @author philip
  */
-public class LoggingValidationEventHandlerFactory implements IValidationEventHandlerFactory
+public class ConstantValidationEventHandlerFactory implements IValidationEventHandlerFactory
 {
-  public static final boolean DEFAULT_ENCAPSULATE_HANDLER = true;
+  private final ValidationEventHandler m_aEventHandler;
 
-  private final boolean m_bEncapsulateHandler;
-
-  public LoggingValidationEventHandlerFactory ()
+  public ConstantValidationEventHandlerFactory (@Nonnull final ValidationEventHandler aEventHandler)
   {
-    this (DEFAULT_ENCAPSULATE_HANDLER);
-  }
-
-  public LoggingValidationEventHandlerFactory (final boolean bEncapsulateHandler)
-  {
-    m_bEncapsulateHandler = bEncapsulateHandler;
+    if (aEventHandler == null)
+      throw new NullPointerException ("eventHandler");
+    m_aEventHandler = aEventHandler;
   }
 
   @Nonnull
-  public LoggingValidationEventHandler create (final ValidationEventHandler aOldEventHandler)
+  public ValidationEventHandler create (final ValidationEventHandler aOldEventHandler)
   {
-    return new LoggingValidationEventHandler (m_bEncapsulateHandler ? aOldEventHandler : null);
+    return m_aEventHandler;
   }
-
 }

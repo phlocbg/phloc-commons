@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 import javax.xml.bind.ValidationEventHandler;
 
 /**
- * Implementation if {@link IValidationEventHandlerFactory} creating
+ * Implementation of {@link IValidationEventHandlerFactory} creating
  * {@link CollectingValidationEventHandler} objects.
  * 
  * @author philip
