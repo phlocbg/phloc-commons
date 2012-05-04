@@ -22,14 +22,15 @@ import javax.annotation.concurrent.NotThreadSafe;
 import javax.xml.bind.ValidationEventHandler;
 
 /**
- * An implementation of the JAXB {@link ValidationEventHandler} interface. It
- * simply prints the messages to a logger before the original handler handles
- * them.
+ * Deprecated version of {@link ValidationEventHandler}. Use
+ * {@link com.phloc.commons.jaxb.validation.LoggingValidationEventHandler}
+ * instead!
  * 
  * @author philip
  */
 @NotThreadSafe
 @Deprecated
+@edu.umd.cs.findbugs.annotations.SuppressWarnings ("NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class LoggingValidationEventHandler extends com.phloc.commons.jaxb.validation.LoggingValidationEventHandler
 {
   public LoggingValidationEventHandler ()
