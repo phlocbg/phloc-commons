@@ -2455,7 +2455,7 @@ public final class ContainerHelper
   @Nullable
   public static <KEYTYPE, VALUETYPE> Map.Entry <KEYTYPE, VALUETYPE> getFirstElement (@Nullable final Map <KEYTYPE, VALUETYPE> aMap)
   {
-    return isEmpty (aMap) ? null : aMap.entrySet ().iterator ().next ();
+    return isEmpty (aMap) ? null : getFirstElement (aMap.entrySet ());
   }
 
   @Nullable
