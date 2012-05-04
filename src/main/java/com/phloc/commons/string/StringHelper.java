@@ -2150,6 +2150,12 @@ public final class StringHelper
     if (nOldLength == nNewLength && sOld.equals (sNew))
       return sLiteral;
 
+    if (nOldLength == 1 && nNewLength == 1)
+    {
+      // Use char version which is more efficient
+      return replaceAll (sLiteral, sOld.charAt (0), sNew.charAt (0));
+    }
+
     // Does the old text occur anywhere?
     int nIndex = sLiteral.indexOf (sOld, 0);
     if (nIndex == -1)
