@@ -1538,6 +1538,19 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
+  public void testTrim ()
+  {
+    assertEquals ("Hallo Welt", StringHelper.trim ("Hallo Welt"));
+    assertEquals ("Hallo Welt", StringHelper.trim (" Hallo Welt"));
+    assertEquals ("Hallo Welt", StringHelper.trim ("Hallo Welt "));
+    assertEquals ("Hallo Welt", StringHelper.trim (" Hallo Welt "));
+    assertEquals ("Hallo Welt", StringHelper.trim ("   Hallo Welt   "));
+    assertEquals ("", StringHelper.trim (""));
+    assertEquals ("", StringHelper.trim (""));
+    assertSame (null, StringHelper.trim (null));
+  }
+
+  @Test
   public void testGetFirstChar ()
   {
     assertEquals ('a', StringHelper.getFirstChar ("abc"));
@@ -1642,16 +1655,25 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
-  public void testGetNotNull ()
+  public void testGetNotNullString ()
   {
     assertEquals ("abc", StringHelper.getNotNull ("abc"));
     assertEquals ("", StringHelper.getNotNull (""));
     assertEquals ("", StringHelper.getNotNull (null));
+    assertEquals ("xy", StringHelper.getNotNull (null, "xy"));
+  }
+
+  @Test
+  public void testGetNotNullCharSeq ()
+  {
+    assertEquals ("abc", StringHelper.getNotNull (new StringBuilder ("abc")).toString ());
+    assertEquals ("", StringHelper.getNotNull (new StringBuilder ()).toString ());
+    assertEquals ("", StringHelper.getNotNull ((StringBuilder) null));
   }
 
   @Test
   @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
-  public void testReplaceAll ()
+  public void testReplaceAllString ()
   {
     assertEquals ("abc", StringHelper.replaceAll ("abc", "d", "e"));
     assertEquals ("abd", StringHelper.replaceAll ("abc", "c", "d"));
@@ -1686,6 +1708,22 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     }
     catch (final NullPointerException ex)
     {}
+  }
+
+  @Test
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  public void testReplaceAllChar ()
+  {
+    assertEquals ("abc", StringHelper.replaceAll ("abc", 'd', 'e'));
+    assertEquals ("abd", StringHelper.replaceAll ("abc", 'c', 'd'));
+    assertEquals ("adc", StringHelper.replaceAll ("abc", 'b', 'd'));
+    assertEquals ("dbc", StringHelper.replaceAll ("abc", 'a', 'd'));
+    assertEquals ("ddd", StringHelper.replaceAll ("aaa", 'a', 'd'));
+    assertEquals ("", StringHelper.replaceAll ("", 'a', 'b'));
+    assertEquals ("aaa", StringHelper.replaceAll ("aaa", 'a', 'a'));
+    assertEquals ("aaa", StringHelper.replaceAll ("aaa", 'b', 'b'));
+    assertEquals ("bbbbb", StringHelper.replaceAll ("ababa", 'a', 'b'));
+    assertEquals ("\0b\0b\0", StringHelper.replaceAll ("ababa", 'a', '\0'));
   }
 
   @Test

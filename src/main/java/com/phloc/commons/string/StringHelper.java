@@ -683,7 +683,7 @@ public final class StringHelper
       try
       {
         // Single point where we replace "," with "." for parsing!
-        return Double.parseDouble (sStr.replace (",", "."));
+        return Double.parseDouble (replaceAll (sStr, ',', '.'));
       }
       catch (final NumberFormatException ex)// NOPMD
       {
@@ -756,7 +756,7 @@ public final class StringHelper
       try
       {
         // Single point where we replace "," with "." for parsing!
-        return Float.parseFloat (sStr.replace (",", "."));
+        return Float.parseFloat (replaceAll (sStr, ',', '.'));
       }
       catch (final NumberFormatException ex)// NOPMD
       {
@@ -1484,8 +1484,6 @@ public final class StringHelper
   {
     if (sSep == null)
       throw new NullPointerException ("separator");
-    if (aCollection == null)
-      throw new NullPointerException ("collection");
 
     if (hasText (sElements))
     {
@@ -2108,16 +2106,16 @@ public final class StringHelper
                                        @Nonnull final String sOld,
                                        @Nullable final CharSequence sNew)
   {
-    return replaceAll (sLiteral, sOld, sNew == null ? "" : sNew);
+    return replaceAll (sLiteral, sOld, getNotNull (sNew, ""));
   }
 
   /**
    * This is a fast replacement for
    * {@link String#replace(CharSequence, CharSequence)}. The problem with the
-   * mentioned String method is, that is uses internally regular expressions
-   * which use a synchronized block to compile the patterns. This method is
-   * inherently thread safe since {@link String} is immutable and we're
-   * operating on different temporary {@link StringBuilder} objects.
+   * mentioned {@link String} method is, that is uses internally regular
+   * expressions which use a synchronized block to compile the patterns. This
+   * method is inherently thread safe since {@link String} is immutable and
+   * we're operating on different temporary {@link StringBuilder} objects.
    * 
    * @param sLiteral
    *        The input string where the text should be replace. If this parameter
@@ -2129,7 +2127,8 @@ public final class StringHelper
    *        The string with the replacement. May not be <code>null</code> but
    *        may be empty.
    * @return The input string as is, if the input string is empty or if the
-   *         string to be replaced is not contained.
+   *         search pattern and the replacement are equal or if the string to be
+   *         replaced is not contained.
    */
   @Nullable
   public static String replaceAll (@Nullable final String sLiteral,
@@ -2165,6 +2164,56 @@ public final class StringHelper
       nIndex += nOldLength;
       nOldIndex = nIndex;
     } while ((nIndex = sLiteral.indexOf (sOld, nIndex)) != -1);
+    ret.append (sLiteral, nOldIndex, sLiteral.length ());
+    return ret.toString ();
+  }
+
+  /**
+   * This is a fast replacement for
+   * {@link String#replace(CharSequence, CharSequence)} for characters. The
+   * problem with the mentioned String method is, that is uses internally
+   * regular expressions which use a synchronized block to compile the patterns.
+   * This method is inherently thread safe since {@link String} is immutable and
+   * we're operating on different temporary {@link StringBuilder} objects.
+   * 
+   * @param sLiteral
+   *        The input string where the text should be replace. If this parameter
+   *        is <code>null</code> or empty, no replacement is done.
+   * @param cOld
+   *        The character to be replaced. May neither be <code>null</code> nor
+   *        empty.
+   * @param cNew
+   *        The character with the replacement. May not be <code>null</code> but
+   *        may be empty.
+   * @return The input string as is, if the input string is empty or if the
+   *         search pattern and the replacement are equal or if the string to be
+   *         replaced is not contained.
+   */
+  @Nullable
+  public static String replaceAll (@Nullable final String sLiteral, @Nonnull final char cOld, @Nonnull final char cNew)
+  {
+    // Is input string empty?
+    if (hasNoText (sLiteral))
+      return sLiteral;
+
+    // Replace old with the same new?
+    if (cOld == cNew)
+      return sLiteral;
+
+    // Does the old text occur anywhere?
+    int nIndex = sLiteral.indexOf (cOld, 0);
+    if (nIndex == -1)
+      return sLiteral;
+
+    // build output buffer
+    final StringBuilder ret = new StringBuilder (sLiteral.length ());
+    int nOldIndex = 0;
+    do
+    {
+      ret.append (sLiteral, nOldIndex, nIndex).append (cNew);
+      nIndex++;
+      nOldIndex = nIndex;
+    } while ((nIndex = sLiteral.indexOf (cOld, nIndex)) != -1);
     ret.append (sLiteral, nOldIndex, sLiteral.length ());
     return ret.toString ();
   }
@@ -2397,8 +2446,7 @@ public final class StringHelper
   /**
    * Perform all string replacements on the input string as defined by the
    * passed map. All replacements are done using
-   * {@link String#replace(CharSequence, CharSequence)} which is relatively
-   * slow.
+   * {@link #replaceAll(String,String,CharSequence)} which is ok.
    * 
    * @param sInput
    *        The input string where the text should be replaced. May be
@@ -2414,11 +2462,7 @@ public final class StringHelper
     String ret = sInput;
     if (ret != null && aTransTable != null)
       for (final Entry <String, String> aEntry : aTransTable.entrySet ())
-      {
-        // Do not use RegExPool.stringReplacePattern because of package
-        // dependencies
-        ret = ret.replace (aEntry.getKey (), aEntry.getValue ());
-      }
+        ret = replaceAll (ret, aEntry.getKey (), aEntry.getValue ());
     return ret;
   }
 
@@ -2467,6 +2511,40 @@ public final class StringHelper
    */
   @Nullable
   public static String getNotNull (@Nullable final String s, final String sDefaultIfNull)
+  {
+    return s == null ? sDefaultIfNull : s;
+  }
+
+  /**
+   * Get the passed {@link CharSequence} but never return <code>null</code>. If
+   * the passed parameter is <code>null</code> an empty string is returned.
+   * 
+   * @param s
+   *        The parameter to be not <code>null</code>.
+   * @return An empty string if the passed parameter is <code>null</code>, the
+   *         passed {@link CharSequence} otherwise.
+   */
+  @Nonnull
+  public static CharSequence getNotNull (@Nullable final CharSequence s)
+  {
+    return getNotNull (s, "");
+  }
+
+  /**
+   * Get the passed {@link CharSequence} but never return <code>null</code>. If
+   * the passed parameter is <code>null</code> the second parameter is returned.
+   * 
+   * @param s
+   *        The parameter to be not <code>null</code>.
+   * @param sDefaultIfNull
+   *        The value to be used of the first parameter is <code>null</code>.
+   *        May be <code>null</code> but in this case the call to this method is
+   *        obsolete.
+   * @return The passed default value if the string is <code>null</code>,
+   *         otherwise the input {@link CharSequence}.
+   */
+  @Nullable
+  public static CharSequence getNotNull (@Nullable final CharSequence s, final CharSequence sDefaultIfNull)
   {
     return s == null ? sDefaultIfNull : s;
   }
