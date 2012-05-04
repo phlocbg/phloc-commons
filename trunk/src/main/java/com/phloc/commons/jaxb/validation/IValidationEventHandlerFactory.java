@@ -15,28 +15,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.jaxb;
+package com.phloc.commons.jaxb.validation;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
 import javax.xml.bind.ValidationEventHandler;
 
+import com.phloc.commons.factory.IFactoryWithParameter;
+
 /**
- * An implementation of the JAXB {@link ValidationEventHandler} interface. It
- * collects all events that occurred!
+ * Factory interface for {@link ValidationEventHandler} objects.
  * 
  * @author philip
  */
-@NotThreadSafe
-@Deprecated
-public class CollectingValidationEventHandler extends
-                                             com.phloc.commons.jaxb.validation.CollectingValidationEventHandler
+public interface IValidationEventHandlerFactory extends
+                                               IFactoryWithParameter <ValidationEventHandler, ValidationEventHandler>
 {
-  public CollectingValidationEventHandler ()
-  {}
-
-  public CollectingValidationEventHandler (@Nullable final ValidationEventHandler aOrigHandler)
-  {
-    super (aOrigHandler);
-  }
+  /**
+   * Create a validation event handler
+   * 
+   * @param aOldEventHandler
+   *        The previous event handler that optionally may be encapsulated.
+   * @return The created validation event handler and never <code>null</code>.
+   */
+  @Nonnull
+  ValidationEventHandler create (@Nullable ValidationEventHandler aOldEventHandler);
 }

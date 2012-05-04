@@ -35,7 +35,6 @@ import org.junit.Test;
 
 import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.io.streams.NonBlockingStringWriter;
-import com.phloc.commons.mock.PhlocTestUtils;
 import com.phloc.commons.xml.transform.ResourceStreamSource;
 
 /**
@@ -78,33 +77,21 @@ public final class JAXBContextCacheTest
     // retrieve again
     assertSame (aCtx, JAXBContextCache.getInstance ().getFromCache (MockJAXBArchive.class));
 
-    CollectingValidationEventHandler evh = new CollectingValidationEventHandler (new LoggingValidationEventHandler (null));
     final Unmarshaller um = aCtx.createUnmarshaller ();
-    um.setEventHandler (evh);
 
     // read valid
     JAXBElement <MockJAXBArchive> o = um.unmarshal (new ResourceStreamSource (new ClassPathResource ("xml/test-archive-01.xml")),
                                                     MockJAXBArchive.class);
     assertNotNull (o);
-    assertEquals (0, evh.getResourceErrors ().size ());
 
     // read invalid
-    evh = new CollectingValidationEventHandler ();
-    um.setEventHandler (evh);
     o = um.unmarshal (new ResourceStreamSource (new ClassPathResource ("xml/buildinfo.xml")), MockJAXBArchive.class);
     assertNotNull (o);
-    assertTrue (evh.getResourceErrors ().size () > 0);
 
     // Read invalid (but close to valid)
-    evh = new CollectingValidationEventHandler (new LoggingValidationEventHandler ());
-    um.setEventHandler (evh);
     o = um.unmarshal (new ResourceStreamSource (new ClassPathResource ("xml/test-archive-03.xml")),
                       MockJAXBArchive.class);
     assertNotNull (o);
-    assertEquals (1, evh.getResourceErrors ().size ());
-
-    // For code coverage completion
-    PhlocTestUtils.testToStringImplementation (evh);
 
     // Clear cache
     assertTrue (JAXBContextCache.getInstance ().clearCache ().isChanged ());
