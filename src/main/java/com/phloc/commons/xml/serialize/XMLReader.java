@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.xml.serialize;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
@@ -48,6 +49,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.exceptions.InitializationException;
 import com.phloc.commons.factory.IFactory;
 import com.phloc.commons.io.IReadableResource;
+import com.phloc.commons.io.resource.FileSystemResource;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.pool.IObjectPool;
 import com.phloc.commons.pool.ObjectPool;
@@ -123,6 +125,12 @@ public final class XMLReader
   }
 
   @Nullable
+  public static Document readXMLDOM (@Nonnull final File aFile) throws SAXException
+  {
+    return readXMLDOM (aFile, null, null);
+  }
+
+  @Nullable
   public static Document readXMLDOM (@Nonnull final IReadableResource aIIS) throws SAXException
   {
     return readXMLDOM (aIIS, null, null);
@@ -150,6 +158,12 @@ public final class XMLReader
   public static Document readXMLDOM (@WillClose @Nonnull final InputStream aIS, @Nullable final Schema aSchema) throws SAXException
   {
     return readXMLDOM (aIS, aSchema, null);
+  }
+
+  @Nullable
+  public static Document readXMLDOM (@Nonnull final File aFile, @Nullable final Schema aSchema) throws SAXException
+  {
+    return readXMLDOM (aFile, aSchema, null);
   }
 
   @Nullable
@@ -182,6 +196,12 @@ public final class XMLReader
                                      @Nullable final ErrorHandler aCustomErrorHandler) throws SAXException
   {
     return readXMLDOM (aIS, null, aCustomErrorHandler);
+  }
+
+  @Nullable
+  public static Document readXMLDOM (@Nonnull final File aFile, @Nullable final ErrorHandler aCustomErrorHandler) throws SAXException
+  {
+    return readXMLDOM (aFile, null, aCustomErrorHandler);
   }
 
   @Nullable
@@ -267,6 +287,17 @@ public final class XMLReader
     {
       StreamUtils.close (aIS);
     }
+  }
+
+  @Nullable
+  public static Document readXMLDOM (@Nonnull final File aFile,
+                                     @Nullable final Schema aSchema,
+                                     @Nullable final ErrorHandler aCustomErrorHandler) throws SAXException
+  {
+    if (aFile == null)
+      throw new NullPointerException ("file");
+
+    return readXMLDOM (new FileSystemResource (aFile), aSchema, aCustomErrorHandler);
   }
 
   @Nullable
