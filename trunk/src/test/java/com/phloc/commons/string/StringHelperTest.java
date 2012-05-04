@@ -1591,7 +1591,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
-  public void testGetCharacterCount ()
+  public void testGetCharacterCountInt ()
   {
     int iVal = 1;
     for (int i = 1; i <= 10; ++i)
@@ -1605,7 +1605,13 @@ public final class StringHelperTest extends AbstractPhlocTestCase
       assertEquals (1 + i, StringHelper.getCharacterCount (iVal));
       iVal *= 10;
     }
+    assertEquals (11, StringHelper.getCharacterCount (Integer.MIN_VALUE + 1));
+    assertEquals (10, StringHelper.getCharacterCount (Integer.MAX_VALUE));
+  }
 
+  @Test
+  public void testGetCharacterCountLong ()
+  {
     long lVal = 1;
     for (int i = 1; i <= 19; ++i)
     {
@@ -1618,6 +1624,8 @@ public final class StringHelperTest extends AbstractPhlocTestCase
       assertEquals (1 + i, StringHelper.getCharacterCount (lVal));
       lVal *= 10;
     }
+    assertEquals (20, StringHelper.getCharacterCount (Long.MIN_VALUE + 1));
+    assertEquals (19, StringHelper.getCharacterCount (Long.MAX_VALUE));
   }
 
   @Test

@@ -42,6 +42,7 @@ import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.collections.ArrayHelper;
+import com.phloc.commons.math.MathHelper;
 
 /**
  * Generic string transformation and helper methods. If you need to modify a
@@ -1091,7 +1092,7 @@ public final class StringHelper
   public static String leadingZero (final int nValue, final int nChars)
   {
     final boolean bNeg = nValue < 0;
-    final String sValue = Integer.toString (bNeg ? -nValue : nValue);
+    final String sValue = Integer.toString (MathHelper.abs (nValue));
     if (sValue.length () >= nChars)
       return bNeg ? '-' + sValue : sValue;
 
@@ -1108,7 +1109,7 @@ public final class StringHelper
   public static String leadingZero (final long nValue, final int nChars)
   {
     final boolean bNeg = nValue < 0;
-    final String sValue = Long.toString (bNeg ? -nValue : nValue);
+    final String sValue = Long.toString (MathHelper.abs (nValue));
     if (sValue.length () >= nChars)
       return bNeg ? '-' + sValue : sValue;
 
@@ -2038,11 +2039,11 @@ public final class StringHelper
   @Nonnegative
   public static int getCharacterCount (final int nValue)
   {
-    final int nPrefix = nValue < 0 ? 2 : 1;
-    final int nRealValue = Math.abs (nValue);
-
     // index is always one character less than the real size; that's why nPrefix
     // is 1 more!
+    final int nPrefix = nValue < 0 ? 2 : 1;
+    final int nRealValue = MathHelper.abs (nValue);
+
     for (int nIndex = 0;; nIndex++)
       if (nRealValue <= s_aSizeTableInt[nIndex])
         return nPrefix + nIndex;
@@ -2059,11 +2060,11 @@ public final class StringHelper
   @Nonnegative
   public static int getCharacterCount (final long nValue)
   {
-    final int nPrefix = nValue < 0 ? 2 : 1;
-    final long nRealValue = Math.abs (nValue);
-
     // index is always one character less than the real size; that's why nPrefix
     // is 1 more!
+    final int nPrefix = nValue < 0 ? 2 : 1;
+    final long nRealValue = MathHelper.abs (nValue);
+
     for (int nIndex = 0;; nIndex++)
       if (nRealValue <= s_aSizeTableLong[nIndex])
         return nPrefix + nIndex;
@@ -2091,7 +2092,7 @@ public final class StringHelper
    * a <code>null</code> new-value, which is than interpreted as an empty string
    * instead.
    * 
-   * @param sLiteral
+   * @param sInput
    *        The input string where the text should be replace. If this parameter
    *        is <code>null</code> or empty, no replacement is done.
    * @param sOld
@@ -2102,11 +2103,11 @@ public final class StringHelper
    * @return The input string as is, if the input string is empty or if the
    *         string to be replaced is not contained.
    */
-  public static String replaceAllSafe (@Nullable final String sLiteral,
+  public static String replaceAllSafe (@Nullable final String sInput,
                                        @Nonnull final String sOld,
                                        @Nullable final CharSequence sNew)
   {
-    return replaceAll (sLiteral, sOld, getNotNull (sNew, ""));
+    return replaceAll (sInput, sOld, getNotNull (sNew, ""));
   }
 
   /**
@@ -2117,7 +2118,7 @@ public final class StringHelper
    * method is inherently thread safe since {@link String} is immutable and
    * we're operating on different temporary {@link StringBuilder} objects.
    * 
-   * @param sLiteral
+   * @param sInput
    *        The input string where the text should be replace. If this parameter
    *        is <code>null</code> or empty, no replacement is done.
    * @param sOld
@@ -2131,7 +2132,7 @@ public final class StringHelper
    *         replaced is not contained.
    */
   @Nullable
-  public static String replaceAll (@Nullable final String sLiteral,
+  public static String replaceAll (@Nullable final String sInput,
                                    @Nonnull final String sOld,
                                    @Nonnull final CharSequence sNew)
   {
@@ -2141,36 +2142,36 @@ public final class StringHelper
       throw new NullPointerException ("newText");
 
     // Is input string empty?
-    if (hasNoText (sLiteral))
-      return sLiteral;
+    if (hasNoText (sInput))
+      return sInput;
 
     // Replace old with the same new?
     final int nOldLength = sOld.length ();
     final int nNewLength = sNew.length ();
     if (nOldLength == nNewLength && sOld.equals (sNew))
-      return sLiteral;
+      return sInput;
 
     if (nOldLength == 1 && nNewLength == 1)
     {
       // Use char version which is more efficient
-      return replaceAll (sLiteral, sOld.charAt (0), sNew.charAt (0));
+      return replaceAll (sInput, sOld.charAt (0), sNew.charAt (0));
     }
 
     // Does the old text occur anywhere?
-    int nIndex = sLiteral.indexOf (sOld, 0);
+    int nIndex = sInput.indexOf (sOld, 0);
     if (nIndex == -1)
-      return sLiteral;
+      return sInput;
 
     // build output buffer
-    final StringBuilder ret = new StringBuilder (nOldLength >= nNewLength ? sLiteral.length () : sLiteral.length () * 2);
+    final StringBuilder ret = new StringBuilder (nOldLength >= nNewLength ? sInput.length () : sInput.length () * 2);
     int nOldIndex = 0;
     do
     {
-      ret.append (sLiteral, nOldIndex, nIndex).append (sNew);
+      ret.append (sInput, nOldIndex, nIndex).append (sNew);
       nIndex += nOldLength;
       nOldIndex = nIndex;
-    } while ((nIndex = sLiteral.indexOf (sOld, nIndex)) != -1);
-    ret.append (sLiteral, nOldIndex, sLiteral.length ());
+    } while ((nIndex = sInput.indexOf (sOld, nIndex)) != -1);
+    ret.append (sInput, nOldIndex, sInput.length ());
     return ret.toString ();
   }
 
@@ -2182,7 +2183,7 @@ public final class StringHelper
    * This method is inherently thread safe since {@link String} is immutable and
    * we're operating on different temporary {@link StringBuilder} objects.
    * 
-   * @param sLiteral
+   * @param sInput
    *        The input string where the text should be replace. If this parameter
    *        is <code>null</code> or empty, no replacement is done.
    * @param cOld
@@ -2196,31 +2197,31 @@ public final class StringHelper
    *         replaced is not contained.
    */
   @Nullable
-  public static String replaceAll (@Nullable final String sLiteral, @Nonnull final char cOld, @Nonnull final char cNew)
+  public static String replaceAll (@Nullable final String sInput, @Nonnull final char cOld, @Nonnull final char cNew)
   {
     // Is input string empty?
-    if (hasNoText (sLiteral))
-      return sLiteral;
+    if (hasNoText (sInput))
+      return sInput;
 
     // Replace old with the same new?
     if (cOld == cNew)
-      return sLiteral;
+      return sInput;
 
     // Does the old text occur anywhere?
-    int nIndex = sLiteral.indexOf (cOld, 0);
+    int nIndex = sInput.indexOf (cOld, 0);
     if (nIndex == -1)
-      return sLiteral;
+      return sInput;
 
     // build output buffer
-    final StringBuilder ret = new StringBuilder (sLiteral.length ());
+    final StringBuilder ret = new StringBuilder (sInput.length ());
     int nOldIndex = 0;
     do
     {
-      ret.append (sLiteral, nOldIndex, nIndex).append (cNew);
+      ret.append (sInput, nOldIndex, nIndex).append (cNew);
       nIndex++;
       nOldIndex = nIndex;
-    } while ((nIndex = sLiteral.indexOf (cOld, nIndex)) != -1);
-    ret.append (sLiteral, nOldIndex, sLiteral.length ());
+    } while ((nIndex = sInput.indexOf (cOld, nIndex)) != -1);
+    ret.append (sInput, nOldIndex, sInput.length ());
     return ret.toString ();
   }
 
@@ -2272,7 +2273,7 @@ public final class StringHelper
    * 
    * @param aInput
    *        Input char array. May not be <code>null</code>.
-   * @param aPatterns
+   * @param aSearch
    *        The search patterns. May not be <code>null</code>.
    * @param aReplacements
    *        The replacements to be performed. May not be <code>null</code>. The
@@ -2283,16 +2284,17 @@ public final class StringHelper
    */
   @Nonnull
   public static int getReplaceMultipleResultLength (@Nonnull final char [] aInput,
-                                                    @Nonnull @Nonempty final char [] aPatterns,
+                                                    @Nonnull @Nonempty final char [] aSearch,
                                                     @Nonnull @Nonempty final char [][] aReplacements)
   {
     int nResultLen = 0;
     boolean bAnyReplacement = false;
     for (final char cInput : aInput)
     {
+      // In case no replacement is found use a single char
       int nReplacementLength = 1;
-      for (int nIndex = 0; nIndex < aPatterns.length; nIndex++)
-        if (cInput == aPatterns[nIndex])
+      for (int nIndex = 0; nIndex < aSearch.length; nIndex++)
+        if (cInput == aSearch[nIndex])
         {
           nReplacementLength = aReplacements[nIndex].length;
           bAnyReplacement = true;
@@ -2310,7 +2312,7 @@ public final class StringHelper
    * 
    * @param sInput
    *        The input string.
-   * @param aPatterns
+   * @param aSearch
    *        The characters to replace.
    * @param aReplacements
    *        The new strings to be inserted instead. Must have the same array
@@ -2320,14 +2322,14 @@ public final class StringHelper
    */
   @Nonnull
   public static char [] replaceMultiple (@Nullable final String sInput,
-                                         @Nonnull final char [] aPatterns,
+                                         @Nonnull final char [] aSearch,
                                          @Nonnull final char [][] aReplacements)
   {
-    if (aPatterns == null)
-      throw new NullPointerException ("patterns");
+    if (aSearch == null)
+      throw new NullPointerException ("search");
     if (aReplacements == null)
       throw new NullPointerException ("replacements");
-    if (aPatterns.length != aReplacements.length)
+    if (aSearch.length != aReplacements.length)
       throw new IllegalArgumentException ("array length mismatch");
 
     // Any input text?
@@ -2338,32 +2340,32 @@ public final class StringHelper
     final char [] aInput = sInput.toCharArray ();
 
     // Any replacement patterns?
-    if (aPatterns.length == 0)
+    if (aSearch.length == 0)
       return aInput;
 
-    int nIndex;
-
     // get result length
-    final int nResultLen = getReplaceMultipleResultLength (aInput, aPatterns, aReplacements);
+    final int nResultLen = getReplaceMultipleResultLength (aInput, aSearch, aReplacements);
 
     // nothing to replace in here?
     if (nResultLen == CGlobal.ILLEGAL_UINT)
       return aInput;
 
     // build result
-    final char [] ret = new char [nResultLen];
-    nIndex = 0;
-    boolean bFoundReplacement;
+    final char [] aOutput = new char [nResultLen];
+    int nOutputIndex = 0;
+
+    // For all input chars
     for (final char cInput : aInput)
     {
-      bFoundReplacement = false;
-      for (int nPatternIndex = 0; nPatternIndex < aPatterns.length; nPatternIndex++)
+      boolean bFoundReplacement = false;
+      for (int nPatternIndex = 0; nPatternIndex < aSearch.length; nPatternIndex++)
       {
-        if (cInput == aPatterns[nPatternIndex])
+        if (cInput == aSearch[nPatternIndex])
         {
           final char [] aReplacement = aReplacements[nPatternIndex];
-          System.arraycopy (aReplacement, 0, ret, nIndex, aReplacement.length);
-          nIndex += aReplacement.length;
+          final int nReplacementLength = aReplacement.length;
+          System.arraycopy (aReplacement, 0, aOutput, nOutputIndex, nReplacementLength);
+          nOutputIndex += nReplacementLength;
           bFoundReplacement = true;
           break;
         }
@@ -2371,11 +2373,11 @@ public final class StringHelper
       if (!bFoundReplacement)
       {
         // copy char as is
-        ret[nIndex++] = cInput;
+        aOutput[nOutputIndex++] = cInput;
       }
     }
 
-    return ret;
+    return aOutput;
   }
 
   /**
@@ -2386,7 +2388,7 @@ public final class StringHelper
    * 
    * @param sInput
    *        The input string.
-   * @param aPatterns
+   * @param aSearch
    *        The characters to replace.
    * @param aReplacements
    *        The new strings to be inserted instead. Must have the same array
@@ -2399,15 +2401,15 @@ public final class StringHelper
    */
   @Nonnegative
   public static int replaceMultipleTo (@Nullable final String sInput,
-                                       @Nonnull final char [] aPatterns,
+                                       @Nonnull final char [] aSearch,
                                        @Nonnull final char [][] aReplacements,
                                        @Nonnull final Writer aTarget) throws IOException
   {
-    if (aPatterns == null)
+    if (aSearch == null)
       throw new NullPointerException ("patterns");
     if (aReplacements == null)
       throw new NullPointerException ("replacements");
-    if (aPatterns.length != aReplacements.length)
+    if (aSearch.length != aReplacements.length)
       throw new IllegalArgumentException ("array length mismatch");
     if (aTarget == null)
       throw new NullPointerException ("target");
@@ -2415,7 +2417,7 @@ public final class StringHelper
     if (hasNoText (sInput))
       return 0;
 
-    if (aPatterns.length == 0)
+    if (aSearch.length == 0)
     {
       // No modifications required
       aTarget.write (sInput);
@@ -2427,18 +2429,18 @@ public final class StringHelper
     // for all input string characters
     int nFirstNonReplace = 0;
     int nInputIndex = 0;
-    int nReplacements = 0;
+    int nTotalReplacements = 0;
     for (final char cInput : aInput)
     {
-      for (int nPatternIndex = 0; nPatternIndex < aPatterns.length; nPatternIndex++)
+      for (int nPatternIndex = 0; nPatternIndex < aSearch.length; nPatternIndex++)
       {
-        if (cInput == aPatterns[nPatternIndex])
+        if (cInput == aSearch[nPatternIndex])
         {
           if (nFirstNonReplace < nInputIndex)
             aTarget.write (aInput, nFirstNonReplace, nInputIndex - nFirstNonReplace);
           nFirstNonReplace = nInputIndex + 1;
           aTarget.write (aReplacements[nPatternIndex]);
-          ++nReplacements;
+          ++nTotalReplacements;
           break;
         }
       }
@@ -2446,7 +2448,7 @@ public final class StringHelper
     }
     if (nFirstNonReplace < nInputIndex)
       aTarget.write (aInput, nFirstNonReplace, nInputIndex - nFirstNonReplace);
-    return nReplacements;
+    return nTotalReplacements;
   }
 
   /**
@@ -2465,11 +2467,11 @@ public final class StringHelper
   @Nullable
   public static String replaceMultiple (@Nullable final String sInput, @Nullable final Map <String, String> aTransTable)
   {
-    String ret = sInput;
-    if (ret != null && aTransTable != null)
+    String sOutput = sInput;
+    if (sOutput != null && aTransTable != null)
       for (final Entry <String, String> aEntry : aTransTable.entrySet ())
-        ret = replaceAll (ret, aEntry.getKey (), aEntry.getValue ());
-    return ret;
+        sOutput = replaceAll (sOutput, aEntry.getKey (), aEntry.getValue ());
+    return sOutput;
   }
 
   /**
