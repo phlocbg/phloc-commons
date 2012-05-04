@@ -15,12 +15,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.jaxb;
+package com.phloc.commons.jaxb.validation;
 
 import java.net.URL;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 import javax.xml.bind.ValidationEvent;
 import javax.xml.bind.ValidationEventHandler;
 import javax.xml.bind.ValidationEventLocator;
@@ -29,11 +30,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 
+import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.error.EErrorLevel;
 import com.phloc.commons.error.IResourceError;
 import com.phloc.commons.error.IResourceLocation;
 import com.phloc.commons.error.ResourceError;
 import com.phloc.commons.error.ResourceLocation;
+import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.xml.serialize.XMLWriter;
 
 /**
@@ -42,23 +45,52 @@ import com.phloc.commons.xml.serialize.XMLWriter;
  * 
  * @author philip
  */
+@NotThreadSafe
 public abstract class AbstractValidationEventHandler implements ValidationEventHandler
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractValidationEventHandler.class);
+
   private final ValidationEventHandler m_aOrigHandler;
 
+  /**
+   * Constructor not encapsulating any existing handler.
+   */
   public AbstractValidationEventHandler ()
   {
     this (null);
   }
 
+  /**
+   * Constructor.
+   * 
+   * @param aOrigHandler
+   *        Optional validation event handler to be invoked after this handler.
+   *        May be <code>null</code>.
+   */
   public AbstractValidationEventHandler (@Nullable final ValidationEventHandler aOrigHandler)
   {
     m_aOrigHandler = aOrigHandler;
   }
 
+  /**
+   * @return The original validation event handler passed in the constructor.
+   */
+  @Nullable
+  public ValidationEventHandler getOriginalHandler ()
+  {
+    return m_aOrigHandler;
+  }
+
+  /**
+   * Get the error level matching the passed JAXB severity.
+   * 
+   * @param nSeverity
+   *        The JAXB severity.
+   * @return The matching {@link EErrorLevel}. Never <code>null</code>.
+   */
   @Nonnull
-  private static EErrorLevel _getErrorLevel (final int nSeverity)
+  @OverrideOnDemand
+  protected EErrorLevel getErrorLevel (final int nSeverity)
   {
     switch (nSeverity)
     {
@@ -99,9 +131,26 @@ public abstract class AbstractValidationEventHandler implements ValidationEventH
 
   protected abstract void onEvent (@Nonnull IResourceError aEvent);
 
+  /**
+   * Should the processing be continued? By default it is always continued, as
+   * long as no fatal error occurs. This method is only invoked, if no original
+   * handler is present.
+   * 
+   * @param eErrorLevel
+   *        The error level to be checked.
+   * @return <code>true</code> if processing should be continued,
+   *         <code>false</code> if processing should stop.
+   */
+  @OverrideOnDemand
+  protected boolean continueProcessing (@Nonnull final EErrorLevel eErrorLevel)
+  {
+    // Continue as long as it is no fatal error. On Fatal error stop!
+    return eErrorLevel.isLessSevereThan (EErrorLevel.FATAL_ERROR);
+  }
+
   public final boolean handleEvent (@Nonnull final ValidationEvent aEvent)
   {
-    final EErrorLevel eErrorLevel = _getErrorLevel (aEvent.getSeverity ());
+    final EErrorLevel eErrorLevel = getErrorLevel (aEvent.getSeverity ());
 
     // call our callback
     final ValidationEventLocator aLocator = aEvent.getLocator ();
@@ -136,7 +185,13 @@ public abstract class AbstractValidationEventHandler implements ValidationEventH
       return m_aOrigHandler.handleEvent (aEvent);
     }
 
-    // Continue as long as it is no fatal error. On Fatal error stop!
-    return eErrorLevel != EErrorLevel.FATAL_ERROR;
+    // Continue processing?
+    return continueProcessing (eErrorLevel);
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("origHandler", m_aOrigHandler).toString ();
   }
 }

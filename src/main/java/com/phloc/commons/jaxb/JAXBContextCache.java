@@ -55,12 +55,12 @@ public final class JAXBContextCache extends AbstractNotifyingCache <Package, JAX
 
   @Override
   @Nullable
-  protected JAXBContext getValueToCache (@Nullable final Package aPackage)
+  public JAXBContext getValueToCache (@Nullable final Package aPackage)
   {
     if (aPackage == null)
       return null;
 
-    if (GlobalDebug.isDebugMode () && s_aLogger.isInfoEnabled ())
+    if (GlobalDebug.isDebugMode ())
       s_aLogger.info ("Creating JAXB context for package " + aPackage.getName ());
 
     try
@@ -87,7 +87,7 @@ public final class JAXBContextCache extends AbstractNotifyingCache <Package, JAX
     if (aPackage.getAnnotation (XmlSchema.class) == null)
     {
       // E.g. an internal class - try anyway!
-      if (GlobalDebug.isDebugMode () && s_aLogger.isInfoEnabled ())
+      if (GlobalDebug.isDebugMode ())
         s_aLogger.info ("Creating JAXB context for class " + aClass.getName ());
 
       try
