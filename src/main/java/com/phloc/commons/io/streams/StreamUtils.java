@@ -1055,6 +1055,17 @@ public final class StreamUtils
     }
   }
 
+  /**
+   * Fully skip the passed amounts in the input stream. Only forward skipping is
+   * possible!
+   * 
+   * @param aIS
+   *        The input stream to skip in.
+   * @param nBytesToSkip
+   *        The number of bytes to skip. Must be &ge; 0.
+   * @throws IOException
+   *         In case something goes wrong internally
+   */
   public static void skipFully (@Nonnull final InputStream aIS, @Nonnegative final long nBytesToSkip) throws IOException
   {
     if (aIS == null)
@@ -1065,6 +1076,7 @@ public final class StreamUtils
     long nRemaining = nBytesToSkip;
     while (nRemaining > 0)
     {
+      // May only return a partial skip
       final long nSkipped = aIS.skip (nRemaining);
       if (nSkipped == 0)
       {
@@ -1072,11 +1084,11 @@ public final class StreamUtils
         // -> blocking read!
         if (aIS.read () == -1)
         {
-          throw new EOFException ("Could not skip " +
+          throw new EOFException ("Failed to skip a total of " +
                                   nBytesToSkip +
-                                  " bytes. Skipped " +
+                                  " bytes on input stream. Only skipped " +
                                   (nBytesToSkip - nRemaining) +
-                                  " bytes until EOF!");
+                                  " bytes so far!");
         }
         nRemaining--;
       }
@@ -1088,11 +1100,36 @@ public final class StreamUtils
     }
   }
 
+  /**
+   * Read the whole buffer from the input stream.
+   * 
+   * @param aIS
+   *        The input stream to read from. May not be <code>null</code>.
+   * @param aBuffer
+   *        The buffer to read from. May not be <code>null</code>.
+   * @throws IOException
+   *         In case reading fails
+   */
   public static void readFully (@Nonnull final InputStream aIS, @Nonnull final byte [] aBuffer) throws IOException
   {
     readFully (aIS, aBuffer, 0, aBuffer.length);
   }
 
+  /**
+   * Read the whole buffer from the input stream.
+   * 
+   * @param aIS
+   *        The input stream to read from. May not be <code>null</code>.
+   * @param aBuffer
+   *        The buffer to read from. May not be <code>null</code>.
+   * @param nOfs
+   *        The offset into the destination buffer to use. May not be &lt; 0.
+   * @param nLen
+   *        The number of bytes to read into the destination buffer to use. May
+   *        not be &lt; 0.
+   * @throws IOException
+   *         In case reading fails
+   */
   public static void readFully (@Nonnull final InputStream aIS,
                                 @Nonnull final byte [] aBuffer,
                                 @Nonnegative final int nOfs,
