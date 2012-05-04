@@ -24,12 +24,27 @@ import javax.annotation.Nonnull;
 
 import com.phloc.commons.string.ToStringGenerator;
 
+/**
+ * This is a helper class to create an {@link Enumeration} from an existing
+ * {@link Iterator}
+ * 
+ * @author philip
+ * @param <ELEMENTTYPE>
+ *        Type to be enumerated
+ */
 public final class EnumerationFromIterator <ELEMENTTYPE> implements Enumeration <ELEMENTTYPE>
 {
   private final Iterator <ELEMENTTYPE> m_aIter;
 
+  public EnumerationFromIterator (@Nonnull final Iterable <ELEMENTTYPE> aCont)
+  {
+    this (aCont.iterator ());
+  }
+
   public EnumerationFromIterator (@Nonnull final Iterator <ELEMENTTYPE> aIter)
   {
+    if (aIter == null)
+      throw new NullPointerException ("iterator");
     m_aIter = aIter;
   }
 
@@ -53,5 +68,11 @@ public final class EnumerationFromIterator <ELEMENTTYPE> implements Enumeration 
   public static <ELEMENTTYPE> EnumerationFromIterator <ELEMENTTYPE> create (@Nonnull final Iterator <ELEMENTTYPE> aIter)
   {
     return new EnumerationFromIterator <ELEMENTTYPE> (aIter);
+  }
+
+  @Nonnull
+  public static <ELEMENTTYPE> EnumerationFromIterator <ELEMENTTYPE> create (@Nonnull final Iterable <ELEMENTTYPE> aCont)
+  {
+    return new EnumerationFromIterator <ELEMENTTYPE> (aCont);
   }
 }
