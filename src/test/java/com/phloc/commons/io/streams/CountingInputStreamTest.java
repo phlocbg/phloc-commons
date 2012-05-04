@@ -40,6 +40,7 @@ public final class CountingInputStreamTest
     aCIS.read ();
     StreamUtils.copyInputStreamToOutputStream (aCIS, new NonBlockingByteArrayOutputStream ());
     assertEquals (sTestString.length (), aCIS.getBytesRead ());
+    assertEquals (sTestString.length (), aCIS.getPosition ());
     PhlocTestUtils.testToStringImplementation (aCIS);
   }
 }

@@ -19,6 +19,7 @@ package com.phloc.commons.io.streams;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
+import java.io.EOFException;
 import java.io.Flushable;
 import java.io.IOException;
 import java.io.InputStream;
@@ -302,6 +303,36 @@ public final class StreamUtils
     return copyInputStreamToOutputStream (aIS, aOS, aBuffer, null);
   }
 
+  @Nonnegative
+  private static long _copy (@Nonnull final InputStream aIS,
+                             @Nonnull final OutputStream aOS,
+                             @Nonnull final byte [] aBuffer) throws IOException
+  {
+    long nTotalBytesCopied = 0;
+    int nBytesRead;
+    while ((nBytesRead = aIS.read (aBuffer, 0, aBuffer.length)) > -1)
+    {
+      aOS.write (aBuffer, 0, nBytesRead);
+      nTotalBytesCopied += nBytesRead;
+    }
+    return nTotalBytesCopied;
+  }
+
+  @Nonnegative
+  private static long _copy (@Nonnull final Reader aReader,
+                             @Nonnull final Writer aWriter,
+                             @Nonnull final char [] aBuffer) throws IOException
+  {
+    long nTotalBytesCopied = 0;
+    int nBytesRead;
+    while ((nBytesRead = aReader.read (aBuffer, 0, aBuffer.length)) > -1)
+    {
+      aWriter.write (aBuffer, 0, nBytesRead);
+      nTotalBytesCopied += nBytesRead;
+    }
+    return nTotalBytesCopied;
+  }
+
   /**
    * Pass the content of the given input stream to the given output stream. The
    * input stream is automatically closed, whereas the output stream stays open!
@@ -334,14 +365,12 @@ public final class StreamUtils
       if (aIS != null && aOS != null)
       {
         // both streams are not null
-        int nBytesRead;
-        long nTotalBytesCopied = 0;
-        while ((nBytesRead = aIS.read (aBuffer)) > -1)
-        {
-          aOS.write (aBuffer, 0, nBytesRead);
-          nTotalBytesCopied += nBytesRead;
-        }
+        final long nTotalBytesCopied = _copy (aIS, aOS, aBuffer);
+
+        // Add to statistics
         s_aByteSizeHdl.addSize (nTotalBytesCopied);
+
+        // Remember copied bytes?
         if (aCopyByteCount != null)
           aCopyByteCount.set (nTotalBytesCopied);
         return ESuccess.SUCCESS;
@@ -600,14 +629,12 @@ public final class StreamUtils
       if (aReader != null && aWriter != null)
       {
         // both streams are not null
-        int nBytesRead;
-        long nTotalCharsCopied = 0;
-        while ((nBytesRead = aReader.read (aBuffer)) > -1)
-        {
-          aWriter.write (aBuffer, 0, nBytesRead);
-          nTotalCharsCopied += nBytesRead;
-        }
+        final long nTotalCharsCopied = _copy (aReader, aWriter, aBuffer);
+
+        // Add to statistics
         s_aCharSizeHdl.addSize (nTotalCharsCopied);
+
+        // Remember number of copied characters
         if (aCopyCharCount != null)
           aCopyCharCount.set (nTotalCharsCopied);
         return ESuccess.SUCCESS;
@@ -1025,6 +1052,68 @@ public final class StreamUtils
     catch (final UnsupportedEncodingException ex)
     {
       throw new IllegalArgumentException ("Failed to create Writer for charset '" + sCharset + "'", ex);
+    }
+  }
+
+  public static void skipFully (@Nonnull final InputStream aIS, @Nonnegative final long nBytesToSkip) throws IOException
+  {
+    if (aIS == null)
+      throw new NullPointerException ("InputStream");
+    if (nBytesToSkip < 0)
+      throw new IllegalArgumentException ("Cannot skip " + nBytesToSkip + " bytes. Only forward skip is possible!");
+
+    long nRemaining = nBytesToSkip;
+    while (nRemaining > 0)
+    {
+      final long nSkipped = aIS.skip (nRemaining);
+      if (nSkipped == 0)
+      {
+        // Check if we're at the end of the file or not
+        // -> blocking read!
+        if (aIS.read () == -1)
+        {
+          throw new EOFException ("Could not skip " +
+                                  nBytesToSkip +
+                                  " bytes. Skipped " +
+                                  (nBytesToSkip - nRemaining) +
+                                  " bytes until EOF!");
+        }
+        nRemaining--;
+      }
+      else
+      {
+        // Skipped at least one char
+        nRemaining -= nSkipped;
+      }
+    }
+  }
+
+  public static void readFully (@Nonnull final InputStream aIS, @Nonnull final byte [] aBuffer) throws IOException
+  {
+    readFully (aIS, aBuffer, 0, aBuffer.length);
+  }
+
+  public static void readFully (@Nonnull final InputStream aIS,
+                                @Nonnull final byte [] aBuffer,
+                                @Nonnegative final int nOfs,
+                                @Nonnegative final int nLen) throws IOException
+  {
+    if (aIS == null)
+      throw new NullPointerException ("inputStream");
+    if (nOfs < 0 || nLen < 0 || (nOfs + nLen) > aBuffer.length)
+      throw new IllegalArgumentException ("ofs:" + nOfs + ";len=" + nLen + ";bufLen=" + aBuffer.length);
+
+    int nTotalBytesRead = 0;
+    while (nTotalBytesRead < nLen)
+    {
+      final int nBytesRead = aIS.read (aBuffer, nOfs + nTotalBytesRead, nLen - nTotalBytesRead);
+      if (nBytesRead < 0)
+        throw new EOFException ("Failed to read a total of " +
+                                nLen +
+                                " bytes from input stream. Only read " +
+                                nTotalBytesRead +
+                                " bytes so far.");
+      nTotalBytesRead += nBytesRead;
     }
   }
 }

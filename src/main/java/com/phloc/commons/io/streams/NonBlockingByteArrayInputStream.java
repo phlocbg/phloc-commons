@@ -20,6 +20,7 @@ package com.phloc.commons.io.streams;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 /**
@@ -260,4 +261,13 @@ public class NonBlockingByteArrayInputStream extends InputStream implements Seri
   @Override
   public void close ()
   {}
+
+  /**
+   * @return The position where we are in the stream.
+   */
+  @Nonnegative
+  public int getPosition ()
+  {
+    return m_nPos;
+  }
 }

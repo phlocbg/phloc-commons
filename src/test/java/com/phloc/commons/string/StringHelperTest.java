@@ -1871,44 +1871,44 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   {
     NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
     StringHelper.replaceMultipleTo ("a", new char [] { 'a' }, new char [] [] { "bb".toCharArray () }, aSW);
-    assertEquals ("bb", aSW.getBuffer ().toString ());
+    assertEquals ("bb", aSW.toString ());
 
     aSW = new NonBlockingStringWriter ();
     StringHelper.replaceMultipleTo ("aa", new char [] { 'a' }, new char [] [] { "bb".toCharArray () }, aSW);
-    assertEquals ("bbbb", aSW.getBuffer ().toString ());
+    assertEquals ("bbbb", aSW.toString ());
 
     aSW = new NonBlockingStringWriter ();
     StringHelper.replaceMultipleTo ("cdc", new char [] { 'a' }, new char [] [] { "bb".toCharArray () }, aSW);
-    assertEquals ("cdc", aSW.getBuffer ().toString ());
+    assertEquals ("cdc", aSW.toString ());
 
     aSW = new NonBlockingStringWriter ();
     StringHelper.replaceMultipleTo ("cac", new char [] { 'a' }, new char [] [] { "bb".toCharArray () }, aSW);
-    assertEquals ("cbbc", aSW.getBuffer ().toString ());
+    assertEquals ("cbbc", aSW.toString ());
 
     aSW = new NonBlockingStringWriter ();
     StringHelper.replaceMultipleTo ("cac",
                                     new char [] { 'a', 'c' },
                                     new char [] [] { "bb".toCharArray (), "dd".toCharArray () },
                                     aSW);
-    assertEquals ("ddbbdd", aSW.getBuffer ().toString ());
+    assertEquals ("ddbbdd", aSW.toString ());
 
     aSW = new NonBlockingStringWriter ();
     StringHelper.replaceMultipleTo ("<cac>",
                                     new char [] { 'a', 'c' },
                                     new char [] [] { "bb".toCharArray (), "dd".toCharArray () },
                                     aSW);
-    assertEquals ("<ddbbdd>", aSW.getBuffer ().toString ());
+    assertEquals ("<ddbbdd>", aSW.toString ());
 
     aSW = new NonBlockingStringWriter ();
     StringHelper.replaceMultipleTo ("",
                                     new char [] { 'a', 'c' },
                                     new char [] [] { "bb".toCharArray (), "dd".toCharArray () },
                                     aSW);
-    assertEquals ("", aSW.getBuffer ().toString ());
+    assertEquals ("", aSW.toString ());
 
     aSW = new NonBlockingStringWriter ();
     StringHelper.replaceMultipleTo ("any", new char [0], new char [0] [], aSW);
-    assertEquals ("any", aSW.getBuffer ().toString ());
+    assertEquals ("any", aSW.toString ());
 
     try
     {
