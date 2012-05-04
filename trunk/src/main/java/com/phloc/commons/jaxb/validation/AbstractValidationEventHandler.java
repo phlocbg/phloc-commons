@@ -50,7 +50,7 @@ public abstract class AbstractValidationEventHandler implements ValidationEventH
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractValidationEventHandler.class);
 
-  private final ValidationEventHandler m_aOrigHandler;
+  private final ValidationEventHandler m_aWrappedHandler;
 
   /**
    * Constructor not encapsulating any existing handler.
@@ -63,22 +63,22 @@ public abstract class AbstractValidationEventHandler implements ValidationEventH
   /**
    * Constructor.
    * 
-   * @param aOrigHandler
+   * @param aWrappedHandler
    *        Optional validation event handler to be invoked after this handler.
    *        May be <code>null</code>.
    */
-  public AbstractValidationEventHandler (@Nullable final ValidationEventHandler aOrigHandler)
+  public AbstractValidationEventHandler (@Nullable final ValidationEventHandler aWrappedHandler)
   {
-    m_aOrigHandler = aOrigHandler;
+    m_aWrappedHandler = aWrappedHandler;
   }
 
   /**
    * @return The original validation event handler passed in the constructor.
    */
   @Nullable
-  public ValidationEventHandler getOriginalHandler ()
+  public ValidationEventHandler getWrappedHandler ()
   {
-    return m_aOrigHandler;
+    return m_aWrappedHandler;
   }
 
   /**
@@ -133,7 +133,7 @@ public abstract class AbstractValidationEventHandler implements ValidationEventH
 
   /**
    * Should the processing be continued? By default it is always continued, as
-   * long as no fatal error occurs. This method is only invoked, if no original
+   * long as no fatal error occurs. This method is only invoked, if no wrapped
    * handler is present.
    * 
    * @param eErrorLevel
@@ -179,10 +179,10 @@ public abstract class AbstractValidationEventHandler implements ValidationEventH
     }
     onEvent (new ResourceError (aLocation, eErrorLevel, sMsg, aEvent.getLinkedException ()));
 
-    if (m_aOrigHandler != null)
+    if (m_aWrappedHandler != null)
     {
-      // call original handler
-      return m_aOrigHandler.handleEvent (aEvent);
+      // call wrapped handler
+      return m_aWrappedHandler.handleEvent (aEvent);
     }
 
     // Continue processing?
@@ -192,6 +192,6 @@ public abstract class AbstractValidationEventHandler implements ValidationEventH
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("origHandler", m_aOrigHandler).toString ();
+    return new ToStringGenerator (this).append ("origHandler", m_aWrappedHandler).toString ();
   }
 }

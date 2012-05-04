@@ -57,7 +57,7 @@ public final class CollectingSAXErrorHandler extends AbstractSAXErrorHandler imp
   }
 
   @Override
-  protected void log (final EErrorLevel eErrorLevel, final SAXParseException aException)
+  protected void log (@Nonnull final EErrorLevel eErrorLevel, final SAXParseException aException)
   {
     m_aRWLock.writeLock ().lock ();
     try

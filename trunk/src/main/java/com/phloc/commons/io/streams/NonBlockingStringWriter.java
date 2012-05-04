@@ -24,6 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.IHasStringRepresentation;
 import com.phloc.commons.annotations.DevelopersNote;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.annotations.ReturnsMutableObject;
@@ -36,7 +37,7 @@ import com.phloc.commons.annotations.ReturnsMutableObject;
  * @author philip
  */
 @NotThreadSafe
-public class NonBlockingStringWriter extends Writer
+public class NonBlockingStringWriter extends Writer implements IHasStringRepresentation
 {
   private final StringBuilder m_aSB;
 
@@ -251,12 +252,29 @@ public class NonBlockingStringWriter extends Writer
    */
   @Nonnull
   @ReturnsMutableCopy
-  public char [] toCharArray ()
+  public char [] getAsCharArray ()
   {
     final int nChars = m_aSB.length ();
     final char [] ret = new char [nChars];
     m_aSB.getChars (0, nChars, ret, 0);
     return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  @Deprecated
+  public char [] toCharArray ()
+  {
+    return getAsCharArray ();
+  }
+
+  /**
+   * Return the buffer's current value as a string.
+   */
+  @Nonnull
+  public String getAsString ()
+  {
+    return m_aSB.toString ();
   }
 
   /**
@@ -265,6 +283,6 @@ public class NonBlockingStringWriter extends Writer
   @Override
   public String toString ()
   {
-    return m_aSB.toString ();
+    return getAsString ();
   }
 }

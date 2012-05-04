@@ -675,7 +675,7 @@ public final class StreamUtils
     if (aReader == null)
       return null;
 
-    return getCopy (aReader).toCharArray ();
+    return getCopy (aReader).getAsCharArray ();
   }
 
   /**

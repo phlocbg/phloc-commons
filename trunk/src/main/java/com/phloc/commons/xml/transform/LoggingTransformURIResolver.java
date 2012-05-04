@@ -26,38 +26,30 @@ import javax.xml.transform.URIResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.phloc.commons.string.ToStringGenerator;
-
 /**
  * java.xml.transform {@link URIResolver} that logs to the commandline.
  * 
  * @author philip
  */
 @NotThreadSafe
-public final class LoggingTransformURIResolver implements URIResolver
+public final class LoggingTransformURIResolver extends AbstractTransformURIResolver
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (LoggingTransformURIResolver.class);
-  private final URIResolver m_aWrappedURIResolver;
 
   public LoggingTransformURIResolver ()
   {
-    this (null);
+    super ();
   }
 
   public LoggingTransformURIResolver (@Nullable final URIResolver aWrappedURIResolver)
   {
-    m_aWrappedURIResolver = aWrappedURIResolver;
-  }
-
-  public Source resolve (final String sHref, final String sBase) throws TransformerException
-  {
-    s_aLogger.info ("URIResolver.resolve (" + sHref + ", " + sBase + ")");
-    return m_aWrappedURIResolver == null ? null : m_aWrappedURIResolver.resolve (sHref, sBase);
+    super (aWrappedURIResolver);
   }
 
   @Override
-  public String toString ()
+  protected Source doResolve (final String sHref, final String sBase) throws TransformerException
   {
-    return new ToStringGenerator (this).appendIfNotNull ("wrappedURIResolver", m_aWrappedURIResolver).toString ();
+    s_aLogger.info ("URIResolver.resolve (" + sHref + ", " + sBase + ")");
+    return null;
   }
 }

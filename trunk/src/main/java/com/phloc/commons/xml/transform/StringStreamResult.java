@@ -52,7 +52,13 @@ public final class StringStreamResult extends StreamResult implements IHasString
   @Nonnull
   public String getAsString ()
   {
-    return m_aSW.toString ();
+    return m_aSW.getAsString ();
+  }
+
+  @Nonnull
+  public char [] getAsCharArray ()
+  {
+    return m_aSW.getAsCharArray ();
   }
 
   @Override

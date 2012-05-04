@@ -47,7 +47,7 @@ public final class CollectingTransformErrorListener extends AbstractTransformErr
 
   public CollectingTransformErrorListener ()
   {
-    this (null);
+    super ();
   }
 
   public CollectingTransformErrorListener (@Nullable final ErrorListener aWrappedErrorListener)

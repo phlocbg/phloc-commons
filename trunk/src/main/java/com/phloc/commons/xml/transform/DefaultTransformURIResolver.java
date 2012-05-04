@@ -23,7 +23,6 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.URIResolver;
 
 import com.phloc.commons.io.IReadableResource;
-import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.xml.ls.SimpleLSResourceResolver;
 
 /**
@@ -32,22 +31,21 @@ import com.phloc.commons.xml.ls.SimpleLSResourceResolver;
  * 
  * @author philip
  */
-public final class DefaultTransformURIResolver implements URIResolver
+public final class DefaultTransformURIResolver extends AbstractTransformURIResolver
 {
-  private final URIResolver m_aWrappedURIResolver;
-
   public DefaultTransformURIResolver ()
   {
-    this (null);
+    super ();
   }
 
   public DefaultTransformURIResolver (@Nullable final URIResolver aWrappedURIResolver)
   {
-    m_aWrappedURIResolver = aWrappedURIResolver;
+    super (aWrappedURIResolver);
   }
 
+  @Override
   @Nullable
-  public Source resolve (final String sHref, final String sBase) throws TransformerException
+  protected Source doResolve (final String sHref, final String sBase) throws TransformerException
   {
     try
     {
@@ -59,12 +57,8 @@ public final class DefaultTransformURIResolver implements URIResolver
     {
       throw new TransformerException (sHref + "//" + sBase, ex);
     }
-    return m_aWrappedURIResolver == null ? null : m_aWrappedURIResolver.resolve (sHref, sBase);
-  }
 
-  @Override
-  public String toString ()
-  {
-    return new ToStringGenerator (this).appendIfNotNull ("wrappedURIResolver", m_aWrappedURIResolver).toString ();
+    // Nothing to resolve
+    return null;
   }
 }
