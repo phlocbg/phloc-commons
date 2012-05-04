@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.microdom.serialize;
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
@@ -31,6 +32,7 @@ import org.xml.sax.InputSource;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.io.IInputStreamProvider;
+import com.phloc.commons.io.file.FileUtils;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.xml.serialize.XMLReader;
 
@@ -106,6 +108,21 @@ public final class MicroReader
     if (aIS == null)
       return null;
     return readMicroXML (new InputSource (aIS), aSpecialEntityResolver);
+  }
+
+  @Nullable
+  public static IMicroDocument readMicroXML (@Nullable final File aFile)
+  {
+    return readMicroXML (aFile, null);
+  }
+
+  @Nullable
+  public static IMicroDocument readMicroXML (@Nullable final File aFile,
+                                             @Nullable final EntityResolver aSpecialEntityResolver)
+  {
+    if (aFile == null)
+      return null;
+    return readMicroXML (FileUtils.getInputStream (aFile), aSpecialEntityResolver);
   }
 
   @Nullable
