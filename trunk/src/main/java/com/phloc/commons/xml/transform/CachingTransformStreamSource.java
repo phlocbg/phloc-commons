@@ -33,7 +33,7 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * {@link javax.xml.transform.Source} that ensures that the passed
- * {@link InputStream} is closed. This is achieved by copying the content in a
+ * {@link InputStream} is copied. This is achieved by copying the content in a
  * {@link NonBlockingByteArrayInputStream}.
  * 
  * @author philip
