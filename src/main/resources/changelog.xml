@@ -22,6 +22,21 @@
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
   <entry date="2012-05-07" category="api" action="add">
     <change>
+      <text locale="en">Made *SAXErrorHandler, *ValidationEventHandler and *TransformErrorListener non-final and subclassable</text>
+    </change>
+  </entry>
+  <entry date="2012-05-07" category="api" action="add">
+    <change>
+      <text locale="en">Added a method clearErrors to CollectingSAXErrorHandler, CollectingValidationEventHandler and CollectingTransformErrorListener</text>
+    </change>
+  </entry>
+  <entry date="2012-05-07" category="api" action="change">
+    <change>
+      <text locale="en">Made CollectingSAXErrorHandler thread-safe</text>
+    </change>
+  </entry>
+  <entry date="2012-05-07" category="api" action="add">
+    <change>
       <text locale="en">ResourceErrorGroup now implements IClearable</text>
     </change>
   </entry>

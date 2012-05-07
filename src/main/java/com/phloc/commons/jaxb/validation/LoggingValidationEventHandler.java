@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.error.EErrorLevel;
 import com.phloc.commons.error.IResourceError;
-import com.phloc.commons.jaxb.validation.AbstractValidationEventHandler;
 
 /**
  * An implementation of the JAXB {@link ValidationEventHandler} interface. It
@@ -39,7 +38,8 @@ import com.phloc.commons.jaxb.validation.AbstractValidationEventHandler;
 @NotThreadSafe
 public class LoggingValidationEventHandler extends AbstractValidationEventHandler
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (LoggingValidationEventHandler.class);
+  protected static final Logger s_aLogger = LoggerFactory.getLogger (LoggingValidationEventHandler.class);
+  private static final LoggingValidationEventHandler s_aInstance = new LoggingValidationEventHandler ();
 
   public LoggingValidationEventHandler ()
   {}
@@ -47,6 +47,12 @@ public class LoggingValidationEventHandler extends AbstractValidationEventHandle
   public LoggingValidationEventHandler (@Nullable final ValidationEventHandler aOrigHandler)
   {
     super (aOrigHandler);
+  }
+
+  @Nonnull
+  public static LoggingValidationEventHandler getInstance ()
+  {
+    return s_aInstance;
   }
 
   @Override

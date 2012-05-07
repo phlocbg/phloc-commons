@@ -34,15 +34,13 @@ import com.phloc.commons.log.LogUtils;
  * @author philip
  */
 @Immutable
-public final class LoggingTransformErrorListener extends AbstractTransformErrorListener
+public class LoggingTransformErrorListener extends AbstractTransformErrorListener
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (LoggingTransformErrorListener.class);
+  protected static final Logger s_aLogger = LoggerFactory.getLogger (LoggingTransformErrorListener.class);
   private static final LoggingTransformErrorListener s_aInstance = new LoggingTransformErrorListener ();
 
-  private LoggingTransformErrorListener ()
-  {
-    super ();
-  }
+  public LoggingTransformErrorListener ()
+  {}
 
   public LoggingTransformErrorListener (@Nullable final ErrorListener aWrappedErrorListener)
   {

@@ -18,9 +18,12 @@
 package com.phloc.commons.xml.sax;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.annotation.concurrent.Immutable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXParseException;
 
 import com.phloc.commons.error.EErrorLevel;
@@ -31,14 +34,21 @@ import com.phloc.commons.log.LogUtils;
  * 
  * @author philip
  */
-public final class LoggingSAXErrorHandler extends AbstractSAXErrorHandler
+@Immutable
+public class LoggingSAXErrorHandler extends AbstractSAXErrorHandler
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (LoggingSAXErrorHandler.class);
+  protected static final Logger s_aLogger = LoggerFactory.getLogger (LoggingSAXErrorHandler.class);
   private static final LoggingSAXErrorHandler s_aInstance = new LoggingSAXErrorHandler ();
 
-  private LoggingSAXErrorHandler ()
+  public LoggingSAXErrorHandler ()
   {}
 
+  public LoggingSAXErrorHandler (@Nullable final ErrorHandler aWrappedErrorHandler)
+  {
+    super (aWrappedErrorHandler);
+  }
+
+  @Nonnull
   public static LoggingSAXErrorHandler getInstance ()
   {
     return s_aInstance;

@@ -30,6 +30,7 @@ import com.phloc.commons.error.IHasResourceErrorGroup;
 import com.phloc.commons.error.IResourceError;
 import com.phloc.commons.error.IResourceErrorGroup;
 import com.phloc.commons.error.ResourceErrorGroup;
+import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -39,10 +40,9 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @ThreadSafe
-public final class CollectingTransformErrorListener extends AbstractTransformErrorListener implements
-                                                                                          IHasResourceErrorGroup
+public class CollectingTransformErrorListener extends AbstractTransformErrorListener implements IHasResourceErrorGroup
 {
-  private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
+  protected final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
   private final ResourceErrorGroup m_aErrors = new ResourceErrorGroup ();
 
   public CollectingTransformErrorListener ()
@@ -81,6 +81,25 @@ public final class CollectingTransformErrorListener extends AbstractTransformErr
     finally
     {
       m_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  /**
+   * Clear all currently stored errors.
+   * 
+   * @return {@link EChange#CHANGED} if at least one item was cleared.
+   */
+  @Nonnull
+  public EChange clearErrors ()
+  {
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      return m_aErrors.clear ();
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
     }
   }
 
