@@ -27,7 +27,7 @@
   </entry>
   <entry date="2012-05-07" category="api" action="add">
     <change>
-      <text locale="en">Added a method clearErrors to CollectingSAXErrorHandler, CollectingValidationEventHandler and CollectingTransformErrorListener</text>
+      <text locale="en">Added a method clearResourceErrors to CollectingSAXErrorHandler, CollectingValidationEventHandler and CollectingTransformErrorListener</text>
     </change>
   </entry>
   <entry date="2012-05-07" category="api" action="change">
