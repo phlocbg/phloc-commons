@@ -111,6 +111,17 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   }
 
   /**
+   * @return The currently used validation event handler factory. By default an
+   *         instance of {@link CollectingLoggingValidationEventHandlerFactory}
+   *         is used. May be <code>null</code> if explicitly set.
+   */
+  @Nullable
+  public final IValidationEventHandlerFactory getValidationEventHandlerFactory ()
+  {
+    return m_aVEHFactory;
+  }
+
+  /**
    * Get the last created validation event handler. This may be required when
    * collecting all errors using a {@link CollectingValidationEventHandler}.
    * 
