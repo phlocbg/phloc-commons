@@ -29,6 +29,8 @@ import com.phloc.commons.ICloneable;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.hash.HashCodeGenerator;
+import com.phloc.commons.state.EChange;
+import com.phloc.commons.state.IClearable;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -37,7 +39,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @NotThreadSafe
-public final class ResourceErrorGroup implements IResourceErrorGroup, ICloneable <ResourceErrorGroup>
+public final class ResourceErrorGroup implements IResourceErrorGroup, ICloneable <ResourceErrorGroup>, IClearable
 {
   private final List <IResourceError> m_aErrors = new ArrayList <IResourceError> ();
 
@@ -204,6 +206,15 @@ public final class ResourceErrorGroup implements IResourceErrorGroup, ICloneable
   public List <IResourceError> getAllResourceErrors ()
   {
     return ContainerHelper.makeUnmodifiable (m_aErrors);
+  }
+
+  @Nonnull
+  public EChange clear ()
+  {
+    if (m_aErrors.isEmpty ())
+      return EChange.UNCHANGED;
+    m_aErrors.clear ();
+    return EChange.CHANGED;
   }
 
   @Override
