@@ -88,7 +88,7 @@ public class CollectingValidationEventHandler extends AbstractValidationEventHan
    * @return {@link EChange#CHANGED} if at least one item was cleared.
    */
   @Nonnull
-  public EChange clearErrors ()
+  public EChange clearResourceErrors ()
   {
     m_aRWLock.writeLock ().lock ();
     try
@@ -104,6 +104,14 @@ public class CollectingValidationEventHandler extends AbstractValidationEventHan
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("errors", m_aErrors).toString ();
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return ToStringGenerator.getDerived (super.toString ()).append ("errors", m_aErrors).toString ();
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
   }
 }

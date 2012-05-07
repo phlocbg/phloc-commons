@@ -90,7 +90,7 @@ public class CollectingSAXErrorHandler extends AbstractSAXErrorHandler implement
    * @return {@link EChange#CHANGED} if at least one item was cleared.
    */
   @Nonnull
-  public EChange clearErrors ()
+  public EChange clearResourceErrors ()
   {
     m_aRWLock.writeLock ().lock ();
     try
