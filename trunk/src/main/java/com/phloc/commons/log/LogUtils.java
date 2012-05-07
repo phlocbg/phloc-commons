@@ -63,6 +63,7 @@ public final class LogUtils
         if (eErrorLevel.isMoreOrEqualSevereThan (EErrorLevel.INFO))
           aLogger.info (sMsg, t);
         else
-          aLogger.debug (sMsg, t);
+          if (aLogger.isDebugEnabled ())
+            aLogger.debug (sMsg, t);
   }
 }

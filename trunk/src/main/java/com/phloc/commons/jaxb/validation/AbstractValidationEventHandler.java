@@ -76,7 +76,7 @@ public abstract class AbstractValidationEventHandler implements ValidationEventH
    * @return The original validation event handler passed in the constructor.
    */
   @Nullable
-  public ValidationEventHandler getWrappedHandler ()
+  public final ValidationEventHandler getWrappedHandler ()
   {
     return m_aWrappedHandler;
   }

@@ -17,18 +17,20 @@
  */
 package com.phloc.commons.jaxb.validation;
 
-import javax.annotation.Nonnegative;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
+import javax.annotation.concurrent.ThreadSafe;
 import javax.xml.bind.ValidationEventHandler;
 
 import com.phloc.commons.annotations.ReturnsMutableCopy;
-import com.phloc.commons.error.EErrorLevel;
 import com.phloc.commons.error.IHasResourceErrorGroup;
 import com.phloc.commons.error.IResourceError;
 import com.phloc.commons.error.IResourceErrorGroup;
 import com.phloc.commons.error.ResourceErrorGroup;
+import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -37,9 +39,10 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author philip
  */
-@NotThreadSafe
+@ThreadSafe
 public class CollectingValidationEventHandler extends AbstractValidationEventHandler implements IHasResourceErrorGroup
 {
+  protected final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
   private final ResourceErrorGroup m_aErrors = new ResourceErrorGroup ();
 
   public CollectingValidationEventHandler ()
@@ -53,37 +56,49 @@ public class CollectingValidationEventHandler extends AbstractValidationEventHan
   @Override
   protected void onEvent (@Nonnull final IResourceError aEvent)
   {
-    m_aErrors.addResourceError (aEvent);
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      m_aErrors.addResourceError (aEvent);
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public IResourceErrorGroup getResourceErrors ()
   {
-    return m_aErrors.getClone ();
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return m_aErrors.getClone ();
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
   }
 
   /**
-   * Get the most severe error level within this group.
+   * Clear all currently stored errors.
    * 
-   * @return {@link EErrorLevel#SUCCESS} if no resource error is contained, the
-   *         most severe error level otherwise.
+   * @return {@link EChange#CHANGED} if at least one item was cleared.
    */
   @Nonnull
-  public EErrorLevel getMostSevereErrorLevel ()
+  public EChange clearErrors ()
   {
-    return m_aErrors.getMostSevereErrorLevel ();
-  }
-
-  /**
-   * Get the number of resource errors on any error level.
-   * 
-   * @return A non-negative number of resource errors contained.
-   */
-  @Nonnegative
-  public int getResourceErrorCount ()
-  {
-    return m_aErrors.size ();
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      return m_aErrors.clear ();
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
   }
 
   @Override
