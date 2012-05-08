@@ -22,6 +22,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import org.junit.Test;
@@ -39,7 +40,7 @@ public final class CombinedIteratorTest
   public void testAll ()
   {
     // both null
-    CombinedIterator <String> es = CombinedIterator.create (null, null);
+    Iterator <String> es = CombinedIterator.create (null, null);
     assertFalse (es.hasNext ());
     try
     {
@@ -77,8 +78,42 @@ public final class CombinedIteratorTest
     catch (final NoSuchElementException ex)
     {}
 
+    // one empty
+    es = CombinedIterator.create (ContainerHelper.getIterator ("a", "b", "c"), EmptyIterator.<String> getInstance ());
+    assertTrue (es.hasNext ());
+    assertEquals ("a", es.next ());
+    assertTrue (es.hasNext ());
+    assertEquals ("b", es.next ());
+    assertTrue (es.hasNext ());
+    assertEquals ("c", es.next ());
+    assertFalse (es.hasNext ());
+    try
+    {
+      es.next ();
+      fail ();
+    }
+    catch (final NoSuchElementException ex)
+    {}
+
     // other one null
     es = CombinedIterator.create (null, ContainerHelper.getIterator ("a", "b", "c"));
+    assertTrue (es.hasNext ());
+    assertEquals ("a", es.next ());
+    assertTrue (es.hasNext ());
+    assertEquals ("b", es.next ());
+    assertTrue (es.hasNext ());
+    assertEquals ("c", es.next ());
+    assertFalse (es.hasNext ());
+    try
+    {
+      es.next ();
+      fail ();
+    }
+    catch (final NoSuchElementException ex)
+    {}
+
+    // other one empty
+    es = CombinedIterator.create (EmptyIterator.<String> getInstance (), ContainerHelper.getIterator ("a", "b", "c"));
     assertTrue (es.hasNext ());
     assertEquals ("a", es.next ());
     assertTrue (es.hasNext ());

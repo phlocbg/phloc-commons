@@ -88,9 +88,11 @@ public final class CombinedIterator <ELEMENTTYPE> implements Iterator <ELEMENTTY
   }
 
   @Nonnull
-  public static <ELEMENTTYPE> CombinedIterator <ELEMENTTYPE> create (@Nullable final Iterator <? extends ELEMENTTYPE> aIter1,
-                                                                     @Nullable final Iterator <? extends ELEMENTTYPE> aIter2)
+  public static <ELEMENTTYPE> Iterator <ELEMENTTYPE> create (@Nullable final Iterator <? extends ELEMENTTYPE> aIter1,
+                                                             @Nullable final Iterator <? extends ELEMENTTYPE> aIter2)
   {
+    if (aIter1 == null && aIter2 == null)
+      return EmptyIterator.<ELEMENTTYPE> getInstance ();
     return new CombinedIterator <ELEMENTTYPE> (aIter1, aIter2);
   }
 }
