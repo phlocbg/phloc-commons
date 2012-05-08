@@ -20,45 +20,41 @@ package com.phloc.commons.changelog;
 import java.util.Date;
 
 import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
-import com.phloc.commons.version.Version;
 
 /**
- * This class represents a single release within a changelog.
+ * Base class for all changelog entries
  * 
  * @author philip
  */
-@Immutable
-public final class ChangeLogRelease extends AbstractChangeLogEntry
+public abstract class AbstractChangeLogEntry
 {
-  private final Version m_aVersion;
+  private final Date m_aDate;
 
   /**
    * Constructor.
    * 
    * @param aDate
    *        The release date. May not be <code>null</code>.
-   * @param aVersion
-   *        The release version. May not be <code>null</code>.
    */
-  public ChangeLogRelease (@Nonnull final Date aDate, @Nonnull final Version aVersion)
+  public AbstractChangeLogEntry (@Nonnull final Date aDate)
   {
-    super (aDate);
-    if (aVersion == null)
-      throw new NullPointerException ("version");
-    m_aVersion = aVersion;
+    if (aDate == null)
+      throw new NullPointerException ("date");
+    m_aDate = (Date) aDate.clone ();
   }
 
   /**
-   * @return The non-<code>null</code> version of this release.
+   * @return A mutable, non-<code>null</code> clone of the contained entry date.
    */
   @Nonnull
-  public Version getVersion ()
+  @ReturnsMutableCopy
+  public final Date getDate ()
   {
-    return m_aVersion;
+    return (Date) m_aDate.clone ();
   }
 
   @Override
@@ -66,21 +62,21 @@ public final class ChangeLogRelease extends AbstractChangeLogEntry
   {
     if (o == this)
       return true;
-    if (!super.equals (o))
+    if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    final ChangeLogRelease rhs = (ChangeLogRelease) o;
-    return m_aVersion.equals (rhs.m_aVersion);
+    final AbstractChangeLogEntry rhs = (AbstractChangeLogEntry) o;
+    return m_aDate.equals (rhs.m_aDate);
   }
 
   @Override
   public int hashCode ()
   {
-    return HashCodeGenerator.getDerived (super.hashCode ()).append (m_aVersion).getHashCode ();
+    return new HashCodeGenerator (this).append (m_aDate).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("version", m_aVersion).toString ();
+    return new ToStringGenerator (this).append ("date", m_aDate).toString ();
   }
 }

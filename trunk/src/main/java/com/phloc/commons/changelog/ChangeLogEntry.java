@@ -26,7 +26,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.annotations.ReturnsImmutableObject;
-import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.EChange;
@@ -42,9 +41,8 @@ import com.phloc.commons.text.impl.ReadonlyMultiLingualText;
  * 
  * @author philip
  */
-public final class ChangeLogEntry
+public final class ChangeLogEntry extends AbstractChangeLogEntry
 {
-  private final Date m_aDate;
   private final EChangeLogAction m_eAction;
   private final EChangeLogCategory m_eCategory;
   private final boolean m_bIsIncompatible;
@@ -74,6 +72,7 @@ public final class ChangeLogEntry
                          @Nonnull final EChangeLogCategory eCategory,
                          final boolean bIsIncompatible)
   {
+    super (aDate);
     if (aChangeLog == null)
       throw new NullPointerException ("changeLog");
     if (aDate == null)
@@ -83,7 +82,6 @@ public final class ChangeLogEntry
     if (eCategory == null)
       throw new NullPointerException ("category");
     m_aChangeLog = aChangeLog;
-    m_aDate = (Date) aDate.clone ();
     m_eAction = eAction;
     m_eCategory = eCategory;
     m_bIsIncompatible = bIsIncompatible;
@@ -96,17 +94,6 @@ public final class ChangeLogEntry
   public ChangeLog getChangeLog ()
   {
     return m_aChangeLog;
-  }
-
-  /**
-   * @return The issue date of the change log entry. Returns a non-
-   *         <code>null</code> clone of the contained date.
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  public Date getDate ()
-  {
-    return (Date) m_aDate.clone ();
   }
 
   /**
@@ -228,11 +215,10 @@ public final class ChangeLogEntry
   {
     if (o == this)
       return true;
-    if (!(o instanceof ChangeLogEntry))
+    if (super.equals (o))
       return false;
     final ChangeLogEntry rhs = (ChangeLogEntry) o;
     return m_aChangeLog.getComponent ().equals (rhs.m_aChangeLog.getComponent ()) &&
-           m_aDate.equals (rhs.m_aDate) &&
            m_eAction.equals (rhs.m_eAction) &&
            m_eCategory.equals (rhs.m_eCategory) &&
            m_bIsIncompatible == rhs.m_bIsIncompatible &&
@@ -243,26 +229,26 @@ public final class ChangeLogEntry
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aChangeLog.getComponent ())
-                                       .append (m_aDate)
-                                       .append (m_eAction)
-                                       .append (m_eCategory)
-                                       .append (m_bIsIncompatible)
-                                       .append (m_aTexts)
-                                       .append (m_aIssues)
-                                       .getHashCode ();
+    return HashCodeGenerator.getDerived (super.hashCode ())
+                            .append (m_aChangeLog.getComponent ())
+                            .append (m_eAction)
+                            .append (m_eCategory)
+                            .append (m_bIsIncompatible)
+                            .append (m_aTexts)
+                            .append (m_aIssues)
+                            .getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("changelog", m_aChangeLog.getComponent ())
-                                       .append ("date", m_aDate)
-                                       .append ("action", m_eAction)
-                                       .append ("category", m_eCategory)
-                                       .append ("isIncompatible", m_bIsIncompatible)
-                                       .append ("texts", m_aTexts)
-                                       .append ("issues", m_aIssues)
-                                       .toString ();
+    return ToStringGenerator.getDerived (super.toString ())
+                            .append ("changelog", m_aChangeLog.getComponent ())
+                            .append ("action", m_eAction)
+                            .append ("category", m_eCategory)
+                            .append ("isIncompatible", m_bIsIncompatible)
+                            .append ("texts", m_aTexts)
+                            .append ("issues", m_aIssues)
+                            .toString ();
   }
 }
