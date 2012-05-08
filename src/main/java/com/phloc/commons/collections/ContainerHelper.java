@@ -45,6 +45,7 @@ import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.annotations.ReturnsMutableObject;
 import com.phloc.commons.collections.iterate.CombinedEnumeration;
+import com.phloc.commons.collections.iterate.CombinedIterator;
 import com.phloc.commons.collections.iterate.EmptyEnumeration;
 import com.phloc.commons.collections.iterate.EmptyIterator;
 import com.phloc.commons.collections.iterate.EnumerationFromIterator;
@@ -2309,6 +2310,25 @@ public final class ContainerHelper
   }
 
   /**
+   * Get a merged iterator of both iterators. The first iterator is iterated
+   * first, the second one afterwards.
+   * 
+   * @param <ELEMENTTYPE>
+   *        The type of elements to be enumerated.
+   * @param aIter1
+   *        First iterator. May be <code>null</code>.
+   * @param aIter2
+   *        Second iterator. May be <code>null</code>.
+   * @return The merged iterator. Never <code>null</code>.
+   */
+  @Nonnull
+  public static <ELEMENTTYPE> Iterator <ELEMENTTYPE> getCombinedIterator (@Nullable final Iterator <? extends ELEMENTTYPE> aIter1,
+                                                                          @Nullable final Iterator <? extends ELEMENTTYPE> aIter2)
+  {
+    return new CombinedIterator <ELEMENTTYPE> (aIter1, aIter2);
+  }
+
+  /**
    * Get an {@link Enumeration} object based on a {@link Collection} object.
    * 
    * @param <ELEMENTTYPE>
@@ -2369,8 +2389,8 @@ public final class ContainerHelper
    * @return The merged enumeration. Never <code>null</code>.
    */
   @Nonnull
-  public static <ELEMENTTYPE> Enumeration <ELEMENTTYPE> getCombinedEnumeration (@Nullable final Enumeration <ELEMENTTYPE> aEnum1,
-                                                                                @Nullable final Enumeration <ELEMENTTYPE> aEnum2)
+  public static <ELEMENTTYPE> Enumeration <ELEMENTTYPE> getCombinedEnumeration (@Nullable final Enumeration <? extends ELEMENTTYPE> aEnum1,
+                                                                                @Nullable final Enumeration <? extends ELEMENTTYPE> aEnum2)
   {
     return new CombinedEnumeration <ELEMENTTYPE> (aEnum1, aEnum2);
   }
