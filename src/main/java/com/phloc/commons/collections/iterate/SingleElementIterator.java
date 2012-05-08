@@ -20,6 +20,7 @@ package com.phloc.commons.collections.iterate;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -90,5 +91,11 @@ public final class SingleElementIterator <ELEMENTTYPE> implements Iterator <ELEM
   public String toString ()
   {
     return new ToStringGenerator (this).append ("hasNext", m_bHasNext).append ("element", m_aElement).toString ();
+  }
+
+  @Nonnull
+  public static <T> Iterator <T> create (@Nullable final T aElement)
+  {
+    return new SingleElementIterator <T> (aElement);
   }
 }

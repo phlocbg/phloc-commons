@@ -20,6 +20,7 @@ package com.phloc.commons.collections.iterate;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -128,5 +129,11 @@ public final class SingleElementListIterator <ELEMENTTYPE> implements ListIterat
   public String toString ()
   {
     return new ToStringGenerator (this).append ("hasNext", m_bHasNext).append ("element", m_aElement).toString ();
+  }
+
+  @Nonnull
+  public static <T> ListIterator <T> create (@Nullable final T aElement)
+  {
+    return new SingleElementListIterator <T> (aElement);
   }
 }
