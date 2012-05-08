@@ -27,6 +27,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.ICloneable;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.EChange;
@@ -149,6 +150,7 @@ public class ResourceErrorGroup implements IResourceErrorGroup, ICloneable <Reso
   }
 
   @Nonnull
+  @ReturnsMutableCopy
   public ResourceErrorGroup getAllFailures ()
   {
     final ResourceErrorGroup ret = new ResourceErrorGroup ();
@@ -159,6 +161,7 @@ public class ResourceErrorGroup implements IResourceErrorGroup, ICloneable <Reso
   }
 
   @Nonnull
+  @ReturnsMutableCopy
   public ResourceErrorGroup getAllErrors ()
   {
     final ResourceErrorGroup ret = new ResourceErrorGroup ();
