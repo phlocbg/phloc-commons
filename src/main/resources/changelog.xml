@@ -20,6 +20,11 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2012-05-08" category="api" action="change" incompatible="true">
+    <change>
+      <text locale="en">Moved ArrayEnumeration to sub-package 'iterate'</text>
+    </change>
+  </entry>
   <entry date="2012-05-08" category="api" action="add">
     <change>
       <text locale="en">Added static factory method for SingleElement(Iterator|ListIterator|Enumeration)</text>

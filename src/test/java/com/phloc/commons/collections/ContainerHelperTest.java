@@ -102,6 +102,7 @@ import java.util.Vector;
 
 import org.junit.Test;
 
+import com.phloc.commons.collections.iterate.ArrayEnumeration;
 import com.phloc.commons.collections.iterate.EmptyEnumeration;
 import com.phloc.commons.collections.iterate.EmptyIterator;
 import com.phloc.commons.collections.iterate.IIterableIterator;
