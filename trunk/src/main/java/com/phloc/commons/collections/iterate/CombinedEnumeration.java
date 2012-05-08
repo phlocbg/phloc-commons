@@ -18,7 +18,9 @@
 package com.phloc.commons.collections.iterate;
 
 import java.util.Enumeration;
+import java.util.NoSuchElementException;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.string.ToStringGenerator;
@@ -32,15 +34,16 @@ import com.phloc.commons.string.ToStringGenerator;
  */
 public final class CombinedEnumeration <ELEMENTTYPE> implements Enumeration <ELEMENTTYPE>
 {
-  private final Enumeration <ELEMENTTYPE> m_aEnum1;
-  private final Enumeration <ELEMENTTYPE> m_aEnum2;
-  private boolean m_bFirstEnum = true;
+  private final Enumeration <? extends ELEMENTTYPE> m_aEnum1;
+  private final Enumeration <? extends ELEMENTTYPE> m_aEnum2;
+  private boolean m_bFirstEnum;
 
-  public CombinedEnumeration (@Nullable final Enumeration <ELEMENTTYPE> aEnum1,
-                              @Nullable final Enumeration <ELEMENTTYPE> aEnum2)
+  public CombinedEnumeration (@Nullable final Enumeration <? extends ELEMENTTYPE> aEnum1,
+                              @Nullable final Enumeration <? extends ELEMENTTYPE> aEnum2)
   {
     m_aEnum1 = aEnum1;
     m_aEnum2 = aEnum2;
+    m_bFirstEnum = aEnum1 != null;
   }
 
   public boolean hasMoreElements ()
@@ -60,12 +63,23 @@ public final class CombinedEnumeration <ELEMENTTYPE> implements Enumeration <ELE
   @Nullable
   public ELEMENTTYPE nextElement ()
   {
-    return m_bFirstEnum ? m_aEnum1.nextElement () : m_aEnum2.nextElement ();
+    if (m_bFirstEnum)
+      return m_aEnum1.nextElement ();
+    if (m_aEnum2 == null)
+      throw new NoSuchElementException ();
+    return m_aEnum2.nextElement ();
   }
 
   @Override
   public String toString ()
   {
     return new ToStringGenerator (this).append ("enum1", m_aEnum1).append ("enum2", m_aEnum2).toString ();
+  }
+
+  @Nonnull
+  public static <ELEMENTTYPE> CombinedEnumeration <ELEMENTTYPE> create (@Nullable final Enumeration <? extends ELEMENTTYPE> aEnum1,
+                                                                        @Nullable final Enumeration <? extends ELEMENTTYPE> aEnum2)
+  {
+    return new CombinedEnumeration <ELEMENTTYPE> (aEnum1, aEnum2);
   }
 }
