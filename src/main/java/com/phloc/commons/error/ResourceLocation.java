@@ -49,6 +49,11 @@ public final class ResourceLocation implements IResourceLocation
     this (sResourceID, ILLEGAL_NUMBER, ILLEGAL_NUMBER, sField);
   }
 
+  public ResourceLocation (@Nullable final String sResourceID, final int nLineNumber, final int nColumnNumber)
+  {
+    this (sResourceID, nLineNumber, nColumnNumber, null);
+  }
+
   public ResourceLocation (@Nullable final String sResourceID,
                            final int nLineNumber,
                            final int nColumnNumber,

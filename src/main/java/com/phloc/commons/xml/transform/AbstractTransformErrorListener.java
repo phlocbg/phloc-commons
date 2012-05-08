@@ -72,8 +72,7 @@ public abstract class AbstractTransformErrorListener implements ErrorListener
                                                               aLocator != null ? aLocator.getLineNumber ()
                                                                               : IResourceLocation.ILLEGAL_NUMBER,
                                                               aLocator != null ? aLocator.getColumnNumber ()
-                                                                              : IResourceLocation.ILLEGAL_NUMBER,
-                                                              null);
+                                                                              : IResourceLocation.ILLEGAL_NUMBER);
     return new ResourceError (aLocation, eErrorLevel, sPrefix, ex);
   }
 
