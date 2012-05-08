@@ -77,9 +77,11 @@ public final class CombinedEnumeration <ELEMENTTYPE> implements Enumeration <ELE
   }
 
   @Nonnull
-  public static <ELEMENTTYPE> CombinedEnumeration <ELEMENTTYPE> create (@Nullable final Enumeration <? extends ELEMENTTYPE> aEnum1,
-                                                                        @Nullable final Enumeration <? extends ELEMENTTYPE> aEnum2)
+  public static <ELEMENTTYPE> Enumeration <ELEMENTTYPE> create (@Nullable final Enumeration <? extends ELEMENTTYPE> aEnum1,
+                                                                @Nullable final Enumeration <? extends ELEMENTTYPE> aEnum2)
   {
+    if (aEnum1 == null && aEnum2 == null)
+      return EmptyEnumeration.<ELEMENTTYPE> getInstance ();
     return new CombinedEnumeration <ELEMENTTYPE> (aEnum1, aEnum2);
   }
 }

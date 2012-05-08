@@ -22,6 +22,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.Enumeration;
 import java.util.NoSuchElementException;
 
 import org.junit.Test;
@@ -39,7 +40,7 @@ public final class CombinedEnumerationTest
   public void testAll ()
   {
     // both null
-    CombinedEnumeration <String> es = CombinedEnumeration.create (null, null);
+    Enumeration <String> es = CombinedEnumeration.create (null, null);
     assertFalse (es.hasMoreElements ());
     try
     {
@@ -77,8 +78,44 @@ public final class CombinedEnumerationTest
     catch (final NoSuchElementException ex)
     {}
 
+    // one empty
+    es = CombinedEnumeration.create (ContainerHelper.getEnumeration ("a", "b", "c"),
+                                     EmptyEnumeration.<String> getInstance ());
+    assertTrue (es.hasMoreElements ());
+    assertEquals ("a", es.nextElement ());
+    assertTrue (es.hasMoreElements ());
+    assertEquals ("b", es.nextElement ());
+    assertTrue (es.hasMoreElements ());
+    assertEquals ("c", es.nextElement ());
+    assertFalse (es.hasMoreElements ());
+    try
+    {
+      es.nextElement ();
+      fail ();
+    }
+    catch (final NoSuchElementException ex)
+    {}
+
     // other one null
     es = CombinedEnumeration.create (null, ContainerHelper.getEnumeration ("a", "b", "c"));
+    assertTrue (es.hasMoreElements ());
+    assertEquals ("a", es.nextElement ());
+    assertTrue (es.hasMoreElements ());
+    assertEquals ("b", es.nextElement ());
+    assertTrue (es.hasMoreElements ());
+    assertEquals ("c", es.nextElement ());
+    assertFalse (es.hasMoreElements ());
+    try
+    {
+      es.nextElement ();
+      fail ();
+    }
+    catch (final NoSuchElementException ex)
+    {}
+
+    // other one empty
+    es = CombinedEnumeration.create (EmptyEnumeration.<String> getInstance (),
+                                     ContainerHelper.getEnumeration ("a", "b", "c"));
     assertTrue (es.hasMoreElements ());
     assertEquals ("a", es.nextElement ());
     assertTrue (es.hasMoreElements ());

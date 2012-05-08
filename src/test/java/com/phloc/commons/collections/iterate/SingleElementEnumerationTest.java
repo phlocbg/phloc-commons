@@ -29,41 +29,33 @@ import org.junit.Test;
 import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
- * Test class for class {@link SingleElementIterator}
+ * Test class for class {@link SingleElementEnumeration}
  * 
  * @author philip
  */
-public final class SingleElementIteratorTest
+public final class SingleElementEnumerationTest
 {
   @Test
   public void testAll ()
   {
-    final SingleElementIterator <String> eit = new SingleElementIterator <String> ("any");
-    assertTrue (eit.hasNext ());
+    final SingleElementEnumeration <String> eit = new SingleElementEnumeration <String> ("any");
+    assertTrue (eit.hasMoreElements ());
 
-    assertEquals ("any", eit.next ());
+    assertEquals ("any", eit.nextElement ());
     try
     {
-      eit.next ();
+      eit.nextElement ();
       fail ();
     }
     catch (final NoSuchElementException ex)
     {}
-    assertFalse (eit.hasNext ());
+    assertFalse (eit.hasMoreElements ());
 
-    try
-    {
-      eit.remove ();
-      fail ();
-    }
-    catch (final UnsupportedOperationException ex)
-    {}
-
-    PhlocTestUtils.testDefaultImplementationWithEqualContentObject (new SingleElementIterator <String> ("any"),
-                                                                    new SingleElementIterator <String> ("any"));
-    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (new SingleElementIterator <String> ("any"),
-                                                                        new SingleElementIterator <String> ("any2"));
-    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (new SingleElementIterator <String> ("any"),
-                                                                        new SingleElementIterator <Integer> (Integer.valueOf (1)));
+    PhlocTestUtils.testDefaultImplementationWithEqualContentObject (new SingleElementEnumeration <String> ("any"),
+                                                                    new SingleElementEnumeration <String> ("any"));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (new SingleElementEnumeration <String> ("any"),
+                                                                        new SingleElementEnumeration <String> ("any2"));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (new SingleElementEnumeration <String> ("any"),
+                                                                        new SingleElementEnumeration <Integer> (Integer.valueOf (1)));
   }
 }
