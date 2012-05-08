@@ -43,8 +43,7 @@ public final class ChangeLog
 {
   private final Version m_aVersion;
   private final String m_sComponent;
-  private final List <ChangeLogEntry> m_aEntries = new ArrayList <ChangeLogEntry> ();
-  private final List <ChangeLogRelease> m_aReleases = new ArrayList <ChangeLogRelease> ();
+  private final List <AbstractChangeLogEntry> m_aEntries = new ArrayList <AbstractChangeLogEntry> ();
 
   /**
    * Constructor.
@@ -113,14 +112,30 @@ public final class ChangeLog
   }
 
   /**
-   * @return An unmodifiable list of all change log entries. Never
-   *         <code>null</code>.
+   * @return An unmodifiable list of all contained change log items. Never
+   *         <code>null</code>. The elements my be of type
+   *         {@link ChangeLogEntry} or {@link ChangeLogRelease}.
    */
   @Nonnull
   @ReturnsImmutableObject
-  public List <ChangeLogEntry> getAllEntries ()
+  public List <AbstractChangeLogEntry> getAllBaseEntries ()
   {
     return ContainerHelper.makeUnmodifiable (m_aEntries);
+  }
+
+  /**
+   * @return A modifiable list of all change log entries. Never
+   *         <code>null</code>.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public List <ChangeLogEntry> getAllEntries ()
+  {
+    final List <ChangeLogEntry> ret = new ArrayList <ChangeLogEntry> ();
+    for (final AbstractChangeLogEntry aEntry : m_aEntries)
+      if (aEntry instanceof ChangeLogEntry)
+        ret.add ((ChangeLogEntry) aEntry);
+    return ret;
   }
 
   /**
@@ -139,9 +154,13 @@ public final class ChangeLog
       throw new NullPointerException ("category");
 
     final List <ChangeLogEntry> ret = new ArrayList <ChangeLogEntry> ();
-    for (final ChangeLogEntry aEntry : m_aEntries)
-      if (aEntry.getCategory ().equals (eCategory))
-        ret.add (aEntry);
+    for (final AbstractChangeLogEntry aEntry : m_aEntries)
+      if (aEntry instanceof ChangeLogEntry)
+      {
+        final ChangeLogEntry aRealEntry = (ChangeLogEntry) aEntry;
+        if (aRealEntry.getCategory ().equals (eCategory))
+          ret.add (aRealEntry);
+      }
     return ret;
   }
 
@@ -155,7 +174,7 @@ public final class ChangeLog
   {
     if (aRelease == null)
       throw new NullPointerException ("release");
-    m_aReleases.add (aRelease);
+    m_aEntries.add (aRelease);
   }
 
   /**
@@ -170,17 +189,21 @@ public final class ChangeLog
   {
     if (aRelease == null)
       throw new NullPointerException ("release");
-    m_aReleases.add (nIndex, aRelease);
+    m_aEntries.add (nIndex, aRelease);
   }
 
   /**
    * @return A list of all contained releases in this change log.
    */
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public List <ChangeLogRelease> getAllReleases ()
   {
-    return ContainerHelper.makeUnmodifiable (m_aReleases);
+    final List <ChangeLogRelease> ret = new ArrayList <ChangeLogRelease> ();
+    for (final AbstractChangeLogEntry aEntry : m_aEntries)
+      if (aEntry instanceof ChangeLogRelease)
+        ret.add ((ChangeLogRelease) aEntry);
+    return ret;
   }
 
   /**
@@ -191,9 +214,13 @@ public final class ChangeLog
   public ChangeLogRelease getLatestRelease ()
   {
     ChangeLogRelease aLatest = null;
-    for (final ChangeLogRelease aRelease : m_aReleases)
-      if (aLatest == null || aRelease.getDate ().getTime () > aLatest.getDate ().getTime ())
-        aLatest = aRelease;
+    for (final AbstractChangeLogEntry aEntry : m_aEntries)
+      if (aEntry instanceof ChangeLogRelease)
+      {
+        final ChangeLogRelease aRelease = (ChangeLogRelease) aEntry;
+        if (aLatest == null || aRelease.getDate ().getTime () > aLatest.getDate ().getTime ())
+          aLatest = aRelease;
+      }
     return aLatest;
   }
 
@@ -207,18 +234,13 @@ public final class ChangeLog
     final ChangeLog rhs = (ChangeLog) o;
     return m_aVersion.equals (rhs.m_aVersion) &&
            m_sComponent.equals (rhs.m_sComponent) &&
-           m_aEntries.equals (rhs.m_aEntries) &&
-           m_aReleases.equals (rhs.m_aReleases);
+           m_aEntries.equals (rhs.m_aEntries);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aVersion)
-                                       .append (m_sComponent)
-                                       .append (m_aEntries)
-                                       .append (m_aReleases)
-                                       .getHashCode ();
+    return new HashCodeGenerator (this).append (m_aVersion).append (m_sComponent).append (m_aEntries).getHashCode ();
   }
 
   @Override
@@ -227,7 +249,6 @@ public final class ChangeLog
     return new ToStringGenerator (this).append ("version", m_aVersion)
                                        .append ("component", m_sComponent)
                                        .append ("entries", m_aEntries)
-                                       .append ("releases", m_aReleases)
                                        .toString ();
   }
 }
