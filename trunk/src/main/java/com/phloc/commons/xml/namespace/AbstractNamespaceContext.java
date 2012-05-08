@@ -48,9 +48,9 @@ public abstract class AbstractNamespaceContext implements NamespaceContext
     if (sNamespaceURI == null)
       throw new IllegalArgumentException ();
     if (sNamespaceURI.equals (XMLConstants.XML_NS_URI))
-      return new SingleElementIterator <String> (XMLConstants.XML_NS_PREFIX);
+      return SingleElementIterator.create (XMLConstants.XML_NS_PREFIX);
     if (sNamespaceURI.equals (XMLConstants.XMLNS_ATTRIBUTE_NS_URI))
-      return new SingleElementIterator <String> (XMLConstants.XMLNS_ATTRIBUTE);
+      return SingleElementIterator.create (XMLConstants.XMLNS_ATTRIBUTE);
 
     final Iterator <?> ret = getCustomPrefixes (sNamespaceURI);
     return ret != null ? ret : ContainerHelper.<String> getEmptyIterator ();

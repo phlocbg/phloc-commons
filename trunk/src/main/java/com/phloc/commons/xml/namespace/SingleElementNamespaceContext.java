@@ -73,7 +73,7 @@ public final class SingleElementNamespaceContext extends AbstractNamespaceContex
   @Nullable
   protected Iterator <String> getCustomPrefixes (@Nullable final String sNamespaceURI)
   {
-    return m_sNamespaceURI.equals (sNamespaceURI) ? new SingleElementIterator <String> (m_sPrefix) : null;
+    return m_sNamespaceURI.equals (sNamespaceURI) ? SingleElementIterator.create (m_sPrefix) : null;
   }
 
   @Override

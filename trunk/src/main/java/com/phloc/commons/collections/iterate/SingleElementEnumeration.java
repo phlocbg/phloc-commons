@@ -20,6 +20,7 @@ package com.phloc.commons.collections.iterate;
 import java.util.Enumeration;
 import java.util.NoSuchElementException;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -85,5 +86,11 @@ public final class SingleElementEnumeration <ELEMENTTYPE> implements Enumeration
     return new ToStringGenerator (this).append ("hasMoreElements", m_bHasMoreElements)
                                        .append ("element", m_aElement)
                                        .toString ();
+  }
+
+  @Nonnull
+  public static <T> Enumeration <T> create (@Nullable final T aElement)
+  {
+    return new SingleElementEnumeration <T> (aElement);
   }
 }
