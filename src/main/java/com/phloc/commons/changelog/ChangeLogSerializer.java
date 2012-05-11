@@ -290,26 +290,31 @@ public final class ChangeLogSerializer
     if (StringHelper.hasText (aChangeLog.getComponent ()))
       eRoot.setAttribute (ATTR_COMPONENT, aChangeLog.getComponent ());
 
-    for (final ChangeLogEntry aEntry : aChangeLog.getAllEntries ())
+    for (final AbstractChangeLogEntry aBaseEntry : aChangeLog.getAllBaseEntries ())
     {
-      final IMicroElement eEntry = eRoot.appendElement (CChangeLog.CHANGELOG_NAMESPACE_10, ELEMENT_ENTRY);
-      eEntry.setAttribute (ATTR_DATE, aDF.format (aEntry.getDate ()));
-      eEntry.setAttribute (ATTR_ACTION, aEntry.getAction ().getID ());
-      eEntry.setAttribute (ATTR_CATEGORY, aEntry.getCategory ().getID ());
-      if (aEntry.isIncompatible ())
-        eEntry.setAttribute (ATTR_INCOMPATIBLE, Boolean.TRUE.toString ());
-      eEntry.appendChild (MicroTypeConverter.convertToMicroElement (aEntry.getAllTexts (),
-                                                                    CChangeLog.CHANGELOG_NAMESPACE_10,
-                                                                    ELEMENT_CHANGE));
-      for (final String sIssue : aEntry.getAllIssues ())
-        eEntry.appendElement (CChangeLog.CHANGELOG_NAMESPACE_10, ELEMENT_ISSUE).appendText (sIssue);
-    }
-
-    for (final ChangeLogRelease aRelease : aChangeLog.getAllReleases ())
-    {
-      final IMicroElement eRelease = eRoot.appendElement (CChangeLog.CHANGELOG_NAMESPACE_10, ELEMENT_RELEASE);
-      eRelease.setAttribute (ATTR_DATE, aDF.format (aRelease.getDate ()));
-      eRelease.setAttribute (ATTR_VERSION, aRelease.getVersion ().getAsString ());
+      if (aBaseEntry instanceof ChangeLogEntry)
+      {
+        final ChangeLogEntry aEntry = (ChangeLogEntry) aBaseEntry;
+        final IMicroElement eEntry = eRoot.appendElement (CChangeLog.CHANGELOG_NAMESPACE_10, ELEMENT_ENTRY);
+        eEntry.setAttribute (ATTR_DATE, aDF.format (aEntry.getDate ()));
+        eEntry.setAttribute (ATTR_ACTION, aEntry.getAction ().getID ());
+        eEntry.setAttribute (ATTR_CATEGORY, aEntry.getCategory ().getID ());
+        if (aEntry.isIncompatible ())
+          eEntry.setAttribute (ATTR_INCOMPATIBLE, Boolean.TRUE.toString ());
+        eEntry.appendChild (MicroTypeConverter.convertToMicroElement (aEntry.getAllTexts (),
+                                                                      CChangeLog.CHANGELOG_NAMESPACE_10,
+                                                                      ELEMENT_CHANGE));
+        for (final String sIssue : aEntry.getAllIssues ())
+          eEntry.appendElement (CChangeLog.CHANGELOG_NAMESPACE_10, ELEMENT_ISSUE).appendText (sIssue);
+      }
+      else
+      {
+        // Must be a release
+        final ChangeLogRelease aRelease = (ChangeLogRelease) aBaseEntry;
+        final IMicroElement eRelease = eRoot.appendElement (CChangeLog.CHANGELOG_NAMESPACE_10, ELEMENT_RELEASE);
+        eRelease.setAttribute (ATTR_DATE, aDF.format (aRelease.getDate ()));
+        eRelease.setAttribute (ATTR_VERSION, aRelease.getVersion ().getAsString ());
+      }
     }
 
     return ret;

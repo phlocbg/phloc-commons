@@ -43,12 +43,12 @@ import com.phloc.commons.text.impl.ReadonlyMultiLingualText;
  */
 public final class ChangeLogEntry extends AbstractChangeLogEntry
 {
+  private final ChangeLog m_aChangeLog;
   private final EChangeLogAction m_eAction;
   private final EChangeLogCategory m_eCategory;
   private final boolean m_bIsIncompatible;
   private final IMultiLingualText m_aTexts = new MultiLingualText ();
   private final List <String> m_aIssues = new ArrayList <String> ();
-  private final ChangeLog m_aChangeLog;
 
   /**
    * Constructor.
@@ -215,7 +215,7 @@ public final class ChangeLogEntry extends AbstractChangeLogEntry
   {
     if (o == this)
       return true;
-    if (super.equals (o))
+    if (!super.equals (o))
       return false;
     final ChangeLogEntry rhs = (ChangeLogEntry) o;
     return m_aChangeLog.getComponent ().equals (rhs.m_aChangeLog.getComponent ()) &&
