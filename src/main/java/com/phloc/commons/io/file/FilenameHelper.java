@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
@@ -146,8 +147,24 @@ public final class FilenameHelper
   }
 
   /**
-   * Get the the passed filename without the extension. If the file name
+   * Get the name of the passed file without the extension. If the file name
    * contains a leading absolute path, the path is returned as well.
+   * 
+   * @param aFile
+   *        The file to extract the extension from. May be <code>null</code>.
+   * @return An empty string if no extension was found, the extension without
+   *         the leading dot otherwise. If the input file is <code>null</code>
+   *         the return value is <code>null</code>.
+   */
+  @Nullable
+  public static String getWithoutExtension (@Nullable final File aFile)
+  {
+    return aFile == null ? null : getWithoutExtension (aFile.getPath ());
+  }
+
+  /**
+   * Get the passed filename without the extension. If the file name contains a
+   * leading absolute path, the path is returned as well.
    * 
    * @param sFilename
    *        The filename to extract the extension from. May be <code>null</code>
@@ -255,7 +272,7 @@ public final class FilenameHelper
    * 
    * @param sFilename
    *        The filename to find the last path separator in, <code>null</code>
-   *        returns -1.
+   *        returns {@link CGlobal#ILLEGAL_UINT}.
    * @return The index of the last separator character, or
    *         {@link CGlobal#ILLEGAL_UINT} if there is no such character
    */
@@ -266,6 +283,21 @@ public final class FilenameHelper
   }
 
   /**
+   * Get the name of the passed file without any eventually leading path. Note:
+   * if the passed file is a directory, the name of the directory is returned.
+   * 
+   * @param aFile
+   *        The file. May be <code>null</code>.
+   * @return The name only or <code>null</code> if the passed parameter is
+   *         <code>null</code>.
+   */
+  @Nullable
+  public static String getWithoutPath (@Nullable final File aFile)
+  {
+    return aFile == null ? null : aFile.getName ();
+  }
+
+  /**
    * Get the name of the passed file without any eventually leading path.
    * 
    * @param sAbsoluteFilename
@@ -273,6 +305,7 @@ public final class FilenameHelper
    * @return The name only or <code>null</code> if the passed parameter is
    *         <code>null</code>.
    */
+  @Nullable
   public static String getWithoutPath (@Nullable final String sAbsoluteFilename)
   {
     /**
@@ -285,7 +318,7 @@ public final class FilenameHelper
     if (sAbsoluteFilename == null)
       return null;
     final int nLastSepIndex = getIndexOfLastSeparator (sAbsoluteFilename);
-    return sAbsoluteFilename.substring (nLastSepIndex + 1);
+    return nLastSepIndex == CGlobal.ILLEGAL_UINT ? sAbsoluteFilename : sAbsoluteFilename.substring (nLastSepIndex + 1);
   }
 
   /**
@@ -298,6 +331,7 @@ public final class FilenameHelper
    *         Returns <code>null</code> if the passed parameter is
    *         <code>null</code>.
    */
+  @Nullable
   public static String getPath (@Nullable final String sAbsoluteFilename)
   {
     /**
@@ -310,7 +344,37 @@ public final class FilenameHelper
     if (sAbsoluteFilename == null)
       return null;
     final int nLastSepIndex = getIndexOfLastSeparator (sAbsoluteFilename);
-    return nLastSepIndex == -1 ? "" : sAbsoluteFilename.substring (0, nLastSepIndex + 1);
+    return nLastSepIndex == CGlobal.ILLEGAL_UINT ? "" : sAbsoluteFilename.substring (0, nLastSepIndex + 1);
+  }
+
+  /**
+   * Get the passed filename without path and without extension.<br>
+   * Example: <code>/dir1/dir2/file.txt</code> becomes <code>file</code>
+   * 
+   * @param aFile
+   *        The file to get the base name from. May be <code>null</code>.
+   * @return The base name of the passed parameter. May be <code>null</code> if
+   *         the parameter was <code>null</code>.
+   */
+  @Nullable
+  public static String getBaseName (@Nullable final File aFile)
+  {
+    return aFile == null ? null : getWithoutExtension (aFile.getName ());
+  }
+
+  /**
+   * Get the passed filename without path and without extension.<br>
+   * Example: <code>/dir1/dir2/file.txt</code> becomes <code>file</code>
+   * 
+   * @param sAbsoluteFilename
+   *        The filename to get the base name from. May be <code>null</code>.
+   * @return The base name of the passed parameter. May be <code>null</code> if
+   *         the parameter was <code>null</code>.
+   */
+  @Nullable
+  public static String getBaseName (@Nullable final String sAbsoluteFilename)
+  {
+    return getWithoutExtension (getWithoutPath (sAbsoluteFilename));
   }
 
   /**
@@ -354,7 +418,8 @@ public final class FilenameHelper
   public static boolean isEqualIgnoreFileSeparator (@Nullable final String sAbsoluteFilename1,
                                                     @Nullable final String sAbsoluteFilename2)
   {
-    return EqualsUtils.equals (getPathUsingUnixSeparator (sAbsoluteFilename1), getPathUsingUnixSeparator (sAbsoluteFilename2));
+    return EqualsUtils.equals (getPathUsingUnixSeparator (sAbsoluteFilename1),
+                               getPathUsingUnixSeparator (sAbsoluteFilename2));
   }
 
   /**
@@ -785,6 +850,7 @@ public final class FilenameHelper
    *         the current operating system.
    */
   @Nullable
+  @CheckReturnValue
   public static String ensurePathStartingWithSeparator (@Nullable final String sPath)
   {
     return sPath == null ? null : startsWithPathSeparatorChar (sPath) ? sPath : File.separator + sPath;
@@ -800,6 +866,7 @@ public final class FilenameHelper
    * @return The path that is ensured to NOT end with the directory separator.
    */
   @Nullable
+  @CheckReturnValue
   public static String ensurePathEndingWithoutSeparator (@Nullable final String sPath)
   {
     if (sPath == null)
@@ -822,6 +889,7 @@ public final class FilenameHelper
    *         current operating system.
    */
   @Nullable
+  @CheckReturnValue
   public static String ensurePathEndingWithSeparator (@Nullable final String sPath)
   {
     return sPath == null ? null : endsWithPathSeparatorChar (sPath) ? sPath : sPath + File.separator;
