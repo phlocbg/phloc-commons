@@ -19,6 +19,7 @@ package com.phloc.commons.messagedigest;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.charset.CharsetManager;
 
 /**
@@ -31,7 +32,7 @@ import com.phloc.commons.charset.CharsetManager;
 public abstract class AbstractMessageDigestGenerator implements IMessageDigestGenerator
 {
   @Nonnull
-  public final IMessageDigestGenerator update (@Nonnull final String aValue, @Nonnull final String sCharset)
+  public final IMessageDigestGenerator update (@Nonnull final String aValue, @Nonnull @Nonempty final String sCharset)
   {
     if (aValue == null)
       throw new NullPointerException ("value");

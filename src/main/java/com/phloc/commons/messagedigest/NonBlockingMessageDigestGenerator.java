@@ -28,6 +28,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.WillClose;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsMutableObject;
 import com.phloc.commons.collections.ArrayHelper;
@@ -44,6 +47,8 @@ import com.phloc.commons.string.ToStringGenerator;
 @NotThreadSafe
 public final class NonBlockingMessageDigestGenerator extends AbstractMessageDigestGenerator
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (NonBlockingMessageDigestGenerator.class);
+
   private final MessageDigest m_aMessageDigest;
   private byte [] m_aDigest;
 
@@ -81,6 +86,7 @@ public final class NonBlockingMessageDigestGenerator extends AbstractMessageDige
       catch (final NoSuchAlgorithmException ex)// NOPMD
       {
         // Unknown algorithm -> goto next
+        s_aLogger.warn ("Unsupported message digest algorithm '" + eMD.getAlgorithm () + "' found");
       }
 
     if (aMessageDigest == null)
@@ -198,5 +204,20 @@ public final class NonBlockingMessageDigestGenerator extends AbstractMessageDige
     {
       StreamUtils.close (aIS);
     }
+  }
+
+  @Nonnull
+  public static byte [] getDigest (@Nonnull final String sContent,
+                                   @Nonnull @Nonempty final String sCharset,
+                                   @Nonnull @Nonempty final EMessageDigestAlgorithm... aAlgorithms)
+  {
+    return new NonBlockingMessageDigestGenerator (aAlgorithms).update (sContent, sCharset).getDigest ();
+  }
+
+  @Nonnull
+  public static byte [] getDigest (@Nonnull final byte [] aContent,
+                                   @Nonnull @Nonempty final EMessageDigestAlgorithm... aAlgorithms)
+  {
+    return new NonBlockingMessageDigestGenerator (aAlgorithms).update (aContent).getDigest ();
   }
 }
