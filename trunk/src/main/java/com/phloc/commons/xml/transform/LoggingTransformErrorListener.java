@@ -25,6 +25,7 @@ import javax.xml.transform.ErrorListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.annotations.CodingStyleguideUnaware;
 import com.phloc.commons.error.IResourceError;
 import com.phloc.commons.log.LogUtils;
 
@@ -34,6 +35,7 @@ import com.phloc.commons.log.LogUtils;
  * @author philip
  */
 @Immutable
+@CodingStyleguideUnaware ("logger too visible by purpose")
 public class LoggingTransformErrorListener extends AbstractTransformErrorListener
 {
   protected static final Logger s_aLogger = LoggerFactory.getLogger (LoggingTransformErrorListener.class);

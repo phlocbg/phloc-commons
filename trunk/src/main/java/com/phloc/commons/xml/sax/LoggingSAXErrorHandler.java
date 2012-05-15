@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXParseException;
 
+import com.phloc.commons.annotations.CodingStyleguideUnaware;
 import com.phloc.commons.error.EErrorLevel;
 import com.phloc.commons.log.LogUtils;
 
@@ -35,6 +36,7 @@ import com.phloc.commons.log.LogUtils;
  * @author philip
  */
 @Immutable
+@CodingStyleguideUnaware ("logger too visible by purpose")
 public class LoggingSAXErrorHandler extends AbstractSAXErrorHandler
 {
   protected static final Logger s_aLogger = LoggerFactory.getLogger (LoggingSAXErrorHandler.class);
