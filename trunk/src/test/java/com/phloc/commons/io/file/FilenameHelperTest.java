@@ -58,7 +58,8 @@ public final class FilenameHelperTest
   @Test
   public void testGetWithoutExtension ()
   {
-    assertNull (FilenameHelper.getWithoutExtension (null));
+    assertNull (FilenameHelper.getWithoutExtension ((String) null));
+    assertNull (FilenameHelper.getWithoutExtension ((File) null));
     assertEquals ("", FilenameHelper.getWithoutExtension (""));
     assertEquals ("xyz", FilenameHelper.getWithoutExtension ("xyz"));
     assertEquals ("xyz", FilenameHelper.getWithoutExtension ("xyz.sh"));
@@ -68,12 +69,29 @@ public final class FilenameHelperTest
   }
 
   /**
+   * Test method getBaseName
+   */
+  @Test
+  public void testGetBaseName ()
+  {
+    assertNull (FilenameHelper.getBaseName ((String) null));
+    assertNull (FilenameHelper.getBaseName ((File) null));
+    assertEquals ("", FilenameHelper.getBaseName (""));
+    assertEquals ("xyz", FilenameHelper.getBaseName ("xyz"));
+    assertEquals ("xyz", FilenameHelper.getBaseName ("xyz.sh"));
+    assertEquals ("ABC", FilenameHelper.getBaseName ("ABC.exe"));
+    assertEquals ("c", FilenameHelper.getBaseName ("a/b/c"));
+    assertEquals ("c", FilenameHelper.getBaseName ("a/b/c.exe"));
+  }
+
+  /**
    * Test method getExtension
    */
   @Test
   public void testGetExtensionString ()
   {
     assertEquals ("", FilenameHelper.getExtension ((String) null));
+    assertEquals ("", FilenameHelper.getExtension ((File) null));
     assertEquals ("", FilenameHelper.getExtension (""));
     assertEquals ("", FilenameHelper.getExtension ("xyz"));
     assertEquals ("sh", FilenameHelper.getExtension ("xyz.sh"));
@@ -119,7 +137,8 @@ public final class FilenameHelperTest
   @Test
   public void testGetWithoutPath ()
   {
-    assertNull (FilenameHelper.getWithoutPath (null));
+    assertNull (FilenameHelper.getWithoutPath ((String) null));
+    assertNull (FilenameHelper.getWithoutPath ((File) null));
     assertEquals ("", FilenameHelper.getWithoutPath (""));
     assertEquals ("xyz", FilenameHelper.getWithoutPath ("xyz"));
     assertEquals ("xyz.sh", FilenameHelper.getWithoutPath ("xyz.sh"));
