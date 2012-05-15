@@ -177,7 +177,8 @@ public final class CGlobal
   public static final BigInteger BIGINT_MINUS_ONE = new BigInteger ("-1");
 
   /** The BigInteger representation of 10 */
-  public static final BigInteger BIGINT_10 = new BigInteger ("10");
+  @Deprecated
+  public static final BigInteger BIGINT_10 = BigInteger.TEN;
 
   /** The BigInteger representation of 100 */
   public static final BigInteger BIGINT_100 = new BigInteger ("100");
@@ -198,7 +199,8 @@ public final class CGlobal
   public static final BigDecimal BIGDEC_MINUS_ONE = new BigDecimal ("-1");
 
   /** The BigDecimal representation of 10 */
-  public static final BigDecimal BIGDEC_10 = new BigDecimal ("10");
+  @Deprecated
+  public static final BigDecimal BIGDEC_10 = BigDecimal.TEN;
 
   /** The BigDecimal representation of 100 */
   public static final BigDecimal BIGDEC_100 = new BigDecimal ("100");
