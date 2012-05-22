@@ -42,6 +42,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @Immutable
+@edu.umd.cs.findbugs.annotations.SuppressWarnings ("SE_NO_SERIALVERSIONID")
 public final class ClassPathResource implements IReadableResource
 {
   /** Use this prefix to uniquely identify classpath resources */
