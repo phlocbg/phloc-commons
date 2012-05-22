@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import org.junit.Test;
@@ -132,12 +133,14 @@ public final class StreamUtilsTest
 
   /**
    * Test method copyInputStreamToOutputStream
+   * 
+   * @throws UnsupportedEncodingException
    */
   @Test
   @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
-  public void testCopyInputStreamToOutputStream ()
+  public void testCopyInputStreamToOutputStream () throws UnsupportedEncodingException
   {
-    final byte [] aInput = "Hallo".getBytes ();
+    final byte [] aInput = "Hallo".getBytes (CCharset.CHARSET_ISO_8859_1);
     final NonBlockingByteArrayInputStream bais = new NonBlockingByteArrayInputStream (aInput);
     final NonBlockingByteArrayOutputStream baos = new NonBlockingByteArrayOutputStream ();
     assertTrue (StreamUtils.copyInputStreamToOutputStream (bais, baos).isSuccess ());
@@ -182,9 +185,9 @@ public final class StreamUtilsTest
   }
 
   @Test
-  public void testGetAvailable ()
+  public void testGetAvailable () throws UnsupportedEncodingException
   {
-    final byte [] aInput = "Hallo".getBytes ();
+    final byte [] aInput = "Hallo".getBytes (CCharset.CHARSET_ISO_8859_1);
     assertEquals (5, StreamUtils.getAvailable (new NonBlockingByteArrayInputStream (aInput)));
     assertEquals (0, StreamUtils.getAvailable ((InputStream) null));
     assertEquals (0, StreamUtils.getAvailable (new WrappedInputStream (new NonBlockingByteArrayInputStream (aInput))
@@ -199,10 +202,10 @@ public final class StreamUtilsTest
 
   @Test
   @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
-  public void testGetAllBytes ()
+  public void testGetAllBytes () throws UnsupportedEncodingException
   {
     final String sInput = "Hallo";
-    final byte [] aInput = sInput.getBytes ();
+    final byte [] aInput = sInput.getBytes (CCharset.CHARSET_ISO_8859_1);
     assertArrayEquals (aInput, StreamUtils.getAllBytes (new ByteArrayInputStreamProvider (aInput)));
     assertArrayEquals (aInput, StreamUtils.getAllBytes (new NonBlockingByteArrayInputStream (aInput)));
     assertNull (StreamUtils.getAllBytes ((IInputStreamProvider) null));
@@ -365,9 +368,9 @@ public final class StreamUtilsTest
 
   @Test
   @SuppressWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
-  public void testWriteStream ()
+  public void testWriteStream () throws UnsupportedEncodingException
   {
-    final byte [] buf = "abcde".getBytes ();
+    final byte [] buf = "abcde".getBytes (CCharset.CHARSET_ISO_8859_1);
     final NonBlockingByteArrayOutputStream os = new NonBlockingByteArrayOutputStream ();
     assertTrue (StreamUtils.writeStream (os, buf).isSuccess ());
     assertTrue (StreamUtils.writeStream (os, buf, 0, buf.length).isSuccess ());

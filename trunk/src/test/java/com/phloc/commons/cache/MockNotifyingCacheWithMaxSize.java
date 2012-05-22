@@ -17,6 +17,10 @@
  */
 package com.phloc.commons.cache;
 
+import javax.annotation.Nullable;
+
+import com.phloc.commons.string.StringHelper;
+
 public final class MockNotifyingCacheWithMaxSize extends AbstractNotifyingCacheWithMaxSize <String, String>
 {
   public MockNotifyingCacheWithMaxSize (final int nMaxSize)
@@ -25,8 +29,8 @@ public final class MockNotifyingCacheWithMaxSize extends AbstractNotifyingCacheW
   }
 
   @Override
-  protected String getValueToCache (final String aKey)
+  protected String getValueToCache (@Nullable final String aKey)
   {
-    return aKey;
+    return StringHelper.getNotNull (aKey);
   }
 }

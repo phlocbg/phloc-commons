@@ -20,6 +20,8 @@ package com.phloc.commons.messagedigest;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
+import java.io.UnsupportedEncodingException;
+
 import org.junit.Test;
 
 import com.phloc.commons.charset.CCharset;
@@ -32,7 +34,7 @@ import com.phloc.commons.charset.CCharset;
 public final class MessageDigestGeneratorHelperTest
 {
   @Test
-  public void testAll ()
+  public void testAll () throws UnsupportedEncodingException
   {
     // For all algorithms
     for (final EMessageDigestAlgorithm eAlgo : EMessageDigestAlgorithm.values ())
@@ -42,7 +44,7 @@ public final class MessageDigestGeneratorHelperTest
       final IMessageDigestGenerator aMD2 = new NonBlockingMessageDigestGenerator (eAlgo);
       for (int i = 0; i < 255; ++i)
       {
-        final byte [] aBytes = ("abc" + i + "def").getBytes ();
+        final byte [] aBytes = ("abc" + i + "def").getBytes (CCharset.CHARSET_ISO_8859_1);
         aMD1.update ((byte) i);
         aMD1.update (aBytes);
         aMD2.update ((byte) i);
@@ -57,7 +59,7 @@ public final class MessageDigestGeneratorHelperTest
                     MessageDigestGeneratorHelper.getHexValueFromDigest (aMD2.getDigest ()));
 
       final String s = "phloc commons is great";
-      final byte [] aBytes = s.getBytes ();
+      final byte [] aBytes = s.getBytes (CCharset.CHARSET_ISO_8859_1);
       assertArrayEquals (MessageDigestGeneratorHelper.getDigest (eAlgo, aBytes),
                          MessageDigestGeneratorHelper.getDigest (eAlgo, aBytes));
       assertArrayEquals (MessageDigestGeneratorHelper.getDigest (eAlgo, aBytes, 5, 10),

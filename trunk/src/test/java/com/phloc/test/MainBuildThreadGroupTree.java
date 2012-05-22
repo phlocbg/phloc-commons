@@ -46,7 +46,7 @@ public class MainBuildThreadGroupTree
     /*
      * Create a vector that contains all threads in all groups.
      */
-    Thread [] threads = new Thread [rootGroup.activeCount ()];
+    final Thread [] threads = new Thread [rootGroup.activeCount ()];
     final int threadCount = rootGroup.enumerate (threads, true);
     /*
      * Copy the thread information into a string vector.
@@ -69,7 +69,7 @@ public class MainBuildThreadGroupTree
                       ", " +
                       state.toString ();
     }
-    threads = null; /* Dump the vector */
+    /* Dump the vector */
     for (final String s : threadInfo)
       System.out.println (s);
   }

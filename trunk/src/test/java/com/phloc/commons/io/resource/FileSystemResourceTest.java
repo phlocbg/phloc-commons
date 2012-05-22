@@ -112,4 +112,10 @@ public final class FileSystemResourceTest
       FileOperations.deleteFile (f);
     }
   }
+
+  @Test
+  public void testSerialize () throws Exception
+  {
+    PhlocTestUtils.testDefaultSerialization (new FileSystemResource ("file.txt"));
+  }
 }

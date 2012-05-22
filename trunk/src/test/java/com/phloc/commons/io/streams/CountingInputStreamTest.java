@@ -23,6 +23,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
@@ -36,7 +37,7 @@ public final class CountingInputStreamTest
   public void testAll () throws IOException
   {
     final String sTestString = "test 123 - This counts!";
-    final CountingInputStream aCIS = new CountingInputStream (new NonBlockingByteArrayInputStream (sTestString.getBytes ()));
+    final CountingInputStream aCIS = new CountingInputStream (new NonBlockingByteArrayInputStream (sTestString.getBytes (CCharset.CHARSET_ISO_8859_1)));
     aCIS.read ();
     StreamUtils.copyInputStreamToOutputStream (aCIS, new NonBlockingByteArrayOutputStream ());
     assertEquals (sTestString.length (), aCIS.getBytesRead ());

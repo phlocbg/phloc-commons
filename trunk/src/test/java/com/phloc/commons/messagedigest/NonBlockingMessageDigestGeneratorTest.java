@@ -21,6 +21,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
+import java.io.UnsupportedEncodingException;
+
 import org.junit.Test;
 
 import com.phloc.commons.charset.CCharset;
@@ -69,7 +71,7 @@ public final class NonBlockingMessageDigestGeneratorTest
   }
 
   @Test
-  public void testErrorCases ()
+  public void testErrorCases () throws UnsupportedEncodingException
   {
     try
     {
@@ -121,8 +123,8 @@ public final class NonBlockingMessageDigestGeneratorTest
     catch (final NullPointerException ex)
     {}
     md.update ((byte) 5);
-    md.update ("abc".getBytes ());
-    md.update ("abc".getBytes (), 1, 1);
+    md.update ("abc".getBytes (CCharset.CHARSET_ISO_8859_1));
+    md.update ("abc".getBytes (CCharset.CHARSET_ISO_8859_1), 1, 1);
     md.update ("abc", CCharset.CHARSET_UTF_8);
     assertNotNull (md.getDigest ());
     assertNotNull (md.getDigest (2));

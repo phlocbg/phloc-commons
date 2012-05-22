@@ -33,7 +33,8 @@ final class MockConcurrentCollectorMultiple extends ConcurrentCollectorMultiple 
 
   public void run (final List <String> aObjects)
   {
-    m_nPerformCount += aObjects.size ();
+    if (aObjects != null)
+      m_nPerformCount += aObjects.size ();
   }
 
   public int getPerformCount ()

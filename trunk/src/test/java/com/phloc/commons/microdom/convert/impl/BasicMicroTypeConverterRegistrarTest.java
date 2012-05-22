@@ -21,12 +21,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import org.junit.Test;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.convert.MicroTypeConverter;
@@ -51,7 +53,7 @@ import com.phloc.commons.state.EValidity;
 public final class BasicMicroTypeConverterRegistrarTest
 {
   @Test
-  public void testSimpleString ()
+  public void testSimpleString () throws UnsupportedEncodingException
   {
     final Object [] aDefinedObjs = new Object [] { "InputString",
                                                   BigDecimal.ONE,
@@ -104,7 +106,7 @@ public final class BasicMicroTypeConverterRegistrarTest
                                                   ETriState.UNDEFINED,
                                                   EValidity.VALID,
                                                   EValidity.INVALID,
-                                                  "Jägalä".getBytes (),
+                                                  "Jägalä".getBytes (CCharset.CHARSET_ISO_8859_1),
                                                   new StringBuffer ("Äh ja - wie is das jetzt?"),
                                                   new StringBuilder ("Thät lüks greyt!") };
     for (final Object aObj : aDefinedObjs)

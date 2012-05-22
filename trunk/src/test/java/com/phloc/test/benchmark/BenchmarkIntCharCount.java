@@ -27,7 +27,7 @@ public final class BenchmarkIntCharCount
     int getCharacterCount (int n);
   }
 
-  public static IDoIt s_a1 = new IDoIt ()
+  public static final IDoIt s_a1 = new IDoIt ()
   {
     public int getCharacterCount (final int n)
     {
@@ -35,7 +35,7 @@ public final class BenchmarkIntCharCount
     }
   };
 
-  public static IDoIt s_a2 = new IDoIt ()
+  public static final IDoIt s_a2 = new IDoIt ()
   {
     public int getCharacterCount (final int n)
     {

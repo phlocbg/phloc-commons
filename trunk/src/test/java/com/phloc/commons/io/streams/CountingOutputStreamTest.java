@@ -24,6 +24,8 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import com.phloc.commons.charset.CCharset;
+
 /**
  * Test class for class {@link CountingOutputStream}.
  * 
@@ -36,7 +38,8 @@ public final class CountingOutputStreamTest
   {
     final String sTestString = "test 123 - This counts!";
     final CountingOutputStream aCOS = new CountingOutputStream (new NonBlockingByteArrayOutputStream ());
-    StreamUtils.copyInputStreamToOutputStream (new NonBlockingByteArrayInputStream (sTestString.getBytes ()), aCOS);
+    StreamUtils.copyInputStreamToOutputStream (new NonBlockingByteArrayInputStream (sTestString.getBytes (CCharset.CHARSET_ISO_8859_1)),
+                                               aCOS);
     assertEquals (sTestString.length (), aCOS.getBytesWritten ());
     aCOS.write (5);
     aCOS.write (new byte [] { 1, 2, 3 });

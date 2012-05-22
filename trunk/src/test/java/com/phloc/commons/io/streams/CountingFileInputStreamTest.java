@@ -37,15 +37,29 @@ public final class CountingFileInputStreamTest
   public void testAll () throws IOException
   {
     CountingFileInputStream aCIS = new CountingFileInputStream ("pom.xml");
-    aCIS.read ();
-    assertEquals (1, aCIS.read (new byte [5], 1, 1));
-    StreamUtils.copyInputStreamToOutputStream (aCIS, new NonBlockingByteArrayOutputStream ());
-    PhlocTestUtils.testToStringImplementation (aCIS);
+    try
+    {
+      aCIS.read ();
+      assertEquals (1, aCIS.read (new byte [5], 1, 1));
+      StreamUtils.copyInputStreamToOutputStream (aCIS, new NonBlockingByteArrayOutputStream ());
+      PhlocTestUtils.testToStringImplementation (aCIS);
+    }
+    finally
+    {
+      StreamUtils.close (aCIS);
+    }
 
     aCIS = new CountingFileInputStream (new File ("pom.xml"));
-    aCIS.read ();
-    assertEquals (1, aCIS.read (new byte [5], 1, 1));
-    StreamUtils.copyInputStreamToOutputStream (aCIS, new NonBlockingByteArrayOutputStream ());
-    PhlocTestUtils.testToStringImplementation (aCIS);
+    try
+    {
+      aCIS.read ();
+      assertEquals (1, aCIS.read (new byte [5], 1, 1));
+      StreamUtils.copyInputStreamToOutputStream (aCIS, new NonBlockingByteArrayOutputStream ());
+      PhlocTestUtils.testToStringImplementation (aCIS);
+    }
+    finally
+    {
+      StreamUtils.close (aCIS);
+    }
   }
 }
