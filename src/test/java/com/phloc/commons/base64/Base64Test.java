@@ -80,10 +80,10 @@ public final class Base64Test
   public void testEncodeBytes () throws IOException
   {
     final String sSource = "Hallo Welt! Ümläüte";
-    final String sEncoded = Base64.encodeBytes (sSource.getBytes ());
+    final String sEncoded = Base64.encodeBytes (sSource.getBytes (CCharset.CHARSET_ISO_8859_1));
     final byte [] aDecoded = Base64.decode (sEncoded);
 
-    assertArrayEquals (sSource.getBytes (), aDecoded);
+    assertArrayEquals (sSource.getBytes (CCharset.CHARSET_ISO_8859_1), aDecoded);
     final byte [] aSrc = "Hallo Wält".getBytes (CCharset.CHARSET_UTF_8);
     final String sDst = Base64.encodeBytes (aSrc, 0, aSrc.length);
     assertEquals ("Hallo Wält", Base64Helper.safeDecodeAsString (sDst, CCharset.CHARSET_UTF_8));
@@ -93,9 +93,9 @@ public final class Base64Test
   public void testEncodeBytesGZIP () throws IOException
   {
     final String sSource = "Hallo Welt! Ümläüte";
-    final String sEncoded = Base64.encodeBytes (sSource.getBytes (), Base64.GZIP);
+    final String sEncoded = Base64.encodeBytes (sSource.getBytes (CCharset.CHARSET_ISO_8859_1), Base64.GZIP);
     final byte [] aDecoded = Base64.decode (sEncoded);
-    assertArrayEquals (sSource.getBytes (), aDecoded);
+    assertArrayEquals (sSource.getBytes (CCharset.CHARSET_ISO_8859_1), aDecoded);
   }
 
   @Test
@@ -221,7 +221,9 @@ public final class Base64Test
     try
     {
       assertFalse (FileUtils.existsFile (f2));
-      SimpleFileIO.writeFile (f1, Base64Helper.safeEncode ("Hallo Wält", CCharset.CHARSET_UTF_8).getBytes ());
+      SimpleFileIO.writeFile (f1,
+                              Base64Helper.safeEncode ("Hallo Wält", CCharset.CHARSET_UTF_8)
+                                          .getBytes (CCharset.CHARSET_ISO_8859_1));
       Base64.decodeFileToFile (f1.getAbsolutePath (), f2.getAbsolutePath ());
       assertTrue (FileUtils.existsFile (f2));
       final String sDecoded = SimpleFileIO.readFileAsString (f2, CCharset.CHARSET_UTF_8);

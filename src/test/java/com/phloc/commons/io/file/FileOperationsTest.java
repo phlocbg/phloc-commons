@@ -23,6 +23,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
 import javax.annotation.Nonnull;
@@ -279,17 +280,17 @@ public final class FileOperationsTest
   }
 
   @Test
-  public void testRenameFile ()
+  public void testRenameFile () throws UnsupportedEncodingException
   {
     final File aFile = new File ("dummy.txt");
     final File aFile2 = new File ("dummy2.txt");
     assertFalse (FileUtils.existsFile (aFile));
     try
     {
-      SimpleFileIO.writeFile (aFile, "abc".getBytes ());
+      SimpleFileIO.writeFile (aFile, "abc".getBytes (CCharset.CHARSET_ISO_8859_1));
       assertTrue (FileUtils.existsFile (aFile));
 
-      SimpleFileIO.writeFile (aFile2, "abc".getBytes ());
+      SimpleFileIO.writeFile (aFile2, "abc".getBytes (CCharset.CHARSET_ISO_8859_1));
       _expectedError (FileOperations.renameFile (aFile, aFile2), EFileIOErrorCode.TARGET_ALREADY_EXISTS);
       _expectedSuccess (FileOperations.deleteFile (aFile2));
 
@@ -324,7 +325,7 @@ public final class FileOperationsTest
   }
 
   @Test
-  public void testCopyFile ()
+  public void testCopyFile () throws UnsupportedEncodingException
   {
     final File aFile = new File ("dummy.txt");
     final File aFile2 = new File ("dummy2.txt");
@@ -335,10 +336,10 @@ public final class FileOperationsTest
 
       _expectedError (FileOperations.copyFile (aFile, aFile2), EFileIOErrorCode.SOURCE_DOES_NOT_EXIST);
 
-      SimpleFileIO.writeFile (aFile, "abc".getBytes ());
+      SimpleFileIO.writeFile (aFile, "abc".getBytes (CCharset.CHARSET_ISO_8859_1));
       assertTrue (FileUtils.existsFile (aFile));
 
-      SimpleFileIO.writeFile (aFile2, "abc".getBytes ());
+      SimpleFileIO.writeFile (aFile2, "abc".getBytes (CCharset.CHARSET_ISO_8859_1));
       _expectedError (FileOperations.copyFile (aFile, aFile2), EFileIOErrorCode.TARGET_ALREADY_EXISTS);
       _expectedSuccess (FileOperations.deleteFile (aFile2));
 
@@ -492,14 +493,14 @@ public final class FileOperationsTest
   }
 
   @Test
-  public void testDeleteFile ()
+  public void testDeleteFile () throws UnsupportedEncodingException
   {
     _expectedError (FileOperations.deleteFile (new File ("warum sollte es diese Datei geben")),
                     EFileIOErrorCode.SOURCE_DOES_NOT_EXIST);
     final File f = new File ("delfile.test");
     try
     {
-      SimpleFileIO.writeFile (f, "abc".getBytes ());
+      SimpleFileIO.writeFile (f, "abc".getBytes (CCharset.CHARSET_ISO_8859_1));
       assertTrue (FileUtils.existsFile (f));
       _expectedSuccess (FileOperations.deleteFile (f));
       assertFalse (FileUtils.existsFile (f));

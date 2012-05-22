@@ -25,6 +25,7 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ import javax.annotation.Nonnull;
 
 import org.junit.Test;
 
+import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.lang.ClassHelper;
@@ -157,7 +159,7 @@ public final class TypeConverterTest extends AbstractPhlocTestCase
   }
 
   @Test
-  public void testToString ()
+  public void testToString () throws UnsupportedEncodingException
   {
     // Check conversion with explicit converters defined
     final Object [] aDefinedObjs = new Object [] { BigDecimal.ONE,
@@ -183,7 +185,7 @@ public final class TypeConverterTest extends AbstractPhlocTestCase
                                                   ETopBottom.BOTTOM,
                                                   ETriState.UNDEFINED,
                                                   EValidity.VALID,
-                                                  "Jägalä".getBytes (),
+                                                  "Jägalä".getBytes (CCharset.CHARSET_ISO_8859_1),
                                                   new StringBuffer ("Äh ja - wie is das jetzt?"),
                                                   new StringBuilder ("Thät lüks greyt!") };
     for (final Object aSrcValue : aDefinedObjs)

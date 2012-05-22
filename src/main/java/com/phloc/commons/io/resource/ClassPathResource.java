@@ -50,7 +50,7 @@ public final class ClassPathResource implements IReadableResource
   public static final String CLASSPATH_PREFIX_SHORT = "cp:";
 
   private final String m_sPath;
-  private final WeakReference <ClassLoader> m_aClassLoader;
+  private final transient WeakReference <ClassLoader> m_aClassLoader;
   private boolean m_bURLResolved = false;
   private URL m_aURL;
 

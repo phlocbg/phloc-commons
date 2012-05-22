@@ -40,8 +40,8 @@ public final class WrappedOutputStreamTest
     final NonBlockingByteArrayOutputStream baos = new NonBlockingByteArrayOutputStream ();
     final WrappedOutputStream ws = new WrappedOutputStream (baos);
     ws.write ('a');
-    ws.write ("bc".getBytes ());
-    ws.write ("cde".getBytes (), 1, 1);
+    ws.write ("bc".getBytes (CCharset.CHARSET_ISO_8859_1));
+    ws.write ("cde".getBytes (CCharset.CHARSET_ISO_8859_1), 1, 1);
     ws.flush ();
     ws.close ();
     assertEquals ("abcd", baos.getAsString (CCharset.CHARSET_ISO_8859_1));

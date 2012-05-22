@@ -32,13 +32,12 @@ import com.phloc.commons.string.StringHelper;
 
 /**
  * Test class for class {@link WrappedReader}.
- *
+ * 
  * @author philip
  */
 public final class WrappedReaderTest
 {
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testAll () throws IOException
   {
     final StringReader baos = new StringReader (StringHelper.getRepeated ('a', 100));
@@ -67,8 +66,7 @@ public final class WrappedReaderTest
     {}
     finally
     {
-      if (aReader != null)
-        aReader.close ();
+      StreamUtils.close (aReader);
     }
   }
 }

@@ -227,7 +227,7 @@ public final class ClassPathResourceTest
   }
 
   @Test
-  public void testDefault ()
+  public void testDefault () throws Exception
   {
     final ClassPathResource aCPISP1a = new ClassPathResource ("folder/test2.txt");
     final ClassPathResource aCPISP1b = new ClassPathResource ("folder/test2.txt");
@@ -238,5 +238,6 @@ public final class ClassPathResourceTest
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (aCPISP1a,
                                                                     new ClassPathResource ("classpath:folder/test2.txt"));
     PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (aCPISP1a, aCPISP2);
+    PhlocTestUtils.testDefaultSerialization (aCPISP1a);
   }
 }

@@ -18,6 +18,7 @@
 package com.phloc.commons.io;
 
 import java.io.File;
+import java.io.Serializable;
 import java.net.URL;
 
 import javax.annotation.Nonnull;
@@ -31,7 +32,7 @@ import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
  * @author philip
  */
 @MustImplementEqualsAndHashcode
-interface IResourceBase
+interface IResourceBase extends Serializable
 {
   /**
    * @return A non-<code>null</code> resource ID used e.g. for system IDs in XML

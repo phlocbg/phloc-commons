@@ -20,8 +20,11 @@ package com.phloc.commons.io.streams;
 import static org.junit.Assert.assertEquals;
 
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 
 import org.junit.Test;
+
+import com.phloc.commons.charset.CCharset;
 
 /**
  * Test class for class {@link CountingInputStream}.
@@ -52,17 +55,17 @@ public final class NonClosingInputStreamTest
   }
 
   @Test
-  public void testClosing ()
+  public void testClosing () throws UnsupportedEncodingException
   {
-    final MockCloseCountingInputStream aX = new MockCloseCountingInputStream (new NonBlockingByteArrayInputStream ("abc".getBytes ()));
+    final MockCloseCountingInputStream aX = new MockCloseCountingInputStream (new NonBlockingByteArrayInputStream ("abc".getBytes (CCharset.CHARSET_ISO_8859_1)));
     StreamUtils.copyInputStreamToOutputStream (aX, new NonBlockingByteArrayOutputStream ());
     assertEquals (1, aX.getCloseCount ());
   }
 
   @Test
-  public void testNonClosing ()
+  public void testNonClosing () throws UnsupportedEncodingException
   {
-    final MockCloseCountingInputStream aX = new MockCloseCountingInputStream (new NonBlockingByteArrayInputStream ("abc".getBytes ()));
+    final MockCloseCountingInputStream aX = new MockCloseCountingInputStream (new NonBlockingByteArrayInputStream ("abc".getBytes (CCharset.CHARSET_ISO_8859_1)));
     StreamUtils.copyInputStreamToOutputStream (new NonClosingInputStream (aX), new NonBlockingByteArrayOutputStream ());
     assertEquals (0, aX.getCloseCount ());
   }

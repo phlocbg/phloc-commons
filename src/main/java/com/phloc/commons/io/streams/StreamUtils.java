@@ -304,9 +304,9 @@ public final class StreamUtils
   }
 
   @Nonnegative
-  private static long _copy (@Nonnull final InputStream aIS,
-                             @Nonnull final OutputStream aOS,
-                             @Nonnull final byte [] aBuffer) throws IOException
+  private static long _copyInputStreamToOutputStream (@Nonnull final InputStream aIS,
+                                                      @Nonnull final OutputStream aOS,
+                                                      @Nonnull final byte [] aBuffer) throws IOException
   {
     long nTotalBytesCopied = 0;
     int nBytesRead;
@@ -319,9 +319,9 @@ public final class StreamUtils
   }
 
   @Nonnegative
-  private static long _copy (@Nonnull final Reader aReader,
-                             @Nonnull final Writer aWriter,
-                             @Nonnull final char [] aBuffer) throws IOException
+  private static long _copyReaderToWriter (@Nonnull final Reader aReader,
+                                           @Nonnull final Writer aWriter,
+                                           @Nonnull final char [] aBuffer) throws IOException
   {
     long nTotalBytesCopied = 0;
     int nBytesRead;
@@ -365,7 +365,7 @@ public final class StreamUtils
       if (aIS != null && aOS != null)
       {
         // both streams are not null
-        final long nTotalBytesCopied = _copy (aIS, aOS, aBuffer);
+        final long nTotalBytesCopied = _copyInputStreamToOutputStream (aIS, aOS, aBuffer);
 
         // Add to statistics
         s_aByteSizeHdl.addSize (nTotalBytesCopied);
@@ -629,7 +629,7 @@ public final class StreamUtils
       if (aReader != null && aWriter != null)
       {
         // both streams are not null
-        final long nTotalCharsCopied = _copy (aReader, aWriter, aBuffer);
+        final long nTotalCharsCopied = _copyReaderToWriter (aReader, aWriter, aBuffer);
 
         // Add to statistics
         s_aCharSizeHdl.addSize (nTotalCharsCopied);

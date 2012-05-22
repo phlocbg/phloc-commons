@@ -23,9 +23,11 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 
 import org.junit.Test;
 
+import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
@@ -237,7 +239,7 @@ public final class FileOperationManagerTest
   }
 
   @Test
-  public void testRenameFile ()
+  public void testRenameFile () throws UnsupportedEncodingException
   {
     final IFileOperationManager aFOM = new FileOperationManager ();
     final File aFile = new File ("renfile.test");
@@ -248,7 +250,7 @@ public final class FileOperationManagerTest
       _expectedError (aFOM.renameFile (aFile, aFile2), EFileIOErrorCode.SOURCE_DOES_NOT_EXIST);
       assertEquals (EFileIOOperation.RENAME_FILE, aFOM.getLastOperation ());
 
-      SimpleFileIO.writeFile (aFile, "hhsad".getBytes ());
+      SimpleFileIO.writeFile (aFile, "hhsad".getBytes (CCharset.CHARSET_ISO_8859_1));
       assertTrue (FileUtils.existsFile (aFile));
       assertFalse (FileUtils.existsFile (aFile2));
       _expectedSuccess (aFOM.renameFile (aFile, aFile2));
@@ -267,7 +269,7 @@ public final class FileOperationManagerTest
   }
 
   @Test
-  public void testDeleteFile ()
+  public void testDeleteFile () throws UnsupportedEncodingException
   {
     final IFileOperationManager aFOM = new FileOperationManager ();
     final File aFile = new File ("delfile.test");
@@ -277,7 +279,7 @@ public final class FileOperationManagerTest
       _expectedError (aFOM.deleteFile (aFile), EFileIOErrorCode.SOURCE_DOES_NOT_EXIST);
       assertEquals (EFileIOOperation.DELETE_FILE, aFOM.getLastOperation ());
 
-      SimpleFileIO.writeFile (aFile, "xxx".getBytes ());
+      SimpleFileIO.writeFile (aFile, "xxx".getBytes (CCharset.CHARSET_ISO_8859_1));
       _expectedSuccess (aFOM.deleteFile (aFile));
       assertEquals (EFileIOOperation.DELETE_FILE, aFOM.getLastOperation ());
       assertFalse (FileUtils.existsFile (aFile));
@@ -290,7 +292,7 @@ public final class FileOperationManagerTest
   }
 
   @Test
-  public void testDeleteFileIfExisting ()
+  public void testDeleteFileIfExisting () throws UnsupportedEncodingException
   {
     final IFileOperationManager aFOM = new FileOperationManager ();
     final File aFile = new File ("delfile.test");
@@ -300,7 +302,7 @@ public final class FileOperationManagerTest
       _expectedSuccess (aFOM.deleteFileIfExisting (aFile));
       assertEquals (EFileIOOperation.DELETE_FILE, aFOM.getLastOperation ());
 
-      SimpleFileIO.writeFile (aFile, "xxx".getBytes ());
+      SimpleFileIO.writeFile (aFile, "xxx".getBytes (CCharset.CHARSET_ISO_8859_1));
       _expectedSuccess (aFOM.deleteFileIfExisting (aFile));
       assertEquals (EFileIOOperation.DELETE_FILE, aFOM.getLastOperation ());
       assertFalse (FileUtils.existsFile (aFile));
@@ -392,7 +394,7 @@ public final class FileOperationManagerTest
   }
 
   @Test
-  public void testCopyFile ()
+  public void testCopyFile () throws UnsupportedEncodingException
   {
     final IFileOperationManager aFOM = new FileOperationManager ();
     final File aFile = new File ("copyfile.test");
@@ -402,7 +404,7 @@ public final class FileOperationManagerTest
       assertFalse (FileUtils.existsFile (aFile));
       _expectedError (aFOM.deleteFile (aFile), EFileIOErrorCode.SOURCE_DOES_NOT_EXIST);
       assertEquals (EFileIOOperation.DELETE_FILE, aFOM.getLastOperation ());
-      SimpleFileIO.writeFile (aFile, "hudriwudri".getBytes ());
+      SimpleFileIO.writeFile (aFile, "hudriwudri".getBytes (CCharset.CHARSET_ISO_8859_1));
       _expectedError (aFOM.copyDirRecursive (aFile, aFile2), EFileIOErrorCode.SOURCE_DOES_NOT_EXIST);
       assertEquals (EFileIOOperation.COPY_DIR_RECURSIVE, aFOM.getLastOperation ());
       assertTrue (FileUtils.existsFile (aFile));

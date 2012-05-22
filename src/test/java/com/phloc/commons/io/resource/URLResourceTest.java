@@ -132,4 +132,10 @@ public final class URLResourceTest extends AbstractPhlocTestCase
     catch (final IllegalArgumentException ex)
     {}
   }
+
+  @Test
+  public void testSerialize () throws Exception
+  {
+    PhlocTestUtils.testDefaultSerialization (new URLResource ("http://www.phloc.com"));
+  }
 }

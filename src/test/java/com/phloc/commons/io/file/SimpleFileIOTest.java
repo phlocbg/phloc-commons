@@ -24,6 +24,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,16 +41,16 @@ import com.phloc.commons.io.resource.ClassPathResource;
 public final class SimpleFileIOTest
 {
   @Test
-  public void testReadFileBytes ()
+  public void testReadFileBytes () throws UnsupportedEncodingException
   {
     final String s = "äöü text";
     final File f = new File ("dummy.txt");
-    assertTrue (SimpleFileIO.writeFile (f, s.getBytes ()).isSuccess ());
+    assertTrue (SimpleFileIO.writeFile (f, s.getBytes (CCharset.CHARSET_ISO_8859_1)).isSuccess ());
     try
     {
       final byte [] aBytes = SimpleFileIO.readFileBytes (f);
       assertNotNull (aBytes);
-      assertTrue (Arrays.equals (aBytes, s.getBytes ()));
+      assertTrue (Arrays.equals (aBytes, s.getBytes (CCharset.CHARSET_ISO_8859_1)));
       assertNull (SimpleFileIO.readFileBytes (null));
       assertNull (SimpleFileIO.readFileBytes (new File ("non existing file")));
     }

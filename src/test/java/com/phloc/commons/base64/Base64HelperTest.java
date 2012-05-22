@@ -21,6 +21,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
 import org.junit.Test;
@@ -35,14 +36,16 @@ import com.phloc.commons.charset.CCharset;
 public final class Base64HelperTest
 {
   @Test
-  public void testAll ()
+  public void testAll () throws UnsupportedEncodingException
   {
     final String sSource = "dgMP$";
     final String sEncoded = Base64Helper.safeEncode (sSource, CCharset.CHARSET_ISO_8859_1);
-    assertTrue (Arrays.equals (sSource.getBytes (), Base64Helper.safeDecode (sEncoded)));
-    assertTrue (Arrays.equals (sSource.getBytes (), Base64Helper.safeDecode (sEncoded.getBytes ())));
+    assertTrue (Arrays.equals (sSource.getBytes (CCharset.CHARSET_ISO_8859_1), Base64Helper.safeDecode (sEncoded)));
+    assertTrue (Arrays.equals (sSource.getBytes (CCharset.CHARSET_ISO_8859_1),
+                               Base64Helper.safeDecode (sEncoded.getBytes (CCharset.CHARSET_ISO_8859_1))));
     assertEquals (sSource, Base64Helper.safeDecodeAsString (sEncoded, CCharset.CHARSET_ISO_8859_1));
-    assertEquals (sSource, Base64Helper.safeDecodeAsString (sEncoded.getBytes (), CCharset.CHARSET_ISO_8859_1));
+    assertEquals (sSource, Base64Helper.safeDecodeAsString (sEncoded.getBytes (CCharset.CHARSET_ISO_8859_1),
+                                                            CCharset.CHARSET_ISO_8859_1));
 
     // Invalid input
     assertNull (Base64Helper.safeDecode ("xyz"));

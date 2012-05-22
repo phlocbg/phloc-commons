@@ -30,7 +30,7 @@ public final class BenchmarkCharContains
     boolean containsPathSep (String s);
   }
 
-  public static IDoIt s_a1 = new IDoIt ()
+  public static final IDoIt s_a1 = new IDoIt ()
   {
     public boolean containsPathSep (final String s)
     {
@@ -42,7 +42,7 @@ public final class BenchmarkCharContains
     }
   };
 
-  public static IDoIt s_a2 = new IDoIt ()
+  public static final IDoIt s_a2 = new IDoIt ()
   {
     public boolean containsPathSep (final String s)
     {

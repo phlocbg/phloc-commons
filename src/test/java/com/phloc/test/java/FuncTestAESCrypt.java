@@ -30,6 +30,7 @@ import javax.crypto.SecretKey;
 import org.junit.Test;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.crypto.CryptoPolicy;
 import com.phloc.commons.random.VerySecureRandom;
@@ -166,7 +167,7 @@ public final class FuncTestAESCrypt
     final AESCrypter aCrypter = new AESCrypter (aMyKey);
 
     // Our cleartext
-    final byte [] cleartext = "This is just än example".getBytes ();
+    final byte [] cleartext = "This is just än example".getBytes (CCharset.CHARSET_ISO_8859_1);
 
     // Encrypt the cleartext
     final byte [] ciphertext = aCrypter.encrypt (cleartext);

@@ -21,12 +21,14 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import org.junit.Test;
 
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
+import com.phloc.commons.io.streams.StreamUtils;
 
 /**
  * Test class for {@link ClassPathHelper}
@@ -46,21 +48,25 @@ public final class ClassPathHelperTest
 
   /**
    * Test for method printClassPathEntries
+   * 
+   * @throws UnsupportedEncodingException
    */
   @Test
-  public void testPrintClassPathEntries ()
+  public void testPrintClassPathEntries () throws UnsupportedEncodingException
   {
     // Use default separator
     NonBlockingByteArrayOutputStream baos = new NonBlockingByteArrayOutputStream ();
-    ClassPathHelper.printClassPathEntries (new PrintStream (baos));
+    ClassPathHelper.printClassPathEntries (new PrintStream (baos, false, CCharset.CHARSET_ISO_8859_1));
     assertTrue (baos.getAsString (CCharset.CHARSET_ISO_8859_1).length () > 0);
     assertTrue (baos.getAsString (CCharset.CHARSET_ISO_8859_1).indexOf ("\n") > 0);
+    StreamUtils.close (baos);
 
     // Use special separator
     baos = new NonBlockingByteArrayOutputStream ();
-    ClassPathHelper.printClassPathEntries (new PrintStream (baos), "$$$");
+    ClassPathHelper.printClassPathEntries (new PrintStream (baos, false, CCharset.CHARSET_ISO_8859_1), "$$$");
     assertTrue (baos.getAsString (CCharset.CHARSET_ISO_8859_1).length () > 0);
     assertTrue (baos.getAsString (CCharset.CHARSET_ISO_8859_1).indexOf ("$$$") > 0);
-    assertTrue (baos.getAsString ("UTF-8").indexOf ("$$$") > 0);
+    assertTrue (baos.getAsString (CCharset.CHARSET_UTF_8).indexOf ("$$$") > 0);
+    StreamUtils.close (baos);
   }
 }
