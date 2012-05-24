@@ -34,6 +34,7 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.List;
 
 import org.junit.Test;
@@ -452,12 +453,21 @@ public final class StreamUtilsTest
   public void testCreateReader ()
   {
     assertNull (StreamUtils.createReader (null, CCharset.CHARSET_ISO_8859_1));
+    assertNull (StreamUtils.createReader (null, CCharset.CHARSET_ISO_8859_1_OBJ));
     final NonBlockingByteArrayInputStream is = new NonBlockingByteArrayInputStream (new byte [4]);
     assertNotNull (StreamUtils.createReader (is, CCharset.CHARSET_ISO_8859_1));
+    assertNotNull (StreamUtils.createReader (is, CCharset.CHARSET_ISO_8859_1_OBJ));
 
     try
     {
-      StreamUtils.createReader (is, null);
+      StreamUtils.createReader (is, (String) null);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+    try
+    {
+      StreamUtils.createReader (is, (Charset) null);
       fail ();
     }
     catch (final NullPointerException ex)
@@ -475,12 +485,21 @@ public final class StreamUtilsTest
   public void testCreateWriter ()
   {
     assertNull (StreamUtils.createWriter (null, CCharset.CHARSET_ISO_8859_1));
+    assertNull (StreamUtils.createWriter (null, CCharset.CHARSET_ISO_8859_1_OBJ));
     final NonBlockingByteArrayOutputStream os = new NonBlockingByteArrayOutputStream ();
     assertNotNull (StreamUtils.createWriter (os, CCharset.CHARSET_ISO_8859_1));
+    assertNotNull (StreamUtils.createWriter (os, CCharset.CHARSET_ISO_8859_1_OBJ));
 
     try
     {
-      StreamUtils.createWriter (os, null);
+      StreamUtils.createWriter (os, (String) null);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+    try
+    {
+      StreamUtils.createWriter (os, (Charset) null);
       fail ();
     }
     catch (final NullPointerException ex)

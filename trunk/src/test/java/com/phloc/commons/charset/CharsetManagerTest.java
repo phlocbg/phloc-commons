@@ -176,12 +176,12 @@ public final class CharsetManagerTest
     assertEquals (3, CharsetManager.getUTF8ByteCount ("abc"));
     assertEquals (9, CharsetManager.getUTF8ByteCount ("abcäöü"));
     assertEquals (3, CharsetManager.getUTF8ByteCount ("\ud7ff"));
-    // assertEquals (0, CharsetManager.getUTF8ByteCount ("\udfff"));
-    // assertEquals (3, CharsetManager.getUTF8ByteCount ("\ue000"));
-    // assertEquals (3, CharsetManager.getUTF8ByteCount ("\uffff"));
 
-    // assertEquals (0, CharsetManager.getUTF8ByteCount (0x110000));
-    // assertEquals (4, CharsetManager.getUTF8ByteCount (0x10000));
+    assertEquals (0, CharsetManager.getUTF8ByteCount ("\udfff"));
+    assertEquals (3, CharsetManager.getUTF8ByteCount ("\ue000"));
+    assertEquals (3, CharsetManager.getUTF8ByteCount ("\uffff"));
+    assertEquals (0, CharsetManager.getUTF8ByteCount (0x110000));
+    assertEquals (4, CharsetManager.getUTF8ByteCount (0x10000));
   }
 
   @Test

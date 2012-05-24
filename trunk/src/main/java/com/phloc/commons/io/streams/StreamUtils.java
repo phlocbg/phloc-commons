@@ -29,6 +29,7 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -1043,6 +1044,12 @@ public final class StreamUtils
   }
 
   @Nullable
+  public static InputStreamReader createReader (@Nullable final InputStream aIS, @Nonnull final Charset aCharset)
+  {
+    return aIS == null ? null : new InputStreamReader (aIS, aCharset);
+  }
+
+  @Nullable
   public static OutputStreamWriter createWriter (@Nullable final OutputStream aOS, @Nonnull final String sCharset)
   {
     try
@@ -1053,6 +1060,12 @@ public final class StreamUtils
     {
       throw new IllegalArgumentException ("Failed to create Writer for charset '" + sCharset + "'", ex);
     }
+  }
+
+  @Nullable
+  public static OutputStreamWriter createWriter (@Nullable final OutputStream aOS, @Nonnull final Charset aCharset)
+  {
+    return aOS == null ? null : new OutputStreamWriter (aOS, aCharset);
   }
 
   /**
