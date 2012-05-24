@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.xml.serialize;
 
+import java.nio.charset.Charset;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.xml.namespace.NamespaceContext;
@@ -69,10 +71,16 @@ public interface IXMLWriterSettings
   EXMLIncorrectCharacterHandling getIncorrectCharacterHandling ();
 
   /**
-   * @return The charset to use. May never be <code>null</code>.
+   * @return The charset name to use. May never be <code>null</code>.
    */
   @Nonnull
   String getCharset ();
+
+  /**
+   * @return The charset to use. May never be <code>null</code>.
+   */
+  @Nonnull
+  Charset getCharsetObj ();
 
   /**
    * @return The namespace context to be used. May be <code>null</code> to

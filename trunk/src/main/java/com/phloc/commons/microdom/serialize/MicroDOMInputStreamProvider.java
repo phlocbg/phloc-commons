@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.microdom.serialize;
 
+import java.nio.charset.Charset;
+
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.io.streamprovider.StringInputStreamProvider;
@@ -54,5 +56,18 @@ public class MicroDOMInputStreamProvider extends StringInputStreamProvider
   public MicroDOMInputStreamProvider (@Nonnull final IMicroNode aNode, @Nonnull final String sCharset)
   {
     super (MicroWriter.getNodeAsString (aNode, new XMLWriterSettings ().setCharset (sCharset)), sCharset);
+  }
+
+  /**
+   * Constructor for MicroNodes.
+   * 
+   * @param aNode
+   *        The node to be streamed. May not be <code>null</code>.
+   * @param aCharset
+   *        The charset to use. May not be <code>null</code>.
+   */
+  public MicroDOMInputStreamProvider (@Nonnull final IMicroNode aNode, @Nonnull final Charset aCharset)
+  {
+    super (MicroWriter.getNodeAsString (aNode, new XMLWriterSettings ().setCharset (aCharset)), aCharset);
   }
 }

@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.xml.serialize;
 
+import java.nio.charset.Charset;
+
 import javax.annotation.Nonnull;
 
 import org.w3c.dom.Node;
@@ -42,5 +44,18 @@ public class DOMInputStreamProvider extends StringInputStreamProvider
   public DOMInputStreamProvider (@Nonnull final Node aNode, @Nonnull final String sCharset)
   {
     super (XMLWriter.getNodeAsString (aNode, new XMLWriterSettings ().setCharset (sCharset)), sCharset);
+  }
+
+  /**
+   * Constructor for W3C nodes.
+   * 
+   * @param aNode
+   *        The node to be streamed. May not be <code>null</code>.
+   * @param aCharset
+   *        The charset to use. May not be <code>null</code>.
+   */
+  public DOMInputStreamProvider (@Nonnull final Node aNode, @Nonnull final Charset aCharset)
+  {
+    super (XMLWriter.getNodeAsString (aNode, new XMLWriterSettings ().setCharset (aCharset)), aCharset);
   }
 }

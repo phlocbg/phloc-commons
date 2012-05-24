@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.lang.ref.WeakReference;
 import java.net.URL;
+import java.nio.charset.Charset;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -215,6 +216,12 @@ public final class ClassPathResource implements IReadableResource
   public Reader getReader (@Nonnull final String sCharset)
   {
     return StreamUtils.createReader (getInputStream (), sCharset);
+  }
+
+  @Nullable
+  public Reader getReader (@Nonnull final Charset aCharset)
+  {
+    return StreamUtils.createReader (getInputStream (), aCharset);
   }
 
   /**

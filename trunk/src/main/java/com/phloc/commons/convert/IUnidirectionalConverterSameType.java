@@ -17,28 +17,15 @@
  */
 package com.phloc.commons.convert;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
-public final class UnidirectionalConverterIdentity <DATATYPE> implements IUnidirectionalConverterSameType <DATATYPE>
+/**
+ * A specialized converter interface that does not do type transformations.
+ * 
+ * @param <DATATYPE>
+ *        Handled data type
+ * @author philip
+ */
+public interface IUnidirectionalConverterSameType <DATATYPE> extends IUnidirectionalConverter <DATATYPE, DATATYPE>
 {
-  @Nullable
-  public DATATYPE convert (@Nullable final DATATYPE aInput)
-  {
-    return aInput;
-  }
-
-  /**
-   * Get a converter instance that does not conversion at all. Just to fulfil
-   * API compatibility.
-   * 
-   * @param <DATATYPE>
-   *        The type of input and output object
-   * @return A non-<code>null</code> converter object.
-   */
-  @Nonnull
-  public static <DATATYPE> UnidirectionalConverterIdentity <DATATYPE> create ()
-  {
-    return new UnidirectionalConverterIdentity <DATATYPE> ();
-  }
+  /* empty */
 }

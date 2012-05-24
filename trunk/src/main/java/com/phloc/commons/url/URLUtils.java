@@ -38,10 +38,16 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.GlobalDebug;
 import com.phloc.commons.charset.CCharset;
+import com.phloc.commons.charset.CharsetManager;
+import com.phloc.commons.encode.IDecoder;
+import com.phloc.commons.encode.IEncoder;
+import com.phloc.commons.encode.IdentityDecoder;
+import com.phloc.commons.encode.IdentityEncoder;
 import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.microdom.reader.XMLMapHandler;
 import com.phloc.commons.regex.RegExHelper;
 import com.phloc.commons.string.StringHelper;
+import com.phloc.commons.url.encode.URLParameterEncoder;
 
 @Immutable
 public final class URLUtils
@@ -204,10 +210,18 @@ public final class URLUtils
   }
 
   @Nonnull
-  public static IURLData parseURL (final String sHref)
+  public static IURLData parseURL (@Nonnull final String sHref)
+  {
+    return parseURL (sHref, IdentityDecoder.<String> create ());
+  }
+
+  @Nonnull
+  public static IURLData parseURL (@Nonnull final String sHref, @Nonnull final IDecoder <String> aParameterDecoder)
   {
     if (sHref == null)
-      throw new NullPointerException ("href may not be null");
+      throw new NullPointerException ("href");
+    if (aParameterDecoder == null)
+      throw new NullPointerException ("parameterDecoder");
 
     // Is it a protocol that does not allow for query parameters?
     final EURLProtocol eProtocol = EURLProtocol.getProtocol (sHref);
@@ -265,7 +279,9 @@ public final class URLUtils
 
             if (aParams == null)
               aParams = new LinkedHashMap <String, String> ();
-            aParams.put (sKey, sValue);
+
+            // Now decode the parameters
+            aParams.put (aParameterDecoder.decode (sKey), aParameterDecoder.decode (sValue));
           }
       }
       sPath = sRemainingHref.substring (0, nQuestionIndex);
@@ -282,6 +298,12 @@ public final class URLUtils
     return getURLString (aURL.getPath (), aURL.directGetParams (), aURL.getAnchor (), sParameterCharset);
   }
 
+  @Nonnull
+  public static String getURLString (@Nonnull final IURLData aURL, @Nullable final Charset aParameterCharset)
+  {
+    return getURLString (aURL.getPath (), aURL.directGetParams (), aURL.getAnchor (), aParameterCharset);
+  }
+
   /**
    * Get the final representation of the URL using the specified elements.
    * 
@@ -291,9 +313,8 @@ public final class URLUtils
    *        The set of parameters to be appended. May be <code>null</code>.
    * @param sAnchor
    *        An optional anchor to be added. May be <code>null</code>.
-   * @param sParameterCharset
-   *        If not <code>null</code> the parameters are encoded using this
-   *        charset.
+   * @param aParameterEncoder
+   *        The parameters encoding to be used. May not be <code>null</code>.
    * @return May be <code>null</code> if all parameters are <code>null</code>.
    */
   @SuppressWarnings ("null")
@@ -301,7 +322,7 @@ public final class URLUtils
   public static String getURLString (@Nullable final String sPath,
                                      @Nullable final Map <String, String> aParams,
                                      @Nullable final String sAnchor,
-                                     @Nullable final String sParameterCharset)
+                                     @Nonnull final IEncoder <String> aParameterEncoder)
   {
     if (sPath != null)
     {
@@ -310,6 +331,8 @@ public final class URLUtils
       if (sPath.contains (HASH_STR))
         throw new IllegalArgumentException ("Path contains a '#': " + sPath);
     }
+    if (aParameterEncoder == null)
+      throw new NullPointerException ("parameterEncoder");
 
     final boolean bHasParams = aParams != null && !aParams.isEmpty ();
     final boolean bHasAnchor = StringHelper.hasText (sAnchor);
@@ -337,9 +360,9 @@ public final class URLUtils
       {
         final String sKey = aEntry.getKey ();
         final String sValue = aEntry.getValue ();
-        aSB.append (sParameterCharset == null ? sKey : urlEncode (sKey, sParameterCharset));
+        aSB.append (aParameterEncoder.encode (sKey));
         if (StringHelper.hasText (sValue))
-          aSB.append ('=').append (sParameterCharset == null ? sValue : urlEncode (sValue, sParameterCharset));
+          aSB.append ('=').append (aParameterEncoder.encode (sValue));
         aSB.append (AMPERSAND);
       }
 
@@ -352,6 +375,62 @@ public final class URLUtils
       aSB.append (HASH).append (sAnchor);
 
     return aSB.toString ();
+  }
+
+  /**
+   * Get the final representation of the URL using the specified elements.
+   * 
+   * @param sPath
+   *        The main path. May be <code>null</code>.
+   * @param aParams
+   *        The set of parameters to be appended. May be <code>null</code>.
+   * @param sAnchor
+   *        An optional anchor to be added. May be <code>null</code>.
+   * @param sParameterCharset
+   *        If not <code>null</code> the parameters are encoded using this
+   *        charset.
+   * @return May be <code>null</code> if all parameters are <code>null</code>.
+   */
+  @Nullable
+  public static String getURLString (@Nullable final String sPath,
+                                     @Nullable final Map <String, String> aParams,
+                                     @Nullable final String sAnchor,
+                                     @Nullable final String sParameterCharset)
+  {
+    IEncoder <String> aParameterEncoder;
+    if (StringHelper.hasNoText (sParameterCharset))
+      aParameterEncoder = IdentityEncoder.create ();
+    else
+      aParameterEncoder = new URLParameterEncoder (CharsetManager.charsetFromName (sParameterCharset));
+    return getURLString (sPath, aParams, sAnchor, aParameterEncoder);
+  }
+
+  /**
+   * Get the final representation of the URL using the specified elements.
+   * 
+   * @param sPath
+   *        The main path. May be <code>null</code>.
+   * @param aParams
+   *        The set of parameters to be appended. May be <code>null</code>.
+   * @param sAnchor
+   *        An optional anchor to be added. May be <code>null</code>.
+   * @param aParameterCharset
+   *        If not <code>null</code> the parameters are encoded using this
+   *        charset.
+   * @return May be <code>null</code> if all parameters are <code>null</code>.
+   */
+  @Nullable
+  public static String getURLString (@Nullable final String sPath,
+                                     @Nullable final Map <String, String> aParams,
+                                     @Nullable final String sAnchor,
+                                     @Nullable final Charset aParameterCharset)
+  {
+    IEncoder <String> aParameterEncoder;
+    if (aParameterCharset == null)
+      aParameterEncoder = IdentityEncoder.create ();
+    else
+      aParameterEncoder = new URLParameterEncoder (aParameterCharset);
+    return getURLString (sPath, aParams, sAnchor, aParameterEncoder);
   }
 
   @Nullable

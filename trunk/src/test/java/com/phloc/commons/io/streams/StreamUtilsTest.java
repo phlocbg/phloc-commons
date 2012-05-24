@@ -54,6 +54,7 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
  * 
  * @author philip
  */
+@edu.umd.cs.findbugs.annotations.SuppressWarnings ("SE_BAD_FIELD_INNER_CLASS")
 public final class StreamUtilsTest
 {
   @Test
@@ -204,7 +205,7 @@ public final class StreamUtilsTest
   public void testGetAllBytes ()
   {
     final String sInput = "Hallo";
-    final byte [] aInput = CharsetManager.getAsBytes (sInput, CCharset.CHARSET_ISO_8859_1_OBJ);
+    final byte [] aInput = CharsetManager.getAsBytes (sInput, CCharset.CHARSET_ISO_8859_1);
     assertArrayEquals (aInput, StreamUtils.getAllBytes (new ByteArrayInputStreamProvider (aInput)));
     assertArrayEquals (aInput, StreamUtils.getAllBytes (new NonBlockingByteArrayInputStream (aInput)));
     assertNull (StreamUtils.getAllBytes ((IInputStreamProvider) null));
@@ -218,7 +219,7 @@ public final class StreamUtilsTest
     assertNull (StreamUtils.getAllBytesAsString ((InputStream) null, CCharset.CHARSET_ISO_8859_1));
     try
     {
-      StreamUtils.getAllBytesAsString (new NonBlockingByteArrayInputStream (aInput), null);
+      StreamUtils.getAllBytesAsString (new NonBlockingByteArrayInputStream (aInput), (String) null);
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -229,6 +230,32 @@ public final class StreamUtilsTest
       fail ();
     }
     catch (final IllegalArgumentException ex)
+    {}
+  }
+
+  @Test
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  public void testGetAllBytesCharset ()
+  {
+    final String sInput = "Hallo";
+    final byte [] aInput = CharsetManager.getAsBytes (sInput, CCharset.CHARSET_ISO_8859_1_OBJ);
+    assertArrayEquals (aInput, StreamUtils.getAllBytes (new ByteArrayInputStreamProvider (aInput)));
+    assertArrayEquals (aInput, StreamUtils.getAllBytes (new NonBlockingByteArrayInputStream (aInput)));
+    assertNull (StreamUtils.getAllBytes ((IInputStreamProvider) null));
+    assertNull (StreamUtils.getAllBytes ((InputStream) null));
+
+    assertEquals (sInput, StreamUtils.getAllBytesAsString (new ByteArrayInputStreamProvider (aInput),
+                                                           CCharset.CHARSET_ISO_8859_1_OBJ));
+    assertEquals (sInput, StreamUtils.getAllBytesAsString (new NonBlockingByteArrayInputStream (aInput),
+                                                           CCharset.CHARSET_ISO_8859_1_OBJ));
+    assertNull (StreamUtils.getAllBytesAsString ((IInputStreamProvider) null, CCharset.CHARSET_ISO_8859_1_OBJ));
+    assertNull (StreamUtils.getAllBytesAsString ((InputStream) null, CCharset.CHARSET_ISO_8859_1_OBJ));
+    try
+    {
+      StreamUtils.getAllBytesAsString (new NonBlockingByteArrayInputStream (aInput), (Charset) null);
+      fail ();
+    }
+    catch (final NullPointerException ex)
     {}
   }
 

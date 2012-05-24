@@ -18,6 +18,7 @@
 package com.phloc.commons.io;
 
 import java.io.Reader;
+import java.nio.charset.Charset;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -40,4 +41,15 @@ public interface IReaderProvider extends IInputStreamProvider
    */
   @Nullable
   Reader getReader (@Nonnull String sCharset);
+
+  /**
+   * Get an {@link Reader} based on this input stream provider using the given
+   * charset.
+   * 
+   * @param aCharset
+   *        The charset to use. May not be <code>null</code>.
+   * @return <code>null</code> if no input stream could be retrieved.
+   */
+  @Nullable
+  Reader getReader (@Nonnull Charset aCharset);
 }

@@ -24,6 +24,7 @@ import java.io.Reader;
 import java.io.Writer;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.Charset;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -114,6 +115,12 @@ public final class FileSystemResource implements IReadWriteResource
   }
 
   @Nullable
+  public Reader getReader (@Nonnull final Charset aCharset)
+  {
+    return StreamUtils.createReader (getInputStream (), aCharset);
+  }
+
+  @Nullable
   public OutputStream getOutputStream (@Nonnull final EAppend eAppend)
   {
     return FileUtils.getOutputStream (m_aFile, eAppend);
@@ -123,6 +130,12 @@ public final class FileSystemResource implements IReadWriteResource
   public Writer getWriter (@Nonnull final String sCharset, @Nonnull final EAppend eAppend)
   {
     return StreamUtils.createWriter (getOutputStream (eAppend), sCharset);
+  }
+
+  @Nullable
+  public Writer getWriter (@Nonnull final Charset aCharset, @Nonnull final EAppend eAppend)
+  {
+    return StreamUtils.createWriter (getOutputStream (eAppend), aCharset);
   }
 
   public boolean exists ()

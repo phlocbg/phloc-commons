@@ -18,6 +18,7 @@
 package com.phloc.commons.io.file;
 
 import java.io.File;
+import java.nio.charset.Charset;
 import java.util.List;
 
 import javax.annotation.Nonnegative;
@@ -78,6 +79,23 @@ public final class SimpleFileIO
   }
 
   /**
+   * Get the content of the passed file as a string using the system line
+   * separator. Note: the last line does not end with the passed line separator.
+   * 
+   * @param aFile
+   *        The file to read. May be <code>null</code>.
+   * @param aCharset
+   *        The character set to use. May not be <code>null</code>.
+   * @return <code>null</code> if the file does not exist, the content
+   *         otherwise.
+   */
+  @Nullable
+  public static String readFileAsString (@Nullable final File aFile, @Nonnull final Charset aCharset)
+  {
+    return aFile == null ? null : StreamUtils.getAllBytesAsString (FileUtils.getInputStream (aFile), aCharset);
+  }
+
+  /**
    * Get the content of the passed file as a list of lines, whereas each line
    * does not contain a separator.
    * 
@@ -100,6 +118,23 @@ public final class SimpleFileIO
    * 
    * @param aFile
    *        The file to read. May be <code>null</code>.
+   * @param aCharset
+   *        The character set to use. May not be <code>null</code>.
+   * @return <code>null</code> if the file does not exist, the content
+   *         otherwise.
+   */
+  @Nullable
+  public static List <String> readFileLines (@Nullable final File aFile, @Nonnull final Charset aCharset)
+  {
+    return aFile == null ? null : StreamUtils.readStreamLines (FileUtils.getInputStream (aFile), aCharset);
+  }
+
+  /**
+   * Get the content of the passed file as a list of lines, whereas each line
+   * does not contain a separator.
+   * 
+   * @param aFile
+   *        The file to read. May be <code>null</code>.
    * @param sCharset
    *        The character set to use. May not be <code>null</code>.
    * @param aTargetList
@@ -112,6 +147,26 @@ public final class SimpleFileIO
   {
     if (aFile != null)
       StreamUtils.readStreamLines (FileUtils.getInputStream (aFile), sCharset, aTargetList);
+  }
+
+  /**
+   * Get the content of the passed file as a list of lines, whereas each line
+   * does not contain a separator.
+   * 
+   * @param aFile
+   *        The file to read. May be <code>null</code>.
+   * @param aCharset
+   *        The character set to use. May not be <code>null</code>.
+   * @param aTargetList
+   *        The target list to be filled. May not be <code>null</code>.
+   */
+  @Nullable
+  public static void readFileLines (@Nullable final File aFile,
+                                    @Nonnull final Charset aCharset,
+                                    @Nonnull final List <String> aTargetList)
+  {
+    if (aFile != null)
+      StreamUtils.readStreamLines (FileUtils.getInputStream (aFile), aCharset, aTargetList);
   }
 
   @Nonnull
@@ -139,9 +194,25 @@ public final class SimpleFileIO
 
   @Nonnull
   public static ESuccess writeFile (@Nonnull final File aFile,
+                                    @Nonnull final String sContent,
+                                    @Nonnull final Charset aCharset)
+  {
+    return StreamUtils.writeStream (FileUtils.getOutputStream (aFile), sContent, aCharset);
+  }
+
+  @Nonnull
+  public static ESuccess writeFile (@Nonnull final File aFile,
                                     @Nonnull final List <String> aContent,
                                     @Nonnull final String sCharset)
   {
     return writeFile (aFile, StringHelper.implode (CGlobal.LINE_SEPARATOR, aContent), sCharset);
+  }
+
+  @Nonnull
+  public static ESuccess writeFile (@Nonnull final File aFile,
+                                    @Nonnull final List <String> aContent,
+                                    @Nonnull final Charset aCharset)
+  {
+    return writeFile (aFile, StringHelper.implode (CGlobal.LINE_SEPARATOR, aContent), aCharset);
   }
 }

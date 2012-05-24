@@ -25,6 +25,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.Charset;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -132,6 +133,12 @@ public final class URLResource implements IReadableResource
   public Reader getReader (@Nonnull final String sCharset)
   {
     return StreamUtils.createReader (getInputStream (), sCharset);
+  }
+
+  @Nullable
+  public Reader getReader (@Nonnull final Charset aCharset)
+  {
+    return StreamUtils.createReader (getInputStream (), aCharset);
   }
 
   public boolean exists ()

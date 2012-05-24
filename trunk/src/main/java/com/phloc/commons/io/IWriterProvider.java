@@ -18,6 +18,7 @@
 package com.phloc.commons.io;
 
 import java.io.Writer;
+import java.nio.charset.Charset;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -42,4 +43,17 @@ public interface IWriterProvider extends IOutputStreamProvider
    */
   @Nullable
   Writer getWriter (@Nonnull String sCharset, @Nonnull EAppend eAppend);
+
+  /**
+   * Get an {@link Writer} based on this output stream provider using the given
+   * charset.
+   * 
+   * @param aCharset
+   *        The charset to use. May not be <code>null</code>.
+   * @param eAppend
+   *        Appending mode. May not be <code>null</code>.
+   * @return <code>null</code> if no output stream could be retrieved.
+   */
+  @Nullable
+  Writer getWriter (@Nonnull Charset aCharset, @Nonnull EAppend eAppend);
 }
