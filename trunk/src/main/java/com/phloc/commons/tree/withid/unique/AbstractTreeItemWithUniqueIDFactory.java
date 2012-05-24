@@ -26,7 +26,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.annotations.OverrideOnDemand;
-import com.phloc.commons.annotations.ReturnsImmutableObject;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
@@ -113,11 +113,11 @@ public abstract class AbstractTreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, I
   }
 
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public final Collection <ITEMTYPE> getAllItems ()
   {
     // Avoid unintentional modification of internal item store
-    return ContainerHelper.makeUnmodifiable (m_aItemStore.values ());
+    return ContainerHelper.newList (m_aItemStore.values ());
   }
 
   @Override

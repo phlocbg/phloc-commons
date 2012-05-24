@@ -29,7 +29,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
-import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.callback.IChangeNotify;
 import com.phloc.commons.collections.ContainerHelper;
@@ -193,7 +192,7 @@ public final class MultiLingualTextThreadSafe implements IMultiLingualText
   }
 
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public Map <Locale, String> getMap ()
   {
     m_aRWLock.readLock ().lock ();

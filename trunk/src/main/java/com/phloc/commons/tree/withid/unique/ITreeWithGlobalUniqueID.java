@@ -22,7 +22,6 @@ import java.util.Collection;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.parent.IChildrenProviderWithID;
 import com.phloc.commons.parent.IChildrenProviderWithUniqueID;
 import com.phloc.commons.tree.withid.ITreeItemWithID;
@@ -60,7 +59,6 @@ public interface ITreeWithGlobalUniqueID <KEYTYPE, VALUETYPE, ITEMTYPE extends I
    * @return A non-<code>null</code>, modifiable collection of all items.
    */
   @Nonnull
-  @ReturnsImmutableObject
   Collection <ITEMTYPE> getAllItems ();
 
   /**

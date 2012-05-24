@@ -35,7 +35,6 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.GlobalDebug;
 import com.phloc.commons.annotations.Nonempty;
-import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.locale.LocaleUtils;
@@ -241,7 +240,7 @@ public final class EnumTextResolverWithPropertiesOverrideAndFallback extends
    *         <code>null</code>.
    */
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public Set <String> getAllUsedFallbackBundleNames ()
   {
     m_aRWLock.readLock ().lock ();

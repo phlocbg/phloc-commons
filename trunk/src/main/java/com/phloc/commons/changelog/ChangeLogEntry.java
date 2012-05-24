@@ -26,6 +26,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.annotations.ReturnsImmutableObject;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.EChange;
@@ -162,7 +163,7 @@ public final class ChangeLogEntry extends AbstractChangeLogEntry
    * @return A new multilingual text containing all change texts of this entry.
    */
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public IReadonlyMultiLingualText getAllTexts ()
   {
     return new ReadonlyMultiLingualText (m_aTexts);

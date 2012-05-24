@@ -24,7 +24,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.CGlobal;
-import com.phloc.commons.annotations.ReturnsImmutableObject;
 
 /**
  * Base interface for keyed statistic handlers
@@ -34,10 +33,10 @@ import com.phloc.commons.annotations.ReturnsImmutableObject;
 public interface IStatisticsHandlerKeyed extends IStatisticsHandler
 {
   /**
-   * @return A collection of all keys that have a value assigned.
+   * @return A collection of all keys that have a value assigned. Never
+   *         <code>null</code>.
    */
   @Nonnull
-  @ReturnsImmutableObject
   Set <String> getAllKeys ();
 
   /**

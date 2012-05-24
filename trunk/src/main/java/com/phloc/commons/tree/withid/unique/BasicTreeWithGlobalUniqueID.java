@@ -25,7 +25,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.tree.withid.BasicTreeWithID;
@@ -78,7 +77,6 @@ public class BasicTreeWithGlobalUniqueID <KEYTYPE, VALUETYPE, ITEMTYPE extends I
   }
 
   @Nonnull
-  @ReturnsImmutableObject
   public final Collection <ITEMTYPE> getAllItems ()
   {
     return m_aFactory.getAllItems ();

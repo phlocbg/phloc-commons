@@ -45,6 +45,7 @@ public final class CharsetManager
 
   static
   {
+    // Returns an immutable object
     s_aAllCharsets = Charset.availableCharsets ();
     // Ensure that all explicitly named charsets are supported by this
     // platform!
