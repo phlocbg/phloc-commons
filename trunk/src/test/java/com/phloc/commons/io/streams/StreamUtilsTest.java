@@ -33,13 +33,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.List;
 
 import org.junit.Test;
 
 import com.phloc.commons.charset.CCharset;
+import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.io.IInputStreamProvider;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.resource.ClassPathResource;
@@ -134,14 +134,12 @@ public final class StreamUtilsTest
 
   /**
    * Test method copyInputStreamToOutputStream
-   * 
-   * @throws UnsupportedEncodingException
    */
   @Test
   @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
-  public void testCopyInputStreamToOutputStream () throws UnsupportedEncodingException
+  public void testCopyInputStreamToOutputStream ()
   {
-    final byte [] aInput = "Hallo".getBytes (CCharset.CHARSET_ISO_8859_1);
+    final byte [] aInput = CharsetManager.getAsBytes ("Hallo", CCharset.CHARSET_ISO_8859_1_OBJ);
     final NonBlockingByteArrayInputStream bais = new NonBlockingByteArrayInputStream (aInput);
     final NonBlockingByteArrayOutputStream baos = new NonBlockingByteArrayOutputStream ();
     assertTrue (StreamUtils.copyInputStreamToOutputStream (bais, baos).isSuccess ());
@@ -186,9 +184,9 @@ public final class StreamUtilsTest
   }
 
   @Test
-  public void testGetAvailable () throws UnsupportedEncodingException
+  public void testGetAvailable ()
   {
-    final byte [] aInput = "Hallo".getBytes (CCharset.CHARSET_ISO_8859_1);
+    final byte [] aInput = CharsetManager.getAsBytes ("Hallo", CCharset.CHARSET_ISO_8859_1_OBJ);
     assertEquals (5, StreamUtils.getAvailable (new NonBlockingByteArrayInputStream (aInput)));
     assertEquals (0, StreamUtils.getAvailable ((InputStream) null));
     assertEquals (0, StreamUtils.getAvailable (new WrappedInputStream (new NonBlockingByteArrayInputStream (aInput))
@@ -203,10 +201,10 @@ public final class StreamUtilsTest
 
   @Test
   @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
-  public void testGetAllBytes () throws UnsupportedEncodingException
+  public void testGetAllBytes ()
   {
     final String sInput = "Hallo";
-    final byte [] aInput = sInput.getBytes (CCharset.CHARSET_ISO_8859_1);
+    final byte [] aInput = CharsetManager.getAsBytes (sInput, CCharset.CHARSET_ISO_8859_1_OBJ);
     assertArrayEquals (aInput, StreamUtils.getAllBytes (new ByteArrayInputStreamProvider (aInput)));
     assertArrayEquals (aInput, StreamUtils.getAllBytes (new NonBlockingByteArrayInputStream (aInput)));
     assertNull (StreamUtils.getAllBytes ((IInputStreamProvider) null));
@@ -369,13 +367,13 @@ public final class StreamUtilsTest
 
   @Test
   @SuppressWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
-  public void testWriteStream () throws UnsupportedEncodingException
+  public void testWriteStream ()
   {
-    final byte [] buf = "abcde".getBytes (CCharset.CHARSET_ISO_8859_1);
+    final byte [] buf = CharsetManager.getAsBytes ("abcde", CCharset.CHARSET_ISO_8859_1_OBJ);
     final NonBlockingByteArrayOutputStream os = new NonBlockingByteArrayOutputStream ();
     assertTrue (StreamUtils.writeStream (os, buf).isSuccess ());
     assertTrue (StreamUtils.writeStream (os, buf, 0, buf.length).isSuccess ());
-    assertTrue (StreamUtils.writeStream (os, "anyäöü", CCharset.CHARSET_ISO_8859_1).isSuccess ());
+    assertTrue (StreamUtils.writeStream (os, "anyäöü", CCharset.CHARSET_ISO_8859_1_OBJ).isSuccess ());
 
     // The byte array version
     try
@@ -431,7 +429,14 @@ public final class StreamUtilsTest
     {}
     try
     {
-      StreamUtils.writeStream (os, "any", null);
+      StreamUtils.writeStream (os, null, CCharset.CHARSET_ISO_8859_1_OBJ);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+    try
+    {
+      StreamUtils.writeStream (os, "any", (String) null);
       fail ();
     }
     catch (final NullPointerException ex)

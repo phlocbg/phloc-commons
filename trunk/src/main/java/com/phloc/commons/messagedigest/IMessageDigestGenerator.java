@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.messagedigest;
 
+import java.nio.charset.Charset;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
@@ -66,6 +68,20 @@ public interface IMessageDigestGenerator
    */
   @Nonnull
   IMessageDigestGenerator update (@Nonnull String sValue, @Nonnull String sCharset);
+
+  /**
+   * Update the hash with the bytes of the given string in the given charset.
+   * After calling {@link #getDigest()} once, no further update is possible.
+   * 
+   * @param sValue
+   *        The string value to update the hash. May not be <code>null</code>.
+   * @param aCharset
+   *        The charset to be used for extraction of the bytes. May not be
+   *        <code>null</code>.
+   * @return this
+   */
+  @Nonnull
+  IMessageDigestGenerator update (@Nonnull String sValue, @Nonnull Charset aCharset);
 
   /**
    * Update the hash with the given byte array. After calling
@@ -141,5 +157,4 @@ public interface IMessageDigestGenerator
    */
   @Nonnull
   String getDigestHexString ();
-
 }

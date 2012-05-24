@@ -91,7 +91,7 @@ public final class CryptoPolicy
       // Not using padding so # bytes must be multiple of AES cipher
       // block size which is 16 bytes. Also, OK not to use UTF-8 here.
       final byte [] aEncrypted = aCipher.doFinal (CharsetManager.getAsBytes ("1234567890123456",
-                                                                             CCharset.CHARSET_ISO_8859_1));
+                                                                             CCharset.CHARSET_ISO_8859_1_OBJ));
       if (aEncrypted == null)
         throw new IllegalStateException ("Encryption of test string failed!");
       final ExemptionMechanism aExempt = aCipher.getExemptionMechanism ();

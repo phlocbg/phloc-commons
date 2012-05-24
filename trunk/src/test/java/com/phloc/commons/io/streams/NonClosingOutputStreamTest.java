@@ -20,11 +20,11 @@ package com.phloc.commons.io.streams;
 import static org.junit.Assert.assertEquals;
 
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 
 import org.junit.Test;
 
 import com.phloc.commons.charset.CCharset;
+import com.phloc.commons.charset.CharsetManager;
 
 /**
  * Test class for class {@link CountingOutputStream}.
@@ -55,19 +55,21 @@ public final class NonClosingOutputStreamTest
   }
 
   @Test
-  public void testClosing () throws UnsupportedEncodingException
+  public void testClosing ()
   {
     final MockCloseCountingOutputStream aX = new MockCloseCountingOutputStream (new NonBlockingByteArrayOutputStream ());
-    StreamUtils.copyInputStreamToOutputStreamAndCloseOS (new NonBlockingByteArrayInputStream ("abc".getBytes (CCharset.CHARSET_ISO_8859_1)),
+    StreamUtils.copyInputStreamToOutputStreamAndCloseOS (new NonBlockingByteArrayInputStream (CharsetManager.getAsBytes ("abc",
+                                                                                                                         CCharset.CHARSET_ISO_8859_1_OBJ)),
                                                          aX);
     assertEquals (1, aX.getCloseCount ());
   }
 
   @Test
-  public void testNonClosing () throws UnsupportedEncodingException
+  public void testNonClosing ()
   {
     final MockCloseCountingOutputStream aX = new MockCloseCountingOutputStream (new NonBlockingByteArrayOutputStream ());
-    StreamUtils.copyInputStreamToOutputStreamAndCloseOS (new NonBlockingByteArrayInputStream ("abc".getBytes (CCharset.CHARSET_ISO_8859_1)),
+    StreamUtils.copyInputStreamToOutputStreamAndCloseOS (new NonBlockingByteArrayInputStream (CharsetManager.getAsBytes ("abc",
+                                                                                                                         CCharset.CHARSET_ISO_8859_1_OBJ)),
                                                          new NonClosingOutputStream (aX));
     assertEquals (0, aX.getCloseCount ());
   }

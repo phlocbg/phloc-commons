@@ -24,7 +24,6 @@ import static org.junit.Assert.fail;
 import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
-import java.io.UnsupportedEncodingException;
 
 import javax.xml.validation.Schema;
 
@@ -37,6 +36,7 @@ import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
+import com.phloc.commons.io.streams.StringInputStream;
 import com.phloc.commons.xml.sax.CachingSAXInputSource;
 import com.phloc.commons.xml.sax.CollectingSAXErrorHandler;
 import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
@@ -59,10 +59,9 @@ public final class XMLReaderTest
    * Test method readXMLDOM
    * 
    * @throws SAXException
-   * @throws UnsupportedEncodingException
    */
   @Test
-  public void testReadXMLDOMInputSource () throws SAXException, UnsupportedEncodingException
+  public void testReadXMLDOMInputSource () throws SAXException
   {
     Document doc = XMLReader.readXMLDOM ("<root/>");
     assertNotNull (doc);
@@ -72,7 +71,8 @@ public final class XMLReaderTest
     assertNotNull (doc);
     doc = XMLReader.readXMLDOM (new InputSource (new StringReader ("<?xml version=\"1.0\"?>\n" + "<root/>")));
     assertNotNull (doc);
-    doc = XMLReader.readXMLDOM (new NonBlockingByteArrayInputStream ("<?xml version=\"1.0\"?>\n<root/>".getBytes (CCharset.CHARSET_ISO_8859_1)));
+    doc = XMLReader.readXMLDOM (new StringInputStream ("<?xml version=\"1.0\"?>\n<root/>",
+                                                       CCharset.CHARSET_ISO_8859_1_OBJ));
     assertNotNull (doc);
 
     try
@@ -152,14 +152,14 @@ public final class XMLReaderTest
    * Test method readXMLDOM
    * 
    * @throws SAXException
-   * @throws UnsupportedEncodingException
    */
   @Test
-  public void testReadXMLDOMInputStream () throws SAXException, UnsupportedEncodingException
+  public void testReadXMLDOMInputStream () throws SAXException
   {
-    Document doc = XMLReader.readXMLDOM (new NonBlockingByteArrayInputStream ("<root/>".getBytes (CCharset.CHARSET_ISO_8859_1)));
+    Document doc = XMLReader.readXMLDOM (new StringInputStream ("<root/>", CCharset.CHARSET_ISO_8859_1_OBJ));
     assertNotNull (doc);
-    doc = XMLReader.readXMLDOM (new NonBlockingByteArrayInputStream ("<?xml version=\"1.0\"?>\n<root/>".getBytes (CCharset.CHARSET_ISO_8859_1)));
+    doc = XMLReader.readXMLDOM (new StringInputStream ("<?xml version=\"1.0\"?>\n<root/>",
+                                                       CCharset.CHARSET_ISO_8859_1_OBJ));
     assertNotNull (doc);
 
     try
@@ -180,12 +180,13 @@ public final class XMLReaderTest
     catch (final SAXException ex)
     {}
 
-    doc = XMLReader.readXMLDOM (new NonBlockingByteArrayInputStream ("<?xml version=\"1.0\"?>\n<root/>".getBytes (CCharset.CHARSET_ISO_8859_1)));
+    doc = XMLReader.readXMLDOM (new StringInputStream ("<?xml version=\"1.0\"?>\n<root/>",
+                                                       CCharset.CHARSET_ISO_8859_1_OBJ));
     assertNotNull (doc);
   }
 
   @Test
-  public void testReadWithSchema () throws SAXException, UnsupportedEncodingException
+  public void testReadWithSchema () throws SAXException
   {
     final Schema aSchema = XMLSchemaCache.getInstance ().getSchema (new ClassPathResource ("xml/schema1.xsd"));
     assertNotNull (aSchema);
@@ -204,13 +205,12 @@ public final class XMLReaderTest
     assertNotNull (doc);
     doc = XMLReader.readXMLDOM (new StringReader (sValid), aSchema, LoggingSAXErrorHandler.getInstance ());
     assertNotNull (doc);
-    doc = XMLReader.readXMLDOM (new NonBlockingByteArrayInputStream (sValid.getBytes (CCharset.CHARSET_ISO_8859_1)),
-                                aSchema);
+    doc = XMLReader.readXMLDOM (new StringInputStream (sValid, CCharset.CHARSET_ISO_8859_1_OBJ), aSchema);
     assertNotNull (doc);
-    doc = XMLReader.readXMLDOM (new NonBlockingByteArrayInputStream (sValid.getBytes (CCharset.CHARSET_ISO_8859_1)),
+    doc = XMLReader.readXMLDOM (new StringInputStream (sValid, CCharset.CHARSET_ISO_8859_1_OBJ),
                                 LoggingSAXErrorHandler.getInstance ());
     assertNotNull (doc);
-    doc = XMLReader.readXMLDOM (new NonBlockingByteArrayInputStream (sValid.getBytes (CCharset.CHARSET_ISO_8859_1)),
+    doc = XMLReader.readXMLDOM (new StringInputStream (sValid, CCharset.CHARSET_ISO_8859_1_OBJ),
                                 aSchema,
                                 LoggingSAXErrorHandler.getInstance ());
     assertNotNull (doc);
@@ -239,10 +239,9 @@ public final class XMLReaderTest
     assertNull (doc);
     doc = XMLReader.readXMLDOM (new StringReader (sInvalid), aSchema, LoggingSAXErrorHandler.getInstance ());
     assertNull (doc);
-    doc = XMLReader.readXMLDOM (new NonBlockingByteArrayInputStream (sInvalid.getBytes (CCharset.CHARSET_ISO_8859_1)),
-                                aSchema);
+    doc = XMLReader.readXMLDOM (new StringInputStream (sInvalid, CCharset.CHARSET_ISO_8859_1_OBJ), aSchema);
     assertNull (doc);
-    doc = XMLReader.readXMLDOM (new NonBlockingByteArrayInputStream (sInvalid.getBytes (CCharset.CHARSET_ISO_8859_1)),
+    doc = XMLReader.readXMLDOM (new StringInputStream (sInvalid, CCharset.CHARSET_ISO_8859_1_OBJ),
                                 aSchema,
                                 LoggingSAXErrorHandler.getInstance ());
     assertNull (doc);

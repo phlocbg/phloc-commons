@@ -17,10 +17,13 @@
  */
 package com.phloc.commons.messagedigest;
 
+import java.nio.charset.Charset;
+
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.charset.CharsetManager;
+import com.phloc.commons.string.StringHelper;
 
 /**
  * Base class for creating a cryptographic hash value. Don't mix it up with the
@@ -36,8 +39,21 @@ public abstract class AbstractMessageDigestGenerator implements IMessageDigestGe
   {
     if (aValue == null)
       throw new NullPointerException ("value");
+    if (StringHelper.hasNoText (sCharset))
+      throw new IllegalArgumentException ("charset");
 
     return update (CharsetManager.getAsBytes (aValue, sCharset));
+  }
+
+  @Nonnull
+  public final IMessageDigestGenerator update (@Nonnull final String aValue, @Nonnull final Charset aCharset)
+  {
+    if (aValue == null)
+      throw new NullPointerException ("value");
+    if (aCharset == null)
+      throw new NullPointerException ("charset");
+
+    return update (CharsetManager.getAsBytes (aValue, aCharset));
   }
 
   @Nonnull

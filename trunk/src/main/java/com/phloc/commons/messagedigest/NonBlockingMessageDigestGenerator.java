@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.messagedigest;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -34,7 +33,6 @@ import org.slf4j.LoggerFactory;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsMutableObject;
 import com.phloc.commons.collections.ArrayHelper;
-import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -169,55 +167,28 @@ public final class NonBlockingMessageDigestGenerator extends AbstractMessageDige
                                        .toString ();
   }
 
-  /**
-   * Create a hash value from the complete input stream.
-   * 
-   * @param aIS
-   *        The input stream to create the hash value from. May not be
-   *        <code>null</code>.
-   * @param aAlgorithms
-   *        The list of algorithms to choose the first one from. May neither be
-   *        <code>null</code> nor empty.
-   * @return The non-<code>null</code> message digest byte array
-   */
   @Nonnull
+  @Deprecated
   public static byte [] getDigestFromInputStream (@Nonnull @WillClose final InputStream aIS,
                                                   @Nonnull @Nonempty final EMessageDigestAlgorithm... aAlgorithms)
   {
-    if (aIS == null)
-      throw new NullPointerException ("inputStream");
-
-    final NonBlockingMessageDigestGenerator aMDGen = new NonBlockingMessageDigestGenerator (aAlgorithms);
-    final byte [] aBuf = new byte [2048];
-    try
-    {
-      int nBytesRead;
-      while ((nBytesRead = aIS.read (aBuf)) > -1)
-        aMDGen.update (aBuf, 0, nBytesRead);
-      return aMDGen.getDigest ();
-    }
-    catch (final IOException ex)
-    {
-      throw new IllegalStateException ("Failed to read from InputStream for hashing!", ex);
-    }
-    finally
-    {
-      StreamUtils.close (aIS);
-    }
+    return MessageDigestGeneratorHelper.getDigestFromInputStream (aIS, aAlgorithms);
   }
 
   @Nonnull
+  @Deprecated
   public static byte [] getDigest (@Nonnull final String sContent,
                                    @Nonnull @Nonempty final String sCharset,
                                    @Nonnull @Nonempty final EMessageDigestAlgorithm... aAlgorithms)
   {
-    return new NonBlockingMessageDigestGenerator (aAlgorithms).update (sContent, sCharset).getDigest ();
+    return MessageDigestGeneratorHelper.getDigest (sContent, sCharset, aAlgorithms);
   }
 
   @Nonnull
+  @Deprecated
   public static byte [] getDigest (@Nonnull final byte [] aContent,
                                    @Nonnull @Nonempty final EMessageDigestAlgorithm... aAlgorithms)
   {
-    return new NonBlockingMessageDigestGenerator (aAlgorithms).update (aContent).getDigest ();
+    return MessageDigestGeneratorHelper.getDigest (aContent, aAlgorithms);
   }
 }

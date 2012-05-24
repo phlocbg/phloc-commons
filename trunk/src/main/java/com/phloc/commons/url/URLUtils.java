@@ -24,6 +24,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -101,8 +102,23 @@ public final class URLUtils
    * 
    * @param sValue
    *        The value to be decoded. May not be <code>null</code>.
+   * @param aCharset
+   *        The charset to use. May not be <code>null</code>.
+   * @return The decoded value.
+   */
+  @Nonnull
+  public static String urlDecode (@Nonnull final String sValue, @Nonnull final Charset aCharset)
+  {
+    return urlDecode (sValue, aCharset.name ());
+  }
+
+  /**
+   * URL-decode the passed value automatically handling charset issues.
+   * 
+   * @param sValue
+   *        The value to be decoded. May not be <code>null</code>.
    * @param sCharset
-   *        The char set to use. May not be <code>null</code>.
+   *        The charset to use. May not be <code>null</code>.
    * @return The decoded value.
    */
   @SuppressWarnings ("deprecation")
@@ -139,8 +155,23 @@ public final class URLUtils
    * 
    * @param sValue
    *        The value to be encoded. May not be <code>null</code>.
+   * @param aCharset
+   *        The charset to use. May not be <code>null</code>.
+   * @return The encoded value.
+   */
+  @Nonnull
+  public static String urlEncode (@Nonnull final String sValue, @Nonnull final Charset aCharset)
+  {
+    return urlEncode (sValue, aCharset.name ());
+  }
+
+  /**
+   * URL-encode the passed value automatically handling charset issues.
+   * 
+   * @param sValue
+   *        The value to be encoded. May not be <code>null</code>.
    * @param sCharset
-   *        The char set to use. May not be <code>null</code>.
+   *        The charset to use. May not be <code>null</code>.
    * @return The encoded value.
    */
   @SuppressWarnings ("deprecation")

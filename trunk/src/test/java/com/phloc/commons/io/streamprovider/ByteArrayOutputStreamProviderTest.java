@@ -22,11 +22,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 
 import org.junit.Test;
 
 import com.phloc.commons.charset.CCharset;
+import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.io.EAppend;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.io.streams.StringInputStream;
@@ -39,7 +39,7 @@ import com.phloc.commons.io.streams.StringInputStream;
 public final class ByteArrayOutputStreamProviderTest
 {
   @Test
-  public void testSimple () throws UnsupportedEncodingException
+  public void testSimple ()
   {
     final ByteArrayOutputStreamProvider aOSP = new ByteArrayOutputStreamProvider ();
     final OutputStream aOS = aOSP.getOutputStream (EAppend.DEFAULT);
@@ -47,7 +47,7 @@ public final class ByteArrayOutputStreamProviderTest
     StreamUtils.copyInputStreamToOutputStreamAndCloseOS (new StringInputStream ("Hiho", CCharset.CHARSET_ISO_8859_1),
                                                          aOS);
     assertEquals ("Hiho", aOSP.getAsString (CCharset.CHARSET_ISO_8859_1));
-    assertArrayEquals ("Hiho".getBytes (CCharset.CHARSET_ISO_8859_1), aOSP.getBytes ());
+    assertArrayEquals (CharsetManager.getAsBytes ("Hiho", CCharset.CHARSET_ISO_8859_1_OBJ), aOSP.getBytes ());
     StreamUtils.close (aOSP.getWriter (CCharset.CHARSET_UTF_8, EAppend.DEFAULT));
     assertNotNull (aOSP.toString ());
   }

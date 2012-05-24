@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.io.streamprovider;
 
+import java.nio.charset.Charset;
+
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.charset.CharsetManager;
@@ -33,13 +35,28 @@ public class StringInputStreamProvider extends ByteArrayInputStreamProvider
     this (new String (aChars), sCharset);
   }
 
+  public StringInputStreamProvider (@Nonnull final char [] aChars, @Nonnull final Charset aCharset)
+  {
+    this (new String (aChars), aCharset);
+  }
+
   public StringInputStreamProvider (@Nonnull final CharSequence aData, @Nonnull final String sCharset)
   {
     this (aData.toString (), sCharset);
   }
 
+  public StringInputStreamProvider (@Nonnull final CharSequence aData, @Nonnull final Charset aCharset)
+  {
+    this (aData.toString (), aCharset);
+  }
+
   public StringInputStreamProvider (@Nonnull final String sData, @Nonnull final String sCharset)
   {
     super (CharsetManager.getAsBytes (sData, sCharset));
+  }
+
+  public StringInputStreamProvider (@Nonnull final String sData, @Nonnull final Charset aCharset)
+  {
+    super (CharsetManager.getAsBytes (sData, aCharset));
   }
 }

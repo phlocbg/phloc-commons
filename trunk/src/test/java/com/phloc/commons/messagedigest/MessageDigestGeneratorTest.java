@@ -21,11 +21,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
-import java.io.UnsupportedEncodingException;
-
 import org.junit.Test;
 
 import com.phloc.commons.charset.CCharset;
+import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
@@ -40,10 +39,13 @@ public final class MessageDigestGeneratorTest
     final IMessageDigestGenerator x = new MessageDigestGenerator (aAlgo);
     assertEquals (aAlgo[0].getAlgorithm (), x.getAlgorithmName ());
     x.update ("Any string", CCharset.CHARSET_ISO_8859_1);
+    x.update ("Any string", CCharset.CHARSET_ISO_8859_1_OBJ);
     final IMessageDigestGenerator y = new MessageDigestGenerator (aAlgo);
     assertEquals (aAlgo[0].getAlgorithm (), y.getAlgorithmName ());
     y.update ("Any ", CCharset.CHARSET_ISO_8859_1);
     y.update ("string", CCharset.CHARSET_ISO_8859_1);
+    y.update ("Any ", CCharset.CHARSET_ISO_8859_1_OBJ);
+    y.update ("string", CCharset.CHARSET_ISO_8859_1_OBJ);
     assertEquals (x.getDigestLong (), y.getDigestLong ());
     assertEquals (x.getDigestHexString (), y.getDigestHexString ());
     assertEquals (x.getDigestLong (), x.getDigestLong ());
@@ -71,7 +73,7 @@ public final class MessageDigestGeneratorTest
   }
 
   @Test
-  public void testErrorCases () throws UnsupportedEncodingException
+  public void testErrorCases ()
   {
     try
     {
@@ -123,9 +125,10 @@ public final class MessageDigestGeneratorTest
     catch (final NullPointerException ex)
     {}
     md.update ((byte) 5);
-    md.update ("abc".getBytes (CCharset.CHARSET_ISO_8859_1));
-    md.update ("abc".getBytes (CCharset.CHARSET_ISO_8859_1), 1, 1);
+    md.update (CharsetManager.getAsBytes ("abc", CCharset.CHARSET_ISO_8859_1_OBJ));
+    md.update (CharsetManager.getAsBytes ("abc", CCharset.CHARSET_ISO_8859_1_OBJ), 1, 1);
     md.update ("abc", CCharset.CHARSET_UTF_8);
+    md.update ("äöü", CCharset.CHARSET_UTF_8_OBJ);
     assertNotNull (md.getDigest ());
     assertNotNull (md.getDigest (2));
     assertEquals (2, md.getDigest (2).length);

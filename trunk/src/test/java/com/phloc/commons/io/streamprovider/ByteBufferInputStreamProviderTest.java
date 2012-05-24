@@ -21,12 +21,12 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 
 import org.junit.Test;
 
 import com.phloc.commons.charset.CCharset;
+import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.io.streams.StreamUtils;
 
 /**
@@ -37,9 +37,9 @@ import com.phloc.commons.io.streams.StreamUtils;
 public final class ByteBufferInputStreamProviderTest
 {
   @Test
-  public void testSimple () throws UnsupportedEncodingException
+  public void testSimple ()
   {
-    final byte [] aBytes = "Hallo Weltäöü".getBytes (CCharset.CHARSET_ISO_8859_1);
+    final byte [] aBytes = CharsetManager.getAsBytes ("Hallo Weltäöü", CCharset.CHARSET_ISO_8859_1_OBJ);
     final ByteBuffer bb = ByteBuffer.wrap (aBytes);
     final ByteBufferInputStreamProvider aISP = new ByteBufferInputStreamProvider (bb);
     final InputStream aIS = aISP.getInputStream ();

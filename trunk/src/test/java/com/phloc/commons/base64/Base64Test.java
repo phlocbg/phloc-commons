@@ -258,26 +258,27 @@ public final class Base64Test
   @Test
   public void testEncodeByteBuffer ()
   {
-    final ByteBuffer aSrc = ByteBuffer.wrap (CharsetManager.getAsBytes ("Hallo Wält", CCharset.CHARSET_UTF_8));
+    final ByteBuffer aSrc = ByteBuffer.wrap (CharsetManager.getAsBytes ("Hallo Wält", CCharset.CHARSET_UTF_8_OBJ));
     final ByteBuffer aDst = ByteBuffer.allocate (aSrc.capacity () * 2);
     Base64.encode (aSrc, aDst);
-    assertEquals ("Hallo Wält", Base64Helper.safeDecodeAsString (aDst.array (), CCharset.CHARSET_UTF_8));
+    assertEquals ("Hallo Wält", Base64Helper.safeDecodeAsString (aDst.array (), CCharset.CHARSET_UTF_8_OBJ));
   }
 
   @Test
   public void testEncodeCharBuffer ()
   {
-    final ByteBuffer aSrc = ByteBuffer.wrap (CharsetManager.getAsBytes ("Hallo Wält", CCharset.CHARSET_UTF_8));
+    final ByteBuffer aSrc = ByteBuffer.wrap (CharsetManager.getAsBytes ("Hallo Wält", CCharset.CHARSET_UTF_8_OBJ));
     final CharBuffer aDst = CharBuffer.allocate (aSrc.capacity () * 2);
     Base64.encode (aSrc, aDst);
-    assertEquals ("Hallo Wält", Base64Helper.safeDecodeAsString (new String (aDst.array ()), CCharset.CHARSET_UTF_8));
+    assertEquals ("Hallo Wält",
+                  Base64Helper.safeDecodeAsString (new String (aDst.array ()), CCharset.CHARSET_UTF_8_OBJ));
   }
 
   @Test
   public void testEncodeByteToByte ()
   {
-    final byte [] aSrc = CharsetManager.getAsBytes ("Hallo Wält", CCharset.CHARSET_UTF_8);
+    final byte [] aSrc = CharsetManager.getAsBytes ("Hallo Wält", CCharset.CHARSET_UTF_8_OBJ);
     final byte [] aDst = Base64.encodeBytesToBytes (aSrc);
-    assertEquals ("Hallo Wält", Base64Helper.safeDecodeAsString (aDst, CCharset.CHARSET_UTF_8));
+    assertEquals ("Hallo Wält", Base64Helper.safeDecodeAsString (aDst, CCharset.CHARSET_UTF_8_OBJ));
   }
 }

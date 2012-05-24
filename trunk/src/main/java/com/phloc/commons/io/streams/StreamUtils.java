@@ -1030,6 +1030,31 @@ public final class StreamUtils
     return writeStream (aOS, CharsetManager.getAsBytes (sContent, sCharset));
   }
 
+  /**
+   * Write bytes to an {@link OutputStream}.
+   * 
+   * @param aOS
+   *        The output stream to write to. May not be <code>null</code>. Is
+   *        closed independent of error or success.
+   * @param sContent
+   *        The string to be written. May not be <code>null</code>.
+   * @param aCharset
+   *        The charset to be used, to convert the String to a byte array.
+   * @return {@link ESuccess}
+   */
+  @Nonnull
+  public static ESuccess writeStream (@WillClose @Nonnull final OutputStream aOS,
+                                      @Nonnull final String sContent,
+                                      @Nonnull final Charset aCharset)
+  {
+    if (sContent == null)
+      throw new NullPointerException ("content");
+    if (aCharset == null)
+      throw new NullPointerException ("charset");
+
+    return writeStream (aOS, CharsetManager.getAsBytes (sContent, aCharset));
+  }
+
   @Nullable
   public static InputStreamReader createReader (@Nullable final InputStream aIS, @Nonnull final String sCharset)
   {

@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.base64;
 
+import java.nio.charset.Charset;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
@@ -86,6 +88,8 @@ public final class Base64Helper
    * 
    * @param sEncoded
    *        The encoded byte array.
+   * @param sCharset
+   *        The character set to be used.
    * @return <code>null</code> if decoding failed.
    */
   @Nullable
@@ -102,10 +106,34 @@ public final class Base64Helper
   }
 
   /**
+   * Decode the string and convert it back to a string.
+   * 
+   * @param sEncoded
+   *        The encoded byte array.
+   * @param aCharset
+   *        The character set to be used.
+   * @return <code>null</code> if decoding failed.
+   */
+  @Nullable
+  public static String safeDecodeAsString (@Nonnull final String sEncoded, @Nonnull final Charset aCharset)
+  {
+    try
+    {
+      return CharsetManager.getAsString (Base64.decode (sEncoded), aCharset);
+    }
+    catch (final Exception ex)
+    {
+      return null;
+    }
+  }
+
+  /**
    * Decode the byte array and convert it to a string.
    * 
    * @param aEncodedBytes
    *        The encoded byte array.
+   * @param sCharset
+   *        The character set to be used.
    * @return <code>null</code> if decoding failed.
    */
   @Nullable
@@ -114,6 +142,28 @@ public final class Base64Helper
     try
     {
       return CharsetManager.getAsString (Base64.decode (aEncodedBytes), sCharset);
+    }
+    catch (final Exception ex)
+    {
+      return null;
+    }
+  }
+
+  /**
+   * Decode the byte array and convert it to a string.
+   * 
+   * @param aEncodedBytes
+   *        The encoded byte array.
+   * @param aCharset
+   *        The character set to be used.
+   * @return <code>null</code> if decoding failed.
+   */
+  @Nullable
+  public static String safeDecodeAsString (@Nonnull final byte [] aEncodedBytes, @Nonnull final Charset aCharset)
+  {
+    try
+    {
+      return CharsetManager.getAsString (Base64.decode (aEncodedBytes), aCharset);
     }
     catch (final Exception ex)
     {
@@ -132,5 +182,18 @@ public final class Base64Helper
   public static String safeEncode (@Nonnull final String s, @Nonnull final String sCharset)
   {
     return Base64.encodeBytes (CharsetManager.getAsBytes (s, sCharset));
+  }
+
+  /**
+   * @param s
+   *        The string to be encoded
+   * @param aCharset
+   *        The charset to be used
+   * @return The encoded byte array.
+   */
+  @Nullable
+  public static String safeEncode (@Nonnull final String s, @Nonnull final Charset aCharset)
+  {
+    return Base64.encodeBytes (CharsetManager.getAsBytes (s, aCharset));
   }
 }

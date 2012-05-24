@@ -26,7 +26,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.HashMap;
@@ -771,7 +770,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
-  public void testHexDecode () throws UnsupportedEncodingException
+  public void testHexDecode ()
   {
     try
     {
@@ -808,8 +807,8 @@ public final class StringHelperTest extends AbstractPhlocTestCase
 
     for (final String sString : new String [] { "Super", "Hallo", "", "Welt!", "fff" })
       assertEquals (sString,
-                    new String (StringHelper.hexDecode (StringHelper.hexEncode (sString.getBytes (CCharset.CHARSET_ISO_8859_1))),
-                                CCharset.CHARSET_ISO_8859_1));
+                    new String (StringHelper.hexDecode (StringHelper.hexEncode (sString.getBytes (CCharset.CHARSET_ISO_8859_1_OBJ))),
+                                CCharset.CHARSET_ISO_8859_1_OBJ));
 
     assertArrayEquals (new byte [] { 0 }, StringHelper.hexDecode ("00"));
     assertArrayEquals (new byte [] { 0, 1 }, StringHelper.hexDecode ("0001"));

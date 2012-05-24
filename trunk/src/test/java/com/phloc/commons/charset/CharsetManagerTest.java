@@ -25,6 +25,7 @@ import static org.junit.Assert.fail;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 
 import org.junit.Ignore;
@@ -75,11 +76,16 @@ public final class CharsetManagerTest
   public void testGetAsBytes ()
   {
     final String s = "äbc";
-    assertEquals (3, CharsetManager.getAsBytes (s, CCharset.CHARSET_ISO_8859_1_OBJ).length);
     assertEquals (3, CharsetManager.getAsBytes (s, CCharset.CHARSET_ISO_8859_1).length);
-    assertEquals (4, CharsetManager.getAsBytes (s, CCharset.CHARSET_UTF_8_OBJ).length);
     assertEquals (4, CharsetManager.getAsBytes (s, CCharset.CHARSET_UTF_8).length);
 
+    try
+    {
+      CharsetManager.getAsBytes (s, (String) null);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
     try
     {
       CharsetManager.getAsBytes (s, "");
@@ -93,6 +99,22 @@ public final class CharsetManagerTest
       fail ();
     }
     catch (final IllegalArgumentException ex)
+    {}
+  }
+
+  @Test
+  public void testGetAsBytesCharset ()
+  {
+    final String s = "äbc";
+    assertEquals (3, CharsetManager.getAsBytes (s, CCharset.CHARSET_ISO_8859_1_OBJ).length);
+    assertEquals (4, CharsetManager.getAsBytes (s, CCharset.CHARSET_UTF_8_OBJ).length);
+
+    try
+    {
+      CharsetManager.getAsBytes (s, (Charset) null);
+      fail ();
+    }
+    catch (final NullPointerException ex)
     {}
   }
 
@@ -119,6 +141,43 @@ public final class CharsetManagerTest
     try
     {
       CharsetManager.getAsStringInOtherCharset (s, CCharset.CHARSET_ISO_8859_1, null);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+  }
+
+  @Test
+  public void testGetAsStringInOtherCharsetCharset ()
+  {
+    final String s = "äbc";
+    assertEquals (3,
+                  CharsetManager.getAsStringInOtherCharset (s,
+                                                            CCharset.CHARSET_ISO_8859_1_OBJ,
+                                                            CCharset.CHARSET_UTF_8_OBJ).length ());
+    assertEquals (4,
+                  CharsetManager.getAsStringInOtherCharset (s,
+                                                            CCharset.CHARSET_UTF_8_OBJ,
+                                                            CCharset.CHARSET_ISO_8859_1_OBJ).length ());
+    assertNull (CharsetManager.getAsStringInOtherCharset (null,
+                                                          CCharset.CHARSET_ISO_8859_1_OBJ,
+                                                          CCharset.CHARSET_UTF_8_OBJ));
+    assertEquals (s, CharsetManager.getAsStringInOtherCharset (s,
+                                                               CCharset.CHARSET_ISO_8859_1_OBJ,
+                                                               CCharset.CHARSET_ISO_8859_1_OBJ));
+    assertEquals (s,
+                  CharsetManager.getAsStringInOtherCharset (s, CCharset.CHARSET_UTF_8_OBJ, CCharset.CHARSET_UTF_8_OBJ));
+
+    try
+    {
+      CharsetManager.getAsStringInOtherCharset (s, null, CCharset.CHARSET_UTF_8_OBJ);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+    try
+    {
+      CharsetManager.getAsStringInOtherCharset (s, CCharset.CHARSET_ISO_8859_1_OBJ, null);
       fail ();
     }
     catch (final NullPointerException ex)
@@ -178,10 +237,22 @@ public final class CharsetManagerTest
     assertEquals (3, CharsetManager.getUTF8ByteCount ("\ud7ff"));
 
     assertEquals (0, CharsetManager.getUTF8ByteCount ("\udfff"));
-    assertEquals (3, CharsetManager.getUTF8ByteCount ("\ue000"));
-    assertEquals (3, CharsetManager.getUTF8ByteCount ("\uffff"));
-    assertEquals (0, CharsetManager.getUTF8ByteCount (0x110000));
-    assertEquals (4, CharsetManager.getUTF8ByteCount (0x10000));
+    assertEquals (0, CharsetManager.getUTF8ByteCount ("\ue000"));
+    assertEquals (0, CharsetManager.getUTF8ByteCount ("\uffff"));
+    try
+    {
+      CharsetManager.getUTF8ByteCount (0x110000);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+    try
+    {
+      CharsetManager.getUTF8ByteCount (0x10000);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
   }
 
   @Test

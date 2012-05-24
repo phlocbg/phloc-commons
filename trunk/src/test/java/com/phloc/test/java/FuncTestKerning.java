@@ -165,7 +165,7 @@ public final class FuncTestKerning
       {
         m_nBytePosition += tagBytes.length;
         StreamUtils.readFully (aIS, tagBytes);
-        final String tag = CharsetManager.getAsString (tagBytes, CCharset.CHARSET_ISO_8859_1);
+        final String tag = CharsetManager.getAsString (tagBytes, CCharset.CHARSET_ISO_8859_1_OBJ);
 
         _skip (aIS, 4);
         final long nOffset = _readUnsignedInt (aIS);
