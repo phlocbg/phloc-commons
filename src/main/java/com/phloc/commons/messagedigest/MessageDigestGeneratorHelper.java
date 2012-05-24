@@ -17,12 +17,19 @@
  */
 package com.phloc.commons.messagedigest;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.WillClose;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
+import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.string.StringHelper;
 
 /**
@@ -60,15 +67,23 @@ public final class MessageDigestGeneratorHelper
   @Nonnull
   public static byte [] getDigest (@Nonnull final EMessageDigestAlgorithm eAlgorithm,
                                    @Nonnull final String sText,
-                                   @Nonnull final String sCharset)
+                                   @Nonnull @Nonempty final String sCharset)
   {
-    return new NonBlockingMessageDigestGenerator (eAlgorithm).update (sText, sCharset).getDigest ();
+    return getDigest (sText, sCharset, eAlgorithm);
+  }
+
+  @Nonnull
+  public static byte [] getDigest (@Nonnull final EMessageDigestAlgorithm eAlgorithm,
+                                   @Nonnull final String sText,
+                                   @Nonnull final Charset aCharset)
+  {
+    return getDigest (sText, aCharset, eAlgorithm);
   }
 
   @Nonnull
   public static byte [] getDigest (@Nonnull final EMessageDigestAlgorithm eAlgorithm, @Nonnull final byte [] aBytes)
   {
-    return new NonBlockingMessageDigestGenerator (eAlgorithm).update (aBytes).getDigest ();
+    return getDigest (aBytes, eAlgorithm);
   }
 
   @Nonnull
@@ -77,6 +92,75 @@ public final class MessageDigestGeneratorHelper
                                    @Nonnegative final int nOfs,
                                    @Nonnegative final int nLength)
   {
-    return new NonBlockingMessageDigestGenerator (eAlgorithm).update (aBytes, nOfs, nLength).getDigest ();
+    return getDigest (aBytes, nOfs, nLength, eAlgorithm);
+  }
+
+  @Nonnull
+  public static byte [] getDigest (@Nonnull final String sContent,
+                                   @Nonnull @Nonempty final String sCharset,
+                                   @Nonnull @Nonempty final EMessageDigestAlgorithm... aAlgorithms)
+  {
+    return new NonBlockingMessageDigestGenerator (aAlgorithms).update (sContent, sCharset).getDigest ();
+  }
+
+  @Nonnull
+  public static byte [] getDigest (@Nonnull final String sContent,
+                                   @Nonnull final Charset aCharset,
+                                   @Nonnull @Nonempty final EMessageDigestAlgorithm... aAlgorithms)
+  {
+    return new NonBlockingMessageDigestGenerator (aAlgorithms).update (sContent, aCharset).getDigest ();
+  }
+
+  @Nonnull
+  public static byte [] getDigest (@Nonnull final byte [] aContent,
+                                   @Nonnull @Nonempty final EMessageDigestAlgorithm... aAlgorithms)
+  {
+    return new NonBlockingMessageDigestGenerator (aAlgorithms).update (aContent).getDigest ();
+  }
+
+  @Nonnull
+  public static byte [] getDigest (@Nonnull final byte [] aContent,
+                                   @Nonnegative final int nOfs,
+                                   @Nonnegative final int nLength,
+                                   @Nonnull @Nonempty final EMessageDigestAlgorithm... aAlgorithms)
+  {
+    return new NonBlockingMessageDigestGenerator (aAlgorithms).update (aContent, nOfs, nLength).getDigest ();
+  }
+
+  /**
+   * Create a hash value from the complete input stream.
+   * 
+   * @param aIS
+   *        The input stream to create the hash value from. May not be
+   *        <code>null</code>.
+   * @param aAlgorithms
+   *        The list of algorithms to choose the first one from. May neither be
+   *        <code>null</code> nor empty.
+   * @return The non-<code>null</code> message digest byte array
+   */
+  @Nonnull
+  public static byte [] getDigestFromInputStream (@Nonnull @WillClose final InputStream aIS,
+                                                  @Nonnull @Nonempty final EMessageDigestAlgorithm... aAlgorithms)
+  {
+    if (aIS == null)
+      throw new NullPointerException ("inputStream");
+
+    final NonBlockingMessageDigestGenerator aMDGen = new NonBlockingMessageDigestGenerator (aAlgorithms);
+    final byte [] aBuf = new byte [2048];
+    try
+    {
+      int nBytesRead;
+      while ((nBytesRead = aIS.read (aBuf)) > -1)
+        aMDGen.update (aBuf, 0, nBytesRead);
+      return aMDGen.getDigest ();
+    }
+    catch (final IOException ex)
+    {
+      throw new IllegalStateException ("Failed to read from InputStream for hashing!", ex);
+    }
+    finally
+    {
+      StreamUtils.close (aIS);
+    }
   }
 }

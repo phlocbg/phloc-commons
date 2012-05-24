@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.mime;
 
+import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,8 +27,10 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.GlobalDebug;
+import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
+import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.exceptions.InitializationException;
 import com.phloc.commons.io.file.FilenameHelper;
@@ -94,6 +97,18 @@ public final class MimeTypeDeterminator
   private static boolean _match (@Nonnull final byte [] b, @Nonnull final byte [] aCmp)
   {
     return b.length > aCmp.length && _match (b, 0, aCmp);
+  }
+
+  @Nonnull
+  public static IMimeType getMimeTypeFromString (@Nullable final String s, @Nonnull @Nonempty final String sCharsetName)
+  {
+    return getMimeTypeFromBytes (s == null ? null : CharsetManager.getAsBytes (s, sCharsetName));
+  }
+
+  @Nonnull
+  public static IMimeType getMimeTypeFromString (@Nullable final String s, @Nonnull final Charset aCharset)
+  {
+    return getMimeTypeFromBytes (s == null ? null : CharsetManager.getAsBytes (s, aCharset));
   }
 
   /**

@@ -20,11 +20,13 @@ package com.phloc.commons.base64;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectStreamClass;
+import java.nio.charset.Charset;
 import java.util.zip.GZIPOutputStream;
 
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
+import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.io.file.FileUtils;
 import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
@@ -243,7 +245,7 @@ public class Base64// NOPMD
   private final static byte NEW_LINE = (byte) '\n';
 
   /** Preferred encoding. */
-  private final static String PREFERRED_ENCODING = "US-ASCII";
+  private final static Charset PREFERRED_ENCODING = CCharset.CHARSET_US_ASCII_OBJ;
 
   private final static byte WHITE_SPACE_ENC = -5; // Indicates white space in
                                                   // encoding
@@ -2539,7 +2541,7 @@ public class Base64// NOPMD
     {
       out = new java.io.BufferedOutputStream (FileUtils.getOutputStream (outfile));
       // Strict, 7-bit output.
-      out.write (CharsetManager.getAsBytes (encoded, "US-ASCII"));
+      out.write (CharsetManager.getAsBytes (encoded, PREFERRED_ENCODING));
     }
     catch (final IOException e)
     {

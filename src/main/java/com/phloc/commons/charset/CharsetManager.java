@@ -107,12 +107,19 @@ public final class CharsetManager
   @Nonnull
   public static byte [] getAsBytes (@Nonnull final String sText, @Nonnull final Charset aCharset)
   {
-    return getAsBytes (sText, aCharset.name ());
+    if (sText == null)
+      throw new NullPointerException ("text");
+    if (aCharset == null)
+      throw new NullPointerException ("charset");
+
+    return sText.getBytes (aCharset);
   }
 
   @Nonnull
   public static byte [] getAsBytes (@Nonnull final String sText, @Nonnull @Nonempty final String sCharsetName)
   {
+    if (sText == null)
+      throw new NullPointerException ("text");
     if (StringHelper.hasNoText (sCharsetName))
       throw new IllegalArgumentException ("empty charset");
 
@@ -139,6 +146,21 @@ public final class CharsetManager
       return sText;
 
     return getAsString (getAsBytes (sText, sCurrentCharset), sNewCharset);
+  }
+
+  @Nullable
+  public static String getAsStringInOtherCharset (@Nullable final String sText,
+                                                  @Nonnull final Charset aCurrentCharset,
+                                                  @Nonnull final Charset aNewCharset)
+  {
+    if (aCurrentCharset == null)
+      throw new NullPointerException ("currentCharset");
+    if (aNewCharset == null)
+      throw new NullPointerException ("newCharset");
+    if (sText == null || aCurrentCharset.equals (aNewCharset))
+      return sText;
+
+    return getAsString (getAsBytes (sText, aCurrentCharset), aNewCharset);
   }
 
   @Nonnull
@@ -175,7 +197,7 @@ public final class CharsetManager
                                     @Nonnegative final int nLength,
                                     @Nonnull final Charset aCharset)
   {
-    return getAsString (aBuffer, nOfs, nLength, aCharset.name ());
+    return new String (aBuffer, nOfs, nLength, aCharset);
   }
 
   /**

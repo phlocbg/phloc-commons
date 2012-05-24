@@ -20,6 +20,7 @@ package com.phloc.commons.io.streams;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.nio.charset.Charset;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -237,6 +238,27 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements
   public String getAsString (@Nonnull final String sCharset)
   {
     return CharsetManager.getAsString (m_aBuf, 0, m_nCount, sCharset);
+  }
+
+  /**
+   * Converts the buffer's contents into a string by decoding the bytes using
+   * the specified {@link java.nio.charset.Charset charsetName}. The length of
+   * the new <tt>String</tt> is a function of the charset, and hence may not be
+   * equal to the length of the byte array.
+   * <p>
+   * This method always replaces malformed-input and unmappable-character
+   * sequences with this charset's default replacement string. The
+   * {@link java.nio.charset.CharsetDecoder} class should be used when more
+   * control over the decoding process is required.
+   * 
+   * @param aCharset
+   *        the charset to be used. May not be <code>null</code>.
+   * @return String decoded from the buffer's contents.
+   */
+  @Nonnull
+  public String getAsString (@Nonnull final Charset aCharset)
+  {
+    return CharsetManager.getAsString (m_aBuf, 0, m_nCount, aCharset);
   }
 
   /**
