@@ -20,9 +20,14 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2012-05-24" category="api" action="add">
+    <change>
+      <text locale="en">Added new interfaces IHasMicroNodeRepresentation and IHasXMLRepresentation</text>
+    </change>
+  </entry>
   <entry date="2012-05-22" category="api" action="add">
     <change>
-      <text locale="en">MAde IReadableResource Serializable</text>
+      <text locale="en">Made IReadableResource Serializable</text>
     </change>
   </entry>
   <release date="2012-05-15" version="3.5.5" />
