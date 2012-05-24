@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 
 import org.w3c.dom.Node;
 
+import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.io.streamprovider.StringInputStreamProvider;
 
 /**
@@ -34,6 +35,17 @@ import com.phloc.commons.io.streamprovider.StringInputStreamProvider;
 public class DOMInputStreamProvider extends StringInputStreamProvider
 {
   /**
+   * Constructor for W3C nodes using the default XML charset.
+   * 
+   * @param aNode
+   *        The node to be streamed. May not be <code>null</code>.
+   */
+  public DOMInputStreamProvider (@Nonnull final Node aNode)
+  {
+    this (aNode, XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ);
+  }
+
+  /**
    * Constructor for W3C nodes.
    * 
    * @param aNode
@@ -41,7 +53,7 @@ public class DOMInputStreamProvider extends StringInputStreamProvider
    * @param sCharset
    *        The charset to use. May not be <code>null</code>.
    */
-  public DOMInputStreamProvider (@Nonnull final Node aNode, @Nonnull final String sCharset)
+  public DOMInputStreamProvider (@Nonnull final Node aNode, @Nonnull @Nonempty final String sCharset)
   {
     super (XMLWriter.getNodeAsString (aNode, new XMLWriterSettings ().setCharset (sCharset)), sCharset);
   }

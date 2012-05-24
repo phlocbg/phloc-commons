@@ -17,13 +17,12 @@
  */
 package com.phloc.commons.xml.transform;
 
-import java.io.StringReader;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 import javax.xml.transform.stream.StreamSource;
 
+import com.phloc.commons.io.streams.NonBlockingStringReader;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -42,7 +41,7 @@ public final class StringStreamSource extends StreamSource
 
   public StringStreamSource (@Nonnull final String sInput, @Nullable final String sSystemID)
   {
-    super (new StringReader (sInput));
+    super (new NonBlockingStringReader (sInput));
     setSystemId (sSystemID);
   }
 

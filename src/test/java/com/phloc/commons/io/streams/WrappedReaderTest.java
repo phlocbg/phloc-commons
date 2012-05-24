@@ -22,7 +22,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.nio.CharBuffer;
 
 import org.junit.Test;
@@ -40,7 +39,7 @@ public final class WrappedReaderTest
   @Test
   public void testAll () throws IOException
   {
-    final StringReader baos = new StringReader (StringHelper.getRepeated ('a', 100));
+    final NonBlockingStringReader baos = new NonBlockingStringReader (StringHelper.getRepeated ('a', 100));
     final WrappedReader ws = new WrappedReader (baos);
     assertTrue (ws.markSupported ());
     assertTrue (ws.ready ());

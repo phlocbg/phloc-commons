@@ -20,7 +20,6 @@ package com.phloc.commons.microdom.serialize;
 import java.io.File;
 import java.io.InputStream;
 import java.io.Reader;
-import java.io.StringReader;
 
 import javax.annotation.Nullable;
 import javax.annotation.WillClose;
@@ -34,6 +33,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.io.IInputStreamProvider;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.resource.FileSystemResource;
+import com.phloc.commons.io.streams.NonBlockingStringReader;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.xml.sax.ReadableResourceSAXInputSource;
 import com.phloc.commons.xml.serialize.XMLReader;
@@ -184,6 +184,6 @@ public final class MicroReader
   {
     if (sXML == null)
       return null;
-    return readMicroXML (new StringReader (sXML), aSpecialEntityResolver);
+    return readMicroXML (new NonBlockingStringReader (sXML), aSpecialEntityResolver);
   }
 }

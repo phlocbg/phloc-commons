@@ -21,6 +21,7 @@ import java.nio.charset.Charset;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.io.streamprovider.StringInputStreamProvider;
 import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.xml.serialize.XMLWriterSettings;
@@ -42,7 +43,7 @@ public class MicroDOMInputStreamProvider extends StringInputStreamProvider
    */
   public MicroDOMInputStreamProvider (@Nonnull final IMicroNode aNode)
   {
-    this (aNode, XMLWriterSettings.DEFAULT_XML_CHARSET);
+    this (aNode, XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ);
   }
 
   /**
@@ -53,7 +54,7 @@ public class MicroDOMInputStreamProvider extends StringInputStreamProvider
    * @param sCharset
    *        The charset to use. May not be <code>null</code>.
    */
-  public MicroDOMInputStreamProvider (@Nonnull final IMicroNode aNode, @Nonnull final String sCharset)
+  public MicroDOMInputStreamProvider (@Nonnull final IMicroNode aNode, @Nonnull @Nonempty final String sCharset)
   {
     super (MicroWriter.getNodeAsString (aNode, new XMLWriterSettings ().setCharset (sCharset)), sCharset);
   }

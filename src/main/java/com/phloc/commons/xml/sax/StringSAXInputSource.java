@@ -18,13 +18,13 @@
 package com.phloc.commons.xml.sax;
 
 import java.io.Reader;
-import java.io.StringReader;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.xml.sax.InputSource;
 
+import com.phloc.commons.io.streams.NonBlockingStringReader;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -53,7 +53,7 @@ public final class StringSAXInputSource extends InputSource
   @Override
   public Reader getCharacterStream ()
   {
-    return new StringReader (m_sText);
+    return new NonBlockingStringReader (m_sText);
   }
 
   @Override

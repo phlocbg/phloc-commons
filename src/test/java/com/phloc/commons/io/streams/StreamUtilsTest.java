@@ -32,7 +32,6 @@ import java.io.Flushable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
-import java.io.StringReader;
 import java.nio.charset.Charset;
 import java.util.List;
 
@@ -336,19 +335,19 @@ public final class StreamUtilsTest
   public void testCopyReaderToWriter ()
   {
     final String sInput = "Hallo";
-    StringReader bais = new StringReader (sInput);
+    NonBlockingStringReader bais = new NonBlockingStringReader (sInput);
     final NonBlockingStringWriter baos = new NonBlockingStringWriter ();
     assertTrue (StreamUtils.copyReaderToWriter (bais, baos).isSuccess ());
     assertEquals (sInput, baos.toString ());
 
     // try with null streams
-    bais = new StringReader (sInput);
+    bais = new NonBlockingStringReader (sInput);
     assertTrue (StreamUtils.copyReaderToWriter (bais, null).isFailure ());
     assertTrue (StreamUtils.copyReaderToWriter (null, baos).isFailure ());
-    bais = new StringReader (sInput);
+    bais = new NonBlockingStringReader (sInput);
     assertTrue (StreamUtils.copyReaderToWriter (bais, baos, new char [10]).isSuccess ());
     final MutableLong aML = new MutableLong ();
-    bais = new StringReader (sInput);
+    bais = new NonBlockingStringReader (sInput);
     assertTrue (StreamUtils.copyReaderToWriter (bais, baos, new char [10], aML).isSuccess ());
     assertEquals (aML.longValue (), sInput.length ());
 
@@ -385,10 +384,10 @@ public final class StreamUtilsTest
   public void testGetAllCharacters ()
   {
     final String sInput = "Hallo";
-    assertEquals (sInput, StreamUtils.getAllCharactersAsString (new StringReader (sInput)));
+    assertEquals (sInput, StreamUtils.getAllCharactersAsString (new NonBlockingStringReader (sInput)));
     assertNull (StreamUtils.getAllCharactersAsString ((Reader) null));
 
-    assertArrayEquals (sInput.toCharArray (), StreamUtils.getAllCharacters (new StringReader (sInput)));
+    assertArrayEquals (sInput.toCharArray (), StreamUtils.getAllCharacters (new NonBlockingStringReader (sInput)));
     assertNull (StreamUtils.getAllCharacters ((Reader) null));
   }
 

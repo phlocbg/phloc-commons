@@ -41,6 +41,9 @@ public interface ISimpleURL extends IURLData, IHasStringRepresentation
   @Nullable
   String getParam (@Nullable String sKey);
 
+  /**
+   * @return <code>true</code> if the URL has a known protocol
+   */
   boolean hasKnownProtocol ();
 
   /**

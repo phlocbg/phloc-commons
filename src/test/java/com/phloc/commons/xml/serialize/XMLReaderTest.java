@@ -23,7 +23,6 @@ import static org.junit.Assert.fail;
 
 import java.io.InputStream;
 import java.io.Reader;
-import java.io.StringReader;
 
 import javax.xml.validation.Schema;
 
@@ -36,6 +35,7 @@ import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
+import com.phloc.commons.io.streams.NonBlockingStringReader;
 import com.phloc.commons.io.streams.StringInputStream;
 import com.phloc.commons.xml.sax.CachingSAXInputSource;
 import com.phloc.commons.xml.sax.CollectingSAXErrorHandler;
@@ -65,11 +65,11 @@ public final class XMLReaderTest
   {
     Document doc = XMLReader.readXMLDOM ("<root/>");
     assertNotNull (doc);
-    doc = XMLReader.readXMLDOM (new StringReader ("<root/>"));
+    doc = XMLReader.readXMLDOM (new NonBlockingStringReader ("<root/>"));
     assertNotNull (doc);
-    doc = XMLReader.readXMLDOM (new InputSource (new StringReader ("<root/>")));
+    doc = XMLReader.readXMLDOM (new StringSAXInputSource ("<root/>"));
     assertNotNull (doc);
-    doc = XMLReader.readXMLDOM (new InputSource (new StringReader ("<?xml version=\"1.0\"?>\n" + "<root/>")));
+    doc = XMLReader.readXMLDOM (new StringSAXInputSource ("<?xml version=\"1.0\"?>\n" + "<root/>"));
     assertNotNull (doc);
     doc = XMLReader.readXMLDOM (new StringInputStream ("<?xml version=\"1.0\"?>\n<root/>",
                                                        CCharset.CHARSET_ISO_8859_1_OBJ));
@@ -87,7 +87,7 @@ public final class XMLReaderTest
     try
     {
       // non-XML
-      XMLReader.readXMLDOM (new InputSource (new StringReader ("")));
+      XMLReader.readXMLDOM (new StringSAXInputSource (""));
       fail ();
     }
     catch (final SAXException ex)
@@ -96,7 +96,7 @@ public final class XMLReaderTest
     try
     {
       // non-XML
-      XMLReader.readXMLDOM (new InputSource (new StringReader ("<bla>")));
+      XMLReader.readXMLDOM (new StringSAXInputSource ("<bla>"));
       fail ();
     }
     catch (final SAXException ex)
@@ -199,11 +199,11 @@ public final class XMLReaderTest
     assertNotNull (doc);
     doc = XMLReader.readXMLDOM (sValid, aSchema, LoggingSAXErrorHandler.getInstance ());
     assertNotNull (doc);
-    XMLReader.readXMLDOM (new StringReader (sValid), aSchema);
+    XMLReader.readXMLDOM (new NonBlockingStringReader (sValid), aSchema);
     assertNotNull (doc);
-    doc = XMLReader.readXMLDOM (new StringReader (sValid), new CollectingSAXErrorHandler ());
+    doc = XMLReader.readXMLDOM (new NonBlockingStringReader (sValid), new CollectingSAXErrorHandler ());
     assertNotNull (doc);
-    doc = XMLReader.readXMLDOM (new StringReader (sValid), aSchema, LoggingSAXErrorHandler.getInstance ());
+    doc = XMLReader.readXMLDOM (new NonBlockingStringReader (sValid), aSchema, LoggingSAXErrorHandler.getInstance ());
     assertNotNull (doc);
     doc = XMLReader.readXMLDOM (new StringInputStream (sValid, CCharset.CHARSET_ISO_8859_1_OBJ), aSchema);
     assertNotNull (doc);
@@ -235,9 +235,9 @@ public final class XMLReaderTest
     assertNull (doc);
     doc = XMLReader.readXMLDOM (sInvalid, aSchema, LoggingSAXErrorHandler.getInstance ());
     assertNull (doc);
-    doc = XMLReader.readXMLDOM (new StringReader (sInvalid), aSchema);
+    doc = XMLReader.readXMLDOM (new NonBlockingStringReader (sInvalid), aSchema);
     assertNull (doc);
-    doc = XMLReader.readXMLDOM (new StringReader (sInvalid), aSchema, LoggingSAXErrorHandler.getInstance ());
+    doc = XMLReader.readXMLDOM (new NonBlockingStringReader (sInvalid), aSchema, LoggingSAXErrorHandler.getInstance ());
     assertNull (doc);
     doc = XMLReader.readXMLDOM (new StringInputStream (sInvalid, CCharset.CHARSET_ISO_8859_1_OBJ), aSchema);
     assertNull (doc);
