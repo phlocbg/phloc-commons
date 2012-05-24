@@ -15,30 +15,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.convert;
+package com.phloc.commons.url.encode;
+
+import java.nio.charset.Charset;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public final class UnidirectionalConverterIdentity <DATATYPE> implements IUnidirectionalConverterSameType <DATATYPE>
+import com.phloc.commons.encode.IEncoder;
+import com.phloc.commons.url.URLUtils;
+
+/**
+ * Encoder for URLs
+ * 
+ * @author philip
+ */
+public final class URLParameterEncoder implements IEncoder <String>
 {
-  @Nullable
-  public DATATYPE convert (@Nullable final DATATYPE aInput)
+  private final Charset m_aCharset;
+
+  public URLParameterEncoder (@Nonnull final Charset aCharset)
   {
-    return aInput;
+    if (aCharset == null)
+      throw new NullPointerException ("charset");
+    m_aCharset = aCharset;
   }
 
-  /**
-   * Get a converter instance that does not conversion at all. Just to fulfil
-   * API compatibility.
-   * 
-   * @param <DATATYPE>
-   *        The type of input and output object
-   * @return A non-<code>null</code> converter object.
-   */
-  @Nonnull
-  public static <DATATYPE> UnidirectionalConverterIdentity <DATATYPE> create ()
+  @Nullable
+  public String encode (@Nullable final String sInput)
   {
-    return new UnidirectionalConverterIdentity <DATATYPE> ();
+    return sInput == null ? null : URLUtils.urlEncode (sInput, m_aCharset);
   }
 }

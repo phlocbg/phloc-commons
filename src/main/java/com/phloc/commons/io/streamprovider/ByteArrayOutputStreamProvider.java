@@ -19,6 +19,7 @@ package com.phloc.commons.io.streamprovider;
 
 import java.io.OutputStream;
 import java.io.Writer;
+import java.nio.charset.Charset;
 
 import javax.annotation.Nonnull;
 
@@ -52,6 +53,12 @@ public class ByteArrayOutputStreamProvider implements IWriterProvider
   public final Writer getWriter (@Nonnull final String sCharset, @Nonnull final EAppend eAppend)
   {
     return StreamUtils.createWriter (getOutputStream (eAppend), sCharset);
+  }
+
+  @Nonnull
+  public final Writer getWriter (@Nonnull final Charset aCharset, @Nonnull final EAppend eAppend)
+  {
+    return StreamUtils.createWriter (getOutputStream (eAppend), aCharset);
   }
 
   /**

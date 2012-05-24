@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.url;
 
+import java.nio.charset.Charset;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -58,10 +60,21 @@ public interface ISimpleURL extends IURLData, IHasStringRepresentation
 
   /**
    * @param sCharset
-   *        The charset used for encoding the parameters.
+   *        The charset used for encoding the parameters. May not be
+   *        <code>null</code>.
    * @return The final string representation of this URL with encoded URL
    *         parameter keys and values.
    */
   @Nonnull
-  String getAsStringWithEncodedParameters (String sCharset);
+  String getAsStringWithEncodedParameters (@Nonnull String sCharset);
+
+  /**
+   * @param aCharset
+   *        The charset used for encoding the parameters. May not be
+   *        <code>null</code>.
+   * @return The final string representation of this URL with encoded URL
+   *         parameter keys and values.
+   */
+  @Nonnull
+  String getAsStringWithEncodedParameters (@Nonnull Charset aCharset);
 }

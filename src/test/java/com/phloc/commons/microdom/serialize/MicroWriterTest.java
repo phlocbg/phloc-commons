@@ -19,9 +19,10 @@ package com.phloc.commons.microdom.serialize;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
+import java.nio.charset.UnsupportedCharsetException;
 
 import org.junit.Test;
 
@@ -157,7 +158,15 @@ public final class MicroWriterTest
     {}
 
     // Illegal charset
-    assertNull (MicroWriter.getNodeAsString (aDoc, new XMLWriterSettings ().setCharset ("sichaNed")));
+    try
+    {
+      MicroWriter.getNodeAsString (aDoc, new XMLWriterSettings ().setCharset ("sichaNed"));
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {
+      assertTrue (ex.getCause () instanceof UnsupportedCharsetException);
+    }
   }
 
   @Test

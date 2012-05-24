@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.xml.serialize;
 
+import java.nio.charset.Charset;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
@@ -24,8 +26,8 @@ import javax.xml.namespace.NamespaceContext;
 
 import com.phloc.commons.ICloneable;
 import com.phloc.commons.charset.CCharset;
+import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.hash.HashCodeGenerator;
-import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.xml.EXMLIncorrectCharacterHandling;
 import com.phloc.commons.xml.EXMLVersion;
@@ -40,6 +42,12 @@ import com.phloc.commons.xml.EXMLVersion;
 @NotThreadSafe
 public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWriterSettings>
 {
+  // Must be before the IXMLWriterSettings constants!
+  public static final String DEFAULT_XML_CHARSET = CCharset.CHARSET_UTF_8;
+  public static final Charset DEFAULT_XML_CHARSET_OBJ = CCharset.CHARSET_UTF_8_OBJ;
+  public static final boolean DEFAULT_USE_DOUBLE_QUOTES_FOR_ATTRIBUTES = true;
+  public static final boolean DEFAULT_SPACE_ON_SELF_CLOSED_ELEMENT = true;
+
   /** The default settings to use */
   public static final IXMLWriterSettings DEFAULT_XML_SETTINGS = new XMLWriterSettings ();
 
@@ -49,17 +57,13 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
    */
   public static final IXMLWriterSettings SUGGESTED_XML_SETTINGS = new XMLWriterSettings ().setIncorrectCharacterHandling (EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING);
 
-  public static final String DEFAULT_XML_CHARSET = CCharset.CHARSET_UTF_8;
-  public static final boolean DEFAULT_USE_DOUBLE_QUOTES_FOR_ATTRIBUTES = true;
-  public static final boolean DEFAULT_SPACE_ON_SELF_CLOSED_ELEMENT = true;
-
   private EXMLSerializeFormat m_eFormat = EXMLSerializeFormat.XML;
   private EXMLVersion m_eXMLVersion = EXMLVersion.XML_10;
   private EXMLSerializeDocType m_eSerializeDocType = EXMLSerializeDocType.EMIT;
   private EXMLSerializeComments m_eSerializeComments = EXMLSerializeComments.EMIT;
   private EXMLSerializeIndent m_eIndent = EXMLSerializeIndent.INDENT_AND_ALIGN;
   private EXMLIncorrectCharacterHandling m_eIncorrectCharacterHandling = EXMLIncorrectCharacterHandling.WRITE_TO_FILE_NO_LOG;
-  private String m_sCharset = DEFAULT_XML_CHARSET;
+  private Charset m_aCharset = DEFAULT_XML_CHARSET_OBJ;
   private NamespaceContext m_aNamespaceContext;
   private boolean m_bUseDoubleQuotesForAttributes = DEFAULT_USE_DOUBLE_QUOTES_FOR_ATTRIBUTES;
   private boolean m_bSpaceOnSelfClosedElement = DEFAULT_SPACE_ON_SELF_CLOSED_ELEMENT;
@@ -97,7 +101,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
     setSerializeComments (aOther.getSerializeComments ());
     setIndent (aOther.getIndent ());
     setIncorrectCharacterHandling (aOther.getIncorrectCharacterHandling ());
-    setCharset (aOther.getCharset ());
+    setCharset (aOther.getCharsetObj ());
     setNamespaceContext (aOther.getNamespaceContext ());
     setUseDoubleQuotesForAttributes (aOther.isUseDoubleQuotesForAttributes ());
     setSpaceOnSelfClosedElement (aOther.isSpaceOnSelfClosedElement ());
@@ -238,6 +242,22 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
   /**
    * Set the serialization charset.
    * 
+   * @param aCharset
+   *        The charset to be used. May not be <code>null</code>.
+   * @return this
+   */
+  @Nonnull
+  public XMLWriterSettings setCharset (@Nonnull final Charset aCharset)
+  {
+    if (aCharset == null)
+      throw new NullPointerException ("charset");
+    m_aCharset = aCharset;
+    return this;
+  }
+
+  /**
+   * Set the serialization charset.
+   * 
    * @param sCharset
    *        The charset to be used. May not be <code>null</code>.
    * @return this
@@ -245,16 +265,19 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
   @Nonnull
   public XMLWriterSettings setCharset (@Nonnull final String sCharset)
   {
-    if (StringHelper.hasNoText (sCharset))
-      throw new IllegalArgumentException ("illegal charset passed");
-    m_sCharset = sCharset;
-    return this;
+    return setCharset (CharsetManager.charsetFromName (sCharset));
   }
 
   @Nonnull
   public String getCharset ()
   {
-    return m_sCharset;
+    return m_aCharset.name ();
+  }
+
+  @Nonnull
+  public Charset getCharsetObj ()
+  {
+    return m_aCharset;
   }
 
   /**
@@ -324,7 +347,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
            m_eSerializeComments.equals (rhs.m_eSerializeComments) &&
            m_eIndent.equals (rhs.m_eIndent) &&
            m_eIncorrectCharacterHandling.equals (rhs.m_eIncorrectCharacterHandling) &&
-           m_sCharset.equals (rhs.m_sCharset) &&
+           m_aCharset.equals (rhs.m_aCharset) &&
            m_bUseDoubleQuotesForAttributes == rhs.m_bUseDoubleQuotesForAttributes &&
            m_bSpaceOnSelfClosedElement == rhs.m_bSpaceOnSelfClosedElement;
   }
@@ -339,7 +362,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
                                        .append (m_eSerializeComments)
                                        .append (m_eIndent)
                                        .append (m_eIncorrectCharacterHandling)
-                                       .append (m_sCharset)
+                                       .append (m_aCharset)
                                        .append (m_bUseDoubleQuotesForAttributes)
                                        .append (m_bSpaceOnSelfClosedElement)
                                        .getHashCode ();
@@ -354,7 +377,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
                                        .append ("serializeComments", m_eSerializeComments)
                                        .append ("indent", m_eIndent)
                                        .append ("incorrectCharHandling", m_eIncorrectCharacterHandling)
-                                       .append ("charset", m_sCharset)
+                                       .append ("charset", m_aCharset)
                                        .append ("namespaceContext", m_aNamespaceContext)
                                        .append ("doubleQuotesForAttrs", m_bUseDoubleQuotesForAttributes)
                                        .append ("spaceOnSelfClosedElement", m_bSpaceOnSelfClosedElement)

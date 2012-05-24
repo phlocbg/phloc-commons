@@ -15,30 +15,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.convert;
+package com.phloc.commons.encode;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public final class UnidirectionalConverterIdentity <DATATYPE> implements IUnidirectionalConverterSameType <DATATYPE>
+/**
+ * The most basic decoding interface
+ * 
+ * @param <DATATYPE>
+ *        data type
+ * @author philip
+ */
+public interface IDecoder <DATATYPE>
 {
-  @Nullable
-  public DATATYPE convert (@Nullable final DATATYPE aInput)
-  {
-    return aInput;
-  }
-
   /**
-   * Get a converter instance that does not conversion at all. Just to fulfil
-   * API compatibility.
+   * Decode the passed source object
    * 
-   * @param <DATATYPE>
-   *        The type of input and output object
-   * @return A non-<code>null</code> converter object.
+   * @param aInput
+   *        The source object to be decoded
+   * @return The decoded value.
    */
-  @Nonnull
-  public static <DATATYPE> UnidirectionalConverterIdentity <DATATYPE> create ()
-  {
-    return new UnidirectionalConverterIdentity <DATATYPE> ();
-  }
+  @Nullable
+  DATATYPE decode (@Nullable DATATYPE aInput);
 }

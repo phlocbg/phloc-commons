@@ -484,6 +484,26 @@ public final class StreamUtils
   /**
    * Read all bytes from the passed input stream into a string.
    * 
+   * @param aISP
+   *        The input stream provider to read from. May be <code>null</code> .
+   * @param aCharset
+   *        The charset to use. May not be <code>null</code> .
+   * @return The String or <code>null</code> if the parameter or the resolved
+   *         input stream is <code>null</code>.
+   */
+  @Nullable
+  public static String getAllBytesAsString (@Nullable final IInputStreamProvider aISP,
+                                            @Nonnull @Nonempty final Charset aCharset)
+  {
+    if (aISP == null)
+      return null;
+
+    return getAllBytesAsString (aISP.getInputStream (), aCharset);
+  }
+
+  /**
+   * Read all bytes from the passed input stream into a string.
+   * 
    * @param aIS
    *        The input stream to read from. May be <code>null</code>.
    * @param sCharset
@@ -502,6 +522,29 @@ public final class StreamUtils
       return null;
 
     return getCopy (aIS).getAsString (sCharset);
+  }
+
+  /**
+   * Read all bytes from the passed input stream into a string.
+   * 
+   * @param aIS
+   *        The input stream to read from. May be <code>null</code>.
+   * @param aCharset
+   *        The charset to use. May not be <code>null</code> .
+   * @return The String or <code>null</code> if the input stream is
+   *         <code>null</code>.
+   */
+  @Nullable
+  public static String getAllBytesAsString (@Nullable @WillClose final InputStream aIS,
+                                            @Nonnull @Nonempty final Charset aCharset)
+  {
+    if (aCharset == null)
+      throw new NullPointerException ("empty charset");
+
+    if (aIS == null)
+      return null;
+
+    return getCopy (aIS).getAsString (aCharset);
   }
 
   /**
@@ -720,6 +763,25 @@ public final class StreamUtils
    * passed character set.
    * 
    * @param aISP
+   *        The resource to read. May not be <code>null</code>.
+   * @param aCharset
+   *        The character set to use. May not be <code>null</code>.
+   * @return <code>null</code> if the resolved input stream is <code>null</code>
+   *         , the content otherwise.
+   */
+  @Nullable
+  @ReturnsMutableCopy
+  public static List <String> readStreamLines (@Nullable final IInputStreamProvider aISP,
+                                               @Nonnull final Charset aCharset)
+  {
+    return readStreamLines (aISP, aCharset, 0, CGlobal.ILLEGAL_UINT);
+  }
+
+  /**
+   * Get the content of the passed Spring resource as one big string in the
+   * passed character set.
+   * 
+   * @param aISP
    *        The resource to read. May be <code>null</code>.
    * @param sCharset
    *        The character set to use. May not be <code>null</code>.
@@ -747,6 +809,37 @@ public final class StreamUtils
   }
 
   /**
+   * Get the content of the passed Spring resource as one big string in the
+   * passed character set.
+   * 
+   * @param aISP
+   *        The resource to read. May be <code>null</code>.
+   * @param aCharset
+   *        The character set to use. May not be <code>null</code>.
+   * @param nLinesToSkip
+   *        The 0-based index of the first line to read. Pass in 0 to indicate
+   *        to read everything.
+   * @param nLinesToRead
+   *        The number of lines to read. Pass in {@link CGlobal#ILLEGAL_UINT} to
+   *        indicate that all lines should be read. If the number passed here
+   *        exceeds the number of lines in the file, nothing happens.
+   * @return <code>null</code> if the resolved input stream is <code>null</code>
+   *         , the content otherwise.
+   */
+  @Nullable
+  @ReturnsMutableCopy
+  public static List <String> readStreamLines (@Nullable final IInputStreamProvider aISP,
+                                               @Nonnull final Charset aCharset,
+                                               @Nonnegative final int nLinesToSkip,
+                                               final int nLinesToRead)
+  {
+    if (aISP == null)
+      return null;
+
+    return readStreamLines (aISP.getInputStream (), aCharset, nLinesToSkip, nLinesToRead);
+  }
+
+  /**
    * Get the content of the passed stream as a list of lines in the passed
    * character set.
    * 
@@ -771,6 +864,25 @@ public final class StreamUtils
    * 
    * @param aIS
    *        The input stream to read from. May be <code>null</code>.
+   * @param aCharset
+   *        The character set to use. May not be <code>null</code>.
+   * @return <code>null</code> if the input stream is <code>null</code>, the
+   *         content lines otherwise.
+   */
+  @Nullable
+  @ReturnsMutableCopy
+  public static List <String> readStreamLines (@WillClose @Nullable final InputStream aIS,
+                                               @Nonnull @Nonempty final Charset aCharset)
+  {
+    return readStreamLines (aIS, aCharset, 0, CGlobal.ILLEGAL_UINT);
+  }
+
+  /**
+   * Get the content of the passed stream as a list of lines in the passed
+   * character set.
+   * 
+   * @param aIS
+   *        The input stream to read from. May be <code>null</code>.
    * @param sCharset
    *        The character set to use. May not be <code>null</code>.
    * @param aTargetList
@@ -784,6 +896,33 @@ public final class StreamUtils
   {
     if (aIS != null)
       readStreamLines (aIS, sCharset, 0, CGlobal.ILLEGAL_UINT, new INonThrowingRunnableWithParameter <String> ()
+      {
+        public void run (final String sLine)
+        {
+          aTargetList.add (sLine);
+        }
+      });
+  }
+
+  /**
+   * Get the content of the passed stream as a list of lines in the passed
+   * character set.
+   * 
+   * @param aIS
+   *        The input stream to read from. May be <code>null</code>.
+   * @param aCharset
+   *        The character set to use. May not be <code>null</code>.
+   * @param aTargetList
+   *        The list to be filled with the lines. May not be <code>null</code>.
+   */
+  @Nullable
+  @ReturnsMutableCopy
+  public static void readStreamLines (@WillClose @Nullable final InputStream aIS,
+                                      @Nonnull final Charset aCharset,
+                                      @Nonnull final List <String> aTargetList)
+  {
+    if (aIS != null)
+      readStreamLines (aIS, aCharset, 0, CGlobal.ILLEGAL_UINT, new INonThrowingRunnableWithParameter <String> ()
       {
         public void run (final String sLine)
         {
@@ -833,6 +972,46 @@ public final class StreamUtils
   }
 
   /**
+   * Get the content of the passed stream as a list of lines in the passed
+   * character set.
+   * 
+   * @param aIS
+   *        The input stream to read from. May be <code>null</code>.
+   * @param aCharset
+   *        The character set to use. May not be <code>null</code>.
+   * @param nLinesToSkip
+   *        The 0-based index of the first line to read. Pass in 0 to indicate
+   *        to read everything.
+   * @param nLinesToRead
+   *        The number of lines to read. Pass in {@link CGlobal#ILLEGAL_UINT} to
+   *        indicate that all lines should be read. If the number passed here
+   *        exceeds the number of lines in the file, nothing happens.
+   * @return <code>null</code> if the input stream is <code>null</code>, the
+   *         content lines otherwise.
+   */
+  @Nullable
+  @ReturnsMutableCopy
+  public static List <String> readStreamLines (@WillClose @Nullable final InputStream aIS,
+                                               @Nonnull final Charset aCharset,
+                                               @Nonnegative final int nLinesToSkip,
+                                               final int nLinesToRead)
+  {
+    if (aIS == null)
+      return null;
+
+    // Read stream and collect all read lines in a list
+    final List <String> ret = new ArrayList <String> ();
+    readStreamLines (aIS, aCharset, nLinesToSkip, nLinesToRead, new INonThrowingRunnableWithParameter <String> ()
+    {
+      public void run (final String sLine)
+      {
+        ret.add (sLine);
+      }
+    });
+    return ret;
+  }
+
+  /**
    * Read the complete content of the passed stream and pass each line
    * separately to the passed callback.
    * 
@@ -849,6 +1028,125 @@ public final class StreamUtils
                                       @Nonnull final INonThrowingRunnableWithParameter <String> aLineCallback)
   {
     readStreamLines (aIS, sCharset, 0, CGlobal.ILLEGAL_UINT, aLineCallback);
+  }
+
+  /**
+   * Read the complete content of the passed stream and pass each line
+   * separately to the passed callback.
+   * 
+   * @param aIS
+   *        The input stream to read from. May be <code>null</code>.
+   * @param aCharset
+   *        The character set to use. May not be <code>null</code>.
+   * @param aLineCallback
+   *        The callback that is invoked for all read lines. Each passed line
+   *        does NOT contain the line delimiter!
+   */
+  public static void readStreamLines (@WillClose @Nullable final InputStream aIS,
+                                      @Nonnull @Nonempty final Charset aCharset,
+                                      @Nonnull final INonThrowingRunnableWithParameter <String> aLineCallback)
+  {
+    readStreamLines (aIS, aCharset, 0, CGlobal.ILLEGAL_UINT, aLineCallback);
+  }
+
+  private static void _readFromReader (final int nLinesToSkip,
+                                       final int nLinesToRead,
+                                       final INonThrowingRunnableWithParameter <String> aLineCallback,
+                                       final boolean bReadAllLines,
+                                       final BufferedReader aBR) throws IOException
+  {
+    // Skip all requested lines
+    String sLine;
+    for (int i = 0; i < nLinesToSkip; ++i)
+      if ((sLine = aBR.readLine ()) == null)
+        break;
+
+    if (bReadAllLines)
+    {
+      // Read all lines
+      while ((sLine = aBR.readLine ()) != null)
+        aLineCallback.run (sLine);
+    }
+    else
+    {
+      // Read only a certain amount of lines
+      int nRead = 0;
+      while ((sLine = aBR.readLine ()) != null)
+      {
+        aLineCallback.run (sLine);
+        ++nRead;
+        if (nRead >= nLinesToRead)
+          break;
+      }
+    }
+  }
+
+  /**
+   * Read the content of the passed stream line by line and invoking a callback
+   * on all matching lines.
+   * 
+   * @param aIS
+   *        The input stream to read from. May be <code>null</code>.
+   * @param aCharset
+   *        The character set to use. May not be <code>null</code>.
+   * @param nLinesToSkip
+   *        The 0-based index of the first line to read. Pass in 0 to indicate
+   *        to read everything.
+   * @param nLinesToRead
+   *        The number of lines to read. Pass in {@link CGlobal#ILLEGAL_UINT} to
+   *        indicate that all lines should be read. If the number passed here
+   *        exceeds the number of lines in the file, nothing happens.
+   * @param aLineCallback
+   *        The callback that is invoked for all read lines. Each passed line
+   *        does NOT contain the line delimiter! Note: it is not invoked for
+   *        skipped lines!
+   */
+  public static void readStreamLines (@WillClose @Nullable final InputStream aIS,
+                                      @Nonnull @Nonempty final Charset aCharset,
+                                      @Nonnegative final int nLinesToSkip,
+                                      final int nLinesToRead,
+                                      @Nonnull final INonThrowingRunnableWithParameter <String> aLineCallback)
+  {
+    if (aCharset == null)
+      throw new NullPointerException ("Empty charset passed!");
+    if (nLinesToSkip < 0)
+      throw new IllegalArgumentException ("First line may not be negative: " + nLinesToSkip);
+    final boolean bReadAllLines = nLinesToRead == CGlobal.ILLEGAL_UINT;
+    if (nLinesToRead < 0 && !bReadAllLines)
+      throw new IllegalArgumentException ("Line count may not be that negative: " + nLinesToRead);
+    if (aLineCallback == null)
+      throw new NullPointerException ("lineCallback");
+
+    if (aIS != null)
+      try
+      {
+        // Start the action only if there is something to read
+        if (bReadAllLines || nLinesToRead > 0)
+        {
+          BufferedReader aBR = null;
+          try
+          {
+            // read with the passed charset
+            aBR = new BufferedReader (createReader (aIS, aCharset));
+            _readFromReader (nLinesToSkip, nLinesToRead, aLineCallback, bReadAllLines, aBR);
+          }
+          catch (final IOException ex)
+          {
+            s_aLogger.error ("Failed to read from input stream", ex);
+          }
+          finally
+          {
+            // Close buffered reader
+            close (aBR);
+          }
+        }
+      }
+      finally
+      {
+        // Close input stream in case something went wrong with the buffered
+        // reader.
+        close (aIS);
+      }
   }
 
   /**
@@ -898,31 +1196,7 @@ public final class StreamUtils
           {
             // read with the passed charset
             aBR = new BufferedReader (createReader (aIS, sCharset));
-
-            // Skip all requested lines
-            String sLine;
-            for (int i = 0; i < nLinesToSkip; ++i)
-              if ((sLine = aBR.readLine ()) == null)
-                break;
-
-            if (bReadAllLines)
-            {
-              // Read all lines
-              while ((sLine = aBR.readLine ()) != null)
-                aLineCallback.run (sLine);
-            }
-            else
-            {
-              // Read only a certain amount of lines
-              int nRead = 0;
-              while ((sLine = aBR.readLine ()) != null)
-              {
-                aLineCallback.run (sLine);
-                ++nRead;
-                if (nRead >= nLinesToRead)
-                  break;
-              }
-            }
+            _readFromReader (nLinesToSkip, nLinesToRead, aLineCallback, bReadAllLines, aBR);
           }
           catch (final IOException ex)
           {

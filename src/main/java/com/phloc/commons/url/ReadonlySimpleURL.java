@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.url;
 
+import java.nio.charset.Charset;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -112,7 +113,7 @@ public final class ReadonlySimpleURL implements ISimpleURL
   @Nonnull
   public String getAsString ()
   {
-    return URLUtils.getURLString (this, null);
+    return URLUtils.getURLString (this, (String) null);
   }
 
   @Nonnull
@@ -127,6 +128,14 @@ public final class ReadonlySimpleURL implements ISimpleURL
     if (sParameterCharset == null)
       throw new NullPointerException ("parameterCharset");
     return URLUtils.getURLString (this, sParameterCharset);
+  }
+
+  @Nonnull
+  public String getAsStringWithEncodedParameters (@Nonnull final Charset aParameterCharset)
+  {
+    if (aParameterCharset == null)
+      throw new NullPointerException ("parameterCharset");
+    return URLUtils.getURLString (this, aParameterCharset);
   }
 
   @Override
