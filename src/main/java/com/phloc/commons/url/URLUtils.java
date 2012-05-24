@@ -54,6 +54,7 @@ import com.phloc.commons.url.encode.URLParameterEncoder;
 public final class URLUtils
 {
   public static final String CHARSET_URL = CCharset.CHARSET_UTF_8;
+  public static final Charset CHARSET_URL_OBJ = CCharset.CHARSET_UTF_8_OBJ;
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (URLUtils.class);
   private static final char QUESTIONMARK = '?';
