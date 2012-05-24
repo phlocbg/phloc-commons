@@ -159,7 +159,7 @@ public final class SimpleURL implements ISimpleURL, ICloneable <SimpleURL>
   @ReturnsMutableCopy
   public Map <String, String> directGetParams ()
   {
-    return ContainerHelper.newMap (m_aParams);
+    return ContainerHelper.newOrderedMap (m_aParams);
   }
 
   @Nonnull
