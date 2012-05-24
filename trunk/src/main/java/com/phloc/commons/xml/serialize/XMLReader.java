@@ -21,7 +21,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
-import java.io.StringReader;
 import java.net.UnknownHostException;
 
 import javax.annotation.Nonnull;
@@ -50,6 +49,7 @@ import com.phloc.commons.exceptions.InitializationException;
 import com.phloc.commons.factory.IFactory;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.resource.FileSystemResource;
+import com.phloc.commons.io.streams.NonBlockingStringReader;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.pool.IObjectPool;
 import com.phloc.commons.pool.ObjectPool;
@@ -337,7 +337,7 @@ public final class XMLReader
     if (sXML == null)
       throw new NullPointerException ("xml");
 
-    return readXMLDOM (new StringReader (sXML), aSchema, aCustomErrorHandler);
+    return readXMLDOM (new NonBlockingStringReader (sXML), aSchema, aCustomErrorHandler);
   }
 
   /**

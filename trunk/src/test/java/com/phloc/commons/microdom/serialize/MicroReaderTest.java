@@ -25,7 +25,6 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
-import java.io.StringReader;
 
 import org.junit.Test;
 import org.xml.sax.EntityResolver;
@@ -40,6 +39,7 @@ import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.io.streamprovider.StringInputStreamProvider;
 import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
+import com.phloc.commons.io.streams.NonBlockingStringReader;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
 import com.phloc.commons.xml.sax.StringSAXInputSource;
@@ -82,7 +82,7 @@ public final class MicroReaderTest
     aDoc = MicroReader.readMicroXML (new StringSAXInputSource (s));
     assertNotNull (aDoc);
 
-    aDoc = MicroReader.readMicroXML (new StringReader (s));
+    aDoc = MicroReader.readMicroXML (new NonBlockingStringReader (s));
     assertNotNull (aDoc);
 
     aDoc = MicroReader.readMicroXML (new StringInputStreamProvider (s, CCharset.CHARSET_ISO_8859_1));
@@ -134,7 +134,7 @@ public final class MicroReaderTest
                           + "</span>"
                           + "</div>"
                           + "</content>";
-    final IMicroDocument docXHTML = MicroReader.readMicroXML (new StringReader (sXHTML));
+    final IMicroDocument docXHTML = MicroReader.readMicroXML (new NonBlockingStringReader (sXHTML));
     assertNotNull (docXHTML);
     final String sResult = MicroWriter.getNodeAsString (docXHTML,
                                                         new XMLWriterSettings ().setIndent (EXMLSerializeIndent.NONE));

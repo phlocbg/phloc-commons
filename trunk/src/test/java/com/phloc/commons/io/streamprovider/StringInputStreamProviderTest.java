@@ -50,4 +50,22 @@ public final class StringInputStreamProviderTest
     aIS = new StringInputStreamProvider (new StringBuilder (s), CCharset.CHARSET_UTF_8).getInputStream ();
     assertEquals (s, StreamUtils.getAllBytesAsString (aIS, CCharset.CHARSET_UTF_8));
   }
+
+  @Test
+  public void testSimpleCharset ()
+  {
+    final String s = "Hallo Weltäöü";
+
+    // String constructor
+    InputStream aIS = new StringInputStreamProvider (s, CCharset.CHARSET_UTF_8_OBJ).getInputStream ();
+    assertEquals (s, StreamUtils.getAllBytesAsString (aIS, CCharset.CHARSET_UTF_8_OBJ));
+
+    // char[] constructor
+    aIS = new StringInputStreamProvider (s.toCharArray (), CCharset.CHARSET_UTF_8_OBJ).getInputStream ();
+    assertEquals (s, StreamUtils.getAllBytesAsString (aIS, CCharset.CHARSET_UTF_8_OBJ));
+
+    // CharSequence constructor
+    aIS = new StringInputStreamProvider (new StringBuilder (s), CCharset.CHARSET_UTF_8_OBJ).getInputStream ();
+    assertEquals (s, StreamUtils.getAllBytesAsString (aIS, CCharset.CHARSET_UTF_8_OBJ));
+  }
 }

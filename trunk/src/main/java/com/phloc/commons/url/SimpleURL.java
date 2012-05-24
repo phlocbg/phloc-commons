@@ -25,7 +25,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.ICloneable;
-import com.phloc.commons.annotations.ReturnsImmutableObject;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
@@ -156,10 +156,10 @@ public final class SimpleURL implements ISimpleURL, ICloneable <SimpleURL>
   }
 
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public Map <String, String> directGetParams ()
   {
-    return ContainerHelper.makeUnmodifiableNotNull (m_aParams);
+    return ContainerHelper.newMap (m_aParams);
   }
 
   @Nonnull

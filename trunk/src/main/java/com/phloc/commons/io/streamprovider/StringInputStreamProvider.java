@@ -17,20 +17,30 @@
  */
 package com.phloc.commons.io.streamprovider;
 
+import java.io.InputStream;
+import java.io.Reader;
 import java.nio.charset.Charset;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.charset.CharsetManager;
+import com.phloc.commons.io.IReaderProvider;
+import com.phloc.commons.io.streams.NonBlockingStringReader;
+import com.phloc.commons.io.streams.StringInputStream;
+import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * An input stream provider based on a String.
  * 
  * @author philip
  */
-public class StringInputStreamProvider extends ByteArrayInputStreamProvider
+public class StringInputStreamProvider implements IReaderProvider
 {
-  public StringInputStreamProvider (@Nonnull final char [] aChars, @Nonnull final String sCharset)
+  private final String m_sData;
+  private final Charset m_aCharset;
+
+  public StringInputStreamProvider (@Nonnull final char [] aChars, @Nonnull @Nonempty final String sCharset)
   {
     this (new String (aChars), sCharset);
   }
@@ -40,7 +50,7 @@ public class StringInputStreamProvider extends ByteArrayInputStreamProvider
     this (new String (aChars), aCharset);
   }
 
-  public StringInputStreamProvider (@Nonnull final CharSequence aData, @Nonnull final String sCharset)
+  public StringInputStreamProvider (@Nonnull final CharSequence aData, @Nonnull @Nonempty final String sCharset)
   {
     this (aData.toString (), sCharset);
   }
@@ -50,13 +60,42 @@ public class StringInputStreamProvider extends ByteArrayInputStreamProvider
     this (aData.toString (), aCharset);
   }
 
-  public StringInputStreamProvider (@Nonnull final String sData, @Nonnull final String sCharset)
+  public StringInputStreamProvider (@Nonnull final String sData, @Nonnull @Nonempty final String sCharset)
   {
-    super (CharsetManager.getAsBytes (sData, sCharset));
+    this (sData, CharsetManager.charsetFromName (sCharset));
   }
 
   public StringInputStreamProvider (@Nonnull final String sData, @Nonnull final Charset aCharset)
   {
-    super (CharsetManager.getAsBytes (sData, aCharset));
+    if (sData == null)
+      throw new NullPointerException ("data");
+    if (aCharset == null)
+      throw new NullPointerException ("charset");
+    m_sData = sData;
+    m_aCharset = aCharset;
+  }
+
+  @Nonnull
+  public final InputStream getInputStream ()
+  {
+    return new StringInputStream (m_sData, m_aCharset);
+  }
+
+  @Nonnull
+  public final Reader getReader (@Nonnull final String sCharset)
+  {
+    return new NonBlockingStringReader (m_sData);
+  }
+
+  @Nonnull
+  public final Reader getReader (@Nonnull final Charset aCharset)
+  {
+    return new NonBlockingStringReader (m_sData);
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (null).append ("data", m_sData).append ("charset", m_aCharset).toString ();
   }
 }

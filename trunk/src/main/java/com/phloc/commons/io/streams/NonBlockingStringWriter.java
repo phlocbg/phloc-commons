@@ -31,7 +31,7 @@ import com.phloc.commons.annotations.ReturnsMutableObject;
 
 /**
  * A version of the {@link java.io.StringWriter} class that uses
- * {@link StringBuilder} instead of {@link StringBuilder} and therefore does not
+ * {@link StringBuilder} instead of {@link StringBuffer} and therefore does not
  * need synchronized access!
  * 
  * @author philip

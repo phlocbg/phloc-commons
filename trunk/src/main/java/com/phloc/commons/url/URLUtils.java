@@ -37,6 +37,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.GlobalDebug;
+import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.encode.IDecoder;
@@ -115,6 +116,9 @@ public final class URLUtils
   @Nonnull
   public static String urlDecode (@Nonnull final String sValue, @Nonnull final Charset aCharset)
   {
+    if (aCharset == null)
+      throw new NullPointerException ("charset");
+
     return urlDecode (sValue, aCharset.name ());
   }
 
@@ -129,7 +133,7 @@ public final class URLUtils
    */
   @SuppressWarnings ("deprecation")
   @Nonnull
-  public static String urlDecode (@Nonnull final String sValue, @Nonnull final String sCharset)
+  public static String urlDecode (@Nonnull final String sValue, @Nonnull @Nonempty final String sCharset)
   {
     try
     {
@@ -168,6 +172,9 @@ public final class URLUtils
   @Nonnull
   public static String urlEncode (@Nonnull final String sValue, @Nonnull final Charset aCharset)
   {
+    if (aCharset == null)
+      throw new NullPointerException ("charset");
+
     return urlEncode (sValue, aCharset.name ());
   }
 
@@ -182,7 +189,7 @@ public final class URLUtils
    */
   @SuppressWarnings ("deprecation")
   @Nonnull
-  public static String urlEncode (@Nonnull final String sValue, @Nonnull final String sCharset)
+  public static String urlEncode (@Nonnull final String sValue, @Nonnull @Nonempty final String sCharset)
   {
     try
     {

@@ -21,11 +21,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.InputStream;
-import java.io.StringReader;
 
 import org.junit.Test;
 import org.w3c.dom.Document;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import com.phloc.commons.charset.CCharset;
@@ -40,11 +38,10 @@ public final class DOMInputStreamProviderTest
   @Test
   public void testSimple () throws SAXException
   {
-    final Document doc = XMLReader.readXMLDOM (new InputSource (new StringReader ("<?xml version=\"1.0\"?>"
-                                                                                  + "<root />")));
+    final Document doc = XMLReader.readXMLDOM ("<?xml version=\"1.0\"?><root />");
     assertNotNull (doc);
 
-    final InputStream aIS = new DOMInputStreamProvider (doc, CCharset.CHARSET_UTF_8).getInputStream ();
+    final InputStream aIS = new DOMInputStreamProvider (doc, CCharset.CHARSET_UTF_8_OBJ).getInputStream ();
     final Document doc2 = XMLReader.readXMLDOM (aIS);
     assertEquals (XMLWriter.getXMLString (doc), XMLWriter.getXMLString (doc2));
   }
