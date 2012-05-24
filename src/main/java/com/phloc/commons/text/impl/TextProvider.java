@@ -30,7 +30,7 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import com.phloc.commons.GlobalDebug;
 import com.phloc.commons.annotations.OverrideOnDemand;
-import com.phloc.commons.annotations.ReturnsImmutableObject;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.annotations.ReturnsMutableObject;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.hash.HashCodeGenerator;
@@ -159,10 +159,10 @@ public class TextProvider extends AbstractTextProvider implements ISimpleMultiLi
   }
 
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public final Set <Locale> getAllLocales ()
   {
-    return ContainerHelper.makeUnmodifiable (m_aTexts.keySet ());
+    return ContainerHelper.newSet (m_aTexts.keySet ());
   }
 
   public final boolean containsLocale (@Nullable final Locale aLocale)
@@ -180,10 +180,10 @@ public class TextProvider extends AbstractTextProvider implements ISimpleMultiLi
   }
 
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public final Map <Locale, String> getMap ()
   {
-    return ContainerHelper.makeUnmodifiable (m_aTexts);
+    return ContainerHelper.newMap (m_aTexts);
   }
 
   @Nonnegative

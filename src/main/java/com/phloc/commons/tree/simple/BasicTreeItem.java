@@ -27,7 +27,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.annotations.OverrideOnDemand;
-import com.phloc.commons.annotations.ReturnsImmutableObject;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
@@ -169,10 +169,10 @@ public class BasicTreeItem <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, IT
   }
 
   @Nullable
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public final List <ITEMTYPE> getChildren ()
   {
-    return m_aChildren == null ? null : ContainerHelper.makeUnmodifiable (m_aChildren);
+    return m_aChildren == null ? null : ContainerHelper.newList (m_aChildren);
   }
 
   @Nullable
@@ -265,8 +265,7 @@ public class BasicTreeItem <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, IT
     if (!(o instanceof BasicTreeItem <?, ?>))
       return false;
     final BasicTreeItem <?, ?> rhs = (BasicTreeItem <?, ?>) o;
-    return EqualsUtils.equals (m_aData, rhs.m_aData) &&
-           EqualsUtils.equals (m_aChildren, rhs.m_aChildren);
+    return EqualsUtils.equals (m_aData, rhs.m_aData) && EqualsUtils.equals (m_aChildren, rhs.m_aChildren);
   }
 
   @Override

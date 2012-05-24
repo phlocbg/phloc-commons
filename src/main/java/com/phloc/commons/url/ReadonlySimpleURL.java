@@ -89,8 +89,7 @@ public final class ReadonlySimpleURL implements ISimpleURL
   @ReturnsImmutableObject
   public Map <String, String> directGetParams ()
   {
-    return m_aParams == null ? ContainerHelper.<String, String> newUnmodifiableMap ()
-                            : ContainerHelper.makeUnmodifiable (m_aParams);
+    return ContainerHelper.makeUnmodifiableNotNull (m_aParams);
   }
 
   @Nullable

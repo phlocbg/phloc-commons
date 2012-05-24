@@ -27,7 +27,6 @@ import javax.annotation.Nullable;
 
 import com.phloc.commons.GlobalDebug;
 import com.phloc.commons.annotations.Nonempty;
-import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.equals.EqualsUtils;
@@ -93,10 +92,10 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
   }
 
   @Nullable
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public Map <String, String> getAttributes ()
   {
-    return hasAttributes () ? ContainerHelper.makeUnmodifiable (m_aAttrs) : null;
+    return hasAttributes () ? ContainerHelper.newMap (m_aAttrs) : null;
   }
 
   @Nullable

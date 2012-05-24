@@ -22,7 +22,6 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.IHasSize;
-import com.phloc.commons.annotations.ReturnsImmutableObject;
 
 /**
  * Contains a list of resource errors and some sanity access methods.
@@ -118,10 +117,8 @@ public interface IResourceErrorGroup extends IHasSize, Iterable <IResourceError>
   /**
    * Get a list of all contained resource errors.
    * 
-   * @return A non-<code>null</code> immutable list of all contained error
-   *         objects
+   * @return A non-<code>null</code> list of all contained error objects
    */
   @Nonnull
-  @ReturnsImmutableObject
   List <IResourceError> getAllResourceErrors ();
 }

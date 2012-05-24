@@ -30,7 +30,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.equals.EqualsUtils;
@@ -125,10 +124,10 @@ public class GraphNode <VALUETYPE> extends AbstractGraphObject implements IGraph
   }
 
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public Collection <IGraphRelation <VALUETYPE>> getIncomingRelations ()
   {
-    return ContainerHelper.makeUnmodifiable (_getIncoming ().values ());
+    return ContainerHelper.newList (_getIncoming ().values ());
   }
 
   @Nonnull
@@ -187,10 +186,10 @@ public class GraphNode <VALUETYPE> extends AbstractGraphObject implements IGraph
   }
 
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public Collection <IGraphRelation <VALUETYPE>> getOutgoingRelations ()
   {
-    return ContainerHelper.makeUnmodifiable (_getOutgoing ().values ());
+    return ContainerHelper.newList (_getOutgoing ().values ());
   }
 
   @Nonnull

@@ -22,7 +22,6 @@ import java.util.Collection;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.tree.withid.ITreeItemWithID;
 import com.phloc.commons.tree.withid.ITreeItemWithIDFactory;
 
@@ -49,6 +48,5 @@ public interface ITreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE exte
    *         factory instance.
    */
   @Nonnull
-  @ReturnsImmutableObject
   Collection <ITEMTYPE> getAllItems ();
 }

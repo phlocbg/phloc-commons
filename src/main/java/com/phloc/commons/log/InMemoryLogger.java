@@ -27,7 +27,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.IHasSize;
-import com.phloc.commons.annotations.ReturnsImmutableObject;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.error.EErrorLevel;
 import com.phloc.commons.state.EChange;
@@ -81,10 +81,10 @@ public class InMemoryLogger implements Iterable <LogMessage>, IHasSize, IClearab
   }
 
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public List <LogMessage> getAllMessages ()
   {
-    return ContainerHelper.makeUnmodifiable (m_aMessages);
+    return ContainerHelper.newList (m_aMessages);
   }
 
   @Nonnull

@@ -23,8 +23,6 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
-import com.phloc.commons.annotations.ReturnsImmutableObject;
-
 public interface IReadonlyMultiLingualText extends ISimpleMultiLingualText, Serializable
 {
   /**
@@ -49,10 +47,9 @@ public interface IReadonlyMultiLingualText extends ISimpleMultiLingualText, Seri
   boolean containsLocaleWithFallback (@Nonnull Locale aContentLocale);
 
   /**
-   * @return A read-only map over all contained locale/text pairs. Never
+   * @return A rmap over all contained locale/text pairs. Never
    *         <code>null</code> .
    */
   @Nonnull
-  @ReturnsImmutableObject
   Map <Locale, String> getMap ();
 }

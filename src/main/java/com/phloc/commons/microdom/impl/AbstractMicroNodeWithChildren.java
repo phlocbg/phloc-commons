@@ -25,7 +25,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
-import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.annotations.ReturnsMutableObject;
 import com.phloc.commons.collections.ContainerHelper;
@@ -179,10 +178,10 @@ abstract class AbstractMicroNodeWithChildren extends AbstractMicroNode
 
   @Override
   @Nullable
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public final List <IMicroNode> getChildren ()
   {
-    return m_aChildren == null ? null : ContainerHelper.makeUnmodifiable (m_aChildren);
+    return m_aChildren == null ? null : ContainerHelper.newList (m_aChildren);
   }
 
   @Override

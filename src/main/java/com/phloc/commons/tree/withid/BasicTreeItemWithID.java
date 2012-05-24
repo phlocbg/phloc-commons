@@ -29,7 +29,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.annotations.OverrideOnDemand;
-import com.phloc.commons.annotations.ReturnsImmutableObject;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
@@ -195,10 +195,10 @@ public class BasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItem
   }
 
   @Nullable
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public final List <ITEMTYPE> getChildren ()
   {
-    return m_aChildList == null ? null : ContainerHelper.makeUnmodifiable (m_aChildList);
+    return m_aChildList == null ? null : ContainerHelper.newList (m_aChildList);
   }
 
   @Nullable

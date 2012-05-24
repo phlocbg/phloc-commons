@@ -23,7 +23,6 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.state.EChange;
 
@@ -86,7 +85,6 @@ public interface IMicroElement extends IMicroNodeWithChildren
    * @return May be <code>null</code>.
    */
   @Nullable
-  @ReturnsImmutableObject
   Map <String, String> getAttributes ();
 
   /**

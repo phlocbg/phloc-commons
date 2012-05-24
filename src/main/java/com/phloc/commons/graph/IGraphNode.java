@@ -23,7 +23,6 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 
 /**
@@ -59,7 +58,7 @@ public interface IGraphNode <VALUETYPE> extends IGraphObject
   int getIncomingRelationCount ();
 
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   Collection <IGraphRelation <VALUETYPE>> getIncomingRelations ();
 
   @Nonnull
@@ -86,7 +85,7 @@ public interface IGraphNode <VALUETYPE> extends IGraphObject
   int getOutgoingRelationCount ();
 
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   Collection <IGraphRelation <VALUETYPE>> getOutgoingRelations ();
 
   @Nonnull
