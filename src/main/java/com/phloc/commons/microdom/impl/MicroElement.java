@@ -95,7 +95,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
   @ReturnsMutableCopy
   public Map <String, String> getAttributes ()
   {
-    return hasAttributes () ? ContainerHelper.newMap (m_aAttrs) : null;
+    return hasAttributes () ? ContainerHelper.newOrderedMap (m_aAttrs) : null;
   }
 
   @Nullable
