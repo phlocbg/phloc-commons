@@ -63,7 +63,7 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
   {}
 
   @Nonnull
-  private static Map <Class <?>, ITypeConverter> _getConverterMap (@Nonnull final Class <?> aClass)
+  private static Map <Class <?>, ITypeConverter> _getOrCreateConverterMap (@Nonnull final Class <?> aClass)
   {
     Map <Class <?>, ITypeConverter> ret = s_aConverter.get (aClass);
     if (ret == null)
@@ -112,7 +112,7 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
       throw new NullPointerException ("converter");
 
     // The main class should not already be registered
-    final Map <Class <?>, ITypeConverter> aSrcMap = _getConverterMap (aSrcClass);
+    final Map <Class <?>, ITypeConverter> aSrcMap = _getOrCreateConverterMap (aSrcClass);
     if (aSrcMap.containsKey (aDstClass))
       throw new IllegalArgumentException ("A mapping from " + aSrcClass + " to " + aDstClass + " is already defined!");
 
