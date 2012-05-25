@@ -124,10 +124,15 @@ public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegi
     s_aRWLock.readLock ().lock ();
     try
     {
-      IMicroTypeConverter ret = null;
-      for (final Class <?> aCurDstClass : ClassHelper.getClassHierarchy (aDstClass, true))
-        if ((ret = s_aMap.get (aCurDstClass)) != null)
-          break;
+      // Check for an exact match first
+      IMicroTypeConverter ret = s_aMap.get (aDstClass);
+      if (ret == null)
+      {
+        // No exact match found - try fuzzy
+        for (final Class <?> aCurDstClass : ClassHelper.getClassHierarchy (aDstClass, true))
+          if ((ret = s_aMap.get (aCurDstClass)) != null)
+            break;
+      }
       return ret;
     }
     finally
