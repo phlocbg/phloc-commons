@@ -140,7 +140,6 @@ public final class SimpleFileIO
    * @param aTargetList
    *        The target list to be filled. May not be <code>null</code>.
    */
-  @Nullable
   public static void readFileLines (@Nullable final File aFile,
                                     @Nonnull final String sCharset,
                                     @Nonnull final List <String> aTargetList)
@@ -160,7 +159,6 @@ public final class SimpleFileIO
    * @param aTargetList
    *        The target list to be filled. May not be <code>null</code>.
    */
-  @Nullable
   public static void readFileLines (@Nullable final File aFile,
                                     @Nonnull final Charset aCharset,
                                     @Nonnull final List <String> aTargetList)
