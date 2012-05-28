@@ -888,8 +888,6 @@ public final class StreamUtils
    * @param aTargetList
    *        The list to be filled with the lines. May not be <code>null</code>.
    */
-  @Nullable
-  @ReturnsMutableCopy
   public static void readStreamLines (@WillClose @Nullable final InputStream aIS,
                                       @Nonnull @Nonempty final String sCharset,
                                       @Nonnull final List <String> aTargetList)
@@ -915,8 +913,6 @@ public final class StreamUtils
    * @param aTargetList
    *        The list to be filled with the lines. May not be <code>null</code>.
    */
-  @Nullable
-  @ReturnsMutableCopy
   public static void readStreamLines (@WillClose @Nullable final InputStream aIS,
                                       @Nonnull final Charset aCharset,
                                       @Nonnull final List <String> aTargetList)

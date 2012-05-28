@@ -75,7 +75,6 @@ public final class GraphObjectIDFactory
    *        The new ID factory to use. May be <code>null</code> to indicate that
    *        the default should be used.
    */
-  @Nullable
   public static void setIDFactory (@Nullable final IIDFactory <String> aIDFactory)
   {
     s_aRWLock.writeLock ().lock ();

@@ -210,7 +210,6 @@ public final class CombinationGenerator <DATATYPE> implements IIterableIterator 
    *        be quite large and may contain duplicates if the input list contains
    *        duplicate elements! Note: this list is not cleared before filling
    */
-  @Nonnull
   public static <DATATYPE> void addAllPermutations (@Nonnull @Nonempty final List <DATATYPE> aInput,
                                                     @Nonnegative final int nSlotCount,
                                                     @Nonnull final Collection <List <DATATYPE>> aResultList)

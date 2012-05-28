@@ -27,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.GlobalDebug;
+import com.phloc.commons.annotations.CodingStyleguideUnaware;
 import com.phloc.commons.annotations.OverrideOnDemand;
 
 /**
@@ -39,7 +40,9 @@ public abstract class AbstractPhlocTestCase
 {
   // For test case classes it is ok to have a protected logger
   @Deprecated
+  @CodingStyleguideUnaware
   protected final Logger s_aLogger = LoggerFactory.getLogger (getClass ());
+  @CodingStyleguideUnaware
   protected final Logger m_aLogger = s_aLogger;
 
   protected static final Integer I_1 = Integer.valueOf (-1);

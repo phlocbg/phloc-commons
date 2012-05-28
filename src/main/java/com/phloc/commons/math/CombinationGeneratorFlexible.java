@@ -118,8 +118,6 @@ public final class CombinationGeneratorFlexible <DATATYPE>
     return aAllResults;
   }
 
-  @Nonnull
-  @ReturnsMutableCopy
   public static <DATATYPE> void iterateAllCombinations (@Nonnull final List <DATATYPE> aElements,
                                                         final boolean bAllowEmpty,
                                                         @Nonnull final INonThrowingRunnableWithParameter <List <DATATYPE>> aCallback)
