@@ -307,7 +307,6 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
     return this;
   }
 
-  @Nullable
   public boolean isUseDoubleQuotesForAttributes ()
   {
     return m_bUseDoubleQuotesForAttributes;
@@ -320,7 +319,6 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
     return this;
   }
 
-  @Nullable
   public boolean isSpaceOnSelfClosedElement ()
   {
     return m_bSpaceOnSelfClosedElement;

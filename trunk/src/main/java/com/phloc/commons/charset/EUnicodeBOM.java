@@ -71,7 +71,6 @@ public enum EUnicodeBOM implements IHasByteSize
   /**
    * @return The number of bytes defining this BOM
    */
-  @Nonnull
   @Nonnegative
   public long getSizeInBytes ()
   {

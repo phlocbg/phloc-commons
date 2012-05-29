@@ -2284,7 +2284,6 @@ public final class StringHelper
    * @return {@link CGlobal#ILLEGAL_UINT} if no replacement was needed, and
    *         therefore the length of the input array could be used.
    */
-  @Nonnull
   public static int getReplaceMultipleResultLength (@Nonnull final char [] aInput,
                                                     @Nonnull @Nonempty final char [] aSearch,
                                                     @Nonnull @Nonempty final char [][] aReplacements)

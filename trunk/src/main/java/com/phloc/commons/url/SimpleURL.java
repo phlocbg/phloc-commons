@@ -149,7 +149,6 @@ public final class SimpleURL implements ISimpleURL, ICloneable <SimpleURL>
     return this;
   }
 
-  @Nonnull
   public int getParamCount ()
   {
     return ContainerHelper.getSize (m_aParams);

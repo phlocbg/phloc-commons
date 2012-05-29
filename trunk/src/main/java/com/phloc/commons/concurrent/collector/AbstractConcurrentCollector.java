@@ -136,7 +136,6 @@ public abstract class AbstractConcurrentCollector <DATATYPE> implements
     }
   }
 
-  @Nonnull
   public final boolean isStopped ()
   {
     m_aRWLock.readLock ().lock ();
