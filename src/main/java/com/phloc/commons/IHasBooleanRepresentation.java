@@ -17,7 +17,6 @@
  */
 package com.phloc.commons;
 
-import javax.annotation.Nonnull;
 
 /**
  * Base interface for all objects having an explicit boolean representation
@@ -29,6 +28,5 @@ public interface IHasBooleanRepresentation
   /**
    * @return The boolean representation of this object.
    */
-  @Nonnull
   boolean getAsBoolean ();
 }

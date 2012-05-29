@@ -299,7 +299,6 @@ public final class SystemProperties
    * @return <code>true</code> if such a system property is present,
    *         <code>false</code> otherwise
    */
-  @Nonnull
   public static boolean containsPropertyName (final String sPropertyName)
   {
     return getAllProperties ().containsKey (sPropertyName);

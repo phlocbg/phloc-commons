@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.hash;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
@@ -59,7 +58,6 @@ public final class HashCodeCalculator
    *        Array to add
    * @return The updated hash code
    */
-  @Nonnull
   public static int append (final int nPrevHashCode, final boolean x)
   {
     return append (nPrevHashCode, x ? 1231 : 1237);
@@ -74,7 +72,6 @@ public final class HashCodeCalculator
    *        Array to add
    * @return The updated hash code
    */
-  @Nonnull
   public static int append (final int nPrevHashCode, final byte x)
   {
     return append (nPrevHashCode, (int) x);
@@ -89,7 +86,6 @@ public final class HashCodeCalculator
    *        Array to add
    * @return The updated hash code
    */
-  @Nonnull
   public static int append (final int nPrevHashCode, final char x)
   {
     return append (nPrevHashCode, (int) x);
@@ -104,7 +100,6 @@ public final class HashCodeCalculator
    *        Array to add
    * @return The updated hash code
    */
-  @Nonnull
   public static int append (final int nPrevHashCode, final double x)
   {
     return append (nPrevHashCode, x == 0.0 ? 0L : Double.doubleToLongBits (x));
@@ -119,7 +114,6 @@ public final class HashCodeCalculator
    *        Array to add
    * @return The updated hash code
    */
-  @Nonnull
   public static int append (final int nPrevHashCode, final float x)
   {
     return append (nPrevHashCode, x == 0.0F ? 0 : Float.floatToIntBits (x));
@@ -134,7 +128,6 @@ public final class HashCodeCalculator
    *        Array to add
    * @return The updated hash code
    */
-  @Nonnull
   public static int append (final int nPrevHashCode, final int x)
   {
     return nPrevHashCode * MULTIPLIER + x;
@@ -149,7 +142,6 @@ public final class HashCodeCalculator
    *        Array to add
    * @return The updated hash code
    */
-  @Nonnull
   public static int append (final int nPrevHashCode, final long x)
   {
     final int nTemp = append (nPrevHashCode, (int) (x >>> 32));
@@ -165,7 +157,6 @@ public final class HashCodeCalculator
    *        Array to add
    * @return The updated hash code
    */
-  @Nonnull
   public static int append (final int nPrevHashCode, final short x)
   {
     return append (nPrevHashCode, (int) x);
@@ -180,7 +171,6 @@ public final class HashCodeCalculator
    *        Object to add. May be <code>null</code>.
    * @return The updated hash code
    */
-  @Nonnull
   public static int append (final int nPrevHashCode, @Nullable final Object x)
   {
     return append (nPrevHashCode, HashCodeImplementationRegistry.getHashCode (x));
