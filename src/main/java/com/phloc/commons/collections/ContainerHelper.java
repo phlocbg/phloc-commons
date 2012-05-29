@@ -2645,6 +2645,27 @@ public final class ContainerHelper
     return ret;
   }
 
+  /**
+   * Retrieve the size of the passed {@link Enumeration}.
+   * 
+   * @param aEnum
+   *        Enumeration to check. May be <code>null</code>.
+   * @return The number objects or 0 if the passed parameter is
+   *         <code>null</code>.
+   */
+  @Nonnegative
+  public static int getSize (@Nullable final Enumeration <?> aEnum)
+  {
+    int ret = 0;
+    if (aEnum != null)
+      while (aEnum.hasMoreElements ())
+      {
+        aEnum.nextElement ();
+        ++ret;
+      }
+    return ret;
+  }
+
   @Nullable
   @ReturnsMutableCopy
   public static <ELEMENTTYPE> List <ELEMENTTYPE> getConcatenatedList (@Nullable final Collection <? extends ELEMENTTYPE> aCont1,
