@@ -104,7 +104,10 @@ public enum EURLProtocol
   CALLTO ("callto:"),
 
   /** JavaScript */
-  JAVASCRIPT ("javascript:");
+  JAVASCRIPT ("javascript:"),
+
+  /** RTMP */
+  RTMP ("rtmp://");
 
   private final String m_sProtocol;
 
@@ -145,9 +148,20 @@ public enum EURLProtocol
     return null;
   }
 
+  @Nullable
+  public static EURLProtocol getProtocol (@Nullable final ISimpleURL aURL)
+  {
+    return aURL != null ? getProtocol (aURL.getPath ()) : null;
+  }
+
   public static boolean hasKnownProtocol (@Nullable final CharSequence sURL)
   {
     return getProtocol (sURL) != null;
+  }
+
+  public static boolean hasKnownProtocol (@Nullable final ISimpleURL aURL)
+  {
+    return getProtocol (aURL) != null;
   }
 
   @Nullable
