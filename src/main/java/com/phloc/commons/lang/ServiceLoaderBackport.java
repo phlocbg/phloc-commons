@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.lang;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -34,6 +33,7 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.charset.CCharset;
+import com.phloc.commons.io.streams.NonBlockingBufferedReader;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -251,15 +251,14 @@ public final class ServiceLoaderBackport <SPITYPE> implements Iterable <SPITYPE>
   //
   private int _parseLine (final Class <SPITYPE> aService,
                           final URL u,
-                          final BufferedReader r,
+                          final NonBlockingBufferedReader r,
                           final int lc,
                           final List <String> names) throws IOException
   {
     String ln = r.readLine ();
     if (ln == null)
-    {
       return -1;
-    }
+
     final int ci = ln.indexOf ('#');
     if (ci >= 0)
       ln = ln.substring (0, ci);
@@ -304,12 +303,12 @@ public final class ServiceLoaderBackport <SPITYPE> implements Iterable <SPITYPE>
   private Iterator <String> _parse (final Class <SPITYPE> aService, final URL u)
   {
     InputStream in = null;
-    BufferedReader r = null;
+    NonBlockingBufferedReader r = null;
     final ArrayList <String> names = new ArrayList <String> ();
     try
     {
       in = u.openStream ();
-      r = new BufferedReader (StreamUtils.createReader (in, CCharset.CHARSET_SERVICE_LOADER));
+      r = new NonBlockingBufferedReader (StreamUtils.createReader (in, CCharset.CHARSET_SERVICE_LOADER));
       int lc = 1;
       while ((lc = _parseLine (aService, u, r, lc, names)) >= 0)
       {// NOPMD

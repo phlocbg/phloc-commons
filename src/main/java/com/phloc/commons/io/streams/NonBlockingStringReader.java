@@ -26,13 +26,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 /**
- * A version of the {@link java.io.StringReader} class that does not use
- * synchronized access!<br>
+ * A non-synchronized copy of the class {@link java.io.StringReader}.<br>
  * Note: super class {@link Reader} uses the lock object internally only for
  * <code>long skip(long n)</code> and as this method is overwritten in here, the
  * lock is never used.
  * 
  * @author philip
+ * @see java.io.StringReader
  */
 @NotThreadSafe
 public class NonBlockingStringReader extends Reader

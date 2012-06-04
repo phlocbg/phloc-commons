@@ -23,7 +23,6 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.Arrays;
@@ -31,6 +30,7 @@ import java.util.Arrays;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import com.phloc.commons.io.streams.NonBlockingBufferedReader;
 import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.random.VerySecureRandom;
@@ -203,13 +203,13 @@ public final class CharsetManagerTest
     assertEquals (sAlpha, CharsetManager.getAsString (b, CCharset.CHARSET_UTF_8));
     assertEquals (sAlpha, CharsetManager.getAsString (b, CCharset.CHARSET_UTF_8_OBJ));
 
-    BufferedReader aReader = new BufferedReader (new InputStreamReader (new NonBlockingByteArrayInputStream (b),
-                                                                        CCharset.CHARSET_UTF_8));
+    NonBlockingBufferedReader aReader = new NonBlockingBufferedReader (new InputStreamReader (new NonBlockingByteArrayInputStream (b),
+                                                                                              CCharset.CHARSET_UTF_8));
     assertEquals (sAlpha, aReader.readLine ());
     StreamUtils.close (aReader);
 
-    aReader = new BufferedReader (new InputStreamReader (new NonBlockingByteArrayInputStream (b),
-                                                         CCharset.CHARSET_UTF_8_OBJ));
+    aReader = new NonBlockingBufferedReader (new InputStreamReader (new NonBlockingByteArrayInputStream (b),
+                                                                    CCharset.CHARSET_UTF_8_OBJ));
     assertEquals (sAlpha, aReader.readLine ());
     StreamUtils.close (aReader);
   }

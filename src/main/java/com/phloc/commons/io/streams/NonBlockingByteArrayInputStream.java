@@ -24,13 +24,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 /**
- * A <code>NonBlockingByteArrayInputStream</code> contains an internal buffer
- * that contains bytes that may be read from the stream. An internal counter
- * keeps track of the next byte to be supplied by the <code>read</code> method.
- * <p>
- * Closing a <tt>NonBlockingByteArrayInputStream</tt> has no effect. The methods
- * in this class can be called after the stream has been closed without
- * generating an <tt>IOException</tt>.
+ * A non-synchronized copy of the class {@link java.io.ByteArrayInputStream}.
  * 
  * @author philip
  * @see java.io.ByteArrayInputStream

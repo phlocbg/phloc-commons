@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.io.streams;
 
-import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.EOFException;
 import java.io.Flushable;
@@ -1049,7 +1048,7 @@ public final class StreamUtils
                                        final int nLinesToRead,
                                        final INonThrowingRunnableWithParameter <String> aLineCallback,
                                        final boolean bReadAllLines,
-                                       final BufferedReader aBR) throws IOException
+                                       final NonBlockingBufferedReader aBR) throws IOException
   {
     // Skip all requested lines
     String sLine;
@@ -1119,11 +1118,11 @@ public final class StreamUtils
         // Start the action only if there is something to read
         if (bReadAllLines || nLinesToRead > 0)
         {
-          BufferedReader aBR = null;
+          NonBlockingBufferedReader aBR = null;
           try
           {
             // read with the passed charset
-            aBR = new BufferedReader (createReader (aIS, aCharset));
+            aBR = new NonBlockingBufferedReader (createReader (aIS, aCharset));
             _readFromReader (nLinesToSkip, nLinesToRead, aLineCallback, bReadAllLines, aBR);
           }
           catch (final IOException ex)
@@ -1187,11 +1186,11 @@ public final class StreamUtils
         // Start the action only if there is something to read
         if (bReadAllLines || nLinesToRead > 0)
         {
-          BufferedReader aBR = null;
+          NonBlockingBufferedReader aBR = null;
           try
           {
             // read with the passed charset
-            aBR = new BufferedReader (createReader (aIS, sCharset));
+            aBR = new NonBlockingBufferedReader (createReader (aIS, sCharset));
             _readFromReader (nLinesToSkip, nLinesToRead, aLineCallback, bReadAllLines, aBR);
           }
           catch (final IOException ex)
