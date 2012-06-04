@@ -30,11 +30,12 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.annotations.ReturnsMutableObject;
 
 /**
- * A version of the {@link java.io.StringWriter} class that uses
- * {@link StringBuilder} instead of {@link StringBuffer} and therefore does not
- * need synchronized access!
+ * A non-synchronized copy of the class {@link java.io.StringWriter}.<br>
+ * It uses {@link StringBuilder} instead of {@link StringBuffer} and therefore
+ * does not need synchronized access!
  * 
  * @author philip
+ * @see java.io.StringWriter
  */
 @NotThreadSafe
 public class NonBlockingStringWriter extends Writer implements IHasStringRepresentation

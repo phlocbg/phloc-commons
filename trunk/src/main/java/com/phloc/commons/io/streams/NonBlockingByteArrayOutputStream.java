@@ -32,8 +32,7 @@ import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.collections.ArrayHelper;
 
 /**
- * A non-synchronized version of the class {@link java.io.ByteArrayOutputStream}
- * .
+ * A non-synchronized copy of the class {@link java.io.ByteArrayOutputStream}.
  * 
  * @author philip
  * @see java.io.ByteArrayOutputStream
