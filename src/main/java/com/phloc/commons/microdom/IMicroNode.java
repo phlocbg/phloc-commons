@@ -85,6 +85,9 @@ public interface IMicroNode extends
   IMicroNode getLastChild ();
 
   /**
+   * Recursively get all children. Micro container are contained in this list
+   * (incl. their children of course)
+   * 
    * @return A list containing all recursively contained child elements. May be
    *         <code>null</code> if this node has no children.
    */

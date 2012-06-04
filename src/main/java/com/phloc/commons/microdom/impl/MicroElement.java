@@ -307,6 +307,33 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return ret;
   }
 
+  @Nonnull
+  @ReturnsMutableCopy
+  public List <IMicroElement> getAllChildElementsRecursive ()
+  {
+    final List <IMicroElement> ret = new ArrayList <IMicroElement> ();
+    if (hasChildren ())
+      for (final IMicroNode aChild : directGetChildren ())
+        if (aChild.isElement ())
+        {
+          final IMicroElement aChildElement = (IMicroElement) aChild;
+          ret.add (aChildElement);
+          ret.addAll (aChildElement.getAllChildElementsRecursive ());
+        }
+        else
+          if (aChild.isContainer () && aChild.hasChildren ())
+          {
+            for (final IMicroNode aContChild : aChild.getChildren ())
+              if (aContChild.isElement ())
+              {
+                final MicroElement aContChildElement = (MicroElement) aContChild;
+                ret.add (aContChildElement);
+                ret.addAll (aContChildElement.getAllChildElementsRecursive ());
+              }
+          }
+    return ret;
+  }
+
   public boolean hasChildElements ()
   {
     if (hasChildren ())
@@ -469,6 +496,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
           if (aChild.isContainer () && aChild.hasChildren ())
           {
             for (final IMicroNode aContChild : aChild.getChildren ())
+            {
               if (aContChild.isText ())
               {
                 // ignore whitespace-only content
@@ -480,6 +508,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
                 {
                   aSB.append (aContChild.getNodeValue ());
                 }
+            }
           }
     return aSB.toString ();
   }
@@ -504,7 +533,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
 
     // Copy attributes
     if (m_aAttrs != null)
-      ret.m_aAttrs = new LinkedHashMap <String, String> (m_aAttrs);
+      ret.m_aAttrs = ContainerHelper.newOrderedMap (m_aAttrs);
 
     // Deep clone all child nodes
     if (hasChildren ())

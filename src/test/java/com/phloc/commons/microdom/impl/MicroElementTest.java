@@ -43,7 +43,7 @@ import com.phloc.commons.typeconvert.TypeConverterException;
 
 /**
  * Test class for class {@link MicroElement}.
- *
+ * 
  * @author philip
  */
 public final class MicroElementTest extends AbstractPhlocTestCase
@@ -138,8 +138,8 @@ public final class MicroElementTest extends AbstractPhlocTestCase
     assertFalse (new MicroElement ("myns", "xyz").isEqualContent (new MicroElement ("myns", "xy")));
     assertFalse (new MicroElement ("myns", "xyz").isEqualContent (new MicroElement ("myns2", "xyz")));
     assertFalse (new MicroElement ("myns", "xyz").isEqualContent (new MicroElement (null, "xyz")));
-    assertFalse (new MicroElement ("myns", "xyz").isEqualContent (new MicroElement ("myns", "xyz")
-                                                                                     .setAttribute ("name", "value")));
+    assertFalse (new MicroElement ("myns", "xyz").isEqualContent (new MicroElement ("myns", "xyz").setAttribute ("name",
+                                                                                                                 "value")));
 
     e = new MicroElement ("ns1:element");
     assertNull (e.getLocalName ());
@@ -656,5 +656,45 @@ public final class MicroElementTest extends AbstractPhlocTestCase
     el2.appendElement ("z1");
     assertFalse (el1.isEqualContent (el2));
     assertFalse (el2.isEqualContent (el1));
+  }
+
+  @Test
+  public void testGetAllChildElementsRecursive ()
+  {
+    final IMicroElement e = new MicroElement ("x");
+    assertNotNull (e.getAllChildElementsRecursive ());
+    assertEquals (0, e.getAllChildElementsRecursive ().size ());
+
+    e.appendText ("foo");
+    assertNotNull (e.getAllChildElementsRecursive ());
+    assertEquals (0, e.getAllChildElementsRecursive ().size ());
+    assertEquals (1, e.getAllChildrenRecursive ().size ());
+
+    final IMicroElement e1 = e.appendElement ("y1");
+    assertEquals (1, e.getAllChildElementsRecursive ().size ());
+    assertEquals (2, e.getAllChildrenRecursive ().size ());
+
+    e1.appendComment ("doesn't really matter");
+    assertEquals (1, e.getAllChildElementsRecursive ().size ());
+    assertEquals (3, e.getAllChildrenRecursive ().size ());
+
+    final IMicroElement e2 = e.appendElement ("y2");
+    assertEquals (2, e.getAllChildElementsRecursive ().size ());
+    assertEquals (4, e.getAllChildrenRecursive ().size ());
+
+    e2.appendComment ("doesn't really matter");
+    assertEquals (2, e.getAllChildElementsRecursive ().size ());
+    assertEquals (5, e.getAllChildrenRecursive ().size ());
+
+    e1.appendElement ("y11");
+    assertEquals (3, e.getAllChildElementsRecursive ().size ());
+    assertEquals (6, e.getAllChildrenRecursive ().size ());
+
+    e2.appendElement ("y21");
+    assertEquals (4, e.getAllChildElementsRecursive ().size ());
+    assertEquals (7, e.getAllChildrenRecursive ().size ());
+
+    assertEquals (1, e1.getAllChildElementsRecursive ().size ());
+    assertEquals (1, e2.getAllChildElementsRecursive ().size ());
   }
 }

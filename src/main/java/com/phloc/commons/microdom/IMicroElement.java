@@ -210,8 +210,9 @@ public interface IMicroElement extends IMicroNodeWithChildren
   String getTagName ();
 
   /**
-   * Get a list of all direct child elements! Text nodes and other other child
-   * nodes are not returned with this call!
+   * Get a list of all direct child elements. Text nodes and other other child
+   * nodes are not returned with this call. Micro container children are
+   * inlined.
    * 
    * @return Never be <code>null</code>.
    */
@@ -220,10 +221,11 @@ public interface IMicroElement extends IMicroNodeWithChildren
   List <IMicroElement> getChildElements ();
 
   /**
-   * Get a list of all direct child elements having the specified tag name!
+   * Get a list of all direct child elements having the specified tag name.
+   * Micro container children are inlined.
    * 
    * @param sTagName
-   *        The tag name to check. May not be <code>null</code>.
+   *        The tag name to check. May be <code>null</code>.
    * @return Never be <code>null</code>.
    */
   @Nonnull
@@ -232,36 +234,76 @@ public interface IMicroElement extends IMicroNodeWithChildren
 
   /**
    * Get a list of all direct child elements having the specified namespace and
-   * the specified tag name!
+   * the specified tag name. Micro container children are inlined.
    * 
    * @param sNamespaceURI
-   *        The namespace URI to check. May not be <code>null</code>.
+   *        The namespace URI to check. May be <code>null</code>.
    * @param sLocalName
-   *        The tag name to check. May not be <code>null</code>.
+   *        The tag name to check. May be <code>null</code>.
    * @return Never be <code>null</code>.
    */
   @Nonnull
   @ReturnsMutableCopy
   List <IMicroElement> getChildElements (@Nullable String sNamespaceURI, @Nullable String sLocalName);
 
+  /**
+   * Recursively get all child elements. Micro container children are inlined.
+   * 
+   * @return A list containing all recursively contained elements. May not be
+   *         <code>null</code> but empty.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  List <IMicroElement> getAllChildElementsRecursive ();
+
+  /**
+   * Check if this element has at least one child element. Micro container
+   * children are also checked.
+   * 
+   * @return <code>true</code> if this element has at least one child element
+   */
   boolean hasChildElements ();
 
+  /**
+   * Check if this element has at least one child element with the specified tag
+   * name. Micro container children are also checked.
+   * 
+   * @param sTagName
+   *        The tag name to check. May be <code>null</code>.
+   * @return <code>true</code> if this element has at least one child element
+   *         with the specified tag name
+   */
   boolean hasChildElements (@Nullable String sTagName);
 
+  /**
+   * Check if this element has at least one child element with the specified
+   * namespace URI and tag name. Micro container children are also checked.
+   * 
+   * @param sNamespaceURI
+   *        The namespace URI to check. May be <code>null</code>.
+   * @param sLocalName
+   *        The tag name to check. May be <code>null</code>.
+   * @return <code>true</code> if this element has at least one child element
+   *         with the specified namespace URI and tag name
+   */
   boolean hasChildElements (@Nullable String sNamespaceURI, @Nullable String sLocalName);
 
   /**
+   * Get the first child element of this element. Micro container children are
+   * also checked.
+   * 
    * @return The first child element or <code>null</code> if this element has no
-   *         child element
+   *         child element.
    */
   @Nullable
   IMicroElement getFirstChildElement ();
 
   /**
-   * Get the first child element with the given tag name.
+   * Get the first child element with the given tag name. Micro container
+   * children are also checked.
    * 
    * @param sTagName
-   *        The tag name of the element to search.
+   *        The tag name of the element to search. May be <code>null</code>.
    * @return <code>null</code> if no such child element is present
    */
   @Nullable
@@ -269,7 +311,7 @@ public interface IMicroElement extends IMicroNodeWithChildren
 
   /**
    * Get the first child element with the given tag name and the given
-   * namespace.
+   * namespace. Micro container children are also checked.
    * 
    * @param sNamespaceURI
    *        The namespace URL to search.
@@ -300,6 +342,9 @@ public interface IMicroElement extends IMicroNodeWithChildren
   @Nullable
   <DSTTYPE> DSTTYPE getTextContentWithConversion (@Nonnull Class <DSTTYPE> aDstClass);
 
+  /**
+   * {@inheritDoc}
+   */
   @Nonnull
   IMicroElement getClone ();
 }
