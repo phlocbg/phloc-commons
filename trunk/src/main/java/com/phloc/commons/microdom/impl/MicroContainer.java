@@ -41,6 +41,13 @@ public final class MicroContainer extends AbstractMicroNodeWithChildren implemen
         appendChild (aChildNode);
   }
 
+  public MicroContainer (@Nullable final Iterable <? extends IMicroNode> aChildNodes)
+  {
+    if (aChildNodes != null)
+      for (final IMicroNode aChildNode : aChildNodes)
+        appendChild (aChildNode);
+  }
+
   @Nonnull
   public EMicroNodeType getType ()
   {
