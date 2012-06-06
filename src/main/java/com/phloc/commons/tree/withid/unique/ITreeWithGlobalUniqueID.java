@@ -56,7 +56,7 @@ public interface ITreeWithGlobalUniqueID <KEYTYPE, VALUETYPE, ITEMTYPE extends I
   ITEMTYPE getItemWithID (@Nullable KEYTYPE aDataID);
 
   /**
-   * @return A non-<code>null</code>, modifiable collection of all items.
+   * @return A non-<code>null</code> collection of all items.
    */
   @Nonnull
   Collection <ITEMTYPE> getAllItems ();
@@ -74,5 +74,5 @@ public interface ITreeWithGlobalUniqueID <KEYTYPE, VALUETYPE, ITEMTYPE extends I
    *         parent item, <code>false</code> if one of the IDs could not be
    *         resolved or they are not in a parent-child-relationship.
    */
-  boolean isItemSameOrDescendant (KEYTYPE aParentItemID, KEYTYPE aChildItemID);
+  boolean isItemSameOrDescendant (@Nullable KEYTYPE aParentItemID, @Nullable KEYTYPE aChildItemID);
 }

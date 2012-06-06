@@ -64,7 +64,7 @@ public class BasicTreeWithGlobalUniqueID <KEYTYPE, VALUETYPE, ITEMTYPE extends I
   }
 
   @Nullable
-  public final ITEMTYPE getItemWithID (final KEYTYPE aDataID)
+  public final ITEMTYPE getItemWithID (@Nullable final KEYTYPE aDataID)
   {
     return m_aFactory.getItemOfDataID (aDataID);
   }

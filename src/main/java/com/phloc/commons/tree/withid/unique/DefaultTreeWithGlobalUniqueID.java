@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.tree.withid.unique;
 
+import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.tree.withid.DefaultTreeItemWithID;
@@ -41,7 +42,7 @@ public class DefaultTreeWithGlobalUniqueID <KEYTYPE, VALUETYPE> extends
     this (new DefaultTreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE> ());
   }
 
-  public DefaultTreeWithGlobalUniqueID (final ITreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, DefaultTreeItemWithID <KEYTYPE, VALUETYPE>> aFactory)
+  public DefaultTreeWithGlobalUniqueID (@Nonnull final ITreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, DefaultTreeItemWithID <KEYTYPE, VALUETYPE>> aFactory)
   {
     super (aFactory);
   }

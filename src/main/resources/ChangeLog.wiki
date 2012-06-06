@@ -1,7 +1,10 @@
 #summary Change log of phloc-commons
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
-<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr><td>6/4/12</td><td>add</td><td>api</td><td></td><td>Added new class NonBlockingBufferedReader</td></tr>
+<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr border="1"><td>6/6/12</td><td colspan="4">_Release *3.5.8*_</td></tr>
+<tr><td>6/6/12</td><td>add</td><td>api</td><td></td><td>Added new MicroContainer constructor and static factory methods for easy clone handling</td></tr>
+<tr><td>6/6/12</td><td>add</td><td>api</td><td></td><td>Added new com.phloc.commons.codec package, with the encoders and decoders from our internal PDF package</td></tr>
+<tr><td>6/4/12</td><td>add</td><td>api</td><td></td><td>Added new class NonBlockingBufferedReader</td></tr>
 <tr><td>6/4/12</td><td>add</td><td>api</td><td></td><td>Added new method IMicroElement.getAllChildElementsRecursive()</td></tr>
 <tr><td>5/30/12</td><td>add</td><td>api</td><td></td><td>Extended EURLProtocol with methods to support ISimpleURL</td></tr>
 <tr><td>5/29/12</td><td>add</td><td>api</td><td></td><td>Added ContainerHelper.getSize(Enumeration)</td></tr>
