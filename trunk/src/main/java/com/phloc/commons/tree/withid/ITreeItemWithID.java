@@ -84,13 +84,14 @@ public interface ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItem
    * already contained, the item is automatically overwritten.
    * 
    * @param aDataID
-   *        ID of the item to generate. May not be <code>null</code>.
+   *        ID of the item to generate. May be <code>null</code> in rare
+   *        circumstances.
    * @param aData
    *        The data associated with this item.
    * @return the created tree item
    */
   @Nonnull
-  ITEMTYPE createChildItem (@Nonnull KEYTYPE aDataID, VALUETYPE aData);
+  ITEMTYPE createChildItem (@Nullable final KEYTYPE aDataID, @Nullable final VALUETYPE aData);
 
   /**
    * Add a direct child item to this item.

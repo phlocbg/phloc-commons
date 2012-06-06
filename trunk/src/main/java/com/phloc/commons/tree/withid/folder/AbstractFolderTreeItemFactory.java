@@ -55,6 +55,7 @@ public abstract class AbstractFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYP
   }
 
   @Override
+  @Nonnull
   protected final KEYTYPE internalGetItemID (@Nonnull final ITEMTYPE aItem)
   {
     return aItem.getGlobalUniqueDataID ();
@@ -66,6 +67,7 @@ public abstract class AbstractFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYP
     return m_aKeyCombinator;
   }
 
+  @Nonnull
   protected abstract ITEMTYPE internalCreateRoot ();
 
   /*
