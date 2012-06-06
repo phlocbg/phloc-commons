@@ -69,4 +69,40 @@ public final class MicroContainer extends AbstractMicroNodeWithChildren implemen
         ret.appendChild (aChildNode.getClone ());
     return ret;
   }
+
+  /**
+   * Create a new {@link IMicroContainer} that contains clones of all passed
+   * nodes
+   * 
+   * @param aChildNodes
+   *        The micro node array to add to the {@link IMicroContainer}
+   * @return The created {@link IMicroContainer} and never <code>null</code>.
+   */
+  @Nonnull
+  public static IMicroContainer createWithClones (@Nullable final IMicroNode... aChildNodes)
+  {
+    final IMicroContainer ret = new MicroContainer ();
+    if (aChildNodes != null)
+      for (final IMicroNode aChildNode : aChildNodes)
+        ret.appendChild (aChildNode == null ? null : aChildNode.getClone ());
+    return ret;
+  }
+
+  /**
+   * Create a new {@link IMicroContainer} that contains clones of all passed
+   * nodes
+   * 
+   * @param aChildNodes
+   *        The micro node container to add to the {@link IMicroContainer}
+   * @return The created {@link IMicroContainer} and never <code>null</code>.
+   */
+  @Nonnull
+  public static IMicroContainer createWithClones (@Nullable final Iterable <? extends IMicroNode> aChildNodes)
+  {
+    final IMicroContainer ret = new MicroContainer ();
+    if (aChildNodes != null)
+      for (final IMicroNode aChildNode : aChildNodes)
+        ret.appendChild (aChildNode == null ? null : aChildNode.getClone ());
+    return ret;
+  }
 }
