@@ -1224,7 +1224,7 @@ public final class StringHelper
   {
     final int nHex1 = getHexValue (cHigh);
     final int nHex2 = getHexValue (cLow);
-    return nHex1 < 0 || nHex2 < 0 ? -1 : (nHex1 << 4) | nHex2;
+    return nHex1 < 0 || nHex2 < 0 ? CGlobal.ILLEGAL_UINT : (nHex1 << 4) | nHex2;
   }
 
   @Nonnull
