@@ -470,8 +470,7 @@ public final class XMLHelper
       public boolean matchesFilter (@Nullable final Element aElement)
       {
         // check namespace before checking local name
-        return hasNamespaceURI (aElement, sNamespaceURI) &&
-               EqualsUtils.equals (aElement.getLocalName (), sLocalName);
+        return hasNamespaceURI (aElement, sNamespaceURI) && EqualsUtils.equals (aElement.getLocalName (), sLocalName);
       }
     });
   }
@@ -821,5 +820,10 @@ public final class XMLHelper
       if (isInvalidXMLCharacter (c))
         aRes.add (Character.valueOf (c));
     return aRes;
+  }
+
+  public static boolean isEmpty (@Nullable final NodeList aNL)
+  {
+    return aNL == null || aNL.getLength () == 0;
   }
 }

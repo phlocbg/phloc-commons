@@ -25,17 +25,17 @@ import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.charset.CharsetManager;
 
 /**
- * Test class for class {@link ASCIIHexDecoder}
+ * Test class for class {@link ASCIIHexCodec}
  * 
  * @author philip
  */
-public final class ASCIIHexDecoderTest
+public final class ASCIIHexCodecTest
 {
   @Test
   public void testDecode ()
   {
     final String sEncoded = "616263\n" + "414243>";
-    final byte [] aDecoded = new ASCIIHexDecoder ().decode (sEncoded.getBytes (CCharset.CHARSET_US_ASCII_OBJ));
+    final byte [] aDecoded = new ASCIIHexCodec ().decode (sEncoded.getBytes (CCharset.CHARSET_US_ASCII_OBJ));
     final String sDecoded = CharsetManager.getAsString (aDecoded, CCharset.CHARSET_US_ASCII_OBJ);
     assertEquals ("abcABC", sDecoded);
   }

@@ -21,11 +21,11 @@ import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.io.streams.StreamUtils;
 
-public class RunLengthDecoder implements IDecoder
+public class RunLengthCodec implements IDecoder
 {
   private static final int RUN_LENGTH_EOD = 128;
 
-  public RunLengthDecoder ()
+  public RunLengthCodec ()
   {}
 
   public byte [] decode (final byte [] aEncodedBuffer)
