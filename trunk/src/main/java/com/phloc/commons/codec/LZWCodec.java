@@ -230,7 +230,7 @@ final class LZWEncodeDictionary extends AbstractLZWDictionary
   }
 }
 
-public class LZWCodec implements IDecoder, IEncoder
+public class LZWCodec implements ICodec
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (LZWCodec.class);
 

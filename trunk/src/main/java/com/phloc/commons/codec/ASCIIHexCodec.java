@@ -24,7 +24,7 @@ import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.string.StringHelper;
 
-public final class ASCIIHexCodec implements IDecoder
+public final class ASCIIHexCodec implements IByteArrayDecoder
 {
   public ASCIIHexCodec ()
   {}

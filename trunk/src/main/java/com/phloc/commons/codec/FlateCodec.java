@@ -29,7 +29,7 @@ import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.io.streams.StreamUtils;
 
-public final class FlateCodec implements IDecoder, IEncoder
+public final class FlateCodec implements ICodec
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (FlateCodec.class);
 

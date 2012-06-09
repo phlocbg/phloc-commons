@@ -27,7 +27,7 @@ import com.phloc.commons.io.streams.StreamUtils;
  * 
  * @author philip
  */
-public final class ASCII85Codec implements IDecoder
+public final class ASCII85Codec implements IByteArrayDecoder
 {
   public ASCII85Codec ()
   {}

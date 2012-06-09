@@ -17,24 +17,13 @@
  */
 package com.phloc.commons.codec;
 
-import javax.annotation.Nonnull;
 
 /**
- * Interface for a single decoder.
+ * Interface for a single encoder + decoder.
  * 
  * @author philip
  */
-public interface IDecoder
+public interface ICodec extends IByteArrayEncoder, IByteArrayDecoder
 {
-  /**
-   * Decode stream bytes.
-   * 
-   * @param aEncodedBuffer
-   *        The byte array to be decoded. May not be <code>null</code>.
-   * @return The decoded byte array. Never <code>null</code>.
-   * @throws DecoderException
-   *         in case something goes wrong
-   */
-  @Nonnull
-  byte [] decode (@Nonnull byte [] aEncodedBuffer);
+  /* empty */
 }
