@@ -28,11 +28,11 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
 
-public final class DCTDecoder implements IDecoder
+public final class DCTCodec implements IDecoder
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (DCTDecoder.class);
+  private static final Logger s_aLogger = LoggerFactory.getLogger (DCTCodec.class);
 
-  public DCTDecoder ()
+  public DCTCodec ()
   {}
 
   @Nonnull
