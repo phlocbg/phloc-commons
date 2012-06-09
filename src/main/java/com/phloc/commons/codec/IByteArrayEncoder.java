@@ -19,22 +19,24 @@ package com.phloc.commons.codec;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.encode.IEncoder;
+
 /**
  * Interface for a single encoder
  * 
  * @author philip
  */
-public interface IEncoder
+public interface IByteArrayEncoder extends IEncoder <byte []>
 {
   /**
-   * Encode stream bytes.
+   * Encode a byte array.
    * 
-   * @param aBuffer
+   * @param aDecodedBuffer
    *        The byte array to be encoded. May not be <code>null</code>.
    * @return The encoded byte array. Never <code>null</code>.
    * @throws EncoderException
    *         In case something goes wrong
    */
   @Nonnull
-  byte [] encode (@Nonnull byte [] aBuffer);
+  byte [] encode (@Nonnull byte [] aDecodedBuffer);
 }

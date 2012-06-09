@@ -21,7 +21,7 @@ import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.io.streams.StreamUtils;
 
-public class RunLengthCodec implements IDecoder
+public class RunLengthCodec implements IByteArrayDecoder
 {
   private static final int RUN_LENGTH_EOD = 128;
 

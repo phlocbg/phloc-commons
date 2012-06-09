@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
 
-public final class DCTCodec implements IDecoder
+public final class DCTCodec implements IByteArrayDecoder
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (DCTCodec.class);
 
