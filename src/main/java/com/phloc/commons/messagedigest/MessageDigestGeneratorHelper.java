@@ -61,7 +61,7 @@ public final class MessageDigestGeneratorHelper
   @Nonnull
   public static String getHexValueFromDigest (@Nonnull final byte [] aDigest)
   {
-    return StringHelper.hexEncode (aDigest);
+    return StringHelper.getHexEncoded (aDigest);
   }
 
   @Nonnull

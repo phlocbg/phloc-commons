@@ -66,7 +66,7 @@ public final class ToStringGenerator
       final int nIndex = sClassName.lastIndexOf ('.');
       m_aSB.append (nIndex == -1 ? sClassName : sClassName.substring (nIndex + 1))
            .append ("@0x")
-           .append (StringHelper.hexStringLeadingZero (System.identityHashCode (aSrc), 8));
+           .append (StringHelper.getHexStringLeadingZero (System.identityHashCode (aSrc), 8));
     }
     m_aSrc = aSrc;
   }

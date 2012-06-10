@@ -808,7 +808,7 @@ public final class FilenameHelper
     for (int i = 0; i < nParentFolders; i++)
       aElements.add (0, PATH_PARENT);
 
-    return sPrefix + StringHelper.implode (UNIX_SEPARATOR_STR, aElements);
+    return sPrefix + StringHelper.getImploded (UNIX_SEPARATOR_STR, aElements);
   }
 
   /**

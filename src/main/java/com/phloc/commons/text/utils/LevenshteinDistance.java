@@ -223,8 +223,8 @@ public final class LevenshteinDistance
    */
   public static int getDistance (@Nullable final String sStr1, @Nullable final String sStr2)
   {
-    final int nLen1 = StringHelper.length (sStr1);
-    final int nLen2 = StringHelper.length (sStr2);
+    final int nLen1 = StringHelper.getLength (sStr1);
+    final int nLen2 = StringHelper.getLength (sStr2);
 
     if (nLen1 == 0)
       return nLen2;
@@ -247,8 +247,8 @@ public final class LevenshteinDistance
     if (nCostSubstitution < 0)
       throw new IllegalArgumentException ("Substitution cost is invalid: " + nCostSubstitution);
 
-    final int nLen1 = StringHelper.length (sStr1);
-    final int nLen2 = StringHelper.length (sStr2);
+    final int nLen1 = StringHelper.getLength (sStr1);
+    final int nLen2 = StringHelper.getLength (sStr2);
 
     if (nLen1 == 0)
       return nLen2 * nCostInsert;
