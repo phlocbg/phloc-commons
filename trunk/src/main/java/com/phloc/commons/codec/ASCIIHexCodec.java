@@ -17,7 +17,7 @@
  */
 package com.phloc.commons.codec;
 
-import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
@@ -29,11 +29,11 @@ public final class ASCIIHexCodec implements IByteArrayDecoder
   public ASCIIHexCodec ()
   {}
 
-  @Nonnull
-  public byte [] decode (@Nonnull final byte [] aEncodedBuffer)
+  @Nullable
+  public byte [] decode (@Nullable final byte [] aEncodedBuffer)
   {
     if (aEncodedBuffer == null)
-      throw new NullPointerException ("encodedBuffer");
+      return null;
 
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
     try

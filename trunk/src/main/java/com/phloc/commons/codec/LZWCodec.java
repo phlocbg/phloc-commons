@@ -237,9 +237,12 @@ public class LZWCodec implements ICodec
   public LZWCodec ()
   {}
 
-  @Nonnull
-  public byte [] decode (@Nonnull final byte [] aEncodedBuffer)
+  @Nullable
+  public byte [] decode (@Nullable final byte [] aEncodedBuffer)
   {
+    if (aEncodedBuffer == null)
+      return null;
+
     final BitInputStream aBIS = new BitInputStream (new NonBlockingByteArrayInputStream (aEncodedBuffer), true);
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
 
@@ -314,11 +317,11 @@ public class LZWCodec implements ICodec
     }
   }
 
-  @Nonnull
-  public byte [] encode (@Nonnull final byte [] aBuffer)
+  @Nullable
+  public byte [] encode (@Nullable final byte [] aBuffer)
   {
     if (aBuffer == null)
-      throw new NullPointerException ("buffer");
+      return null;
 
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
     final BitOutputStream aBOS = new BitOutputStream (aBAOS, true);

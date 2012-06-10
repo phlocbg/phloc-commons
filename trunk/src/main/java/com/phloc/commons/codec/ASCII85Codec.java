@@ -17,7 +17,7 @@
  */
 package com.phloc.commons.codec;
 
-import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.io.streams.StreamUtils;
@@ -32,11 +32,11 @@ public final class ASCII85Codec implements IByteArrayDecoder
   public ASCII85Codec ()
   {}
 
-  @Nonnull
-  public byte [] decode (@Nonnull final byte [] aEncodedBuffer)
+  @Nullable
+  public byte [] decode (@Nullable final byte [] aEncodedBuffer)
   {
     if (aEncodedBuffer == null)
-      throw new NullPointerException ("encodedBuffer");
+      return null;
     if (aEncodedBuffer.length < 4)
       throw new IllegalArgumentException ("Buffer too small: " + aEncodedBuffer.length);
 

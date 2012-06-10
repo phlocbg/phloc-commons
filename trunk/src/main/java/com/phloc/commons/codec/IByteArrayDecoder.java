@@ -17,7 +17,7 @@
  */
 package com.phloc.commons.codec;
 
-import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.phloc.commons.encode.IDecoder;
 
@@ -33,10 +33,11 @@ public interface IByteArrayDecoder extends IDecoder <byte []>
    * 
    * @param aEncodedBuffer
    *        The byte array to be decoded. May not be <code>null</code>.
-   * @return The decoded byte array. Never <code>null</code>.
+   * @return The decoded byte array or <code>null</code> if the parameter was
+   *         <code>null</code>.
    * @throws DecoderException
    *         in case something goes wrong
    */
-  @Nonnull
-  byte [] decode (@Nonnull byte [] aEncodedBuffer);
+  @Nullable
+  byte [] decode (@Nullable byte [] aEncodedBuffer);
 }
