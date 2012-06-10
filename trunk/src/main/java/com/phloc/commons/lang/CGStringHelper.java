@@ -250,6 +250,6 @@ public final class CGStringHelper
   {
     if (aObject == null)
       return "0x00000000";
-    return "0x" + StringHelper.hexStringLeadingZero (System.identityHashCode (aObject), 8);
+    return "0x" + StringHelper.getHexStringLeadingZero (System.identityHashCode (aObject), 8);
   }
 }

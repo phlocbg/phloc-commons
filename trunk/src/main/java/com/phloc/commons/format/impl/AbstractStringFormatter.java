@@ -56,7 +56,7 @@ public abstract class AbstractStringFormatter implements IFormatter
   protected String getValueAsString (@Nullable final Object aValue)
   {
     final String sValue = TypeConverter.convertIfNecessary (aValue, String.class);
-    return sValue != null ? sValue : StringHelper.toString (aValue);
+    return sValue != null ? sValue : StringHelper.getToString (aValue);
   }
 
   protected abstract String getFormattedValueAsString (@Nullable Object aValue);

@@ -1027,6 +1027,18 @@ public final class StringHelper
   }
 
   /**
+   * Check if the string is <code>null</code> or empty.
+   * 
+   * @param aCS
+   *        The string to check. May be <code>null</code>.
+   * @return <code>true</code> if the string is <code>null</code> or empty
+   */
+  public static boolean isEmpty (@Nullable final CharSequence aCS)
+  {
+    return hasNoText (aCS);
+  }
+
+  /**
    * Check if the string is <code>null</code> or empty after trimming.
    * 
    * @param s
@@ -1037,6 +1049,19 @@ public final class StringHelper
   public static boolean hasNoTextAfterTrim (@Nullable final String s)
   {
     return s == null || s.trim ().length () == 0;
+  }
+
+  /**
+   * Check if the string is <code>null</code> or empty after trimming.
+   * 
+   * @param s
+   *        The string to check. May be <code>null</code>.
+   * @return <code>true</code> if the string is <code>null</code> or empty or
+   *         consists only of whitespaces.
+   */
+  public static boolean isEmptyAfterTrim (@Nullable final String s)
+  {
+    return hasNoTextAfterTrim (s);
   }
 
   /**
@@ -1053,6 +1078,19 @@ public final class StringHelper
   }
 
   /**
+   * Check if the string contains any char.
+   * 
+   * @param aCS
+   *        The string to check
+   * @return true if the string contains at least one char public static boolean
+   *         hasText (@Nullable final CharSequence s)
+   */
+  public static boolean isNotEmpty (@Nullable final CharSequence aCS)
+  {
+    return hasText (aCS);
+  }
+
+  /**
    * Check if the string neither <code>null</code> nor empty after trimming.
    * 
    * @param s
@@ -1065,32 +1103,95 @@ public final class StringHelper
     return s != null && s.trim ().length () > 0;
   }
 
+  /**
+   * Check if the string neither <code>null</code> nor empty after trimming.
+   * 
+   * @param s
+   *        The string to check. May be <code>null</code>.
+   * @return <code>true</code> if the string is neither <code>null</code> nor
+   *         empty nor consists only of whitespaces.
+   */
+  public static boolean isNotEmptyAfterTrim (@Nullable final String s)
+  {
+    return hasTextAfterTrim (s);
+  }
+
+  /**
+   * @deprecated Use {@link #getLeadingZero(Byte,int)} instead
+   */
+  @Deprecated
   @Nullable
   public static String leadingZero (@Nullable final Byte aValue, final int nChars)
   {
-    return aValue == null ? null : leadingZero (aValue.byteValue (), nChars);
+    return getLeadingZero (aValue, nChars);
   }
 
+  @Nullable
+  public static String getLeadingZero (@Nullable final Byte aValue, final int nChars)
+  {
+    return aValue == null ? null : getLeadingZero (aValue.byteValue (), nChars);
+  }
+
+  /**
+   * @deprecated Use {@link #getLeadingZero(Integer,int)} instead
+   */
+  @Deprecated
   @Nullable
   public static String leadingZero (@Nullable final Integer aValue, final int nChars)
   {
-    return aValue == null ? null : leadingZero (aValue.longValue (), nChars);
+    return getLeadingZero (aValue, nChars);
   }
 
+  @Nullable
+  public static String getLeadingZero (@Nullable final Integer aValue, final int nChars)
+  {
+    return aValue == null ? null : getLeadingZero (aValue.longValue (), nChars);
+  }
+
+  /**
+   * @deprecated Use {@link #getLeadingZero(Long,int)} instead
+   */
+  @Deprecated
   @Nullable
   public static String leadingZero (@Nullable final Long aValue, final int nChars)
   {
-    return aValue == null ? null : leadingZero (aValue.longValue (), nChars);
+    return getLeadingZero (aValue, nChars);
   }
 
   @Nullable
+  public static String getLeadingZero (@Nullable final Long aValue, final int nChars)
+  {
+    return aValue == null ? null : getLeadingZero (aValue.longValue (), nChars);
+  }
+
+  /**
+   * @deprecated Use {@link #getLeadingZero(Short,int)} instead
+   */
+  @Deprecated
+  @Nullable
   public static String leadingZero (@Nullable final Short aValue, final int nChars)
   {
-    return aValue == null ? null : leadingZero (aValue.shortValue (), nChars);
+    return getLeadingZero (aValue, nChars);
+  }
+
+  @Nullable
+  public static String getLeadingZero (@Nullable final Short aValue, final int nChars)
+  {
+    return aValue == null ? null : getLeadingZero (aValue.shortValue (), nChars);
+  }
+
+  /**
+   * @deprecated Use {@link #getLeadingZero(int,int)} instead
+   */
+  @Deprecated
+  @Nonnull
+  public static String leadingZero (final int nValue, final int nChars)
+  {
+    return getLeadingZero (nValue, nChars);
   }
 
   @Nonnull
-  public static String leadingZero (final int nValue, final int nChars)
+  public static String getLeadingZero (final int nValue, final int nChars)
   {
     final boolean bNeg = nValue < 0;
     final String sValue = Integer.toString (MathHelper.abs (nValue));
@@ -1106,8 +1207,18 @@ public final class StringHelper
     return aSB.append (sValue).toString ();
   }
 
+  /**
+   * @deprecated Use {@link #getLeadingZero(long,int)} instead
+   */
+  @Deprecated
   @Nonnull
   public static String leadingZero (final long nValue, final int nChars)
+  {
+    return getLeadingZero (nValue, nChars);
+  }
+
+  @Nonnull
+  public static String getLeadingZero (final long nValue, final int nChars)
   {
     final boolean bNeg = nValue < 0;
     final String sValue = Long.toString (MathHelper.abs (nValue));
@@ -1123,8 +1234,18 @@ public final class StringHelper
     return aSB.append (sValue).toString ();
   }
 
+  /**
+   * @deprecated Use {@link #getLeadingZero(String,int)} instead
+   */
+  @Deprecated
   @Nonnull
   public static String leadingZero (@Nonnull final String sValue, final int nChars)
+  {
+    return getLeadingZero (sValue, nChars);
+  }
+
+  @Nonnull
+  public static String getLeadingZero (@Nonnull final String sValue, final int nChars)
   {
     final int nLen = sValue.length ();
     if (nLen >= nChars)
@@ -1157,14 +1278,50 @@ public final class StringHelper
    *        The byte array to be converted to a String. May not be
    *        <code>null</code>.
    * @return The String representation of the byte array.
+   * @deprecated Use {@link #getHexEncoded(byte[])} instead
    */
+  @Deprecated
   @Nonnull
   public static String hexEncode (@Nonnull final byte [] aInput)
+  {
+    return getHexEncoded (aInput);
+  }
+
+  /**
+   * Convert a byte array to a hexadecimal encoded string.
+   * 
+   * @param aInput
+   *        The byte array to be converted to a String. May not be
+   *        <code>null</code>.
+   * @return The String representation of the byte array.
+   */
+  @Nonnull
+  public static String getHexEncoded (@Nonnull final byte [] aInput)
   {
     if (aInput == null)
       throw new NullPointerException ("input");
 
-    return hexEncode (aInput, 0, aInput.length);
+    return getHexEncoded (aInput, 0, aInput.length);
+  }
+
+  /**
+   * Convert a byte array to a hexadecimal encoded string.
+   * 
+   * @param aInput
+   *        The byte array to be converted to a String. May not be
+   *        <code>null</code>.
+   * @param nOfs
+   *        Byte array offset
+   * @param nLen
+   *        Number of bytes to encode
+   * @return The String representation of the byte array.
+   * @deprecated Use {@link #getHexEncoded(byte[],int,int)} instead
+   */
+  @Deprecated
+  @Nonnull
+  public static String hexEncode (@Nonnull final byte [] aInput, final int nOfs, final int nLen)
+  {
+    return getHexEncoded (aInput, nOfs, nLen);
   }
 
   /**
@@ -1180,7 +1337,7 @@ public final class StringHelper
    * @return The String representation of the byte array.
    */
   @Nonnull
-  public static String hexEncode (@Nonnull final byte [] aInput, final int nOfs, final int nLen)
+  public static String getHexEncoded (@Nonnull final byte [] aInput, final int nOfs, final int nLen)
   {
     if (aInput == null)
       throw new NullPointerException ("input");
@@ -1227,14 +1384,31 @@ public final class StringHelper
     return nHex1 < 0 || nHex2 < 0 ? CGlobal.ILLEGAL_UINT : (nHex1 << 4) | nHex2;
   }
 
+  /**
+   * @deprecated Use {@link #getHexDecoded(String)} instead
+   */
+  @Deprecated
   @Nonnull
   public static byte [] hexDecode (@Nonnull final String sInput)
   {
+    return getHexDecoded (sInput);
+  }
+
+  @Nonnull
+  public static byte [] getHexDecoded (@Nonnull final String sInput)
+  {
     if (sInput == null)
       throw new NullPointerException ("input");
-    final char [] aInput = sInput.toCharArray ();
+    return getHexDecoded (sInput.toCharArray ());
+  }
+
+  @Nonnull
+  public static byte [] getHexDecoded (@Nonnull final char [] aInput)
+  {
+    if (aInput == null)
+      throw new NullPointerException ("input");
     if ((aInput.length % 2) > 0)
-      throw new IllegalArgumentException ("Passed string has no even length: " + aInput.length);
+      throw new IllegalArgumentException ("Passed chars have no even length: " + aInput.length);
 
     final byte [] ret = new byte [aInput.length / 2];
     int nRetIdx = 0;
@@ -1250,45 +1424,118 @@ public final class StringHelper
     return ret;
   }
 
+  /**
+   * @deprecated Use {@link #getHexString(byte)} instead
+   */
+  @Deprecated
   @Nonnull
   public static String hexString (final byte nValue)
+  {
+    return getHexString (nValue);
+  }
+
+  @Nonnull
+  public static String getHexString (final byte nValue)
   {
     return Integer.toString (nValue & 0xff, CGlobal.HEX_RADIX);
   }
 
+  /**
+   * @deprecated Use {@link #getHexStringLeadingZero(byte,int)} instead
+   */
+  @Deprecated
   public static String hexStringLeadingZero (final byte nValue, final int nDigits)
   {
-    return leadingZero (hexString (nValue), nDigits);
+    return getHexStringLeadingZero (nValue, nDigits);
   }
 
+  public static String getHexStringLeadingZero (final byte nValue, final int nDigits)
+  {
+    return getLeadingZero (getHexString (nValue), nDigits);
+  }
+
+  /**
+   * @deprecated Use {@link #getHexString(int)} instead
+   */
+  @Deprecated
   public static String hexString (final int nValue)
+  {
+    return getHexString (nValue);
+  }
+
+  public static String getHexString (final int nValue)
   {
     return Integer.toString (nValue, CGlobal.HEX_RADIX);
   }
 
+  /**
+   * @deprecated Use {@link #getHexStringLeadingZero(int,int)} instead
+   */
+  @Deprecated
   public static String hexStringLeadingZero (final int nValue, final int nDigits)
   {
-    return leadingZero (hexString (nValue), nDigits);
+    return getHexStringLeadingZero (nValue, nDigits);
   }
 
+  public static String getHexStringLeadingZero (final int nValue, final int nDigits)
+  {
+    return getLeadingZero (getHexString (nValue), nDigits);
+  }
+
+  /**
+   * @deprecated Use {@link #getHexString(long)} instead
+   */
+  @Deprecated
   public static String hexString (final long nValue)
+  {
+    return getHexString (nValue);
+  }
+
+  public static String getHexString (final long nValue)
   {
     return Long.toString (nValue, CGlobal.HEX_RADIX);
   }
 
+  /**
+   * @deprecated Use {@link #getHexStringLeadingZero(long,int)} instead
+   */
+  @Deprecated
   public static String hexStringLeadingZero (final long nValue, final int nDigits)
   {
-    return leadingZero (hexString (nValue), nDigits);
+    return getHexStringLeadingZero (nValue, nDigits);
   }
 
+  public static String getHexStringLeadingZero (final long nValue, final int nDigits)
+  {
+    return getLeadingZero (getHexString (nValue), nDigits);
+  }
+
+  /**
+   * @deprecated Use {@link #getHexString(short)} instead
+   */
+  @Deprecated
   public static String hexString (final short nValue)
+  {
+    return getHexString (nValue);
+  }
+
+  public static String getHexString (final short nValue)
   {
     return Integer.toString (nValue & 0xffff, CGlobal.HEX_RADIX);
   }
 
+  /**
+   * @deprecated Use {@link #getHexStringLeadingZero(short,int)} instead
+   */
+  @Deprecated
   public static String hexStringLeadingZero (final short nValue, final int nDigits)
   {
-    return leadingZero (hexString (nValue), nDigits);
+    return getHexStringLeadingZero (nValue, nDigits);
+  }
+
+  public static String getHexStringLeadingZero (final short nValue, final int nDigits)
+  {
+    return getLeadingZero (getHexString (nValue), nDigits);
   }
 
   @Nonnegative
@@ -1358,9 +1605,27 @@ public final class StringHelper
    * @param aElements
    *        The container to convert. May be <code>null</code> or empty.
    * @return The concatenated string.
+   * @deprecated Use {@link #getImploded(String,Iterable)} instead
    */
+  @Deprecated
   @Nonnull
   public static String implode (@Nonnull final String sSep, @Nullable final Iterable <?> aElements)
+  {
+    return getImploded (sSep, aElements);
+  }
+
+  /**
+   * Get a concatenated String from all elements of the passed container,
+   * separated by the specified separator string.
+   * 
+   * @param sSep
+   *        The separator to use. May not be <code>null</code>.
+   * @param aElements
+   *        The container to convert. May be <code>null</code> or empty.
+   * @return The concatenated string.
+   */
+  @Nonnull
+  public static String getImploded (@Nonnull final String sSep, @Nullable final Iterable <?> aElements)
   {
     if (sSep == null)
       throw new NullPointerException ("separator");
@@ -1392,11 +1657,35 @@ public final class StringHelper
    * @param aElements
    *        The map to convert. May be <code>null</code> or empty.
    * @return The concatenated string.
+   * @deprecated Use {@link #getImploded(String,String,Map)} instead
    */
+  @Deprecated
   @Nonnull
   public static String implode (@Nonnull final String sSepOuter,
                                 @Nonnull final String sSepInner,
                                 @Nullable final Map <?, ?> aElements)
+  {
+    return getImploded (sSepOuter, sSepInner, aElements);
+  }
+
+  /**
+   * Get a concatenated String from all elements of the passed map, separated by
+   * the specified separator string.
+   * 
+   * @param sSepOuter
+   *        The separator to use for separating the map entries. May not be
+   *        <code>null</code>.
+   * @param sSepInner
+   *        The separator to use for separating the key from the value. May not
+   *        be <code>null</code>.
+   * @param aElements
+   *        The map to convert. May be <code>null</code> or empty.
+   * @return The concatenated string.
+   */
+  @Nonnull
+  public static String getImploded (@Nonnull final String sSepOuter,
+                                    @Nonnull final String sSepInner,
+                                    @Nullable final Map <?, ?> aElements)
   {
     if (sSepOuter == null)
       throw new NullPointerException ("outerSeparator");
@@ -1428,15 +1717,62 @@ public final class StringHelper
    * @return The concatenated string.
    * @param <ELEMENTTYPE>
    *        The type of elements to be imploded.
+   * @deprecated Use {@link #getImploded(String,ELEMENTTYPE...)} instead
    */
+  @Deprecated
   @Nonnull
   public static <ELEMENTTYPE> String implode (@Nonnull final String sSep, @Nullable final ELEMENTTYPE... aElements)
+  {
+    return getImploded (sSep, aElements);
+  }
+
+  /**
+   * Get a concatenated String from all elements of the passed array, separated
+   * by the specified separator string.
+   * 
+   * @param sSep
+   *        The separator to use. May not be <code>null</code>.
+   * @param aElements
+   *        The container to convert. May be <code>null</code> or empty.
+   * @return The concatenated string.
+   * @param <ELEMENTTYPE>
+   *        The type of elements to be imploded.
+   */
+  @Nonnull
+  public static <ELEMENTTYPE> String getImploded (@Nonnull final String sSep, @Nullable final ELEMENTTYPE... aElements)
   {
     if (sSep == null)
       throw new NullPointerException ("separator");
     if (aElements == null)
       return "";
-    return implode (sSep, aElements, 0, aElements.length);
+    return getImploded (sSep, aElements, 0, aElements.length);
+  }
+
+  /**
+   * Get a concatenated String from all elements of the passed array, separated
+   * by the specified separator string.
+   * 
+   * @param sSep
+   *        The separator to use. May not be <code>null</code>.
+   * @param aElements
+   *        The container to convert. May be <code>null</code> or empty.
+   * @param nOfs
+   *        The offset to start from.
+   * @param nLen
+   *        The number of elements to implode.
+   * @return The concatenated string.
+   * @param <ELEMENTTYPE>
+   *        The type of elements to be imploded.
+   * @deprecated Use {@link #getImploded(String,ELEMENTTYPE[],int,int)} instead
+   */
+  @Deprecated
+  @Nonnull
+  public static <ELEMENTTYPE> String implode (@Nonnull final String sSep,
+                                              @Nullable final ELEMENTTYPE [] aElements,
+                                              @Nonnegative final int nOfs,
+                                              @Nonnegative final int nLen)
+  {
+    return getImploded (sSep, aElements, nOfs, nLen);
   }
 
   /**
@@ -1456,10 +1792,10 @@ public final class StringHelper
    *        The type of elements to be imploded.
    */
   @Nonnull
-  public static <ELEMENTTYPE> String implode (@Nonnull final String sSep,
-                                              @Nullable final ELEMENTTYPE [] aElements,
-                                              @Nonnegative final int nOfs,
-                                              @Nonnegative final int nLen)
+  public static <ELEMENTTYPE> String getImploded (@Nonnull final String sSep,
+                                                  @Nullable final ELEMENTTYPE [] aElements,
+                                                  @Nonnegative final int nOfs,
+                                                  @Nonnegative final int nLen)
   {
     if (sSep == null)
       throw new NullPointerException ("separator");
@@ -1481,9 +1817,9 @@ public final class StringHelper
   }
 
   @Nonnull
-  private static <COLLTYPE extends Collection <String>> COLLTYPE _explode (@Nonnull final String sSep,
-                                                                           @Nullable final String sElements,
-                                                                           @Nonnull final COLLTYPE aCollection)
+  private static <COLLTYPE extends Collection <String>> COLLTYPE _getExploded (@Nonnull final String sSep,
+                                                                               @Nullable final String sElements,
+                                                                               @Nonnull final COLLTYPE aCollection)
   {
     if (sSep == null)
       throw new NullPointerException ("separator");
@@ -1517,11 +1853,53 @@ public final class StringHelper
    * @return The {@link List} represented by the passed string. Never
    *         <code>null</code>. If the passed input string is <code>null</code>
    *         or "" an empty list is returned.
+   * @deprecated Use {@link #getExploded(String,String)} instead
    */
+  @Deprecated
   @Nonnull
   public static List <String> explode (@Nonnull final String sSep, @Nullable final String sElements)
   {
-    return _explode (sSep, sElements, new ArrayList <String> ());
+    return getExploded (sSep, sElements);
+  }
+
+  /**
+   * Take a concatenated String and return a {@link List} of all elements in the
+   * passed string, using specified separator string.
+   * 
+   * @param sSep
+   *        The separator to use. May not be <code>null</code>.
+   * @param sElements
+   *        The concatenated String to convert. May be <code>null</code> or
+   *        empty.
+   * @return The {@link List} represented by the passed string. Never
+   *         <code>null</code>. If the passed input string is <code>null</code>
+   *         or "" an empty list is returned.
+   */
+  @Nonnull
+  public static List <String> getExploded (@Nonnull final String sSep, @Nullable final String sElements)
+  {
+    return _getExploded (sSep, sElements, new ArrayList <String> ());
+  }
+
+  /**
+   * Take a concatenated String and return a {@link Set} of all elements in the
+   * passed string, using specified separator string.
+   * 
+   * @param sSep
+   *        The separator to use. May not be <code>null</code>.
+   * @param sElements
+   *        The concatenated String to convert. May be <code>null</code> or
+   *        empty.
+   * @return The {@link Set} represented by the passed string. Never
+   *         <code>null</code>. If the passed input string is <code>null</code>
+   *         or "" an empty list is returned.
+   * @deprecated Use {@link #getExplodedToSet(String,String)} instead
+   */
+  @Deprecated
+  @Nonnull
+  public static Set <String> explodeToSet (@Nonnull final String sSep, @Nullable final String sElements)
+  {
+    return getExplodedToSet (sSep, sElements);
   }
 
   /**
@@ -1538,9 +1916,30 @@ public final class StringHelper
    *         or "" an empty list is returned.
    */
   @Nonnull
-  public static Set <String> explodeToSet (@Nonnull final String sSep, @Nullable final String sElements)
+  public static Set <String> getExplodedToSet (@Nonnull final String sSep, @Nullable final String sElements)
   {
-    return _explode (sSep, sElements, new HashSet <String> ());
+    return _getExploded (sSep, sElements, new HashSet <String> ());
+  }
+
+  /**
+   * Take a concatenated String and return an ordered {@link Set} of all
+   * elements in the passed string, using specified separator string.
+   * 
+   * @param sSep
+   *        The separator to use. May not be <code>null</code>.
+   * @param sElements
+   *        The concatenated String to convert. May be <code>null</code> or
+   *        empty.
+   * @return The ordered {@link Set} represented by the passed string. Never
+   *         <code>null</code>. If the passed input string is <code>null</code>
+   *         or "" an empty list is returned.
+   * @deprecated Use {@link #getExplodedToOrderedSet(String,String)} instead
+   */
+  @Deprecated
+  @Nonnull
+  public static Set <String> explodeToOrderedSet (@Nonnull final String sSep, @Nullable final String sElements)
+  {
+    return getExplodedToOrderedSet (sSep, sElements);
   }
 
   /**
@@ -1557,9 +1956,9 @@ public final class StringHelper
    *         or "" an empty list is returned.
    */
   @Nonnull
-  public static Set <String> explodeToOrderedSet (@Nonnull final String sSep, @Nullable final String sElements)
+  public static Set <String> getExplodedToOrderedSet (@Nonnull final String sSep, @Nullable final String sElements)
   {
-    return _explode (sSep, sElements, new LinkedHashSet <String> ());
+    return _getExploded (sSep, sElements, new LinkedHashSet <String> ());
   }
 
   /**
@@ -1633,9 +2032,27 @@ public final class StringHelper
    * @param sEnd
    *        May be <code>null</code>.
    * @return The concatenated string.
+   * @deprecated Use {@link #getConcatenatedOnDemand(String,String)} instead
    */
+  @Deprecated
   @Nonnull
   public static String concatenateOnDemand (@Nullable final String sFront, @Nullable final String sEnd)
+  {
+    return getConcatenatedOnDemand (sFront, sEnd);
+  }
+
+  /**
+   * Concatenate the strings sFront and sEnd. If either front or back is null or
+   * empty
+   * 
+   * @param sFront
+   *        Front string. May be <code>null</code>.
+   * @param sEnd
+   *        May be <code>null</code>.
+   * @return The concatenated string.
+   */
+  @Nonnull
+  public static String getConcatenatedOnDemand (@Nullable final String sFront, @Nullable final String sEnd)
   {
     if (sFront == null)
       return sEnd == null ? "" : sEnd;
@@ -1655,11 +2072,34 @@ public final class StringHelper
    * @param sEnd
    *        May be <code>null</code>.
    * @return The concatenated string.
+   * @deprecated Use {@link #getConcatenatedOnDemand(String,String,String)}
+   *             instead
    */
+  @Deprecated
   @Nonnull
   public static String concatenateOnDemand (@Nullable final String sFront,
                                             @Nullable final String sSep,
                                             @Nullable final String sEnd)
+  {
+    return getConcatenatedOnDemand (sFront, sSep, sEnd);
+  }
+
+  /**
+   * Concatenate the strings sFront and sEnd by the "sSep" string. If either
+   * front or back is <code>null</code> or empty, the separator is not applied.
+   * 
+   * @param sFront
+   *        Front string. May be <code>null</code>.
+   * @param sSep
+   *        Separator string. May be <code>null</code>.
+   * @param sEnd
+   *        May be <code>null</code>.
+   * @return The concatenated string.
+   */
+  @Nonnull
+  public static String getConcatenatedOnDemand (@Nullable final String sFront,
+                                                @Nullable final String sSep,
+                                                @Nullable final String sEnd)
   {
     final StringBuilder aSB = new StringBuilder ();
     if (hasText (sFront))
@@ -1759,8 +2199,26 @@ public final class StringHelper
    * @return The index of sSearch within sText or -1 if sSearch was not found or
    *         if any parameter was <code>null</code>.
    * @see String#indexOf(String)
+   * @deprecated Use {@link #getIndexOf(String,String)} instead
    */
+  @Deprecated
   public static int indexOf (@Nullable final String sText, @Nullable final String sSearch)
+  {
+    return getIndexOf (sText, sSearch);
+  }
+
+  /**
+   * Get the index of sSearch within sText.
+   * 
+   * @param sText
+   *        The text to search in. May be <code>null</code>.
+   * @param sSearch
+   *        The text to search for. May be <code>null</code>.
+   * @return The index of sSearch within sText or -1 if sSearch was not found or
+   *         if any parameter was <code>null</code>.
+   * @see String#indexOf(String)
+   */
+  public static int getIndexOf (@Nullable final String sText, @Nullable final String sSearch)
   {
     return sText != null && sSearch != null && sText.length () >= sSearch.length () ? sText.indexOf (sSearch) : -1;
   }
@@ -1775,42 +2233,50 @@ public final class StringHelper
    * @return The index of sSearch within sText or -1 if cSearch was not found or
    *         if any parameter was <code>null</code>.
    * @see String#indexOf(int)
+   * @deprecated Use {@link #getIndexOf(String,char)} instead
    */
+  @Deprecated
   public static int indexOf (@Nullable final String sText, @Nullable final char cSearch)
   {
-    return sText != null && sText.length () >= 1 ? sText.indexOf (cSearch) : -1;
+    return getIndexOf (sText, cSearch);
   }
 
   /**
-   * Check if sSearch is contained within sText.
-   * 
-   * @param sText
-   *        The text to search in. May be <code>null</code>.
-   * @param sSearch
-   *        The text to search for. May be <code>null</code>.
-   * @return <code>true</code> if sSearch is contained in sText,
-   *         <code>false</code> otherwise.
-   * @see String#contains(CharSequence)
-   */
-  public static boolean contains (@Nullable final String sText, @Nullable final String sSearch)
-  {
-    return indexOf (sText, sSearch) > -1;
-  }
-
-  /**
-   * Check if cSearch is contained within sText.
+   * Get the index of cSearch within sText.
    * 
    * @param sText
    *        The text to search in. May be <code>null</code>.
    * @param cSearch
    *        The character to search for. May be <code>null</code>.
-   * @return <code>true</code> if cSearch is contained in sText,
-   *         <code>false</code> otherwise.
-   * @see String#contains(CharSequence)
+   * @return The index of sSearch within sText or -1 if cSearch was not found or
+   *         if any parameter was <code>null</code>.
+   * @see String#indexOf(int)
    */
-  public static boolean contains (@Nullable final String sText, @Nullable final char cSearch)
+  public static int getIndexOf (@Nullable final String sText, @Nullable final char cSearch)
   {
-    return indexOf (sText, cSearch) > -1;
+    return sText != null && sText.length () >= 1 ? sText.indexOf (cSearch) : -1;
+  }
+
+  /**
+   * Get the index of sSearch within sText ignoring case.
+   * 
+   * @param sText
+   *        The text to search in. May be <code>null</code>.
+   * @param sSearch
+   *        The text to search for. May be <code>null</code>.
+   * @param aSortLocale
+   *        The locale to be used for case unifying.
+   * @return The index of sSearch within sText or -1 if sSearch was not found or
+   *         if any parameter was <code>null</code>.
+   * @see String#indexOf(String)
+   * @deprecated Use {@link #getIndexOfIgnoreCase(String,String,Locale)} instead
+   */
+  @Deprecated
+  public static int indexOfIgnoreCase (@Nullable final String sText,
+                                       @Nullable final String sSearch,
+                                       @Nonnull final Locale aSortLocale)
+  {
+    return getIndexOfIgnoreCase (sText, sSearch, aSortLocale);
   }
 
   /**
@@ -1826,14 +2292,67 @@ public final class StringHelper
    *         if any parameter was <code>null</code>.
    * @see String#indexOf(String)
    */
-  public static int indexOfIgnoreCase (@Nullable final String sText,
-                                       @Nullable final String sSearch,
-                                       @Nonnull final Locale aSortLocale)
+  public static int getIndexOfIgnoreCase (@Nullable final String sText,
+                                          @Nullable final String sSearch,
+                                          @Nonnull final Locale aSortLocale)
   {
     return sText != null && sSearch != null && sText.length () >= sSearch.length ()
                                                                                    ? sText.toLowerCase (aSortLocale)
                                                                                           .indexOf (sSearch.toLowerCase (aSortLocale))
                                                                                    : -1;
+  }
+
+  /**
+   * Get the index of cSearch within sText ignoring case.
+   * 
+   * @param sText
+   *        The text to search in. May be <code>null</code>.
+   * @param cSearch
+   *        The char to search for. May be <code>null</code>.
+   * @param aSortLocale
+   *        The locale to be used for case unifying.
+   * @return The index of sSearch within sText or -1 if sSearch was not found or
+   *         if any parameter was <code>null</code>.
+   * @see String#indexOf(int)
+   */
+  public static int getIndexOfIgnoreCase (@Nullable final String sText,
+                                          @Nullable final char cSearch,
+                                          @Nonnull final Locale aSortLocale)
+  {
+    return sText != null && sText.length () >= 1 ? sText.toLowerCase (aSortLocale)
+                                                        .indexOf (Character.toLowerCase (cSearch)) : -1;
+  }
+
+  /**
+   * Check if sSearch is contained within sText.
+   * 
+   * @param sText
+   *        The text to search in. May be <code>null</code>.
+   * @param sSearch
+   *        The text to search for. May be <code>null</code>.
+   * @return <code>true</code> if sSearch is contained in sText,
+   *         <code>false</code> otherwise.
+   * @see String#contains(CharSequence)
+   */
+  public static boolean contains (@Nullable final String sText, @Nullable final String sSearch)
+  {
+    return getIndexOf (sText, sSearch) > -1;
+  }
+
+  /**
+   * Check if cSearch is contained within sText.
+   * 
+   * @param sText
+   *        The text to search in. May be <code>null</code>.
+   * @param cSearch
+   *        The character to search for. May be <code>null</code>.
+   * @return <code>true</code> if cSearch is contained in sText,
+   *         <code>false</code> otherwise.
+   * @see String#contains(CharSequence)
+   */
+  public static boolean contains (@Nullable final String sText, @Nullable final char cSearch)
+  {
+    return getIndexOf (sText, cSearch) > -1;
   }
 
   /**
@@ -1853,7 +2372,85 @@ public final class StringHelper
                                             @Nullable final String sSearch,
                                             @Nonnull final Locale aSortLocale)
   {
-    return indexOfIgnoreCase (sText, sSearch, aSortLocale) > -1;
+    return getIndexOfIgnoreCase (sText, sSearch, aSortLocale) > -1;
+  }
+
+  /**
+   * Check if cSearch is contained within sText ignoring case.
+   * 
+   * @param sText
+   *        The text to search in. May be <code>null</code>.
+   * @param cSearch
+   *        The char to search for. May be <code>null</code>.
+   * @param aSortLocale
+   *        The locale to be used for case unifying.
+   * @return <code>true</code> if sSearch is contained in sText,
+   *         <code>false</code> otherwise.
+   * @see String#indexOf(int)
+   */
+  public static boolean containsIgnoreCase (@Nullable final String sText,
+                                            @Nullable final char cSearch,
+                                            @Nonnull final Locale aSortLocale)
+  {
+    return getIndexOfIgnoreCase (sText, cSearch, aSortLocale) > -1;
+  }
+
+  /**
+   * Check if any of the passed searched characters is contained in the input
+   * char array.
+   * 
+   * @param aInput
+   *        The input char array. May be <code>null</code>.
+   * @param aSearchChars
+   *        The char array to search. May not be <code>null</code>.
+   * @return <code>true</code> if at least any of the search char is contained
+   *         in the input char array, <code>false</code> otherwise.
+   * @deprecated Use {@link #containsAny(char[],char[])} instead
+   */
+  @Deprecated
+  public static boolean multiContains (@Nonnull final char [] aInput, @Nonnull final char [] aSearchChars)
+  {
+    return containsAny (aInput, aSearchChars);
+  }
+
+  /**
+   * Check if any of the passed searched characters is contained in the input
+   * char array.
+   * 
+   * @param aInput
+   *        The input char array. May be <code>null</code>.
+   * @param aSearchChars
+   *        The char array to search. May not be <code>null</code>.
+   * @return <code>true</code> if at least any of the search char is contained
+   *         in the input char array, <code>false</code> otherwise.
+   */
+  public static boolean containsAny (@Nonnull final char [] aInput, @Nonnull final char [] aSearchChars)
+  {
+    if (aSearchChars == null)
+      throw new NullPointerException ("searchChars");
+
+    if (aInput != null)
+      for (final char cIn : aInput)
+        for (final char cSearch : aSearchChars)
+          if (cIn == cSearch)
+            return true;
+    return false;
+  }
+
+  /**
+   * Check if any of the passed searched characters in contained in the input
+   * string.
+   * 
+   * @param sInput
+   *        The input string. May be <code>null</code>.
+   * @param aSearchChars
+   *        The char array to search. May not be <code>null</code>.
+   * @return <code>true</code> if at least any of the search char is contained
+   *         in the input char array, <code>false</code> otherwise.
+   */
+  public static boolean containsAny (@Nonnull final String sInput, @Nonnull final char [] aSearchChars)
+  {
+    return sInput == null ? false : containsAny (sInput.toCharArray (), aSearchChars);
   }
 
   /**
@@ -1869,15 +2466,15 @@ public final class StringHelper
   public static int getOccurrenceCount (@Nullable final String sText, @Nullable final String sSearch)
   {
     int ret = 0;
-    final int nTextLength = length (sText);
-    final int nSearchLength = length (sSearch);
+    final int nTextLength = getLength (sText);
+    final int nSearchLength = getLength (sSearch);
     if (nTextLength > 0 && nSearchLength > 0 && nTextLength >= nSearchLength)
     {
       int nLastIndex = 0, nIndex;
       do
       {
         // Start searching from the last result
-        nIndex = indexOf (sText.substring (nLastIndex), sSearch);
+        nIndex = getIndexOf (sText.substring (nLastIndex), sSearch);
         if (nIndex > -1)
         {
           // Match found
@@ -1998,22 +2595,36 @@ public final class StringHelper
     return hasText (aCS) ? aCS.charAt (0) : CGlobal.ILLEGAL_CHAR;
   }
 
+  public static char getFirstChar (@Nullable final char [] aChars)
+  {
+    return ArrayHelper.getFirst (aChars, CGlobal.ILLEGAL_CHAR);
+  }
+
   public static char getLastChar (@Nullable final CharSequence aCS)
   {
-    return hasText (aCS) ? aCS.charAt (aCS.length () - 1) : CGlobal.ILLEGAL_CHAR;
+    final int nLength = getLength (aCS);
+    return nLength > 0 ? aCS.charAt (nLength - 1) : CGlobal.ILLEGAL_CHAR;
+  }
+
+  public static char getLastChar (@Nullable final char [] aChars)
+  {
+    return ArrayHelper.getLast (aChars, CGlobal.ILLEGAL_CHAR);
   }
 
   @Nonnegative
   public static int getCharCount (@Nullable final String s, final char cSearch)
   {
+    return s == null ? 0 : getCharCount (s.toCharArray (), cSearch);
+  }
+
+  @Nonnegative
+  public static int getCharCount (@Nullable final char [] aChars, final char cSearch)
+  {
     int ret = 0;
-    if (s != null)
-    {
-      final char [] aChars = s.toCharArray ();
+    if (aChars != null)
       for (final char c : aChars)
         if (c == cSearch)
           ++ret;
-    }
     return ret;
   }
 
@@ -2072,20 +2683,32 @@ public final class StringHelper
         return nPrefix + nIndex;
   }
 
+  /**
+   * @deprecated Use {@link #getCutAfterLength(String,int,String)} instead
+   */
+  @Deprecated
   @Nonnull
   public static String cutAfterLength (@Nonnull final String sValue,
                                        @Nonnegative final int nMaxLength,
-                                       @Nonnull final String sNewSuffix)
+                                       @Nullable final String sNewSuffix)
+  {
+    return getCutAfterLength (sValue, nMaxLength, sNewSuffix);
+  }
+
+  @Nonnull
+  public static String getCutAfterLength (@Nonnull final String sValue,
+                                          @Nonnegative final int nMaxLength,
+                                          @Nullable final String sNewSuffix)
   {
     if (sValue == null)
       throw new NullPointerException ("value");
     if (nMaxLength < 0)
       throw new IllegalArgumentException ("Illegal max length");
-    if (sNewSuffix == null)
-      throw new NullPointerException ("newSuffix");
 
     if (sValue.length () <= nMaxLength)
       return sValue;
+    if (isEmpty (sNewSuffix))
+      return sValue.substring (0, nMaxLength);
     return sValue.substring (0, nMaxLength) + sNewSuffix;
   }
 
@@ -2483,9 +3106,26 @@ public final class StringHelper
    *        <code>null</code>.
    * @return 0 if the parameter is <code>null</code>, its length otherwise.
    * @see CharSequence#length()
+   * @deprecated Use {@link #getLength(CharSequence)} instead
    */
+  @Deprecated
   @Nonnegative
   public static int length (@Nullable final CharSequence aCS)
+  {
+    return getLength (aCS);
+  }
+
+  /**
+   * Get the length of the passed character sequence.
+   * 
+   * @param aCS
+   *        The character sequence who's length is to be determined. May be
+   *        <code>null</code>.
+   * @return 0 if the parameter is <code>null</code>, its length otherwise.
+   * @see CharSequence#length()
+   */
+  @Nonnegative
+  public static int getLength (@Nullable final CharSequence aCS)
   {
     return aCS == null ? 0 : aCS.length ();
   }
@@ -2567,11 +3207,51 @@ public final class StringHelper
    * @return An empty string in case the passed object was <code>null</code>.
    *         Never <code>null</code>.
    * @see Object#toString()
+   * @deprecated Use {@link #getToString(Object)} instead
    */
+  @Deprecated
   @Nonnull
   public static String toString (@Nullable final Object aObject)
   {
-    return toString (aObject, "");
+    return getToString (aObject);
+  }
+
+  /**
+   * Convert the passed object to a string using the {@link Object#toString()}
+   * method.
+   * 
+   * @param aObject
+   *        The value to be converted. May be <code>null</code>.
+   * @return An empty string in case the passed object was <code>null</code>.
+   *         Never <code>null</code>.
+   * @see Object#toString()
+   */
+  @Nonnull
+  public static String getToString (@Nullable final Object aObject)
+  {
+    return getToString (aObject, "");
+  }
+
+  /**
+   * Convert the passed object to a string using the {@link Object#toString()}
+   * method or otherwise return the passed default value.
+   * 
+   * @param aObject
+   *        The value to be converted. May be <code>null</code>.
+   * @param sNullValue
+   *        The value to be returned in case the passed object is
+   *        <code>null</code>. May be <code>null</code> itself.
+   * @return The passed default value in case the passed object was
+   *         <code>null</code> or the result of {@link Object#toString()} on the
+   *         passed object.
+   * @see Object#toString()
+   * @deprecated Use {@link #getToString(Object,String)} instead
+   */
+  @Deprecated
+  @Nullable
+  public static String toString (@Nullable final Object aObject, @Nullable final String sNullValue)
+  {
+    return getToString (aObject, sNullValue);
   }
 
   /**
@@ -2589,28 +3269,8 @@ public final class StringHelper
    * @see Object#toString()
    */
   @Nullable
-  public static String toString (@Nullable final Object aObject, @Nullable final String sNullValue)
+  public static String getToString (@Nullable final Object aObject, @Nullable final String sNullValue)
   {
     return aObject == null ? sNullValue : aObject.toString ();
-  }
-
-  /**
-   * Check if any of the passed searched characters in contained in the input
-   * char array.
-   * 
-   * @param aInput
-   *        The input char array. May not be <code>null</code>.
-   * @param aSearchChars
-   *        The char array to search. May not be <code>null</code>.
-   * @return <code>true</code> if at least any of the search char is contained
-   *         in the input char array, false otherwise.
-   */
-  public static boolean multiContains (@Nonnull final char [] aInput, @Nonnull final char [] aSearchChars)
-  {
-    for (final char cIn : aInput)
-      for (final char cSearch : aSearchChars)
-        if (cIn == cSearch)
-          return true;
-    return false;
   }
 }

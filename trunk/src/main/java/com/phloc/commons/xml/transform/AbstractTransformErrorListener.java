@@ -65,7 +65,7 @@ public abstract class AbstractTransformErrorListener implements ErrorListener
                                              @Nonnull final String sPrefix)
   {
     final SourceLocator aLocator = ex.getLocator ();
-    final String sResourceID = aLocator == null ? null : StringHelper.concatenateOnDemand (aLocator.getPublicId (),
+    final String sResourceID = aLocator == null ? null : StringHelper.getConcatenatedOnDemand (aLocator.getPublicId (),
                                                                                            "/",
                                                                                            aLocator.getSystemId ());
     final IResourceLocation aLocation = new ResourceLocation (sResourceID,

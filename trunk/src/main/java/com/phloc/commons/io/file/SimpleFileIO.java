@@ -203,7 +203,7 @@ public final class SimpleFileIO
                                     @Nonnull final List <String> aContent,
                                     @Nonnull final String sCharset)
   {
-    return writeFile (aFile, StringHelper.implode (CGlobal.LINE_SEPARATOR, aContent), sCharset);
+    return writeFile (aFile, StringHelper.getImploded (CGlobal.LINE_SEPARATOR, aContent), sCharset);
   }
 
   @Nonnull
@@ -211,6 +211,6 @@ public final class SimpleFileIO
                                     @Nonnull final List <String> aContent,
                                     @Nonnull final Charset aCharset)
   {
-    return writeFile (aFile, StringHelper.implode (CGlobal.LINE_SEPARATOR, aContent), aCharset);
+    return writeFile (aFile, StringHelper.getImploded (CGlobal.LINE_SEPARATOR, aContent), aCharset);
   }
 }

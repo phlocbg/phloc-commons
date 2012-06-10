@@ -650,38 +650,38 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   @Test
   public void testLeadingZero ()
   {
-    assertEquals ("005", StringHelper.leadingZero (5, 3));
-    assertEquals ("0005", StringHelper.leadingZero (5, 4));
-    assertEquals ("5", StringHelper.leadingZero (5, 1));
-    assertEquals ("56", StringHelper.leadingZero (56, 1));
-    assertEquals ("56", StringHelper.leadingZero (56, 2));
-    assertEquals ("056", StringHelper.leadingZero (56, 3));
-    assertEquals ("0000056", StringHelper.leadingZero (56, 7));
-    assertEquals ("0005678", StringHelper.leadingZero (5678, 7));
-    assertEquals ("-5", StringHelper.leadingZero (-5, 1));
-    assertEquals ("-05", StringHelper.leadingZero (-5, 2));
-    assertEquals ("-005", StringHelper.leadingZero (-5, 3));
+    assertEquals ("005", StringHelper.getLeadingZero (5, 3));
+    assertEquals ("0005", StringHelper.getLeadingZero (5, 4));
+    assertEquals ("5", StringHelper.getLeadingZero (5, 1));
+    assertEquals ("56", StringHelper.getLeadingZero (56, 1));
+    assertEquals ("56", StringHelper.getLeadingZero (56, 2));
+    assertEquals ("056", StringHelper.getLeadingZero (56, 3));
+    assertEquals ("0000056", StringHelper.getLeadingZero (56, 7));
+    assertEquals ("0005678", StringHelper.getLeadingZero (5678, 7));
+    assertEquals ("-5", StringHelper.getLeadingZero (-5, 1));
+    assertEquals ("-05", StringHelper.getLeadingZero (-5, 2));
+    assertEquals ("-005", StringHelper.getLeadingZero (-5, 3));
 
-    assertEquals ("005", StringHelper.leadingZero (5L, 3));
-    assertEquals ("0005", StringHelper.leadingZero (5L, 4));
-    assertEquals ("5", StringHelper.leadingZero (5L, 1));
-    assertEquals ("56", StringHelper.leadingZero (56L, 1));
-    assertEquals ("56", StringHelper.leadingZero (56L, 2));
-    assertEquals ("056", StringHelper.leadingZero (56L, 3));
-    assertEquals ("0000056", StringHelper.leadingZero (56L, 7));
-    assertEquals ("0005678", StringHelper.leadingZero (5678L, 7));
-    assertEquals ("-5", StringHelper.leadingZero (-5L, 1));
-    assertEquals ("-05", StringHelper.leadingZero (-5L, 2));
-    assertEquals ("-005", StringHelper.leadingZero (-5L, 3));
+    assertEquals ("005", StringHelper.getLeadingZero (5L, 3));
+    assertEquals ("0005", StringHelper.getLeadingZero (5L, 4));
+    assertEquals ("5", StringHelper.getLeadingZero (5L, 1));
+    assertEquals ("56", StringHelper.getLeadingZero (56L, 1));
+    assertEquals ("56", StringHelper.getLeadingZero (56L, 2));
+    assertEquals ("056", StringHelper.getLeadingZero (56L, 3));
+    assertEquals ("0000056", StringHelper.getLeadingZero (56L, 7));
+    assertEquals ("0005678", StringHelper.getLeadingZero (5678L, 7));
+    assertEquals ("-5", StringHelper.getLeadingZero (-5L, 1));
+    assertEquals ("-05", StringHelper.getLeadingZero (-5L, 2));
+    assertEquals ("-005", StringHelper.getLeadingZero (-5L, 3));
 
-    assertNull (StringHelper.leadingZero ((Byte) null, 5));
-    assertEquals ("00013", StringHelper.leadingZero (Byte.valueOf ((byte) 13), 5));
-    assertNull (StringHelper.leadingZero ((Integer) null, 5));
-    assertEquals ("00013", StringHelper.leadingZero (Integer.valueOf (13), 5));
-    assertNull (StringHelper.leadingZero ((Long) null, 5));
-    assertEquals ("00013", StringHelper.leadingZero (Long.valueOf (13), 5));
-    assertNull (StringHelper.leadingZero ((Short) null, 5));
-    assertEquals ("00013", StringHelper.leadingZero (Short.valueOf ((short) 13), 5));
+    assertNull (StringHelper.getLeadingZero ((Byte) null, 5));
+    assertEquals ("00013", StringHelper.getLeadingZero (Byte.valueOf ((byte) 13), 5));
+    assertNull (StringHelper.getLeadingZero ((Integer) null, 5));
+    assertEquals ("00013", StringHelper.getLeadingZero (Integer.valueOf (13), 5));
+    assertNull (StringHelper.getLeadingZero ((Long) null, 5));
+    assertEquals ("00013", StringHelper.getLeadingZero (Long.valueOf (13), 5));
+    assertNull (StringHelper.getLeadingZero ((Short) null, 5));
+    assertEquals ("00013", StringHelper.getLeadingZero (Short.valueOf ((short) 13), 5));
   }
 
   @Test
@@ -690,7 +690,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     try
     {
       // null not allowed
-      StringHelper.hexEncode (null);
+      StringHelper.getHexEncoded (null);
       fail ();
     }
     catch (final NullPointerException ex)
@@ -698,46 +698,46 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     try
     {
       // null not allowed
-      StringHelper.hexEncode (null, 0, 5);
+      StringHelper.getHexEncoded (null, 0, 5);
       fail ();
     }
     catch (final NullPointerException ex)
     {}
     try
     {
-      StringHelper.hexEncode (new byte [0], -1, 5);
+      StringHelper.getHexEncoded (new byte [0], -1, 5);
       fail ();
     }
     catch (final IllegalArgumentException ex)
     {}
     try
     {
-      StringHelper.hexEncode (new byte [0], 0, -1);
+      StringHelper.getHexEncoded (new byte [0], 0, -1);
       fail ();
     }
     catch (final IllegalArgumentException ex)
     {}
     try
     {
-      StringHelper.hexEncode (new byte [0], 0, 1);
+      StringHelper.getHexEncoded (new byte [0], 0, 1);
       fail ();
     }
     catch (final IllegalArgumentException ex)
     {}
 
-    assertEquals (StringHelper.hexEncode (new byte [] {}), "");
-    assertEquals (StringHelper.hexEncode (new byte [] { 1 }), "01");
-    assertEquals (StringHelper.hexEncode (new byte [] { 1, 10 }), "010a");
-    assertEquals (StringHelper.hexEncode (new byte [] { 0, 1, 10, (byte) 255 }), "00010aff");
+    assertEquals (StringHelper.getHexEncoded (new byte [] {}), "");
+    assertEquals (StringHelper.getHexEncoded (new byte [] { 1 }), "01");
+    assertEquals (StringHelper.getHexEncoded (new byte [] { 1, 10 }), "010a");
+    assertEquals (StringHelper.getHexEncoded (new byte [] { 0, 1, 10, (byte) 255 }), "00010aff");
 
     // Byte offset
-    assertEquals (StringHelper.hexEncode (new byte [] { 1, 10 }, 0, 2), "010a");
-    assertEquals (StringHelper.hexEncode (new byte [] { 1, 10 }, 0, 1), "01");
-    assertEquals (StringHelper.hexEncode (new byte [] { 1, 10 }, 1, 1), "0a");
+    assertEquals (StringHelper.getHexEncoded (new byte [] { 1, 10 }, 0, 2), "010a");
+    assertEquals (StringHelper.getHexEncoded (new byte [] { 1, 10 }, 0, 1), "01");
+    assertEquals (StringHelper.getHexEncoded (new byte [] { 1, 10 }, 1, 1), "0a");
     try
     {
       // length is too large
-      StringHelper.hexEncode (new byte [] { 1, 10 }, 1, 2);
+      StringHelper.getHexEncoded (new byte [] { 1, 10 }, 1, 2);
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -775,7 +775,15 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     try
     {
       // null not allowed
-      StringHelper.hexDecode (null);
+      StringHelper.getHexDecoded ((String) null);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+    try
+    {
+      // null not allowed
+      StringHelper.getHexDecoded ((char []) null);
       fail ();
     }
     catch (final NullPointerException ex)
@@ -783,7 +791,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     try
     {
       // odd length
-      StringHelper.hexDecode ("000");
+      StringHelper.getHexDecoded ("000");
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -791,7 +799,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     try
     {
       // No valid hex char 'g'
-      StringHelper.hexDecode ("0g");
+      StringHelper.getHexDecoded ("0g");
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -799,7 +807,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     try
     {
       // No valid hex char 'g'
-      StringHelper.hexDecode ("g0");
+      StringHelper.getHexDecoded ("g0");
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -807,87 +815,87 @@ public final class StringHelperTest extends AbstractPhlocTestCase
 
     for (final String sString : new String [] { "Super", "Hallo", "", "Welt!", "fff" })
       assertEquals (sString,
-                    new String (StringHelper.hexDecode (StringHelper.hexEncode (sString.getBytes (CCharset.CHARSET_ISO_8859_1_OBJ))),
+                    new String (StringHelper.getHexDecoded (StringHelper.getHexEncoded (sString.getBytes (CCharset.CHARSET_ISO_8859_1_OBJ))),
                                 CCharset.CHARSET_ISO_8859_1_OBJ));
 
-    assertArrayEquals (new byte [] { 0 }, StringHelper.hexDecode ("00"));
-    assertArrayEquals (new byte [] { 0, 1 }, StringHelper.hexDecode ("0001"));
+    assertArrayEquals (new byte [] { 0 }, StringHelper.getHexDecoded ("00"));
+    assertArrayEquals (new byte [] { 0, 1 }, StringHelper.getHexDecoded ("0001"));
   }
 
   @Test
   public void testHexStringByte ()
   {
-    assertEquals ("0", StringHelper.hexString ((byte) 0));
-    assertEquals ("9", StringHelper.hexString ((byte) 9));
-    assertEquals ("a", StringHelper.hexString ((byte) 10));
-    assertEquals ("ff", StringHelper.hexString ((byte) 255));
+    assertEquals ("0", StringHelper.getHexString ((byte) 0));
+    assertEquals ("9", StringHelper.getHexString ((byte) 9));
+    assertEquals ("a", StringHelper.getHexString ((byte) 10));
+    assertEquals ("ff", StringHelper.getHexString ((byte) 255));
   }
 
   @Test
   public void testHexStringLeadingZeroByte ()
   {
-    assertEquals ("0000", StringHelper.hexStringLeadingZero ((byte) 0, 4));
-    assertEquals ("0009", StringHelper.hexStringLeadingZero ((byte) 9, 4));
-    assertEquals ("000a", StringHelper.hexStringLeadingZero ((byte) 10, 4));
-    assertEquals ("00ff", StringHelper.hexStringLeadingZero ((byte) 255, 4));
+    assertEquals ("0000", StringHelper.getHexStringLeadingZero ((byte) 0, 4));
+    assertEquals ("0009", StringHelper.getHexStringLeadingZero ((byte) 9, 4));
+    assertEquals ("000a", StringHelper.getHexStringLeadingZero ((byte) 10, 4));
+    assertEquals ("00ff", StringHelper.getHexStringLeadingZero ((byte) 255, 4));
   }
 
   @Test
   public void testHexStringInt ()
   {
-    assertEquals ("9", StringHelper.hexString (9));
-    assertEquals ("a", StringHelper.hexString (10));
-    assertEquals ("ff", StringHelper.hexString (255));
-    assertEquals ("ffff", StringHelper.hexString (65535));
+    assertEquals ("9", StringHelper.getHexString (9));
+    assertEquals ("a", StringHelper.getHexString (10));
+    assertEquals ("ff", StringHelper.getHexString (255));
+    assertEquals ("ffff", StringHelper.getHexString (65535));
   }
 
   @Test
   public void testHexStringLeadingZeroInt ()
   {
-    assertEquals ("09", StringHelper.hexStringLeadingZero (9, 2));
-    assertEquals ("00a", StringHelper.hexStringLeadingZero (10, 3));
-    assertEquals ("00ff", StringHelper.hexStringLeadingZero (255, 4));
-    assertEquals ("ffff", StringHelper.hexStringLeadingZero (65535, 4));
-    assertEquals ("ffff", StringHelper.hexStringLeadingZero (65535, 0));
+    assertEquals ("09", StringHelper.getHexStringLeadingZero (9, 2));
+    assertEquals ("00a", StringHelper.getHexStringLeadingZero (10, 3));
+    assertEquals ("00ff", StringHelper.getHexStringLeadingZero (255, 4));
+    assertEquals ("ffff", StringHelper.getHexStringLeadingZero (65535, 4));
+    assertEquals ("ffff", StringHelper.getHexStringLeadingZero (65535, 0));
   }
 
   @Test
   public void testHexStringLong ()
   {
-    assertEquals ("9", StringHelper.hexString (9L));
-    assertEquals ("a", StringHelper.hexString (10L));
-    assertEquals ("ff", StringHelper.hexString (255L));
-    assertEquals ("ffff", StringHelper.hexString (65535L));
-    assertEquals ("ffff0000", StringHelper.hexString (65536L * 65535L));
+    assertEquals ("9", StringHelper.getHexString (9L));
+    assertEquals ("a", StringHelper.getHexString (10L));
+    assertEquals ("ff", StringHelper.getHexString (255L));
+    assertEquals ("ffff", StringHelper.getHexString (65535L));
+    assertEquals ("ffff0000", StringHelper.getHexString (65536L * 65535L));
   }
 
   @Test
   public void testHexStringLeadingZeroLong ()
   {
-    assertEquals ("09", StringHelper.hexStringLeadingZero (9L, 2));
-    assertEquals ("00a", StringHelper.hexStringLeadingZero (10L, 3));
-    assertEquals ("00ff", StringHelper.hexStringLeadingZero (255L, 4));
-    assertEquals ("ffff", StringHelper.hexStringLeadingZero (65535L, 4));
-    assertEquals ("0000ffff", StringHelper.hexStringLeadingZero (65535L, 8));
-    assertEquals ("ffff0000", StringHelper.hexStringLeadingZero (65536L * 65535L, 5));
+    assertEquals ("09", StringHelper.getHexStringLeadingZero (9L, 2));
+    assertEquals ("00a", StringHelper.getHexStringLeadingZero (10L, 3));
+    assertEquals ("00ff", StringHelper.getHexStringLeadingZero (255L, 4));
+    assertEquals ("ffff", StringHelper.getHexStringLeadingZero (65535L, 4));
+    assertEquals ("0000ffff", StringHelper.getHexStringLeadingZero (65535L, 8));
+    assertEquals ("ffff0000", StringHelper.getHexStringLeadingZero (65536L * 65535L, 5));
   }
 
   @Test
   public void testHexStringShort ()
   {
-    assertEquals ("0", StringHelper.hexString ((short) 0));
-    assertEquals ("9", StringHelper.hexString ((short) 9));
-    assertEquals ("a", StringHelper.hexString ((short) 10));
-    assertEquals ("ff", StringHelper.hexString ((short) 255));
+    assertEquals ("0", StringHelper.getHexString ((short) 0));
+    assertEquals ("9", StringHelper.getHexString ((short) 9));
+    assertEquals ("a", StringHelper.getHexString ((short) 10));
+    assertEquals ("ff", StringHelper.getHexString ((short) 255));
   }
 
   @Test
   public void testHexStringLeadingZeroShort ()
   {
-    assertEquals ("0000", StringHelper.hexStringLeadingZero ((short) 0, 4));
-    assertEquals ("0009", StringHelper.hexStringLeadingZero ((short) 9, 4));
-    assertEquals ("000a", StringHelper.hexStringLeadingZero ((short) 10, 4));
-    assertEquals ("00ff", StringHelper.hexStringLeadingZero ((short) 255, 4));
+    assertEquals ("0000", StringHelper.getHexStringLeadingZero ((short) 0, 4));
+    assertEquals ("0009", StringHelper.getHexStringLeadingZero ((short) 9, 4));
+    assertEquals ("000a", StringHelper.getHexStringLeadingZero ((short) 10, 4));
+    assertEquals ("00ff", StringHelper.getHexStringLeadingZero ((short) 255, 4));
   }
 
   @Test
@@ -940,16 +948,16 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   public void testImplodeIterable ()
   {
     final List <String> aList = ContainerHelper.newList ("a", "b", "c");
-    assertEquals ("", StringHelper.implode (".", (String []) null));
-    assertEquals ("", StringHelper.implode (".", (List <String>) null));
-    assertEquals ("a.b.c", StringHelper.implode (".", aList));
-    assertEquals ("abc", StringHelper.implode ("", aList));
-    assertEquals ("a.b.c", StringHelper.implode (".", aList.toArray (new String [3])));
-    assertEquals ("abc", StringHelper.implode ("", aList.toArray (new String [3])));
+    assertEquals ("", StringHelper.getImploded (".", (String []) null));
+    assertEquals ("", StringHelper.getImploded (".", (List <String>) null));
+    assertEquals ("a.b.c", StringHelper.getImploded (".", aList));
+    assertEquals ("abc", StringHelper.getImploded ("", aList));
+    assertEquals ("a.b.c", StringHelper.getImploded (".", aList.toArray (new String [3])));
+    assertEquals ("abc", StringHelper.getImploded ("", aList.toArray (new String [3])));
 
     try
     {
-      StringHelper.implode (null, aList);
+      StringHelper.getImploded (null, aList);
       fail ();
     }
     catch (final NullPointerException ex)
@@ -961,37 +969,29 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   public void testImplodeArray ()
   {
     final String [] aArray = new String [] { "a", "b", "c" };
-    assertEquals ("a.b", StringHelper.implode (".", aArray, 0, 2));
-    assertEquals ("b.c", StringHelper.implode (".", aArray, 1, 2));
-    assertEquals ("", StringHelper.implode (".", aArray, 0, 0));
-    assertEquals ("", StringHelper.implode (".", aArray, 2, 0));
-    assertEquals ("", StringHelper.implode (".", null, 2, 0));
+    assertEquals ("a.b", StringHelper.getImploded (".", aArray, 0, 2));
+    assertEquals ("b.c", StringHelper.getImploded (".", aArray, 1, 2));
+    assertEquals ("", StringHelper.getImploded (".", aArray, 0, 0));
+    assertEquals ("", StringHelper.getImploded (".", aArray, 2, 0));
+    assertEquals ("", StringHelper.getImploded (".", null, 2, 0));
 
     try
     {
-      StringHelper.implode (null, aArray, 2, 2);
+      StringHelper.getImploded (null, aArray, 2, 2);
       fail ();
     }
     catch (final NullPointerException ex)
     {}
     try
     {
-      StringHelper.implode (".", aArray, -1, 2);
+      StringHelper.getImploded (".", aArray, -1, 2);
       fail ();
     }
     catch (final IllegalArgumentException ex)
     {}
     try
     {
-      StringHelper.implode (".", aArray, 0, -1);
-      fail ();
-    }
-    catch (final IllegalArgumentException ex)
-    {}
-    try
-    {
-      // too long
-      StringHelper.implode (".", aArray, 2, 2);
+      StringHelper.getImploded (".", aArray, 0, -1);
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -999,14 +999,22 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     try
     {
       // too long
-      StringHelper.implode (".", aArray, 0, 4);
+      StringHelper.getImploded (".", aArray, 2, 2);
       fail ();
     }
     catch (final IllegalArgumentException ex)
     {}
     try
     {
-      StringHelper.implode (null, aArray);
+      // too long
+      StringHelper.getImploded (".", aArray, 0, 4);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+    try
+    {
+      StringHelper.getImploded (null, aArray);
       fail ();
     }
     catch (final NullPointerException ex)
@@ -1017,22 +1025,22 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   public void testImplodeMap ()
   {
     final Map <String, String> aMap = ContainerHelper.newOrderedMap ("a", "true", "b", "true", "c", "false");
-    assertEquals ("atruebtruecfalse", StringHelper.implode ("", "", aMap));
-    assertEquals ("atrue,btrue,cfalse", StringHelper.implode (",", "", aMap));
-    assertEquals ("a,trueb,truec,false", StringHelper.implode ("", ",", aMap));
-    assertEquals ("a,true,b,true,c,false", StringHelper.implode (",", ",", aMap));
-    assertEquals ("a:true,b:true,c:false", StringHelper.implode (",", ":", aMap));
+    assertEquals ("atruebtruecfalse", StringHelper.getImploded ("", "", aMap));
+    assertEquals ("atrue,btrue,cfalse", StringHelper.getImploded (",", "", aMap));
+    assertEquals ("a,trueb,truec,false", StringHelper.getImploded ("", ",", aMap));
+    assertEquals ("a,true,b,true,c,false", StringHelper.getImploded (",", ",", aMap));
+    assertEquals ("a:true,b:true,c:false", StringHelper.getImploded (",", ":", aMap));
 
     try
     {
-      StringHelper.implode (null, ":", aMap);
+      StringHelper.getImploded (null, ":", aMap);
       fail ();
     }
     catch (final NullPointerException ex)
     {}
     try
     {
-      StringHelper.implode (",", null, aMap);
+      StringHelper.getImploded (",", null, aMap);
       fail ();
     }
     catch (final NullPointerException ex)
@@ -1042,25 +1050,25 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   @Test
   public void testExplodeToList ()
   {
-    List <String> ret = StringHelper.explode ("@", "a@b@@c");
+    List <String> ret = StringHelper.getExploded ("@", "a@b@@c");
     assertEquals (ContainerHelper.newList ("a", "b", "", "c"), ret);
-    ret = StringHelper.explode ("uu", "auubuuuuuuc");
+    ret = StringHelper.getExploded ("uu", "auubuuuuuuc");
     assertEquals (ContainerHelper.newList ("a", "b", "", "", "c"), ret);
-    ret = StringHelper.explode (".", "a.b...c");
+    ret = StringHelper.getExploded (".", "a.b...c");
     assertEquals (ContainerHelper.newList ("a", "b", "", "", "c"), ret);
-    ret = StringHelper.explode ("o", "boo:and:foo");
+    ret = StringHelper.getExploded ("o", "boo:and:foo");
     assertEquals (ContainerHelper.newList ("b", "", ":and:f", "", ""), ret);
-    ret = StringHelper.explode ("@", "@a@b@@c");
+    ret = StringHelper.getExploded ("@", "@a@b@@c");
     assertEquals (ContainerHelper.newList ("", "a", "b", "", "c"), ret);
-    ret = StringHelper.explode ("@", "a@b@@c@");
+    ret = StringHelper.getExploded ("@", "a@b@@c@");
     assertEquals (ContainerHelper.newList ("a", "b", "", "c", ""), ret);
-    ret = StringHelper.explode ("@", "@a@b@@c@");
+    ret = StringHelper.getExploded ("@", "@a@b@@c@");
     assertEquals (ContainerHelper.newList ("", "a", "b", "", "c", ""), ret);
-    assertTrue (StringHelper.explode ("@", null).isEmpty ());
+    assertTrue (StringHelper.getExploded ("@", null).isEmpty ());
 
     try
     {
-      StringHelper.explode (null, "@a@b@@c@");
+      StringHelper.getExploded (null, "@a@b@@c@");
       fail ();
     }
     catch (final NullPointerException ex)
@@ -1070,25 +1078,25 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   @Test
   public void testExplodeToSet ()
   {
-    Set <String> ret = StringHelper.explodeToSet ("@", "a@b@@c");
+    Set <String> ret = StringHelper.getExplodedToSet ("@", "a@b@@c");
     assertEquals (ContainerHelper.newSet ("a", "b", "", "c"), ret);
-    ret = StringHelper.explodeToSet ("uu", "auubuuuuuuc");
+    ret = StringHelper.getExplodedToSet ("uu", "auubuuuuuuc");
     assertEquals (ContainerHelper.newSet ("a", "b", "", "", "c"), ret);
-    ret = StringHelper.explodeToSet (".", "a.b...c");
+    ret = StringHelper.getExplodedToSet (".", "a.b...c");
     assertEquals (ContainerHelper.newSet ("a", "b", "", "", "c"), ret);
-    ret = StringHelper.explodeToSet ("o", "boo:and:foo");
+    ret = StringHelper.getExplodedToSet ("o", "boo:and:foo");
     assertEquals (ContainerHelper.newSet ("b", "", ":and:f", "", ""), ret);
-    ret = StringHelper.explodeToSet ("@", "@a@b@@c");
+    ret = StringHelper.getExplodedToSet ("@", "@a@b@@c");
     assertEquals (ContainerHelper.newSet ("", "a", "b", "", "c"), ret);
-    ret = StringHelper.explodeToSet ("@", "a@b@@c@");
+    ret = StringHelper.getExplodedToSet ("@", "a@b@@c@");
     assertEquals (ContainerHelper.newSet ("a", "b", "", "c", ""), ret);
-    ret = StringHelper.explodeToSet ("@", "@a@b@@c@");
+    ret = StringHelper.getExplodedToSet ("@", "@a@b@@c@");
     assertEquals (ContainerHelper.newSet ("", "a", "b", "", "c", ""), ret);
-    assertTrue (StringHelper.explodeToSet ("@", null).isEmpty ());
+    assertTrue (StringHelper.getExplodedToSet ("@", null).isEmpty ());
 
     try
     {
-      StringHelper.explodeToSet (null, "@a@b@@c@");
+      StringHelper.getExplodedToSet (null, "@a@b@@c@");
       fail ();
     }
     catch (final NullPointerException ex)
@@ -1098,25 +1106,25 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   @Test
   public void testExplodeToOrderedSet ()
   {
-    Set <String> ret = StringHelper.explodeToOrderedSet ("@", "a@b@@c");
+    Set <String> ret = StringHelper.getExplodedToOrderedSet ("@", "a@b@@c");
     assertEquals (ContainerHelper.newSet ("a", "b", "", "c"), ret);
-    ret = StringHelper.explodeToOrderedSet ("uu", "auubuuuuuuc");
+    ret = StringHelper.getExplodedToOrderedSet ("uu", "auubuuuuuuc");
     assertEquals (ContainerHelper.newSet ("a", "b", "", "", "c"), ret);
-    ret = StringHelper.explodeToOrderedSet (".", "a.b...c");
+    ret = StringHelper.getExplodedToOrderedSet (".", "a.b...c");
     assertEquals (ContainerHelper.newSet ("a", "b", "", "", "c"), ret);
-    ret = StringHelper.explodeToOrderedSet ("o", "boo:and:foo");
+    ret = StringHelper.getExplodedToOrderedSet ("o", "boo:and:foo");
     assertEquals (ContainerHelper.newSet ("b", "", ":and:f", "", ""), ret);
-    ret = StringHelper.explodeToOrderedSet ("@", "@a@b@@c");
+    ret = StringHelper.getExplodedToOrderedSet ("@", "@a@b@@c");
     assertEquals (ContainerHelper.newSet ("", "a", "b", "", "c"), ret);
-    ret = StringHelper.explodeToOrderedSet ("@", "a@b@@c@");
+    ret = StringHelper.getExplodedToOrderedSet ("@", "a@b@@c@");
     assertEquals (ContainerHelper.newSet ("a", "b", "", "c", ""), ret);
-    ret = StringHelper.explodeToOrderedSet ("@", "@a@b@@c@");
+    ret = StringHelper.getExplodedToOrderedSet ("@", "@a@b@@c@");
     assertEquals (ContainerHelper.newSet ("", "a", "b", "", "c", ""), ret);
-    assertTrue (StringHelper.explodeToOrderedSet ("@", null).isEmpty ());
+    assertTrue (StringHelper.getExplodedToOrderedSet ("@", null).isEmpty ());
 
     try
     {
-      StringHelper.explodeToOrderedSet (null, "@a@b@@c@");
+      StringHelper.getExplodedToOrderedSet (null, "@a@b@@c@");
       fail ();
     }
     catch (final NullPointerException ex)
@@ -1162,24 +1170,24 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   @Test
   public void testConcatenateOnDemand ()
   {
-    assertEquals ("abc", StringHelper.concatenateOnDemand ("a", "b", "c"));
-    assertEquals ("a", StringHelper.concatenateOnDemand ("a", "b", null));
-    assertEquals ("a", StringHelper.concatenateOnDemand ("a", "b", ""));
-    assertEquals ("c", StringHelper.concatenateOnDemand (null, "b", "c"));
-    assertEquals ("c", StringHelper.concatenateOnDemand ("", "b", "c"));
-    assertEquals ("ac", StringHelper.concatenateOnDemand ("a", "", "c"));
-    assertEquals ("ac", StringHelper.concatenateOnDemand ("a", null, "c"));
-    assertEquals ("bc", StringHelper.concatenateOnDemand (null, null, "bc"));
-    assertEquals ("", StringHelper.concatenateOnDemand (null, null, null));
-    assertEquals ("", StringHelper.concatenateOnDemand ("", "", ""));
+    assertEquals ("abc", StringHelper.getConcatenatedOnDemand ("a", "b", "c"));
+    assertEquals ("a", StringHelper.getConcatenatedOnDemand ("a", "b", null));
+    assertEquals ("a", StringHelper.getConcatenatedOnDemand ("a", "b", ""));
+    assertEquals ("c", StringHelper.getConcatenatedOnDemand (null, "b", "c"));
+    assertEquals ("c", StringHelper.getConcatenatedOnDemand ("", "b", "c"));
+    assertEquals ("ac", StringHelper.getConcatenatedOnDemand ("a", "", "c"));
+    assertEquals ("ac", StringHelper.getConcatenatedOnDemand ("a", null, "c"));
+    assertEquals ("bc", StringHelper.getConcatenatedOnDemand (null, null, "bc"));
+    assertEquals ("", StringHelper.getConcatenatedOnDemand (null, null, null));
+    assertEquals ("", StringHelper.getConcatenatedOnDemand ("", "", ""));
 
-    assertEquals ("a", StringHelper.concatenateOnDemand ("a", null));
-    assertEquals ("a", StringHelper.concatenateOnDemand ("a", ""));
-    assertEquals ("b", StringHelper.concatenateOnDemand (null, "b"));
-    assertEquals ("b", StringHelper.concatenateOnDemand ("", "b"));
-    assertEquals ("ab", StringHelper.concatenateOnDemand ("a", "b"));
-    assertEquals ("", StringHelper.concatenateOnDemand (null, null));
-    assertEquals ("", StringHelper.concatenateOnDemand ("", ""));
+    assertEquals ("a", StringHelper.getConcatenatedOnDemand ("a", null));
+    assertEquals ("a", StringHelper.getConcatenatedOnDemand ("a", ""));
+    assertEquals ("b", StringHelper.getConcatenatedOnDemand (null, "b"));
+    assertEquals ("b", StringHelper.getConcatenatedOnDemand ("", "b"));
+    assertEquals ("ab", StringHelper.getConcatenatedOnDemand ("a", "b"));
+    assertEquals ("", StringHelper.getConcatenatedOnDemand (null, null));
+    assertEquals ("", StringHelper.getConcatenatedOnDemand ("", ""));
   }
 
   @Test
@@ -1355,25 +1363,25 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   @Test
   public void testIndexOfString ()
   {
-    assertEquals (-1, StringHelper.indexOf (null, null));
-    assertEquals (-1, StringHelper.indexOf (null, "a"));
-    assertEquals (-1, StringHelper.indexOf ("b", null));
-    assertEquals (-1, StringHelper.indexOf ("b", "cd"));
-    assertEquals (-1, StringHelper.indexOf ("bla foo", "z"));
-    assertEquals (0, StringHelper.indexOf ("bla foo", "b"));
-    assertEquals (2, StringHelper.indexOf ("bla foo", "a"));
+    assertEquals (-1, StringHelper.getIndexOf (null, null));
+    assertEquals (-1, StringHelper.getIndexOf (null, "a"));
+    assertEquals (-1, StringHelper.getIndexOf ("b", null));
+    assertEquals (-1, StringHelper.getIndexOf ("b", "cd"));
+    assertEquals (-1, StringHelper.getIndexOf ("bla foo", "z"));
+    assertEquals (0, StringHelper.getIndexOf ("bla foo", "b"));
+    assertEquals (2, StringHelper.getIndexOf ("bla foo", "a"));
   }
 
   @Test
   public void testIndexOfChar ()
   {
-    assertEquals (-1, StringHelper.indexOf (null, '\0'));
-    assertEquals (-1, StringHelper.indexOf (null, 'a'));
-    assertEquals (-1, StringHelper.indexOf ("b", '\0'));
-    assertEquals (-1, StringHelper.indexOf ("b", 'c'));
-    assertEquals (-1, StringHelper.indexOf ("bla foo", 'z'));
-    assertEquals (0, StringHelper.indexOf ("bla foo", 'b'));
-    assertEquals (2, StringHelper.indexOf ("bla foo", 'a'));
+    assertEquals (-1, StringHelper.getIndexOf (null, '\0'));
+    assertEquals (-1, StringHelper.getIndexOf (null, 'a'));
+    assertEquals (-1, StringHelper.getIndexOf ("b", '\0'));
+    assertEquals (-1, StringHelper.getIndexOf ("b", 'c'));
+    assertEquals (-1, StringHelper.getIndexOf ("bla foo", 'z'));
+    assertEquals (0, StringHelper.getIndexOf ("bla foo", 'b'));
+    assertEquals (2, StringHelper.getIndexOf ("bla foo", 'a'));
   }
 
   @Test
@@ -1414,17 +1422,17 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   @Test
   public void testIndexOfIgnoreCaseString ()
   {
-    assertEquals (-1, StringHelper.indexOfIgnoreCase (null, null, L_DE));
-    assertEquals (-1, StringHelper.indexOfIgnoreCase (null, "a", L_DE));
-    assertEquals (-1, StringHelper.indexOfIgnoreCase ("b", null, L_DE));
-    assertEquals (-1, StringHelper.indexOfIgnoreCase ("b", "cd", L_DE));
-    assertEquals (-1, StringHelper.indexOfIgnoreCase ("bla foo", "z", L_DE));
-    assertEquals (0, StringHelper.indexOfIgnoreCase ("bla foo", "b", L_DE));
-    assertEquals (2, StringHelper.indexOfIgnoreCase ("bla foo", "a", L_DE));
-    assertEquals (0, StringHelper.indexOfIgnoreCase ("bla foo", "B", L_DE));
-    assertEquals (2, StringHelper.indexOfIgnoreCase ("bla foo", "A", L_DE));
-    assertEquals (0, StringHelper.indexOfIgnoreCase ("BLA FOO", "b", L_DE));
-    assertEquals (2, StringHelper.indexOfIgnoreCase ("BLA FOO", "a", L_DE));
+    assertEquals (-1, StringHelper.getIndexOfIgnoreCase (null, null, L_DE));
+    assertEquals (-1, StringHelper.getIndexOfIgnoreCase (null, "a", L_DE));
+    assertEquals (-1, StringHelper.getIndexOfIgnoreCase ("b", null, L_DE));
+    assertEquals (-1, StringHelper.getIndexOfIgnoreCase ("b", "cd", L_DE));
+    assertEquals (-1, StringHelper.getIndexOfIgnoreCase ("bla foo", "z", L_DE));
+    assertEquals (0, StringHelper.getIndexOfIgnoreCase ("bla foo", "b", L_DE));
+    assertEquals (2, StringHelper.getIndexOfIgnoreCase ("bla foo", "a", L_DE));
+    assertEquals (0, StringHelper.getIndexOfIgnoreCase ("bla foo", "B", L_DE));
+    assertEquals (2, StringHelper.getIndexOfIgnoreCase ("bla foo", "A", L_DE));
+    assertEquals (0, StringHelper.getIndexOfIgnoreCase ("BLA FOO", "b", L_DE));
+    assertEquals (2, StringHelper.getIndexOfIgnoreCase ("BLA FOO", "a", L_DE));
   }
 
   @Test
@@ -1559,7 +1567,8 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     assertEquals ('a', StringHelper.getFirstChar ("abc"));
     assertEquals ('a', StringHelper.getFirstChar ("a"));
     assertEquals (CGlobal.ILLEGAL_CHAR, StringHelper.getFirstChar (""));
-    assertEquals (CGlobal.ILLEGAL_CHAR, StringHelper.getFirstChar (null));
+    assertEquals (CGlobal.ILLEGAL_CHAR, StringHelper.getFirstChar ((CharSequence) null));
+    assertEquals (CGlobal.ILLEGAL_CHAR, StringHelper.getFirstChar ((char []) null));
   }
 
   @Test
@@ -1568,7 +1577,8 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     assertEquals ('c', StringHelper.getLastChar ("abc"));
     assertEquals ('a', StringHelper.getLastChar ("a"));
     assertEquals (CGlobal.ILLEGAL_CHAR, StringHelper.getLastChar (""));
-    assertEquals (CGlobal.ILLEGAL_CHAR, StringHelper.getLastChar (null));
+    assertEquals (CGlobal.ILLEGAL_CHAR, StringHelper.getLastChar ((CharSequence) null));
+    assertEquals (CGlobal.ILLEGAL_CHAR, StringHelper.getLastChar ((char []) null));
   }
 
   @Test
@@ -1578,7 +1588,8 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     assertEquals (1, StringHelper.getCharCount ("xabc", 'x'));
     assertEquals (1, StringHelper.getCharCount ("abxc", 'x'));
     assertEquals (1, StringHelper.getCharCount ("abcx", 'x'));
-    assertEquals (0, StringHelper.getCharCount (null, 'x'));
+    assertEquals (0, StringHelper.getCharCount ((String) null, 'x'));
+    assertEquals (0, StringHelper.getCharCount ((char []) null, 'x'));
     assertEquals (0, StringHelper.getCharCount ("", 'x'));
     for (int i = 0; i < 1000; ++i)
       assertEquals (i, StringHelper.getCharCount (StringHelper.getRepeated ('x', i), 'x'));
@@ -1634,15 +1645,15 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   @Test
   public void testCutAfterLength ()
   {
-    assertEquals ("abc...", StringHelper.cutAfterLength ("abc die Katze lief im Schnee", 3, "..."));
-    assertEquals ("ab", StringHelper.cutAfterLength ("ab", 3, "..."));
-    assertEquals ("abc", StringHelper.cutAfterLength ("abc", 3, "..."));
-    assertEquals ("", StringHelper.cutAfterLength ("", 3, "..."));
-    assertEquals ("abc", StringHelper.cutAfterLength ("abcdef", 3, ""));
+    assertEquals ("abc...", StringHelper.getCutAfterLength ("abc die Katze lief im Schnee", 3, "..."));
+    assertEquals ("ab", StringHelper.getCutAfterLength ("ab", 3, "..."));
+    assertEquals ("abc", StringHelper.getCutAfterLength ("abc", 3, "..."));
+    assertEquals ("", StringHelper.getCutAfterLength ("", 3, "..."));
+    assertEquals ("abc", StringHelper.getCutAfterLength ("abcdef", 3, ""));
 
     try
     {
-      StringHelper.cutAfterLength (null, 3, "...");
+      StringHelper.getCutAfterLength (null, 3, "...");
       fail ();
     }
     catch (final NullPointerException ex)
@@ -1650,7 +1661,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
 
     try
     {
-      StringHelper.cutAfterLength ("abc", -1, "...");
+      StringHelper.getCutAfterLength ("abc", -1, "...");
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -1658,7 +1669,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
 
     try
     {
-      StringHelper.cutAfterLength ("abc", 3, null);
+      StringHelper.getCutAfterLength ("abc", 3, null);
       fail ();
     }
     catch (final NullPointerException ex)
@@ -1946,26 +1957,26 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   @Test
   public void testToString ()
   {
-    assertEquals ("1", StringHelper.toString (I1));
-    assertEquals ("any", StringHelper.toString ("any"));
-    assertEquals ("", StringHelper.toString (null));
+    assertEquals ("1", StringHelper.getToString (I1));
+    assertEquals ("any", StringHelper.getToString ("any"));
+    assertEquals ("", StringHelper.getToString (null));
 
-    assertEquals ("1", StringHelper.toString (I1, "default"));
-    assertEquals ("any", StringHelper.toString ("any", "default"));
-    assertEquals ("default", StringHelper.toString (null, "default"));
+    assertEquals ("1", StringHelper.getToString (I1, "default"));
+    assertEquals ("any", StringHelper.getToString ("any", "default"));
+    assertEquals ("default", StringHelper.getToString (null, "default"));
 
-    assertEquals ("1", StringHelper.toString (I1, null));
-    assertEquals ("any", StringHelper.toString ("any", null));
-    assertNull (StringHelper.toString (null, null));
+    assertEquals ("1", StringHelper.getToString (I1, null));
+    assertEquals ("any", StringHelper.getToString ("any", null));
+    assertNull (StringHelper.getToString (null, null));
   }
 
   @Test
   public void testMultiContains ()
   {
     final char [] aIn = "abcde".toCharArray ();
-    assertTrue (StringHelper.multiContains (aIn, "a".toCharArray ()));
-    assertFalse (StringHelper.multiContains (aIn, "z".toCharArray ()));
-    assertFalse (StringHelper.multiContains (aIn, new char [0]));
-    assertFalse (StringHelper.multiContains (new char [0], "a".toCharArray ()));
+    assertTrue (StringHelper.containsAny (aIn, "a".toCharArray ()));
+    assertFalse (StringHelper.containsAny (aIn, "z".toCharArray ()));
+    assertFalse (StringHelper.containsAny (aIn, new char [0]));
+    assertFalse (StringHelper.containsAny (new char [0], "a".toCharArray ()));
   }
 }

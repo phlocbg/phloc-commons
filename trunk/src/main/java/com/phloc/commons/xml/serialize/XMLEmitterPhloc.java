@@ -242,7 +242,7 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
     if (StringHelper.hasText (sText))
     {
       // Split CDATA sections if the contain the illegal "]]>" marker
-      final List <String> aParts = StringHelper.explode (CDATA_END, sText);
+      final List <String> aParts = StringHelper.getExploded (CDATA_END, sText);
       final int nParts = aParts.size ();
       for (int i = 0; i < nParts; ++i)
       {

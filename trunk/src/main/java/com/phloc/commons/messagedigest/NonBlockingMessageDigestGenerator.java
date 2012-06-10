@@ -30,6 +30,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.annotations.DevelopersNote;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsMutableObject;
 import com.phloc.commons.collections.ArrayHelper;
@@ -169,6 +170,7 @@ public final class NonBlockingMessageDigestGenerator extends AbstractMessageDige
 
   @Nonnull
   @Deprecated
+  @DevelopersNote ("see MessageDigestGeneratorHelper")
   public static byte [] getDigestFromInputStream (@Nonnull @WillClose final InputStream aIS,
                                                   @Nonnull @Nonempty final EMessageDigestAlgorithm... aAlgorithms)
   {
@@ -177,6 +179,7 @@ public final class NonBlockingMessageDigestGenerator extends AbstractMessageDige
 
   @Nonnull
   @Deprecated
+  @DevelopersNote ("see MessageDigestGeneratorHelper")
   public static byte [] getDigest (@Nonnull final String sContent,
                                    @Nonnull @Nonempty final String sCharset,
                                    @Nonnull @Nonempty final EMessageDigestAlgorithm... aAlgorithms)
@@ -186,6 +189,7 @@ public final class NonBlockingMessageDigestGenerator extends AbstractMessageDige
 
   @Nonnull
   @Deprecated
+  @DevelopersNote ("see MessageDigestGeneratorHelper")
   public static byte [] getDigest (@Nonnull final byte [] aContent,
                                    @Nonnull @Nonempty final EMessageDigestAlgorithm... aAlgorithms)
   {

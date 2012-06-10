@@ -81,7 +81,7 @@ public abstract class AbstractSAXErrorHandler implements ErrorHandler
   protected static final IResourceError getSaxParseError (@Nonnull final EErrorLevel eErrorLevel,
                                                           @Nonnull final SAXParseException ex)
   {
-    final String sResourceID = StringHelper.concatenateOnDemand (ex.getPublicId (), "/", ex.getSystemId ());
+    final String sResourceID = StringHelper.getConcatenatedOnDemand (ex.getPublicId (), "/", ex.getSystemId ());
     final IResourceLocation aLocation = new ResourceLocation (sResourceID, ex.getLineNumber (), ex.getColumnNumber ());
     return new ResourceError (aLocation, eErrorLevel, ex.getMessage (), null);
   }

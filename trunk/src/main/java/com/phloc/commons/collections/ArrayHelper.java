@@ -451,18 +451,318 @@ public final class ArrayHelper
   }
 
   /**
+   * Get the first element of the array or the passed default if the passed
+   * array is empty.
+   * 
+   * @param aArray
+   *        The array who's first element is to be retrieved. May be
+   *        <code>null</code> or empty.
+   * @param aDefaultValue
+   *        The default value to be returned if the array is empty
+   * @return the first element if the passed array is not empty, the default
+   *         value if the passed array is empty.
+   */
+  public static boolean getFirst (@Nullable final boolean [] aArray, final boolean aDefaultValue)
+  {
+    return isEmpty (aArray) ? aDefaultValue : aArray[0];
+  }
+
+  /**
+   * Get the first element of the array or the passed default if the passed
+   * array is empty.
+   * 
+   * @param aArray
+   *        The array who's first element is to be retrieved. May be
+   *        <code>null</code> or empty.
+   * @param aDefaultValue
+   *        The default value to be returned if the array is empty
+   * @return the first element if the passed array is not empty, the default
+   *         value if the passed array is empty.
+   */
+  public static byte getFirst (@Nullable final byte [] aArray, final byte aDefaultValue)
+  {
+    return isEmpty (aArray) ? aDefaultValue : aArray[0];
+  }
+
+  /**
+   * Get the first element of the array or the passed default if the passed
+   * array is empty.
+   * 
+   * @param aArray
+   *        The array who's first element is to be retrieved. May be
+   *        <code>null</code> or empty.
+   * @param aDefaultValue
+   *        The default value to be returned if the array is empty
+   * @return the first element if the passed array is not empty, the default
+   *         value if the passed array is empty.
+   */
+  public static char getFirst (@Nullable final char [] aArray, final char aDefaultValue)
+  {
+    return isEmpty (aArray) ? aDefaultValue : aArray[0];
+  }
+
+  /**
+   * Get the first element of the array or the passed default if the passed
+   * array is empty.
+   * 
+   * @param aArray
+   *        The array who's first element is to be retrieved. May be
+   *        <code>null</code> or empty.
+   * @param aDefaultValue
+   *        The default value to be returned if the array is empty
+   * @return the first element if the passed array is not empty, the default
+   *         value if the passed array is empty.
+   */
+  public static double getFirst (@Nullable final double [] aArray, final double aDefaultValue)
+  {
+    return isEmpty (aArray) ? aDefaultValue : aArray[0];
+  }
+
+  /**
+   * Get the first element of the array or the passed default if the passed
+   * array is empty.
+   * 
+   * @param aArray
+   *        The array who's first element is to be retrieved. May be
+   *        <code>null</code> or empty.
+   * @param aDefaultValue
+   *        The default value to be returned if the array is empty
+   * @return the first element if the passed array is not empty, the default
+   *         value if the passed array is empty.
+   */
+  public static float getFirst (@Nullable final float [] aArray, final float aDefaultValue)
+  {
+    return isEmpty (aArray) ? aDefaultValue : aArray[0];
+  }
+
+  /**
+   * Get the first element of the array or the passed default if the passed
+   * array is empty.
+   * 
+   * @param aArray
+   *        The array who's first element is to be retrieved. May be
+   *        <code>null</code> or empty.
+   * @param aDefaultValue
+   *        The default value to be returned if the array is empty
+   * @return the first element if the passed array is not empty, the default
+   *         value if the passed array is empty.
+   */
+  public static int getFirst (@Nullable final int [] aArray, final int aDefaultValue)
+  {
+    return isEmpty (aArray) ? aDefaultValue : aArray[0];
+  }
+
+  /**
+   * Get the first element of the array or the passed default if the passed
+   * array is empty.
+   * 
+   * @param aArray
+   *        The array who's first element is to be retrieved. May be
+   *        <code>null</code> or empty.
+   * @param aDefaultValue
+   *        The default value to be returned if the array is empty
+   * @return the first element if the passed array is not empty, the default
+   *         value if the passed array is empty.
+   */
+  public static long getFirst (@Nullable final long [] aArray, final long aDefaultValue)
+  {
+    return isEmpty (aArray) ? aDefaultValue : aArray[0];
+  }
+
+  /**
+   * Get the first element of the array or the passed default if the passed
+   * array is empty.
+   * 
+   * @param aArray
+   *        The array who's first element is to be retrieved. May be
+   *        <code>null</code> or empty.
+   * @param aDefaultValue
+   *        The default value to be returned if the array is empty
+   * @return the first element if the passed array is not empty, the default
+   *         value if the passed array is empty.
+   */
+  public static short getFirst (@Nullable final short [] aArray, final short aDefaultValue)
+  {
+    return isEmpty (aArray) ? aDefaultValue : aArray[0];
+  }
+
+  /**
    * Get the first element of the array or <code>null</code> if the passed array
    * is empty.
    * 
    * @param aArray
-   *        The array who's first element is to be retrieved.
+   *        The array who's first element is to be retrieved. May be
+   *        <code>null</code> or empty.
    * @return <code>null</code> if the passed array is <code>null</code> or empty
    *         - the first element otherwise (may also be <code>null</code>).
    */
   @Nullable
   public static <ELEMENTTYPE> ELEMENTTYPE getFirst (@Nullable final ELEMENTTYPE... aArray)
   {
-    return isEmpty (aArray) ? null : aArray[0];
+    return getFirst (aArray, null);
+  }
+
+  /**
+   * Get the first element of the array or the passed default if the passed
+   * array is empty.
+   * 
+   * @param aArray
+   *        The array who's first element is to be retrieved. May be
+   *        <code>null</code> or empty.
+   * @param aDefaultValue
+   *        The default value to be returned if the array is empty
+   * @return the first element if the passed array is not empty, the default
+   *         value if the passed array is empty.
+   */
+  @Nullable
+  public static <ELEMENTTYPE> ELEMENTTYPE getFirst (@Nullable final ELEMENTTYPE [] aArray,
+                                                    @Nullable final ELEMENTTYPE aDefaultValue)
+  {
+    return isEmpty (aArray) ? aDefaultValue : aArray[0];
+  }
+
+  /**
+   * Get the last element of the array or the passed default if the passed array
+   * is empty.
+   * 
+   * @param aArray
+   *        The array who's last element is to be retrieved. May be
+   *        <code>null</code> or empty.
+   * @param aDefaultValue
+   *        The default value to be returned if the array is empty
+   * @return the last element if the passed array is not empty, the default
+   *         value if the passed array is empty.
+   */
+  public static boolean getLast (@Nullable final boolean [] aArray, final boolean aDefaultValue)
+  {
+    final int nSize = getSize (aArray);
+    return nSize == 0 ? aDefaultValue : aArray[nSize - 1];
+  }
+
+  /**
+   * Get the last element of the array or the passed default if the passed array
+   * is empty.
+   * 
+   * @param aArray
+   *        The array who's last element is to be retrieved. May be
+   *        <code>null</code> or empty.
+   * @param aDefaultValue
+   *        The default value to be returned if the array is empty
+   * @return the last element if the passed array is not empty, the default
+   *         value if the passed array is empty.
+   */
+  public static byte getLast (@Nullable final byte [] aArray, final byte aDefaultValue)
+  {
+    final int nSize = getSize (aArray);
+    return nSize == 0 ? aDefaultValue : aArray[nSize - 1];
+  }
+
+  /**
+   * Get the last element of the array or the passed default if the passed array
+   * is empty.
+   * 
+   * @param aArray
+   *        The array who's last element is to be retrieved. May be
+   *        <code>null</code> or empty.
+   * @param aDefaultValue
+   *        The default value to be returned if the array is empty
+   * @return the last element if the passed array is not empty, the default
+   *         value if the passed array is empty.
+   */
+  public static char getLast (@Nullable final char [] aArray, final char aDefaultValue)
+  {
+    final int nSize = getSize (aArray);
+    return nSize == 0 ? aDefaultValue : aArray[nSize - 1];
+  }
+
+  /**
+   * Get the last element of the array or the passed default if the passed array
+   * is empty.
+   * 
+   * @param aArray
+   *        The array who's last element is to be retrieved. May be
+   *        <code>null</code> or empty.
+   * @param aDefaultValue
+   *        The default value to be returned if the array is empty
+   * @return the last element if the passed array is not empty, the default
+   *         value if the passed array is empty.
+   */
+  public static double getLast (@Nullable final double [] aArray, final double aDefaultValue)
+  {
+    final int nSize = getSize (aArray);
+    return nSize == 0 ? aDefaultValue : aArray[nSize - 1];
+  }
+
+  /**
+   * Get the last element of the array or the passed default if the passed array
+   * is empty.
+   * 
+   * @param aArray
+   *        The array who's last element is to be retrieved. May be
+   *        <code>null</code> or empty.
+   * @param aDefaultValue
+   *        The default value to be returned if the array is empty
+   * @return the last element if the passed array is not empty, the default
+   *         value if the passed array is empty.
+   */
+  public static float getLast (@Nullable final float [] aArray, final float aDefaultValue)
+  {
+    final int nSize = getSize (aArray);
+    return nSize == 0 ? aDefaultValue : aArray[nSize - 1];
+  }
+
+  /**
+   * Get the last element of the array or the passed default if the passed array
+   * is empty.
+   * 
+   * @param aArray
+   *        The array who's last element is to be retrieved. May be
+   *        <code>null</code> or empty.
+   * @param aDefaultValue
+   *        The default value to be returned if the array is empty
+   * @return the last element if the passed array is not empty, the default
+   *         value if the passed array is empty.
+   */
+  public static int getLast (@Nullable final int [] aArray, final int aDefaultValue)
+  {
+    final int nSize = getSize (aArray);
+    return nSize == 0 ? aDefaultValue : aArray[nSize - 1];
+  }
+
+  /**
+   * Get the last element of the array or the passed default if the passed array
+   * is empty.
+   * 
+   * @param aArray
+   *        The array who's last element is to be retrieved. May be
+   *        <code>null</code> or empty.
+   * @param aDefaultValue
+   *        The default value to be returned if the array is empty
+   * @return the last element if the passed array is not empty, the default
+   *         value if the passed array is empty.
+   */
+  public static long getLast (@Nullable final long [] aArray, final long aDefaultValue)
+  {
+    final int nSize = getSize (aArray);
+    return nSize == 0 ? aDefaultValue : aArray[nSize - 1];
+  }
+
+  /**
+   * Get the last element of the array or the passed default if the passed array
+   * is empty.
+   * 
+   * @param aArray
+   *        The array who's last element is to be retrieved. May be
+   *        <code>null</code> or empty.
+   * @param aDefaultValue
+   *        The default value to be returned if the array is empty
+   * @return the last element if the passed array is not empty, the default
+   *         value if the passed array is empty.
+   */
+  public static short getLast (@Nullable final short [] aArray, final short aDefaultValue)
+  {
+    final int nSize = getSize (aArray);
+    return nSize == 0 ? aDefaultValue : aArray[nSize - 1];
   }
 
   /**
@@ -470,14 +770,35 @@ public final class ArrayHelper
    * is empty.
    * 
    * @param aArray
-   *        The array who's last element is to be retrieved.
+   *        The array who's last element is to be retrieved. May be
+   *        <code>null</code> or empty.
    * @return <code>null</code> if the passed array is <code>null</code> or empty
    *         - the last element otherwise (may also be <code>null</code>).
    */
   @Nullable
   public static <ELEMENTTYPE> ELEMENTTYPE getLast (@Nullable final ELEMENTTYPE... aArray)
   {
-    return isEmpty (aArray) ? null : aArray[aArray.length - 1];
+    return getLast (aArray, null);
+  }
+
+  /**
+   * Get the last element of the array or the passed default if the passed array
+   * is empty.
+   * 
+   * @param aArray
+   *        The array who's last element is to be retrieved. May be
+   *        <code>null</code> or empty.
+   * @param aDefaultValue
+   *        The default value to be returned if the array is empty
+   * @return the last element if the passed array is not empty, the default
+   *         value if the passed array is empty.
+   */
+  @Nullable
+  public static <ELEMENTTYPE> ELEMENTTYPE getLast (@Nullable final ELEMENTTYPE [] aArray,
+                                                   @Nullable final ELEMENTTYPE aDefaultValue)
+  {
+    final int nSize = getSize (aArray);
+    return nSize == 0 ? aDefaultValue : aArray[nSize - 1];
   }
 
   /**
