@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.codec;
 
+import javax.annotation.Nullable;
+
 import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.io.streams.StreamUtils;
@@ -28,10 +30,11 @@ public class RunLengthCodec implements IByteArrayDecoder
   public RunLengthCodec ()
   {}
 
-  public byte [] decode (final byte [] aEncodedBuffer)
+  @Nullable
+  public byte [] decode (@Nullable final byte [] aEncodedBuffer)
   {
     if (aEncodedBuffer == null)
-      throw new NullPointerException ("encodedBuffer");
+      return null;
 
     int nDupAmount = -1;
     final byte [] aReadBuffer = new byte [128];

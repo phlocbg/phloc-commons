@@ -20,7 +20,7 @@ package com.phloc.commons.codec;
 import java.awt.Image;
 import java.awt.image.PixelGrabber;
 
-import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.imageio.ImageIO;
 
 import org.slf4j.Logger;
@@ -35,9 +35,12 @@ public final class DCTCodec implements IByteArrayDecoder
   public DCTCodec ()
   {}
 
-  @Nonnull
-  public byte [] decode (@Nonnull final byte [] aEncodedBuffer)
+  @Nullable
+  public byte [] decode (@Nullable final byte [] aEncodedBuffer)
   {
+    if (aEncodedBuffer == null)
+      return null;
+
     Image aImg;
     try
     {

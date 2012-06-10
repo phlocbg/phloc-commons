@@ -20,7 +20,7 @@ package com.phloc.commons.codec;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
 
-import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,11 +51,11 @@ public final class FlateCodec implements ICodec
     return false;
   }
 
-  @Nonnull
-  public byte [] decode (@Nonnull final byte [] aEncodedBuffer)
+  @Nullable
+  public byte [] decode (@Nullable final byte [] aEncodedBuffer)
   {
     if (aEncodedBuffer == null)
-      throw new NullPointerException ("encodedBuffer");
+      return null;
 
     if (!_isZlibHead (aEncodedBuffer))
       s_aLogger.warn ("ZLib header not found");
@@ -74,11 +74,11 @@ public final class FlateCodec implements ICodec
     }
   }
 
-  @Nonnull
-  public byte [] encode (@Nonnull final byte [] aBuffer)
+  @Nullable
+  public byte [] encode (@Nullable final byte [] aBuffer)
   {
     if (aBuffer == null)
-      throw new NullPointerException ("buffer");
+      return null;
 
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
     final DeflaterOutputStream aEncodeOS = new DeflaterOutputStream (aBAOS);
