@@ -1650,6 +1650,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     assertEquals ("abc", StringHelper.getCutAfterLength ("abc", 3, "..."));
     assertEquals ("", StringHelper.getCutAfterLength ("", 3, "..."));
     assertEquals ("abc", StringHelper.getCutAfterLength ("abcdef", 3, ""));
+    assertEquals ("abc", StringHelper.getCutAfterLength ("abcdef", 3, null));
 
     try
     {
@@ -1665,14 +1666,6 @@ public final class StringHelperTest extends AbstractPhlocTestCase
       fail ();
     }
     catch (final IllegalArgumentException ex)
-    {}
-
-    try
-    {
-      StringHelper.getCutAfterLength ("abc", 3, null);
-      fail ();
-    }
-    catch (final NullPointerException ex)
     {}
   }
 

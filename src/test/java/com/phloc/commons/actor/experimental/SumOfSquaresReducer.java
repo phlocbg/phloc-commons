@@ -1,0 +1,43 @@
+package com.phloc.commons.actor.experimental;
+
+import java.math.BigInteger;
+
+/**
+ * A MapReducer that calculates the sum of squares of a list of integers.
+ * 
+ * @author BFEIGENB
+ */
+public class SumOfSquaresReducer implements MapReduceer
+{
+  @Override
+  public void map (final Object [] values, final int start, final int end)
+  {
+    for (int i = start; i <= end; i++)
+    {
+      values[i] = ((BigInteger) values[i]).multiply ((BigInteger) values[i]);
+      sleep (200); // fake taking time
+    }
+  }
+
+  @Override
+  public void reduce (final Object [] values, final int start, final int end, final Object [] target, final int posn)
+  {
+    BigInteger res = new BigInteger ("0");
+    for (int i = start; i <= end; i++)
+    {
+      res = res.add ((BigInteger) values[i]);
+      sleep (100); // fake taking time
+    }
+    target[posn] = res;
+  }
+
+  private void sleep (final int millis)
+  {
+    try
+    {
+      Thread.sleep (millis);
+    }
+    catch (final InterruptedException e)
+    {}
+  }
+}
