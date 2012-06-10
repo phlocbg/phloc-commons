@@ -204,14 +204,22 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
       m_aRWLock.readLock ().lock ();
       try
       {
-        for (final Class <?> aCurClass : ClassHelper.getClassHierarchy (aClass, true))
+        // Check for an exact match first
+        aMatchingImplementation = m_aMap.get (aClass);
+        if (aMatchingImplementation != null)
+          aMatchingConverterClass = aClass;
+        else
         {
-          final IEqualsImplementation aImpl = m_aMap.get (aCurClass);
-          if (aImpl != null)
+          // Scan hierarchy
+          for (final Class <?> aCurClass : ClassHelper.getClassHierarchy (aClass, true))
           {
-            aMatchingConverterClass = aCurClass;
-            aMatchingImplementation = aImpl;
-            break;
+            final IEqualsImplementation aImpl = m_aMap.get (aCurClass);
+            if (aImpl != null)
+            {
+              aMatchingImplementation = aImpl;
+              aMatchingConverterClass = aCurClass;
+              break;
+            }
           }
         }
       }
