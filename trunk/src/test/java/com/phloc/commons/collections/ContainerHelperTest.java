@@ -17,7 +17,7 @@
  */
 package com.phloc.commons.collections;
 
-import static com.phloc.commons.collections.ContainerHelper.containsNullElement;
+import static com.phloc.commons.collections.ContainerHelper.containsAnyNullElement;
 import static com.phloc.commons.collections.ContainerHelper.getCombinedEnumeration;
 import static com.phloc.commons.collections.ContainerHelper.getCombinedMap;
 import static com.phloc.commons.collections.ContainerHelper.getConcatenatedInline;
@@ -3026,14 +3026,14 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   @Test
   public void testContainsNullElement ()
   {
-    assertFalse (containsNullElement ((List <String>) null));
-    assertFalse (containsNullElement (new ArrayList <String> ()));
-    assertFalse (containsNullElement (newList ("a")));
-    assertFalse (containsNullElement (newList ("a", "b", "c")));
-    assertTrue (containsNullElement (newList (null, "a")));
-    assertTrue (containsNullElement (newList ("a", null)));
-    assertTrue (containsNullElement (newList ((String) null)));
-    assertTrue (containsNullElement (newList (null, Integer.valueOf (5))));
+    assertFalse (containsAnyNullElement ((List <String>) null));
+    assertFalse (containsAnyNullElement (new ArrayList <String> ()));
+    assertFalse (containsAnyNullElement (newList ("a")));
+    assertFalse (containsAnyNullElement (newList ("a", "b", "c")));
+    assertTrue (containsAnyNullElement (newList (null, "a")));
+    assertTrue (containsAnyNullElement (newList ("a", null)));
+    assertTrue (containsAnyNullElement (newList ((String) null)));
+    assertTrue (containsAnyNullElement (newList (null, Integer.valueOf (5))));
   }
 
   @Test

@@ -3155,18 +3155,55 @@ public final class ContainerHelper
    * Check if the passed collection contains at least one <code>null</code>
    * element.
    * 
-   * @param aCollection
+   * @param aCont
+   *        The collection to check. May be <code>null</code>.
+   * @return <code>true</code> only if the passed collection is neither
+   *         <code>null</code> nor empty and if at least one <code>null</code>
+   *         element is contained.
+   * @deprecated Use {@link #containsAnyNullElement(Iterable)} instead
+   */
+  @Deprecated
+  public static boolean containsNullElement (@Nullable final Iterable <?> aCont)
+  {
+    return containsAnyNullElement (aCont);
+  }
+
+  /**
+   * Check if the passed collection contains at least one <code>null</code>
+   * element.
+   * 
+   * @param aCont
    *        The collection to check. May be <code>null</code>.
    * @return <code>true</code> only if the passed collection is neither
    *         <code>null</code> nor empty and if at least one <code>null</code>
    *         element is contained.
    */
-  public static boolean containsNullElement (@Nullable final Collection <?> aCollection)
+  public static boolean containsAnyNullElement (@Nullable final Iterable <?> aCont)
   {
-    if (aCollection != null)
-      for (final Object aObj : aCollection)
+    if (aCont != null)
+      for (final Object aObj : aCont)
         if (aObj == null)
           return true;
     return false;
+  }
+
+  /**
+   * Check if the passed collection contains only <code>null</code> element.
+   * 
+   * @param aCont
+   *        The collection to check. May be <code>null</code>.
+   * @return <code>true</code> only if the passed collection is neither
+   *         <code>null</code> nor empty and if at least one <code>null</code>
+   *         element is contained.
+   */
+  public static boolean containsOnlyNullElements (@Nullable final Iterable <?> aCont)
+  {
+    if (isEmpty (aCont))
+      return false;
+
+    for (final Object aObj : aCont)
+      if (aObj != null)
+        return false;
+    return true;
   }
 }

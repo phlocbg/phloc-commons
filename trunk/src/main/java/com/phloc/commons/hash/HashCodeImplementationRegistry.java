@@ -175,14 +175,22 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
       m_aRWLock.readLock ().lock ();
       try
       {
-        for (final Class <?> aCurClass : ClassHelper.getClassHierarchy (aClass, true))
+        // Check for an exact match first
+        aMatchingImplementation = m_aMap.get (aClass);
+        if (aMatchingImplementation != null)
+          aMatchingConverterClass = aClass;
+        else
         {
-          final IHashCodeImplementation ret = m_aMap.get (aCurClass);
-          if (ret != null)
+          // Scan hierarchy
+          for (final Class <?> aCurClass : ClassHelper.getClassHierarchy (aClass, true))
           {
-            aMatchingConverterClass = aCurClass;
-            aMatchingImplementation = ret;
-            break;
+            final IHashCodeImplementation ret = m_aMap.get (aCurClass);
+            if (ret != null)
+            {
+              aMatchingConverterClass = aCurClass;
+              aMatchingImplementation = ret;
+              break;
+            }
           }
         }
       }
