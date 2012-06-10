@@ -169,8 +169,8 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
   {
     if (aClass != null)
     {
-      Class <?> aMatchingConverterClass = null;
       IHashCodeImplementation aMatchingImplementation = null;
+      Class <?> aMatchingConverterClass = null;
 
       m_aRWLock.readLock ().lock ();
       try
@@ -187,8 +187,8 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
             final IHashCodeImplementation ret = m_aMap.get (aCurClass);
             if (ret != null)
             {
-              aMatchingConverterClass = aCurClass;
               aMatchingImplementation = ret;
+              aMatchingConverterClass = aCurClass;
               break;
             }
           }
