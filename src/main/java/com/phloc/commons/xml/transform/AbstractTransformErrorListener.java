@@ -83,11 +83,11 @@ public abstract class AbstractTransformErrorListener implements ErrorListener
    * @param aResError
    *        The resource error to be handled. Never <code>null</code>.
    */
-  protected abstract void log (@Nonnull final IResourceError aResError);
+  protected abstract void internalLog (@Nonnull final IResourceError aResError);
 
   public final void warning (@Nonnull final TransformerException ex) throws TransformerException
   {
-    log (_buildError (ex, EErrorLevel.WARN, EXMLTransformTexts.TRANSFORMATION_WARNING));
+    internalLog (_buildError (ex, EErrorLevel.WARN, EXMLTransformTexts.TRANSFORMATION_WARNING));
 
     if (m_aWrappedErrorListener != null)
       m_aWrappedErrorListener.warning (ex);
@@ -95,7 +95,7 @@ public abstract class AbstractTransformErrorListener implements ErrorListener
 
   public final void error (@Nonnull final TransformerException ex) throws TransformerException
   {
-    log (_buildError (ex, EErrorLevel.ERROR, EXMLTransformTexts.TRANSFORMATION_ERROR));
+    internalLog (_buildError (ex, EErrorLevel.ERROR, EXMLTransformTexts.TRANSFORMATION_ERROR));
 
     if (m_aWrappedErrorListener != null)
       m_aWrappedErrorListener.error (ex);
@@ -103,7 +103,7 @@ public abstract class AbstractTransformErrorListener implements ErrorListener
 
   public final void fatalError (@Nonnull final TransformerException ex) throws TransformerException
   {
-    log (_buildError (ex, EErrorLevel.FATAL_ERROR, EXMLTransformTexts.TRANSFORMATION_FATAL_ERROR));
+    internalLog (_buildError (ex, EErrorLevel.FATAL_ERROR, EXMLTransformTexts.TRANSFORMATION_FATAL_ERROR));
 
     if (m_aWrappedErrorListener != null)
       m_aWrappedErrorListener.fatalError (ex);
