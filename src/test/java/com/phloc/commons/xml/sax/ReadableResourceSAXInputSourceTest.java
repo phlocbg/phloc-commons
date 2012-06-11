@@ -18,6 +18,7 @@
 package com.phloc.commons.xml.sax;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.io.InputStream;
@@ -45,6 +46,14 @@ public final class ReadableResourceSAXInputSourceTest
     assertNotNull (StreamUtils.getAllBytes (is.getByteStream ()));
     PhlocTestUtils.testToStringImplementation (is);
 
+    assertNull (new ReadableResourceSAXInputSource (new IInputStreamProvider ()
+    {
+      public InputStream getInputStream ()
+      {
+        return null;
+      }
+    }, "sysid").getByteStream ());
+
     try
     {
       new ReadableResourceSAXInputSource (null);
@@ -58,19 +67,6 @@ public final class ReadableResourceSAXInputSourceTest
       fail ();
     }
     catch (final NullPointerException ex)
-    {}
-    try
-    {
-      new ReadableResourceSAXInputSource (new IInputStreamProvider ()
-      {
-        public InputStream getInputStream ()
-        {
-          return null;
-        }
-      }, "sysid").getByteStream ();
-      fail ();
-    }
-    catch (final IllegalStateException ex)
     {}
   }
 }
