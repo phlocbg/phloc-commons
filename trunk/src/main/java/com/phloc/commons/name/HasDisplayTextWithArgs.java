@@ -43,7 +43,7 @@ public final class HasDisplayTextWithArgs implements IHasDisplayText
     if (aParentText == null)
       throw new NullPointerException ("parentText");
     if (ArrayHelper.isEmpty (aArgs))
-      throw new IllegalArgumentException ("array may not eb empty");
+      throw new IllegalArgumentException ("arguments may not be empty");
     m_aParentText = aParentText;
     m_aArgs = aArgs;
   }
