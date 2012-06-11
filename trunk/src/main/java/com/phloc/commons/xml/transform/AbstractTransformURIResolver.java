@@ -53,12 +53,12 @@ public abstract class AbstractTransformURIResolver implements URIResolver
   }
 
   @Nullable
-  protected abstract Source doResolve (final String sHref, final String sBase) throws TransformerException;
+  protected abstract Source internalResolve (final String sHref, final String sBase) throws TransformerException;
 
   @Nullable
   public final Source resolve (final String sHref, final String sBase) throws TransformerException
   {
-    final Source aSource = doResolve (sHref, sBase);
+    final Source aSource = internalResolve (sHref, sBase);
     if (aSource != null)
       return aSource;
 

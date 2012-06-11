@@ -154,7 +154,7 @@ public class SimpleLSResourceResolver implements LSResourceResolver
 
   @OverrideOnDemand
   @Nullable
-  protected IReadableResource resolveResource (final String sSystemId, final String sBaseURI) throws Exception
+  protected IReadableResource internalResolveResource (final String sSystemId, final String sBaseURI) throws Exception
   {
     return doStandardResourceResolving (sSystemId, sBaseURI);
   }
@@ -182,7 +182,7 @@ public class SimpleLSResourceResolver implements LSResourceResolver
     try
     {
       // Try to get the resource
-      final IReadableResource aResolvedResource = resolveResource (sSystemId, sBaseURI);
+      final IReadableResource aResolvedResource = internalResolveResource (sSystemId, sBaseURI);
       if (aResolvedResource != null)
         return new ResourceLSInput (aResolvedResource);
     }

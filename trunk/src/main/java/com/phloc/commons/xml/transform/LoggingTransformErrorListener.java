@@ -59,7 +59,7 @@ public class LoggingTransformErrorListener extends AbstractTransformErrorListene
   }
 
   @Override
-  protected void log (@Nonnull final IResourceError aResError)
+  protected void internalLog (@Nonnull final IResourceError aResError)
   {
     LogUtils.log (s_aLogger, aResError.getErrorLevel (), aResError.getAsString (m_aDisplayLocale));
   }

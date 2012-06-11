@@ -59,7 +59,7 @@ public class LoggingSAXErrorHandler extends AbstractSAXErrorHandler
   }
 
   @Override
-  protected void log (@Nonnull final EErrorLevel eErrorLevel, final SAXParseException aException)
+  protected void internalLog (@Nonnull final EErrorLevel eErrorLevel, final SAXParseException aException)
   {
     // As the SAX error messages are not localized, we can use a fixed locale
     // here

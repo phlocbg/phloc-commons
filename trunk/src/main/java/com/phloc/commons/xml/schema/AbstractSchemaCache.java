@@ -56,7 +56,7 @@ public abstract class AbstractSchemaCache extends SimpleCacheWithConversion <Str
   }
 
   @Nonnull
-  protected abstract SchemaFactory getSchemaFactory ();
+  protected abstract SchemaFactory internalGetSchemaFactory ();
 
   @Nonnull
   private Schema _getSchema (@Nonnull final String sResourceID, @Nonnull final Source [] aSources)
@@ -69,7 +69,7 @@ public abstract class AbstractSchemaCache extends SimpleCacheWithConversion <Str
         // Note: sMyResourceID == sResourceID
         try
         {
-          final Schema ret = getSchemaFactory ().newSchema (aSources);
+          final Schema ret = internalGetSchemaFactory ().newSchema (aSources);
           if (ret == null)
             throw new IllegalStateException ("Failed to create " +
                                              m_sSchemaTypeName +

@@ -45,7 +45,7 @@ public final class DefaultTransformURIResolver extends AbstractTransformURIResol
 
   @Override
   @Nullable
-  protected Source doResolve (final String sHref, final String sBase) throws TransformerException
+  protected Source internalResolve (final String sHref, final String sBase) throws TransformerException
   {
     try
     {

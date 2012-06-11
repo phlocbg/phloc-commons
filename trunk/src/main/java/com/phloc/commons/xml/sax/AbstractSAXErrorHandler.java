@@ -86,11 +86,11 @@ public abstract class AbstractSAXErrorHandler implements ErrorHandler
     return new ResourceError (aLocation, eErrorLevel, ex.getMessage ());
   }
 
-  protected abstract void log (@Nonnull EErrorLevel eErrorLevel, @Nonnull SAXParseException aException);
+  protected abstract void internalLog (@Nonnull EErrorLevel eErrorLevel, @Nonnull SAXParseException aException);
 
   public final void warning (final SAXParseException ex) throws SAXException
   {
-    log (EErrorLevel.WARN, ex);
+    internalLog (EErrorLevel.WARN, ex);
 
     // Call parent error handler if available
     if (m_aWrappedErrorHandler != null)
@@ -99,7 +99,7 @@ public abstract class AbstractSAXErrorHandler implements ErrorHandler
 
   public final void error (final SAXParseException ex) throws SAXException
   {
-    log (EErrorLevel.ERROR, ex);
+    internalLog (EErrorLevel.ERROR, ex);
 
     // Call parent error handler if available
     if (m_aWrappedErrorHandler != null)
@@ -108,7 +108,7 @@ public abstract class AbstractSAXErrorHandler implements ErrorHandler
 
   public final void fatalError (final SAXParseException ex) throws SAXException
   {
-    log (EErrorLevel.FATAL_ERROR, ex);
+    internalLog (EErrorLevel.FATAL_ERROR, ex);
 
     // Call parent error handler if available
     if (m_aWrappedErrorHandler != null)

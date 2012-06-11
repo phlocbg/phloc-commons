@@ -56,7 +56,7 @@ public class CollectingTransformErrorListener extends AbstractTransformErrorList
   }
 
   @Override
-  protected void log (@Nonnull final IResourceError aResError)
+  protected void internalLog (@Nonnull final IResourceError aResError)
   {
     m_aRWLock.writeLock ().lock ();
     try

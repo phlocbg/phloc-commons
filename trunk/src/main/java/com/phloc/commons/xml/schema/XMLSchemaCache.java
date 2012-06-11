@@ -66,7 +66,7 @@ public final class XMLSchemaCache extends AbstractSchemaCache
 
   @Override
   @Nonnull
-  protected SchemaFactory getSchemaFactory ()
+  protected SchemaFactory internalGetSchemaFactory ()
   {
     return m_aSchemaFactory;
   }
