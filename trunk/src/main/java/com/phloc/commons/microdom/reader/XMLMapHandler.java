@@ -139,26 +139,7 @@ public final class XMLMapHandler
       final IMicroDocument aDoc = MicroReader.readMicroXML (aIS);
       if (aDoc != null)
       {
-        // and insert all elements
-        for (final IMicroElement eMap : aDoc.getDocumentElement ().getChildElements (ELEMENT_MAP))
-        {
-          final String sName = eMap.getAttribute (ATTR_KEY);
-          if (sName == null)
-            s_aLogger.warn ("Ignoring mapping element because key is null");
-          else
-          {
-            final String sValue = eMap.getAttribute (ATTR_VALUE);
-            if (sValue == null)
-              s_aLogger.warn ("Ignoring mapping element because value is null");
-            else
-            {
-              if (aTargetMap.containsKey (sName))
-                s_aLogger.warn ("Key '" + sName + "' is already contained - overwriting!");
-              aTargetMap.put (sName, sValue);
-            }
-          }
-        }
-
+        readMap (aDoc, aTargetMap);
         return ESuccess.SUCCESS;
       }
     }
@@ -170,8 +151,63 @@ public final class XMLMapHandler
     {
       StreamUtils.close (aIS);
     }
-
     return ESuccess.FAILURE;
+  }
+
+  @Nonnull
+  public static ESuccess readMap (@Nonnull final IMicroDocument aDoc, @Nonnull final Map <String, String> aTargetMap)
+  {
+    if (aDoc == null)
+      throw new NullPointerException ("doc");
+    if (aTargetMap == null)
+      throw new NullPointerException ("targetMap");
+
+    try
+    {
+      // and insert all elements
+      for (final IMicroElement eMap : aDoc.getDocumentElement ().getChildElements (ELEMENT_MAP))
+      {
+        final String sName = eMap.getAttribute (ATTR_KEY);
+        if (sName == null)
+          s_aLogger.warn ("Ignoring mapping element because key is null");
+        else
+        {
+          final String sValue = eMap.getAttribute (ATTR_VALUE);
+          if (sValue == null)
+            s_aLogger.warn ("Ignoring mapping element because value is null");
+          else
+          {
+            if (aTargetMap.containsKey (sName))
+              s_aLogger.warn ("Key '" + sName + "' is already contained - overwriting!");
+            aTargetMap.put (sName, sValue);
+          }
+        }
+      }
+
+      return ESuccess.SUCCESS;
+    }
+    catch (final Throwable t)
+    {
+      s_aLogger.warn ("Failed to read mapping document", t);
+    }
+    return ESuccess.FAILURE;
+  }
+
+  @Nonnull
+  public static IMicroDocument createMapDocument (@Nonnull final Map <String, String> aMap)
+  {
+    if (aMap == null)
+      throw new NullPointerException ("map");
+
+    final IMicroDocument aDoc = new MicroDocument ();
+    final IMicroElement eRoot = aDoc.appendElement (ELEMENT_MAPPING);
+    for (final Map.Entry <String, String> aEntry : aMap.entrySet ())
+    {
+      final IMicroElement eMap = eRoot.appendElement (ELEMENT_MAP);
+      eMap.setAttribute (ATTR_KEY, aEntry.getKey ());
+      eMap.setAttribute (ATTR_VALUE, aEntry.getValue ());
+    }
+    return aDoc;
   }
 
   @Nonnull
@@ -205,16 +241,8 @@ public final class XMLMapHandler
 
     try
     {
-      final IMicroDocument aDoc = new MicroDocument ();
-      final IMicroElement eRoot = aDoc.appendElement (ELEMENT_MAPPING);
-      for (final Map.Entry <String, String> aEntry : aMap.entrySet ())
-      {
-        final IMicroElement eMap = eRoot.appendElement (ELEMENT_MAP);
-        eMap.setAttribute (ATTR_KEY, aEntry.getKey ());
-        eMap.setAttribute (ATTR_VALUE, aEntry.getValue ());
-      }
-      MicroWriter.writeToStream (aDoc, aOS, XMLWriterSettings.DEFAULT_XML_SETTINGS);
-      return ESuccess.SUCCESS;
+      final IMicroDocument aDoc = createMapDocument (aMap);
+      return MicroWriter.writeToStream (aDoc, aOS, XMLWriterSettings.DEFAULT_XML_SETTINGS);
     }
     finally
     {

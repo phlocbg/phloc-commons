@@ -35,6 +35,7 @@ import com.phloc.commons.CGlobal;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.io.IInputStreamProvider;
+import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.io.streamprovider.StringInputStreamProvider;
 import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
@@ -67,6 +68,7 @@ public final class MicroReaderTest
   {
     assertNull (MicroReader.readMicroXML ((InputSource) null));
     assertNull (MicroReader.readMicroXML ((InputStream) null));
+    assertNull (MicroReader.readMicroXML ((IReadableResource) null));
     assertNull (MicroReader.readMicroXML ((IInputStreamProvider) null));
     assertNull (MicroReader.readMicroXML ((Reader) null));
     assertNull (MicroReader.readMicroXML ((String) null));
@@ -148,6 +150,13 @@ public final class MicroReaderTest
                   "</span>" +
                   "</div>" +
                   "</content>", sResult);
+  }
+
+  @Test
+  public void testReadNonExistingResource ()
+  {
+    assertNull (MicroReader.readMicroXML (new ClassPathResource ("does-not-exist.xml")));
+    assertNull (MicroReader.readMicroXML ((IInputStreamProvider) new ClassPathResource ("does-not-exist.xml")));
   }
 
   @Test

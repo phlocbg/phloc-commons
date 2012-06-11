@@ -167,6 +167,22 @@ public final class XMLListHandler
   }
 
   @Nonnull
+  public static IMicroDocument createListDocument (@Nonnull final Collection <String> aCollection)
+  {
+    if (aCollection == null)
+      throw new NullPointerException ("collection");
+
+    final IMicroDocument aDoc = new MicroDocument ();
+    final IMicroElement eRoot = aDoc.appendElement (ELEMENT_LIST);
+    for (final String sItem : aCollection)
+    {
+      final IMicroElement eItem = eRoot.appendElement (ELEMENT_ITEM);
+      eItem.setAttribute (ATTR_VALUE, sItem);
+    }
+    return aDoc;
+  }
+
+  @Nonnull
   public static ESuccess writeList (@Nonnull final Collection <String> aCollection,
                                     @Nonnull final IOutputStreamProvider aOSP)
   {
@@ -199,15 +215,8 @@ public final class XMLListHandler
 
     try
     {
-      final IMicroDocument aDoc = new MicroDocument ();
-      final IMicroElement eRoot = aDoc.appendElement (ELEMENT_LIST);
-      for (final String sItem : aCollection)
-      {
-        final IMicroElement eItem = eRoot.appendElement (ELEMENT_ITEM);
-        eItem.setAttribute (ATTR_VALUE, sItem);
-      }
-      MicroWriter.writeToStream (aDoc, aOS, XMLWriterSettings.DEFAULT_XML_SETTINGS);
-      return ESuccess.SUCCESS;
+      final IMicroDocument aDoc = createListDocument (aCollection);
+      return MicroWriter.writeToStream (aDoc, aOS, XMLWriterSettings.SUGGESTED_XML_SETTINGS);
     }
     finally
     {
