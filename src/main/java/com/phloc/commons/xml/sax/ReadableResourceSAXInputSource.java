@@ -57,8 +57,9 @@ public final class ReadableResourceSAXInputSource extends InputSource
   public InputStream getByteStream ()
   {
     final InputStream aIS = m_aISP.getInputStream ();
-    if (aIS == null)
-      throw new IllegalStateException ("Failed to open input stream for " + m_aISP);
+    if (false)
+      if (aIS == null)
+        throw new IllegalStateException ("Failed to open input stream for " + m_aISP);
     return aIS;
   }
 
