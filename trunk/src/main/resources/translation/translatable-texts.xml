@@ -18,7 +18,7 @@
     limitations under the License.
 
 -->
-<translationitems count="419">
+<translationitems count="422">
   <item id="com.phloc.commons.locale.ELocaleName.ID_LANGUAGE_ALL">
     <de>Alle Sprachen</de>
     <en>All languages</en>
@@ -1694,5 +1694,17 @@
   <item id="com.phloc.commons.locale.country.ECountrySubName.US_WY">
     <de>Wyoming</de>
     <en>Wyoming</en>
+  </item>
+  <item id="com.phloc.commons.xml.transform.EXMLTransformTexts.TRANSFORMATION_ERROR">
+    <de>Transformationsfehler</de>
+    <en>Transformation error</en>
+  </item>
+  <item id="com.phloc.commons.xml.transform.EXMLTransformTexts.TRANSFORMATION_FATAL_ERROR">
+    <de>Schwerer Transformationsfehler</de>
+    <en>Transformation fatal error</en>
+  </item>
+  <item id="com.phloc.commons.xml.transform.EXMLTransformTexts.TRANSFORMATION_WARNING">
+    <de>Transformationswarnung</de>
+    <en>Transformation warning</en>
   </item>
 </translationitems>
