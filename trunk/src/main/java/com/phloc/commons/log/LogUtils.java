@@ -22,6 +22,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.error.EErrorLevel;
@@ -42,6 +43,21 @@ public final class LogUtils
   private LogUtils ()
   {}
 
+  public static void log (@Nonnull final Class <?> aLoggingClass,
+                          @Nonnull final EErrorLevel eErrorLevel,
+                          @Nonnull final String sMsg)
+  {
+    log (aLoggingClass, eErrorLevel, sMsg, null);
+  }
+
+  public static void log (@Nonnull final Class <?> aLoggingClass,
+                          @Nonnull final EErrorLevel eErrorLevel,
+                          @Nonnull final String sMsg,
+                          @Nullable final Throwable t)
+  {
+    log (LoggerFactory.getLogger (aLoggingClass), eErrorLevel, sMsg, t);
+  }
+
   public static void log (@Nonnull final Logger aLogger,
                           @Nonnull final EErrorLevel eErrorLevel,
                           @Nonnull final String sMsg)
@@ -54,6 +70,11 @@ public final class LogUtils
                           @Nonnull final String sMsg,
                           @Nullable final Throwable t)
   {
+    if (aLogger == null)
+      throw new NullPointerException ("logger");
+    if (eErrorLevel == null)
+      throw new NullPointerException ("errorLevel");
+
     if (eErrorLevel.isMoreOrEqualSevereThan (EErrorLevel.ERROR))
       aLogger.error (sMsg, t);
     else

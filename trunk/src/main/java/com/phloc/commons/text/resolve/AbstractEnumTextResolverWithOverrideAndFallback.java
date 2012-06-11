@@ -58,7 +58,7 @@ public abstract class AbstractEnumTextResolverWithOverrideAndFallback implements
    * @return The string in the passed locale. May be <code>null</code>.
    */
   @Nullable
-  protected abstract String getOverrideString (@Nonnull String sID, @Nonnull Locale aContentLocale);
+  protected abstract String internalGetOverrideString (@Nonnull String sID, @Nonnull Locale aContentLocale);
 
   /**
    * This method must return the fallback string for the passed parameters.
@@ -70,7 +70,7 @@ public abstract class AbstractEnumTextResolverWithOverrideAndFallback implements
    * @return The string in the passed locale. May be <code>null</code>.
    */
   @Nullable
-  protected abstract String getFallbackString (@Nonnull String sID, @Nonnull Locale aContentLocale);
+  protected abstract String internalGetFallbackString (@Nonnull String sID, @Nonnull Locale aContentLocale);
 
   @Nullable
   private String _getText (@Nonnull final Enum <?> aEnum,
@@ -84,7 +84,7 @@ public abstract class AbstractEnumTextResolverWithOverrideAndFallback implements
     (bIsWithArgs ? s_aStatsGetTextWithArgs : s_aStatsGetText).increment (sID);
 
     // Is there an override available?
-    String ret = getOverrideString (sID, aContentLocale);
+    String ret = internalGetOverrideString (sID, aContentLocale);
     if (ret != null)
     {
       // An override string was found!
@@ -100,7 +100,7 @@ public abstract class AbstractEnumTextResolverWithOverrideAndFallback implements
         // The text was not found -> try the fallback (e.g. for different
         // locale)
         s_aStatsFallback.increment ();
-        ret = getFallbackString (sID, aContentLocale);
+        ret = internalGetFallbackString (sID, aContentLocale);
       }
     }
     return ret;

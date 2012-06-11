@@ -50,10 +50,10 @@ public final class GenericReflectionTest
   public void testForName () throws ClassNotFoundException
   {
     assertSame (GenericReflectionTest.class,
-                GenericReflection.<GenericReflectionTest> forName (GenericReflectionTest.class.getName ()));
+                GenericReflection.<GenericReflectionTest> getClassFromName (GenericReflectionTest.class.getName ()));
     try
     {
-      GenericReflection.forName ("There ain't no such class");
+      GenericReflection.getClassFromName ("There ain't no such class");
       fail ();
     }
     catch (final ClassNotFoundException ex)
@@ -64,8 +64,8 @@ public final class GenericReflectionTest
   public void testSafeForName ()
   {
     assertSame (GenericReflectionTest.class,
-                GenericReflection.<GenericReflectionTest> safeForName (GenericReflectionTest.class.getName ()));
-    assertNull (GenericReflection.safeForName ("There ain't no such class"));
+                GenericReflection.<GenericReflectionTest> getClassFromNameSafe (GenericReflectionTest.class.getName ()));
+    assertNull (GenericReflection.getClassFromNameSafe ("There ain't no such class"));
   }
 
   @Test

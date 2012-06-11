@@ -61,7 +61,7 @@ public class FuncTestJavaCollator
     aSet.add ("A A");
     aSet.add ("AA A");
 
-    final Locale aLocale = LocaleCache.get ("de_DE");
+    final Locale aLocale = LocaleCache.getLocale ("de_DE");
 
     for (final String s : ContainerHelper.getSorted (aSet, new ComparatorString ()))
     {

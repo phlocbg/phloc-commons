@@ -42,23 +42,23 @@ public final class LocaleCacheTest extends AbstractPhlocTestCase
   @Test
   public void testGet ()
   {
-    assertNotNull (LocaleCache.get ("de"));
-    assertNotNull (LocaleCache.get ("de_at"));
-    assertNotNull (LocaleCache.get ("de_surely_not_known"));
-    assertNull (LocaleCache.get (null));
-    assertNull (LocaleCache.get (""));
+    assertNotNull (LocaleCache.getLocale ("de"));
+    assertNotNull (LocaleCache.getLocale ("de_at"));
+    assertNotNull (LocaleCache.getLocale ("de_surely_not_known"));
+    assertNull (LocaleCache.getLocale (null));
+    assertNull (LocaleCache.getLocale (""));
 
-    assertNotNull (LocaleCache.get ("de", "AT"));
-    assertEquals ("de_AT", LocaleCache.get ("de", "AT").toString ());
-    assertEquals ("de_AT", LocaleCache.get ("de", "at").toString ());
-    assertEquals ("de", LocaleCache.get ("de", null).toString ());
-    assertEquals ("_AT", LocaleCache.get (null, "AT").toString ());
-    assertNull (LocaleCache.get (null, null));
+    assertNotNull (LocaleCache.getLocale ("de", "AT"));
+    assertEquals ("de_AT", LocaleCache.getLocale ("de", "AT").toString ());
+    assertEquals ("de_AT", LocaleCache.getLocale ("de", "at").toString ());
+    assertEquals ("de", LocaleCache.getLocale ("de", null).toString ());
+    assertEquals ("_AT", LocaleCache.getLocale (null, "AT").toString ());
+    assertNull (LocaleCache.getLocale (null, null));
 
-    assertNotNull (LocaleCache.get ("de", "AT", "Vienna"));
+    assertNotNull (LocaleCache.getLocale ("de", "AT", "Vienna"));
     assertEquals ("de__Vienna", new Locale ("de", "", "Vienna").toString ());
-    assertEquals ("de__Vienna", LocaleCache.get ("de", null, "Vienna").toString ());
-    assertEquals ("de_AT", LocaleCache.get ("de", "AT", null).toString ());
+    assertEquals ("de__Vienna", LocaleCache.getLocale ("de", null, "Vienna").toString ());
+    assertEquals ("de_AT", LocaleCache.getLocale ("de", "AT", null).toString ());
   }
 
   @Test

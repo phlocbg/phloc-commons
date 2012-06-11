@@ -131,6 +131,7 @@ public final class MicroWriterTest
     _testGetNodeAsXMLString (aDoc.getDocumentElement ());
     _testGetNodeAsXMLString (new MicroElement ("xyz"));
     _testGetNodeAsXMLString (new MicroContainer ());
+    _testGetNodeAsXMLString (new MicroContainer (new MicroComment ("useless"), new MicroElement ("xyz")));
     _testGetNodeAsXMLString (new MicroComment ("useless"));
     _testGetNodeAsXMLString (new MicroEntityReference ("xyz"));
     _testGetNodeAsXMLString (new MicroCDATA ("xyz"));

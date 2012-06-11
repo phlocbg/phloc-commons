@@ -69,17 +69,17 @@ public final class LocaleUtils
       if (sLanguage.length () > 0)
       {
         // Use only the language
-        ret.add (0, LocaleCache.get (sLanguage));
+        ret.add (0, LocaleCache.getLocale (sLanguage));
         final String sCountry = aBaseLocale.getCountry ();
         if (sCountry.length () > 0)
         {
           // Use language + country
-          ret.add (0, LocaleCache.get (sLanguage, sCountry));
+          ret.add (0, LocaleCache.getLocale (sLanguage, sCountry));
           final String sVariant = aBaseLocale.getVariant ();
           if (sVariant.length () > 0)
           {
             // Use language + country + variant
-            ret.add (0, LocaleCache.get (sLanguage, sCountry, sVariant));
+            ret.add (0, LocaleCache.getLocale (sLanguage, sCountry, sVariant));
           }
         }
       }
@@ -257,7 +257,7 @@ public final class LocaleUtils
       sVariant = "";
 
     // And now resolve using the locale cache
-    return LocaleCache.get (sLanguage, sCountry, sVariant);
+    return LocaleCache.getLocale (sLanguage, sCountry, sVariant);
   }
 
   @Nullable

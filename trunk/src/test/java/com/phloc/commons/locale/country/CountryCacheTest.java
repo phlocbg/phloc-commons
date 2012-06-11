@@ -52,8 +52,8 @@ public final class CountryCacheTest
     // Returns a valid locale, but emits a warning:
     assertNotNull (CountryCache.getCountry ("xxx"));
     assertEquals (CountryCache.getCountry ("ch"), CountryCache.getCountry (new Locale ("de", "ch")));
-    assertEquals (LocaleCache.get ("", "AT", ""), CountryCache.getCountry ("_AT"));
-    assertEquals (LocaleCache.get ("", "AT", ""), CountryCache.getCountry ("de_AT"));
+    assertEquals (LocaleCache.getLocale ("", "AT", ""), CountryCache.getCountry ("_AT"));
+    assertEquals (LocaleCache.getLocale ("", "AT", ""), CountryCache.getCountry ("de_AT"));
     assertEquals (CountryCache.getCountry ("AT"), CountryCache.getCountry (CountryCache.getCountry ("AT").toString ()));
     for (final String sLocale : CountryCache.getAllCountries ())
       assertTrue (CountryCache.containsCountry (sLocale));

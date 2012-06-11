@@ -334,7 +334,7 @@ public final class MultiLingualTextThreadSafe implements IMultiLingualText
     {
       final String sText = aEntry.getValue ();
       if (sText != null)
-        ret.setText (LocaleCache.get (aEntry.getKey ()), sText);
+        ret.setText (LocaleCache.getLocale (aEntry.getKey ()), sText);
     }
     return ret;
   }

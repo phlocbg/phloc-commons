@@ -867,7 +867,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
           // Resolve any enum class
           // Note: The explicit EChange is just here, because an explicit enum
           // type is needed. It must of course not only be EChange :)
-          final Class <EChange> aClass = GenericReflection.forName (aParts[0]);
+          final Class <EChange> aClass = GenericReflection.getClassFromName (aParts[0]);
 
           // And look up the element by name
           return Enum.valueOf (aClass, aParts[1]);

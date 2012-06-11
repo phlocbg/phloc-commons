@@ -69,8 +69,8 @@ public final class LocaleUtilsTest extends AbstractPhlocTestCase
   @Test
   public void testGetAllLocaleDisplayNames ()
   {
-    assertNotNull (LocaleUtils.getAllLocaleDisplayNames (LocaleCache.get ("de")));
-    assertFalse (LocaleUtils.getAllLocaleDisplayNames (LocaleCache.get ("de")).isEmpty ());
+    assertNotNull (LocaleUtils.getAllLocaleDisplayNames (LocaleCache.getLocale ("de")));
+    assertFalse (LocaleUtils.getAllLocaleDisplayNames (LocaleCache.getLocale ("de")).isEmpty ());
   }
 
   @Test
@@ -90,25 +90,25 @@ public final class LocaleUtilsTest extends AbstractPhlocTestCase
     assertEquals (0, aList.size ());
 
     // Only the language
-    aList = LocaleUtils.getCalculatedLocaleListForResolving (LocaleCache.get ("de"));
+    aList = LocaleUtils.getCalculatedLocaleListForResolving (LocaleCache.getLocale ("de"));
     assertNotNull (aList);
     assertEquals (1, aList.size ());
-    assertEquals (LocaleCache.get ("de"), aList.get (0));
+    assertEquals (LocaleCache.getLocale ("de"), aList.get (0));
 
     // Language + country
-    aList = LocaleUtils.getCalculatedLocaleListForResolving (LocaleCache.get ("de", "AT"));
+    aList = LocaleUtils.getCalculatedLocaleListForResolving (LocaleCache.getLocale ("de", "AT"));
     assertNotNull (aList);
     assertEquals (2, aList.size ());
-    assertEquals (LocaleCache.get ("de", "AT"), aList.get (0));
-    assertEquals (LocaleCache.get ("de"), aList.get (1));
+    assertEquals (LocaleCache.getLocale ("de", "AT"), aList.get (0));
+    assertEquals (LocaleCache.getLocale ("de"), aList.get (1));
 
     // Language + country + Variant
-    aList = LocaleUtils.getCalculatedLocaleListForResolving (LocaleCache.get ("de", "AT", "Wien"));
+    aList = LocaleUtils.getCalculatedLocaleListForResolving (LocaleCache.getLocale ("de", "AT", "Wien"));
     assertNotNull (aList);
     assertEquals (3, aList.size ());
-    assertEquals (LocaleCache.get ("de", "AT", "Wien"), aList.get (0));
-    assertEquals (LocaleCache.get ("de", "AT"), aList.get (1));
-    assertEquals (LocaleCache.get ("de"), aList.get (2));
+    assertEquals (LocaleCache.getLocale ("de", "AT", "Wien"), aList.get (0));
+    assertEquals (LocaleCache.getLocale ("de", "AT"), aList.get (1));
+    assertEquals (LocaleCache.getLocale ("de"), aList.get (2));
 
     // No language - only country
     aList = LocaleUtils.getCalculatedLocaleListForResolving (new Locale ("", "AT"));
@@ -125,18 +125,18 @@ public final class LocaleUtilsTest extends AbstractPhlocTestCase
   public void testGetLocaleFromString ()
   {
     assertEquals (SystemHelper.getSystemLocale (), LocaleUtils.getLocaleFromString (""));
-    assertEquals (LocaleCache.get ("de"), LocaleUtils.getLocaleFromString ("de"));
-    assertEquals (LocaleCache.get ("de"), LocaleUtils.getLocaleFromString ("DE"));
-    assertEquals (LocaleCache.get ("de", "AT"), LocaleUtils.getLocaleFromString ("de_AT"));
-    assertEquals (LocaleCache.get ("de", "AT"), LocaleUtils.getLocaleFromString ("de_at"));
-    assertEquals (LocaleCache.get ("de", "AT"), LocaleUtils.getLocaleFromString ("de_at"));
+    assertEquals (LocaleCache.getLocale ("de"), LocaleUtils.getLocaleFromString ("de"));
+    assertEquals (LocaleCache.getLocale ("de"), LocaleUtils.getLocaleFromString ("DE"));
+    assertEquals (LocaleCache.getLocale ("de", "AT"), LocaleUtils.getLocaleFromString ("de_AT"));
+    assertEquals (LocaleCache.getLocale ("de", "AT"), LocaleUtils.getLocaleFromString ("de_at"));
+    assertEquals (LocaleCache.getLocale ("de", "AT"), LocaleUtils.getLocaleFromString ("de_at"));
     // only variant is not allowed!
-    assertEquals (LocaleCache.get ("", "", ""), LocaleUtils.getLocaleFromString ("__wien"));
-    assertEquals (LocaleCache.get ("de", "AT", "WIEN"), LocaleUtils.getLocaleFromString ("de_at_wien"));
-    assertEquals (LocaleCache.get ("de", "", "WIEN"), LocaleUtils.getLocaleFromString ("de__wien"));
-    assertEquals (LocaleCache.get ("", "AT", "WIEN"), LocaleUtils.getLocaleFromString ("_at_wien"));
-    assertEquals (LocaleCache.get ("", "AT", "WIEN"), LocaleUtils.getLocaleFromString ("dee_at_wien"));
-    assertEquals (LocaleCache.get ("de", "", "WIEN"), LocaleUtils.getLocaleFromString ("de_att_wien"));
+    assertEquals (LocaleCache.getLocale ("", "", ""), LocaleUtils.getLocaleFromString ("__wien"));
+    assertEquals (LocaleCache.getLocale ("de", "AT", "WIEN"), LocaleUtils.getLocaleFromString ("de_at_wien"));
+    assertEquals (LocaleCache.getLocale ("de", "", "WIEN"), LocaleUtils.getLocaleFromString ("de__wien"));
+    assertEquals (LocaleCache.getLocale ("", "AT", "WIEN"), LocaleUtils.getLocaleFromString ("_at_wien"));
+    assertEquals (LocaleCache.getLocale ("", "AT", "WIEN"), LocaleUtils.getLocaleFromString ("dee_at_wien"));
+    assertEquals (LocaleCache.getLocale ("de", "", "WIEN"), LocaleUtils.getLocaleFromString ("de_att_wien"));
   }
 
   @Test
@@ -177,6 +177,6 @@ public final class LocaleUtilsTest extends AbstractPhlocTestCase
     assertTrue (LocaleUtils.isSpecialLocale (CGlobal.LOCALE_ALL));
     assertTrue (LocaleUtils.isSpecialLocale (CGlobal.LOCALE_INDEPENDENT));
     assertFalse (LocaleUtils.isSpecialLocale (null));
-    assertFalse (LocaleUtils.isSpecialLocale (LocaleCache.get ("de")));
+    assertFalse (LocaleUtils.isSpecialLocale (LocaleCache.getLocale ("de")));
   }
 }

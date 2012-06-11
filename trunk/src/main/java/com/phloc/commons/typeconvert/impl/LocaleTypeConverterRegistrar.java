@@ -54,7 +54,7 @@ public final class LocaleTypeConverterRegistrar implements ITypeConverterRegistr
     {
       public Locale convert (final Object aSource)
       {
-        return LocaleCache.get ((String) aSource);
+        return LocaleCache.getLocale ((String) aSource);
       }
     });
   }

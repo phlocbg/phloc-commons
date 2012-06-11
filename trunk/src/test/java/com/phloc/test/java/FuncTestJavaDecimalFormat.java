@@ -112,7 +112,7 @@ public final class FuncTestJavaDecimalFormat
      * the pattern and then create a number format with this pattern. Something
      * like the following:
      */
-    NumberFormat curFormat = NumberFormat.getCurrencyInstance (LocaleCache.get ("fr"));
+    NumberFormat curFormat = NumberFormat.getCurrencyInstance (LocaleCache.getLocale ("fr"));
     assertTrue (curFormat instanceof DecimalFormat);
 
     final String pattern = ((DecimalFormat) curFormat).toPattern ();

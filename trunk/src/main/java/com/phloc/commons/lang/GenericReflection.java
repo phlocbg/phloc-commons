@@ -55,8 +55,18 @@ public final class GenericReflection
     return (DSTTYPE) aObject;
   }
 
+  /**
+   * @deprecated Use {@link #getClassFromName(String)} instead
+   */
+  @Deprecated
   @Nonnull
   public static <DATATYPE> Class <DATATYPE> forName (@Nonnull final String sName) throws ClassNotFoundException
+  {
+    return getClassFromName (sName);
+  }
+
+  @Nonnull
+  public static <DATATYPE> Class <DATATYPE> getClassFromName (@Nonnull final String sName) throws ClassNotFoundException
   {
     return uncheckedCast (Class.forName (sName));
   }
@@ -69,13 +79,30 @@ public final class GenericReflection
    * @param sName
    *        The name to be resolved.
    * @return <code>null</code> if the class could not be resolved
+   * @deprecated Use {@link #getClassFromNameSafe(String)} instead
    */
+  @Deprecated
   @Nullable
   public static <DATATYPE> Class <DATATYPE> safeForName (@Nonnull final String sName)
   {
+    return getClassFromNameSafe (sName);
+  }
+
+  /**
+   * Get the class of the given name
+   * 
+   * @param <DATATYPE>
+   *        The return type
+   * @param sName
+   *        The name to be resolved.
+   * @return <code>null</code> if the class could not be resolved
+   */
+  @Nullable
+  public static <DATATYPE> Class <DATATYPE> getClassFromNameSafe (@Nonnull final String sName)
+  {
     try
     {
-      return forName (sName);
+      return getClassFromName (sName);
     }
     catch (final ClassNotFoundException e)
     {
@@ -151,7 +178,7 @@ public final class GenericReflection
                                                                                             InvocationTargetException,
                                                                                             ClassNotFoundException
   {
-    return GenericReflection.<RETURNTYPE> invokeStaticMethod (forName (sClassName), sMethodName, aArgs);
+    return GenericReflection.<RETURNTYPE> invokeStaticMethod (getClassFromName (sClassName), sMethodName, aArgs);
   }
 
   public static <RETURNTYPE> RETURNTYPE invokeStaticMethod (@Nonnull final Class <?> aClass,
@@ -171,7 +198,10 @@ public final class GenericReflection
                                                                                             InvocationTargetException,
                                                                                             ClassNotFoundException
   {
-    return GenericReflection.<RETURNTYPE> invokeStaticMethod (forName (sClassName), sMethodName, aArgClasses, aArgs);
+    return GenericReflection.<RETURNTYPE> invokeStaticMethod (getClassFromName (sClassName),
+                                                              sMethodName,
+                                                              aArgClasses,
+                                                              aArgs);
   }
 
   public static <RETURNTYPE> RETURNTYPE invokeStaticMethod (@Nonnull final Class <?> aClass,
@@ -244,7 +274,7 @@ public final class GenericReflection
     if (sClassName != null && aDesiredType != null)
       try
       {
-        return aDesiredType.cast (forName (sClassName).newInstance ());
+        return aDesiredType.cast (getClassFromName (sClassName).newInstance ());
       }
       catch (final Throwable t)
       {

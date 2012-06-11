@@ -144,6 +144,12 @@ public final class StackTraceHelper
   }
 
   @Nonnull
+  public static String getStackAsString (@Nonnull final Thread aThread, final boolean bOmitCommonStackTraceElements)
+  {
+    return getStackAsString (aThread.getStackTrace (), bOmitCommonStackTraceElements);
+  }
+
+  @Nonnull
   public static String getCurrentThreadStackAsString ()
   {
     return getStackAsString (Thread.currentThread ().getStackTrace (), true);

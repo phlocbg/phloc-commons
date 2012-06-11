@@ -47,7 +47,7 @@ public final class ReadonlySimpleURL implements ISimpleURL
 
   public ReadonlySimpleURL (@Nonnull final String sHref)
   {
-    this (URLUtils.parseURL (sHref));
+    this (URLUtils.getAsURLData (sHref));
   }
 
   public ReadonlySimpleURL (@Nonnull final String sHref, @Nullable final Map <String, String> aParams)

@@ -87,21 +87,55 @@ public final class LocaleCache
    *        The language to use. May be <code>null</code> or empty.
    * @return <code>null</code> if the passed language string is
    *         <code>null</code> or empty
+   * @deprecated Use {@link #getLocale(String)} instead
    */
+  @Deprecated
   @Nullable
   public static Locale get (@Nullable final String sLanguage)
+  {
+    return getLocale (sLanguage);
+  }
+
+  /**
+   * Get the {@link Locale} object matching the given language.
+   * 
+   * @param sLanguage
+   *        The language to use. May be <code>null</code> or empty.
+   * @return <code>null</code> if the passed language string is
+   *         <code>null</code> or empty
+   */
+  @Nullable
+  public static Locale getLocale (@Nullable final String sLanguage)
   {
     if (sLanguage != null && sLanguage.length () > 2)
     {
       // parse
       final String [] aParts = RegExHelper.split (sLanguage, CGlobal.LOCALE_SEPARATOR_STR, 3);
       if (aParts.length == 3)
-        return get (aParts[0], aParts[1], aParts[2]);
+        return getLocale (aParts[0], aParts[1], aParts[2]);
       if (aParts.length == 2)
-        return get (aParts[0], aParts[1], "");
+        return getLocale (aParts[0], aParts[1], "");
       // else fall through
     }
-    return get (sLanguage, "", "");
+    return getLocale (sLanguage, "", "");
+  }
+
+  /**
+   * Get the {@link Locale} object matching the given language and country.
+   * 
+   * @param sLanguage
+   *        The language to use. May be <code>null</code> or empty.
+   * @param sCountry
+   *        The country to use. May be <code>null</code>.
+   * @return <code>null</code> if the passed language string is
+   *         <code>null</code> or empty
+   * @deprecated Use {@link #getLocale(String,String)} instead
+   */
+  @Deprecated
+  @Nullable
+  public static Locale get (@Nullable final String sLanguage, @Nullable final String sCountry)
+  {
+    return getLocale (sLanguage, sCountry);
   }
 
   /**
@@ -115,9 +149,9 @@ public final class LocaleCache
    *         <code>null</code> or empty
    */
   @Nullable
-  public static Locale get (@Nullable final String sLanguage, @Nullable final String sCountry)
+  public static Locale getLocale (@Nullable final String sLanguage, @Nullable final String sCountry)
   {
-    return get (sLanguage, sCountry, "");
+    return getLocale (sLanguage, sCountry, "");
   }
 
   /**
@@ -158,11 +192,33 @@ public final class LocaleCache
    *        Optional variant. May be <code>null</code>.
    * @return <code>null</code> if all the passed parameters are
    *         <code>null</code> or empty
+   * @deprecated Use {@link #getLocale(String,String,String)} instead
    */
+  @Deprecated
   @Nullable
   public static Locale get (@Nullable final String sLanguage,
                             @Nullable final String sCountry,
                             @Nullable final String sVariant)
+  {
+    return getLocale (sLanguage, sCountry, sVariant);
+  }
+
+  /**
+   * Get the {@link Locale} object matching the given locale string
+   * 
+   * @param sLanguage
+   *        The language to use. May be <code>null</code> or empty.
+   * @param sCountry
+   *        Optional country to use. May be <code>null</code>.
+   * @param sVariant
+   *        Optional variant. May be <code>null</code>.
+   * @return <code>null</code> if all the passed parameters are
+   *         <code>null</code> or empty
+   */
+  @Nullable
+  public static Locale getLocale (@Nullable final String sLanguage,
+                                  @Nullable final String sCountry,
+                                  @Nullable final String sVariant)
   {
     // create case insensitive key!
     final String sRealLanguage = sLanguage == null ? "" : sLanguage.toLowerCase ();// NOPMD
@@ -245,7 +301,7 @@ public final class LocaleCache
     {
       final String sLanguage = aLocale.getLanguage ();
       if (StringHelper.hasText (sLanguage))
-        ret.add (LocaleCache.get (sLanguage, null, null));
+        ret.add (LocaleCache.getLocale (sLanguage, null, null));
     }
     return ret;
   }
