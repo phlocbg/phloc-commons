@@ -140,17 +140,7 @@ public final class XMLListHandler
       final IMicroDocument aDoc = MicroReader.readMicroXML (aIS);
       if (aDoc != null)
       {
-        // and insert all elements
-        for (final IMicroElement eMap : aDoc.getDocumentElement ().getChildElements (ELEMENT_ITEM))
-        {
-          final String sValue = eMap.getAttribute (ATTR_VALUE);
-          if (sValue == null)
-            s_aLogger.warn ("Ignoring mapping element because value is null");
-          else
-            if (!aTargetList.add (sValue))
-              s_aLogger.warn ("Ignoring mapping element '" + sValue + "' because value is already contained");
-        }
-
+        readList (aDoc.getDocumentElement (), aTargetList);
         return ESuccess.SUCCESS;
       }
     }
@@ -163,6 +153,36 @@ public final class XMLListHandler
       StreamUtils.close (aIS);
     }
 
+    return ESuccess.FAILURE;
+  }
+
+  @Nonnull
+  public static ESuccess readList (@Nonnull final IMicroElement aParentElement,
+                                   @Nonnull final Collection <String> aTargetList)
+  {
+    if (aParentElement == null)
+      throw new NullPointerException ("parentElement");
+    if (aTargetList == null)
+      throw new NullPointerException ("targetList");
+
+    try
+    {
+      // and insert all elements
+      for (final IMicroElement eItem : aParentElement.getChildElements (ELEMENT_ITEM))
+      {
+        final String sValue = eItem.getAttribute (ATTR_VALUE);
+        if (sValue == null)
+          s_aLogger.warn ("Ignoring list item because value is null");
+        else
+          if (!aTargetList.add (sValue))
+            s_aLogger.warn ("Ignoring list item '" + sValue + "' because value is already contained");
+      }
+      return ESuccess.SUCCESS;
+    }
+    catch (final Throwable t)
+    {
+      s_aLogger.warn ("Failed to read list document", t);
+    }
     return ESuccess.FAILURE;
   }
 
