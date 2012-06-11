@@ -25,8 +25,10 @@ import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.hash.HashCodeGenerator;
+import com.phloc.commons.name.IHasDisplayText;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
+import com.phloc.commons.text.impl.ConstantTextProvider;
 
 /**
  * Default implementation of the {@link IResourceError} interface. The
@@ -39,7 +41,7 @@ public class ResourceError implements IResourceError
 {
   private final IResourceLocation m_aLocation;
   private final EErrorLevel m_eErrorLevel;
-  private final String m_sErrorText;
+  private final IHasDisplayText m_aErrorText;
   private final Throwable m_aLinkedException;
 
   public ResourceError (@Nonnull final IResourceLocation aLocation,
@@ -54,16 +56,31 @@ public class ResourceError implements IResourceError
                         @Nonnull final String sErrorText,
                         @Nullable final Throwable aLinkedException)
   {
+    this (aLocation, eErrorLevel, new ConstantTextProvider (sErrorText), aLinkedException);
+  }
+
+  public ResourceError (@Nonnull final IResourceLocation aLocation,
+                        @Nonnull final EErrorLevel eErrorLevel,
+                        @Nonnull final IHasDisplayText aErrorText)
+  {
+    this (aLocation, eErrorLevel, aErrorText, null);
+  }
+
+  public ResourceError (@Nonnull final IResourceLocation aLocation,
+                        @Nonnull final EErrorLevel eErrorLevel,
+                        @Nonnull final IHasDisplayText aErrorText,
+                        @Nullable final Throwable aLinkedException)
+  {
     if (aLocation == null)
       throw new NullPointerException ("location");
     if (eErrorLevel == null)
       throw new NullPointerException ("errorLevel");
-    if (StringHelper.hasNoText (sErrorText))
-      throw new IllegalArgumentException ("errorText may not be empty");
+    if (aErrorText == null)
+      throw new NullPointerException ("errorText");
 
     m_aLocation = aLocation;
     m_eErrorLevel = eErrorLevel;
-    m_sErrorText = sErrorText;
+    m_aErrorText = aErrorText;
     m_aLinkedException = aLinkedException;
   }
 
@@ -81,9 +98,9 @@ public class ResourceError implements IResourceError
 
   @Nonnull
   @OverrideOnDemand
-  public String getErrorText (final Locale aContentLocale)
+  public String getDisplayText (final Locale aContentLocale)
   {
-    return m_sErrorText;
+    return m_aErrorText.getDisplayText (aContentLocale);
   }
 
   @Nullable
@@ -94,13 +111,13 @@ public class ResourceError implements IResourceError
 
   @Nonnull
   @OverrideOnDemand
-  public String getAsString ()
+  public String getAsString (@Nonnull final Locale aDisplayLocale)
   {
     String ret = "[" + m_eErrorLevel.getID () + "]";
     final String sLocation = m_aLocation.getAsString ();
     if (StringHelper.hasText (sLocation))
       ret += ' ' + sLocation + ": ";
-    ret += m_sErrorText;
+    ret += getDisplayText (aDisplayLocale);
     if (m_aLinkedException != null)
       ret += " (" + m_aLinkedException.getMessage () + ")";
     return ret;
@@ -137,7 +154,7 @@ public class ResourceError implements IResourceError
     // Do not include the exception, because it is not comparable
     return m_aLocation.equals (rhs.m_aLocation) &&
            m_eErrorLevel.equals (rhs.m_eErrorLevel) &&
-           m_sErrorText.equals (rhs.m_sErrorText);
+           m_aErrorText.equals (rhs.m_aErrorText);
   }
 
   @Override
@@ -146,7 +163,7 @@ public class ResourceError implements IResourceError
     // Do not include the exception, because it is not comparable
     return new HashCodeGenerator (this).append (m_aLocation)
                                        .append (m_eErrorLevel)
-                                       .append (m_sErrorText)
+                                       .append (m_aErrorText)
                                        .getHashCode ();
   }
 
@@ -155,7 +172,7 @@ public class ResourceError implements IResourceError
   {
     return new ToStringGenerator (this).append ("location", m_aLocation)
                                        .append ("errorLevel", m_eErrorLevel)
-                                       .append ("errorText", m_sErrorText)
+                                       .append ("errorText", m_aErrorText)
                                        .appendIfNotNull ("linkedException", m_aLinkedException)
                                        .toString ();
   }

@@ -64,15 +64,7 @@ public final class ResourceErrorTest
       new ResourceError (loc, EErrorLevel.SUCCESS, (String) null);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
-    {}
-    try
-    {
-      // error text may not be empty
-      new ResourceError (loc, EErrorLevel.SUCCESS, "");
-      fail ();
-    }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
   }
 
@@ -84,9 +76,9 @@ public final class ResourceErrorTest
     ResourceError re = new ResourceError (loc, EErrorLevel.ERROR, "mock error");
     assertEquals (loc, re.getLocation ());
     assertEquals (EErrorLevel.ERROR, re.getErrorLevel ());
-    assertEquals ("mock error", re.getErrorText (CGlobal.LOCALE_ALL));
+    assertEquals ("mock error", re.getDisplayText (CGlobal.LOCALE_ALL));
     assertNull (re.getLinkedException ());
-    assertNotNull (re.getAsString ());
+    assertNotNull (re.getAsString (CGlobal.LOCALE_ALL));
     assertFalse (re.isSuccess ());
     assertTrue (re.isFailure ());
     assertTrue (re.isError ());
@@ -95,9 +87,9 @@ public final class ResourceErrorTest
     re = new ResourceError (loc, EErrorLevel.WARN, "mock error", new MockException ());
     assertEquals (loc, re.getLocation ());
     assertEquals (EErrorLevel.WARN, re.getErrorLevel ());
-    assertEquals ("mock error", re.getErrorText (CGlobal.LOCALE_ALL));
+    assertEquals ("mock error", re.getDisplayText (CGlobal.LOCALE_ALL));
     assertTrue (re.getLinkedException () instanceof MockException);
-    assertNotNull (re.getAsString ());
+    assertNotNull (re.getAsString (CGlobal.LOCALE_ALL));
     assertFalse (re.isSuccess ());
     assertTrue (re.isFailure ());
     assertFalse (re.isError ());

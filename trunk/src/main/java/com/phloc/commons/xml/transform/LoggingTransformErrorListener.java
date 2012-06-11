@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.xml.transform;
 
+import java.util.Locale;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
@@ -39,25 +41,26 @@ import com.phloc.commons.log.LogUtils;
 public class LoggingTransformErrorListener extends AbstractTransformErrorListener
 {
   protected static final Logger s_aLogger = LoggerFactory.getLogger (LoggingTransformErrorListener.class);
-  private static final LoggingTransformErrorListener s_aInstance = new LoggingTransformErrorListener ();
 
-  public LoggingTransformErrorListener ()
-  {}
+  private final Locale m_aDisplayLocale;
 
-  public LoggingTransformErrorListener (@Nullable final ErrorListener aWrappedErrorListener)
+  public LoggingTransformErrorListener (@Nonnull final Locale aDisplayLocale)
   {
-    super (aWrappedErrorListener);
+    this (null, aDisplayLocale);
   }
 
-  @Nonnull
-  public static LoggingTransformErrorListener getInstance ()
+  public LoggingTransformErrorListener (@Nullable final ErrorListener aWrappedErrorListener,
+                                        @Nonnull final Locale aDisplayLocale)
   {
-    return s_aInstance;
+    super (aWrappedErrorListener);
+    if (aDisplayLocale == null)
+      throw new NullPointerException ("displayLocale");
+    m_aDisplayLocale = aDisplayLocale;
   }
 
   @Override
   protected void log (@Nonnull final IResourceError aResError)
   {
-    LogUtils.log (s_aLogger, aResError.getErrorLevel (), aResError.getAsString ());
+    LogUtils.log (s_aLogger, aResError.getErrorLevel (), aResError.getAsString (m_aDisplayLocale));
   }
 }

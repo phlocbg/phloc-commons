@@ -32,6 +32,7 @@ import javax.xml.transform.URIResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.exceptions.InitializationException;
 import com.phloc.commons.io.IReadableResource;
@@ -44,7 +45,7 @@ public final class XMLTransformerFactory
 
   static
   {
-    s_aFactory = createTransformerFactory (LoggingTransformErrorListener.getInstance (),
+    s_aFactory = createTransformerFactory (new LoggingTransformErrorListener (CGlobal.DEFAULT_LOCALE),
                                            new DefaultTransformURIResolver ());
   }
 

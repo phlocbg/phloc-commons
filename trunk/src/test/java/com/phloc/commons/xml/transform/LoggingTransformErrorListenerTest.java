@@ -26,6 +26,7 @@ import javax.xml.transform.TransformerFactory;
 import org.junit.Test;
 
 import com.phloc.commons.io.resource.ClassPathResource;
+import com.phloc.commons.mock.AbstractPhlocTestCase;
 import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
@@ -33,12 +34,12 @@ import com.phloc.commons.mock.PhlocTestUtils;
  * 
  * @author philip
  */
-public final class LoggingTransformErrorListenerTest
+public final class LoggingTransformErrorListenerTest extends AbstractPhlocTestCase
 {
   @Test
   public void testAll ()
   {
-    final LoggingTransformErrorListener el = LoggingTransformErrorListener.getInstance ();
+    final LoggingTransformErrorListener el = new LoggingTransformErrorListener (L_EN);
     final TransformerFactory fac = XMLTransformerFactory.createTransformerFactory (el,
                                                                                    new LoggingTransformURIResolver ());
     assertNotNull (fac);
