@@ -32,10 +32,8 @@ import org.xml.sax.InputSource;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.io.IInputStreamProvider;
 import com.phloc.commons.io.IReadableResource;
-import com.phloc.commons.io.resource.FileSystemResource;
-import com.phloc.commons.io.streams.NonBlockingStringReader;
 import com.phloc.commons.microdom.IMicroDocument;
-import com.phloc.commons.xml.sax.ReadableResourceSAXInputSource;
+import com.phloc.commons.xml.sax.InputSourceFactory;
 import com.phloc.commons.xml.serialize.XMLReader;
 
 /**
@@ -54,38 +52,38 @@ public final class MicroReader
   {}
 
   @Nullable
-  public static IMicroDocument readMicroXML (@WillClose @Nullable final InputSource aIS)
+  public static IMicroDocument readMicroXML (@WillClose @Nullable final InputSource aInputSource)
   {
-    return readMicroXML (aIS, null);
+    return readMicroXML (aInputSource, null);
   }
 
   @Nullable
-  public static IMicroDocument readMicroXML (@WillClose @Nullable final InputSource aIS,
+  public static IMicroDocument readMicroXML (@WillClose @Nullable final InputSource aInputSource,
                                              @Nullable final EntityResolver aSpecialEntityResolver)
   {
-    return readMicroXML (aIS, aSpecialEntityResolver, null);
+    return readMicroXML (aInputSource, aSpecialEntityResolver, null);
   }
 
   @Nullable
-  public static IMicroDocument readMicroXML (@WillClose @Nullable final InputSource aIS,
+  public static IMicroDocument readMicroXML (@WillClose @Nullable final InputSource aInputSource,
                                              @Nullable final EntityResolver aSpecialEntityResolver,
                                              @Nullable final ErrorHandler aSpecialErrorHdl)
   {
-    return readMicroXML (aIS, aSpecialEntityResolver, aSpecialErrorHdl, false, false);
+    return readMicroXML (aInputSource, aSpecialEntityResolver, aSpecialErrorHdl, false, false);
   }
 
   @Nullable
-  public static IMicroDocument readMicroXML (@WillClose @Nullable final InputSource aIS,
+  public static IMicroDocument readMicroXML (@WillClose @Nullable final InputSource aInputSource,
                                              @Nullable final EntityResolver aSpecialEntityResolver,
                                              @Nullable final ErrorHandler aSpecialErrorHdl,
                                              final boolean bDTDValidation,
                                              final boolean bSchemaValidation)
   {
-    if (aIS == null)
+    if (aInputSource == null)
       return null;
 
     final MicroSAXHandler aHdl = new MicroSAXHandler (false, aSpecialEntityResolver);
-    if (XMLReader.readXMLSAX (aIS,
+    if (XMLReader.readXMLSAX (aInputSource,
                               aHdl,
                               aHdl,
                               aHdl,
@@ -109,7 +107,7 @@ public final class MicroReader
   {
     if (aIS == null)
       return null;
-    return readMicroXML (new InputSource (aIS), aSpecialEntityResolver);
+    return readMicroXML (InputSourceFactory.create (aIS), aSpecialEntityResolver);
   }
 
   @Nullable
@@ -124,7 +122,7 @@ public final class MicroReader
   {
     if (aFile == null)
       return null;
-    return readMicroXML (new FileSystemResource (aFile), aSpecialEntityResolver);
+    return readMicroXML (InputSourceFactory.create (aFile), aSpecialEntityResolver);
   }
 
   @Nullable
@@ -139,7 +137,7 @@ public final class MicroReader
   {
     if (aRes == null)
       return null;
-    return readMicroXML (new ReadableResourceSAXInputSource (aRes), aSpecialEntityResolver);
+    return readMicroXML (InputSourceFactory.create (aRes), aSpecialEntityResolver);
   }
 
   @Nullable
@@ -154,7 +152,7 @@ public final class MicroReader
   {
     if (aISP == null)
       return null;
-    return readMicroXML (aISP.getInputStream (), aSpecialEntityResolver);
+    return readMicroXML (InputSourceFactory.create (aISP), aSpecialEntityResolver);
   }
 
   @Nullable
@@ -169,7 +167,7 @@ public final class MicroReader
   {
     if (aReader == null)
       return null;
-    return readMicroXML (new InputSource (aReader), aSpecialEntityResolver);
+    return readMicroXML (InputSourceFactory.create (aReader), aSpecialEntityResolver);
   }
 
   @Nullable
@@ -184,6 +182,6 @@ public final class MicroReader
   {
     if (sXML == null)
       return null;
-    return readMicroXML (new NonBlockingStringReader (sXML), aSpecialEntityResolver);
+    return readMicroXML (InputSourceFactory.create (sXML), aSpecialEntityResolver);
   }
 }

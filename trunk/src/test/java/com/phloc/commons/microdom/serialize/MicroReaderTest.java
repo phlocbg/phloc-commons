@@ -26,6 +26,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 
+import javax.annotation.Nonnull;
+
 import org.junit.Test;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
@@ -42,6 +44,7 @@ import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.io.streams.NonBlockingStringReader;
 import com.phloc.commons.microdom.IMicroDocument;
+import com.phloc.commons.xml.sax.InputSourceFactory;
 import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
 import com.phloc.commons.xml.sax.StringSAXInputSource;
 import com.phloc.commons.xml.serialize.EXMLSerializeIndent;
@@ -57,9 +60,10 @@ public final class MicroReaderTest
 {
   public static final class EmptyEntityResolver implements EntityResolver
   {
+    @Nonnull
     public InputSource resolveEntity (final String sPublicId, final String sSystemId) throws SAXException, IOException
     {
-      return new StringSAXInputSource ("");
+      return InputSourceFactory.create ("");
     }
   }
 

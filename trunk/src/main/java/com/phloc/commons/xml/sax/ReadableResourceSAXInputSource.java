@@ -22,6 +22,8 @@ import java.io.InputStream;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
 
 import com.phloc.commons.io.IInputStreamProvider;
@@ -38,6 +40,8 @@ import com.phloc.commons.string.ToStringGenerator;
  */
 public final class ReadableResourceSAXInputSource extends InputSource
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (ReadableResourceSAXInputSource.class);
+
   private final IInputStreamProvider m_aISP;
 
   public ReadableResourceSAXInputSource (@Nonnull final IReadableResource aResource)
@@ -57,9 +61,8 @@ public final class ReadableResourceSAXInputSource extends InputSource
   public InputStream getByteStream ()
   {
     final InputStream aIS = m_aISP.getInputStream ();
-    if (false)
-      if (aIS == null)
-        throw new IllegalStateException ("Failed to open input stream for " + m_aISP);
+    if (aIS == null)
+      s_aLogger.warn ("Failed to open input stream for " + m_aISP);
     return aIS;
   }
 

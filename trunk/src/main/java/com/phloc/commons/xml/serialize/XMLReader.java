@@ -48,8 +48,6 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.exceptions.InitializationException;
 import com.phloc.commons.factory.IFactory;
 import com.phloc.commons.io.IReadableResource;
-import com.phloc.commons.io.resource.FileSystemResource;
-import com.phloc.commons.io.streams.NonBlockingStringReader;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.pool.IObjectPool;
 import com.phloc.commons.pool.ObjectPool;
@@ -61,8 +59,8 @@ import com.phloc.commons.timing.StopWatch;
 import com.phloc.commons.xml.EXMLParserFeature;
 import com.phloc.commons.xml.XMLFactory;
 import com.phloc.commons.xml.sax.CollectingSAXErrorHandler;
+import com.phloc.commons.xml.sax.InputSourceFactory;
 import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
-import com.phloc.commons.xml.sax.ReadableResourceSAXInputSource;
 
 /**
  * Helper class to read XML documents via SAX or DOM
@@ -225,11 +223,11 @@ public final class XMLReader
   }
 
   @Nullable
-  public static Document readXMLDOM (@WillClose @Nonnull final InputSource aIS,
+  public static Document readXMLDOM (@WillClose @Nonnull final InputSource aInputSource,
                                      @Nullable final Schema aSchema,
                                      @Nullable final ErrorHandler aCustomErrorHandler) throws SAXException
   {
-    if (aIS == null)
+    if (aInputSource == null)
       throw new NullPointerException ("inputSource");
 
     Document doc = null;
@@ -245,7 +243,7 @@ public final class XMLReader
         aCEH = new CollectingSAXErrorHandler (aCustomErrorHandler != null ? aCustomErrorHandler
                                                                          : LoggingSAXErrorHandler.getInstance ());
       aDocumentBuilder.setErrorHandler (aCEH);
-      doc = aDocumentBuilder.parse (aIS);
+      doc = aDocumentBuilder.parse (aInputSource);
       if (aSchema == null)
         s_aDomTimerHdl.addTime (aSW.stopAndGetMillis ());
       else
@@ -281,7 +279,7 @@ public final class XMLReader
 
     try
     {
-      return readXMLDOM (new InputSource (aIS), aSchema, aCustomErrorHandler);
+      return readXMLDOM (InputSourceFactory.create (aIS), aSchema, aCustomErrorHandler);
     }
     finally
     {
@@ -297,7 +295,7 @@ public final class XMLReader
     if (aFile == null)
       throw new NullPointerException ("file");
 
-    return readXMLDOM (new FileSystemResource (aFile), aSchema, aCustomErrorHandler);
+    return readXMLDOM (InputSourceFactory.create (aFile), aSchema, aCustomErrorHandler);
   }
 
   @Nullable
@@ -308,7 +306,7 @@ public final class XMLReader
     if (aResource == null)
       throw new NullPointerException ("resource");
 
-    return readXMLDOM (new ReadableResourceSAXInputSource (aResource), aSchema, aCustomErrorHandler);
+    return readXMLDOM (InputSourceFactory.create (aResource), aSchema, aCustomErrorHandler);
   }
 
   @Nullable
@@ -321,7 +319,7 @@ public final class XMLReader
 
     try
     {
-      return readXMLDOM (new InputSource (aReader), aSchema, aCustomErrorHandler);
+      return readXMLDOM (InputSourceFactory.create (aReader), aSchema, aCustomErrorHandler);
     }
     finally
     {
@@ -337,7 +335,7 @@ public final class XMLReader
     if (sXML == null)
       throw new NullPointerException ("xml");
 
-    return readXMLDOM (new NonBlockingStringReader (sXML), aSchema, aCustomErrorHandler);
+    return readXMLDOM (InputSourceFactory.create (sXML), aSchema, aCustomErrorHandler);
   }
 
   /**
@@ -373,7 +371,7 @@ public final class XMLReader
     if (aIS == null)
       throw new NullPointerException ("inputStream");
 
-    return readXMLSAX (new InputSource (aIS),
+    return readXMLSAX (InputSourceFactory.create (aIS),
                        aEntityResolver,
                        aDTDHdl,
                        aContentHdl,

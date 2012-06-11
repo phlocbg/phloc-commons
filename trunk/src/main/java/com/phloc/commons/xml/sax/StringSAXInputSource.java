@@ -45,7 +45,7 @@ public final class StringSAXInputSource extends InputSource
   public StringSAXInputSource (@Nonnull final String sText, @Nullable final String sSystemID)
   {
     if (sText == null)
-      throw new NullPointerException ("resource");
+      throw new NullPointerException ("text");
     m_sText = sText;
     setSystemId (sSystemID);
   }

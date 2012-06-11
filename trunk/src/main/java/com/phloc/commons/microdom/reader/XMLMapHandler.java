@@ -139,7 +139,7 @@ public final class XMLMapHandler
       final IMicroDocument aDoc = MicroReader.readMicroXML (aIS);
       if (aDoc != null)
       {
-        readMap (aDoc, aTargetMap);
+        readMap (aDoc.getDocumentElement (), aTargetMap);
         return ESuccess.SUCCESS;
       }
     }
@@ -155,17 +155,18 @@ public final class XMLMapHandler
   }
 
   @Nonnull
-  public static ESuccess readMap (@Nonnull final IMicroDocument aDoc, @Nonnull final Map <String, String> aTargetMap)
+  public static ESuccess readMap (@Nonnull final IMicroElement aParentElement,
+                                  @Nonnull final Map <String, String> aTargetMap)
   {
-    if (aDoc == null)
-      throw new NullPointerException ("doc");
+    if (aParentElement == null)
+      throw new NullPointerException ("parentElement");
     if (aTargetMap == null)
       throw new NullPointerException ("targetMap");
 
     try
     {
       // and insert all elements
-      for (final IMicroElement eMap : aDoc.getDocumentElement ().getChildElements (ELEMENT_MAP))
+      for (final IMicroElement eMap : aParentElement.getChildElements (ELEMENT_MAP))
       {
         final String sName = eMap.getAttribute (ATTR_KEY);
         if (sName == null)
@@ -183,7 +184,6 @@ public final class XMLMapHandler
           }
         }
       }
-
       return ESuccess.SUCCESS;
     }
     catch (final Throwable t)
@@ -242,7 +242,7 @@ public final class XMLMapHandler
     try
     {
       final IMicroDocument aDoc = createMapDocument (aMap);
-      return MicroWriter.writeToStream (aDoc, aOS, XMLWriterSettings.DEFAULT_XML_SETTINGS);
+      return MicroWriter.writeToStream (aDoc, aOS, XMLWriterSettings.SUGGESTED_XML_SETTINGS);
     }
     finally
     {
