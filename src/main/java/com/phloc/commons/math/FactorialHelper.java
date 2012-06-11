@@ -90,6 +90,7 @@ public final class FactorialHelper
   {
     private long m_nCurrentN;
 
+    @Nonnull
     private BigInteger _getProduct (final int n)
     {
       final int m = n / 2;
@@ -101,7 +102,7 @@ public final class FactorialHelper
     }
 
     @Nonnull
-    public BigInteger getFactorial (final int n)
+    public BigInteger getFactorial (@Nonnegative final int n)
     {
       if (n < 0)
         throw new IllegalArgumentException ("n >= 0 required, but was " + n);

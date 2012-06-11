@@ -39,120 +39,120 @@ public final class VersionRangeTest
   public void testVersionRange ()
   {
     VersionRange vr = new VersionRange ("[1.2.3, 4.5.6)");
-    assertTrue (vr.includeFloor ());
+    assertTrue (vr.isIncludingFloor ());
     assertEquals (vr.getFloorVersion ().getAsString (), "1.2.3");
-    assertFalse (vr.includeCeil ());
+    assertFalse (vr.isIncludingCeil ());
     assertEquals (vr.getCeilVersion ().getAsString (), "4.5.6");
     assertNotNull (vr.toString ());
 
     vr = new VersionRange ("   [1.2.3, 4.5.6)   ");
-    assertTrue (vr.includeFloor ());
+    assertTrue (vr.isIncludingFloor ());
     assertEquals (vr.getFloorVersion ().getAsString (), "1.2.3");
-    assertFalse (vr.includeCeil ());
+    assertFalse (vr.isIncludingCeil ());
     assertEquals (vr.getCeilVersion ().getAsString (), "4.5.6");
 
     vr = new VersionRange ("[1.2.3, 4.5.6]");
-    assertTrue (vr.includeFloor ());
+    assertTrue (vr.isIncludingFloor ());
     assertEquals (vr.getFloorVersion ().getAsString (), "1.2.3");
-    assertTrue (vr.includeCeil ());
+    assertTrue (vr.isIncludingCeil ());
     assertEquals (vr.getCeilVersion ().getAsString (), "4.5.6");
 
     vr = new VersionRange ("(1.2.3, 4.5.6]");
-    assertFalse (vr.includeFloor ());
+    assertFalse (vr.isIncludingFloor ());
     assertEquals (vr.getFloorVersion ().getAsString (), "1.2.3");
-    assertTrue (vr.includeCeil ());
+    assertTrue (vr.isIncludingCeil ());
     assertEquals (vr.getCeilVersion ().getAsString (), "4.5.6");
 
     vr = new VersionRange ("(1.2.3, 4.5.6)");
-    assertFalse (vr.includeFloor ());
+    assertFalse (vr.isIncludingFloor ());
     assertEquals (vr.getFloorVersion ().getAsString (), "1.2.3");
-    assertFalse (vr.includeCeil ());
+    assertFalse (vr.isIncludingCeil ());
     assertEquals (vr.getCeilVersion ().getAsString (), "4.5.6");
 
     vr = new VersionRange ("1.2.3");
-    assertTrue (vr.includeFloor ());
+    assertTrue (vr.isIncludingFloor ());
     assertEquals (vr.getFloorVersion ().getAsString (), "1.2.3");
-    assertFalse (vr.includeCeil ());
+    assertFalse (vr.isIncludingCeil ());
     assertNull (vr.getCeilVersion ());
 
     vr = new VersionRange ("[1.2.3");
-    assertTrue (vr.includeFloor ());
+    assertTrue (vr.isIncludingFloor ());
     assertEquals (vr.getFloorVersion ().getAsString (), "1.2.3");
-    assertFalse (vr.includeCeil ());
+    assertFalse (vr.isIncludingCeil ());
     assertNull (vr.getCeilVersion ());
 
     vr = new VersionRange ("(1.2.3");
-    assertFalse (vr.includeFloor ());
+    assertFalse (vr.isIncludingFloor ());
     assertEquals (vr.getFloorVersion ().getAsString (), "1.2.3");
-    assertFalse (vr.includeCeil ());
+    assertFalse (vr.isIncludingCeil ());
     assertNull (vr.getCeilVersion ());
 
     vr = new VersionRange ("1.2.3]");
-    assertTrue (vr.includeFloor ());
+    assertTrue (vr.isIncludingFloor ());
     assertEquals (vr.getFloorVersion ().getAsString (), "1.2.3");
-    assertTrue (vr.includeCeil ());
+    assertTrue (vr.isIncludingCeil ());
     assertNull (vr.getCeilVersion ());
 
     vr = new VersionRange ("1.2.3)");
-    assertTrue (vr.includeFloor ());
+    assertTrue (vr.isIncludingFloor ());
     assertEquals (vr.getFloorVersion ().getAsString (), "1.2.3");
-    assertFalse (vr.includeCeil ());
+    assertFalse (vr.isIncludingCeil ());
     assertNull (vr.getCeilVersion ());
 
     vr = new VersionRange ("[1.2.3]");
-    assertTrue (vr.includeFloor ());
+    assertTrue (vr.isIncludingFloor ());
     assertEquals (vr.getFloorVersion ().getAsString (), "1.2.3");
-    assertTrue (vr.includeCeil ());
+    assertTrue (vr.isIncludingCeil ());
     assertNull (vr.getCeilVersion ());
 
     vr = new VersionRange ("(1.2.3]");
-    assertFalse (vr.includeFloor ());
+    assertFalse (vr.isIncludingFloor ());
     assertEquals (vr.getFloorVersion ().getAsString (), "1.2.3");
-    assertTrue (vr.includeCeil ());
+    assertTrue (vr.isIncludingCeil ());
     assertNull (vr.getCeilVersion ());
 
     vr = new VersionRange ("5");
-    assertTrue (vr.includeFloor ());
+    assertTrue (vr.isIncludingFloor ());
     assertEquals (vr.getFloorVersion ().getAsString (), "5");
-    assertFalse (vr.includeCeil ());
+    assertFalse (vr.isIncludingCeil ());
     assertNull (vr.getCeilVersion ());
 
     vr = new VersionRange ("5,6");
-    assertTrue (vr.includeFloor ());
+    assertTrue (vr.isIncludingFloor ());
     assertEquals (vr.getFloorVersion ().getAsString (), "5");
-    assertFalse (vr.includeCeil ());
+    assertFalse (vr.isIncludingCeil ());
     assertEquals (vr.getCeilVersion ().getAsString (), "6");
 
     vr = new VersionRange (",6");
-    assertTrue (vr.includeFloor ());
+    assertTrue (vr.isIncludingFloor ());
     assertEquals (vr.getFloorVersion ().getAsString (), Version.DEFAULT_VERSION_STRING);
-    assertFalse (vr.includeCeil ());
+    assertFalse (vr.isIncludingCeil ());
     assertEquals (vr.getCeilVersion ().getAsString (), "6");
 
     vr = new VersionRange ("(,6]");
-    assertFalse (vr.includeFloor ());
+    assertFalse (vr.isIncludingFloor ());
     assertEquals (vr.getFloorVersion ().getAsString (), Version.DEFAULT_VERSION_STRING);
-    assertTrue (vr.includeCeil ());
+    assertTrue (vr.isIncludingCeil ());
     assertEquals (vr.getCeilVersion ().getAsString (), "6");
 
     vr = new VersionRange ("(]");
-    assertFalse (vr.includeFloor ());
+    assertFalse (vr.isIncludingFloor ());
     assertEquals (vr.getFloorVersion ().getAsString (), Version.DEFAULT_VERSION_STRING);
-    assertTrue (vr.includeCeil ());
+    assertTrue (vr.isIncludingCeil ());
     assertNull (vr.getCeilVersion ());
 
     // empty string: okay
     vr = new VersionRange ("");
-    assertTrue (vr.includeFloor ());
+    assertTrue (vr.isIncludingFloor ());
     assertEquals (vr.getFloorVersion ().getAsString (), Version.DEFAULT_VERSION_STRING);
-    assertFalse (vr.includeCeil ());
+    assertFalse (vr.isIncludingCeil ());
     assertNull (vr.getCeilVersion ());
 
     // null: okay
     vr = new VersionRange (null);
-    assertTrue (vr.includeFloor ());
+    assertTrue (vr.isIncludingFloor ());
     assertEquals (vr.getFloorVersion ().getAsString (), Version.DEFAULT_VERSION_STRING);
-    assertFalse (vr.includeCeil ());
+    assertFalse (vr.isIncludingCeil ());
     assertNull (vr.getCeilVersion ());
 
     // check floor > ceil

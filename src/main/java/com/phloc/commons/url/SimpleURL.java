@@ -51,7 +51,7 @@ public final class SimpleURL implements ISimpleURL, ICloneable <SimpleURL>
 
   public SimpleURL (@Nonnull final String sHref)
   {
-    this (URLUtils.parseURL (sHref));
+    this (URLUtils.getAsURLData (sHref));
   }
 
   public SimpleURL (@Nonnull final String sHref, @Nullable final Map <String, String> aParams)

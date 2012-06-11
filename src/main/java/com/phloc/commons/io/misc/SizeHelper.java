@@ -54,7 +54,7 @@ public final class SizeHelper
   private final DecimalFormat m_aDF2;
   private final DecimalFormatSymbols m_aDFS;
 
-  private SizeHelper (@Nonnull final Locale aDisplayLocale)
+  public SizeHelper (@Nonnull final Locale aDisplayLocale)
   {
     if (aDisplayLocale == null)
       throw new NullPointerException ("displayLocale");

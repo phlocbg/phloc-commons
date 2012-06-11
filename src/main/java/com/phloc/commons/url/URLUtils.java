@@ -217,14 +217,34 @@ public final class URLUtils
     return new String (StringHelper.replaceMultiple (sURLPart, CLEANURL_OLD, CLEANURL_NEW));
   }
 
+  /**
+   * @deprecated Use {@link #getAsURLData(String)} instead
+   */
+  @Deprecated
   @Nonnull
   public static IURLData parseURL (@Nonnull final String sHref)
   {
-    return parseURL (sHref, IdentityDecoder.<String> create ());
+    return getAsURLData (sHref);
   }
 
   @Nonnull
+  public static IURLData getAsURLData (@Nonnull final String sHref)
+  {
+    return getAsURLData (sHref, IdentityDecoder.<String> create ());
+  }
+
+  /**
+   * @deprecated Use {@link #getAsURLData(String,IDecoder)} instead
+   */
+  @Deprecated
+  @Nonnull
   public static IURLData parseURL (@Nonnull final String sHref, @Nonnull final IDecoder <String> aParameterDecoder)
+  {
+    return getAsURLData (sHref, aParameterDecoder);
+  }
+
+  @Nonnull
+  public static IURLData getAsURLData (@Nonnull final String sHref, @Nonnull final IDecoder <String> aParameterDecoder)
   {
     if (sHref == null)
       throw new NullPointerException ("href");

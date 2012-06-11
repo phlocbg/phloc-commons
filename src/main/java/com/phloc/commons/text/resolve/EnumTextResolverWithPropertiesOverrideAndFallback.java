@@ -154,7 +154,7 @@ public final class EnumTextResolverWithPropertiesOverrideAndFallback extends
 
   @Override
   @Nullable
-  protected String getOverrideString (final String sID, @Nonnull final Locale aContentLocale)
+  protected String internalGetOverrideString (final String sID, @Nonnull final Locale aContentLocale)
   {
     // Try all possible locales of the passed locale
     for (final Locale aLocale : LocaleUtils.getCalculatedLocaleListForResolving (aContentLocale))
@@ -183,7 +183,7 @@ public final class EnumTextResolverWithPropertiesOverrideAndFallback extends
 
   @Override
   @Nullable
-  protected String getFallbackString (final String sID, final Locale aContentLocale)
+  protected String internalGetFallbackString (final String sID, final Locale aContentLocale)
   {
     // Try all possible locales of the passed locale
     for (final Locale aLocale : LocaleUtils.getCalculatedLocaleListForResolving (aContentLocale))

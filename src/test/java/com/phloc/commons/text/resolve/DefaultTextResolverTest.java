@@ -87,10 +87,10 @@ public final class DefaultTextResolverTest
   public void testGetText ()
   {
     final Locale aDE = TextProvider.DE;
-    final Locale aDE_AT = LocaleCache.get ("de", "AT");
+    final Locale aDE_AT = LocaleCache.getLocale ("de", "AT");
     final Locale aEN = TextProvider.EN;
-    final Locale aEN_US = LocaleCache.get ("en", "US");
-    final Locale aSR = LocaleCache.get ("sr", "RS");
+    final Locale aEN_US = LocaleCache.getLocale ("en", "US");
+    final Locale aSR = LocaleCache.getLocale ("sr", "RS");
 
     // Regular
     assertEquals ("Text1de", EText.TEXT1.getDisplayText (aDE));

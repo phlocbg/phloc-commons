@@ -409,23 +409,6 @@ public final class StreamUtils
   }
 
   /**
-   * Read all bytes from the passed input stream into a byte array.
-   * 
-   * @param aISP
-   *        The input stream provider to read from. May be <code>null</code> .
-   * @return The byte array or <code>null</code> if the parameter or the
-   *         resolved input stream is <code>null</code>.
-   */
-  @Nullable
-  public static byte [] getAllBytes (@Nullable final IInputStreamProvider aISP)
-  {
-    if (aISP == null)
-      return null;
-
-    return getAllBytes (aISP.getInputStream ());
-  }
-
-  /**
    * Get a byte buffer with all the available content of the passed input
    * stream.
    * 
@@ -441,6 +424,23 @@ public final class StreamUtils
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream (nAvailable);
     copyInputStreamToOutputStreamAndCloseOS (aIS, aBAOS);
     return aBAOS;
+  }
+
+  /**
+   * Read all bytes from the passed input stream into a byte array.
+   * 
+   * @param aISP
+   *        The input stream provider to read from. May be <code>null</code> .
+   * @return The byte array or <code>null</code> if the parameter or the
+   *         resolved input stream is <code>null</code>.
+   */
+  @Nullable
+  public static byte [] getAllBytes (@Nullable final IInputStreamProvider aISP)
+  {
+    if (aISP == null)
+      return null;
+
+    return getAllBytes (aISP.getInputStream ());
   }
 
   /**

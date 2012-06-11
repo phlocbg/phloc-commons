@@ -50,8 +50,8 @@ import com.phloc.commons.text.ITextProvider;
 @edu.umd.cs.findbugs.annotations.SuppressWarnings ("SE_NO_SERIALVERSIONID")
 public class TextProvider extends AbstractTextProvider implements ISimpleMultiLingualText, Serializable
 {
-  public static final Locale DE = LocaleCache.get ("de");
-  public static final Locale EN = LocaleCache.get ("en");
+  public static final Locale DE = LocaleCache.getLocale ("de");
+  public static final Locale EN = LocaleCache.getLocale ("en");
 
   private final Map <Locale, String> m_aTexts = new HashMap <Locale, String> ();
 

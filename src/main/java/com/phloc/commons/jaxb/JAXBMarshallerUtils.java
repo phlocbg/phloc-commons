@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.jaxb;
 
+import java.nio.charset.Charset;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
@@ -79,6 +81,19 @@ public final class JAXBMarshallerUtils
   private static String _getStringProperty (@Nonnull final Marshaller aMarshaller, @Nonnull final String sPropertyName)
   {
     return (String) _getProperty (aMarshaller, sPropertyName);
+  }
+
+  /**
+   * Set the standard property for the encoding charset.
+   * 
+   * @param aMarshaller
+   *        The marshaller to set the property. May not be <code>null</code>.
+   * @param aEncoding
+   *        the value to be set
+   */
+  public static void setEncoding (@Nonnull final Marshaller aMarshaller, @Nullable final Charset aEncoding)
+  {
+    setEncoding (aMarshaller, aEncoding == null ? null : aEncoding.name ());
   }
 
   /**

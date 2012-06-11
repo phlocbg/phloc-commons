@@ -213,7 +213,16 @@ public final class VersionRange implements Comparable <VersionRange>, IHasString
       throw new IllegalArgumentException ("Floor version may not be greater than the ceiling version!");
   }
 
+  /**
+   * @deprecated Use {@link #isIncludingFloor()} instead
+   */
+  @Deprecated
   public boolean includeFloor ()
+  {
+    return isIncludingFloor ();
+  }
+
+  public boolean isIncludingFloor ()
   {
     return m_bIncludeFloor;
   }
@@ -224,7 +233,16 @@ public final class VersionRange implements Comparable <VersionRange>, IHasString
     return m_aFloorVersion;
   }
 
+  /**
+   * @deprecated Use {@link #isIncludingCeil()} instead
+   */
+  @Deprecated
   public boolean includeCeil ()
+  {
+    return isIncludingCeil ();
+  }
+
+  public boolean isIncludingCeil ()
   {
     return m_bIncludeCeil;
   }

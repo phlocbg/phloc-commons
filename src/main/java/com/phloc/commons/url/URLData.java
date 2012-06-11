@@ -26,6 +26,8 @@ import javax.annotation.concurrent.Immutable;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.annotations.ReturnsMutableObject;
 import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.equals.EqualsUtils;
+import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -85,6 +87,25 @@ public final class URLData implements IURLData
   public String getAnchor ()
   {
     return m_sAnchor;
+  }
+
+  @Override
+  public boolean equals (final Object o)
+  {
+    if (o == this)
+      return true;
+    if (!(o instanceof URLData))
+      return false;
+    final URLData rhs = (URLData) o;
+    return m_sPath.equals (rhs.m_sPath) &&
+           EqualsUtils.equals (m_aParams, rhs.m_aParams) &&
+           EqualsUtils.equals (m_sAnchor, rhs.m_sAnchor);
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    return new HashCodeGenerator (this).append (m_sPath).append (m_aParams).append (m_sAnchor).getHashCode ();
   }
 
   @Override

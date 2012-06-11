@@ -68,7 +68,7 @@ public final class MultiLingualTextMicroTypeConverterRegistrar implements IMicro
       final MultiLingualText aMLT = new MultiLingualText ();
       for (final IMicroElement eText : aElement.getChildElements (ELEMENT_TEXT))
       {
-        final Locale aLocale = LocaleCache.get (eText.getAttribute (ATTR_LOCALE));
+        final Locale aLocale = LocaleCache.getLocale (eText.getAttribute (ATTR_LOCALE));
         aMLT.setText (aLocale, eText.getTextContent ());
       }
       return aMLT;

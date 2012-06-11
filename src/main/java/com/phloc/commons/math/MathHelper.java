@@ -20,6 +20,7 @@ package com.phloc.commons.math;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
+import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
@@ -117,6 +118,7 @@ public final class MathHelper
     return (nValue & LONG_HIGH_BITS) == 0 || (nValue & LONG_HIGH_BITS) == LONG_HIGH_BITS;
   }
 
+  @CheckReturnValue
   public static int longToInt (final long nValue, final int nFallback)
   {
     return canConvertLongToInt (nValue) ? (int) nValue : nFallback;

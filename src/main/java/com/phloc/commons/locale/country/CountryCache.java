@@ -114,12 +114,12 @@ public final class CountryCache
     // Was something like "_AT" (e.g. the result of getCountry (...).toString
     // ()) passed in? -> indirect recursion
     if (sCountry.indexOf (CGlobal.LOCALE_SEPARATOR) >= 0)
-      return getCountry (LocaleCache.get (sCountry));
+      return getCountry (LocaleCache.getLocale (sCountry));
 
     final String sRealCountry = _getUnifiedCountry (sCountry);
     if (!containsCountry (sRealCountry))
       s_aLogger.warn ("Trying to retrieve unsupported country " + sRealCountry);
-    return LocaleCache.get ("", sRealCountry, "");
+    return LocaleCache.getLocale ("", sRealCountry, "");
   }
 
   /**
