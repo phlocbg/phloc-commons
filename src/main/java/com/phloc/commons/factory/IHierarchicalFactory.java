@@ -28,7 +28,7 @@ import javax.annotation.Nonnull;
  * @param <DATATYPE>
  *        The type of object to create.
  */
-public interface IHierarchicalFactory <DATATYPE>
+public interface IHierarchicalFactory <DATATYPE> extends IFactoryWithParameter <DATATYPE, DATATYPE>
 {
   /**
    * Create an object of the desired type.

@@ -49,11 +49,11 @@ public final class CharsetManager
     s_aAllCharsets = Charset.availableCharsets ();
     // Ensure that all explicitly named charsets are supported by this
     // platform!
-    charsetFromName (CCharset.CHARSET_ISO_8859_1);
-    charsetFromName (CCharset.CHARSET_UTF_8);
-    charsetFromName (CCharset.CHARSET_US_ASCII);
-    charsetFromName (CCharset.CHARSET_SERVICE_LOADER);
-    charsetFromName (CCharset.DEFAULT_CHARSET);
+    getCharsetFromName (CCharset.CHARSET_ISO_8859_1);
+    getCharsetFromName (CCharset.CHARSET_UTF_8);
+    getCharsetFromName (CCharset.CHARSET_US_ASCII);
+    getCharsetFromName (CCharset.CHARSET_SERVICE_LOADER);
+    getCharsetFromName (CCharset.DEFAULT_CHARSET);
   }
 
   @PresentForCodeCoverage
@@ -74,9 +74,29 @@ public final class CharsetManager
    * @return The Charset object
    * @throws IllegalArgumentException
    *         If the charset could not be resolved.
+   * @deprecated Use {@link #getCharsetFromName(String)} instead
    */
+  @Deprecated
   @Nonnull
   public static Charset charsetFromName (@Nonnull final String sCharsetName)
+  {
+    return getCharsetFromName (sCharsetName);
+  }
+
+  /**
+   * Resolve the charset by the specified name. The difference to
+   * {@link Charset#forName(String)} is, that this method has no checked
+   * exceptions but only unchecked exceptions.
+   * 
+   * @param sCharsetName
+   *        The charset to be resolved. May neither be <code>null</code> nor
+   *        empty.
+   * @return The Charset object
+   * @throws IllegalArgumentException
+   *         If the charset could not be resolved.
+   */
+  @Nonnull
+  public static Charset getCharsetFromName (@Nonnull final String sCharsetName)
   {
     try
     {

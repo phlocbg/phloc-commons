@@ -54,7 +54,7 @@ public final class CharsetTypeConverterRegistrar implements ITypeConverterRegist
     {
       public Charset convert (final Object aSource)
       {
-        return CharsetManager.charsetFromName ((String) aSource);
+        return CharsetManager.getCharsetFromName ((String) aSource);
       }
     });
   }

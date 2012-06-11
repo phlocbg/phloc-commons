@@ -280,7 +280,7 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
   public void write (@Nonnull final IMicroNode aNode, @Nonnull @WillNotClose final OutputStream aOS)
   {
     final Writer aWriter = new BufferedWriter (new OutputStreamWriter (aOS,
-                                                                       CharsetManager.charsetFromName (m_aSettings.getCharset ())));
+                                                                       CharsetManager.getCharsetFromName (m_aSettings.getCharset ())));
     final IXMLIterationHandler aXMLWriter = new XMLEmitterPhloc (aWriter, m_aSettings);
     // No previous and no next sibling
     _writeNode (aXMLWriter, null, aNode, null);

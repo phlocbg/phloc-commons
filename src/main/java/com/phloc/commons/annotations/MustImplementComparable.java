@@ -31,7 +31,7 @@ import java.lang.annotation.Target;
  * @author philip
  */
 @Retention (RetentionPolicy.CLASS)
-@Target ({ ElementType.TYPE })
+@Target ({ ElementType.TYPE, ElementType.FIELD })
 @Documented
 public @interface MustImplementComparable
 {

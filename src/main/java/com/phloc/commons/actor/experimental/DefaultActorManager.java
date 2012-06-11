@@ -21,7 +21,6 @@ import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.phloc.commons.actor.experimental.Utils;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.string.StringHelper;
 
@@ -37,11 +36,12 @@ public class DefaultActorManager extends Utils implements IActorManager
   public static final String ACTOR_THREAD_COUNT = "threadCount";
   private static final Logger s_aLogger = LoggerFactory.getLogger (DefaultActorManager.class);
   private static volatile DefaultActorManager s_aInstance;
+  private static int s_nGroupCount;
 
   private final Map <String, AbstractActor> m_aActors = new LinkedHashMap <String, AbstractActor> ();
   private final Map <String, AbstractActor> m_aRunnables = new LinkedHashMap <String, AbstractActor> ();
   private final Map <String, AbstractActor> m_aWaiters = new LinkedHashMap <String, AbstractActor> ();
-  private final Map <String, ActorRunnable> m_aTRunnables = new HashMap <String, ActorRunnable> ();
+  private final Map <String, ActorRunnable> m_aThreadRunnables = new HashMap <String, ActorRunnable> ();
   private final Random m_aRand = new Random ();
   private final Map <String, List <IActorMessage>> m_aSentMessages = new HashMap <String, List <IActorMessage>> ();
   private boolean m_bRecordSentMessages = true;
@@ -49,11 +49,11 @@ public class DefaultActorManager extends Utils implements IActorManager
   volatile private long m_nLastDispatchTime;
   volatile private int m_nSendCount, m_nLastSendCount;
   volatile private int m_nDispatchCount, m_nLastDispatchCount;
-  private static int s_nGroupCount;
   private final List <Thread> m_aThreads = new LinkedList <Thread> ();
   private int m_nTrendValue = 0, m_nMaxTrendValue = 10;
   private boolean m_bRunning, m_bTerminated;
   private ThreadGroup m_aThreadGroup;
+  private boolean m_bInitialized;
 
   /**
    * Get the default instance. Uses ActorManager.properties for configuration.
@@ -83,7 +83,6 @@ public class DefaultActorManager extends Utils implements IActorManager
   /**
    * Detach an actor.
    */
-  @Override
   public void detachActor (final IActor actor)
   {
     if (((AbstractActor) actor).getManager () != this)
@@ -152,7 +151,6 @@ public class DefaultActorManager extends Utils implements IActorManager
    * @param type
    *        the class to count (also its subclasses)
    */
-  @Override
   public int getActorCount (final Class <? extends IActor> type)
   {
     int res = 0;
@@ -306,29 +304,28 @@ public class DefaultActorManager extends Utils implements IActorManager
    *        target actor
    * @return number of receiving actors
    */
-  @Override
-  public int send (final IActorMessage message, final IActor from, final IActor to)
+  public int send (@Nullable final IActorMessage message, @Nullable final IActor from, @Nullable final IActor to)
   {
     int count = 0;
     if (message != null)
     {
-      final AbstractActor aa = (AbstractActor) to;
-      if (aa != null)
+      final AbstractActor aTo = (AbstractActor) to;
+      if (aTo != null)
       {
-        if (!aa.isShutdown () && !aa.isSuspended () && aa.willReceive (message.getSubject ()))
+        if (!aTo.isShutdown () && !aTo.isSuspended () && aTo.willReceive (message.getSubject ()))
         {
           final DefaultActorMessage xmessage = (DefaultActorMessage) ((DefaultActorMessage) message).assignSender (from);
           if (false)
             s_aLogger.trace (" " + xmessage + " to " + to);
-          aa.addMessage (xmessage);
-          xmessage.fireMessageListeners (new ActorMessageEvent (aa, xmessage, EMessageStatus.SENT));
+          aTo.addMessage (xmessage);
+          xmessage.fireMessageListeners (new ActorMessageEvent (aTo, xmessage, EMessageStatus.SENT));
           m_nSendCount++;
           m_nLastSendTime = new Date ().getTime ();
           if (m_bRecordSentMessages)
           {
             synchronized (m_aSentMessages)
             {
-              final String aname = aa.getName ();
+              final String aname = aTo.getName ();
               List <IActorMessage> l = m_aSentMessages.get (aname);
               if (l == null)
               {
@@ -364,7 +361,6 @@ public class DefaultActorManager extends Utils implements IActorManager
    *        target actors
    * @return number of receiving actors
    */
-  @Override
   public int send (final IActorMessage message, final IActor from, final IActor [] to)
   {
     int count = 0;
@@ -386,7 +382,6 @@ public class DefaultActorManager extends Utils implements IActorManager
    *        target actors
    * @return number of receiving actors
    */
-  @Override
   public int send (final IActorMessage message, final IActor from, final Collection <IActor> to)
   {
     int count = 0;
@@ -408,7 +403,6 @@ public class DefaultActorManager extends Utils implements IActorManager
    *        target actor category
    * @return number of receiving actors
    */
-  @Override
   public int send (final IActorMessage message, final IActor from, final String category)
   {
     int count = 0;
@@ -450,7 +444,6 @@ public class DefaultActorManager extends Utils implements IActorManager
    *        source actor
    * @return number of receiving actors
    */
-  @Override
   public int broadcast (final IActorMessage message, final IActor from)
   {
     int count = 0;
@@ -465,7 +458,6 @@ public class DefaultActorManager extends Utils implements IActorManager
    * 
    * @return categories
    */
-  @Override
   public Set <String> getCategories ()
   {
     final Map <String, ? extends IActor> xactors = cloneActors ();
@@ -502,31 +494,31 @@ public class DefaultActorManager extends Utils implements IActorManager
   /**
    * Suspend an actor until it has a read message.
    * 
-   * @param actor
+   * @param aActor
    *        receiving actor
    */
-  public void awaitMessage (@Nonnull final AbstractActor actor)
+  public void awaitMessage (@Nonnull final AbstractActor aActor)
   {
     synchronized (m_aActors)
     {
-      m_aWaiters.put (actor.getName (), actor);
+      m_aWaiters.put (aActor.getName (), aActor);
       // actors.notifyAll();
       if (false)
-        s_aLogger.trace ("awaitMessage waiters=" + m_aWaiters.size () + ": " + actor);
+        s_aLogger.trace ("awaitMessage waiters=" + m_aWaiters.size () + ": " + aActor);
     }
   }
 
   /**
    * Get the Runnable by name.
    * 
-   * @param name
+   * @param sName
    *        thread name
    * @return runnable
    */
   @Nullable
-  public ActorRunnable getRunnable (final String name)
+  public ActorRunnable getRunnable (final String sName)
   {
-    return m_aTRunnables.get (name);
+    return m_aThreadRunnables.get (sName);
   }
 
   /**
@@ -540,8 +532,8 @@ public class DefaultActorManager extends Utils implements IActorManager
     int res = 0;
     synchronized (m_aActors)
     {
-      for (final String key : m_aTRunnables.keySet ())
-        if (m_aTRunnables.get (key).m_bHasThread)
+      for (final String key : m_aThreadRunnables.keySet ())
+        if (m_aThreadRunnables.get (key).m_bHasThread)
           res++;
     }
     return res;
@@ -554,15 +546,15 @@ public class DefaultActorManager extends Utils implements IActorManager
    * @return Never <code>null</code>
    */
   @Nonnull
-  public Thread addThread (final String name)
+  public Thread addThread (@Nonnull final String name)
   {
     Thread t;
     synchronized (m_aActors)
     {
-      if (m_aTRunnables.containsKey (name))
+      if (m_aThreadRunnables.containsKey (name))
         throw new IllegalStateException ("already exists: " + name);
       final ActorRunnable r = new ActorRunnable ();
-      m_aTRunnables.put (name, r);
+      m_aThreadRunnables.put (name, r);
       t = new Thread (m_aThreadGroup, r, name);
       m_aThreads.add (t);
       if (false)
@@ -576,22 +568,22 @@ public class DefaultActorManager extends Utils implements IActorManager
   /**
    * Remove a dynamic thread.
    * 
-   * @param name
+   * @param sName
    */
-  public void removeThread (final String name)
+  public void removeThread (@Nonnull final String sName)
   {
     synchronized (m_aActors)
     {
-      if (!m_aTRunnables.containsKey (name))
-        throw new IllegalStateException ("not running: " + name);
+      if (!m_aThreadRunnables.containsKey (sName))
+        throw new IllegalStateException ("not running: " + sName);
       if (false)
-        s_aLogger.trace ("removeThread: " + name);
-      m_aTRunnables.remove (name);
+        s_aLogger.trace ("removeThread: " + sName);
+      m_aThreadRunnables.remove (sName);
       final Iterator <Thread> i = m_aThreads.iterator ();
       while (i.hasNext ())
       {
         final Thread xt = i.next ();
-        if (xt.getName ().equals (name))
+        if (xt.getName ().equals (sName))
         {
           i.remove ();
           xt.interrupt ();
@@ -614,13 +606,10 @@ public class DefaultActorManager extends Utils implements IActorManager
   /**
    * Initialize this manager. Call only once.
    */
-  @Override
   public void initialize ()
   {
     initialize (null);
   }
-
-  private boolean initialized;
 
   /**
    * Initialize this manager. Call only once.
@@ -628,30 +617,26 @@ public class DefaultActorManager extends Utils implements IActorManager
    * @param options
    *        map of options
    */
-  @Override
   public void initialize (final Map <String, Object> options)
   {
-    if (!initialized)
+    if (!m_bInitialized)
     {
-      initialized = true;
-      final int count = getThreadCount (options);
-      final ThreadGroup tg = new ThreadGroup ("ActorManager" + s_nGroupCount++);
-      m_aThreadGroup = tg;
-      for (int i = 0; i < count; i++)
-      {
+      m_bInitialized = true;
+      final int nCount = getThreadCount (options);
+      final ThreadGroup aThreadGroup = new ThreadGroup ("ActorManager" + s_nGroupCount++);
+      m_aThreadGroup = aThreadGroup;
+      for (int i = 0; i < nCount; i++)
         createThread (i);
-      }
       m_bRunning = true;
-      for (final Thread t : m_aThreads)
+      for (final Thread aThread : m_aThreads)
       {
         if (false)
-          s_aLogger.trace ("procesNextActor starting " + t);
-        t.start ();
+          s_aLogger.trace ("initialize starting " + aThread);
+        aThread.start ();
       }
 
       final Thread Counter = new Thread (new Runnable ()
       {
-        @Override
         public void run ()
         {
           while (m_bRunning)
@@ -703,7 +688,7 @@ public class DefaultActorManager extends Utils implements IActorManager
   }
 
   /** public intended only for "friend" access. */
-  public class ActorRunnable implements Runnable
+  public final class ActorRunnable implements Runnable
   {
     public boolean m_bHasThread;
     public AbstractActor m_aActor;
@@ -765,7 +750,7 @@ public class DefaultActorManager extends Utils implements IActorManager
       {
         // first run never started
         run = true;
-        m_aActor.setHasThread (true);
+        m_aActor.setThreadAssigned (true);
         m_bHasThread = true;
         try
         {
@@ -773,7 +758,7 @@ public class DefaultActorManager extends Utils implements IActorManager
         }
         finally
         {
-          m_aActor.setHasThread (false);
+          m_aActor.setThreadAssigned (false);
           m_bHasThread = false;
         }
       }
@@ -790,7 +775,7 @@ public class DefaultActorManager extends Utils implements IActorManager
         if (m_aActor != null)
         {
           // then waiting for responses
-          m_aActor.setHasThread (true);
+          m_aActor.setThreadAssigned (true);
           m_bHasThread = true;
           try
           {
@@ -800,7 +785,7 @@ public class DefaultActorManager extends Utils implements IActorManager
           }
           finally
           {
-            m_aActor.setHasThread (false);
+            m_aActor.setThreadAssigned (false);
             m_bHasThread = false;
           }
         }
@@ -826,7 +811,6 @@ public class DefaultActorManager extends Utils implements IActorManager
   /**
    * Terminate processing and wait for all threads to stop.
    */
-  @Override
   public void terminateAndWait ()
   {
     s_aLogger.trace ("terminateAndWait waiting on termination of " + m_aThreads.size () + " threads");
@@ -862,7 +846,6 @@ public class DefaultActorManager extends Utils implements IActorManager
   /**
    * Terminate processing.
    */
-  @Override
   public void terminate ()
   {
     m_bTerminated = true;
@@ -891,7 +874,6 @@ public class DefaultActorManager extends Utils implements IActorManager
    * @param name
    *        the actor name; must be unique
    */
-  @Override
   public IActor createActor (final Class <? extends IActor> clazz, final String name)
   {
     return createActor (clazz, name, null);
@@ -905,7 +887,6 @@ public class DefaultActorManager extends Utils implements IActorManager
    * @param name
    *        the actor name; must be unique
    */
-  @Override
   public IActor createAndStartActor (final Class <? extends IActor> clazz, final String name)
   {
     return createAndStartActor (clazz, name, null);
@@ -921,7 +902,6 @@ public class DefaultActorManager extends Utils implements IActorManager
    * @param options
    *        actor options
    */
-  @Override
   public IActor createAndStartActor (final Class <? extends IActor> clazz,
                                      final String name,
                                      final Map <String, Object> options)
@@ -941,7 +921,6 @@ public class DefaultActorManager extends Utils implements IActorManager
    * @param options
    *        actor options
    */
-  @Override
   public IActor createActor (final Class <? extends IActor> clazz, final String name, final Map <String, Object> options)
   {
     AbstractActor a = null;
@@ -975,8 +954,7 @@ public class DefaultActorManager extends Utils implements IActorManager
    * @param actor
    *        the actor
    */
-  @Override
-  public void startActor (final IActor actor)
+  public void startActor (@Nonnull final IActor actor)
   {
     if (((AbstractActor) actor).getManager () != this)
       throw new IllegalStateException ("actor not owned by this manager");

@@ -2339,9 +2339,9 @@ public class Base64// NOPMD
    * but in retrospect that's a pretty poor way to handle it.
    * </p>
    * 
-   * @param dataToEncode
+   * @param aDataToEncode
    *        byte array of data to encode in base64 form
-   * @param filename
+   * @param sFilename
    *        Filename for saving encoded data
    * @throws IOException
    *         if there is an error
@@ -2349,10 +2349,10 @@ public class Base64// NOPMD
    *         if dataToEncode is null
    * @since 2.1
    */
-  public static void encodeToFile (final byte [] dataToEncode, final String filename) throws IOException
+  public static void encodeToFile (final byte [] aDataToEncode, final String sFilename) throws IOException
   {
 
-    if (dataToEncode == null)
+    if (aDataToEncode == null)
     {
       throw new NullPointerException ("Data to encode was null.");
     }
@@ -2360,8 +2360,8 @@ public class Base64// NOPMD
     Base64.OutputStream bos = null;
     try
     {
-      bos = new Base64.OutputStream (FileUtils.getOutputStream (filename), Base64.ENCODE);
-      bos.write (dataToEncode);
+      bos = new Base64.OutputStream (FileUtils.getOutputStream (sFilename), Base64.ENCODE);
+      bos.write (aDataToEncode);
     }
     finally
     {

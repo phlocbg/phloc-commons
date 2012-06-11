@@ -101,10 +101,10 @@ public class LRUCache <KEYTYPE, VALUETYPE> extends LinkedHashMap <KEYTYPE, VALUE
   {
     if (o == this)
       return true;
-    if (!super.equals (o))
-      return false;
     // Special case because LinkedHashMap implementation is a bit bogus
     if (o == null || !getClass ().equals (o.getClass ()))
+      return false;
+    if (!super.equals (o))
       return false;
     final LRUCache <?, ?> rhs = (LRUCache <?, ?>) o;
     return EqualsUtils.equals (m_nMaxSize, rhs.m_nMaxSize);

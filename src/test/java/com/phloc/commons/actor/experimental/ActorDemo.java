@@ -1438,7 +1438,7 @@ public class ActorDemo extends JPanel implements ChangeListener
         {
           acolor = Color.RED;
         }
-        final Color xacolor = aa.getHasThread () ? acolor.darker () : acolor;
+        final Color xacolor = aa.isThreadAssigned () ? acolor.darker () : acolor;
         g2d.setColor (xacolor);
         if (selfSends.contains (aa))
         {

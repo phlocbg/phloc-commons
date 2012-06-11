@@ -62,7 +62,7 @@ public class StringInputStreamProvider implements IReaderProvider
 
   public StringInputStreamProvider (@Nonnull final String sData, @Nonnull @Nonempty final String sCharset)
   {
-    this (sData, CharsetManager.charsetFromName (sCharset));
+    this (sData, CharsetManager.getCharsetFromName (sCharset));
   }
 
   public StringInputStreamProvider (@Nonnull final String sData, @Nonnull final Charset aCharset)

@@ -24,6 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.phloc.commons.IHasSize;
+import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
 import com.phloc.commons.factory.FactoryNull;
 import com.phloc.commons.factory.IFactory;
 import com.phloc.commons.hash.HashCodeGenerator;
@@ -45,6 +46,7 @@ import com.phloc.commons.string.ToStringGenerator;
 @ThreadSafe
 public class SafeVector <ELEMENTTYPE> extends Vector <ELEMENTTYPE> implements IHasSize
 {
+  @MustImplementEqualsAndHashcode
   private final IFactory <ELEMENTTYPE> m_aFactory;
 
   public SafeVector ()
@@ -83,9 +85,11 @@ public class SafeVector <ELEMENTTYPE> extends Vector <ELEMENTTYPE> implements IH
   @Override
   public synchronized boolean equals (final Object o) // NOPMD
   {
-    if (!super.equals (o))
+    if (o == this)
+      return true;
+    if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    if (!getClass ().equals (o.getClass ()))
+    if (!super.equals (o))
       return false;
     final SafeVector <?> rhs = (SafeVector <?>) o;
     return m_aFactory.equals (rhs.m_aFactory);
