@@ -28,6 +28,7 @@ import com.phloc.commons.error.IResourceError;
 import com.phloc.commons.error.IResourceLocation;
 import com.phloc.commons.error.ResourceError;
 import com.phloc.commons.error.ResourceLocation;
+import com.phloc.commons.name.IHasDisplayText;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -62,18 +63,18 @@ public abstract class AbstractTransformErrorListener implements ErrorListener
   @Nonnull
   private static IResourceError _buildError (@Nonnull final TransformerException ex,
                                              @Nonnull final EErrorLevel eErrorLevel,
-                                             @Nonnull final String sPrefix)
+                                             @Nonnull final IHasDisplayText aErrorMsg)
   {
     final SourceLocator aLocator = ex.getLocator ();
     final String sResourceID = aLocator == null ? null : StringHelper.getConcatenatedOnDemand (aLocator.getPublicId (),
-                                                                                           "/",
-                                                                                           aLocator.getSystemId ());
+                                                                                               "/",
+                                                                                               aLocator.getSystemId ());
     final IResourceLocation aLocation = new ResourceLocation (sResourceID,
                                                               aLocator != null ? aLocator.getLineNumber ()
                                                                               : IResourceLocation.ILLEGAL_NUMBER,
                                                               aLocator != null ? aLocator.getColumnNumber ()
                                                                               : IResourceLocation.ILLEGAL_NUMBER);
-    return new ResourceError (aLocation, eErrorLevel, sPrefix, ex);
+    return new ResourceError (aLocation, eErrorLevel, aErrorMsg, ex);
   }
 
   /**
@@ -86,7 +87,7 @@ public abstract class AbstractTransformErrorListener implements ErrorListener
 
   public final void warning (@Nonnull final TransformerException ex) throws TransformerException
   {
-    log (_buildError (ex, EErrorLevel.WARN, "Transformation warning"));
+    log (_buildError (ex, EErrorLevel.WARN, EXMLTransformTexts.TRANSFORMATION_WARNING));
 
     if (m_aWrappedErrorListener != null)
       m_aWrappedErrorListener.warning (ex);
@@ -94,7 +95,7 @@ public abstract class AbstractTransformErrorListener implements ErrorListener
 
   public final void error (@Nonnull final TransformerException ex) throws TransformerException
   {
-    log (_buildError (ex, EErrorLevel.ERROR, "Transformation error"));
+    log (_buildError (ex, EErrorLevel.ERROR, EXMLTransformTexts.TRANSFORMATION_ERROR));
 
     if (m_aWrappedErrorListener != null)
       m_aWrappedErrorListener.error (ex);
@@ -102,7 +103,7 @@ public abstract class AbstractTransformErrorListener implements ErrorListener
 
   public final void fatalError (@Nonnull final TransformerException ex) throws TransformerException
   {
-    log (_buildError (ex, EErrorLevel.FATAL_ERROR, "Transformation fatal error"));
+    log (_buildError (ex, EErrorLevel.FATAL_ERROR, EXMLTransformTexts.TRANSFORMATION_FATAL_ERROR));
 
     if (m_aWrappedErrorListener != null)
       m_aWrappedErrorListener.fatalError (ex);

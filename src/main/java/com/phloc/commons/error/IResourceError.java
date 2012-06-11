@@ -17,10 +17,13 @@
  */
 package com.phloc.commons.error;
 
+import java.util.Locale;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.phloc.commons.IHasStringRepresentation;
+import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.name.IHasDisplayText;
 import com.phloc.commons.state.IErrorIndicator;
 import com.phloc.commons.state.ISuccessIndicator;
 
@@ -30,12 +33,7 @@ import com.phloc.commons.state.ISuccessIndicator;
  * 
  * @author philip
  */
-public interface IResourceError extends
-                               IHasErrorLevel,
-                               IHasErrorText,
-                               ISuccessIndicator,
-                               IErrorIndicator,
-                               IHasStringRepresentation
+public interface IResourceError extends IHasErrorLevel, IHasDisplayText, ISuccessIndicator, IErrorIndicator
 {
   /**
    * @return The non-<code>null</code> location of the error.
@@ -55,4 +53,15 @@ public interface IResourceError extends
    */
   @Nullable
   Throwable getLinkedException ();
+
+  /**
+   * Get the error as a string representation
+   * 
+   * @param aDisplayLocale
+   *        Locale to resolve the error text
+   * @return The default string representation
+   */
+  @Nonnull
+  @Nonempty
+  String getAsString (@Nonnull Locale aDisplayLocale);
 }

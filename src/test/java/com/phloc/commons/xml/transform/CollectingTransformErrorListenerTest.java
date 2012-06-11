@@ -33,6 +33,7 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 
 import com.phloc.commons.io.resource.ClassPathResource;
+import com.phloc.commons.mock.AbstractPhlocTestCase;
 import com.phloc.commons.mock.PhlocTestUtils;
 import com.phloc.commons.xml.XMLFactory;
 
@@ -41,12 +42,12 @@ import com.phloc.commons.xml.XMLFactory;
  * 
  * @author philip
  */
-public final class CollectingTransformErrorListenerTest
+public final class CollectingTransformErrorListenerTest extends AbstractPhlocTestCase
 {
   @Test
   public void testAll () throws TransformerConfigurationException, TransformerException
   {
-    final CollectingTransformErrorListener el = new CollectingTransformErrorListener (LoggingTransformErrorListener.getInstance ());
+    final CollectingTransformErrorListener el = new CollectingTransformErrorListener (new LoggingTransformErrorListener (L_EN));
     final TransformerFactory fac = XMLTransformerFactory.createTransformerFactory (el,
                                                                                    new LoggingTransformURIResolver ());
     assertNotNull (fac);

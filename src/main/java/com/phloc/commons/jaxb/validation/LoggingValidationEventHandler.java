@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.jaxb.validation;
 
+import java.util.Locale;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
@@ -44,7 +46,9 @@ public class LoggingValidationEventHandler extends AbstractValidationEventHandle
   private static final LoggingValidationEventHandler s_aInstance = new LoggingValidationEventHandler ();
 
   public LoggingValidationEventHandler ()
-  {}
+  {
+    super ();
+  }
 
   public LoggingValidationEventHandler (@Nullable final ValidationEventHandler aOrigHandler)
   {
@@ -60,7 +64,8 @@ public class LoggingValidationEventHandler extends AbstractValidationEventHandle
   @Override
   protected void onEvent (@Nonnull final IResourceError aEvent)
   {
-    final String sMsg = "JAXB " + aEvent.getAsString ();
+    // As JAXB messages are not localized, we can use a fixed locale here!
+    final String sMsg = "JAXB " + aEvent.getAsString (Locale.US);
     if (aEvent.getErrorLevel ().isLessOrEqualSevereThan (EErrorLevel.WARN))
       s_aLogger.warn (sMsg, aEvent.getLinkedException ());
     else

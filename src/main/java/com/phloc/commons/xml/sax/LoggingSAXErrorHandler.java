@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.xml.sax;
 
+import java.util.Locale;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
@@ -59,6 +61,8 @@ public class LoggingSAXErrorHandler extends AbstractSAXErrorHandler
   @Override
   protected void log (@Nonnull final EErrorLevel eErrorLevel, final SAXParseException aException)
   {
-    LogUtils.log (s_aLogger, eErrorLevel, "SAX " + getSaxParseError (eErrorLevel, aException).getAsString ());
+    // As the SAX error messages are not localized, we can use a fixed locale
+    // here
+    LogUtils.log (s_aLogger, eErrorLevel, "SAX " + getSaxParseError (eErrorLevel, aException).getAsString (Locale.US));
   }
 }

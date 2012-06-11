@@ -221,7 +221,7 @@ public final class CGlobal
   /**
    * The very hardcoded default locale that cannot be changed.
    */
-  public static final Locale DEFAULT_LOCALE = Locale.ENGLISH;
+  public static final Locale DEFAULT_LOCALE = Locale.US;
 
   /**
    * The default language in case no other language is specified.
