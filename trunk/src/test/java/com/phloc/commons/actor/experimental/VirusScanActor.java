@@ -30,42 +30,42 @@ public class VirusScanActor extends AbstractTestableActor
   }
 
   @Override
-  protected void loopBody (final IActorMessage m)
+  protected void loopBody (final IActorMessage aMessage)
   {
     try
     {
       // s_aLogger.trace("TestActor:%s loopBody %s: %s", getName(), m, this);
       DefaultActorTest.sleeper (1);
-      final String subject = m.getSubject ();
-      final DefaultActorManager manager = (DefaultActorManager) getManager ();
-      if ("scanDir".equals (subject))
+      final String sSubject = aMessage.getSubject ();
+      final DefaultActorManager aManager = getManager ();
+      if ("scanDir".equals (sSubject))
       {
-        final String dir = (String) m.getData ();
+        final String dir = (String) aMessage.getData ();
         final File [] list = new File (dir).listFiles ();
         s_aLogger.trace ("Scanning directory %s...", dir);
-        if (manager.getCategorySize (getCategory ()) < 50)
+        if (aManager.getCategorySize (getCategory ()) < 50)
         {
-          createVirusScanActor (manager);
+          createVirusScanActor (aManager);
         }
         for (final File file : list)
         {
           if (file.isDirectory ())
           {
             final DefaultActorMessage dm = new DefaultActorMessage ("scanDir", file.getCanonicalPath ());
-            manager.send (dm, this, this.getClass ().getSimpleName ());
+            aManager.send (dm, this, this.getClass ().getSimpleName ());
           }
           else
             if (file.isFile () && file.getName ().toLowerCase ().endsWith (".txt"))
             {
               final DefaultActorMessage dm = new DefaultActorMessage ("scanFile", file.getCanonicalPath ());
-              manager.send (dm, this, getCategoryName ());
+              aManager.send (dm, this, getCategoryName ());
             }
         }
       }
       else
-        if ("scanFile".equals (subject))
+        if ("scanFile".equals (sSubject))
         {
-          final String file = (String) m.getData ();
+          final String file = (String) aMessage.getData ();
           final File xfile = new File (file);
           final String xpath = xfile.getCanonicalPath ();
           s_aLogger.trace ("Scaning file %s...", xpath);
@@ -85,14 +85,14 @@ public class VirusScanActor extends AbstractTestableActor
           {
             final DefaultActorMessage dm = new DefaultActorMessage ("virusFound",
                                                                     new Object [] { xpath, "more than 10 returns found" });
-            manager.send (dm, this, getCategoryName ());
+            aManager.send (dm, this, getCategoryName ());
           }
           ba = null;
         }
         else
-          if ("virusFound".equals (subject))
+          if ("virusFound".equals (sSubject))
           {
-            final Object [] params = (Object []) m.getData ();
+            final Object [] params = (Object []) aMessage.getData ();
             final String file = params.length > 0 ? (String) params[0] : null;
             final String message = params.length > 1 ? (String) params[1] : null;
             if (file != null)
@@ -103,18 +103,18 @@ public class VirusScanActor extends AbstractTestableActor
             }
           }
           else
-            if ("init".equals (subject))
+            if ("init".equals (sSubject))
             {
-              final String startPath = (String) m.getData ();
+              final String startPath = (String) aMessage.getData ();
               if (startPath != null)
               {
                 final DefaultActorMessage dm = new DefaultActorMessage ("scanDir", startPath);
-                manager.send (dm, this, getCategoryName ());
+                aManager.send (dm, this, getCategoryName ());
               }
             }
             else
             {
-              s_aLogger.warn ("VirusScanActor:" + getName () + " loopBody unknown subject: " + subject);
+              s_aLogger.warn ("VirusScanActor:" + getName () + " loopBody unknown subject: " + sSubject);
             }
     }
     catch (final IOException e)

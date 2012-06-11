@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nullable;
 
 import org.slf4j.Logger;
@@ -32,13 +33,13 @@ public abstract class AbstractActor implements IActor
   private String m_sCategory = DEFAULT_CATEGORY;
   private String m_sName;
   private boolean m_bIsActive;
-  private boolean m_bHasThread;
+  private boolean m_bThreadAssigned;
   private boolean m_bShutdown;
   private boolean m_bSuspended;
   protected final List <DefaultActorMessage> m_aMessages = new LinkedList <DefaultActorMessage> ();
 
   @Nullable
-  public IActorManager getManager ()
+  public DefaultActorManager getManager ()
   {
     return m_aManager;
   }
@@ -132,10 +133,14 @@ public abstract class AbstractActor implements IActor
     return getMatch (null, false);
   }
 
-  /** Process the accepted subject. */
+  /**
+   * Process the accepted subject.
+   */
   abstract protected void loopBody (IActorMessage m);
 
-  /** Test a message against a defined subject pattern. */
+  /**
+   * Test a message against a defined subject pattern.
+   */
   @Nullable
   protected DefaultActorMessage getMatch (final String subject, final boolean isRegExpr)
   {
@@ -147,11 +152,13 @@ public abstract class AbstractActor implements IActor
     return res;
   }
 
+  @Nullable
   public DefaultActorMessage [] getMessages ()
   {
     return m_aMessages.toArray (new DefaultActorMessage [m_aMessages.size ()]);
   }
 
+  @Nonnegative
   public int getMessageCount ()
   {
     synchronized (m_aMessages)
@@ -164,7 +171,7 @@ public abstract class AbstractActor implements IActor
    * Limit the number of messages that can be received. Subclasses should
    * override.
    */
-
+  @Nonnegative
   public int getMaxMessageCount ()
   {
     return DEFAULT_MAX_MESSAGES;
@@ -192,11 +199,13 @@ public abstract class AbstractActor implements IActor
     }
   }
 
+  @Nullable
   public IActorMessage peekNext ()
   {
-    return peekNext (null);
+    return peekNext (null, false);
   }
 
+  @Nullable
   public IActorMessage peekNext (final String subject)
   {
     return peekNext (subject, false);
@@ -208,26 +217,26 @@ public abstract class AbstractActor implements IActor
   @Nullable
   public IActorMessage peekNext (final String sSubject, final boolean bIsRegExpr)
   {
-    IActorMessage res = null;
+    IActorMessage aResultMessage = null;
     if (m_bIsActive)
     {
-      final long now = new Date ().getTime ();
+      final long nNow = new Date ().getTime ();
       synchronized (m_aMessages)
       {
-        for (final DefaultActorMessage m : m_aMessages)
+        for (final DefaultActorMessage aMessage : m_aMessages)
         {
-          if (m.getDelayUntil () <= now)
-            if (sSubject == null || m.subjectMatches (sSubject, bIsRegExpr))
+          if (aMessage.getDelayUntil () <= nNow)
+            if (sSubject == null || aMessage.subjectMatches (sSubject, bIsRegExpr))
             {
-              res = m;
+              aResultMessage = aMessage;
               break;
             }
         }
       }
     }
     if (false)
-      s_aLogger.trace ("peekNext " + sSubject + "," + bIsRegExpr + ": " + res);
-    return res;
+      s_aLogger.trace ("peekNext " + sSubject + "," + bIsRegExpr + ": " + aResultMessage);
+    return aResultMessage;
   }
 
   public boolean remove (@Nullable final IActorMessage aMessage)
@@ -265,22 +274,17 @@ public abstract class AbstractActor implements IActor
   public void run ()
   {
     runBody ();
-    ((DefaultActorManager) getManager ()).awaitMessage (this);
+    getManager ().awaitMessage (this);
   }
 
-  public boolean getHasThread ()
+  public boolean isThreadAssigned ()
   {
-    return m_bHasThread;
+    return m_bThreadAssigned;
   }
 
-  protected void setHasThread (final boolean hasThread)
+  protected void setThreadAssigned (final boolean bThreadAssigned)
   {
-    m_bHasThread = hasThread;
-  }
-
-  protected String bodyString ()
-  {
-    return "name=" + m_sName + ", category=" + m_sCategory + ", messages=" + m_aMessages.size ();
+    m_bThreadAssigned = bThreadAssigned;
   }
 
   public boolean isShutdown ()
@@ -311,6 +315,14 @@ public abstract class AbstractActor implements IActor
   @Override
   public String toString ()
   {
-    return getClass ().getSimpleName () + "[" + bodyString () + "]";
+    return getClass ().getSimpleName () +
+           "[" +
+           "name=" +
+           m_sName +
+           ", category=" +
+           m_sCategory +
+           ", messages=" +
+           m_aMessages.size () +
+           "]";
   }
 }

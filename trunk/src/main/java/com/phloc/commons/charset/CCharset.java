@@ -42,7 +42,7 @@ public final class CCharset
    * The UTF-8 charset object.
    */
   @Nonnull
-  public static final Charset CHARSET_UTF_8_OBJ = CharsetManager.charsetFromName (CHARSET_UTF_8);
+  public static final Charset CHARSET_UTF_8_OBJ = CharsetManager.getCharsetFromName (CHARSET_UTF_8);
 
   /**
    * The special ANSI charset to be used in all applications. This is
@@ -55,7 +55,7 @@ public final class CCharset
    * The ISO-8859-1 charset object.
    */
   @Nonnull
-  public static final Charset CHARSET_ISO_8859_1_OBJ = CharsetManager.charsetFromName (CHARSET_ISO_8859_1);
+  public static final Charset CHARSET_ISO_8859_1_OBJ = CharsetManager.getCharsetFromName (CHARSET_ISO_8859_1);
 
   @Nonnull
   public static final String CHARSET_WINDOWS_1252 = "windows-1252";
@@ -71,7 +71,7 @@ public final class CCharset
    * The US-ASCII charset object.
    */
   @Nonnull
-  public static final Charset CHARSET_US_ASCII_OBJ = CharsetManager.charsetFromName (CHARSET_US_ASCII);
+  public static final Charset CHARSET_US_ASCII_OBJ = CharsetManager.getCharsetFromName (CHARSET_US_ASCII);
 
   /**
    * The default charset to be used in all applications. Currently this is
@@ -84,7 +84,7 @@ public final class CCharset
    * The default charset object. Currently this is UTF-8.
    */
   @Nonnull
-  public static final Charset DEFAULT_CHARSET_OBJ = CharsetManager.charsetFromName (DEFAULT_CHARSET);
+  public static final Charset DEFAULT_CHARSET_OBJ = CharsetManager.getCharsetFromName (DEFAULT_CHARSET);
 
   /**
    * The charset used by the

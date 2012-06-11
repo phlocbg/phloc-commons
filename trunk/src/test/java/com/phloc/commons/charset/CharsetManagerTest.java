@@ -46,10 +46,10 @@ public final class CharsetManagerTest
   @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testCharsetFromName ()
   {
-    assertNotNull (CharsetManager.charsetFromName ("UTF-8"));
+    assertNotNull (CharsetManager.getCharsetFromName ("UTF-8"));
     try
     {
-      CharsetManager.charsetFromName (null);
+      CharsetManager.getCharsetFromName (null);
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -57,7 +57,7 @@ public final class CharsetManagerTest
     try
     {
       // Illegal name
-      CharsetManager.charsetFromName ("does not exist");
+      CharsetManager.getCharsetFromName ("does not exist");
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -65,7 +65,7 @@ public final class CharsetManagerTest
     try
     {
       // Unsupported
-      CharsetManager.charsetFromName ("bla");
+      CharsetManager.getCharsetFromName ("bla");
       fail ();
     }
     catch (final IllegalArgumentException ex)

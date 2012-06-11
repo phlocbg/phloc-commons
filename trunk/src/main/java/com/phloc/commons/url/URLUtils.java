@@ -409,7 +409,7 @@ public final class URLUtils
     if (StringHelper.hasNoText (sParameterCharset))
       aParameterEncoder = IdentityEncoder.create ();
     else
-      aParameterEncoder = new URLParameterEncoder (CharsetManager.charsetFromName (sParameterCharset));
+      aParameterEncoder = new URLParameterEncoder (CharsetManager.getCharsetFromName (sParameterCharset));
     return getURLString (sPath, aParams, sAnchor, aParameterEncoder);
   }
 

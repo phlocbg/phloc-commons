@@ -1,5 +1,7 @@
 package com.phloc.commons.actor.experimental;
 
+import javax.annotation.Nullable;
+
 /**
  * A message between actors.
  * 
@@ -7,12 +9,21 @@ package com.phloc.commons.actor.experimental;
  */
 public interface IActorMessage
 {
-  /** Get the sender of the message. */
+  /**
+   * @return Get the sender of the message.
+   */
+  @Nullable
   IActor getSource ();
 
-  /** Get the subject (AKA command) of the message. */
+  /**
+   * @return Get the subject (AKA command) of the message.
+   */
+  @Nullable
   String getSubject ();
 
-  /** Get any parameter data associated with the message. */
+  /**
+   * @return Get any parameter data associated with the message.
+   */
+  @Nullable
   Object getData ();
 }

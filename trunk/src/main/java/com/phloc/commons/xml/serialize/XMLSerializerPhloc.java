@@ -252,7 +252,7 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
   public void write (@Nonnull final Node aNode, @Nonnull @WillNotClose final OutputStream aOS)
   {
     final Writer aWriter = new BufferedWriter (new OutputStreamWriter (aOS,
-                                                                       CharsetManager.charsetFromName (m_aSettings.getCharset ())));
+                                                                       CharsetManager.getCharsetFromName (m_aSettings.getCharset ())));
     final IXMLIterationHandler aXMLWriter = new XMLEmitterPhloc (aWriter, m_aSettings);
     _writeNode (aXMLWriter, aNode);
     // Flush is important for Writer!

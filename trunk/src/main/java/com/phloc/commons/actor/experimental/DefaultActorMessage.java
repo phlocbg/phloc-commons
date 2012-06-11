@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.equals.EqualsUtils;
@@ -24,64 +25,68 @@ public class DefaultActorMessage implements IActorMessage
   private long m_nDelayUntil = CGlobal.ILLEGAL_ULONG;
   private final List <IActorMessageListener> m_aListeners = new LinkedList <IActorMessageListener> ();
 
-  public DefaultActorMessage (final String subject, final int nData)
-  {
-    this (subject, Integer.valueOf (nData));
-  }
-
-  public DefaultActorMessage (final String subject, final Object data)
-  {
-    this (subject);
-    m_aData = data;
-  }
-
-  private DefaultActorMessage (final IActor aSource, final String subject, final Object data)
-  {
-    this (subject, data);
-    m_aSource = aSource;
-  }
-
-  public DefaultActorMessage (final String subject)
-  {
-    this ();
-    m_sSubject = subject;
-  }
-
   protected DefaultActorMessage ()
   {}
 
-  @Override
+  public DefaultActorMessage (@Nullable final String sSubject)
+  {
+    this ();
+    m_sSubject = sSubject;
+  }
+
+  public DefaultActorMessage (@Nullable final String sSubject, final int nData)
+  {
+    this (sSubject, Integer.valueOf (nData));
+  }
+
+  public DefaultActorMessage (@Nullable final String sSubject, @Nullable final Object data)
+  {
+    this (sSubject);
+    m_aData = data;
+  }
+
+  private DefaultActorMessage (@Nullable final IActor aSource,
+                               @Nullable final String sSubject,
+                               @Nullable final Object data)
+  {
+    this (sSubject, data);
+    m_aSource = aSource;
+  }
+
+  @Nullable
   public IActor getSource ()
   {
     return m_aSource;
   }
 
-  /** Sets the sender of this message; can be null. */
-  public void setSource (final IActor source)
+  /**
+   * Sets the sender of this message; can be null.
+   */
+  public void setSource (@Nullable final IActor source)
   {
     m_aSource = source;
   }
 
-  @Override
+  @Nullable
   public String getSubject ()
   {
     return m_sSubject;
   }
 
-  /** Sets the subject (command) this message implies; can be null. */
-  public void setSubject (final String subject)
+  /** Sets the sSubject (command) this message implies; can be null. */
+  public void setSubject (@Nullable final String sSubject)
   {
-    m_sSubject = subject;
+    m_sSubject = sSubject;
   }
 
-  @Override
+  @Nullable
   public Object getData ()
   {
     return m_aData;
   }
 
   /** Sets data associated with this message; can be null. */
-  public void setData (final Object data)
+  public void setData (@Nullable final Object data)
   {
     m_aData = data;
   }
@@ -108,28 +113,30 @@ public class DefaultActorMessage implements IActorMessage
 
   /** Set the sender of a clone of this message. */
   @Nonnull
-  public IActorMessage assignSender (final IActor sender)
+  public IActorMessage assignSender (@Nullable final IActor sender)
   {
     return new DefaultActorMessage (sender, m_sSubject, m_aData);
   }
 
-  public boolean subjectMatches (final String s, final boolean bIsRegEx)
+  public boolean subjectMatches (@Nonnull final String sSubject, final boolean bIsRegEx)
   {
-    return bIsRegEx ? RegExHelper.stringMatchesPattern (s, m_sSubject) : EqualsUtils.equals (s, m_sSubject);
+    return bIsRegEx ? RegExHelper.stringMatchesPattern (sSubject, m_sSubject) : EqualsUtils.equals (sSubject,
+                                                                                                    m_sSubject);
   }
 
-  public void addMessageListener (final IActorMessageListener l)
+  public void addMessageListener (@Nullable final IActorMessageListener aListener)
   {
-    if (!m_aListeners.contains (l))
-      m_aListeners.add (l);
+    if (aListener != null)
+      if (!m_aListeners.contains (aListener))
+        m_aListeners.add (aListener);
   }
 
-  public void removeMessageListener (final IActorMessageListener l)
+  public void removeMessageListener (@Nullable final IActorMessageListener aListener)
   {
-    m_aListeners.remove (l);
+    m_aListeners.remove (aListener);
   }
 
-  public void fireMessageListeners (final ActorMessageEvent e)
+  public void fireMessageListeners (@Nonnull final ActorMessageEvent e)
   {
     for (final IActorMessageListener aListener : m_aListeners)
       aListener.onMessage (e);

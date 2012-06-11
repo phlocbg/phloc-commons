@@ -23,7 +23,7 @@ package com.phloc.commons.actor.experimental;
  * can provide implementations to allow filtering of messages before reception.
  * 
  * @author bfeigenb
- * @see IActorManager
+ * @See {@link IActorManager}
  */
 public interface IActor extends Runnable
 {
@@ -122,5 +122,4 @@ public interface IActor extends Runnable
    * rarely more than (say) 100.
    */
   int getMaxMessageCount ();
-
 }

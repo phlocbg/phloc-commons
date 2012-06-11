@@ -1,5 +1,7 @@
 package com.phloc.commons.actor.experimental;
 
+import javax.annotation.Nonnull;
+
 /**
  * Listener for message reception.
  * 
@@ -13,5 +15,5 @@ public interface IActorMessageListener
    * @param e
    *        event
    */
-  void onMessage (ActorMessageEvent e);
+  void onMessage (@Nonnull ActorMessageEvent e);
 }

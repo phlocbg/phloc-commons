@@ -9,12 +9,11 @@ import java.util.Set;
  * and assign threads to actors to process messages.
  * 
  * @author bfeigenb
- * @See Actor
- * @See Message
+ * @See {@link IActor}
+ * @See {@link IActorMessage}
  */
 public interface IActorManager
 {
-
   /**
    * Create an actor.
    * 

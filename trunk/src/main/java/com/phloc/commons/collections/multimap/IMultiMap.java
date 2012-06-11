@@ -39,9 +39,25 @@ import com.phloc.commons.state.EChange;
 public interface IMultiMap <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends
                                                                                          Map <KEYTYPE, COLLTYPE>
 {
+  /**
+   * Add a single value into the container identified by the passed key.
+   * 
+   * @param aKey
+   *        The key to use
+   * @param aValue
+   *        The value to be added
+   * @return {@link EChange}
+   */
   @Nonnull
   EChange putSingle (@Nullable KEYTYPE aKey, @Nullable VALUETYPE aValue);
 
+  /**
+   * Add all values into the container identified by the passed key-value-map.
+   * 
+   * @param aMap
+   *        The key-value-map to use
+   * @return {@link EChange}
+   */
   @Nonnull
   EChange putAllIn (@Nonnull Map <? extends KEYTYPE, ? extends VALUETYPE> aMap);
 
