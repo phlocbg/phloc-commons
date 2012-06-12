@@ -3335,17 +3335,53 @@ public final class ArrayHelper
    * Check if the passed array contains at least one <code>null</code> element.
    * 
    * @param aArray
-   *        The collection to check. May be <code>null</code>.
+   *        The array to check. May be <code>null</code>.
+   * @return <code>true</code> only if the passed array is neither
+   *         <code>null</code> nor empty and if at least one <code>null</code>
+   *         element is contained.
+   * @deprecated Use {@link #containsAnyNullElement(T[])} instead
+   */
+  @Deprecated
+  public static <T> boolean containsNullElement (@Nullable final T [] aArray)
+  {
+    return containsAnyNullElement (aArray);
+  }
+
+  /**
+   * Check if the passed array contains at least one <code>null</code> element.
+   * 
+   * @param aArray
+   *        The array to check. May be <code>null</code>.
    * @return <code>true</code> only if the passed array is neither
    *         <code>null</code> nor empty and if at least one <code>null</code>
    *         element is contained.
    */
-  public static <T> boolean containsNullElement (@Nullable final T [] aArray)
+  public static <T> boolean containsAnyNullElement (@Nullable final T [] aArray)
   {
     if (aArray != null)
       for (final T aObj : aArray)
         if (aObj == null)
           return true;
     return false;
+  }
+
+  /**
+   * Check if the passed array contains only <code>null</code> element.
+   * 
+   * @param aArray
+   *        The array to check. May be <code>null</code>.
+   * @return <code>true</code> only if the passed array is neither
+   *         <code>null</code> nor empty and if at least one <code>null</code>
+   *         element is contained.
+   */
+  public static <T> boolean containsOnlyNullElements (@Nullable final T [] aArray)
+  {
+    if (isEmpty (aArray))
+      return false;
+
+    for (final Object aObj : aArray)
+      if (aObj != null)
+        return false;
+    return true;
   }
 }

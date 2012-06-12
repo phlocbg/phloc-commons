@@ -18,7 +18,7 @@
 package com.phloc.commons.collections;
 
 import static com.phloc.commons.collections.ArrayHelper.contains;
-import static com.phloc.commons.collections.ArrayHelper.containsNullElement;
+import static com.phloc.commons.collections.ArrayHelper.containsAnyNullElement;
 import static com.phloc.commons.collections.ArrayHelper.getAllExceptFirst;
 import static com.phloc.commons.collections.ArrayHelper.getAllExceptLast;
 import static com.phloc.commons.collections.ArrayHelper.getAsObjectArray;
@@ -1047,14 +1047,14 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
   @Test
   public void testContainsNullElement ()
   {
-    assertFalse (containsNullElement ((String []) null));
-    assertFalse (containsNullElement (new Object [0]));
+    assertFalse (containsAnyNullElement ((String []) null));
+    assertFalse (containsAnyNullElement (new Object [0]));
 
-    assertFalse (containsNullElement (newArray ("a")));
-    assertFalse (containsNullElement (newArray ("a", "b", "c")));
-    assertTrue (containsNullElement (newArray ((String) null, "a")));
-    assertTrue (containsNullElement (newArray ("a", (String) null)));
-    assertTrue (containsNullElement (newArray ((String) null)));
+    assertFalse (containsAnyNullElement (newArray ("a")));
+    assertFalse (containsAnyNullElement (newArray ("a", "b", "c")));
+    assertTrue (containsAnyNullElement (newArray ((String) null, "a")));
+    assertTrue (containsAnyNullElement (newArray ("a", (String) null)));
+    assertTrue (containsAnyNullElement (newArray ((String) null)));
   }
 
   @Test
