@@ -115,6 +115,6 @@ public final class JAXBContextCacheTest
     final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
     m.marshal (new JAXBElement <String> (new QName ("element"), String.class, sMsg), aSW);
     assertEquals ("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><element>" + sMsg + "</element>",
-                  aSW.toString ());
+                  aSW.getAsString ());
   }
 }

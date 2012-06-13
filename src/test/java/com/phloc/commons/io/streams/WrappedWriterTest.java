@@ -36,16 +36,16 @@ public final class WrappedWriterTest
   @Test
   public void testAll () throws IOException
   {
-    final NonBlockingStringWriter baos = new NonBlockingStringWriter ();
-    final WrappedWriter ws = new WrappedWriter (baos);
+    final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
+    final WrappedWriter ws = new WrappedWriter (aSW);
     ws.write ('a');
     ws.write ("bc".toCharArray ());
     ws.write ("de".toCharArray (), 0, 1);
     ws.write ("ef");
     ws.write ("fgh", 1, 1);
-    assertEquals ("abcdefg", baos.toString ());
+    assertEquals ("abcdefg", aSW.getAsString ());
     ws.append ('0').append ("12").append ("234", 1, 2);
-    assertEquals ("abcdefg0123", baos.toString ());
+    assertEquals ("abcdefg0123", aSW.getAsString ());
     ws.flush ();
     ws.close ();
     PhlocTestUtils.testToStringImplementation (ws);

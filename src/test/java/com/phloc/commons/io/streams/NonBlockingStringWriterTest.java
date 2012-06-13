@@ -18,6 +18,8 @@
 package com.phloc.commons.io.streams;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
@@ -37,24 +39,29 @@ public final class NonBlockingStringWriterTest
   @SuppressWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   public void testAll () throws IOException
   {
-    final NonBlockingStringWriter ws = new NonBlockingStringWriter ();
-    ws.write ('a');
-    ws.write ("bc".toCharArray ());
-    ws.write ("de".toCharArray (), 0, 1);
-    ws.write ("ef");
-    ws.write ("fgh", 1, 1);
-    assertEquals ("abcdefg", ws.toString ());
-    ws.append ('0').append ("12").append ("234", 1, 2);
-    assertEquals ("abcdefg0123", ws.toString ());
-    assertEquals ("abcdefg0123", ws.directGetStringBuilder ().toString ());
-    ws.append (null).append (null, 1, 2);
-    assertEquals ("abcdefg0123nullu", ws.toString ());
-    ws.flush ();
-    ws.close ();
+    final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
+    assertTrue (aSW.isEmpty ());
+    assertEquals (0, aSW.size ());
+    aSW.write ('a');
+    assertFalse (aSW.isEmpty ());
+    assertEquals (1, aSW.size ());
+    aSW.write ("bc".toCharArray ());
+    aSW.write ("de".toCharArray (), 0, 1);
+    aSW.write ("ef");
+    aSW.write ("fgh", 1, 1);
+    assertEquals ("abcdefg", aSW.getAsString ());
+    assertEquals (7, aSW.size ());
+    aSW.append ('0').append ("12").append ("234", 1, 2);
+    assertEquals ("abcdefg0123", aSW.getAsString ());
+    assertEquals ("abcdefg0123", aSW.directGetStringBuilder ().toString ());
+    aSW.append (null).append (null, 1, 2);
+    assertEquals ("abcdefg0123nullu", aSW.getAsString ());
+    aSW.flush ();
+    aSW.close ();
 
     try
     {
-      new NonBlockingStringWriter (-1).close ();
+      new NonBlockingStringWriter (-1);
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -63,21 +70,21 @@ public final class NonBlockingStringWriterTest
     final char [] ca = "abc".toCharArray ();
     try
     {
-      ws.write (ca, -1, 1);
+      aSW.write (ca, -1, 1);
       fail ();
     }
     catch (final IllegalArgumentException ex)
     {}
     try
     {
-      ws.write (ca, 0, -1);
+      aSW.write (ca, 0, -1);
       fail ();
     }
     catch (final IllegalArgumentException ex)
     {}
     try
     {
-      ws.write (ca, 2, 5);
+      aSW.write (ca, 2, 5);
       fail ();
     }
     catch (final IllegalArgumentException ex)

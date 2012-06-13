@@ -184,6 +184,42 @@ public final class StreamUtilsTest
   }
 
   @Test
+  public void testCopyInputStreamToOutputStreamWithLimit ()
+  {
+    final byte [] aInput = CharsetManager.getAsBytes ("Hello12Bytes", CCharset.CHARSET_ISO_8859_1_OBJ);
+    final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
+    assertTrue (StreamUtils.copyInputStreamToOutputStreamWithLimit (new NonBlockingByteArrayInputStream (aInput),
+                                                                    aBAOS,
+                                                                    5).isSuccess ());
+    assertEquals ("Hello", aBAOS.getAsString (CCharset.CHARSET_ISO_8859_1_OBJ));
+    aBAOS.reset ();
+    assertTrue (StreamUtils.copyInputStreamToOutputStreamWithLimit (new NonBlockingByteArrayInputStream (aInput),
+                                                                    aBAOS,
+                                                                    7).isSuccess ());
+    assertEquals ("Hello12", aBAOS.getAsString (CCharset.CHARSET_ISO_8859_1_OBJ));
+    aBAOS.reset ();
+    assertTrue (StreamUtils.copyInputStreamToOutputStreamWithLimit (new NonBlockingByteArrayInputStream (aInput),
+                                                                    aBAOS,
+                                                                    0).isSuccess ());
+    assertEquals ("", aBAOS.getAsString (CCharset.CHARSET_ISO_8859_1_OBJ));
+    aBAOS.reset ();
+    assertTrue (StreamUtils.copyInputStreamToOutputStreamWithLimit (new NonBlockingByteArrayInputStream (aInput),
+                                                                    aBAOS,
+                                                                    9999).isSuccess ());
+    assertEquals ("Hello12Bytes", aBAOS.getAsString (CCharset.CHARSET_ISO_8859_1_OBJ));
+    aBAOS.reset ();
+
+    try
+    {
+      // Negative limit is not allowed
+      StreamUtils.copyInputStreamToOutputStreamWithLimit (new NonBlockingByteArrayInputStream (aInput), aBAOS, -1);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+  }
+
+  @Test
   public void testGetAvailable ()
   {
     final byte [] aInput = CharsetManager.getAsBytes ("Hallo", CCharset.CHARSET_ISO_8859_1_OBJ);
@@ -326,8 +362,10 @@ public final class StreamUtilsTest
   {
     final IReadableResource aRes = new ClassPathResource ("streamutils-bytes");
     assertEquals ("abc", StreamUtils.getAllBytesAsString (aRes, CCharset.CHARSET_UTF_8));
+    assertEquals ("abc", StreamUtils.getAllBytesAsString (aRes, CCharset.CHARSET_UTF_8_OBJ));
     // Non existing
     assertNull (StreamUtils.getAllBytesAsString (new ClassPathResource ("bla fasel"), CCharset.CHARSET_UTF_8));
+    assertNull (StreamUtils.getAllBytesAsString (new ClassPathResource ("bla fasel"), CCharset.CHARSET_UTF_8_OBJ));
   }
 
   @Test
@@ -338,7 +376,7 @@ public final class StreamUtilsTest
     NonBlockingStringReader bais = new NonBlockingStringReader (sInput);
     final NonBlockingStringWriter baos = new NonBlockingStringWriter ();
     assertTrue (StreamUtils.copyReaderToWriter (bais, baos).isSuccess ());
-    assertEquals (sInput, baos.toString ());
+    assertEquals (sInput, baos.getAsString ());
 
     // try with null streams
     bais = new NonBlockingStringReader (sInput);
@@ -374,6 +412,34 @@ public final class StreamUtilsTest
     {
       // empty buffer
       StreamUtils.copyReaderToWriter (bais, baos, new char [0]);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+  }
+
+  @Test
+  public void testCopyReaderToWriterWithLimit ()
+  {
+    final String sSrc = "Hello12Chars";
+    final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
+    assertTrue (StreamUtils.copyReaderToWriterWithLimit (StreamUtils.createReader (sSrc), aSW, 5).isSuccess ());
+    assertEquals ("Hello", aSW.getAsString ());
+    aSW.reset ();
+    assertTrue (StreamUtils.copyReaderToWriterWithLimit (StreamUtils.createReader (sSrc), aSW, 7).isSuccess ());
+    assertEquals ("Hello12", aSW.getAsString ());
+    aSW.reset ();
+    assertTrue (StreamUtils.copyReaderToWriterWithLimit (StreamUtils.createReader (sSrc), aSW, 0).isSuccess ());
+    assertEquals ("", aSW.getAsString ());
+    aSW.reset ();
+    assertTrue (StreamUtils.copyReaderToWriterWithLimit (StreamUtils.createReader (sSrc), aSW, 9999).isSuccess ());
+    assertEquals (sSrc, aSW.getAsString ());
+    aSW.reset ();
+
+    try
+    {
+      // negative limit is not allowed!
+      StreamUtils.copyReaderToWriterWithLimit (StreamUtils.createReader (sSrc), aSW, -1);
       fail ();
     }
     catch (final IllegalArgumentException ex)

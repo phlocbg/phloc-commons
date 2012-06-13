@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.io.streams;
 
+import java.io.Serializable;
 import java.io.Writer;
 
 import javax.annotation.Nonnegative;
@@ -24,6 +25,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.IHasSize;
 import com.phloc.commons.IHasStringRepresentation;
 import com.phloc.commons.annotations.DevelopersNote;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
@@ -38,7 +40,7 @@ import com.phloc.commons.annotations.ReturnsMutableObject;
  * @see java.io.StringWriter
  */
 @NotThreadSafe
-public class NonBlockingStringWriter extends Writer implements IHasStringRepresentation
+public class NonBlockingStringWriter extends Writer implements IHasStringRepresentation, IHasSize, Serializable
 {
   private final StringBuilder m_aSB;
 
@@ -279,9 +281,30 @@ public class NonBlockingStringWriter extends Writer implements IHasStringReprese
   }
 
   /**
+   * Remove all content of the buffer.
+   */
+  public void reset ()
+  {
+    m_aSB.setLength (0);
+  }
+
+  @Nonnegative
+  public int size ()
+  {
+    return m_aSB.length ();
+  }
+
+  public boolean isEmpty ()
+  {
+    return m_aSB.length () == 0;
+  }
+
+  /**
    * Return the buffer's current value as a string.
    */
   @Override
+  @Deprecated
+  @DevelopersNote ("Use getAsString as it is more explicit!")
   public String toString ()
   {
     return getAsString ();
