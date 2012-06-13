@@ -24,6 +24,7 @@ import javax.annotation.concurrent.Immutable;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.id.IHasID;
 import com.phloc.commons.id.IHasSimpleIntID;
+import com.phloc.commons.name.IHasName;
 
 /**
  * Some enum utility methods.
@@ -252,6 +253,148 @@ public final class EnumHelper
     final ENUMTYPE aEnum = getFromIDOrNull (aClass, nID);
     if (aEnum == null)
       throw new IllegalArgumentException ("Failed to resolve ID " + nID + " within class " + aClass);
+    return aEnum;
+  }
+
+  /**
+   * Get the enum value with the passed name
+   * 
+   * @param <ENUMTYPE>
+   *        The enum type
+   * @param aClass
+   *        The enum class
+   * @param sName
+   *        The name to search
+   * @return <code>null</code> if no enum item with the given name is present.
+   */
+  @Nullable
+  public static <ENUMTYPE extends Enum <ENUMTYPE> & IHasName> ENUMTYPE getFromNameOrNull (@Nonnull final Class <ENUMTYPE> aClass,
+                                                                                          @Nullable final String sName)
+  {
+    return getFromNameOrDefault (aClass, sName, null);
+  }
+
+  /**
+   * Get the enum value with the passed name
+   * 
+   * @param <ENUMTYPE>
+   *        The enum type
+   * @param aClass
+   *        The enum class
+   * @param sName
+   *        The name to search
+   * @param aDefault
+   *        The default value to be returned, if the name was not found.
+   * @return The default parameter if no enum item with the given name is
+   *         present.
+   */
+  @Nullable
+  public static <ENUMTYPE extends Enum <ENUMTYPE> & IHasName> ENUMTYPE getFromNameOrDefault (@Nonnull final Class <ENUMTYPE> aClass,
+                                                                                             @Nullable final String sName,
+                                                                                             @Nullable final ENUMTYPE aDefault)
+  {
+    if (aClass == null)
+      throw new NullPointerException ("class");
+
+    if (sName != null)
+      for (final ENUMTYPE aElement : aClass.getEnumConstants ())
+        if (aElement.getName ().equals (sName))
+          return aElement;
+    return aDefault;
+  }
+
+  /**
+   * Get the enum value with the passed name. If no such name is present, an
+   * {@link IllegalArgumentException} is thrown.
+   * 
+   * @param <ENUMTYPE>
+   *        The enum type
+   * @param aClass
+   *        The enum class
+   * @param sName
+   *        The name to search
+   * @return The enum item with the given name. Never <code>null</code>.
+   * @throws IllegalArgumentException
+   *         if no enum item with the given name is present
+   */
+  @Nonnull
+  public static <ENUMTYPE extends Enum <ENUMTYPE> & IHasName> ENUMTYPE getFromNameOrThrow (@Nonnull final Class <ENUMTYPE> aClass,
+                                                                                           @Nullable final String sName)
+  {
+    final ENUMTYPE aEnum = getFromNameOrNull (aClass, sName);
+    if (aEnum == null)
+      throw new IllegalArgumentException ("Failed to resolve name " + sName + " within class " + aClass);
+    return aEnum;
+  }
+
+  /**
+   * Get the enum value with the passed name case insensitive
+   * 
+   * @param <ENUMTYPE>
+   *        The enum type
+   * @param aClass
+   *        The enum class
+   * @param sName
+   *        The name to search
+   * @return <code>null</code> if no enum item with the given ID is present.
+   */
+  @Nullable
+  public static <ENUMTYPE extends Enum <ENUMTYPE> & IHasName> ENUMTYPE getFromNameCaseInsensitiveOrNull (@Nonnull final Class <ENUMTYPE> aClass,
+                                                                                                         @Nullable final String sName)
+  {
+    return getFromNameCaseInsensitiveOrDefault (aClass, sName, null);
+  }
+
+  /**
+   * Get the enum value with the passed name case insensitive
+   * 
+   * @param <ENUMTYPE>
+   *        The enum type
+   * @param aClass
+   *        The enum class
+   * @param sName
+   *        The name to search
+   * @param aDefault
+   *        The default value to be returned, if the name was not found.
+   * @return The default parameter if no enum item with the given name is
+   *         present.
+   */
+  @Nullable
+  public static <ENUMTYPE extends Enum <ENUMTYPE> & IHasName> ENUMTYPE getFromNameCaseInsensitiveOrDefault (@Nonnull final Class <ENUMTYPE> aClass,
+                                                                                                            @Nullable final String sName,
+                                                                                                            @Nullable final ENUMTYPE aDefault)
+  {
+    if (aClass == null)
+      throw new NullPointerException ("class");
+
+    if (sName != null)
+      for (final ENUMTYPE aElement : aClass.getEnumConstants ())
+        if (aElement.getName ().equalsIgnoreCase (sName))
+          return aElement;
+    return aDefault;
+  }
+
+  /**
+   * Get the enum value with the passed name (case insensitive). If no such name
+   * is present, an {@link IllegalArgumentException} is thrown.
+   * 
+   * @param <ENUMTYPE>
+   *        The enum type
+   * @param aClass
+   *        The enum class
+   * @param sName
+   *        The name to search
+   * @return The enum item with the given name. Never <code>null</code>.
+   * @throws IllegalArgumentException
+   *         if no enum item with the given name is present
+   */
+  @Nonnull
+  public static <ENUMTYPE extends Enum <ENUMTYPE> & IHasName> ENUMTYPE getFromNameCaseInsensitiveOrThrow (@Nonnull final Class <ENUMTYPE> aClass,
+                                                                                                          @Nullable final String sName)
+  {
+    final ENUMTYPE aEnum = getFromNameCaseInsensitiveOrNull (aClass, sName);
+    if (aEnum == null)
+      throw new IllegalArgumentException ("Failed to resolve name " + sName + " within class " + aClass);
     return aEnum;
   }
 
