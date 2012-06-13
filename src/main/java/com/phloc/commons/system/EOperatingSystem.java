@@ -80,9 +80,9 @@ public enum EOperatingSystem implements IHasDisplayName
   private static volatile EOperatingSystem s_aInstance = null;
 
   /** The human-readable name for this operating system. */
-  private String m_sDisplayName;
+  private final String m_sDisplayName;
 
-  private boolean m_bUnixBased;
+  private final boolean m_bUnixBased;
 
   /**
    * Creates a new operating system value with the provided name.

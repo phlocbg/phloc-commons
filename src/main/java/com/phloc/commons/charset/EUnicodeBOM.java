@@ -51,7 +51,7 @@ public enum EUnicodeBOM implements IHasByteSize
   BOM_BOCU_1_ALT2 (new byte [] { (byte) 0xfb, (byte) 0xee, 0x28, (byte) 0xff }),
   BOM_GB_18030 (new byte [] { (byte) 0x84, 0x31, (byte) 0x95, 0x33 });
 
-  private byte [] m_aBOMBytes;
+  private final byte [] m_aBOMBytes;
 
   private EUnicodeBOM (@Nonnull final byte [] aBytes)// NOPMD
   {

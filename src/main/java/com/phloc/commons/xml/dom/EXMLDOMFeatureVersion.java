@@ -34,7 +34,7 @@ public enum EXMLDOMFeatureVersion implements IHasID <String>
   DOM_FEATURE_VERSION2 ("2.0"),
   DOM_FEATURE_VERSION3 ("3.0");
 
-  private String m_sID;
+  private final String m_sID;
 
   private EXMLDOMFeatureVersion (@Nonnull @Nonempty final String sID)
   {

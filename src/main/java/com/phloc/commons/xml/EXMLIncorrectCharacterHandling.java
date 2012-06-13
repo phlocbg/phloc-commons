@@ -124,8 +124,8 @@ public enum EXMLIncorrectCharacterHandling
   public static final EXMLIncorrectCharacterHandling DEFAULT = EXMLIncorrectCharacterHandling.WRITE_TO_FILE_NO_LOG;
   private static final Logger s_aLogger = LoggerFactory.getLogger (EXMLIncorrectCharacterHandling.class);
 
-  private boolean m_bIsTestRequired;
-  private boolean m_bReplaceWithNothing;
+  private final boolean m_bIsTestRequired;
+  private final boolean m_bReplaceWithNothing;
 
   /**
    * Constructor

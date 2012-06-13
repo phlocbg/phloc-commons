@@ -38,7 +38,7 @@ public enum EMicroNodeType
 
   public static final short ILLEGAL_DOM_NODE_TYPE = 0;
 
-  private short m_nDOMNodeType;
+  private final short m_nDOMNodeType;
 
   private EMicroNodeType ()
   {

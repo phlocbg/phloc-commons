@@ -31,8 +31,8 @@ public enum EXMLSerializeIndent
   ALIGN_ONLY (true, false),
   INDENT_AND_ALIGN (true, true);
 
-  private boolean m_bAlign;
-  private boolean m_bIndent;
+  private final boolean m_bAlign;
+  private final boolean m_bIndent;
 
   private EXMLSerializeIndent (final boolean bAlign, final boolean bIndent)
   {

@@ -35,7 +35,7 @@ public enum EMicroEvent implements IHasID <String>
   NODE_INSERTED ("NodeInserted"),
   NODE_REMOVED ("NodeRemoved");
 
-  private String m_sID;
+  private final String m_sID;
 
   private EMicroEvent (@Nonnull @Nonempty final String sID)
   {

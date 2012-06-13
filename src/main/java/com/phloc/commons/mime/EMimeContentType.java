@@ -43,7 +43,7 @@ public enum EMimeContentType implements IHasID <String>
   VIDEO ("video"),
   _STAR ("*");
 
-  private String m_sText;
+  private final String m_sText;
 
   private EMimeContentType (@Nonnull @Nonempty final String sText)
   {

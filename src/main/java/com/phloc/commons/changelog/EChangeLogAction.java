@@ -37,7 +37,7 @@ public enum EChangeLogAction implements IHasID <String>
   FIX ("fix"),
   UPDATE ("update");
 
-  private String m_sID;
+  private final String m_sID;
 
   private EChangeLogAction (@Nonnull @Nonempty final String sID)
   {

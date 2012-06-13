@@ -36,8 +36,8 @@ public enum ETriState implements IHasID <String>, ITriState
   FALSE ("false", Boolean.FALSE),
   UNDEFINED ("undefined", null);
 
-  private String m_sID;
-  private Boolean m_aBoolean;
+  private final String m_sID;
+  private final Boolean m_aBoolean;
 
   private ETriState (@Nonnull @Nonempty final String sID, @Nullable final Boolean aBoolean)
   {

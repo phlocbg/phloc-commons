@@ -92,7 +92,7 @@ public enum EXMLDOMNodeType implements IHasSimpleIntID
    */
   NOTATION_NODE (Node.NOTATION_NODE);
 
-  private short m_nValue;
+  private final short m_nValue;
 
   private EXMLDOMNodeType (@Nonnegative final short nValue)
   {

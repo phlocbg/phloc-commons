@@ -34,7 +34,7 @@ public enum EXMLTransformTexts implements IHasDisplayText
   TRANSFORMATION_ERROR ("Transformationsfehler", "Transformation error"),
   TRANSFORMATION_FATAL_ERROR ("Schwerer Transformationsfehler", "Transformation fatal error");
 
-  private ITextProvider m_aTP;
+  private final ITextProvider m_aTP;
 
   private EXMLTransformTexts (@Nonnull final String sDE, @Nonnull final String sEN)
   {

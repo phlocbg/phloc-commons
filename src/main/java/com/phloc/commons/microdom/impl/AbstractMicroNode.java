@@ -502,7 +502,7 @@ public abstract class AbstractMicroNode implements IMicroNode
     return this instanceof IMicroContainer;
   }
 
-  final void _triggerEvent (@Nonnull final EMicroEvent eEventType, @Nonnull final IMicroEvent aEvent)
+  final void internalTriggerEvent (@Nonnull final EMicroEvent eEventType, @Nonnull final IMicroEvent aEvent)
   {
     // Any event targets present?
     if (m_aEventTargets != null && !m_aEventTargets.isEmpty ())
@@ -519,7 +519,7 @@ public abstract class AbstractMicroNode implements IMicroNode
 
     // Bubble to parent
     if (m_aParentNode != null)
-      m_aParentNode._triggerEvent (eEventType, aEvent);
+      m_aParentNode.internalTriggerEvent (eEventType, aEvent);
   }
 
   protected final void onEvent (@Nonnull final EMicroEvent eEventType,
@@ -527,7 +527,7 @@ public abstract class AbstractMicroNode implements IMicroNode
                                 @Nonnull final IMicroNode aTargetNode)
   {
     // Create the event only once
-    _triggerEvent (eEventType, new MicroEvent (eEventType, aSourceNode, aTargetNode));
+    internalTriggerEvent (eEventType, new MicroEvent (eEventType, aSourceNode, aTargetNode));
   }
 
   @Nonnull

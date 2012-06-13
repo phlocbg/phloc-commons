@@ -41,7 +41,7 @@ public enum EChangeLogCategory implements IHasID <String>
   DATA ("data"),
   PERFORMANCE ("performance");
 
-  private String m_sID;
+  private final String m_sID;
 
   private EChangeLogCategory (@Nonnull @Nonempty final String sID)
   {

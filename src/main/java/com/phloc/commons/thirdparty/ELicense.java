@@ -58,10 +58,10 @@ public enum ELicense implements ILicense
   // Public domain
   PUBLIC_DOMAIN ("pd", "Public Domain", null, null);
 
-  private String m_sID;
-  private String m_sName;
-  private Version m_aVersion;
-  private String m_sURL;
+  private final String m_sID;
+  private final String m_sName;
+  private final Version m_aVersion;
+  private final String m_sURL;
 
   /**
    * Create a custom license.

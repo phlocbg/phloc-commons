@@ -32,7 +32,8 @@ public enum ESortOrder implements ISortOrderIndicator
   DESCENDING (0);
 
   public static final ESortOrder DEFAULT = ASCENDING;
-  private int m_nValue;
+
+  private final int m_nValue;
 
   private ESortOrder (@Nonnegative final int nValue)
   {
