@@ -36,7 +36,7 @@ public enum EMessageDigestAlgorithm
   SHA_384 ("SHA-384"),
   SHA_512 ("SHA-512");
 
-  private String m_sAlgorithm;
+  private final String m_sAlgorithm;
 
   private EMessageDigestAlgorithm (@Nonnull @Nonempty final String sAlgorithm)
   {

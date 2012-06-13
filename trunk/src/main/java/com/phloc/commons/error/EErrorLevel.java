@@ -54,8 +54,8 @@ public enum EErrorLevel implements
   /** Highest error level within this enum */
   public static final EErrorLevel HIGHEST = FATAL_ERROR;
 
-  private String m_sID;
-  private int m_nNumericLevel;
+  private final String m_sID;
+  private final int m_nNumericLevel;
 
   private EErrorLevel (@Nonnull @Nonempty final String sID, @Nonnegative final int nNumericLevel)
   {

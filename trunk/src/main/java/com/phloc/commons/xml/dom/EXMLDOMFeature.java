@@ -45,7 +45,7 @@ public enum EXMLDOMFeature implements IHasID <String>
   DOM_FEATURE_VALIDATION ("Validation"),
   DOM_FEATURE_XPATH ("XPath");
 
-  private String m_sID;
+  private final String m_sID;
 
   private EXMLDOMFeature (@Nonnull @Nonempty final String sID)
   {

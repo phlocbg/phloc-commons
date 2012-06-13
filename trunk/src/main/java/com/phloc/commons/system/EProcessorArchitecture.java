@@ -43,7 +43,7 @@ public enum EProcessorArchitecture
   /** The current architecture. */
   private static volatile EProcessorArchitecture s_aInstance = null;
 
-  private int m_nBits;
+  private final int m_nBits;
 
   private EProcessorArchitecture (final int nBits)
   {

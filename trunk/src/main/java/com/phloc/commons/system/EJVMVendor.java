@@ -77,7 +77,8 @@ public enum EJVMVendor
 
   /** The current vendor. */
   private static volatile EJVMVendor s_aInstance = null;
-  private boolean m_bIsIt = false;
+
+  private final boolean m_bIsIt;
 
   private EJVMVendor ()
   {

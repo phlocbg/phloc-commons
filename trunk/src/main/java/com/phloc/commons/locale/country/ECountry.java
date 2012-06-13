@@ -456,11 +456,11 @@ public enum ECountry implements IHasDisplayText, IHasID <String>
   ZM (ECountryName.ZM),
   ZW (ECountryName.ZW);
 
-  private String m_sID;
-  private String m_sISOCountryCode;
-  private IHasDisplayText m_aName;
-  private boolean m_bIsCountrySub;
-  private Locale m_aCountry;
+  private final String m_sID;
+  private final String m_sISOCountryCode;
+  private final IHasDisplayText m_aName;
+  private final boolean m_bIsCountrySub;
+  private final Locale m_aCountry;
 
   private ECountry (@Nonnull final IHasDisplayText eName)
   {
