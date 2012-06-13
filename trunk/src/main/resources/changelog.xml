@@ -22,6 +22,11 @@
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
   <entry date="2012-06-13" category="api" action="add">
     <change>
+      <text locale="en">Added new annotation type @LazilyInitialized</text>
+    </change>
+  </entry>
+  <entry date="2012-06-13" category="api" action="add">
+    <change>
       <text locale="en">Extended StreamUtils API to support copy routines with a limit</text>
     </change>
   </entry>
