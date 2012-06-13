@@ -20,21 +20,26 @@ package com.phloc.commons.microdom.impl;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import javax.annotation.Nonnull;
+
 import com.phloc.commons.microdom.EMicroEvent;
 import com.phloc.commons.microdom.IMicroEvent;
 import com.phloc.commons.microdom.IMicroEventTarget;
 
 final class MockMicroEventListener implements IMicroEventTarget
 {
+  private final EMicroEvent m_eType;
   private int m_nIC = 0;
 
-  public MockMicroEventListener ()
-  {}
+  public MockMicroEventListener (@Nonnull final EMicroEvent eType)
+  {
+    m_eType = eType;
+  }
 
   public void handleEvent (final IMicroEvent aEvent)
   {
     assertNotNull (aEvent);
-    assertEquals (EMicroEvent.NODE_INSERTED, aEvent.getEventType ());
+    assertEquals (m_eType, aEvent.getEventType ());
     m_nIC++;
   }
 

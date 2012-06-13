@@ -29,6 +29,7 @@ import org.junit.Test;
 import com.phloc.commons.microdom.EMicroEvent;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroElement;
+import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
@@ -65,9 +66,9 @@ public final class MicroEventTest
   }
 
   @Test
-  public void testInsertionEvent ()
+  public void testInsertedEvent ()
   {
-    final MockMicroEventListener aIEL = new MockMicroEventListener ();
+    final MockMicroEventListener aIEL = new MockMicroEventListener (EMicroEvent.NODE_INSERTED);
     final IMicroDocument aDoc = new MicroDocument ();
     assertFalse (aDoc.unregisterEventTarget (EMicroEvent.NODE_INSERTED, aIEL).isChanged ());
     assertTrue (aDoc.registerEventTarget (EMicroEvent.NODE_INSERTED, aIEL).isChanged ());
@@ -124,5 +125,60 @@ public final class MicroEventTest
     }
     catch (final NullPointerException ex)
     {}
+  }
+
+  @Test
+  public void testRemovedEvent ()
+  {
+    final MockMicroEventListener aIEL = new MockMicroEventListener (EMicroEvent.NODE_REMOVED);
+    final IMicroDocument aDoc = new MicroDocument ();
+    assertFalse (aDoc.unregisterEventTarget (EMicroEvent.NODE_REMOVED, aIEL).isChanged ());
+    assertTrue (aDoc.registerEventTarget (EMicroEvent.NODE_REMOVED, aIEL).isChanged ());
+    assertFalse (aDoc.registerEventTarget (EMicroEvent.NODE_REMOVED, aIEL).isChanged ());
+    IMicroElement eRoot = null;
+    try
+    {
+      assertEquals (0, aIEL.getInvocationCount ());
+      eRoot = aDoc.appendElement ("root_element");
+      final IMicroNode aNode1 = eRoot.appendElement ("root_element");
+      final IMicroNode aNode2 = eRoot.appendText ("My Text node");
+
+      // Only insertions so far
+      assertEquals (0, aIEL.getInvocationCount ());
+      assertEquals (2, eRoot.getChildCount ());
+
+      // Remove element
+      eRoot.removeChild (aNode1);
+      assertEquals (1, aIEL.getInvocationCount ());
+      assertEquals (1, eRoot.getChildCount ());
+      assertSame (aNode2, eRoot.getFirstChild ());
+
+      // Remove by index
+      eRoot.removeChildAtIndex (0);
+      assertEquals (2, aIEL.getInvocationCount ());
+      assertFalse (eRoot.hasChildren ());
+
+      // Rebuild and than remove all at once
+      eRoot.appendElement ("root_element");
+      eRoot.appendText ("My Text node");
+      eRoot.appendElement ("a").appendElement ("b").appendText ("c");
+      assertEquals (3, eRoot.getChildCount ());
+      eRoot.removeAllChildren ();
+      assertEquals (2 + 3, aIEL.getInvocationCount ());
+    }
+    finally
+    {
+      // unregister
+      aDoc.unregisterEventTarget (EMicroEvent.NODE_REMOVED, aIEL);
+    }
+
+    // Rebuild and than remove all at once again - no events triggered because
+    // event listener was removed
+    eRoot.appendElement ("root_element");
+    eRoot.appendText ("My Text node");
+    eRoot.appendElement ("a").appendElement ("b").appendText ("c");
+    assertEquals (3, eRoot.getChildCount ());
+    eRoot.removeAllChildren ();
+    assertEquals (2 + 3, aIEL.getInvocationCount ());
   }
 }

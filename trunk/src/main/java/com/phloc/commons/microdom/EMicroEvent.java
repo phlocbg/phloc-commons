@@ -32,7 +32,8 @@ import com.phloc.commons.string.StringHelper;
  */
 public enum EMicroEvent implements IHasID <String>
 {
-  NODE_INSERTED ("NodeInserted");
+  NODE_INSERTED ("NodeInserted"),
+  NODE_REMOVED ("NodeRemoved");
 
   private String m_sID;
 

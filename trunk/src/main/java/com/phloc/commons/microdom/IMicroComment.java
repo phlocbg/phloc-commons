@@ -26,6 +26,9 @@ import javax.annotation.Nonnull;
  */
 public interface IMicroComment extends IMicroNode, IMicroDataAware
 {
+  /**
+   * {@inheritDoc}
+   */
   @Nonnull
   IMicroComment getClone ();
 }
