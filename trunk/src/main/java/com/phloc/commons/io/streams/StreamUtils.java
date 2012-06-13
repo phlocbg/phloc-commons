@@ -228,7 +228,42 @@ public final class StreamUtils
   {
     try
     {
-      return copyInputStreamToOutputStream (aIS, aOS);
+      return copyInputStreamToOutputStream (aIS, aOS, new byte [DEFAULT_BUFSIZE], (MutableLong) null, (Long) null);
+    }
+    finally
+    {
+      close (aOS);
+    }
+  }
+
+  /**
+   * Pass the content of the given input stream to the given output stream. Both
+   * the input stream and the output stream are automatically closed.
+   * 
+   * @param aIS
+   *        The input stream to read from. May be <code>null</code>.
+   *        Automatically closed!
+   * @param aOS
+   *        The output stream to write to. May be <code>null</code>.
+   *        Automatically closed!
+   * @param nLimit
+   *        The maximum number of bytes to be copied to the output stream. Must
+   *        be &ge; 0.
+   * @return <code>{@link ESuccess#SUCCESS}</code> if copying took place,
+   *         <code>{@link ESuccess#FAILURE}</code> otherwise
+   */
+  @Nonnull
+  public static ESuccess copyInputStreamToOutputStreamWithLimitAndCloseOS (@WillClose @Nullable final InputStream aIS,
+                                                                           @WillClose @Nullable final OutputStream aOS,
+                                                                           @Nonnegative final long nLimit)
+  {
+    try
+    {
+      return copyInputStreamToOutputStream (aIS,
+                                            aOS,
+                                            new byte [DEFAULT_BUFSIZE],
+                                            (MutableLong) null,
+                                            Long.valueOf (nLimit));
     }
     finally
     {
@@ -253,7 +288,7 @@ public final class StreamUtils
   public static ESuccess copyInputStreamToOutputStream (@WillClose @Nullable final InputStream aIS,
                                                         @WillNotClose @Nullable final OutputStream aOS)
   {
-    return copyInputStreamToOutputStream (aIS, aOS, (MutableLong) null);
+    return copyInputStreamToOutputStream (aIS, aOS, new byte [DEFAULT_BUFSIZE], (MutableLong) null, (Long) null);
   }
 
   /**
@@ -277,7 +312,35 @@ public final class StreamUtils
                                                         @WillNotClose @Nullable final OutputStream aOS,
                                                         @Nullable final MutableLong aCopyByteCount)
   {
-    return copyInputStreamToOutputStream (aIS, aOS, new byte [DEFAULT_BUFSIZE], aCopyByteCount);
+    return copyInputStreamToOutputStream (aIS, aOS, new byte [DEFAULT_BUFSIZE], aCopyByteCount, (Long) null);
+  }
+
+  /**
+   * Pass the content of the given input stream to the given output stream. The
+   * input stream is automatically closed, whereas the output stream stays open!
+   * 
+   * @param aIS
+   *        The input stream to read from. May be <code>null</code>.
+   *        Automatically closed!
+   * @param aOS
+   *        The output stream to write to. May be <code>null</code>. Not
+   *        automatically closed!
+   * @param nLimit
+   *        The maximum number of bytes to be copied to the output stream. Must
+   *        be &ge; 0.
+   * @return <code>{@link ESuccess#SUCCESS}</code> if copying took place,
+   *         <code>{@link ESuccess#FAILURE}</code> otherwise
+   */
+  @Nonnull
+  public static ESuccess copyInputStreamToOutputStreamWithLimit (@WillClose @Nullable final InputStream aIS,
+                                                                 @WillNotClose @Nullable final OutputStream aOS,
+                                                                 @Nonnegative final long nLimit)
+  {
+    return copyInputStreamToOutputStream (aIS,
+                                          aOS,
+                                          new byte [DEFAULT_BUFSIZE],
+                                          (MutableLong) null,
+                                          Long.valueOf (nLimit));
   }
 
   /**
@@ -300,7 +363,7 @@ public final class StreamUtils
                                                         @WillNotClose @Nullable final OutputStream aOS,
                                                         @Nonnull final byte [] aBuffer)
   {
-    return copyInputStreamToOutputStream (aIS, aOS, aBuffer, null);
+    return copyInputStreamToOutputStream (aIS, aOS, aBuffer, (MutableLong) null, (Long) null);
   }
 
   @Nonnegative
@@ -308,29 +371,46 @@ public final class StreamUtils
                                                       @Nonnull final OutputStream aOS,
                                                       @Nonnull final byte [] aBuffer) throws IOException
   {
-    long nTotalBytesCopied = 0;
+    long nTotalBytesWritten = 0;
     int nBytesRead;
     while ((nBytesRead = aIS.read (aBuffer, 0, aBuffer.length)) > -1)
     {
       aOS.write (aBuffer, 0, nBytesRead);
-      nTotalBytesCopied += nBytesRead;
+      nTotalBytesWritten += nBytesRead;
     }
-    return nTotalBytesCopied;
+    return nTotalBytesWritten;
   }
 
   @Nonnegative
-  private static long _copyReaderToWriter (@Nonnull final Reader aReader,
-                                           @Nonnull final Writer aWriter,
-                                           @Nonnull final char [] aBuffer) throws IOException
+  private static long _copyInputStreamToOutputStreamWithLimit (@Nonnull final InputStream aIS,
+                                                               @Nonnull final OutputStream aOS,
+                                                               @Nonnull final byte [] aBuffer,
+                                                               @Nonnegative final long nLimit) throws IOException
   {
-    long nTotalBytesCopied = 0;
-    int nBytesRead;
-    while ((nBytesRead = aReader.read (aBuffer, 0, aBuffer.length)) > -1)
+    long nRest = nLimit;
+    long nTotalBytesWritten = 0;
+    while (true)
     {
-      aWriter.write (aBuffer, 0, nBytesRead);
-      nTotalBytesCopied += nBytesRead;
+      // if nRest is smaller than aBuffer.length, which is an int, it is safe to
+      // cast nRest also to an int!
+      final int nBytesToRead = nRest >= aBuffer.length ? aBuffer.length : (int) nRest;
+      if (nBytesToRead == 0)
+        break;
+      final int nBytesRead = aIS.read (aBuffer, 0, nBytesToRead);
+      if (nBytesRead == -1)
+      {
+        // EOF
+        break;
+      }
+      if (nBytesRead > 0)
+      {
+        // At least one byte read
+        aOS.write (aBuffer, 0, nBytesRead);
+        nTotalBytesWritten += nBytesRead;
+        nRest -= nBytesRead;
+      }
     }
-    return nTotalBytesCopied;
+    return nTotalBytesWritten;
   }
 
   /**
@@ -357,15 +437,53 @@ public final class StreamUtils
                                                         @Nonnull @Nonempty final byte [] aBuffer,
                                                         @Nullable final MutableLong aCopyByteCount)
   {
+    return copyInputStreamToOutputStream (aIS, aOS, aBuffer, aCopyByteCount, (Long) null);
+  }
+
+  /**
+   * Pass the content of the given input stream to the given output stream. The
+   * input stream is automatically closed, whereas the output stream stays open!
+   * 
+   * @param aIS
+   *        The input stream to read from. May be <code>null</code>.
+   *        Automatically closed!
+   * @param aOS
+   *        The output stream to write to. May be <code>null</code>. Not
+   *        automatically closed!
+   * @param aBuffer
+   *        The buffer to use. May not be <code>null</code>.
+   * @param aCopyByteCount
+   *        An optional mutable long object that will receive the total number
+   *        of copied bytes. Note: and optional old value is overwritten!
+   * @param aLimit
+   *        An optional maximum number of bytes to copied from the input stream
+   *        to the output stream. May be <code>null</code> to indicate no limit,
+   *        meaning all bytes are copied.
+   * @return <code>{@link ESuccess#SUCCESS}</code> if copying took place,
+   *         <code>{@link ESuccess#FAILURE}</code> otherwise
+   */
+  @Nonnull
+  public static ESuccess copyInputStreamToOutputStream (@WillClose @Nullable final InputStream aIS,
+                                                        @WillNotClose @Nullable final OutputStream aOS,
+                                                        @Nonnull @Nonempty final byte [] aBuffer,
+                                                        @Nullable final MutableLong aCopyByteCount,
+                                                        @Nullable final Long aLimit)
+  {
     if (ArrayHelper.isEmpty (aBuffer))
       throw new IllegalArgumentException ("buffer is empty");
+    if (aLimit != null && aLimit.longValue () < 0)
+      throw new IllegalArgumentException ("Limit may not be negative!");
 
     try
     {
       if (aIS != null && aOS != null)
       {
         // both streams are not null
-        final long nTotalBytesCopied = _copyInputStreamToOutputStream (aIS, aOS, aBuffer);
+        final long nTotalBytesCopied = aLimit == null ? _copyInputStreamToOutputStream (aIS, aOS, aBuffer)
+                                                     : _copyInputStreamToOutputStreamWithLimit (aIS,
+                                                                                                aOS,
+                                                                                                aBuffer,
+                                                                                                aLimit.longValue ());
 
         // Add to statistics
         s_aByteSizeHdl.addSize (nTotalBytesCopied);
@@ -423,6 +541,28 @@ public final class StreamUtils
     final int nAvailable = Math.max (DEFAULT_BUFSIZE, getAvailable (aIS));
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream (nAvailable);
     copyInputStreamToOutputStreamAndCloseOS (aIS, aBAOS);
+    return aBAOS;
+  }
+
+  /**
+   * Get a byte buffer with all the available content of the passed input
+   * stream.
+   * 
+   * @param aIS
+   *        The source input stream. May not be <code>null</code>.
+   * @param nLimit
+   *        The maximum number of bytes to be copied to the output stream. Must
+   *        be &ge; 0.
+   * @return A new {@link NonBlockingByteArrayOutputStream} with all available
+   *         content inside.
+   */
+  @Nonnull
+  public static NonBlockingByteArrayOutputStream getCopyWithLimit (@Nonnull @WillClose final InputStream aIS,
+                                                                   @Nonnegative final long nLimit)
+  {
+    final int nAvailable = Math.max (DEFAULT_BUFSIZE, getAvailable (aIS));
+    final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream (nAvailable);
+    copyInputStreamToOutputStreamWithLimitAndCloseOS (aIS, aBAOS, nLimit);
     return aBAOS;
   }
 
@@ -565,7 +705,42 @@ public final class StreamUtils
   {
     try
     {
-      return copyReaderToWriter (aReader, aWriter);
+      return copyReaderToWriter (aReader, aWriter, new char [DEFAULT_BUFSIZE], (MutableLong) null, (Long) null);
+    }
+    finally
+    {
+      close (aWriter);
+    }
+  }
+
+  /**
+   * Pass the content of the given reader to the given writer. The reader and
+   * the writer are automatically closed!
+   * 
+   * @param aReader
+   *        The reader to read from. May be <code>null</code>. Automatically
+   *        closed!
+   * @param aWriter
+   *        The writer to write to. May be <code>null</code>. Automatically
+   *        closed!
+   * @param nLimit
+   *        The maximum number of chars to be copied to the writer. Must be &ge;
+   *        0.
+   * @return <code>{@link ESuccess#SUCCESS}</code> if copying took place,
+   *         <code>{@link ESuccess#FAILURE}</code> otherwise
+   */
+  @Nonnull
+  public static ESuccess copyReaderToWriterWithLimitAndCloseWriter (@WillClose @Nullable final Reader aReader,
+                                                                    @WillClose @Nullable final Writer aWriter,
+                                                                    @Nonnegative final long nLimit)
+  {
+    try
+    {
+      return copyReaderToWriter (aReader,
+                                 aWriter,
+                                 new char [DEFAULT_BUFSIZE],
+                                 (MutableLong) null,
+                                 Long.valueOf (nLimit));
     }
     finally
     {
@@ -590,7 +765,7 @@ public final class StreamUtils
   public static ESuccess copyReaderToWriter (@WillClose @Nullable final Reader aReader,
                                              @WillNotClose @Nullable final Writer aWriter)
   {
-    return copyReaderToWriter (aReader, aWriter, (MutableLong) null);
+    return copyReaderToWriter (aReader, aWriter, new char [DEFAULT_BUFSIZE], (MutableLong) null, (Long) null);
   }
 
   /**
@@ -614,7 +789,7 @@ public final class StreamUtils
                                              @WillNotClose @Nullable final Writer aWriter,
                                              @Nullable final MutableLong aCopyCharCount)
   {
-    return copyReaderToWriter (aReader, aWriter, new char [DEFAULT_BUFSIZE], aCopyCharCount);
+    return copyReaderToWriter (aReader, aWriter, new char [DEFAULT_BUFSIZE], aCopyCharCount, (Long) null);
   }
 
   /**
@@ -637,7 +812,78 @@ public final class StreamUtils
                                              @WillNotClose @Nullable final Writer aWriter,
                                              @Nonnull final char [] aBuffer)
   {
-    return copyReaderToWriter (aReader, aWriter, aBuffer, null);
+    return copyReaderToWriter (aReader, aWriter, aBuffer, (MutableLong) null, (Long) null);
+  }
+
+  /**
+   * Pass the content of the given reader to the given writer. The reader is
+   * automatically closed, whereas the writer stays open!
+   * 
+   * @param aReader
+   *        The reader to read from. May be <code>null</code>. Automatically
+   *        closed!
+   * @param aWriter
+   *        The writer to write to. May be <code>null</code>. Not automatically
+   *        closed!
+   * @param nLimit
+   *        The maximum number of chars to be copied to the writer. Must be &ge;
+   *        0.
+   * @return <code>{@link ESuccess#SUCCESS}</code> if copying took place,
+   *         <code>{@link ESuccess#FAILURE}</code> otherwise
+   */
+  @Nonnull
+  public static ESuccess copyReaderToWriterWithLimit (@WillClose @Nullable final Reader aReader,
+                                                      @WillNotClose @Nullable final Writer aWriter,
+                                                      @Nullable final long nLimit)
+  {
+    return copyReaderToWriter (aReader, aWriter, new char [DEFAULT_BUFSIZE], (MutableLong) null, Long.valueOf (nLimit));
+  }
+
+  @Nonnegative
+  private static long _copyReaderToWriter (@Nonnull final Reader aReader,
+                                           @Nonnull final Writer aWriter,
+                                           @Nonnull final char [] aBuffer) throws IOException
+  {
+    long nTotalCharsWritten = 0;
+    int nCharsRead;
+    while ((nCharsRead = aReader.read (aBuffer, 0, aBuffer.length)) > -1)
+    {
+      aWriter.write (aBuffer, 0, nCharsRead);
+      nTotalCharsWritten += nCharsRead;
+    }
+    return nTotalCharsWritten;
+  }
+
+  @Nonnegative
+  private static long _copyReaderToWriterWithLimit (@Nonnull final Reader aReader,
+                                                    @Nonnull final Writer aWriter,
+                                                    @Nonnull final char [] aBuffer,
+                                                    @Nonnegative final long nLimit) throws IOException
+  {
+    long nRest = nLimit;
+    long nTotalCharsWritten = 0;
+    while (true)
+    {
+      // if nRest is smaller than aBuffer.length, which is an int, it is safe to
+      // cast nRest also to an int!
+      final int nCharsToRead = nRest >= aBuffer.length ? aBuffer.length : (int) nRest;
+      if (nCharsToRead == 0)
+        break;
+      final int nCharsRead = aReader.read (aBuffer, 0, nCharsToRead);
+      if (nCharsRead == -1)
+      {
+        // EOF
+        break;
+      }
+      if (nCharsRead > 0)
+      {
+        // At least one byte read
+        aWriter.write (aBuffer, 0, nCharsRead);
+        nTotalCharsWritten += nCharsRead;
+        nRest -= nCharsRead;
+      }
+    }
+    return nTotalCharsWritten;
   }
 
   /**
@@ -664,15 +910,53 @@ public final class StreamUtils
                                              @Nonnull @Nonempty final char [] aBuffer,
                                              @Nullable final MutableLong aCopyCharCount)
   {
+    return copyReaderToWriter (aReader, aWriter, aBuffer, aCopyCharCount, (Long) null);
+  }
+
+  /**
+   * Pass the content of the given reader to the given writer. The reader is
+   * automatically closed, whereas the writer stays open!
+   * 
+   * @param aReader
+   *        The reader to read from. May be <code>null</code>. Automatically
+   *        closed!
+   * @param aWriter
+   *        The writer to write to. May be <code>null</code>. Not automatically
+   *        closed!
+   * @param aBuffer
+   *        The buffer to use. May not be <code>null</code>.
+   * @param aCopyCharCount
+   *        An optional mutable long object that will receive the total number
+   *        of copied characters. Note: and optional old value is overwritten!
+   * @param aLimit
+   *        An optional maximum number of chars to copied from the reader to the
+   *        writer. May be <code>null</code> to indicate no limit, meaning all
+   *        chars are copied.
+   * @return <code>{@link ESuccess#SUCCESS}</code> if copying took place,
+   *         <code>{@link ESuccess#FAILURE}</code> otherwise
+   */
+  @Nonnull
+  public static ESuccess copyReaderToWriter (@WillClose @Nullable final Reader aReader,
+                                             @WillNotClose @Nullable final Writer aWriter,
+                                             @Nonnull @Nonempty final char [] aBuffer,
+                                             @Nullable final MutableLong aCopyCharCount,
+                                             @Nullable final Long aLimit)
+  {
     if (ArrayHelper.isEmpty (aBuffer))
       throw new IllegalArgumentException ("buffer is empty");
+    if (aLimit != null && aLimit.longValue () < 0)
+      throw new IllegalArgumentException ("Limit may not be negative!");
 
     try
     {
       if (aReader != null && aWriter != null)
       {
         // both streams are not null
-        final long nTotalCharsCopied = _copyReaderToWriter (aReader, aWriter, aBuffer);
+        final long nTotalCharsCopied = aLimit == null ? _copyReaderToWriter (aReader, aWriter, aBuffer)
+                                                     : _copyReaderToWriterWithLimit (aReader,
+                                                                                     aWriter,
+                                                                                     aBuffer,
+                                                                                     aLimit.longValue ());
 
         // Add to statistics
         s_aCharSizeHdl.addSize (nTotalCharsCopied);
@@ -701,6 +985,15 @@ public final class StreamUtils
   {
     final NonBlockingStringWriter aWriter = new NonBlockingStringWriter (DEFAULT_BUFSIZE);
     copyReaderToWriterAndCloseWriter (aReader, aWriter);
+    return aWriter;
+  }
+
+  @Nonnull
+  public static NonBlockingStringWriter getCopyWithLimit (@Nonnull @WillClose final Reader aReader,
+                                                          @Nonnegative final long nLimit)
+  {
+    final NonBlockingStringWriter aWriter = new NonBlockingStringWriter (DEFAULT_BUFSIZE);
+    copyReaderToWriterWithLimitAndCloseWriter (aReader, aWriter, nLimit);
     return aWriter;
   }
 
@@ -735,7 +1028,7 @@ public final class StreamUtils
     if (aReader == null)
       return null;
 
-    return getCopy (aReader).toString ();
+    return getCopy (aReader).getAsString ();
   }
 
   /**
@@ -1322,6 +1615,18 @@ public final class StreamUtils
       throw new NullPointerException ("charset");
 
     return writeStream (aOS, CharsetManager.getAsBytes (sContent, aCharset));
+  }
+
+  @Nonnull
+  public static NonBlockingStringReader createReader (@Nonnull final String sText)
+  {
+    return new NonBlockingStringReader (sText);
+  }
+
+  @Nonnull
+  public static NonBlockingStringReader createReader (@Nonnull final char [] aChars)
+  {
+    return new NonBlockingStringReader (aChars);
   }
 
   @Nullable

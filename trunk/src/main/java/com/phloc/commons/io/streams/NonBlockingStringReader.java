@@ -42,6 +42,16 @@ public class NonBlockingStringReader extends Reader
   private int m_nNext = 0;
   private int m_nMark = 0;
 
+  public NonBlockingStringReader (@Nonnull final char [] aChars)
+  {
+    this (new String (aChars));
+  }
+
+  public NonBlockingStringReader (@Nonnull final char [] aChars, final int nOfs, final int nLength)
+  {
+    this (new String (aChars, nOfs, nLength));
+  }
+
   /**
    * Creates a new string reader.
    * 
