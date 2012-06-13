@@ -45,6 +45,9 @@ public interface IMicroDocument extends IMicroNodeWithChildren
   @Nullable
   IMicroElement getDocumentElement ();
 
+  /**
+   * {@inheritDoc}
+   */
   @Nonnull
   IMicroDocument getClone ();
 }

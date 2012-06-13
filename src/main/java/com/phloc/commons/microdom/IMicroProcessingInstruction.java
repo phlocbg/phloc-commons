@@ -39,6 +39,9 @@ public interface IMicroProcessingInstruction extends IMicroNode
   @Nullable
   String getData ();
 
+  /**
+   * {@inheritDoc}
+   */
   @Nonnull
   IMicroProcessingInstruction getClone ();
 }

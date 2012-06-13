@@ -34,6 +34,9 @@ public interface IMicroEntityReference extends IMicroNode, IHasName
   @Nonempty
   String getName ();
 
+  /**
+   * {@inheritDoc}
+   */
   @Nonnull
   IMicroEntityReference getClone ();
 }

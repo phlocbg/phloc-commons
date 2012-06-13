@@ -27,6 +27,9 @@ import javax.annotation.Nonnull;
  */
 public interface IMicroNodeWithChildren extends IMicroNode
 {
+  /**
+   * {@inheritDoc}
+   */
   @Nonnull
   IMicroNodeWithChildren getClone ();
 }

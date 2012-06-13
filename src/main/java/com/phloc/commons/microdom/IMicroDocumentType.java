@@ -37,6 +37,9 @@ public interface IMicroDocumentType extends IMicroNode
   @Nullable
   String getSystemID ();
 
+  /**
+   * {@inheritDoc}
+   */
   @Nonnull
   IMicroDocumentType getClone ();
 }

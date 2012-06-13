@@ -115,20 +115,28 @@ abstract class AbstractMicroNodeWithChildren extends AbstractMicroNode
     _afterInsertAsChildOfThis (aChildNode);
   }
 
+  private void _afterRemoveChildOfThis (@Nonnull final IMicroNode aChildNode)
+  {
+    if (m_aChildren.contains (aChildNode))
+      throw new IllegalStateException ("Child " + aChildNode + " is contained more than once in it's parents list");
+
+    if (m_aChildren.isEmpty ())
+      m_aChildren = null;
+    ((AbstractMicroNode) aChildNode).resetParentNode ();
+    onEvent (EMicroEvent.NODE_REMOVED, this, aChildNode);
+  }
+
   @Override
   @Nonnull
-  protected final EChange onRemoveChild (@Nonnull final IMicroNode aChild)
+  protected final EChange onRemoveChild (@Nonnull final IMicroNode aChildNode)
   {
-    if (!aChild.hasParent ())
+    if (!aChildNode.hasParent ())
       throw new MicroException ("The passed child node to be removed has no parent!");
 
-    if (m_aChildren == null || !m_aChildren.remove (aChild))
+    if (m_aChildren == null || !m_aChildren.remove (aChildNode))
       return EChange.UNCHANGED;
 
-    if (m_aChildren.contains (aChild))
-      throw new IllegalStateException ("Child " + aChild + " is contained more than once in it's parents list");
-
-    ((AbstractMicroNode) aChild).resetParentNode ();
+    _afterRemoveChildOfThis (aChildNode);
     return EChange.CHANGED;
   }
 
@@ -136,20 +144,19 @@ abstract class AbstractMicroNodeWithChildren extends AbstractMicroNode
   @Nonnull
   protected final EChange onRemoveChildAtIndex (@Nonnegative final int nIndex)
   {
-    final IMicroNode aChild = getChildAtIndex (nIndex);
-    if (aChild == null)
+    // Resolve index - may be invalid
+    final IMicroNode aChildNode = getChildAtIndex (nIndex);
+    if (aChildNode == null)
       return EChange.UNCHANGED;
 
-    if (!aChild.hasParent ())
-      throw new MicroException ("The passed child node to be removed has no parent!");
+    if (!aChildNode.hasParent ())
+      throw new MicroException ("Internal inconsistency: the passed child node to be removed has no parent!");
 
-    if (m_aChildren.remove (nIndex) == null)
-      return EChange.UNCHANGED;
+    // Main removal
+    if (m_aChildren.remove (nIndex) != aChildNode)
+      throw new MicroException ("Internal inconsistency: remove resulted in an illegal object!");
 
-    if (m_aChildren.contains (aChild))
-      throw new IllegalStateException ("Child " + aChild + " is contained more than once in it's parents list");
-
-    ((AbstractMicroNode) aChild).resetParentNode ();
+    _afterRemoveChildOfThis (aChildNode);
     return EChange.CHANGED;
   }
 
@@ -160,13 +167,12 @@ abstract class AbstractMicroNodeWithChildren extends AbstractMicroNode
     if (m_aChildren == null || m_aChildren.isEmpty ())
       return EChange.UNCHANGED;
 
-    for (final IMicroNode aChild : m_aChildren)
-    {
-      if (!aChild.hasParent ())
-        throw new MicroException ("One child node to be removed has no parent!");
-      ((AbstractMicroNode) aChild).resetParentNode ();
-    }
-    m_aChildren = null;
+    // Trigger the method manually so that all events etc. are fired
+    // Don't access m_aChildren directly because it is reset to null in
+    // removeChildAtIndex
+    while (hasChildren ())
+      removeChildAtIndex (0);
+
     return EChange.CHANGED;
   }
 
@@ -208,7 +214,8 @@ abstract class AbstractMicroNodeWithChildren extends AbstractMicroNode
   @Nullable
   public final IMicroNode getLastChild ()
   {
-    return hasChildren () ? m_aChildren.get (m_aChildren.size () - 1) : null;
+    final int nChildCount = getChildCount ();
+    return nChildCount == 0 ? null : m_aChildren.get (nChildCount - 1);
   }
 
   private void _fillListPrefix (@Nonnull final IMicroNode aCurNode, @Nonnull final List <IMicroNode> aNodes)

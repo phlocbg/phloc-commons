@@ -35,6 +35,9 @@ public interface IMicroText extends IMicroNode, IMicroDataAware
    */
   boolean isElementContentWhitespace ();
 
+  /**
+   * {@inheritDoc}
+   */
   @Nonnull
   IMicroText getClone ();
 }
