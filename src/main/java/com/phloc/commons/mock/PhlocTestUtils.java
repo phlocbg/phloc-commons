@@ -199,26 +199,31 @@ public final class PhlocTestUtils
    * @param aSerializable
    *        The object to be written and read
    * @return The newly read object
-   * @throws Exception
-   *         In case reading or writing goes wrong
    */
   @Nonnull
-  public static <DATATYPE extends Serializable> DATATYPE testDefaultSerialization (@Nonnull final DATATYPE aSerializable) throws Exception
+  public static <DATATYPE extends Serializable> DATATYPE testDefaultSerialization (@Nonnull final DATATYPE aSerializable)
   {
-    // Serialize to byte array
-    final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
-    final ObjectOutputStream aOOS = new ObjectOutputStream (aBAOS);
-    aOOS.writeObject (aSerializable);
-    aOOS.close ();
+    try
+    {
+      // Serialize to byte array
+      final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
+      final ObjectOutputStream aOOS = new ObjectOutputStream (aBAOS);
+      aOOS.writeObject (aSerializable);
+      aOOS.close ();
 
-    // Read new object from byte array
-    final ObjectInputStream aOIS = new ObjectInputStream (new ByteArrayInputStreamProvider (aBAOS.toByteArray ()).getInputStream ());
-    final DATATYPE aReadObject = GenericReflection.<Object, DATATYPE> uncheckedCast (aOIS.readObject ());
-    aOIS.close ();
+      // Read new object from byte array
+      final ObjectInputStream aOIS = new ObjectInputStream (new ByteArrayInputStreamProvider (aBAOS.toByteArray ()).getInputStream ());
+      final DATATYPE aReadObject = GenericReflection.<Object, DATATYPE> uncheckedCast (aOIS.readObject ());
+      aOIS.close ();
 
-    // Now check them for equality
-    testDefaultImplementationWithEqualContentObject (aSerializable, aReadObject);
-    return aReadObject;
+      // Now check them for equality
+      testDefaultImplementationWithEqualContentObject (aSerializable, aReadObject);
+      return aReadObject;
+    }
+    catch (final Exception ex)
+    {
+      throw new IllegalStateException ("testDefaultSerialization failed", ex);
+    }
   }
 
   /**
@@ -227,15 +232,15 @@ public final class PhlocTestUtils
    * {@link #testDefaultImplementationWithEqualContentObject(Object, Object)} to
    * check for equality.
    * 
-   * @param aClonable
-   *        The clonable object to test
+   * @param aCloneable
+   *        The cloneable object to test
    */
-  public static <DATATYPE> void testGetClone (@Nonnull final ICloneable <? extends DATATYPE> aClonable)
+  public static <DATATYPE extends ICloneable <DATATYPE>> void testGetClone (@Nonnull final DATATYPE aCloneable)
   {
-    final DATATYPE aClone = aClonable.getClone ();
+    final DATATYPE aClone = aCloneable.getClone ();
     _assertNotNull ("Clone returned a null object", aClone);
     _assertTrue ("Clone returned a different class than the original one",
-                 aClone.getClass ().equals (aClonable.getClass ()));
-    testDefaultImplementationWithEqualContentObject (aClonable, aClone);
+                 aClone.getClass ().equals (aCloneable.getClass ()));
+    testDefaultImplementationWithEqualContentObject (aCloneable, aClone);
   }
 }
