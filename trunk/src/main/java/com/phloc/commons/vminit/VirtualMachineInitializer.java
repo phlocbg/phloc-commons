@@ -23,6 +23,7 @@ import com.phloc.commons.annotations.CodingStyleguideUnaware;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.lang.ServiceLoaderBackport;
+import com.phloc.commons.mock.IMockException;
 
 /**
  * This class should be run upon VM initialization. This should be the very
@@ -60,7 +61,8 @@ public final class VirtualMachineInitializer
         // Do not use ILogger because this may interfere with the general
         // startup!
         System.err.println ("!!! Error running VM initializer SPI " + aSPI);// NOPMD
-        t.printStackTrace (System.err);
+        if (!(t instanceof IMockException))
+          t.printStackTrace (System.err);
       }
   }
 
@@ -76,7 +78,8 @@ public final class VirtualMachineInitializer
         // Do not use ILogger because this may interfere with the general
         // shutdown!
         System.err.println ("!!! Error running VM shutdown SPI " + aSPI);// NOPMD
-        t.printStackTrace (System.err);
+        if (!(t instanceof IMockException))
+          t.printStackTrace (System.err);
       }
 
     // Help the GC

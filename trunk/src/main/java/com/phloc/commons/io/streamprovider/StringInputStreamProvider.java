@@ -17,15 +17,14 @@
  */
 package com.phloc.commons.io.streamprovider;
 
-import java.io.InputStream;
-import java.io.Reader;
 import java.nio.charset.Charset;
 
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.charset.CharsetManager;
-import com.phloc.commons.io.IInputStreamAndReaderProvider;
+import com.phloc.commons.io.IInputStreamProvider;
+import com.phloc.commons.io.IReaderProvider;
 import com.phloc.commons.io.streams.NonBlockingStringReader;
 import com.phloc.commons.io.streams.StringInputStream;
 import com.phloc.commons.string.ToStringGenerator;
@@ -35,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author philip
  */
-public class StringInputStreamProvider implements IInputStreamAndReaderProvider
+public class StringInputStreamProvider implements IInputStreamProvider, IReaderProvider
 {
   private final String m_sData;
   private final Charset m_aCharset;
@@ -76,19 +75,13 @@ public class StringInputStreamProvider implements IInputStreamAndReaderProvider
   }
 
   @Nonnull
-  public final InputStream getInputStream ()
+  public final StringInputStream getInputStream ()
   {
     return new StringInputStream (m_sData, m_aCharset);
   }
 
   @Nonnull
-  public final Reader getReader (@Nonnull final String sCharset)
-  {
-    return new NonBlockingStringReader (m_sData);
-  }
-
-  @Nonnull
-  public final Reader getReader (@Nonnull final Charset aCharset)
+  public final NonBlockingStringReader getReader ()
   {
     return new NonBlockingStringReader (m_sData);
   }

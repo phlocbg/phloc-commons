@@ -21,13 +21,11 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
-import java.io.InputStream;
-
 import org.junit.Test;
 
-import com.phloc.commons.io.IInputStreamProvider;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.resource.ClassPathResource;
+import com.phloc.commons.io.streamprovider.MockNullInputStreamProvider;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.mock.PhlocTestUtils;
 
@@ -46,13 +44,7 @@ public final class ReadableResourceSAXInputSourceTest
     assertNotNull (StreamUtils.getAllBytes (is.getByteStream ()));
     PhlocTestUtils.testToStringImplementation (is);
 
-    assertNull (new ReadableResourceSAXInputSource (new IInputStreamProvider ()
-    {
-      public InputStream getInputStream ()
-      {
-        return null;
-      }
-    }, "sysid").getByteStream ());
+    assertNull (new ReadableResourceSAXInputSource (new MockNullInputStreamProvider (), "sysid").getByteStream ());
 
     try
     {

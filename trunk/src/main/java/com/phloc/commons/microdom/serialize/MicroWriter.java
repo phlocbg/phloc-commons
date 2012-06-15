@@ -18,6 +18,7 @@
 package com.phloc.commons.microdom.serialize;
 
 import java.io.OutputStream;
+import java.io.Writer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -29,7 +30,7 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
-import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
+import com.phloc.commons.io.streams.NonBlockingStringWriter;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.state.ESuccess;
@@ -76,7 +77,7 @@ public final class MicroWriter
   }
 
   /**
-   * Write a Micro Node to an output stream.
+   * Write a Micro Node to an {@link OutputStream}.
    * 
    * @param aNode
    *        The node to be serialized. May be any kind of node (incl.
@@ -95,10 +96,10 @@ public final class MicroWriter
                                         @Nonnull @WillClose final OutputStream aOS,
                                         @Nonnull final IXMLWriterSettings aSettings)
   {
-    if (aOS == null)
-      throw new NullPointerException ("outputStream");
     if (aNode == null)
       throw new NullPointerException ("node");
+    if (aOS == null)
+      throw new NullPointerException ("outputStream");
     if (aSettings == null)
       throw new NullPointerException ("settings");
 
@@ -114,6 +115,45 @@ public final class MicroWriter
     }
   }
 
+  /**
+   * Write a Micro Node to a {@link Writer}.
+   * 
+   * @param aNode
+   *        The node to be serialized. May be any kind of node (incl.
+   *        documents). May not be <code>null</code>.
+   * @param aWriter
+   *        The writer to write to. May not be <code>null</code>. The writer is
+   *        closed anyway directly after the operation finishes (on success and
+   *        on error).
+   * @param aSettings
+   *        The settings to be used for the creation. May not be
+   *        <code>null</code>.
+   * @return {@link ESuccess}
+   */
+  @Nonnull
+  public static ESuccess writeToWriter (@Nonnull final IMicroNode aNode,
+                                        @Nonnull @WillClose final Writer aWriter,
+                                        @Nonnull final IXMLWriterSettings aSettings)
+  {
+    if (aNode == null)
+      throw new NullPointerException ("node");
+    if (aWriter == null)
+      throw new NullPointerException ("writer");
+    if (aSettings == null)
+      throw new NullPointerException ("settings");
+
+    try
+    {
+      final IXMLSerializer <IMicroNode> aSerializer = new MicroSerializer (aSettings);
+      aSerializer.write (aNode, aWriter);
+      return ESuccess.SUCCESS;
+    }
+    finally
+    {
+      StreamUtils.close (aWriter);
+    }
+  }
+
   @Nullable
   public static String getNodeAsString (@Nonnull final IMicroNode aNode, @Nonnull final IXMLWriterSettings aSettings)
   {
@@ -122,21 +162,24 @@ public final class MicroWriter
     if (aSettings == null)
       throw new NullPointerException ("settings");
 
+    NonBlockingStringWriter aWriter = null;
     try
     {
       // start serializing
-      final NonBlockingByteArrayOutputStream aOS = new NonBlockingByteArrayOutputStream (50 * CGlobal.BYTES_PER_KILOBYTE);
-      writeToStream (aNode, aOS, aSettings);
-      s_aSizeHdl.addSize (aOS.size ());
-      return aOS.getAsString (aSettings.getCharset ());
+      aWriter = new NonBlockingStringWriter (50 * CGlobal.BYTES_PER_KILOBYTE);
+      if (writeToWriter (aNode, aWriter, aSettings).isSuccess ())
+      {
+        s_aSizeHdl.addSize (aWriter.size ());
+        return aWriter.getAsString ();
+      }
     }
-    catch (final RuntimeException ex)
+    catch (final Throwable t)
     {
-      s_aLogger.error ("Error in XML serialization", ex);
+      s_aLogger.error ("Error serializing MicroDOM with settings " + aSettings.toString (), t);
     }
-    catch (final Exception ex)
+    finally
     {
-      s_aLogger.error ("Error serializing with settings " + aSettings, ex);
+      StreamUtils.close (aWriter);
     }
     return null;
   }

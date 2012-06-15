@@ -30,6 +30,7 @@ import org.junit.Test;
 import com.phloc.commons.io.IInputStreamProvider;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.resource.ClassPathResource;
+import com.phloc.commons.io.streamprovider.MockNullInputStreamProvider;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.mock.PhlocTestUtils;
 
@@ -101,13 +102,7 @@ public final class CachingTransformStreamSourceTest
     try
     {
       // Input stream provider
-      new CachingTransformStreamSource (new IInputStreamProvider ()
-      {
-        public InputStream getInputStream ()
-        {
-          return null;
-        }
-      }, "systid").getInputStream ();
+      new CachingTransformStreamSource (new MockNullInputStreamProvider (), "systid").getInputStream ();
       fail ();
     }
     catch (final NullPointerException ex)

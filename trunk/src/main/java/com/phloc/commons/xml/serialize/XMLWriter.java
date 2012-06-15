@@ -18,6 +18,7 @@
 package com.phloc.commons.xml.serialize;
 
 import java.io.OutputStream;
+import java.io.Writer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -29,10 +30,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 
+import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
-import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
+import com.phloc.commons.io.streams.NonBlockingStringWriter;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.state.ESuccess;
+import com.phloc.commons.stats.IStatisticsHandlerSize;
+import com.phloc.commons.stats.StatisticsManager;
 import com.phloc.commons.xml.EXMLVersion;
 
 /**
@@ -47,6 +51,7 @@ public final class XMLWriter
   public static final NamespaceContext DEFAULT_NAMESPACE_CTX = null;
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (XMLWriter.class);
+  private static final IStatisticsHandlerSize s_aSizeHdl = StatisticsManager.getSizeHandler (XMLWriter.class);
 
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")
@@ -56,15 +61,15 @@ public final class XMLWriter
   {}
 
   /**
-   * Write a ode to an output stream using the default settings.
+   * Write a node to an {@link OutputStream} using the default settings.
    * 
    * @param aNode
    *        The node to be serialized. May be any kind of node (incl.
    *        documents). May not be <code>null</code>.
    * @param aOS
-   *        The output stream to write to. May not be <code>null</code>. The
-   *        output stream is closed anyway directly after the operation finishes
-   *        (on success and on error).
+   *        The {@link OutputStream} to write to. May not be <code>null</code>.
+   *        The {@link OutputStream} is closed anyway directly after the
+   *        operation finishes (on success and on error).
    */
   @Nonnull
   public static ESuccess writeToStream (@Nonnull final Node aNode, @Nonnull @WillClose final OutputStream aOS)
@@ -72,6 +77,19 @@ public final class XMLWriter
     return writeToStream (aNode, aOS, XMLWriterSettings.DEFAULT_XML_SETTINGS);
   }
 
+  /**
+   * Write a node to an {@link OutputStream} using custom settings.
+   * 
+   * @param aNode
+   *        The node to be serialized. May be any kind of node (incl.
+   *        documents). May not be <code>null</code>.
+   * @param aOS
+   *        The {@link OutputStream} to write to. May not be <code>null</code>.
+   *        The {@link OutputStream} is closed anyway directly after the
+   *        operation finishes (on success and on error).
+   * @param aSettings
+   *        The serialization settings to be used. May not be <code>null</code>.
+   */
   @Nonnull
   public static ESuccess writeToStream (@Nonnull final Node aNode,
                                         @Nonnull @WillClose final OutputStream aOS,
@@ -106,26 +124,94 @@ public final class XMLWriter
     return ESuccess.FAILURE;
   }
 
+  /**
+   * Write a node to a {@link Writer} using the default settings.
+   * 
+   * @param aNode
+   *        The node to be serialized. May be any kind of node (incl.
+   *        documents). May not be <code>null</code>.
+   * @param aWriter
+   *        The {@link Writer} to write to. May not be <code>null</code>. The
+   *        {@link Writer} is closed anyway directly after the operation
+   *        finishes (on success and on error).
+   */
+  @Nonnull
+  public static ESuccess writeToWriter (@Nonnull final Node aNode, @Nonnull @WillClose final Writer aWriter)
+  {
+    return writeToWriter (aNode, aWriter, XMLWriterSettings.DEFAULT_XML_SETTINGS);
+  }
+
+  /**
+   * Write a node to a {@link Writer} using the default settings.
+   * 
+   * @param aNode
+   *        The node to be serialized. May be any kind of node (incl.
+   *        documents). May not be <code>null</code>.
+   * @param aWriter
+   *        The {@link Writer} to write to. May not be <code>null</code>. The
+   *        {@link Writer} is closed anyway directly after the operation
+   *        finishes (on success and on error).
+   * @param aSettings
+   *        The serialization settings to be used. May not be <code>null</code>.
+   */
+  @Nonnull
+  public static ESuccess writeToWriter (@Nonnull final Node aNode,
+                                        @Nonnull @WillClose final Writer aWriter,
+                                        @Nonnull final IXMLWriterSettings aSettings)
+  {
+    if (aNode == null)
+      throw new NullPointerException ("node");
+    if (aWriter == null)
+      throw new NullPointerException ("writer");
+    if (aSettings == null)
+      throw new NullPointerException ("settings");
+
+    try
+    {
+      final IXMLSerializer <Node> aSerializer = new XMLSerializerPhloc (aSettings);
+      aSerializer.write (aNode, aWriter);
+      return ESuccess.SUCCESS;
+    }
+    catch (final RuntimeException ex)
+    {
+      s_aLogger.error ("Error in XML serialization", ex);
+      throw ex;
+    }
+    catch (final Exception ex)
+    {
+      s_aLogger.error ("Error in XML serialization", ex);
+    }
+    finally
+    {
+      StreamUtils.close (aWriter);
+    }
+    return ESuccess.FAILURE;
+  }
+
   @Nullable
   public static String getNodeAsString (@Nonnull final Node aNode, @Nonnull final IXMLWriterSettings aSettings)
   {
-    NonBlockingByteArrayOutputStream aOS = null;
+    NonBlockingStringWriter aWriter = null;
     try
     {
       // start serializing
-      aOS = new NonBlockingByteArrayOutputStream (8192);
-      if (writeToStream (aNode, aOS, aSettings).isFailure ())
+      aWriter = new NonBlockingStringWriter (50 * CGlobal.BYTES_PER_KILOBYTE);
+      if (writeToWriter (aNode, aWriter, aSettings).isSuccess ())
       {
-        // Some exception was thrown....
-        return null;
+        s_aSizeHdl.addSize (aWriter.size ());
+        return aWriter.getAsString ();
       }
-      return aOS.getAsString (aSettings.getCharset ());
+    }
+    catch (final Throwable t)
+    {
+      s_aLogger.error ("Error serializing DOM node with settings " + aSettings.toString (), t);
     }
     finally
     {
       // don't forget to close the stream!
-      StreamUtils.close (aOS);
+      StreamUtils.close (aWriter);
     }
+    return null;
   }
 
   /**

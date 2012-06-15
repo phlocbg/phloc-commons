@@ -17,8 +17,7 @@
  */
 package com.phloc.commons.io.streamprovider;
 
-import java.io.InputStream;
-import java.io.Reader;
+import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
@@ -46,19 +45,19 @@ public class ByteBufferInputStreamProvider implements IInputStreamAndReaderProvi
   }
 
   @Nonnull
-  public final InputStream getInputStream ()
+  public final NonBlockingByteArrayInputStream getInputStream ()
   {
     return new NonBlockingByteArrayInputStream (m_aBuffer.array ());
   }
 
   @Nonnull
-  public final Reader getReader (@Nonnull final String sCharset)
+  public final InputStreamReader getReader (@Nonnull final String sCharset)
   {
     return StreamUtils.createReader (getInputStream (), sCharset);
   }
 
   @Nonnull
-  public final Reader getReader (@Nonnull final Charset aCharset)
+  public final InputStreamReader getReader (@Nonnull final Charset aCharset)
   {
     return StreamUtils.createReader (getInputStream (), aCharset);
   }
