@@ -75,6 +75,18 @@ public class StringInputStreamProvider implements IInputStreamProvider, IReaderP
   }
 
   @Nonnull
+  public String getData ()
+  {
+    return m_sData;
+  }
+
+  @Nonnull
+  public Charset getCharset ()
+  {
+    return m_aCharset;
+  }
+
+  @Nonnull
   public final StringInputStream getInputStream ()
   {
     return new StringInputStream (m_sData, m_aCharset);

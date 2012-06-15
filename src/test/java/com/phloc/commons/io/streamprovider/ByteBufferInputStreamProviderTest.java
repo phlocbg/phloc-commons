@@ -44,7 +44,7 @@ public final class ByteBufferInputStreamProviderTest
     final ByteBufferInputStreamProvider aISP = new ByteBufferInputStreamProvider (bb);
     final InputStream aIS = aISP.getInputStream ();
     assertArrayEquals (aBytes, StreamUtils.getAllBytes (aIS));
-    StreamUtils.close (aISP.getReader (CCharset.CHARSET_UTF_8));
+    StreamUtils.close (aISP.getReader (CCharset.CHARSET_UTF_8_OBJ));
     assertNotNull (aISP.toString ());
   }
 }

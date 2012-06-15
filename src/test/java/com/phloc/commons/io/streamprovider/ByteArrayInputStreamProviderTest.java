@@ -42,7 +42,7 @@ public final class ByteArrayInputStreamProviderTest
     final ByteArrayInputStreamProvider aISP = new ByteArrayInputStreamProvider (aBytes);
     final InputStream aIS = aISP.getInputStream ();
     assertArrayEquals (aBytes, StreamUtils.getAllBytes (aIS));
-    StreamUtils.close (aISP.getReader (CCharset.CHARSET_UTF_8));
+    StreamUtils.close (aISP.getReader (CCharset.CHARSET_UTF_8_OBJ));
     assertNotNull (aISP.toString ());
   }
 }
