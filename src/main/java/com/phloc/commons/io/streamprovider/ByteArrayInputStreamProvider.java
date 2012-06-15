@@ -23,7 +23,7 @@ import java.nio.charset.Charset;
 
 import javax.annotation.Nonnull;
 
-import com.phloc.commons.io.IReaderProvider;
+import com.phloc.commons.io.IInputStreamAndReaderProvider;
 import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.string.ToStringGenerator;
@@ -33,7 +33,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author philip
  */
-public class ByteArrayInputStreamProvider implements IReaderProvider
+public class ByteArrayInputStreamProvider implements IInputStreamAndReaderProvider
 {
   private final byte [] m_aData;
 

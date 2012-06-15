@@ -25,7 +25,7 @@ import javax.annotation.Nonnull;
 
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.charset.CharsetManager;
-import com.phloc.commons.io.IReaderProvider;
+import com.phloc.commons.io.IInputStreamAndReaderProvider;
 import com.phloc.commons.io.streams.NonBlockingStringReader;
 import com.phloc.commons.io.streams.StringInputStream;
 import com.phloc.commons.string.ToStringGenerator;
@@ -35,7 +35,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author philip
  */
-public class StringInputStreamProvider implements IReaderProvider
+public class StringInputStreamProvider implements IInputStreamAndReaderProvider
 {
   private final String m_sData;
   private final Charset m_aCharset;

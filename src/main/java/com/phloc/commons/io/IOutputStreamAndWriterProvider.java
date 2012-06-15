@@ -29,7 +29,7 @@ import javax.annotation.Nullable;
  * 
  * @author philip
  */
-public interface IWriterProvider extends IOutputStreamProvider
+public interface IOutputStreamAndWriterProvider extends IOutputStreamProvider
 {
   /**
    * Get an {@link Writer} based on this output stream provider using the given

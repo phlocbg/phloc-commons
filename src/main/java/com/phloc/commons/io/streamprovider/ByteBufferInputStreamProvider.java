@@ -24,7 +24,7 @@ import java.nio.charset.Charset;
 
 import javax.annotation.Nonnull;
 
-import com.phloc.commons.io.IReaderProvider;
+import com.phloc.commons.io.IInputStreamAndReaderProvider;
 import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.string.ToStringGenerator;
@@ -34,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author philip
  */
-public class ByteBufferInputStreamProvider implements IReaderProvider
+public class ByteBufferInputStreamProvider implements IInputStreamAndReaderProvider
 {
   private final ByteBuffer m_aBuffer;
 

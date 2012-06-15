@@ -29,7 +29,7 @@ import javax.annotation.Nullable;
  * 
  * @author philip
  */
-public interface IReaderProvider extends IInputStreamProvider
+public interface IInputStreamAndReaderProvider extends IInputStreamProvider
 {
   /**
    * Get an {@link Reader} based on this input stream provider using the given

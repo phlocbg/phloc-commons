@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.io;
 
+import javax.annotation.Nonnull;
+
 import com.phloc.commons.IHasBooleanRepresentation;
 
 /**
@@ -31,6 +33,7 @@ public enum EAppend implements IHasBooleanRepresentation
   /** Truncate an eventually existing object and start over */
   TRUNCATE;
 
+  @Nonnull
   public static final EAppend DEFAULT = TRUNCATE;
 
   public boolean getAsBoolean ()
