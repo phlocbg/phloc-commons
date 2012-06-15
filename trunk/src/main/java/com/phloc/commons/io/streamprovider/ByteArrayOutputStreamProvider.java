@@ -24,7 +24,7 @@ import java.nio.charset.Charset;
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.io.EAppend;
-import com.phloc.commons.io.IWriterProvider;
+import com.phloc.commons.io.IOutputStreamAndWriterProvider;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.string.ToStringGenerator;
@@ -34,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author philip
  */
-public class ByteArrayOutputStreamProvider implements IWriterProvider
+public class ByteArrayOutputStreamProvider implements IOutputStreamAndWriterProvider
 {
   private final NonBlockingByteArrayOutputStream m_aOS = new NonBlockingByteArrayOutputStream ();
 

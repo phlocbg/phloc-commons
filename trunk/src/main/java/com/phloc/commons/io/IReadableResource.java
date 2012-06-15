@@ -27,7 +27,7 @@ import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
  * @author philip
  */
 @MustImplementEqualsAndHashcode
-public interface IReadableResource extends IReaderProvider, IResourceBase
+public interface IReadableResource extends IInputStreamAndReaderProvider, IResourceBase
 {
   // Change return type
   @Nonnull
