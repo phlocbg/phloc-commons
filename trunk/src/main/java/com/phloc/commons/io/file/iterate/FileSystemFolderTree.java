@@ -31,6 +31,12 @@ import com.phloc.commons.io.file.FilenameHelper;
 import com.phloc.commons.tree.withid.folder.DefaultFolderTree;
 import com.phloc.commons.tree.withid.folder.DefaultFolderTreeItem;
 
+/**
+ * Represents a folder tree with the file system contents. This structure is
+ * eagerly filled!
+ * 
+ * @author philip
+ */
 @NotThreadSafe
 public class FileSystemFolderTree extends DefaultFolderTree <String, File, List <File>>
 {
@@ -65,9 +71,21 @@ public class FileSystemFolderTree extends DefaultFolderTree <String, File, List 
       }
   }
 
+  public FileSystemFolderTree (@Nonnull final String sStartDir)
+  {
+    this (new File (sStartDir));
+  }
+
   public FileSystemFolderTree (@Nonnull final File aStartDir)
   {
     this (aStartDir, null, null);
+  }
+
+  public FileSystemFolderTree (@Nonnull final String sStartDir,
+                               @Nullable final FileFilter aDirFilter,
+                               @Nullable final FileFilter aFileFilter)
+  {
+    this (new File (sStartDir), aDirFilter, aFileFilter);
   }
 
   public FileSystemFolderTree (@Nonnull final File aStartDir,

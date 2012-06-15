@@ -44,7 +44,15 @@ public final class FileSystemRecursiveIteratorTest
     try
     {
       // null not allowed
-      new FileSystemRecursiveIterator (null);
+      new FileSystemRecursiveIterator ((File) null);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+    try
+    {
+      // null not allowed
+      new FileSystemRecursiveIterator ((String) null);
       fail ();
     }
     catch (final NullPointerException ex)
