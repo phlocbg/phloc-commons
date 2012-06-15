@@ -17,9 +17,6 @@
  */
 package com.phloc.commons.microdom.serialize;
 
-import java.io.BufferedWriter;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -29,7 +26,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.WillNotClose;
 
-import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.microdom.IMicroCDATA;
 import com.phloc.commons.microdom.IMicroComment;
@@ -277,10 +273,8 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
     }
   }
 
-  public void write (@Nonnull final IMicroNode aNode, @Nonnull @WillNotClose final OutputStream aOS)
+  public void write (@Nonnull final IMicroNode aNode, @Nonnull @WillNotClose final Writer aWriter)
   {
-    final Writer aWriter = new BufferedWriter (new OutputStreamWriter (aOS,
-                                                                       CharsetManager.getCharsetFromName (m_aSettings.getCharset ())));
     final IXMLIterationHandler aXMLWriter = new XMLEmitterPhloc (aWriter, m_aSettings);
     // No previous and no next sibling
     _writeNode (aXMLWriter, null, aNode, null);

@@ -15,22 +15,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.callback;
+package com.phloc.commons.io;
 
-import org.junit.Test;
+import java.io.Writer;
 
-import com.phloc.commons.mock.MockException;
+import javax.annotation.Nullable;
 
 /**
- * Test class for class {@link LoggingExceptionHandler}
+ * A callback interface to retrieve {@link Writer} objects.
  * 
  * @author philip
  */
-public final class LoggingExceptionHandlerTest
+public interface IWriterProvider
 {
-  @Test
-  public void testAll ()
-  {
-    new LoggingExceptionHandler ().onException (new MockException ());
-  }
+  /**
+   * Get the writer to write to an object. Each time this method is call, a new
+   * {@link Writer} needs to be created!
+   * 
+   * @return <code>null</code> if resolving failed.
+   */
+  @Nullable
+  Writer getWriter ();
 }

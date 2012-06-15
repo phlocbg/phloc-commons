@@ -17,9 +17,6 @@
  */
 package com.phloc.commons.xml.serialize;
 
-import java.io.BufferedWriter;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.util.Map;
 import java.util.TreeMap;
@@ -40,7 +37,6 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.ProcessingInstruction;
 import org.w3c.dom.Text;
 
-import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.xml.CXML;
@@ -249,10 +245,8 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
     }
   }
 
-  public void write (@Nonnull final Node aNode, @Nonnull @WillNotClose final OutputStream aOS)
+  public void write (@Nonnull final Node aNode, @Nonnull @WillNotClose final Writer aWriter)
   {
-    final Writer aWriter = new BufferedWriter (new OutputStreamWriter (aOS,
-                                                                       CharsetManager.getCharsetFromName (m_aSettings.getCharset ())));
     final IXMLIterationHandler aXMLWriter = new XMLEmitterPhloc (aWriter, m_aSettings);
     _writeNode (aXMLWriter, aNode);
     // Flush is important for Writer!

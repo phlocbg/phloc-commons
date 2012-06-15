@@ -1,7 +1,30 @@
 #summary Change log of phloc-commons
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
-<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr border="1"><td>6/6/12</td><td colspan="4">_Release *3.5.8*_</td></tr>
+<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr border="1"><td>6/15/12</td><td colspan="4">_Release *3.6.0*_</td></tr>
+<tr><td>6/15/12</td><td>add</td><td>api</td><td></td><td>MicroWriter and XMLWriter now have an API to write on a Writer as well</td></tr>
+<tr><td>6/15/12</td><td>change</td><td>api</td><td>*yes*</td><td>Added new interfaces IReaderProvider IWriterProvider</td></tr>
+<tr><td>6/15/12</td><td>change</td><td>api</td><td>*yes*</td><td>Renamed IReaderProvider to IInputStreamAndReaderProvider and IWriterProvider to IOutputStreamAndWriterProvider</td></tr>
+<tr><td>6/15/12</td><td>add</td><td>api</td><td></td><td>Extended FileSystem(Recursive)Iterator with String based constructors/factory methods</td></tr>
+<tr><td>6/13/12</td><td>add</td><td>api</td><td></td><td>Extended EnumHelper with getFromName`*` methods handling IHasName enums</td></tr>
+<tr><td>6/13/12</td><td>add</td><td>api</td><td></td><td>Added new annotation type @LazilyInitialized</td></tr>
+<tr><td>6/13/12</td><td>add</td><td>api</td><td></td><td>Extended StreamUtils API to support copy routines with a limit</td></tr>
+<tr><td>6/13/12</td><td>add</td><td>api</td><td></td><td>Extended API of NonBlockingStringWriter implementing IHasSize and deprecated toString method</td></tr>
+<tr><td>6/13/12</td><td>add</td><td>api</td><td></td><td>Added new constructors for NonBlockingStringReader</td></tr>
+<tr><td>6/13/12</td><td>add</td><td>api</td><td></td><td>Added new MicroDOM event NODE`_`REMOVED that is triggered upon node removal</td></tr>
+<tr><td>6/13/12</td><td>add</td><td>api</td><td></td><td>Added new package com.phloc.commons.email handling a structured email address + regex validation</td></tr>
+<tr><td>6/11/12</td><td>add</td><td>api</td><td></td><td>Unified ArrayHelper API</td></tr>
+<tr border="1"><td>6/11/12</td><td colspan="4">_Release *3.6.0*_</td></tr>
+<tr><td>6/11/12</td><td>add</td><td>api</td><td></td><td>Added new factory class InputSourceFactory</td></tr>
+<tr><td>6/11/12</td><td>add</td><td>api</td><td></td><td>Extended API of XMLListHandler and XMLMapHandler</td></tr>
+<tr><td>6/10/12</td><td>change</td><td>api</td><td>*yes*</td><td>LoggingTransformErrorListener now requires a locale</td></tr>
+<tr><td>6/10/12</td><td>remove</td><td>api</td><td>*yes*</td><td>Removed IHasErrorText and replaced it with IHasDisplayText (especially in IResourceError)</td></tr>
+<tr><td>6/10/12</td><td>change</td><td>tech</td><td></td><td>Made EqualsImplementationRegistry and HashCodeImplementationRegistry more efficient</td></tr>
+<tr><td>6/10/12</td><td>add</td><td>api</td><td></td><td>Made StringHelper API more consistent using more get... methods. Old methods are deprecated.</td></tr>
+<tr><td>6/10/12</td><td>add</td><td>api</td><td></td><td>Added ArrayHelper.getFirst and getLast for all primitive types</td></tr>
+<tr><td>6/10/12</td><td>change</td><td>api</td><td>*yes*</td><td>Renamed codec.I(En|De)coder to IByteArray(En|De)coder and derived it from .encode.I(En|De)coder</td></tr>
+<tr><td>6/10/12</td><td>change</td><td>api</td><td>*yes*</td><td>Renamed .codec classes so that they all end of Codec to be more general-purpose</td></tr>
+<tr border="1"><td>6/6/12</td><td colspan="4">_Release *3.5.8*_</td></tr>
 <tr><td>6/6/12</td><td>add</td><td>api</td><td></td><td>Added new MicroContainer constructor and static factory methods for easy clone handling</td></tr>
 <tr><td>6/6/12</td><td>add</td><td>api</td><td></td><td>Added new com.phloc.commons.codec package, with the encoders and decoders from our internal PDF package</td></tr>
 <tr><td>6/4/12</td><td>add</td><td>api</td><td></td><td>Added new class NonBlockingBufferedReader</td></tr>

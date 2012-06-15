@@ -18,6 +18,7 @@
 package com.phloc.commons.xml.serialize;
 
 import java.io.OutputStream;
+import java.io.Writer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.WillNotClose;
@@ -41,4 +42,14 @@ public interface IXMLSerializer <NODETYPE>
    *        The stream to serialize onto. May not be <code>null</code>.
    */
   void write (@Nonnull NODETYPE aNode, @Nonnull @WillNotClose OutputStream aOS);
+
+  /**
+   * Write the specified node to the specified {@link Writer}.
+   * 
+   * @param aNode
+   *        The node to write. May not be <code>null</code>.
+   * @param aWriter
+   *        The writer to serialize onto. May not be <code>null</code>.
+   */
+  void write (@Nonnull NODETYPE aNode, @Nonnull @WillNotClose Writer aWriter);
 }

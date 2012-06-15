@@ -17,6 +17,9 @@
  */
 package com.phloc.commons.xml.serialize;
 
+import java.io.BufferedWriter;
+import java.io.OutputStream;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +28,7 @@ import java.util.Map;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.WillNotClose;
 import javax.xml.namespace.NamespaceContext;
 
 import org.slf4j.Logger;
@@ -33,6 +37,7 @@ import org.slf4j.LoggerFactory;
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.xml.CXML;
@@ -319,6 +324,13 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
       throw new NullPointerException ("settings");
     m_aSettings = aSettings;
     m_aNSStack = new NamespaceStack (aSettings.getNamespaceContext ());
+  }
+
+  public final void write (@Nonnull final NODETYPE aNode, @Nonnull @WillNotClose final OutputStream aOS)
+  {
+    // Create a writer for the the passed output stream
+    final Writer aWriter = new BufferedWriter (StreamUtils.createWriter (aOS, m_aSettings.getCharsetObj ()));
+    write (aNode, aWriter);
   }
 
   @Override

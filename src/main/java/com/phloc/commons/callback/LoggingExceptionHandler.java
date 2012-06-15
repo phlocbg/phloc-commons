@@ -22,6 +22,8 @@ import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.mock.IMockException;
+
 /**
  * A specific implementation of the {@link IExceptionHandler} interface, that
  * logs all exceptions to a standard logger.
@@ -34,6 +36,6 @@ public class LoggingExceptionHandler implements IExceptionHandler <Throwable>
 
   public void onException (@Nullable final Throwable t)
   {
-    s_aLogger.warn ("Exception occurred", t);
+    s_aLogger.warn ("Exception occurred", t instanceof IMockException ? null : t);
   }
 }

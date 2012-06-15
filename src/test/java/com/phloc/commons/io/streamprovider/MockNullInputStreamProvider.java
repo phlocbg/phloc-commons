@@ -15,33 +15,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.vminit;
+package com.phloc.commons.io.streamprovider;
 
-import com.phloc.commons.annotations.IsSPIImplementation;
-import com.phloc.commons.mock.MockException;
+import java.io.InputStream;
 
-@IsSPIImplementation
-public final class MockVirtualMachineSPIThrowing implements IVirtualMachineEventSPI
+import javax.annotation.Nullable;
+
+import com.phloc.commons.io.IInputStreamProvider;
+
+public final class MockNullInputStreamProvider implements IInputStreamProvider
 {
-  private static int s_nInstanceCount = 0;
-
-  public MockVirtualMachineSPIThrowing ()
+  @Nullable
+  public InputStream getInputStream ()
   {
-    s_nInstanceCount++;
-  }
-
-  public void onVirtualMachineStart () throws Exception
-  {
-    throw new MockException ("onVirtualMachineStart");
-  }
-
-  public void onVirtualMachineStop () throws Exception
-  {
-    throw new MockException ("onVirtualMachineStop");
-  }
-
-  public static int getInstanceCount ()
-  {
-    return s_nInstanceCount;
+    return null;
   }
 }

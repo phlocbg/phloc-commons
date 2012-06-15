@@ -17,8 +17,7 @@
  */
 package com.phloc.commons.io.streamprovider;
 
-import java.io.OutputStream;
-import java.io.Writer;
+import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 
 import javax.annotation.Nonnull;
@@ -42,7 +41,7 @@ public class ByteArrayOutputStreamProvider implements IOutputStreamAndWriterProv
   {}
 
   @Nonnull
-  public final OutputStream getOutputStream (@Nonnull final EAppend eAppend)
+  public final NonBlockingByteArrayOutputStream getOutputStream (@Nonnull final EAppend eAppend)
   {
     if (eAppend.isTruncate ())
       m_aOS.reset ();
@@ -50,13 +49,13 @@ public class ByteArrayOutputStreamProvider implements IOutputStreamAndWriterProv
   }
 
   @Nonnull
-  public final Writer getWriter (@Nonnull final String sCharset, @Nonnull final EAppend eAppend)
+  public final OutputStreamWriter getWriter (@Nonnull final String sCharset, @Nonnull final EAppend eAppend)
   {
     return StreamUtils.createWriter (getOutputStream (eAppend), sCharset);
   }
 
   @Nonnull
-  public final Writer getWriter (@Nonnull final Charset aCharset, @Nonnull final EAppend eAppend)
+  public final OutputStreamWriter getWriter (@Nonnull final Charset aCharset, @Nonnull final EAppend eAppend)
   {
     return StreamUtils.createWriter (getOutputStream (eAppend), aCharset);
   }
@@ -70,9 +69,16 @@ public class ByteArrayOutputStreamProvider implements IOutputStreamAndWriterProv
     return m_aOS.toByteArray ();
   }
 
+  @Nonnull
   public String getAsString (@Nonnull final String sCharset)
   {
     return m_aOS.getAsString (sCharset);
+  }
+
+  @Nonnull
+  public String getAsString (@Nonnull final Charset aCharset)
+  {
+    return m_aOS.getAsString (aCharset);
   }
 
   @Override

@@ -27,9 +27,9 @@ import java.io.InputStream;
 
 import org.junit.Test;
 
-import com.phloc.commons.io.IInputStreamProvider;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.resource.ClassPathResource;
+import com.phloc.commons.io.streamprovider.MockNullInputStreamProvider;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.mock.PhlocTestUtils;
 
@@ -71,13 +71,7 @@ public final class ResourceStreamSourceTest
     try
     {
       // Input stream provider
-      new ResourceStreamSource (new IInputStreamProvider ()
-      {
-        public InputStream getInputStream ()
-        {
-          return null;
-        }
-      }, "systid").getInputStream ();
+      new ResourceStreamSource (new MockNullInputStreamProvider (), "systid").getInputStream ();
       fail ();
     }
     catch (final IllegalStateException ex)
