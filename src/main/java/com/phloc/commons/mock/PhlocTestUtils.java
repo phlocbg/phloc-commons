@@ -235,9 +235,9 @@ public final class PhlocTestUtils
    * @param aCloneable
    *        The cloneable object to test
    */
-  public static <DATATYPE extends ICloneable <DATATYPE>> void testGetClone (@Nonnull final DATATYPE aCloneable)
+  public static void testGetClone (@Nonnull final ICloneable <?> aCloneable)
   {
-    final DATATYPE aClone = aCloneable.getClone ();
+    final Object aClone = aCloneable.getClone ();
     _assertNotNull ("Clone returned a null object", aClone);
     _assertTrue ("Clone returned a different class than the original one",
                  aClone.getClass ().equals (aCloneable.getClass ()));
