@@ -73,6 +73,7 @@ public final class CharsetManagerTest
   }
 
   @Test
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings ("NP_NONNULL_PARAM_VIOLATION")
   public void testGetAsBytes ()
   {
     final String s = "äbc";

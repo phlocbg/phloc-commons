@@ -30,14 +30,14 @@ import org.junit.Test;
 
 /**
  * Test class for class {@link SingleElementNamespaceContext}.
- *
+ * 
  * @author philip
  */
 public final class SingleElementNamespaceContextTest
 {
 
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NULL_PARAM_DEREF_NONVIRTUAL")
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings ({ "NP_NULL_PARAM_DEREF_NONVIRTUAL", "NP_NONNULL_PARAM_VIOLATION" })
   public void testCtor ()
   {
     try

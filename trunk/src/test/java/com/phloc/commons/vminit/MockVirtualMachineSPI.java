@@ -28,6 +28,7 @@ public final class MockVirtualMachineSPI implements IVirtualMachineEventSPI
   private static final Logger s_aLogger = LoggerFactory.getLogger (MockVirtualMachineSPI.class);
   private static int s_nInstanceCount = 0;
 
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings ("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
   public MockVirtualMachineSPI ()
   {
     s_nInstanceCount++;

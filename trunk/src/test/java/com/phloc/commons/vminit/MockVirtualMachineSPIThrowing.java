@@ -25,6 +25,7 @@ public final class MockVirtualMachineSPIThrowing implements IVirtualMachineEvent
 {
   private static int s_nInstanceCount = 0;
 
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings ("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
   public MockVirtualMachineSPIThrowing ()
   {
     s_nInstanceCount++;
