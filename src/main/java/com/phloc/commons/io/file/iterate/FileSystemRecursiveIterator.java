@@ -63,9 +63,19 @@ public class FileSystemRecursiveIterator implements IIterableIterator <File>
     return StringHelper.getCharCount (aFile.getAbsolutePath (), File.separatorChar);
   }
 
+  public FileSystemRecursiveIterator (@Nonnull final String sBaseDir)
+  {
+    this (new File (sBaseDir), null);
+  }
+
   public FileSystemRecursiveIterator (@Nonnull final File aBaseDir)
   {
     this (aBaseDir, null);
+  }
+
+  public FileSystemRecursiveIterator (@Nonnull final String sBaseDir, @Nullable final IFilter <File> aRecursionFilter)
+  {
+    this (new File (sBaseDir), aRecursionFilter);
   }
 
   /**

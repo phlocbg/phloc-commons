@@ -43,7 +43,16 @@ public final class FileSystemIteratorTest
     try
     {
       // null not allowed
-      new FileSystemIterator (null);
+      new FileSystemIterator ((File) null);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+
+    try
+    {
+      // null not allowed
+      new FileSystemIterator ((String) null);
       fail ();
     }
     catch (final NullPointerException ex)

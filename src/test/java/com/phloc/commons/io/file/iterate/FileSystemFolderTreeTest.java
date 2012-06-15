@@ -45,7 +45,15 @@ public final class FileSystemFolderTreeTest
   {
     try
     {
-      new FileSystemFolderTree (null);
+      new FileSystemFolderTree ((File) null);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+
+    try
+    {
+      new FileSystemFolderTree ((String) null);
       fail ();
     }
     catch (final NullPointerException ex)
@@ -54,6 +62,14 @@ public final class FileSystemFolderTreeTest
     try
     {
       new FileSystemFolderTree (new File ("gibts-ned"));
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+
+    try
+    {
+      new FileSystemFolderTree ("gibts-ned");
       fail ();
     }
     catch (final IllegalArgumentException ex)
