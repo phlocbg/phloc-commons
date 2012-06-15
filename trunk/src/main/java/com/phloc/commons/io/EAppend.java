@@ -33,6 +33,7 @@ public enum EAppend implements IHasBooleanRepresentation
   /** Truncate an eventually existing object and start over */
   TRUNCATE;
 
+  /** The default is {@link #TRUNCATE} */
   @Nonnull
   public static final EAppend DEFAULT = TRUNCATE;
 

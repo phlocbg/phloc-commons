@@ -22,6 +22,8 @@ import java.nio.charset.Charset;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.annotations.DevelopersNote;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.io.EAppend;
 import com.phloc.commons.io.IOutputStreamAndWriterProvider;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
@@ -64,6 +66,7 @@ public class ByteArrayOutputStreamProvider implements IOutputStreamAndWriterProv
    * @return All bytes already written
    */
   @Nonnull
+  @ReturnsMutableCopy
   public byte [] getBytes ()
   {
     return m_aOS.toByteArray ();
@@ -82,8 +85,10 @@ public class ByteArrayOutputStreamProvider implements IOutputStreamAndWriterProv
   }
 
   @Override
+  @Deprecated
+  @DevelopersNote ("Most probably you wanted to call getAsString")
   public String toString ()
   {
-    return new ToStringGenerator (null).toString ();
+    return new ToStringGenerator (this).append ("os", m_aOS).toString ();
   }
 }

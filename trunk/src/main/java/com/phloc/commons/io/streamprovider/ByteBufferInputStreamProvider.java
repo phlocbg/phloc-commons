@@ -45,6 +45,12 @@ public class ByteBufferInputStreamProvider implements IInputStreamAndReaderProvi
   }
 
   @Nonnull
+  public ByteBuffer getByteBuffer ()
+  {
+    return m_aBuffer;
+  }
+
+  @Nonnull
   public final NonBlockingByteArrayInputStream getInputStream ()
   {
     return new NonBlockingByteArrayInputStream (m_aBuffer.array ());

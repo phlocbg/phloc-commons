@@ -28,6 +28,7 @@ import org.junit.Test;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.io.EAppend;
+import com.phloc.commons.io.streams.NonBlockingStringReader;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.io.streams.StringInputStream;
 
@@ -47,8 +48,14 @@ public final class ByteArrayOutputStreamProviderTest
     StreamUtils.copyInputStreamToOutputStreamAndCloseOS (new StringInputStream ("Hiho", CCharset.CHARSET_ISO_8859_1),
                                                          aOS);
     assertEquals ("Hiho", aOSP.getAsString (CCharset.CHARSET_ISO_8859_1));
+    assertEquals ("Hiho", aOSP.getAsString (CCharset.CHARSET_ISO_8859_1_OBJ));
     assertArrayEquals (CharsetManager.getAsBytes ("Hiho", CCharset.CHARSET_ISO_8859_1_OBJ), aOSP.getBytes ());
+    // Close the underlying OS
     StreamUtils.close (aOSP.getWriter (CCharset.CHARSET_UTF_8, EAppend.DEFAULT));
-    assertNotNull (aOSP.toString ());
+
+    // Reader/Writer
+    StreamUtils.copyReaderToWriterAndCloseWriter (new NonBlockingStringReader ("Hiho"),
+                                                  aOSP.getWriter (CCharset.CHARSET_UTF_8, EAppend.DEFAULT));
+    assertEquals ("Hiho", aOSP.getAsString (CCharset.CHARSET_UTF_8));
   }
 }
