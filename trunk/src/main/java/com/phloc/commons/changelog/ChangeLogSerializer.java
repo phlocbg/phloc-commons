@@ -210,7 +210,7 @@ public final class ChangeLogSerializer
             s_aLogger.warn ("Failed to parse release date '" + sDate + "'");
             continue;
           }
-          ret.addRelease (new ChangeLogRelease (aDate, new Version (sVersion)));
+          ret.addRelease (new ChangeLogRelease (aDate, new Version (sVersion, false)));
         }
         else
           aErrorCallback.run ("Changelog contains unsupported element '" + sTagName + "!");
