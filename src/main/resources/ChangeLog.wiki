@@ -5,9 +5,9 @@
 <tr><td>6/18/12</td><td>update</td><td>tech</td><td></td><td>Extended version parser to handle incorrect versions better and to handle the dash character as a separator</td></tr>
 <tr><td>6/18/12</td><td>add</td><td>api</td><td></td><td>Added new method RegExHelper.getAllMatchingGroupValues</td></tr>
 <tr><td>6/15/12</td><td>add</td><td>api</td><td></td><td>Added new class DoNothingExceptionHandler</td></tr>
-<tr border="1"><td>6/15/12</td><td colspan="4">_Release *3.6.0.RC3*_</td></tr>
+<tr border="1"><td>6/15/12</td><td colspan="4">_Release *3.6.0*_</td></tr>
 <tr><td>6/15/12</td><td>fix</td><td>api</td><td></td><td>Fixed error in PhlocTestUtils.testGetClone declaration</td></tr>
-<tr border="1"><td>6/15/12</td><td colspan="4">_Release *3.6.0.RC2*_</td></tr>
+<tr border="1"><td>6/15/12</td><td colspan="4">_Release *3.6.0*_</td></tr>
 <tr><td>6/15/12</td><td>add</td><td>api</td><td></td><td>MicroWriter and XMLWriter now have an API to write on a Writer as well</td></tr>
 <tr><td>6/15/12</td><td>change</td><td>api</td><td>*yes*</td><td>Added new interfaces IReaderProvider IWriterProvider</td></tr>
 <tr><td>6/15/12</td><td>change</td><td>api</td><td>*yes*</td><td>Renamed IReaderProvider to IInputStreamAndReaderProvider and IWriterProvider to IOutputStreamAndWriterProvider</td></tr>
@@ -20,7 +20,7 @@
 <tr><td>6/13/12</td><td>add</td><td>api</td><td></td><td>Added new MicroDOM event NODE`_`REMOVED that is triggered upon node removal</td></tr>
 <tr><td>6/13/12</td><td>add</td><td>api</td><td></td><td>Added new package com.phloc.commons.email handling a structured email address + regex validation</td></tr>
 <tr><td>6/11/12</td><td>add</td><td>api</td><td></td><td>Unified ArrayHelper API</td></tr>
-<tr border="1"><td>6/11/12</td><td colspan="4">_Release *3.6.0.RC1*_</td></tr>
+<tr border="1"><td>6/11/12</td><td colspan="4">_Release *3.6.0*_</td></tr>
 <tr><td>6/11/12</td><td>add</td><td>api</td><td></td><td>Added new factory class InputSourceFactory</td></tr>
 <tr><td>6/11/12</td><td>add</td><td>api</td><td></td><td>Extended API of XMLListHandler and XMLMapHandler</td></tr>
 <tr><td>6/10/12</td><td>change</td><td>api</td><td>*yes*</td><td>LoggingTransformErrorListener now requires a locale</td></tr>
