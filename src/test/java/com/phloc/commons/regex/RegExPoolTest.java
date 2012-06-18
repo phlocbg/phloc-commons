@@ -17,14 +17,12 @@
  */
 package com.phloc.commons.regex;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.util.regex.Matcher;
 import java.util.regex.PatternSyntaxException;
 
 import org.junit.Test;
@@ -34,7 +32,7 @@ import com.phloc.commons.mock.AbstractPhlocTestCase;
 
 /**
  * Test class for {@link RegExPool}.
- *
+ * 
  * @author philip
  */
 public final class RegExPoolTest extends AbstractPhlocTestCase
@@ -92,37 +90,5 @@ public final class RegExPoolTest extends AbstractPhlocTestCase
       catch (final IllegalArgumentException ex)
       {}
     }
-  }
-
-  /**
-   * Test method getMatcher
-   */
-  @Test
-  public void testGetMatcher ()
-  {
-    final Matcher m = RegExHelper.getMatcher ("Hallo (\\d+)\\.(\\d+) Welt", "This is Hallo 2.3 Welt Text");
-    assertNotNull (m);
-    assertEquals (2, m.groupCount ());
-
-    // start over
-    m.reset ();
-    final StringBuffer sb = new StringBuffer ();
-    while (m.find ())
-    {
-      // Get the match result
-      String replaceStr = m.group ();
-      assertEquals ("Hallo 2.3 Welt", replaceStr);
-
-      // Convert to uppercase
-      replaceStr = "<$1.$2>";
-
-      // Insert replacement
-      m.appendReplacement (sb, replaceStr);
-    }
-    m.appendTail (sb);
-    assertEquals ("This is <2.3> Text", sb.toString ());
-
-    // easy cheesy
-    assertEquals ("This is <2.3> Text", m.replaceAll ("<$1.$2>"));
   }
 }

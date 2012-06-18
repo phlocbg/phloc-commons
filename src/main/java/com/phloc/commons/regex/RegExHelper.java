@@ -287,4 +287,36 @@ public final class RegExHelper
       return false;
     }
   }
+
+  /**
+   * Get the values of all groups (RegEx <code>(...)</code>) for the passed
+   * value.<br>
+   * Note: groups starting with "?:" are non-capturing groups (e.g.
+   * <code>(?:a|b)</code>)
+   * 
+   * @param sRegEx
+   *        The regular expression containing the groups
+   * @param sValue
+   *        The value to check
+   * @return <code>null</code> if the passed value does not match the regular
+   *         expression. An empty array if the regular expression contains no
+   *         capturing group.
+   */
+  @Nullable
+  public static String [] getAllMatchingGroupValues (@Nonnull @RegEx final String sRegEx, @Nonnull final String sValue)
+  {
+    final Matcher m = getMatcher (sRegEx, sValue);
+    if (!m.find ())
+    {
+      // Values does not match RegEx
+      return null;
+    }
+
+    // groupCount is excluding the .group(0) match!!!
+    final int nGroupCount = m.groupCount ();
+    final String [] ret = new String [nGroupCount];
+    for (int i = 0; i < nGroupCount; ++i)
+      ret[i] = m.group (i + 1);
+    return ret;
+  }
 }

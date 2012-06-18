@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.regex;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -25,6 +26,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.junit.Test;
@@ -349,6 +351,57 @@ public final class RegExHelperTest
   }
 
   /**
+   * Test method getMatcher
+   */
+  @Test
+  public void testGetMatcher ()
+  {
+    final Matcher m = RegExHelper.getMatcher ("Hallo (\\d+)\\.(\\d+) Welt", "This is Hallo 2.3 Welt Text");
+    assertNotNull (m);
+    assertEquals (2, m.groupCount ());
+
+    // start over and replace all at once
+    {
+      m.reset ();
+      final StringBuffer sb = new StringBuffer ();
+      assertTrue (m.find ());
+
+      // Get the overall match result
+      assertEquals ("Hallo 2.3 Welt", m.group (0));
+
+      // Insert replacement
+      m.appendReplacement (sb, "<$1.$2>");
+      assertFalse (m.find ());
+
+      m.appendTail (sb);
+      assertEquals ("This is <2.3> Text", sb.toString ());
+    }
+
+    // start over and replace all at once
+    {
+      m.reset ();
+      final StringBuffer sb = new StringBuffer ();
+      assertTrue (m.find ());
+
+      // Get the first match result
+      assertEquals ("2", m.group (1));
+      assertEquals ("3", m.group (2));
+
+      // Insert replacement
+      m.appendReplacement (sb, "4");
+
+      m.appendTail (sb);
+      assertEquals ("This is 4 Text", sb.toString ());
+    }
+
+    // easy cheesy version
+    {
+      m.reset ();
+      assertEquals ("This is <2.3> Text", m.replaceAll ("<$1.$2>"));
+    }
+  }
+
+  /**
    * Test for method stringMatchesPattern
    */
   @Test
@@ -408,6 +461,9 @@ public final class RegExHelperTest
     assertTrue (RegExHelper.isValidPattern (""));
     assertTrue (RegExHelper.isValidPattern ("abc"));
     assertTrue (RegExHelper.isValidPattern ("ab.+c"));
+    assertTrue (RegExHelper.isValidPattern ("^ab.+c"));
+    assertTrue (RegExHelper.isValidPattern ("ab.+c$"));
+    assertTrue (RegExHelper.isValidPattern ("^ab.+c$"));
     assertFalse (RegExHelper.isValidPattern ("*-[]"));
 
     try
@@ -417,5 +473,54 @@ public final class RegExHelperTest
     }
     catch (final NullPointerException ex)
     {}
+  }
+
+  @Test
+  public void testGetAllMatchingGroupValues ()
+  {
+    // Non-matching
+    assertNull (RegExHelper.getAllMatchingGroupValues ("H(.)llo", "Servus"));
+    assertNull (RegExHelper.getAllMatchingGroupValues ("H([al]+)(.)", "Hello"));
+
+    // With a single group
+    assertArrayEquals (new String [] { "a" }, RegExHelper.getAllMatchingGroupValues ("H(.)llo", "Hallo"));
+    assertArrayEquals (new String [] { "e" }, RegExHelper.getAllMatchingGroupValues ("H(.)llo", "Hello"));
+
+    // With multiple groups
+    assertArrayEquals (new String [] { "all", "o" }, RegExHelper.getAllMatchingGroupValues ("H([al]+)(.)", "Hallo"));
+    assertArrayEquals (new String [] { "all", "o" }, RegExHelper.getAllMatchingGroupValues ("H([ael]+)(.)", "Hallo"));
+    assertArrayEquals (new String [] { "ell", "o" }, RegExHelper.getAllMatchingGroupValues ("H([ael]+)(.)", "Hello"));
+    assertArrayEquals (new String [] { "allall", "o" },
+                       RegExHelper.getAllMatchingGroupValues ("H([ael]+)(.).*", "Hallallodrio"));
+
+    // With a repeat indicator -> last match
+    assertArrayEquals (new String [] { "l" }, RegExHelper.getAllMatchingGroupValues ("H([al]){1,3}o", "Hallo"));
+    assertArrayEquals (new String [] { "all" }, RegExHelper.getAllMatchingGroupValues ("H([al]{1,3})o", "Hallo"));
+    assertArrayEquals (new String [] { "l" }, RegExHelper.getAllMatchingGroupValues ("H([al]){1,2}lo", "Hallo"));
+    assertArrayEquals (new String [] { "al" }, RegExHelper.getAllMatchingGroupValues ("H([al]{1,2})lo", "Hallo"));
+    assertArrayEquals (new String [] { "a" }, RegExHelper.getAllMatchingGroupValues ("H([al]){1}llo", "Hallo"));
+    assertArrayEquals (new String [] { "aa" }, RegExHelper.getAllMatchingGroupValues ("H([al]{1,2})llo", "Haallo"));
+
+    // With nested groups
+    assertArrayEquals (new String [] { "allallo", "allall", "o" },
+                       RegExHelper.getAllMatchingGroupValues ("H(([ael]+)(.)).*", "Hallallodrio"));
+    assertArrayEquals (new String [] { "allall", "o" },
+                       RegExHelper.getAllMatchingGroupValues ("H(?:([ael]+)(.)).*", "Hallallodrio"));
+
+    // With a non-capturing group
+    assertArrayEquals (new String [] { "o" },
+                       RegExHelper.getAllMatchingGroupValues ("H(?:[ael]+)(.).*", "Hallallodrio"));
+
+    // With only non-capturing groups
+    assertArrayEquals (new String [] {}, RegExHelper.getAllMatchingGroupValues ("H(?:[ael]+)(?:.).*", "Hallallodrio"));
+
+    // Without groups
+    assertArrayEquals (new String [] {}, RegExHelper.getAllMatchingGroupValues ("H.llo", "Hallo"));
+    assertArrayEquals (new String [] {}, RegExHelper.getAllMatchingGroupValues ("H.llo", "Hello"));
+
+    // With a back reference
+    assertArrayEquals (new String [] { "H", "allo", "H" },
+                       RegExHelper.getAllMatchingGroupValues ("(.)(.+)(\\1)", "HalloH"));
+    assertArrayEquals (new String [] { "H", "H" }, RegExHelper.getAllMatchingGroupValues ("(.).+(\\1).*", "HalloHH"));
   }
 }
