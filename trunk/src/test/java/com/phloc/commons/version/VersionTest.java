@@ -20,6 +20,7 @@ package com.phloc.commons.version;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -42,46 +43,46 @@ public final class VersionTest
   {
     // use 0.0.0
     Version v = new Version (0, 0, 0);
-    assertEquals (v.getMajor (), 0);
-    assertEquals (v.getMinor (), 0);
-    assertEquals (v.getMicro (), 0);
-    assertEquals (v.getQualifier (), null);
+    assertEquals (0, v.getMajor ());
+    assertEquals (0, v.getMinor ());
+    assertEquals (0, v.getMicro ());
+    assertNull (v.getQualifier ());
     assertNotNull (v.toString ());
 
     // use 0.0
     v = new Version (0, 0);
-    assertEquals (v.getMajor (), 0);
-    assertEquals (v.getMinor (), 0);
-    assertEquals (v.getMicro (), 0);
-    assertEquals (v.getQualifier (), null);
+    assertEquals (0, v.getMajor ());
+    assertEquals (0, v.getMinor ());
+    assertEquals (0, v.getMicro ());
+    assertNull (v.getQualifier ());
 
     // use 9.7
     v = new Version (9, 7);
     assertEquals (v.getMajor (), 9);
     assertEquals (v.getMinor (), 7);
-    assertEquals (v.getMicro (), 0);
-    assertEquals (v.getQualifier (), null);
+    assertEquals (0, v.getMicro ());
+    assertNull (v.getQualifier ());
 
     // use 0
     v = new Version (0);
-    assertEquals (v.getMajor (), 0);
-    assertEquals (v.getMinor (), 0);
-    assertEquals (v.getMicro (), 0);
-    assertEquals (v.getQualifier (), null);
+    assertEquals (0, v.getMajor ());
+    assertEquals (0, v.getMinor ());
+    assertEquals (0, v.getMicro ());
+    assertNull (v.getQualifier ());
 
     // use 2
     v = new Version (2);
     assertEquals (v.getMajor (), 2);
-    assertEquals (v.getMinor (), 0);
-    assertEquals (v.getMicro (), 0);
-    assertEquals (v.getQualifier (), null);
+    assertEquals (0, v.getMinor ());
+    assertEquals (0, v.getMicro ());
+    assertNull (v.getQualifier ());
 
     // try 97.98.99
     v = new Version (97, 98, 99);
     assertEquals (v.getMajor (), 97);
     assertEquals (v.getMinor (), 98);
     assertEquals (v.getMicro (), 99);
-    assertEquals (v.getQualifier (), null);
+    assertNull (v.getQualifier ());
 
     // try 97.98.99.alpha
     v = new Version (97, 98, 99, "alpha");
@@ -133,21 +134,21 @@ public final class VersionTest
     assertEquals (v.getMajor (), 4);
     assertEquals (v.getMinor (), 5);
     assertEquals (v.getMicro (), 6);
-    assertEquals (v.getQualifier (), null);
+    assertNull (v.getQualifier ());
 
     // no micro
     v = new Version ("7.8");
     assertEquals (v.getMajor (), 7);
     assertEquals (v.getMinor (), 8);
-    assertEquals (v.getMicro (), 0);
-    assertEquals (v.getQualifier (), null);
+    assertEquals (0, v.getMicro ());
+    assertNull (v.getQualifier ());
 
     // no minor
     v = new Version ("9");
     assertEquals (v.getMajor (), 9);
-    assertEquals (v.getMinor (), 0);
-    assertEquals (v.getMicro (), 0);
-    assertEquals (v.getQualifier (), null);
+    assertEquals (0, v.getMinor ());
+    assertEquals (0, v.getMicro ());
+    assertNull (v.getQualifier ());
 
     try
     {
@@ -176,66 +177,108 @@ public final class VersionTest
 
     // empty string
     v = new Version ("");
-    assertEquals (v.getMajor (), 0);
-    assertEquals (v.getMinor (), 0);
-    assertEquals (v.getMicro (), 0);
-    assertEquals (v.getQualifier (), null);
+    assertEquals (0, v.getMajor ());
+    assertEquals (0, v.getMinor ());
+    assertEquals (0, v.getMicro ());
+    assertNull (v.getQualifier ());
 
     // very weird stuff - fails because String.split does not split
     v = new Version ("...");
-    assertEquals (v.getMajor (), 0);
-    assertEquals (v.getMinor (), 0);
-    assertEquals (v.getMicro (), 0);
-    assertEquals (v.getQualifier (), null);
+    assertEquals (0, v.getMajor ());
+    assertEquals (0, v.getMinor ());
+    assertEquals (0, v.getMicro ());
+    assertNull (v.getQualifier ());
 
     // very weird stuff - fails because String.split does not split
     v = new Version ("..");
-    assertEquals (v.getMajor (), 0);
-    assertEquals (v.getMinor (), 0);
-    assertEquals (v.getMicro (), 0);
-    assertEquals (v.getQualifier (), null);
+    assertEquals (0, v.getMajor ());
+    assertEquals (0, v.getMinor ());
+    assertEquals (0, v.getMicro ());
+    assertNull (v.getQualifier ());
 
     // very weird stuff - fails because String.split does not split
     v = new Version (".");
-    assertEquals (v.getMajor (), 0);
-    assertEquals (v.getMinor (), 0);
-    assertEquals (v.getMicro (), 0);
-    assertEquals (v.getQualifier (), null);
+    assertEquals (0, v.getMajor ());
+    assertEquals (0, v.getMinor ());
+    assertEquals (0, v.getMicro ());
+    assertNull (v.getQualifier ());
 
     // null string
     v = new Version (null);
-    assertEquals (v.getMajor (), 0);
-    assertEquals (v.getMinor (), 0);
-    assertEquals (v.getMicro (), 0);
-    assertEquals (v.getQualifier (), null);
+    assertEquals (0, v.getMajor ());
+    assertEquals (0, v.getMinor ());
+    assertEquals (0, v.getMicro ());
+    assertNull (v.getQualifier ());
 
     // alphabetic string
-    v = new Version ("a.b.c.d");
-    assertEquals (v.getMajor (), 0);
-    assertEquals (v.getMinor (), 0);
-    assertEquals (v.getMicro (), 0);
-    assertEquals (v.getQualifier (), "d");
+    v = new Version ("a.b.c.d", true);
+    assertEquals (0, v.getMajor ());
+    assertEquals (0, v.getMinor ());
+    assertEquals (0, v.getMicro ());
+    assertEquals ("d", v.getQualifier ());
 
     // alphabetic string
-    v = new Version ("a.b.c");
-    assertEquals (v.getMajor (), 0);
-    assertEquals (v.getMinor (), 0);
-    assertEquals (v.getMicro (), 0);
-    assertEquals (v.getQualifier (), null);
+    v = new Version ("a.b.c.d", false);
+    assertEquals (0, v.getMajor ());
+    assertEquals (0, v.getMinor ());
+    assertEquals (0, v.getMicro ());
+    assertEquals ("a.b.c.d", v.getQualifier ());
 
     // alphabetic string
-    v = new Version ("a5.b5.c5");
-    assertEquals (v.getMajor (), 0);
-    assertEquals (v.getMinor (), 0);
-    assertEquals (v.getMicro (), 0);
-    assertEquals (v.getQualifier (), null);
+    v = new Version ("a.b.c", true);
+    assertEquals (0, v.getMajor ());
+    assertEquals (0, v.getMinor ());
+    assertEquals (0, v.getMicro ());
+    assertNull (v.getQualifier ());
+
+    // alphabetic string
+    v = new Version ("a.b.c", false);
+    assertEquals (0, v.getMajor ());
+    assertEquals (0, v.getMinor ());
+    assertEquals (0, v.getMicro ());
+    assertEquals ("a.b.c", v.getQualifier ());
+
+    // alphabetic string
+    v = new Version ("a5.b5.c5", true);
+    assertEquals (0, v.getMajor ());
+    assertEquals (0, v.getMinor ());
+    assertEquals (0, v.getMicro ());
+    assertNull (v.getQualifier ());
+
+    // alphabetic string
+    v = new Version ("a5.b5.c5", false);
+    assertEquals (0, v.getMajor ());
+    assertEquals (0, v.getMinor ());
+    assertEquals (0, v.getMicro ());
+    assertEquals ("a5.b5.c5", v.getQualifier ());
 
     // invalid numeric string
-    v = new Version ("3a.3b.3c");
-    assertEquals (v.getMajor (), 0);
-    assertEquals (v.getMinor (), 0);
-    assertEquals (v.getMicro (), 0);
-    assertEquals (v.getQualifier (), null);
+    v = new Version ("3a.3b.3c", true);
+    assertEquals (0, v.getMajor ());
+    assertEquals (0, v.getMinor ());
+    assertEquals (0, v.getMicro ());
+    assertNull (v.getQualifier ());
+
+    // invalid numeric string
+    v = new Version ("3a.3b.3c", false);
+    assertEquals (0, v.getMajor ());
+    assertEquals (0, v.getMinor ());
+    assertEquals (0, v.getMicro ());
+    assertEquals ("3a.3b.3c", v.getQualifier ());
+
+    // Dash separator
+    v = new Version ("3.0.0-RC1", true);
+    assertEquals (3, v.getMajor ());
+    assertEquals (0, v.getMinor ());
+    assertEquals (0, v.getMicro ());
+    assertNull (v.getQualifier ());
+
+    // Dash separator
+    v = new Version ("3.0.0-RC1", false);
+    assertEquals (3, v.getMajor ());
+    assertEquals (0, v.getMinor ());
+    assertEquals (0, v.getMicro ());
+    assertEquals ("RC1", v.getQualifier ());
   }
 
   @Test
@@ -539,6 +582,14 @@ public final class VersionTest
     v = new Version ("...2");
     assertEquals ("0.0.0.2", v.getAsString ());
     assertEquals (v, new Version (v.getAsString ()));
+
+    v = new Version ("3.0.0-RC1", true);
+    assertEquals ("3", v.getAsString ());
+    assertEquals (v, new Version (v.getAsString ()));
+
+    v = new Version ("3.0.0-RC1", false);
+    assertEquals ("3.0.0.RC1", v.getAsString ());
+    assertEquals (v, new Version (v.getAsString ()));
   }
 
   @Test
@@ -599,22 +650,43 @@ public final class VersionTest
     v = new Version ("...2");
     assertEquals ("0.0.0.2", v.getAsString (true));
     assertEquals (v, new Version (v.getAsString (true)));
+
+    v = new Version ("3.0.0-RC1", true);
+    assertEquals ("3.0.0", v.getAsString (true));
+    assertEquals (v, new Version (v.getAsString (true)));
+
+    v = new Version ("3.0.0-RC1", false);
+    assertEquals ("3.0.0.RC1", v.getAsString (true));
+    assertEquals (v, new Version (v.getAsString (true)));
+
+    v = new Version ("3-RC1", true);
+    assertEquals ("0.0.0", v.getAsString (true));
+    assertEquals (v, new Version (v.getAsString (true)));
+
+    v = new Version ("3-RC1", false);
+    assertEquals ("3.0.0.RC1", v.getAsString (true));
+    assertEquals (v, new Version (v.getAsString (true)));
   }
 
   @Test
   public void testHashCode ()
   {
-    assertFalse (0 == new Version (1, 2, 3).hashCode ());
-    assertEquals (new Version (1, 2, 3).hashCode (), new Version (1, 2, 3).hashCode ());
-    assertFalse (new Version (1, 2, 3).hashCode () == new Version (1, 2, 4).hashCode ());
-    assertFalse (new Version (1, 2, 3).hashCode () == new Version (1, 3, 3).hashCode ());
-    assertFalse (new Version (1, 2, 3).hashCode () == new Version (2, 2, 3).hashCode ());
-
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (new Version (1, 2, 3, 4), new Version (1, 2, 3, 4));
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (new Version (1, 2, 3, 4),
                                                                     new Version (1, 2, 3, "4"));
+    PhlocTestUtils.testDefaultImplementationWithEqualContentObject (new Version (1, 2, 3, 4), new Version ("1.2.3.4"));
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (new Version (1), new Version ("1"));
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (new Version ("1"), new Version ("   1"));
+
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (new Version (1, 2, 3, 4), new Version (1, 2, 3));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (new Version (1, 2, 3, 4), new Version (1,
+                                                                                                               2,
+                                                                                                               3,
+                                                                                                               "5"));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (new Version (1, 2, 3, 4),
+                                                                        new Version ("1.3.3.4"));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (new Version (2), new Version ("1"));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (new Version ("1"), new Version ("   11"));
   }
 
   @Test
