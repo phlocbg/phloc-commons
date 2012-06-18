@@ -153,11 +153,11 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
   /**
    * Construct a version object from a string.<br>
    * EBNF:<br>
-   * version ::= major( '.' minor ( '.' micro ( '.' qualifier )? )? )?<br>
+   * version ::= major( '.' minor ( '.' micro ( ( '.' | '-' ) qualifier )? )? )?<br>
    * major ::= number<br>
    * minor ::= number<br>
    * micro ::= number<br>
-   * qualifier ::= ( alphanum | '_' | '-' )+
+   * qualifier ::= .+
    * 
    * @param sVersionString
    *        the version string to be interpreted as a version
@@ -166,28 +166,136 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
    */
   public Version (@Nullable final String sVersionString)
   {
+    // For backward compatibility the old version should be used
+    this (sVersionString, true);
+  }
+
+  @Nonnull
+  private static String [] _extSplit (final String s)
+  {
+    final String [] aDotParts = RegExHelper.split (s, "\\.", 2);
+    if (aDotParts.length == 2)
+    {
+      // Dots always take precedence
+      return aDotParts;
+    }
+
+    if (StringHelper.isInt (aDotParts[0]))
+    {
+      // If it is numeric, use the dot parts anyway (e.g. for "-1")
+      return aDotParts;
+    }
+
+    final String [] aDashParts = RegExHelper.split (s, "\\-", 2);
+    if (aDashParts.length == 1)
+    {
+      // Neither dot nor dash present
+      return aDotParts;
+    }
+
+    // More matches for dash split! (e.g. "0-RC1")
+    return aDashParts;
+  }
+
+  /**
+   * Construct a version object from a string.
+   * 
+   * @param sVersionString
+   *        the version string to be interpreted as a version
+   * @param bOldVersion
+   *        <code>true</code> to use the old version to parse a string, meaning
+   *        splitting only by dot; or <code>false</code> to indicate that the
+   *        more complex parsing should be used.
+   * @throws IllegalArgumentException
+   *         if any of the parameters is &lt; 0
+   */
+  public Version (@Nullable final String sVersionString, final boolean bOldVersion)
+  {
     String s = sVersionString == null ? "" : sVersionString.trim ();
     if (s.length () == 0)
       s = DEFAULT_VERSION_STRING;
 
-    // split each token
-    final String [] aParts = RegExHelper.split (s, "\\.", 4);
-    if (aParts.length > 0)
-      m_nMajor = StringHelper.parseInt (aParts[0], 0);
+    if (bOldVersion)
+    {
+      // old version
+
+      // split each token
+      final String [] aParts = RegExHelper.split (s, "\\.", 4);
+      if (aParts.length > 0)
+        m_nMajor = StringHelper.parseInt (aParts[0], 0);
+      else
+        m_nMajor = 0;
+      if (aParts.length > 1)
+        m_nMinor = StringHelper.parseInt (aParts[1], 0);
+      else
+        m_nMinor = 0;
+      if (aParts.length > 2)
+        m_nMicro = StringHelper.parseInt (aParts[2], 0);
+      else
+        m_nMicro = 0;
+      if (aParts.length > 3)
+        m_sQualifier = StringHelper.hasNoText (aParts[3]) ? null : aParts[3];
+      else
+        m_sQualifier = null;
+    }
     else
-      m_nMajor = 0;
-    if (aParts.length > 1)
-      m_nMinor = StringHelper.parseInt (aParts[1], 0);
-    else
-      m_nMinor = 0;
-    if (aParts.length > 2)
-      m_nMicro = StringHelper.parseInt (aParts[2], 0);
-    else
-      m_nMicro = 0;
-    if (aParts.length > 3)
-      m_sQualifier = StringHelper.hasNoText (aParts[3]) ? null : aParts[3];
-    else
-      m_sQualifier = null;
+    {
+      // Complex parsing
+      Integer aMajor = null;
+      Integer aMinor = null;
+      Integer aMicro = null;
+      String sQualifier = null;
+      boolean bDone = false;
+
+      // Extract major version number
+      String [] aParts = _extSplit (s);
+      aMajor = StringHelper.parseIntObj (aParts[0]);
+      if (aMajor == null && StringHelper.hasText (aParts[0]))
+      {
+        // Major version is not numeric, so everything is the qualifier
+        sQualifier = s;
+        bDone = true;
+      }
+
+      String sRest = !bDone && aParts.length > 1 ? aParts[1] : null;
+      if (sRest != null)
+      {
+        // Parse minor version number part
+        aParts = _extSplit (sRest);
+        aMinor = StringHelper.parseIntObj (aParts[0]);
+        if (aMinor == null && StringHelper.hasText (aParts[0]))
+        {
+          // Minor version is not numeric, so everything is the qualifier
+          sQualifier = sRest;
+          bDone = true;
+        }
+
+        sRest = !bDone && aParts.length > 1 ? aParts[1] : null;
+        if (sRest != null)
+        {
+          // Parse micro version number part
+          aParts = _extSplit (sRest);
+          aMicro = StringHelper.parseIntObj (aParts[0]);
+          if (aMicro == null && StringHelper.hasText (aParts[0]))
+          {
+            // Micro version is not numeric, so everything is the qualifier
+            sQualifier = sRest;
+            bDone = true;
+          }
+
+          if (!bDone && aParts.length > 1)
+          {
+            // Some qualifier left!
+            sQualifier = aParts[1];
+          }
+        }
+      }
+
+      m_nMajor = aMajor == null ? 0 : aMajor.intValue ();
+      m_nMinor = aMinor == null ? 0 : aMinor.intValue ();
+      m_nMicro = aMicro == null ? 0 : aMicro.intValue ();
+      m_sQualifier = StringHelper.hasNoText (sQualifier) ? null : sQualifier;
+    }
 
     // check consistency
     if (m_nMajor < 0)
