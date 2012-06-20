@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.graph.simple;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -207,6 +208,13 @@ public class SimpleGraph <VALUETYPE> implements IGraph <VALUETYPE>
   public int getNodeCount ()
   {
     return m_aNodes.size ();
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public Collection <IGraphNode <VALUETYPE>> getAllNodes ()
+  {
+    return ContainerHelper.newList (m_aNodes.values ());
   }
 
   @Nonnull

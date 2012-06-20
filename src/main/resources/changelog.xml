@@ -20,6 +20,16 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2012-06-20" category="api" action="add">
+    <change>
+      <text locale="en">Extended SimpleGraph API to support retrieving all nodes</text>
+    </change>
+  </entry>
+  <entry date="2012-06-20" category="api" action="change">
+    <change>
+      <text locale="en">Deprecated size() and isEmpty() in I(Readonly)AttributeContainer as these names are not specific enough. Instead getAttributeCount() and containsNoAttributes() methods were introduced</text>
+    </change>
+  </entry>
   <entry date="2012-06-18" category="tech" action="change">
     <change>
       <text locale="en">Using the new Version constructor to read ChangeLog release versions</text>

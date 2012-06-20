@@ -23,11 +23,13 @@ import java.util.Enumeration;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.IHasSize;
+import com.phloc.commons.annotations.DevelopersNote;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 
 /**
@@ -38,6 +40,20 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
  */
 public interface IReadonlyAttributeContainer extends IHasSize, Serializable
 {
+  @Nonnegative
+  @Deprecated
+  @DevelopersNote ("use getAttributeCount")
+  int size ();
+
+  @Nonnegative
+  int getAttributeCount ();
+
+  @Deprecated
+  @DevelopersNote ("use containsNoAttribute")
+  boolean isEmpty ();
+
+  boolean containsNoAttribute ();
+
   /**
    * Check if an attribute of the given name is contained.
    * 

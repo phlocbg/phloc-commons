@@ -127,12 +127,25 @@ public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContain
   }
 
   @Nonnegative
+  @Deprecated
   public int size ()
+  {
+    return getAttributeCount ();
+  }
+
+  @Nonnegative
+  public int getAttributeCount ()
   {
     return m_aAttrs.size ();
   }
 
+  @Deprecated
   public boolean isEmpty ()
+  {
+    return containsNoAttribute ();
+  }
+
+  public boolean containsNoAttribute ()
   {
     return m_aAttrs.isEmpty ();
   }
