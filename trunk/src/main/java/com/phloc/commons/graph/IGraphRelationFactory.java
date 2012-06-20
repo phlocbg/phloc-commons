@@ -30,7 +30,7 @@ import javax.annotation.Nullable;
 public interface IGraphRelationFactory <VALUETYPE>
 {
   /**
-   * Shortcut factory method to spare using the generics parameter manually.
+   * Create a new relation from the passed fromNode to the toNode.
    * 
    * @param aFrom
    *        The from node. May not be <code>null</code>.
@@ -42,11 +42,12 @@ public interface IGraphRelationFactory <VALUETYPE>
   IGraphRelation <VALUETYPE> createRelation (@Nonnull IGraphNode <VALUETYPE> aFrom, @Nonnull IGraphNode <VALUETYPE> aTo);
 
   /**
-   * Shortcut factory method to spare using the generics parameter manually.
+   * Create a new relation from the passed fromNode to the toNode using a
+   * previously known ID.
    * 
    * @param sID
-   *        The ID of the relation to be created. May be <code>null</code>. If
-   *        <code>null</code> than a new unique ID is created.
+   *        The ID of the relation to be created. If it is <code>null</code> or
+   *        empty a new unique ID is created.
    * @param aFrom
    *        The from node. May not be <code>null</code>.
    * @param aTo

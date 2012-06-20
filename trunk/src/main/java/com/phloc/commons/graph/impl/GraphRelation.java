@@ -70,6 +70,12 @@ public class GraphRelation <VALUETYPE> extends AbstractGraphObject implements IG
   }
 
   @Nonnull
+  public String getFromID ()
+  {
+    return m_aFrom.getID ();
+  }
+
+  @Nonnull
   public IGraphNode <VALUETYPE> getTo ()
   {
     return m_aTo;
@@ -79,6 +85,12 @@ public class GraphRelation <VALUETYPE> extends AbstractGraphObject implements IG
   public VALUETYPE getToValue ()
   {
     return m_aTo.getValue ();
+  }
+
+  @Nonnull
+  public String getToID ()
+  {
+    return m_aTo.getID ();
   }
 
   @Override

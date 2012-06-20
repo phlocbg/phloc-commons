@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.graph.simple;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -30,7 +29,6 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
-import com.phloc.commons.graph.IGraph;
 import com.phloc.commons.graph.IGraphNode;
 import com.phloc.commons.graph.IGraphObjectFactory;
 import com.phloc.commons.graph.IGraphRelation;
@@ -48,11 +46,14 @@ import com.phloc.commons.string.ToStringGenerator;
  *        The value type of the graph nodes.
  */
 @NotThreadSafe
-public class SimpleGraph <VALUETYPE> implements IGraph <VALUETYPE>
+public class SimpleGraph <VALUETYPE> implements ISimpleGraph <VALUETYPE>
 {
-  private final Map <String, IGraphNode <VALUETYPE>> m_aNodes = new HashMap <String, IGraphNode <VALUETYPE>> ();
-  private ETriState m_eHasCycles = ETriState.UNDEFINED;
+  public static final boolean DEFAULT_CHANGING_CONNECTED_OBJECTS_ALLOWED = true;
+
   private IGraphObjectFactory <VALUETYPE> m_aFactory;
+  private final Map <String, IGraphNode <VALUETYPE>> m_aNodes = new HashMap <String, IGraphNode <VALUETYPE>> ();
+  private boolean m_bIsChangingConnectedObjectsAllowed = DEFAULT_CHANGING_CONNECTED_OBJECTS_ALLOWED;
+  private ETriState m_eCacheHasCycles = ETriState.UNDEFINED;
 
   public SimpleGraph ()
   {
@@ -66,34 +67,38 @@ public class SimpleGraph <VALUETYPE> implements IGraph <VALUETYPE>
     m_aFactory = aFactory;
   }
 
-  /**
-   * Create a new graph node and add it to the graph. A new ID is generated.
-   * 
-   * @param aValue
-   *        The value to be added. May be <code>null</code>.
-   * @return The created graph node. Never <code>null</code>.
-   */
+  private void _invalidateCache ()
+  {
+    // Reset the "has cycles" cached value
+    m_eCacheHasCycles = ETriState.UNDEFINED;
+  }
+
+  public void setChangingConnectedObjectsAllowed (final boolean bIsChangingConnectedObjectsAllowed)
+  {
+    m_bIsChangingConnectedObjectsAllowed = bIsChangingConnectedObjectsAllowed;
+  }
+
+  public boolean isChangingConnectedObjectsAllowed ()
+  {
+    return m_bIsChangingConnectedObjectsAllowed;
+  }
+
+  @Nonnull
+  public IGraphNode <VALUETYPE> createNode ()
+  {
+    return createNode (null);
+  }
+
   @Nonnull
   public IGraphNode <VALUETYPE> createNode (@Nullable final VALUETYPE aValue)
   {
     // Create node with new ID
     final IGraphNode <VALUETYPE> aNode = m_aFactory.createNode (aValue);
-    addNode (aNode);
+    if (addNode (aNode).isUnchanged ())
+      throw new IllegalStateException ("The ID factory created the ID '" + aNode.getID () + "' that is already in use");
     return aNode;
   }
 
-  /**
-   * Create a new graph node with the given ID and value.
-   * 
-   * @param sID
-   *        The ID of the graph node to be created. If the ID is
-   *        <code>null</code> a new graph ID is created.
-   * @param aValue
-   *        The value to be added. May be <code>null</code>.
-   * @return <code>null</code> if another graph node with the same ID is already
-   *         present - the non-<code>null</code> graph node upon successful
-   *         adding.
-   */
   @Nullable
   public IGraphNode <VALUETYPE> createNode (@Nullable final String sID, @Nullable final VALUETYPE aValue)
   {
@@ -107,13 +112,15 @@ public class SimpleGraph <VALUETYPE> implements IGraph <VALUETYPE>
     if (aNode == null)
       throw new NullPointerException ("node");
 
+    if (!isChangingConnectedObjectsAllowed () && aNode.hasIncomingOrOutgoingRelations ())
+      throw new IllegalArgumentException ("The node to be added already has incoming and/or outgoing relations and this is not allowed!");
+
     final String sID = aNode.getID ();
     if (m_aNodes.containsKey (sID))
       return EChange.UNCHANGED;
     m_aNodes.put (sID, aNode);
 
-    // Cycle state is undefined
-    m_eHasCycles = ETriState.UNDEFINED;
+    _invalidateCache ();
     return EChange.CHANGED;
   }
 
@@ -123,11 +130,13 @@ public class SimpleGraph <VALUETYPE> implements IGraph <VALUETYPE>
     if (aNode == null)
       throw new NullPointerException ("node");
 
+    if (!isChangingConnectedObjectsAllowed () && aNode.hasIncomingOrOutgoingRelations ())
+      throw new IllegalArgumentException ("The node to be removed already has incoming and/or outgoing relations and this is not allowed!");
+
     if (m_aNodes.remove (aNode.getID ()) == null)
       return EChange.UNCHANGED;
 
-    // Cycle state is undefined
-    m_eHasCycles = ETriState.UNDEFINED;
+    _invalidateCache ();
     return EChange.CHANGED;
   }
 
@@ -137,6 +146,19 @@ public class SimpleGraph <VALUETYPE> implements IGraph <VALUETYPE>
     aRelation.getFrom ().addOutgoingRelation (aRelation);
     aRelation.getTo ().addIncomingRelation (aRelation);
     return aRelation;
+  }
+
+  @Override
+  @Nonnull
+  public IGraphRelation <VALUETYPE> createRelation (@Nonnull final String sFromNodeID, @Nonnull final String sToNodeID)
+  {
+    final IGraphNode <VALUETYPE> aFromNode = getNodeOfID (sFromNodeID);
+    if (aFromNode == null)
+      throw new IllegalArgumentException ("Failed to resolve from node ID '" + sFromNodeID + "'");
+    final IGraphNode <VALUETYPE> aToNode = getNodeOfID (sToNodeID);
+    if (aToNode == null)
+      throw new IllegalArgumentException ("Failed to resolve to node ID '" + sToNodeID + "'");
+    return createRelation (aFromNode, aToNode);
   }
 
   @Nonnull
@@ -155,7 +177,7 @@ public class SimpleGraph <VALUETYPE> implements IGraph <VALUETYPE>
   }
 
   @Nonnull
-  public IGraphNode <VALUETYPE> getSingleStartNode ()
+  public IGraphNode <VALUETYPE> getSingleStartNode () throws IllegalStateException
   {
     final Set <IGraphNode <VALUETYPE>> aStartNodes = getAllStartNodes ();
     if (aStartNodes.size () > 1)
@@ -177,7 +199,7 @@ public class SimpleGraph <VALUETYPE> implements IGraph <VALUETYPE>
   }
 
   @Nonnull
-  public IGraphNode <VALUETYPE> getSingleEndNode ()
+  public IGraphNode <VALUETYPE> getSingleEndNode () throws IllegalStateException
   {
     final Set <IGraphNode <VALUETYPE>> aEndNodes = getAllEndNodes ();
     if (aEndNodes.size () > 1)
@@ -212,9 +234,9 @@ public class SimpleGraph <VALUETYPE> implements IGraph <VALUETYPE>
 
   @Nonnull
   @ReturnsMutableCopy
-  public Collection <IGraphNode <VALUETYPE>> getAllNodes ()
+  public Set <IGraphNode <VALUETYPE>> getAllNodes ()
   {
-    return ContainerHelper.newList (m_aNodes.values ());
+    return ContainerHelper.newSet (m_aNodes.values ());
   }
 
   @Nonnull
@@ -224,17 +246,16 @@ public class SimpleGraph <VALUETYPE> implements IGraph <VALUETYPE>
       return EChange.UNCHANGED;
     m_aNodes.clear ();
 
-    // No cycles in an empty graph :)
-    m_eHasCycles = ETriState.FALSE;
+    _invalidateCache ();
     return EChange.CHANGED;
   }
 
   public boolean containsCycles ()
   {
     // Use cached result?
-    if (m_eHasCycles.isUndefined ())
+    if (m_eCacheHasCycles.isUndefined ())
     {
-      m_eHasCycles = ETriState.FALSE;
+      m_eCacheHasCycles = ETriState.FALSE;
       Set <IGraphNode <VALUETYPE>> aNodes = getAllStartNodes ();
       if (aNodes.isEmpty ())
       {
@@ -248,12 +269,14 @@ public class SimpleGraph <VALUETYPE> implements IGraph <VALUETYPE>
           it.next ();
         if (it.hasCycles ())
         {
-          m_eHasCycles = ETriState.TRUE;
+          m_eCacheHasCycles = ETriState.TRUE;
           break;
         }
       }
     }
-    return m_eHasCycles.getAsBooleanValue (true);
+
+    // cannot be undefined here
+    return m_eCacheHasCycles.getAsBooleanValue (true);
   }
 
   @Override
@@ -278,6 +301,18 @@ public class SimpleGraph <VALUETYPE> implements IGraph <VALUETYPE>
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("nodes", m_aNodes).append ("hasCycles", m_eHasCycles).toString ();
+    return new ToStringGenerator (this).append ("nodes", m_aNodes).append ("hasCycles", m_eCacheHasCycles).toString ();
+  }
+
+  @Nonnull
+  public static <VALUETYPE> SimpleGraph <VALUETYPE> create ()
+  {
+    return new SimpleGraph <VALUETYPE> ();
+  }
+
+  @Nonnull
+  public static <VALUETYPE> SimpleGraph <VALUETYPE> create (@Nonnull final IGraphObjectFactory <VALUETYPE> aFactory)
+  {
+    return new SimpleGraph <VALUETYPE> (aFactory);
   }
 }

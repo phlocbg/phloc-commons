@@ -95,4 +95,10 @@ public interface IGraphNode <VALUETYPE> extends IGraphObject
   @Nonnull
   @ReturnsMutableCopy
   Collection <VALUETYPE> getAllToValues ();
+
+  // --- incoming and/or outgoing
+
+  boolean hasIncomingOrOutgoingRelations ();
+
+  boolean hasIncomingAndOutgoingRelations ();
 }

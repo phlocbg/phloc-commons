@@ -32,22 +32,54 @@ import com.phloc.commons.state.IClearable;
 public interface IGraph <VALUETYPE> extends IReadonlyGraph <VALUETYPE>, IClearable, IGraphObjectFactory <VALUETYPE>
 {
   /**
+   * Allow or disallow that {@link #addNode(IGraphNode)} and
+   * {@link #removeNode(IGraphNode)} can handle graph nodes that are already
+   * connected.
+   * 
+   * @param bAllow
+   *        if <code>true</code> it is allowed to add and remove nodes that
+   *        already have incoming or outgoing relations.
+   */
+  void setChangingConnectedObjectsAllowed (boolean bAllow);
+
+  /**
+   * @return The current state, whether changing connected objects is allowed or
+   *         not. The default value should be <code>true</code> for backward
+   *         compatibility.
+   * @see #setChangingConnectedObjectsAllowed(boolean)
+   */
+  boolean isChangingConnectedObjectsAllowed ();
+
+  /**
    * Add an existing node to this graph.
    * 
    * @param aNode
    *        The node to be added. May not be <code>null</code>.
    * @return {@link EChange}
+   * @throws IllegalArgumentException
+   *         If the node to be added already has incoming or outgoing relations,
+   *         and {@link #isChangingConnectedObjectsAllowed()} returned
+   *         <code>false</code>
+   * @see #setChangingConnectedObjectsAllowed(boolean)
    */
   @Nonnull
-  EChange addNode (@Nonnull IGraphNode <VALUETYPE> aNode);
+  EChange addNode (@Nonnull IGraphNode <VALUETYPE> aNode) throws IllegalArgumentException;
 
   /**
-   * Remove an existing node from the graph-
+   * Remove an existing node from the graph. <br>
+   * Important note: existing relations are not altered when this method is
+   * called, so it may be possible that existing relations pointing to that
+   * object therefore reference a node that is no longer in the graph!
    * 
    * @param aNode
    *        The node to be removed. May not be <code>null</code>.
    * @return {@link EChange}
+   * @throws IllegalArgumentException
+   *         If the node to be removed already has incoming or outgoing
+   *         relations, and {@link #isChangingConnectedObjectsAllowed()}
+   *         returned <code>false</code>
+   * @see #setChangingConnectedObjectsAllowed(boolean)
    */
   @Nonnull
-  EChange removeNode (@Nonnull IGraphNode <VALUETYPE> aNode);
+  EChange removeNode (@Nonnull IGraphNode <VALUETYPE> aNode) throws IllegalArgumentException;
 }
