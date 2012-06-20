@@ -45,12 +45,12 @@ public final class MapBasedReadonlyAttributeContainerTest
                                                                                                            new Object [] {}));
     assertNotNull (x.getAllAttributeNames ());
     assertTrue (x.getAllAttributeNames ().isEmpty ());
-    assertTrue (x.isEmpty ());
+    assertTrue (x.containsNoAttribute ());
 
     x = new MapBasedReadonlyAttributeContainer (ContainerHelper.newMap (new String [] { "key", "key2", "key3" },
                                                                         new Object [] { "value", "value2", null }));
-    assertEquals (3, x.size ());
-    assertFalse (x.isEmpty ());
+    assertEquals (3, x.getAttributeCount ());
+    assertFalse (x.containsNoAttribute ());
     assertEquals ("value2", x.getAttributeObject ("key2"));
     assertEquals ("value2", x.getAttributeAsString ("key2"));
     assertEquals ("value2", x.getCastedAttribute ("key2"));

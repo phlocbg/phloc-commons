@@ -187,12 +187,20 @@ public class MapBasedAttributeContainerThreadSafe extends MapBasedAttributeConta
 
   @Override
   @Nonnegative
+  @Deprecated
   public int size ()
+  {
+    return getAttributeCount ();
+  }
+
+  @Override
+  @Nonnegative
+  public int getAttributeCount ()
   {
     m_aRWLock.readLock ().lock ();
     try
     {
-      return super.size ();
+      return super.getAttributeCount ();
     }
     finally
     {
@@ -201,12 +209,19 @@ public class MapBasedAttributeContainerThreadSafe extends MapBasedAttributeConta
   }
 
   @Override
+  @Deprecated
   public boolean isEmpty ()
+  {
+    return containsNoAttribute ();
+  }
+
+  @Override
+  public boolean containsNoAttribute ()
   {
     m_aRWLock.readLock ().lock ();
     try
     {
-      return super.isEmpty ();
+      return super.containsNoAttribute ();
     }
     finally
     {
