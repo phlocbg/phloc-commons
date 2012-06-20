@@ -36,6 +36,12 @@ public interface IGraphRelation <VALUETYPE> extends IGraphObject
   IGraphNode <VALUETYPE> getFrom ();
 
   /**
+   * @return The ID of the from-node of this relation. Never <code>null</code>.
+   */
+  @Nonnull
+  String getFromID ();
+
+  /**
    * This is a sanity method for <code>getFrom ().getValue ()</code>
    * 
    * @return <code>null</code> if the from-node has no value.
@@ -48,6 +54,12 @@ public interface IGraphRelation <VALUETYPE> extends IGraphObject
    */
   @Nonnull
   IGraphNode <VALUETYPE> getTo ();
+
+  /**
+   * @return The ID of the to-node of this relation. Never <code>null</code>.
+   */
+  @Nonnull
+  String getToID ();
 
   /**
    * This is a sanity method for <code>getTo ().getValue ()</code>

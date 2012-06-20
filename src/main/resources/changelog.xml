@@ -22,7 +22,7 @@
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
   <entry date="2012-06-20" category="api" action="add">
     <change>
-      <text locale="en">Extended SimpleGraph API to support retrieving all nodes</text>
+      <text locale="en">Extended Graph API in several places and introduced new ISimpleGraph interface</text>
     </change>
   </entry>
   <entry date="2012-06-20" category="api" action="change">

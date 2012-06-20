@@ -30,7 +30,17 @@ import javax.annotation.Nullable;
 public interface IGraphNodeFactory <VALUETYPE>
 {
   /**
-   * Create a new graph node with a new ID.
+   * Create a new graph node with a <code>null</code> value and add it to the
+   * graph. A new ID is generated.<br>
+   * Equal to calling <code>createNode (null);</code>
+   * 
+   * @return The created graph node. Never <code>null</code>.
+   */
+  @Nonnull
+  IGraphNode <VALUETYPE> createNode ();
+
+  /**
+   * Create a new graph node and add it to the graph. A new ID is generated.
    * 
    * @param aValue
    *        The value to be assigned to the graph node. May be <code>null</code>
@@ -44,8 +54,8 @@ public interface IGraphNodeFactory <VALUETYPE>
    * Create a new graph node with a known ID.
    * 
    * @param sID
-   *        The ID of the graph node. If it is <code>null</code> a new ID is
-   *        automatically created.
+   *        The ID of the graph node. If it is <code>null</code> or empty a new
+   *        ID is automatically created.
    * @param aValue
    *        The value to be assigned to the graph node. May be <code>null</code>
    *        .

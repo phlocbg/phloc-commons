@@ -230,6 +230,16 @@ public class GraphNode <VALUETYPE> extends AbstractGraphObject implements IGraph
     return false;
   }
 
+  public boolean hasIncomingOrOutgoingRelations ()
+  {
+    return hasIncomingRelations () || hasOutgoingRelations ();
+  }
+
+  public boolean hasIncomingAndOutgoingRelations ()
+  {
+    return hasIncomingRelations () && hasOutgoingRelations ();
+  }
+
   @Override
   public boolean equals (final Object o)
   {
