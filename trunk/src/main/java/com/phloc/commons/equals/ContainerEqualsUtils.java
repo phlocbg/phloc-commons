@@ -18,15 +18,16 @@
 package com.phloc.commons.equals;
 
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.Queue;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.phloc.commons.collections.ArrayHelper;
+import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.lang.ClassHelper;
 
 /**
  * A special equals helper class that handles collections and container classes.
@@ -47,43 +48,61 @@ public final class ContainerEqualsUtils
   public static enum EContainerType
   {
     /**
-     * The list type applies to List and Queue objects, as the can be compared
-     * in the regular order.
+     * The collection type applies to all Collection objects that are not Sets,
+     * and will be compared in their regular order.
      */
-    LIST,
+    COLLECTION,
     /** Sets represent unordered container */
     SET,
     /** Maps are key-value-containers */
     MAP,
     /** Arrays */
-    ARRAY;
+    ARRAY,
+    /** Iterator */
+    ITERATOR,
+    /** Enumeration */
+    ENUMERATION;
   }
 
   private ContainerEqualsUtils ()
   {}
 
   @Nullable
-  public static EContainerType getContainerType (@Nullable final Object aObj)
+  public static EContainerType getContainerTypeOfClass (@Nullable final Class <?> aClass)
   {
-    if (aObj != null)
+    if (aClass != null)
     {
-      if (aObj instanceof List <?>)
-        return EContainerType.LIST;
-      if (aObj instanceof Queue <?>)
-        return EContainerType.LIST;
-      if (aObj instanceof Set <?>)
+      // Query Set before Collection, because Set is derived from Collection!
+      if (Set.class.isAssignableFrom (aClass))
         return EContainerType.SET;
-      if (aObj instanceof Map <?, ?>)
+      if (Collection.class.isAssignableFrom (aClass))
+        return EContainerType.COLLECTION;
+      if (Map.class.isAssignableFrom (aClass))
         return EContainerType.MAP;
-      if (ArrayHelper.isArray (aObj))
+      if (ClassHelper.isArrayClass (aClass))
         return EContainerType.ARRAY;
+      if (Iterator.class.isAssignableFrom (aClass))
+        return EContainerType.ITERATOR;
+      if (Enumeration.class.isAssignableFrom (aClass))
+        return EContainerType.ENUMERATION;
     }
     return null;
   }
 
+  @Nullable
+  public static EContainerType getContainerTypeOfObject (@Nullable final Object aObj)
+  {
+    return aObj == null ? null : getContainerTypeOfClass (aObj.getClass ());
+  }
+
+  public static boolean isContainerClass (@Nullable final Class <?> aClass)
+  {
+    return getContainerTypeOfClass (aClass) != null;
+  }
+
   public static boolean isContainerObject (@Nullable final Object aObj)
   {
-    return getContainerType (aObj) != null;
+    return getContainerTypeOfObject (aObj) != null;
   }
 
   private static boolean _areChildrenEqual (@Nullable final Object aObj1, @Nullable final Object aObj2)
@@ -125,8 +144,8 @@ public final class ContainerEqualsUtils
     if (aObj1 == null || aObj2 == null)
       return false;
 
-    final EContainerType eType1 = getContainerType (aObj1);
-    final EContainerType eType2 = getContainerType (aObj2);
+    final EContainerType eType1 = getContainerTypeOfObject (aObj1);
+    final EContainerType eType2 = getContainerTypeOfObject (aObj2);
     if (eType1 == null)
       throw new IllegalArgumentException ("The first parameter is not a container type: " + aObj1);
     if (eType2 == null)
@@ -140,9 +159,9 @@ public final class ContainerEqualsUtils
 
     switch (eType1)
     {
-      case LIST:
+      case COLLECTION:
       {
-        // Valid for List and Queue
+        // Valid for non-Set collections
         final Collection <?> aCont1 = (Collection <?>) aObj1;
         final Collection <?> aCont2 = (Collection <?>) aObj2;
         if (aCont1.isEmpty () && aCont2.isEmpty ())
@@ -194,12 +213,158 @@ public final class ContainerEqualsUtils
       }
       case ARRAY:
       {
+        // Check if it is an array of collections (e.g. List<String>[])
+        final Class <?> aComponentClass1 = aObj1.getClass ().getComponentType ();
+        final Class <?> aComponentClass2 = aObj2.getClass ().getComponentType ();
+        if (isContainerClass (aComponentClass1) && isContainerClass (aComponentClass2))
+        {
+          // Special handling for arrays of containers
+          final Object [] aArray1 = (Object []) aObj1;
+          final Object [] aArray2 = (Object []) aObj2;
+          if (aArray1.length != aArray2.length)
+            return false;
+          for (int i = 0; i < aArray1.length; ++i)
+          {
+            final Object aChildObj1 = aArray1[i];
+            final Object aChildObj2 = aArray2[i];
+            if (!_areChildrenEqual (aChildObj1, aChildObj2))
+              return false;
+          }
+          return true;
+        }
+
         // No different types possible -> use EqualsImplementationRegistry
         // directly
         return EqualsImplementationRegistry.areEqual (aObj1, aObj2);
       }
+      case ITERATOR:
+      {
+        final Iterator <?> aIter1 = (Iterator <?>) aObj1;
+        final Iterator <?> aIter2 = (Iterator <?>) aObj2;
+        while (aIter1.hasNext ())
+        {
+          if (!aIter2.hasNext ())
+          {
+            // Second iterator is shorter
+            return false;
+          }
+          final Object aChildObj1 = aIter1.next ();
+          final Object aChildObj2 = aIter2.next ();
+          if (!_areChildrenEqual (aChildObj1, aChildObj2))
+            return false;
+        }
+        if (aIter2.hasNext ())
+        {
+          // Second iterator is longer
+          return false;
+        }
+        return true;
+      }
+      case ENUMERATION:
+      {
+        final Enumeration <?> aIter1 = (Enumeration <?>) aObj1;
+        final Enumeration <?> aIter2 = (Enumeration <?>) aObj2;
+        while (aIter1.hasMoreElements ())
+        {
+          if (!aIter2.hasMoreElements ())
+          {
+            // Second enumeration is shorter
+            return false;
+          }
+          final Object aChildObj1 = aIter1.nextElement ();
+          final Object aChildObj2 = aIter2.nextElement ();
+          if (!_areChildrenEqual (aChildObj1, aChildObj2))
+            return false;
+        }
+        if (aIter2.hasMoreElements ())
+        {
+          // Second enumeration is longer
+          return false;
+        }
+        return true;
+      }
       default:
         throw new IllegalStateException ("Unhandled container type " + eType1 + "!");
     }
+  }
+
+  /**
+   * Get the passed object as a {@link Collection} object. This is helpful in
+   * case you want to compare the String array ["a", "b"] with the
+   * List&lt;String> ("a", "b") If the passed object is not a recognised.
+   * container type, than a new list with one element is created!
+   * 
+   * @param aObj
+   *        The object to be converted. May not be <code>null</code>.
+   * @return The object as a collection. Never <code>null</code>.
+   */
+  @Nonnull
+  public static Collection <?> getAsCollection (@Nonnull final Object aObj)
+  {
+    if (aObj == null)
+      throw new NullPointerException ("object");
+
+    final EContainerType eType = getContainerTypeOfObject (aObj);
+    if (eType == null)
+    {
+      // It's not a supported container -> create a new list with one element
+      return ContainerHelper.newList (aObj);
+    }
+
+    switch (eType)
+    {
+      case COLLECTION:
+        // It's already a collection
+        return (Collection <?>) aObj;
+      case SET:
+        // Convert to list
+        return ContainerHelper.newList ((Set <?>) aObj);
+      case MAP:
+        // Use the entry set of the map
+        return ((Map <?, ?>) aObj).entrySet ();
+      case ARRAY:
+        // Convert the array to a list
+        return ContainerHelper.newList ((Object []) aObj);
+      case ITERATOR:
+        // Convert the iterator to a list
+        return ContainerHelper.newList ((Iterator <?>) aObj);
+      case ENUMERATION:
+        // Convert the enumeration to a list
+        return ContainerHelper.newList ((Enumeration <?>) aObj);
+      default:
+        throw new IllegalStateException ("Unhandled container type " + eType + "!");
+    }
+  }
+
+  /**
+   * This is a sanity method that first calls {@link #getAsCollection(Object)}
+   * on both objects an than calls {@link #equals(Object, Object)} on the
+   * collections. This means that calling this method with the String array
+   * ["a", "b"] and the List&lt;String&gt; ("a", "b") will result in a return
+   * value of true.
+   * 
+   * @param aObj1
+   *        The first object to be compared
+   * @param aObj2
+   *        The second object to be compared
+   * @return <code>true</code> if the contents are equal, <code>false</code>
+   *         otherwise
+   */
+  public static boolean equalsAsCollection (@Nullable final Object aObj1, @Nullable final Object aObj2)
+  {
+    // Same object - check first
+    if (aObj1 == aObj2)
+      return true;
+
+    // Is only one value null?
+    if (aObj1 == null || aObj2 == null)
+      return false;
+
+    // Convert to a collection
+    final Collection <?> aCollection1 = getAsCollection (aObj1);
+    final Collection <?> aCollection2 = getAsCollection (aObj2);
+
+    // And compare
+    return equals (aCollection1, aCollection2);
   }
 }

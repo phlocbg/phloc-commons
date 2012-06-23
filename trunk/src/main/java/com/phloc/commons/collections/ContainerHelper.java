@@ -2472,6 +2472,25 @@ public final class ContainerHelper
   }
 
   /**
+   * Get an Enumeration object based on a Map object.
+   * 
+   * @param <KEYTYPE>
+   *        map key type
+   * @param <VALUETYPE>
+   *        map value type
+   * @param aMap
+   *        map object to use
+   * @return an Enumeration object
+   */
+  @Nonnull
+  public static <KEYTYPE, VALUETYPE> Enumeration <Map.Entry <KEYTYPE, VALUETYPE>> getEnumeration (@Nullable final Map <KEYTYPE, VALUETYPE> aMap)
+  {
+    if (aMap == null)
+      return EmptyEnumeration.<Map.Entry <KEYTYPE, VALUETYPE>> getInstance ();
+    return getEnumeration (aMap.entrySet ());
+  }
+
+  /**
    * Get a merged enumeration of both enumeration. The first enumeration is
    * enumerated first, the second one afterwards.
    * 
