@@ -20,6 +20,21 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2012-06-23" category="api" action="change">
+    <change>
+      <text locale="en">Replaced ArrayHelper.newArray(ELEMENTTYPE[],int) with newArraySameType because of potential misunderstanding</text>
+    </change>
+  </entry>
+  <entry date="2012-06-23" category="api" action="change">
+    <change>
+      <text locale="en">Replaced ArrayHelper.newArray(ELEMENTTYPE,Class) with newArraySingleElement because of potential name clashes with newArray(ELEMENTTYPE...)</text>
+    </change>
+  </entry>
+  <entry date="2012-06-23" category="tech" action="add">
+    <change>
+      <text locale="en">Added default equals/hashCode implementations for Iterator and Enumeration</text>
+    </change>
+  </entry>
   <entry date="2012-06-23" category="api" action="add">
     <change>
       <text locale="en">Extended ContainerHelper with method getEnumeration(Map&lt;?,?&gt;)</text>

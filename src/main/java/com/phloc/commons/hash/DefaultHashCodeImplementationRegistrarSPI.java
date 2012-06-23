@@ -18,6 +18,8 @@
 package com.phloc.commons.hash;
 
 import java.util.Collection;
+import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -224,6 +226,32 @@ public final class DefaultHashCodeImplementationRegistrarSPI implements IHashCod
         HashCodeGenerator aHC = new HashCodeGenerator (aRealObj).append (aRealObj.size ());
         for (final Object aMember : aRealObj)
           aHC = aHC.append (aMember);
+        return aHC.getHashCode ();
+      }
+    });
+
+    // Special handling for Iterator
+    aRegistry.registerHashCodeImplementation (Iterator.class, new IHashCodeImplementation ()
+    {
+      public int getHashCode (final Object aObj)
+      {
+        final Iterator <?> aRealObj = (Iterator <?>) aObj;
+        HashCodeGenerator aHC = new HashCodeGenerator (aRealObj);
+        while (aRealObj.hasNext ())
+          aHC = aHC.append (aRealObj.next ());
+        return aHC.getHashCode ();
+      }
+    });
+
+    // Special handling for Enumeration
+    aRegistry.registerHashCodeImplementation (Enumeration.class, new IHashCodeImplementation ()
+    {
+      public int getHashCode (final Object aObj)
+      {
+        final Enumeration <?> aRealObj = (Enumeration <?>) aObj;
+        HashCodeGenerator aHC = new HashCodeGenerator (aRealObj);
+        while (aRealObj.hasMoreElements ())
+          aHC = aHC.append (aRealObj.nextElement ());
         return aHC.getHashCode ();
       }
     });
