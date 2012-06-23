@@ -30,7 +30,8 @@ import com.phloc.commons.annotations.DevelopersNote;
 
 /**
  * A special URL parameter map that is made for best inline usage. It's simply a
- * Map&lt;String,String&gt; with more nifty API :)
+ * Map&lt;String,String&gt; with more nifty API :)<br>
+ * SMap is short for String-Map
  * 
  * @author philip
  */

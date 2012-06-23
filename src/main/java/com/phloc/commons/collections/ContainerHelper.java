@@ -29,6 +29,8 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Set;
 import java.util.SortedMap;
 import java.util.SortedSet;
@@ -778,7 +780,7 @@ public final class ContainerHelper
   public static <ELEMENTTYPE> Set <ELEMENTTYPE> newSet (@Nullable final IIterableIterator <? extends ELEMENTTYPE> aIter)
   {
     if (aIter == null)
-      return new HashSet <ELEMENTTYPE> ();
+      return new HashSet <ELEMENTTYPE> (0);
     return newSet (aIter.iterator ());
   }
 
@@ -1339,7 +1341,7 @@ public final class ContainerHelper
   public static <ELEMENTTYPE> Set <ELEMENTTYPE> newOrderedSet (@Nullable final IIterableIterator <? extends ELEMENTTYPE> aIter)
   {
     if (aIter == null)
-      return new LinkedHashSet <ELEMENTTYPE> ();
+      return new LinkedHashSet <ELEMENTTYPE> (0);
     return newOrderedSet (aIter.iterator ());
   }
 
@@ -1657,7 +1659,7 @@ public final class ContainerHelper
   public static <ELEMENTTYPE> List <ELEMENTTYPE> newList (@Nullable final IIterableIterator <? extends ELEMENTTYPE> aIter)
   {
     if (aIter == null)
-      return new ArrayList <ELEMENTTYPE> ();
+      return new ArrayList <ELEMENTTYPE> (0);
     return newList (aIter.iterator ());
   }
 
@@ -1918,6 +1920,99 @@ public final class ContainerHelper
   public static <ELEMENTTYPE> NonBlockingStack <ELEMENTTYPE> newStack (@Nullable final Collection <? extends ELEMENTTYPE> aValues)
   {
     return new NonBlockingStack <ELEMENTTYPE> (aValues);
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE> Queue <ELEMENTTYPE> newQueue ()
+  {
+    return new PriorityQueue <ELEMENTTYPE> (0);
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE> Queue <ELEMENTTYPE> newQueue (@Nullable final ELEMENTTYPE aValue)
+  {
+    final Queue <ELEMENTTYPE> ret = new PriorityQueue <ELEMENTTYPE> (1);
+    ret.add (aValue);
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE> Queue <ELEMENTTYPE> newQueue (@Nullable final ELEMENTTYPE... aValues)
+  {
+    // Don't user Arrays.asQueue since aIter returns an unmodifiable list!
+    if (ArrayHelper.isEmpty (aValues))
+      return new PriorityQueue <ELEMENTTYPE> (0);
+
+    final Queue <ELEMENTTYPE> ret = new PriorityQueue <ELEMENTTYPE> (aValues.length);
+    for (int i = 0; i < aValues.length; ++i)
+      ret.add (aValues[i]);
+    return ret;
+  }
+
+  /**
+   * Compared to {@link Collections#list(Enumeration)} this method is more
+   * flexible in Generics parameter.
+   * 
+   * @param <ELEMENTTYPE>
+   *        Type of the elements
+   * @param aEnum
+   *        The enumeration to be converted
+   * @return The non-<code>null</code> created {@link PriorityQueue}.
+   * @see Collections#list(Enumeration)
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE> Queue <ELEMENTTYPE> newQueue (@Nullable final Enumeration <? extends ELEMENTTYPE> aEnum)
+  {
+    final Queue <ELEMENTTYPE> ret = new PriorityQueue <ELEMENTTYPE> ();
+    if (aEnum != null)
+      while (aEnum.hasMoreElements ())
+        ret.add (aEnum.nextElement ());
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE> Queue <ELEMENTTYPE> newQueue (@Nullable final Iterator <? extends ELEMENTTYPE> aIter)
+  {
+    final Queue <ELEMENTTYPE> ret = new PriorityQueue <ELEMENTTYPE> ();
+    if (aIter != null)
+      while (aIter.hasNext ())
+        ret.add (aIter.next ());
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE> Queue <ELEMENTTYPE> newQueue (@Nullable final Iterable <? extends ELEMENTTYPE> aIter)
+  {
+    final Queue <ELEMENTTYPE> ret = new PriorityQueue <ELEMENTTYPE> ();
+    if (aIter != null)
+      for (final ELEMENTTYPE aObj : aIter)
+        ret.add (aObj);
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE> Queue <ELEMENTTYPE> newQueue (@Nullable final Collection <? extends ELEMENTTYPE> aCont)
+  {
+    if (isEmpty (aCont))
+      return new PriorityQueue <ELEMENTTYPE> (0);
+
+    return new PriorityQueue <ELEMENTTYPE> (aCont);
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE> Queue <ELEMENTTYPE> newQueue (@Nullable final IIterableIterator <? extends ELEMENTTYPE> aIter)
+  {
+    if (aIter == null)
+      return new PriorityQueue <ELEMENTTYPE> (0);
+    return newQueue (aIter.iterator ());
   }
 
   /**
