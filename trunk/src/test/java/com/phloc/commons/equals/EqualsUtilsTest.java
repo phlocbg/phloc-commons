@@ -26,7 +26,6 @@ import java.net.URL;
 
 import org.junit.Test;
 
-import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 
 /**

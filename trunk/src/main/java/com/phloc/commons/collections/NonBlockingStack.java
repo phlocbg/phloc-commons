@@ -17,15 +17,10 @@
  */
 package com.phloc.commons.collections;
 
-import java.io.Serializable;
-import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EmptyStackException;
-import java.util.Iterator;
-import java.util.List;
 
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
@@ -45,31 +40,28 @@ import com.phloc.commons.string.ToStringGenerator;
  *        The type of the elements contained in the stack
  */
 @NotThreadSafe
-public class NonBlockingStack <ELEMENTTYPE> extends AbstractCollection <ELEMENTTYPE> implements
-                                                                                    IHasSize,
-                                                                                    Serializable,
-                                                                                    ICloneable <NonBlockingStack <ELEMENTTYPE>>
+public class NonBlockingStack <ELEMENTTYPE> extends ArrayList <ELEMENTTYPE> implements
+                                                                           IHasSize,
+                                                                           ICloneable <NonBlockingStack <ELEMENTTYPE>>
 {
-  private final List <ELEMENTTYPE> m_aList = new ArrayList <ELEMENTTYPE> ();
-
   public NonBlockingStack ()
   {}
 
   public NonBlockingStack (@Nullable final ELEMENTTYPE... aElements)
   {
-    ContainerHelper.getConcatenatedInline (m_aList, aElements);
+    ContainerHelper.getConcatenatedInline (this, aElements);
   }
 
   public NonBlockingStack (@Nullable final Collection <? extends ELEMENTTYPE> aCollection)
   {
     if (aCollection != null)
-      m_aList.addAll (aCollection);
+      addAll (aCollection);
   }
 
   public NonBlockingStack (@Nullable final NonBlockingStack <? extends ELEMENTTYPE> aStack)
   {
     if (aStack != null)
-      m_aList.addAll (aStack.m_aList);
+      addAll (aStack);
   }
 
   /**
@@ -82,7 +74,7 @@ public class NonBlockingStack <ELEMENTTYPE> extends AbstractCollection <ELEMENTT
   @Nullable
   public ELEMENTTYPE push (@Nullable final ELEMENTTYPE aItem)
   {
-    m_aList.add (aItem);
+    add (aItem);
     return aItem;
   }
 
@@ -97,9 +89,9 @@ public class NonBlockingStack <ELEMENTTYPE> extends AbstractCollection <ELEMENTT
   @Nullable
   public ELEMENTTYPE pop ()
   {
-    if (m_aList.isEmpty ())
+    if (isEmpty ())
       throw new EmptyStackException ();
-    return m_aList.remove (m_aList.size () - 1);
+    return remove (size () - 1);
   }
 
   /**
@@ -113,61 +105,17 @@ public class NonBlockingStack <ELEMENTTYPE> extends AbstractCollection <ELEMENTT
   @Nullable
   public ELEMENTTYPE peek ()
   {
-    if (m_aList.isEmpty ())
+    if (isEmpty ())
       throw new EmptyStackException ();
-    return m_aList.get (m_aList.size () - 1);
-  }
-
-  @Override
-  public boolean addAll (@Nonnull final Collection <? extends ELEMENTTYPE> aCont)
-  {
-    return m_aList.addAll (aCont);
-  }
-
-  /**
-   * Tests if this stack is empty.
-   * 
-   * @return <code>true</code> if and only if this stack contains no items;
-   *         <code>false</code> otherwise.
-   */
-  @Override
-  public boolean isEmpty ()
-  {
-    return m_aList.isEmpty ();
-  }
-
-  @Override
-  @Nonnegative
-  public int size ()
-  {
-    return m_aList.size ();
-  }
-
-  @Override
-  @Nonnull
-  public Iterator <ELEMENTTYPE> iterator ()
-  {
-    return m_aList.iterator ();
+    return get (size () - 1);
   }
 
   @Nullable
   public ELEMENTTYPE firstElement ()
   {
-    if (m_aList.isEmpty ())
+    if (isEmpty ())
       throw new EmptyStackException ();
-    return m_aList.get (0);
-  }
-
-  @Override
-  public void clear ()
-  {
-    m_aList.clear ();
-  }
-
-  @Override
-  public boolean contains (@Nullable final Object aElement)
-  {
-    return m_aList.contains (aElement);
+    return get (0);
   }
 
   @Nonnull
@@ -183,20 +131,19 @@ public class NonBlockingStack <ELEMENTTYPE> extends AbstractCollection <ELEMENTT
       return true;
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    final NonBlockingStack <?> rhs = (NonBlockingStack <?>) o;
-    return m_aList.equals (rhs.m_aList);
+    return super.equals (o);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aList).getHashCode ();
+    return new HashCodeGenerator (this).append (super.hashCode ()).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("list", m_aList).toString ();
+    return new ToStringGenerator (this).append ("list", super.toString ()).toString ();
   }
 
   @Nonnull
