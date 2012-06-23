@@ -26,6 +26,7 @@ import java.net.URL;
 
 import org.junit.Test;
 
+import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 
 /**
@@ -36,7 +37,7 @@ import com.phloc.commons.mock.AbstractPhlocTestCase;
 public final class EqualsUtilsTest extends AbstractPhlocTestCase
 {
   @Test
-  public void testSafeEquals_Float ()
+  public void testEquals_Float ()
   {
     assertTrue (EqualsUtils.equals (1.1f, 1.1f));
     assertTrue (EqualsUtils.equals (Float.NaN, Float.NaN));
@@ -49,7 +50,7 @@ public final class EqualsUtilsTest extends AbstractPhlocTestCase
   }
 
   @Test
-  public void testSafeEquals_Double ()
+  public void testEquals_Double ()
   {
     assertTrue (EqualsUtils.equals (1.1d, 1.1d));
     assertTrue (EqualsUtils.equals (Double.NaN, Double.NaN));
@@ -62,7 +63,7 @@ public final class EqualsUtilsTest extends AbstractPhlocTestCase
   }
 
   @Test
-  public void testSafeEquals_URL () throws MalformedURLException
+  public void testEquals_URL () throws MalformedURLException
   {
     final URL u1 = new URL ("http://www.phloc.com");
     final URL u2 = new URL ("http://www.mydomain.at");
@@ -72,7 +73,7 @@ public final class EqualsUtilsTest extends AbstractPhlocTestCase
   }
 
   @Test
-  public void testSafeEquals_BigDecimal ()
+  public void testEquals_BigDecimal ()
   {
     final BigDecimal bd1 = new BigDecimal ("5.5");
     final BigDecimal bd2 = new BigDecimal ("5.49999");
@@ -82,7 +83,7 @@ public final class EqualsUtilsTest extends AbstractPhlocTestCase
     assertFalse (EqualsUtils.equals (bd1, bd2));
   }
 
-  public void _testNSE (final String s1, final String s2)
+  public void _test (final String s1, final String s2)
   {
     assertTrue (EqualsUtils.equals (s1, s1));
     assertFalse (EqualsUtils.equals (s1, s2));
@@ -92,7 +93,7 @@ public final class EqualsUtilsTest extends AbstractPhlocTestCase
     assertTrue (EqualsUtils.equals ((String) null, (String) null));
   }
 
-  public void _testNSE (final BigDecimal s1, final BigDecimal s2)
+  public void _test (final BigDecimal s1, final BigDecimal s2)
   {
     assertTrue (EqualsUtils.equals (s1, s1));
     assertFalse (EqualsUtils.equals (s1, s2));
@@ -102,7 +103,7 @@ public final class EqualsUtilsTest extends AbstractPhlocTestCase
     assertTrue (EqualsUtils.equals ((Float) null, (Float) null));
   }
 
-  public void _testNSE (final Double s1, final Double s2)
+  public void _test (final Double s1, final Double s2)
   {
     assertTrue (EqualsUtils.equals (s1, s1));
     assertFalse (EqualsUtils.equals (s1, s2));
@@ -112,7 +113,7 @@ public final class EqualsUtilsTest extends AbstractPhlocTestCase
     assertTrue (EqualsUtils.equals ((Double) null, (Double) null));
   }
 
-  public void _testNSE (final Float s1, final Float s2)
+  public void _test (final Float s1, final Float s2)
   {
     assertTrue (EqualsUtils.equals (s1, s1));
     assertFalse (EqualsUtils.equals (s1, s2));
@@ -122,7 +123,7 @@ public final class EqualsUtilsTest extends AbstractPhlocTestCase
     assertTrue (EqualsUtils.equals ((Float) null, (Float) null));
   }
 
-  public void _testNSE (final URL s1, final URL s2)
+  public void _test (final URL s1, final URL s2)
   {
     assertTrue (EqualsUtils.equals (s1, s1));
     assertFalse (EqualsUtils.equals (s1, s2));
@@ -132,7 +133,7 @@ public final class EqualsUtilsTest extends AbstractPhlocTestCase
     assertTrue (EqualsUtils.equals ((Float) null, (Float) null));
   }
 
-  public void _testNSE (final boolean [] s1, final boolean [] s2)
+  public void _test (final boolean [] s1, final boolean [] s2)
   {
     assertTrue (EqualsUtils.equals (s1, s1));
     assertFalse (EqualsUtils.equals (s1, s2));
@@ -142,7 +143,7 @@ public final class EqualsUtilsTest extends AbstractPhlocTestCase
     assertTrue (EqualsUtils.equals ((boolean []) null, (boolean []) null));
   }
 
-  public void _testNSE (final byte [] s1, final byte [] s2)
+  public void _test (final byte [] s1, final byte [] s2)
   {
     assertTrue (EqualsUtils.equals (s1, s1));
     assertFalse (EqualsUtils.equals (s1, s2));
@@ -152,7 +153,7 @@ public final class EqualsUtilsTest extends AbstractPhlocTestCase
     assertTrue (EqualsUtils.equals ((byte []) null, (byte []) null));
   }
 
-  public void _testNSE (final char [] s1, final char [] s2)
+  public void _test (final char [] s1, final char [] s2)
   {
     assertTrue (EqualsUtils.equals (s1, s1));
     assertFalse (EqualsUtils.equals (s1, s2));
@@ -162,7 +163,7 @@ public final class EqualsUtilsTest extends AbstractPhlocTestCase
     assertTrue (EqualsUtils.equals ((char []) null, (char []) null));
   }
 
-  public void _testNSE (final double [] s1, final double [] s2)
+  public void _test (final double [] s1, final double [] s2)
   {
     assertTrue (EqualsUtils.equals (s1, s1));
     assertFalse (EqualsUtils.equals (s1, s2));
@@ -172,7 +173,7 @@ public final class EqualsUtilsTest extends AbstractPhlocTestCase
     assertTrue (EqualsUtils.equals ((double []) null, (double []) null));
   }
 
-  public void _testNSE (final float [] s1, final float [] s2)
+  public void _test (final float [] s1, final float [] s2)
   {
     assertTrue (EqualsUtils.equals (s1, s1));
     assertFalse (EqualsUtils.equals (s1, s2));
@@ -182,7 +183,7 @@ public final class EqualsUtilsTest extends AbstractPhlocTestCase
     assertTrue (EqualsUtils.equals ((float []) null, (float []) null));
   }
 
-  public void _testNSE (final int [] s1, final int [] s2)
+  public void _test (final int [] s1, final int [] s2)
   {
     assertTrue (EqualsUtils.equals (s1, s1));
     assertFalse (EqualsUtils.equals (s1, s2));
@@ -192,7 +193,7 @@ public final class EqualsUtilsTest extends AbstractPhlocTestCase
     assertTrue (EqualsUtils.equals ((int []) null, (int []) null));
   }
 
-  public void _testNSE (final long [] s1, final long [] s2)
+  public void _test (final long [] s1, final long [] s2)
   {
     assertTrue (EqualsUtils.equals (s1, s1));
     assertFalse (EqualsUtils.equals (s1, s2));
@@ -202,7 +203,7 @@ public final class EqualsUtilsTest extends AbstractPhlocTestCase
     assertTrue (EqualsUtils.equals ((long []) null, (long []) null));
   }
 
-  public void _testNSE (final short [] s1, final short [] s2)
+  public void _test (final short [] s1, final short [] s2)
   {
     assertTrue (EqualsUtils.equals (s1, s1));
     assertFalse (EqualsUtils.equals (s1, s2));
@@ -215,19 +216,19 @@ public final class EqualsUtilsTest extends AbstractPhlocTestCase
   @Test
   public void testNullSafeEquals () throws MalformedURLException
   {
-    _testNSE ("s1", "s2");
-    _testNSE (new BigDecimal ("12562136756"), new BigDecimal ("67673455"));
-    _testNSE (Double.valueOf (3.1415d), Double.valueOf (23.456d));
-    _testNSE (Float.valueOf (3.1415f), Float.valueOf (23.456f));
-    _testNSE (new URL ("http://www.phloc.com"), new URL ("http://www.google.com"));
-    _testNSE (new boolean [] { true }, new boolean [] { false });
-    _testNSE (new byte [] { 1 }, new byte [] { 2 });
-    _testNSE (new char [] { 'a' }, new char [] { 'b' });
-    _testNSE (new double [] { 2.1 }, new double [] { 2 });
-    _testNSE (new float [] { 2.1f }, new float [] { 1.9f });
-    _testNSE (new int [] { 5 }, new int [] { 6 });
-    _testNSE (new long [] { 7 }, new long [] { 8 });
-    _testNSE (new short [] { -9 }, new short [] { -10 });
+    _test ("s1", "s2");
+    _test (new BigDecimal ("12562136756"), new BigDecimal ("67673455"));
+    _test (Double.valueOf (3.1415d), Double.valueOf (23.456d));
+    _test (Float.valueOf (3.1415f), Float.valueOf (23.456f));
+    _test (new URL ("http://www.phloc.com"), new URL ("http://www.google.com"));
+    _test (new boolean [] { true }, new boolean [] { false });
+    _test (new byte [] { 1 }, new byte [] { 2 });
+    _test (new char [] { 'a' }, new char [] { 'b' });
+    _test (new double [] { 2.1 }, new double [] { 2 });
+    _test (new float [] { 2.1f }, new float [] { 1.9f });
+    _test (new int [] { 5 }, new int [] { 6 });
+    _test (new long [] { 7 }, new long [] { 8 });
+    _test (new short [] { -9 }, new short [] { -10 });
 
     final String s1 = "s1";
     final String s2 = "S1";
@@ -249,5 +250,16 @@ public final class EqualsUtilsTest extends AbstractPhlocTestCase
     assertTrue (EqualsUtils.equals (aSB1, new StringBuffer ("Hi")));
     assertFalse (EqualsUtils.equals (aSB1, new StringBuffer ("Hallo")));
     assertFalse (EqualsUtils.equals (aSB1, null));
+
+    assertTrue (EqualsUtils.equals (ContainerHelper.newList ("a", "b", "c"), ContainerHelper.newList ("a", "b", "c")));
+    assertTrue (EqualsUtils.equals (ContainerHelper.newUnmodifiableList ("a", "b", "c"),
+                                    ContainerHelper.newUnmodifiableList ("a", "b", "c")));
+    assertTrue (EqualsUtils.equals (ContainerHelper.newStack ("a", "b", "c"), ContainerHelper.newStack ("a", "b", "c")));
+    assertTrue (EqualsUtils.equals (ContainerHelper.newList ("a", "b", "c").iterator (),
+                                    ContainerHelper.newList ("a", "b", "c").iterator ()));
+    assertTrue (EqualsUtils.equals (ContainerHelper.getEnumeration ("a", "b", "c"),
+                                    ContainerHelper.getEnumeration ("a", "b", "c")));
+    assertFalse (EqualsUtils.equals (ContainerHelper.newUnmodifiableList ("a", "b", "c"),
+                                     ContainerHelper.newList ("a", "b", "c")));
   }
 }

@@ -20,6 +20,7 @@ package com.phloc.commons.equals;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -60,6 +61,8 @@ public final class ContainerEqualsUtils
     ARRAY,
     /** Iterator */
     ITERATOR,
+    /** Iterable */
+    ITERABLE,
     /** Enumeration */
     ENUMERATION;
   }
@@ -83,6 +86,8 @@ public final class ContainerEqualsUtils
         return EContainerType.ARRAY;
       if (Iterator.class.isAssignableFrom (aClass))
         return EContainerType.ITERATOR;
+      if (Iterable.class.isAssignableFrom (aClass))
+        return EContainerType.ITERABLE;
       if (Enumeration.class.isAssignableFrom (aClass))
         return EContainerType.ENUMERATION;
     }
@@ -260,23 +265,29 @@ public final class ContainerEqualsUtils
         }
         return true;
       }
+      case ITERABLE:
+      {
+        final Iterable <?> aIterable1 = (Iterable <?>) aObj1;
+        final Iterable <?> aIterable2 = (Iterable <?>) aObj2;
+        return equals (aIterable1.iterator (), aIterable2.iterator ());
+      }
       case ENUMERATION:
       {
-        final Enumeration <?> aIter1 = (Enumeration <?>) aObj1;
-        final Enumeration <?> aIter2 = (Enumeration <?>) aObj2;
-        while (aIter1.hasMoreElements ())
+        final Enumeration <?> aEnum1 = (Enumeration <?>) aObj1;
+        final Enumeration <?> aEnum2 = (Enumeration <?>) aObj2;
+        while (aEnum1.hasMoreElements ())
         {
-          if (!aIter2.hasMoreElements ())
+          if (!aEnum2.hasMoreElements ())
           {
             // Second enumeration is shorter
             return false;
           }
-          final Object aChildObj1 = aIter1.nextElement ();
-          final Object aChildObj2 = aIter2.nextElement ();
+          final Object aChildObj1 = aEnum1.nextElement ();
+          final Object aChildObj2 = aEnum2.nextElement ();
           if (!_areChildrenEqual (aChildObj1, aChildObj2))
             return false;
         }
-        if (aIter2.hasMoreElements ())
+        if (aEnum2.hasMoreElements ())
         {
           // Second enumeration is longer
           return false;
@@ -289,17 +300,17 @@ public final class ContainerEqualsUtils
   }
 
   /**
-   * Get the passed object as a {@link Collection} object. This is helpful in
-   * case you want to compare the String array ["a", "b"] with the
-   * List&lt;String> ("a", "b") If the passed object is not a recognised.
-   * container type, than a new list with one element is created!
+   * Get the passed object as a {@link List} object. This is helpful in case you
+   * want to compare the String array ["a", "b"] with the List&lt;String> ("a",
+   * "b") If the passed object is not a recognised. container type, than a new
+   * list with one element is created!
    * 
    * @param aObj
    *        The object to be converted. May not be <code>null</code>.
    * @return The object as a collection. Never <code>null</code>.
    */
   @Nonnull
-  public static Collection <?> getAsCollection (@Nonnull final Object aObj)
+  public static List <?> getAsList (@Nonnull final Object aObj)
   {
     if (aObj == null)
       throw new NullPointerException ("object");
@@ -315,19 +326,24 @@ public final class ContainerEqualsUtils
     {
       case COLLECTION:
         // It's already a collection
-        return (Collection <?>) aObj;
+        if (aObj instanceof List <?>)
+          return (List <?>) aObj;
+        return ContainerHelper.newList ((Collection <?>) aObj);
       case SET:
         // Convert to list
         return ContainerHelper.newList ((Set <?>) aObj);
       case MAP:
-        // Use the entry set of the map
-        return ((Map <?, ?>) aObj).entrySet ();
+        // Use the entry set of the map as list
+        return ContainerHelper.newList (((Map <?, ?>) aObj).entrySet ());
       case ARRAY:
         // Convert the array to a list
         return ContainerHelper.newList ((Object []) aObj);
       case ITERATOR:
         // Convert the iterator to a list
         return ContainerHelper.newList ((Iterator <?>) aObj);
+      case ITERABLE:
+        // Convert the iterable to a list
+        return ContainerHelper.newList ((Iterable <?>) aObj);
       case ENUMERATION:
         // Convert the enumeration to a list
         return ContainerHelper.newList ((Enumeration <?>) aObj);
@@ -337,11 +353,10 @@ public final class ContainerEqualsUtils
   }
 
   /**
-   * This is a sanity method that first calls {@link #getAsCollection(Object)}
-   * on both objects an than calls {@link #equals(Object, Object)} on the
-   * collections. This means that calling this method with the String array
-   * ["a", "b"] and the List&lt;String&gt; ("a", "b") will result in a return
-   * value of true.
+   * This is a sanity method that first calls {@link #getAsList(Object)} on both
+   * objects an than calls {@link #equals(Object, Object)} on the collections.
+   * This means that calling this method with the String array ["a", "b"] and
+   * the List&lt;String&gt; ("a", "b") will result in a return value of true.
    * 
    * @param aObj1
    *        The first object to be compared
@@ -350,7 +365,7 @@ public final class ContainerEqualsUtils
    * @return <code>true</code> if the contents are equal, <code>false</code>
    *         otherwise
    */
-  public static boolean equalsAsCollection (@Nullable final Object aObj1, @Nullable final Object aObj2)
+  public static boolean equalsAsList (@Nullable final Object aObj1, @Nullable final Object aObj2)
   {
     // Same object - check first
     if (aObj1 == aObj2)
@@ -361,8 +376,8 @@ public final class ContainerEqualsUtils
       return false;
 
     // Convert to a collection
-    final Collection <?> aCollection1 = getAsCollection (aObj1);
-    final Collection <?> aCollection2 = getAsCollection (aObj2);
+    final List <?> aCollection1 = getAsList (aObj1);
+    final List <?> aCollection2 = getAsList (aObj2);
 
     // And compare
     return equals (aCollection1, aCollection2);

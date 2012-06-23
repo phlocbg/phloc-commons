@@ -26,6 +26,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.annotations.DevelopersNote;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.annotations.ReturnsMutableObject;
@@ -1401,7 +1402,7 @@ public final class ArrayHelper
   {
     if (aArray == null)
       return null;
-    final ELEMENTTYPE [] ret = newArray (aArray, nLength);
+    final ELEMENTTYPE [] ret = newArraySameType (aArray, nLength);
     System.arraycopy (aArray, nStartIndex, ret, 0, nLength);
     return ret;
   }
@@ -1457,7 +1458,7 @@ public final class ArrayHelper
       return getCopy (aHeadArray);
 
     // Start concatenating
-    final ELEMENTTYPE [] ret = newArray (aHeadArray, aHeadArray.length + aTailArray.length);
+    final ELEMENTTYPE [] ret = newArraySameType (aHeadArray, aHeadArray.length + aTailArray.length);
     System.arraycopy (aHeadArray, 0, ret, 0, aHeadArray.length);
     System.arraycopy (aTailArray, 0, ret, aHeadArray.length, aTailArray.length);
     return ret;
@@ -1487,7 +1488,7 @@ public final class ArrayHelper
                                                               @Nonnull final Class <ELEMENTTYPE> aClass)
   {
     if (isEmpty (aTailArray))
-      return newArray (aHead, aClass);
+      return newArraySingleElement (aHead, aClass);
 
     // Start concatenating
     final ELEMENTTYPE [] ret = newArray (aClass, 1 + aTailArray.length);
@@ -1520,7 +1521,7 @@ public final class ArrayHelper
                                                               @Nonnull final Class <ELEMENTTYPE> aClass)
   {
     if (isEmpty (aHeadArray))
-      return newArray (aTail, aClass);
+      return newArraySingleElement (aTail, aClass);
 
     // Start concatenating
     final ELEMENTTYPE [] ret = newArray (aClass, aHeadArray.length + 1);
@@ -3135,9 +3136,29 @@ public final class ArrayHelper
     return GenericReflection.<Object, ELEMENTTYPE []> uncheckedCast (aArray);
   }
 
+  /**
+   * @deprecated Use {@link #newArraySameType(ELEMENTTYPE[],int)} instead
+   */
+  @Deprecated
   @Nonnull
   public static <ELEMENTTYPE> ELEMENTTYPE [] newArray (@Nonnull final ELEMENTTYPE [] aArray,
                                                        @Nonnegative final int nSize)
+  {
+    return newArraySameType (aArray, nSize);
+  }
+
+  /**
+   * Create a new empty array with the same type as the passed array.
+   * 
+   * @param aArray
+   *        Source array. May not be <code>null</code>.
+   * @param nSize
+   *        Destination size. Must be &ge; 0.
+   * @return Never <code>null</code>.
+   */
+  @Nonnull
+  public static <ELEMENTTYPE> ELEMENTTYPE [] newArraySameType (@Nonnull final ELEMENTTYPE [] aArray,
+                                                               @Nonnegative final int nSize)
   {
     return newArray (getComponentType (aArray), nSize);
   }
@@ -3155,13 +3176,16 @@ public final class ArrayHelper
    *         <code>null</code> array with all elements of the collection
    *         otherwise.
    */
-  @Nullable
+  @Nonnull
   @ReturnsMutableCopy
   public static <ELEMENTTYPE> ELEMENTTYPE [] newArray (@Nullable final Collection <? extends ELEMENTTYPE> aCollection,
                                                        @Nonnull final Class <ELEMENTTYPE> aClass)
   {
+    if (aClass == null)
+      throw new NullPointerException ("class");
+
     if (ContainerHelper.isEmpty (aCollection))
-      return null;
+      return newArray (aClass, 0);
 
     final ELEMENTTYPE [] ret = newArray (aClass, aCollection.size ());
     return aCollection.toArray (ret);
@@ -3179,12 +3203,39 @@ public final class ArrayHelper
    *        present because in case the passed element is <code>null</code>
    *        there is no way to determine the array component type!
    * @return The created array and never <code>null</code>.
+   * @deprecated Use {@link #newArraySingleElement(Object,Class)} instead
    */
+  @Deprecated
+  @DevelopersNote ("Was deprecated because of potential name clashes with newArray(ELEMENTTYPE...)")
   @Nonnull
   @ReturnsMutableCopy
   public static <ELEMENTTYPE> ELEMENTTYPE [] newArray (@Nullable final ELEMENTTYPE aElement,
                                                        @Nonnull final Class <ELEMENTTYPE> aClass)
   {
+    return newArraySingleElement (aElement, aClass);
+  }
+
+  /**
+   * Wrapper that allows a single argument to be treated as an array.
+   * 
+   * @param <ELEMENTTYPE>
+   *        Type of element
+   * @param aElement
+   *        The element to be converted to an array. May be <code>null</code>.
+   * @param aClass
+   *        The class of the element. May not be <code>null</code>. Must be
+   *        present because in case the passed element is <code>null</code>
+   *        there is no way to determine the array component type!
+   * @return The created array and never <code>null</code>.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE> ELEMENTTYPE [] newArraySingleElement (@Nullable final ELEMENTTYPE aElement,
+                                                                    @Nonnull final Class <ELEMENTTYPE> aClass)
+  {
+    if (aClass == null)
+      throw new NullPointerException ("class");
+
     final ELEMENTTYPE [] ret = newArray (aClass, 1);
     ret[0] = aElement;
     return ret;
@@ -3202,10 +3253,12 @@ public final class ArrayHelper
    *        The vararg array
    * @return The wrapped array
    */
-  @Nullable
+  @Nonnull
   @ReturnsMutableObject (reason = "use getCopy otherwise")
-  public static <ELEMENTTYPE> ELEMENTTYPE [] newArray (@Nullable final ELEMENTTYPE... aArray)
+  public static <ELEMENTTYPE> ELEMENTTYPE [] newArray (@Nonnull final ELEMENTTYPE... aArray)
   {
+    if (aArray == null)
+      throw new NullPointerException ("array");
     return aArray;
   }
 

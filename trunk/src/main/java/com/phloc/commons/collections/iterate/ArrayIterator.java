@@ -57,8 +57,7 @@ public final class ArrayIterator <ELEMENTTYPE> implements Iterator <ELEMENTTYPE>
     m_nIndex = 0;
 
     final int nLength = nEnd - nBegin;
-    m_aArray = ArrayHelper.newArray (aArray, nLength);
-    System.arraycopy (aArray, nBegin, m_aArray, 0, nLength);
+    m_aArray = ArrayHelper.getCopy (aArray, nBegin, nLength);
   }
 
   public boolean hasNext ()

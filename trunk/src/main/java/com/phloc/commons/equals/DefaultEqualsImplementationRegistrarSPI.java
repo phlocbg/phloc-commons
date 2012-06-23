@@ -21,6 +21,8 @@ import java.math.BigDecimal;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -294,6 +296,64 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
         final Object [] aData1 = aRealObj1.toArray ();
         final Object [] aData2 = aRealObj2.toArray ();
         return EqualsImplementationRegistry.areEqual (aData1, aData2);
+      }
+    });
+
+    // Special handling for Iterator
+    aRegistry.registerEqualsImplementation (Iterator.class, new IEqualsImplementation ()
+    {
+      public boolean areEqual (final Object aObj1, final Object aObj2)
+      {
+        final Iterator <?> aRealObj1 = (Iterator <?>) aObj1;
+        final Iterator <?> aRealObj2 = (Iterator <?>) aObj2;
+
+        while (aRealObj1.hasNext ())
+        {
+          if (!aRealObj2.hasNext ())
+          {
+            // Second iterator is shorter
+            return false;
+          }
+          final Object aChild1 = aRealObj1.next ();
+          final Object aChild2 = aRealObj2.next ();
+          if (!EqualsImplementationRegistry.areEqual (aChild1, aChild2))
+            return false;
+        }
+        if (aRealObj2.hasNext ())
+        {
+          // Second iterator is longer
+          return false;
+        }
+        return true;
+      }
+    });
+
+    // Special handling for Enumeration
+    aRegistry.registerEqualsImplementation (Enumeration.class, new IEqualsImplementation ()
+    {
+      public boolean areEqual (final Object aObj1, final Object aObj2)
+      {
+        final Enumeration <?> aRealObj1 = (Enumeration <?>) aObj1;
+        final Enumeration <?> aRealObj2 = (Enumeration <?>) aObj2;
+
+        while (aRealObj1.hasMoreElements ())
+        {
+          if (!aRealObj2.hasMoreElements ())
+          {
+            // Second enumeration is shorter
+            return false;
+          }
+          final Object aChild1 = aRealObj1.nextElement ();
+          final Object aChild2 = aRealObj2.nextElement ();
+          if (!EqualsImplementationRegistry.areEqual (aChild1, aChild2))
+            return false;
+        }
+        if (aRealObj2.hasMoreElements ())
+        {
+          // Second enumeration is long
+          return false;
+        }
+        return true;
       }
     });
   }

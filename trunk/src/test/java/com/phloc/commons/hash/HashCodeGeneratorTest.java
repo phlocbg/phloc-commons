@@ -66,6 +66,8 @@ public final class HashCodeGeneratorTest
     aHC.append (new StringBuffer ("Hallo"));
     aHC.append (new StringBuilder ("Hallo Welt"));
     aHC.append (ContainerHelper.newSet ("Hallo", "Welt", "from", "unit", "test"));
+    aHC.append (ContainerHelper.getIterator ("Hallo", "Welt", "from", "unit", "test"));
+    aHC.append (ContainerHelper.getEnumeration ("Hallo", "Welt", "from", "unit", "test"));
 
     // Multi values containing null
     aHC.append (ContainerHelper.newSet ("Hallo", null, null, "unit", "test"));
