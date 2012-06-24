@@ -1931,7 +1931,7 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsMutableCopy
-  public static <ELEMENTTYPE> Queue <ELEMENTTYPE> newQueue (@Nullable final ELEMENTTYPE aValue)
+  public static <ELEMENTTYPE> Queue <ELEMENTTYPE> newQueue (@Nonnull final ELEMENTTYPE aValue)
   {
     final Queue <ELEMENTTYPE> ret = new PriorityQueue <ELEMENTTYPE> (1);
     ret.add (aValue);
