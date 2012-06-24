@@ -553,10 +553,10 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
     assertEquals (3, x.length);
 
     x = newArray (new ArrayList <String> (), String.class);
-    assertNull (x);
+    assertNotNull (x);
 
     x = newArray ((List <String>) null, String.class);
-    assertNull (x);
+    assertNotNull (x);
 
     CharSequence [] y = newArray (ContainerHelper.newList ("s1", "s2", "s3"), CharSequence.class);
     assertNotNull (y);
