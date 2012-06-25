@@ -20,6 +20,21 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2012-06-25" category="api" action="add">
+    <change>
+      <text locale="en">Extended InputSourceFactory with 2 new overloads</text>
+    </change>
+  </entry>
+  <entry date="2012-06-25" category="api" action="add">
+    <change>
+      <text locale="en">Added new class TransformSourceFactory to create javax.xml.transform.Source for different input types (comparable to InputSourceFactory)</text>
+    </change>
+  </entry>
+  <entry date="2012-06-25" category="api" action="add">
+    <change>
+      <text locale="en">Further extended IGraphNode API</text>
+    </change>
+  </entry>
   <entry date="2012-06-23" category="api" action="change">
     <change>
       <text locale="en">Replaced ArrayHelper.newArray(ELEMENTTYPE[],int) with newArraySameType because of potential misunderstanding</text>
