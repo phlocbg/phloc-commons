@@ -46,6 +46,8 @@ public final class CollectingValidationEventHandlerTest
   {
     final JAXBContext aCtx = JAXBContextCache.getInstance ().getFromCache (MockJAXBArchive.class);
     CollectingValidationEventHandler evh = new CollectingValidationEventHandler (new LoggingValidationEventHandler (null));
+    // is equal to:
+    evh = new CollectingValidationEventHandlerFactory ().create (new LoggingValidationEventHandlerFactory ().create (null));
     final Unmarshaller um = aCtx.createUnmarshaller ();
     um.setEventHandler (evh);
 
