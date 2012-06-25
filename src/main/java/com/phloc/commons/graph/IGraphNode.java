@@ -18,6 +18,7 @@
 package com.phloc.commons.graph;
 
 import java.util.Collection;
+import java.util.Set;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -40,8 +41,6 @@ public interface IGraphNode <VALUETYPE> extends IGraphObject
   @Nullable
   VALUETYPE getValue ();
 
-  boolean isConnectedWith (@Nullable IGraphNode <VALUETYPE> aNode);
-
   // --- incoming ---
 
   /**
@@ -52,19 +51,54 @@ public interface IGraphNode <VALUETYPE> extends IGraphObject
    */
   void addIncomingRelation (@Nonnull IGraphRelation <VALUETYPE> aRelation);
 
+  /**
+   * @return <code>true</code> if this node has at least one incoming relation.
+   */
   boolean hasIncomingRelations ();
 
+  /**
+   * @return The number of incoming relations. Always &ge; 0.
+   */
   @Nonnegative
   int getIncomingRelationCount ();
 
+  /**
+   * Check if this node has the passed relation as an incoming relations.
+   * 
+   * @param aRelation
+   *        The relation to be checked. May be <code>null</code>.
+   * @return <code>true</code> if the passed relation is an incoming relation,
+   *         <code>false</code> if not
+   */
+  boolean isIncomingRelation (@Nullable IGraphRelation <VALUETYPE> aRelation);
+
+  /**
+   * @return All incoming relations and never <code>null</code>.
+   */
   @Nonnull
   @ReturnsMutableCopy
   Collection <IGraphRelation <VALUETYPE>> getIncomingRelations ();
 
+  /**
+   * Check if this graph node is directly connected to the passed node via an
+   * incoming relation.
+   * 
+   * @param aNode
+   *        The node to be checked. May be <code>null</code>.
+   * @return <code>true</code> if is connected, <code>false</code> if not
+   */
+  boolean isFromNode (@Nullable IGraphNode <VALUETYPE> aNode);
+
+  /**
+   * @return All nodes that are connected via incoming relations.
+   */
   @Nonnull
   @ReturnsMutableCopy
   Collection <IGraphNode <VALUETYPE>> getAllFromNodes ();
 
+  /**
+   * @return All values from all nodes connected via incoming relations.
+   */
   @Nonnull
   @ReturnsMutableCopy
   Collection <VALUETYPE> getAllFromValues ();
@@ -79,26 +113,112 @@ public interface IGraphNode <VALUETYPE> extends IGraphObject
    */
   void addOutgoingRelation (@Nonnull IGraphRelation <VALUETYPE> aRelation);
 
+  /**
+   * @return <code>true</code> if this node has at least one outgoing relation.
+   */
   boolean hasOutgoingRelations ();
 
+  /**
+   * @return The number of outgoing relations. Always &ge; 0.
+   */
   @Nonnegative
   int getOutgoingRelationCount ();
 
+  /**
+   * Check if this node has the passed relation as an outgoing relations.
+   * 
+   * @param aRelation
+   *        The relation to be checked. May be <code>null</code>.
+   * @return <code>true</code> if the passed relation is an outgoing relation,
+   *         <code>false</code> if not
+   */
+  boolean isOutgoingRelation (@Nullable IGraphRelation <VALUETYPE> aRelation);
+
+  /**
+   * @return All outgoing relations and never <code>null</code>.
+   */
   @Nonnull
   @ReturnsMutableCopy
   Collection <IGraphRelation <VALUETYPE>> getOutgoingRelations ();
 
+  /**
+   * Check if this graph node is directly connected to the passed node via an
+   * outgoing relation.
+   * 
+   * @param aNode
+   *        The node to be checked. May be <code>null</code>.
+   * @return <code>true</code> if is connected, <code>false</code> if not
+   */
+  boolean isToNode (@Nullable IGraphNode <VALUETYPE> aNode);
+
+  /**
+   * @return All nodes that are connected via outgoing relations.
+   */
   @Nonnull
   @ReturnsMutableCopy
   Collection <IGraphNode <VALUETYPE>> getAllToNodes ();
 
+  /**
+   * @return All values from all nodes connected via outgoing relations.
+   */
   @Nonnull
   @ReturnsMutableCopy
   Collection <VALUETYPE> getAllToValues ();
 
   // --- incoming and/or outgoing
 
+  /**
+   * Check if this graph node is directly connected to the passed node, either
+   * via an incoming or via an outgoing relation.<br>
+   * This is the same as calling
+   * <code>isFromNode(aNode) || isToNode(aNode)</code>
+   * 
+   * @param aNode
+   *        The node to be checked. May be <code>null</code>.
+   * @return <code>true</code> if is connected, <code>false</code> if not
+   */
+  boolean isConnectedWith (@Nullable IGraphNode <VALUETYPE> aNode);
+
+  /**
+   * Check if this node has incoming <b>or</b> outgoing relations. This is equal
+   * to calling <code>hasIncomingRelations() || hasOutgoingRelations()</code>
+   * 
+   * @return <code>true</code> if this node has at least one incoming or
+   *         outgoing relation.
+   */
   boolean hasIncomingOrOutgoingRelations ();
 
+  /**
+   * Check if this node has incoming <b>and</b> outgoing relations. This is
+   * equal to calling
+   * <code>hasIncomingRelations() && hasOutgoingRelations()</code>
+   * 
+   * @return <code>true</code> if this node has at least one incoming and at
+   *         least one outgoing relation.
+   */
   boolean hasIncomingAndOutgoingRelations ();
+
+  /**
+   * @return A container with all incoming and outgoing relations. Never
+   *         <code>null</code>.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  Set <IGraphRelation <VALUETYPE>> getAllRelations ();
+
+  /**
+   * @return A container with all nodes directly connected via incoming or
+   *         outgoing relations. Never <code>null</code>.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  Set <IGraphNode <VALUETYPE>> getAllRelatedNodes ();
+
+  /**
+   * @return A container with all values of all nodes directly connected via
+   *         incoming or outgoing relations. Never <code>null</code>.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  Set <VALUETYPE> getAllRelatedValues ();
 }

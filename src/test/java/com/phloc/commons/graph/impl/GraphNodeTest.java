@@ -30,6 +30,7 @@ import org.junit.Test;
 
 import com.phloc.commons.graph.IGraphRelation;
 import com.phloc.commons.mock.PhlocTestUtils;
+import com.phloc.commons.string.StringHelper;
 
 /**
  * Test class for class {@link GraphNode}.
@@ -43,15 +44,21 @@ public final class GraphNodeTest
   {
     final GraphNode <String> n = new GraphNode <String> ();
     assertNotNull (n.getID ());
-    assertTrue (n.getID ().length () > 0);
+    assertTrue (StringHelper.hasText (n.getID ()));
     assertNull (n.getValue ());
 
     final GraphNode <String> n1 = new GraphNode <String> ("", null);
     assertNotNull (n1.getID ());
-    assertTrue (n1.getID ().length () > 0);
+    assertTrue (StringHelper.hasText (n1.getID ()));
     assertNull (n1.getValue ());
     assertEquals (0, n1.getAllFromNodes ().size ());
+    assertEquals (0, n1.getIncomingRelationCount ());
     assertEquals (0, n1.getAllToNodes ().size ());
+    assertEquals (0, n1.getOutgoingRelationCount ());
+    assertFalse (n1.hasIncomingRelations ());
+    assertFalse (n1.hasOutgoingRelations ());
+    assertFalse (n1.hasIncomingOrOutgoingRelations ());
+    assertFalse (n1.hasIncomingAndOutgoingRelations ());
 
     final GraphNode <String> n2 = new GraphNode <String> ("Hi");
     assertNotNull (n2.getID ());
@@ -70,7 +77,19 @@ public final class GraphNodeTest
   {
     final GraphNode <String> nf = new GraphNode <String> ();
     final GraphNode <String> nt = new GraphNode <String> ();
-    nf.addOutgoingRelation (new GraphRelation <String> (nf, nt));
+    final IGraphRelation <String> gr = new GraphRelation <String> (nf, nt);
+    nf.addOutgoingRelation (gr);
+
+    assertFalse (nf.isIncomingRelation (gr));
+    assertTrue (nf.isOutgoingRelation (gr));
+    assertFalse (nt.isIncomingRelation (gr));
+    assertFalse (nt.isOutgoingRelation (gr));
+    assertTrue (nf.isConnectedWith (nt));
+    assertFalse (nt.isConnectedWith (nf));
+    assertFalse (nf.hasIncomingRelations ());
+    assertTrue (nf.hasOutgoingRelations ());
+    assertTrue (nf.hasIncomingOrOutgoingRelations ());
+    assertFalse (nf.hasIncomingAndOutgoingRelations ());
 
     assertEquals (0, nf.getAllFromNodes ().size ());
     assertEquals (1, nf.getAllToNodes ().size ());
