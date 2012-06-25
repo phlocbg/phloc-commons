@@ -56,6 +56,15 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
     }
     catch (final IllegalStateException ex)
     {}
+
+    try
+    {
+      // no node contained
+      sg.getSingleEndNode ();
+      fail ();
+    }
+    catch (final IllegalStateException ex)
+    {}
   }
 
   @Test
@@ -75,6 +84,7 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
     final GraphNode <String> n = new GraphNode <String> ();
     assertTrue (sg.addNode (n).isChanged ());
     assertEquals (1, sg.getNodeCount ());
+    assertFalse (n.hasIncomingOrOutgoingRelations ());
 
     // node already contained
     assertFalse (sg.addNode (n).isChanged ());
@@ -86,6 +96,7 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
 
     final GraphNode <String> n2 = new GraphNode <String> ();
     assertTrue (sg.addNode (n2).isChanged ());
+    assertFalse (n2.hasIncomingOrOutgoingRelations ());
 
     // node already contained
     assertFalse (sg.addNode (n2).isChanged ());
@@ -98,6 +109,13 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
     try
     {
       sg.getSingleStartNode ();
+      fail ();
+    }
+    catch (final IllegalStateException ex)
+    {}
+    try
+    {
+      sg.getSingleEndNode ();
       fail ();
     }
     catch (final IllegalStateException ex)
@@ -148,6 +166,26 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
     final IGraphNode <Integer> n2 = sg.createNode (null);
     sg.createRelation (n1, n2);
     sg.createRelation (n2, n1);
+
+    assertEquals (1, n1.getIncomingRelationCount ());
+    assertEquals (1, n1.getOutgoingRelationCount ());
+    assertTrue (n1.hasIncomingRelations ());
+    assertTrue (n1.hasOutgoingRelations ());
+    assertTrue (n1.hasIncomingOrOutgoingRelations ());
+    assertTrue (n1.hasIncomingAndOutgoingRelations ());
+    assertTrue (n1.isConnectedWith (n2));
+    assertTrue (n1.isFromNode (n2));
+    assertTrue (n1.isToNode (n2));
+
+    assertEquals (1, n2.getIncomingRelationCount ());
+    assertEquals (1, n2.getOutgoingRelationCount ());
+    assertTrue (n2.hasIncomingRelations ());
+    assertTrue (n2.hasOutgoingRelations ());
+    assertTrue (n2.hasIncomingOrOutgoingRelations ());
+    assertTrue (n2.hasIncomingAndOutgoingRelations ());
+    assertTrue (n2.isConnectedWith (n1));
+    assertTrue (n2.isFromNode (n1));
+    assertTrue (n2.isToNode (n1));
 
     assertTrue (sg.containsCycles ());
 
