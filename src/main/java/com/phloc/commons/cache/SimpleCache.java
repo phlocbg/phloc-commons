@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.cache;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.state.EChange;
@@ -31,11 +32,14 @@ final class SimpleCache implements SimpleCacheMBean
 {
   private final AbstractCache <?, ?> m_aCache;
 
-  public SimpleCache (final AbstractCache <?, ?> aCache)
+  public SimpleCache (@Nonnull final AbstractCache <?, ?> aCache)
   {
+    if (aCache == null)
+      throw new NullPointerException ("cache");
     m_aCache = aCache;
   }
 
+  @Nonnegative
   public int size ()
   {
     return m_aCache.size ();

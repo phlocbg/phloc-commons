@@ -47,13 +47,6 @@ public final class CharsetManager
   {
     // Returns an immutable object
     s_aAllCharsets = Charset.availableCharsets ();
-    // Ensure that all explicitly named charsets are supported by this
-    // platform!
-    getCharsetFromName (CCharset.CHARSET_ISO_8859_1);
-    getCharsetFromName (CCharset.CHARSET_UTF_8);
-    getCharsetFromName (CCharset.CHARSET_US_ASCII);
-    getCharsetFromName (CCharset.CHARSET_SERVICE_LOADER);
-    getCharsetFromName (CCharset.DEFAULT_CHARSET);
   }
 
   @PresentForCodeCoverage

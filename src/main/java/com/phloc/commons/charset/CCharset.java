@@ -61,6 +61,12 @@ public final class CCharset
   public static final String CHARSET_WINDOWS_1252 = "windows-1252";
 
   /**
+   * The Windows 1252 charset object.
+   */
+  @Nonnull
+  public static final Charset CHARSET_WINDOWS_1252_OBJ = CharsetManager.getCharsetFromName (CHARSET_WINDOWS_1252);
+
+  /**
    * The special US ACSII charset to be used in all applications. This is
    * US-ASCII.
    */
