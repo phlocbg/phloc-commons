@@ -118,7 +118,7 @@ public final class XMLTransformerFactory
     if (aResource == null)
       throw new NullPointerException ("resource");
 
-    return newTransformer (new ResourceStreamSource (aResource));
+    return newTransformer (TransformSourceFactory.create (aResource));
   }
 
   /**
@@ -191,7 +191,7 @@ public final class XMLTransformerFactory
     if (aResource == null)
       throw new NullPointerException ("resource");
 
-    return newTemplates (aFactory, new ResourceStreamSource (aResource));
+    return newTemplates (aFactory, TransformSourceFactory.create (aResource));
   }
 
   /**

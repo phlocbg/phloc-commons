@@ -27,11 +27,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 import javax.xml.transform.Source;
+import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
+
+import org.w3c.dom.Node;
 
 import com.phloc.commons.io.IInputStreamProvider;
 import com.phloc.commons.io.IReadableResource;
-import com.phloc.commons.io.resource.FileSystemResource;
 import com.phloc.commons.io.resource.URLResource;
 
 /**
@@ -47,62 +49,70 @@ public final class TransformSourceFactory
   {}
 
   @Nonnull
-  public static Source create (@Nonnull final File aFile)
+  public static StreamSource create (@Nonnull final File aFile)
   {
-    return create (new FileSystemResource (aFile));
+    return new StreamSource (aFile);
   }
 
   @Nonnull
-  public static Source create (@Nonnull final URL aURL)
+  public static ResourceStreamSource create (@Nonnull final URL aURL)
   {
     return create (new URLResource (aURL));
   }
 
   @Nonnull
-  public static Source create (@Nonnull final IInputStreamProvider aISP)
+  public static StreamSource create (@Nonnull final IInputStreamProvider aISP)
   {
     return create (aISP.getInputStream ());
   }
 
   @Nonnull
-  public static Source create (@Nonnull final IReadableResource aResource)
+  public static ResourceStreamSource create (@Nonnull final IReadableResource aResource)
   {
     return new ResourceStreamSource (aResource);
   }
 
   @Nonnull
-  public static Source create (@Nonnull final String sXML)
+  public static StringStreamSource create (@Nonnull final String sXML)
   {
     return new StringStreamSource (sXML);
   }
 
   @Nonnull
-  public static Source create (@Nonnull final char [] aXML)
+  public static StringStreamSource create (@Nonnull final char [] aXML)
   {
     return create (new String (aXML));
   }
 
   @Nonnull
-  public static Source create (@Nonnull final char [] aXML, @Nonnegative final int nOfs, @Nonnegative final int nLength)
+  public static StringStreamSource create (@Nonnull final char [] aXML,
+                                           @Nonnegative final int nOfs,
+                                           @Nonnegative final int nLength)
   {
     return create (new String (aXML, nOfs, nLength));
   }
 
   @Nonnull
-  public static Source create (@Nonnull final CharSequence aXML)
+  public static StringStreamSource create (@Nonnull final CharSequence aXML)
   {
     return create (aXML.toString ());
   }
 
   @Nonnull
-  public static Source create (@Nullable final InputStream aIS)
+  public static StreamSource create (@Nullable final InputStream aIS)
   {
     return new StreamSource (aIS);
   }
 
   @Nonnull
-  public static Source create (@Nullable final Reader aReader)
+  public static StreamSource create (@Nullable final Reader aReader)
   {
     return new StreamSource (aReader);
+  }
+
+  @Nonnull
+  public static DOMSource create (@Nullable final Node aNode)
+  {
+    return new DOMSource (aNode);
   }
 }

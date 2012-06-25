@@ -37,7 +37,7 @@ import com.phloc.commons.convert.IUnidirectionalConverter;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
-import com.phloc.commons.xml.transform.ResourceStreamSource;
+import com.phloc.commons.xml.transform.TransformSourceFactory;
 
 /**
  * Abstract base class for caching JAXP validation scheme elements.
@@ -94,7 +94,7 @@ public abstract class AbstractSchemaCache extends SimpleCacheWithConversion <Str
     if (aResource == null)
       throw new NullPointerException ("resources");
 
-    return _getSchema (aResource.getResourceID (), new Source [] { new ResourceStreamSource (aResource) });
+    return _getSchema (aResource.getResourceID (), new Source [] { TransformSourceFactory.create (aResource) });
   }
 
   @Nonnull
@@ -118,7 +118,7 @@ public abstract class AbstractSchemaCache extends SimpleCacheWithConversion <Str
         aResourceID.append (';');
       aResourceID.append (aResource.getResourceID ());
 
-      aSources[nIndex++] = new ResourceStreamSource (aResource);
+      aSources[nIndex++] = TransformSourceFactory.create (aResource);
     }
 
     return _getSchema (aResourceID.toString (), aSources);

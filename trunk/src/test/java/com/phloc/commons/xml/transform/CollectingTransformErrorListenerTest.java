@@ -60,7 +60,7 @@ public final class CollectingTransformErrorListenerTest extends AbstractPhlocTes
     // Try a real transformation
     {
       final Document aDoc = XMLFactory.newDocument ();
-      t1.newTransformer ().transform (new ResourceStreamSource (new ClassPathResource ("xml/xslt1.xml")),
+      t1.newTransformer ().transform (TransformSourceFactory.create (new ClassPathResource ("xml/xslt1.xml")),
                                       new DOMResult (aDoc));
       assertNotNull (aDoc);
       assertNotNull (aDoc.getDocumentElement ());

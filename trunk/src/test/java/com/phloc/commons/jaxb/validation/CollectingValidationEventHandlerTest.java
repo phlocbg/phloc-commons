@@ -32,7 +32,7 @@ import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.jaxb.JAXBContextCache;
 import com.phloc.commons.jaxb.MockJAXBArchive;
 import com.phloc.commons.mock.PhlocTestUtils;
-import com.phloc.commons.xml.transform.ResourceStreamSource;
+import com.phloc.commons.xml.transform.TransformSourceFactory;
 
 /**
  * Test class for class {@link CollectingValidationEventHandler}.
@@ -50,22 +50,23 @@ public final class CollectingValidationEventHandlerTest
     um.setEventHandler (evh);
 
     // read valid
-    JAXBElement <MockJAXBArchive> o = um.unmarshal (new ResourceStreamSource (new ClassPathResource ("xml/test-archive-01.xml")),
+    JAXBElement <MockJAXBArchive> o = um.unmarshal (TransformSourceFactory.create (new ClassPathResource ("xml/test-archive-01.xml")),
                                                     MockJAXBArchive.class);
     assertNotNull (o);
-    assertEquals (0, evh.getResourceErrors ().size ());
+    assertTrue (evh.getResourceErrors ().isEmpty ());
 
     // read invalid
     evh = new CollectingValidationEventHandler ();
     um.setEventHandler (evh);
-    o = um.unmarshal (new ResourceStreamSource (new ClassPathResource ("xml/buildinfo.xml")), MockJAXBArchive.class);
+    o = um.unmarshal (TransformSourceFactory.create (new ClassPathResource ("xml/buildinfo.xml")),
+                      MockJAXBArchive.class);
     assertNotNull (o);
     assertTrue (evh.getResourceErrors ().size () > 0);
 
     // Read invalid (but close to valid)
     evh = new CollectingValidationEventHandler (new LoggingValidationEventHandler ());
     um.setEventHandler (evh);
-    o = um.unmarshal (new ResourceStreamSource (new ClassPathResource ("xml/test-archive-03.xml")),
+    o = um.unmarshal (TransformSourceFactory.create (new ClassPathResource ("xml/test-archive-03.xml")),
                       MockJAXBArchive.class);
     assertNotNull (o);
     assertEquals (1, evh.getResourceErrors ().size ());
