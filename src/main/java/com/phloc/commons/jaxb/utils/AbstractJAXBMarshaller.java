@@ -22,6 +22,7 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -33,9 +34,7 @@ import javax.xml.bind.ValidationEventHandler;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMResult;
-import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 
 import org.slf4j.Logger;
@@ -61,7 +60,7 @@ import com.phloc.commons.state.ESuccess;
 import com.phloc.commons.xml.XMLFactory;
 import com.phloc.commons.xml.schema.XMLSchemaCache;
 import com.phloc.commons.xml.transform.ResourceStreamResult;
-import com.phloc.commons.xml.transform.ResourceStreamSource;
+import com.phloc.commons.xml.transform.TransformSourceFactory;
 
 /**
  * This is the abstract reader and writer base class for JAXB enabled document
@@ -69,6 +68,7 @@ import com.phloc.commons.xml.transform.ResourceStreamSource;
  * 
  * @author philip
  */
+@NotThreadSafe
 public abstract class AbstractJAXBMarshaller <JAXBTYPE>
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractJAXBMarshaller.class);
@@ -278,7 +278,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
     if (aFile == null)
       throw new NullPointerException ("file");
 
-    return read (new StreamSource (aFile));
+    return read (TransformSourceFactory.create (aFile));
   }
 
   /**
@@ -294,7 +294,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
     if (aResource == null)
       throw new NullPointerException ("resource");
 
-    return read (new ResourceStreamSource (aResource));
+    return read (TransformSourceFactory.create (aResource));
   }
 
   /**
@@ -310,7 +310,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
     if (aNode == null)
       throw new NullPointerException ("node");
 
-    return read (new DOMSource (aNode));
+    return read (TransformSourceFactory.create (aNode));
   }
 
   /**

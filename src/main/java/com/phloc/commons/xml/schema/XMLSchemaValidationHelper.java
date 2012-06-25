@@ -27,7 +27,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.error.IResourceErrorGroup;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.xml.sax.CollectingSAXErrorHandler;
-import com.phloc.commons.xml.transform.ResourceStreamSource;
+import com.phloc.commons.xml.transform.TransformSourceFactory;
 
 /**
  * A helper class for simple XSD validation.
@@ -57,7 +57,7 @@ public final class XMLSchemaValidationHelper
     if (aXML == null)
       throw new NullPointerException ("XMLresource");
 
-    return validate (aSchemas, new ResourceStreamSource (aXML));
+    return validate (aSchemas, TransformSourceFactory.create (aXML));
   }
 
   @Nonnull
@@ -66,7 +66,7 @@ public final class XMLSchemaValidationHelper
     if (aXML == null)
       throw new NullPointerException ("XMLresource");
 
-    return validate (aSchema, new ResourceStreamSource (aXML));
+    return validate (aSchema, TransformSourceFactory.create (aXML));
   }
 
   @Nonnull

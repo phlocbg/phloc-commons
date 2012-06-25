@@ -35,7 +35,7 @@ import org.junit.Test;
 
 import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.io.streams.NonBlockingStringWriter;
-import com.phloc.commons.xml.transform.ResourceStreamSource;
+import com.phloc.commons.xml.transform.TransformSourceFactory;
 
 /**
  * Test class for class {@link JAXBContextCache}.
@@ -80,16 +80,17 @@ public final class JAXBContextCacheTest
     final Unmarshaller um = aCtx.createUnmarshaller ();
 
     // read valid
-    JAXBElement <MockJAXBArchive> o = um.unmarshal (new ResourceStreamSource (new ClassPathResource ("xml/test-archive-01.xml")),
+    JAXBElement <MockJAXBArchive> o = um.unmarshal (TransformSourceFactory.create (new ClassPathResource ("xml/test-archive-01.xml")),
                                                     MockJAXBArchive.class);
     assertNotNull (o);
 
     // read invalid
-    o = um.unmarshal (new ResourceStreamSource (new ClassPathResource ("xml/buildinfo.xml")), MockJAXBArchive.class);
+    o = um.unmarshal (TransformSourceFactory.create (new ClassPathResource ("xml/buildinfo.xml")),
+                      MockJAXBArchive.class);
     assertNotNull (o);
 
     // Read invalid (but close to valid)
-    o = um.unmarshal (new ResourceStreamSource (new ClassPathResource ("xml/test-archive-03.xml")),
+    o = um.unmarshal (TransformSourceFactory.create (new ClassPathResource ("xml/test-archive-03.xml")),
                       MockJAXBArchive.class);
     assertNotNull (o);
 

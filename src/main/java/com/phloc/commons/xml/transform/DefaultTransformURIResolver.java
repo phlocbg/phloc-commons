@@ -51,7 +51,7 @@ public final class DefaultTransformURIResolver extends AbstractTransformURIResol
     {
       final IReadableResource aRes = SimpleLSResourceResolver.doStandardResourceResolving (sHref, sBase);
       if (aRes != null && aRes.exists ())
-        return new ResourceStreamSource (aRes);
+        return TransformSourceFactory.create (aRes);
     }
     catch (final Exception ex)
     {

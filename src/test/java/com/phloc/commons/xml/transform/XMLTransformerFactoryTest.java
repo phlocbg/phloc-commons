@@ -93,12 +93,12 @@ public final class XMLTransformerFactoryTest
     // Read valid XSLT (with import)
     t1 = XMLTransformerFactory.newTemplates (new ClassPathResource ("xml/test2.xslt"));
     assertNotNull (t1);
-    t1 = XMLTransformerFactory.newTemplates (new ResourceStreamSource (new ClassPathResource ("xml/test2.xslt")));
+    t1 = XMLTransformerFactory.newTemplates (TransformSourceFactory.create (new ClassPathResource ("xml/test2.xslt")));
     assertNotNull (t1);
 
     // Read invalid XSLT
     assertNull (XMLTransformerFactory.newTemplates (new ClassPathResource ("test1.txt")));
-    assertNull (XMLTransformerFactory.newTemplates (new ResourceStreamSource (new ClassPathResource ("test1.txt"))));
+    assertNull (XMLTransformerFactory.newTemplates (TransformSourceFactory.create (new ClassPathResource ("test1.txt"))));
 
     try
     {
