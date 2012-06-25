@@ -1,7 +1,20 @@
 #summary Change log of phloc-commons
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
-<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr><td>6/18/12</td><td>change</td><td>tech</td><td></td><td>Using the new Version constructor to read ChangeLog release versions</td></tr>
+<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr border="1"><td>6/25/12</td><td colspan="4">_Release *3.6.1*_</td></tr>
+<tr><td>6/25/12</td><td>add</td><td>api</td><td></td><td>Extended InputSourceFactory with 2 new overloads</td></tr>
+<tr><td>6/25/12</td><td>add</td><td>api</td><td></td><td>Added new class TransformSourceFactory to create javax.xml.transform.Source for different input types (comparable to InputSourceFactory)</td></tr>
+<tr><td>6/25/12</td><td>add</td><td>api</td><td></td><td>Further extended IGraphNode API</td></tr>
+<tr><td>6/23/12</td><td>change</td><td>api</td><td></td><td>Replaced ArrayHelper.newArray(ELEMENTTYPE[],int) with newArraySameType because of potential misunderstanding</td></tr>
+<tr><td>6/23/12</td><td>change</td><td>api</td><td></td><td>Replaced ArrayHelper.newArray(ELEMENTTYPE,Class) with newArraySingleElement because of potential name clashes with newArray(ELEMENTTYPE...)</td></tr>
+<tr><td>6/23/12</td><td>add</td><td>tech</td><td></td><td>Added default equals/hashCode implementations for Iterator and Enumeration</td></tr>
+<tr><td>6/23/12</td><td>add</td><td>api</td><td></td><td>Extended ContainerHelper with method getEnumeration(Map`<`?,?`>`)</td></tr>
+<tr><td>6/23/12</td><td>add</td><td>api</td><td></td><td>Added new class ContainerEqualsUtils that compares container contents not strictly by class</td></tr>
+<tr><td>6/23/12</td><td>add</td><td>api</td><td></td><td>Extended ContainerHelper with newQueue methods</td></tr>
+<tr><td>6/23/12</td><td>change</td><td>tech</td><td>*yes*</td><td>Made NonBlockingStack derive from AbstractList instead of AbstractCollection so that is better comparable to java.util.Stack which is derived from Vector!</td></tr>
+<tr><td>6/20/12</td><td>add</td><td>api</td><td></td><td>Extended Graph API in several places and introduced new ISimpleGraph interface</td></tr>
+<tr><td>6/20/12</td><td>change</td><td>api</td><td></td><td>Deprecated size() and isEmpty() in I(Readonly)AttributeContainer as these names are not specific enough. Instead getAttributeCount() and containsNoAttributes() methods were introduced</td></tr>
+<tr><td>6/18/12</td><td>change</td><td>tech</td><td></td><td>Using the new Version constructor to read ChangeLog release versions</td></tr>
 <tr border="1"><td>6/18/12</td><td colspan="4">_Release *3.6.0*_</td></tr>
 <tr><td>6/18/12</td><td>update</td><td>tech</td><td></td><td>Extended version parser to handle incorrect versions better and to handle the dash character as a separator</td></tr>
 <tr><td>6/18/12</td><td>add</td><td>api</td><td></td><td>Added new method RegExHelper.getAllMatchingGroupValues</td></tr>
