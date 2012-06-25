@@ -45,21 +45,16 @@ public final class TreeSorter
   private TreeSorter ()
   {}
 
-  /**
-   * Sort each level of the passed tree with the specified comparator.
-   * 
-   * @param aTree
-   *        The tree to be sorted.
-   * @param aComparator
-   *        The comparator to be used for sorting the tree items on each level.
-   */
-  public static <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> void sort (@Nonnull final IBasicTree <VALUETYPE, ITEMTYPE> aTree,
-                                                                                         @Nonnull final Comparator <? super VALUETYPE> aComparator)
+  private static <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> void _sort (@Nonnull final IBasicTree <VALUETYPE, ITEMTYPE> aTree,
+                                                                                           @Nonnull final Comparator <? super ITEMTYPE> aComparator)
   {
-    final ComparatorTreeItemValue <VALUETYPE, ITEMTYPE> aRealComp = new ComparatorTreeItemValue <VALUETYPE, ITEMTYPE> (aComparator);
+    if (aTree == null)
+      throw new NullPointerException ("tree");
+    if (aComparator == null)
+      throw new NullPointerException ("comparator");
 
     // sort root manually
-    aTree.getRootItem ().reorderChildItems (aRealComp);
+    aTree.getRootItem ().reorderChildItems (aComparator);
 
     // and now start iterating
     TreeWalker.walkTree (aTree, new DefaultHierarchyWalkerCallback <ITEMTYPE> ()
@@ -68,9 +63,24 @@ public final class TreeSorter
       public void onItemBeforeChildren (@Nullable final ITEMTYPE aTreeItem)
       {
         if (aTreeItem != null)
-          aTreeItem.reorderChildItems (aRealComp);
+          aTreeItem.reorderChildItems (aComparator);
       }
     });
+  }
+
+  /**
+   * Sort each level of the passed tree with the specified comparator.
+   * 
+   * @param aTree
+   *        The tree to be sorted.
+   * @param aValueComparator
+   *        The comparator to be used for sorting the tree items on each level.
+   */
+  public static <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> void sort (@Nonnull final IBasicTree <VALUETYPE, ITEMTYPE> aTree,
+                                                                                         @Nonnull final Comparator <? super VALUETYPE> aValueComparator)
+  {
+    final ComparatorTreeItemValue <VALUETYPE, ITEMTYPE> aItemComp = new ComparatorTreeItemValue <VALUETYPE, ITEMTYPE> (aValueComparator);
+    _sort (aTree, aItemComp);
   }
 
   /**
@@ -83,20 +93,7 @@ public final class TreeSorter
    */
   public static <VALUETYPE extends Comparable <? super VALUETYPE>, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> void sort (@Nonnull final IBasicTree <VALUETYPE, ITEMTYPE> aTree)
   {
-    final ComparatorTreeItemValueComparable <VALUETYPE, ITEMTYPE> aRealComp = new ComparatorTreeItemValueComparable <VALUETYPE, ITEMTYPE> ();
-
-    // sort root manually
-    aTree.getRootItem ().reorderChildItems (aRealComp);
-
-    // and now start iterating
-    TreeWalker.walkTree (aTree, new DefaultHierarchyWalkerCallback <ITEMTYPE> ()
-    {
-      @Override
-      public void onItemBeforeChildren (@Nullable final ITEMTYPE aTreeItem)
-      {
-        if (aTreeItem != null)
-          aTreeItem.reorderChildItems (aRealComp);
-      }
-    });
+    final ComparatorTreeItemValueComparable <VALUETYPE, ITEMTYPE> aItemComp = new ComparatorTreeItemValueComparable <VALUETYPE, ITEMTYPE> ();
+    _sort (aTree, aItemComp);
   }
 }
