@@ -27,7 +27,6 @@ import javax.xml.bind.ValidationEventHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.phloc.commons.annotations.CodingStyleguideUnaware;
 import com.phloc.commons.error.EErrorLevel;
 import com.phloc.commons.error.IResourceError;
 
@@ -39,7 +38,6 @@ import com.phloc.commons.error.IResourceError;
  * @author philip
  */
 @NotThreadSafe
-@CodingStyleguideUnaware ("logger too visible by purpose")
 public class LoggingValidationEventHandler extends AbstractValidationEventHandler
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (LoggingValidationEventHandler.class);
