@@ -245,6 +245,13 @@ public final class URLUtils
     return getAsURLData (sHref, aParameterDecoder);
   }
 
+  /**
+   * Parses the passed URL into a structured form
+   * 
+   * @param sHref
+   *        The URL to be parsed
+   * @return the corresponding {@link IURLData} representation of the passed URL
+   */
   @Nonnull
   public static IURLData getAsURLData (@Nonnull final String sHref, @Nonnull final IDecoder <String> aParameterDecoder)
   {
