@@ -31,7 +31,6 @@ import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
-import com.phloc.commons.url.protocol.URLProtocolRegistry;
 
 /**
  * Abstraction of the string parts of a URL but much simpler (and faster) than
