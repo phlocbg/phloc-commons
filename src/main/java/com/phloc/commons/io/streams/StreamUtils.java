@@ -50,6 +50,7 @@ import com.phloc.commons.callback.INonThrowingRunnableWithParameter;
 import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.io.IInputStreamProvider;
+import com.phloc.commons.mock.IMockException;
 import com.phloc.commons.mutable.MutableLong;
 import com.phloc.commons.state.ESuccess;
 import com.phloc.commons.stats.IStatisticsHandlerSize;
@@ -136,7 +137,8 @@ public final class StreamUtils
       catch (final IOException ex)
       {
         if (!isKnownEOFException (ex))
-          s_aLogger.error ("Failed to close stream " + aCloseable.getClass ().getName (), ex);
+          s_aLogger.error ("Failed to close stream " + aCloseable.getClass ().getName (),
+                           ex instanceof IMockException ? null : ex);
       }
     }
     return ESuccess.FAILURE;
@@ -174,7 +176,8 @@ public final class StreamUtils
       catch (final IOException ex)
       {
         if (!isKnownEOFException (ex))
-          s_aLogger.error ("Failed to close object " + aCloseable.getClass ().getName (), ex);
+          s_aLogger.error ("Failed to close object " + aCloseable.getClass ().getName (),
+                           ex instanceof IMockException ? null : ex);
       }
     }
 
@@ -204,7 +207,8 @@ public final class StreamUtils
       catch (final IOException ex)
       {
         if (!isKnownEOFException (ex))
-          s_aLogger.error ("Failed to flush object " + aFlushable.getClass ().getName (), ex);
+          s_aLogger.error ("Failed to flush object " + aFlushable.getClass ().getName (),
+                           ex instanceof IMockException ? null : ex);
       }
     return ESuccess.FAILURE;
   }
@@ -497,7 +501,7 @@ public final class StreamUtils
     catch (final IOException ex)
     {
       if (!isKnownEOFException (ex))
-        s_aLogger.error ("Failed to copy from stream to stream", ex);
+        s_aLogger.error ("Failed to copy from stream to stream", ex instanceof IMockException ? null : ex);
     }
     finally
     {
@@ -970,7 +974,7 @@ public final class StreamUtils
     catch (final IOException ex)
     {
       if (!isKnownEOFException (ex))
-        s_aLogger.error ("Failed to copy from stream to stream", ex);
+        s_aLogger.error ("Failed to copy from reader to writer", ex instanceof IMockException ? null : ex);
     }
     finally
     {
@@ -1420,7 +1424,7 @@ public final class StreamUtils
           }
           catch (final IOException ex)
           {
-            s_aLogger.error ("Failed to read from input stream", ex);
+            s_aLogger.error ("Failed to read from input stream", ex instanceof IMockException ? null : ex);
           }
           finally
           {
@@ -1488,7 +1492,7 @@ public final class StreamUtils
           }
           catch (final IOException ex)
           {
-            s_aLogger.error ("Failed to read from input stream", ex);
+            s_aLogger.error ("Failed to read from input stream", ex instanceof IMockException ? null : ex);
           }
           finally
           {
@@ -1542,7 +1546,7 @@ public final class StreamUtils
     }
     catch (final IOException ex)
     {
-      s_aLogger.error ("Failed to write to output stream", ex);
+      s_aLogger.error ("Failed to write to output stream", ex instanceof IMockException ? null : ex);
       return ESuccess.FAILURE;
     }
     finally
