@@ -198,4 +198,37 @@ public enum EURLProtocol implements IURLProtocol
   {
     return this == HTTP || this == HTTPS || this == MAILTO || this == SHTTP;
   }
+
+  @Nullable
+  @Deprecated
+  public static IURLProtocol getProtocol (@Nullable final CharSequence sURL)
+  {
+    return URLProtocolRegistry.getProtocol (sURL);
+  }
+
+  @Nullable
+  @Deprecated
+  public static IURLProtocol getProtocol (@Nullable final ISimpleURL aURL)
+  {
+    return URLProtocolRegistry.getProtocol (aURL);
+  }
+
+  @Deprecated
+  public static boolean hasKnownProtocol (@Nullable final CharSequence sURL)
+  {
+    return URLProtocolRegistry.hasKnownProtocol (sURL);
+  }
+
+  @Deprecated
+  public static boolean hasKnownProtocol (@Nullable final IURLData aURL)
+  {
+    return URLProtocolRegistry.hasKnownProtocol (aURL);
+  }
+
+  @Nullable
+  @Deprecated
+  public static String getWithoutProtocol (@Nullable final String sURL)
+  {
+    return URLProtocolRegistry.getWithoutProtocol (sURL);
+  }
 }
