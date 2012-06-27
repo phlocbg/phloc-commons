@@ -79,6 +79,17 @@ public final class ReadonlySimpleURL implements ISimpleURL
     m_sAnchor = aURL.getAnchor ();
   }
 
+  @Nullable
+  public IURLProtocol getProtocol ()
+  {
+    return URLProtocolRegistry.getProtocol (m_sPath);
+  }
+
+  public boolean hasKnownProtocol ()
+  {
+    return URLProtocolRegistry.hasKnownProtocol (m_sPath);
+  }
+
   @Nonnull
   public String getPath ()
   {
@@ -102,11 +113,6 @@ public final class ReadonlySimpleURL implements ISimpleURL
   public String getParam (@Nullable final String sKey)
   {
     return m_aParams == null ? null : m_aParams.get (sKey);
-  }
-
-  public boolean hasKnownProtocol ()
-  {
-    return URLProtocolRegistry.hasKnownProtocol (m_sPath);
   }
 
   @Nonnull
