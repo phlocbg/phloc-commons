@@ -83,15 +83,21 @@ public final class SimpleURL implements ISimpleURL, ICloneable <SimpleURL>
     m_sAnchor = aURL.getAnchor ();
   }
 
-  @Nonnull
-  public String getPath ()
+  @Nullable
+  public IURLProtocol getProtocol ()
   {
-    return m_sPath;
+    return URLProtocolRegistry.getProtocol (m_sPath);
   }
 
   public boolean hasKnownProtocol ()
   {
     return URLProtocolRegistry.hasKnownProtocol (m_sPath);
+  }
+
+  @Nonnull
+  public String getPath ()
+  {
+    return m_sPath;
   }
 
   @Nonnull

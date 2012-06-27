@@ -63,6 +63,17 @@ public final class URLData implements IURLData
     m_sAnchor = sAnchor;
   }
 
+  @Nullable
+  public IURLProtocol getProtocol ()
+  {
+    return URLProtocolRegistry.getProtocol (m_sPath);
+  }
+
+  public boolean hasKnownProtocol ()
+  {
+    return URLProtocolRegistry.hasKnownProtocol (m_sPath);
+  }
+
   @Nonnull
   public String getPath ()
   {

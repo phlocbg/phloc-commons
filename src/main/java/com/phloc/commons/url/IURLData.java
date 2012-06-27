@@ -32,7 +32,20 @@ import javax.annotation.Nullable;
 public interface IURLData extends Serializable
 {
   /**
-   * @return The path part of the URL (everything before the "?" and the "#")
+   * @return The protocol used. May be <code>null</code> for an unknown
+   *         protocol.
+   */
+  @Nullable
+  IURLProtocol getProtocol ();
+
+  /**
+   * @return <code>true</code> if the URL has a known protocol
+   */
+  boolean hasKnownProtocol ();
+
+  /**
+   * @return The path part of the URL (everything before the "?" and the "#",
+   *         incl. the protocol)
    */
   @Nonnull
   String getPath ();

@@ -146,9 +146,29 @@ public enum EURLProtocol implements IURLProtocol
    *        The URL to check. May be <code>null</code>.
    * @return <code>true</code> if the passed URL starts with this protocol
    */
+  @Deprecated
+  public boolean covers (@Nullable final CharSequence sURL)
+  {
+    return isUsedInURL (sURL);
+  }
+
+  /**
+   * Tells if the passed String (URL) belongs to this protocol.
+   * 
+   * @param sURL
+   *        The URL to check. May be <code>null</code>.
+   * @return <code>true</code> if the passed URL starts with this protocol
+   */
   public boolean isUsedInURL (@Nullable final CharSequence sURL)
   {
     return sURL != null && StringHelper.startsWith (sURL, m_sProtocol);
+  }
+
+  @Nullable
+  @Deprecated
+  public String ensureProtocol (@Nullable final String sURL)
+  {
+    return getWithProtocol (sURL);
   }
 
   @Nullable
@@ -157,6 +177,13 @@ public enum EURLProtocol implements IURLProtocol
     if (sURL == null)
       return sURL;
     return m_sProtocol + sURL;
+  }
+
+  @Nullable
+  @Deprecated
+  public String ensureProtocolIfNone (@Nullable final String sURL)
+  {
+    return getWithProtocolIfNone (sURL);
   }
 
   @Nullable
