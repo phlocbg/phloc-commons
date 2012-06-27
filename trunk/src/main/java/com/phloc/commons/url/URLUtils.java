@@ -49,8 +49,6 @@ import com.phloc.commons.microdom.reader.XMLMapHandler;
 import com.phloc.commons.regex.RegExHelper;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.url.encode.URLParameterEncoder;
-import com.phloc.commons.url.protocol.IURLProtocol;
-import com.phloc.commons.url.protocol.URLProtocolRegistry;
 
 @Immutable
 public final class URLUtils

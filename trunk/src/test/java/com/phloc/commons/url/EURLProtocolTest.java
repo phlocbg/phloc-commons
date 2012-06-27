@@ -15,13 +15,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.url.protocol;
+package com.phloc.commons.url;
 
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import com.phloc.commons.string.StringHelper;
+import com.phloc.commons.url.EURLProtocol;
 
 /**
  * Test class for class {@link EURLProtocol}.

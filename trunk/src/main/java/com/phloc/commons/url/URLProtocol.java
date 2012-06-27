@@ -1,4 +1,4 @@
-package com.phloc.commons.url.protocol;
+package com.phloc.commons.url;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

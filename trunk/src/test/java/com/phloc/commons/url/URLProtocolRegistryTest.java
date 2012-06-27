@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.url.protocol;
+package com.phloc.commons.url;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
@@ -24,7 +24,10 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
+import com.phloc.commons.url.EURLProtocol;
 import com.phloc.commons.url.URLData;
+import com.phloc.commons.url.URLProtocol;
+import com.phloc.commons.url.URLProtocolRegistry;
 
 /**
  * Test class for class {@link URLProtocolRegistry}.

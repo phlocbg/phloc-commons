@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.url.protocol;
+package com.phloc.commons.url;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -33,7 +33,6 @@ import org.slf4j.LoggerFactory;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.lang.ServiceLoaderBackport;
-import com.phloc.commons.url.IURLData;
 
 /**
  * A central registry for supported URL protocols. By default, the registry will
