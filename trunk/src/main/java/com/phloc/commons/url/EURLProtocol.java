@@ -20,6 +20,7 @@ package com.phloc.commons.url;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.annotations.DevelopersNote;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.string.StringHelper;
 
@@ -30,6 +31,8 @@ import com.phloc.commons.string.StringHelper;
  * 
  * @author philip
  */
+@Deprecated
+@DevelopersNote ("Use the one from the new .protocol child package!")
 public enum EURLProtocol
 {
   /** embedded data */
@@ -139,6 +142,27 @@ public enum EURLProtocol
   }
 
   @Nullable
+  public String ensureProtocol (@Nullable final String sURL)
+  {
+    if (sURL == null)
+      return null;
+    return m_sProtocol + getWithoutProtocol (sURL);
+  }
+
+  @Nullable
+  public String ensureProtocolIfNone (@Nullable final String sURL)
+  {
+    if (sURL == null || hasKnownProtocol (sURL))
+      return sURL;
+    return m_sProtocol + sURL;
+  }
+
+  public boolean allowsForQueryParameters ()
+  {
+    return this == HTTP || this == HTTPS || this == MAILTO;
+  }
+
+  @Nullable
   public static EURLProtocol getProtocol (@Nullable final CharSequence sURL)
   {
     if (sURL != null)
@@ -169,26 +193,5 @@ public enum EURLProtocol
   {
     final EURLProtocol eProtocol = getProtocol (sURL);
     return eProtocol == null ? sURL : sURL.substring (eProtocol.getProtocol ().length ());
-  }
-
-  @Nullable
-  public String ensureProtocol (@Nullable final String sURL)
-  {
-    if (sURL == null)
-      return null;
-    return m_sProtocol + getWithoutProtocol (sURL);
-  }
-
-  @Nullable
-  public String ensureProtocolIfNone (@Nullable final String sURL)
-  {
-    if (sURL == null || hasKnownProtocol (sURL))
-      return sURL;
-    return m_sProtocol + sURL;
-  }
-
-  public boolean allowsForQueryParameters ()
-  {
-    return this == HTTP || this == HTTPS || this == MAILTO;
   }
 }

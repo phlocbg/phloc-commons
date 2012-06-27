@@ -49,6 +49,8 @@ import com.phloc.commons.microdom.reader.XMLMapHandler;
 import com.phloc.commons.regex.RegExHelper;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.url.encode.URLParameterEncoder;
+import com.phloc.commons.url.protocol.IURLProtocol;
+import com.phloc.commons.url.protocol.URLProtocolRegistry;
 
 @Immutable
 public final class URLUtils
@@ -252,7 +254,7 @@ public final class URLUtils
       throw new NullPointerException ("parameterDecoder");
 
     // Is it a protocol that does not allow for query parameters?
-    final EURLProtocol eProtocol = EURLProtocol.getProtocol (sHref);
+    final IURLProtocol eProtocol = URLProtocolRegistry.getProtocol (sHref);
     if (eProtocol != null && !eProtocol.allowsForQueryParameters ())
       return new URLData (sHref, null, null);
 
