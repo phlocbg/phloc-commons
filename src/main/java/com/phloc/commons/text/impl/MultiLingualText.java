@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.callback.IChangeNotify;
@@ -95,7 +96,7 @@ public final class MultiLingualText extends TextProvider implements IMultiLingua
   }
 
   @Nonnull
-  public EChange addText (final Locale aContentLocale, final String sText)
+  public EChange addText (@Nonnull final Locale aContentLocale, @Nullable final String sText)
   {
     if (aContentLocale == null)
       throw new NullPointerException ("locale");
@@ -111,7 +112,7 @@ public final class MultiLingualText extends TextProvider implements IMultiLingua
   }
 
   @Nonnull
-  public EChange setText (final Locale aContentLocale, final String sText)
+  public EChange setText (@Nonnull final Locale aContentLocale, @Nullable final String sText)
   {
     if (aContentLocale == null)
       throw new NullPointerException ("locale");

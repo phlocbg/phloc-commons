@@ -23,7 +23,7 @@ import static org.junit.Assert.fail;
 import java.io.File;
 import java.util.List;
 
-import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.junit.Test;
 
@@ -82,10 +82,11 @@ public final class FileSystemFolderTreeTest
                             new DefaultHierarchyWalkerCallback <DefaultFolderTreeItem <String, File, List <File>>> ()
                             {
                               @Override
-                              public void onItemBeforeChildren (@Nonnull final DefaultFolderTreeItem <String, File, List <File>> aFolder)
+                              public void onItemBeforeChildren (@Nullable final DefaultFolderTreeItem <String, File, List <File>> aFolder)
                               {
-                                for (final File aFile : aFolder.getData ())
-                                  assertTrue (aFile.isFile ());
+                                if (aFolder != null)
+                                  for (final File aFile : aFolder.getData ())
+                                    assertTrue (aFile.isFile ());
                               }
                             });
 

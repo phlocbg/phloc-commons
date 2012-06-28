@@ -17,7 +17,8 @@
  */
 package com.phloc.commons.filter;
 
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.meta.When;
 
 /**
  * A generic filter interface for simple object selection. If you need an
@@ -38,5 +39,5 @@ public interface IFilter <DATATYPE>
    * @return <code>true</code> if the object match the filter,
    *         <code>false</code> otherwise.
    */
-  boolean matchesFilter (@Nullable DATATYPE aValue);
+  boolean matchesFilter (@Nonnull (when = When.MAYBE) DATATYPE aValue);
 }

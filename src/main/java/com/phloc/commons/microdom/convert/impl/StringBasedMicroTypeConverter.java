@@ -18,7 +18,9 @@
 package com.phloc.commons.microdom.convert.impl;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
+import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.convert.IMicroTypeConverter;
 import com.phloc.commons.typeconvert.TypeConverter;
@@ -42,7 +44,9 @@ public final class StringBasedMicroTypeConverter implements IMicroTypeConverter
   }
 
   @Nonnull
-  public IMicroElement convertToMicroElement (final Object aObject, final String sNamespaceURI, final String sTagName)
+  public IMicroElement convertToMicroElement (@Nonnull final Object aObject,
+                                              @Nullable final String sNamespaceURI,
+                                              @Nonnull @Nonempty final String sTagName)
   {
     final String sValue = TypeConverter.convertIfNecessary (aObject, String.class);
     return StringMicroTypeConverter.getInstance ().convertToMicroElement (sValue, sNamespaceURI, sTagName);

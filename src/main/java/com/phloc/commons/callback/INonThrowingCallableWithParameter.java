@@ -19,7 +19,9 @@ package com.phloc.commons.callback;
 
 import java.util.concurrent.Callable;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.meta.When;
 
 /**
  * Like the {@link Callable} interface but not throwing an exception and
@@ -42,5 +44,5 @@ public interface INonThrowingCallableWithParameter <DATATYPE, PARAMTYPE> extends
    * @return Anything
    */
   @Nullable
-  DATATYPE call (@Nullable PARAMTYPE aParameter);
+  DATATYPE call (@Nonnull (when = When.MAYBE) PARAMTYPE aParameter);
 }

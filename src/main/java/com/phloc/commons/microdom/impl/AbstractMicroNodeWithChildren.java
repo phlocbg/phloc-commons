@@ -239,7 +239,7 @@ abstract class AbstractMicroNodeWithChildren extends AbstractMicroNode
   }
 
   @OverridingMethodsMustInvokeSuper
-  public boolean isEqualContent (final IMicroNode o)
+  public boolean isEqualContent (@Nullable final IMicroNode o)
   {
     if (o == this)
       return true;

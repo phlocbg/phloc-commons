@@ -18,7 +18,7 @@
 package com.phloc.commons.factory;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.meta.When;
 
 /**
  * This is a generic interface for creating objects of a certain type that have
@@ -43,5 +43,5 @@ public interface IHierarchicalFactoryWithParameter <DATATYPE, PARAMTYPE> extends
    *        the implementation.
    * @return The created object.
    */
-  DATATYPE create (@Nonnull DATATYPE aParent, @Nullable PARAMTYPE aParam);
+  DATATYPE create (@Nonnull DATATYPE aParent, @Nonnull (when = When.MAYBE) PARAMTYPE aParam);
 }

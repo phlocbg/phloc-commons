@@ -93,7 +93,7 @@ public class TextProvider extends AbstractTextProvider implements ISimpleMultiLi
   }
 
   @Nonnull
-  protected final TextProvider internalSetText (@Nonnull final Locale aContentLocale, @Nonnull final String sValue)
+  protected final TextProvider internalSetText (@Nonnull final Locale aContentLocale, @Nullable final String sValue)
   {
     if (GlobalDebug.isDebugMode () && sValue != null)
       _performDebugOnlyConsistencyChecks (sValue);

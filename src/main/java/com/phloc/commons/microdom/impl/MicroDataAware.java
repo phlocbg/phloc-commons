@@ -49,10 +49,10 @@ final class MicroDataAware implements IMicroDataAware, ICloneable <MicroDataAwar
     return m_aData;
   }
 
-  public void setData (@Nullable final CharSequence sData)
+  public void setData (@Nullable final CharSequence aData)
   {
     m_aData.setLength (0);
-    m_aData.append (sData);
+    m_aData.append (aData);
   }
 
   public void appendData (@Nullable final CharSequence sData)

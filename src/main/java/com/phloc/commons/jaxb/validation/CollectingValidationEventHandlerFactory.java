@@ -18,6 +18,7 @@
 package com.phloc.commons.jaxb.validation;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.xml.bind.ValidationEventHandler;
 
 /**
@@ -43,7 +44,7 @@ public class CollectingValidationEventHandlerFactory implements IValidationEvent
   }
 
   @Nonnull
-  public CollectingValidationEventHandler create (final ValidationEventHandler aOldEventHandler)
+  public CollectingValidationEventHandler create (@Nullable final ValidationEventHandler aOldEventHandler)
   {
     return new CollectingValidationEventHandler (m_bEncapsulateHandler ? aOldEventHandler : null);
   }

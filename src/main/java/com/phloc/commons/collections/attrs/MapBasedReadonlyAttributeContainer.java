@@ -52,9 +52,9 @@ public final class MapBasedReadonlyAttributeContainer extends AbstractReadonlyAt
     m_aAttrs = new HashMap <String, Object> (aMap);
   }
 
-  public boolean containsAttribute (final String name)
+  public boolean containsAttribute (@Nullable final String sName)
   {
-    return m_aAttrs.containsKey (name);
+    return m_aAttrs.containsKey (sName);
   }
 
   @Nonnull
@@ -85,9 +85,9 @@ public final class MapBasedReadonlyAttributeContainer extends AbstractReadonlyAt
   }
 
   @Nullable
-  public Object getAttributeObject (final String name)
+  public Object getAttributeObject (@Nullable final String sName)
   {
-    return m_aAttrs.get (name);
+    return m_aAttrs.get (sName);
   }
 
   @Nonnegative

@@ -2236,7 +2236,7 @@ public final class StringHelper
    * @deprecated Use {@link #getIndexOf(String,char)} instead
    */
   @Deprecated
-  public static int indexOf (@Nullable final String sText, @Nullable final char cSearch)
+  public static int indexOf (@Nullable final String sText, final char cSearch)
   {
     return getIndexOf (sText, cSearch);
   }
@@ -2252,7 +2252,7 @@ public final class StringHelper
    *         if any parameter was <code>null</code>.
    * @see String#indexOf(int)
    */
-  public static int getIndexOf (@Nullable final String sText, @Nullable final char cSearch)
+  public static int getIndexOf (@Nullable final String sText, final char cSearch)
   {
     return sText != null && sText.length () >= 1 ? sText.indexOf (cSearch) : -1;
   }
@@ -2316,7 +2316,7 @@ public final class StringHelper
    * @see String#indexOf(int)
    */
   public static int getIndexOfIgnoreCase (@Nullable final String sText,
-                                          @Nullable final char cSearch,
+                                          final char cSearch,
                                           @Nonnull final Locale aSortLocale)
   {
     return sText != null && sText.length () >= 1 ? sText.toLowerCase (aSortLocale)
@@ -2350,7 +2350,7 @@ public final class StringHelper
    *         <code>false</code> otherwise.
    * @see String#contains(CharSequence)
    */
-  public static boolean contains (@Nullable final String sText, @Nullable final char cSearch)
+  public static boolean contains (@Nullable final String sText, final char cSearch)
   {
     return getIndexOf (sText, cSearch) > -1;
   }
@@ -2389,7 +2389,7 @@ public final class StringHelper
    * @see String#indexOf(int)
    */
   public static boolean containsIgnoreCase (@Nullable final String sText,
-                                            @Nullable final char cSearch,
+                                            final char cSearch,
                                             @Nonnull final Locale aSortLocale)
   {
     return getIndexOfIgnoreCase (sText, cSearch, aSortLocale) > -1;

@@ -17,7 +17,9 @@
  */
 package com.phloc.commons.convert;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.meta.When;
 
 /**
  * This is a very simple type conversion interface for compile type conversions.
@@ -38,5 +40,5 @@ public interface IUnidirectionalConverter <SRCTYPE, DSTTYPE>
    * @return The converted value.
    */
   @Nullable
-  DSTTYPE convert (@Nullable SRCTYPE aSource);
+  DSTTYPE convert (@Nonnull (when = When.MAYBE) SRCTYPE aSource);
 }

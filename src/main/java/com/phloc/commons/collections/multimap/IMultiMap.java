@@ -22,6 +22,7 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.meta.When;
 
 import com.phloc.commons.state.EChange;
 
@@ -49,7 +50,7 @@ public interface IMultiMap <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VAL
    * @return {@link EChange}
    */
   @Nonnull
-  EChange putSingle (@Nullable KEYTYPE aKey, @Nullable VALUETYPE aValue);
+  EChange putSingle (@Nonnull (when = When.MAYBE) KEYTYPE aKey, @Nullable VALUETYPE aValue);
 
   /**
    * Add all values into the container identified by the passed key-value-map.
@@ -62,7 +63,7 @@ public interface IMultiMap <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VAL
   EChange putAllIn (@Nonnull Map <? extends KEYTYPE, ? extends VALUETYPE> aMap);
 
   @Nonnull
-  EChange removeSingle (@Nullable KEYTYPE aKey, @Nullable VALUETYPE aValue);
+  EChange removeSingle (@Nonnull (when = When.MAYBE) KEYTYPE aKey, @Nullable VALUETYPE aValue);
 
-  boolean containsSingle (@Nullable KEYTYPE aKey, @Nullable VALUETYPE aValue);
+  boolean containsSingle (@Nonnull (when = When.MAYBE) KEYTYPE aKey, @Nullable VALUETYPE aValue);
 }

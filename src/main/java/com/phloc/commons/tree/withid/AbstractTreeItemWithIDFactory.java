@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.tree.withid;
 
+import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.annotations.OverrideOnDemand;
@@ -37,13 +38,13 @@ public abstract class AbstractTreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYP
                                                                                                                                           ITreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE>
 {
   @OverrideOnDemand
-  public void onRemoveItem (final ITEMTYPE aItem)
+  public void onRemoveItem (@Nonnull final ITEMTYPE aItem)
   {
     // it doesn't matter to us
   }
 
   @OverrideOnDemand
-  public void onAddItem (final ITEMTYPE aItem)
+  public void onAddItem (@Nonnull final ITEMTYPE aItem)
   {
     // it doesn't matter to us
   }

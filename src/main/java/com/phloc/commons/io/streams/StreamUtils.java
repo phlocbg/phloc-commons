@@ -838,7 +838,7 @@ public final class StreamUtils
   @Nonnull
   public static ESuccess copyReaderToWriterWithLimit (@WillClose @Nullable final Reader aReader,
                                                       @WillNotClose @Nullable final Writer aWriter,
-                                                      @Nullable final long nLimit)
+                                                      final long nLimit)
   {
     return copyReaderToWriter (aReader, aWriter, new char [DEFAULT_BUFSIZE], (MutableLong) null, Long.valueOf (nLimit));
   }

@@ -138,7 +138,7 @@ public final class MultiLingualTextThreadSafe implements IMultiLingualText
   }
 
   @Nonnull
-  public EChange addText (final Locale aContentLocale, final String sText)
+  public EChange addText (final Locale aContentLocale, @Nullable final String sText)
   {
     m_aRWLock.writeLock ().lock ();
     try
@@ -152,7 +152,7 @@ public final class MultiLingualTextThreadSafe implements IMultiLingualText
   }
 
   @Nonnull
-  public EChange setText (final Locale aContentLocale, final String sText)
+  public EChange setText (final Locale aContentLocale, @Nullable final String sText)
   {
     m_aRWLock.writeLock ().lock ();
     try
