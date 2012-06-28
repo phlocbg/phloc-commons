@@ -91,7 +91,7 @@ public final class MicroProcessingInstruction extends AbstractMicroNode implemen
     return new MicroProcessingInstruction (m_sTarget, m_sData);
   }
 
-  public boolean isEqualContent (final IMicroNode o)
+  public boolean isEqualContent (@Nullable final IMicroNode o)
   {
     if (o == this)
       return true;

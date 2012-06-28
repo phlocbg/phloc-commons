@@ -17,7 +17,8 @@
  */
 package com.phloc.commons.callback;
 
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.meta.When;
 
 /**
  * Simple callback interface to allow generic iteration with a typed callback
@@ -38,5 +39,5 @@ public interface IThrowingRunnableWithParameter <PARAMTYPE>
    * @throws Exception
    *         In case something goes wrong
    */
-  void run (@Nullable PARAMTYPE aCurrentObject) throws Exception;
+  void run (@Nonnull (when = When.MAYBE) PARAMTYPE aCurrentObject) throws Exception;
 }

@@ -20,7 +20,9 @@ package com.phloc.commons.parent;
 import java.util.Collection;
 
 import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.meta.When;
 
 /**
  * This interface can be used to generically resolved children of a certain
@@ -41,7 +43,7 @@ public interface IChildrenProvider <CHILDTYPE>
    * @return <code>true</code> if this item has children, <code>false</code>
    *         otherwise.
    */
-  boolean hasChildren (@Nullable CHILDTYPE aCurrent);
+  boolean hasChildren (@Nonnull (when = When.MAYBE) CHILDTYPE aCurrent);
 
   /**
    * @param aCurrent
@@ -50,7 +52,7 @@ public interface IChildrenProvider <CHILDTYPE>
    * @return The number of contained direct children. Always &ge; 0.
    */
   @Nonnegative
-  int getChildCount (@Nullable CHILDTYPE aCurrent);
+  int getChildCount (@Nonnull (when = When.MAYBE) CHILDTYPE aCurrent);
 
   /**
    * Get the children of the passed object.
@@ -65,5 +67,5 @@ public interface IChildrenProvider <CHILDTYPE>
    *         the same object returned <code>true</code>.
    */
   @Nullable
-  Collection <? extends CHILDTYPE> getChildren (@Nullable CHILDTYPE aCurrent);
+  Collection <? extends CHILDTYPE> getChildren (@Nonnull (when = When.MAYBE) CHILDTYPE aCurrent);
 }

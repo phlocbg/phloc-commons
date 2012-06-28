@@ -125,10 +125,13 @@ public final class ChangeLogSerializer
     if (aDoc == null)
       return null;
 
-    final DateFormat aDF = new SimpleDateFormat (DATE_FORMAT);
     final IMicroElement eRoot = aDoc.getDocumentElement ();
+    if (eRoot == null)
+      return null;
+
     final ChangeLog ret = new ChangeLog (new Version (eRoot.getAttribute (ATTR_VERSION)),
                                          eRoot.getAttribute (ATTR_COMPONENT));
+    final DateFormat aDF = new SimpleDateFormat (DATE_FORMAT);
 
     // Add all entries
     for (final IMicroElement eElement : eRoot.getChildElements ())

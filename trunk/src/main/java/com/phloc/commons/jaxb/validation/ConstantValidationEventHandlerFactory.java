@@ -36,7 +36,7 @@ public class ConstantValidationEventHandlerFactory implements IValidationEventHa
   }
 
   @Nullable
-  public ValidationEventHandler create (final ValidationEventHandler aOldEventHandler)
+  public ValidationEventHandler create (@Nullable final ValidationEventHandler aOldEventHandler)
   {
     return m_aEventHandler;
   }

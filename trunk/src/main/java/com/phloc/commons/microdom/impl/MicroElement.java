@@ -129,7 +129,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
   }
 
   @Nonnull
-  public IMicroElement setAttribute (final String sAttrName, final String sAttrValue)
+  public IMicroElement setAttribute (@Nonnull @Nonempty final String sAttrName, @Nullable final String sAttrValue)
   {
     if (StringHelper.hasNoText (sAttrName))
       throw new IllegalArgumentException ("No valid attribute name passed");
@@ -166,13 +166,13 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
   }
 
   @Nonnull
-  public IMicroElement setAttribute (@Nonnull final String sAttrName, @Nullable final int nAttrValue)
+  public IMicroElement setAttribute (@Nonnull final String sAttrName, final int nAttrValue)
   {
     return setAttribute (sAttrName, Integer.toString (nAttrValue));
   }
 
   @Nonnull
-  public IMicroElement setAttribute (@Nonnull final String sAttrName, @Nullable final long nAttrValue)
+  public IMicroElement setAttribute (@Nonnull final String sAttrName, final long nAttrValue)
   {
     return setAttribute (sAttrName, Long.toString (nAttrValue));
   }
@@ -543,7 +543,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
   }
 
   @Override
-  public boolean isEqualContent (final IMicroNode o)
+  public boolean isEqualContent (@Nullable final IMicroNode o)
   {
     if (o == this)
       return true;

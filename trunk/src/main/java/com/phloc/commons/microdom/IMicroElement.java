@@ -111,7 +111,7 @@ public interface IMicroElement extends IMicroNodeWithChildren
    * @return this
    */
   @Nonnull
-  IMicroElement setAttribute (@Nonnull String sAttrName, @Nullable int nAttrValue);
+  IMicroElement setAttribute (@Nonnull String sAttrName, int nAttrValue);
 
   /**
    * Set an attribute value of this element. This is a shortcut for
@@ -124,7 +124,7 @@ public interface IMicroElement extends IMicroNodeWithChildren
    * @return this
    */
   @Nonnull
-  IMicroElement setAttribute (@Nonnull String sAttrName, @Nullable long nAttrValue);
+  IMicroElement setAttribute (@Nonnull String sAttrName, long nAttrValue);
 
   /**
    * Set an attribute value of this element. If the type of the value is not

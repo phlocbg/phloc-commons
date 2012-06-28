@@ -39,7 +39,7 @@ public interface IAppendable <THISTYPE extends IAppendable <THISTYPE>>
    * @return this
    */
   @Nonnull
-  THISTYPE append (@Nullable boolean x);
+  THISTYPE append (boolean x);
 
   /**
    * @param x
@@ -47,7 +47,7 @@ public interface IAppendable <THISTYPE extends IAppendable <THISTYPE>>
    * @return this
    */
   @Nonnull
-  THISTYPE append (@Nullable byte x);
+  THISTYPE append (byte x);
 
   /**
    * @param x
@@ -55,7 +55,7 @@ public interface IAppendable <THISTYPE extends IAppendable <THISTYPE>>
    * @return this
    */
   @Nonnull
-  THISTYPE append (@Nullable char x);
+  THISTYPE append (char x);
 
   /**
    * @param x
@@ -63,7 +63,7 @@ public interface IAppendable <THISTYPE extends IAppendable <THISTYPE>>
    * @return this
    */
   @Nonnull
-  THISTYPE append (@Nullable double x);
+  THISTYPE append (double x);
 
   /**
    * @param x
@@ -71,7 +71,7 @@ public interface IAppendable <THISTYPE extends IAppendable <THISTYPE>>
    * @return this
    */
   @Nonnull
-  THISTYPE append (@Nullable float x);
+  THISTYPE append (float x);
 
   /**
    * @param x
@@ -79,7 +79,7 @@ public interface IAppendable <THISTYPE extends IAppendable <THISTYPE>>
    * @return this
    */
   @Nonnull
-  THISTYPE append (@Nullable int x);
+  THISTYPE append (int x);
 
   /**
    * @param x
@@ -87,7 +87,7 @@ public interface IAppendable <THISTYPE extends IAppendable <THISTYPE>>
    * @return this
    */
   @Nonnull
-  THISTYPE append (@Nullable long x);
+  THISTYPE append (long x);
 
   /**
    * @param x
@@ -95,7 +95,7 @@ public interface IAppendable <THISTYPE extends IAppendable <THISTYPE>>
    * @return this
    */
   @Nonnull
-  THISTYPE append (@Nullable short x);
+  THISTYPE append (short x);
 
   /**
    * @param x

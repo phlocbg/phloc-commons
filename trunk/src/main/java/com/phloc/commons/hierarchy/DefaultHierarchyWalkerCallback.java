@@ -17,7 +17,8 @@
  */
 package com.phloc.commons.hierarchy;
 
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.meta.When;
 
 import com.phloc.commons.annotations.OverrideOnDemand;
 
@@ -43,10 +44,10 @@ public class DefaultHierarchyWalkerCallback <DATATYPE> extends DefaultHierarchyW
   }
 
   @OverrideOnDemand
-  public void onItemBeforeChildren (@Nullable final DATATYPE aItem)
+  public void onItemBeforeChildren (@Nonnull (when = When.MAYBE) final DATATYPE aItem)
   {}
 
   @OverrideOnDemand
-  public void onItemAfterChildren (@Nullable final DATATYPE aItem)
+  public void onItemAfterChildren (@Nonnull (when = When.MAYBE) final DATATYPE aItem)
   {}
 }

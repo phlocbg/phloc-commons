@@ -66,17 +66,17 @@ public final class MicroComment extends AbstractMicroNode implements IMicroComme
     return m_aData.getData ().toString ();
   }
 
-  public void appendData (final CharSequence sData)
+  public void appendData (@Nullable final CharSequence sData)
   {
     m_aData.appendData (sData);
   }
 
-  public void prependData (final CharSequence sData)
+  public void prependData (@Nullable final CharSequence sData)
   {
     m_aData.prependData (sData);
   }
 
-  public void setData (final CharSequence sData)
+  public void setData (@Nullable final CharSequence sData)
   {
     m_aData.setData (sData);
   }
@@ -87,7 +87,7 @@ public final class MicroComment extends AbstractMicroNode implements IMicroComme
     return new MicroComment (m_aData);
   }
 
-  public boolean isEqualContent (final IMicroNode o)
+  public boolean isEqualContent (@Nullable final IMicroNode o)
   {
     if (o == this)
       return true;

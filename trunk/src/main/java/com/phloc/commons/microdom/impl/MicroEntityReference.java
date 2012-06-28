@@ -18,6 +18,7 @@
 package com.phloc.commons.microdom.impl;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.Nonempty;
@@ -78,7 +79,7 @@ public final class MicroEntityReference extends AbstractMicroNode implements IMi
     return new MicroEntityReference (m_sName);
   }
 
-  public boolean isEqualContent (final IMicroNode o)
+  public boolean isEqualContent (@Nullable final IMicroNode o)
   {
     if (o == this)
       return true;

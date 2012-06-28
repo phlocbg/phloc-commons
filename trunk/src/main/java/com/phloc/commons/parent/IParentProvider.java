@@ -17,7 +17,9 @@
  */
 package com.phloc.commons.parent;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.meta.When;
 
 /**
  * This helper interface is required to build a generic tree. This is required
@@ -39,5 +41,5 @@ public interface IParentProvider <PARENTTYPE>
    *         parent.
    */
   @Nullable
-  PARENTTYPE getParent (@Nullable PARENTTYPE aCurrent);
+  PARENTTYPE getParent (@Nonnull (when = When.MAYBE) PARENTTYPE aCurrent);
 }

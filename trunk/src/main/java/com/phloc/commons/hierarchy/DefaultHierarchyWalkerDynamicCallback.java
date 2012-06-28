@@ -18,7 +18,6 @@
 package com.phloc.commons.hierarchy;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.phloc.commons.annotations.OverrideOnDemand;
 
@@ -45,14 +44,14 @@ public class DefaultHierarchyWalkerDynamicCallback <DATATYPE> extends DefaultHie
 
   @OverrideOnDemand
   @Nonnull
-  public EHierarchyCallbackReturn onItemBeforeChildren (@Nullable final DATATYPE aItem)
+  public EHierarchyCallbackReturn onItemBeforeChildren (@Nonnull final DATATYPE aItem)
   {
     return EHierarchyCallbackReturn.CONTINUE;
   }
 
   @OverrideOnDemand
   @Nonnull
-  public EHierarchyCallbackReturn onItemAfterChildren (@Nullable final DATATYPE aItem)
+  public EHierarchyCallbackReturn onItemAfterChildren (@Nonnull final DATATYPE aItem)
   {
     return EHierarchyCallbackReturn.CONTINUE;
   }

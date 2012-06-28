@@ -323,7 +323,7 @@ public final class FileUtils
   }
 
   @Nonnull
-  public static String getFileSizeDisplay (@Nullable final long nFileSize)
+  public static String getFileSizeDisplay (final long nFileSize)
   {
     return getFileSizeDisplay (nFileSize, 0);
   }

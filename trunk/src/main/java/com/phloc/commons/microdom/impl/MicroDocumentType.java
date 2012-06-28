@@ -93,7 +93,7 @@ public final class MicroDocumentType extends AbstractMicroNode implements IMicro
     return new MicroDocumentType (this);
   }
 
-  public boolean isEqualContent (final IMicroNode o)
+  public boolean isEqualContent (@Nullable final IMicroNode o)
   {
     if (o == this)
       return true;

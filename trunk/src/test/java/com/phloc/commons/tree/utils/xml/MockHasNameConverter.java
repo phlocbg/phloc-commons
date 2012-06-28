@@ -18,6 +18,7 @@
 package com.phloc.commons.tree.utils.xml;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.utils.MicroUtils;
@@ -25,7 +26,7 @@ import com.phloc.commons.name.MockHasName;
 
 public final class MockHasNameConverter implements IConverterTreeXML <MockHasName>
 {
-  public void appendDataValue (final IMicroElement eDataElement, final MockHasName aAnyName)
+  public void appendDataValue (@Nonnull final IMicroElement eDataElement, @Nullable final MockHasName aAnyName)
   {
     final IMicroElement eName = eDataElement.appendElement ("name");
     if (aAnyName != null)
