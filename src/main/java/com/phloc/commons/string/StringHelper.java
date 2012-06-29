@@ -2717,22 +2717,22 @@ public final class StringHelper
    * a <code>null</code> new-value, which is than interpreted as an empty string
    * instead.
    * 
-   * @param sInput
+   * @param sInputString
    *        The input string where the text should be replace. If this parameter
    *        is <code>null</code> or empty, no replacement is done.
-   * @param sOld
+   * @param sSearchText
    *        The string to be replaced. May neither be <code>null</code> nor
    *        empty.
-   * @param sNew
+   * @param aReplacementText
    *        The string with the replacement. May be <code>null</code> or empty.
    * @return The input string as is, if the input string is empty or if the
    *         string to be replaced is not contained.
    */
-  public static String replaceAllSafe (@Nullable final String sInput,
-                                       @Nonnull final String sOld,
-                                       @Nullable final CharSequence sNew)
+  public static String replaceAllSafe (@Nullable final String sInputString,
+                                       @Nonnull final String sSearchText,
+                                       @Nullable final CharSequence aReplacementText)
   {
-    return replaceAll (sInput, sOld, getNotNull (sNew, ""));
+    return replaceAll (sInputString, sSearchText, getNotNull (aReplacementText, ""));
   }
 
   /**
@@ -2743,13 +2743,13 @@ public final class StringHelper
    * method is inherently thread safe since {@link String} is immutable and
    * we're operating on different temporary {@link StringBuilder} objects.
    * 
-   * @param sInput
+   * @param sInputString
    *        The input string where the text should be replace. If this parameter
    *        is <code>null</code> or empty, no replacement is done.
-   * @param sOld
+   * @param sSearchText
    *        The string to be replaced. May neither be <code>null</code> nor
    *        empty.
-   * @param sNew
+   * @param aReplacementText
    *        The string with the replacement. May not be <code>null</code> but
    *        may be empty.
    * @return The input string as is, if the input string is empty or if the
@@ -2757,46 +2757,51 @@ public final class StringHelper
    *         replaced is not contained.
    */
   @Nullable
-  public static String replaceAll (@Nullable final String sInput,
-                                   @Nonnull final String sOld,
-                                   @Nonnull final CharSequence sNew)
+  public static String replaceAll (@Nullable final String sInputString,
+                                   @Nonnull final String sSearchText,
+                                   @Nonnull final CharSequence aReplacementText)
   {
-    if (hasNoText (sOld))
+    if (hasNoText (sSearchText))
       throw new IllegalArgumentException ("Value to replace may not be empty!");
-    if (sNew == null)
+    if (aReplacementText == null)
       throw new NullPointerException ("newText");
 
     // Is input string empty?
-    if (hasNoText (sInput))
-      return sInput;
+    if (hasNoText (sInputString))
+      return sInputString;
 
     // Replace old with the same new?
-    final int nOldLength = sOld.length ();
-    final int nNewLength = sNew.length ();
-    if (nOldLength == nNewLength && sOld.equals (sNew))
-      return sInput;
-
-    if (nOldLength == 1 && nNewLength == 1)
+    final int nOldLength = sSearchText.length ();
+    final int nNewLength = aReplacementText.length ();
+    if (nOldLength == nNewLength)
     {
-      // Use char version which is more efficient
-      return replaceAll (sInput, sOld.charAt (0), sNew.charAt (0));
+      // Any change?
+      if (sSearchText.equals (aReplacementText))
+        return sInputString;
+
+      if (nOldLength == 1)
+      {
+        // Use char version which is more efficient
+        return replaceAll (sInputString, sSearchText.charAt (0), aReplacementText.charAt (0));
+      }
     }
 
     // Does the old text occur anywhere?
-    int nIndex = sInput.indexOf (sOld, 0);
+    int nIndex = sInputString.indexOf (sSearchText, 0);
     if (nIndex == -1)
-      return sInput;
+      return sInputString;
 
     // build output buffer
-    final StringBuilder ret = new StringBuilder (nOldLength >= nNewLength ? sInput.length () : sInput.length () * 2);
+    final StringBuilder ret = new StringBuilder (nOldLength >= nNewLength ? sInputString.length ()
+                                                                         : sInputString.length () * 2);
     int nOldIndex = 0;
     do
     {
-      ret.append (sInput, nOldIndex, nIndex).append (sNew);
+      ret.append (sInputString, nOldIndex, nIndex).append (aReplacementText);
       nIndex += nOldLength;
       nOldIndex = nIndex;
-    } while ((nIndex = sInput.indexOf (sOld, nIndex)) != -1);
-    ret.append (sInput, nOldIndex, sInput.length ());
+    } while ((nIndex = sInputString.indexOf (sSearchText, nIndex)) != -1);
+    ret.append (sInputString, nOldIndex, sInputString.length ());
     return ret.toString ();
   }
 
@@ -2808,13 +2813,13 @@ public final class StringHelper
    * This method is inherently thread safe since {@link String} is immutable and
    * we're operating on different temporary {@link StringBuilder} objects.
    * 
-   * @param sInput
+   * @param sInputString
    *        The input string where the text should be replace. If this parameter
    *        is <code>null</code> or empty, no replacement is done.
-   * @param cOld
+   * @param cSearchChar
    *        The character to be replaced. May neither be <code>null</code> nor
    *        empty.
-   * @param cNew
+   * @param cReplacementChar
    *        The character with the replacement. May not be <code>null</code> but
    *        may be empty.
    * @return The input string as is, if the input string is empty or if the
@@ -2822,31 +2827,33 @@ public final class StringHelper
    *         replaced is not contained.
    */
   @Nullable
-  public static String replaceAll (@Nullable final String sInput, @Nonnull final char cOld, @Nonnull final char cNew)
+  public static String replaceAll (@Nullable final String sInputString,
+                                   final char cSearchChar,
+                                   final char cReplacementChar)
   {
     // Is input string empty?
-    if (hasNoText (sInput))
-      return sInput;
+    if (hasNoText (sInputString))
+      return sInputString;
 
     // Replace old with the same new?
-    if (cOld == cNew)
-      return sInput;
+    if (cSearchChar == cReplacementChar)
+      return sInputString;
 
     // Does the old text occur anywhere?
-    int nIndex = sInput.indexOf (cOld, 0);
+    int nIndex = sInputString.indexOf (cSearchChar, 0);
     if (nIndex == -1)
-      return sInput;
+      return sInputString;
 
     // build output buffer
-    final StringBuilder ret = new StringBuilder (sInput.length ());
+    final StringBuilder ret = new StringBuilder (sInputString.length ());
     int nOldIndex = 0;
     do
     {
-      ret.append (sInput, nOldIndex, nIndex).append (cNew);
+      ret.append (sInputString, nOldIndex, nIndex).append (cReplacementChar);
       nIndex++;
       nOldIndex = nIndex;
-    } while ((nIndex = sInput.indexOf (cOld, nIndex)) != -1);
-    ret.append (sInput, nOldIndex, sInput.length ());
+    } while ((nIndex = sInputString.indexOf (cSearchChar, nIndex)) != -1);
+    ret.append (sInputString, nOldIndex, sInputString.length ());
     return ret.toString ();
   }
 
@@ -2854,40 +2861,40 @@ public final class StringHelper
    * Just calls <code>replaceAll</code> as long as there are still replacements
    * found
    * 
-   * @param sLiteral
+   * @param sInputString
    *        The input string where the text should be replace. If this parameter
    *        is <code>null</code> or empty, no replacement is done.
-   * @param sOld
+   * @param sSearchText
    *        The string to be replaced. May neither be <code>null</code> nor
    *        empty.
-   * @param sNew
+   * @param sReplacementText
    *        The string with the replacement. May not be <code>null</code> but
    *        may be empty.
    * @return The input string as is, if the input string is empty or if the
    *         string to be replaced is not contained.
    */
   @Nullable
-  public static String replaceAllRepeatedly (@Nullable final String sLiteral,
-                                             @Nonnull final String sOld,
-                                             @Nonnull final String sNew)
+  public static String replaceAllRepeatedly (@Nullable final String sInputString,
+                                             @Nonnull final String sSearchText,
+                                             @Nonnull final String sReplacementText)
   {
-    if (StringHelper.hasNoText (sOld))
-      throw new IllegalArgumentException ("old");
-    if (sNew == null)
-      throw new NullPointerException ("new");
-    if (sNew.indexOf (sOld) >= 0)
-      throw new IllegalArgumentException ("Loop detection: sNew must not contain sOld");
+    if (hasNoText (sSearchText))
+      throw new IllegalArgumentException ("searchText");
+    if (sReplacementText == null)
+      throw new NullPointerException ("replacementText");
+    if (sReplacementText.indexOf (sSearchText) >= 0)
+      throw new IllegalArgumentException ("Loop detection: replacementText must not contain searchText");
 
     // Is input string empty?
-    if (hasNoText (sLiteral))
-      return sLiteral;
+    if (hasNoText (sInputString))
+      return sInputString;
 
-    String sRet = sLiteral;
+    String sRet = sInputString;
     String sLastLiteral;
     do
     {
       sLastLiteral = sRet;
-      sRet = replaceAll (sRet, sOld, sNew);
+      sRet = replaceAll (sRet, sSearchText, sReplacementText);
     } while (!sLastLiteral.equals (sRet));
     return sRet;
   }
@@ -2896,31 +2903,31 @@ public final class StringHelper
    * Get the result length (in characters) when replacing all patterns with the
    * replacements on the passed input array.
    * 
-   * @param aInput
+   * @param aInputString
    *        Input char array. May not be <code>null</code>.
-   * @param aSearch
-   *        The search patterns. May not be <code>null</code>.
-   * @param aReplacements
+   * @param aSearchChars
+   *        The one-character search patterns. May not be <code>null</code>.
+   * @param aReplacementStrings
    *        The replacements to be performed. May not be <code>null</code>. The
    *        first dimension of this array must have exactly the same amount of
    *        elements as the patterns parameter array.
    * @return {@link CGlobal#ILLEGAL_UINT} if no replacement was needed, and
    *         therefore the length of the input array could be used.
    */
-  public static int getReplaceMultipleResultLength (@Nonnull final char [] aInput,
-                                                    @Nonnull @Nonempty final char [] aSearch,
-                                                    @Nonnull @Nonempty final char [][] aReplacements)
+  public static int getReplaceMultipleResultLength (@Nonnull final char [] aInputString,
+                                                    @Nonnull @Nonempty final char [] aSearchChars,
+                                                    @Nonnull @Nonempty final char [][] aReplacementStrings)
   {
     int nResultLen = 0;
     boolean bAnyReplacement = false;
-    for (final char cInput : aInput)
+    for (final char cInput : aInputString)
     {
       // In case no replacement is found use a single char
       int nReplacementLength = 1;
-      for (int nIndex = 0; nIndex < aSearch.length; nIndex++)
-        if (cInput == aSearch[nIndex])
+      for (int nIndex = 0; nIndex < aSearchChars.length; nIndex++)
+        if (cInput == aSearchChars[nIndex])
         {
-          nReplacementLength = aReplacements[nIndex].length;
+          nReplacementLength = aReplacementStrings[nIndex].length;
           bAnyReplacement = true;
           break;
         }
@@ -2934,41 +2941,41 @@ public final class StringHelper
    * strings. This method was created for efficient XML special character
    * replacements!
    * 
-   * @param sInput
+   * @param sInputString
    *        The input string.
-   * @param aSearch
+   * @param aSearchChars
    *        The characters to replace.
-   * @param aReplacements
+   * @param aReplacementStrings
    *        The new strings to be inserted instead. Must have the same array
    *        length as aPatterns.
    * @return The replaced version of the string or an empty char array if the
    *         input string was <code>null</code>.
    */
   @Nonnull
-  public static char [] replaceMultiple (@Nullable final String sInput,
-                                         @Nonnull final char [] aSearch,
-                                         @Nonnull final char [][] aReplacements)
+  public static char [] replaceMultiple (@Nullable final String sInputString,
+                                         @Nonnull final char [] aSearchChars,
+                                         @Nonnull final char [][] aReplacementStrings)
   {
-    if (aSearch == null)
+    if (aSearchChars == null)
       throw new NullPointerException ("search");
-    if (aReplacements == null)
+    if (aReplacementStrings == null)
       throw new NullPointerException ("replacements");
-    if (aSearch.length != aReplacements.length)
+    if (aSearchChars.length != aReplacementStrings.length)
       throw new IllegalArgumentException ("array length mismatch");
 
     // Any input text?
-    if (hasNoText (sInput))
+    if (hasNoText (sInputString))
       return new char [0];
 
     // Get char array
-    final char [] aInput = sInput.toCharArray ();
+    final char [] aInput = sInputString.toCharArray ();
 
     // Any replacement patterns?
-    if (aSearch.length == 0)
+    if (aSearchChars.length == 0)
       return aInput;
 
     // get result length
-    final int nResultLen = getReplaceMultipleResultLength (aInput, aSearch, aReplacements);
+    final int nResultLen = getReplaceMultipleResultLength (aInput, aSearchChars, aReplacementStrings);
 
     // nothing to replace in here?
     if (nResultLen == CGlobal.ILLEGAL_UINT)
@@ -2982,11 +2989,11 @@ public final class StringHelper
     for (final char cInput : aInput)
     {
       boolean bFoundReplacement = false;
-      for (int nPatternIndex = 0; nPatternIndex < aSearch.length; nPatternIndex++)
+      for (int nPatternIndex = 0; nPatternIndex < aSearchChars.length; nPatternIndex++)
       {
-        if (cInput == aSearch[nPatternIndex])
+        if (cInput == aSearchChars[nPatternIndex])
         {
-          final char [] aReplacement = aReplacements[nPatternIndex];
+          final char [] aReplacement = aReplacementStrings[nPatternIndex];
           final int nReplacementLength = aReplacement.length;
           System.arraycopy (aReplacement, 0, aOutput, nOutputIndex, nReplacementLength);
           nOutputIndex += nReplacementLength;
@@ -3010,11 +3017,11 @@ public final class StringHelper
    * parameter. This has the advantage, that not length calculation needs to
    * take place!
    * 
-   * @param sInput
+   * @param sInputString
    *        The input string.
-   * @param aSearch
+   * @param aSearchChars
    *        The characters to replace.
-   * @param aReplacements
+   * @param aReplacementStrings
    *        The new strings to be inserted instead. Must have the same array
    *        length as aPatterns.
    * @param aTarget
@@ -3024,31 +3031,31 @@ public final class StringHelper
    * @throws IOException
    */
   @Nonnegative
-  public static int replaceMultipleTo (@Nullable final String sInput,
-                                       @Nonnull final char [] aSearch,
-                                       @Nonnull final char [][] aReplacements,
+  public static int replaceMultipleTo (@Nullable final String sInputString,
+                                       @Nonnull final char [] aSearchChars,
+                                       @Nonnull final char [][] aReplacementStrings,
                                        @Nonnull final Writer aTarget) throws IOException
   {
-    if (aSearch == null)
+    if (aSearchChars == null)
       throw new NullPointerException ("patterns");
-    if (aReplacements == null)
+    if (aReplacementStrings == null)
       throw new NullPointerException ("replacements");
-    if (aSearch.length != aReplacements.length)
+    if (aSearchChars.length != aReplacementStrings.length)
       throw new IllegalArgumentException ("array length mismatch");
     if (aTarget == null)
       throw new NullPointerException ("target");
 
-    if (hasNoText (sInput))
+    if (hasNoText (sInputString))
       return 0;
 
-    if (aSearch.length == 0)
+    if (aSearchChars.length == 0)
     {
       // No modifications required
-      aTarget.write (sInput);
+      aTarget.write (sInputString);
       return 0;
     }
 
-    final char [] aInput = sInput.toCharArray ();
+    final char [] aInput = sInputString.toCharArray ();
 
     // for all input string characters
     int nFirstNonReplace = 0;
@@ -3056,14 +3063,14 @@ public final class StringHelper
     int nTotalReplacements = 0;
     for (final char cInput : aInput)
     {
-      for (int nPatternIndex = 0; nPatternIndex < aSearch.length; nPatternIndex++)
+      for (int nPatternIndex = 0; nPatternIndex < aSearchChars.length; nPatternIndex++)
       {
-        if (cInput == aSearch[nPatternIndex])
+        if (cInput == aSearchChars[nPatternIndex])
         {
           if (nFirstNonReplace < nInputIndex)
             aTarget.write (aInput, nFirstNonReplace, nInputIndex - nFirstNonReplace);
           nFirstNonReplace = nInputIndex + 1;
-          aTarget.write (aReplacements[nPatternIndex]);
+          aTarget.write (aReplacementStrings[nPatternIndex]);
           ++nTotalReplacements;
           break;
         }
@@ -3080,7 +3087,7 @@ public final class StringHelper
    * passed map. All replacements are done using
    * {@link #replaceAll(String,String,CharSequence)} which is ok.
    * 
-   * @param sInput
+   * @param sInputString
    *        The input string where the text should be replaced. May be
    *        <code>null</code>.
    * @param aTransTable
@@ -3089,12 +3096,56 @@ public final class StringHelper
    * @return <code>null</code> if the input string was <code>null</code>.
    */
   @Nullable
-  public static String replaceMultiple (@Nullable final String sInput, @Nullable final Map <String, String> aTransTable)
+  public static String replaceMultiple (@Nullable final String sInputString,
+                                        @Nullable final Map <String, String> aTransTable)
   {
-    String sOutput = sInput;
+    String sOutput = sInputString;
     if (sOutput != null && aTransTable != null)
       for (final Entry <String, String> aEntry : aTransTable.entrySet ())
         sOutput = replaceAll (sOutput, aEntry.getKey (), aEntry.getValue ());
+    return sOutput;
+  }
+
+  /**
+   * Perform all string replacements on the input string as defined by the
+   * passed map. All replacements are done using
+   * {@link #replaceAll(String,String,CharSequence)} which is ok.
+   * 
+   * @param sInputString
+   *        The input string where the text should be replaced. May be
+   *        <code>null</code>.
+   * @param aSearchTexts
+   *        The texts to be searched. If <code>null</code> is passed, the input
+   *        string is not altered.
+   * @param aReplacementTexts
+   *        The texts to be used as the replacements. This array must have
+   *        exactly the same number of elements than the searched texts! If
+   *        <code>null</code> is passed, the input string is not altered.
+   * @return <code>null</code> if the input string was <code>null</code>. The
+   *         unmodified input string if no search/replace patterns where
+   *         provided.
+   */
+  @SuppressWarnings ("null")
+  @Nullable
+  public static String replaceMultiple (@Nullable final String sInputString,
+                                        @Nullable final String [] aSearchTexts,
+                                        @Nullable final String [] aReplacementTexts)
+  {
+    if (hasNoText (sInputString))
+      return sInputString;
+
+    final int nSearchTextLength = aSearchTexts == null ? 0 : aSearchTexts.length;
+    final int nReplacementTextLength = aReplacementTexts == null ? 0 : aReplacementTexts.length;
+    if (nSearchTextLength != nReplacementTextLength)
+      throw new IllegalArgumentException ("Array length mismatch!");
+
+    // Nothing to replace?
+    if (nSearchTextLength == 0)
+      return sInputString;
+
+    String sOutput = sInputString;
+    for (int nIndex = 0; nIndex < nSearchTextLength; ++nIndex)
+      sOutput = replaceAll (sOutput, aSearchTexts[nIndex], aReplacementTexts[nIndex]);
     return sOutput;
   }
 
