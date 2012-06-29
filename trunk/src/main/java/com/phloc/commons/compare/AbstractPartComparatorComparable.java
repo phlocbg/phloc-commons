@@ -23,20 +23,22 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
- * Abstract comparator class that supports a sort order. This comparator may be
- * used for <code>null</code> and non-<code>null</code> values.
+ * This class is an {@link AbstractComparator} that extracts a certain data
+ * element from the main object to compare.
  * 
  * @author philip
  * @param <DATATYPE>
  *        The data type to be compared
+ * @param <PARTTYPE>
+ *        The part type that is extracted from the data element and compared
  */
-@Deprecated
-public abstract class AbstractComparatorNullAware <DATATYPE> extends AbstractComparator <DATATYPE>
+public abstract class AbstractPartComparatorComparable <DATATYPE, PARTTYPE extends Comparable <? super PARTTYPE>> extends
+                                                                                                                  AbstractComparator <DATATYPE>
 {
   /**
    * Comparator with default sort order.
    */
-  public AbstractComparatorNullAware ()
+  public AbstractPartComparatorComparable ()
   {
     super ();
   }
@@ -47,7 +49,7 @@ public abstract class AbstractComparatorNullAware <DATATYPE> extends AbstractCom
    * @param eSortOrder
    *        The sort order to use. May not be <code>null</code>.
    */
-  public AbstractComparatorNullAware (@Nonnull final ESortOrder eSortOrder)
+  public AbstractPartComparatorComparable (@Nonnull final ESortOrder eSortOrder)
   {
     super (eSortOrder);
   }
@@ -59,7 +61,7 @@ public abstract class AbstractComparatorNullAware <DATATYPE> extends AbstractCom
    *        The nested comparator to be invoked, when the main comparison
    *        resulted in 0.
    */
-  public AbstractComparatorNullAware (@Nullable final Comparator <? super DATATYPE> aNestedComparator)
+  public AbstractPartComparatorComparable (@Nullable final Comparator <? super DATATYPE> aNestedComparator)
   {
     super (aNestedComparator);
   }
@@ -73,9 +75,20 @@ public abstract class AbstractComparatorNullAware <DATATYPE> extends AbstractCom
    *        The nested comparator to be invoked, when the main comparison
    *        resulted in 0.
    */
-  public AbstractComparatorNullAware (@Nonnull final ESortOrder eSortOrder,
-                                      @Nullable final Comparator <? super DATATYPE> aNestedComparator)
+  public AbstractPartComparatorComparable (@Nonnull final ESortOrder eSortOrder,
+                                           @Nullable final Comparator <? super DATATYPE> aNestedComparator)
   {
     super (eSortOrder, aNestedComparator);
+  }
+
+  @Nullable
+  protected abstract PARTTYPE getPart (DATATYPE aObject);
+
+  @Override
+  protected final int mainCompare (final DATATYPE aElement1, final DATATYPE aElement2)
+  {
+    final PARTTYPE aPart1 = getPart (aElement1);
+    final PARTTYPE aPart2 = getPart (aElement2);
+    return CompareUtils.nullSafeCompare (aPart1, aPart2);
   }
 }
