@@ -31,8 +31,8 @@ import com.phloc.commons.tree.withid.DefaultTreeItemWithID;
  * @param <VALUETYPE>
  *        tree item value type
  */
-public final class ComparatorDefaultTreeItemWithIDValue <VALUETYPE> extends
-                                                                    ComparatorTreeItemValue <VALUETYPE, DefaultTreeItemWithID <?, VALUETYPE>>
+public final class ComparatorDefaultTreeItemWithIDValue <IDTYYPE, VALUETYPE> extends
+                                                                             ComparatorTreeItemValue <VALUETYPE, DefaultTreeItemWithID <IDTYYPE, VALUETYPE>>
 {
   public ComparatorDefaultTreeItemWithIDValue (@Nonnull final Comparator <? super VALUETYPE> aValueComparator)
   {
