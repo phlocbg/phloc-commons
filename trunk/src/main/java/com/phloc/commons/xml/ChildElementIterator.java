@@ -37,25 +37,7 @@ import com.phloc.commons.filter.collections.FilterIterator;
  */
 public class ChildElementIterator implements IIterableIterator <Element>
 {
-  public static final class FilterIsElement implements IFilter <Node>
-  {
-    private final IFilter <Element> m_aCustomFilter;
-
-    public FilterIsElement (@Nullable final IFilter <Element> aCustomFilter)
-    {
-      m_aCustomFilter = aCustomFilter;
-    }
-
-    public boolean matchesFilter (@Nonnull final Node aNode)
-    {
-      if (aNode.getNodeType () != Node.ELEMENT_NODE)
-        return false;
-      return m_aCustomFilter == null ? true : m_aCustomFilter.matchesFilter ((Element) aNode);
-    }
-  }
-
   /** The nodes to iterate. */
-  @Nonnull
   private final Iterator <Node> m_aIter;
 
   public ChildElementIterator (@Nonnull final Node aStartNode)

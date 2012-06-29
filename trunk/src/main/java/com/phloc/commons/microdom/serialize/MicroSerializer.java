@@ -170,10 +170,10 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
     if (m_aSettings.getSerializeComments ().emit ())
     {
       if (m_aSettings.getIndent ().isIndent () && m_aIndent.length () > 0)
-        aXMLWriter.onContentElementWhitspace (m_aIndent);
+        aXMLWriter.onContentElementWhitespace (m_aIndent);
       aXMLWriter.onComment (aComment.getData ().toString ());
       if (m_aSettings.getIndent ().isAlign ())
-        aXMLWriter.onContentElementWhitspace (NEWLINE);
+        aXMLWriter.onContentElementWhitespace (NEWLINE);
     }
   }
 
@@ -236,7 +236,7 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
 
       // indent only if predecessor was an element
       if (m_aSettings.getIndent ().isIndent () && bIndentPrev && m_aIndent.length () > 0)
-        aXMLWriter.onContentElementWhitspace (m_aIndent);
+        aXMLWriter.onContentElementWhitespace (m_aIndent);
 
       aXMLWriter.onElementStart (sNSPrefix, sTagName, aAttrMap, bHasChildren);
 
@@ -245,7 +245,7 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
       {
         // do we have enclosing elements?
         if (m_aSettings.getIndent ().isAlign () && bHasChildElement)
-          aXMLWriter.onContentElementWhitspace (NEWLINE);
+          aXMLWriter.onContentElementWhitespace (NEWLINE);
 
         // increment indent
         m_aIndent.append (INDENT);
@@ -259,13 +259,13 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
 
         // add closing tag
         if (m_aSettings.getIndent ().isIndent () && bHasChildElement && m_aIndent.length () > 0)
-          aXMLWriter.onContentElementWhitspace (m_aIndent);
+          aXMLWriter.onContentElementWhitespace (m_aIndent);
 
         aXMLWriter.onElementEnd (sNSPrefix, sTagName);
       }
 
       if (m_aSettings.getIndent ().isAlign () && bIndentNext)
-        aXMLWriter.onContentElementWhitspace (NEWLINE);
+        aXMLWriter.onContentElementWhitespace (NEWLINE);
     }
     finally
     {

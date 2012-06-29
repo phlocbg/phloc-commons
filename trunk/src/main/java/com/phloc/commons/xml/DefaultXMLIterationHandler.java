@@ -48,7 +48,7 @@ public class DefaultXMLIterationHandler implements IXMLIterationHandler
   public void onEntityReference (@Nonnull final String sEntityRef)
   {}
 
-  public void onContentElementWhitspace (@Nullable final CharSequence aWhitespaces)
+  public void onContentElementWhitespace (@Nullable final CharSequence aWhitespaces)
   {}
 
   public void onComment (@Nullable final String sComment)

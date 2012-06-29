@@ -83,7 +83,7 @@ public interface IXMLIterationHandler
    * @param aWhitespaces
    *        The whitespace character sequence
    */
-  void onContentElementWhitspace (@Nullable CharSequence aWhitespaces);
+  void onContentElementWhitespace (@Nullable CharSequence aWhitespaces);
 
   /**
    * Comment node.

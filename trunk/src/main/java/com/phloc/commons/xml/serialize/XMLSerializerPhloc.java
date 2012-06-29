@@ -208,7 +208,7 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
 
       // indent only if predecessor was an element
       if (m_aSettings.getIndent ().isIndent () && bIndentPrev && m_aIndent.length () > 0)
-        aEmitter.onContentElementWhitspace (m_aIndent);
+        aEmitter.onContentElementWhitespace (m_aIndent);
 
       aEmitter.onElementStart (sNSPrefix, sTagName, aAttrMap, bHasChildren);
 
@@ -217,7 +217,7 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
       {
         // do we have enclosing elements?
         if (m_aSettings.getIndent ().isAlign () && bHasChildElement)
-          aEmitter.onContentElementWhitspace (NEWLINE);
+          aEmitter.onContentElementWhitespace (NEWLINE);
 
         // increment indent
         m_aIndent.append (INDENT);
@@ -231,13 +231,13 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
 
         // add closing tag
         if (m_aSettings.getIndent ().isIndent () && bHasChildElement && m_aIndent.length () > 0)
-          aEmitter.onContentElementWhitspace (m_aIndent);
+          aEmitter.onContentElementWhitespace (m_aIndent);
 
         aEmitter.onElementEnd (sNSPrefix, sTagName);
       }
 
       if (m_aSettings.getIndent ().isAlign () && bIndentNext)
-        aEmitter.onContentElementWhitspace (NEWLINE);
+        aEmitter.onContentElementWhitespace (NEWLINE);
     }
     finally
     {

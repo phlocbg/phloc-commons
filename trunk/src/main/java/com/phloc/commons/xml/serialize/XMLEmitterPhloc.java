@@ -212,7 +212,7 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   }
 
   @Override
-  public void onContentElementWhitspace (@Nullable final CharSequence aWhitespaces)
+  public void onContentElementWhitespace (@Nullable final CharSequence aWhitespaces)
   {
     if (StringHelper.hasText (aWhitespaces))
       _append (aWhitespaces.toString ());

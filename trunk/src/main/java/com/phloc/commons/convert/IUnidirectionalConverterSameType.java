@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.convert;
 
-
 /**
  * A specialized converter interface that does not do type transformations.
  * 

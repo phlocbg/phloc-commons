@@ -44,7 +44,6 @@ public interface ITreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE extends IT
   /**
    * {@inheritDoc}
    */
-  @Nonnull
   ITEMTYPE create (@Nonnull ITEMTYPE aParent, @Nonnull KEYTYPE aDataID);
 
   /**
