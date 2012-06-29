@@ -42,7 +42,7 @@ public final class LocaleTypeConverterRegistrar implements ITypeConverterRegistr
     final ITypeConverter aConverterToString = new ITypeConverter ()
     {
       @Nonnull
-      public String convert (final Object aSource)
+      public String convert (@Nonnull final Object aSource)
       {
         return aSource.toString ();
       }
@@ -52,7 +52,7 @@ public final class LocaleTypeConverterRegistrar implements ITypeConverterRegistr
     aRegistry.registerTypeConverter (Locale.class, String.class, aConverterToString);
     aRegistry.registerTypeConverter (String.class, Locale.class, new ITypeConverter ()
     {
-      public Locale convert (final Object aSource)
+      public Locale convert (@Nonnull final Object aSource)
       {
         return LocaleCache.getLocale ((String) aSource);
       }

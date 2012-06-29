@@ -48,12 +48,16 @@ public final class MicroSerializerTest
     for (int i = 1; i <= 10; ++i)
     {
       final IMicroElement e1 = aDocElement.appendElement ("level1");
+      e1.setAttribute ("a1", "Supsi1");
+      e1.setAttribute ("a1a", "Supsi1a");
       for (int j = 1; j <= 20; ++j)
       {
         final IMicroElement e2 = e1.appendElement ("level2");
+        e2.setAttribute ("a2", "Supsi");
         for (int k = 1; k <= 100; ++k)
         {
           final IMicroElement e3 = e2.appendElement ("level3");
+          e3.setAttribute ("a3", "Supsi");
           if (bWithText)
             e3.appendText ("Level 3 text <> " + Double.toString (Math.random ()));
         }
@@ -71,14 +75,14 @@ public final class MicroSerializerTest
   {
     final MicroSerializer aMS = new MicroSerializer ();
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
-    final boolean bWithText = false;
+    final boolean bWithText = true;
     final IMicroDocument doc = _createLargeDoc (new MicroDocument (), bWithText);
 
     int nMilliSecs = 0;
     int nRun = 0;
     int nWarmUpRuns = 0;
     final StopWatch aSW = new StopWatch ();
-    for (; nRun < 20; ++nRun)
+    for (; nRun < 2000; ++nRun)
     {
       aBAOS.reset ();
 

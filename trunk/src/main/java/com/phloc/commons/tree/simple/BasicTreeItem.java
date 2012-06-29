@@ -158,6 +158,8 @@ public class BasicTreeItem <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, IT
   {
     // create new item
     final ITEMTYPE aItem = m_aFactory.create (_asT (this));
+    if (aItem == null)
+      throw new IllegalStateException ("null item created!");
     aItem.setData (aData);
     internalAddChild (aItem);
     return aItem;

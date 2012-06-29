@@ -18,7 +18,6 @@
 package com.phloc.commons.factory;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.meta.When;
 
 /**
@@ -43,7 +42,7 @@ public interface IFactoryWithTwoParameters <DATATYPE, PARAM1TYPE, PARAM2TYPE>
    *        The second parameter required to create the object.
    * @return The created object.
    */
-  @Nullable
+  @Nonnull (when = When.MAYBE)
   DATATYPE create (@Nonnull (when = When.MAYBE) PARAM1TYPE aParameter1,
                    @Nonnull (when = When.MAYBE) PARAM2TYPE aParameter2);
 }

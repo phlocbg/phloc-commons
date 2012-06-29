@@ -17,7 +17,8 @@
  */
 package com.phloc.commons.factory;
 
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.meta.When;
 
 /**
  * This is a generic interface for creating objects of a certain type.
@@ -34,6 +35,6 @@ public interface IFactory <DATATYPE>
    * @return The created object. May be <code>null</code> in case of an error
    *         but is not supposed to be!
    */
-  @Nullable
+  @Nonnull (when = When.MAYBE)
   DATATYPE create ();
 }

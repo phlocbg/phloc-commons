@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.xml.serialize;
 
-import java.io.BufferedWriter;
 import java.io.OutputStream;
 import java.io.Writer;
 import java.util.ArrayList;
@@ -37,6 +36,7 @@ import org.slf4j.LoggerFactory;
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.io.streams.NonBlockingBufferedWriter;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
@@ -329,7 +329,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
   public final void write (@Nonnull final NODETYPE aNode, @Nonnull @WillNotClose final OutputStream aOS)
   {
     // Create a writer for the the passed output stream
-    final Writer aWriter = new BufferedWriter (StreamUtils.createWriter (aOS, m_aSettings.getCharsetObj ()));
+    final Writer aWriter = new NonBlockingBufferedWriter (StreamUtils.createWriter (aOS, m_aSettings.getCharsetObj ()));
     write (aNode, aWriter);
   }
 

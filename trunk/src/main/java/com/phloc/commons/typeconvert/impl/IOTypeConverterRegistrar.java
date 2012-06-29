@@ -49,14 +49,14 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
     // File
     aRegistry.registerTypeConverter (File.class, String.class, new ITypeConverter ()
     {
-      public String convert (final Object aSource)
+      public String convert (@Nonnull final Object aSource)
       {
         return ((File) aSource).getAbsolutePath ();
       }
     });
     aRegistry.registerTypeConverter (String.class, File.class, new ITypeConverter ()
     {
-      public File convert (final Object aSource)
+      public File convert (@Nonnull final Object aSource)
       {
         return new File ((String) aSource);
       }
@@ -64,14 +64,14 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
 
     final ITypeConverter aConvertResourceToString = new ITypeConverter ()
     {
-      public String convert (final Object aSource)
+      public String convert (@Nonnull final Object aSource)
       {
         return ((IReadableResource) aSource).getPath ();
       }
     };
     final ITypeConverter aConvertResourceToURL = new ITypeConverter ()
     {
-      public URL convert (final Object aSource)
+      public URL convert (@Nonnull final Object aSource)
       {
         return ((IReadableResource) aSource).getAsURL ();
       }
@@ -80,7 +80,7 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
     aRegistry.registerTypeConverter (ClassPathResource.class, String.class, aConvertResourceToString);
     aRegistry.registerTypeConverter (String.class, ClassPathResource.class, new ITypeConverter ()
     {
-      public ClassPathResource convert (final Object aSource)
+      public ClassPathResource convert (@Nonnull final Object aSource)
       {
         return new ClassPathResource ((String) aSource);
       }
@@ -88,7 +88,7 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
     aRegistry.registerTypeConverter (ClassPathResource.class, URL.class, aConvertResourceToURL);
     aRegistry.registerTypeConverter (URL.class, ClassPathResource.class, new ITypeConverter ()
     {
-      public ClassPathResource convert (final Object aSource)
+      public ClassPathResource convert (@Nonnull final Object aSource)
       {
         return new ClassPathResource (((URL) aSource).toExternalForm ());
       }
@@ -98,7 +98,7 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
     aRegistry.registerTypeConverter (FileSystemResource.class, String.class, aConvertResourceToString);
     aRegistry.registerTypeConverter (String.class, FileSystemResource.class, new ITypeConverter ()
     {
-      public FileSystemResource convert (final Object aSource)
+      public FileSystemResource convert (@Nonnull final Object aSource)
       {
         return new FileSystemResource ((String) aSource);
       }
@@ -106,7 +106,7 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
     aRegistry.registerTypeConverter (FileSystemResource.class, URL.class, aConvertResourceToURL);
     aRegistry.registerTypeConverter (URL.class, FileSystemResource.class, new ITypeConverter ()
     {
-      public FileSystemResource convert (final Object aSource)
+      public FileSystemResource convert (@Nonnull final Object aSource)
       {
         try
         {
@@ -127,7 +127,7 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
     aRegistry.registerTypeConverter (URLResource.class, String.class, aConvertResourceToString);
     aRegistry.registerTypeConverter (String.class, URLResource.class, new ITypeConverter ()
     {
-      public URLResource convert (final Object aSource)
+      public URLResource convert (@Nonnull final Object aSource)
       {
         try
         {
@@ -142,7 +142,7 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
     aRegistry.registerTypeConverter (URLResource.class, URL.class, aConvertResourceToURL);
     aRegistry.registerTypeConverter (URL.class, URLResource.class, new ITypeConverter ()
     {
-      public URLResource convert (final Object aSource)
+      public URLResource convert (@Nonnull final Object aSource)
       {
         return new URLResource ((URL) aSource);
       }

@@ -80,7 +80,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // to Boolean
     final ITypeConverter aConverterNumberToBoolean = new ITypeConverter ()
     {
-      public Boolean convert (final Object aSource)
+      public Boolean convert (@Nonnull final Object aSource)
       {
         return Boolean.valueOf (((Number) aSource).intValue () != 0);
       }
@@ -97,21 +97,21 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverter (Short.class, Boolean.class, aConverterNumberToBoolean);
     aRegistry.registerTypeConverter (AtomicBoolean.class, Boolean.class, new ITypeConverter ()
     {
-      public Boolean convert (final Object aSource)
+      public Boolean convert (@Nonnull final Object aSource)
       {
         return Boolean.valueOf (((AtomicBoolean) aSource).get ());
       }
     });
     aRegistry.registerTypeConverter (Character.class, Boolean.class, new ITypeConverter ()
     {
-      public Boolean convert (final Object aSource)
+      public Boolean convert (@Nonnull final Object aSource)
       {
         return Boolean.valueOf (((Character) aSource).charValue () != 0);
       }
     });
     final ITypeConverter aConverterStringToBoolean = new ITypeConverter ()
     {
-      public Boolean convert (final Object aSource)
+      public Boolean convert (@Nonnull final Object aSource)
       {
         return Boolean.valueOf (aSource.toString ());
       }
@@ -123,7 +123,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // to Byte
     final ITypeConverter aConverterNumberToByte = new ITypeConverter ()
     {
-      public Byte convert (final Object aSource)
+      public Byte convert (@Nonnull final Object aSource)
       {
         return Byte.valueOf (((Number) aSource).byteValue ());
       }
@@ -139,28 +139,28 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverter (Short.class, Byte.class, aConverterNumberToByte);
     aRegistry.registerTypeConverter (Boolean.class, Byte.class, new ITypeConverter ()
     {
-      public Byte convert (final Object aSource)
+      public Byte convert (@Nonnull final Object aSource)
       {
         return Byte.valueOf (((Boolean) aSource).booleanValue () ? (byte) 1 : (byte) 0);
       }
     });
     aRegistry.registerTypeConverter (AtomicBoolean.class, Byte.class, new ITypeConverter ()
     {
-      public Byte convert (final Object aSource)
+      public Byte convert (@Nonnull final Object aSource)
       {
         return Byte.valueOf (((AtomicBoolean) aSource).get () ? (byte) 1 : (byte) 0);
       }
     });
     aRegistry.registerTypeConverter (Character.class, Byte.class, new ITypeConverter ()
     {
-      public Byte convert (final Object aSource)
+      public Byte convert (@Nonnull final Object aSource)
       {
         return Byte.valueOf ((byte) ((Character) aSource).charValue ());
       }
     });
     final ITypeConverter aConverterStringToByte = new ITypeConverter ()
     {
-      public Byte convert (final Object aSource)
+      public Byte convert (@Nonnull final Object aSource)
       {
         try
         {
@@ -179,7 +179,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // to Character
     final ITypeConverter aConverterNumberToCharacter = new ITypeConverter ()
     {
-      public Character convert (final Object aSource)
+      public Character convert (@Nonnull final Object aSource)
       {
         return Character.valueOf ((char) ((Number) aSource).intValue ());
       }
@@ -196,21 +196,21 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverter (Short.class, Character.class, aConverterNumberToCharacter);
     aRegistry.registerTypeConverter (Boolean.class, Character.class, new ITypeConverter ()
     {
-      public Character convert (final Object aSource)
+      public Character convert (@Nonnull final Object aSource)
       {
         return Character.valueOf (((Boolean) aSource).booleanValue () ? (char) 1 : (char) 0);
       }
     });
     aRegistry.registerTypeConverter (AtomicBoolean.class, Character.class, new ITypeConverter ()
     {
-      public Character convert (final Object aSource)
+      public Character convert (@Nonnull final Object aSource)
       {
         return Character.valueOf (((AtomicBoolean) aSource).get () ? (char) 1 : (char) 0);
       }
     });
     final ITypeConverter aConverterStringToCharacter = new ITypeConverter ()
     {
-      public Character convert (final Object aSource)
+      public Character convert (@Nonnull final Object aSource)
       {
         final String sSource = aSource.toString ();
         return sSource.length () == 1 ? Character.valueOf (sSource.charAt (0)) : null;
@@ -223,7 +223,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // to Double
     final ITypeConverter aConverterNumberToDouble = new ITypeConverter ()
     {
-      public Double convert (final Object aSource)
+      public Double convert (@Nonnull final Object aSource)
       {
         return Double.valueOf (((Number) aSource).doubleValue ());
       }
@@ -239,28 +239,28 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverter (Short.class, Double.class, aConverterNumberToDouble);
     aRegistry.registerTypeConverter (Boolean.class, Double.class, new ITypeConverter ()
     {
-      public Double convert (final Object aSource)
+      public Double convert (@Nonnull final Object aSource)
       {
         return Double.valueOf (((Boolean) aSource).booleanValue () ? 1d : 0d);
       }
     });
     aRegistry.registerTypeConverter (AtomicBoolean.class, Double.class, new ITypeConverter ()
     {
-      public Double convert (final Object aSource)
+      public Double convert (@Nonnull final Object aSource)
       {
         return Double.valueOf (((AtomicBoolean) aSource).get () ? 1d : 0d);
       }
     });
     aRegistry.registerTypeConverter (Character.class, Double.class, new ITypeConverter ()
     {
-      public Double convert (final Object aSource)
+      public Double convert (@Nonnull final Object aSource)
       {
         return Double.valueOf (((Character) aSource).charValue ());
       }
     });
     final ITypeConverter aConverterStringToDouble = new ITypeConverter ()
     {
-      public Double convert (final Object aSource)
+      public Double convert (@Nonnull final Object aSource)
       {
         return StringHelper.parseDoubleObj (aSource.toString (), null);
       }
@@ -272,7 +272,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // to Float
     final ITypeConverter aConverterNumberToFloat = new ITypeConverter ()
     {
-      public Float convert (final Object aSource)
+      public Float convert (@Nonnull final Object aSource)
       {
         return Float.valueOf (((Number) aSource).floatValue ());
       }
@@ -288,28 +288,28 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverter (Short.class, Float.class, aConverterNumberToFloat);
     aRegistry.registerTypeConverter (Boolean.class, Float.class, new ITypeConverter ()
     {
-      public Float convert (final Object aSource)
+      public Float convert (@Nonnull final Object aSource)
       {
         return Float.valueOf (((Boolean) aSource).booleanValue () ? 1f : 0f);
       }
     });
     aRegistry.registerTypeConverter (AtomicBoolean.class, Float.class, new ITypeConverter ()
     {
-      public Float convert (final Object aSource)
+      public Float convert (@Nonnull final Object aSource)
       {
         return Float.valueOf (((AtomicBoolean) aSource).get () ? 1f : 0f);
       }
     });
     aRegistry.registerTypeConverter (Character.class, Float.class, new ITypeConverter ()
     {
-      public Float convert (final Object aSource)
+      public Float convert (@Nonnull final Object aSource)
       {
         return Float.valueOf (((Character) aSource).charValue ());
       }
     });
     final ITypeConverter aConverterStringToFloat = new ITypeConverter ()
     {
-      public Float convert (final Object aSource)
+      public Float convert (@Nonnull final Object aSource)
       {
         return StringHelper.parseFloatObj (aSource.toString (), null);
       }
@@ -321,7 +321,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // to Integer
     final ITypeConverter aConverterNumberToInteger = new ITypeConverter ()
     {
-      public Integer convert (final Object aSource)
+      public Integer convert (@Nonnull final Object aSource)
       {
         return Integer.valueOf (((Number) aSource).intValue ());
       }
@@ -337,28 +337,28 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverter (Short.class, Integer.class, aConverterNumberToInteger);
     aRegistry.registerTypeConverter (Boolean.class, Integer.class, new ITypeConverter ()
     {
-      public Integer convert (final Object aSource)
+      public Integer convert (@Nonnull final Object aSource)
       {
         return Integer.valueOf (((Boolean) aSource).booleanValue () ? 1 : 0);
       }
     });
     aRegistry.registerTypeConverter (AtomicBoolean.class, Integer.class, new ITypeConverter ()
     {
-      public Integer convert (final Object aSource)
+      public Integer convert (@Nonnull final Object aSource)
       {
         return Integer.valueOf (((AtomicBoolean) aSource).get () ? 1 : 0);
       }
     });
     aRegistry.registerTypeConverter (Character.class, Integer.class, new ITypeConverter ()
     {
-      public Integer convert (final Object aSource)
+      public Integer convert (@Nonnull final Object aSource)
       {
         return Integer.valueOf (((Character) aSource).charValue ());
       }
     });
     final ITypeConverter aConverterStringToInteger = new ITypeConverter ()
     {
-      public Integer convert (final Object aSource)
+      public Integer convert (@Nonnull final Object aSource)
       {
         return StringHelper.parseIntObj (aSource.toString (), null);
       }
@@ -370,7 +370,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // to Long
     final ITypeConverter aConverterNumberToLong = new ITypeConverter ()
     {
-      public Long convert (final Object aSource)
+      public Long convert (@Nonnull final Object aSource)
       {
         return Long.valueOf (((Number) aSource).longValue ());
       }
@@ -386,28 +386,28 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverter (Short.class, Long.class, aConverterNumberToLong);
     aRegistry.registerTypeConverter (Boolean.class, Long.class, new ITypeConverter ()
     {
-      public Long convert (final Object aSource)
+      public Long convert (@Nonnull final Object aSource)
       {
         return Long.valueOf (((Boolean) aSource).booleanValue () ? 1L : 0L);
       }
     });
     aRegistry.registerTypeConverter (AtomicBoolean.class, Long.class, new ITypeConverter ()
     {
-      public Long convert (final Object aSource)
+      public Long convert (@Nonnull final Object aSource)
       {
         return Long.valueOf (((AtomicBoolean) aSource).get () ? 1L : 0L);
       }
     });
     aRegistry.registerTypeConverter (Character.class, Long.class, new ITypeConverter ()
     {
-      public Long convert (final Object aSource)
+      public Long convert (@Nonnull final Object aSource)
       {
         return Long.valueOf (((Character) aSource).charValue ());
       }
     });
     final ITypeConverter aConverterStringToLong = new ITypeConverter ()
     {
-      public Long convert (final Object aSource)
+      public Long convert (@Nonnull final Object aSource)
       {
         return StringHelper.parseLongObj (aSource.toString (), null);
       }
@@ -419,7 +419,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // to Short
     final ITypeConverter aConverterNumberToShort = new ITypeConverter ()
     {
-      public Short convert (final Object aSource)
+      public Short convert (@Nonnull final Object aSource)
       {
         return Short.valueOf (((Number) aSource).shortValue ());
       }
@@ -435,28 +435,28 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverter (Long.class, Short.class, aConverterNumberToShort);
     aRegistry.registerTypeConverter (Boolean.class, Short.class, new ITypeConverter ()
     {
-      public Short convert (final Object aSource)
+      public Short convert (@Nonnull final Object aSource)
       {
         return Short.valueOf (((Boolean) aSource).booleanValue () ? (short) 1 : (short) 0);
       }
     });
     aRegistry.registerTypeConverter (AtomicBoolean.class, Short.class, new ITypeConverter ()
     {
-      public Short convert (final Object aSource)
+      public Short convert (@Nonnull final Object aSource)
       {
         return Short.valueOf (((AtomicBoolean) aSource).get () ? (short) 1 : (short) 0);
       }
     });
     aRegistry.registerTypeConverter (Character.class, Short.class, new ITypeConverter ()
     {
-      public Short convert (final Object aSource)
+      public Short convert (@Nonnull final Object aSource)
       {
         return Short.valueOf ((short) ((Character) aSource).charValue ());
       }
     });
     final ITypeConverter aConverterStringToShort = new ITypeConverter ()
     {
-      public Short convert (final Object aSource)
+      public Short convert (@Nonnull final Object aSource)
       {
         try
         {
@@ -475,7 +475,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // to String
     final ITypeConverter aConverterToString = new ITypeConverter ()
     {
-      public String convert (final Object aSource)
+      public String convert (@Nonnull final Object aSource)
       {
         return aSource.toString ();
       }
@@ -499,14 +499,14 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // to BigDecimal
     aRegistry.registerTypeConverter (BigInteger.class, BigDecimal.class, new ITypeConverter ()
     {
-      public BigDecimal convert (final Object aSource)
+      public BigDecimal convert (@Nonnull final Object aSource)
       {
         return new BigDecimal ((BigInteger) aSource);
       }
     });
     final ITypeConverter aConverterNumberToBigDecimal = new ITypeConverter ()
     {
-      public BigDecimal convert (final Object aSource)
+      public BigDecimal convert (@Nonnull final Object aSource)
       {
         return BigDecimal.valueOf (((Number) aSource).doubleValue ());
       }
@@ -521,28 +521,28 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverter (Short.class, BigDecimal.class, aConverterNumberToBigDecimal);
     aRegistry.registerTypeConverter (Boolean.class, BigDecimal.class, new ITypeConverter ()
     {
-      public BigDecimal convert (final Object aSource)
+      public BigDecimal convert (@Nonnull final Object aSource)
       {
         return ((Boolean) aSource).booleanValue () ? BigDecimal.ONE : BigDecimal.ZERO;
       }
     });
     aRegistry.registerTypeConverter (AtomicBoolean.class, BigDecimal.class, new ITypeConverter ()
     {
-      public BigDecimal convert (final Object aSource)
+      public BigDecimal convert (@Nonnull final Object aSource)
       {
         return ((AtomicBoolean) aSource).get () ? BigDecimal.ONE : BigDecimal.ZERO;
       }
     });
     aRegistry.registerTypeConverter (Character.class, BigDecimal.class, new ITypeConverter ()
     {
-      public BigDecimal convert (final Object aSource)
+      public BigDecimal convert (@Nonnull final Object aSource)
       {
         return BigDecimal.valueOf (((Character) aSource).charValue ());
       }
     });
     final ITypeConverter aConverterStringToBigDecimal = new ITypeConverter ()
     {
-      public BigDecimal convert (final Object aSource)
+      public BigDecimal convert (@Nonnull final Object aSource)
       {
         return StringHelper.parseBigDecimal (aSource.toString ());
       }
@@ -554,14 +554,14 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // to BigInteger
     aRegistry.registerTypeConverter (BigDecimal.class, BigInteger.class, new ITypeConverter ()
     {
-      public BigInteger convert (final Object aSource)
+      public BigInteger convert (@Nonnull final Object aSource)
       {
         return ((BigDecimal) aSource).toBigInteger ();
       }
     });
     final ITypeConverter aConverterNumberToBigInteger = new ITypeConverter ()
     {
-      public BigInteger convert (final Object aSource)
+      public BigInteger convert (@Nonnull final Object aSource)
       {
         return BigInteger.valueOf (((Number) aSource).longValue ());
       }
@@ -576,28 +576,28 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverter (Short.class, BigInteger.class, aConverterNumberToBigInteger);
     aRegistry.registerTypeConverter (Boolean.class, BigInteger.class, new ITypeConverter ()
     {
-      public BigInteger convert (final Object aSource)
+      public BigInteger convert (@Nonnull final Object aSource)
       {
         return ((Boolean) aSource).booleanValue () ? BigInteger.ONE : BigInteger.ZERO;
       }
     });
     aRegistry.registerTypeConverter (AtomicBoolean.class, BigInteger.class, new ITypeConverter ()
     {
-      public BigInteger convert (final Object aSource)
+      public BigInteger convert (@Nonnull final Object aSource)
       {
         return ((AtomicBoolean) aSource).get () ? BigInteger.ONE : BigInteger.ZERO;
       }
     });
     aRegistry.registerTypeConverter (Character.class, BigInteger.class, new ITypeConverter ()
     {
-      public BigInteger convert (final Object aSource)
+      public BigInteger convert (@Nonnull final Object aSource)
       {
         return BigInteger.valueOf (((Character) aSource).charValue ());
       }
     });
     final ITypeConverter aConverterStringToBigInteger = new ITypeConverter ()
     {
-      public BigInteger convert (final Object aSource)
+      public BigInteger convert (@Nonnull final Object aSource)
       {
         return StringHelper.parseBigInteger (aSource.toString ());
       }
@@ -609,7 +609,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // to AtomicBoolean
     final ITypeConverter aConverterToAtomicBoolean = new ITypeConverter ()
     {
-      public AtomicBoolean convert (final Object aSource)
+      public AtomicBoolean convert (@Nonnull final Object aSource)
       {
         return new AtomicBoolean (TypeConverter.convertIfNecessary (aSource, Boolean.class).booleanValue ());
       }
@@ -633,7 +633,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // to AtomicInteger
     final ITypeConverter aConverterNumberToAtomicInteger = new ITypeConverter ()
     {
-      public AtomicInteger convert (final Object aSource)
+      public AtomicInteger convert (@Nonnull final Object aSource)
       {
         return new AtomicInteger (((Number) aSource).intValue ());
       }
@@ -649,28 +649,28 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverter (Short.class, AtomicInteger.class, aConverterNumberToAtomicInteger);
     aRegistry.registerTypeConverter (Boolean.class, AtomicInteger.class, new ITypeConverter ()
     {
-      public AtomicInteger convert (final Object aSource)
+      public AtomicInteger convert (@Nonnull final Object aSource)
       {
         return new AtomicInteger (((Boolean) aSource).booleanValue () ? 1 : 0);
       }
     });
     aRegistry.registerTypeConverter (AtomicBoolean.class, AtomicInteger.class, new ITypeConverter ()
     {
-      public AtomicInteger convert (final Object aSource)
+      public AtomicInteger convert (@Nonnull final Object aSource)
       {
         return new AtomicInteger (((AtomicBoolean) aSource).get () ? 1 : 0);
       }
     });
     aRegistry.registerTypeConverter (Character.class, AtomicInteger.class, new ITypeConverter ()
     {
-      public AtomicInteger convert (final Object aSource)
+      public AtomicInteger convert (@Nonnull final Object aSource)
       {
         return new AtomicInteger (((Character) aSource).charValue ());
       }
     });
     final ITypeConverter aConverterStringToAtomicInteger = new ITypeConverter ()
     {
-      public AtomicInteger convert (final Object aSource)
+      public AtomicInteger convert (@Nonnull final Object aSource)
       {
         final Integer aInt = StringHelper.parseIntObj (aSource.toString (), null);
         return aInt == null ? null : new AtomicInteger (aInt.intValue ());
@@ -683,7 +683,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // to AtomicLong
     final ITypeConverter aConverterNumberToAtomicLong = new ITypeConverter ()
     {
-      public AtomicLong convert (final Object aSource)
+      public AtomicLong convert (@Nonnull final Object aSource)
       {
         return new AtomicLong (((Number) aSource).longValue ());
       }
@@ -699,28 +699,28 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverter (Short.class, AtomicLong.class, aConverterNumberToAtomicLong);
     aRegistry.registerTypeConverter (Boolean.class, AtomicLong.class, new ITypeConverter ()
     {
-      public AtomicLong convert (final Object aSource)
+      public AtomicLong convert (@Nonnull final Object aSource)
       {
         return new AtomicLong (((Boolean) aSource).booleanValue () ? 1L : 0L);
       }
     });
     aRegistry.registerTypeConverter (AtomicBoolean.class, AtomicLong.class, new ITypeConverter ()
     {
-      public AtomicLong convert (final Object aSource)
+      public AtomicLong convert (@Nonnull final Object aSource)
       {
         return new AtomicLong (((AtomicBoolean) aSource).get () ? 1L : 0L);
       }
     });
     aRegistry.registerTypeConverter (Character.class, AtomicLong.class, new ITypeConverter ()
     {
-      public AtomicLong convert (final Object aSource)
+      public AtomicLong convert (@Nonnull final Object aSource)
       {
         return new AtomicLong (((Character) aSource).charValue ());
       }
     });
     final ITypeConverter aConverterStringToAtomicLong = new ITypeConverter ()
     {
-      public AtomicLong convert (final Object aSource)
+      public AtomicLong convert (@Nonnull final Object aSource)
       {
         final Long aLong = StringHelper.parseLongObj (aSource.toString (), null);
         return aLong == null ? null : new AtomicLong (aLong.longValue ());
@@ -733,7 +733,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // toList<?>
     final ITypeConverter aConverterObjectToList = new ITypeConverter ()
     {
-      public List <?> convert (final Object aSource)
+      public List <?> convert (@Nonnull final Object aSource)
       {
         final List <Object> ret = new ArrayList <Object> ();
         ret.add (aSource);
@@ -760,7 +760,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // to Set<?>
     final ITypeConverter aConverterObjectToSet = new ITypeConverter ()
     {
-      public Set <?> convert (final Object aSource)
+      public Set <?> convert (@Nonnull final Object aSource)
       {
         final Set <Object> ret = new HashSet <Object> ();
         ret.add (aSource);
@@ -787,7 +787,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // StringBuilder
     final ITypeConverter aConverterObjectToStringBuilder = new ITypeConverter ()
     {
-      public StringBuilder convert (final Object aSource)
+      public StringBuilder convert (@Nonnull final Object aSource)
       {
         return new StringBuilder (TypeConverter.convertIfNecessary (aSource, String.class));
       }
@@ -807,7 +807,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverter (Short.class, StringBuilder.class, aConverterObjectToStringBuilder);
     final ITypeConverter aConverterStringToStringBuilder = new ITypeConverter ()
     {
-      public StringBuilder convert (final Object aSource)
+      public StringBuilder convert (@Nonnull final Object aSource)
       {
         return new StringBuilder (aSource.toString ());
       }
@@ -818,7 +818,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // StringBuffer
     final ITypeConverter aConverterObjectToStringBuffer = new ITypeConverter ()
     {
-      public StringBuffer convert (final Object aSource)
+      public StringBuffer convert (@Nonnull final Object aSource)
       {
         return new StringBuffer (TypeConverter.convertIfNecessary (aSource, String.class));
       }
@@ -838,7 +838,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverter (Short.class, StringBuffer.class, aConverterObjectToStringBuffer);
     final ITypeConverter aConverterStringToStringBuffer = new ITypeConverter ()
     {
-      public StringBuffer convert (final Object aSource)
+      public StringBuffer convert (@Nonnull final Object aSource)
       {
         return new StringBuffer (aSource.toString ());
       }
@@ -849,7 +849,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // Enum
     aRegistry.registerTypeConverter (Enum.class, String.class, new ITypeConverter ()
     {
-      public String convert (final Object aSource)
+      public String convert (@Nonnull final Object aSource)
       {
         // We need to append the Enum class name, otherwise we cannot resolve
         // it! Use the colon as it is not allowed in class names.
@@ -858,7 +858,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverter (String.class, Enum.class, new ITypeConverterUpCast ()
     {
-      public Enum <?> convert (final Object aSource)
+      public Enum <?> convert (@Nonnull final Object aSource)
       {
         // Split class name and enum value name
         final String [] aParts = RegExHelper.split ((String) aSource, ":", 2);
@@ -882,21 +882,21 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // boolean[]
     aRegistry.registerTypeConverter (boolean [].class, ArrayList.class, new ITypeConverter ()
     {
-      public List <Boolean> convert (final Object aSource)
+      public List <Boolean> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newBooleanList ((boolean []) aSource);
       }
     });
     aRegistry.registerTypeConverter (boolean [].class, HashSet.class, new ITypeConverter ()
     {
-      public Set <Boolean> convert (final Object aSource)
+      public Set <Boolean> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newBooleanSet ((boolean []) aSource);
       }
     });
     aRegistry.registerTypeConverter (boolean [].class, LinkedHashSet.class, new ITypeConverter ()
     {
-      public Set <Boolean> convert (final Object aSource)
+      public Set <Boolean> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newBooleanOrderedSet ((boolean []) aSource);
       }
@@ -905,35 +905,35 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // byte[]
     aRegistry.registerTypeConverter (byte [].class, String.class, new ITypeConverter ()
     {
-      public String convert (final Object aSource)
+      public String convert (@Nonnull final Object aSource)
       {
         return Base64.encodeBytes ((byte []) aSource);
       }
     });
     aRegistry.registerTypeConverter (String.class, byte [].class, new ITypeConverter ()
     {
-      public byte [] convert (final Object aSource)
+      public byte [] convert (@Nonnull final Object aSource)
       {
         return Base64Helper.safeDecode ((String) aSource);
       }
     });
     aRegistry.registerTypeConverter (byte [].class, ArrayList.class, new ITypeConverter ()
     {
-      public List <Byte> convert (final Object aSource)
+      public List <Byte> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newByteList ((byte []) aSource);
       }
     });
     aRegistry.registerTypeConverter (byte [].class, HashSet.class, new ITypeConverter ()
     {
-      public Set <Byte> convert (final Object aSource)
+      public Set <Byte> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newByteSet ((byte []) aSource);
       }
     });
     aRegistry.registerTypeConverter (byte [].class, LinkedHashSet.class, new ITypeConverter ()
     {
-      public Set <Byte> convert (final Object aSource)
+      public Set <Byte> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newByteOrderedSet ((byte []) aSource);
       }
@@ -942,35 +942,35 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // char[]
     aRegistry.registerTypeConverter (char [].class, String.class, new ITypeConverter ()
     {
-      public String convert (final Object aSource)
+      public String convert (@Nonnull final Object aSource)
       {
         return new String ((char []) aSource);
       }
     });
     aRegistry.registerTypeConverter (String.class, char [].class, new ITypeConverter ()
     {
-      public char [] convert (final Object aSource)
+      public char [] convert (@Nonnull final Object aSource)
       {
         return ((String) aSource).toCharArray ();
       }
     });
     aRegistry.registerTypeConverter (char [].class, ArrayList.class, new ITypeConverter ()
     {
-      public List <Character> convert (final Object aSource)
+      public List <Character> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newCharList ((char []) aSource);
       }
     });
     aRegistry.registerTypeConverter (char [].class, HashSet.class, new ITypeConverter ()
     {
-      public Set <Character> convert (final Object aSource)
+      public Set <Character> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newCharSet ((char []) aSource);
       }
     });
     aRegistry.registerTypeConverter (char [].class, LinkedHashSet.class, new ITypeConverter ()
     {
-      public Set <Character> convert (final Object aSource)
+      public Set <Character> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newCharOrderedSet ((char []) aSource);
       }
@@ -979,21 +979,21 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // double[]
     aRegistry.registerTypeConverter (double [].class, ArrayList.class, new ITypeConverter ()
     {
-      public List <Double> convert (final Object aSource)
+      public List <Double> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newDoubleList ((double []) aSource);
       }
     });
     aRegistry.registerTypeConverter (double [].class, HashSet.class, new ITypeConverter ()
     {
-      public Set <Double> convert (final Object aSource)
+      public Set <Double> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newDoubleSet ((double []) aSource);
       }
     });
     aRegistry.registerTypeConverter (double [].class, LinkedHashSet.class, new ITypeConverter ()
     {
-      public Set <Double> convert (final Object aSource)
+      public Set <Double> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newDoubleOrderedSet ((double []) aSource);
       }
@@ -1002,21 +1002,21 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // float[]
     aRegistry.registerTypeConverter (float [].class, ArrayList.class, new ITypeConverter ()
     {
-      public List <Float> convert (final Object aSource)
+      public List <Float> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newFloatList ((float []) aSource);
       }
     });
     aRegistry.registerTypeConverter (float [].class, HashSet.class, new ITypeConverter ()
     {
-      public Set <Float> convert (final Object aSource)
+      public Set <Float> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newFloatSet ((float []) aSource);
       }
     });
     aRegistry.registerTypeConverter (float [].class, LinkedHashSet.class, new ITypeConverter ()
     {
-      public Set <Float> convert (final Object aSource)
+      public Set <Float> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newFloatOrderedSet ((float []) aSource);
       }
@@ -1025,21 +1025,21 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // int[]
     aRegistry.registerTypeConverter (int [].class, ArrayList.class, new ITypeConverter ()
     {
-      public List <Integer> convert (final Object aSource)
+      public List <Integer> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newIntList ((int []) aSource);
       }
     });
     aRegistry.registerTypeConverter (int [].class, HashSet.class, new ITypeConverter ()
     {
-      public Set <Integer> convert (final Object aSource)
+      public Set <Integer> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newIntSet ((int []) aSource);
       }
     });
     aRegistry.registerTypeConverter (int [].class, LinkedHashSet.class, new ITypeConverter ()
     {
-      public Set <Integer> convert (final Object aSource)
+      public Set <Integer> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newIntOrderedSet ((int []) aSource);
       }
@@ -1048,21 +1048,21 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // long[]
     aRegistry.registerTypeConverter (long [].class, ArrayList.class, new ITypeConverter ()
     {
-      public List <Long> convert (final Object aSource)
+      public List <Long> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newLongList ((long []) aSource);
       }
     });
     aRegistry.registerTypeConverter (long [].class, HashSet.class, new ITypeConverter ()
     {
-      public Set <Long> convert (final Object aSource)
+      public Set <Long> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newLongSet ((long []) aSource);
       }
     });
     aRegistry.registerTypeConverter (long [].class, LinkedHashSet.class, new ITypeConverter ()
     {
-      public Set <Long> convert (final Object aSource)
+      public Set <Long> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newLongOrderedSet ((long []) aSource);
       }
@@ -1071,21 +1071,21 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // short[]
     aRegistry.registerTypeConverter (short [].class, ArrayList.class, new ITypeConverter ()
     {
-      public List <Short> convert (final Object aSource)
+      public List <Short> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newShortList ((short []) aSource);
       }
     });
     aRegistry.registerTypeConverter (short [].class, HashSet.class, new ITypeConverter ()
     {
-      public Set <Short> convert (final Object aSource)
+      public Set <Short> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newShortSet ((short []) aSource);
       }
     });
     aRegistry.registerTypeConverter (short [].class, LinkedHashSet.class, new ITypeConverter ()
     {
-      public Set <Short> convert (final Object aSource)
+      public Set <Short> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newShortOrderedSet ((short []) aSource);
       }

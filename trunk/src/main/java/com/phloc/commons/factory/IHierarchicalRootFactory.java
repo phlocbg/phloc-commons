@@ -17,6 +17,9 @@
  */
 package com.phloc.commons.factory;
 
+import javax.annotation.Nonnull;
+import javax.annotation.meta.When;
+
 /**
  * This is a generic interface for creating root objects of a hierarchy.
  * 
@@ -31,5 +34,6 @@ public interface IHierarchicalRootFactory <DATATYPE>
    * 
    * @return The root object.
    */
+  @Nonnull (when = When.MAYBE)
   DATATYPE createRoot ();
 }

@@ -37,8 +37,26 @@ import com.phloc.commons.filter.collections.FilterIterator;
  */
 public class ChildElementIterator implements IIterableIterator <Element>
 {
+  public static final class FilterIsElement implements IFilter <Node>
+  {
+    private final IFilter <Element> m_aCustomFilter;
+
+    public FilterIsElement (@Nullable final IFilter <Element> aCustomFilter)
+    {
+      m_aCustomFilter = aCustomFilter;
+    }
+
+    public boolean matchesFilter (@Nonnull final Node aNode)
+    {
+      if (aNode.getNodeType () != Node.ELEMENT_NODE)
+        return false;
+      return m_aCustomFilter == null ? true : m_aCustomFilter.matchesFilter ((Element) aNode);
+    }
+  }
+
   /** The nodes to iterate. */
-  private final Iterator <Node> m_it;
+  @Nonnull
+  private final Iterator <Node> m_aIter;
 
   public ChildElementIterator (@Nonnull final Node aStartNode)
   {
@@ -47,26 +65,18 @@ public class ChildElementIterator implements IIterableIterator <Element>
 
   public ChildElementIterator (@Nonnull final Node aStartNode, @Nullable final IFilter <Element> aCustomFilter)
   {
-    m_it = new FilterIterator <Node> (new ChildNodeIterator (aStartNode), new IFilter <Node> ()
-    {
-      public boolean matchesFilter (final Node aNode)
-      {
-        if (aNode.getNodeType () != Node.ELEMENT_NODE)
-          return false;
-        return aCustomFilter == null ? true : aCustomFilter.matchesFilter ((Element) aNode);
-      }
-    });
+    m_aIter = new FilterIterator <Node> (new ChildNodeIterator (aStartNode), new FilterIsElement (aCustomFilter));
   }
 
   public final boolean hasNext ()
   {
-    return m_it.hasNext ();
+    return m_aIter.hasNext ();
   }
 
   @Nonnull
   public final Element next ()
   {
-    return (Element) m_it.next ();
+    return (Element) m_aIter.next ();
   }
 
   @UnsupportedOperation
