@@ -29,6 +29,7 @@ import javax.annotation.Nullable;
  * 
  * @author philip
  * @param <DATATYPE>
+ *        The data type to be compared
  */
 public abstract class AbstractComparator <DATATYPE> implements Comparator <DATATYPE>, Serializable
 {

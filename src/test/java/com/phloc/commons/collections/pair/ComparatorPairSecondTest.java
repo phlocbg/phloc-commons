@@ -54,7 +54,7 @@ public final class ComparatorPairSecondTest
     assertEquals ("k2", aList.get (1).getFirst ());
     assertEquals ("k1", aList.get (2).getFirst ());
 
-    final List <IReadonlyPair <String, String>> aList2 = ComparatorPairSecond.getSortedByPairSecond (aList);
+    final List <IReadonlyPair <String, String>> aList2 = PairUtils.getSortedByPairSecond (aList);
     assertEquals (3, aList2.size ());
     assertEquals ("k1", aList2.get (0).getFirst ());
     assertEquals ("k2", aList2.get (1).getFirst ());

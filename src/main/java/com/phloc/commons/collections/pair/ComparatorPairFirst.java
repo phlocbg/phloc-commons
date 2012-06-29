@@ -17,15 +17,10 @@
  */
 package com.phloc.commons.collections.pair;
 
-import java.util.Collection;
-import java.util.List;
-
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
-import com.phloc.commons.annotations.ReturnsMutableCopy;
-import com.phloc.commons.collections.ContainerHelper;
-import com.phloc.commons.compare.AbstractComparator;
-import com.phloc.commons.compare.CompareUtils;
+import com.phloc.commons.compare.AbstractPartComparatorComparable;
 import com.phloc.commons.compare.ESortOrder;
 
 /**
@@ -38,11 +33,11 @@ import com.phloc.commons.compare.ESortOrder;
  *        pair second type
  */
 public class ComparatorPairFirst <DATA1TYPE extends Comparable <? super DATA1TYPE>, DATA2TYPE> extends
-                                                                                               AbstractComparator <IReadonlyPair <DATA1TYPE, DATA2TYPE>>
+                                                                                               AbstractPartComparatorComparable <IReadonlyPair <DATA1TYPE, DATA2TYPE>, DATA1TYPE>
 {
   public ComparatorPairFirst ()
   {
-    this (ESortOrder.DEFAULT);
+    super ();
   }
 
   public ComparatorPairFirst (@Nonnull final ESortOrder eSortOrder)
@@ -51,17 +46,9 @@ public class ComparatorPairFirst <DATA1TYPE extends Comparable <? super DATA1TYP
   }
 
   @Override
-  protected final int mainCompare (@Nonnull final IReadonlyPair <DATA1TYPE, DATA2TYPE> aPair1,
-                                   @Nonnull final IReadonlyPair <DATA1TYPE, DATA2TYPE> aPair2)
+  @Nullable
+  protected DATA1TYPE getPart (@Nonnull final IReadonlyPair <DATA1TYPE, DATA2TYPE> aObject)
   {
-    return CompareUtils.nullSafeCompare (aPair1.getFirst (), aPair2.getFirst ());
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public static <V1 extends Comparable <? super V1>, V2> List <IReadonlyPair <V1, V2>> getSortedByPairFirst (@Nonnull final Collection <? extends IReadonlyPair <V1, V2>> aList)
-  {
-    // get sorted entry list
-    return ContainerHelper.getSorted (aList, new ComparatorPairFirst <V1, V2> ());
+    return aObject.getFirst ();
   }
 }
