@@ -17,19 +17,13 @@
  */
 package com.phloc.commons.io.file.filter;
 
-import java.io.File;
 import java.io.FilenameFilter;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
-import com.phloc.commons.collections.ArrayHelper;
-import com.phloc.commons.io.file.FilenameHelper;
-import com.phloc.commons.regex.RegExHelper;
-import com.phloc.commons.string.StringHelper;
 
 /**
  * Contains methods to create default {@link FilenameFilter} objects.
@@ -37,6 +31,7 @@ import com.phloc.commons.string.StringHelper;
  * @author philip
  */
 @Immutable
+@Deprecated
 public final class FilenameFilterFactory
 {
   @PresentForCodeCoverage
@@ -56,19 +51,10 @@ public final class FilenameFilterFactory
    * @return A non-<code>null</code> file name filter.
    */
   @Nonnull
+  @Deprecated
   public static FilenameFilter getEndsWithFilter (@Nonnull final String sExt)
   {
-    if (StringHelper.hasNoText (sExt))
-      throw new IllegalArgumentException ("extension may not be empty");
-
-    return new FilenameFilter ()
-    {
-      public boolean accept (@Nullable final File aDir, @Nullable final String sName)
-      {
-        final String sRealName = FilenameHelper.getSecureFilename (sName);
-        return sRealName != null && sRealName.endsWith (sExt);
-      }
-    };
+    return new FilenameFilterEndsWith (sExt);
   }
 
   /**
@@ -76,17 +62,10 @@ public final class FilenameFilterFactory
    *         name does not start with a dot!)
    */
   @Nonnull
+  @Deprecated
   public static FilenameFilter getPublicDirectoryFilter ()
   {
-    return new FilenameFilter ()
-    {
-      public boolean accept (@Nonnull final File aDir, @Nonnull final String sName)
-      {
-        // Ignore hidden directories
-        final String sRealName = FilenameHelper.getSecureFilename (sName);
-        return new File (aDir, sRealName).isDirectory () && !StringHelper.startsWith (sRealName, '.');
-      }
-    };
+    return new FilenameFilterPublicDirectory ();
   }
 
   /**
@@ -95,23 +74,10 @@ public final class FilenameFilterFactory
    *         file is accepted. The filter is applied on directories and files!
    */
   @Nonnull
+  @Deprecated
   public static FilenameFilter getMatchRegExFilter (@Nonnull @Nonempty final String... aRegExs)
   {
-    if (ArrayHelper.isEmpty (aRegExs))
-      throw new IllegalArgumentException ("empty array passed");
-
-    return new FilenameFilter ()
-    {
-      public boolean accept (@Nonnull final File aDir, @Nonnull final String sName)
-      {
-        final String sRealName = FilenameHelper.getSecureFilename (sName);
-        if (sRealName != null)
-          for (final String sRegEx : aRegExs)
-            if (RegExHelper.stringMatchesPattern (sRegEx, sRealName))
-              return true;
-        return false;
-      }
-    };
+    return new FilenameFilterMatchAnyRegEx (aRegExs);
   }
 
   /**
@@ -120,23 +86,9 @@ public final class FilenameFilterFactory
    *         file is rejected. The filter is applied on directories and files!
    */
   @Nonnull
+  @Deprecated
   public static FilenameFilter getIgnoreMatchRegExFilter (@Nonnull @Nonempty final String... aRegExs)
   {
-    if (ArrayHelper.isEmpty (aRegExs))
-      throw new IllegalArgumentException ("empty array passed");
-
-    return new FilenameFilter ()
-    {
-      public boolean accept (@Nonnull final File aDir, @Nonnull final String sName)
-      {
-        final String sRealName = FilenameHelper.getSecureFilename (sName);
-        if (sRealName == null)
-          return false;
-        for (final String sRegEx : aRegExs)
-          if (RegExHelper.stringMatchesPattern (sRegEx, sRealName))
-            return false;
-        return true;
-      }
-    };
+    return new FilenameFilterMatchNoRegEx (aRegExs);
   }
 }

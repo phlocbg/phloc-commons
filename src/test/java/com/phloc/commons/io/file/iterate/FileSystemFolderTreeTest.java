@@ -28,8 +28,7 @@ import javax.annotation.Nullable;
 import org.junit.Test;
 
 import com.phloc.commons.hierarchy.DefaultHierarchyWalkerCallback;
-import com.phloc.commons.io.file.filter.FileFilterFileFromFilenameFilter;
-import com.phloc.commons.io.file.filter.FilenameFilterFactory;
+import com.phloc.commons.io.file.filter.FilenameFilterEndsWith;
 import com.phloc.commons.tree.utils.walk.TreeWalker;
 import com.phloc.commons.tree.withid.folder.DefaultFolderTreeItem;
 
@@ -77,7 +76,7 @@ public final class FileSystemFolderTreeTest
 
     FileSystemFolderTree aTree = new FileSystemFolderTree (new File (".").getAbsoluteFile (),
                                                            null,
-                                                           new FileFilterFileFromFilenameFilter (FilenameFilterFactory.getEndsWithFilter (".java")));
+                                                           new FilenameFilterEndsWith (".java"));
     TreeWalker.walkSubTree (aTree.getRootItem (),
                             new DefaultHierarchyWalkerCallback <DefaultFolderTreeItem <String, File, List <File>>> ()
                             {
@@ -91,9 +90,7 @@ public final class FileSystemFolderTreeTest
                             });
 
     // Only dir filter
-    aTree = new FileSystemFolderTree (new File (".").getAbsoluteFile (),
-                                      new FileFilterFileFromFilenameFilter (FilenameFilterFactory.getEndsWithFilter ("src")),
-                                      null);
+    aTree = new FileSystemFolderTree (new File (".").getAbsoluteFile (), new FilenameFilterEndsWith ("src"), null);
     TreeWalker.walkSubTree (aTree.getRootItem (),
                             new DefaultHierarchyWalkerCallback <DefaultFolderTreeItem <String, File, List <File>>> ());
 
