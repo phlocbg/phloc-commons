@@ -33,13 +33,14 @@ import javax.annotation.Nullable;
 public abstract class AbstractComparatorNullAware <DATATYPE> implements Comparator <DATATYPE>, Serializable
 {
   private ESortOrder m_eSortOrder;
+  private Comparator <? super DATATYPE> m_aNestedComparator;
 
   /**
    * Comparator with default sort order.
    */
   public AbstractComparatorNullAware ()
   {
-    this (ESortOrder.DEFAULT);
+    this (ESortOrder.DEFAULT, null);
   }
 
   /**
@@ -50,9 +51,37 @@ public abstract class AbstractComparatorNullAware <DATATYPE> implements Comparat
    */
   public AbstractComparatorNullAware (@Nonnull final ESortOrder eSortOrder)
   {
+    this (eSortOrder, null);
+  }
+
+  /**
+   * Comparator with default sort order and a nested comparator.
+   * 
+   * @param aNestedComparator
+   *        The nested comparator to be invoked, when the main comparison
+   *        resulted in 0.
+   */
+  public AbstractComparatorNullAware (@Nullable final Comparator <? super DATATYPE> aNestedComparator)
+  {
+    this (ESortOrder.DEFAULT, aNestedComparator);
+  }
+
+  /**
+   * Comparator with sort order and a nested comparator.
+   * 
+   * @param eSortOrder
+   *        The sort order to use. May not be <code>null</code>.
+   * @param aNestedComparator
+   *        The nested comparator to be invoked, when the main comparison
+   *        resulted in 0.
+   */
+  public AbstractComparatorNullAware (@Nonnull final ESortOrder eSortOrder,
+                                      @Nullable final Comparator <? super DATATYPE> aNestedComparator)
+  {
     if (eSortOrder == null)
       throw new NullPointerException ("sortOrder");
     m_eSortOrder = eSortOrder;
+    m_aNestedComparator = aNestedComparator;
   }
 
   /**
@@ -92,6 +121,13 @@ public abstract class AbstractComparatorNullAware <DATATYPE> implements Comparat
 
   public final int compare (@Nullable final DATATYPE aElement1, @Nullable final DATATYPE aElement2)
   {
-    return (m_eSortOrder.isAscending () ? 1 : -1) * mainCompare (aElement1, aElement2);
+    int nCompare = mainCompare (aElement1, aElement2);
+    if (nCompare == 0 && m_aNestedComparator != null)
+    {
+      // Invoke the nested comparator for 2nd level comparison
+      nCompare = m_aNestedComparator.compare (aElement1, aElement2);
+    }
+
+    return (m_eSortOrder.isAscending () ? 1 : -1) * nCompare;
   }
 }
