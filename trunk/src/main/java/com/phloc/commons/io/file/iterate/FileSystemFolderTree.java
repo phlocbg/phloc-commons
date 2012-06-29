@@ -19,6 +19,7 @@ package com.phloc.commons.io.file.iterate;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.combine.CombinatorStringWithSeparatorIgnoreNull;
 import com.phloc.commons.io.file.FilenameHelper;
+import com.phloc.commons.io.file.filter.FileFilterFileFromFilenameFilter;
 import com.phloc.commons.tree.withid.folder.DefaultFolderTree;
 import com.phloc.commons.tree.withid.folder.DefaultFolderTreeItem;
 
@@ -78,7 +80,14 @@ public class FileSystemFolderTree extends DefaultFolderTree <String, File, List 
 
   public FileSystemFolderTree (@Nonnull final File aStartDir)
   {
-    this (aStartDir, null, null);
+    this (aStartDir, (FileFilter) null, (FileFilter) null);
+  }
+
+  public FileSystemFolderTree (@Nonnull final String sStartDir,
+                               @Nullable final FilenameFilter aDirFilter,
+                               @Nullable final FilenameFilter aFileFilter)
+  {
+    this (new File (sStartDir), aDirFilter, aFileFilter);
   }
 
   public FileSystemFolderTree (@Nonnull final String sStartDir,
@@ -86,6 +95,15 @@ public class FileSystemFolderTree extends DefaultFolderTree <String, File, List 
                                @Nullable final FileFilter aFileFilter)
   {
     this (new File (sStartDir), aDirFilter, aFileFilter);
+  }
+
+  public FileSystemFolderTree (@Nonnull final File aStartDir,
+                               @Nullable final FilenameFilter aDirFilter,
+                               @Nullable final FilenameFilter aFileFilter)
+  {
+    this (aStartDir,
+          aDirFilter == null ? null : new FileFilterFileFromFilenameFilter (aDirFilter),
+          aFileFilter == null ? null : new FileFilterFileFromFilenameFilter (aFileFilter));
   }
 
   public FileSystemFolderTree (@Nonnull final File aStartDir,
