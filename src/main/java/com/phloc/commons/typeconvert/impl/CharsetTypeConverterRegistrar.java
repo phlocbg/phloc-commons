@@ -42,7 +42,7 @@ public final class CharsetTypeConverterRegistrar implements ITypeConverterRegist
     final ITypeConverter aConverterToString = new ITypeConverter ()
     {
       @Nonnull
-      public String convert (final Object aSource)
+      public String convert (@Nonnull final Object aSource)
       {
         return aSource.toString ();
       }
@@ -52,7 +52,7 @@ public final class CharsetTypeConverterRegistrar implements ITypeConverterRegist
     aRegistry.registerTypeConverter (Charset.class, String.class, aConverterToString);
     aRegistry.registerTypeConverter (String.class, Charset.class, new ITypeConverter ()
     {
-      public Charset convert (final Object aSource)
+      public Charset convert (@Nonnull final Object aSource)
       {
         return CharsetManager.getCharsetFromName ((String) aSource);
       }

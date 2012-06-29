@@ -18,7 +18,6 @@
 package com.phloc.commons.factory;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.meta.When;
 
 /**
@@ -39,6 +38,6 @@ public interface IHierarchicalFactory <DATATYPE> extends IFactoryWithParameter <
    *        The parent item to use. May never be <code>null</code>.
    * @return The created object.
    */
-  @Nullable
+  @Nonnull (when = When.MAYBE)
   DATATYPE create (@Nonnull (when = When.MAYBE) DATATYPE aParent);
 }

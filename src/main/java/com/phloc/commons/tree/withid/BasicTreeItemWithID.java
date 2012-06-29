@@ -216,11 +216,13 @@ public class BasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItem
     m_aData = aData;
   }
 
+  @Nullable
   public final ITEMTYPE createChildItem (@Nullable final KEYTYPE aDataID, @Nullable final VALUETYPE aData)
   {
     return createChildItem (aDataID, aData, true);
   }
 
+  @Nullable
   public final ITEMTYPE createChildItem (@Nullable final KEYTYPE aDataID,
                                          @Nullable final VALUETYPE aData,
                                          final boolean bAllowOverwrite)
@@ -242,6 +244,8 @@ public class BasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItem
     {
       // create new item
       aItem = m_aFactory.create (_asT (this), aDataID);
+      if (aItem == null)
+        throw new IllegalStateException ("null item created!");
       aItem.setData (aData);
       if (m_aChildMap == null)
       {

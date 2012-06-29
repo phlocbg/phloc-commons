@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.tree.simple;
 
+import javax.annotation.Nonnull;
+
 import com.phloc.commons.factory.IHierarchicalFactory;
 import com.phloc.commons.factory.IHierarchicalRootFactory;
 
@@ -33,5 +35,15 @@ public interface ITreeItemFactory <VALUETYPE, ITEMTYPE extends ITreeItem <VALUET
                                                                                                 IHierarchicalFactory <ITEMTYPE>,
                                                                                                 IHierarchicalRootFactory <ITEMTYPE>
 {
-  /* empty */
+  /**
+   * {@inheritDoc}
+   */
+  @Nonnull
+  ITEMTYPE createRoot ();
+
+  /**
+   * {@inheritDoc}
+   */
+  @Nonnull
+  ITEMTYPE create (@Nonnull ITEMTYPE aParent);
 }

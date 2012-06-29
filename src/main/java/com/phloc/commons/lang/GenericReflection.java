@@ -24,6 +24,7 @@ import java.lang.reflect.Method;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
+import javax.annotation.meta.When;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -150,6 +151,7 @@ public final class GenericReflection
    * @throws IllegalAccessException
    * @throws InvocationTargetException
    */
+  @Nullable
   public static <RETURNTYPE> RETURNTYPE invokeMethod (@Nonnull final Object aSrcObj,
                                                       @Nonnull final String sMethodName,
                                                       @Nullable final Object... aArgs) throws NoSuchMethodException,
@@ -159,6 +161,7 @@ public final class GenericReflection
     return GenericReflection.<RETURNTYPE> invokeMethod (aSrcObj, sMethodName, getClassArray (aArgs), aArgs);
   }
 
+  @Nullable
   public static <RETURNTYPE> RETURNTYPE invokeMethod (@Nonnull final Object aSrcObj,
                                                       @Nonnull final String sMethodName,
                                                       @Nullable final Class <?> [] aArgClasses,
@@ -171,6 +174,7 @@ public final class GenericReflection
     return GenericReflection.<Object, RETURNTYPE> uncheckedCast (aReturn);
   }
 
+  @Nullable
   public static <RETURNTYPE> RETURNTYPE invokeStaticMethod (@Nonnull final String sClassName,
                                                             @Nonnull final String sMethodName,
                                                             @Nullable final Object... aArgs) throws NoSuchMethodException,
@@ -181,6 +185,7 @@ public final class GenericReflection
     return GenericReflection.<RETURNTYPE> invokeStaticMethod (getClassFromName (sClassName), sMethodName, aArgs);
   }
 
+  @Nullable
   public static <RETURNTYPE> RETURNTYPE invokeStaticMethod (@Nonnull final Class <?> aClass,
                                                             @Nonnull final String sMethodName,
                                                             @Nullable final Object... aArgs) throws NoSuchMethodException,
@@ -190,6 +195,7 @@ public final class GenericReflection
     return GenericReflection.<RETURNTYPE> invokeStaticMethod (aClass, sMethodName, getClassArray (aArgs), aArgs);
   }
 
+  @Nullable
   public static <RETURNTYPE> RETURNTYPE invokeStaticMethod (@Nonnull final String sClassName,
                                                             @Nonnull final String sMethodName,
                                                             @Nullable final Class <?> [] aArgClasses,
@@ -204,6 +210,7 @@ public final class GenericReflection
                                                               aArgs);
   }
 
+  @Nullable
   public static <RETURNTYPE> RETURNTYPE invokeStaticMethod (@Nonnull final Class <?> aClass,
                                                             @Nonnull final String sMethodName,
                                                             @Nullable final Class <?> [] aArgClasses,
@@ -216,6 +223,7 @@ public final class GenericReflection
     return GenericReflection.<Object, RETURNTYPE> uncheckedCast (aReturn);
   }
 
+  @Nonnull
   public static <DATATYPE> Constructor <DATATYPE> findConstructor (@Nonnull final DATATYPE aObj,
                                                                    final Class <?>... aCtorArgs) throws NoSuchMethodException
   {
@@ -240,6 +248,7 @@ public final class GenericReflection
    * @throws InstantiationException
    *         Reflection exception
    */
+  @Nonnull (when = When.MAYBE)
   public static <DATATYPE> DATATYPE newInstance (@Nonnull final DATATYPE aObj) throws IllegalAccessException,
                                                                               NoSuchMethodException,
                                                                               InvocationTargetException,
@@ -248,7 +257,7 @@ public final class GenericReflection
     return findConstructor (aObj).newInstance ();
   }
 
-  @Nullable
+  @Nonnull (when = When.MAYBE)
   public static <DATATYPE> DATATYPE newInstance (@Nullable final Class <? extends DATATYPE> aClass)
   {
     if (aClass != null)
@@ -267,7 +276,7 @@ public final class GenericReflection
     return null;
   }
 
-  @Nullable
+  @Nonnull (when = When.MAYBE)
   public static <DATATYPE> DATATYPE newInstance (@Nullable final String sClassName,
                                                  @Nullable final Class <DATATYPE> aDesiredType)
   {
@@ -288,7 +297,7 @@ public final class GenericReflection
     return null;
   }
 
-  @Nullable
+  @Nonnull (when = When.MAYBE)
   public static <DATATYPE> DATATYPE newInstance (@Nullable final String sClassName,
                                                  @Nullable final Class <DATATYPE> aDesiredType,
                                                  @Nullable final ClassLoader aClassLoaderToUse)

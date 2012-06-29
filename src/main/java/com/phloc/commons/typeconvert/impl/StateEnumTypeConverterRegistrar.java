@@ -50,7 +50,7 @@ public final class StateEnumTypeConverterRegistrar implements ITypeConverterRegi
     final ITypeConverter aEnumToStringConverter = new ITypeConverter ()
     {
       @Nonnull
-      public String convert (final Object aSource)
+      public String convert (@Nonnull final Object aSource)
       {
         return ((Enum <?>) aSource).name ();
       }
@@ -61,7 +61,7 @@ public final class StateEnumTypeConverterRegistrar implements ITypeConverterRegi
     aRegistry.registerTypeConverter (String.class, EChange.class, new ITypeConverter ()
     {
       @Nonnull
-      public EChange convert (final Object aSource)
+      public EChange convert (@Nonnull final Object aSource)
       {
         return EChange.valueOf ((String) aSource);
       }
@@ -72,7 +72,7 @@ public final class StateEnumTypeConverterRegistrar implements ITypeConverterRegi
     aRegistry.registerTypeConverter (String.class, EContinue.class, new ITypeConverter ()
     {
       @Nonnull
-      public EContinue convert (final Object aSource)
+      public EContinue convert (@Nonnull final Object aSource)
       {
         return EContinue.valueOf ((String) aSource);
       }
@@ -83,7 +83,7 @@ public final class StateEnumTypeConverterRegistrar implements ITypeConverterRegi
     aRegistry.registerTypeConverter (String.class, EEnabled.class, new ITypeConverter ()
     {
       @Nonnull
-      public EEnabled convert (final Object aSource)
+      public EEnabled convert (@Nonnull final Object aSource)
       {
         return EEnabled.valueOf ((String) aSource);
       }
@@ -94,7 +94,7 @@ public final class StateEnumTypeConverterRegistrar implements ITypeConverterRegi
     aRegistry.registerTypeConverter (String.class, EFinish.class, new ITypeConverter ()
     {
       @Nonnull
-      public EFinish convert (final Object aSource)
+      public EFinish convert (@Nonnull final Object aSource)
       {
         return EFinish.valueOf ((String) aSource);
       }
@@ -105,7 +105,7 @@ public final class StateEnumTypeConverterRegistrar implements ITypeConverterRegi
     aRegistry.registerTypeConverter (String.class, EInterrupt.class, new ITypeConverter ()
     {
       @Nonnull
-      public EInterrupt convert (final Object aSource)
+      public EInterrupt convert (@Nonnull final Object aSource)
       {
         return EInterrupt.valueOf ((String) aSource);
       }
@@ -116,7 +116,7 @@ public final class StateEnumTypeConverterRegistrar implements ITypeConverterRegi
     aRegistry.registerTypeConverter (String.class, ELeftRight.class, new ITypeConverter ()
     {
       @Nonnull
-      public ELeftRight convert (final Object aSource)
+      public ELeftRight convert (@Nonnull final Object aSource)
       {
         return ELeftRight.valueOf ((String) aSource);
       }
@@ -127,7 +127,7 @@ public final class StateEnumTypeConverterRegistrar implements ITypeConverterRegi
     aRegistry.registerTypeConverter (String.class, EMandatory.class, new ITypeConverter ()
     {
       @Nonnull
-      public EMandatory convert (final Object aSource)
+      public EMandatory convert (@Nonnull final Object aSource)
       {
         return EMandatory.valueOf ((String) aSource);
       }
@@ -138,7 +138,7 @@ public final class StateEnumTypeConverterRegistrar implements ITypeConverterRegi
     aRegistry.registerTypeConverter (String.class, ESuccess.class, new ITypeConverter ()
     {
       @Nonnull
-      public ESuccess convert (final Object aSource)
+      public ESuccess convert (@Nonnull final Object aSource)
       {
         return ESuccess.valueOf ((String) aSource);
       }
@@ -149,7 +149,7 @@ public final class StateEnumTypeConverterRegistrar implements ITypeConverterRegi
     aRegistry.registerTypeConverter (String.class, ETopBottom.class, new ITypeConverter ()
     {
       @Nonnull
-      public ETopBottom convert (final Object aSource)
+      public ETopBottom convert (@Nonnull final Object aSource)
       {
         return ETopBottom.valueOf ((String) aSource);
       }
@@ -160,7 +160,7 @@ public final class StateEnumTypeConverterRegistrar implements ITypeConverterRegi
     aRegistry.registerTypeConverter (String.class, ETriState.class, new ITypeConverter ()
     {
       @Nonnull
-      public ETriState convert (final Object aSource)
+      public ETriState convert (@Nonnull final Object aSource)
       {
         return ETriState.valueOf ((String) aSource);
       }
@@ -171,7 +171,7 @@ public final class StateEnumTypeConverterRegistrar implements ITypeConverterRegi
     aRegistry.registerTypeConverter (String.class, EValidity.class, new ITypeConverter ()
     {
       @Nonnull
-      public EValidity convert (final Object aSource)
+      public EValidity convert (@Nonnull final Object aSource)
       {
         return EValidity.valueOf ((String) aSource);
       }

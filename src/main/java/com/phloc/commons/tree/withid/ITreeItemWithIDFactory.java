@@ -36,6 +36,18 @@ public interface ITreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE extends IT
                                                                                                                               IHierarchicalRootFactory <ITEMTYPE>
 {
   /**
+   * {@inheritDoc}
+   */
+  @Nonnull
+  ITEMTYPE createRoot ();
+
+  /**
+   * {@inheritDoc}
+   */
+  @Nonnull
+  ITEMTYPE create (@Nonnull ITEMTYPE aParent, @Nonnull KEYTYPE aDataID);
+
+  /**
    * To be called once a tree item is removed from the owning tree. This method
    * is mainly important for the tree with globally unique IDs.
    * 

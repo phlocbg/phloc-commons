@@ -18,7 +18,6 @@
 package com.phloc.commons.factory;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.meta.When;
 
 /**
@@ -39,6 +38,6 @@ public interface IFactoryWithParameter <DATATYPE, PARAMTYPE>
    *        The parameter required to create the object.
    * @return The created object.
    */
-  @Nullable
+  @Nonnull (when = When.MAYBE)
   DATATYPE create (@Nonnull (when = When.MAYBE) PARAMTYPE aParameter);
 }
