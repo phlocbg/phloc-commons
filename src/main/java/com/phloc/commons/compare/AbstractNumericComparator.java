@@ -31,7 +31,7 @@ import javax.annotation.Nullable;
  *        The data type to be compared. Must somehow have a value that can be
  *        compared as a double value.
  */
-public abstract class AbstractNumericComparator <DATATYPE> extends AbstractComparatorNullAware <DATATYPE>
+public abstract class AbstractNumericComparator <DATATYPE> extends AbstractComparator <DATATYPE>
 {
   public AbstractNumericComparator ()
   {
@@ -76,10 +76,10 @@ public abstract class AbstractNumericComparator <DATATYPE> extends AbstractCompa
     super (eSortOrder, aNestedComparator);
   }
 
-  protected abstract double asDouble (@Nullable DATATYPE aObject);
+  protected abstract double asDouble (DATATYPE aObject);
 
   @Override
-  protected final int mainCompare (@Nullable final DATATYPE aElement1, @Nullable final DATATYPE aElement2)
+  protected final int mainCompare (final DATATYPE aElement1, final DATATYPE aElement2)
   {
     final double d1 = asDouble (aElement1);
     final double d2 = asDouble (aElement2);

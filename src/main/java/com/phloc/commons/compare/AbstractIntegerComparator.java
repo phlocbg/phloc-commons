@@ -31,7 +31,7 @@ import javax.annotation.Nullable;
  *        The data type to be compared. Must somehow have a value that can be
  *        compared as a long value.
  */
-public abstract class AbstractIntegerComparator <DATATYPE> extends AbstractComparatorNullAware <DATATYPE>
+public abstract class AbstractIntegerComparator <DATATYPE> extends AbstractComparator <DATATYPE>
 {
   public AbstractIntegerComparator ()
   {
@@ -76,10 +76,10 @@ public abstract class AbstractIntegerComparator <DATATYPE> extends AbstractCompa
     super (eSortOrder, aNestedComparator);
   }
 
-  protected abstract long asLong (@Nullable DATATYPE aObject);
+  protected abstract long asLong (DATATYPE aObject);
 
   @Override
-  protected final int mainCompare (@Nullable final DATATYPE aElement1, @Nullable final DATATYPE aElement2)
+  protected final int mainCompare (final DATATYPE aElement1, final DATATYPE aElement2)
   {
     final long n1 = asLong (aElement1);
     final long n2 = asLong (aElement2);
