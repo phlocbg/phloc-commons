@@ -30,7 +30,7 @@ import javax.annotation.Nullable;
  * @author philip
  */
 public class ComparatorComparableNullAware <DATATYPE extends Comparable <? super DATATYPE>> extends
-                                                                                            AbstractComparatorNullAware <DATATYPE>
+                                                                                            AbstractComparator <DATATYPE>
 {
   public static final boolean DEFAULT_NULL_VALUES_COME_FIRST = CompareUtils.DEFAULT_NULL_VALUES_COME_FIRST;
 
@@ -97,12 +97,6 @@ public class ComparatorComparableNullAware <DATATYPE extends Comparable <? super
   @Override
   protected final int mainCompare (@Nullable final DATATYPE aElement1, @Nullable final DATATYPE aElement2)
   {
-    if (aElement1 == aElement2)
-      return 0;
-    if (aElement1 == null)
-      return m_bNullValuesComeFirst ? -1 : +1;
-    if (aElement2 == null)
-      return m_bNullValuesComeFirst ? +1 : -1;
-    return aElement1.compareTo (aElement2);
+    return CompareUtils.nullSafeCompare (aElement1, aElement2, m_bNullValuesComeFirst);
   }
 }

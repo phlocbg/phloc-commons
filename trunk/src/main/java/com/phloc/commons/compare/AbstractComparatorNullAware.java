@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.compare;
 
-import java.io.Serializable;
 import java.util.Comparator;
 
 import javax.annotation.Nonnull;
@@ -30,17 +29,15 @@ import javax.annotation.Nullable;
  * @author philip
  * @param <DATATYPE>
  */
-public abstract class AbstractComparatorNullAware <DATATYPE> implements Comparator <DATATYPE>, Serializable
+@Deprecated
+public abstract class AbstractComparatorNullAware <DATATYPE> extends AbstractComparator <DATATYPE>
 {
-  private ESortOrder m_eSortOrder;
-  private Comparator <? super DATATYPE> m_aNestedComparator;
-
   /**
    * Comparator with default sort order.
    */
   public AbstractComparatorNullAware ()
   {
-    this (ESortOrder.DEFAULT, null);
+    super ();
   }
 
   /**
@@ -51,7 +48,7 @@ public abstract class AbstractComparatorNullAware <DATATYPE> implements Comparat
    */
   public AbstractComparatorNullAware (@Nonnull final ESortOrder eSortOrder)
   {
-    this (eSortOrder, null);
+    super (eSortOrder);
   }
 
   /**
@@ -63,7 +60,7 @@ public abstract class AbstractComparatorNullAware <DATATYPE> implements Comparat
    */
   public AbstractComparatorNullAware (@Nullable final Comparator <? super DATATYPE> aNestedComparator)
   {
-    this (ESortOrder.DEFAULT, aNestedComparator);
+    super (aNestedComparator);
   }
 
   /**
@@ -78,56 +75,6 @@ public abstract class AbstractComparatorNullAware <DATATYPE> implements Comparat
   public AbstractComparatorNullAware (@Nonnull final ESortOrder eSortOrder,
                                       @Nullable final Comparator <? super DATATYPE> aNestedComparator)
   {
-    if (eSortOrder == null)
-      throw new NullPointerException ("sortOrder");
-    m_eSortOrder = eSortOrder;
-    m_aNestedComparator = aNestedComparator;
-  }
-
-  /**
-   * Call this to enable sorting after the constructor was invoked.
-   * 
-   * @param eSortOrder
-   *        The sort order to use. May not be <code>null</code>.
-   * @return this
-   */
-  @Nonnull
-  public final AbstractComparatorNullAware <DATATYPE> setSortOrder (@Nonnull final ESortOrder eSortOrder)
-  {
-    if (eSortOrder == null)
-      throw new NullPointerException ("sortOrder");
-    m_eSortOrder = eSortOrder;
-    return this;
-  }
-
-  /**
-   * @return The currently assigned sort order. Never <code>null</code>.
-   */
-  @Nonnull
-  public final ESortOrder getSortOrder ()
-  {
-    return m_eSortOrder;
-  }
-
-  /**
-   * @param aElement1
-   *        First element to compare. May be <code>null</code>.
-   * @param aElement2
-   *        Second element to compare. May be <code>null</code>.
-   * @return a negative integer, zero, or a positive integer as the first
-   *         argument is less than, equal to, or greater than the second.
-   */
-  protected abstract int mainCompare (@Nullable final DATATYPE aElement1, @Nullable final DATATYPE aElement2);
-
-  public final int compare (@Nullable final DATATYPE aElement1, @Nullable final DATATYPE aElement2)
-  {
-    int nCompare = mainCompare (aElement1, aElement2);
-    if (nCompare == 0 && m_aNestedComparator != null)
-    {
-      // Invoke the nested comparator for 2nd level comparison
-      nCompare = m_aNestedComparator.compare (aElement1, aElement2);
-    }
-
-    return (m_eSortOrder.isAscending () ? 1 : -1) * nCompare;
+    super (eSortOrder, aNestedComparator);
   }
 }

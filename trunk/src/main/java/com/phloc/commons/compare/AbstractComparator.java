@@ -111,15 +111,17 @@ public abstract class AbstractComparator <DATATYPE> implements Comparator <DATAT
 
   /**
    * @param aElement1
-   *        First element to compare. May not be <code>null</code>.
+   *        First element to compare. No information on the <code>null</code>
+   *        status.
    * @param aElement2
-   *        Second element to compare. May not be <code>null</code>.
+   *        Second element to compare. No information on the <code>null</code>
+   *        status.
    * @return a negative integer, zero, or a positive integer as the first
    *         argument is less than, equal to, or greater than the second.
    */
-  protected abstract int mainCompare (@Nonnull final DATATYPE aElement1, @Nonnull final DATATYPE aElement2);
+  protected abstract int mainCompare (final DATATYPE aElement1, final DATATYPE aElement2);
 
-  public final int compare (@Nonnull final DATATYPE aElement1, @Nonnull final DATATYPE aElement2)
+  public final int compare (final DATATYPE aElement1, final DATATYPE aElement2)
   {
     int nCompare = mainCompare (aElement1, aElement2);
     if (nCompare == 0 && m_aNestedComparator != null)

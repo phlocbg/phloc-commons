@@ -36,19 +36,19 @@ import com.phloc.commons.collections.ContainerHelper;
  */
 public final class AbstractCollationComparatorTest
 {
-  private static final class ComparatorMockCollation extends AbstractCollationComparator <String>
+  private static final class ComparatorString extends AbstractCollationComparator <String>
   {
-    ComparatorMockCollation (final ESortOrder eSortOrder)
+    ComparatorString (final ESortOrder eSortOrder)
     {
       super (eSortOrder);
     }
 
-    ComparatorMockCollation (final Locale aSortLocale)
+    ComparatorString (final Locale aSortLocale)
     {
       super (aSortLocale);
     }
 
-    ComparatorMockCollation (final Locale aSortLocale, final ESortOrder eSortOrder)
+    ComparatorString (final Locale aSortLocale, final ESortOrder eSortOrder)
     {
       super (aSortLocale, eSortOrder);
     }
@@ -69,15 +69,15 @@ public final class AbstractCollationComparatorTest
     final String [] x = new String [] { S1, S2, S3 };
 
     // Explicitly sort ascending
-    List <String> l = ContainerHelper.getSorted (x, new ComparatorMockCollation (ESortOrder.ASCENDING));
+    List <String> l = ContainerHelper.getSorted (x, new ComparatorString (ESortOrder.ASCENDING));
     assertArrayEquals (new String [] { S3, S1, S2 }, l.toArray ());
 
     // Explicitly sort descending
-    l = ContainerHelper.getSorted (x, new ComparatorMockCollation (ESortOrder.DESCENDING));
+    l = ContainerHelper.getSorted (x, new ComparatorString (ESortOrder.DESCENDING));
     assertArrayEquals (new String [] { S2, S1, S3 }, l.toArray ());
 
     // change dynamically
-    final ComparatorMockCollation c = new ComparatorMockCollation (ESortOrder.ASCENDING);
+    final ComparatorString c = new ComparatorString (ESortOrder.ASCENDING);
     l = ContainerHelper.getSorted (x, c);
     assertArrayEquals (new String [] { S3, S1, S2 }, l.toArray ());
 
@@ -98,19 +98,19 @@ public final class AbstractCollationComparatorTest
     final String [] x = new String [] { S1, S2, S3 };
 
     // default: sort ascending
-    List <String> l = ContainerHelper.getSorted (x, new ComparatorMockCollation (Locale.GERMAN));
+    List <String> l = ContainerHelper.getSorted (x, new ComparatorString (Locale.GERMAN));
     assertArrayEquals (new String [] { S2, S3, S1 }, l.toArray ());
 
     // sort ascending manually
-    l = ContainerHelper.getSorted (x, new ComparatorMockCollation (Locale.GERMAN, ESortOrder.ASCENDING));
+    l = ContainerHelper.getSorted (x, new ComparatorString (Locale.GERMAN, ESortOrder.ASCENDING));
     assertArrayEquals (new String [] { S2, S3, S1 }, l.toArray ());
 
     // sort descending manually
-    l = ContainerHelper.getSorted (x, new ComparatorMockCollation (Locale.GERMAN, ESortOrder.DESCENDING));
+    l = ContainerHelper.getSorted (x, new ComparatorString (Locale.GERMAN, ESortOrder.DESCENDING));
     assertArrayEquals (new String [] { S1, S3, S2 }, l.toArray ());
 
     // null locale allowed
-    new ComparatorMockCollation ((Locale) null);
+    new ComparatorString ((Locale) null);
     assertArrayEquals (new String [] { S1, S3, S2 }, l.toArray ());
 
     // null locale allowed
@@ -122,10 +122,9 @@ public final class AbstractCollationComparatorTest
   @Test
   public void testIsAscending ()
   {
-    assertTrue (new ComparatorMockCollation (Locale.CANADA_FRENCH).getSortOrder ().isAscending ());
-    assertFalse (new ComparatorMockCollation (Locale.CANADA_FRENCH, ESortOrder.DESCENDING).getSortOrder ()
-                                                                                          .isAscending ());
-    assertTrue (new ComparatorMockCollation (ESortOrder.ASCENDING).getSortOrder ().isAscending ());
-    assertFalse (new ComparatorMockCollation (ESortOrder.DESCENDING).getSortOrder ().isAscending ());
+    assertTrue (new ComparatorString (Locale.CANADA_FRENCH).getSortOrder ().isAscending ());
+    assertFalse (new ComparatorString (Locale.CANADA_FRENCH, ESortOrder.DESCENDING).getSortOrder ().isAscending ());
+    assertTrue (new ComparatorString (ESortOrder.ASCENDING).getSortOrder ().isAscending ());
+    assertFalse (new ComparatorString (ESortOrder.DESCENDING).getSortOrder ().isAscending ());
   }
 }

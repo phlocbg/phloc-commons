@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.compare.AbstractComparator;
+import com.phloc.commons.compare.CompareUtils;
 import com.phloc.commons.compare.ESortOrder;
 
 /**
@@ -81,6 +82,6 @@ public final class ComparatorChangeLogComponent extends AbstractComparator <Chan
   @Override
   protected int mainCompare (@Nonnull final ChangeLog aChangeLog1, @Nonnull final ChangeLog aChangeLog2)
   {
-    return aChangeLog1.getComponent ().compareTo (aChangeLog2.getComponent ());
+    return CompareUtils.nullSafeCompare (aChangeLog1.getComponent (), aChangeLog2.getComponent ());
   }
 }
