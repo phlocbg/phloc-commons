@@ -84,14 +84,16 @@ public final class FileSystemRecursiveIteratorTest
     PhlocTestUtils.testToStringImplementation (it);
 
     // With one filter
-    it = FileSystemRecursiveIterator.create (new File ("."), new FileFilterFileOnly ());
+    it = FileSystemRecursiveIterator.create (new File ("."), FileFilterFileOnly.getInstance ());
     assertNotNull (it);
     assertTrue (it.hasNext ());
     while (it.hasNext ())
       it.next ();
 
     // With one filter
-    it = FileSystemRecursiveIterator.create (new File ("."), new FileFilterFileOnly (), new FileFilterFileOnly ());
+    it = FileSystemRecursiveIterator.create (new File ("."),
+                                             FileFilterFileOnly.getInstance (),
+                                             FileFilterFileOnly.getInstance ());
     assertNotNull (it);
     assertTrue (it.hasNext ());
     while (it.hasNext ())

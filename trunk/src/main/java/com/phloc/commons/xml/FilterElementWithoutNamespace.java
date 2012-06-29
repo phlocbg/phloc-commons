@@ -15,28 +15,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.factory;
+package com.phloc.commons.xml;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 
-import com.phloc.commons.equals.EqualsUtils;
+import org.w3c.dom.Element;
+
+import com.phloc.commons.filter.IFilter;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
-public final class FactoryConstantValue <DATATYPE> implements IFactory <DATATYPE>
+/**
+ * An implementation of {@link IFilter} on {@link Element} objects that will
+ * only return elements without a namespace URI.
+ * 
+ * @author philip
+ */
+@NotThreadSafe
+public final class FilterElementWithoutNamespace implements IFilter <Element>
 {
-  private final DATATYPE m_aConstantValue;
+  private static final FilterElementWithoutNamespace s_aInstance = new FilterElementWithoutNamespace ();
 
-  public FactoryConstantValue (@Nullable final DATATYPE aConstantValue)
-  {
-    m_aConstantValue = aConstantValue;
-  }
+  private FilterElementWithoutNamespace ()
+  {}
 
-  @Nullable
-  public DATATYPE create ()
+  public boolean matchesFilter (@Nonnull final Element aElement)
   {
-    return m_aConstantValue;
+    return aElement.getNamespaceURI () == null;
   }
 
   @Override
@@ -44,27 +50,26 @@ public final class FactoryConstantValue <DATATYPE> implements IFactory <DATATYPE
   {
     if (o == this)
       return true;
-    if (!(o instanceof FactoryConstantValue))
+    if (!(o instanceof FilterElementWithoutNamespace))
       return false;
-    final FactoryConstantValue <?> rhs = (FactoryConstantValue <?>) o;
-    return EqualsUtils.equals (m_aConstantValue, rhs.m_aConstantValue);
+    return true;
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aConstantValue).getHashCode ();
+    return new HashCodeGenerator (this).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("constant", m_aConstantValue).toString ();
+    return new ToStringGenerator (this).toString ();
   }
 
   @Nonnull
-  public static <DATATYPE> FactoryConstantValue <DATATYPE> create (@Nullable final DATATYPE aConstantValue)
+  public static FilterElementWithoutNamespace getInstance ()
   {
-    return new FactoryConstantValue <DATATYPE> (aConstantValue);
+    return s_aInstance;
   }
 }

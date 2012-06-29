@@ -17,7 +17,7 @@
  */
 package com.phloc.commons.filter;
 
-import javax.annotation.Nullable;
+import com.phloc.commons.annotations.DevelopersNote;
 
 /**
  * A generic filter interface for simple object selection based on a parameter.
@@ -35,12 +35,14 @@ public interface IFilterWithParameter <DATATYPE, PARAMTYPE>
    * Check if the given value matches the filter or not.
    * 
    * @param aValue
-   *        The object to filter. May be <code>null</code>.
+   *        The object to filter. May be <code>null</code> depending on the
+   *        implementation.
    * @param aParam
    *        An optional parameter that may be used in determining whether the
    *        object matches the filter or not!
    * @return <code>true</code> if the object match the filter,
    *         <code>false</code> otherwise.
    */
-  boolean matchesFilter (@Nullable DATATYPE aValue, @Nullable PARAMTYPE aParam);
+  @DevelopersNote ("No @Nullable annotation as we can make no assumptions on the state")
+  boolean matchesFilter (DATATYPE aValue, PARAMTYPE aParam);
 }

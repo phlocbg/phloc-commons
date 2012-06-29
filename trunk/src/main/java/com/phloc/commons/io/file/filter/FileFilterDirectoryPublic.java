@@ -20,6 +20,7 @@ package com.phloc.commons.io.file.filter;
 import java.io.File;
 
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.StringHelper;
@@ -31,8 +32,14 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author philip
  */
+@NotThreadSafe
 public final class FileFilterDirectoryPublic extends AbstractFileFilter
 {
+  private static final FileFilterDirectoryPublic s_aInstance = new FileFilterDirectoryPublic ();
+
+  private FileFilterDirectoryPublic ()
+  {}
+
   public boolean accept (@Nullable final File aFile)
   {
     return aFile != null && aFile.isDirectory () && !StringHelper.startsWith (aFile.getName (), '.');
@@ -58,5 +65,10 @@ public final class FileFilterDirectoryPublic extends AbstractFileFilter
   public String toString ()
   {
     return new ToStringGenerator (this).toString ();
+  }
+
+  public static FileFilterDirectoryPublic getInstance ()
+  {
+    return s_aInstance;
   }
 }

@@ -19,6 +19,7 @@ package com.phloc.commons.io.file.filter;
 
 import java.io.File;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.hash.HashCodeGenerator;
@@ -33,6 +34,11 @@ import com.phloc.commons.string.ToStringGenerator;
  */
 public final class FileFilterParentDirectoryPublic extends AbstractFileFilter
 {
+  private static final FileFilterParentDirectoryPublic s_aInstance = new FileFilterParentDirectoryPublic ();
+
+  private FileFilterParentDirectoryPublic ()
+  {}
+
   public boolean accept (@Nullable final File aFile)
   {
     final File aParentFile = aFile != null ? aFile.getAbsoluteFile ().getParentFile () : null;
@@ -59,5 +65,11 @@ public final class FileFilterParentDirectoryPublic extends AbstractFileFilter
   public String toString ()
   {
     return new ToStringGenerator (this).toString ();
+  }
+
+  @Nonnull
+  public static FileFilterParentDirectoryPublic getInstance ()
+  {
+    return s_aInstance;
   }
 }

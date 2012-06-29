@@ -58,7 +58,7 @@ public final class FileFilterToIFilterAdapterTest
     catch (final NullPointerException ex)
     {}
 
-    IFilter <File> aFilter = new FileFilterToIFilterAdapter (new FileFilterParentDirectoryPublic ());
+    IFilter <File> aFilter = new FileFilterToIFilterAdapter (FileFilterParentDirectoryPublic.getInstance ());
 
     // file
     assertTrue (aFilter.matchesFilter (new File ("pom.xml")));
@@ -71,8 +71,8 @@ public final class FileFilterToIFilterAdapterTest
 
     PhlocTestUtils.testToStringImplementation (aFilter);
 
-    aFilter = FileFilterToIFilterAdapter.getANDChained (new FileFilterParentDirectoryPublic (),
-                                                        new FileFilterFileOnly ());
+    aFilter = FileFilterToIFilterAdapter.getANDChained (FileFilterParentDirectoryPublic.getInstance (),
+                                                        FileFilterFileOnly.getInstance ());
     assertNotNull (aFilter);
 
     // file
@@ -86,8 +86,8 @@ public final class FileFilterToIFilterAdapterTest
 
     PhlocTestUtils.testToStringImplementation (aFilter);
 
-    aFilter = FileFilterToIFilterAdapter.getORChained (new FileFilterParentDirectoryPublic (),
-                                                       new FileFilterFileOnly ());
+    aFilter = FileFilterToIFilterAdapter.getORChained (FileFilterParentDirectoryPublic.getInstance (),
+                                                       FileFilterFileOnly.getInstance ());
     assertNotNull (aFilter);
 
     // file

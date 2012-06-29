@@ -47,7 +47,7 @@ public class ChildElementIterator implements IIterableIterator <Element>
 
   public ChildElementIterator (@Nonnull final Node aStartNode, @Nullable final IFilter <Element> aCustomFilter)
   {
-    m_aIter = new FilterIterator <Node> (new ChildNodeIterator (aStartNode), new FilterIsElement (aCustomFilter));
+    m_aIter = new FilterIterator <Node> (new ChildNodeIterator (aStartNode), new FilterNodeIsElement (aCustomFilter));
   }
 
   public final boolean hasNext ()

@@ -17,8 +17,6 @@
  */
 package com.phloc.commons.factory;
 
-import javax.annotation.Nullable;
-
 import com.phloc.commons.annotations.DevelopersNote;
 
 /**
@@ -38,11 +36,14 @@ public interface IFactoryWithTwoParameters <DATATYPE, PARAM1TYPE, PARAM2TYPE>
    * Create an object of the desired type.
    * 
    * @param aParameter1
-   *        The first parameter required to create the object.
+   *        The first parameter required to create the object. May be
+   *        <code>null</code> depending on the implementation.
    * @param aParameter2
-   *        The second parameter required to create the object.
-   * @return The created object.
+   *        The second parameter required to create the object. May be
+   *        <code>null</code> depending on the implementation.
+   * @return The created object. May be <code>null</code> depending on the
+   *         implementation.
    */
   @DevelopersNote ("No @Nullable annotation as we can make no assumptions on the state")
-  DATATYPE create (@Nullable PARAM1TYPE aParameter1, @Nullable PARAM2TYPE aParameter2);
+  DATATYPE create (PARAM1TYPE aParameter1, PARAM2TYPE aParameter2);
 }

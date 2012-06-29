@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -48,8 +47,6 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.collections.iterate.IIterableIterator;
-import com.phloc.commons.equals.EqualsUtils;
-import com.phloc.commons.filter.IFilter;
 import com.phloc.commons.string.StringHelper;
 
 /**
@@ -407,13 +404,7 @@ public final class XMLHelper
   @Nonnull
   public static IIterableIterator <Element> getChildElementIteratorNoNS (@Nonnull final Node aStartNode)
   {
-    return new ChildElementIterator (aStartNode, new IFilter <Element> ()
-    {
-      public boolean matchesFilter (@Nullable final Element aElement)
-      {
-        return aElement != null && aElement.getNamespaceURI () == null;
-      }
-    });
+    return new ChildElementIterator (aStartNode, FilterElementWithoutNamespace.getInstance ());
   }
 
   /**
@@ -435,26 +426,14 @@ public final class XMLHelper
     if (StringHelper.hasNoText (sTagName))
       throw new IllegalArgumentException ("Passed tag name is illegal");
 
-    return new ChildElementIterator (aStartNode, new IFilter <Element> ()
-    {
-      public boolean matchesFilter (@Nullable final Element aElement)
-      {
-        return aElement != null && aElement.getNamespaceURI () == null && aElement.getTagName ().equals (sTagName);
-      }
-    });
+    return new ChildElementIterator (aStartNode, new FilterElementWithTagName (sTagName));
   }
 
   @Nonnull
   public static IIterableIterator <Element> getChildElementIteratorNS (@Nonnull final Node aStartNode,
                                                                        @Nullable final String sNamespaceURI)
   {
-    return new ChildElementIterator (aStartNode, new IFilter <Element> ()
-    {
-      public boolean matchesFilter (@Nullable final Element aElement)
-      {
-        return hasNamespaceURI (aElement, sNamespaceURI);
-      }
-    });
+    return new ChildElementIterator (aStartNode, new FilterElementWithNamespace (sNamespaceURI));
   }
 
   @Nonnull
@@ -465,14 +444,7 @@ public final class XMLHelper
     if (StringHelper.hasNoText (sLocalName))
       throw new IllegalArgumentException ("Passed local name is illegal");
 
-    return new ChildElementIterator (aStartNode, new IFilter <Element> ()
-    {
-      public boolean matchesFilter (@Nullable final Element aElement)
-      {
-        // check namespace before checking local name
-        return hasNamespaceURI (aElement, sNamespaceURI) && EqualsUtils.equals (aElement.getLocalName (), sLocalName);
-      }
-    });
+    return new ChildElementIterator (aStartNode, new FilterElementWithNamespaceAndLocalName (sNamespaceURI, sLocalName));
   }
 
   public static boolean hasNamespaceURI (@Nullable final Node aNode, @Nullable final String sNamespaceURI)
@@ -519,16 +491,14 @@ public final class XMLHelper
       final StringBuilder aName = new StringBuilder (aCurNode.getNodeName ());
       if (aCurNode.getNodeType () == Node.ELEMENT_NODE && aCurNode.getParentNode () != null)
       {
-        // get index of my node
+        // get index of my current element
+        final Element aCurElement = (Element) aCurNode;
         int nIndex = 0;
-
-        final Iterator <Element> it = getChildElementIteratorNoNS (aCurNode.getParentNode ());
-        while (it.hasNext ())
+        for (final Element x : getChildElementIteratorNoNS (aCurNode.getParentNode ()))
         {
-          final Element x = it.next ();
           if (x == aCurNode)// NOPMD
             break;
-          if (x.getTagName ().equals (((Element) aCurNode).getTagName ()))
+          if (x.getTagName ().equals (aCurElement.getTagName ()))
             ++nIndex;
         }
         aName.append ('[').append (nIndex).append (']');

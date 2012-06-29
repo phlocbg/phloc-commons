@@ -51,7 +51,7 @@ public class SafeVector <ELEMENTTYPE> extends Vector <ELEMENTTYPE> implements IH
 
   public SafeVector ()
   {
-    this (new FactoryNull <ELEMENTTYPE> ());
+    this (FactoryNull.<ELEMENTTYPE> getInstance ());
   }
 
   public SafeVector (@Nonnull final IFactory <ELEMENTTYPE> aFactory)

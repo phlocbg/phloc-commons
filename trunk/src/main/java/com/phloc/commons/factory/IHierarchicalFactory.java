@@ -17,8 +17,6 @@
  */
 package com.phloc.commons.factory;
 
-import javax.annotation.Nonnull;
-
 import com.phloc.commons.annotations.DevelopersNote;
 
 /**
@@ -40,5 +38,5 @@ public interface IHierarchicalFactory <DATATYPE> extends IFactoryWithParameter <
    * @return The created object.
    */
   @DevelopersNote ("No @Nullable annotation as we can make no assumptions on the state")
-  DATATYPE create (@Nonnull DATATYPE aParent);
+  DATATYPE create (DATATYPE aParent);
 }

@@ -15,28 +15,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.io.file.filter;
+package com.phloc.test.nullable;
 
-import java.io.File;
-import java.io.FileFilter;
-
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.meta.When;
 
-import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
-import com.phloc.commons.filter.IFilter;
-
-/**
- * Abstract base implementation of {@link FileFilter} with some conversion
- * methods. Also implements {@link IFilter} and forwards the calls to the
- * {@link FileFilter} API.
- * 
- * @author philip
- */
-@MustImplementEqualsAndHashcode
-public abstract class AbstractFileFilter implements FileFilter, IFilter <File>
+public class NullableTestCorrect implements INullableTest
 {
-  public final boolean matchesFilter (@Nullable final File aFile)
-  {
-    return accept (aFile);
-  }
+  public void paramUndefined (final String s)
+  {}
+
+  public void paramNonnull (@Nonnull final String s)
+  {}
+
+  public void paramNonnullAlways (@Nonnull (when = When.ALWAYS) final String s)
+  {}
+
+  public void paramNonnullMaybe (@Nonnull (when = When.MAYBE) final String s)
+  {}
+
+  public void paramNonnullNever (@Nonnull (when = When.NEVER) final String s)
+  {}
+
+  public void paramNonnullUnknown (@Nonnull (when = When.UNKNOWN) final String s)
+  {}
+
+  public void paramNullable (@Nullable final String s)
+  {}
 }

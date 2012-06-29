@@ -25,6 +25,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import com.phloc.commons.filter.IFilter;
+import com.phloc.commons.hash.HashCodeGenerator;
+import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * An implementation of {@link IFilter} on {@link Node} objects that will only
@@ -33,16 +35,16 @@ import com.phloc.commons.filter.IFilter;
  * @author philip
  */
 @NotThreadSafe
-public final class FilterIsElement implements IFilter <Node>
+public final class FilterNodeIsElement implements IFilter <Node>
 {
   private final IFilter <Element> m_aCustomFilter;
 
-  public FilterIsElement ()
+  public FilterNodeIsElement ()
   {
     this (null);
   }
 
-  public FilterIsElement (@Nullable final IFilter <Element> aCustomFilter)
+  public FilterNodeIsElement (@Nullable final IFilter <Element> aCustomFilter)
   {
     m_aCustomFilter = aCustomFilter;
   }
@@ -54,5 +56,28 @@ public final class FilterIsElement implements IFilter <Node>
     if (m_aCustomFilter == null)
       return true;
     return m_aCustomFilter.matchesFilter ((Element) aNode);
+  }
+
+  @Override
+  public boolean equals (final Object o)
+  {
+    if (o == this)
+      return true;
+    if (!(o instanceof FilterNodeIsElement))
+      return false;
+    final FilterNodeIsElement rhs = (FilterNodeIsElement) o;
+    return m_aCustomFilter.equals (rhs.m_aCustomFilter);
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    return new HashCodeGenerator (this).append (m_aCustomFilter).getHashCode ();
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("customFilter", m_aCustomFilter).toString ();
   }
 }

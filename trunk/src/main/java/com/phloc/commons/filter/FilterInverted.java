@@ -20,6 +20,16 @@ package com.phloc.commons.filter;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.hash.HashCodeGenerator;
+import com.phloc.commons.string.ToStringGenerator;
+
+/**
+ * A filter implementation that inverts the result of another filter.
+ * 
+ * @author philip
+ * @param <DATATYPE>
+ *        The data type to filter
+ */
 @Immutable
 public final class FilterInverted <DATATYPE> implements IFilter <DATATYPE>
 {
@@ -35,5 +45,28 @@ public final class FilterInverted <DATATYPE> implements IFilter <DATATYPE>
   public boolean matchesFilter (final DATATYPE aValue)
   {
     return !m_aOriginalFilter.matchesFilter (aValue);
+  }
+
+  @Override
+  public boolean equals (final Object o)
+  {
+    if (o == this)
+      return true;
+    if (!(o instanceof FilterInverted <?>))
+      return false;
+    final FilterInverted <?> rhs = (FilterInverted <?>) o;
+    return m_aOriginalFilter.equals (rhs.m_aOriginalFilter);
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    return new HashCodeGenerator (this).append (m_aOriginalFilter).getHashCode ();
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("originalFilter", m_aOriginalFilter).toString ();
   }
 }

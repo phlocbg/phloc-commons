@@ -17,12 +17,20 @@
  */
 package com.phloc.commons.factory;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.hash.HashCodeGenerator;
+import com.phloc.commons.lang.GenericReflection;
+import com.phloc.commons.string.ToStringGenerator;
 
 public final class FactoryNull <DATATYPE> implements IFactory <DATATYPE>
 {
+  private static final FactoryNull <Object> s_aInstance = new FactoryNull <Object> ();
+
+  private FactoryNull ()
+  {}
+
   @Nullable
   public DATATYPE create ()
   {
@@ -43,5 +51,17 @@ public final class FactoryNull <DATATYPE> implements IFactory <DATATYPE>
   public int hashCode ()
   {
     return new HashCodeGenerator (this).getHashCode ();
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).toString ();
+  }
+
+  @Nonnull
+  public static <DATATYPE> FactoryNull <DATATYPE> getInstance ()
+  {
+    return GenericReflection.<FactoryNull <Object>, FactoryNull <DATATYPE>> uncheckedCast (s_aInstance);
   }
 }

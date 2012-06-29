@@ -17,16 +17,21 @@
  */
 package com.phloc.commons.filter;
 
+import java.util.List;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.hash.HashCodeGenerator;
+import com.phloc.commons.string.ToStringGenerator;
 
 @Immutable
 public final class FilterChainAND <DATATYPE> implements IFilter <DATATYPE>
 {
-  private final Iterable <? extends IFilter <? super DATATYPE>> m_aFilters;
+  private final List <? extends IFilter <? super DATATYPE>> m_aFilters;
 
   public FilterChainAND (@Nullable final IFilter <? super DATATYPE>... aFilters)
   {
@@ -38,12 +43,42 @@ public final class FilterChainAND <DATATYPE> implements IFilter <DATATYPE>
     m_aFilters = ContainerHelper.newList (aFilters);
   }
 
+  @Nonnull
+  @ReturnsMutableCopy
+  public List <? extends IFilter <? super DATATYPE>> getContainedFilters ()
+  {
+    return ContainerHelper.newList (m_aFilters);
+  }
+
   public boolean matchesFilter (@Nullable final DATATYPE aValue)
   {
     for (final IFilter <? super DATATYPE> aFilter : m_aFilters)
       if (!aFilter.matchesFilter (aValue))
         return false;
     return true;
+  }
+
+  @Override
+  public boolean equals (final Object o)
+  {
+    if (o == this)
+      return true;
+    if (!(o instanceof FilterChainAND <?>))
+      return false;
+    final FilterChainAND <?> rhs = (FilterChainAND <?>) o;
+    return m_aFilters.equals (rhs.m_aFilters);
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    return new HashCodeGenerator (this).append (m_aFilters).getHashCode ();
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("filters", m_aFilters).toString ();
   }
 
   @Nonnull
