@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.typeconvert;
 
+import javax.annotation.Nullable;
+
 import com.phloc.commons.convert.IUnidirectionalConverter;
 
 /**
@@ -26,5 +28,9 @@ import com.phloc.commons.convert.IUnidirectionalConverter;
  */
 public interface ITypeConverter extends IUnidirectionalConverter <Object, Object>
 {
-  /* empty */
+  /**
+   * {@inheritDoc} Here the parameter can always be <code>null</code>!
+   */
+  @Nullable
+  Object convert (@Nullable Object aSource);
 }
