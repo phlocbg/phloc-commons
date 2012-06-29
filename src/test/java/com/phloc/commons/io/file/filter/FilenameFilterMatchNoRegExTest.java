@@ -20,38 +20,40 @@ package com.phloc.commons.io.file.filter;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FilenameFilter;
 
 import org.junit.Test;
 
-import com.phloc.commons.mock.PhlocTestUtils;
-
 /**
- * Test class for class {@link FileFilterFileFromFilenameFilter}.
+ * Test class for class {@link FilenameFilterMatchNoRegEx}.
  * 
  * @author philip
  */
-public final class FileFilterFileFromFilenameFilterTest
+public final class FilenameFilterMatchNoRegExTest
 {
   @Test
-  public void testGetFileNameFilter ()
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  public void testAll ()
   {
-    final FilenameFilter ff = new FilenameFilterEndsWith (".xml");
-    final FileFilter aFilter = new FileFilterFileFromFilenameFilter (ff);
-    assertNotNull (aFilter);
+    try
+    {
+      // null not allowed
+      new FilenameFilterMatchNoRegEx ((String []) null);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
 
-    // file
-    assertTrue (aFilter.accept (new File ("pom.xml")));
-    // not existing file
-    assertFalse (aFilter.accept (new File ("file.htm")));
-    // directory
-    assertFalse (aFilter.accept (new File ("src")));
-    // null
-    assertFalse (aFilter.accept (null));
-
-    PhlocTestUtils.testDefaultImplementationWithEqualContentObject (aFilter, new FileFilterFileFromFilenameFilter (ff));
+    final FilenameFilter ff = new FilenameFilterMatchNoRegEx (".*html$");
+    assertNotNull (ff);
+    assertTrue (ff.accept (null, "file.htm"));
+    assertTrue (ff.accept (new File ("dir"), "file.htm"));
+    assertFalse (ff.accept (null, "file.html"));
+    assertFalse (ff.accept (new File ("dir"), "file.html"));
+    assertFalse (ff.accept (null, null));
+    assertTrue (ff.accept (null, ""));
   }
 }

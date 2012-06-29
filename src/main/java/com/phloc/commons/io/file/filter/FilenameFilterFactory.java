@@ -65,7 +65,7 @@ public final class FilenameFilterFactory
   @Deprecated
   public static FilenameFilter getPublicDirectoryFilter ()
   {
-    return new FilenameFilterPublicDirectory ();
+    return FilenameFilterPublicDirectory.getInstance ();
   }
 
   /**

@@ -21,52 +21,46 @@ import java.io.File;
 import java.io.FilenameFilter;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.phloc.commons.annotations.Nonempty;
-import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.io.file.FilenameHelper;
-import com.phloc.commons.regex.RegExHelper;
+import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * A filter that rejects certain file names, based on a regular expression. If
- * at least one regular expressions is fulfilled, the file is rejected. The
- * filter is applied on directories and files!
+ * A filename filter that checks whether a file starts with a certain text. The
+ * implementation is done via {@link String#startsWith(String)} so it is case
+ * sensitive.
  * 
  * @author philip
  */
 @ThreadSafe
-public final class FilenameFilterMatchNoRegEx implements FilenameFilter
+public final class FilenameFilterStartsWith implements FilenameFilter
 {
-  private final String [] m_aRegExs;
+  private final String m_sPrefix;
 
-  public FilenameFilterMatchNoRegEx (@Nonnull @Nonempty final String sRegEx)
+  /**
+   * @param sPrefix
+   *        The extension to use. May neither be <code>null</code> nor empty.
+   */
+  public FilenameFilterStartsWith (@Nonnull @Nonempty final String sPrefix)
   {
-    this (new String [] { sRegEx });
+    if (StringHelper.hasNoText (sPrefix))
+      throw new IllegalArgumentException ("prefix may not be empty");
+    m_sPrefix = sPrefix;
   }
 
-  public FilenameFilterMatchNoRegEx (@Nonnull @Nonempty final String... aRegExs)
-  {
-    if (ArrayHelper.isEmpty (aRegExs))
-      throw new IllegalArgumentException ("empty array passed");
-    m_aRegExs = aRegExs;
-  }
-
-  public boolean accept (@Nonnull final File aDir, @Nonnull final String sName)
+  public boolean accept (@Nullable final File aDir, @Nullable final String sName)
   {
     final String sRealName = FilenameHelper.getSecureFilename (sName);
-    if (sRealName == null)
-      return false;
-    for (final String sRegEx : m_aRegExs)
-      if (RegExHelper.stringMatchesPattern (sRegEx, sRealName))
-        return false;
-    return true;
+    return sRealName != null && sRealName.startsWith (m_sPrefix);
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("regExs", m_aRegExs).toString ();
+    return new ToStringGenerator (this).append ("prefix", m_sPrefix).toString ();
   }
 }

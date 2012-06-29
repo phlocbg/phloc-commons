@@ -39,7 +39,7 @@ public final class FileFilterDirectoryFromFilenameFilterTest
   @Test
   public void testGetDirectoryNameFilter ()
   {
-    final FilenameFilter ff = FilenameFilterFactory.getEndsWithFilter ("rc");
+    final FilenameFilter ff = new FilenameFilterEndsWith ("rc");
     final FileFilter aFilter = new FileFilterDirectoryFromFilenameFilter (ff);
     assertNotNull (aFilter);
 
