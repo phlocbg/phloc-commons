@@ -17,9 +17,13 @@
  */
 package com.phloc.commons.id;
 
-import javax.annotation.Nonnull;
+import java.util.Comparator;
 
-import com.phloc.commons.compare.AbstractComparator;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.phloc.commons.CGlobal;
+import com.phloc.commons.compare.AbstractIntegerComparator;
 import com.phloc.commons.compare.ESortOrder;
 
 /**
@@ -30,21 +34,57 @@ import com.phloc.commons.compare.ESortOrder;
  * @param <DATATYPE>
  *        The type of elements to be compared.
  */
-public class ComparatorHasSimpleIntID <DATATYPE extends IHasSimpleIntID> extends AbstractComparator <DATATYPE>
+public class ComparatorHasSimpleIntID <DATATYPE extends IHasSimpleIntID> extends AbstractIntegerComparator <DATATYPE>
 {
+  /**
+   * Comparator with default sort order and no nested comparator.
+   */
   public ComparatorHasSimpleIntID ()
-  {}
+  {
+    super ();
+  }
 
+  /**
+   * Constructor with sort order.
+   * 
+   * @param eSortOrder
+   *        The sort order to use. May not be <code>null</code>.
+   */
   public ComparatorHasSimpleIntID (@Nonnull final ESortOrder eSortOrder)
   {
     super (eSortOrder);
   }
 
-  @Override
-  protected final int mainCompare (@Nonnull final DATATYPE aElement1, @Nonnull final DATATYPE aElement2)
+  /**
+   * Comparator with default sort order and a nested comparator.
+   * 
+   * @param aNestedComparator
+   *        The nested comparator to be invoked, when the main comparison
+   *        resulted in 0.
+   */
+  public ComparatorHasSimpleIntID (@Nullable final Comparator <? super DATATYPE> aNestedComparator)
   {
-    final int nID1 = aElement1.getID ();
-    final int nID2 = aElement2.getID ();
-    return nID1 < nID2 ? -1 : nID2 < nID1 ? +1 : 0;
+    super (aNestedComparator);
+  }
+
+  /**
+   * Comparator with sort order and a nested comparator.
+   * 
+   * @param eSortOrder
+   *        The sort order to use. May not be <code>null</code>.
+   * @param aNestedComparator
+   *        The nested comparator to be invoked, when the main comparison
+   *        resulted in 0.
+   */
+  public ComparatorHasSimpleIntID (@Nonnull final ESortOrder eSortOrder,
+                                   @Nullable final Comparator <? super DATATYPE> aNestedComparator)
+  {
+    super (eSortOrder, aNestedComparator);
+  }
+
+  @Override
+  protected long asLong (@Nullable final DATATYPE aObject)
+  {
+    return aObject == null ? CGlobal.ILLEGAL_ULONG : aObject.getID ();
   }
 }
