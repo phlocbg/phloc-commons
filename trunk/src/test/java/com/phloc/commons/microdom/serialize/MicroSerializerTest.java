@@ -82,7 +82,7 @@ public final class MicroSerializerTest
   {
     final MicroSerializer aMS = new MicroSerializer ();
     final NonBlockingStringWriter aWriter = new NonBlockingStringWriter ();
-    final boolean bWithText = true;
+    final boolean bWithText = false;
     final boolean bWithAttrs = false;
     final IMicroDocument doc = _createLargeDoc (new MicroDocument (), bWithText, bWithAttrs);
 

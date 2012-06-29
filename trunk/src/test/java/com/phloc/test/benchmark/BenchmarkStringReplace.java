@@ -43,13 +43,13 @@ public final class BenchmarkStringReplace extends AbstractBenchmarkTask
   {
     final int nRuns = 1000;
     final double javaTime = benchmarkTask (new StringReplace (nRuns));
-    s_aLogger.info ("Time purely in Java: " + javaTime + " us");
+    s_aLogger.info ("Time purely in Java:        " + javaTime + " us");
 
     final double systemTime = benchmarkTask (new PatternReplace (nRuns));
     s_aLogger.info ("Time using pattern replace: " + systemTime + " us");
 
     final double selfTime = benchmarkTask (new SelfReplace (nRuns));
-    s_aLogger.info ("Time using self replace: " + selfTime + " us");
+    s_aLogger.info ("Time using self replace:    " + selfTime + " us");
   }
 
   private static final String SRC = "This is <<a> text";
