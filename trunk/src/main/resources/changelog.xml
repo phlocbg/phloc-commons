@@ -23,7 +23,12 @@
   <release date="2012-06-29" version="3.6.3" />
   <entry date="2012-06-29" category="api" action="add">
     <change>
-      <text locale="en">Added The possibility for all AbstractComparator implementations to pass nested comparators that are invoked in case the main comparison returned 0</text>
+      <text locale="en">Added some more Comparator implementations and aligned Comparator hierarchy</text>
+    </change>
+  </entry>
+  <entry date="2012-06-29" category="api" action="add">
+    <change>
+      <text locale="en">Added the possibility for all AbstractComparator implementations to pass nested comparators that are invoked in case the main comparison returned 0</text>
     </change>
   </entry>
   <entry date="2012-06-29" category="api" action="add">

@@ -21,7 +21,7 @@ import java.util.Comparator;
 
 import javax.annotation.Nonnull;
 
-import com.phloc.commons.compare.AbstractComparator;
+import com.phloc.commons.id.ComparatorHasID;
 import com.phloc.commons.tree.withid.ITreeItemWithID;
 
 /**
@@ -37,20 +37,10 @@ import com.phloc.commons.tree.withid.ITreeItemWithID;
  *        tree item implementation type
  */
 public class ComparatorTreeItemID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> extends
-                                                                                                                        AbstractComparator <ITEMTYPE>
+                                                                                                                        ComparatorHasID <KEYTYPE, ITEMTYPE>
 {
-  private final Comparator <? super KEYTYPE> m_aKeyComparator;
-
   public ComparatorTreeItemID (@Nonnull final Comparator <? super KEYTYPE> aKeyComparator)
   {
-    if (aKeyComparator == null)
-      throw new NullPointerException ("keyComparator");
-    m_aKeyComparator = aKeyComparator;
-  }
-
-  @Override
-  protected final int mainCompare (@Nonnull final ITEMTYPE aTreeItem1, @Nonnull final ITEMTYPE aTreeItem2)
-  {
-    return m_aKeyComparator.compare (aTreeItem1.getID (), aTreeItem2.getID ());
+    super (aKeyComparator);
   }
 }

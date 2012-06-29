@@ -27,7 +27,8 @@ import com.phloc.commons.compare.ESortOrder;
 
 /**
  * This is a collation {@link java.util.Comparator} for objects that implement
- * the {@link IHasID} interface with a class that implements {@link Comparable}.
+ * the {@link IHasID} interface with a class that does NOT implements
+ * {@link Comparable}.
  * 
  * @author philip
  * @param <IDTYPE>
@@ -35,26 +36,32 @@ import com.phloc.commons.compare.ESortOrder;
  * @param <DATATYPE>
  *        The type of elements to be compared.
  */
-public class ComparatorHasIDComparable <IDTYPE extends Comparable <? super IDTYPE>, DATATYPE extends IHasID <IDTYPE>> extends
-                                                                                                                      AbstractComparator <DATATYPE>
+public class ComparatorHasID <IDTYPE, DATATYPE extends IHasID <IDTYPE>> extends AbstractComparator <DATATYPE>
 {
+  private Comparator <? super IDTYPE> m_aIDComparator;
+
   /**
    * Comparator with default sort order and no nested comparator.
+   * 
+   * @param aIDComparator
+   *        The comparator for comparing the IDs. May not be <code>null</code>.
    */
-  public ComparatorHasIDComparable ()
+  public ComparatorHasID (@Nonnull final Comparator <? super IDTYPE> aIDComparator)
   {
-    super ();
+    this (ESortOrder.DEFAULT, (Comparator <? super DATATYPE>) null, aIDComparator);
   }
 
   /**
-   * Constructor with sort order.
+   * Constructor with sort order and no nested comparator.
    * 
    * @param eSortOrder
    *        The sort order to use. May not be <code>null</code>.
+   * @param aIDComparator
+   *        The comparator for comparing the IDs. May not be <code>null</code>.
    */
-  public ComparatorHasIDComparable (@Nonnull final ESortOrder eSortOrder)
+  public ComparatorHasID (@Nonnull final ESortOrder eSortOrder, @Nonnull final Comparator <? super IDTYPE> aIDComparator)
   {
-    super (eSortOrder);
+    this (eSortOrder, (Comparator <? super DATATYPE>) null, aIDComparator);
   }
 
   /**
@@ -63,30 +70,39 @@ public class ComparatorHasIDComparable <IDTYPE extends Comparable <? super IDTYP
    * @param aNestedComparator
    *        The nested comparator to be invoked, when the main comparison
    *        resulted in 0.
+   * @param aIDComparator
+   *        The comparator for comparing the IDs. May not be <code>null</code>.
    */
-  public ComparatorHasIDComparable (@Nullable final Comparator <? super DATATYPE> aNestedComparator)
+  public ComparatorHasID (@Nullable final Comparator <? super DATATYPE> aNestedComparator,
+                          @Nonnull final Comparator <? super IDTYPE> aIDComparator)
   {
-    super (aNestedComparator);
+    this (ESortOrder.DEFAULT, aNestedComparator, aIDComparator);
   }
 
   /**
-   * Comparator with sort order and a nested comparator.
+   * Constructor with sort order and a nested comparator.
    * 
    * @param eSortOrder
    *        The sort order to use. May not be <code>null</code>.
    * @param aNestedComparator
    *        The nested comparator to be invoked, when the main comparison
    *        resulted in 0.
+   * @param aIDComparator
+   *        The comparator for comparing the IDs. May not be <code>null</code>.
    */
-  public ComparatorHasIDComparable (@Nonnull final ESortOrder eSortOrder,
-                                    @Nullable final Comparator <? super DATATYPE> aNestedComparator)
+  public ComparatorHasID (@Nonnull final ESortOrder eSortOrder,
+                          @Nullable final Comparator <? super DATATYPE> aNestedComparator,
+                          @Nonnull final Comparator <? super IDTYPE> aIDComparator)
   {
     super (eSortOrder, aNestedComparator);
+    if (aIDComparator == null)
+      throw new NullPointerException ("IDComparator");
+    m_aIDComparator = aIDComparator;
   }
 
   @Override
   protected final int mainCompare (@Nonnull final DATATYPE aObj1, @Nonnull final DATATYPE aObj2)
   {
-    return aObj1.getID ().compareTo (aObj2.getID ());
+    return m_aIDComparator.compare (aObj1.getID (), aObj2.getID ());
   }
 }
