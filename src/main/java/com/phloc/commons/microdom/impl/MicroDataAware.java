@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.ICloneable;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.microdom.IMicroDataAware;
 import com.phloc.commons.string.StringHelper;
@@ -35,16 +36,16 @@ final class MicroDataAware implements IMicroDataAware, ICloneable <MicroDataAwar
 {
   private final StringBuilder m_aData;
 
-  public MicroDataAware (@Nullable final CharSequence sText)
+  public MicroDataAware (@Nullable final CharSequence aText)
   {
-    if (StringHelper.hasNoText (sText))
+    if (StringHelper.hasNoText (aText))
       m_aData = new StringBuilder ();
     else
-      m_aData = new StringBuilder (sText);
+      m_aData = new StringBuilder (aText);
   }
 
   @Nonnull
-  public CharSequence getData ()
+  public StringBuilder getData ()
   {
     return m_aData;
   }
@@ -79,13 +80,13 @@ final class MicroDataAware implements IMicroDataAware, ICloneable <MicroDataAwar
     if (!(o instanceof MicroDataAware))
       return false;
     final MicroDataAware rhs = (MicroDataAware) o;
-    return m_aData.toString ().equals (rhs.m_aData.toString ());
+    return EqualsUtils.equals (m_aData, rhs.m_aData);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aData.toString ()).getHashCode ();
+    return new HashCodeGenerator (this).append (m_aData).getHashCode ();
   }
 
   @Override

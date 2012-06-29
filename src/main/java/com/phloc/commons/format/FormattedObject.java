@@ -93,8 +93,7 @@ public class FormattedObject implements IFormattedObject
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final FormattedObject rhs = (FormattedObject) o;
-    return EqualsUtils.equals (m_aValue, rhs.m_aValue) &&
-           EqualsUtils.equals (m_aFormatter, rhs.m_aFormatter);
+    return EqualsUtils.equals (m_aValue, rhs.m_aValue) && EqualsUtils.equals (m_aFormatter, rhs.m_aFormatter);
   }
 
   @Override

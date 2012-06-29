@@ -38,7 +38,8 @@ public final class PrivilegedActionAccessibleObjectSetAccessible implements Priv
     this (aObject, true);
   }
 
-  public PrivilegedActionAccessibleObjectSetAccessible (@Nonnull final AccessibleObject aObject, final boolean bAccessible)
+  public PrivilegedActionAccessibleObjectSetAccessible (@Nonnull final AccessibleObject aObject,
+                                                        final boolean bAccessible)
   {
     if (aObject == null)
       throw new NullPointerException ("method");

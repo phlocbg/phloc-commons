@@ -326,6 +326,12 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
     m_aNSStack = new NamespaceStack (aSettings.getNamespaceContext ());
   }
 
+  @Nonnull
+  public final IXMLWriterSettings getSettings ()
+  {
+    return m_aSettings;
+  }
+
   public final void write (@Nonnull final NODETYPE aNode, @Nonnull @WillNotClose final OutputStream aOS)
   {
     // Create a writer for the the passed output stream

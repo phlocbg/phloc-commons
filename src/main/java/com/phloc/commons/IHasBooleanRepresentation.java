@@ -17,7 +17,6 @@
  */
 package com.phloc.commons;
 
-
 /**
  * Base interface for all objects having an explicit boolean representation
  * 

@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.codec;
 
-
 /**
  * Interface for a single encoder + decoder.
  * 

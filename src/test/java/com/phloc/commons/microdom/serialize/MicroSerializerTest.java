@@ -25,7 +25,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
+import com.phloc.commons.io.streams.NonBlockingStringWriter;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.impl.MicroDocument;
@@ -42,22 +42,29 @@ public final class MicroSerializerTest
   private static final Logger s_aLogger = LoggerFactory.getLogger (MicroSerializerTest.class);
 
   @Nonnull
-  private IMicroDocument _createLargeDoc (@Nonnull final IMicroDocument doc, final boolean bWithText)
+  private IMicroDocument _createLargeDoc (@Nonnull final IMicroDocument doc,
+                                          final boolean bWithText,
+                                          final boolean bWithAttrs)
   {
     final IMicroElement aDocElement = doc.appendElement ("root");
     for (int i = 1; i <= 10; ++i)
     {
       final IMicroElement e1 = aDocElement.appendElement ("level1");
-      e1.setAttribute ("a1", "Supsi1");
-      e1.setAttribute ("a1a", "Supsi1a");
+      if (bWithAttrs)
+      {
+        e1.setAttribute ("a1", "Supsi1");
+        e1.setAttribute ("a1a", "Supsi1a");
+      }
       for (int j = 1; j <= 20; ++j)
       {
         final IMicroElement e2 = e1.appendElement ("level2");
-        e2.setAttribute ("a2", "Supsi");
+        if (bWithAttrs)
+          e2.setAttribute ("a2", "Supsi");
         for (int k = 1; k <= 100; ++k)
         {
           final IMicroElement e3 = e2.appendElement ("level3");
-          e3.setAttribute ("a3", "Supsi");
+          if (bWithAttrs)
+            e3.setAttribute ("a3", "Supsi");
           if (bWithText)
             e3.appendText ("Level 3 text <> " + Double.toString (Math.random ()));
         }
@@ -74,9 +81,10 @@ public final class MicroSerializerTest
   public void testLargeTree ()
   {
     final MicroSerializer aMS = new MicroSerializer ();
-    final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
+    final NonBlockingStringWriter aWriter = new NonBlockingStringWriter ();
     final boolean bWithText = true;
-    final IMicroDocument doc = _createLargeDoc (new MicroDocument (), bWithText);
+    final boolean bWithAttrs = false;
+    final IMicroDocument doc = _createLargeDoc (new MicroDocument (), bWithText, bWithAttrs);
 
     int nMilliSecs = 0;
     int nRun = 0;
@@ -84,7 +92,7 @@ public final class MicroSerializerTest
     final StopWatch aSW = new StopWatch ();
     for (; nRun < 2000; ++nRun)
     {
-      aBAOS.reset ();
+      aWriter.reset ();
 
       /**
        * Current averages:<br>
@@ -96,18 +104,18 @@ public final class MicroSerializerTest
        */
       if (nRun < 2)
       {
-        aMS.write (doc, aBAOS);
+        aMS.write (doc, aWriter);
         nWarmUpRuns++;
       }
       else
       {
         aSW.start ();
-        aMS.write (doc, aBAOS);
+        aMS.write (doc, aWriter);
         aSW.stop ();
         nMilliSecs += aSW.getMillis ();
         aSW.reset ();
       }
-      assertTrue (aBAOS.size () > 0);
+      assertTrue (aWriter.size () > 0);
     }
     s_aLogger.info ("Average MicroDOM write: " + ((double) nMilliSecs / (nRun - nWarmUpRuns)) + " millisecs");
 

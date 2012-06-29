@@ -17,8 +17,9 @@
  */
 package com.phloc.commons.factory;
 
-import javax.annotation.Nonnull;
-import javax.annotation.meta.When;
+import javax.annotation.Nullable;
+
+import com.phloc.commons.annotations.DevelopersNote;
 
 /**
  * This is a generic interface for creating objects of a certain type.
@@ -42,7 +43,6 @@ public interface IFactoryWithTwoParameters <DATATYPE, PARAM1TYPE, PARAM2TYPE>
    *        The second parameter required to create the object.
    * @return The created object.
    */
-  @Nonnull (when = When.MAYBE)
-  DATATYPE create (@Nonnull (when = When.MAYBE) PARAM1TYPE aParameter1,
-                   @Nonnull (when = When.MAYBE) PARAM2TYPE aParameter2);
+  @DevelopersNote ("No @Nullable annotation as we can make no assumptions on the state")
+  DATATYPE create (@Nullable PARAM1TYPE aParameter1, @Nullable PARAM2TYPE aParameter2);
 }
