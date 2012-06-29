@@ -22,7 +22,7 @@ import java.util.Comparator;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.phloc.commons.compare.AbstractComparator;
+import com.phloc.commons.compare.AbstractPartComparatorComparable;
 import com.phloc.commons.compare.ESortOrder;
 
 /**
@@ -36,7 +36,7 @@ import com.phloc.commons.compare.ESortOrder;
  *        The type of elements to be compared.
  */
 public class ComparatorHasIDComparable <IDTYPE extends Comparable <? super IDTYPE>, DATATYPE extends IHasID <IDTYPE>> extends
-                                                                                                                      AbstractComparator <DATATYPE>
+                                                                                                                      AbstractPartComparatorComparable <DATATYPE, IDTYPE>
 {
   /**
    * Comparator with default sort order and no nested comparator.
@@ -85,8 +85,9 @@ public class ComparatorHasIDComparable <IDTYPE extends Comparable <? super IDTYP
   }
 
   @Override
-  protected final int mainCompare (@Nonnull final DATATYPE aObj1, @Nonnull final DATATYPE aObj2)
+  @Nullable
+  protected final IDTYPE getPart (@Nonnull final DATATYPE aObject)
   {
-    return aObj1.getID ().compareTo (aObj2.getID ());
+    return aObject.getID ();
   }
 }

@@ -20,9 +20,9 @@ package com.phloc.commons.tree.utils.sort;
 import java.util.Comparator;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
-import com.phloc.commons.compare.AbstractComparator;
-import com.phloc.commons.compare.CompareUtils;
+import com.phloc.commons.compare.AbstractPartComparator;
 import com.phloc.commons.tree.IBasicTreeItem;
 import com.phloc.commons.tree.simple.ITreeItem;
 import com.phloc.commons.tree.withid.ITreeItemWithID;
@@ -39,20 +39,17 @@ import com.phloc.commons.tree.withid.ITreeItemWithID;
  *        tree item implementation type
  */
 public class ComparatorTreeItemValue <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> extends
-                                                                                                        AbstractComparator <ITEMTYPE>
+                                                                                                        AbstractPartComparator <ITEMTYPE, VALUETYPE>
 {
-  private final Comparator <? super VALUETYPE> m_aValueComparator;
-
   public ComparatorTreeItemValue (@Nonnull final Comparator <? super VALUETYPE> aValueComparator)
   {
-    if (aValueComparator == null)
-      throw new NullPointerException ("valueComparator");
-    m_aValueComparator = aValueComparator;
+    super (aValueComparator);
   }
 
   @Override
-  protected final int mainCompare (@Nonnull final ITEMTYPE aTreeItem1, @Nonnull final ITEMTYPE aTreeItem2)
+  @Nullable
+  protected VALUETYPE getPart (@Nonnull final ITEMTYPE aTreeItem)
   {
-    return CompareUtils.nullSafeCompare (aTreeItem1.getData (), aTreeItem1.getData (), m_aValueComparator);
+    return aTreeItem.getData ();
   }
 }
