@@ -15,39 +15,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.id;
+package com.phloc.commons.compare;
 
 import java.util.Comparator;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.phloc.commons.compare.AbstractPartComparator;
-import com.phloc.commons.compare.ESortOrder;
-
 /**
- * This is a collation {@link java.util.Comparator} for objects that implement
- * the {@link IHasID} interface with a class that does NOT implements
- * {@link Comparable}.
+ * This class is an {@link AbstractComparator} that extracts a certain data
+ * element from the main object to compare.
  * 
  * @author philip
- * @param <IDTYPE>
- *        The type of the ID
  * @param <DATATYPE>
  *        The type of elements to be compared.
+ * @param <PARTTYPE>
+ *        The part type that is extracted from the data element and compared
  */
-public class ComparatorHasID <IDTYPE, DATATYPE extends IHasID <IDTYPE>> extends
-                                                                        AbstractPartComparator <DATATYPE, IDTYPE>
+public abstract class AbstractPartComparator <DATATYPE, PARTTYPE> extends AbstractComparator <DATATYPE>
 {
+  private Comparator <? super PARTTYPE> m_aPartComparator;
+
   /**
    * Comparator with default sort order and no nested comparator.
    * 
-   * @param aIDComparator
+   * @param aPartComparator
    *        The comparator for comparing the IDs. May not be <code>null</code>.
    */
-  public ComparatorHasID (@Nonnull final Comparator <? super IDTYPE> aIDComparator)
+  public AbstractPartComparator (@Nonnull final Comparator <? super PARTTYPE> aPartComparator)
   {
-    super (aIDComparator);
+    this (ESortOrder.DEFAULT, (Comparator <? super DATATYPE>) null, aPartComparator);
   }
 
   /**
@@ -55,12 +52,13 @@ public class ComparatorHasID <IDTYPE, DATATYPE extends IHasID <IDTYPE>> extends
    * 
    * @param eSortOrder
    *        The sort order to use. May not be <code>null</code>.
-   * @param aIDComparator
+   * @param aPartComparator
    *        The comparator for comparing the IDs. May not be <code>null</code>.
    */
-  public ComparatorHasID (@Nonnull final ESortOrder eSortOrder, @Nonnull final Comparator <? super IDTYPE> aIDComparator)
+  public AbstractPartComparator (@Nonnull final ESortOrder eSortOrder,
+                                 @Nonnull final Comparator <? super PARTTYPE> aPartComparator)
   {
-    super (eSortOrder, aIDComparator);
+    this (eSortOrder, (Comparator <? super DATATYPE>) null, aPartComparator);
   }
 
   /**
@@ -69,13 +67,13 @@ public class ComparatorHasID <IDTYPE, DATATYPE extends IHasID <IDTYPE>> extends
    * @param aNestedComparator
    *        The nested comparator to be invoked, when the main comparison
    *        resulted in 0.
-   * @param aIDComparator
+   * @param aPartComparator
    *        The comparator for comparing the IDs. May not be <code>null</code>.
    */
-  public ComparatorHasID (@Nullable final Comparator <? super DATATYPE> aNestedComparator,
-                          @Nonnull final Comparator <? super IDTYPE> aIDComparator)
+  public AbstractPartComparator (@Nullable final Comparator <? super DATATYPE> aNestedComparator,
+                                 @Nonnull final Comparator <? super PARTTYPE> aPartComparator)
   {
-    super (aNestedComparator, aIDComparator);
+    this (ESortOrder.DEFAULT, aNestedComparator, aPartComparator);
   }
 
   /**
@@ -86,20 +84,27 @@ public class ComparatorHasID <IDTYPE, DATATYPE extends IHasID <IDTYPE>> extends
    * @param aNestedComparator
    *        The nested comparator to be invoked, when the main comparison
    *        resulted in 0.
-   * @param aIDComparator
+   * @param aPartComparator
    *        The comparator for comparing the IDs. May not be <code>null</code>.
    */
-  public ComparatorHasID (@Nonnull final ESortOrder eSortOrder,
-                          @Nullable final Comparator <? super DATATYPE> aNestedComparator,
-                          @Nonnull final Comparator <? super IDTYPE> aIDComparator)
+  public AbstractPartComparator (@Nonnull final ESortOrder eSortOrder,
+                                 @Nullable final Comparator <? super DATATYPE> aNestedComparator,
+                                 @Nonnull final Comparator <? super PARTTYPE> aPartComparator)
   {
-    super (eSortOrder, aNestedComparator, aIDComparator);
+    super (eSortOrder, aNestedComparator);
+    if (aPartComparator == null)
+      throw new NullPointerException ("partComparator");
+    m_aPartComparator = aPartComparator;
   }
 
-  @Override
   @Nullable
-  protected IDTYPE getPart (final DATATYPE aObject)
+  protected abstract PARTTYPE getPart (DATATYPE aObject);
+
+  @Override
+  protected final int mainCompare (final DATATYPE aElement1, final DATATYPE aElement2)
   {
-    return aObject.getID ();
+    final PARTTYPE aPart1 = getPart (aElement1);
+    final PARTTYPE aPart2 = getPart (aElement2);
+    return CompareUtils.nullSafeCompare (aPart1, aPart2, m_aPartComparator);
   }
 }

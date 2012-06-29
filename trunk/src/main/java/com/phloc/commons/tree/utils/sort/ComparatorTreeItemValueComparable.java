@@ -17,10 +17,13 @@
  */
 package com.phloc.commons.tree.utils.sort;
 
-import javax.annotation.Nonnull;
+import java.util.Comparator;
 
-import com.phloc.commons.compare.AbstractComparator;
-import com.phloc.commons.compare.CompareUtils;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.phloc.commons.compare.AbstractPartComparatorComparable;
+import com.phloc.commons.compare.ESortOrder;
 import com.phloc.commons.tree.IBasicTreeItem;
 import com.phloc.commons.tree.simple.ITreeItem;
 import com.phloc.commons.tree.withid.ITreeItemWithID;
@@ -37,11 +40,58 @@ import com.phloc.commons.tree.withid.ITreeItemWithID;
  *        tree item implementation type
  */
 public class ComparatorTreeItemValueComparable <VALUETYPE extends Comparable <? super VALUETYPE>, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> extends
-                                                                                                                                                         AbstractComparator <ITEMTYPE>
+                                                                                                                                                         AbstractPartComparatorComparable <ITEMTYPE, VALUETYPE>
 {
-  @Override
-  protected final int mainCompare (@Nonnull final ITEMTYPE aTreeItem1, @Nonnull final ITEMTYPE aTreeItem2)
+  /**
+   * Comparator with default sort order.
+   */
+  public ComparatorTreeItemValueComparable ()
   {
-    return CompareUtils.nullSafeCompare (aTreeItem1.getData (), aTreeItem2.getData ());
+    super ();
+  }
+
+  /**
+   * Constructor with sort order.
+   * 
+   * @param eSortOrder
+   *        The sort order to use. May not be <code>null</code>.
+   */
+  public ComparatorTreeItemValueComparable (@Nonnull final ESortOrder eSortOrder)
+  {
+    super (eSortOrder);
+  }
+
+  /**
+   * Comparator with default sort order and a nested comparator.
+   * 
+   * @param aNestedComparator
+   *        The nested comparator to be invoked, when the main comparison
+   *        resulted in 0.
+   */
+  public ComparatorTreeItemValueComparable (@Nullable final Comparator <? super ITEMTYPE> aNestedComparator)
+  {
+    super (aNestedComparator);
+  }
+
+  /**
+   * Comparator with sort order and a nested comparator.
+   * 
+   * @param eSortOrder
+   *        The sort order to use. May not be <code>null</code>.
+   * @param aNestedComparator
+   *        The nested comparator to be invoked, when the main comparison
+   *        resulted in 0.
+   */
+  public ComparatorTreeItemValueComparable (@Nonnull final ESortOrder eSortOrder,
+                                            @Nullable final Comparator <? super ITEMTYPE> aNestedComparator)
+  {
+    super (eSortOrder, aNestedComparator);
+  }
+
+  @Override
+  @Nullable
+  protected VALUETYPE getPart (@Nonnull final ITEMTYPE aTreeItem)
+  {
+    return aTreeItem.getData ();
   }
 }

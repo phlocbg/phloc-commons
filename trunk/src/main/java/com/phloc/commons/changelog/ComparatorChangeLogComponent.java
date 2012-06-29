@@ -22,8 +22,7 @@ import java.util.Comparator;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.phloc.commons.compare.AbstractComparator;
-import com.phloc.commons.compare.CompareUtils;
+import com.phloc.commons.compare.AbstractPartComparatorComparable;
 import com.phloc.commons.compare.ESortOrder;
 
 /**
@@ -31,7 +30,7 @@ import com.phloc.commons.compare.ESortOrder;
  * 
  * @author philip
  */
-public final class ComparatorChangeLogComponent extends AbstractComparator <ChangeLog>
+public final class ComparatorChangeLogComponent extends AbstractPartComparatorComparable <ChangeLog, String>
 {
   /**
    * Comparator with default sort order and no nested comparator.
@@ -80,8 +79,9 @@ public final class ComparatorChangeLogComponent extends AbstractComparator <Chan
   }
 
   @Override
-  protected int mainCompare (@Nonnull final ChangeLog aChangeLog1, @Nonnull final ChangeLog aChangeLog2)
+  @Nullable
+  protected String getPart (@Nonnull final ChangeLog aChangeLog)
   {
-    return CompareUtils.nullSafeCompare (aChangeLog1.getComponent (), aChangeLog2.getComponent ());
+    return aChangeLog.getComponent ();
   }
 }
