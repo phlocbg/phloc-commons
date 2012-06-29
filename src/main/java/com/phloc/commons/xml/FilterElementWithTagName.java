@@ -15,33 +15,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.io.file.filter;
-
-import java.io.File;
+package com.phloc.commons.xml;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import org.w3c.dom.Element;
+
+import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.filter.IFilter;
 import com.phloc.commons.hash.HashCodeGenerator;
+import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * A file filter that accepts only directories.
+ * An implementation of {@link IFilter} on {@link Element} objects that will
+ * only return elements with a certain tag name and without a namespace URI.
  * 
  * @author philip
  */
 @NotThreadSafe
-public final class FileFilterDirectoryOnly extends AbstractFileFilter
+public final class FilterElementWithTagName implements IFilter <Element>
 {
-  private static final FileFilterDirectoryOnly s_aInstance = new FileFilterDirectoryOnly ();
+  private final String m_sTagName;
 
-  private FileFilterDirectoryOnly ()
-  {}
-
-  public boolean accept (@Nullable final File aFile)
+  public FilterElementWithTagName (@Nonnull @Nonempty final String sTagName)
   {
-    return aFile != null && aFile.isDirectory ();
+    if (StringHelper.hasNoText (sTagName))
+      throw new IllegalArgumentException ("tagName");
+    m_sTagName = sTagName;
+  }
+
+  public boolean matchesFilter (@Nonnull final Element aElement)
+  {
+    return aElement.getNamespaceURI () == null && aElement.getTagName ().equals (m_sTagName);
   }
 
   @Override
@@ -49,26 +56,21 @@ public final class FileFilterDirectoryOnly extends AbstractFileFilter
   {
     if (o == this)
       return true;
-    if (!(o instanceof FileFilterDirectoryOnly))
+    if (!(o instanceof FilterElementWithTagName))
       return false;
-    return true;
+    final FilterElementWithTagName rhs = (FilterElementWithTagName) o;
+    return m_sTagName.equals (rhs.m_sTagName);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).getHashCode ();
+    return new HashCodeGenerator (this).append (m_sTagName).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).toString ();
-  }
-
-  @Nonnull
-  public static FileFilterDirectoryOnly getInstance ()
-  {
-    return s_aInstance;
+    return new ToStringGenerator (this).append ("tagName", m_sTagName).toString ();
   }
 }

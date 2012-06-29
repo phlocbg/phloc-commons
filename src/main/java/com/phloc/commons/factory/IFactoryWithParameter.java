@@ -17,8 +17,6 @@
  */
 package com.phloc.commons.factory;
 
-import javax.annotation.Nullable;
-
 import com.phloc.commons.annotations.DevelopersNote;
 
 /**
@@ -36,9 +34,11 @@ public interface IFactoryWithParameter <DATATYPE, PARAMTYPE>
    * Create an object of the desired type.
    * 
    * @param aParameter
-   *        The parameter required to create the object.
-   * @return The created object.
+   *        The parameter required to create the object. May be
+   *        <code>null</code> depending on the implementation.
+   * @return The created object. May be <code>null</code> depending on the
+   *         implementation.
    */
   @DevelopersNote ("No @Nullable annotation as we can make no assumptions on the state")
-  DATATYPE create (@Nullable PARAMTYPE aParameter);
+  DATATYPE create (PARAMTYPE aParameter);
 }

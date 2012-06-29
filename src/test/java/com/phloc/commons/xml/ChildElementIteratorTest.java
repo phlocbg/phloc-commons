@@ -26,7 +26,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.phloc.commons.collections.ContainerHelper;
-import com.phloc.commons.filter.IFilter;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 
 /**
@@ -53,13 +52,8 @@ public final class ChildElementIteratorTest extends AbstractPhlocTestCase
     eRoot.appendChild (doc.createTextNode (" - "));
     eRoot.appendChild (doc.createElement ("Welt"));
     assertEquals (2, ContainerHelper.newList (new ChildElementIterator (eRoot)).size ());
-    assertEquals (1, ContainerHelper.newList (new ChildElementIterator (eRoot, new IFilter <Element> ()
-    {
-      public boolean matchesFilter (final Element aValue)
-      {
-        return aValue.getTagName ().equals ("Hallo");
-      }
-    })).size ());
+    assertEquals (1, ContainerHelper.newList (new ChildElementIterator (eRoot, new FilterElementWithTagName ("Hallo")))
+                                    .size ());
 
     try
     {

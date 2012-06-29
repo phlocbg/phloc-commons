@@ -34,7 +34,8 @@ public interface IFilter <DATATYPE>
    * Check if the given value matches the filter or not.
    * 
    * @param aValue
-   *        The object to filter. May be <code>null</code>.
+   *        The object to filter. May be <code>null</code> depending on the
+   *        implementation.
    * @return <code>true</code> if the object match the filter,
    *         <code>false</code> otherwise.
    */

@@ -15,28 +15,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.factory;
+package com.phloc.commons.xml;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
+
+import org.w3c.dom.Element;
 
 import com.phloc.commons.equals.EqualsUtils;
+import com.phloc.commons.filter.IFilter;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
-public final class FactoryConstantValue <DATATYPE> implements IFactory <DATATYPE>
+/**
+ * An implementation of {@link IFilter} on {@link Element} objects that will
+ * only return elements with a certain namespace URI.
+ * 
+ * @author philip
+ */
+@NotThreadSafe
+public final class FilterElementWithNamespace implements IFilter <Element>
 {
-  private final DATATYPE m_aConstantValue;
+  private final String m_sNamespaceURI;
 
-  public FactoryConstantValue (@Nullable final DATATYPE aConstantValue)
+  public FilterElementWithNamespace (@Nullable final String sNamespaceURI)
   {
-    m_aConstantValue = aConstantValue;
+    m_sNamespaceURI = sNamespaceURI;
   }
 
-  @Nullable
-  public DATATYPE create ()
+  public boolean matchesFilter (@Nonnull final Element aElement)
   {
-    return m_aConstantValue;
+    return XMLHelper.hasNamespaceURI (aElement, m_sNamespaceURI);
   }
 
   @Override
@@ -44,27 +54,21 @@ public final class FactoryConstantValue <DATATYPE> implements IFactory <DATATYPE
   {
     if (o == this)
       return true;
-    if (!(o instanceof FactoryConstantValue))
+    if (!(o instanceof FilterElementWithNamespace))
       return false;
-    final FactoryConstantValue <?> rhs = (FactoryConstantValue <?>) o;
-    return EqualsUtils.equals (m_aConstantValue, rhs.m_aConstantValue);
+    final FilterElementWithNamespace rhs = (FilterElementWithNamespace) o;
+    return EqualsUtils.equals (m_sNamespaceURI, rhs.m_sNamespaceURI);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aConstantValue).getHashCode ();
+    return new HashCodeGenerator (this).append (m_sNamespaceURI).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("constant", m_aConstantValue).toString ();
-  }
-
-  @Nonnull
-  public static <DATATYPE> FactoryConstantValue <DATATYPE> create (@Nullable final DATATYPE aConstantValue)
-  {
-    return new FactoryConstantValue <DATATYPE> (aConstantValue);
+    return new ToStringGenerator (this).append ("namespaceURI", m_sNamespaceURI).toString ();
   }
 }

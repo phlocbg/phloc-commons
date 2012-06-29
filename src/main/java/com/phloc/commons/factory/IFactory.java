@@ -31,8 +31,8 @@ public interface IFactory <DATATYPE>
   /**
    * Create an object of the desired type.
    * 
-   * @return The created object. May be <code>null</code> in case of an error
-   *         but is not supposed to be!
+   * @return The created object. May be <code>null</code> depending on the
+   *         implementation.
    */
   @DevelopersNote ("No @Nullable annotation as we can make no assumptions on the state")
   DATATYPE create ();

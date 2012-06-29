@@ -51,7 +51,7 @@ public class SafeArrayList <ELEMENTTYPE> extends ArrayList <ELEMENTTYPE> impleme
 
   public SafeArrayList ()
   {
-    this (new FactoryNull <ELEMENTTYPE> ());
+    this (FactoryNull.<ELEMENTTYPE> getInstance ());
   }
 
   public SafeArrayList (@Nonnull final IFactory <ELEMENTTYPE> aFactory)

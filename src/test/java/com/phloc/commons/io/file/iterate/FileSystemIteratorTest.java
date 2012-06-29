@@ -73,14 +73,16 @@ public final class FileSystemIteratorTest
     assertFalse (it.hasNext ());
 
     // With one filter
-    it = FileSystemIterator.create (new File ("."), new FileFilterFileOnly ());
+    it = FileSystemIterator.create (new File ("."), FileFilterFileOnly.getInstance ());
     assertNotNull (it);
     assertTrue (it.hasNext ());
     while (it.hasNext ())
       it.next ();
 
     // With one filter
-    it = FileSystemIterator.create (new File ("."), new FileFilterFileOnly (), new FileFilterFileOnly ());
+    it = FileSystemIterator.create (new File ("."),
+                                    FileFilterFileOnly.getInstance (),
+                                    FileFilterFileOnly.getInstance ());
     assertNotNull (it);
     assertTrue (it.hasNext ());
     while (it.hasNext ())

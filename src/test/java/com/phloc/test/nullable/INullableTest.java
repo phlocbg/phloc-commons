@@ -15,25 +15,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.factory;
+package com.phloc.test.nullable;
 
-import com.phloc.commons.annotations.DevelopersNote;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.annotation.meta.When;
 
-/**
- * This is a generic interface for creating root objects of a hierarchy.
- * 
- * @author philip
- * @param <DATATYPE>
- *        The type of object to create.
- */
-public interface IHierarchicalRootFactory <DATATYPE>
+public interface INullableTest
 {
-  /**
-   * Create the root object. May be called only once.
-   * 
-   * @return The root object. May be <code>null</code> depending on the
-   *         implementation.
-   */
-  @DevelopersNote ("No @Nullable annotation as we can make no assumptions on the state")
-  DATATYPE createRoot ();
+  void paramUndefined (String s);
+
+  void paramNonnull (@Nonnull String s);
+
+  void paramNonnullAlways (@Nonnull (when = When.ALWAYS) String s);
+
+  void paramNonnullMaybe (@Nonnull (when = When.MAYBE) String s);
+
+  void paramNonnullNever (@Nonnull (when = When.NEVER) String s);
+
+  void paramNonnullUnknown (@Nonnull (when = When.UNKNOWN) String s);
+
+  void paramNullable (@Nullable String s);
 }

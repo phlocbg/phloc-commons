@@ -18,10 +18,20 @@
 package com.phloc.commons.filter;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.lang.GenericReflection;
+import com.phloc.commons.string.ToStringGenerator;
 
+/**
+ * A filter implementation where all non-<code>null</code> values match.
+ * 
+ * @author philip
+ * @param <DATATYPE>
+ *        The data type to filter.
+ */
 @Immutable
 public final class FilterNotNull <DATATYPE> implements IFilter <DATATYPE>
 {
@@ -30,9 +40,31 @@ public final class FilterNotNull <DATATYPE> implements IFilter <DATATYPE>
   private FilterNotNull ()
   {}
 
-  public boolean matchesFilter (final DATATYPE aValue)
+  public boolean matchesFilter (@Nullable final DATATYPE aValue)
   {
     return aValue != null;
+  }
+
+  @Override
+  public boolean equals (final Object o)
+  {
+    if (o == this)
+      return true;
+    if (!(o instanceof FilterNotNull <?>))
+      return false;
+    return true;
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    return new HashCodeGenerator (this).getHashCode ();
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).toString ();
   }
 
   @Nonnull

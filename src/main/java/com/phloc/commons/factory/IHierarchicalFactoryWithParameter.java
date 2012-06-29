@@ -17,9 +17,6 @@
  */
 package com.phloc.commons.factory;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.phloc.commons.annotations.DevelopersNote;
 
 /**
@@ -39,12 +36,14 @@ public interface IHierarchicalFactoryWithParameter <DATATYPE, PARAMTYPE> extends
    * Create an object of the desired type.
    * 
    * @param aParent
-   *        The parent item to use. May not be <code>null</code>.
+   *        The parent item to use. May be <code>null</code> depending on the
+   *        implementation.
    * @param aParam
    *        The parameter to be passed. May be <code>null</code> depending on
    *        the implementation.
-   * @return The created object.
+   * @return The created object. May be <code>null</code> depending on the
+   *         implementation.
    */
   @DevelopersNote ("No @Nullable annotation as we can make no assumptions on the state")
-  DATATYPE create (@Nonnull DATATYPE aParent, @Nullable PARAMTYPE aParam);
+  DATATYPE create (DATATYPE aParent, PARAMTYPE aParam);
 }

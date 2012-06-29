@@ -19,10 +19,9 @@ package com.phloc.commons.factory;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 
 import org.junit.Test;
-
-import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
  * Test class for class {@link FactoryNull}.
@@ -34,13 +33,13 @@ public final class FactoryNullTest
   @Test
   public void testNullFactory ()
   {
-    final IFactory <?> aFactory = new FactoryNull <Object> ();
+    final IFactory <?> aFactory = FactoryNull.getInstance ();
     assertNotNull (aFactory);
     assertNull (aFactory.create ());
     assertNull (aFactory.create ());
     assertNull (aFactory.create ());
     assertNull (aFactory.create ());
 
-    PhlocTestUtils.testDefaultImplementationWithEqualContentObject (aFactory, new FactoryNull <Object> ());
+    assertSame (aFactory, FactoryNull.getInstance ());
   }
 }

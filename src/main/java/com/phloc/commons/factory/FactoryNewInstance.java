@@ -24,6 +24,7 @@ import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.lang.GenericReflection;
+import com.phloc.commons.string.ToStringGenerator;
 
 public final class FactoryNewInstance <DATATYPE> implements IFactory <DATATYPE>
 {
@@ -59,6 +60,12 @@ public final class FactoryNewInstance <DATATYPE> implements IFactory <DATATYPE>
   public int hashCode ()
   {
     return new HashCodeGenerator (this).append (m_aClass).getHashCode ();
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("class", m_aClass).toString ();
   }
 
   @Nonnull
