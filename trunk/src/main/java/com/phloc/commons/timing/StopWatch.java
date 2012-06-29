@@ -104,9 +104,22 @@ public final class StopWatch implements IStoppable
     return EChange.CHANGED;
   }
 
+  /**
+   * @return <code>true</code> if the stop watch is currently started (running),
+   *         <code>false</code> otherwise.
+   */
   public boolean isStarted ()
   {
     return m_nStartDT != 0;
+  }
+
+  /**
+   * @return <code>true</code> if the stop watch is currently stopped (not
+   *         running), <code>false</code> otherwise.
+   */
+  public boolean isStopped ()
+  {
+    return m_nStartDT == 0;
   }
 
   /**
@@ -134,15 +147,15 @@ public final class StopWatch implements IStoppable
   }
 
   /**
-   * Stop the stop watch and get the elapsed seconds since the start. If the
+   * Stop the stop watch and get the elapsed nanoseconds since the start. If the
    * stop watch was started and stopped multiple times, the duration is added.
    * 
-   * @return The elapsed seconds or 0 if the stop watch was never started.
+   * @return The elapsed nano seconds or 0 if the stop watch was never started.
    */
-  public long stopAndGetSeconds ()
+  public long stopAndGetNanos ()
   {
     stop ();
-    return getSeconds ();
+    return getNanos ();
   }
 
   /**
@@ -159,15 +172,15 @@ public final class StopWatch implements IStoppable
   }
 
   /**
-   * Stop the stop watch and get the elapsed nanoseconds since the start. If the
+   * Stop the stop watch and get the elapsed seconds since the start. If the
    * stop watch was started and stopped multiple times, the duration is added.
    * 
-   * @return The elapsed nano seconds or 0 if the stop watch was never started.
+   * @return The elapsed seconds or 0 if the stop watch was never started.
    */
-  public long stopAndGetNanos ()
+  public long stopAndGetSeconds ()
   {
     stop ();
-    return getNanos ();
+    return getSeconds ();
   }
 
   @Override

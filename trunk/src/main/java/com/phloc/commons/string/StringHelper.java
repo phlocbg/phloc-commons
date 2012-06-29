@@ -3099,10 +3099,12 @@ public final class StringHelper
   public static String replaceMultiple (@Nullable final String sInputString,
                                         @Nullable final Map <String, String> aTransTable)
   {
+    if (hasNoText (sInputString) || aTransTable == null || aTransTable.isEmpty ())
+      return sInputString;
+
     String sOutput = sInputString;
-    if (sOutput != null && aTransTable != null)
-      for (final Entry <String, String> aEntry : aTransTable.entrySet ())
-        sOutput = replaceAll (sOutput, aEntry.getKey (), aEntry.getValue ());
+    for (final Entry <String, String> aEntry : aTransTable.entrySet ())
+      sOutput = replaceAll (sOutput, aEntry.getKey (), aEntry.getValue ());
     return sOutput;
   }
 
