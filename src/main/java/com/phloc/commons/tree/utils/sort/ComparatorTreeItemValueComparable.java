@@ -40,8 +40,8 @@ public class ComparatorTreeItemValueComparable <VALUETYPE extends Comparable <? 
                                                                                                                                                          AbstractComparator <ITEMTYPE>
 {
   @Override
-  protected int mainCompare (@Nonnull final ITEMTYPE aItem1, @Nonnull final ITEMTYPE aItem2)
+  protected final int mainCompare (@Nonnull final ITEMTYPE aTreeItem1, @Nonnull final ITEMTYPE aTreeItem2)
   {
-    return CompareUtils.nullSafeCompare (aItem1.getData (), aItem2.getData ());
+    return CompareUtils.nullSafeCompare (aTreeItem1.getData (), aTreeItem2.getData ());
   }
 }

@@ -22,6 +22,7 @@ import java.util.Comparator;
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.compare.AbstractComparator;
+import com.phloc.commons.compare.CompareUtils;
 import com.phloc.commons.tree.IBasicTreeItem;
 import com.phloc.commons.tree.simple.ITreeItem;
 import com.phloc.commons.tree.withid.ITreeItemWithID;
@@ -52,6 +53,6 @@ public class ComparatorTreeItemValue <VALUETYPE, ITEMTYPE extends IBasicTreeItem
   @Override
   protected final int mainCompare (@Nonnull final ITEMTYPE aTreeItem1, @Nonnull final ITEMTYPE aTreeItem2)
   {
-    return m_aValueComparator.compare (aTreeItem1.getData (), aTreeItem2.getData ());
+    return CompareUtils.nullSafeCompare (aTreeItem1.getData (), aTreeItem1.getData (), m_aValueComparator);
   }
 }

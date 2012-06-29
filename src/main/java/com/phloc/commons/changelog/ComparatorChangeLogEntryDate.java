@@ -17,9 +17,13 @@
  */
 package com.phloc.commons.changelog;
 
+import java.util.Comparator;
+
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.phloc.commons.compare.AbstractComparator;
+import com.phloc.commons.compare.CompareUtils;
 import com.phloc.commons.compare.ESortOrder;
 
 /**
@@ -30,14 +34,50 @@ import com.phloc.commons.compare.ESortOrder;
  */
 public final class ComparatorChangeLogEntryDate extends AbstractComparator <ChangeLogEntry>
 {
+  /**
+   * Comparator with default sort order and no nested comparator.
+   */
   public ComparatorChangeLogEntryDate ()
   {
-    this (ESortOrder.DEFAULT);
+    super ();
   }
 
-  public ComparatorChangeLogEntryDate (@Nonnull final ESortOrder eSortOder)
+  /**
+   * Constructor with sort order.
+   * 
+   * @param eSortOrder
+   *        The sort order to use. May not be <code>null</code>.
+   */
+  public ComparatorChangeLogEntryDate (@Nonnull final ESortOrder eSortOrder)
   {
-    super (eSortOder);
+    super (eSortOrder);
+  }
+
+  /**
+   * Comparator with default sort order and a nested comparator.
+   * 
+   * @param aNestedComparator
+   *        The nested comparator to be invoked, when the main comparison
+   *        resulted in 0.
+   */
+  public ComparatorChangeLogEntryDate (@Nullable final Comparator <? super ChangeLogEntry> aNestedComparator)
+  {
+    super (aNestedComparator);
+  }
+
+  /**
+   * Comparator with sort order and a nested comparator.
+   * 
+   * @param eSortOrder
+   *        The sort order to use. May not be <code>null</code>.
+   * @param aNestedComparator
+   *        The nested comparator to be invoked, when the main comparison
+   *        resulted in 0.
+   */
+  public ComparatorChangeLogEntryDate (@Nonnull final ESortOrder eSortOrder,
+                                       @Nullable final Comparator <? super ChangeLogEntry> aNestedComparator)
+  {
+    super (eSortOrder, aNestedComparator);
   }
 
   @Override
@@ -47,7 +87,10 @@ public final class ComparatorChangeLogEntryDate extends AbstractComparator <Chan
     final long n2 = aEntry2.getDate ().getTime ();
     int i = n1 < n2 ? -1 : n1 == n2 ? 0 : +1;
     if (i == 0)
-      i = aEntry1.getChangeLog ().getComponent ().compareTo (aEntry2.getChangeLog ().getComponent ());
+    {
+      i = CompareUtils.nullSafeCompare (aEntry1.getChangeLog ().getComponent (), aEntry2.getChangeLog ()
+                                                                                        .getComponent ());
+    }
     return i;
   }
 }

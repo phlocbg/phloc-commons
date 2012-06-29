@@ -34,5 +34,8 @@ import com.phloc.commons.tree.withid.ITreeItemWithID;
 public class ComparatorTreeItemIDComparable <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> extends
                                                                                                                                                                        ComparatorHasIDComparable <KEYTYPE, ITEMTYPE>
 {
-  /* empty */
+  public ComparatorTreeItemIDComparable ()
+  {
+    super ();
+  }
 }
