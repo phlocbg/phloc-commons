@@ -2,7 +2,22 @@
 #labels Featured
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
-<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr border="1"><td>6/27/12</td><td colspan="4">_Release *3.6.2*_</td></tr>
+<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr border="1"><td>6/29/12</td><td colspan="4">_Release *3.6.3*_</td></tr>
+<tr><td>6/29/12</td><td>change</td><td>api</td><td>*yes*</td><td>Moved static methods from ComparatorPair(First|Second) to new PairUtils class</td></tr>
+<tr><td>6/29/12</td><td>add</td><td>api</td><td></td><td>Added some more Comparator implementations and aligned Comparator hierarchy</td></tr>
+<tr><td>6/29/12</td><td>add</td><td>api</td><td></td><td>Added the possibility for all AbstractComparator implementations to pass nested comparators that are invoked in case the main comparison returned 0</td></tr>
+<tr><td>6/29/12</td><td>add</td><td>api</td><td></td><td>Added new FilenameFilter implementations FilenameFilterEquals, FilenameFilterEqualsIgnoreCase and FilenameFilterStartsWith</td></tr>
+<tr><td>6/29/12</td><td>change</td><td>api</td><td></td><td>Moved all anonymous classes from FilenameFilterFactory to separate files and deprecated FilenameFilterFactory</td></tr>
+<tr><td>6/29/12</td><td>add</td><td>api</td><td></td><td>Extended FileSystemFolderTree constructors to also handle FilenameFilters</td></tr>
+<tr><td>6/29/12</td><td>change</td><td>api</td><td></td><td>Extracted anonymous IFilter implementations within XMLHelper into named classes</td></tr>
+<tr><td>6/29/12</td><td>change</td><td>api</td><td>*yes*</td><td>Made FileFilterDirectoryOnly, FileFilterDirectoryPublic, FileFilterFileOnly and FileFilterParentDirectoryPublic singletons</td></tr>
+<tr><td>6/29/12</td><td>change</td><td>api</td><td>*yes*</td><td>Made FilterTrue, FilterFalse, FilterNull and FilterNotNull singletons</td></tr>
+<tr><td>6/29/12</td><td>add</td><td>api</td><td></td><td>Added new method StopWatch.isStopped()</td></tr>
+<tr><td>6/29/12</td><td>add</td><td>api</td><td></td><td>Added new method StringHelper.replaceMutliple(String,String[],String[])</td></tr>
+<tr><td>6/29/12</td><td>add</td><td>api</td><td></td><td>Added new class NonBlockingStringWriter</td></tr>
+<tr><td>6/28/12</td><td>change</td><td>api</td><td></td><td>Improved @Nullable annotation handling and made more flexible</td></tr>
+<tr><td>6/27/12</td><td>change</td><td>api</td><td></td><td>Made EURLProtocol binary compatible with v3.6.1</td></tr>
+<tr border="1"><td>6/27/12</td><td colspan="4">_Release *3.6.2*_</td></tr>
 <tr><td>6/27/12</td><td>change</td><td>api</td><td></td><td>Extracted AbstractSimpleURL abstract base class</td></tr>
 <tr><td>6/27/12</td><td>add</td><td>api</td><td>*yes*</td><td>Extended IURLData with getProcotol() and hasKnownProtocol()</td></tr>
 <tr><td>6/27/12</td><td>add</td><td>api</td><td></td><td>Added new URL protocol handlers to register custom protocols via URLProtocolRegistry</td></tr>
