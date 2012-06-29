@@ -90,7 +90,7 @@ public final class MicroSerializerTest
     int nRun = 0;
     int nWarmUpRuns = 0;
     final StopWatch aSW = new StopWatch ();
-    for (; nRun < 2000; ++nRun)
+    for (; nRun < 200; ++nRun)
     {
       aWriter.reset ();
 
@@ -111,8 +111,7 @@ public final class MicroSerializerTest
       {
         aSW.start ();
         aMS.write (doc, aWriter);
-        aSW.stop ();
-        nMilliSecs += aSW.getMillis ();
+        nMilliSecs += aSW.stopAndGetMillis ();
         aSW.reset ();
       }
       assertTrue (aWriter.size () > 0);
