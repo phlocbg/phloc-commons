@@ -32,41 +32,66 @@ import javax.annotation.Nullable;
 public class ComparatorComparableNullAware <DATATYPE extends Comparable <? super DATATYPE>> extends
                                                                                             AbstractComparatorNullAware <DATATYPE>
 {
-  public static final boolean DEFAULT_NULL_VALUES_COME_FIRST = true;
-  private boolean m_bNullValuesComeFirst;
+  public static final boolean DEFAULT_NULL_VALUES_COME_FIRST = CompareUtils.DEFAULT_NULL_VALUES_COME_FIRST;
+
+  private boolean m_bNullValuesComeFirst = DEFAULT_NULL_VALUES_COME_FIRST;
 
   /**
-   * Default constructor. Default values are sorted to the beginning of the
-   * list.
+   * Comparator with default sort order.
    */
   public ComparatorComparableNullAware ()
   {
-    this (DEFAULT_NULL_VALUES_COME_FIRST);
+    super ();
   }
 
   /**
-   * Constructor with a sort order. If the sort order is ascending,
-   * <code>null</code> values are at the beginning of the list. If sort order is
-   * descending, <code>null</code> values are put to the end of the list.
+   * Constructor with sort order.
    * 
    * @param eSortOrder
    *        The sort order to use. May not be <code>null</code>.
    */
   public ComparatorComparableNullAware (@Nonnull final ESortOrder eSortOrder)
   {
-    this (eSortOrder, DEFAULT_NULL_VALUES_COME_FIRST);
-  }
-
-  public ComparatorComparableNullAware (final boolean bNullValuesComeFirst)
-  {
-    super ();
-    m_bNullValuesComeFirst = bNullValuesComeFirst;
-  }
-
-  public ComparatorComparableNullAware (@Nonnull final ESortOrder eSortOrder, final boolean bNullValuesComeFirst)
-  {
     super (eSortOrder);
+  }
+
+  /**
+   * Comparator with default sort order and a nested comparator.
+   * 
+   * @param aNestedComparator
+   *        The nested comparator to be invoked, when the main comparison
+   *        resulted in 0.
+   */
+  public ComparatorComparableNullAware (@Nullable final Comparator <? super DATATYPE> aNestedComparator)
+  {
+    super (aNestedComparator);
+  }
+
+  /**
+   * Comparator with sort order and a nested comparator.
+   * 
+   * @param eSortOrder
+   *        The sort order to use. May not be <code>null</code>.
+   * @param aNestedComparator
+   *        The nested comparator to be invoked, when the main comparison
+   *        resulted in 0.
+   */
+  public ComparatorComparableNullAware (@Nonnull final ESortOrder eSortOrder,
+                                        @Nullable final Comparator <? super DATATYPE> aNestedComparator)
+  {
+    super (eSortOrder, aNestedComparator);
+  }
+
+  public final boolean isNullValuesComeFirst ()
+  {
+    return m_bNullValuesComeFirst;
+  }
+
+  @Nonnull
+  public final ComparatorComparableNullAware <DATATYPE> setNullValuesComeFirst (final boolean bNullValuesComeFirst)
+  {
     m_bNullValuesComeFirst = bNullValuesComeFirst;
+    return this;
   }
 
   @Override
