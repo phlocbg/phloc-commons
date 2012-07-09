@@ -1,7 +1,12 @@
 #summary Change log of phloc-commons
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
-<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr border="1"><td>6/29/12</td><td colspan="4">_Release *3.6.3*_</td></tr>
+<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr border="1"><td>7/9/12</td><td colspan="4">_Release *3.6.4*_</td></tr>
+<tr><td>7/9/12</td><td>update</td><td>api</td><td></td><td>Ensured that all getDisplayTextWithArgs methods require non-null arguments</td></tr>
+<tr><td>7/9/12</td><td>add</td><td>tech</td><td></td><td>Added possibility in XMLEmitterPhloc to customize the handling of nested comments</td></tr>
+<tr><td>7/9/12</td><td>change</td><td>api</td><td></td><td>Renamed some methods in RegExHelper to match the naming conventions</td></tr>
+<tr><td>7/9/12</td><td>add</td><td>api</td><td></td><td>Added new methods RegExHelper.getAsIdentifier to pass custom replacement character/string</td></tr>
+<tr border="1"><td>6/29/12</td><td colspan="4">_Release *3.6.3*_</td></tr>
 <tr><td>6/29/12</td><td>change</td><td>api</td><td>*yes*</td><td>Moved static methods from ComparatorPair(First|Second) to new PairUtils class</td></tr>
 <tr><td>6/29/12</td><td>add</td><td>api</td><td></td><td>Added some more Comparator implementations and aligned Comparator hierarchy</td></tr>
 <tr><td>6/29/12</td><td>add</td><td>api</td><td></td><td>Added the possibility for all AbstractComparator implementations to pass nested comparators that are invoked in case the main comparison returned 0</td></tr>
