@@ -96,9 +96,9 @@ public class ResourceError implements IResourceError
     return m_eErrorLevel;
   }
 
-  @Nonnull
+  @Nullable
   @OverrideOnDemand
-  public String getDisplayText (final Locale aContentLocale)
+  public String getDisplayText (@Nonnull final Locale aContentLocale)
   {
     return m_aErrorText.getDisplayText (aContentLocale);
   }

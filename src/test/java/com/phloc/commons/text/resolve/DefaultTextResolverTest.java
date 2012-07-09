@@ -24,6 +24,9 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Locale;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -32,6 +35,7 @@ import com.phloc.commons.GlobalDebug;
 import com.phloc.commons.annotations.NoTranslationRequired;
 import com.phloc.commons.locale.LocaleCache;
 import com.phloc.commons.name.IHasDisplayText;
+import com.phloc.commons.name.IHasDisplayTextWithArgs;
 import com.phloc.commons.text.ISimpleMultiLingualText;
 import com.phloc.commons.text.impl.TextProvider;
 
@@ -43,7 +47,7 @@ import com.phloc.commons.text.impl.TextProvider;
 public final class DefaultTextResolverTest
 {
   @NoTranslationRequired
-  public static enum EText implements IHasDisplayText
+  public static enum EText implements IHasDisplayText, IHasDisplayTextWithArgs
   {
     TEXT1 ("Text1de", "Text1en"),
     TEXT2 ("Text2de", "Text2en"),
@@ -55,12 +59,14 @@ public final class DefaultTextResolverTest
       m_aTP = TextProvider.create_DE_EN (sDE, sEN);
     }
 
-    public String getDisplayText (final Locale aContentLocale)
+    @Nullable
+    public String getDisplayText (@Nonnull final Locale aContentLocale)
     {
       return DefaultTextResolver.getText (this, m_aTP, aContentLocale);
     }
 
-    public String getDisplayTextWithArgs (final Locale aContentLocale, final Object... aArgs)
+    @Nullable
+    public String getDisplayTextWithArgs (@Nonnull final Locale aContentLocale, @Nonnull final Object... aArgs)
     {
       return DefaultTextResolver.getTextWithArgs (this, m_aTP, aContentLocale, aArgs);
     }
