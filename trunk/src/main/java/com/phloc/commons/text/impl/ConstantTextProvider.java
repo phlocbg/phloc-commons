@@ -69,7 +69,7 @@ public final class ConstantTextProvider extends AbstractTextProvider implements
   }
 
   @Nonnull
-  public String getDisplayText (final Locale aContentLocale)
+  public String getDisplayText (@Nonnull final Locale aContentLocale)
   {
     return m_sFixedText;
   }
