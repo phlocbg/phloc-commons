@@ -25,6 +25,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.WillNotClose;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.microdom.IMicroDocumentType;
@@ -41,11 +42,15 @@ import com.phloc.commons.xml.XMLHelper;
  * 
  * @author philip
  */
+@NotThreadSafe
 public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
 {
+  public static final boolean DEFAULT_THROW_EXCEPTION_ON_NESTED_COMMENTS = true;
   private static final String CDATA_START = "<![CDATA[";
   private static final String CDATA_END = "]]>";
   private static final String CRLF = CGlobal.LINE_SEPARATOR;
+
+  private static boolean s_bThrowExceptionOnNestedComments = DEFAULT_THROW_EXCEPTION_ON_NESTED_COMMENTS;
 
   private final Writer m_aWriter;
   private final IXMLWriterSettings m_aSettings;
@@ -61,6 +66,27 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
     m_aWriter = aWriter;
     m_aSettings = aSettings;
     m_cTextBoundary = aSettings.isUseDoubleQuotesForAttributes () ? '"' : '\'';
+  }
+
+  /**
+   * Define whether nested XML comments throw an exception or not.
+   * 
+   * @param bThrowExceptionOnNestedComments
+   *        <code>true</code> to throw an exception, <code>false</code> to
+   *        ignore nested comments.
+   */
+  public static void setThrowExceptionOnNestedComments (final boolean bThrowExceptionOnNestedComments)
+  {
+    s_bThrowExceptionOnNestedComments = bThrowExceptionOnNestedComments;
+  }
+
+  /**
+   * @return <code>true</code> if nested XML comments will throw an error.
+   *         Default is {@value #DEFAULT_THROW_EXCEPTION_ON_NESTED_COMMENTS}.
+   */
+  public static boolean isThrowExceptionOnNestedComments ()
+  {
+    return s_bThrowExceptionOnNestedComments;
   }
 
   @Nonnull
@@ -223,8 +249,9 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   {
     if (StringHelper.hasText (sComment))
     {
-      if (sComment.contains ("<!--") || sComment.contains ("-->"))
-        throw new IllegalArgumentException ("XML comment contains nested XML comment: " + sComment);
+      if (isThrowExceptionOnNestedComments ())
+        if (sComment.contains ("<!--") || sComment.contains ("-->"))
+          throw new IllegalArgumentException ("XML comment contains nested XML comment: " + sComment);
 
       _append ("<!--")._append (sComment)._append ("-->");
     }
