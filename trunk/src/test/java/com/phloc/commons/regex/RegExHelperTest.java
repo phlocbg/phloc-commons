@@ -45,53 +45,53 @@ public final class RegExHelperTest
   @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testSplitNoLimit ()
   {
-    String [] x = RegExHelper.split ("abc", "b");
+    String [] x = RegExHelper.getSplitToArray ("abc", "b");
     assertNotNull (x);
     assertEquals (2, x.length);
     assertEquals ("a", x[0]);
     assertEquals ("c", x[1]);
 
-    x = RegExHelper.split ("aaacbccca", "b");
+    x = RegExHelper.getSplitToArray ("aaacbccca", "b");
     assertNotNull (x);
     assertEquals (2, x.length);
     assertEquals ("aaac", x[0]);
     assertEquals ("ccca", x[1]);
 
-    x = RegExHelper.split ("aaa", "b");
+    x = RegExHelper.getSplitToArray ("aaa", "b");
     assertNotNull (x);
     assertEquals (1, x.length);
     assertEquals ("aaa", x[0]);
 
-    x = RegExHelper.split ("", "b");
+    x = RegExHelper.getSplitToArray ("", "b");
     assertNotNull (x);
     assertEquals (1, x.length);
     assertEquals ("", x[0]);
 
-    x = RegExHelper.split ("ab9cd14ef", "[0-9]+");
+    x = RegExHelper.getSplitToArray ("ab9cd14ef", "[0-9]+");
     assertNotNull (x);
     assertEquals (3, x.length);
     assertEquals ("ab", x[0]);
     assertEquals ("cd", x[1]);
     assertEquals ("ef", x[2]);
 
-    x = RegExHelper.split ("line1\nline2bline3", "b");
+    x = RegExHelper.getSplitToArray ("line1\nline2bline3", "b");
     assertNotNull (x);
     assertEquals (2, x.length);
     assertEquals ("line1\nline2", x[0]);
     assertEquals ("line3", x[1]);
 
-    x = RegExHelper.split (null, "b");
+    x = RegExHelper.getSplitToArray (null, "b");
     assertNotNull (x);
     assertEquals (0, x.length);
 
-    x = RegExHelper.split (null, null);
+    x = RegExHelper.getSplitToArray (null, null);
     assertNotNull (x);
     assertEquals (0, x.length);
 
     try
     {
       // empty regex not allowed
-      RegExHelper.split ("ab9cd14ef", null);
+      RegExHelper.getSplitToArray ("ab9cd14ef", null);
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -100,7 +100,7 @@ public final class RegExHelperTest
     try
     {
       // empty regex not allowed
-      RegExHelper.split ("ab9cd14ef", "");
+      RegExHelper.getSplitToArray ("ab9cd14ef", "");
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -114,59 +114,59 @@ public final class RegExHelperTest
   @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testSplitWithLimit ()
   {
-    String [] x = RegExHelper.split ("abc", "b", 2);
+    String [] x = RegExHelper.getSplitToArray ("abc", "b", 2);
     assertNotNull (x);
     assertEquals (2, x.length);
     assertEquals ("a", x[0]);
     assertEquals ("c", x[1]);
 
     // a limit <= 0 means -> all tokens
-    x = RegExHelper.split ("aaacbccca", "b", 0);
+    x = RegExHelper.getSplitToArray ("aaacbccca", "b", 0);
     assertNotNull (x);
     assertEquals (2, x.length);
     assertEquals ("aaac", x[0]);
     assertEquals ("ccca", x[1]);
 
-    x = RegExHelper.split ("aaacbccca", "b", 1);
+    x = RegExHelper.getSplitToArray ("aaacbccca", "b", 1);
     assertNotNull (x);
     assertEquals (1, x.length);
     assertEquals ("aaacbccca", x[0]);
 
-    x = RegExHelper.split ("aaacbccca", "b", 2);
+    x = RegExHelper.getSplitToArray ("aaacbccca", "b", 2);
     assertNotNull (x);
     assertEquals (2, x.length);
     assertEquals ("aaac", x[0]);
     assertEquals ("ccca", x[1]);
 
-    x = RegExHelper.split ("aaacbccca", "b", 3);
+    x = RegExHelper.getSplitToArray ("aaacbccca", "b", 3);
     assertNotNull (x);
     assertEquals (2, x.length);
     assertEquals ("aaac", x[0]);
     assertEquals ("ccca", x[1]);
 
-    x = RegExHelper.split ("aaa", "b", 2);
+    x = RegExHelper.getSplitToArray ("aaa", "b", 2);
     assertNotNull (x);
     assertEquals (1, x.length);
     assertEquals ("aaa", x[0]);
 
-    x = RegExHelper.split ("", "b", 2);
+    x = RegExHelper.getSplitToArray ("", "b", 2);
     assertNotNull (x);
     assertEquals (1, x.length);
     assertEquals ("", x[0]);
 
-    x = RegExHelper.split ("ab9cd14ef", "[0-9]+", 2);
+    x = RegExHelper.getSplitToArray ("ab9cd14ef", "[0-9]+", 2);
     assertNotNull (x);
     assertEquals (2, x.length);
     assertEquals ("ab", x[0]);
     assertEquals ("cd14ef", x[1]);
 
-    x = RegExHelper.split (null, "b", 2);
+    x = RegExHelper.getSplitToArray (null, "b", 2);
     assertNotNull (x);
     assertEquals (0, x.length);
 
     try
     {
-      x = RegExHelper.split (null, null, 2);
+      x = RegExHelper.getSplitToArray (null, null, 2);
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -175,7 +175,7 @@ public final class RegExHelperTest
     try
     {
       // empty regex not allowed
-      RegExHelper.split ("ab9cd14ef", null, 2);
+      RegExHelper.getSplitToArray ("ab9cd14ef", null, 2);
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -184,7 +184,7 @@ public final class RegExHelperTest
     try
     {
       // empty regex not allowed
-      RegExHelper.split ("ab9cd14ef", "", 2);
+      RegExHelper.getSplitToArray ("ab9cd14ef", "", 2);
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -198,45 +198,45 @@ public final class RegExHelperTest
   @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testSplitToListNoLimit ()
   {
-    List <String> x = RegExHelper.splitToList ("abc", "b");
+    List <String> x = RegExHelper.getSplitToList ("abc", "b");
     assertNotNull (x);
     assertEquals (2, x.size ());
     assertEquals ("a", x.get (0));
     assertEquals ("c", x.get (1));
 
-    x = RegExHelper.splitToList ("aaacbccca", "b");
+    x = RegExHelper.getSplitToList ("aaacbccca", "b");
     assertNotNull (x);
     assertEquals (2, x.size ());
     assertEquals ("aaac", x.get (0));
     assertEquals ("ccca", x.get (1));
 
-    x = RegExHelper.splitToList ("aaa", "b");
+    x = RegExHelper.getSplitToList ("aaa", "b");
     assertNotNull (x);
     assertEquals (1, x.size ());
     assertEquals ("aaa", x.get (0));
 
-    x = RegExHelper.splitToList ("", "b");
+    x = RegExHelper.getSplitToList ("", "b");
     assertNotNull (x);
     assertEquals (1, x.size ());
     assertEquals ("", x.get (0));
 
-    x = RegExHelper.splitToList ("ab9cd14ef", "[0-9]+");
+    x = RegExHelper.getSplitToList ("ab9cd14ef", "[0-9]+");
     assertNotNull (x);
     assertEquals (3, x.size ());
     assertEquals ("ab", x.get (0));
     assertEquals ("cd", x.get (1));
     assertEquals ("ef", x.get (2));
 
-    x = RegExHelper.splitToList (null, "b");
+    x = RegExHelper.getSplitToList (null, "b");
     assertNotNull (x);
 
-    x = RegExHelper.splitToList (null, null);
+    x = RegExHelper.getSplitToList (null, null);
     assertNotNull (x);
 
     try
     {
       // empty regex not allowed
-      RegExHelper.splitToList ("ab9cd14ef", null);
+      RegExHelper.getSplitToList ("ab9cd14ef", null);
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -245,7 +245,7 @@ public final class RegExHelperTest
     try
     {
       // empty regex not allowed
-      RegExHelper.splitToList ("ab9cd14ef", "");
+      RegExHelper.getSplitToList ("ab9cd14ef", "");
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -259,58 +259,58 @@ public final class RegExHelperTest
   @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testSplitToListWithLimit ()
   {
-    List <String> x = RegExHelper.splitToList ("abc", "b", 2);
+    List <String> x = RegExHelper.getSplitToList ("abc", "b", 2);
     assertNotNull (x);
     assertEquals (2, x.size ());
     assertEquals ("a", x.get (0));
     assertEquals ("c", x.get (1));
 
     // a limit <= 0 means -> all tokens
-    x = RegExHelper.splitToList ("aaacbccca", "b", 0);
+    x = RegExHelper.getSplitToList ("aaacbccca", "b", 0);
     assertNotNull (x);
     assertEquals (2, x.size ());
     assertEquals ("aaac", x.get (0));
     assertEquals ("ccca", x.get (1));
 
-    x = RegExHelper.splitToList ("aaacbccca", "b", 1);
+    x = RegExHelper.getSplitToList ("aaacbccca", "b", 1);
     assertNotNull (x);
     assertEquals (1, x.size ());
     assertEquals ("aaacbccca", x.get (0));
 
-    x = RegExHelper.splitToList ("aaacbccca", "b", 2);
+    x = RegExHelper.getSplitToList ("aaacbccca", "b", 2);
     assertNotNull (x);
     assertEquals (2, x.size ());
     assertEquals ("aaac", x.get (0));
     assertEquals ("ccca", x.get (1));
 
-    x = RegExHelper.splitToList ("aaacbccca", "b", 3);
+    x = RegExHelper.getSplitToList ("aaacbccca", "b", 3);
     assertNotNull (x);
     assertEquals (2, x.size ());
     assertEquals ("aaac", x.get (0));
     assertEquals ("ccca", x.get (1));
 
-    x = RegExHelper.splitToList ("aaa", "b", 2);
+    x = RegExHelper.getSplitToList ("aaa", "b", 2);
     assertNotNull (x);
     assertEquals (1, x.size ());
     assertEquals ("aaa", x.get (0));
 
-    x = RegExHelper.splitToList ("", "b", 2);
+    x = RegExHelper.getSplitToList ("", "b", 2);
     assertNotNull (x);
     assertEquals (1, x.size ());
     assertEquals ("", x.get (0));
 
-    x = RegExHelper.splitToList ("ab9cd14ef", "[0-9]+", 2);
+    x = RegExHelper.getSplitToList ("ab9cd14ef", "[0-9]+", 2);
     assertNotNull (x);
     assertEquals (2, x.size ());
     assertEquals ("ab", x.get (0));
     assertEquals ("cd14ef", x.get (1));
 
-    x = RegExHelper.splitToList (null, "b", 2);
+    x = RegExHelper.getSplitToList (null, "b", 2);
     assertNotNull (x);
 
     try
     {
-      x = RegExHelper.splitToList (null, null, 2);
+      x = RegExHelper.getSplitToList (null, null, 2);
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -319,7 +319,7 @@ public final class RegExHelperTest
     try
     {
       // empty regex not allowed
-      RegExHelper.splitToList ("ab9cd14ef", null, 2);
+      RegExHelper.getSplitToList ("ab9cd14ef", null, 2);
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -328,7 +328,7 @@ public final class RegExHelperTest
     try
     {
       // empty regex not allowed
-      RegExHelper.splitToList ("ab9cd14ef", "", 2);
+      RegExHelper.getSplitToList ("ab9cd14ef", "", 2);
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -341,13 +341,16 @@ public final class RegExHelperTest
   @Test
   public void testMakeIdentifier ()
   {
-    assertNull (RegExHelper.makeIdentifier (null));
-    assertEquals ("", RegExHelper.makeIdentifier (""));
-    assertEquals ("abc", RegExHelper.makeIdentifier ("abc"));
-    assertEquals ("ABC", RegExHelper.makeIdentifier ("ABC"));
-    assertEquals ("_0ABC", RegExHelper.makeIdentifier ("0ABC"));
-    assertEquals ("_0ABC", RegExHelper.makeIdentifier ("_0ABC"));
-    assertEquals ("___", RegExHelper.makeIdentifier (";;;"));
+    assertNull (RegExHelper.getAsIdentifier (null));
+    assertEquals ("", RegExHelper.getAsIdentifier (""));
+    assertEquals ("abc", RegExHelper.getAsIdentifier ("abc"));
+    assertEquals ("ABC", RegExHelper.getAsIdentifier ("ABC"));
+    assertEquals ("_0ABC", RegExHelper.getAsIdentifier ("0ABC"));
+    assertEquals ("abc0ABC", RegExHelper.getAsIdentifier ("0ABC", "abc"));
+    assertEquals ("_0ABC", RegExHelper.getAsIdentifier ("_0ABC"));
+    assertEquals ("___", RegExHelper.getAsIdentifier (";;;"));
+    assertEquals ("aaa", RegExHelper.getAsIdentifier (";;;", "a"));
+    assertEquals ("", RegExHelper.getAsIdentifier (";;;", ""));
   }
 
   /**

@@ -50,7 +50,7 @@ public final class ClassPathHelper
   @Nonnull
   public static List <String> getAllClassPathEntries ()
   {
-    return RegExHelper.splitToList (SystemProperties.getJavaClassPath (), SystemProperties.getPathSeparator ());
+    return RegExHelper.getSplitToList (SystemProperties.getJavaClassPath (), SystemProperties.getPathSeparator ());
   }
 
   /**

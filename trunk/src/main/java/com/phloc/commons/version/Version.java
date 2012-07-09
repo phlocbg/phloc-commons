@@ -173,7 +173,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
   @Nonnull
   private static String [] _extSplit (final String s)
   {
-    final String [] aDotParts = RegExHelper.split (s, "\\.", 2);
+    final String [] aDotParts = RegExHelper.getSplitToArray (s, "\\.", 2);
     if (aDotParts.length == 2)
     {
       // Dots always take precedence
@@ -186,7 +186,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
       return aDotParts;
     }
 
-    final String [] aDashParts = RegExHelper.split (s, "\\-", 2);
+    final String [] aDashParts = RegExHelper.getSplitToArray (s, "\\-", 2);
     if (aDashParts.length == 1)
     {
       // Neither dot nor dash present
@@ -220,7 +220,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
       // old version
 
       // split each token
-      final String [] aParts = RegExHelper.split (s, "\\.", 4);
+      final String [] aParts = RegExHelper.getSplitToArray (s, "\\.", 4);
       if (aParts.length > 0)
         m_nMajor = StringHelper.parseInt (aParts[0], 0);
       else

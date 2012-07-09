@@ -60,9 +60,30 @@ public final class RegExHelper
    *         <code>null</code> array otherwise. If both text and regular
    *         expression are <code>null</code> an empty array is returned as well
    *         since the text parameter is checked first.
+   * @deprecated Use {@link #getSplitToArray(CharSequence,String)} instead
    */
+  @Deprecated
   @Nonnull
   public static String [] split (@Nullable final CharSequence sText, @Nonnull @RegEx final String sRegEx)
+  {
+    return getSplitToArray (sText, sRegEx);
+  }
+
+  /**
+   * Split the passed text with the given regular expression.
+   * 
+   * @param sText
+   *        The text to be split. May be <code>null</code>.
+   * @param sRegEx
+   *        The regular expression to use for splitting. May neither be
+   *        <code>null</code> nor empty.
+   * @return An empty array if the text is <code>null</code>, a non-
+   *         <code>null</code> array otherwise. If both text and regular
+   *         expression are <code>null</code> an empty array is returned as well
+   *         since the text parameter is checked first.
+   */
+  @Nonnull
+  public static String [] getSplitToArray (@Nullable final CharSequence sText, @Nonnull @RegEx final String sRegEx)
   {
     if (sText == null)
       return new String [0];
@@ -85,11 +106,38 @@ public final class RegExHelper
    *         <code>null</code> array otherwise. If both text and regular
    *         expression are <code>null</code> an empty array is returned as well
    *         since the text parameter is checked first.
+   * @deprecated Use {@link #getSplitToArray(CharSequence,String,int)} instead
    */
+  @Deprecated
   @Nonnull
   public static String [] split (@Nullable final CharSequence sText,
                                  @Nonnull @RegEx final String sRegEx,
                                  @Nonnegative final int nLimit)
+  {
+    return getSplitToArray (sText, sRegEx, nLimit);
+  }
+
+  /**
+   * Split the passed text with the given regular expression returning at most
+   * the given number of tokens.
+   * 
+   * @param sText
+   *        The text to be split. May be <code>null</code>.
+   * @param sRegEx
+   *        The regular expression to use for splitting. May neither be
+   *        <code>null</code> nor empty.
+   * @param nLimit
+   *        The maximum number of tokens to return if the value is &gt; 0. If
+   *        the value is &le; 0 it has no effect and all tokens are returned.
+   * @return An empty array if the text is <code>null</code>, a non-
+   *         <code>null</code> array otherwise. If both text and regular
+   *         expression are <code>null</code> an empty array is returned as well
+   *         since the text parameter is checked first.
+   */
+  @Nonnull
+  public static String [] getSplitToArray (@Nullable final CharSequence sText,
+                                           @Nonnull @RegEx final String sRegEx,
+                                           @Nonnegative final int nLimit)
   {
     if (sRegEx == null)
       throw new IllegalArgumentException ("regexp");
@@ -110,11 +158,58 @@ public final class RegExHelper
    *         <code>null</code> list otherwise. If both text and regular
    *         expression are <code>null</code> an empty list is returned as well
    *         since the text parameter is checked first.
+   * @deprecated Use {@link #getSplitToList(CharSequence,String)} instead
    */
+  @Deprecated
   @Nonnull
   public static List <String> splitToList (@Nullable final CharSequence sText, @Nonnull @RegEx final String sRegEx)
   {
-    return ContainerHelper.newList (split (sText, sRegEx));
+    return getSplitToList (sText, sRegEx);
+  }
+
+  /**
+   * Split the passed text with the given regular expression.
+   * 
+   * @param sText
+   *        The text to be split. May be <code>null</code>.
+   * @param sRegEx
+   *        The regular expression to use for splitting. May neither be
+   *        <code>null</code> nor empty.
+   * @return An empty list if the text is <code>null</code>, a non-
+   *         <code>null</code> list otherwise. If both text and regular
+   *         expression are <code>null</code> an empty list is returned as well
+   *         since the text parameter is checked first.
+   */
+  @Nonnull
+  public static List <String> getSplitToList (@Nullable final CharSequence sText, @Nonnull @RegEx final String sRegEx)
+  {
+    return ContainerHelper.newList (getSplitToArray (sText, sRegEx));
+  }
+
+  /**
+   * Split the passed text with the given regular expression.
+   * 
+   * @param sText
+   *        The text to be split. May be <code>null</code>.
+   * @param sRegEx
+   *        The regular expression to use for splitting. May neither be
+   *        <code>null</code> nor empty.
+   * @param nLimit
+   *        The maximum number of tokens to return if the value is &gt; 0. If
+   *        the value is &le; 0 it has no effect and all tokens are returned.
+   * @return An empty list if the text is <code>null</code>, a non-
+   *         <code>null</code> list otherwise. If both text and regular
+   *         expression are <code>null</code> an empty list is returned as well
+   *         since the text parameter is checked first.
+   * @deprecated Use {@link #getSplitToList(CharSequence,String,int)} instead
+   */
+  @Deprecated
+  @Nonnull
+  public static List <String> splitToList (@Nullable final CharSequence sText,
+                                           @Nonnull @RegEx final String sRegEx,
+                                           @Nonnegative final int nLimit)
+  {
+    return getSplitToList (sText, sRegEx, nLimit);
   }
 
   /**
@@ -134,11 +229,11 @@ public final class RegExHelper
    *         since the text parameter is checked first.
    */
   @Nonnull
-  public static List <String> splitToList (@Nullable final CharSequence sText,
-                                           @Nonnull @RegEx final String sRegEx,
-                                           @Nonnegative final int nLimit)
+  public static List <String> getSplitToList (@Nullable final CharSequence sText,
+                                              @Nonnull @RegEx final String sRegEx,
+                                              @Nonnegative final int nLimit)
   {
-    return ContainerHelper.newList (split (sText, sRegEx, nLimit));
+    return ContainerHelper.newList (getSplitToArray (sText, sRegEx, nLimit));
   }
 
   /**
@@ -252,15 +347,88 @@ public final class RegExHelper
    *         <code>null</code>.
    */
   @Nullable
+  @Deprecated
   public static String makeIdentifier (@Nullable final String s)
+  {
+    return getAsIdentifier (s);
+  }
+
+  /**
+   * Convert an identifier to a programming language identifier by replacing all
+   * non-word characters with an underscore ("_").
+   * 
+   * @param s
+   *        The string to convert. May be <code>null</code> or empty.
+   * @return The converted string or <code>null</code> if the input string is
+   *         <code>null</code>.
+   */
+  @Nullable
+  public static String getAsIdentifier (@Nullable final String s)
+  {
+    return getAsIdentifier (s, "_");
+  }
+
+  /**
+   * Convert an identifier to a programming language identifier by replacing all
+   * non-word characters with an underscore.
+   * 
+   * @param s
+   *        The string to convert. May be <code>null</code> or empty.
+   * @param cReplacement
+   *        The replacement character to be used for all non-identifier
+   *        characters
+   * @return The converted string or <code>null</code> if the input string is
+   *         <code>null</code>.
+   */
+  @Nullable
+  public static String getAsIdentifier (@Nullable final String s, final char cReplacement)
   {
     if (StringHelper.hasNoText (s))
       return s;
 
-    // replace all non-word characters with under scores
-    final String ret = stringReplacePattern ("\\W", s, "_");
+    final String sReplacement = Character.toString (cReplacement);
+
+    // replace all non-word characters with the replacement character
+    // Important: quote the replacement in case it is a backslash or another
+    // special regex character
+    final String ret = stringReplacePattern ("\\W", s, Pattern.quote (sReplacement));
     if (!Character.isJavaIdentifierStart (ret.charAt (0)))
-      return "_" + ret;
+      return sReplacement + ret;
+    return ret;
+  }
+
+  /**
+   * Convert an identifier to a programming language identifier by replacing all
+   * non-word characters with an underscore.
+   * 
+   * @param s
+   *        The string to convert. May be <code>null</code> or empty.
+   * @param sReplacement
+   *        The replacement string to be used for all non-identifier characters.
+   *        May be empty but not be <code>null</code>.
+   * @return The converted string or <code>null</code> if the input string is
+   *         <code>null</code>. Maybe an invalid identifier, if the replacement
+   *         is empty, and the identifier starts with an illegal character, or
+   *         if the replacement is empty and the source string only contains
+   *         invalid characters!
+   */
+  @Nullable
+  public static String getAsIdentifier (@Nullable final String s, @Nonnull final String sReplacement)
+  {
+    if (sReplacement == null)
+      throw new NullPointerException ("replacement");
+
+    if (StringHelper.hasNoText (s))
+      return s;
+
+    // replace all non-word characters with the replacement character
+    // Important: replacement does not need to be quoted, because it is not
+    // treated as a regular expression!
+    final String ret = stringReplacePattern ("\\W", s, sReplacement);
+    if (ret.length () == 0)
+      return sReplacement;
+    if (!Character.isJavaIdentifierStart (ret.charAt (0)))
+      return sReplacement + ret;
     return ret;
   }
 

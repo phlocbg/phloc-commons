@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.tree.utils.build;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -118,7 +117,7 @@ public final class TreeWithIDBuilder
    *         a parent that is not in the list!
    */
   @Nonnull
-  public static <KEYTYPE, VALUETYPE extends IHasID <KEYTYPE>> DefaultTreeWithID <KEYTYPE, VALUETYPE> buildTree (@Nonnull final Collection <VALUETYPE> aAll,
+  public static <KEYTYPE, VALUETYPE extends IHasID <KEYTYPE>> DefaultTreeWithID <KEYTYPE, VALUETYPE> buildTree (@Nonnull final Collection <? extends VALUETYPE> aAll,
                                                                                                                 @Nonnull final IParentProvider <VALUETYPE> aParentResolver)
   {
     if (aAll == null)
@@ -126,7 +125,7 @@ public final class TreeWithIDBuilder
     if (aParentResolver == null)
       throw new NullPointerException ("parentResolver");
 
-    return _buildTree (new ArrayList <VALUETYPE> (aAll), aParentResolver);
+    return _buildTree (ContainerHelper.newList (aAll), aParentResolver);
   }
 
   /**
@@ -175,7 +174,7 @@ public final class TreeWithIDBuilder
    *         a parent that is not in the list!
    */
   @Nonnull
-  public static <KEYTYPE, VALUETYPE extends IHasParent <VALUETYPE> & IHasID <KEYTYPE>> DefaultTreeWithID <KEYTYPE, VALUETYPE> buildTree (@Nonnull final Collection <VALUETYPE> aAll)
+  public static <KEYTYPE, VALUETYPE extends IHasParent <VALUETYPE> & IHasID <KEYTYPE>> DefaultTreeWithID <KEYTYPE, VALUETYPE> buildTree (@Nonnull final Collection <? extends VALUETYPE> aAll)
   {
     if (aAll == null)
       throw new NullPointerException ("all");

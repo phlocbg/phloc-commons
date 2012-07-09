@@ -300,11 +300,11 @@ public final class URLUtils
       // Maybe empty, if the URL ends with a '?'
       if (StringHelper.hasText (sQueryString))
       {
-        final String [] aKeyValuePairs = RegExHelper.split (sQueryString, AMPERSAND_STR);
+        final String [] aKeyValuePairs = RegExHelper.getSplitToArray (sQueryString, AMPERSAND_STR);
         for (final String sKeyValuePair : aKeyValuePairs)
           if (sKeyValuePair.length () > 0)
           {
-            final String [] aParts = RegExHelper.split (sKeyValuePair, "=", 2);
+            final String [] aParts = RegExHelper.getSplitToArray (sKeyValuePair, "=", 2);
             final String sKey = aParts[0];
             final String sValue = aParts.length == 2 ? aParts[1] : "";
             if (StringHelper.hasNoText (sKey))

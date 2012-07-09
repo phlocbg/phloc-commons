@@ -861,7 +861,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
       public Enum <?> convert (@Nonnull final Object aSource)
       {
         // Split class name and enum value name
-        final String [] aParts = RegExHelper.split ((String) aSource, ":", 2);
+        final String [] aParts = RegExHelper.getSplitToArray ((String) aSource, ":", 2);
         try
         {
           // Resolve any enum class
