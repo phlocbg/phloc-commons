@@ -121,8 +121,8 @@ public abstract class AbstractEnumTextResolverWithOverrideAndFallback implements
                                        @Nonnull final Object [] aArgs)
   {
     // The same as getText
-    final String ret = _getText (aEnum, aTP, aContentLocale, true);
+    final String sText = _getText (aEnum, aTP, aContentLocale, true);
     // And if something was found, resolve the arguments
-    return TextFormatter.getFormattedText (ret, aArgs);
+    return TextFormatter.getFormattedText (sText, aArgs);
   }
 }

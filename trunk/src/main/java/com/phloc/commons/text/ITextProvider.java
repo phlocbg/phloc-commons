@@ -31,7 +31,7 @@ public interface ITextProvider
 {
   /**
    * Get the text specific for the passed locale. The implementation class MUST
-   * NOT add locale-generalization when resolving the text ("de_DE" => "de" =>
+   * NOT add locale-generalisation when resolving the text ("de_DE" => "de" =>
    * <i>default</i>).
    * 
    * @param aContentLocale
@@ -43,7 +43,7 @@ public interface ITextProvider
 
   /**
    * Get the text specific for the passed locale. The implementation class MUST
-   * add locale-generalization when resolving the text ("de_DE" => "de" =>
+   * add locale-generalisation when resolving the text ("de_DE" => "de" =>
    * <i>default</i>).
    * 
    * @param aContentLocale
@@ -55,31 +55,33 @@ public interface ITextProvider
 
   /**
    * Get the text specific for the passed locale. The implementation class MUST
-   * NOT add locale-generalization when resolving the text ("de_DE" => "de" =>
+   * NOT add locale-generalisation when resolving the text ("de_DE" => "de" =>
    * <i>default</i>). The placeholders will be resolved with the
    * {@link java.text.MessageFormat#format(Object)} method.
    * 
    * @param aContentLocale
    *        The locale to use. May not be <code>null</code>.
    * @param aArgs
-   *        The arguments to be added into the string.
+   *        The arguments to be added into the string. May not be
+   *        <code>null</code>.
    * @return <code>null</code> if no text for the given locale was found.
    */
   @Nullable
-  String getTextWithArgs (@Nonnull Locale aContentLocale, Object... aArgs);
+  String getTextWithArgs (@Nonnull Locale aContentLocale, @Nonnull Object... aArgs);
 
   /**
    * Get the text specific for the passed locale. The implementation class MUST
-   * add locale-generalization when resolving the text ("de_DE" => "de" =>
+   * add locale-generalisation when resolving the text ("de_DE" => "de" =>
    * <i>default</i>). The placeholders will be resolved with the
    * {@link java.text.MessageFormat#format(Object)} method.
    * 
    * @param aContentLocale
    *        The locale to use. May not be <code>null</code>.
    * @param aArgs
-   *        The arguments to be added into the string.
+   *        The arguments to be added into the string. May not be
+   *        <code>null</code>.
    * @return <code>null</code> if no text for the given locale was found.
    */
   @Nullable
-  String getTextWithLocaleFallbackAndArgs (@Nonnull Locale aContentLocale, Object... aArgs);
+  String getTextWithLocaleFallbackAndArgs (@Nonnull Locale aContentLocale, @Nonnull Object... aArgs);
 }

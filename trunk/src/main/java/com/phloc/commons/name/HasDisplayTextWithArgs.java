@@ -49,10 +49,10 @@ public final class HasDisplayTextWithArgs implements IHasDisplayText
   }
 
   @Nullable
-  public String getDisplayText (final Locale aContentLocale)
+  public String getDisplayText (@Nonnull final Locale aContentLocale)
   {
-    final String ret = m_aParentText.getDisplayText (aContentLocale);
-    return ret == null ? null : TextFormatter.getFormattedText (ret, m_aArgs);
+    final String sText = m_aParentText.getDisplayText (aContentLocale);
+    return sText == null ? null : TextFormatter.getFormattedText (sText, m_aArgs);
   }
 
   @Override
