@@ -110,7 +110,7 @@ public final class LocaleCache
     if (sLanguage != null && sLanguage.length () > 2)
     {
       // parse
-      final String [] aParts = RegExHelper.split (sLanguage, CGlobal.LOCALE_SEPARATOR_STR, 3);
+      final String [] aParts = RegExHelper.getSplitToArray (sLanguage, CGlobal.LOCALE_SEPARATOR_STR, 3);
       if (aParts.length == 3)
         return getLocale (aParts[0], aParts[1], aParts[2]);
       if (aParts.length == 2)
@@ -319,7 +319,7 @@ public final class LocaleCache
     if (sLanguage != null && sLanguage.length () > 2)
     {
       // parse
-      final String [] aParts = RegExHelper.split (sLanguage, CGlobal.LOCALE_SEPARATOR_STR, 3);
+      final String [] aParts = RegExHelper.getSplitToArray (sLanguage, CGlobal.LOCALE_SEPARATOR_STR, 3);
       if (aParts.length == 3)
         return containsLocale (aParts[0], aParts[1], aParts[2]);
       if (aParts.length == 2)

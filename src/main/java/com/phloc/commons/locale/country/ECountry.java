@@ -465,7 +465,7 @@ public enum ECountry implements IHasDisplayText, IHasID <String>
   private ECountry (@Nonnull final IHasDisplayText eName)
   {
     m_sID = name ().toLowerCase ();
-    m_sISOCountryCode = RegExHelper.split (m_sID, "_")[0];
+    m_sISOCountryCode = RegExHelper.getSplitToArray (m_sID, "_")[0];
     m_aName = eName;
     m_bIsCountrySub = m_sID.indexOf ('_') != -1;
     m_aCountry = CountryCache.getCountry (m_sISOCountryCode);

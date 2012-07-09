@@ -140,7 +140,7 @@ public final class VersionRange implements Comparable <VersionRange>, IHasString
       }
       else
       {
-        final String [] parts = RegExHelper.split (s.substring (i, s.length () - j), ",");
+        final String [] parts = RegExHelper.getSplitToArray (s.substring (i, s.length () - j), ",");
         final String sFloor = parts[0].trim ();
         final String sCeiling = parts.length > 1 ? parts[1].trim () : null;
 

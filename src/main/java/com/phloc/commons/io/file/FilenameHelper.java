@@ -775,7 +775,7 @@ public final class FilenameHelper
     // Start splitting into paths
     final List <String> aElements = new ArrayList <String> ();
     int nParentFolders = 0;
-    final String [] aPathArray = RegExHelper.split (sPathToUse, UNIX_SEPARATOR_STR);
+    final String [] aPathArray = RegExHelper.getSplitToArray (sPathToUse, UNIX_SEPARATOR_STR);
 
     // from right to left
     for (int i = aPathArray.length - 1; i >= 0; i--)
