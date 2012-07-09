@@ -17,6 +17,9 @@
  */
 package com.phloc.commons.text;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 /**
  * Specialized {@link com.phloc.commons.text.ITextProvider}-like interface that
  * gives support for resolving a text without manually passing in a locale.
@@ -30,12 +33,17 @@ public interface IPredefinedLocaleTextProvider
    *         {@link com.phloc.commons.text.ITextProvider#getText(java.util.Locale)}
    *         in the predefined locale.
    */
+  @Nullable
   String getText ();
 
   /**
+   * @param aArgs
+   *        The arguments to be added into the string. May not be
+   *        <code>null</code>.
    * @return The same as
    *         {@link com.phloc.commons.text.ITextProvider#getTextWithArgs(java.util.Locale, Object...)}
    *         in the predefined locale.
    */
-  String getTextWithArgs (Object... aArgs);
+  @Nullable
+  String getTextWithArgs (@Nonnull Object... aArgs);
 }

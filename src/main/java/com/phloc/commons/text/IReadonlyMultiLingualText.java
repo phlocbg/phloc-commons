@@ -47,8 +47,8 @@ public interface IReadonlyMultiLingualText extends ISimpleMultiLingualText, Seri
   boolean containsLocaleWithFallback (@Nonnull Locale aContentLocale);
 
   /**
-   * @return A rmap over all contained locale/text pairs. Never
-   *         <code>null</code> .
+   * @return A map over all contained locale/text pairs. Never <code>null</code>
+   *         .
    */
   @Nonnull
   Map <Locale, String> getMap ();

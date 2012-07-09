@@ -31,12 +31,39 @@ import com.phloc.commons.text.ITextProvider;
  */
 public interface IEnumTextResolver
 {
+  /**
+   * Get the text of an enumeration item.
+   * 
+   * @param aEnum
+   *        The enumeration item to get the unique ID of. May not be
+   *        <code>null</code>.
+   * @param aTP
+   *        The text provider containing the text. May not be <code>null</code>.
+   * @param aContentLocale
+   *        The locale to be used. May not be <code>null</code>.
+   * @return <code>null</code> if no text could be resolved.
+   */
   @Nullable
-  String getText (@Nonnull final Enum <?> aEnum, @Nonnull final ITextProvider aTP, @Nonnull final Locale aContentLocale);
+  String getText (@Nonnull Enum <?> aEnum, @Nonnull ITextProvider aTP, @Nonnull Locale aContentLocale);
 
+  /**
+   * Get the text of an enumeration item with placeholder texts being replaced.
+   * 
+   * @param aEnum
+   *        The enumeration item to get the unique ID of. May not be
+   *        <code>null</code>.
+   * @param aTP
+   *        The text provider containing the text. May not be <code>null</code>.
+   * @param aContentLocale
+   *        The locale to be used. May not be <code>null</code>.
+   * @param aArgs
+   *        The arguments to be added into the string. May not be
+   *        <code>null</code>.
+   * @return <code>null</code> if no text could be resolved.
+   */
   @Nullable
-  String getTextWithArgs (@Nonnull final Enum <?> aEnum,
-                          @Nonnull final ITextProvider aTP,
-                          @Nonnull final Locale aContentLocale,
-                          @Nonnull final Object [] aArgs);
+  String getTextWithArgs (@Nonnull Enum <?> aEnum,
+                          @Nonnull ITextProvider aTP,
+                          @Nonnull Locale aContentLocale,
+                          @Nonnull Object [] aArgs);
 }
