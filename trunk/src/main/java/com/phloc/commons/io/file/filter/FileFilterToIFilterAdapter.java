@@ -34,7 +34,8 @@ import com.phloc.commons.filter.IFilter;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * Converts an {@link FileFilter} to an {@link IFilter} object.
+ * Converts {@link FileFilter} and {@link FilenameFilter} objects to an
+ * {@link IFilter} object.
  * 
  * @author philip
  */

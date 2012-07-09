@@ -2,6 +2,7 @@
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
 <table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr border="1"><td>7/9/12</td><td colspan="4">_Release *3.6.4*_</td></tr>
+<tr><td>7/9/12</td><td>add</td><td>api</td><td></td><td>Added some more factory methods in FileSystemRecursiveIterator</td></tr>
 <tr><td>7/9/12</td><td>update</td><td>api</td><td></td><td>Ensured that all getDisplayTextWithArgs methods require non-null arguments</td></tr>
 <tr><td>7/9/12</td><td>add</td><td>tech</td><td></td><td>Added possibility in XMLEmitterPhloc to customize the handling of nested comments</td></tr>
 <tr><td>7/9/12</td><td>change</td><td>api</td><td></td><td>Renamed some methods in RegExHelper to match the naming conventions</td></tr>
