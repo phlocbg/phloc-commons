@@ -101,7 +101,11 @@ public final class ResourceLocation implements IResourceLocation
         ret += "(" + m_nLineNumber + ":?)";
     }
     if (m_sField != null)
-      ret += " @ " + m_sField;
+    {
+      if (ret.length () > 0)
+        ret += " @ ";
+      ret += m_sField;
+    }
     return ret;
   }
 
