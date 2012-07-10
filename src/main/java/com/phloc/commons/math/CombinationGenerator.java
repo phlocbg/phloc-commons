@@ -42,6 +42,7 @@ import com.phloc.commons.lang.GenericReflection;
  * slots.
  * 
  * @author Boris Gregorcic
+ * @author philip
  * @param <DATATYPE>
  *        element type
  */

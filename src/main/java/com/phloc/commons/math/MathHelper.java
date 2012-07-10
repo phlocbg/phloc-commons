@@ -118,8 +118,18 @@ public final class MathHelper
     return (nValue & LONG_HIGH_BITS) == 0 || (nValue & LONG_HIGH_BITS) == LONG_HIGH_BITS;
   }
 
+  /**
+   * @deprecated Use {@link #getLongAsInt(long,int)} instead
+   */
+  @Deprecated
   @CheckReturnValue
   public static int longToInt (final long nValue, final int nFallback)
+  {
+    return getLongAsInt (nValue, nFallback);
+  }
+
+  @CheckReturnValue
+  public static int getLongAsInt (final long nValue, final int nFallback)
   {
     return canConvertLongToInt (nValue) ? (int) nValue : nFallback;
   }

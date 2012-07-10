@@ -37,6 +37,7 @@ import com.phloc.commons.callback.INonThrowingRunnableWithParameter;
  * not all slots are filled.
  * 
  * @author Boris Gregorcic
+ * @author philip
  * @param <DATATYPE>
  *        Element type
  */
@@ -110,7 +111,7 @@ public final class CombinationGeneratorFlexible <DATATYPE>
     final Set <List <DATATYPE>> aAllResults = new HashSet <List <DATATYPE>> ();
     iterateAllCombinations (aElements, new INonThrowingRunnableWithParameter <List <DATATYPE>> ()
     {
-      public void run (final List <DATATYPE> aCurrentObject)
+      public void run (@Nonnull final List <DATATYPE> aCurrentObject)
       {
         aAllResults.add (aCurrentObject);
       }
