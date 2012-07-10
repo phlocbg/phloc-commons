@@ -70,33 +70,33 @@ public final class CollatorUtils
 
       // Collator.getInstance is synchronized and therefore extremely slow ->
       // that's why we put a cache around it!
-      final Collator c = Collator.getInstance (aLocale);
-      if (c == null)
+      final Collator aCollator = Collator.getInstance (aLocale);
+      if (aCollator == null)
       {
         s_aLogger.error ("Failed to get Collator for Locale " + aLocale + " - using Collator for default locale!");
         return Collator.getInstance (SystemHelper.getSystemLocale ());
       }
-      if (!(c instanceof RuleBasedCollator))
+      if (!(aCollator instanceof RuleBasedCollator))
       {
-        s_aLogger.warn ("Collator.getInstance did not return a RulleBasedCollator but a " + c.getClass ().getName ());
-        return c;
+        s_aLogger.warn ("Collator.getInstance did not return a RulleBasedCollator but a " + aCollator.getClass ().getName ());
+        return aCollator;
       }
 
       try
       {
-        final String sRules = ((RuleBasedCollator) c).getRules ();
+        final String sRules = ((RuleBasedCollator) aCollator).getRules ();
         if (sRules.indexOf ("<'.'<") < 0)
         {
           // Nothing to replace - use collator as it is
           s_aLogger.warn ("Failed to identify the Collator rule part to be replaced. Locale used: " + aLocale);
-          return c;
+          return aCollator;
         }
 
         final String sNewRules = StringHelper.replaceAll (sRules, "<'.'<", "<' '<'.'<");
-        final RuleBasedCollator ret = new RuleBasedCollator (sNewRules);
-        ret.setStrength (Collator.TERTIARY);
-        ret.setDecomposition (Collator.FULL_DECOMPOSITION);
-        return ret;
+        final RuleBasedCollator aNewCollator = new RuleBasedCollator (sNewRules);
+        aNewCollator.setStrength (Collator.TERTIARY);
+        aNewCollator.setDecomposition (Collator.FULL_DECOMPOSITION);
+        return aNewCollator;
       }
       catch (final ParseException ex)
       {

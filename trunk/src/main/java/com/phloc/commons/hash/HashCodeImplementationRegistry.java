@@ -24,11 +24,19 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.ThreadSafe;
 
 import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.lang.ServiceLoaderBackport;
 import com.phloc.commons.state.EChange;
 
+/**
+ * The main registry for the different {@link IHashCodeImplementation}
+ * implementations.
+ * 
+ * @author philip
+ */
+@ThreadSafe
 public final class HashCodeImplementationRegistry implements IHashCodeImplementationRegistry
 {
   private static final class ArrayHashCodeImplementation implements IHashCodeImplementation

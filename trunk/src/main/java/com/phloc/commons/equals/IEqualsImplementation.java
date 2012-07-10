@@ -38,13 +38,4 @@ public interface IEqualsImplementation
    *         specification of Object.class.
    */
   boolean areEqual (@Nonnull Object aObj1, @Nonnull Object aObj2);
-
-  /**
-   * Get the hash code for the passed object
-   * 
-   * @param aObj
-   *        The object for which the hash code is to be calculated
-   * @return The hash code for this object
-   */
-  // int getHashCode (@Nonnull Object aObj);
 }
