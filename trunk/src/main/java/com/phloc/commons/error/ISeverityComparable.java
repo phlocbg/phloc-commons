@@ -37,7 +37,7 @@ public interface ISeverityComparable <THISTYPE extends ISeverityComparable <THIS
    * @return <code>true</code> if this object is equally important than the
    *         passed object!
    */
-  boolean isEqualSevereThan (@Nonnull final THISTYPE aOther);
+  boolean isEqualSevereThan (@Nonnull THISTYPE aOther);
 
   /**
    * Check if this object is of lower level (= less important) than the passed
@@ -48,7 +48,7 @@ public interface ISeverityComparable <THISTYPE extends ISeverityComparable <THIS
    * @return <code>true</code> if this object is less important than the passed
    *         object!
    */
-  boolean isLessSevereThan (@Nonnull final THISTYPE aOther);
+  boolean isLessSevereThan (@Nonnull THISTYPE aOther);
 
   /**
    * Check if this object is of equal or lower level (= equally or less
@@ -59,7 +59,7 @@ public interface ISeverityComparable <THISTYPE extends ISeverityComparable <THIS
    * @return <code>true</code> if this object is equally or less important than
    *         the passed object!
    */
-  boolean isLessOrEqualSevereThan (@Nonnull final THISTYPE aOther);
+  boolean isLessOrEqualSevereThan (@Nonnull THISTYPE aOther);
 
   /**
    * Check if this object is of higher level (= more important) than the passed
@@ -70,7 +70,7 @@ public interface ISeverityComparable <THISTYPE extends ISeverityComparable <THIS
    * @return <code>true</code> if this object is more important than the passed
    *         object!
    */
-  boolean isMoreSevereThan (@Nonnull final THISTYPE aOther);
+  boolean isMoreSevereThan (@Nonnull THISTYPE aOther);
 
   /**
    * Check if this object is of equal or higher level (= equally or more
@@ -81,6 +81,5 @@ public interface ISeverityComparable <THISTYPE extends ISeverityComparable <THIS
    * @return <code>true</code> if this object is equally or more important than
    *         the passed object!
    */
-  boolean isMoreOrEqualSevereThan (@Nonnull final THISTYPE aOther);
-
+  boolean isMoreOrEqualSevereThan (@Nonnull THISTYPE aOther);
 }
