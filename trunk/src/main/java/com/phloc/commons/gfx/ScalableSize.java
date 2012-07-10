@@ -25,21 +25,25 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.hash.HashCodeGenerator;
-import com.phloc.commons.math.IHasHeight;
-import com.phloc.commons.math.IHasWidth;
+import com.phloc.commons.math.IHasWidthAndHeight;
 import com.phloc.commons.math.MathHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * This class represents an image size.
+ * This class represents an object having width and height.
  * 
  * @author philip
  */
 @Immutable
-public final class ScalableSize implements IHasWidth, IHasHeight, Serializable
+public final class ScalableSize implements IHasWidthAndHeight, Serializable
 {
   private final int m_nWidth;
   private final int m_nHeight;
+
+  public ScalableSize (@Nonnull final IHasWidthAndHeight aObj)
+  {
+    this (aObj.getWidth (), aObj.getHeight ());
+  }
 
   public ScalableSize (@Nonnegative final int nWidth, @Nonnegative final int nHeight)
   {

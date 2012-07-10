@@ -30,7 +30,7 @@ import javax.annotation.Nullable;
 public interface IGraphRelationFactory <VALUETYPE>
 {
   /**
-   * Create a new relation from the passed fromNode to the toNode.
+   * Create a new relation from the passed from-node to the to-node.
    * 
    * @param aFrom
    *        The from node. May not be <code>null</code>.
@@ -42,7 +42,7 @@ public interface IGraphRelationFactory <VALUETYPE>
   IGraphRelation <VALUETYPE> createRelation (@Nonnull IGraphNode <VALUETYPE> aFrom, @Nonnull IGraphNode <VALUETYPE> aTo);
 
   /**
-   * Create a new relation from the passed fromNode to the toNode using a
+   * Create a new relation from the passed from-node to the to-node using a
    * previously known ID.
    * 
    * @param sID

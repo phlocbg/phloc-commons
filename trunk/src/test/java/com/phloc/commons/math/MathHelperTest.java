@@ -98,16 +98,16 @@ public final class MathHelperTest
   @Test
   public void testLongToInt ()
   {
-    assertEquals (Integer.MIN_VALUE, MathHelper.longToInt (Integer.MIN_VALUE, 5));
-    assertEquals (-1, MathHelper.longToInt (-1, 5));
-    assertEquals (0, MathHelper.longToInt (0, 5));
-    assertEquals (1, MathHelper.longToInt (1, 5));
-    assertEquals (Integer.MAX_VALUE, MathHelper.longToInt (Integer.MAX_VALUE, 5));
+    assertEquals (Integer.MIN_VALUE, MathHelper.getLongAsInt (Integer.MIN_VALUE, 5));
+    assertEquals (-1, MathHelper.getLongAsInt (-1, 5));
+    assertEquals (0, MathHelper.getLongAsInt (0, 5));
+    assertEquals (1, MathHelper.getLongAsInt (1, 5));
+    assertEquals (Integer.MAX_VALUE, MathHelper.getLongAsInt (Integer.MAX_VALUE, 5));
 
-    assertEquals (5, MathHelper.longToInt (Integer.MIN_VALUE - 1L, 5));
-    assertEquals (5, MathHelper.longToInt (Integer.MAX_VALUE + 1L, 5));
-    assertEquals (5, MathHelper.longToInt (Long.MIN_VALUE, 5));
-    assertEquals (5, MathHelper.longToInt (Long.MAX_VALUE, 5));
+    assertEquals (5, MathHelper.getLongAsInt (Integer.MIN_VALUE - 1L, 5));
+    assertEquals (5, MathHelper.getLongAsInt (Integer.MAX_VALUE + 1L, 5));
+    assertEquals (5, MathHelper.getLongAsInt (Long.MIN_VALUE, 5));
+    assertEquals (5, MathHelper.getLongAsInt (Long.MAX_VALUE, 5));
   }
 
   @Test

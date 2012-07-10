@@ -26,7 +26,7 @@ import javax.annotation.concurrent.Immutable;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 
 /**
- * Small class for calculating factorials.
+ * Smart class for calculating factorials.
  * 
  * @author philip
  */
@@ -108,25 +108,27 @@ public final class FactorialHelper
         throw new IllegalArgumentException ("n >= 0 required, but was " + n);
       if (n < 2)
         return BigInteger.ONE;
-      BigInteger p = BigInteger.ONE;
-      BigInteger r = BigInteger.ONE;
+      BigInteger aP = BigInteger.ONE;
+      BigInteger aR = BigInteger.ONE;
       m_nCurrentN = 1;
-      int h = 0, shift = 0, high = 1;
-      int log2n = true ? 31 - Integer.numberOfLeadingZeros (n) : (int) Math.floor (Math.log (n) / Math.log (2));
-      while (h != n)
+      int nH = 0;
+      int nShift = 0;
+      int nHigh = 1;
+      int nLog2n = true ? 31 - Integer.numberOfLeadingZeros (n) : (int) Math.floor (Math.log (n) / Math.log (2));
+      while (nH != n)
       {
-        shift += h;
-        h = n >> log2n--;
-        int len = high;
-        high = (h - 1) | 1;
-        len = (high - len) / 2;
-        if (len > 0)
+        nShift += nH;
+        nH = n >> nLog2n--;
+        int nLen = nHigh;
+        nHigh = (nH - 1) | 1;
+        nLen = (nHigh - nLen) / 2;
+        if (nLen > 0)
         {
-          p = p.multiply (_getProduct (len));
-          r = r.multiply (p);
+          aP = aP.multiply (_getProduct (nLen));
+          aR = aR.multiply (aP);
         }
       }
-      return r.shiftLeft (shift);
+      return aR.shiftLeft (nShift);
     }
   }
 
