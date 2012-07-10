@@ -35,6 +35,13 @@ import org.w3c.dom.NodeList;
 
 import com.phloc.commons.annotations.IsSPIImplementation;
 
+/**
+ * This class registers the default equals implementations. The implementations
+ * in here should be aligned with the implementations in the
+ * {@link com.phloc.commons.hash.DefaultHashCodeImplementationRegistrarSPI}
+ * 
+ * @author philip
+ */
 @IsSPIImplementation
 public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImplementationRegistrarSPI
 {

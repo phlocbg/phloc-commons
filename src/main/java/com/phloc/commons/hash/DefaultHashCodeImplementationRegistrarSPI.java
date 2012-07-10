@@ -32,6 +32,13 @@ import org.w3c.dom.NodeList;
 
 import com.phloc.commons.annotations.IsSPIImplementation;
 
+/**
+ * This class registers the default hash code implementations. The
+ * implementations in here should be aligned with the implementations in the
+ * {@link com.phloc.commons.equals.DefaultEqualsImplementationRegistrarSPI}
+ * 
+ * @author philip
+ */
 @IsSPIImplementation
 public final class DefaultHashCodeImplementationRegistrarSPI implements IHashCodeImplementationRegistrarSPI
 {

@@ -24,11 +24,13 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.ThreadSafe;
 
 import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.lang.ServiceLoaderBackport;
 import com.phloc.commons.state.EChange;
 
+@ThreadSafe
 public final class EqualsImplementationRegistry implements IEqualsImplementationRegistry
 {
   private static final class ArrayEqualsImplementation implements IEqualsImplementation
