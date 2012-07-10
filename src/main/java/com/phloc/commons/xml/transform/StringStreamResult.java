@@ -64,6 +64,6 @@ public final class StringStreamResult extends StreamResult implements IHasString
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("systemID", getSystemId ()).toString ();
+    return new ToStringGenerator (this).append ("stringWriter", m_aSW).append ("systemID", getSystemId ()).toString ();
   }
 }
