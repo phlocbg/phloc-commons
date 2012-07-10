@@ -26,6 +26,7 @@ import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -37,41 +38,49 @@ public class DebugOutputStream extends WrappedOutputStream
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (DebugOutputStream.class);
 
-  private long m_nBytesWritten = 0;
+  private long m_nTotalBytesWritten = 0;
 
   public DebugOutputStream (@Nonnull final OutputStream aSourceOS)
   {
     super (aSourceOS);
   }
 
-  @Override
-  public void write (final int b) throws IOException
-  {
-    super.write (b);
-    m_nBytesWritten++;
-    s_aLogger.info ("Wrote 1 byte; now at " + m_nBytesWritten);
-  }
-
-  @Override
-  public void write (final byte [] b, final int nOffset, final int nLength) throws IOException
-  {
-    super.write (b, nOffset, nLength);
-    m_nBytesWritten += nLength;
-    s_aLogger.info ("Wrote " + nLength + " byte(s); now at " + m_nBytesWritten);
-  }
-
   /**
    * @return The number of written bytes.
    */
   @Nonnegative
-  public long getBytesWritten ()
+  public final long getBytesWritten ()
   {
-    return m_nBytesWritten;
+    return m_nTotalBytesWritten;
+  }
+
+  @OverrideOnDemand
+  protected void onWrite (@Nonnegative final int nBytesWritten, final long nTotalBytesWritten)
+  {
+    s_aLogger.info ("Wrote " + nBytesWritten + " byte(s); now at " + nTotalBytesWritten);
+  }
+
+  @Override
+  public final void write (final int b) throws IOException
+  {
+    super.write (b);
+    m_nTotalBytesWritten++;
+    onWrite (1, m_nTotalBytesWritten);
+  }
+
+  @Override
+  public final void write (final byte [] b, final int nOffset, final int nLength) throws IOException
+  {
+    super.write (b, nOffset, nLength);
+    m_nTotalBytesWritten += nLength;
+    onWrite (nLength, m_nTotalBytesWritten);
   }
 
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("bytesWritten", m_nBytesWritten).toString ();
+    return ToStringGenerator.getDerived (super.toString ())
+                            .append ("totalBytesWritten", m_nTotalBytesWritten)
+                            .toString ();
   }
 }

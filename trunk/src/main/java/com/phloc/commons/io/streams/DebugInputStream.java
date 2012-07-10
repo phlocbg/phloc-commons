@@ -26,6 +26,7 @@ import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -44,38 +45,55 @@ public class DebugInputStream extends WrappedInputStream
     super (aSourceIS);
   }
 
+  public final long getPosition ()
+  {
+    return m_nPosition;
+  }
+
+  @OverrideOnDemand
+  protected void onRead (final int nBytesRead, final long nNewPosition)
+  {
+    s_aLogger.info ("Read " + nBytesRead + " byte(s); now at " + nNewPosition);
+  }
+
+  @OverrideOnDemand
+  protected void onSkip (final long nBytesSkipped, final long nNewPosition)
+  {
+    s_aLogger.info ("Skipped " + nBytesSkipped + " byte(s); now at " + nNewPosition);
+  }
+
   @Override
-  public int read () throws IOException
+  public final int read () throws IOException
   {
     final int ret = super.read ();
     if (ret != -1)
     {
       m_nPosition++;
-      s_aLogger.info ("Read 1 byte; now at " + m_nPosition);
+      onRead (1, m_nPosition);
     }
     return ret;
   }
 
   @Override
-  public int read (final byte b[], final int nOffset, final int nLength) throws IOException
+  public final int read (final byte b[], final int nOffset, final int nLength) throws IOException
   {
     final int ret = super.read (b, nOffset, nLength);
     if (ret != -1)
     {
       m_nPosition += ret;
-      s_aLogger.info ("Read " + ret + " byte(s); now at " + m_nPosition);
+      onRead (ret, m_nPosition);
     }
     return ret;
   }
 
   @Override
-  public long skip (@Nonnegative final long n) throws IOException
+  public final long skip (@Nonnegative final long n) throws IOException
   {
     final long nSkipped = super.skip (n);
     if (nSkipped > 0)
     {
       m_nPosition += nSkipped;
-      s_aLogger.info ("Skipped " + nSkipped + " byte(s); now at " + m_nPosition);
+      onSkip (nSkipped, m_nPosition);
     }
     return nSkipped;
   }
