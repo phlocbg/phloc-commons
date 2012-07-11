@@ -17,8 +17,11 @@
  */
 package com.phloc.test;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 public class MainBuildThreadGroupTree
 {
+  @SuppressFBWarnings ("IL_INFINITE_LOOP")
   private static String _getTGName (final ThreadGroup aParamTG)
   {
     ThreadGroup aTG = aParamTG;
