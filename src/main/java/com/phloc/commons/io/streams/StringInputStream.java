@@ -23,14 +23,16 @@ import javax.annotation.Nonnull;
 
 import com.phloc.commons.charset.CharsetManager;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * An input stream based on an input String.
- * 
+ *
  * @author philip
  */
 public class StringInputStream extends NonBlockingByteArrayInputStream
 {
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings ("DM_DEFAULT_ENCODING")
+  @SuppressFBWarnings ("DM_DEFAULT_ENCODING")
   @Deprecated
   public StringInputStream (@Nonnull final String sInput)
   {

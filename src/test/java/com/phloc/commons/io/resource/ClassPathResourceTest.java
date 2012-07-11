@@ -34,9 +34,11 @@ import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.mock.PhlocTestUtils;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Test class for class {@link ClassPathResource}.
- * 
+ *
  * @author philip
  */
 public final class ClassPathResourceTest
@@ -187,7 +189,7 @@ public final class ClassPathResourceTest
   }
 
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testInvalid ()
   {
     final ClassPathResource aCPISP = new ClassPathResource ("test1-not-existing.txt");

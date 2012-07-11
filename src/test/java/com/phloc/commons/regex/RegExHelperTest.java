@@ -31,9 +31,11 @@ import java.util.regex.Pattern;
 
 import org.junit.Test;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Test class for {@link RegExHelper}.
- * 
+ *
  * @author philip
  */
 public final class RegExHelperTest
@@ -42,7 +44,7 @@ public final class RegExHelperTest
    * Test for method split
    */
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testSplitNoLimit ()
   {
     String [] x = RegExHelper.getSplitToArray ("abc", "b");
@@ -111,7 +113,7 @@ public final class RegExHelperTest
    * Test for method split
    */
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testSplitWithLimit ()
   {
     String [] x = RegExHelper.getSplitToArray ("abc", "b", 2);
@@ -195,7 +197,7 @@ public final class RegExHelperTest
    * Test for method splitToList
    */
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testSplitToListNoLimit ()
   {
     List <String> x = RegExHelper.getSplitToList ("abc", "b");
@@ -256,7 +258,7 @@ public final class RegExHelperTest
    * Test for method splitToList
    */
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testSplitToListWithLimit ()
   {
     List <String> x = RegExHelper.getSplitToList ("abc", "b", 2);
@@ -408,7 +410,7 @@ public final class RegExHelperTest
    * Test for method stringMatchesPattern
    */
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testStringMatchesPattern ()
   {
     assertTrue (RegExHelper.stringMatchesPattern ("[0-9]+", "1234"));

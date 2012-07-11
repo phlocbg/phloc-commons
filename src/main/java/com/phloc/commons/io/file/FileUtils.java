@@ -39,9 +39,11 @@ import com.phloc.commons.io.streams.CountingFileInputStream;
 import com.phloc.commons.io.streams.CountingFileOutputStream;
 import com.phloc.commons.state.EChange;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Miscellaneous file utility methods.
- * 
+ *
  * @author philip
  */
 @Immutable
@@ -58,7 +60,7 @@ public final class FileUtils
 
   /**
    * Check if the passed file exists. Must be existing and a file.
-   * 
+   *
    * @param aFile
    *        The file to be checked for existence. May not be <code>null</code> .
    * @return <code>true</code> if the directory exists, <code>false</code>
@@ -75,7 +77,7 @@ public final class FileUtils
   /**
    * Check if the passed directory exists. Must be existing and must be a
    * directory!
-   * 
+   *
    * @param aDir
    *        The directory to be checked for existence. May not be
    *        <code>null</code>.
@@ -123,7 +125,7 @@ public final class FileUtils
 
   /**
    * Check if the searched directory is a parent object of the start directory
-   * 
+   *
    * @param aSearchDirectory
    *        The directory to be searched. May not be <code>null</code>.
    * @param aStartDirectory
@@ -131,7 +133,7 @@ public final class FileUtils
    * @return <code>true</code> if the search directory is a parent of the start
    *         directory, <code>false</code> otherwise.
    */
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings ("IL_INFINITE_LOOP")
+  @SuppressFBWarnings ("IL_INFINITE_LOOP")
   public static boolean isParentDirectory (@Nonnull final File aSearchDirectory, @Nonnull final File aStartDirectory)
   {
     if (aSearchDirectory == null)
@@ -188,7 +190,7 @@ public final class FileUtils
   /**
    * Get an output stream for writing to a file. Any existing file is
    * overwritten.
-   * 
+   *
    * @param sFilename
    *        The name of the file to write to. May not be <code>null</code>.
    * @return <code>null</code> if the file could not be opened
@@ -201,7 +203,7 @@ public final class FileUtils
 
   /**
    * Get an output stream for writing to a file.
-   * 
+   *
    * @param sFilename
    *        The name of the file to write to. May not be <code>null</code>.
    * @param eAppend
@@ -216,7 +218,7 @@ public final class FileUtils
 
   /**
    * Get an output stream for writing to a file.
-   * 
+   *
    * @param aFile
    *        The file to write to. May not be <code>null</code>.
    * @return <code>null</code> if the file could not be opened
@@ -229,7 +231,7 @@ public final class FileUtils
 
   /**
    * Get an output stream for writing to a file.
-   * 
+   *
    * @param aFile
    *        The file to write to. May not be <code>null</code>.
    * @param eAppend
@@ -278,7 +280,7 @@ public final class FileUtils
    * not exist. Returns <code>false</code> if the first file is older than the
    * second file. Returns <code>false</code> if the first file does not exists
    * but the second does. Returns <code>false</code> if none of the files exist.
-   * 
+   *
    * @param aFile1
    *        First file. May not be <code>null</code>.
    * @param aFile2
@@ -345,7 +347,7 @@ public final class FileUtils
    * relative paths ("." and "..") are resolved and all eventually contained
    * '\0' characters are eliminated. Than all file names are checked for
    * validity (so that no special characters are contained).
-   * 
+   *
    * @param aFile
    *        The file to be secured.
    * @return <code>null</code> if the passed file is <code>null</code>.
@@ -381,7 +383,7 @@ public final class FileUtils
   /**
    * Returns the number of files and directories contained in the passed
    * directory excluding the system internal directories.
-   * 
+   *
    * @param aDirectory
    *        The directory to check. May not be <code>null</code> and must be a
    *        directory.
@@ -408,7 +410,7 @@ public final class FileUtils
   /**
    * Check if the passed 2 files are equal using the unified (unix separator),
    * absolute and cleaned (no "." or "..") path.
-   * 
+   *
    * @param f1
    *        First file. May be <code>null</code>.
    * @param f2

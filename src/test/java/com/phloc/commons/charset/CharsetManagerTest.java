@@ -35,15 +35,17 @@ import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.random.VerySecureRandom;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Test class for class {@link CharsetManager}.
- * 
+ *
  * @author philip
  */
 public final class CharsetManagerTest
 {
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testCharsetFromName ()
   {
     assertNotNull (CharsetManager.getCharsetFromName ("UTF-8"));
@@ -73,7 +75,7 @@ public final class CharsetManagerTest
   }
 
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings ("NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings ("NP_NONNULL_PARAM_VIOLATION")
   public void testGetAsBytes ()
   {
     final String s = "äbc";

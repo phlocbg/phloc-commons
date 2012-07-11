@@ -45,6 +45,8 @@ import com.phloc.commons.microdom.impl.MicroEntityReference;
 import com.phloc.commons.microdom.impl.MicroProcessingInstruction;
 import com.phloc.commons.microdom.impl.MicroText;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 @Immutable
 public final class MicroUtils
 {
@@ -131,7 +133,7 @@ public final class MicroUtils
 
   /**
    * Get the path of the given node, up to the root element.
-   * 
+   *
    * @param aNode
    *        The node to get the path from. May be <code>null</code>.
    * @param sSep
@@ -140,7 +142,7 @@ public final class MicroUtils
    *         <code>null</code>, the return value is an empty string.
    */
   @Nonnull
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings ("IL_INFINITE_LOOP")
+  @SuppressFBWarnings ("IL_INFINITE_LOOP")
   public static String getPath (@Nullable final IMicroNode aNode, @Nonnull final String sSep)
   {
     if (sSep == null)
@@ -160,7 +162,7 @@ public final class MicroUtils
 
   /**
    * Get the tag name of the passed documents root element.
-   * 
+   *
    * @param aDoc
    *        The document to be evaluated. May be <code>null</code>.
    * @return <code>null</code> if the passed document was <code>null</code> or
@@ -263,7 +265,7 @@ public final class MicroUtils
   /**
    * Helper method to extract the text content of the child element denoted by
    * the parameter sChildElementName of the passed parent element.
-   * 
+   *
    * @param eParentElement
    *        The parent element to use. May not be <code>null</code>.
    * @param sChildElementName
@@ -285,7 +287,7 @@ public final class MicroUtils
    * content is converted via the
    * {@link com.phloc.commons.typeconvert.TypeConverter} to the desired
    * destination type.
-   * 
+   *
    * @param eParentElement
    *        The parent element to use. May not be <code>null</code>.
    * @param sChildElementName
@@ -308,7 +310,7 @@ public final class MicroUtils
    * Helper method to extract the text content of the child element denoted by
    * the parameters sNamespaceURI and sChildElementName of the passed parent
    * element.
-   * 
+   *
    * @param eParentElement
    *        The parent element to use. May not be <code>null</code>.
    * @param sNamespaceURI
@@ -333,7 +335,7 @@ public final class MicroUtils
    * element. The read text content is converted via the
    * {@link com.phloc.commons.typeconvert.TypeConverter} to the desired
    * destination type.
-   * 
+   *
    * @param eParentElement
    *        The parent element to use. May not be <code>null</code>.
    * @param sNamespaceURI

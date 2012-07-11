@@ -24,7 +24,7 @@ import java.math.BigInteger;
 
 import org.junit.Test;
 
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link FactorialHelper}.
@@ -34,7 +34,7 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 public final class FactorialHelperTest
 {
   @Test
-  @SuppressWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
+  @SuppressFBWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   public void testSmall ()
   {
     for (int i = FactorialHelper.PREDEFINED_MIN_INDEX; i <= FactorialHelper.PREDEFINED_MAX_INDEX; ++i)
@@ -61,7 +61,7 @@ public final class FactorialHelperTest
   }
 
   @Test
-  @SuppressWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
+  @SuppressFBWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   public void testGetAnyFactorialLinear ()
   {
     final BigInteger y = FactorialHelper.getAnyFactorialLinear (FactorialHelper.PREDEFINED_MAX_INDEX + 1);

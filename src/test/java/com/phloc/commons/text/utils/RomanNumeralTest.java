@@ -22,6 +22,8 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Test class for class {@link RomanNumeral}.
  *
@@ -30,7 +32,7 @@ import org.junit.Test;
 public final class RomanNumeralTest
 {
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NULL_PARAM_DEREF_NONVIRTUAL")
+  @SuppressFBWarnings (value = "NP_NULL_PARAM_DEREF_NONVIRTUAL")
   public void testBasic ()
   {
     assertEquals ("V", RomanNumeral.intToRomanString (5));

@@ -23,9 +23,11 @@ import java.io.Serializable;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * A non-synchronized copy of the class {@link java.io.ByteArrayInputStream}.
- * 
+ *
  * @author philip
  * @see java.io.ByteArrayInputStream
  */
@@ -73,11 +75,11 @@ public class NonBlockingByteArrayInputStream extends InputStream implements Seri
    * <code>buf</code> as its buffer array. The buffer array is not copied. The
    * initial value of <code>pos</code> is <code>0</code> and the initial value
    * of <code>count</code> is the length of <code>buf</code>.
-   * 
+   *
    * @param aBuf
    *        the input buffer.
    */
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings ({ "EI_EXPOSE_REP2" })
+  @SuppressFBWarnings ({ "EI_EXPOSE_REP2" })
   public NonBlockingByteArrayInputStream (@Nonnull final byte [] aBuf)
   {
     this (aBuf, 0, aBuf.length);
@@ -89,7 +91,7 @@ public class NonBlockingByteArrayInputStream extends InputStream implements Seri
    * <code>offset</code> and the initial value of <code>m_nCount</code> is the
    * minimum of <code>nOfs+nLen</code> and <code>aBuf.length</code>. The buffer
    * array is not copied. The buffer's mark is set to the specified offset.
-   * 
+   *
    * @param aBuf
    *        the input buffer.
    * @param nOfs
@@ -97,7 +99,7 @@ public class NonBlockingByteArrayInputStream extends InputStream implements Seri
    * @param nLen
    *        the maximum number of bytes to read from the buffer.
    */
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings ({ "EI_EXPOSE_REP2" })
+  @SuppressFBWarnings ({ "EI_EXPOSE_REP2" })
   public NonBlockingByteArrayInputStream (final byte [] aBuf, final int nOfs, final int nLen)
   {
     if (aBuf == null)
@@ -117,7 +119,7 @@ public class NonBlockingByteArrayInputStream extends InputStream implements Seri
    * been reached, the value <code>-1</code> is returned.
    * <p>
    * This <code>read</code> method cannot block.
-   * 
+   *
    * @return the next byte of data, or <code>-1</code> if the end of the stream
    *         has been reached.
    */
@@ -139,7 +141,7 @@ public class NonBlockingByteArrayInputStream extends InputStream implements Seri
    * <code>pos</code> and <code>k</code> is returned.
    * <p>
    * This <code>read</code> method cannot block.
-   * 
+   *
    * @param aBuf
    *        the buffer into which the data is read.
    * @param nOfs
@@ -179,7 +181,7 @@ public class NonBlockingByteArrayInputStream extends InputStream implements Seri
    * number <code>k</code> of bytes to be skipped is equal to the smaller of
    * <code>n</code> and <code>count-pos</code>. The value <code>k</code> is
    * added into <code>pos</code> and <code>k</code> is returned.
-   * 
+   *
    * @param n
    *        the number of bytes to be skipped.
    * @return the actual number of bytes skipped.
@@ -200,7 +202,7 @@ public class NonBlockingByteArrayInputStream extends InputStream implements Seri
    * <p>
    * The value returned is <code>count&nbsp;- pos</code>, which is the number of
    * bytes remaining to be read from the input buffer.
-   * 
+   *
    * @return the number of remaining bytes that can be read (or skipped over)
    *         from this input stream without blocking.
    */

@@ -57,7 +57,7 @@ import org.junit.Test;
 
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for {@link ArrayHelper}
@@ -580,7 +580,7 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
-  @SuppressWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
+  @SuppressFBWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   public void testNewArraySizeValue ()
   {
     String [] ret = newArray (1, "6", String.class);
@@ -595,8 +595,8 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
     ret = newArray (10, "Hello world", String.class);
     assertNotNull (ret);
     assertEquals (10, ret.length);
-    for (int i = 0; i < ret.length; ++i)
-      assertEquals ("Hello world", ret[i]);
+    for (final String element : ret)
+      assertEquals ("Hello world", element);
 
     try
     {

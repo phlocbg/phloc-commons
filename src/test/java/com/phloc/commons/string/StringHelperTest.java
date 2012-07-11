@@ -46,7 +46,7 @@ import com.phloc.commons.mutable.MutableByte;
 import com.phloc.commons.mutable.MutableInt;
 import com.phloc.commons.mutable.MutableLong;
 
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link StringHelper}.
@@ -56,7 +56,7 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 public final class StringHelperTest extends AbstractPhlocTestCase
 {
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "DM_BOOLEAN_CTOR")
+  @SuppressFBWarnings (value = "DM_BOOLEAN_CTOR")
   public void testParseBool ()
   {
     assertTrue (StringHelper.parseBool ("true"));
@@ -83,7 +83,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "DM_BOOLEAN_CTOR")
+  @SuppressFBWarnings (value = "DM_BOOLEAN_CTOR")
   public void testParseBoolObj ()
   {
     assertEquals (Boolean.TRUE, StringHelper.parseBoolObj ("true"));
@@ -965,7 +965,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
-  @SuppressWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
+  @SuppressFBWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   public void testImplodeArray ()
   {
     final String [] aArray = new String [] { "a", "b", "c" };
@@ -1687,7 +1687,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testReplaceAllString ()
   {
     assertEquals ("abc", StringHelper.replaceAll ("abc", "d", "e"));
@@ -1726,7 +1726,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testReplaceAllChar ()
   {
     assertEquals ("abc", StringHelper.replaceAll ("abc", 'd', 'e'));
@@ -1742,7 +1742,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testReplaceAllSafe ()
   {
     assertEquals ("abc", StringHelper.replaceAllSafe ("abc", "d", "e"));
@@ -1775,7 +1775,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testReplaceAllRepeatedly ()
   {
     assertEquals ("abc", StringHelper.replaceAllRepeatedly ("abc", "d", "e"));

@@ -49,9 +49,11 @@ import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.collections.iterate.IIterableIterator;
 import com.phloc.commons.string.StringHelper;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * This class contains multiple XML utility methods.
- * 
+ *
  * @author philip
  */
 @Immutable
@@ -223,7 +225,7 @@ public final class XMLHelper
 
   /**
    * Get the first direct child element of the passed element.
-   * 
+   *
    * @param aStartNode
    *        The element to start searching.
    * @return <code>null</code> if the passed element does not have any direct
@@ -245,7 +247,7 @@ public final class XMLHelper
 
   /**
    * Check if the passed node has at least one direct child element or not.
-   * 
+   *
    * @param aStartNode
    *        The parent element to be searched. May not be <code>null</code>.
    * @return <code>true</code> if the passed node has at least one child
@@ -259,7 +261,7 @@ public final class XMLHelper
   /**
    * Search all child nodes of the given for the first element that has the
    * specified tag name.
-   * 
+   *
    * @param aStartNode
    *        The parent element to be searched. May not be <code>null</code>.
    * @param sName
@@ -287,7 +289,7 @@ public final class XMLHelper
   /**
    * Get the owner document of the passed node. If the node itself is a
    * document, only a cast is performed.
-   * 
+   *
    * @param aNode
    *        The node to get the document from. May be <code>null</code>.
    * @return <code>null</code> if the passed node was <code>null</code>.
@@ -396,7 +398,7 @@ public final class XMLHelper
 
   /**
    * Get an iterator over all child elements that have no namespace.
-   * 
+   *
    * @param aStartNode
    *        the parent element
    * @return a non-null Iterator
@@ -410,7 +412,7 @@ public final class XMLHelper
   /**
    * Get an iterator over all child elements that have no namespace and the
    * desired tag name.
-   * 
+   *
    * @param aStartNode
    *        the parent element
    * @param sTagName
@@ -456,7 +458,7 @@ public final class XMLHelper
   /**
    * Shortcut for {@link #getPathToNode(Node, String)} using "/" as the
    * separator.
-   * 
+   *
    * @param aNode
    *        The node to check.
    * @return A non-<code>null</code> path.
@@ -469,7 +471,7 @@ public final class XMLHelper
 
   /**
    * Get the path from root node to the passed node.
-   * 
+   *
    * @param aNode
    *        The node to start. May not be <code>null</code>.
    * @param sSep
@@ -477,7 +479,7 @@ public final class XMLHelper
    * @return The path to the node.
    */
   @Nonnull
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings ("IL_INFINITE_LOOP")
+  @SuppressFBWarnings ("IL_INFINITE_LOOP")
   public static String getPathToNode (@Nonnull final Node aNode, @Nonnull final String sSep)
   {
     if (aNode == null)
@@ -515,7 +517,7 @@ public final class XMLHelper
 
   /**
    * Remove all child nodes of the given node.
-   * 
+   *
    * @param aElement
    *        The element whose children are to be removed.
    */
@@ -607,7 +609,7 @@ public final class XMLHelper
    * Check if the passed node is a text node. This includes all nodes derived
    * from {@link CharacterData} which are not {@link Comment} nodes as well as
    * {@link EntityReference} nodes.
-   * 
+   *
    * @param aNode
    *        The node to be checked.
    * @return <code>true</code> if the passed node is a text node,
@@ -620,7 +622,7 @@ public final class XMLHelper
 
   /**
    * Get the content of the first Text child element of the passed element.
-   * 
+   *
    * @param aStartNode
    *        the element to scan for a TextNode child
    * @return <code>null</code> if the element contains no text node as child
@@ -652,7 +654,7 @@ public final class XMLHelper
    * The latest version of XercesJ 2.9 returns an empty string for non existing
    * attributes. To differentiate between empty attributes and non-existing
    * attributes, this method returns null for non existing attributes.
-   * 
+   *
    * @param aElement
    *        the source element to get the attribute from
    * @param sAttrName
@@ -671,7 +673,7 @@ public final class XMLHelper
    * attributes. To differentiate between empty attributes and non-existing
    * attributes, this method returns a default value for non existing
    * attributes.
-   * 
+   *
    * @param aElement
    *        the source element to get the attribute from. May not be
    *        <code>null</code>.
@@ -735,7 +737,7 @@ public final class XMLHelper
    * and XML 1.1.<br>
    * Note: makes no difference between the runtime JAXP solution and the
    * explicit Xerces version
-   * 
+   *
    * @param c
    *        The character to be checked.
    * @return <code>true</code> if the character is valid in XML,

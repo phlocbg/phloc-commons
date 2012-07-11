@@ -27,10 +27,12 @@ import com.phloc.commons.collections.iterate.IIterableIterator;
 import com.phloc.commons.filter.IFilter;
 import com.phloc.commons.string.ToStringGenerator;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * A simple filter iterator that takes a base iterator and an additional filter
  * and returns only the items that match the filter.
- * 
+ *
  * @author philip
  * @param <ELEMENTTYPE>
  *        The type to iterate
@@ -41,7 +43,7 @@ public final class FilterIterator <ELEMENTTYPE> implements IIterableIterator <EL
   private final Iterator <? extends ELEMENTTYPE> m_aBaseIter;
 
   // current result value
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings ("UWF_NULL_FIELD")
+  @SuppressFBWarnings ("UWF_NULL_FIELD")
   private ELEMENTTYPE m_aCurrent;
 
   // the filter to use
@@ -49,7 +51,7 @@ public final class FilterIterator <ELEMENTTYPE> implements IIterableIterator <EL
 
   /**
    * Constructor.
-   * 
+   *
    * @param aBaseIter
    *        The base iterable iterator to use. May not be <code>null</code>.
    * @param aFilter
@@ -63,7 +65,7 @@ public final class FilterIterator <ELEMENTTYPE> implements IIterableIterator <EL
 
   /**
    * Constructor.
-   * 
+   *
    * @param aBaseIter
    *        The base iterator to use. May not be <code>null</code>.
    * @param aFilter
@@ -83,7 +85,7 @@ public final class FilterIterator <ELEMENTTYPE> implements IIterableIterator <EL
 
   /**
    * Constructor.
-   * 
+   *
    * @param aBaseCont
    *        The collection to iterate. May not be <code>null</code>.
    * @param aFilter

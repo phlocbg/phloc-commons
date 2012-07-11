@@ -35,6 +35,8 @@ import com.phloc.commons.io.EAppend;
 import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.io.streams.StreamUtils;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Test class for class {@link FileUtils}.
  *
@@ -75,7 +77,7 @@ public final class FileUtilsTest
   }
 
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "DMI_HARDCODED_ABSOLUTE_FILENAME")
+  @SuppressFBWarnings (value = "DMI_HARDCODED_ABSOLUTE_FILENAME")
   public void testEnsureParentDirectoryIsPresent ()
   {
     // Root directory (no parent)

@@ -17,12 +17,14 @@
  */
 package com.phloc.test.nullable;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 public final class CallNullableTest
 {
   private CallNullableTest ()
   {}
 
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings ("NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings ("NP_NONNULL_PARAM_VIOLATION")
   public static void testCorrect ()
   {
     final NullableTestCorrect n = new NullableTestCorrect ();
@@ -35,7 +37,7 @@ public final class CallNullableTest
     n.paramNonnullUnknown (null);
   }
 
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings ("NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings ("NP_NONNULL_PARAM_VIOLATION")
   public static void testCorrect2 ()
   {
     final INullableTest n = new NullableTestCorrect ();
@@ -48,7 +50,7 @@ public final class CallNullableTest
     n.paramNonnullUnknown (null);
   }
 
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings ("NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings ("NP_NONNULL_PARAM_VIOLATION")
   public static void testNonNull ()
   {
     final NullableTestNonNull n = new NullableTestNonNull ();
@@ -61,7 +63,7 @@ public final class CallNullableTest
     n.paramNonnullUnknown (null);
   }
 
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings ("NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings ("NP_NONNULL_PARAM_VIOLATION")
   public static void testNonNull2 ()
   {
     final INullableTest n = new NullableTestNonNull ();
@@ -85,7 +87,7 @@ public final class CallNullableTest
     n.paramNonnullUnknown (null);
   }
 
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings ("NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings ("NP_NONNULL_PARAM_VIOLATION")
   public static void testNullable2 ()
   {
     final INullableTest n = new NullableTestNullable ();

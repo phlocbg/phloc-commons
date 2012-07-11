@@ -41,15 +41,17 @@ import com.phloc.commons.mock.PhlocTestUtils;
 import com.phloc.commons.text.impl.MultiLingualText;
 import com.phloc.commons.typeconvert.TypeConverterException;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Test class for class {@link MicroElement}.
- * 
+ *
  * @author philip
  */
 public final class MicroElementTest extends AbstractPhlocTestCase
 {
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testCreation ()
   {
     try
@@ -470,7 +472,7 @@ public final class MicroElementTest extends AbstractPhlocTestCase
   }
 
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testAttrs ()
   {
     final IMicroElement e = new MicroElement ("any");

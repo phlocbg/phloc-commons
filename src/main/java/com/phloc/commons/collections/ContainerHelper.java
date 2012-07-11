@@ -60,6 +60,8 @@ import com.phloc.commons.collections.multimap.MultiHashMapHashSetBased;
 import com.phloc.commons.compare.ComparatorComparableNullAware;
 import com.phloc.commons.compare.ComparatorUtils;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Provides various helper methods to handle collections like {@link List},
  * {@link Set} and {@link Map}.
@@ -1004,7 +1006,7 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsMutableCopy
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = { "NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE" }, justification = "When using the constructor with the Comparator it works with null values!")
+  @SuppressFBWarnings (value = { "NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE" }, justification = "When using the constructor with the Comparator it works with null values!")
   public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> TreeSet <ELEMENTTYPE> newSortedSet (@Nullable final ELEMENTTYPE aValue)
   {
     final TreeSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
@@ -1595,8 +1597,8 @@ public final class ContainerHelper
       return new ArrayList <ELEMENTTYPE> (0);
 
     final List <ELEMENTTYPE> ret = new ArrayList <ELEMENTTYPE> (aValues.length);
-    for (int i = 0; i < aValues.length; ++i)
-      ret.add (aValues[i]);
+    for (final ELEMENTTYPE aValue : aValues)
+      ret.add (aValue);
     return ret;
   }
 
@@ -1947,8 +1949,8 @@ public final class ContainerHelper
       return new PriorityQueue <ELEMENTTYPE> (0);
 
     final Queue <ELEMENTTYPE> ret = new PriorityQueue <ELEMENTTYPE> (aValues.length);
-    for (int i = 0; i < aValues.length; ++i)
-      ret.add (aValues[i]);
+    for (final ELEMENTTYPE aValue : aValues)
+      ret.add (aValue);
     return ret;
   }
 

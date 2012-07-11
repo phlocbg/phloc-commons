@@ -28,16 +28,18 @@ import javax.xml.XMLConstants;
 
 import org.junit.Test;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Test class for class {@link SingleElementNamespaceContext}.
- * 
+ *
  * @author philip
  */
 public final class SingleElementNamespaceContextTest
 {
 
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings ({ "NP_NULL_PARAM_DEREF_NONVIRTUAL", "NP_NONNULL_PARAM_VIOLATION" })
+  @SuppressFBWarnings ({ "NP_NULL_PARAM_DEREF_NONVIRTUAL", "NP_NONNULL_PARAM_VIOLATION" })
   public void testCtor ()
   {
     try

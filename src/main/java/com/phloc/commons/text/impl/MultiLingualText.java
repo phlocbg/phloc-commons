@@ -37,14 +37,16 @@ import com.phloc.commons.text.IMultiLingualText;
 import com.phloc.commons.text.IReadonlyMultiLingualText;
 import com.phloc.commons.text.ISimpleMultiLingualText;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * This class represents a multilingual text. It is internally represented as a
  * map from {@link Locale} to the language dependent name.
- * 
+ *
  * @author philip
  */
 @NotThreadSafe
-@edu.umd.cs.findbugs.annotations.SuppressWarnings ("SE_NO_SERIALVERSIONID")
+@SuppressFBWarnings ("SE_NO_SERIALVERSIONID")
 public final class MultiLingualText extends TextProvider implements IMultiLingualText
 {
   public static final IMultiLingualText EMPTY_MULTILINGUAL_TEXT = new MultiLingualText ();
@@ -57,7 +59,7 @@ public final class MultiLingualText extends TextProvider implements IMultiLingua
 
   /**
    * Constructor especially for the static TextProvider.createXXX methods
-   * 
+   *
    * @param aSimpleMLT
    *        The simple multi lingual text to use.
    */
@@ -223,7 +225,7 @@ public final class MultiLingualText extends TextProvider implements IMultiLingua
   /**
    * Get a copy of this object with the specified locales. The default locale is
    * copied.
-   * 
+   *
    * @param aMLT
    *        The initial multi lingual text.
    * @param aContentLocales

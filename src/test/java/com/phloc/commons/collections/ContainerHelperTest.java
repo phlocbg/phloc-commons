@@ -115,7 +115,7 @@ import com.phloc.commons.compare.ComparatorString;
 import com.phloc.commons.compare.ESortOrder;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link ContainerHelper}
@@ -206,7 +206,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
-  @SuppressWarnings ("NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings ("NP_NONNULL_PARAM_VIOLATION")
   public void testMakeUnmodifiableNotNull ()
   {
     assertNotNull (makeUnmodifiableNotNull ((Collection <?>) null));
@@ -1315,7 +1315,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
-  @SuppressWarnings ("NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings ("NP_NONNULL_PARAM_VIOLATION")
   public void testNewSortedSet_SingleValue ()
   {
     SortedSet <String> aSet = newSortedSet ("Hallo");
@@ -1374,7 +1374,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
-  @SuppressWarnings ("NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings ("NP_NONNULL_PARAM_VIOLATION")
   public void testNewSortedSetIIterableIterator ()
   {
     SortedSet <String> aSet = newSortedSet (IterableIterator.create (newList ("Hallo", "Welt", null)));
@@ -1424,7 +1424,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
-  @SuppressWarnings ("NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings ("NP_NONNULL_PARAM_VIOLATION")
   public void testNewUnmodifiableSortedSetSingleValue ()
   {
     SortedSet <String> aUnmodifiableSet = newUnmodifiableSortedSet ("Hallo");
@@ -2893,7 +2893,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
-  @SuppressWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
+  @SuppressFBWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   public void testGetSubList ()
   {
     assertNotNull (getSubList (null, 0, 5));
