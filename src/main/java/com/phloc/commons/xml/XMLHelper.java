@@ -477,6 +477,7 @@ public final class XMLHelper
    * @return The path to the node.
    */
   @Nonnull
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings ("IL_INFINITE_LOOP")
   public static String getPathToNode (@Nonnull final Node aNode, @Nonnull final String sSep)
   {
     if (aNode == null)

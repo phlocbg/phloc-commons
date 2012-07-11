@@ -41,6 +41,7 @@ public final class FilterIterator <ELEMENTTYPE> implements IIterableIterator <EL
   private final Iterator <? extends ELEMENTTYPE> m_aBaseIter;
 
   // current result value
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings ("UWF_NULL_FIELD")
   private ELEMENTTYPE m_aCurrent;
 
   // the filter to use

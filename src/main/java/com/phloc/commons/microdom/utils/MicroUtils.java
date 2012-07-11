@@ -140,6 +140,7 @@ public final class MicroUtils
    *         <code>null</code>, the return value is an empty string.
    */
   @Nonnull
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings ("IL_INFINITE_LOOP")
   public static String getPath (@Nullable final IMicroNode aNode, @Nonnull final String sSep)
   {
     if (sSep == null)
