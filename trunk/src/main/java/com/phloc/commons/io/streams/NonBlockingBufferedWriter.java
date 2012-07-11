@@ -149,6 +149,7 @@ public class NonBlockingBufferedWriter extends Writer
    *            If an I/O error occurs
    */
   @Override
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings ("IL_INFINITE_LOOP")
   public void write (final char cbuf[], final int off, final int len) throws IOException
   {
     ensureOpen ();
@@ -202,6 +203,7 @@ public class NonBlockingBufferedWriter extends Writer
    *            If an I/O error occurs
    */
   @Override
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings ("IL_INFINITE_LOOP")
   public void write (final String s, final int off, final int len) throws IOException
   {
     ensureOpen ();

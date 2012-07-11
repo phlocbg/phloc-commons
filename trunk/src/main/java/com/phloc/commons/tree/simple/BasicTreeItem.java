@@ -191,6 +191,7 @@ public class BasicTreeItem <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, IT
     return m_aChildren != null ? m_aChildren.size () : 0;
   }
 
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings ("IL_INFINITE_LOOP")
   public final boolean isSameOrChildOf (@Nonnull final ITEMTYPE aParent)
   {
     if (aParent == null)

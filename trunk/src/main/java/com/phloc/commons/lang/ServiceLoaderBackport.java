@@ -337,7 +337,7 @@ public final class ServiceLoaderBackport <SPITYPE> implements Iterable <SPITYPE>
   }
 
   // Private inner class implementing fully-lazy provider lookup
-  //
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings ("UWF_NULL_FIELD")
   private final class LazyIterator implements Iterator <SPITYPE>
   {
     private final Class <SPITYPE> m_aLIService;

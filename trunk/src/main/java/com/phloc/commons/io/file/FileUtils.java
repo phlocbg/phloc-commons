@@ -131,6 +131,7 @@ public final class FileUtils
    * @return <code>true</code> if the search directory is a parent of the start
    *         directory, <code>false</code> otherwise.
    */
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings ("IL_INFINITE_LOOP")
   public static boolean isParentDirectory (@Nonnull final File aSearchDirectory, @Nonnull final File aStartDirectory)
   {
     if (aSearchDirectory == null)
