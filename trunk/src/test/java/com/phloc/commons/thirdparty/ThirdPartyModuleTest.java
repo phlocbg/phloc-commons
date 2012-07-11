@@ -28,6 +28,8 @@ import org.junit.Test;
 import com.phloc.commons.mock.PhlocTestUtils;
 import com.phloc.commons.version.Version;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Test class for class {@link ThirdPartyModule}.
  *
@@ -36,7 +38,7 @@ import com.phloc.commons.version.Version;
 public final class ThirdPartyModuleTest
 {
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testAll ()
   {
     ThirdPartyModule mod = new ThirdPartyModule ("displayname", "owner", ELicense.APACHE1);

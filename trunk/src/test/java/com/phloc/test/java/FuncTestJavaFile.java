@@ -25,6 +25,8 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.io.file.FileUtils;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 public final class FuncTestJavaFile
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (FuncTestJavaFile.class);
@@ -42,7 +44,7 @@ public final class FuncTestJavaFile
   }
 
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "DMI_HARDCODED_ABSOLUTE_FILENAME")
+  @SuppressFBWarnings (value = "DMI_HARDCODED_ABSOLUTE_FILENAME")
   public void testGetPath ()
   {
     _log (new File ("pom.xml"));

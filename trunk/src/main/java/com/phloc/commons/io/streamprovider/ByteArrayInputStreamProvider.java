@@ -28,16 +28,18 @@ import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.string.ToStringGenerator;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * An input stream provider based on a byte array.
- * 
+ *
  * @author philip
  */
 public class ByteArrayInputStreamProvider implements IInputStreamAndReaderProvider
 {
   private final byte [] m_aData;
 
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings ({ "EI_EXPOSE_REP2" })
+  @SuppressFBWarnings ({ "EI_EXPOSE_REP2" })
   public ByteArrayInputStreamProvider (@Nonnull final byte [] aData)
   {
     if (aData == null)

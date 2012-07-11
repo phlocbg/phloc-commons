@@ -43,9 +43,11 @@ import com.phloc.commons.xml.namespace.MapBasedNamespaceContext;
 import com.phloc.commons.xml.transform.StringStreamResult;
 import com.phloc.commons.xml.transform.XMLTransformerFactory;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Test class for {@link XMLWriter}
- * 
+ *
  * @author philip
  */
 public final class XMLWriterTest extends AbstractPhlocTestCase
@@ -56,7 +58,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
   /**
    * Test the method getXHTMLString
    */
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings ("NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings ("NP_NONNULL_PARAM_VIOLATION")
   @Test
   public void testGetXHTMLString ()
   {

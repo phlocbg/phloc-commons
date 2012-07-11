@@ -24,6 +24,8 @@ import org.junit.Test;
 import com.phloc.commons.callback.INonThrowingRunnable;
 import com.phloc.commons.mock.PhlocTestUtils;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Test class for class {@link ExtendedDefaultThreadFactory}.
  *
@@ -32,7 +34,7 @@ import com.phloc.commons.mock.PhlocTestUtils;
 public final class ExtendedDefaultThreadFactoryTest
 {
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "DLS_DEAD_LOCAL_STORE")
+  @SuppressFBWarnings (value = "DLS_DEAD_LOCAL_STORE")
   public void testAll ()
   {
     ExtendedDefaultThreadFactory x = new ExtendedDefaultThreadFactory ();

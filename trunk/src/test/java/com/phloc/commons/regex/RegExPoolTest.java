@@ -30,9 +30,11 @@ import org.junit.Test;
 import com.phloc.commons.GlobalDebug;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Test class for {@link RegExPool}.
- * 
+ *
  * @author philip
  */
 public final class RegExPoolTest extends AbstractPhlocTestCase
@@ -41,7 +43,7 @@ public final class RegExPoolTest extends AbstractPhlocTestCase
    * Test method getPattern
    */
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testGetPattern ()
   {
     assertNotNull (RegExPool.getPattern ("xy"));

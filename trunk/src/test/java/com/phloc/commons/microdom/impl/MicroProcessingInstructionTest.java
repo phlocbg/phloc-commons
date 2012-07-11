@@ -30,6 +30,8 @@ import com.phloc.commons.microdom.IMicroProcessingInstruction;
 import com.phloc.commons.microdom.MicroException;
 import com.phloc.commons.mock.PhlocTestUtils;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Test class for class {@link MicroProcessingInstruction}.
  *
@@ -38,7 +40,7 @@ import com.phloc.commons.mock.PhlocTestUtils;
 public final class MicroProcessingInstructionTest
 {
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testCreation ()
   {
     IMicroProcessingInstruction e = new MicroProcessingInstruction ("xyz");

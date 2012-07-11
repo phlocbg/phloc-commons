@@ -27,10 +27,9 @@ import java.util.NoSuchElementException;
 
 import org.junit.Test;
 
-import com.phloc.commons.collections.iterate.ArrayEnumeration;
 import com.phloc.commons.mock.PhlocTestUtils;
 
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link ArrayEnumeration}.
@@ -40,7 +39,7 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 public final class ArrayEnumerationTest
 {
   @Test
-  @SuppressWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
+  @SuppressFBWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   public void testAll ()
   {
     ArrayEnumeration <String> ae = new ArrayEnumeration <String> ("Hallo", "Welt", "from", "Copenhagen");

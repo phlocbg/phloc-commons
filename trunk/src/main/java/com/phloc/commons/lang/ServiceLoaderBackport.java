@@ -37,6 +37,8 @@ import com.phloc.commons.io.streams.NonBlockingBufferedReader;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.string.ToStringGenerator;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * A simple service-provider loading facility.
  * <p>
@@ -104,13 +106,13 @@ import com.phloc.commons.string.ToStringGenerator;
  * have a service type <tt>com.example.CodecSet</tt> which is intended to
  * represent sets of encoder/decoder pairs for some protocol. In this case it is
  * an abstract class with two abstract methods: <blockquote>
- * 
+ *
  * <pre>
  * public abstract Encoder getEncoder (String encodingName);
- * 
+ *
  * public abstract Decoder getDecoder (String encodingName);
  * </pre>
- * 
+ *
  * </blockquote> Each method returns an appropriate object or <tt>null</tt> if
  * the provider does not support the given encoding. Typical providers support
  * more than one encoding.
@@ -118,35 +120,35 @@ import com.phloc.commons.string.ToStringGenerator;
  * If <tt>com.example.impl.StandardCodecs</tt> is an implementation of the
  * <tt>CodecSet</tt> service then its jar file also contains a file named
  * <blockquote>
- * 
+ *
  * <pre>
  * META - INF / services / com.example.CodecSet
  * </pre>
- * 
+ *
  * </blockquote>
  * <p>
  * This file contains the single line: <blockquote>
- * 
+ *
  * <pre>
  * com.example.impl.StandardCodecs    # Standard codecs
  * </pre>
- * 
+ *
  * </blockquote>
  * <p>
  * The <tt>CodecSet</tt> class creates and saves a single service instance at
  * initialization: <blockquote>
- * 
+ *
  * <pre>
  * private static ServiceLoader &lt;CodecSet&gt; codecSetLoader = ServiceLoader.load (CodecSet.class);
  * </pre>
- * 
+ *
  * </blockquote>
  * <p>
  * To locate an encoder for a given encoding name it defines a static factory
  * method which iterates through the known and available providers, returning
  * only when it has located a suitable encoder or has run out of providers.
  * <blockquote>
- * 
+ *
  * <pre>
  * public static Encoder getEncoder (String encodingName)
  * {
@@ -159,7 +161,7 @@ import com.phloc.commons.string.ToStringGenerator;
  *   return null;
  * }
  * </pre>
- * 
+ *
  * </blockquote>
  * <p>
  * A <tt>getDecoder</tt> method is defined similarly.
@@ -182,7 +184,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * provider-configuration file. The best solution to this problem is to fix the
  * misconfigured web server to return the correct response code (HTTP 404) along
  * with the HTML error page.
- * 
+ *
  * @param <SPITYPE>
  *        The type of the service to be loaded by this loader
  * @author Mark Reinhold
@@ -337,7 +339,7 @@ public final class ServiceLoaderBackport <SPITYPE> implements Iterable <SPITYPE>
   }
 
   // Private inner class implementing fully-lazy provider lookup
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings ("UWF_NULL_FIELD")
+  @SuppressFBWarnings ("UWF_NULL_FIELD")
   private final class LazyIterator implements Iterator <SPITYPE>
   {
     private final Class <SPITYPE> m_aLIService;
@@ -447,7 +449,7 @@ public final class ServiceLoaderBackport <SPITYPE> implements Iterable <SPITYPE>
    * The iterator returned by this method does not support removal. Invoking its
    * {@link java.util.Iterator#remove() remove} method will cause an
    * {@link UnsupportedOperationException} to be thrown.
-   * 
+   *
    * @return An iterator that lazily loads providers for this loader's service
    */
   public Iterator <SPITYPE> iterator ()
@@ -480,7 +482,7 @@ public final class ServiceLoaderBackport <SPITYPE> implements Iterable <SPITYPE>
 
   /**
    * Returns a string describing this service.
-   * 
+   *
    * @return A descriptive string
    */
   @Override
@@ -491,7 +493,7 @@ public final class ServiceLoaderBackport <SPITYPE> implements Iterable <SPITYPE>
 
   /**
    * Creates a new service loader for the given service type and class loader.
-   * 
+   *
    * @param service
    *        The interface or abstract class representing the service
    * @param loader
@@ -511,20 +513,20 @@ public final class ServiceLoaderBackport <SPITYPE> implements Iterable <SPITYPE>
    * loader}.
    * <p>
    * An invocation of this convenience method of the form <blockquote>
-   * 
+   *
    * <pre>
    * ServiceLoader.load(&lt;i&gt;service&lt;/i&gt;)
    * </pre>
-   * 
+   *
    * </blockquote> is equivalent to <blockquote>
-   * 
+   *
    * <pre>
    * ServiceLoader.load(&lt;i&gt;service&lt;/i&gt;,
    *                    Thread.currentThread().getContextClassLoader())
    * </pre>
-   * 
+   *
    * </blockquote>
-   * 
+   *
    * @param service
    *        The interface or abstract class representing the service
    * @return A new service loader
@@ -540,11 +542,11 @@ public final class ServiceLoaderBackport <SPITYPE> implements Iterable <SPITYPE>
    * <p>
    * This convenience method simply locates the extension class loader, call it
    * <tt><i>extClassLoader</i></tt>, and then returns <blockquote>
-   * 
+   *
    * <pre>
    * ServiceLoader.load(&lt;i&gt;service&lt;/i&gt;, &lt;i&gt;extClassLoader&lt;/i&gt;)
    * </pre>
-   * 
+   *
    * </blockquote>
    * <p>
    * If the extension class loader cannot be found then the system class loader
@@ -555,7 +557,7 @@ public final class ServiceLoaderBackport <SPITYPE> implements Iterable <SPITYPE>
    * The resulting service will only find and load providers that have been
    * installed into the current Java virtual machine; providers on the
    * application's class path will be ignored.
-   * 
+   *
    * @param service
    *        The interface or abstract class representing the service
    * @return A new service loader

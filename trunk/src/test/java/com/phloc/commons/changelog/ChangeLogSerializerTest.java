@@ -41,15 +41,17 @@ import com.phloc.commons.xml.schema.XMLSchemaCache;
 import com.phloc.commons.xml.serialize.XMLReader;
 import com.phloc.commons.xml.serialize.XMLWriterSettings;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Test class for class {@link ChangeLogSerializer}.
- * 
+ *
  * @author philip
  */
 public final class ChangeLogSerializerTest
 {
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testRead () throws SAXException
   {
     // Read valid

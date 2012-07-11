@@ -21,16 +21,18 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 import javax.xml.bind.ValidationEventHandler;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Deprecated version of {@link ValidationEventHandler}. Use
  * {@link com.phloc.commons.jaxb.validation.LoggingValidationEventHandler}
  * instead!
- * 
+ *
  * @author philip
  */
 @NotThreadSafe
 @Deprecated
-@edu.umd.cs.findbugs.annotations.SuppressWarnings ("NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
+@SuppressFBWarnings ("NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class LoggingValidationEventHandler extends com.phloc.commons.jaxb.validation.LoggingValidationEventHandler
 {
   public LoggingValidationEventHandler ()

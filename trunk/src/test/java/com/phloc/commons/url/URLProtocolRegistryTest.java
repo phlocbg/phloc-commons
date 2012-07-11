@@ -24,11 +24,6 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-import com.phloc.commons.url.EURLProtocol;
-import com.phloc.commons.url.URLData;
-import com.phloc.commons.url.URLProtocol;
-import com.phloc.commons.url.URLProtocolRegistry;
-
 /**
  * Test class for class {@link URLProtocolRegistry}.
  * 

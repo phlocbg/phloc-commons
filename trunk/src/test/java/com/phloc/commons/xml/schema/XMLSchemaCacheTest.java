@@ -36,6 +36,8 @@ import com.phloc.commons.xml.ls.LSResourceData;
 import com.phloc.commons.xml.ls.LoggingLSResourceResolver;
 import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Test class for class {@link XMLSchemaCache}.
  *
@@ -98,7 +100,7 @@ public final class XMLSchemaCacheTest
   }
 
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testCustom ()
   {
     @PresentForCodeCoverage

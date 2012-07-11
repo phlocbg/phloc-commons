@@ -27,15 +27,17 @@ import java.io.FilenameFilter;
 
 import org.junit.Test;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Test class for class {@link FilenameFilterMatchNoRegEx}.
- * 
+ *
  * @author philip
  */
 public final class FilenameFilterMatchNoRegExTest
 {
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testAll ()
   {
     try

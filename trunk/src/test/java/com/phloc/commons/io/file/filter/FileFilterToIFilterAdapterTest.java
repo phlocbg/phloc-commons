@@ -31,15 +31,17 @@ import org.junit.Test;
 import com.phloc.commons.filter.IFilter;
 import com.phloc.commons.mock.PhlocTestUtils;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Test class for class {@link FileFilterToIFilterAdapter}.
- * 
+ *
  * @author philip
  */
 public final class FileFilterToIFilterAdapterTest
 {
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testAll ()
   {
     try

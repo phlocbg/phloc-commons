@@ -27,11 +27,13 @@ import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * A small helper class that provides comparison methods that are
  * <code>null</code> safe. Also provides secure ways to compare double and float
  * values.
- * 
+ *
  * @author philip
  */
 @Immutable
@@ -48,7 +50,7 @@ public final class CompareUtils
 
   /**
    * Special version for doubles
-   * 
+   *
    * @param d1
    *        First value
    * @param d2
@@ -62,7 +64,7 @@ public final class CompareUtils
 
   /**
    * Special version for floats
-   * 
+   *
    * @param f1
    *        First value
    * @param f2
@@ -78,7 +80,7 @@ public final class CompareUtils
    * Compare the passed items and handle <code>null</code> values correctly. A
    * <code>null</code> value is always smaller than a non-<code>null</code>
    * value.
-   * 
+   *
    * @param <DATATYPE>
    *        Any comparable object to be used. Both need to be of the same type.
    * @param aObj1
@@ -98,7 +100,7 @@ public final class CompareUtils
    * Compare the passed items and handle <code>null</code> values correctly. A
    * <code>null</code> value is always smaller than a non-<code>null</code>
    * value.
-   * 
+   *
    * @param <DATATYPE>
    *        Any comparable object to be used. Both need to be of the same type.
    * @param aObj1
@@ -123,7 +125,7 @@ public final class CompareUtils
    * Compare the passed items and handle <code>null</code> values correctly. A
    * <code>null</code> value is always smaller than a non-<code>null</code>
    * value.
-   * 
+   *
    * @param <DATATYPE>
    *        Any object to be used. Both need to be of the same type.
    * @param aObj1
@@ -148,7 +150,7 @@ public final class CompareUtils
    * Compare the passed items and handle <code>null</code> values correctly. A
    * <code>null</code> value is always smaller than a non-<code>null</code>
    * value.
-   * 
+   *
    * @param <DATATYPE>
    *        Any object to be used. Both need to be of the same type.
    * @param aObj1
@@ -190,7 +192,7 @@ public final class CompareUtils
     return nullSafeCompare (sStr1, sStr2, CollatorUtils.getCollatorSpaceBeforeDot (aSortLocale), bNullValuesComeFirst);
   }
 
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings ({ "ES_COMPARING_PARAMETER_STRING_WITH_EQ" })
+  @SuppressFBWarnings ({ "ES_COMPARING_PARAMETER_STRING_WITH_EQ" })
   public static int nullSafeCompare (@Nullable final String sStr1,
                                      @Nullable final String sStr2,
                                      @Nonnull final Collator aCollator)
@@ -199,7 +201,7 @@ public final class CompareUtils
     return nullSafeCompare (sStr1, sStr2, aCollator, DEFAULT_NULL_VALUES_COME_FIRST);
   }
 
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings ({ "ES_COMPARING_PARAMETER_STRING_WITH_EQ" })
+  @SuppressFBWarnings ({ "ES_COMPARING_PARAMETER_STRING_WITH_EQ" })
   public static int nullSafeCompare (@Nullable final String sStr1,
                                      @Nullable final String sStr2,
                                      @Nonnull final Collator aCollator,

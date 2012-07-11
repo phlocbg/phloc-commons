@@ -46,14 +46,14 @@ import com.phloc.commons.io.streamprovider.ByteArrayInputStreamProvider;
 import com.phloc.commons.mock.MockIOException;
 import com.phloc.commons.mutable.MutableLong;
 
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link StreamUtils}.
  * 
  * @author philip
  */
-@edu.umd.cs.findbugs.annotations.SuppressWarnings ("SE_BAD_FIELD_INNER_CLASS")
+@SuppressFBWarnings ("SE_BAD_FIELD_INNER_CLASS")
 public final class StreamUtilsTest
 {
   @Test
@@ -136,7 +136,7 @@ public final class StreamUtilsTest
    * Test method copyInputStreamToOutputStream
    */
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testCopyInputStreamToOutputStream ()
   {
     final byte [] aInput = CharsetManager.getAsBytes ("Hallo", CCharset.CHARSET_ISO_8859_1_OBJ);
@@ -236,7 +236,7 @@ public final class StreamUtilsTest
   }
 
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testGetAllBytes ()
   {
     final String sInput = "Hallo";
@@ -269,7 +269,7 @@ public final class StreamUtilsTest
   }
 
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testGetAllBytesCharset ()
   {
     final String sInput = "Hallo";
@@ -295,7 +295,7 @@ public final class StreamUtilsTest
   }
 
   @Test
-  @SuppressWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
+  @SuppressFBWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   public void testReadLines ()
   {
     assertNull (StreamUtils.readStreamLines ((IReadableResource) null, CCharset.CHARSET_ISO_8859_1));
@@ -369,7 +369,7 @@ public final class StreamUtilsTest
   }
 
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testCopyReaderToWriter ()
   {
     final String sInput = "Hallo";
@@ -458,7 +458,7 @@ public final class StreamUtilsTest
   }
 
   @Test
-  @SuppressWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
+  @SuppressFBWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   public void testWriteStream ()
   {
     final byte [] buf = CharsetManager.getAsBytes ("abcde", CCharset.CHARSET_ISO_8859_1_OBJ);

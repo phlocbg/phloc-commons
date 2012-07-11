@@ -25,6 +25,8 @@ import java.io.File;
 
 import org.junit.Test;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Test class for class {@link EFileIOErrorCode}.
  *
@@ -33,7 +35,7 @@ import org.junit.Test;
 public final class EFileIOErrorCodeTest
 {
   @Test
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testAll ()
   {
     for (final EFileIOErrorCode e : EFileIOErrorCode.values ())

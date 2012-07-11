@@ -42,12 +42,14 @@ import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.text.ISimpleMultiLingualText;
 import com.phloc.commons.text.ITextProvider;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * An in-memory implementation of the {@link ITextProvider} interface.
- * 
+ *
  * @author philip
  */
-@edu.umd.cs.findbugs.annotations.SuppressWarnings ("SE_NO_SERIALVERSIONID")
+@SuppressFBWarnings ("SE_NO_SERIALVERSIONID")
 public class TextProvider extends AbstractTextProvider implements ISimpleMultiLingualText, Serializable
 {
   public static final Locale DE = LocaleCache.getLocale ("de");

@@ -26,7 +26,7 @@ import org.junit.Test;
 
 import com.phloc.commons.mock.PhlocTestUtils;
 
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link ScalableSize}.
@@ -36,7 +36,7 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 public final class ScalableSizeTest
 {
   @Test
-  @SuppressWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
+  @SuppressFBWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   public void testCtor ()
   {
     final ScalableSize aID = new ScalableSize (320, 240);

@@ -20,12 +20,14 @@ package com.phloc.commons.vminit;
 import com.phloc.commons.annotations.IsSPIImplementation;
 import com.phloc.commons.mock.MockException;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 @IsSPIImplementation
 public final class MockVirtualMachineSPIThrowing implements IVirtualMachineEventSPI
 {
   private static int s_nInstanceCount = 0;
 
-  @edu.umd.cs.findbugs.annotations.SuppressWarnings ("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+  @SuppressFBWarnings ("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
   public MockVirtualMachineSPIThrowing ()
   {
     s_nInstanceCount++;
