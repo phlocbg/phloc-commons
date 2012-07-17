@@ -124,6 +124,14 @@ public enum EOperatingSystem implements IHasDisplayName
   }
 
   /**
+   * @return <code>true</code> if this is Windows, <code>false</code> otherwise
+   */
+  public boolean isWindows ()
+  {
+    return this == WINDOWS;
+  }
+
+  /**
    * @return <code>true</code> if the this OS is the current OS.
    */
   public boolean isCurrentOS ()

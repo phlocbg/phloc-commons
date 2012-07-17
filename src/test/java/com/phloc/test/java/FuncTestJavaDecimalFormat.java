@@ -27,6 +27,7 @@ import java.util.Locale;
 
 import org.junit.Test;
 
+import com.phloc.commons.CGlobal;
 import com.phloc.commons.lang.DecimalFormatSymbolsFactory;
 import com.phloc.commons.locale.LocaleCache;
 
@@ -122,6 +123,7 @@ public final class FuncTestJavaDecimalFormat
     assertEquals ("#,##0.00 ", patternWithoutCurSym);
 
     curFormat = new DecimalFormat (patternWithoutCurSym);
-    assertEquals ("3,14 ", curFormat.format (3.1415));
+    ((DecimalFormat) curFormat).setDecimalFormatSymbols (DecimalFormatSymbolsFactory.getInstance (CGlobal.LOCALE_FIXED_NUMBER_FORMAT));
+    assertEquals ("3.14 ", curFormat.format (3.1415));
   }
 }

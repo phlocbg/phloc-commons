@@ -41,6 +41,7 @@ import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.io.streams.StreamUtils;
+import com.phloc.commons.system.EOperatingSystem;
 
 /**
  * Reads a TTF font file and provides access to kerning information. Thanks to
@@ -265,26 +266,31 @@ public final class FuncTestKerning
   @Test
   public void testKerning () throws IOException
   {
-    // required to get graphics up and running...
-    GraphicsEnvironment.getLocalGraphicsEnvironment ();
-    final int nFontSize = 25;
+    if (EOperatingSystem.getCurrentOS ().isWindows ())
+    {
+      // required to get graphics up and running...
+      GraphicsEnvironment.getLocalGraphicsEnvironment ();
+      final int nFontSize = 25;
 
-    final Map <TextAttribute, Object> aTextAttributes = new HashMap <TextAttribute, Object> ();
-    aTextAttributes.put (TextAttribute.FAMILY, "Arial");
-    aTextAttributes.put (TextAttribute.SIZE, Float.valueOf (nFontSize));
-    final Font aFont = Font.getFont (aTextAttributes);
+      final Map <TextAttribute, Object> aTextAttributes = new HashMap <TextAttribute, Object> ();
+      aTextAttributes.put (TextAttribute.FAMILY, "Arial");
+      aTextAttributes.put (TextAttribute.SIZE, Float.valueOf (nFontSize));
+      final Font aFont = Font.getFont (aTextAttributes);
 
-    final char [] aChars = "T,".toCharArray ();
-    final GlyphVector aGlyphVector = aFont.layoutGlyphVector (new FontRenderContext (new AffineTransform (),
-                                                                                     false,
-                                                                                     true),
-                                                              aChars,
-                                                              0,
-                                                              aChars.length,
-                                                              Font.LAYOUT_LEFT_TO_RIGHT);
-    final int tCode = aGlyphVector.getGlyphCode (0);
-    final int commaCode = aGlyphVector.getGlyphCode (1);
-    final Kerning aKerning = new Kerning (new FileInputStream (System.getenv ("windir") + "/fonts/ARIAL.TTF"));
-    s_aLogger.info (Float.toString (aKerning.getValue (tCode, commaCode, nFontSize)));
+      final char [] aChars = "T,".toCharArray ();
+      final GlyphVector aGlyphVector = aFont.layoutGlyphVector (new FontRenderContext (new AffineTransform (),
+                                                                                       false,
+                                                                                       true),
+                                                                aChars,
+                                                                0,
+                                                                aChars.length,
+                                                                Font.LAYOUT_LEFT_TO_RIGHT);
+      final int tCode = aGlyphVector.getGlyphCode (0);
+      final int commaCode = aGlyphVector.getGlyphCode (1);
+      final Kerning aKerning = new Kerning (new FileInputStream (System.getenv ("windir") + "/fonts/ARIAL.TTF"));
+      s_aLogger.info (Float.toString (aKerning.getValue (tCode, commaCode, nFontSize)));
+    }
+    else
+      s_aLogger.warn ("Works only on Windows!");
   }
 }

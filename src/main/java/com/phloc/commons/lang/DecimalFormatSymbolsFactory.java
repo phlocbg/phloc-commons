@@ -22,6 +22,7 @@ import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.system.EJavaVersion;
@@ -34,6 +35,7 @@ import com.phloc.commons.system.EJavaVersion;
  * 
  * @author philip
  */
+@Immutable
 public final class DecimalFormatSymbolsFactory
 {
   @PresentForCodeCoverage
