@@ -266,7 +266,7 @@ public final class FilenameHelperTest
 
     // Contains path
     assertTrue (FilenameHelper.isValidFilenameWithPaths ("a/b"));
-    if (EOperatingSystem.getCurrentOS ().isWindows ())
+    if (EOperatingSystem.WINDOWS.isCurrentOS ())
       assertTrue (FilenameHelper.isValidFilenameWithPaths ("a\\b"));
     assertTrue (FilenameHelper.isValidFilenameWithPaths ("a/b/c"));
     assertTrue (FilenameHelper.isValidFilenameWithPaths ("a/b/c.exe"));
