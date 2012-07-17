@@ -21,15 +21,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.NotThreadSafe;
+import javax.annotation.concurrent.ThreadSafe;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.GlobalDebug;
+import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.lang.ServiceLoaderBackport;
 import com.phloc.commons.mutable.Wrapper;
@@ -42,12 +46,12 @@ import com.phloc.commons.state.EContinue;
  * 
  * @author philip
  */
-@NotThreadSafe
+@ThreadSafe
 public final class TypeConverterRegistry implements ITypeConverterRegistry
 {
   private static final TypeConverterRegistry s_aInstance = new TypeConverterRegistry ();
-
   private static final Logger s_aLogger = LoggerFactory.getLogger (TypeConverterRegistry.class);
+  private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
 
   // Use a weak hash map, because the key is a class
   private static final Map <Class <?>, Map <Class <?>, ITypeConverter>> s_aConverter = new WeakHashMap <Class <?>, Map <Class <?>, ITypeConverter>> ();
@@ -57,6 +61,7 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
     // Register all custom type converter
     for (final ITypeConverterRegistrarSPI aSPI : ServiceLoaderBackport.load (ITypeConverterRegistrarSPI.class))
       aSPI.registerTypeConverter (s_aInstance);
+    s_aLogger.info (getRegisteredTypeConverterCount () + " type converters registered");
   }
 
   private TypeConverterRegistry ()
@@ -65,12 +70,35 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
   @Nonnull
   private static Map <Class <?>, ITypeConverter> _getOrCreateConverterMap (@Nonnull final Class <?> aClass)
   {
-    Map <Class <?>, ITypeConverter> ret = s_aConverter.get (aClass);
+    Map <Class <?>, ITypeConverter> ret;
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      ret = s_aConverter.get (aClass);
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+
     if (ret == null)
     {
-      // Weak hash map because key is a class
-      ret = new WeakHashMap <Class <?>, ITypeConverter> ();
-      s_aConverter.put (aClass, ret);
+      s_aRWLock.writeLock ().lock ();
+      try
+      {
+        // Try again in write lock
+        ret = s_aConverter.get (aClass);
+        if (ret == null)
+        {
+          // Weak hash map because key is a class
+          ret = new WeakHashMap <Class <?>, ITypeConverter> ();
+          s_aConverter.put (aClass, ret);
+        }
+      }
+      finally
+      {
+        s_aRWLock.writeLock ().unlock ();
+      }
     }
     return ret;
   }
@@ -116,11 +144,20 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
     if (aSrcMap.containsKey (aDstClass))
       throw new IllegalArgumentException ("A mapping from " + aSrcClass + " to " + aDstClass + " is already defined!");
 
-    // Automatically register the destination class, and all parent
-    // classes/interfaces
-    for (final Class <?> aCurDstClass : ClassHelper.getClassHierarchy (aDstClass, true))
-      if (!aSrcMap.containsKey (aCurDstClass))
-        aSrcMap.put (aCurDstClass, aConverter);
+    s_aRWLock.writeLock ().lock ();
+    try
+    {
+      // Automatically register the destination class, and all parent
+      // classes/interfaces
+      for (final Class <?> aCurDstClass : ClassHelper.getClassHierarchy (aDstClass, true))
+        if (!aSrcMap.containsKey (aCurDstClass))
+          if (aSrcMap.put (aCurDstClass, aConverter) != null)
+            s_aLogger.warn ("Overwriting converter from " + aSrcClass + " to " + aCurDstClass);
+    }
+    finally
+    {
+      s_aRWLock.writeLock ().unlock ();
+    }
   }
 
   /**
@@ -137,8 +174,16 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
   @Nullable
   static ITypeConverter getExactConverter (@Nullable final Class <?> aSrcClass, @Nullable final Class <?> aDstClass)
   {
-    final Map <Class <?>, ITypeConverter> aConverterMap = s_aConverter.get (aSrcClass);
-    return aConverterMap == null ? null : aConverterMap.get (aDstClass);
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      final Map <Class <?>, ITypeConverter> aConverterMap = s_aConverter.get (aSrcClass);
+      return aConverterMap == null ? null : aConverterMap.get (aDstClass);
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
   }
 
   /**
@@ -217,11 +262,37 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
     if (aSrcClass == null || aDstClass == null)
       return null;
 
-    if (GlobalDebug.isDebugMode ())
+    s_aRWLock.readLock ().lock ();
+    try
     {
-      // Perform a check, whether there is more than one potential converter
-      // present!
-      final List <String> aAllConverters = new ArrayList <String> ();
+      if (GlobalDebug.isDebugMode ())
+      {
+        // Perform a check, whether there is more than one potential converter
+        // present!
+        final List <String> aAllConverters = new ArrayList <String> ();
+        _iterateFuzzyConverters (aSrcClass, aDstClass, new ITypeConverterCallback ()
+        {
+          @Nonnull
+          public EContinue call (@Nonnull final Class <?> aCurSrcClass,
+                                 @Nonnull final Class <?> aCurDstClass,
+                                 @Nonnull final ITypeConverter aConverter)
+          {
+            final boolean bExact = aSrcClass.equals (aCurSrcClass) && aDstClass.equals (aCurDstClass);
+            aAllConverters.add ("[" + aCurSrcClass.getName () + "->" + aCurDstClass.getName () + "]");
+            return bExact ? EContinue.BREAK : EContinue.CONTINUE;
+          }
+        });
+        if (aAllConverters.size () > 1)
+          s_aLogger.warn ("The fuzzy type converter resolver returned more than 1 match for the conversion from " +
+                          aSrcClass +
+                          " to " +
+                          aDstClass +
+                          ": " +
+                          aAllConverters);
+      }
+
+      // Iterate and find the first matching type converter
+      final Wrapper <ITypeConverter> ret = new Wrapper <ITypeConverter> ();
       _iterateFuzzyConverters (aSrcClass, aDstClass, new ITypeConverterCallback ()
       {
         @Nonnull
@@ -229,34 +300,16 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
                                @Nonnull final Class <?> aCurDstClass,
                                @Nonnull final ITypeConverter aConverter)
         {
-          final boolean bExact = aSrcClass.equals (aCurSrcClass) && aDstClass.equals (aCurDstClass);
-          aAllConverters.add ("[" + aCurSrcClass.getName () + "->" + aCurDstClass.getName () + "]");
-          return bExact ? EContinue.BREAK : EContinue.CONTINUE;
+          ret.set (aConverter);
+          return EContinue.BREAK;
         }
       });
-      if (aAllConverters.size () > 1)
-        s_aLogger.warn ("The fuzzy type converter resolver returned more than 1 match for the conversion from " +
-                        aSrcClass +
-                        " to " +
-                        aDstClass +
-                        ": " +
-                        aAllConverters);
+      return ret.get ();
     }
-
-    // Iterate and find the first matching type converter
-    final Wrapper <ITypeConverter> ret = new Wrapper <ITypeConverter> ();
-    _iterateFuzzyConverters (aSrcClass, aDstClass, new ITypeConverterCallback ()
+    finally
     {
-      @Nonnull
-      public EContinue call (@Nonnull final Class <?> aCurSrcClass,
-                             @Nonnull final Class <?> aCurDstClass,
-                             @Nonnull final ITypeConverter aConverter)
-      {
-        ret.set (aConverter);
-        return EContinue.BREAK;
-      }
-    });
-    return ret.get ();
+      s_aRWLock.readLock ().unlock ();
+    }
   }
 
   /**
@@ -267,12 +320,42 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
    */
   public static void iterateAllRegisteredTypeConverters (@Nonnull final ITypeConverterCallback aCallback)
   {
-    outer: for (final Map.Entry <Class <?>, Map <Class <?>, ITypeConverter>> aSrcEntry : s_aConverter.entrySet ())
+    // Create a copy of the map
+    Map <Class <?>, Map <Class <?>, ITypeConverter>> aCopy;
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      aCopy = ContainerHelper.newMap (s_aConverter);
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+
+    // And iterate the copy
+    outer: for (final Map.Entry <Class <?>, Map <Class <?>, ITypeConverter>> aSrcEntry : aCopy.entrySet ())
     {
       final Class <?> aSrcClass = aSrcEntry.getKey ();
       for (final Map.Entry <Class <?>, ITypeConverter> aDstEntry : aSrcEntry.getValue ().entrySet ())
         if (aCallback.call (aSrcClass, aDstEntry.getKey (), aDstEntry.getValue ()).isBreak ())
           break outer;
+    }
+  }
+
+  @Nonnegative
+  public static int getRegisteredTypeConverterCount ()
+  {
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      int ret = 0;
+      for (final Map <Class <?>, ITypeConverter> aMap : s_aConverter.values ())
+        ret += aMap.size ();
+      return ret;
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
     }
   }
 }
