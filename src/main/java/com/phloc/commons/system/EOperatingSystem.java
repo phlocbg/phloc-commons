@@ -20,6 +20,8 @@ package com.phloc.commons.system;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.slf4j.LoggerFactory;
+
 import com.phloc.commons.SystemProperties;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.name.IHasDisplayName;
@@ -124,14 +126,6 @@ public enum EOperatingSystem implements IHasDisplayName
   }
 
   /**
-   * @return <code>true</code> if this is Windows, <code>false</code> otherwise
-   */
-  public boolean isWindows ()
-  {
-    return this == WINDOWS;
-  }
-
-  /**
    * @return <code>true</code> if the this OS is the current OS.
    */
   public boolean isCurrentOS ()
@@ -185,7 +179,12 @@ public enum EOperatingSystem implements IHasDisplayName
     if (ret == null)
     {
       // Note: double initialization doesn't matter here
-      s_aInstance = ret = forName (getCurrentOSName ());
+      final String sCurrentOSName = getCurrentOSName ();
+      s_aInstance = ret = forName (sCurrentOSName);
+      if (ret == null)
+        LoggerFactory.getLogger (EOperatingSystem.class).error ("Failed to resolve operating system from name '" +
+                                                                sCurrentOSName +
+                                                                "'!!!");
     }
     return ret;
   }
@@ -193,6 +192,7 @@ public enum EOperatingSystem implements IHasDisplayName
   /**
    * @return The name of the current operating system.
    */
+  @Nullable
   public static String getCurrentOSName ()
   {
     return SystemProperties.getOsName ();
@@ -201,6 +201,7 @@ public enum EOperatingSystem implements IHasDisplayName
   /**
    * @return The version of the current operating system.
    */
+  @Nullable
   public static String getCurrentOSVersion ()
   {
     return SystemProperties.getOsVersion ();

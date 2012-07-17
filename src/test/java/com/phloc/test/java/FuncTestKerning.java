@@ -266,7 +266,7 @@ public final class FuncTestKerning
   @Test
   public void testKerning () throws IOException
   {
-    if (EOperatingSystem.getCurrentOS ().isWindows ())
+    if (EOperatingSystem.WINDOWS.isCurrentOS ())
     {
       // required to get graphics up and running...
       GraphicsEnvironment.getLocalGraphicsEnvironment ();

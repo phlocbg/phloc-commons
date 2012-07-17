@@ -30,11 +30,6 @@
       <text locale="en">Fixed JUnit tests on Ubuntu 12.4</text>
     </change>
   </entry>
-  <entry date="2012-07-17" category="api" action="add">
-    <change>
-      <text locale="en">Added new method EOperatingSystem.isWindows</text>
-    </change>
-  </entry>
   <entry date="2012-07-12" category="tech" action="change">
     <change>
       <text locale="en">Updated to new @SuppressFBWarnings annotation from FindBugs 2.0 and deprecated old @SuppressWarnings annotation</text>

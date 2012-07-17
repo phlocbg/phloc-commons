@@ -286,7 +286,7 @@ public final class FileUtilsTest
     {}
 
     // Linux allows for this filename to happen!
-    if (EOperatingSystem.getCurrentOS ().isWindows ())
+    if (EOperatingSystem.WINDOWS.isCurrentOS ())
     {
       final String sIllegalFilename = "  ";
       assertNull (FileUtils.getOutputStream (sIllegalFilename));
