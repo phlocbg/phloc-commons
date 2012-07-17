@@ -34,12 +34,13 @@ import com.phloc.commons.CGlobal;
 import com.phloc.commons.io.EAppend;
 import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.io.streams.StreamUtils;
+import com.phloc.commons.system.EOperatingSystem;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link FileUtils}.
- *
+ * 
  * @author philip
  */
 public final class FileUtilsTest
@@ -284,10 +285,17 @@ public final class FileUtilsTest
     catch (final NullPointerException ex)
     {}
 
-    assertNull (FileUtils.getOutputStream ("  "));
-    assertNull (FileUtils.getOutputStream (new File ("  ")));
-    assertNull (FileUtils.getOutputStream (new File ("target", "  ")));
-    assertNull (FileUtils.getOutputStream (new File ("pom.xml", "  ")));
+    // Linux allows for this filename to happen!
+    if (EOperatingSystem.getCurrentOS ().isWindows ())
+    {
+      final String sIllegalFilename = "  ";
+      assertNull (FileUtils.getOutputStream (sIllegalFilename));
+      assertNull (FileUtils.getOutputStream (new File (sIllegalFilename)));
+      // target is an existing directory
+      assertNull (FileUtils.getOutputStream (new File ("target", sIllegalFilename)));
+      // pom.xml is an existing file (=non-directory)
+      assertNull (FileUtils.getOutputStream (new File ("pom.xml", sIllegalFilename)));
+    }
   }
 
   @Test

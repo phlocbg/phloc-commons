@@ -28,12 +28,13 @@ import java.io.File;
 import org.junit.Test;
 
 import com.phloc.commons.charset.CSpecialChars;
+import com.phloc.commons.system.EOperatingSystem;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link FilenameHelper}.
- *
+ * 
  * @author philip
  */
 public final class FilenameHelperTest
@@ -265,7 +266,8 @@ public final class FilenameHelperTest
 
     // Contains path
     assertTrue (FilenameHelper.isValidFilenameWithPaths ("a/b"));
-    assertTrue (FilenameHelper.isValidFilenameWithPaths ("a\\b"));
+    if (EOperatingSystem.getCurrentOS ().isWindows ())
+      assertTrue (FilenameHelper.isValidFilenameWithPaths ("a\\b"));
     assertTrue (FilenameHelper.isValidFilenameWithPaths ("a/b/c"));
     assertTrue (FilenameHelper.isValidFilenameWithPaths ("a/b/c.exe"));
     assertTrue (FilenameHelper.isValidFilenameWithPaths ("a/b/c.exe/def.com"));
