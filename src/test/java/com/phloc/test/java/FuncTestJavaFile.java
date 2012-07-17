@@ -34,13 +34,24 @@ public final class FuncTestJavaFile
   private static void _log (final File f)
   {
     s_aLogger.info ("Next file:");
-    s_aLogger.info ("  AbsPath: " + f.getAbsolutePath ());
-    s_aLogger.info ("  Name:    " + f.getName ());
-    s_aLogger.info ("  Path:    " + f.getPath ());
-    s_aLogger.info ("  Parent:  " + f.getParent ());
-    s_aLogger.info ("  Parent2: " + f.getAbsoluteFile ().getParent ());
-    s_aLogger.info ("  Parent3: " + f.getParentFile ());
-    s_aLogger.info ("  Parent4: " + f.getAbsoluteFile ().getParentFile ());
+    s_aLogger.info ("  AbsolutePath: " + f.getAbsolutePath ());
+    s_aLogger.info ("  Name:         " + f.getName ());
+    s_aLogger.info ("  Path:         " + f.getPath ());
+    s_aLogger.info ("  Parent:       " + f.getParent ());
+    s_aLogger.info ("  Parent2:      " + f.getAbsoluteFile ().getParent ());
+    s_aLogger.info ("  Parent3:      " + f.getParentFile ());
+    s_aLogger.info ("  Parent4:      " + f.getAbsoluteFile ().getParentFile ());
+    s_aLogger.info ("  isAbsolute:   " + f.isAbsolute ());
+    s_aLogger.info ("  exists:       " + f.exists ());
+    if (f.exists ())
+    {
+      s_aLogger.info ("  isDirectory:  " + f.isDirectory ());
+      s_aLogger.info ("  isFile:       " + f.isFile ());
+      s_aLogger.info ("  isHidden:     " + f.isHidden ());
+      s_aLogger.info ("  canRead:      " + f.canRead ());
+      s_aLogger.info ("  canWrite:     " + f.canWrite ());
+      s_aLogger.info ("  canExecute:   " + f.canExecute ());
+    }
   }
 
   @Test
