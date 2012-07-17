@@ -22,9 +22,13 @@ import java.util.WeakHashMap;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.lang.ClassHelper;
@@ -43,7 +47,7 @@ import com.phloc.commons.typeconvert.TypeConverterRegistry;
 public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegistry
 {
   private static final MicroTypeConverterRegistry s_aInstance = new MicroTypeConverterRegistry ();
-
+  private static final Logger s_aLogger = LoggerFactory.getLogger (TypeConverterRegistry.class);
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
 
   // WeakHashMap because key is a class
@@ -54,6 +58,7 @@ public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegi
     // Register all custom micro type converter
     for (final IMicroTypeConverterRegistrarSPI aSPI : ServiceLoaderBackport.load (IMicroTypeConverterRegistrarSPI.class))
       aSPI.registerMicroTypeConverter (s_aInstance);
+    s_aLogger.info (getRegisteredMicroTypeConverterCount () + " micro type converters registered");
   }
 
   private MicroTypeConverterRegistry ()
@@ -166,5 +171,19 @@ public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegi
     for (final Map.Entry <Class <?>, IMicroTypeConverter> aEntry : aCopy.entrySet ())
       if (aCallback.call (aEntry.getKey (), aEntry.getValue ()).isBreak ())
         break;
+  }
+
+  @Nonnegative
+  public static int getRegisteredMicroTypeConverterCount ()
+  {
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      return s_aMap.size ();
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
   }
 }

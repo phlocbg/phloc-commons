@@ -20,6 +20,21 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2012-07-17" category="tech" action="change">
+    <change>
+      <text locale="en">Made TypeConverterRegistry thread safe</text>
+    </change>
+  </entry>
+  <entry date="2012-07-17" category="api" action="add">
+    <change>
+      <text locale="en">Added new method MicroTypeConverterRegistry.getRegisteredMicroTypeConverterCount</text>
+    </change>
+  </entry>
+  <entry date="2012-07-17" category="api" action="add">
+    <change>
+      <text locale="en">Added new method TypeConverterRegistry.getRegisteredTypeConverterCount</text>
+    </change>
+  </entry>
   <release date="2012-07-17" version="3.6.5" />
   <entry date="2012-07-17" category="api" action="change">
     <change>
