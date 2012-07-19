@@ -47,7 +47,7 @@ import com.phloc.commons.typeconvert.TypeConverterRegistry;
 public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegistry
 {
   private static final MicroTypeConverterRegistry s_aInstance = new MicroTypeConverterRegistry ();
-  private static final Logger s_aLogger = LoggerFactory.getLogger (TypeConverterRegistry.class);
+  private static final Logger s_aLogger = LoggerFactory.getLogger (MicroTypeConverterRegistry.class);
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
 
   // WeakHashMap because key is a class
