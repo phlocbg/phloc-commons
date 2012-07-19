@@ -257,4 +257,12 @@ public final class HashCodeGeneratorTest
         System.out.println (nTries + " tries");
     }
   }
+
+  @Test
+  public void testUniqueness ()
+  {
+    final int nHash1 = new HashCodeGenerator (this).append (2).append (3).getHashCode ();
+    final int nHash2 = new HashCodeGenerator (this).append (3).append (2).getHashCode ();
+    assertTrue (nHash1 != nHash2);
+  }
 }
