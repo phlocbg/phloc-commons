@@ -370,13 +370,14 @@ public final class ClassHelperTest
 
     // More sophisticated static class (no interfaces)
     aHierarchy = ClassHelper.getClassHierarchy (CGlobal.class);
-    assertEquals (2, aHierarchy.size ());
+    // Is usually 2, but with Cobertura enabled, it is 3!
+    assertTrue (aHierarchy.size () >= 2);
     assertTrue (aHierarchy.contains (CGlobal.class));
     assertTrue (aHierarchy.contains (Object.class));
 
     // More sophisticated static class (with interfaces)
     aHierarchy = ClassHelper.getClassHierarchy (TypedObject.class);
-    assertEquals (6, aHierarchy.size ());
+    assertTrue (aHierarchy.size () >= 6);
     assertTrue (aHierarchy.contains (TypedObject.class));
     assertTrue (aHierarchy.contains (IHasType.class));
     assertTrue (aHierarchy.contains (ITypedObject.class));
