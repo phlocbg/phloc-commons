@@ -105,7 +105,6 @@ public final class FuncTestJavaFileAccess
     if (EOperatingSystem.getCurrentOS ().isUnixBased ())
     {
       final FileOperationManager aFOM = new FileOperationManager (new LoggingFileOperationCallback ());
-      final String sPrefix = "phloc-commons-";
       final File fTempDir = new File (SystemProperties.getTmpDir (), "phloc");
       FileOperations.createDirIfNotExisting (fTempDir);
       assertTrue (fTempDir.getAbsolutePath (), fTempDir.exists ());
@@ -127,6 +126,7 @@ public final class FuncTestJavaFileAccess
                       final String sMod = Integer.toString (nModeOwn) +
                                           Integer.toString (nModeGroup) +
                                           Integer.toString (nModeOther);
+                      final String sPrefix = "phloc-commons-";
 
                       final File fFile = new File (fTempDir, sPrefix + sMod + ".dat");
                       if (SimpleFileIO.writeFile (fFile, "content".getBytes (CCharset.CHARSET_ISO_8859_1_OBJ))
@@ -139,7 +139,7 @@ public final class FuncTestJavaFileAccess
                     }
       }
 
-      _exec ("chmod", "-v", "111", fTempDir.getAbsolutePath ());
+      _exec ("chmod", "-v", "711", fTempDir.getAbsolutePath ());
 
       // Test there readability
       final List <File> aFiles = FileUtils.getDirectoryContent (fTempDir);
@@ -176,10 +176,10 @@ public final class FuncTestJavaFileAccess
 
       if (false)
         _exec ("chmod", "--preserve-root", "-v", "-R", "777", fTempDir.getAbsolutePath ());
-      if (false)
-        _exec ("rm", "-rf", fTempDir.getAbsolutePath ());
 
       aFOM.deleteDirRecursive (fTempDir);
+      if (fTempDir.exists ())
+        _exec ("rm", "-rf", fTempDir.getAbsolutePath ());
 
       _println ("done");
     }
