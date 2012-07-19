@@ -18,6 +18,7 @@
 package com.phloc.commons.io.file;
 
 import java.io.File;
+import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.List;
 
@@ -170,7 +171,8 @@ public final class SimpleFileIO
   @Nonnull
   public static ESuccess writeFile (@Nonnull final File aFile, @Nonnull final byte [] aContent)
   {
-    return StreamUtils.writeStream (FileUtils.getOutputStream (aFile), aContent);
+    final OutputStream aFOS = FileUtils.getOutputStream (aFile);
+    return aFOS == null ? ESuccess.FAILURE : StreamUtils.writeStream (aFOS, aContent);
   }
 
   @Nonnull
@@ -179,7 +181,8 @@ public final class SimpleFileIO
                                     @Nonnegative final int nOffset,
                                     @Nonnegative final int nLength)
   {
-    return StreamUtils.writeStream (FileUtils.getOutputStream (aFile), aContent, nOffset, nLength);
+    final OutputStream aFOS = FileUtils.getOutputStream (aFile);
+    return aFOS == null ? ESuccess.FAILURE : StreamUtils.writeStream (aFOS, aContent, nOffset, nLength);
   }
 
   @Nonnull
@@ -187,7 +190,8 @@ public final class SimpleFileIO
                                     @Nonnull final String sContent,
                                     @Nonnull final String sCharset)
   {
-    return StreamUtils.writeStream (FileUtils.getOutputStream (aFile), sContent, sCharset);
+    final OutputStream aFOS = FileUtils.getOutputStream (aFile);
+    return aFOS == null ? ESuccess.FAILURE : StreamUtils.writeStream (aFOS, sContent, sCharset);
   }
 
   @Nonnull
@@ -195,7 +199,8 @@ public final class SimpleFileIO
                                     @Nonnull final String sContent,
                                     @Nonnull final Charset aCharset)
   {
-    return StreamUtils.writeStream (FileUtils.getOutputStream (aFile), sContent, aCharset);
+    final OutputStream aFOS = FileUtils.getOutputStream (aFile);
+    return aFOS == null ? ESuccess.FAILURE : StreamUtils.writeStream (aFOS, sContent, aCharset);
   }
 
   @Nonnull

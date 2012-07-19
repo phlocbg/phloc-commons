@@ -28,6 +28,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.combine.CombinatorStringWithSeparatorIgnoreNull;
+import com.phloc.commons.io.file.FileUtils;
 import com.phloc.commons.io.file.FilenameHelper;
 import com.phloc.commons.io.file.filter.FileFilterFileFromFilenameFilter;
 import com.phloc.commons.tree.withid.folder.DefaultFolderTree;
@@ -48,7 +49,7 @@ public class FileSystemFolderTree extends DefaultFolderTree <String, File, List 
                                 @Nullable final FileFilter aFileFilter)
   {
     if (aDir != null)
-      for (final File aChild : aDir.listFiles ())
+      for (final File aChild : FileUtils.getDirectoryContent (aDir))
       {
         if (aChild.isFile ())
         {

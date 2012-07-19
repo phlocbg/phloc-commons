@@ -18,10 +18,13 @@
 package com.phloc.commons.io.file;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
+import java.util.List;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -32,7 +35,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.SystemProperties;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
+import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.io.EAppend;
 import com.phloc.commons.io.misc.SizeHelper;
 import com.phloc.commons.io.streams.CountingFileInputStream;
@@ -43,7 +49,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Miscellaneous file utility methods.
- *
+ * 
  * @author philip
  */
 @Immutable
@@ -60,11 +66,11 @@ public final class FileUtils
 
   /**
    * Check if the passed file exists. Must be existing and a file.
-   *
+   * 
    * @param aFile
    *        The file to be checked for existence. May not be <code>null</code> .
-   * @return <code>true</code> if the directory exists, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if the File is a file and exists,
+   *         <code>false</code> otherwise.
    */
   public static boolean existsFile (@Nonnull final File aFile)
   {
@@ -77,7 +83,7 @@ public final class FileUtils
   /**
    * Check if the passed directory exists. Must be existing and must be a
    * directory!
-   *
+   * 
    * @param aDir
    *        The directory to be checked for existence. May not be
    *        <code>null</code>.
@@ -89,7 +95,8 @@ public final class FileUtils
     if (aDir == null)
       throw new NullPointerException ("directory");
 
-    return aDir.exists () && aDir.isDirectory ();
+    // returns true if it exists() AND is a directory!
+    return aDir.isDirectory ();
   }
 
   @Nonnull
@@ -107,6 +114,7 @@ public final class FileUtils
       return EChange.UNCHANGED;
     }
 
+    // Now try to create the directory
     final FileIOError aError = FileOperations.createDirRecursive (aParent);
     if (aError.isFailure ())
       throw new IllegalStateException ("Failed to create parent of " + aFileObject.getAbsolutePath () + ": " + aError);
@@ -125,7 +133,7 @@ public final class FileUtils
 
   /**
    * Check if the searched directory is a parent object of the start directory
-   *
+   * 
    * @param aSearchDirectory
    *        The directory to be searched. May not be <code>null</code>.
    * @param aStartDirectory
@@ -190,7 +198,7 @@ public final class FileUtils
   /**
    * Get an output stream for writing to a file. Any existing file is
    * overwritten.
-   *
+   * 
    * @param sFilename
    *        The name of the file to write to. May not be <code>null</code>.
    * @return <code>null</code> if the file could not be opened
@@ -203,7 +211,7 @@ public final class FileUtils
 
   /**
    * Get an output stream for writing to a file.
-   *
+   * 
    * @param sFilename
    *        The name of the file to write to. May not be <code>null</code>.
    * @param eAppend
@@ -218,7 +226,7 @@ public final class FileUtils
 
   /**
    * Get an output stream for writing to a file.
-   *
+   * 
    * @param aFile
    *        The file to write to. May not be <code>null</code>.
    * @return <code>null</code> if the file could not be opened
@@ -231,7 +239,7 @@ public final class FileUtils
 
   /**
    * Get an output stream for writing to a file.
-   *
+   * 
    * @param aFile
    *        The file to write to. May not be <code>null</code>.
    * @param eAppend
@@ -252,6 +260,21 @@ public final class FileUtils
     {
       // Happens e.g. when the parent directory is "  "
       s_aLogger.warn ("Failed to create parent directory of '" + aFile + "'", ex);
+      return null;
+    }
+
+    // Check if parent directory is writable, to avoid catching the
+    // FileNotFoundException with "permission denied" afterwards
+    final File aParentDir = aFile.getParentFile ();
+    if (aParentDir != null && !aParentDir.canWrite ())
+    {
+      s_aLogger.warn ("Parent directory '" +
+                      aParentDir +
+                      "' of '" +
+                      aFile +
+                      "' is not writable for current user '" +
+                      SystemProperties.getUserName () +
+                      "'");
       return null;
     }
 
@@ -280,7 +303,7 @@ public final class FileUtils
    * not exist. Returns <code>false</code> if the first file is older than the
    * second file. Returns <code>false</code> if the first file does not exists
    * but the second does. Returns <code>false</code> if none of the files exist.
-   *
+   * 
    * @param aFile1
    *        First file. May not be <code>null</code>.
    * @param aFile2
@@ -347,7 +370,7 @@ public final class FileUtils
    * relative paths ("." and "..") are resolved and all eventually contained
    * '\0' characters are eliminated. Than all file names are checked for
    * validity (so that no special characters are contained).
-   *
+   * 
    * @param aFile
    *        The file to be secured.
    * @return <code>null</code> if the passed file is <code>null</code>.
@@ -383,7 +406,7 @@ public final class FileUtils
   /**
    * Returns the number of files and directories contained in the passed
    * directory excluding the system internal directories.
-   *
+   * 
    * @param aDirectory
    *        The directory to check. May not be <code>null</code> and must be a
    *        directory.
@@ -399,18 +422,16 @@ public final class FileUtils
       throw new IllegalArgumentException ("Passed object is not a directory: " + aDirectory);
 
     int ret = 0;
-    final File [] aChildren = aDirectory.listFiles ();
-    if (aChildren != null)
-      for (final File aChild : aChildren)
-        if (!FilenameHelper.isSystemInternalDirectory (aChild.getName ()))
-          ret++;
+    for (final File aChild : getDirectoryContent (aDirectory))
+      if (!FilenameHelper.isSystemInternalDirectory (aChild.getName ()))
+        ret++;
     return ret;
   }
 
   /**
    * Check if the passed 2 files are equal using the unified (unix separator),
    * absolute and cleaned (no "." or "..") path.
-   *
+   * 
    * @param f1
    *        First file. May be <code>null</code>.
    * @param f2
@@ -425,5 +446,97 @@ public final class FileUtils
       return false;
     return FilenameHelper.getCleanPath (f1.getAbsoluteFile ())
                          .equals (FilenameHelper.getCleanPath (f2.getAbsoluteFile ()));
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  private static List <File> _getDirectoryContent (@Nonnull final File aDirectory,
+                                                   @Nullable final File [] aSelectedContent)
+  {
+    if (!aDirectory.canExecute ())
+    {
+      // If this happens, the resulting File objects are neither files nor
+      // directories (isFile() and isDirectory() both return false!!)
+      s_aLogger.warn ("Directory is missing the listing permission: " + aDirectory.getAbsolutePath ());
+    }
+
+    if (aSelectedContent == null)
+    {
+      // No content returned
+      if (!aDirectory.isDirectory ())
+        s_aLogger.warn ("Cannot list non-directory: " + aDirectory.getAbsolutePath ());
+      else
+        if (!aDirectory.canRead ())
+          s_aLogger.warn ("Cannot list directory because of no read-rights: " + aDirectory.getAbsolutePath ());
+        else
+          s_aLogger.warn ("Directory listing failed because of IO error: " + aDirectory.getAbsolutePath ());
+    }
+    return ContainerHelper.newList (aSelectedContent);
+  }
+
+  /**
+   * This is a replacement for <code>File.listFiles()</code> doing some
+   * additional checks on permissions. The order of the returned files is
+   * defined by the underlying {@link File#listFiles()} method.
+   * 
+   * @param aDirectory
+   *        The directory to be listed. May not be <code>null</code>.
+   * @return Never <code>null</code>.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public static List <File> getDirectoryContent (@Nonnull final File aDirectory)
+  {
+    if (aDirectory == null)
+      throw new NullPointerException ("directory");
+
+    return _getDirectoryContent (aDirectory, aDirectory.listFiles ());
+  }
+
+  /**
+   * This is a replacement for <code>File.listFiles(FilenameFilter)</code> doing
+   * some additional checks on permissions. The order of the returned files is
+   * defined by the underlying {@link File#listFiles(FilenameFilter)} method.
+   * 
+   * @param aDirectory
+   *        The directory to be listed. May not be <code>null</code>.
+   * @param aFilenameFilter
+   *        The filename filter to be used. May not be <code>null</code>.
+   * @return Never <code>null</code>.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public static List <File> getDirectoryContent (@Nonnull final File aDirectory,
+                                                 @Nonnull final FilenameFilter aFilenameFilter)
+  {
+    if (aDirectory == null)
+      throw new NullPointerException ("directory");
+    if (aFilenameFilter == null)
+      throw new NullPointerException ("filenameFilter");
+
+    return _getDirectoryContent (aDirectory, aDirectory.listFiles (aFilenameFilter));
+  }
+
+  /**
+   * This is a replacement for <code>File.listFiles(FileFilter)</code> doing
+   * some additional checks on permissions. The order of the returned files is
+   * defined by the underlying {@link File#listFiles(FileFilter)} method.
+   * 
+   * @param aDirectory
+   *        The directory to be listed. May not be <code>null</code>.
+   * @param aFileFilter
+   *        The file filter to be used. May not be <code>null</code>.
+   * @return Never <code>null</code>.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public static List <File> getDirectoryContent (@Nonnull final File aDirectory, @Nonnull final FileFilter aFileFilter)
+  {
+    if (aDirectory == null)
+      throw new NullPointerException ("directory");
+    if (aFileFilter == null)
+      throw new NullPointerException ("fileFilter");
+
+    return _getDirectoryContent (aDirectory, aDirectory.listFiles (aFileFilter));
   }
 }

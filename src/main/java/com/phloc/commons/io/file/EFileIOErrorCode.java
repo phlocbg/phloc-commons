@@ -23,6 +23,11 @@ import javax.annotation.Nonnull;
 
 import com.phloc.commons.state.ISuccessIndicator;
 
+/**
+ * Represents a set of predefined error codes that can occur in file operations.
+ * 
+ * @author philip
+ */
 public enum EFileIOErrorCode implements ISuccessIndicator
 {
   /** Generic error code: no error. */
@@ -42,7 +47,13 @@ public enum EFileIOErrorCode implements ISuccessIndicator
   /** We stumble across an object that is neither a file nor a directory. */
   OBJECT_CANNOT_BE_HANDLED,
   /** An object's parent could not be retrieved. */
-  OBJECT_HAS_NO_PARENT;
+  OBJECT_HAS_NO_PARENT,
+  /** The source object cannot be read. */
+  SOURCE_NOT_READABLE,
+  /** The source parent object is read-only (not writable). */
+  SOURCE_PARENT_NOT_WRITABLE,
+  /** The target parent object is read-only (not writable). */
+  TARGET_PARENT_NOT_WRITABLE;
 
   @Nonnull
   public FileIOError getAsIOError (@Nonnull final EFileIOOperation eOperation, @Nonnull final File aFile)
