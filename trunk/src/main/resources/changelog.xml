@@ -20,6 +20,31 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2012-07-19" category="tech" action="add">
+    <change>
+      <text locale="en">Added permission check handling in class FileOperations</text>
+    </change>
+  </entry>
+  <entry date="2012-07-19" category="api" action="add">
+    <change>
+      <text locale="en">Added new methods FileUtils.getDirectoryContent(File) encapsulating the File.listFiles method</text>
+    </change>
+  </entry>
+  <entry date="2012-07-19" category="api" action="add">
+    <change>
+      <text locale="en">Added enum members in EFileIOErrorCode</text>
+    </change>
+  </entry>
+  <entry date="2012-07-19" category="tech" action="change">
+    <change>
+      <text locale="en">Added check for writable parent directory in FileUtils.getOutputStream</text>
+    </change>
+  </entry>
+  <entry date="2012-07-19" category="tech" action="change">
+    <change>
+      <text locale="en">Made SimpleFileIO.writeFile methods correctly handle null OutputStreams if opening a file for writing fails</text>
+    </change>
+  </entry>
   <entry date="2012-07-17" category="tech" action="change">
     <change>
       <text locale="en">Made TypeConverterRegistry thread safe</text>

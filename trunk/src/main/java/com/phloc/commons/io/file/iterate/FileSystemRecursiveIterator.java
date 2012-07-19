@@ -32,10 +32,10 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.annotations.UnsupportedOperation;
-import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.collections.iterate.IIterableIterator;
 import com.phloc.commons.filter.IFilter;
 import com.phloc.commons.filter.collections.FilterIterator;
+import com.phloc.commons.io.file.FileUtils;
 import com.phloc.commons.io.file.filter.FileFilterToIFilterAdapter;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
@@ -45,7 +45,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * first iteration, because as soon as a directory is encountered, the children
  * of this directory are iterated.<br>
  * Note: the order of iteration is undefined and depends on the order returned
- * by {@link File#listFiles()}.
+ * by {@link FileUtils#getDirectoryContent(File)}.
  * 
  * @author philip
  */
@@ -93,7 +93,7 @@ public class FileSystemRecursiveIterator implements IIterableIterator <File>
       throw new NullPointerException ("directory");
     m_nStartLevel = _getLevel (aBaseDir);
     m_aRecursionFilter = aRecursionFilter;
-    m_aFilesLeft = ContainerHelper.newList (aBaseDir.listFiles ());
+    m_aFilesLeft = FileUtils.getDirectoryContent (aBaseDir);
   }
 
   @Nonnull
@@ -137,7 +137,7 @@ public class FileSystemRecursiveIterator implements IIterableIterator <File>
       {
         // insert all children of the current directory at the beginning of the
         // list
-        m_aFilesLeft.addAll (0, ContainerHelper.newList (aFile.listFiles ()));
+        m_aFilesLeft.addAll (0, FileUtils.getDirectoryContent (aFile));
       }
     return aFile;
   }

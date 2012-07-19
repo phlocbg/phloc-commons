@@ -27,6 +27,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.phloc.commons.collections.iterate.IIterableIterator;
 import com.phloc.commons.collections.iterate.IterableIterator;
 import com.phloc.commons.filter.collections.FilterIterator;
+import com.phloc.commons.io.file.FileUtils;
 import com.phloc.commons.io.file.filter.FileFilterToIFilterAdapter;
 
 /**
@@ -38,13 +39,6 @@ import com.phloc.commons.io.file.filter.FileFilterToIFilterAdapter;
 @NotThreadSafe
 public final class FileSystemIterator extends IterableIterator <File>
 {
-  @Nonnull
-  private static File [] _getFileList (@Nonnull final File aBaseDir)
-  {
-    final File [] ret = aBaseDir.listFiles ();
-    return ret != null ? ret : new File [0];
-  }
-
   /**
    * Constructor.
    * 
@@ -64,7 +58,7 @@ public final class FileSystemIterator extends IterableIterator <File>
    */
   public FileSystemIterator (@Nonnull final File aBaseDir)
   {
-    super (_getFileList (aBaseDir));
+    super (FileUtils.getDirectoryContent (aBaseDir));
   }
 
   /**
