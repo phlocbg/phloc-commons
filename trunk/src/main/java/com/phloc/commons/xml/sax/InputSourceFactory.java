@@ -33,6 +33,7 @@ import com.phloc.commons.io.IInputStreamProvider;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.resource.FileSystemResource;
 import com.phloc.commons.io.resource.URLResource;
+import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
 
 /**
  * Factory class to create the correct {@link InputSource} objects for different
@@ -61,6 +62,8 @@ public final class InputSourceFactory
   @Nonnull
   public static InputSource create (@Nonnull final IInputStreamProvider aISP)
   {
+    if (aISP instanceof IReadableResource)
+      return create ((IReadableResource) aISP);
     return create (aISP.getInputStream ());
   }
 
@@ -91,8 +94,24 @@ public final class InputSourceFactory
   }
 
   @Nonnull
+  public static InputSource create (@Nonnull final byte [] aXML)
+  {
+    return create (new NonBlockingByteArrayInputStream (aXML));
+  }
+
+  @Nonnull
+  public static InputSource create (@Nonnull final byte [] aXML,
+                                    @Nonnegative final int nOfs,
+                                    @Nonnegative final int nLength)
+  {
+    return create (new NonBlockingByteArrayInputStream (aXML, nOfs, nLength));
+  }
+
+  @Nonnull
   public static InputSource create (@Nonnull final CharSequence aXML)
   {
+    if (aXML instanceof String)
+      return create ((String) aXML);
     return create (aXML.toString ());
   }
 

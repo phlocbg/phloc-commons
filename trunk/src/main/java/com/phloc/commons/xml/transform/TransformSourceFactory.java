@@ -35,6 +35,7 @@ import org.w3c.dom.Node;
 import com.phloc.commons.io.IInputStreamProvider;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.resource.URLResource;
+import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
 
 /**
  * Factory class to create the correct {@link Source} objects for different
@@ -63,6 +64,8 @@ public final class TransformSourceFactory
   @Nonnull
   public static StreamSource create (@Nonnull final IInputStreamProvider aISP)
   {
+    if (aISP instanceof IReadableResource)
+      return create ((IReadableResource) aISP);
     return create (aISP.getInputStream ());
   }
 
@@ -93,8 +96,24 @@ public final class TransformSourceFactory
   }
 
   @Nonnull
+  public static StreamSource create (@Nonnull final byte [] aXML)
+  {
+    return create (new NonBlockingByteArrayInputStream (aXML));
+  }
+
+  @Nonnull
+  public static StreamSource create (@Nonnull final byte [] aXML,
+                                     @Nonnegative final int nOfs,
+                                     @Nonnegative final int nLength)
+  {
+    return create (new NonBlockingByteArrayInputStream (aXML, nOfs, nLength));
+  }
+
+  @Nonnull
   public static StringStreamSource create (@Nonnull final CharSequence aXML)
   {
+    if (aXML instanceof String)
+      return create ((String) aXML);
     return create (aXML.toString ());
   }
 
