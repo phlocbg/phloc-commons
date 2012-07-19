@@ -76,7 +76,7 @@ public final class FileOperations
 
     // Is the parent directory writable?
     final File aParentDir = aDir.getParentFile ();
-    if (aParentDir != null && !aParentDir.canWrite ())
+    if (aParentDir != null && aParentDir.exists () && !aParentDir.canWrite ())
       return EFileIOErrorCode.SOURCE_PARENT_NOT_WRITABLE.getAsIOError (EFileIOOperation.CREATE_DIR, aDir);
 
     try
@@ -128,7 +128,7 @@ public final class FileOperations
 
     // Is the parent directory writable?
     final File aParentDir = aDir.getParentFile ();
-    if (aParentDir != null && !aParentDir.canWrite ())
+    if (aParentDir != null && aParentDir.exists () && !aParentDir.canWrite ())
       return EFileIOErrorCode.SOURCE_PARENT_NOT_WRITABLE.getAsIOError (EFileIOOperation.CREATE_DIR_RECURSIVE, aDir);
 
     try
