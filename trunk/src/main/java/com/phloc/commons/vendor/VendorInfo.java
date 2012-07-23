@@ -19,11 +19,14 @@ package com.phloc.commons.vendor;
 
 import java.util.List;
 
-import javax.annotation.concurrent.Immutable;
+import javax.annotation.Nonnull;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.string.StringHelper;
 
 /**
  * Contains some general vendor specific information. This is mainly for keeping
@@ -31,7 +34,7 @@ import com.phloc.commons.collections.ContainerHelper;
  * 
  * @author philip
  */
-@Immutable
+@NotThreadSafe
 public final class VendorInfo
 {
   public static final String VENDOR_NAME = "phloc systems";
@@ -64,6 +67,49 @@ public final class VendorInfo
   @SuppressWarnings ("unused")
   private static final VendorInfo s_aInstance = new VendorInfo ();
 
+  private static String s_sVendorName = VENDOR_NAME;
+  private static String s_sVendorURL = VENDOR_URL;
+  private static String s_sVendorEmail = VENDOR_EMAIL;
+
   private VendorInfo ()
   {}
+
+  @Nonnull
+  public static String getVendorName ()
+  {
+    return s_sVendorName;
+  }
+
+  public static void setVendorName (@Nonnull @Nonempty final String sVendorName)
+  {
+    if (StringHelper.hasNoText (sVendorName))
+      throw new IllegalArgumentException ("vendorName");
+    s_sVendorName = sVendorName;
+  }
+
+  @Nonnull
+  public static String getVendorURL ()
+  {
+    return s_sVendorURL;
+  }
+
+  public static void setVendorURL (@Nonnull @Nonempty final String sVendorURL)
+  {
+    if (StringHelper.hasNoText (sVendorURL))
+      throw new IllegalArgumentException ("vendorURL");
+    s_sVendorURL = sVendorURL;
+  }
+
+  @Nonnull
+  public static String getVendorEmail ()
+  {
+    return s_sVendorEmail;
+  }
+
+  public static void setVendorEmail (@Nonnull @Nonempty final String sVendorEmail)
+  {
+    if (StringHelper.hasNoText (sVendorEmail))
+      throw new IllegalArgumentException ("vendorEmail");
+    s_sVendorEmail = sVendorEmail;
+  }
 }
