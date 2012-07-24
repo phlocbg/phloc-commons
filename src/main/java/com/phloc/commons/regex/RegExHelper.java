@@ -473,18 +473,18 @@ public final class RegExHelper
   @Nullable
   public static String [] getAllMatchingGroupValues (@Nonnull @RegEx final String sRegEx, @Nonnull final String sValue)
   {
-    final Matcher m = getMatcher (sRegEx, sValue);
-    if (!m.find ())
+    final Matcher aMatcher = getMatcher (sRegEx, sValue);
+    if (!aMatcher.find ())
     {
       // Values does not match RegEx
       return null;
     }
 
     // groupCount is excluding the .group(0) match!!!
-    final int nGroupCount = m.groupCount ();
+    final int nGroupCount = aMatcher.groupCount ();
     final String [] ret = new String [nGroupCount];
     for (int i = 0; i < nGroupCount; ++i)
-      ret[i] = m.group (i + 1);
+      ret[i] = aMatcher.group (i + 1);
     return ret;
   }
 }
