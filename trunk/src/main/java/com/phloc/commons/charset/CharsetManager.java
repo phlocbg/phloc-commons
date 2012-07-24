@@ -125,6 +125,8 @@ public final class CharsetManager
       throw new NullPointerException ("text");
     if (aCharset == null)
       throw new NullPointerException ("charset");
+    if (!aCharset.canEncode ())
+      throw new IllegalArgumentException ("Cannot encode to " + aCharset);
 
     return sText.getBytes (aCharset);
   }
