@@ -147,6 +147,12 @@ public final class XMLReader
   }
 
   @Nullable
+  public static Document readXMLDOM (@Nonnull final byte [] aXML) throws SAXException
+  {
+    return readXMLDOM (aXML, null, null);
+  }
+
+  @Nullable
   public static Document readXMLDOM (@WillClose @Nonnull final InputSource aIS, @Nullable final Schema aSchema) throws SAXException
   {
     return readXMLDOM (aIS, aSchema, null);
@@ -180,6 +186,12 @@ public final class XMLReader
   public static Document readXMLDOM (@Nonnull final String sXML, @Nullable final Schema aSchema) throws SAXException
   {
     return readXMLDOM (sXML, aSchema, null);
+  }
+
+  @Nullable
+  public static Document readXMLDOM (@Nonnull final byte [] aXML, @Nullable final Schema aSchema) throws SAXException
+  {
+    return readXMLDOM (aXML, aSchema, null);
   }
 
   @Nullable
@@ -220,6 +232,12 @@ public final class XMLReader
   public static Document readXMLDOM (@Nonnull final String sXML, @Nullable final ErrorHandler aCustomErrorHandler) throws SAXException
   {
     return readXMLDOM (sXML, null, aCustomErrorHandler);
+  }
+
+  @Nullable
+  public static Document readXMLDOM (@Nonnull final byte [] aXML, @Nullable final ErrorHandler aCustomErrorHandler) throws SAXException
+  {
+    return readXMLDOM (aXML, null, aCustomErrorHandler);
   }
 
   @Nullable
@@ -336,6 +354,17 @@ public final class XMLReader
       throw new NullPointerException ("xml");
 
     return readXMLDOM (InputSourceFactory.create (sXML), aSchema, aCustomErrorHandler);
+  }
+
+  @Nullable
+  public static Document readXMLDOM (@Nonnull final byte [] aXML,
+                                     @Nullable final Schema aSchema,
+                                     @Nullable final ErrorHandler aCustomErrorHandler) throws SAXException
+  {
+    if (aXML == null)
+      throw new NullPointerException ("xml");
+
+    return readXMLDOM (InputSourceFactory.create (aXML), aSchema, aCustomErrorHandler);
   }
 
   /**
