@@ -24,6 +24,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.phloc.commons.concurrent.ThreadUtils;
+
 /**
  * Test class for class {@link StopWatch}.
  * 
@@ -32,7 +34,7 @@ import org.junit.Test;
 public final class StopWatchTest
 {
   @Test
-  public void testAll () throws InterruptedException
+  public void testAll ()
   {
     StopWatch sw = new StopWatch ();
     assertFalse (sw.isStarted ());
@@ -47,13 +49,13 @@ public final class StopWatchTest
 
     assertTrue (sw.start ().isChanged ());
     assertTrue (sw.isStarted ());
-    Thread.sleep (1000);
+    ThreadUtils.sleep (1000);
     assertTrue (sw.stopAndGetMillis () > 0);
     assertFalse (sw.isStarted ());
 
     assertTrue (sw.start ().isChanged ());
     assertTrue (sw.isStarted ());
-    Thread.sleep (10);
+    ThreadUtils.sleep (10);
     assertTrue (sw.stopAndGetNanos () > 0);
     assertFalse (sw.isStarted ());
     assertTrue (sw.getNanos () > 0);
