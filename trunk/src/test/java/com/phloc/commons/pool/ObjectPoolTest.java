@@ -24,6 +24,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.phloc.commons.concurrent.ThreadUtils;
 import com.phloc.commons.factory.FactoryConstantValue;
 
 /**
@@ -66,7 +67,7 @@ public final class ObjectPoolTest
       }
     };
     aThread.start ();
-    Thread.sleep (100);
+    ThreadUtils.sleep (100);
     aThread.interrupt ();
     aThread.join ();
   }
