@@ -184,4 +184,19 @@ public final class MicroReader
       return null;
     return readMicroXML (InputSourceFactory.create (sXML), aSpecialEntityResolver);
   }
+
+  @Nullable
+  public static IMicroDocument readMicroXML (@Nullable final byte [] aXML)
+  {
+    return readMicroXML (aXML, null);
+  }
+
+  @Nullable
+  public static IMicroDocument readMicroXML (@Nullable final byte [] aXML,
+                                             @Nullable final EntityResolver aSpecialEntityResolver)
+  {
+    if (aXML == null)
+      return null;
+    return readMicroXML (InputSourceFactory.create (aXML), aSpecialEntityResolver);
+  }
 }
