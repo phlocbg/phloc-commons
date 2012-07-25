@@ -17,12 +17,13 @@
  */
 package com.phloc.commons.concurrent;
 
+import java.util.concurrent.TimeUnit;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.CGlobal;
-import com.phloc.commons.math.MathHelper;
 import com.phloc.commons.state.ESuccess;
 
 /**
@@ -45,11 +46,11 @@ public final class ThreadUtils
    *         {@link ESuccess#FAILURE} if sleeping was interrupted
    */
   @Nonnull
-  public static ESuccess sleepMinutes (@Nonnegative final int nMinutes)
+  public static ESuccess sleepMinutes (@Nonnegative final long nMinutes)
   {
     if (nMinutes < 0)
       throw new IllegalArgumentException ("Negative minutes: " + nMinutes);
-    return sleep (MathHelper.getLongAsInt (nMinutes * CGlobal.MILLISECONDS_PER_MINUTE, -1));
+    return sleep (nMinutes * CGlobal.MILLISECONDS_PER_MINUTE);
   }
 
   /**
@@ -61,11 +62,32 @@ public final class ThreadUtils
    *         {@link ESuccess#FAILURE} if sleeping was interrupted
    */
   @Nonnull
-  public static ESuccess sleepSeconds (@Nonnegative final int nSeconds)
+  public static ESuccess sleepSeconds (@Nonnegative final long nSeconds)
   {
     if (nSeconds < 0)
       throw new IllegalArgumentException ("Negative seconds: " + nSeconds);
-    return sleep (MathHelper.getLongAsInt (nSeconds * CGlobal.MILLISECONDS_PER_SECOND, -1));
+    return sleep (nSeconds * CGlobal.MILLISECONDS_PER_SECOND);
+  }
+
+  /**
+   * Sleep the current thread for a certain amount of time
+   * 
+   * @param aTimeUnit
+   *        The time unit to use. May not be <code>null</code>.
+   * @param nDuration
+   *        The duration to sleep.
+   * @return {@link ESuccess#SUCCESS} if sleeping was not interrupted,
+   *         {@link ESuccess#FAILURE} if sleeping was interrupted
+   */
+  @Nonnull
+  public static ESuccess sleep (@Nonnull final TimeUnit aTimeUnit, @Nonnegative final long nDuration)
+  {
+    if (aTimeUnit == null)
+      throw new NullPointerException ("timeUnit");
+    if (nDuration < 0)
+      throw new IllegalArgumentException ("Negative duration: " + nDuration);
+
+    return sleep (aTimeUnit.toMillis (nDuration));
   }
 
   /**
@@ -77,7 +99,7 @@ public final class ThreadUtils
    *         {@link ESuccess#FAILURE} if sleeping was interrupted
    */
   @Nonnull
-  public static ESuccess sleep (@Nonnegative final int nMilliseconds)
+  public static ESuccess sleep (@Nonnegative final long nMilliseconds)
   {
     if (nMilliseconds < 0)
       throw new IllegalArgumentException ("Negative milliseconds: " + nMilliseconds);
