@@ -48,6 +48,17 @@ public final class MutableLong extends Number implements IMutableInteger <Mutabl
   /**
    * Initialize with a certain value.
    * 
+   * @param aValue
+   *        The value to be used.
+   */
+  public MutableLong (@Nonnull final Long aValue)
+  {
+    this (aValue.longValue ());
+  }
+
+  /**
+   * Initialize with a certain value.
+   * 
    * @param nValue
    *        The value to be used.
    */

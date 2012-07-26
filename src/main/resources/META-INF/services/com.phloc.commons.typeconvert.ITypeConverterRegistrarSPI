@@ -2,4 +2,5 @@ com.phloc.commons.typeconvert.impl.BaseTypeConverterRegistrar
 com.phloc.commons.typeconvert.impl.CharsetTypeConverterRegistrar
 com.phloc.commons.typeconvert.impl.IOTypeConverterRegistrar
 com.phloc.commons.typeconvert.impl.LocaleTypeConverterRegistrar
+com.phloc.commons.typeconvert.impl.MutableTypeConverterRegistrar
 com.phloc.commons.typeconvert.impl.StateEnumTypeConverterRegistrar

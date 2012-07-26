@@ -60,6 +60,17 @@ public final class MutableByte extends Number implements IMutableInteger <Mutabl
   /**
    * Initialize with a certain value.
    * 
+   * @param aValue
+   *        The value to be used.
+   */
+  public MutableByte (@Nonnull final Byte aValue)
+  {
+    this (aValue.byteValue ());
+  }
+
+  /**
+   * Initialize with a certain value.
+   * 
    * @param nValue
    *        The value to be used.
    */

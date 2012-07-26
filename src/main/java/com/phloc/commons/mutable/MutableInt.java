@@ -48,6 +48,17 @@ public final class MutableInt extends Number implements IMutableInteger <Mutable
   /**
    * Initialize with a certain value.
    * 
+   * @param aValue
+   *        The value to be used.
+   */
+  public MutableInt (@Nonnull final Integer aValue)
+  {
+    this (aValue.intValue ());
+  }
+
+  /**
+   * Initialize with a certain value.
+   * 
    * @param nValue
    *        The value to be used.
    */

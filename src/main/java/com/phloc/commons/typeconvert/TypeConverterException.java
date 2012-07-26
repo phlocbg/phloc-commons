@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.typeconvert;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -35,20 +36,34 @@ public final class TypeConverterException extends RuntimeException
   @NoTranslationRequired (value = "because whenever an exception is thrown, no locale is present!")
   public static enum EReason
   {
-    CONVERSION_FAILED ("Conversion from type {0} to type {1} failed!"),
-    NO_CONVERTER_FOUND ("No converter found to convert an object of type {0} to type {1}");
+    CONVERSION_FAILED (2, "Conversion from type {0} to type {1} failed!"),
+    NO_CONVERTER_FOUND (2, "No converter found to convert an object of type {0} to type {1}"),
+    NULL_SOURCE_NOT_ALLOWED (1, "A null source object cannot be converted to type {0}");
 
-    private String m_sMsg;
+    private final int m_nParamCount;
+    private final String m_sMsg;
 
-    private EReason (@Nonnull @Nonempty final String sMsg)
+    private EReason (@Nonnegative final int nParamCount, @Nonnull @Nonempty final String sMsg)
     {
+      m_nParamCount = nParamCount;
       m_sMsg = sMsg;
+    }
+
+    @Nonnull
+    @Nonempty
+    public String getMessage (@Nonnull final Class <?> aDstClass)
+    {
+      if (m_nParamCount != 1)
+        throw new IllegalStateException ("Message does not expect 1 parameter!");
+      return TextFormatter.getFormattedText (m_sMsg, aDstClass.getName ());
     }
 
     @Nonnull
     @Nonempty
     public String getMessage (@Nonnull final Class <?> aSrcClass, @Nonnull final Class <?> aDstClass)
     {
+      if (m_nParamCount != 2)
+        throw new IllegalStateException ("Message does not expect 2 parameters!");
       return TextFormatter.getFormattedText (m_sMsg, aSrcClass.getName (), aDstClass.getName ());
     }
   }
@@ -58,7 +73,24 @@ public final class TypeConverterException extends RuntimeException
   private final EReason m_eReason;
 
   /**
-   * Constructor without a cause exception.
+   * Constructor only with a destination class.
+   * 
+   * @param aDstClass
+   *        The conversion destination class. May not be <code>null</code>.
+   * @param eReason
+   *        The reason code why the transformation failed. May not be
+   *        <code>null</code>.
+   */
+  public TypeConverterException (@Nonnull final Class <?> aDstClass, @Nonnull final EReason eReason)
+  {
+    super (eReason.getMessage (aDstClass));
+    m_aSrcClass = null;
+    m_aDstClass = aDstClass;
+    m_eReason = eReason;
+  }
+
+  /**
+   * Constructor.
    * 
    * @param aSrcClass
    *        The conversion source class. May not be <code>null</code>.
@@ -102,7 +134,7 @@ public final class TypeConverterException extends RuntimeException
   /**
    * @return The conversion source class. Never <code>null</code>.
    */
-  @Nonnull
+  @Nullable
   public Class <?> getSrcClass ()
   {
     return m_aSrcClass;

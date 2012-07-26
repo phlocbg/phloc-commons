@@ -46,6 +46,11 @@ public final class MutableDouble extends Number implements IMutableNumeric <Muta
     this (DEFAULT_VALUE);
   }
 
+  public MutableDouble (@Nonnull final Double aValue)
+  {
+    this (aValue.doubleValue ());
+  }
+
   public MutableDouble (final double dValue)
   {
     m_dValue = dValue;

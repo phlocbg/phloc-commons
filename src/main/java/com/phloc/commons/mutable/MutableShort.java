@@ -60,6 +60,17 @@ public final class MutableShort extends Number implements IMutableInteger <Mutab
   /**
    * Initialize with a certain value.
    * 
+   * @param aValue
+   *        The value to be used.
+   */
+  public MutableShort (@Nonnull final Short aValue)
+  {
+    this (aValue.shortValue ());
+  }
+
+  /**
+   * Initialize with a certain value.
+   * 
    * @param nValue
    *        The value to be used.
    */
