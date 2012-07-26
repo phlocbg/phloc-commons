@@ -31,7 +31,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @NotThreadSafe
-public final class MutableByte implements IMutableInteger <MutableByte>
+public final class MutableByte extends Number implements IMutableInteger <MutableByte>
 {
   public static final byte DEFAULT_VALUE = 0;
 
@@ -68,6 +68,7 @@ public final class MutableByte implements IMutableInteger <MutableByte>
     m_nValue = nValue;
   }
 
+  @Override
   public byte byteValue ()
   {
     return m_nValue;
@@ -77,6 +78,30 @@ public final class MutableByte implements IMutableInteger <MutableByte>
   public Byte getAsByte ()
   {
     return Byte.valueOf (m_nValue);
+  }
+
+  @Override
+  public float floatValue ()
+  {
+    return m_nValue;
+  }
+
+  @Override
+  public double doubleValue ()
+  {
+    return m_nValue;
+  }
+
+  @Override
+  public int intValue ()
+  {
+    return m_nValue;
+  }
+
+  @Override
+  public long longValue ()
+  {
+    return m_nValue;
   }
 
   /**
