@@ -1134,6 +1134,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
+  @SuppressFBWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   public void testGetRepeated ()
   {
     assertEquals ("", StringHelper.getRepeated ('a', 0));
@@ -1645,6 +1646,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
+  @SuppressFBWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   public void testCutAfterLength ()
   {
     assertEquals ("abc...", StringHelper.getCutAfterLength ("abc die Katze lief im Schnee", 3, "..."));
