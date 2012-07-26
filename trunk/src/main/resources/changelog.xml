@@ -20,6 +20,21 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2012-07-26" category="api" action="change">
+    <change>
+      <text locale="en">LogMessage is now implementing the interfaces ISuccessIndicator and IErrorIndicator</text>
+    </change>
+  </entry>
+  <entry date="2012-07-26" category="api" action="change">
+    <change>
+      <text locale="en">InMemoryLogger now implements the interface IHasErrorLevels</text>
+    </change>
+  </entry>
+  <entry date="2012-07-26" category="api" action="add">
+    <change>
+      <text locale="en">Extracted new interface IHasErrorLevels from IResourceErrorGroup and extended it with the methods get(Success|Failure|Error)Count</text>
+    </change>
+  </entry>
   <entry date="2012-07-26" category="api" action="add">
     <change>
       <text locale="en">Added new class MapBasedXPathVariableResolver</text>

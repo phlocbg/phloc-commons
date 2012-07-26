@@ -28,65 +28,8 @@ import com.phloc.commons.IHasSize;
  * 
  * @author philip
  */
-public interface IResourceErrorGroup extends IHasSize, Iterable <IResourceError>
+public interface IResourceErrorGroup extends IHasSize, Iterable <IResourceError>, IHasErrorLevels
 {
-  /**
-   * Check if this group contains only success messages. If no item is present,
-   * <code>false</code> is returned.
-   * 
-   * @return <code>true</code> if at least one item is present, and if all items
-   *         have the error level success, <code>false</code> otherwise.
-   */
-  boolean containsOnlySuccess ();
-
-  /**
-   * Check if this group contains at least one success message.
-   * 
-   * @return <code>true</code> if at least one success item is present,
-   *         <code>false</code> otherwise.
-   */
-  boolean containsAtLeastOneSuccess ();
-
-  /**
-   * Check if this group contains only failure messages. If no item is present,
-   * <code>false</code> is returned. All error levels except
-   * {@link EErrorLevel#SUCCESS} are considered to be a failure!
-   * 
-   * @return <code>true</code> if at least one item is present, and if all items
-   *         have an error level indicating failure, <code>false</code>
-   *         otherwise.
-   */
-  boolean containsOnlyFailure ();
-
-  /**
-   * Check if this group contains at least one failure message. All error levels
-   * except {@link EErrorLevel#SUCCESS} are considered to be a failure!
-   * 
-   * @return <code>true</code> if at least one failure item is present,
-   *         <code>false</code> otherwise.
-   */
-  boolean containsAtLeastOneFailure ();
-
-  /**
-   * Check if this group contains only error or fatal error messages. If no item
-   * is present, <code>false</code> is returned. All error levels &ge;
-   * {@link EErrorLevel#ERROR} are considered to be an error!
-   * 
-   * @return <code>true</code> if at least one item is present, and if all items
-   *         have an error level indicating error or fatal error,
-   *         <code>false</code> otherwise.
-   */
-  boolean containsOnlyError ();
-
-  /**
-   * Check if this group contains at least one error or fatal error message. All
-   * error levels &ge; {@link EErrorLevel#ERROR} are considered to be an error!
-   * 
-   * @return <code>true</code> if at least one error or fatal error item is
-   *         present, <code>false</code> otherwise.
-   */
-  boolean containsAtLeastOneError ();
-
   /**
    * Get a resource error group containing only the failure elements. All error
    * levels except {@link EErrorLevel#SUCCESS} are considered to be a failure!
