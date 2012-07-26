@@ -22,6 +22,11 @@
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
   <entry date="2012-07-26" category="api" action="add">
     <change>
+      <text locale="en">Added new methods TypeConverter.convertTo(Boolean|Byte|Char|Double|Float|Int|Long|Short)</text>
+    </change>
+  </entry>
+  <entry date="2012-07-26" category="api" action="add">
+    <change>
       <text locale="en">All Mutable* classes except MutableBoolean are now derived from Number</text>
     </change>
   </entry>

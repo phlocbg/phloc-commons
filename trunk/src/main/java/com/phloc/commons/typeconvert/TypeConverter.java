@@ -136,6 +136,174 @@ public final class TypeConverter
   }
 
   /**
+   * Convert the passed source value to boolean
+   * 
+   * @param aSrcValue
+   *        The source value. May not be <code>null</code>.
+   * @return <code>null</code> if the source value was <code>null</code>.
+   * @throws IllegalArgumentException
+   *         if the conversion process fails because either the conversion
+   *         failed, or no converter was found.
+   * @see TypeConverterProviderExactBeforeFuzzy
+   * @throws TypeConverterException
+   *         if the source value is null
+   */
+  public static boolean convertToBoolean (@Nonnull final Object aSrcValue)
+  {
+    if (aSrcValue == null)
+      throw new TypeConverterException (boolean.class, EReason.NULL_SOURCE_NOT_ALLOWED);
+    final Boolean aValue = convertIfNecessary (aSrcValue, Boolean.class);
+    return aValue.booleanValue ();
+  }
+
+  /**
+   * Convert the passed source value to byte
+   * 
+   * @param aSrcValue
+   *        The source value. May not be <code>null</code>.
+   * @return <code>null</code> if the source value was <code>null</code>.
+   * @throws IllegalArgumentException
+   *         if the conversion process fails because either the conversion
+   *         failed, or no converter was found.
+   * @see TypeConverterProviderExactBeforeFuzzy
+   * @throws TypeConverterException
+   *         if the source value is null
+   */
+  public static byte convertToByte (@Nonnull final Object aSrcValue)
+  {
+    if (aSrcValue == null)
+      throw new TypeConverterException (byte.class, EReason.NULL_SOURCE_NOT_ALLOWED);
+    final Byte aValue = convertIfNecessary (aSrcValue, Byte.class);
+    return aValue.byteValue ();
+  }
+
+  /**
+   * Convert the passed source value to char
+   * 
+   * @param aSrcValue
+   *        The source value. May not be <code>null</code>.
+   * @return <code>null</code> if the source value was <code>null</code>.
+   * @throws IllegalArgumentException
+   *         if the conversion process fails because either the conversion
+   *         failed, or no converter was found.
+   * @see TypeConverterProviderExactBeforeFuzzy
+   * @throws TypeConverterException
+   *         if the source value is null
+   */
+  public static char convertToChar (@Nonnull final Object aSrcValue)
+  {
+    if (aSrcValue == null)
+      throw new TypeConverterException (char.class, EReason.NULL_SOURCE_NOT_ALLOWED);
+    final Character aValue = convertIfNecessary (aSrcValue, Character.class);
+    return aValue.charValue ();
+  }
+
+  /**
+   * Convert the passed source value to double
+   * 
+   * @param aSrcValue
+   *        The source value. May not be <code>null</code>.
+   * @return <code>null</code> if the source value was <code>null</code>.
+   * @throws IllegalArgumentException
+   *         if the conversion process fails because either the conversion
+   *         failed, or no converter was found.
+   * @see TypeConverterProviderExactBeforeFuzzy
+   * @throws TypeConverterException
+   *         if the source value is null
+   */
+  public static double convertToDouble (@Nonnull final Object aSrcValue)
+  {
+    if (aSrcValue == null)
+      throw new TypeConverterException (double.class, EReason.NULL_SOURCE_NOT_ALLOWED);
+    final Double aValue = convertIfNecessary (aSrcValue, Double.class);
+    return aValue.doubleValue ();
+  }
+
+  /**
+   * Convert the passed source value to float
+   * 
+   * @param aSrcValue
+   *        The source value. May not be <code>null</code>.
+   * @return <code>null</code> if the source value was <code>null</code>.
+   * @throws IllegalArgumentException
+   *         if the conversion process fails because either the conversion
+   *         failed, or no converter was found.
+   * @see TypeConverterProviderExactBeforeFuzzy
+   * @throws TypeConverterException
+   *         if the source value is null
+   */
+  public static float convertToFloat (@Nonnull final Object aSrcValue)
+  {
+    if (aSrcValue == null)
+      throw new TypeConverterException (float.class, EReason.NULL_SOURCE_NOT_ALLOWED);
+    final Float aValue = convertIfNecessary (aSrcValue, Float.class);
+    return aValue.floatValue ();
+  }
+
+  /**
+   * Convert the passed source value to int
+   * 
+   * @param aSrcValue
+   *        The source value. May not be <code>null</code>.
+   * @return <code>null</code> if the source value was <code>null</code>.
+   * @throws IllegalArgumentException
+   *         if the conversion process fails because either the conversion
+   *         failed, or no converter was found.
+   * @see TypeConverterProviderExactBeforeFuzzy
+   * @throws TypeConverterException
+   *         if the source value is null
+   */
+  public static int convertToInt (@Nonnull final Object aSrcValue)
+  {
+    if (aSrcValue == null)
+      throw new TypeConverterException (int.class, EReason.NULL_SOURCE_NOT_ALLOWED);
+    final Integer aValue = convertIfNecessary (aSrcValue, Integer.class);
+    return aValue.intValue ();
+  }
+
+  /**
+   * Convert the passed source value to long
+   * 
+   * @param aSrcValue
+   *        The source value. May not be <code>null</code>.
+   * @return <code>null</code> if the source value was <code>null</code>.
+   * @throws IllegalArgumentException
+   *         if the conversion process fails because either the conversion
+   *         failed, or no converter was found.
+   * @see TypeConverterProviderExactBeforeFuzzy
+   * @throws TypeConverterException
+   *         if the source value is null
+   */
+  public static long convertToLong (@Nonnull final Object aSrcValue)
+  {
+    if (aSrcValue == null)
+      throw new TypeConverterException (long.class, EReason.NULL_SOURCE_NOT_ALLOWED);
+    final Long aValue = convertIfNecessary (aSrcValue, Long.class);
+    return aValue.longValue ();
+  }
+
+  /**
+   * Convert the passed source value to short
+   * 
+   * @param aSrcValue
+   *        The source value. May not be <code>null</code>.
+   * @return <code>null</code> if the source value was <code>null</code>.
+   * @throws IllegalArgumentException
+   *         if the conversion process fails because either the conversion
+   *         failed, or no converter was found.
+   * @see TypeConverterProviderExactBeforeFuzzy
+   * @throws TypeConverterException
+   *         if the source value is null
+   */
+  public static short convertToShort (@Nonnull final Object aSrcValue)
+  {
+    if (aSrcValue == null)
+      throw new TypeConverterException (short.class, EReason.NULL_SOURCE_NOT_ALLOWED);
+    final Short aValue = convertIfNecessary (aSrcValue, Short.class);
+    return aValue.shortValue ();
+  }
+
+  /**
    * Convert the passed source value to the destination class, if a conversion
    * is necessary. By default the fuzzy type converter provider is used.
    * 

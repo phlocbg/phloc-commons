@@ -60,6 +60,17 @@ public final class MutableChar extends Number implements IMutableInteger <Mutabl
   /**
    * Initialize with a certain value.
    * 
+   * @param aValue
+   *        The value to be used.
+   */
+  public MutableChar (@Nonnull final Character aValue)
+  {
+    this (aValue.charValue ());
+  }
+
+  /**
+   * Initialize with a certain value.
+   * 
    * @param cValue
    *        The value to be used.
    */

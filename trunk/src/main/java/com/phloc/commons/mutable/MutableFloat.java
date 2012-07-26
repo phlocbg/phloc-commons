@@ -46,6 +46,11 @@ public final class MutableFloat extends Number implements IMutableNumeric <Mutab
     this (DEFAULT_VALUE);
   }
 
+  public MutableFloat (@Nonnull final Float aValue)
+  {
+    this (aValue.floatValue ());
+  }
+
   public MutableFloat (final float fValue)
   {
     m_fValue = fValue;

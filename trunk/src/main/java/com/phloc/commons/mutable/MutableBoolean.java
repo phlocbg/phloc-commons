@@ -42,6 +42,11 @@ public final class MutableBoolean implements IMutable <MutableBoolean>
     this (DEFAULT_VALUE);
   }
 
+  public MutableBoolean (@Nonnull final Boolean aValue)
+  {
+    this (aValue.booleanValue ());
+  }
+
   public MutableBoolean (final boolean bValue)
   {
     m_bValue = bValue;

@@ -18,12 +18,14 @@
 package com.phloc.commons.mutable;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
 import com.phloc.commons.mock.PhlocTestUtils;
+import com.phloc.commons.typeconvert.TypeConverter;
 
 /**
  * Test class for class {@link MutableBoolean}.
@@ -49,5 +51,16 @@ public final class MutableBooleanTest
     PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (new MutableBoolean (true),
                                                                         new MutableBoolean (false));
     PhlocTestUtils.testGetClone (new MutableBoolean (true));
+  }
+
+  @Test
+  public void testTypeConversion ()
+  {
+    final MutableBoolean x = new MutableBoolean (true);
+    final Boolean b = TypeConverter.convertIfNecessary (x, Boolean.class);
+    assertNotNull (b);
+    assertTrue (b.booleanValue ());
+    PhlocTestUtils.testDefaultImplementationWithEqualContentObject (x,
+                                                                    TypeConverter.convert (true, MutableBoolean.class));
   }
 }
