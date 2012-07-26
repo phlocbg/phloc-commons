@@ -99,6 +99,57 @@ public final class FileUtils
     return aDir.isDirectory ();
   }
 
+  /**
+   * Tests whether the application can read the file denoted by this abstract
+   * pathname.
+   * 
+   * @param aFile
+   *        The file to be checked. May not be <code>null</code>.
+   * @return <code>true</code> if and only if the file specified by this
+   *         abstract pathname exists <em>and</em> can be read by the
+   *         application; <code>false</code> otherwise
+   */
+  public static boolean canRead (@Nonnull final File aFile)
+  {
+    if (aFile == null)
+      throw new NullPointerException ("file");
+    return aFile.canRead ();
+  }
+
+  /**
+   * Tests whether the application can modify the file denoted by this abstract
+   * pathname.
+   * 
+   * @param aFile
+   *        The file to be checked. May not be <code>null</code>.
+   * @return <code>true</code> if and only if the file system actually contains
+   *         a file denoted by this abstract pathname <em>and</em> the
+   *         application is allowed to write to the file; <code>false</code>
+   *         otherwise.
+   */
+  public static boolean canWrite (@Nonnull final File aFile)
+  {
+    if (aFile == null)
+      throw new NullPointerException ("file");
+    return aFile.canWrite ();
+  }
+
+  /**
+   * Tests whether the application can execute the file denoted by this abstract
+   * pathname.
+   * 
+   * @param aFile
+   *        The file to be checked. May not be <code>null</code>.
+   * @return <code>true</code> if and only if the abstract pathname exists
+   *         <em>and</em> the application is allowed to execute the file
+   */
+  public static boolean canExecute (@Nonnull final File aFile)
+  {
+    if (aFile == null)
+      throw new NullPointerException ("file");
+    return aFile.canExecute ();
+  }
+
   @Nonnull
   public static EChange ensureParentDirectoryIsPresent (@Nonnull final File aFileObject)
   {
@@ -266,7 +317,7 @@ public final class FileUtils
     // Check if parent directory is writable, to avoid catching the
     // FileNotFoundException with "permission denied" afterwards
     final File aParentDir = aFile.getParentFile ();
-    if (aParentDir != null && !aParentDir.canWrite ())
+    if (aParentDir != null && !canWrite (aParentDir))
     {
       s_aLogger.warn ("Parent directory '" +
                       aParentDir +
@@ -453,7 +504,7 @@ public final class FileUtils
   private static List <File> _getDirectoryContent (@Nonnull final File aDirectory,
                                                    @Nullable final File [] aSelectedContent)
   {
-    if (!aDirectory.canExecute ())
+    if (!canExecute (aDirectory))
     {
       // If this happens, the resulting File objects are neither files nor
       // directories (isFile() and isDirectory() both return false!!)
@@ -466,7 +517,7 @@ public final class FileUtils
       if (!aDirectory.isDirectory ())
         s_aLogger.warn ("Cannot list non-directory: " + aDirectory.getAbsolutePath ());
       else
-        if (!aDirectory.canRead ())
+        if (!canRead (aDirectory))
           s_aLogger.warn ("Cannot list directory because of no read-rights: " + aDirectory.getAbsolutePath ());
         else
           s_aLogger.warn ("Directory listing failed because of IO error: " + aDirectory.getAbsolutePath ());

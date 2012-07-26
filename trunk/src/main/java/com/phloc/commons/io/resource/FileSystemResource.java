@@ -200,7 +200,7 @@ public final class FileSystemResource implements IReadWriteResource
    */
   public boolean canRead ()
   {
-    return m_aFile.canRead ();
+    return FileUtils.canRead (m_aFile);
   }
 
   /**
@@ -214,7 +214,7 @@ public final class FileSystemResource implements IReadWriteResource
    */
   public boolean canWrite ()
   {
-    return m_aFile.canWrite ();
+    return FileUtils.canWrite (m_aFile);
   }
 
   /**
@@ -226,7 +226,7 @@ public final class FileSystemResource implements IReadWriteResource
    */
   public boolean canExecute ()
   {
-    return m_aFile.canExecute ();
+    return FileUtils.canExecute (m_aFile);
   }
 
   @Override

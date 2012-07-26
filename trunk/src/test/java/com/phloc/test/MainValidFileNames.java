@@ -39,8 +39,8 @@ public final class MainValidFileNames
     System.out.println ("--- testing name: " + sName + " ---");
     System.out.println (sName + ".exists()=" + f.exists ());
     System.out.println (sName + ".getAbsolutePath()=" + f.getAbsolutePath ());
-    System.out.println (sName + ".canRead()=" + f.canRead ());
-    System.out.println (sName + ".canWrite()=" + f.canWrite ());
+    System.out.println (sName + ".canRead()=" + FileUtils.canRead (f));
+    System.out.println (sName + ".canWrite()=" + FileUtils.canWrite (f));
 
     System.out.println ("Writing into " + fileName + " ...");
     OutputStream out = null;
@@ -70,8 +70,8 @@ public final class MainValidFileNames
 
     System.out.println (sName + ".exists()=" + f.exists ());
     System.out.println (sName + ".getAbsolutePath()=" + f.getAbsolutePath ());
-    System.out.println (sName + ".canRead()=" + f.canRead ());
-    System.out.println (sName + ".canWrite()=" + f.canWrite ());
+    System.out.println (sName + ".canRead()=" + FileUtils.canRead (f));
+    System.out.println (sName + ".canWrite()=" + FileUtils.canWrite (f));
     System.out.println ("Reading from " + fileName + " ...");
     FileInputStream in = null;
     try

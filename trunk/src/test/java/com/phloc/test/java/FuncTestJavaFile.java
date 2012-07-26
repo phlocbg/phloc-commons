@@ -48,9 +48,9 @@ public final class FuncTestJavaFile
       s_aLogger.info ("  isDirectory:  " + f.isDirectory ());
       s_aLogger.info ("  isFile:       " + f.isFile ());
       s_aLogger.info ("  isHidden:     " + f.isHidden ());
-      s_aLogger.info ("  canRead:      " + f.canRead ());
-      s_aLogger.info ("  canWrite:     " + f.canWrite ());
-      s_aLogger.info ("  canExecute:   " + f.canExecute ());
+      s_aLogger.info ("  canRead:      " + FileUtils.canRead (f));
+      s_aLogger.info ("  canWrite:     " + FileUtils.canWrite (f));
+      s_aLogger.info ("  canExecute:   " + FileUtils.canExecute (f));
     }
   }
 
