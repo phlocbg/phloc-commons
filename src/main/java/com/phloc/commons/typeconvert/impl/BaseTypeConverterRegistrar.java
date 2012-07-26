@@ -54,6 +54,70 @@ import com.phloc.commons.typeconvert.TypeConverter;
 @IsSPIImplementation
 public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrarSPI
 {
+  static final class NumberToShortTypeConverter implements ITypeConverter
+  {
+    public Short convert (@Nonnull final Object aSource)
+    {
+      return Short.valueOf (((Number) aSource).shortValue ());
+    }
+  }
+
+  static final class NumberToLongTypeConverter implements ITypeConverter
+  {
+    public Long convert (@Nonnull final Object aSource)
+    {
+      return Long.valueOf (((Number) aSource).longValue ());
+    }
+  }
+
+  static final class NumberToIntegerTypeConverter implements ITypeConverter
+  {
+    public Integer convert (@Nonnull final Object aSource)
+    {
+      return Integer.valueOf (((Number) aSource).intValue ());
+    }
+  }
+
+  static final class NumberToFloatTypeConverter implements ITypeConverter
+  {
+    public Float convert (@Nonnull final Object aSource)
+    {
+      return Float.valueOf (((Number) aSource).floatValue ());
+    }
+  }
+
+  static final class NumberToDoubleTypeConverter implements ITypeConverter
+  {
+    public Double convert (@Nonnull final Object aSource)
+    {
+      return Double.valueOf (((Number) aSource).doubleValue ());
+    }
+  }
+
+  static final class NumberToCharacterTypeConverter implements ITypeConverter
+  {
+    public Character convert (@Nonnull final Object aSource)
+    {
+      return Character.valueOf ((char) ((Number) aSource).intValue ());
+    }
+  }
+
+  static final class NumberToByteTypeConverter implements ITypeConverter
+  {
+    public Byte convert (@Nonnull final Object aSource)
+    {
+      return Byte.valueOf (((Number) aSource).byteValue ());
+    }
+  }
+
+  static final class NumberToBooleanTypeConverter implements ITypeConverter
+  {
+    public Boolean convert (@Nonnull final Object aSource)
+    {
+      return Boolean.valueOf (((Number) aSource).intValue () != 0);
+    }
+  }
+
   /**
    * Register all type converters for the 15 base types:<br>
    * <ul>
@@ -78,13 +142,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
   public void registerTypeConverter (@Nonnull final ITypeConverterRegistry aRegistry)
   {
     // to Boolean
-    final ITypeConverter aConverterNumberToBoolean = new ITypeConverter ()
-    {
-      public Boolean convert (@Nonnull final Object aSource)
-      {
-        return Boolean.valueOf (((Number) aSource).intValue () != 0);
-      }
-    };
+    final ITypeConverter aConverterNumberToBoolean = new NumberToBooleanTypeConverter ();
     aRegistry.registerTypeConverter (AtomicInteger.class, Boolean.class, aConverterNumberToBoolean);
     aRegistry.registerTypeConverter (AtomicLong.class, Boolean.class, aConverterNumberToBoolean);
     aRegistry.registerTypeConverter (BigDecimal.class, Boolean.class, aConverterNumberToBoolean);
@@ -121,13 +179,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverter (StringBuffer.class, Boolean.class, aConverterStringToBoolean);
 
     // to Byte
-    final ITypeConverter aConverterNumberToByte = new ITypeConverter ()
-    {
-      public Byte convert (@Nonnull final Object aSource)
-      {
-        return Byte.valueOf (((Number) aSource).byteValue ());
-      }
-    };
+    final ITypeConverter aConverterNumberToByte = new NumberToByteTypeConverter ();
     aRegistry.registerTypeConverter (AtomicInteger.class, Byte.class, aConverterNumberToByte);
     aRegistry.registerTypeConverter (AtomicLong.class, Byte.class, aConverterNumberToByte);
     aRegistry.registerTypeConverter (BigDecimal.class, Byte.class, aConverterNumberToByte);
@@ -177,13 +229,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverter (StringBuffer.class, Byte.class, aConverterStringToByte);
 
     // to Character
-    final ITypeConverter aConverterNumberToCharacter = new ITypeConverter ()
-    {
-      public Character convert (@Nonnull final Object aSource)
-      {
-        return Character.valueOf ((char) ((Number) aSource).intValue ());
-      }
-    };
+    final ITypeConverter aConverterNumberToCharacter = new NumberToCharacterTypeConverter ();
     aRegistry.registerTypeConverter (AtomicInteger.class, Character.class, aConverterNumberToCharacter);
     aRegistry.registerTypeConverter (AtomicLong.class, Character.class, aConverterNumberToCharacter);
     aRegistry.registerTypeConverter (BigDecimal.class, Character.class, aConverterNumberToCharacter);
@@ -221,13 +267,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverter (StringBuffer.class, Character.class, aConverterStringToCharacter);
 
     // to Double
-    final ITypeConverter aConverterNumberToDouble = new ITypeConverter ()
-    {
-      public Double convert (@Nonnull final Object aSource)
-      {
-        return Double.valueOf (((Number) aSource).doubleValue ());
-      }
-    };
+    final ITypeConverter aConverterNumberToDouble = new NumberToDoubleTypeConverter ();
     aRegistry.registerTypeConverter (AtomicInteger.class, Double.class, aConverterNumberToDouble);
     aRegistry.registerTypeConverter (AtomicLong.class, Double.class, aConverterNumberToDouble);
     aRegistry.registerTypeConverter (BigDecimal.class, Double.class, aConverterNumberToDouble);
@@ -270,13 +310,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverter (StringBuffer.class, Double.class, aConverterStringToDouble);
 
     // to Float
-    final ITypeConverter aConverterNumberToFloat = new ITypeConverter ()
-    {
-      public Float convert (@Nonnull final Object aSource)
-      {
-        return Float.valueOf (((Number) aSource).floatValue ());
-      }
-    };
+    final ITypeConverter aConverterNumberToFloat = new NumberToFloatTypeConverter ();
     aRegistry.registerTypeConverter (AtomicInteger.class, Float.class, aConverterNumberToFloat);
     aRegistry.registerTypeConverter (AtomicLong.class, Float.class, aConverterNumberToFloat);
     aRegistry.registerTypeConverter (BigDecimal.class, Float.class, aConverterNumberToFloat);
@@ -319,13 +353,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverter (StringBuffer.class, Float.class, aConverterStringToFloat);
 
     // to Integer
-    final ITypeConverter aConverterNumberToInteger = new ITypeConverter ()
-    {
-      public Integer convert (@Nonnull final Object aSource)
-      {
-        return Integer.valueOf (((Number) aSource).intValue ());
-      }
-    };
+    final ITypeConverter aConverterNumberToInteger = new NumberToIntegerTypeConverter ();
     aRegistry.registerTypeConverter (AtomicInteger.class, Integer.class, aConverterNumberToInteger);
     aRegistry.registerTypeConverter (AtomicLong.class, Integer.class, aConverterNumberToInteger);
     aRegistry.registerTypeConverter (BigDecimal.class, Integer.class, aConverterNumberToInteger);
@@ -368,13 +396,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverter (StringBuffer.class, Integer.class, aConverterStringToInteger);
 
     // to Long
-    final ITypeConverter aConverterNumberToLong = new ITypeConverter ()
-    {
-      public Long convert (@Nonnull final Object aSource)
-      {
-        return Long.valueOf (((Number) aSource).longValue ());
-      }
-    };
+    final ITypeConverter aConverterNumberToLong = new NumberToLongTypeConverter ();
     aRegistry.registerTypeConverter (AtomicInteger.class, Long.class, aConverterNumberToLong);
     aRegistry.registerTypeConverter (AtomicLong.class, Long.class, aConverterNumberToLong);
     aRegistry.registerTypeConverter (BigDecimal.class, Long.class, aConverterNumberToLong);
@@ -417,13 +439,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverter (StringBuffer.class, Long.class, aConverterStringToLong);
 
     // to Short
-    final ITypeConverter aConverterNumberToShort = new ITypeConverter ()
-    {
-      public Short convert (@Nonnull final Object aSource)
-      {
-        return Short.valueOf (((Number) aSource).shortValue ());
-      }
-    };
+    final ITypeConverter aConverterNumberToShort = new NumberToShortTypeConverter ();
     aRegistry.registerTypeConverter (AtomicInteger.class, Short.class, aConverterNumberToShort);
     aRegistry.registerTypeConverter (AtomicLong.class, Short.class, aConverterNumberToShort);
     aRegistry.registerTypeConverter (BigDecimal.class, Short.class, aConverterNumberToShort);

@@ -60,6 +60,7 @@ public final class MutableBooleanTest
     final Boolean b = TypeConverter.convertIfNecessary (x, Boolean.class);
     assertNotNull (b);
     assertTrue (b.booleanValue ());
+    assertTrue (TypeConverter.convertToBoolean (x));
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (x,
                                                                     TypeConverter.convert (true, MutableBoolean.class));
   }
