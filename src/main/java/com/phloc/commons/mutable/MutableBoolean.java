@@ -20,7 +20,6 @@ package com.phloc.commons.mutable;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.phloc.commons.ICloneable;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
@@ -32,7 +31,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @NotThreadSafe
-public final class MutableBoolean implements Comparable <MutableBoolean>, ICloneable <MutableBoolean>
+public final class MutableBoolean implements IMutable <MutableBoolean>
 {
   public static final boolean DEFAULT_VALUE = false;
 

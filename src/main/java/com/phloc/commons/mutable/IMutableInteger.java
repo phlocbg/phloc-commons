@@ -22,7 +22,7 @@ package com.phloc.commons.mutable;
  * 
  * @author philip
  */
-public interface IMutableInteger extends IMutableNumeric
+public interface IMutableInteger <IMPLTYPE extends IMutableInteger <IMPLTYPE>> extends IMutableNumeric <IMPLTYPE>
 {
   /**
    * @return <code>true</code> if the value is even

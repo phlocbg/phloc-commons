@@ -20,7 +20,6 @@ package com.phloc.commons.mutable;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.phloc.commons.ICloneable;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
@@ -32,7 +31,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @NotThreadSafe
-public final class MutableByte implements Comparable <MutableByte>, ICloneable <MutableByte>, IMutableInteger
+public final class MutableByte implements IMutableInteger <MutableByte>
 {
   public static final byte DEFAULT_VALUE = 0;
 
