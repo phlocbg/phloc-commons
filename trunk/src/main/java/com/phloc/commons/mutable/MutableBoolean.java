@@ -32,7 +32,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @NotThreadSafe
-public final class MutableBoolean implements ICloneable <MutableBoolean>
+public final class MutableBoolean implements Comparable <MutableBoolean>, ICloneable <MutableBoolean>
 {
   public static final boolean DEFAULT_VALUE = false;
 
@@ -66,6 +66,11 @@ public final class MutableBoolean implements ICloneable <MutableBoolean>
       return EChange.UNCHANGED;
     m_bValue = bValue;
     return EChange.CHANGED;
+  }
+
+  public int compareTo (@Nonnull final MutableBoolean rhs)
+  {
+    return m_bValue == rhs.m_bValue ? 0 : m_bValue ? -1 : +1;
   }
 
   @Nonnull
