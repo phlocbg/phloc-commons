@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.error.EErrorLevel;
 import com.phloc.commons.error.IHasErrorLevel;
 import com.phloc.commons.state.IErrorIndicator;
@@ -56,6 +57,7 @@ public final class LogMessage implements IHasErrorLevel, ISuccessIndicator, IErr
   }
 
   @Nonnull
+  @ReturnsMutableCopy
   public Date getIssueDateTime ()
   {
     // Return a copy

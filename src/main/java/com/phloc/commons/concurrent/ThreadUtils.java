@@ -24,6 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.lang.TimeValue;
 import com.phloc.commons.state.ESuccess;
 
 /**
@@ -78,14 +79,49 @@ public final class ThreadUtils
    *        The duration to sleep.
    * @return {@link ESuccess#SUCCESS} if sleeping was not interrupted,
    *         {@link ESuccess#FAILURE} if sleeping was interrupted
+   * @deprecated Use {@link #sleep(long,TimeUnit)} instead
    */
+  @Deprecated
   @Nonnull
   public static ESuccess sleep (@Nonnull final TimeUnit aTimeUnit, @Nonnegative final long nDuration)
   {
-    if (aTimeUnit == null)
-      throw new NullPointerException ("timeUnit");
+    return sleep (nDuration, aTimeUnit);
+  }
+
+  /**
+   * Sleep the current thread for a certain amount of time
+   * 
+   * @param aTimeValue
+   *        The time value to use. May not be <code>null</code>.
+   * @return {@link ESuccess#SUCCESS} if sleeping was not interrupted,
+   *         {@link ESuccess#FAILURE} if sleeping was interrupted
+   */
+  @Nonnull
+  public static ESuccess sleep (@Nonnull final TimeValue aTimeValue)
+  {
+    if (aTimeValue == null)
+      throw new NullPointerException ("timeValue");
+
+    return sleep (aTimeValue.getAsMillis ());
+  }
+
+  /**
+   * Sleep the current thread for a certain amount of time
+   * 
+   * @param nDuration
+   *        The duration to sleep.
+   * @param aTimeUnit
+   *        The time unit to use. May not be <code>null</code>.
+   * @return {@link ESuccess#SUCCESS} if sleeping was not interrupted,
+   *         {@link ESuccess#FAILURE} if sleeping was interrupted
+   */
+  @Nonnull
+  public static ESuccess sleep (@Nonnegative final long nDuration, @Nonnull final TimeUnit aTimeUnit)
+  {
     if (nDuration < 0)
       throw new IllegalArgumentException ("Negative duration: " + nDuration);
+    if (aTimeUnit == null)
+      throw new NullPointerException ("timeUnit");
 
     return sleep (aTimeUnit.toMillis (nDuration));
   }
