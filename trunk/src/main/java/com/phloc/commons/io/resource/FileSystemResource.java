@@ -103,9 +103,18 @@ public final class FileSystemResource implements IReadWriteResource
   }
 
   @Nullable
+  public static InputStream getInputStream (@Nonnull final File aFile)
+  {
+    if (aFile == null)
+      throw new NullPointerException ("file");
+
+    return FileUtils.getInputStream (aFile);
+  }
+
+  @Nullable
   public InputStream getInputStream ()
   {
-    return FileUtils.getInputStream (m_aFile);
+    return getInputStream (m_aFile);
   }
 
   @Nullable
@@ -179,6 +188,21 @@ public final class FileSystemResource implements IReadWriteResource
   public FileSystemResource getWritableCloneForPath (@Nonnull final String sPath)
   {
     return new FileSystemResource (sPath);
+  }
+
+  public boolean canRead ()
+  {
+    return m_aFile.canRead ();
+  }
+
+  public boolean canWrite ()
+  {
+    return m_aFile.canWrite ();
+  }
+
+  public boolean canExecute ()
+  {
+    return m_aFile.canExecute ();
   }
 
   @Override
