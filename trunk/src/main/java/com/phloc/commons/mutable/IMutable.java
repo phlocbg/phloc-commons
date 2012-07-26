@@ -17,40 +17,14 @@
  */
 package com.phloc.commons.mutable;
 
+import com.phloc.commons.ICloneable;
+
 /**
- * Base interface for mutable numeric values
+ * Base interface for all mutable objects
  * 
  * @author philip
  */
-public interface IMutableNumeric <IMPLTYPE extends IMutableNumeric <IMPLTYPE>> extends IMutable <IMPLTYPE>
+public interface IMutable <IMPLTYPE extends IMutable <IMPLTYPE>> extends Comparable <IMPLTYPE>, ICloneable <IMPLTYPE>
 {
-  /**
-   * @return <code>true</code> if the value is 0
-   */
-  boolean is0 ();
-
-  /**
-   * @return <code>true</code> if the value is not 0
-   */
-  boolean isNot0 ();
-
-  /**
-   * @return <code>true</code> if the value is &lt; 0
-   */
-  boolean isSmaller0 ();
-
-  /**
-   * @return <code>true</code> if the value is &le; 0
-   */
-  boolean isSmallerOrEqual0 ();
-
-  /**
-   * @return <code>true</code> if the value is &gt; 0
-   */
-  boolean isGreater0 ();
-
-  /**
-   * @return <code>true</code> if the value is &ge; 0
-   */
-  boolean isGreaterOrEqual0 ();
+  /* empty */
 }
