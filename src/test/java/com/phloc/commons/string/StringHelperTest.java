@@ -38,6 +38,7 @@ import org.junit.Test;
 
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.charset.CCharset;
+import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.io.streams.NonBlockingStringWriter;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
@@ -815,8 +816,9 @@ public final class StringHelperTest extends AbstractPhlocTestCase
 
     for (final String sString : new String [] { "Super", "Hallo", "", "Welt!", "fff" })
       assertEquals (sString,
-                    new String (StringHelper.getHexDecoded (StringHelper.getHexEncoded (sString.getBytes (CCharset.CHARSET_ISO_8859_1_OBJ))),
-                                CCharset.CHARSET_ISO_8859_1_OBJ));
+                    CharsetManager.getAsString (StringHelper.getHexDecoded (StringHelper.getHexEncoded (CharsetManager.getAsBytes (sString,
+                                                                                                                                   CCharset.CHARSET_ISO_8859_1_OBJ))),
+                                                CCharset.CHARSET_ISO_8859_1_OBJ));
 
     assertArrayEquals (new byte [] { 0 }, StringHelper.getHexDecoded ("00"));
     assertArrayEquals (new byte [] { 0, 1 }, StringHelper.getHexDecoded ("0001"));

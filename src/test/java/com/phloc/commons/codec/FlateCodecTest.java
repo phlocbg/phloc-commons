@@ -24,6 +24,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.phloc.commons.charset.CCharset;
+import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.random.VerySecureRandom;
 
 /**
@@ -49,7 +50,7 @@ public final class FlateCodecTest
   public void testEncodeAndDecode ()
   {
     _testEncodeDecode (new byte [0]);
-    _testEncodeDecode ("Hallo JUnit".getBytes (CCharset.CHARSET_ISO_8859_1_OBJ));
+    _testEncodeDecode (CharsetManager.getAsBytes ("Hallo JUnit", CCharset.CHARSET_ISO_8859_1_OBJ));
 
     for (int i = 0; i < 256; ++i)
     {

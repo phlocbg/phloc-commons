@@ -24,6 +24,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.phloc.commons.charset.CCharset;
+import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 import com.phloc.commons.random.VerySecureRandom;
 
@@ -55,7 +56,7 @@ public final class LZWCodecTest extends AbstractPhlocTestCase
   @Test
   public void testEncode2 ()
   {
-    final byte [] aDecoded = "LZWLZ78LZ77LZCLZMWLZAP".getBytes (CCharset.CHARSET_ISO_8859_1_OBJ);
+    final byte [] aDecoded = CharsetManager.getAsBytes ("LZWLZ78LZ77LZCLZMWLZAP", CCharset.CHARSET_ISO_8859_1_OBJ);
     final byte [] aEncoded = new LZWCodec ().encode (aDecoded);
     final byte [] aExpected = new byte [] { (byte) 0x80,
                                            0x13,

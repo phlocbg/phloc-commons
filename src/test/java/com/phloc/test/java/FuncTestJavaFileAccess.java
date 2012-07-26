@@ -35,6 +35,7 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.SystemProperties;
 import com.phloc.commons.charset.CCharset;
+import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.io.file.FileOperationManager;
 import com.phloc.commons.io.file.FileOperations;
@@ -129,7 +130,8 @@ public final class FuncTestJavaFileAccess
                       final String sPrefix = "phloc-commons-";
 
                       final File fFile = new File (fTempDir, sPrefix + sMod + ".dat");
-                      if (SimpleFileIO.writeFile (fFile, "content".getBytes (CCharset.CHARSET_ISO_8859_1_OBJ))
+                      if (SimpleFileIO.writeFile (fFile,
+                                                  CharsetManager.getAsBytes ("content", CCharset.CHARSET_ISO_8859_1_OBJ))
                                       .isSuccess ())
                         _exec ("chmod", sMod, fFile.getAbsolutePath ());
 
@@ -145,9 +147,9 @@ public final class FuncTestJavaFileAccess
       final List <File> aFiles = FileUtils.getDirectoryContent (fTempDir);
       for (final File f : ContainerHelper.getSorted (aFiles))
       {
-        final boolean bCanRead = f.canRead ();
-        final boolean bCanWrite = f.canWrite ();
-        final boolean bCanExec = f.canExecute ();
+        final boolean bCanRead = FileUtils.canRead (f);
+        final boolean bCanWrite = FileUtils.canWrite (f);
+        final boolean bCanExec = FileUtils.canRead (f);
         final String sRights = bCanRead + "/" + bCanWrite + "/" + bCanExec;
         final File f2 = new File (f.getParentFile (), f.getName () + "2");
 

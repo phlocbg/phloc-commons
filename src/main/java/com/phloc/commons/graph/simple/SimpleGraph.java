@@ -148,7 +148,6 @@ public class SimpleGraph <VALUETYPE> implements ISimpleGraph <VALUETYPE>
     return aRelation;
   }
 
-  @Override
   @Nonnull
   public IGraphRelation <VALUETYPE> createRelation (@Nonnull final String sFromNodeID, @Nonnull final String sToNodeID)
   {

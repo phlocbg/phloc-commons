@@ -76,7 +76,7 @@ public final class FileOperations
 
     // Is the parent directory writable?
     final File aParentDir = aDir.getParentFile ();
-    if (aParentDir != null && aParentDir.exists () && !aParentDir.canWrite ())
+    if (aParentDir != null && aParentDir.exists () && !FileUtils.canWrite (aParentDir))
       return EFileIOErrorCode.SOURCE_PARENT_NOT_WRITABLE.getAsIOError (EFileIOOperation.CREATE_DIR, aDir);
 
     try
@@ -128,7 +128,7 @@ public final class FileOperations
 
     // Is the parent directory writable?
     final File aParentDir = aDir.getParentFile ();
-    if (aParentDir != null && aParentDir.exists () && !aParentDir.canWrite ())
+    if (aParentDir != null && aParentDir.exists () && !FileUtils.canWrite (aParentDir))
       return EFileIOErrorCode.SOURCE_PARENT_NOT_WRITABLE.getAsIOError (EFileIOOperation.CREATE_DIR_RECURSIVE, aDir);
 
     try
@@ -187,7 +187,7 @@ public final class FileOperations
 
     // Is the parent directory writable?
     final File aParentDir = aDir.getParentFile ();
-    if (aParentDir != null && !aParentDir.canWrite ())
+    if (aParentDir != null && !FileUtils.canWrite (aParentDir))
       return EFileIOErrorCode.SOURCE_PARENT_NOT_WRITABLE.getAsIOError (EFileIOOperation.DELETE_DIR, aDir);
 
     try
@@ -246,7 +246,7 @@ public final class FileOperations
 
     // Is the parent directory writable?
     final File aParentDir = aDir.getParentFile ();
-    if (aParentDir != null && !aParentDir.canWrite ())
+    if (aParentDir != null && !FileUtils.canWrite (aParentDir))
       return EFileIOErrorCode.SOURCE_PARENT_NOT_WRITABLE.getAsIOError (EFileIOOperation.DELETE_DIR_RECURSIVE, aDir);
 
     // iterate directory
@@ -317,7 +317,7 @@ public final class FileOperations
 
     // Is the parent directory writable?
     final File aParentDir = aFile.getParentFile ();
-    if (aParentDir != null && !aParentDir.canWrite ())
+    if (aParentDir != null && !FileUtils.canWrite (aParentDir))
       return EFileIOErrorCode.SOURCE_PARENT_NOT_WRITABLE.getAsIOError (EFileIOOperation.DELETE_FILE, aFile);
 
     try
@@ -380,12 +380,12 @@ public final class FileOperations
 
     // Is the source parent directory writable?
     final File aSourceParentDir = aSourceFile.getParentFile ();
-    if (aSourceParentDir != null && !aSourceParentDir.canWrite ())
+    if (aSourceParentDir != null && !FileUtils.canWrite (aSourceParentDir))
       return EFileIOErrorCode.SOURCE_PARENT_NOT_WRITABLE.getAsIOError (EFileIOOperation.RENAME_FILE, aSourceFile);
 
     // Is the target parent directory writable?
     final File aTargetParentDir = aTargetFile.getParentFile ();
-    if (aTargetParentDir != null && aTargetParentDir.exists () && !aTargetParentDir.canWrite ())
+    if (aTargetParentDir != null && aTargetParentDir.exists () && !FileUtils.canWrite (aTargetParentDir))
       return EFileIOErrorCode.TARGET_PARENT_NOT_WRITABLE.getAsIOError (EFileIOOperation.RENAME_FILE, aTargetFile);
 
     // Ensure parent of target directory is present
@@ -440,12 +440,12 @@ public final class FileOperations
 
     // Is the source parent directory writable?
     final File aSourceParentDir = aSourceDir.getParentFile ();
-    if (aSourceParentDir != null && !aSourceParentDir.canWrite ())
+    if (aSourceParentDir != null && !FileUtils.canWrite (aSourceParentDir))
       return EFileIOErrorCode.SOURCE_PARENT_NOT_WRITABLE.getAsIOError (EFileIOOperation.RENAME_DIR, aSourceDir);
 
     // Is the target parent directory writable?
     final File aTargetParentDir = aTargetDir.getParentFile ();
-    if (aTargetParentDir != null && aTargetParentDir.exists () && !aTargetParentDir.canWrite ())
+    if (aTargetParentDir != null && aTargetParentDir.exists () && !FileUtils.canWrite (aTargetParentDir))
       return EFileIOErrorCode.TARGET_PARENT_NOT_WRITABLE.getAsIOError (EFileIOOperation.RENAME_DIR, aTargetDir);
 
     // Ensure parent of target directory is present
@@ -495,12 +495,12 @@ public final class FileOperations
       return EFileIOErrorCode.TARGET_ALREADY_EXISTS.getAsIOError (EFileIOOperation.COPY_FILE, aTargetFile);
 
     // Is the source file readable?
-    if (!aSourceFile.canRead ())
+    if (!FileUtils.canRead (aSourceFile))
       return EFileIOErrorCode.SOURCE_NOT_READABLE.getAsIOError (EFileIOOperation.COPY_FILE, aSourceFile);
 
     // Is the target parent directory writable?
     final File aTargetParentDir = aTargetFile.getParentFile ();
-    if (aTargetParentDir != null && aTargetParentDir.exists () && !aTargetParentDir.canWrite ())
+    if (aTargetParentDir != null && aTargetParentDir.exists () && !FileUtils.canWrite (aTargetParentDir))
       return EFileIOErrorCode.TARGET_PARENT_NOT_WRITABLE.getAsIOError (EFileIOOperation.COPY_FILE, aTargetFile);
 
     // Ensure the targets parent directory is present
@@ -558,12 +558,12 @@ public final class FileOperations
       return EFileIOErrorCode.TARGET_ALREADY_EXISTS.getAsIOError (EFileIOOperation.COPY_DIR_RECURSIVE, aTargetDir);
 
     // Is the source directory readable?
-    if (!aSourceDir.canRead ())
+    if (!FileUtils.canRead (aSourceDir))
       return EFileIOErrorCode.SOURCE_NOT_READABLE.getAsIOError (EFileIOOperation.COPY_DIR_RECURSIVE, aSourceDir);
 
     // Is the target parent directory writable?
     final File aTargetParentDir = aTargetDir.getParentFile ();
-    if (aTargetParentDir != null && aTargetParentDir.exists () && !aTargetParentDir.canWrite ())
+    if (aTargetParentDir != null && aTargetParentDir.exists () && !FileUtils.canWrite (aTargetParentDir))
       return EFileIOErrorCode.TARGET_PARENT_NOT_WRITABLE.getAsIOError (EFileIOOperation.COPY_DIR_RECURSIVE, aTargetDir);
 
     FileIOError eCode;
