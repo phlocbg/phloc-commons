@@ -29,9 +29,6 @@ import java.math.RoundingMode;
 import java.util.Iterator;
 
 import javax.annotation.Nonnull;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 
 import org.junit.Test;
 import org.w3c.dom.DOMException;
@@ -42,6 +39,7 @@ import org.w3c.dom.Node;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.collections.iterate.IterableIterator;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
+import com.phloc.commons.xml.xpath.XPathExpressionHelper;
 
 /**
  * Test class for class {@link XMLHelper}.
@@ -421,7 +419,7 @@ public final class XMLHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
-  public void testGetPathToNode () throws XPathExpressionException
+  public void testGetPathToNode ()
   {
     final Document doc = _getTestDoc ();
     assertEquals (doc.getNodeName () + "/", XMLHelper.getPathToNode (doc));
@@ -433,7 +431,7 @@ public final class XMLHelperTest extends AbstractPhlocTestCase
     assertEquals (doc.getNodeName () + "root[0]", XMLHelper.getPathToNode (e, ""));
 
     // Query by XPath is much more comfortable :)
-    e = (Node) XPathFactory.newInstance ().newXPath ().evaluate ("//e1[2]", doc, XPathConstants.NODE);
+    e = XPathExpressionHelper.evalXPathToNode ("//e1[2]", doc);
     assertEquals (doc.getNodeName () + "/root[0]/x:e[0]/e1[1]/", XMLHelper.getPathToNode (e));
 
     try

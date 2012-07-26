@@ -190,16 +190,40 @@ public final class FileSystemResource implements IReadWriteResource
     return new FileSystemResource (sPath);
   }
 
+  /**
+   * Tests whether the application can read the file denoted by this abstract
+   * pathname.
+   * 
+   * @return <code>true</code> if and only if the file specified by this
+   *         abstract pathname exists <em>and</em> can be read by the
+   *         application; <code>false</code> otherwise
+   */
   public boolean canRead ()
   {
     return m_aFile.canRead ();
   }
 
+  /**
+   * Tests whether the application can modify the file denoted by this abstract
+   * pathname.
+   * 
+   * @return <code>true</code> if and only if the file system actually contains
+   *         a file denoted by this abstract pathname <em>and</em> the
+   *         application is allowed to write to the file; <code>false</code>
+   *         otherwise.
+   */
   public boolean canWrite ()
   {
     return m_aFile.canWrite ();
   }
 
+  /**
+   * Tests whether the application can execute the file denoted by this abstract
+   * pathname.
+   * 
+   * @return <code>true</code> if and only if the abstract pathname exists
+   *         <em>and</em> the application is allowed to execute the file
+   */
   public boolean canExecute ()
   {
     return m_aFile.canExecute ();
