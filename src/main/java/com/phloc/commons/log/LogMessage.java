@@ -25,6 +25,8 @@ import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.error.EErrorLevel;
 import com.phloc.commons.error.IHasErrorLevel;
+import com.phloc.commons.state.IErrorIndicator;
+import com.phloc.commons.state.ISuccessIndicator;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -33,7 +35,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @Immutable
-public final class LogMessage implements IHasErrorLevel
+public final class LogMessage implements IHasErrorLevel, ISuccessIndicator, IErrorIndicator
 {
   private final Date m_aIssueDT;
   private final EErrorLevel m_eErrorLevel;
@@ -76,6 +78,26 @@ public final class LogMessage implements IHasErrorLevel
   public Throwable getThrowable ()
   {
     return m_aThrowable;
+  }
+
+  public final boolean isSuccess ()
+  {
+    return m_eErrorLevel.isSuccess ();
+  }
+
+  public final boolean isFailure ()
+  {
+    return m_eErrorLevel.isFailure ();
+  }
+
+  public final boolean isError ()
+  {
+    return m_eErrorLevel.isError ();
+  }
+
+  public final boolean isNoError ()
+  {
+    return m_eErrorLevel.isNoError ();
   }
 
   @Override

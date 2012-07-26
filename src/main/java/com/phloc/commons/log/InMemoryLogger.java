@@ -30,6 +30,7 @@ import com.phloc.commons.IHasSize;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.error.EErrorLevel;
+import com.phloc.commons.error.IHasErrorLevels;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.state.IClearable;
 import com.phloc.commons.string.ToStringGenerator;
@@ -41,7 +42,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @NotThreadSafe
-public class InMemoryLogger implements Iterable <LogMessage>, IHasSize, IClearable
+public class InMemoryLogger implements Iterable <LogMessage>, IHasSize, IClearable, IHasErrorLevels
 {
   private final List <LogMessage> m_aMessages = new ArrayList <LogMessage> ();
 
@@ -102,6 +103,90 @@ public class InMemoryLogger implements Iterable <LogMessage>, IHasSize, IClearab
   public boolean isEmpty ()
   {
     return m_aMessages.isEmpty ();
+  }
+
+  public boolean containsOnlySuccess ()
+  {
+    if (m_aMessages.isEmpty ())
+      return false;
+    for (final LogMessage aMessage : m_aMessages)
+      if (aMessage.isFailure ())
+        return false;
+    return true;
+  }
+
+  public boolean containsAtLeastOneSuccess ()
+  {
+    for (final LogMessage aMessage : m_aMessages)
+      if (aMessage.isSuccess ())
+        return true;
+    return false;
+  }
+
+  @Nonnegative
+  public int getSuccessCount ()
+  {
+    int ret = 0;
+    for (final LogMessage aMessage : m_aMessages)
+      if (aMessage.isSuccess ())
+        ret++;
+    return ret;
+  }
+
+  public boolean containsOnlyFailure ()
+  {
+    if (m_aMessages.isEmpty ())
+      return false;
+    for (final LogMessage aMessage : m_aMessages)
+      if (aMessage.isSuccess ())
+        return false;
+    return true;
+  }
+
+  public boolean containsAtLeastOneFailure ()
+  {
+    for (final LogMessage aMessage : m_aMessages)
+      if (aMessage.isFailure ())
+        return true;
+    return false;
+  }
+
+  @Nonnegative
+  public int getFailureCount ()
+  {
+    int ret = 0;
+    for (final LogMessage aMessage : m_aMessages)
+      if (aMessage.isFailure ())
+        ret++;
+    return ret;
+  }
+
+  public boolean containsOnlyError ()
+  {
+    if (m_aMessages.isEmpty ())
+      return false;
+    for (final LogMessage aMessage : m_aMessages)
+      if (aMessage.isNoError ())
+        return false;
+    return true;
+  }
+
+  public boolean containsAtLeastOneError ()
+  {
+    for (final LogMessage aMessage : m_aMessages)
+      if (aMessage.isError ())
+        return true;
+    return false;
+  }
+
+  @Nonnegative
+  public int getErrorCount ()
+  {
+    int ret = 0;
+    for (final LogMessage aMessage : m_aMessages)
+      if (aMessage.isError ())
+        ret++;
+    return ret;
   }
 
   @Nonnull
