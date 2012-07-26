@@ -37,14 +37,14 @@ public final class TimeValue
   public static final TimeValue SEC1 = new TimeValue (TimeUnit.SECONDS, 1);
 
   private final TimeUnit m_eTimeUnit;
-  private final int m_nValue;
+  private final long m_nDuration;
 
-  public TimeValue (@Nonnull final TimeUnit eTimeUnit, final int nValue)
+  public TimeValue (@Nonnull final TimeUnit eTimeUnit, final long nDuration)
   {
     if (eTimeUnit == null)
       throw new NullPointerException ("timeUnit");
     m_eTimeUnit = eTimeUnit;
-    m_nValue = nValue;
+    m_nDuration = nDuration;
   }
 
   @Nonnull
@@ -53,9 +53,50 @@ public final class TimeValue
     return m_eTimeUnit;
   }
 
-  public int getValue ()
+  @Deprecated
+  public long getValue ()
   {
-    return m_nValue;
+    return getDuration ();
+  }
+
+  public long getDuration ()
+  {
+    return m_nDuration;
+  }
+
+  public long getAsNanos ()
+  {
+    return m_eTimeUnit.toNanos (m_nDuration);
+  }
+
+  public long getAsMicros ()
+  {
+    return m_eTimeUnit.toMicros (m_nDuration);
+  }
+
+  public long getAsMillis ()
+  {
+    return m_eTimeUnit.toMillis (m_nDuration);
+  }
+
+  public long getAsSeconds ()
+  {
+    return m_eTimeUnit.toSeconds (m_nDuration);
+  }
+
+  public long getAsMinutes ()
+  {
+    return m_eTimeUnit.toMinutes (m_nDuration);
+  }
+
+  public long getAsHours ()
+  {
+    return m_eTimeUnit.toHours (m_nDuration);
+  }
+
+  public long getAsDays ()
+  {
+    return m_eTimeUnit.toDays (m_nDuration);
   }
 
   @Override
@@ -66,18 +107,18 @@ public final class TimeValue
     if (!(o instanceof TimeValue))
       return false;
     final TimeValue rhs = (TimeValue) o;
-    return m_eTimeUnit.equals (rhs.m_eTimeUnit) && m_nValue == rhs.m_nValue;
+    return m_eTimeUnit.equals (rhs.m_eTimeUnit) && m_nDuration == rhs.m_nDuration;
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_eTimeUnit).append (m_nValue).getHashCode ();
+    return new HashCodeGenerator (this).append (m_eTimeUnit).append (m_nDuration).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("timeUnit", m_eTimeUnit).append ("value", m_nValue).toString ();
+    return new ToStringGenerator (this).append ("timeUnit", m_eTimeUnit).append ("value", m_nDuration).toString ();
   }
 }

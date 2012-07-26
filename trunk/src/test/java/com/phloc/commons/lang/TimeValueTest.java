@@ -38,7 +38,14 @@ public final class TimeValueTest
   {
     final TimeValue t = new TimeValue (TimeUnit.SECONDS, 5);
     assertEquals (TimeUnit.SECONDS, t.getTimeUnit ());
-    assertEquals (5, t.getValue ());
+    assertEquals (5, t.getDuration ());
+    assertEquals (0, t.getAsDays ());
+    assertEquals (0, t.getAsHours ());
+    assertEquals (0, t.getAsMinutes ());
+    assertEquals (5, t.getAsSeconds ());
+    assertEquals (5000, t.getAsMillis ());
+    assertEquals (5000000, t.getAsMicros ());
+    assertEquals (5000000000L, t.getAsNanos ());
 
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (new TimeValue (TimeUnit.SECONDS, 5),
                                                                     new TimeValue (TimeUnit.SECONDS, 5));
