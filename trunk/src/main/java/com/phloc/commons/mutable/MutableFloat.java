@@ -33,7 +33,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @NotThreadSafe
-public final class MutableFloat implements Comparable <MutableFloat>, ICloneable <MutableFloat>
+public final class MutableFloat implements Comparable <MutableFloat>, ICloneable <MutableFloat>, IMutableNumeric
 {
   public static final float DEFAULT_VALUE = 0.0f;
 

@@ -33,7 +33,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @NotThreadSafe
-public final class MutableDouble implements Comparable <MutableDouble>, ICloneable <MutableDouble>
+public final class MutableDouble implements Comparable <MutableDouble>, ICloneable <MutableDouble>, IMutableNumeric
 {
   public static final double DEFAULT_VALUE = 0;
 

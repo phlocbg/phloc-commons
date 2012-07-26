@@ -32,7 +32,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @NotThreadSafe
-public final class MutableChar implements Comparable <MutableChar>, ICloneable <MutableChar>
+public final class MutableChar implements Comparable <MutableChar>, ICloneable <MutableChar>, IMutableInteger
 {
   public static final char DEFAULT_VALUE = 0;
 
@@ -154,6 +154,11 @@ public final class MutableChar implements Comparable <MutableChar>, ICloneable <
   public boolean isEven ()
   {
     return (m_cValue % 2) == 0;
+  }
+
+  public boolean isOdd ()
+  {
+    return (m_cValue % 2) != 0;
   }
 
   public int compareTo (final MutableChar rhs)
