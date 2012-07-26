@@ -31,7 +31,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @NotThreadSafe
-public final class MutableChar implements IMutableInteger <MutableChar>
+public final class MutableChar extends Number implements IMutableInteger <MutableChar>
 {
   public static final char DEFAULT_VALUE = 0;
 
@@ -77,6 +77,30 @@ public final class MutableChar implements IMutableInteger <MutableChar>
   public Character getAsCharacter ()
   {
     return Character.valueOf (m_cValue);
+  }
+
+  @Override
+  public float floatValue ()
+  {
+    return m_cValue;
+  }
+
+  @Override
+  public double doubleValue ()
+  {
+    return m_cValue;
+  }
+
+  @Override
+  public int intValue ()
+  {
+    return m_cValue;
+  }
+
+  @Override
+  public long longValue ()
+  {
+    return m_cValue;
   }
 
   /**

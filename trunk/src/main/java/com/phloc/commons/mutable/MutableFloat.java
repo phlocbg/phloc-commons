@@ -32,7 +32,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @NotThreadSafe
-public final class MutableFloat implements IMutableNumeric <MutableFloat>
+public final class MutableFloat extends Number implements IMutableNumeric <MutableFloat>
 {
   public static final float DEFAULT_VALUE = 0.0f;
 
@@ -51,6 +51,7 @@ public final class MutableFloat implements IMutableNumeric <MutableFloat>
     m_fValue = fValue;
   }
 
+  @Override
   public float floatValue ()
   {
     return m_fValue;
@@ -60,6 +61,24 @@ public final class MutableFloat implements IMutableNumeric <MutableFloat>
   public Float getAsFloat ()
   {
     return Float.valueOf (m_fValue);
+  }
+
+  @Override
+  public double doubleValue ()
+  {
+    return m_fValue;
+  }
+
+  @Override
+  public int intValue ()
+  {
+    return (int) m_fValue;
+  }
+
+  @Override
+  public long longValue ()
+  {
+    return (long) m_fValue;
   }
 
   /**
