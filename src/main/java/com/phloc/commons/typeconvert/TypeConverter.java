@@ -331,22 +331,14 @@ public final class TypeConverter
       return null;
 
     final Class <?> aSrcClass = aSrcValue.getClass ();
-    final Class <?> aMappedDstClass = _getUsableClass (aDstClass);
-    Object aRetVal = aSrcValue;
+    final Class <?> aUsableDstClass = _getUsableClass (aDstClass);
 
     // First check if a direct cast is possible
-    if (!ClassHelper.areConvertibleClasses (aSrcClass, aMappedDstClass))
-    {
-      // try to find matching converter
-      final ITypeConverter aConverter = aTypeConverterProvider.getTypeConverter (aSrcClass, aMappedDstClass);
-      if (aConverter == null)
-        throw new TypeConverterException (aSrcClass, aMappedDstClass, EReason.NO_CONVERTER_FOUND);
-
-      // Okay, converter was found -> invoke it
-      aRetVal = aConverter.convert (aSrcValue);
-      if (aRetVal == null)
-        throw new TypeConverterException (aSrcClass, aMappedDstClass, EReason.CONVERSION_FAILED);
-    }
+    Object aRetVal;
+    if (ClassHelper.areConvertibleClasses (aSrcClass, aUsableDstClass))
+      aRetVal = aSrcValue;
+    else
+      aRetVal = _performConversion (aTypeConverterProvider, aSrcClass, aUsableDstClass, aSrcValue);
 
     // Done :)
     // Note: aMappedDstClass.cast (aRetValue) does not work on conversion from
@@ -354,5 +346,23 @@ public final class TypeConverter
     @SuppressWarnings ("unchecked")
     final DSTTYPE ret = (DSTTYPE) aRetVal;
     return ret;
+  }
+
+  @Nonnull
+  private static Object _performConversion (@Nonnull final ITypeConverterProvider aTypeConverterProvider,
+                                            @Nonnull final Class <?> aSrcClass,
+                                            @Nonnull final Class <?> aUsableDstClass,
+                                            @Nonnull final Object aSrcValue) throws TypeConverterException
+  {
+    // try to find matching converter
+    final ITypeConverter aConverter = aTypeConverterProvider.getTypeConverter (aSrcClass, aUsableDstClass);
+    if (aConverter == null)
+      throw new TypeConverterException (aSrcClass, aUsableDstClass, EReason.NO_CONVERTER_FOUND);
+
+    // Okay, converter was found -> invoke it
+    final Object aRetVal = aConverter.convert (aSrcValue);
+    if (aRetVal == null)
+      throw new TypeConverterException (aSrcClass, aUsableDstClass, EReason.CONVERSION_FAILED);
+    return aRetVal;
   }
 }
