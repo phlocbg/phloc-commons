@@ -23,7 +23,6 @@ import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.lang.ClassHelper;
-import com.phloc.commons.lang.GenericReflection;
 import com.phloc.commons.typeconvert.TypeConverterException.EReason;
 
 /**
@@ -44,48 +43,6 @@ public final class TypeConverter
 
   private TypeConverter ()
   {}
-
-  /**
-   * Get the class to use. In case the passed class is a primitive type, the
-   * corresponding wrapper class is used.
-   * 
-   * @param aClass
-   *        The class to check. Can be <code>null</code> but should not be
-   *        <code>null</code>.
-   * @return <code>null</code> if the parameter is <code>null</code>.
-   */
-  @Nullable
-  private static Class <?> _getUsableClass (@Nullable final Class <?> aClass)
-  {
-    final Class <?> aPrimitiveWrapperType = ClassHelper.getPrimitiveWrapperClass (aClass);
-    return aPrimitiveWrapperType != null ? aPrimitiveWrapperType : aClass;
-  }
-
-  /**
-   * Check if the passed classes are convertible. Includes conversion checks
-   * between primitive types and primitive wrapper types.
-   * 
-   * @param aSrcClass
-   *        First class. May not be <code>null</code>.
-   * @param aDstClass
-   *        Second class. May not be <code>null</code>.
-   * @return <code>true</code> if the classes are directly convertible.
-   */
-  private static boolean _areConvertibleClasses (@Nonnull final Class <?> aSrcClass, @Nonnull final Class <?> aDstClass)
-  {
-    // Default assignable
-    if (aDstClass.isAssignableFrom (aSrcClass))
-      return true;
-
-    // Special handling for "int.class" == "Integer.class" etc.
-    if (aDstClass == ClassHelper.getPrimitiveWrapperClass (aSrcClass))
-      return true;
-    if (aDstClass == ClassHelper.getPrimitiveClass (aSrcClass))
-      return true;
-
-    // Not convertible
-    return false;
-  }
 
   @Nullable
   public static <DSTTYPE> DSTTYPE convert (final boolean aSrcValue, @Nonnull final Class <DSTTYPE> aDstClass)
@@ -327,6 +284,22 @@ public final class TypeConverter
   }
 
   /**
+   * Get the class to use. In case the passed class is a primitive type, the
+   * corresponding wrapper class is used.
+   * 
+   * @param aClass
+   *        The class to check. Can be <code>null</code> but should not be
+   *        <code>null</code>.
+   * @return <code>null</code> if the parameter is <code>null</code>.
+   */
+  @Nullable
+  private static Class <?> _getUsableClass (@Nullable final Class <?> aClass)
+  {
+    final Class <?> aPrimitiveWrapperType = ClassHelper.getPrimitiveWrapperClass (aClass);
+    return aPrimitiveWrapperType != null ? aPrimitiveWrapperType : aClass;
+  }
+
+  /**
    * Convert the passed source value to the destination class, if a conversion
    * is necessary.
    * 
@@ -361,27 +334,25 @@ public final class TypeConverter
     final Class <?> aMappedDstClass = _getUsableClass (aDstClass);
     Object aRetVal = aSrcValue;
 
-    // are source and destination class identical?
-    if (!aSrcClass.equals (aMappedDstClass))
+    // First check if a direct cast is possible
+    if (!ClassHelper.areConvertibleClasses (aSrcClass, aMappedDstClass))
     {
-      // First check if a direct cast is possible
-      if (!_areConvertibleClasses (aSrcClass, aMappedDstClass))
-      {
-        // try to find matching converter
-        final ITypeConverter aConverter = aTypeConverterProvider.getTypeConverter (aSrcClass, aMappedDstClass);
-        if (aConverter == null)
-          throw new TypeConverterException (aSrcClass, aMappedDstClass, EReason.NO_CONVERTER_FOUND);
+      // try to find matching converter
+      final ITypeConverter aConverter = aTypeConverterProvider.getTypeConverter (aSrcClass, aMappedDstClass);
+      if (aConverter == null)
+        throw new TypeConverterException (aSrcClass, aMappedDstClass, EReason.NO_CONVERTER_FOUND);
 
-        // Okay, converter was found -> invoke it
-        aRetVal = aConverter.convert (aSrcValue);
-        if (aRetVal == null)
-          throw new TypeConverterException (aSrcClass, aMappedDstClass, EReason.CONVERSION_FAILED);
-      }
+      // Okay, converter was found -> invoke it
+      aRetVal = aConverter.convert (aSrcValue);
+      if (aRetVal == null)
+        throw new TypeConverterException (aSrcClass, aMappedDstClass, EReason.CONVERSION_FAILED);
     }
 
     // Done :)
     // Note: aMappedDstClass.cast (aRetValue) does not work on conversion from
     // "boolean" to "Boolean" whereas casting works
-    return GenericReflection.<Object, DSTTYPE> uncheckedCast (aRetVal);
+    @SuppressWarnings ("unchecked")
+    final DSTTYPE ret = (DSTTYPE) aRetVal;
+    return ret;
   }
 }
