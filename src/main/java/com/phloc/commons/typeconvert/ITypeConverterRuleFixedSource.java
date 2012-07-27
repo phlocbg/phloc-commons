@@ -18,32 +18,17 @@
 package com.phloc.commons.typeconvert;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 /**
- * A fuzzy type converter provider. Implemented as a singleton.
+ * A special type converter rule that has a fixed source class.
  * 
  * @author philip
  */
-public final class TypeConverterProviderFuzzy implements ITypeConverterProvider
+public interface ITypeConverterRuleFixedSource extends ITypeConverterRule
 {
-  private static final TypeConverterProviderFuzzy s_aInstance = new TypeConverterProviderFuzzy ();
-
-  private TypeConverterProviderFuzzy ()
-  {}
-
+  /**
+   * @return The source class to convert from. May not be <code>null</code>.
+   */
   @Nonnull
-  public static TypeConverterProviderFuzzy getInstance ()
-  {
-    return s_aInstance;
-  }
-
-  @Nullable
-  public ITypeConverter getTypeConverter (@Nonnull final Class <?> aSrcClass, @Nonnull final Class <?> aDstClass)
-  {
-    ITypeConverter ret = TypeConverterRegistry.getRuleBasedConverter (aSrcClass, aDstClass);
-    if (ret == null)
-      ret = TypeConverterRegistry.getFuzzyConverter (aSrcClass, aDstClass);
-    return ret;
-  }
+  Class <?> getSourceClass ();
 }

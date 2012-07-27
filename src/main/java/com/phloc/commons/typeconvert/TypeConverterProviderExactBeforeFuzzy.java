@@ -46,8 +46,13 @@ public final class TypeConverterProviderExactBeforeFuzzy implements ITypeConvert
     ITypeConverter ret = TypeConverterRegistry.getExactConverter (aSrcClass, aDstClass);
     if (ret == null)
     {
-      // No exact match was found -> try fuzzy converter
-      ret = TypeConverterRegistry.getFuzzyConverter (aSrcClass, aDstClass);
+      // No exact match was found -> try rule based converter
+      ret = TypeConverterRegistry.getRuleBasedConverter (aSrcClass, aDstClass);
+      if (ret == null)
+      {
+        // No exact match was found -> try fuzzy converter
+        ret = TypeConverterRegistry.getFuzzyConverter (aSrcClass, aDstClass);
+      }
     }
     return ret;
   }
