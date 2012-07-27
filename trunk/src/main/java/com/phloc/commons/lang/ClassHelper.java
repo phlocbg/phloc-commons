@@ -358,4 +358,39 @@ public final class ClassHelper
 
     return ret;
   }
+
+  /**
+   * Check if the passed classes are convertible. Includes conversion checks
+   * between primitive types and primitive wrapper types.
+   * 
+   * @param aSrcClass
+   *        First class. May not be <code>null</code>.
+   * @param aDstClass
+   *        Second class. May not be <code>null</code>.
+   * @return <code>true</code> if the classes are directly convertible.
+   */
+  public static boolean areConvertibleClasses (@Nonnull final Class <?> aSrcClass, @Nonnull final Class <?> aDstClass)
+  {
+    if (aSrcClass == null)
+      throw new NullPointerException ("srcClass");
+    if (aDstClass == null)
+      throw new NullPointerException ("dstClass");
+
+    // Same class?
+    if (aDstClass.equals (aSrcClass))
+      return true;
+
+    // Default assignable
+    if (aDstClass.isAssignableFrom (aSrcClass))
+      return true;
+
+    // Special handling for "int.class" == "Integer.class" etc.
+    if (aDstClass == getPrimitiveWrapperClass (aSrcClass))
+      return true;
+    if (aDstClass == getPrimitiveClass (aSrcClass))
+      return true;
+
+    // Not convertible
+    return false;
+  }
 }

@@ -103,21 +103,6 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
     return ret;
   }
 
-  public void registerTypeConverter (@Nonnull final Class <?> aSrcClass,
-                                     @Nonnull final Class <?> aDstClass,
-                                     @Nonnull final ITypeConverter aConverter)
-  {
-    _registerTypeConverter (aSrcClass, aDstClass, aConverter);
-  }
-
-  public void registerTypeConverter (@Nonnull final Class <?> [] aSrcClasses,
-                                     @Nonnull final Class <?> aDstClass,
-                                     @Nonnull final ITypeConverter aConverter)
-  {
-    for (final Class <?> aSrcClass : aSrcClasses)
-      _registerTypeConverter (aSrcClass, aDstClass, aConverter);
-  }
-
   /**
    * Register a default type converter.
    * 
@@ -166,6 +151,21 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
     {
       s_aRWLock.writeLock ().unlock ();
     }
+  }
+
+  public void registerTypeConverter (@Nonnull final Class <?> aSrcClass,
+                                     @Nonnull final Class <?> aDstClass,
+                                     @Nonnull final ITypeConverter aConverter)
+  {
+    _registerTypeConverter (aSrcClass, aDstClass, aConverter);
+  }
+
+  public void registerTypeConverter (@Nonnull final Class <?> [] aSrcClasses,
+                                     @Nonnull final Class <?> aDstClass,
+                                     @Nonnull final ITypeConverter aConverter)
+  {
+    for (final Class <?> aSrcClass : aSrcClasses)
+      _registerTypeConverter (aSrcClass, aDstClass, aConverter);
   }
 
   /**
