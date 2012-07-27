@@ -27,7 +27,7 @@ import javax.annotation.Nonnull;
 public interface ITypeConverterRegistry
 {
   /**
-   * Register a default type converter.
+   * Register a type converter.
    * 
    * @param aSrcClass
    *        A non-<code>null</code> source class to convert from. Must be an
@@ -39,6 +39,22 @@ public interface ITypeConverterRegistry
    *        The convert to use. May not be <code>null</code>.
    */
   void registerTypeConverter (@Nonnull Class <?> aSrcClass,
+                              @Nonnull Class <?> aDstClass,
+                              @Nonnull ITypeConverter aConverter);
+
+  /**
+   * Register a type converter.
+   * 
+   * @param aSrcClasses
+   *        A non-<code>null</code> collection of source classes to convert
+   *        from. Must be an instancable class.
+   * @param aDstClass
+   *        A non-<code>null</code> destination class to convert to. Must be an
+   *        instancable class. May not equal the source class.
+   * @param aConverter
+   *        The convert to use. May not be <code>null</code>.
+   */
+  void registerTypeConverter (@Nonnull Class <?> [] aSrcClasses,
                               @Nonnull Class <?> aDstClass,
                               @Nonnull ITypeConverter aConverter);
 }
