@@ -43,9 +43,7 @@ import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.io.streams.NonBlockingStringWriter;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 import com.phloc.commons.mock.PhlocAssert;
-import com.phloc.commons.mutable.MutableByte;
-import com.phloc.commons.mutable.MutableInt;
-import com.phloc.commons.mutable.MutableLong;
+import com.phloc.commons.mutable.Wrapper;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -131,7 +129,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     assertEquals (0, StringHelper.parseByte ((Object) "", (byte) 0));
     assertEquals (0, StringHelper.parseByte ((Object) null, (byte) 0));
 
-    assertEquals (0, StringHelper.parseByte (new MutableByte (5), (byte) 0));
+    assertEquals (0, StringHelper.parseByte (Wrapper.create ("any"), (byte) 0));
 
     assertEquals (1, StringHelper.parseByte (Byte.valueOf ((byte) 1), (byte) 0));
     assertEquals (1, StringHelper.parseByte (Double.valueOf (1), (byte) 0));
@@ -189,7 +187,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     assertEquals (b0, StringHelper.parseByteObj ((Object) "", b0));
     assertEquals (b0, StringHelper.parseByteObj ((Object) null, b0));
 
-    assertEquals (b0, StringHelper.parseByteObj (new MutableByte (5), b0));
+    assertEquals (b0, StringHelper.parseByteObj (Wrapper.create ("any"), b0));
 
     assertEquals (b1, StringHelper.parseByteObj (Byte.valueOf ((byte) 1), b0));
     assertEquals (b1, StringHelper.parseByteObj (Double.valueOf (1), b0));
@@ -237,7 +235,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     assertEquals (0, StringHelper.parseInt ((Object) "", 0));
     assertEquals (0, StringHelper.parseInt ((Object) null, 0));
 
-    assertEquals (0, StringHelper.parseInt (new MutableInt (5), 0));
+    assertEquals (0, StringHelper.parseInt (Wrapper.create ("any"), 0));
 
     assertEquals (1, StringHelper.parseInt (Integer.valueOf (1), 0));
     assertEquals (1, StringHelper.parseInt (Double.valueOf (1), 0));
@@ -285,7 +283,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     assertEquals (I0, StringHelper.parseIntObj ((Object) "", I0));
     assertEquals (I0, StringHelper.parseIntObj ((Object) null, I0));
 
-    assertEquals (I0, StringHelper.parseIntObj (new MutableInt (5), I0));
+    assertEquals (I0, StringHelper.parseIntObj (Wrapper.create ("any"), I0));
 
     assertEquals (I1, StringHelper.parseIntObj (Integer.valueOf (1), I0));
     assertEquals (I1, StringHelper.parseIntObj (Double.valueOf (1), I0));
@@ -333,7 +331,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     assertEquals (0L, StringHelper.parseLong ((Object) "", 0));
     assertEquals (0L, StringHelper.parseLong ((Object) null, 0));
 
-    assertEquals (0L, StringHelper.parseLong (new MutableLong (5), 0));
+    assertEquals (0L, StringHelper.parseLong (Wrapper.create ("any"), 0));
 
     assertEquals (1L, StringHelper.parseLong (Integer.valueOf (1), 0));
     assertEquals (1L, StringHelper.parseLong (Double.valueOf (1), 0));
@@ -385,7 +383,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     assertEquals (L0, StringHelper.parseLongObj ((Object) "", L0));
     assertEquals (L0, StringHelper.parseLongObj ((Object) null, L0));
 
-    assertEquals (L0, StringHelper.parseLongObj (new MutableInt (5), L0));
+    assertEquals (L0, StringHelper.parseLongObj (Wrapper.create ("any"), L0));
 
     assertEquals (L1, StringHelper.parseLongObj (Integer.valueOf (1), L0));
     assertEquals (L1, StringHelper.parseLongObj (Double.valueOf (1), L0));
@@ -426,7 +424,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     // Object
     PhlocAssert.assertEquals (dDefault, StringHelper.parseDouble ((Object) null, dDefault));
     PhlocAssert.assertEquals (1, StringHelper.parseDouble (BigDecimal.ONE, dDefault));
-    PhlocAssert.assertEquals (dDefault, StringHelper.parseDouble (new MutableInt (5), dDefault));
+    PhlocAssert.assertEquals (dDefault, StringHelper.parseDouble (Wrapper.create ("any"), dDefault));
 
     // String
     PhlocAssert.assertEquals (dDefault, StringHelper.parseDouble ((String) null, dDefault));
@@ -445,7 +443,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     assertNull (StringHelper.parseDoubleObj ((Object) null));
     assertEquals (aDefault, StringHelper.parseDoubleObj ((Object) null, aDefault));
     PhlocAssert.assertEquals (1, StringHelper.parseDoubleObj (BigDecimal.ONE, aDefault));
-    assertEquals (aDefault, StringHelper.parseDoubleObj (new MutableInt (5), aDefault));
+    assertEquals (aDefault, StringHelper.parseDoubleObj (Wrapper.create ("any"), aDefault));
 
     // String
     assertNull (StringHelper.parseDoubleObj ("foo"));
@@ -464,7 +462,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     // Object
     PhlocAssert.assertEquals (fDefault, StringHelper.parseFloat ((Object) null, fDefault));
     PhlocAssert.assertEquals (1, StringHelper.parseFloat (BigDecimal.ONE, fDefault));
-    PhlocAssert.assertEquals (fDefault, StringHelper.parseFloat (new MutableInt (5), fDefault));
+    PhlocAssert.assertEquals (fDefault, StringHelper.parseFloat (Wrapper.create ("any"), fDefault));
 
     // String
     PhlocAssert.assertEquals (fDefault, StringHelper.parseFloat ((String) null, fDefault));
@@ -483,7 +481,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     assertNull (StringHelper.parseFloatObj ((Object) null));
     assertEquals (aDefault, StringHelper.parseFloatObj ((Object) null, aDefault));
     PhlocAssert.assertEquals (1, StringHelper.parseFloatObj (BigDecimal.ONE, aDefault));
-    assertEquals (aDefault, StringHelper.parseFloatObj (new MutableInt (5), aDefault));
+    assertEquals (aDefault, StringHelper.parseFloatObj (Wrapper.create ("any"), aDefault));
 
     // String
     assertNull (StringHelper.parseFloatObj ("foo"));
