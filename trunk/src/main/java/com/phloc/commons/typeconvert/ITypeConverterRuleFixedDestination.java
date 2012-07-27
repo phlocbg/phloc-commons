@@ -17,12 +17,19 @@
  */
 package com.phloc.commons.typeconvert;
 
+import javax.annotation.Nonnull;
+
 /**
- * Marker interface for a type converter that is able to perform up-casts.
+ * A special type converter rule that has a fixed source class.
  * 
  * @author philip
  */
-public interface ITypeConverterUpCast extends ITypeConverter
+public interface ITypeConverterRuleFixedDestination extends ITypeConverterRule
 {
-  /* empty */
+  /**
+   * @return The destination class to convert from. May not be <code>null</code>
+   *         .
+   */
+  @Nonnull
+  Class <?> getDestinationClass ();
 }

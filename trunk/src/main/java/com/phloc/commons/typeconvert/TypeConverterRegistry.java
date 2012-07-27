@@ -55,13 +55,18 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
 
   // Use a weak hash map, because the key is a class
   private static final Map <Class <?>, Map <Class <?>, ITypeConverter>> s_aConverter = new WeakHashMap <Class <?>, Map <Class <?>, ITypeConverter>> ();
+  private static final List <ITypeConverterRule> s_aRules = new ArrayList <ITypeConverterRule> ();
+  private static final List <ITypeConverterRule> s_aRulesAnySource = new ArrayList <ITypeConverterRule> ();
 
   static
   {
     // Register all custom type converter
     for (final ITypeConverterRegistrarSPI aSPI : ServiceLoaderBackport.load (ITypeConverterRegistrarSPI.class))
       aSPI.registerTypeConverter (s_aInstance);
-    s_aLogger.info (getRegisteredTypeConverterCount () + " type converters registered");
+    s_aLogger.info (getRegisteredTypeConverterCount () +
+                    " type converters and " +
+                    getRegisteredTypeConverterRuleCount () +
+                    " rules registered");
   }
 
   private TypeConverterRegistry ()
@@ -195,6 +200,44 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
   }
 
   /**
+   * Get the converter that can convert objects from aSrcClass to aDstClass
+   * using the registered rules. The first match is returned.
+   * 
+   * @param aSrcClass
+   *        Source class. May not be <code>null</code>.
+   * @param aDstClass
+   *        Destination class. May not be <code>null</code>.
+   * @return <code>null</code> if no such type converter exists, the converter
+   *         object otherwise.
+   */
+  @Nullable
+  static ITypeConverter getRuleBasedConverter (@Nullable final Class <?> aSrcClass, @Nullable final Class <?> aDstClass)
+  {
+    if (aSrcClass == null || aDstClass == null)
+      return null;
+
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      // Check all "specific" rules first
+      for (final ITypeConverterRule aRule : s_aRules)
+        if (aRule.canConvert (aSrcClass, aDstClass))
+          return aRule;
+
+      // Check all rules with any source object
+      for (final ITypeConverterRule aRule : s_aRulesAnySource)
+        if (aRule.canConvert (aSrcClass, aDstClass))
+          return aRule;
+
+      return null;
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  /**
    * Iterate all possible fuzzy converters from source class to destination
    * class.
    * 
@@ -224,27 +267,6 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
         {
           // We found a match -> invoke the callback!
           if (aCallback.call (aCurSrcClass, aDstClass, aConverter).isBreak ())
-            break;
-        }
-      }
-    }
-
-    // For all possible destination classes that are up-cast capable
-    final Map <Class <?>, ITypeConverter> aConverterMap = s_aConverter.get (aSrcClass);
-    if (aConverterMap != null)
-    {
-      for (final Class <?> aCurDstClass : ClassHelper.getClassHierarchy (aDstClass, true))
-      {
-        // We already checked this previously!
-        if (aCurDstClass.equals (aDstClass))
-          continue;
-
-        // Check all possible destination classes
-        final ITypeConverter aConverter = aConverterMap.get (aCurDstClass);
-        if (aConverter instanceof ITypeConverterUpCast)
-        {
-          // We found a match -> invoke the callback!
-          if (aCallback.call (aSrcClass, aCurDstClass, aConverter).isBreak ())
             break;
         }
       }
@@ -360,6 +382,39 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
       for (final Map <Class <?>, ITypeConverter> aMap : s_aConverter.values ())
         ret += aMap.size ();
       return ret;
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  public void registerTypeConverterRule (@Nonnull final ITypeConverterRule aTypeConverterRule)
+  {
+    if (aTypeConverterRule == null)
+      throw new NullPointerException ("typeConverterRule");
+
+    s_aRWLock.writeLock ().lock ();
+    try
+    {
+      if (aTypeConverterRule instanceof ITypeConverterRuleAnySource)
+        s_aRulesAnySource.add (aTypeConverterRule);
+      else
+        s_aRules.add (aTypeConverterRule);
+    }
+    finally
+    {
+      s_aRWLock.writeLock ().unlock ();
+    }
+  }
+
+  @Nonnegative
+  public static int getRegisteredTypeConverterRuleCount ()
+  {
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      return s_aRules.size () + s_aRulesAnySource.size ();
     }
     finally
     {

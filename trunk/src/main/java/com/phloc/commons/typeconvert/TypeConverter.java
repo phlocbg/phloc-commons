@@ -21,6 +21,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.typeconvert.TypeConverterException.EReason;
@@ -37,6 +40,8 @@ import com.phloc.commons.typeconvert.TypeConverterException.EReason;
 @Immutable
 public final class TypeConverter
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (TypeConverter.class);
+
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")
   private static final TypeConverter s_aInstance = new TypeConverter ();
@@ -308,12 +313,28 @@ public final class TypeConverter
     // try to find matching converter
     final ITypeConverter aConverter = aTypeConverterProvider.getTypeConverter (aSrcClass, aUsableDstClass);
     if (aConverter == null)
+    {
+      s_aLogger.warn ("No type converter from '" +
+                      aSrcClass.getName () +
+                      "' to '" +
+                      aUsableDstClass.getName () +
+                      "' was found");
       throw new TypeConverterException (aSrcClass, aUsableDstClass, EReason.NO_CONVERTER_FOUND);
+    }
 
     // Okay, converter was found -> invoke it
     final Object aRetVal = aConverter.convert (aSrcValue);
     if (aRetVal == null)
+    {
+      s_aLogger.warn ("Type conversion from '" +
+                      aSrcClass.getName () +
+                      "' to '" +
+                      aUsableDstClass.getName () +
+                      "' with converter " +
+                      aConverter +
+                      " failed");
       throw new TypeConverterException (aSrcClass, aUsableDstClass, EReason.CONVERSION_FAILED);
+    }
     return aRetVal;
   }
 

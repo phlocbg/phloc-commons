@@ -57,4 +57,13 @@ public interface ITypeConverterRegistry
   void registerTypeConverter (@Nonnull Class <?> [] aSrcClasses,
                               @Nonnull Class <?> aDstClass,
                               @Nonnull ITypeConverter aConverter);
+
+  /**
+   * Register a flexible type converter rule.
+   * 
+   * @param aTypeConverterRule
+   *        The type converter rule to be registered. May not be
+   *        <code>null</code>.
+   */
+  void registerTypeConverterRule (@Nonnull ITypeConverterRule aTypeConverterRule);
 }

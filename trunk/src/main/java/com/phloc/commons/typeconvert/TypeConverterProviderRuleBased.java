@@ -21,19 +21,19 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
- * A fuzzy type converter provider. Implemented as a singleton.
+ * A rule based type converter provider. Implemented as a singleton.
  * 
  * @author philip
  */
-public final class TypeConverterProviderFuzzy implements ITypeConverterProvider
+public final class TypeConverterProviderRuleBased implements ITypeConverterProvider
 {
-  private static final TypeConverterProviderFuzzy s_aInstance = new TypeConverterProviderFuzzy ();
+  private static final TypeConverterProviderRuleBased s_aInstance = new TypeConverterProviderRuleBased ();
 
-  private TypeConverterProviderFuzzy ()
+  private TypeConverterProviderRuleBased ()
   {}
 
   @Nonnull
-  public static TypeConverterProviderFuzzy getInstance ()
+  public static TypeConverterProviderRuleBased getInstance ()
   {
     return s_aInstance;
   }
@@ -41,9 +41,6 @@ public final class TypeConverterProviderFuzzy implements ITypeConverterProvider
   @Nullable
   public ITypeConverter getTypeConverter (@Nonnull final Class <?> aSrcClass, @Nonnull final Class <?> aDstClass)
   {
-    ITypeConverter ret = TypeConverterRegistry.getRuleBasedConverter (aSrcClass, aDstClass);
-    if (ret == null)
-      ret = TypeConverterRegistry.getFuzzyConverter (aSrcClass, aDstClass);
-    return ret;
+    return TypeConverterRegistry.getRuleBasedConverter (aSrcClass, aDstClass);
   }
 }
