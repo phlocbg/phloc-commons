@@ -110,6 +110,14 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
     _registerTypeConverter (aSrcClass, aDstClass, aConverter);
   }
 
+  public void registerTypeConverter (@Nonnull final Class <?> [] aSrcClasses,
+                                     @Nonnull final Class <?> aDstClass,
+                                     @Nonnull final ITypeConverter aConverter)
+  {
+    for (final Class <?> aSrcClass : aSrcClasses)
+      _registerTypeConverter (aSrcClass, aDstClass, aConverter);
+  }
+
   /**
    * Register a default type converter.
    * 

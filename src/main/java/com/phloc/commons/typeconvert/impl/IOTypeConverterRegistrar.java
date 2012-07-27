@@ -54,6 +54,92 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
         return ((File) aSource).getAbsolutePath ();
       }
     });
+    aRegistry.registerTypeConverter (File.class, URI.class, new ITypeConverter ()
+    {
+      public URI convert (@Nonnull final Object aSource)
+      {
+        return ((File) aSource).toURI ();
+      }
+    });
+    aRegistry.registerTypeConverter (File.class, URL.class, new ITypeConverter ()
+    {
+      public URL convert (@Nonnull final Object aSource)
+      {
+        try
+        {
+          return ((File) aSource).toURI ().toURL ();
+        }
+        catch (final MalformedURLException ex)
+        {
+          return null;
+        }
+      }
+    });
+    aRegistry.registerTypeConverter (URI.class, String.class, new ITypeConverter ()
+    {
+      public String convert (@Nonnull final Object aSource)
+      {
+        return ((URI) aSource).toString ();
+      }
+    });
+    aRegistry.registerTypeConverter (URI.class, File.class, new ITypeConverter ()
+    {
+      public File convert (@Nonnull final Object aSource)
+      {
+        return new File ((URI) aSource);
+      }
+    });
+    aRegistry.registerTypeConverter (URI.class, URL.class, new ITypeConverter ()
+    {
+      public URL convert (@Nonnull final Object aSource)
+      {
+        try
+        {
+          return ((URI) aSource).toURL ();
+        }
+        catch (final MalformedURLException ex)
+        {
+          return null;
+        }
+      }
+    });
+    aRegistry.registerTypeConverter (URL.class, String.class, new ITypeConverter ()
+    {
+      public String convert (@Nonnull final Object aSource)
+      {
+        return ((URL) aSource).toExternalForm ();
+      }
+    });
+    aRegistry.registerTypeConverter (URL.class, File.class, new ITypeConverter ()
+    {
+      public File convert (@Nonnull final Object aSource)
+      {
+        final URL aURL = (URL) aSource;
+        try
+        {
+          return new File (aURL.toURI ().getSchemeSpecificPart ());
+        }
+        catch (final URISyntaxException ex)
+        {
+          // Fallback for URLs that are not valid URIs
+          return new File (aURL.getPath ());
+        }
+      }
+    });
+    aRegistry.registerTypeConverter (URL.class, URI.class, new ITypeConverter ()
+    {
+      public URI convert (@Nonnull final Object aSource)
+      {
+        try
+        {
+          return ((URL) aSource).toURI ();
+        }
+        catch (final URISyntaxException ex)
+        {
+          return null;
+        }
+      }
+    });
     aRegistry.registerTypeConverter (String.class, File.class, new ITypeConverter ()
     {
       public File convert (@Nonnull final Object aSource)
@@ -61,23 +147,58 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
         return new File ((String) aSource);
       }
     });
+    aRegistry.registerTypeConverter (String.class, URI.class, new ITypeConverter ()
+    {
+      public URI convert (@Nonnull final Object aSource)
+      {
+        try
+        {
+          return new URI ((String) aSource);
+        }
+        catch (final URISyntaxException ex)
+        {
+          return null;
+        }
+      }
+    });
+    aRegistry.registerTypeConverter (String.class, URL.class, new ITypeConverter ()
+    {
+      public URL convert (@Nonnull final Object aSource)
+      {
+        try
+        {
+          return new URL ((String) aSource);
+        }
+        catch (final MalformedURLException ex)
+        {
+          return null;
+        }
+      }
+    });
 
-    final ITypeConverter aConvertResourceToString = new ITypeConverter ()
+    // resource to string
+    aRegistry.registerTypeConverter (new Class <?> [] { ClassPathResource.class,
+                                                       FileSystemResource.class,
+                                                       URLResource.class }, String.class, new ITypeConverter ()
     {
       public String convert (@Nonnull final Object aSource)
       {
         return ((IReadableResource) aSource).getPath ();
       }
-    };
-    final ITypeConverter aConvertResourceToURL = new ITypeConverter ()
+    });
+
+    // resource to URL
+    aRegistry.registerTypeConverter (new Class <?> [] { ClassPathResource.class,
+                                                       FileSystemResource.class,
+                                                       URLResource.class }, URL.class, new ITypeConverter ()
     {
       public URL convert (@Nonnull final Object aSource)
       {
         return ((IReadableResource) aSource).getAsURL ();
       }
-    };
+    });
+
     // ClassPathResource
-    aRegistry.registerTypeConverter (ClassPathResource.class, String.class, aConvertResourceToString);
     aRegistry.registerTypeConverter (String.class, ClassPathResource.class, new ITypeConverter ()
     {
       public ClassPathResource convert (@Nonnull final Object aSource)
@@ -85,7 +206,6 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
         return new ClassPathResource ((String) aSource);
       }
     });
-    aRegistry.registerTypeConverter (ClassPathResource.class, URL.class, aConvertResourceToURL);
     aRegistry.registerTypeConverter (URL.class, ClassPathResource.class, new ITypeConverter ()
     {
       public ClassPathResource convert (@Nonnull final Object aSource)
@@ -95,7 +215,6 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
     });
 
     // FileSystemResource
-    aRegistry.registerTypeConverter (FileSystemResource.class, String.class, aConvertResourceToString);
     aRegistry.registerTypeConverter (String.class, FileSystemResource.class, new ITypeConverter ()
     {
       public FileSystemResource convert (@Nonnull final Object aSource)
@@ -103,7 +222,6 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
         return new FileSystemResource ((String) aSource);
       }
     });
-    aRegistry.registerTypeConverter (FileSystemResource.class, URL.class, aConvertResourceToURL);
     aRegistry.registerTypeConverter (URL.class, FileSystemResource.class, new ITypeConverter ()
     {
       public FileSystemResource convert (@Nonnull final Object aSource)
@@ -124,7 +242,6 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
     });
 
     // URLResource
-    aRegistry.registerTypeConverter (URLResource.class, String.class, aConvertResourceToString);
     aRegistry.registerTypeConverter (String.class, URLResource.class, new ITypeConverter ()
     {
       public URLResource convert (@Nonnull final Object aSource)
@@ -139,12 +256,25 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
         }
       }
     });
-    aRegistry.registerTypeConverter (URLResource.class, URL.class, aConvertResourceToURL);
     aRegistry.registerTypeConverter (URL.class, URLResource.class, new ITypeConverter ()
     {
       public URLResource convert (@Nonnull final Object aSource)
       {
         return new URLResource ((URL) aSource);
+      }
+    });
+    aRegistry.registerTypeConverter (URI.class, URLResource.class, new ITypeConverter ()
+    {
+      public URLResource convert (@Nonnull final Object aSource)
+      {
+        try
+        {
+          return new URLResource (((URI) aSource).toURL ());
+        }
+        catch (final MalformedURLException ex)
+        {
+          return null;
+        }
       }
     });
   }
