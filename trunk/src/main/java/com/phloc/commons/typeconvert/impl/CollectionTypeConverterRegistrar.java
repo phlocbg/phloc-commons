@@ -17,16 +17,14 @@
  */
 package com.phloc.commons.typeconvert.impl;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.TreeSet;
+import java.util.Vector;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
@@ -38,6 +36,7 @@ import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.typeconvert.ITypeConverter;
 import com.phloc.commons.typeconvert.ITypeConverterRegistrarSPI;
 import com.phloc.commons.typeconvert.ITypeConverterRegistry;
+import com.phloc.commons.typeconvert.rule.AbstractTypeConverterRuleAnySourceFixedDestination;
 
 /**
  * Register the base type converter
@@ -71,24 +70,41 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
    */
   public void registerTypeConverter (@Nonnull final ITypeConverterRegistry aRegistry)
   {
+    // to ArrayList<?>
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (ArrayList.class)
+    {
+      public ArrayList <?> convert (@Nonnull final Object aSource)
+      {
+        final ArrayList <Object> ret = new ArrayList <Object> ();
+        ret.add (aSource);
+        return ret;
+      }
+    });
+
+    // to Vector<?>
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (Vector.class)
+    {
+      public Vector <?> convert (@Nonnull final Object aSource)
+      {
+        final Vector <Object> ret = new Vector <Object> ();
+        ret.add (aSource);
+        return ret;
+      }
+    });
+
+    // to LinkedList<?>
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (LinkedList.class)
+    {
+      public LinkedList <?> convert (@Nonnull final Object aSource)
+      {
+        final LinkedList <Object> ret = new LinkedList <Object> ();
+        ret.add (aSource);
+        return ret;
+      }
+    });
 
     // to List<?>
-    aRegistry.registerTypeConverter (new Class <?> [] { AtomicBoolean.class,
-                                                       AtomicInteger.class,
-                                                       AtomicLong.class,
-                                                       BigDecimal.class,
-                                                       BigInteger.class,
-                                                       Boolean.class,
-                                                       Byte.class,
-                                                       Character.class,
-                                                       Double.class,
-                                                       Float.class,
-                                                       Integer.class,
-                                                       Long.class,
-                                                       Short.class,
-                                                       String.class,
-                                                       StringBuilder.class,
-                                                       StringBuffer.class }, List.class, new ITypeConverter ()
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (List.class)
     {
       public List <?> convert (@Nonnull final Object aSource)
       {
@@ -96,23 +112,30 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
       }
     });
 
+    // to TreeSet<?>
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (TreeSet.class)
+    {
+      public TreeSet <?> convert (@Nonnull final Object aSource)
+      {
+        final TreeSet <Object> ret = new TreeSet <Object> ();
+        ret.add (aSource);
+        return ret;
+      }
+    });
+
+    // to LinkedHashSet<?>
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (LinkedHashSet.class)
+    {
+      public LinkedHashSet <?> convert (@Nonnull final Object aSource)
+      {
+        final LinkedHashSet <Object> ret = new LinkedHashSet <Object> ();
+        ret.add (aSource);
+        return ret;
+      }
+    });
+
     // to Set<?>
-    aRegistry.registerTypeConverter (new Class <?> [] { AtomicBoolean.class,
-                                                       AtomicInteger.class,
-                                                       AtomicLong.class,
-                                                       BigDecimal.class,
-                                                       BigInteger.class,
-                                                       Boolean.class,
-                                                       Byte.class,
-                                                       Character.class,
-                                                       Double.class,
-                                                       Float.class,
-                                                       Integer.class,
-                                                       Long.class,
-                                                       Short.class,
-                                                       String.class,
-                                                       StringBuilder.class,
-                                                       StringBuffer.class }, Set.class, new ITypeConverter ()
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (Set.class)
     {
       public Set <?> convert (@Nonnull final Object aSource)
       {
@@ -140,6 +163,13 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
       public Set <Boolean> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newBooleanOrderedSet ((boolean []) aSource);
+      }
+    });
+    aRegistry.registerTypeConverter (boolean [].class, TreeSet.class, new ITypeConverter ()
+    {
+      public Set <Boolean> convert (@Nonnull final Object aSource)
+      {
+        return ContainerHelper.newBooleanSortedSet ((boolean []) aSource);
       }
     });
 
@@ -179,6 +209,13 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
         return ContainerHelper.newByteOrderedSet ((byte []) aSource);
       }
     });
+    aRegistry.registerTypeConverter (byte [].class, TreeSet.class, new ITypeConverter ()
+    {
+      public Set <Byte> convert (@Nonnull final Object aSource)
+      {
+        return ContainerHelper.newByteSortedSet ((byte []) aSource);
+      }
+    });
 
     // char[]
     aRegistry.registerTypeConverter (char [].class, String.class, new ITypeConverter ()
@@ -216,6 +253,13 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
         return ContainerHelper.newCharOrderedSet ((char []) aSource);
       }
     });
+    aRegistry.registerTypeConverter (char [].class, TreeSet.class, new ITypeConverter ()
+    {
+      public Set <Character> convert (@Nonnull final Object aSource)
+      {
+        return ContainerHelper.newCharSortedSet ((char []) aSource);
+      }
+    });
 
     // double[]
     aRegistry.registerTypeConverter (double [].class, ArrayList.class, new ITypeConverter ()
@@ -237,6 +281,13 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
       public Set <Double> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newDoubleOrderedSet ((double []) aSource);
+      }
+    });
+    aRegistry.registerTypeConverter (double [].class, TreeSet.class, new ITypeConverter ()
+    {
+      public Set <Double> convert (@Nonnull final Object aSource)
+      {
+        return ContainerHelper.newDoubleSortedSet ((double []) aSource);
       }
     });
 
@@ -262,6 +313,13 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
         return ContainerHelper.newFloatOrderedSet ((float []) aSource);
       }
     });
+    aRegistry.registerTypeConverter (float [].class, TreeSet.class, new ITypeConverter ()
+    {
+      public Set <Float> convert (@Nonnull final Object aSource)
+      {
+        return ContainerHelper.newFloatSortedSet ((float []) aSource);
+      }
+    });
 
     // int[]
     aRegistry.registerTypeConverter (int [].class, ArrayList.class, new ITypeConverter ()
@@ -283,6 +341,13 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
       public Set <Integer> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newIntOrderedSet ((int []) aSource);
+      }
+    });
+    aRegistry.registerTypeConverter (int [].class, TreeSet.class, new ITypeConverter ()
+    {
+      public Set <Integer> convert (@Nonnull final Object aSource)
+      {
+        return ContainerHelper.newIntSortedSet ((int []) aSource);
       }
     });
 
@@ -308,6 +373,13 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
         return ContainerHelper.newLongOrderedSet ((long []) aSource);
       }
     });
+    aRegistry.registerTypeConverter (long [].class, TreeSet.class, new ITypeConverter ()
+    {
+      public Set <Long> convert (@Nonnull final Object aSource)
+      {
+        return ContainerHelper.newLongSortedSet ((long []) aSource);
+      }
+    });
 
     // short[]
     aRegistry.registerTypeConverter (short [].class, ArrayList.class, new ITypeConverter ()
@@ -329,6 +401,13 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
       public Set <Short> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newShortOrderedSet ((short []) aSource);
+      }
+    });
+    aRegistry.registerTypeConverter (short [].class, TreeSet.class, new ITypeConverter ()
+    {
+      public Set <Short> convert (@Nonnull final Object aSource)
+      {
+        return ContainerHelper.newShortSortedSet ((short []) aSource);
       }
     });
   }

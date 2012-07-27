@@ -39,17 +39,7 @@ public final class LocaleTypeConverterRegistrar implements ITypeConverterRegistr
 {
   public void registerTypeConverter (@Nonnull final ITypeConverterRegistry aRegistry)
   {
-    final ITypeConverter aConverterToString = new ITypeConverter ()
-    {
-      @Nonnull
-      public String convert (@Nonnull final Object aSource)
-      {
-        return aSource.toString ();
-      }
-    };
-
     // Locale
-    aRegistry.registerTypeConverter (Locale.class, String.class, aConverterToString);
     aRegistry.registerTypeConverter (String.class, Locale.class, new ITypeConverter ()
     {
       public Locale convert (@Nonnull final Object aSource)

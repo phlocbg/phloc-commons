@@ -23,6 +23,7 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.charset.Charset;
 
@@ -57,6 +58,11 @@ public final class FileSystemResource implements IReadWriteResource
   private final File m_aFile;
   private final String m_sPath;
   private Integer m_aHashCode;
+
+  public FileSystemResource (@Nonnull final URI aURI)
+  {
+    this (new File (aURI));
+  }
 
   public FileSystemResource (@Nonnull final String sParentPath, @Nonnull final String sChildPath)
   {
