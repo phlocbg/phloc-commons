@@ -27,6 +27,7 @@ import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 import org.junit.Test;
 
@@ -38,7 +39,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link ClassPathResource}.
- *
+ * 
  * @author philip
  */
 public final class ClassPathResourceTest
@@ -200,7 +201,14 @@ public final class ClassPathResourceTest
 
     try
     {
-      new ClassPathResource (null);
+      new ClassPathResource ((URL) null);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+    try
+    {
+      new ClassPathResource ((String) null);
       fail ();
     }
     catch (final IllegalArgumentException ex)

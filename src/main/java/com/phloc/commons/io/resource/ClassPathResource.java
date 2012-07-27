@@ -59,6 +59,33 @@ public final class ClassPathResource implements IReadableResource
   private URL m_aURL;
 
   /**
+   * Create a new class path resource, using the specified URL. Class loader
+   * handling is automatic.
+   * 
+   * @param aURL
+   *        The URL to be used. May not be <code>null</code>.
+   */
+  public ClassPathResource (@Nonnull final URL aURL)
+  {
+    this (aURL, null);
+  }
+
+  /**
+   * Create a new class path resource using the specified URL and class loader
+   * (optional).
+   * 
+   * @param aURL
+   *        The URL to be used. May not be <code>null</code>.
+   * @param aClassLoader
+   *        The class loader to use. May be <code>null</code> indicating that
+   *        automatic class loader handling should be applied.
+   */
+  public ClassPathResource (@Nonnull final URL aURL, @Nullable final ClassLoader aClassLoader)
+  {
+    this (aURL.toExternalForm (), aClassLoader);
+  }
+
+  /**
    * Create a new class path resource, using the specified path. Class loader
    * handling is automatic.
    * 

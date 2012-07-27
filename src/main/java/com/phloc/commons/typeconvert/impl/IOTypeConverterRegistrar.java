@@ -34,6 +34,7 @@ import com.phloc.commons.io.resource.URLResource;
 import com.phloc.commons.typeconvert.ITypeConverter;
 import com.phloc.commons.typeconvert.ITypeConverterRegistrarSPI;
 import com.phloc.commons.typeconvert.ITypeConverterRegistry;
+import com.phloc.commons.typeconvert.rule.AbstractTypeConverterRuleAssignableSourceFixedDestination;
 
 /**
  * Register the IO specific type converter
@@ -73,13 +74,6 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
         {
           return null;
         }
-      }
-    });
-    aRegistry.registerTypeConverter (URI.class, String.class, new ITypeConverter ()
-    {
-      public String convert (@Nonnull final Object aSource)
-      {
-        return ((URI) aSource).toString ();
       }
     });
     aRegistry.registerTypeConverter (URI.class, File.class, new ITypeConverter ()
@@ -177,9 +171,8 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
     });
 
     // resource to string
-    aRegistry.registerTypeConverter (new Class <?> [] { ClassPathResource.class,
-                                                       FileSystemResource.class,
-                                                       URLResource.class }, String.class, new ITypeConverter ()
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAssignableSourceFixedDestination (IReadableResource.class,
+                                                                                                        String.class)
     {
       public String convert (@Nonnull final Object aSource)
       {
@@ -188,13 +181,22 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
     });
 
     // resource to URL
-    aRegistry.registerTypeConverter (new Class <?> [] { ClassPathResource.class,
-                                                       FileSystemResource.class,
-                                                       URLResource.class }, URL.class, new ITypeConverter ()
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAssignableSourceFixedDestination (IReadableResource.class,
+                                                                                                        URL.class)
     {
       public URL convert (@Nonnull final Object aSource)
       {
         return ((IReadableResource) aSource).getAsURL ();
+      }
+    });
+
+    // resource to File
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAssignableSourceFixedDestination (IReadableResource.class,
+                                                                                                        File.class)
+    {
+      public File convert (@Nonnull final Object aSource)
+      {
+        return ((IReadableResource) aSource).getAsFile ();
       }
     });
 
@@ -210,7 +212,7 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
     {
       public ClassPathResource convert (@Nonnull final Object aSource)
       {
-        return new ClassPathResource (((URL) aSource).toExternalForm ());
+        return new ClassPathResource ((URL) aSource);
       }
     });
 
@@ -229,7 +231,7 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
         try
         {
           final URI aURI = ((URL) aSource).toURI ();
-          return new FileSystemResource (new File (aURI));
+          return new FileSystemResource (aURI);
         }
         catch (final IllegalArgumentException e)
         {
