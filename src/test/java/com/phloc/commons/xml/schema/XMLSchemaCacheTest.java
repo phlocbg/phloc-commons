@@ -40,7 +40,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link XMLSchemaCache}.
- *
+ * 
  * @author philip
  */
 public final class XMLSchemaCacheTest
@@ -78,7 +78,8 @@ public final class XMLSchemaCacheTest
 
     // remove afterwards
     final String sPath = new ClassPathResource ("xml/schema1.xsd").getResourceID ();
-    assertTrue (sc.removeFromCache (sPath).isChanged ());
+    // Note: cannot expect success, because a WeakHashMap is used!
+    sc.removeFromCache (sPath);
     assertFalse (sc.removeFromCache (sPath).isChanged ());
 
     // Not a schema
