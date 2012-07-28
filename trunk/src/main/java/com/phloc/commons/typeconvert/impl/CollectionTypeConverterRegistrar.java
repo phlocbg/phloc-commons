@@ -71,7 +71,7 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
     {
       public ArrayList <?> convert (@Nonnull final Object aSource)
       {
-        final ArrayList <Object> ret = new ArrayList <Object> ();
+        final ArrayList <Object> ret = new ArrayList <Object> (1);
         ret.add (aSource);
         return ret;
       }
@@ -82,7 +82,7 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
     {
       public Vector <?> convert (@Nonnull final Object aSource)
       {
-        final Vector <Object> ret = new Vector <Object> ();
+        final Vector <Object> ret = new Vector <Object> (1);
         ret.add (aSource);
         return ret;
       }
@@ -135,7 +135,7 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
     {
       public LinkedHashSet <?> convert (@Nonnull final Object aSource)
       {
-        final LinkedHashSet <Object> ret = new LinkedHashSet <Object> ();
+        final LinkedHashSet <Object> ret = new LinkedHashSet <Object> (1);
         ret.add (aSource);
         return ret;
       }
