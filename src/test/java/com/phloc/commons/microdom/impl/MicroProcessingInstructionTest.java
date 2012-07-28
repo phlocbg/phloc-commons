@@ -21,11 +21,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
+import com.phloc.commons.microdom.EMicroNodeType;
 import com.phloc.commons.microdom.IMicroProcessingInstruction;
 import com.phloc.commons.microdom.MicroException;
 import com.phloc.commons.mock.PhlocTestUtils;
@@ -34,7 +36,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link MicroProcessingInstruction}.
- *
+ * 
  * @author philip
  */
 public final class MicroProcessingInstructionTest
@@ -57,6 +59,7 @@ public final class MicroProcessingInstructionTest
     assertEquals (0, e.getChildCount ());
     assertNotNull (e.getNodeName ());
     assertNotNull (e.getNodeValue ());
+    assertSame (EMicroNodeType.PROCESSING_INSTRUCTION, e.getType ());
     PhlocTestUtils.testToStringImplementation (e);
 
     e = new MicroProcessingInstruction ("xyz", "data");
@@ -77,16 +80,14 @@ public final class MicroProcessingInstructionTest
     assertFalse (e.isEqualContent (null));
     assertFalse (e.isEqualContent (new MicroDocument ()));
 
-    assertTrue (new MicroProcessingInstruction ("xyz")
-                            .isEqualContent (new MicroProcessingInstruction ("xyz")));
-    assertTrue (new MicroProcessingInstruction ("xyz", "data")
-                            .isEqualContent (new MicroProcessingInstruction ("xyz", "data")));
-    assertFalse (new MicroProcessingInstruction ("xyz")
-                             .isEqualContent (new MicroProcessingInstruction ("xy")));
-    assertFalse (new MicroProcessingInstruction ("xyz", "data")
-                             .isEqualContent (new MicroProcessingInstruction ("xyz", null)));
-    assertFalse (new MicroProcessingInstruction ("xyz", "data")
-                             .isEqualContent (new MicroProcessingInstruction ("xyz", "dat")));
+    assertTrue (new MicroProcessingInstruction ("xyz").isEqualContent (new MicroProcessingInstruction ("xyz")));
+    assertTrue (new MicroProcessingInstruction ("xyz", "data").isEqualContent (new MicroProcessingInstruction ("xyz",
+                                                                                                               "data")));
+    assertFalse (new MicroProcessingInstruction ("xyz").isEqualContent (new MicroProcessingInstruction ("xy")));
+    assertFalse (new MicroProcessingInstruction ("xyz", "data").isEqualContent (new MicroProcessingInstruction ("xyz",
+                                                                                                                null)));
+    assertFalse (new MicroProcessingInstruction ("xyz", "data").isEqualContent (new MicroProcessingInstruction ("xyz",
+                                                                                                                "dat")));
 
     try
     {
@@ -130,8 +131,7 @@ public final class MicroProcessingInstructionTest
     try
     {
       // Cannot add any child to a comment
-      e.insertBefore (new MicroProcessingInstruction ("other"),
-                      new MicroProcessingInstruction ("comment"));
+      e.insertBefore (new MicroProcessingInstruction ("other"), new MicroProcessingInstruction ("comment"));
       fail ();
     }
     catch (final MicroException ex)

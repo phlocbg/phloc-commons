@@ -30,6 +30,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.phloc.commons.microdom.EMicroNodeType;
 import com.phloc.commons.microdom.IMicroComment;
 import com.phloc.commons.microdom.IMicroContainer;
 import com.phloc.commons.microdom.IMicroElement;
@@ -86,6 +87,7 @@ public final class MicroElementTest extends AbstractPhlocTestCase
     assertNull (e.getChildren ());
     assertNotNull (e.getChildElements ());
     assertTrue (e.getChildElements ().isEmpty ());
+    assertSame (EMicroNodeType.ELEMENT, e.getType ());
     PhlocTestUtils.testToStringImplementation (e);
 
     e = new MicroElement ("myns", "xyz");

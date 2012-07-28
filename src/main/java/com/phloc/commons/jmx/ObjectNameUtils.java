@@ -34,6 +34,11 @@ import com.phloc.commons.exceptions.LoggedRuntimeException;
 import com.phloc.commons.lang.CGStringHelper;
 import com.phloc.commons.string.StringHelper;
 
+/**
+ * Utility class to create JMX {@link ObjectName} objects.
+ * 
+ * @author philip
+ */
 @Immutable
 public final class ObjectNameUtils
 {
@@ -73,7 +78,8 @@ public final class ObjectNameUtils
   }
 
   /**
-   * @return The default JMX domain to be used for {@link ObjectName} instances
+   * @return The default JMX domain to be used for {@link ObjectName} instances.
+   *         The default value is {@link CJMX#PHLOC_JMX_DOMAIN}.
    */
   @Nonnull
   @Nonempty

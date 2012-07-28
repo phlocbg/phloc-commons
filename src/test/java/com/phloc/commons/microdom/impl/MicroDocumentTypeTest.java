@@ -21,11 +21,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
+import com.phloc.commons.microdom.EMicroNodeType;
 import com.phloc.commons.microdom.IMicroDocumentType;
 import com.phloc.commons.microdom.MicroException;
 import com.phloc.commons.mock.PhlocTestUtils;
@@ -53,27 +55,34 @@ public final class MicroDocumentTypeTest
     assertEquals (0, e.getChildCount ());
     assertNotNull (e.getNodeName ());
     assertNotNull (e.getNodeValue ());
+    assertSame (EMicroNodeType.DOCUMENT_TYPE, e.getType ());
     PhlocTestUtils.testToStringImplementation (e);
 
     assertFalse (e.isEqualContent (null));
     assertTrue (e.isEqualContent (e));
     assertTrue (e.isEqualContent (e.getClone ()));
-    assertTrue (new MicroDocumentType ("qname", "pid", "sid")
-                            .isEqualContent (new MicroDocumentType ("qname", "pid", "sid")));
-    assertTrue (new MicroDocumentType ("qname", null, null)
-                            .isEqualContent (new MicroDocumentType ("qname", null, null)));
-    assertFalse (new MicroDocumentType ("qname", "pid", "sid")
-                             .isEqualContent (new MicroDocumentType ("qname", "pid", "sid2")));
-    assertFalse (new MicroDocumentType ("qname", "pid", "sid")
-                             .isEqualContent (new MicroDocumentType ("qname", "pid", null)));
-    assertFalse (new MicroDocumentType ("qname", "pid", "sid")
-                             .isEqualContent (new MicroDocumentType ("qname", "pid2", "sid")));
-    assertFalse (new MicroDocumentType ("qname", "pid", "sid")
-                             .isEqualContent (new MicroDocumentType ("qname", null, "sid")));
-    assertFalse (new MicroDocumentType ("qname", "pid", "sid")
-                             .isEqualContent (new MicroDocumentType ("qname", null, null)));
-    assertFalse (new MicroDocumentType ("qname", "pid", "sid")
-                             .isEqualContent (new MicroDocumentType ("qname2", "pid", "sid")));
+    assertTrue (new MicroDocumentType ("qname", "pid", "sid").isEqualContent (new MicroDocumentType ("qname",
+                                                                                                     "pid",
+                                                                                                     "sid")));
+    assertTrue (new MicroDocumentType ("qname", null, null).isEqualContent (new MicroDocumentType ("qname", null, null)));
+    assertFalse (new MicroDocumentType ("qname", "pid", "sid").isEqualContent (new MicroDocumentType ("qname",
+                                                                                                      "pid",
+                                                                                                      "sid2")));
+    assertFalse (new MicroDocumentType ("qname", "pid", "sid").isEqualContent (new MicroDocumentType ("qname",
+                                                                                                      "pid",
+                                                                                                      null)));
+    assertFalse (new MicroDocumentType ("qname", "pid", "sid").isEqualContent (new MicroDocumentType ("qname",
+                                                                                                      "pid2",
+                                                                                                      "sid")));
+    assertFalse (new MicroDocumentType ("qname", "pid", "sid").isEqualContent (new MicroDocumentType ("qname",
+                                                                                                      null,
+                                                                                                      "sid")));
+    assertFalse (new MicroDocumentType ("qname", "pid", "sid").isEqualContent (new MicroDocumentType ("qname",
+                                                                                                      null,
+                                                                                                      null)));
+    assertFalse (new MicroDocumentType ("qname", "pid", "sid").isEqualContent (new MicroDocumentType ("qname2",
+                                                                                                      "pid",
+                                                                                                      "sid")));
 
     try
     {

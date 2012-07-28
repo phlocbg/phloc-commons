@@ -21,11 +21,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
+import com.phloc.commons.microdom.EMicroNodeType;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.MicroException;
@@ -55,9 +57,11 @@ public final class MicroDocumentTest
     assertFalse (e.isEqualContent (new MicroText ("any")));
 
     assertTrue (e.isEqualContent (e.getClone ()));
+    assertSame (EMicroNodeType.DOCUMENT, e.getType ());
     assertTrue (new MicroDocument ().isEqualContent (new MicroDocument ()));
-    assertFalse (new MicroDocument ()
-                             .isEqualContent (new MicroDocument (new MicroDocumentType ("any", "public", "system"))));
+    assertFalse (new MicroDocument ().isEqualContent (new MicroDocument (new MicroDocumentType ("any",
+                                                                                                "public",
+                                                                                                "system"))));
 
     // Clone with children
     e.appendElement ("root");
