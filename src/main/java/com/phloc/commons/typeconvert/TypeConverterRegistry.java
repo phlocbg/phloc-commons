@@ -34,6 +34,8 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.GlobalDebug;
 import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.collections.multimap.IMultiMapListBased;
+import com.phloc.commons.collections.multimap.MultiTreeMapArrayListBased;
 import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.lang.ServiceLoaderBackport;
 import com.phloc.commons.mutable.Wrapper;
@@ -55,8 +57,7 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
 
   // Use a weak hash map, because the key is a class
   private static final Map <Class <?>, Map <Class <?>, ITypeConverter>> s_aConverter = new WeakHashMap <Class <?>, Map <Class <?>, ITypeConverter>> ();
-  private static final List <ITypeConverterRule> s_aRules = new ArrayList <ITypeConverterRule> ();
-  private static final List <ITypeConverterRule> s_aRulesAnySource = new ArrayList <ITypeConverterRule> ();
+  private static final IMultiMapListBased <ITypeConverterRule.ESubType, ITypeConverterRule> s_aRules = new MultiTreeMapArrayListBased <ITypeConverterRule.ESubType, ITypeConverterRule> ();
 
   static
   {
@@ -136,6 +137,8 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
       throw new IllegalArgumentException ("Source and destination class are equal and therefore no converter is required.");
     if (aConverter == null)
       throw new NullPointerException ("converter");
+    if (aConverter instanceof ITypeConverterRule)
+      throw new IllegalArgumentException ("Type converter rules must be registered via registerTypeConverterRule");
 
     // The main class should not already be registered
     final Map <Class <?>, ITypeConverter> aSrcMap = _getOrCreateConverterMap (aSrcClass);
@@ -219,15 +222,11 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
     s_aRWLock.readLock ().lock ();
     try
     {
-      // Check all "specific" rules first
-      for (final ITypeConverterRule aRule : s_aRules)
-        if (aRule.canConvert (aSrcClass, aDstClass))
-          return aRule;
-
-      // Check all rules with any source object
-      for (final ITypeConverterRule aRule : s_aRulesAnySource)
-        if (aRule.canConvert (aSrcClass, aDstClass))
-          return aRule;
+      // Check all rules in the correct order
+      for (final Map.Entry <ITypeConverterRule.ESubType, List <ITypeConverterRule>> aEntry : s_aRules.entrySet ())
+        for (final ITypeConverterRule aRule : aEntry.getValue ())
+          if (aRule.canConvert (aSrcClass, aDstClass))
+            return aRule;
 
       return null;
     }
@@ -397,11 +396,7 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
     s_aRWLock.writeLock ().lock ();
     try
     {
-      if (aTypeConverterRule instanceof ITypeConverterRuleAnySource ||
-          aTypeConverterRule instanceof ITypeConverterRuleAnyDestination)
-        s_aRulesAnySource.add (aTypeConverterRule);
-      else
-        s_aRules.add (aTypeConverterRule);
+      s_aRules.putSingle (aTypeConverterRule.getSubType (), aTypeConverterRule);
     }
     finally
     {
@@ -410,12 +405,12 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
   }
 
   @Nonnegative
-  public static int getRegisteredTypeConverterRuleCount ()
+  public static long getRegisteredTypeConverterRuleCount ()
   {
     s_aRWLock.readLock ().lock ();
     try
     {
-      return s_aRules.size () + s_aRulesAnySource.size ();
+      return s_aRules.getTotalValueCount ();
     }
     finally
     {

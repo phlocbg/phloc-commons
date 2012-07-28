@@ -15,20 +15,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.typeconvert;
+package com.phloc.commons.typeconvert.rule;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.string.ToStringGenerator;
+import com.phloc.commons.typeconvert.ITypeConverterRule;
+
 /**
- * A special type converter rule that has a fixed source class.
+ * Abstract type converter rule implementation
  * 
  * @author philip
  */
-public interface ITypeConverterRuleFixedSource extends ITypeConverterRule
+public abstract class AbstractTypeConverterRule implements ITypeConverterRule
 {
-  /**
-   * @return The source class to convert from. May not be <code>null</code>.
-   */
+  private final ESubType m_eSubType;
+
+  public AbstractTypeConverterRule (@Nonnull final ITypeConverterRule.ESubType eSubType)
+  {
+    if (eSubType == null)
+      throw new NullPointerException ("subType");
+    m_eSubType = eSubType;
+  }
+
   @Nonnull
-  Class <?> getSourceClass ();
+  public final ESubType getSubType ()
+  {
+    return m_eSubType;
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("subType", m_eSubType).toString ();
+  }
 }

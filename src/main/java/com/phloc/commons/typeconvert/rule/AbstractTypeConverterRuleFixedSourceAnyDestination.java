@@ -20,8 +20,7 @@ package com.phloc.commons.typeconvert.rule;
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.string.ToStringGenerator;
-import com.phloc.commons.typeconvert.ITypeConverterRuleAnyDestination;
-import com.phloc.commons.typeconvert.ITypeConverterRuleFixedSource;
+import com.phloc.commons.typeconvert.TypeConverter;
 
 /**
  * Abstract type converter than can convert from a base source class to a
@@ -29,14 +28,14 @@ import com.phloc.commons.typeconvert.ITypeConverterRuleFixedSource;
  * 
  * @author philip
  */
-public abstract class AbstractTypeConverterRuleFixedSourceAnyDestination implements
-                                                                        ITypeConverterRuleAnyDestination,
-                                                                        ITypeConverterRuleFixedSource
+public abstract class AbstractTypeConverterRuleFixedSourceAnyDestination extends AbstractTypeConverterRule
 {
   private final Class <?> m_aSrcClass;
+  private Class <?> m_aEffectiveDstClass;
 
   public AbstractTypeConverterRuleFixedSourceAnyDestination (@Nonnull final Class <?> aSrcClass)
   {
+    super (ESubType.FIXED_SRC_ANY_DST);
     if (aSrcClass == null)
       throw new NullPointerException ("srcClass");
     m_aSrcClass = aSrcClass;
@@ -45,7 +44,19 @@ public abstract class AbstractTypeConverterRuleFixedSourceAnyDestination impleme
   public final boolean canConvert (@Nonnull final Class <?> aSrcClass, @Nonnull final Class <?> aDstClass)
   {
     // destination class can be anything
-    return m_aSrcClass.equals (aSrcClass);
+    if (!m_aSrcClass.equals (aSrcClass))
+      return false;
+    // Remember destination class for target conversion
+    m_aEffectiveDstClass = aDstClass;
+    return true;
+  }
+
+  @Nonnull
+  protected abstract Object getInBetweenValue (@Nonnull final Object aSource);
+
+  public final Object convert (@Nonnull final Object aSource)
+  {
+    return TypeConverter.convertIfNecessary (getInBetweenValue (aSource), m_aEffectiveDstClass);
   }
 
   @Nonnull
@@ -57,6 +68,6 @@ public abstract class AbstractTypeConverterRuleFixedSourceAnyDestination impleme
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("srcClass", m_aSrcClass.getName ()).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("srcClass", m_aSrcClass.getName ()).toString ();
   }
 }

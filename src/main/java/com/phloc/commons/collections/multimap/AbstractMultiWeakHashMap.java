@@ -19,7 +19,7 @@ package com.phloc.commons.collections.multimap;
 
 import java.util.Collection;
 import java.util.Map;
-import java.util.TreeMap;
+import java.util.WeakHashMap;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -29,7 +29,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.phloc.commons.state.EChange;
 
 /**
- * Abstract multi map based on {@link TreeMap}.
+ * Abstract multi map based on {@link WeakHashMap}.
  * 
  * @author philip
  * @param <KEYTYPE>
@@ -40,24 +40,24 @@ import com.phloc.commons.state.EChange;
  *        contained collection type
  */
 @NotThreadSafe
-public abstract class AbstractMultiTreeMap <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends
-                                                                                                         TreeMap <KEYTYPE, COLLTYPE> implements
-                                                                                                                                    IMultiMap <KEYTYPE, VALUETYPE, COLLTYPE>
+public abstract class AbstractMultiWeakHashMap <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends
+                                                                                                             WeakHashMap <KEYTYPE, COLLTYPE> implements
+                                                                                                                                            IMultiMap <KEYTYPE, VALUETYPE, COLLTYPE>
 {
-  public AbstractMultiTreeMap ()
+  public AbstractMultiWeakHashMap ()
   {}
 
-  public AbstractMultiTreeMap (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
+  public AbstractMultiWeakHashMap (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
   {
     putSingle (aKey, aValue);
   }
 
-  public AbstractMultiTreeMap (@Nullable final KEYTYPE aKey, @Nullable final COLLTYPE aCollection)
+  public AbstractMultiWeakHashMap (@Nullable final KEYTYPE aKey, @Nullable final COLLTYPE aCollection)
   {
     put (aKey, aCollection);
   }
 
-  public AbstractMultiTreeMap (@Nullable final Map <? extends KEYTYPE, ? extends COLLTYPE> aCont)
+  public AbstractMultiWeakHashMap (@Nullable final Map <? extends KEYTYPE, ? extends COLLTYPE> aCont)
   {
     if (aCont != null)
       putAll (aCont);

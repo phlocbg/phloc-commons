@@ -15,21 +15,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.typeconvert;
+package com.phloc.commons.collections.multimap;
 
+import java.util.Collection;
+
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.Immutable;
 
 /**
- * A special type converter rule that has a fixed source class.
+ * Utility class implementing some common functionality con multi maps
  * 
  * @author philip
  */
-public interface ITypeConverterRuleFixedDestination extends ITypeConverterRule
+@Immutable
+public final class MultiMapHelper
 {
-  /**
-   * @return The destination class to convert from. May not be <code>null</code>
-   *         .
-   */
-  @Nonnull
-  Class <?> getDestinationClass ();
+  private MultiMapHelper ()
+  {}
+
+  @Nonnegative
+  public static long getTotalValueCount (@Nonnull final IMultiMap <?, ?, ?> aMultiMap)
+  {
+    long ret = 0;
+    for (final Collection <?> aChild : aMultiMap.values ())
+      ret += aChild.size ();
+    return ret;
+  }
 }

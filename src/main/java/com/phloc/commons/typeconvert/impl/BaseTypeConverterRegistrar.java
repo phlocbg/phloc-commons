@@ -37,6 +37,7 @@ import com.phloc.commons.typeconvert.ITypeConverterRegistry;
 import com.phloc.commons.typeconvert.TypeConverter;
 import com.phloc.commons.typeconvert.rule.AbstractTypeConverterRuleAnySourceFixedDestination;
 import com.phloc.commons.typeconvert.rule.AbstractTypeConverterRuleAssignableSourceFixedDestination;
+import com.phloc.commons.typeconvert.rule.AbstractTypeConverterRuleFixedSourceAnyDestination;
 import com.phloc.commons.typeconvert.rule.AbstractTypeConverterRuleFixedSourceAssignableDestination;
 
 /**
@@ -80,13 +81,6 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
         return Boolean.valueOf (((Number) aSource).intValue () != 0);
       }
     });
-    aRegistry.registerTypeConverter (AtomicBoolean.class, Boolean.class, new ITypeConverter ()
-    {
-      public Boolean convert (@Nonnull final Object aSource)
-      {
-        return Boolean.valueOf (((AtomicBoolean) aSource).get ());
-      }
-    });
     aRegistry.registerTypeConverter (Character.class, Boolean.class, new ITypeConverter ()
     {
       public Boolean convert (@Nonnull final Object aSource)
@@ -116,13 +110,6 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
       public Byte convert (@Nonnull final Object aSource)
       {
         return Byte.valueOf (((Boolean) aSource).booleanValue () ? (byte) 1 : (byte) 0);
-      }
-    });
-    aRegistry.registerTypeConverter (AtomicBoolean.class, Byte.class, new ITypeConverter ()
-    {
-      public Byte convert (@Nonnull final Object aSource)
-      {
-        return Byte.valueOf (((AtomicBoolean) aSource).get () ? (byte) 1 : (byte) 0);
       }
     });
     aRegistry.registerTypeConverter (Character.class, Byte.class, new ITypeConverter ()
@@ -156,13 +143,6 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
         return Character.valueOf (((Boolean) aSource).booleanValue () ? (char) 1 : (char) 0);
       }
     });
-    aRegistry.registerTypeConverter (AtomicBoolean.class, Character.class, new ITypeConverter ()
-    {
-      public Character convert (@Nonnull final Object aSource)
-      {
-        return Character.valueOf (((AtomicBoolean) aSource).get () ? (char) 1 : (char) 0);
-      }
-    });
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (Character.class)
     {
       public Character convert (@Nonnull final Object aSource)
@@ -186,13 +166,6 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
       public Double convert (@Nonnull final Object aSource)
       {
         return Double.valueOf (((Boolean) aSource).booleanValue () ? 1d : 0d);
-      }
-    });
-    aRegistry.registerTypeConverter (AtomicBoolean.class, Double.class, new ITypeConverter ()
-    {
-      public Double convert (@Nonnull final Object aSource)
-      {
-        return Double.valueOf (((AtomicBoolean) aSource).get () ? 1d : 0d);
       }
     });
     aRegistry.registerTypeConverter (Character.class, Double.class, new ITypeConverter ()
@@ -226,13 +199,6 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
         return Float.valueOf (((Boolean) aSource).booleanValue () ? 1f : 0f);
       }
     });
-    aRegistry.registerTypeConverter (AtomicBoolean.class, Float.class, new ITypeConverter ()
-    {
-      public Float convert (@Nonnull final Object aSource)
-      {
-        return Float.valueOf (((AtomicBoolean) aSource).get () ? 1f : 0f);
-      }
-    });
     aRegistry.registerTypeConverter (Character.class, Float.class, new ITypeConverter ()
     {
       public Float convert (@Nonnull final Object aSource)
@@ -262,13 +228,6 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
       public Integer convert (@Nonnull final Object aSource)
       {
         return Integer.valueOf (((Boolean) aSource).booleanValue () ? 1 : 0);
-      }
-    });
-    aRegistry.registerTypeConverter (AtomicBoolean.class, Integer.class, new ITypeConverter ()
-    {
-      public Integer convert (@Nonnull final Object aSource)
-      {
-        return Integer.valueOf (((AtomicBoolean) aSource).get () ? 1 : 0);
       }
     });
     aRegistry.registerTypeConverter (Character.class, Integer.class, new ITypeConverter ()
@@ -302,13 +261,6 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
         return Long.valueOf (((Boolean) aSource).booleanValue () ? 1L : 0L);
       }
     });
-    aRegistry.registerTypeConverter (AtomicBoolean.class, Long.class, new ITypeConverter ()
-    {
-      public Long convert (@Nonnull final Object aSource)
-      {
-        return Long.valueOf (((AtomicBoolean) aSource).get () ? 1L : 0L);
-      }
-    });
     aRegistry.registerTypeConverter (Character.class, Long.class, new ITypeConverter ()
     {
       public Long convert (@Nonnull final Object aSource)
@@ -338,13 +290,6 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
       public Short convert (@Nonnull final Object aSource)
       {
         return Short.valueOf (((Boolean) aSource).booleanValue () ? (short) 1 : (short) 0);
-      }
-    });
-    aRegistry.registerTypeConverter (AtomicBoolean.class, Short.class, new ITypeConverter ()
-    {
-      public Short convert (@Nonnull final Object aSource)
-      {
-        return Short.valueOf (((AtomicBoolean) aSource).get () ? (short) 1 : (short) 0);
       }
     });
     aRegistry.registerTypeConverter (Character.class, Short.class, new ITypeConverter ()
@@ -394,13 +339,6 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
         return ((Boolean) aSource).booleanValue () ? BigDecimal.ONE : BigDecimal.ZERO;
       }
     });
-    aRegistry.registerTypeConverter (AtomicBoolean.class, BigDecimal.class, new ITypeConverter ()
-    {
-      public BigDecimal convert (@Nonnull final Object aSource)
-      {
-        return ((AtomicBoolean) aSource).get () ? BigDecimal.ONE : BigDecimal.ZERO;
-      }
-    });
     aRegistry.registerTypeConverter (Character.class, BigDecimal.class, new ITypeConverter ()
     {
       public BigDecimal convert (@Nonnull final Object aSource)
@@ -439,13 +377,6 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
         return ((Boolean) aSource).booleanValue () ? BigInteger.ONE : BigInteger.ZERO;
       }
     });
-    aRegistry.registerTypeConverter (AtomicBoolean.class, BigInteger.class, new ITypeConverter ()
-    {
-      public BigInteger convert (@Nonnull final Object aSource)
-      {
-        return ((AtomicBoolean) aSource).get () ? BigInteger.ONE : BigInteger.ZERO;
-      }
-    });
     aRegistry.registerTypeConverter (Character.class, BigInteger.class, new ITypeConverter ()
     {
       public BigInteger convert (@Nonnull final Object aSource)
@@ -461,7 +392,15 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
       }
     });
 
-    // to AtomicBoolean
+    // AtomicBoolean
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleFixedSourceAnyDestination (AtomicBoolean.class)
+    {
+      @Override
+      protected Object getInBetweenValue (@Nonnull final Object aSource)
+      {
+        return Boolean.valueOf (((AtomicBoolean) aSource).get ());
+      }
+    });
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (AtomicBoolean.class)
     {
       public AtomicBoolean convert (@Nonnull final Object aSource)
@@ -470,7 +409,15 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
       }
     });
 
-    // to AtomicInteger
+    // AtomicInteger
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleFixedSourceAnyDestination (AtomicInteger.class)
+    {
+      @Override
+      protected Object getInBetweenValue (@Nonnull final Object aSource)
+      {
+        return Integer.valueOf (((AtomicInteger) aSource).get ());
+      }
+    });
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (AtomicInteger.class)
     {
       public AtomicInteger convert (@Nonnull final Object aSource)
@@ -479,7 +426,15 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
       }
     });
 
-    // to AtomicLong
+    // AtomicLong
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleFixedSourceAnyDestination (AtomicLong.class)
+    {
+      @Override
+      protected Object getInBetweenValue (@Nonnull final Object aSource)
+      {
+        return Long.valueOf (((AtomicLong) aSource).get ());
+      }
+    });
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (AtomicLong.class)
     {
       public AtomicLong convert (@Nonnull final Object aSource)
