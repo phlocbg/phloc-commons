@@ -1,7 +1,29 @@
 #summary Change log of phloc-commons
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
-<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr><td>7/23/12</td><td>add</td><td>api</td><td></td><td>Extended VendorInfo to support getter and setter</td></tr>
+<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr><td>7/28/12</td><td>add</td><td>api</td><td></td><td>Added new methods new...Vector(array) and newVector(...)</td></tr>
+<tr><td>7/28/12</td><td>add</td><td>api</td><td></td><td>Added new interface method IMultiMap.getTotalValueCount()</td></tr>
+<tr><td>7/28/12</td><td>add</td><td>api</td><td></td><td>Added multi map implementations based on WekHashMap</td></tr>
+<tr><td>7/28/12</td><td>add</td><td>api</td><td></td><td>Extracted the parsing functionality from StringHelper to StringParser</td></tr>
+<tr><td>7/28/12</td><td>add</td><td>api</td><td></td><td>Extended StringHelper to support parsing String to short/Short</td></tr>
+<tr><td>7/27/12</td><td>add</td><td>api</td><td></td><td>Added new constructors for ClassPathResource and FileSystemResource</td></tr>
+<tr><td>7/27/12</td><td>change</td><td>api</td><td>*yes*</td><td>Removed ITypeConverterUpCast interface and added more flexible ITypeConverterRule interface</td></tr>
+<tr><td>7/27/12</td><td>add</td><td>tech</td><td></td><td>Added some new type converter implementations</td></tr>
+<tr><td>7/26/12</td><td>add</td><td>api</td><td></td><td>Added new methods TypeConverter.convertTo(Boolean|Byte|Char|Double|Float|Int|Long|Short)</td></tr>
+<tr><td>7/26/12</td><td>add</td><td>api</td><td></td><td>All Mutable`*` classes except MutableBoolean are now derived from Number</td></tr>
+<tr><td>7/26/12</td><td>add</td><td>api</td><td></td><td>Most Mutable`*` classes implement the new IMutable, IMutableNumeric and IMutableInteger interfaces</td></tr>
+<tr><td>7/26/12</td><td>add</td><td>api</td><td></td><td>MutableBoolean now implements Comparable</td></tr>
+<tr><td>7/26/12</td><td>add</td><td>api</td><td></td><td>Added new methods FileUtils.can(Read|Write|Execute) with File parameter</td></tr>
+<tr><td>7/26/12</td><td>add</td><td>api</td><td></td><td>Added new classes XPathHelper and XPathExpressionHelper to easily handle XPath queries</td></tr>
+<tr><td>7/26/12</td><td>add</td><td>api</td><td></td><td>Extended FileSystemResource with methods can(Read|Write|Execute)</td></tr>
+<tr><td>7/26/12</td><td>add</td><td>api</td><td></td><td>Extended TimeValue API with getAs... methods</td></tr>
+<tr><td>7/26/12</td><td>add</td><td>api</td><td></td><td>LogMessage is now implementing the interfaces ISuccessIndicator and IErrorIndicator</td></tr>
+<tr><td>7/26/12</td><td>add</td><td>api</td><td></td><td>InMemoryLogger now implements the interface IHasErrorLevels</td></tr>
+<tr><td>7/26/12</td><td>add</td><td>api</td><td></td><td>Extracted new interface IHasErrorLevels from IResourceErrorGroup and extended it with the methods get(Success|Failure|Error)Count</td></tr>
+<tr><td>7/26/12</td><td>add</td><td>api</td><td></td><td>Added new class MapBasedXPathVariableResolver</td></tr>
+<tr><td>7/25/12</td><td>add</td><td>api</td><td></td><td>Added class ThreadUtils for some threading simplifications</td></tr>
+<tr><td>7/25/12</td><td>add</td><td>api</td><td></td><td>Extended MicroReader and XMLReader to directly handle byte[] as an argument</td></tr>
+<tr><td>7/23/12</td><td>add</td><td>api</td><td></td><td>Extended VendorInfo to support getter and setter</td></tr>
 <tr border="1"><td>7/19/12</td><td colspan="4">_Release *3.6.6*_</td></tr>
 <tr><td>7/19/12</td><td>add</td><td>api</td><td></td><td>Added methods to InputSourceFactory and TransformSourceFactory taking byte[]</td></tr>
 <tr><td>7/19/12</td><td>add</td><td>tech</td><td></td><td>Added permission check handling in class FileOperations</td></tr>
