@@ -48,14 +48,20 @@ public final class StringBasedMicroTypeConverter implements IMicroTypeConverter
                                               @Nullable final String sNamespaceURI,
                                               @Nonnull @Nonempty final String sTagName)
   {
+    // Convert object to string
     final String sValue = TypeConverter.convertIfNecessary (aObject, String.class);
+
+    // Convert string to micro element
     return StringMicroTypeConverter.getInstance ().convertToMicroElement (sValue, sNamespaceURI, sTagName);
   }
 
   @Nonnull
   public Object convertToNative (@Nonnull final IMicroElement aElement)
   {
+    // Convert micro element to string
     final String sValue = StringMicroTypeConverter.getInstance ().convertToNative (aElement);
+
+    // Convert string to native type
     return TypeConverter.convertIfNecessary (sValue, m_aNativeClass);
   }
 }
