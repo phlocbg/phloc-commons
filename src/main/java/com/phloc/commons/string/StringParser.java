@@ -203,7 +203,7 @@ public class StringParser
   }
 
   /**
-   * Parse the given String as byte with radix 10.
+   * Parse the given {@link String} as byte with radix {@value #DEFAULT_RADIX}.
    * 
    * @param sStr
    *        The String to parse. May be <code>null</code>.
@@ -219,7 +219,7 @@ public class StringParser
   }
 
   /**
-   * Parse the given String as byte with the specified radix.
+   * Parse the given {@link String} as byte with the specified radix.
    * 
    * @param sStr
    *        The String to parse. May be <code>null</code>.
@@ -234,7 +234,7 @@ public class StringParser
    */
   public static byte parseByte (@Nullable final String sStr, @Nonnegative final int nRadix, final byte nDefault)
   {
-    if (sStr != null)
+    if (sStr != null && sStr.length () > 0)
       try
       {
         return Byte.parseByte (sStr, nRadix);
@@ -309,20 +309,21 @@ public class StringParser
    * {@value #DEFAULT_RADIX}.
    * 
    * @param sStr
-   *        The String to parse.
+   *        The String to parse. May be <code>null</code>.
    * @return <code>null</code> if the string does not represent a valid value.
    */
   @Nullable
   public static Byte parseByteObj (@Nullable final String sStr)
   {
-    return parseByteObj (sStr, null);
+    return parseByteObj (sStr, DEFAULT_RADIX, null);
   }
 
   /**
-   * Parse the given String as {@link Byte} with radix {@value #DEFAULT_RADIX}.
+   * Parse the given {@link String} as {@link Byte} with radix
+   * {@value #DEFAULT_RADIX}.
    * 
    * @param sStr
-   *        The String to parse.
+   *        The String to parse. May be <code>null</code>.
    * @param aDefault
    *        The default value to be returned if the passed string could not be
    *        converted to a valid value. May be <code>null</code>.
@@ -339,7 +340,7 @@ public class StringParser
    * Parse the given {@link String} as {@link Byte} with the specified radix.
    * 
    * @param sStr
-   *        The String to parse.
+   *        The String to parse. May be <code>null</code>.
    * @param nRadix
    *        The radix to use. Must be &ge; {@link Character#MIN_RADIX} and &le;
    *        {@link Character#MAX_RADIX}.
@@ -354,7 +355,7 @@ public class StringParser
                                    @Nonnegative final int nRadix,
                                    @Nullable final Byte aDefault)
   {
-    if (sStr != null)
+    if (sStr != null && sStr.length () > 0)
       try
       {
         return Byte.valueOf (sStr, nRadix);
@@ -492,12 +493,12 @@ public class StringParser
   // ---[float]---
 
   /**
-   * Parse the given object as float. Note: both the locale independent form of
-   * a float can be parsed here (e.g. 4.523) as well as a localized form using
-   * the comma as the decimal separator (e.g. the German 4,523).
+   * Parse the given {@link Object} as float. Note: both the locale independent
+   * form of a float can be parsed here (e.g. 4.523) as well as a localized form
+   * using the comma as the decimal separator (e.g. the German 4,523).
    * 
    * @param aObject
-   *        The object to parse.
+   *        The object to parse. May be <code>null</code>.
    * @param fDefault
    *        The default value to be returned if the passed object could not be
    *        converted to a valid value.
@@ -513,10 +514,10 @@ public class StringParser
   }
 
   /**
-   * Parse the given string as float.
+   * Parse the given {@link String} as float.
    * 
    * @param sStr
-   *        The string to parse.
+   *        The string to parse. May be <code>null</code>.
    * @param fDefault
    *        The default value to be returned if the passed object could not be
    *        converted to a valid value.
@@ -538,12 +539,36 @@ public class StringParser
     return fDefault;
   }
 
+  /**
+   * Parse the given {@link Object} as {@link Float}. Note: both the locale
+   * independent form of a double can be parsed here (e.g. 4.523) as well as a
+   * localized form using the comma as the decimal separator (e.g. the German
+   * 4,523).
+   * 
+   * @param aObject
+   *        The object to parse. May be <code>null</code>.
+   * @return <code>null</code> if the object does not represent a valid value.
+   */
   @Nullable
   public static Float parseFloatObj (@Nullable final Object aObject)
   {
     return parseFloatObj (aObject, null);
   }
 
+  /**
+   * Parse the given {@link Object} as {@link Float}. Note: both the locale
+   * independent form of a double can be parsed here (e.g. 4.523) as well as a
+   * localized form using the comma as the decimal separator (e.g. the German
+   * 4,523).
+   * 
+   * @param aObject
+   *        The object to parse. May be <code>null</code>.
+   * @param aDefault
+   *        The default value to be returned if the parsed object cannot be
+   *        converted to a float. May be <code>null</code>.
+   * @return <code>aDefault</code> if the object does not represent a valid
+   *         value.
+   */
   @Nullable
   public static Float parseFloatObj (@Nullable final Object aObject, @Nullable final Float aDefault)
   {
@@ -551,12 +576,36 @@ public class StringParser
     return Float.isNaN (fValue) ? aDefault : Float.valueOf (fValue);
   }
 
+  /**
+   * Parse the given {@link String} as {@link Float}. Note: both the locale
+   * independent form of a double can be parsed here (e.g. 4.523) as well as a
+   * localized form using the comma as the decimal separator (e.g. the German
+   * 4,523).
+   * 
+   * @param sStr
+   *        The string to parse. May be <code>null</code>.
+   * @return <code>null</code> if the object does not represent a valid value.
+   */
   @Nullable
   public static Float parseFloatObj (@Nullable final String sStr)
   {
     return parseFloatObj (sStr, null);
   }
 
+  /**
+   * Parse the given {@link String} as {@link Float}. Note: both the locale
+   * independent form of a double can be parsed here (e.g. 4.523) as well as a
+   * localized form using the comma as the decimal separator (e.g. the German
+   * 4,523).
+   * 
+   * @param sStr
+   *        The string to parse. May be <code>null</code>.
+   * @param aDefault
+   *        The default value to be returned if the parsed string cannot be
+   *        converted to a float. May be <code>null</code>.
+   * @return <code>aDefault</code> if the object does not represent a valid
+   *         value.
+   */
   @Nullable
   public static Float parseFloatObj (@Nullable final String sStr, @Nullable final Float aDefault)
   {
@@ -567,7 +616,7 @@ public class StringParser
   // ---[int]---
 
   /**
-   * Parse the given {@link String} as int with radix {@link #DEFAULT_RADIX}.
+   * Parse the given {@link Object} as int with radix {@link #DEFAULT_RADIX}.
    * 
    * @param aObject
    *        The Object to parse. May be <code>null</code>.
@@ -582,12 +631,13 @@ public class StringParser
   }
 
   /**
-   * Parse the given String as int.
+   * Parse the given {@link Object} as int with the specified radix.
    * 
    * @param aObject
-   *        The Object to parse. May be <code>null</code>.
+   *        The object to parse. May be <code>null</code>.
    * @param nRadix
-   *        The radix to use.
+   *        The radix to use. Must be &ge; {@link Character#MIN_RADIX} and &le;
+   *        {@link Character#MAX_RADIX}.
    * @param nDefault
    *        The default value to be returned if the passed object could not be
    *        converted to a valid value.
@@ -595,13 +645,15 @@ public class StringParser
    */
   public static int parseInt (@Nullable final Object aObject, @Nonnegative final int nRadix, final int nDefault)
   {
+    if (aObject == null)
+      return nDefault;
     if (aObject instanceof Number)
       return ((Number) aObject).intValue ();
     return parseInt (String.valueOf (aObject), nRadix, nDefault);
   }
 
   /**
-   * Parse the given String as int with radix 10.
+   * Parse the given {@link String} as int with radix {@value #DEFAULT_RADIX}.
    * 
    * @param sStr
    *        The String to parse. May be <code>null</code>.
@@ -617,12 +669,13 @@ public class StringParser
   }
 
   /**
-   * Parse the given String as int.
+   * Parse the given {@link String} as int with the specified radix.
    * 
    * @param sStr
    *        The String to parse. May be <code>null</code>.
    * @param nRadix
-   *        The radix to use.
+   *        The radix to use. Must be &ge; {@link Character#MIN_RADIX} and &le;
+   *        {@link Character#MAX_RADIX}.
    * @param nDefault
    *        The value to be returned if the string cannot be converted to a
    *        valid value.
@@ -631,7 +684,7 @@ public class StringParser
    */
   public static int parseInt (@Nullable final String sStr, @Nonnegative final int nRadix, final int nDefault)
   {
-    if (sStr != null)
+    if (sStr != null && sStr.length () > 0)
       try
       {
         return Integer.parseInt (sStr, nRadix);
@@ -644,24 +697,51 @@ public class StringParser
   }
 
   /**
-   * Parse the given object as integer.
+   * Parse the given {@link Object} as {@link Integer} with radix
+   * {@value #DEFAULT_RADIX}.
    * 
    * @param aObject
-   *        The object to parse.
+   *        The object to parse. May be <code>null</code>.
    * @return <code>null</code> if the object does not represent a valid value.
    */
   @Nullable
   public static Integer parseIntObj (@Nullable final Object aObject)
   {
-    return parseIntObj (aObject, null);
+    return parseIntObj (aObject, DEFAULT_RADIX, null);
   }
 
+  /**
+   * Parse the given {@link Object} as {@link Integer} with radix
+   * {@value #DEFAULT_RADIX}.
+   * 
+   * @param aObject
+   *        The object to parse. May be <code>null</code>.
+   * @param aDefault
+   *        The default value to be returned if the passed object cannot be
+   *        converted to an Integer. May be <code>null</code>.
+   * @return <code>aDefault</code> if the object does not represent a valid
+   *         value.
+   */
   @Nullable
   public static Integer parseIntObj (@Nullable final Object aObject, @Nullable final Integer aDefault)
   {
     return parseIntObj (aObject, DEFAULT_RADIX, aDefault);
   }
 
+  /**
+   * Parse the given {@link Object} as {@link Integer} with the specified radix.
+   * 
+   * @param aObject
+   *        The object to parse. May be <code>null</code>.
+   * @param nRadix
+   *        The radix to use. Must be &ge; {@link Character#MIN_RADIX} and &le;
+   *        {@link Character#MAX_RADIX}.
+   * @param aDefault
+   *        The default value to be returned if the passed object cannot be
+   *        converted to an Integer. May be <code>null</code>.
+   * @return <code>aDefault</code> if the object does not represent a valid
+   *         value.
+   */
   @Nullable
   public static Integer parseIntObj (@Nullable final Object aObject,
                                      @Nonnegative final int nRadix,
@@ -675,26 +755,28 @@ public class StringParser
   }
 
   /**
-   * Parse the given String as integer.
+   * Parse the given {@link String} as {@link Integer} with radix
+   * {@value #DEFAULT_RADIX}.
    * 
    * @param sStr
-   *        The String to parse.
+   *        The string to parse. May be <code>null</code>.
    * @return <code>null</code> if the string does not represent a valid value.
    */
   @Nullable
   public static Integer parseIntObj (@Nullable final String sStr)
   {
-    return parseIntObj (sStr, null);
+    return parseIntObj (sStr, DEFAULT_RADIX, null);
   }
 
   /**
-   * Parse the given String as integer with radix 10.
+   * Parse the given {@link String} as {@link Integer} with radix
+   * {@link #DEFAULT_RADIX}.
    * 
    * @param sStr
-   *        The String to parse.
+   *        The string to parse. May be <code>null</code>.
    * @param aDefault
    *        The default value to be returned if the passed string could not be
-   *        converted to a valid value.
+   *        converted to a valid value. May be <code>null</code>.
    * @return <code>aDefault</code> if the string does not represent a valid
    *         value.
    */
@@ -705,15 +787,16 @@ public class StringParser
   }
 
   /**
-   * Parse the given String as integer.
+   * Parse the given {@link String} as {@link Integer} with the specified radix.
    * 
    * @param sStr
-   *        The String to parse.
+   *        The string to parse. May be <code>null</code>.
    * @param nRadix
-   *        The radix to use.
+   *        The radix to use. Must be &ge; {@link Character#MIN_RADIX} and &le;
+   *        {@link Character#MAX_RADIX}.
    * @param aDefault
    *        The default value to be returned if the passed string could not be
-   *        converted to a valid value.
+   *        converted to a valid value. May be <code>null</code>.
    * @return <code>aDefault</code> if the string does not represent a valid
    *         value.
    */
@@ -722,7 +805,7 @@ public class StringParser
                                      @Nonnegative final int nRadix,
                                      @Nullable final Integer aDefault)
   {
-    if (sStr != null)
+    if (sStr != null && sStr.length () > 0)
       try
       {
         return Integer.valueOf (sStr, nRadix);
@@ -737,10 +820,10 @@ public class StringParser
   // ---[long]---
 
   /**
-   * Parse the given object as long with radix 10.
+   * Parse the given {@link Object} as long with radix {@value #DEFAULT_RADIX}.
    * 
    * @param aObject
-   *        The object to parse.
+   *        The object to parse. May be <code>null</code>.
    * @param nDefault
    *        The default value to be returned if the passed object could not be
    *        converted to a valid value.
@@ -752,12 +835,13 @@ public class StringParser
   }
 
   /**
-   * Parse the given object as long.
+   * Parse the given {@link Object} as long with the specified radix.
    * 
    * @param aObject
-   *        The object to parse.
+   *        The object to parse. May be <code>null</code>.
    * @param nRadix
-   *        The radix to use.
+   *        The radix to use. Must be &ge; {@link Character#MIN_RADIX} and &le;
+   *        {@link Character#MAX_RADIX}.
    * @param nDefault
    *        The default value to be returned if the passed object could not be
    *        converted to a valid value.
@@ -773,10 +857,10 @@ public class StringParser
   }
 
   /**
-   * Parse the given String as long with radix 10.
+   * Parse the given {@link String} as long with radix {@value #DEFAULT_RADIX}.
    * 
    * @param sStr
-   *        The string to parse.
+   *        The string to parse. May be <code>null</code>.
    * @param nDefault
    *        The default value to be returned if the passed object could not be
    *        converted to a valid value.
@@ -788,12 +872,13 @@ public class StringParser
   }
 
   /**
-   * Parse the given String as long.
+   * Parse the given {@link String} as long with the specified radix.
    * 
    * @param sStr
-   *        The string to parse.
+   *        The string to parse. May be <code>null</code>.
    * @param nRadix
-   *        The radix to use.
+   *        The radix to use. Must be &ge; {@link Character#MIN_RADIX} and &le;
+   *        {@link Character#MAX_RADIX}.
    * @param nDefault
    *        The default value to be returned if the passed object could not be
    *        converted to a valid value.
@@ -801,7 +886,7 @@ public class StringParser
    */
   public static long parseLong (@Nullable final String sStr, @Nonnegative final int nRadix, final long nDefault)
   {
-    if (sStr != null)
+    if (sStr != null && sStr.length () > 0)
       try
       {
         return Long.parseLong (sStr, nRadix);
@@ -813,18 +898,52 @@ public class StringParser
     return nDefault;
   }
 
+  /**
+   * Parse the given {@link Object} as {@link Long} with radix
+   * {@value #DEFAULT_RADIX}.
+   * 
+   * @param aObject
+   *        The object to parse. May be <code>null</code>.
+   * @return <code>null</code> if the object does not represent a valid value.
+   */
   @Nullable
   public static Long parseLongObj (@Nullable final Object aObject)
   {
-    return parseLongObj (aObject, null);
+    return parseLongObj (aObject, DEFAULT_RADIX, null);
   }
 
+  /**
+   * Parse the given {@link Object} as {@link Long} with radix
+   * {@value #DEFAULT_RADIX}.
+   * 
+   * @param aObject
+   *        The object to parse. May be <code>null</code>.
+   * @param aDefault
+   *        The default value to be returned if the passed object cannot be
+   *        converted to a Long. May be <code>null</code>.
+   * @return <code>aDefault</code> if the object does not represent a valid
+   *         value.
+   */
   @Nullable
   public static Long parseLongObj (@Nullable final Object aObject, @Nullable final Long aDefault)
   {
     return parseLongObj (aObject, DEFAULT_RADIX, aDefault);
   }
 
+  /**
+   * Parse the given {@link Object} as {@link Long} with the specified radix.
+   * 
+   * @param aObject
+   *        The object to parse. May be <code>null</code>.
+   * @param nRadix
+   *        The radix to use. Must be &ge; {@link Character#MIN_RADIX} and &le;
+   *        {@link Character#MAX_RADIX}.
+   * @param aDefault
+   *        The default value to be returned if the passed object cannot be
+   *        converted to a Long. May be <code>null</code>.
+   * @return <code>aDefault</code> if the object does not represent a valid
+   *         value.
+   */
   @Nullable
   public static Long parseLongObj (@Nullable final Object aObject,
                                    @Nonnegative final int nRadix,
@@ -838,30 +957,57 @@ public class StringParser
   }
 
   /**
-   * Parse the given String as long.
+   * Parse the given {@link String} as {@link Long} with radix
+   * {@value #DEFAULT_RADIX}.
    * 
    * @param sStr
-   *        The string to parse.
+   *        The string to parse. May be <code>null</code>.
    * @return <code>null</code> if the string does not represent a valid value.
    */
   @Nullable
   public static Long parseLongObj (@Nullable final String sStr)
   {
-    return parseLongObj (sStr, null);
+    return parseLongObj (sStr, DEFAULT_RADIX, null);
   }
 
+  /**
+   * Parse the given {@link String} as {@link Long} with radix
+   * {@link #DEFAULT_RADIX}.
+   * 
+   * @param sStr
+   *        The string to parse. May be <code>null</code>.
+   * @param aDefault
+   *        The default value to be returned if the passed string could not be
+   *        converted to a valid value. May be <code>null</code>.
+   * @return <code>aDefault</code> if the string does not represent a valid
+   *         value.
+   */
   @Nullable
   public static Long parseLongObj (@Nullable final String sStr, @Nullable final Long aDefault)
   {
     return parseLongObj (sStr, DEFAULT_RADIX, aDefault);
   }
 
+  /**
+   * Parse the given {@link String} as {@link Long} with the specified radix.
+   * 
+   * @param sStr
+   *        The string to parse. May be <code>null</code>.
+   * @param nRadix
+   *        The radix to use. Must be &ge; {@link Character#MIN_RADIX} and &le;
+   *        {@link Character#MAX_RADIX}.
+   * @param aDefault
+   *        The default value to be returned if the passed string could not be
+   *        converted to a valid value. May be <code>null</code>.
+   * @return <code>aDefault</code> if the string does not represent a valid
+   *         value.
+   */
   @Nullable
   public static Long parseLongObj (@Nullable final String sStr,
                                    @Nonnegative final int nRadix,
                                    @Nullable final Long aDefault)
   {
-    if (sStr != null)
+    if (sStr != null && sStr.length () > 0)
       try
       {
         return Long.valueOf (sStr, nRadix);
@@ -876,10 +1022,10 @@ public class StringParser
   // ---[short]---
 
   /**
-   * Parse the given object as short with radix 10.
+   * Parse the given {@link Object} as short with radix {@value #DEFAULT_RADIX}.
    * 
    * @param aObject
-   *        The object to parse.
+   *        The object to parse. May be <code>null</code>.
    * @param nDefault
    *        The default value to be returned if the passed object could not be
    *        converted to a valid value.
@@ -891,12 +1037,13 @@ public class StringParser
   }
 
   /**
-   * Parse the given object as short.
+   * Parse the given {@link Object} as short with the specified radix.
    * 
    * @param aObject
-   *        The object to parse.
+   *        The object to parse. May be <code>null</code>.
    * @param nRadix
-   *        The radix to use.
+   *        The radix to use. Must be &ge; {@link Character#MIN_RADIX} and &le;
+   *        {@link Character#MAX_RADIX}.
    * @param nDefault
    *        The default value to be returned if the passed object could not be
    *        converted to a valid value.
@@ -912,10 +1059,10 @@ public class StringParser
   }
 
   /**
-   * Parse the given String as short with radix 10.
+   * Parse the given {@link String} as short with radix {@value #DEFAULT_RADIX}.
    * 
    * @param sStr
-   *        The string to parse.
+   *        The string to parse. May be <code>null</code>.
    * @param nDefault
    *        The default value to be returned if the passed object could not be
    *        converted to a valid value.
@@ -927,12 +1074,13 @@ public class StringParser
   }
 
   /**
-   * Parse the given String as short.
+   * Parse the given {@link String} as short with the specified radix.
    * 
    * @param sStr
-   *        The string to parse.
+   *        The string to parse. May be <code>null</code>.
    * @param nRadix
-   *        The radix to use.
+   *        The radix to use. Must be &ge; {@link Character#MIN_RADIX} and &le;
+   *        {@link Character#MAX_RADIX}.
    * @param nDefault
    *        The default value to be returned if the passed object could not be
    *        converted to a valid value.
@@ -940,7 +1088,7 @@ public class StringParser
    */
   public static short parseShort (@Nullable final String sStr, @Nonnegative final int nRadix, final short nDefault)
   {
-    if (sStr != null)
+    if (sStr != null && sStr.length () > 0)
       try
       {
         return Short.parseShort (sStr, nRadix);
@@ -952,18 +1100,52 @@ public class StringParser
     return nDefault;
   }
 
+  /**
+   * Parse the given {@link Object} as {@link Short} with radix
+   * {@value #DEFAULT_RADIX}.
+   * 
+   * @param aObject
+   *        The object to parse. May be <code>null</code>.
+   * @return <code>null</code> if the object does not represent a valid value.
+   */
   @Nullable
   public static Short parseShortObj (@Nullable final Object aObject)
   {
-    return parseShortObj (aObject, null);
+    return parseShortObj (aObject, DEFAULT_RADIX, null);
   }
 
+  /**
+   * Parse the given {@link Object} as {@link Short} with radix
+   * {@value #DEFAULT_RADIX}.
+   * 
+   * @param aObject
+   *        The object to parse. May be <code>null</code>.
+   * @param aDefault
+   *        The default value to be returned if the passed object cannot be
+   *        converted to a Short. May be <code>null</code>.
+   * @return <code>aDefault</code> if the object does not represent a valid
+   *         value.
+   */
   @Nullable
   public static Short parseShortObj (@Nullable final Object aObject, @Nullable final Short aDefault)
   {
     return parseShortObj (aObject, DEFAULT_RADIX, aDefault);
   }
 
+  /**
+   * Parse the given {@link Object} as {@link Short} with the specified radix.
+   * 
+   * @param aObject
+   *        The object to parse. May be <code>null</code>.
+   * @param nRadix
+   *        The radix to use. Must be &ge; {@link Character#MIN_RADIX} and &le;
+   *        {@link Character#MAX_RADIX}.
+   * @param aDefault
+   *        The default value to be returned if the passed object cannot be
+   *        converted to a Short. May be <code>null</code>.
+   * @return <code>aDefault</code> if the object does not represent a valid
+   *         value.
+   */
   @Nullable
   public static Short parseShortObj (@Nullable final Object aObject,
                                      @Nonnegative final int nRadix,
@@ -977,30 +1159,57 @@ public class StringParser
   }
 
   /**
-   * Parse the given String as short.
+   * Parse the given {@link String} as {@link Short} with radix
+   * {@value #DEFAULT_RADIX}.
    * 
    * @param sStr
-   *        The string to parse.
+   *        The string to parse. May be <code>null</code>.
    * @return <code>null</code> if the string does not represent a valid value.
    */
   @Nullable
   public static Short parseShortObj (@Nullable final String sStr)
   {
-    return parseShortObj (sStr, null);
+    return parseShortObj (sStr, DEFAULT_RADIX, null);
   }
 
+  /**
+   * Parse the given {@link String} as {@link Short} with radix
+   * {@link #DEFAULT_RADIX}.
+   * 
+   * @param sStr
+   *        The string to parse. May be <code>null</code>.
+   * @param aDefault
+   *        The default value to be returned if the passed string could not be
+   *        converted to a valid value. May be <code>null</code>.
+   * @return <code>aDefault</code> if the string does not represent a valid
+   *         value.
+   */
   @Nullable
   public static Short parseShortObj (@Nullable final String sStr, @Nullable final Short aDefault)
   {
     return parseShortObj (sStr, DEFAULT_RADIX, aDefault);
   }
 
+  /**
+   * Parse the given {@link String} as {@link Short} with the specified radix.
+   * 
+   * @param sStr
+   *        The string to parse. May be <code>null</code>.
+   * @param nRadix
+   *        The radix to use. Must be &ge; {@link Character#MIN_RADIX} and &le;
+   *        {@link Character#MAX_RADIX}.
+   * @param aDefault
+   *        The default value to be returned if the passed string could not be
+   *        converted to a valid value. May be <code>null</code>.
+   * @return <code>aDefault</code> if the string does not represent a valid
+   *         value.
+   */
   @Nullable
   public static Short parseShortObj (@Nullable final String sStr,
                                      @Nonnegative final int nRadix,
                                      @Nullable final Short aDefault)
   {
-    if (sStr != null)
+    if (sStr != null && sStr.length () > 0)
       try
       {
         return Short.valueOf (sStr, nRadix);
@@ -1015,11 +1224,11 @@ public class StringParser
   // ---[BigInteger]---
 
   /**
-   * Parse the given String as {@link BigInteger} with the default radix
+   * Parse the given {@link String} as {@link BigInteger} with radix
    * {@value #DEFAULT_RADIX}.
    * 
    * @param sStr
-   *        The String to parse.
+   *        The String to parse. May be <code>null</code>.
    * @return <code>null</code> if the string does not represent a valid value.
    */
   @Nullable
@@ -1029,12 +1238,14 @@ public class StringParser
   }
 
   /**
-   * Parse the given String as {@link BigInteger}.
+   * Parse the given {@link String} as {@link BigInteger} with the specified
+   * radix.
    * 
    * @param sStr
-   *        The String to parse.
+   *        The String to parse. May be <code>null</code>.
    * @param nRadix
-   *        The radix to use.
+   *        The radix to use. Must be &ge; {@link Character#MIN_RADIX} and &le;
+   *        {@link Character#MAX_RADIX}.
    * @return <code>null</code> if the string does not represent a valid value.
    */
   @Nullable
@@ -1044,14 +1255,14 @@ public class StringParser
   }
 
   /**
-   * Parse the given String as {@link BigInteger} with the default radix
+   * Parse the given {@link String} as {@link BigInteger} with radix
    * {@value #DEFAULT_RADIX}.
    * 
    * @param sStr
-   *        The String to parse.
+   *        The String to parse. May be <code>null</code>.
    * @param aDefault
    *        The default value to be returned if the passed string could not be
-   *        converted to a valid value.
+   *        converted to a valid value. May be <code>null</code>.
    * @return <code>aDefault</code> if the string does not represent a valid
    *         value.
    */
@@ -1062,15 +1273,17 @@ public class StringParser
   }
 
   /**
-   * Parse the given String as {@link BigInteger}.
+   * Parse the given {@link String} as {@link BigInteger} with the specified
+   * radix.
    * 
    * @param sStr
-   *        The String to parse.
+   *        The String to parse. May be <code>null</code>.
    * @param nRadix
-   *        The radix to use.
+   *        The radix to use. Must be &ge; {@link Character#MIN_RADIX} and &le;
+   *        {@link Character#MAX_RADIX}.
    * @param aDefault
    *        The default value to be returned if the passed string could not be
-   *        converted to a valid value.
+   *        converted to a valid value. May be <code>null</code>.
    * @return <code>aDefault</code> if the string does not represent a valid
    *         value.
    */
@@ -1079,7 +1292,7 @@ public class StringParser
                                             @Nonnegative final int nRadix,
                                             @Nullable final BigInteger aDefault)
   {
-    if (sStr != null)
+    if (sStr != null && sStr.length () > 0)
       try
       {
         return new BigInteger (sStr, nRadix);
@@ -1094,10 +1307,10 @@ public class StringParser
   // ---[BigDecimal]---
 
   /**
-   * Parse the given String as {@link BigDecimal}.
+   * Parse the given {@link String} as {@link BigDecimal}.
    * 
    * @param sStr
-   *        The String to parse.
+   *        The String to parse. May be <code>null</code>.
    * @return <code>null</code> if the string does not represent a valid value.
    */
   @Nullable
@@ -1107,20 +1320,20 @@ public class StringParser
   }
 
   /**
-   * Parse the given String as {@link BigDecimal}.
+   * Parse the given {@link String} as {@link BigDecimal}.
    * 
    * @param sStr
-   *        The String to parse.
+   *        The String to parse. May be <code>null</code>.
    * @param aDefault
    *        The default value to be returned if the passed string could not be
-   *        converted to a valid value.
+   *        converted to a valid value. May be <code>null</code>.
    * @return <code>aDefault</code> if the string does not represent a valid
    *         value.
    */
   @Nullable
   public static BigDecimal parseBigDecimal (@Nullable final String sStr, @Nullable final BigDecimal aDefault)
   {
-    if (sStr != null)
+    if (sStr != null && sStr.length () > 0)
       try
       {
         return new BigDecimal (_getUnifiedDecimal (sStr));
@@ -1136,10 +1349,10 @@ public class StringParser
 
   /**
    * Checks if the given string is a numeric string that can be converted to a
-   * long value with radix 10.
+   * long value with radix {@value #DEFAULT_RADIX}.
    * 
    * @param sStr
-   *        the string to check
+   *        The string to check. May be <code>null</code>.
    * @return <code>true</code> if the value can be converted to a valid value
    */
   public static boolean isInt (@Nullable final String sStr)
@@ -1159,10 +1372,10 @@ public class StringParser
 
   /**
    * Checks if the given string is a numeric string that can be converted to a
-   * long value with radix 10.
+   * long value with radix {@value #DEFAULT_RADIX}.
    * 
    * @param sStr
-   *        the string to check
+   *        The string to check. May be <code>null</code>.
    * @return <code>true</code> if the value can be converted to a valid value
    */
   public static boolean isLong (@Nullable final String sStr)
@@ -1182,10 +1395,10 @@ public class StringParser
 
   /**
    * Checks if the given string is a numeric string that can be converted to an
-   * unsigned long value with radix 10.
+   * unsigned long value with radix {@value #DEFAULT_RADIX}.
    * 
    * @param sStr
-   *        the string to check
+   *        The string to check. May be <code>null</code>.
    * @return <code>true</code> if the value can be converted to a valid value
    */
   public static boolean isUnsignedInt (@Nullable final String sStr)
@@ -1205,10 +1418,10 @@ public class StringParser
 
   /**
    * Checks if the given string is a numeric string that can be converted to an
-   * unsigned long value with radix 10.
+   * unsigned long value with radix {@value #DEFAULT_RADIX}.
    * 
    * @param sStr
-   *        the string to check
+   *        The string to check. May be <code>null</code>.
    * @return <code>true</code> if the value can be converted to a valid value
    */
   public static boolean isUnsignedLong (@Nullable final String sStr)
@@ -1231,7 +1444,7 @@ public class StringParser
    * double value.
    * 
    * @param sStr
-   *        the string to check
+   *        The string to check. May be <code>null</code>.
    * @return <code>true</code> if the value can be converted to a valid value
    */
   public static boolean isDouble (@Nullable final String sStr)
@@ -1244,7 +1457,7 @@ public class StringParser
    * double value.
    * 
    * @param sStr
-   *        the string to check
+   *        The string to check. May be <code>null</code>.
    * @return <code>true</code> if the value can be converted to a valid value
    */
   public static boolean isFloat (@Nullable final String sStr)
