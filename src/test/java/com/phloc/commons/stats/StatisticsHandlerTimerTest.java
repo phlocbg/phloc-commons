@@ -47,19 +47,19 @@ public final class StatisticsHandlerTimerTest
     assertEquals (5, sh.getMin ());
     assertEquals (5, sh.getAverage ());
     assertEquals (5, sh.getMax ());
-    assertEquals (new BigInteger ("5"), sh.getSum ());
+    assertEquals (BigInteger.valueOf (5), sh.getSum ());
     sh.addTime (45);
     assertEquals (2, sh.getInvocationCount ());
     assertEquals (5, sh.getMin ());
     assertEquals (25, sh.getAverage ());
     assertEquals (45, sh.getMax ());
-    assertEquals (new BigInteger ("50"), sh.getSum ());
+    assertEquals (BigInteger.valueOf (50), sh.getSum ());
     sh.addTime (25);
     assertEquals (3, sh.getInvocationCount ());
     assertEquals (5, sh.getMin ());
     assertEquals (25, sh.getAverage ());
     assertEquals (45, sh.getMax ());
-    assertEquals (new BigInteger ("75"), sh.getSum ());
+    assertEquals (BigInteger.valueOf (75), sh.getSum ());
     sh.addTime (-1);
 
     assertNotNull (sh.getAsString ());

@@ -164,6 +164,7 @@ public final class TypeConverterTest extends AbstractPhlocTestCase
     // Check conversion with explicit converters defined
     final Object [] aDefinedObjs = new Object [] { BigDecimal.ONE,
                                                   new BigDecimal (Double.MAX_VALUE),
+                                                  new BigDecimal ("123446712345678765456547865789762131.9999123446712345678765456547865789762131"),
                                                   BigInteger.ZERO,
                                                   new BigInteger ("123446712345678765456547865789762131"),
                                                   Byte.valueOf ((byte) 5),
@@ -260,7 +261,7 @@ public final class TypeConverterTest extends AbstractPhlocTestCase
   @Test
   public void testBigX ()
   {
-    BigInteger aBI = new BigInteger ("1234");
+    BigInteger aBI = BigInteger.valueOf (1234);
     BigDecimal aBD = TypeConverter.convertIfNecessary (aBI, BigDecimal.class);
     assertEquals (1234, aBD.intValue ());
     assertEquals (aBI, aBD.toBigInteger ());

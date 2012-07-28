@@ -32,6 +32,7 @@ import org.junit.Test;
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 import com.phloc.commons.mock.PhlocAssert;
+import com.phloc.commons.string.StringParser;
 
 /**
  * Test class for class {@link LocaleFormatter}.
@@ -134,7 +135,7 @@ public final class LocaleFormatterTest extends AbstractPhlocTestCase
   @Test
   public void testParseBigDecimal ()
   {
-    final BigDecimal aBD1M = new BigDecimal ("1000000");
+    final BigDecimal aBD1M = StringParser.parseBigDecimal ("1000000");
     assertEquals (aBD1M, LocaleFormatter.parseBigDecimal ("1.000.000", L_DE, CGlobal.BIGDEC_MINUS_ONE));
     assertEquals (aBD1M, LocaleFormatter.parseBigDecimal ("1,000,000", L_EN, CGlobal.BIGDEC_MINUS_ONE));
     assertEquals (aBD1M, LocaleFormatter.parseBigDecimal ("1,000,000", (DecimalFormat) NumberFormat.getInstance (L_EN)));

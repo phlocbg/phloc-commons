@@ -358,7 +358,6 @@ public class StringParser
     if (sStr != null && sStr.length () > 0)
       try
       {
-        Byte.valueOf (sStr);
         return Byte.valueOf (sStr, nRadix);
       }
       catch (final NumberFormatException ex)// NOPMD

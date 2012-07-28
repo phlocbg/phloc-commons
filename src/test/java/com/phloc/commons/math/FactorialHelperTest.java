@@ -41,7 +41,7 @@ public final class FactorialHelperTest
     {
       final long n = FactorialHelper.getSmallFactorial (i);
       final BigInteger x = FactorialHelper.getAnyFactorialLinear (i);
-      assertEquals (x, new BigInteger (Long.toString (n)));
+      assertEquals (x, BigInteger.valueOf (n));
     }
 
     try
@@ -66,13 +66,13 @@ public final class FactorialHelperTest
   {
     final BigInteger y = FactorialHelper.getAnyFactorialLinear (FactorialHelper.PREDEFINED_MAX_INDEX + 1);
     assertEquals (FactorialHelper.getAnyFactorialLinear (FactorialHelper.PREDEFINED_MAX_INDEX)
-                                 .multiply (new BigInteger (Long.toString (FactorialHelper.PREDEFINED_MAX_INDEX + 1))),
+                                 .multiply (BigInteger.valueOf (FactorialHelper.PREDEFINED_MAX_INDEX + 1L)),
                   y);
 
     final BigInteger z = FactorialHelper.getAnyFactorialLinear (FactorialHelper.PREDEFINED_MAX_INDEX + 2);
     assertEquals (FactorialHelper.getAnyFactorialLinear (FactorialHelper.PREDEFINED_MAX_INDEX)
-                                 .multiply (new BigInteger (Long.toString (FactorialHelper.PREDEFINED_MAX_INDEX + 1)))
-                                 .multiply (new BigInteger (Long.toString (FactorialHelper.PREDEFINED_MAX_INDEX + 2))),
+                                 .multiply (BigInteger.valueOf (FactorialHelper.PREDEFINED_MAX_INDEX + 1L))
+                                 .multiply (BigInteger.valueOf (FactorialHelper.PREDEFINED_MAX_INDEX + 2L)),
                   z);
 
     try
