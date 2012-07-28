@@ -25,6 +25,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.Vector;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
@@ -53,10 +55,12 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
    * <li>ArrayList</li>
    * <li>Vector</li>
    * <li>LinkedList</li>
+   * <li>CopyOnWriteArrayList</li>
    * <li>List</li>
    * <li>HashSet</li>
    * <li>TreeSet</li>
    * <li>LinkedHashSet</li>
+   * <li>CopyOnWriteArraySet</li>
    * <li>Set</li>
    * </ul>
    */
@@ -95,6 +99,17 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
       }
     });
 
+    // to CopyOnWriteArrayList<?>
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (CopyOnWriteArrayList.class)
+    {
+      public CopyOnWriteArrayList <?> convert (@Nonnull final Object aSource)
+      {
+        final CopyOnWriteArrayList <Object> ret = new CopyOnWriteArrayList <Object> ();
+        ret.add (aSource);
+        return ret;
+      }
+    });
+
     // to List<?>
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (List.class)
     {
@@ -126,6 +141,17 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
       }
     });
 
+    // to CopyOnWriteArraySet<?>
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (CopyOnWriteArraySet.class)
+    {
+      public CopyOnWriteArraySet <?> convert (@Nonnull final Object aSource)
+      {
+        final CopyOnWriteArraySet <Object> ret = new CopyOnWriteArraySet <Object> ();
+        ret.add (aSource);
+        return ret;
+      }
+    });
+
     // to Set<?>
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (Set.class)
     {
@@ -141,6 +167,13 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
       public List <Boolean> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newBooleanList ((boolean []) aSource);
+      }
+    });
+    aRegistry.registerTypeConverter (boolean [].class, Vector.class, new ITypeConverter ()
+    {
+      public Vector <Boolean> convert (@Nonnull final Object aSource)
+      {
+        return ContainerHelper.newBooleanVector ((boolean []) aSource);
       }
     });
     aRegistry.registerTypeConverter (boolean [].class, HashSet.class, new ITypeConverter ()

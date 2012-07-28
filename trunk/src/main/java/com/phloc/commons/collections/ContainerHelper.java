@@ -36,6 +36,7 @@ import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.Vector;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -1747,6 +1748,94 @@ public final class ContainerHelper
   public static List <Short> newShortList (@Nullable final short... aValues)
   {
     final List <Short> ret = new ArrayList <Short> ();
+    if (aValues != null)
+      for (final short aValue : aValues)
+        ret.add (Short.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Vector <Boolean> newBooleanVector (@Nullable final boolean... aValues)
+  {
+    final Vector <Boolean> ret = new Vector <Boolean> ();
+    if (aValues != null)
+      for (final boolean aValue : aValues)
+        ret.add (Boolean.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Vector <Byte> newByteVector (@Nullable final byte... aValues)
+  {
+    final Vector <Byte> ret = new Vector <Byte> ();
+    if (aValues != null)
+      for (final byte aValue : aValues)
+        ret.add (Byte.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Vector <Character> newCharVector (@Nullable final char... aValues)
+  {
+    final Vector <Character> ret = new Vector <Character> ();
+    if (aValues != null)
+      for (final char aValue : aValues)
+        ret.add (Character.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Vector <Double> newDoubleVector (@Nullable final double... aValues)
+  {
+    final Vector <Double> ret = new Vector <Double> ();
+    if (aValues != null)
+      for (final double aValue : aValues)
+        ret.add (Double.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Vector <Float> newFloatVector (@Nullable final float... aValues)
+  {
+    final Vector <Float> ret = new Vector <Float> ();
+    if (aValues != null)
+      for (final float aValue : aValues)
+        ret.add (Float.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Vector <Integer> newIntVector (@Nullable final int... aValues)
+  {
+    final Vector <Integer> ret = new Vector <Integer> ();
+    if (aValues != null)
+      for (final int aValue : aValues)
+        ret.add (Integer.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Vector <Long> newLongVector (@Nullable final long... aValues)
+  {
+    final Vector <Long> ret = new Vector <Long> ();
+    if (aValues != null)
+      for (final long aValue : aValues)
+        ret.add (Long.valueOf (aValue));
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Vector <Short> newShortVector (@Nullable final short... aValues)
+  {
+    final Vector <Short> ret = new Vector <Short> ();
     if (aValues != null)
       for (final short aValue : aValues)
         ret.add (Short.valueOf (aValue));
