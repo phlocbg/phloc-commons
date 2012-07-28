@@ -66,7 +66,7 @@ public final class FactorialHelper
 
   /**
    * Calculate n! whereas n must be in the range of
-   * {@value #PREDEFINED_MIN_INDEX} to {@value #PREDEFINED_MAX_INDEX}.
+   * {@value #PREDEFINED_MIN_INDEX} to {@link #PREDEFINED_MAX_INDEX}.
    * 
    * @param n
    *        Input value

@@ -3137,7 +3137,7 @@ public final class ArrayHelper
   }
 
   /**
-   * @deprecated Use {@link #newArraySameType(ELEMENTTYPE[],int)} instead
+   * @deprecated Use {@link #newArraySameType(Object[],int)} instead
    */
   @Deprecated
   @Nonnull
@@ -3392,7 +3392,7 @@ public final class ArrayHelper
    * @return <code>true</code> only if the passed array is neither
    *         <code>null</code> nor empty and if at least one <code>null</code>
    *         element is contained.
-   * @deprecated Use {@link #containsAnyNullElement(T[])} instead
+   * @deprecated Use {@link #containsAnyNullElement(Object[])} instead
    */
   @Deprecated
   public static <T> boolean containsNullElement (@Nullable final T [] aArray)

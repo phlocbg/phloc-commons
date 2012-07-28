@@ -791,7 +791,7 @@ public final class StringHelper extends StringParser
    * @return The concatenated string.
    * @param <ELEMENTTYPE>
    *        The type of elements to be imploded.
-   * @deprecated Use {@link #getImploded(String,ELEMENTTYPE...)} instead
+   * @deprecated Use {@link #getImploded(String,Object...)} instead
    */
   @Deprecated
   @Nonnull
@@ -837,7 +837,7 @@ public final class StringHelper extends StringParser
    * @return The concatenated string.
    * @param <ELEMENTTYPE>
    *        The type of elements to be imploded.
-   * @deprecated Use {@link #getImploded(String,ELEMENTTYPE[],int,int)} instead
+   * @deprecated Use {@link #getImploded(String,Object[],int,int)} instead
    */
   @Deprecated
   @Nonnull
