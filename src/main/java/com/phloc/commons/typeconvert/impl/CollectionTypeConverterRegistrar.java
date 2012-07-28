@@ -220,6 +220,13 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
         return ContainerHelper.newByteList ((byte []) aSource);
       }
     });
+    aRegistry.registerTypeConverter (byte [].class, Vector.class, new ITypeConverter ()
+    {
+      public Vector <Byte> convert (@Nonnull final Object aSource)
+      {
+        return ContainerHelper.newByteVector ((byte []) aSource);
+      }
+    });
     aRegistry.registerTypeConverter (byte [].class, HashSet.class, new ITypeConverter ()
     {
       public Set <Byte> convert (@Nonnull final Object aSource)
@@ -264,6 +271,13 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
         return ContainerHelper.newCharList ((char []) aSource);
       }
     });
+    aRegistry.registerTypeConverter (char [].class, Vector.class, new ITypeConverter ()
+    {
+      public Vector <Character> convert (@Nonnull final Object aSource)
+      {
+        return ContainerHelper.newCharVector ((char []) aSource);
+      }
+    });
     aRegistry.registerTypeConverter (char [].class, HashSet.class, new ITypeConverter ()
     {
       public Set <Character> convert (@Nonnull final Object aSource)
@@ -292,6 +306,13 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
       public List <Double> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newDoubleList ((double []) aSource);
+      }
+    });
+    aRegistry.registerTypeConverter (double [].class, Vector.class, new ITypeConverter ()
+    {
+      public Vector <Double> convert (@Nonnull final Object aSource)
+      {
+        return ContainerHelper.newDoubleVector ((double []) aSource);
       }
     });
     aRegistry.registerTypeConverter (double [].class, HashSet.class, new ITypeConverter ()
@@ -324,6 +345,13 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
         return ContainerHelper.newFloatList ((float []) aSource);
       }
     });
+    aRegistry.registerTypeConverter (float [].class, Vector.class, new ITypeConverter ()
+    {
+      public Vector <Float> convert (@Nonnull final Object aSource)
+      {
+        return ContainerHelper.newFloatVector ((float []) aSource);
+      }
+    });
     aRegistry.registerTypeConverter (float [].class, HashSet.class, new ITypeConverter ()
     {
       public Set <Float> convert (@Nonnull final Object aSource)
@@ -352,6 +380,13 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
       public List <Integer> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newIntList ((int []) aSource);
+      }
+    });
+    aRegistry.registerTypeConverter (int [].class, Vector.class, new ITypeConverter ()
+    {
+      public Vector <Integer> convert (@Nonnull final Object aSource)
+      {
+        return ContainerHelper.newIntVector ((int []) aSource);
       }
     });
     aRegistry.registerTypeConverter (int [].class, HashSet.class, new ITypeConverter ()
@@ -384,6 +419,13 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
         return ContainerHelper.newLongList ((long []) aSource);
       }
     });
+    aRegistry.registerTypeConverter (long [].class, Vector.class, new ITypeConverter ()
+    {
+      public Vector <Long> convert (@Nonnull final Object aSource)
+      {
+        return ContainerHelper.newLongVector ((long []) aSource);
+      }
+    });
     aRegistry.registerTypeConverter (long [].class, HashSet.class, new ITypeConverter ()
     {
       public Set <Long> convert (@Nonnull final Object aSource)
@@ -412,6 +454,13 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
       public List <Short> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newShortList ((short []) aSource);
+      }
+    });
+    aRegistry.registerTypeConverter (short [].class, Vector.class, new ITypeConverter ()
+    {
+      public Vector <Short> convert (@Nonnull final Object aSource)
+      {
+        return ContainerHelper.newShortVector ((short []) aSource);
       }
     });
     aRegistry.registerTypeConverter (short [].class, HashSet.class, new ITypeConverter ()

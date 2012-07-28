@@ -1668,6 +1668,113 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsMutableCopy
+  public static <ELEMENTTYPE> Vector <ELEMENTTYPE> newVectorPrefilled (@Nullable final ELEMENTTYPE aValue,
+                                                                       @Nonnegative final int nElements)
+  {
+    if (nElements < 0)
+      throw new IllegalArgumentException ("Element count must be >= 0!");
+
+    final Vector <ELEMENTTYPE> ret = new Vector <ELEMENTTYPE> (nElements);
+    for (int i = 0; i < nElements; ++i)
+      ret.add (aValue);
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE> Vector <ELEMENTTYPE> newVector ()
+  {
+    return new Vector <ELEMENTTYPE> (0);
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE> Vector <ELEMENTTYPE> newVector (@Nullable final ELEMENTTYPE aValue)
+  {
+    final Vector <ELEMENTTYPE> ret = new Vector <ELEMENTTYPE> (1);
+    ret.add (aValue);
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE> Vector <ELEMENTTYPE> newVector (@Nullable final ELEMENTTYPE... aValues)
+  {
+    // Don't user Arrays.asVector since aIter returns an unmodifiable list!
+    if (ArrayHelper.isEmpty (aValues))
+      return new Vector <ELEMENTTYPE> (0);
+
+    final Vector <ELEMENTTYPE> ret = new Vector <ELEMENTTYPE> (aValues.length);
+    for (final ELEMENTTYPE aValue : aValues)
+      ret.add (aValue);
+    return ret;
+  }
+
+  /**
+   * Compared to {@link Collections#list(Enumeration)} this method is more
+   * flexible in Generics parameter.
+   * 
+   * @param <ELEMENTTYPE>
+   *        Type of the elements
+   * @param aEnum
+   *        The enumeration to be converted
+   * @return The non-<code>null</code> created {@link Vector}.
+   * @see Collections#list(Enumeration)
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE> Vector <ELEMENTTYPE> newVector (@Nullable final Enumeration <? extends ELEMENTTYPE> aEnum)
+  {
+    final Vector <ELEMENTTYPE> ret = new Vector <ELEMENTTYPE> ();
+    if (aEnum != null)
+      while (aEnum.hasMoreElements ())
+        ret.add (aEnum.nextElement ());
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE> Vector <ELEMENTTYPE> newVector (@Nullable final Iterator <? extends ELEMENTTYPE> aIter)
+  {
+    final Vector <ELEMENTTYPE> ret = new Vector <ELEMENTTYPE> ();
+    if (aIter != null)
+      while (aIter.hasNext ())
+        ret.add (aIter.next ());
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE> Vector <ELEMENTTYPE> newVector (@Nullable final Iterable <? extends ELEMENTTYPE> aIter)
+  {
+    final Vector <ELEMENTTYPE> ret = new Vector <ELEMENTTYPE> ();
+    if (aIter != null)
+      for (final ELEMENTTYPE aObj : aIter)
+        ret.add (aObj);
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE> Vector <ELEMENTTYPE> newVector (@Nullable final Collection <? extends ELEMENTTYPE> aCont)
+  {
+    if (isEmpty (aCont))
+      return new Vector <ELEMENTTYPE> (0);
+
+    return new Vector <ELEMENTTYPE> (aCont);
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE> Vector <ELEMENTTYPE> newVector (@Nullable final IIterableIterator <? extends ELEMENTTYPE> aIter)
+  {
+    if (aIter == null)
+      return new Vector <ELEMENTTYPE> (0);
+    return newVector (aIter.iterator ());
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
   public static List <Boolean> newBooleanList (@Nullable final boolean... aValues)
   {
     final List <Boolean> ret = new ArrayList <Boolean> ();
