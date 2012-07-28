@@ -17,8 +17,6 @@
  */
 package com.phloc.commons.system;
 
-import java.math.BigDecimal;
-
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
@@ -158,7 +156,7 @@ public enum EJavaVersion
   @Nonnull
   public static EJavaVersion getFromMajorAndMinor (final int nMajor, final int nMinor)
   {
-    final double dVersion = new BigDecimal (nMajor + "." + nMinor).doubleValue ();
+    final double dVersion = StringParser.parseBigDecimal (nMajor + "." + nMinor).doubleValue ();
     return getFromVersionNumber (dVersion);
   }
 

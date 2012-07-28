@@ -58,6 +58,7 @@ public final class BasicMicroTypeConverterRegistrarTest
     final Object [] aDefinedObjs = new Object [] { "InputString",
                                                   BigDecimal.ONE,
                                                   new BigDecimal (Double.MAX_VALUE),
+                                                  new BigDecimal ("123446712345678765456547865789762131.111123446712345678765456547865789762131"),
                                                   BigInteger.ZERO,
                                                   new BigInteger ("123446712345678765456547865789762131"),
                                                   Byte.valueOf ((byte) 5),

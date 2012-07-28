@@ -168,26 +168,26 @@ public final class CGlobal
   public static final long NANOSECONDS_PER_SECOND = 1000000000L;
 
   /** The BigInteger for the largest possible long value */
-  public static final BigInteger BIGINT_MAX_LONG = new BigInteger (Long.toString (Long.MAX_VALUE));
+  public static final BigInteger BIGINT_MAX_LONG = BigInteger.valueOf (Long.MAX_VALUE);
 
   /** The BigInteger for the smallest possible long value */
-  public static final BigInteger BIGINT_MIN_LONG = new BigInteger (Long.toString (Long.MIN_VALUE));
+  public static final BigInteger BIGINT_MIN_LONG = BigInteger.valueOf (Long.MIN_VALUE);
 
   /** The BigInteger representation of -1 */
-  public static final BigInteger BIGINT_MINUS_ONE = new BigInteger ("-1");
+  public static final BigInteger BIGINT_MINUS_ONE = BigInteger.valueOf (-1L);
 
   /** The BigInteger representation of 10 */
   @Deprecated
   public static final BigInteger BIGINT_10 = BigInteger.TEN;
 
   /** The BigInteger representation of 100 */
-  public static final BigInteger BIGINT_100 = new BigInteger ("100");
+  public static final BigInteger BIGINT_100 = BigInteger.valueOf (100);
 
   /** The BigDecimal for the largest possible long value */
-  public static final BigDecimal BIGDEC_MAX_LONG = new BigDecimal (Long.toString (Long.MAX_VALUE));
+  public static final BigDecimal BIGDEC_MAX_LONG = BigDecimal.valueOf (Long.MAX_VALUE);
 
   /** The BigDecimal for the smallest possible long value */
-  public static final BigDecimal BIGDEC_MIN_LONG = new BigDecimal (Long.toString (Long.MIN_VALUE));
+  public static final BigDecimal BIGDEC_MIN_LONG = BigDecimal.valueOf (Long.MIN_VALUE);
 
   /** The BigDecimal for the largest possible double value */
   public static final BigDecimal BIGDEC_MAX_DOUBLE = BigDecimal.valueOf (Double.MAX_VALUE);

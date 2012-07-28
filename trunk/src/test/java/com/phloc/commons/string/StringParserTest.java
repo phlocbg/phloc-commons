@@ -88,11 +88,11 @@ public final class StringParserTest extends AbstractPhlocTestCase
     assertEquals (Boolean.TRUE, StringParser.parseBoolObj (new Boolean (true)));
     assertEquals (Boolean.FALSE, StringParser.parseBoolObj (new Boolean (false)));
     assertNull (StringParser.parseBoolObj ((Object) null));
-    assertNull (StringParser.parseBoolObj (Integer.valueOf (0)));
-    assertNull (StringParser.parseBoolObj (Integer.valueOf (1)));
-    assertEquals (Boolean.TRUE, StringParser.parseBoolObj (Integer.valueOf (0), Boolean.TRUE));
-    assertEquals (Boolean.TRUE, StringParser.parseBoolObj (Integer.valueOf (1), Boolean.TRUE));
-    assertNull (StringParser.parseBoolObj (Integer.valueOf (0), null));
+    assertEquals (Boolean.FALSE, StringParser.parseBoolObj (Integer.valueOf (0)));
+    assertEquals (Boolean.FALSE, StringParser.parseBoolObj (Integer.valueOf (1)));
+    assertEquals (Boolean.FALSE, StringParser.parseBoolObj (Integer.valueOf (0), Boolean.TRUE));
+    assertEquals (Boolean.FALSE, StringParser.parseBoolObj (Integer.valueOf (1), Boolean.TRUE));
+    assertEquals (Boolean.FALSE, StringParser.parseBoolObj (Integer.valueOf (0), null));
   }
 
   @Test
@@ -485,8 +485,8 @@ public final class StringParserTest extends AbstractPhlocTestCase
 
     // String
     assertEquals (BigInteger.ONE, StringParser.parseBigInteger ("1"));
-    assertEquals (new BigInteger ("10"), StringParser.parseBigInteger ("10", 10));
-    assertEquals (new BigInteger ("16"), StringParser.parseBigInteger ("10", 16));
+    assertEquals (BigInteger.TEN, StringParser.parseBigInteger ("10", 10));
+    assertEquals (BigInteger.valueOf (16), StringParser.parseBigInteger ("10", 16));
     assertNull (StringParser.parseBigInteger ("abc"));
     assertEquals (BigInteger.ONE, StringParser.parseBigInteger ("1", aDefault));
     assertEquals (new BigInteger ("46278643279823467687565723"),

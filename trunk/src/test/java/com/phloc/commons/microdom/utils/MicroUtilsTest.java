@@ -34,6 +34,7 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
+import com.phloc.commons.CGlobal;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.collections.ContainerHelper;
@@ -191,11 +192,11 @@ public final class MicroUtilsTest
     final IMicroElement y = e.appendElement ("y");
     assertNull (MicroUtils.getChildTextContentWithConversion (e, "y", BigInteger.class));
     y.appendText ("100");
-    assertEquals (new BigInteger ("100"), MicroUtils.getChildTextContentWithConversion (e, "y", BigInteger.class));
+    assertEquals (CGlobal.BIGINT_100, MicroUtils.getChildTextContentWithConversion (e, "y", BigInteger.class));
     y.appendElement ("1");
-    assertEquals (new BigInteger ("100"), MicroUtils.getChildTextContentWithConversion (e, "y", BigInteger.class));
+    assertEquals (CGlobal.BIGINT_100, MicroUtils.getChildTextContentWithConversion (e, "y", BigInteger.class));
     y.appendCDATA ("234");
-    assertEquals (new BigInteger ("100234"), MicroUtils.getChildTextContentWithConversion (e, "y", BigInteger.class));
+    assertEquals (BigInteger.valueOf (100234), MicroUtils.getChildTextContentWithConversion (e, "y", BigInteger.class));
   }
 
   @Test
@@ -223,13 +224,11 @@ public final class MicroUtilsTest
     final IMicroElement y = e.appendElement (sNSURI, "y");
     assertNull (MicroUtils.getChildTextContentWithConversion (e, sNSURI, "y", BigInteger.class));
     y.appendText ("100");
-    assertEquals (new BigInteger ("100"),
-                  MicroUtils.getChildTextContentWithConversion (e, sNSURI, "y", BigInteger.class));
+    assertEquals (CGlobal.BIGINT_100, MicroUtils.getChildTextContentWithConversion (e, sNSURI, "y", BigInteger.class));
     y.appendElement ("1");
-    assertEquals (new BigInteger ("100"),
-                  MicroUtils.getChildTextContentWithConversion (e, sNSURI, "y", BigInteger.class));
+    assertEquals (CGlobal.BIGINT_100, MicroUtils.getChildTextContentWithConversion (e, sNSURI, "y", BigInteger.class));
     y.appendCDATA ("234");
-    assertEquals (new BigInteger ("100234"),
+    assertEquals (BigInteger.valueOf (100234),
                   MicroUtils.getChildTextContentWithConversion (e, sNSURI, "y", BigInteger.class));
   }
 }

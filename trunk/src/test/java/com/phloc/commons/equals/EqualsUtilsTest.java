@@ -28,6 +28,7 @@ import org.junit.Test;
 
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
+import com.phloc.commons.string.StringParser;
 
 /**
  * Test class for class {@link EqualsUtils}.
@@ -75,11 +76,11 @@ public final class EqualsUtilsTest extends AbstractPhlocTestCase
   @Test
   public void testEquals_BigDecimal ()
   {
-    final BigDecimal bd1 = new BigDecimal ("5.5");
-    final BigDecimal bd2 = new BigDecimal ("5.49999");
+    final BigDecimal bd1 = StringParser.parseBigDecimal ("5.5");
+    final BigDecimal bd2 = StringParser.parseBigDecimal ("5.49999");
     assertTrue (EqualsUtils.equals (bd1, bd1));
-    assertTrue (EqualsUtils.equals (bd1, new BigDecimal ("5.5000")));
-    assertTrue (EqualsUtils.equals (bd1, new BigDecimal ("5.50000000000000000")));
+    assertTrue (EqualsUtils.equals (bd1, StringParser.parseBigDecimal ("5.5000")));
+    assertTrue (EqualsUtils.equals (bd1, StringParser.parseBigDecimal ("5.50000000000000000")));
     assertFalse (EqualsUtils.equals (bd1, bd2));
   }
 
@@ -217,7 +218,7 @@ public final class EqualsUtilsTest extends AbstractPhlocTestCase
   public void testNullSafeEquals () throws MalformedURLException
   {
     _test ("s1", "s2");
-    _test (new BigDecimal ("12562136756"), new BigDecimal ("67673455"));
+    _test (StringParser.parseBigDecimal ("12562136756"), StringParser.parseBigDecimal ("67673455"));
     _test (Double.valueOf (3.1415d), Double.valueOf (23.456d));
     _test (Float.valueOf (3.1415f), Float.valueOf (23.456f));
     _test (new URL ("http://www.phloc.com"), new URL ("http://www.google.com"));
