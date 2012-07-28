@@ -20,43 +20,43 @@ package com.phloc.commons.typeconvert.rule;
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.string.ToStringGenerator;
-import com.phloc.commons.typeconvert.ITypeConverterRuleAnySource;
-import com.phloc.commons.typeconvert.ITypeConverterRuleFixedDestination;
+import com.phloc.commons.typeconvert.ITypeConverterRuleAnyDestination;
+import com.phloc.commons.typeconvert.ITypeConverterRuleFixedSource;
 
 /**
  * Abstract type converter than can convert from a base source class to a
- * destination class. Example from Object.class to String.class
+ * destination class. Example from Number.class to String.class
  * 
  * @author philip
  */
-public abstract class AbstractTypeConverterRuleAnySourceFixedDestination implements
-                                                                        ITypeConverterRuleAnySource,
-                                                                        ITypeConverterRuleFixedDestination
+public abstract class AbstractTypeConverterRuleFixedSourceAnyDestination implements
+                                                                        ITypeConverterRuleAnyDestination,
+                                                                        ITypeConverterRuleFixedSource
 {
-  private final Class <?> m_aDstClass;
+  private final Class <?> m_aSrcClass;
 
-  public AbstractTypeConverterRuleAnySourceFixedDestination (@Nonnull final Class <?> aDstClass)
+  public AbstractTypeConverterRuleFixedSourceAnyDestination (@Nonnull final Class <?> aSrcClass)
   {
-    if (aDstClass == null)
-      throw new NullPointerException ("dstClass");
-    m_aDstClass = aDstClass;
+    if (aSrcClass == null)
+      throw new NullPointerException ("srcClass");
+    m_aSrcClass = aSrcClass;
   }
 
   public final boolean canConvert (@Nonnull final Class <?> aSrcClass, @Nonnull final Class <?> aDstClass)
   {
-    // source class can be anything
-    return m_aDstClass.equals (aDstClass);
+    // destination class can be anything
+    return m_aSrcClass.equals (aSrcClass);
   }
 
   @Nonnull
-  public final Class <?> getDestinationClass ()
+  public final Class <?> getSourceClass ()
   {
-    return m_aDstClass;
+    return m_aSrcClass;
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("dstClass", m_aDstClass.getName ()).toString ();
+    return new ToStringGenerator (this).append ("srcClass", m_aSrcClass.getName ()).toString ();
   }
 }
