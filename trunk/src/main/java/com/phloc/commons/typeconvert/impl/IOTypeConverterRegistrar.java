@@ -18,6 +18,10 @@
 package com.phloc.commons.typeconvert.impl;
 
 import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.Reader;
+import java.io.Writer;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -27,7 +31,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.IsSPIImplementation;
-import com.phloc.commons.io.IReadableResource;
+import com.phloc.commons.io.EAppend;
+import com.phloc.commons.io.IInputStreamProvider;
+import com.phloc.commons.io.IOutputStreamProvider;
+import com.phloc.commons.io.IReaderProvider;
+import com.phloc.commons.io.IResourceBase;
+import com.phloc.commons.io.IWriterProvider;
 import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.io.resource.FileSystemResource;
 import com.phloc.commons.io.resource.URLResource;
@@ -170,33 +179,73 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
       }
     });
 
-    // resource to string
-    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAssignableSourceFixedDestination (IReadableResource.class,
+    // IResourceBase to string
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAssignableSourceFixedDestination (IResourceBase.class,
                                                                                                         String.class)
     {
       public String convert (@Nonnull final Object aSource)
       {
-        return ((IReadableResource) aSource).getPath ();
+        return ((IResourceBase) aSource).getPath ();
       }
     });
 
-    // resource to URL
-    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAssignableSourceFixedDestination (IReadableResource.class,
+    // IReadableResource to URL
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAssignableSourceFixedDestination (IResourceBase.class,
                                                                                                         URL.class)
     {
       public URL convert (@Nonnull final Object aSource)
       {
-        return ((IReadableResource) aSource).getAsURL ();
+        return ((IResourceBase) aSource).getAsURL ();
       }
     });
 
-    // resource to File
-    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAssignableSourceFixedDestination (IReadableResource.class,
+    // IResourceBase to File
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAssignableSourceFixedDestination (IResourceBase.class,
                                                                                                         File.class)
     {
       public File convert (@Nonnull final Object aSource)
       {
-        return ((IReadableResource) aSource).getAsFile ();
+        return ((IResourceBase) aSource).getAsFile ();
+      }
+    });
+
+    // IInputStreamProvider to InputStream
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAssignableSourceFixedDestination (IInputStreamProvider.class,
+                                                                                                        InputStream.class)
+    {
+      public InputStream convert (@Nonnull final Object aSource)
+      {
+        return ((IInputStreamProvider) aSource).getInputStream ();
+      }
+    });
+
+    // IOutputStreamProvider to OutputStream
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAssignableSourceFixedDestination (IOutputStreamProvider.class,
+                                                                                                        OutputStream.class)
+    {
+      public OutputStream convert (@Nonnull final Object aSource)
+      {
+        return ((IOutputStreamProvider) aSource).getOutputStream (EAppend.DEFAULT);
+      }
+    });
+
+    // IReaderProvider to Reader
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAssignableSourceFixedDestination (IReaderProvider.class,
+                                                                                                        Reader.class)
+    {
+      public Reader convert (@Nonnull final Object aSource)
+      {
+        return ((IReaderProvider) aSource).getReader ();
+      }
+    });
+
+    // IWriterProvider to Writer
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAssignableSourceFixedDestination (IWriterProvider.class,
+                                                                                                        Writer.class)
+    {
+      public Writer convert (@Nonnull final Object aSource)
+      {
+        return ((IWriterProvider) aSource).getWriter ();
       }
     });
 

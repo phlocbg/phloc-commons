@@ -32,7 +32,7 @@ import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
  * @author philip
  */
 @MustImplementEqualsAndHashcode
-interface IResourceBase extends Serializable
+public interface IResourceBase extends Serializable
 {
   /**
    * @return A non-<code>null</code> resource ID used e.g. for system IDs in XML
