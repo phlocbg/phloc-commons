@@ -49,6 +49,14 @@ import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.locale.ELocaleName;
 import com.phloc.commons.locale.LocaleCache;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
+import com.phloc.commons.mutable.MutableBoolean;
+import com.phloc.commons.mutable.MutableByte;
+import com.phloc.commons.mutable.MutableChar;
+import com.phloc.commons.mutable.MutableDouble;
+import com.phloc.commons.mutable.MutableFloat;
+import com.phloc.commons.mutable.MutableInt;
+import com.phloc.commons.mutable.MutableLong;
+import com.phloc.commons.mutable.MutableShort;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.state.EContinue;
 import com.phloc.commons.state.EEnabled;
@@ -87,7 +95,15 @@ public final class TypeConverterTest extends AbstractPhlocTestCase
                                                                             BigInteger.class,
                                                                             AtomicBoolean.class,
                                                                             AtomicInteger.class,
-                                                                            AtomicLong.class };
+                                                                            AtomicLong.class,
+                                                                            MutableBoolean.class,
+                                                                            MutableByte.class,
+                                                                            MutableChar.class,
+                                                                            MutableDouble.class,
+                                                                            MutableFloat.class,
+                                                                            MutableInt.class,
+                                                                            MutableLong.class,
+                                                                            MutableShort.class };
 
   @Nonnull
   private static Object _instantiate (@Nonnull final Class <?> aClass) throws Exception
@@ -102,6 +118,22 @@ public final class TypeConverterTest extends AbstractPhlocTestCase
       return Boolean.valueOf ((aClass.getName ().hashCode () % 3) == 1);
     if (aClass == Character.class)
       return Character.valueOf (StringHelper.getLastChar (aClass.getName ()));
+    if (aClass == MutableBoolean.class)
+      return new MutableBoolean ((aClass.getName ().hashCode () % 3) == 2);
+    if (aClass == MutableByte.class)
+      return new MutableByte ((byte) 6);
+    if (aClass == MutableChar.class)
+      return new MutableChar ('a');
+    if (aClass == MutableDouble.class)
+      return new MutableDouble (3.4567);
+    if (aClass == MutableFloat.class)
+      return new MutableFloat (321313.53324f);
+    if (aClass == MutableInt.class)
+      return new MutableInt (aClass.hashCode () * 2);
+    if (aClass == MutableLong.class)
+      return new MutableLong (aClass.hashCode () * 2343L);
+    if (aClass == MutableShort.class)
+      return new MutableShort ((short) aClass.hashCode ());
     // One character numeric string!
     return aClass.getConstructor (String.class).newInstance (Integer.toString (aClass.getName ().length () % 10));
   }

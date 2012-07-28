@@ -128,17 +128,23 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
     if (aSrcClass == null)
       throw new NullPointerException ("srcClass");
     if (!ClassHelper.isPublic (aSrcClass))
-      throw new IllegalArgumentException ("source " + aSrcClass + " is no public class!");
+      throw new IllegalArgumentException ("Source " + aSrcClass + " is no public class!");
     if (aDstClass == null)
       throw new NullPointerException ("dstClass");
     if (!ClassHelper.isPublic (aDstClass))
-      throw new IllegalArgumentException ("destination " + aDstClass + " is no public class!");
+      throw new IllegalArgumentException ("Destination " + aDstClass + " is no public class!");
     if (aSrcClass.equals (aDstClass))
       throw new IllegalArgumentException ("Source and destination class are equal and therefore no converter is required.");
     if (aConverter == null)
       throw new NullPointerException ("converter");
     if (aConverter instanceof ITypeConverterRule)
       throw new IllegalArgumentException ("Type converter rules must be registered via registerTypeConverterRule");
+    if (ClassHelper.areConvertibleClasses (aSrcClass, aDstClass))
+      s_aLogger.warn ("No type converter needed between " +
+                      aSrcClass +
+                      " and " +
+                      aDstClass +
+                      " because types are convertible!");
 
     // The main class should not already be registered
     final Map <Class <?>, ITypeConverter> aSrcMap = _getOrCreateConverterMap (aSrcClass);
