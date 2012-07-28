@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
@@ -98,5 +99,11 @@ public abstract class AbstractMultiConcurrentHashMap <KEYTYPE, VALUETYPE, COLLTY
   {
     final COLLTYPE aCont = get (aKey);
     return aCont == null ? false : aCont.contains (aValue);
+  }
+
+  @Nonnegative
+  public final long getTotalValueCount ()
+  {
+    return MultiMapHelper.getTotalValueCount (this);
   }
 }

@@ -20,6 +20,7 @@ package com.phloc.commons.collections.multimap;
 import java.util.Collection;
 import java.util.Map;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.meta.When;
@@ -66,4 +67,10 @@ public interface IMultiMap <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VAL
   EChange removeSingle (@Nonnull (when = When.MAYBE) KEYTYPE aKey, @Nullable VALUETYPE aValue);
 
   boolean containsSingle (@Nonnull (when = When.MAYBE) KEYTYPE aKey, @Nullable VALUETYPE aValue);
+
+  /**
+   * @return The total number of contained values. Always &ge; 0.
+   */
+  @Nonnegative
+  long getTotalValueCount ();
 }

@@ -20,7 +20,6 @@ package com.phloc.commons.typeconvert.rule;
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.string.ToStringGenerator;
-import com.phloc.commons.typeconvert.ITypeConverterRuleFixedSource;
 
 /**
  * Abstract type converter than can convert from a base source class to a
@@ -28,8 +27,7 @@ import com.phloc.commons.typeconvert.ITypeConverterRuleFixedSource;
  * 
  * @author philip
  */
-public abstract class AbstractTypeConverterRuleFixedSourceAssignableDestination implements
-                                                                               ITypeConverterRuleFixedSource
+public abstract class AbstractTypeConverterRuleFixedSourceAssignableDestination extends AbstractTypeConverterRule
 {
   private final Class <?> m_aSrcClass;
   private final Class <?> m_aDstClass;
@@ -37,6 +35,7 @@ public abstract class AbstractTypeConverterRuleFixedSourceAssignableDestination 
   public AbstractTypeConverterRuleFixedSourceAssignableDestination (@Nonnull final Class <?> aSrcClass,
                                                                     @Nonnull final Class <?> aDstClass)
   {
+    super (ESubType.FIXED_SRC_ASSIGNABLE_DST);
     if (aSrcClass == null)
       throw new NullPointerException ("srcClass");
     if (aDstClass == null)
@@ -65,8 +64,9 @@ public abstract class AbstractTypeConverterRuleFixedSourceAssignableDestination 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("srcClass", m_aSrcClass.getName ())
-                                       .append ("dstClass", m_aDstClass.getName ())
-                                       .toString ();
+    return ToStringGenerator.getDerived (super.toString ())
+                            .append ("srcClass", m_aSrcClass.getName ())
+                            .append ("dstClass", m_aDstClass.getName ())
+                            .toString ();
   }
 }

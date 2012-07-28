@@ -28,6 +28,30 @@ import javax.annotation.Nonnull;
 public interface ITypeConverterRule extends ITypeConverter
 {
   /**
+   * Define the sub types of the rules. The order is the sub type in which they
+   * are evaluated.
+   * 
+   * @author philip
+   */
+  enum ESubType
+  {
+    /** Fixed source type and assignable destination type. */
+    FIXED_SRC_ASSIGNABLE_DST,
+    /** Fixed source type and any destination type. */
+    FIXED_SRC_ANY_DST,
+    /** Assignable source type and fixed destination type. */
+    ASSIGNABLE_SRC_FIXED_DST,
+    /** Any source type and fixed destination type. */
+    ANY_SRC_FIXED_DST;
+  }
+
+  /**
+   * @return The sub type of the converter rule. May not be <code>null</code>.
+   */
+  @Nonnull
+  ESubType getSubType ();
+
+  /**
    * Check if this converter can handle the conversion from the passed source to
    * the passed destination class. Note: as this method is called for every type
    * conversion for which no exact converters are present, the implementation of

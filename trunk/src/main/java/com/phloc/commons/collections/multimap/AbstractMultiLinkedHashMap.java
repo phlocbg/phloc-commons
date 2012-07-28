@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
@@ -97,5 +98,11 @@ public abstract class AbstractMultiLinkedHashMap <KEYTYPE, VALUETYPE, COLLTYPE e
   {
     final Collection <VALUETYPE> aCont = get (aKey);
     return aCont == null ? false : aCont.contains (aValue);
+  }
+
+  @Nonnegative
+  public final long getTotalValueCount ()
+  {
+    return MultiMapHelper.getTotalValueCount (this);
   }
 }

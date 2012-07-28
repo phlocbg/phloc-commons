@@ -20,8 +20,6 @@ package com.phloc.commons.typeconvert.rule;
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.string.ToStringGenerator;
-import com.phloc.commons.typeconvert.ITypeConverterRuleAnySource;
-import com.phloc.commons.typeconvert.ITypeConverterRuleFixedDestination;
 
 /**
  * Abstract type converter than can convert from a base source class to a
@@ -29,14 +27,13 @@ import com.phloc.commons.typeconvert.ITypeConverterRuleFixedDestination;
  * 
  * @author philip
  */
-public abstract class AbstractTypeConverterRuleAnySourceFixedDestination implements
-                                                                        ITypeConverterRuleAnySource,
-                                                                        ITypeConverterRuleFixedDestination
+public abstract class AbstractTypeConverterRuleAnySourceFixedDestination extends AbstractTypeConverterRule
 {
   private final Class <?> m_aDstClass;
 
   public AbstractTypeConverterRuleAnySourceFixedDestination (@Nonnull final Class <?> aDstClass)
   {
+    super (ESubType.ANY_SRC_FIXED_DST);
     if (aDstClass == null)
       throw new NullPointerException ("dstClass");
     m_aDstClass = aDstClass;
@@ -57,6 +54,6 @@ public abstract class AbstractTypeConverterRuleAnySourceFixedDestination impleme
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("dstClass", m_aDstClass.getName ()).toString ();
+    return ToStringGenerator.getDerived (super.toString ()).append ("dstClass", m_aDstClass.getName ()).toString ();
   }
 }
