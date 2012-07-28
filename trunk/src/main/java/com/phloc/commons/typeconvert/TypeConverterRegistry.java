@@ -397,7 +397,8 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
     s_aRWLock.writeLock ().lock ();
     try
     {
-      if (aTypeConverterRule instanceof ITypeConverterRuleAnySource)
+      if (aTypeConverterRule instanceof ITypeConverterRuleAnySource ||
+          aTypeConverterRule instanceof ITypeConverterRuleAnyDestination)
         s_aRulesAnySource.add (aTypeConverterRule);
       else
         s_aRules.add (aTypeConverterRule);

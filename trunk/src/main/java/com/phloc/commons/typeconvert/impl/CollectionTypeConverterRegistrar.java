@@ -48,24 +48,16 @@ import com.phloc.commons.typeconvert.rule.AbstractTypeConverterRuleAnySourceFixe
 public final class CollectionTypeConverterRegistrar implements ITypeConverterRegistrarSPI
 {
   /**
-   * Register all type converters for the base types:<br>
+   * Register type converters for the collection types:<br>
    * <ul>
-   * <li>Boolean</li>
-   * <li>Byte</li>
-   * <li>Character</li>
-   * <li>Double</li>
-   * <li>Float</li>
-   * <li>Integer</li>
-   * <li>Long</li>
-   * <li>Short</li>
-   * <li>String</li>
-   * <li>BigDecimal</li>
-   * <li>BigInteger</li>
-   * <li>AtomicBoolean</li>
-   * <li>AtomicInteger</li>
-   * <li>AtomicLong</li>
-   * <li>StringBuffer</li>
-   * <li>StringBuilder</li>
+   * <li>ArrayList</li>
+   * <li>Vector</li>
+   * <li>LinkedList</li>
+   * <li>List</li>
+   * <li>HashSet</li>
+   * <li>TreeSet</li>
+   * <li>LinkedHashSet</li>
+   * <li>Set</li>
    * </ul>
    */
   public void registerTypeConverter (@Nonnull final ITypeConverterRegistry aRegistry)
