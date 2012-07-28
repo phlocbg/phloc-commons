@@ -21,10 +21,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.phloc.commons.microdom.EMicroNodeType;
 import com.phloc.commons.microdom.IMicroContainer;
 import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.mock.PhlocTestUtils;
@@ -53,6 +55,7 @@ public final class MicroContainerTest
     assertNotNull (e.getNodeName ());
     assertNotNull (e.getNodeValue ());
     assertTrue (e.isEqualContent (e.getClone ()));
+    assertSame (EMicroNodeType.CONTAINER, e.getType ());
     PhlocTestUtils.testToStringImplementation (e);
 
     e.appendElement ("any");
@@ -67,7 +70,7 @@ public final class MicroContainerTest
     e = new MicroContainer ();
     e.appendText ("text");
     assertFalse (new MicroContainer ().isEqualContent (e));
-    IMicroNode [] aChildNodes = { new MicroText ("any") };
+    final IMicroNode [] aChildNodes = { new MicroText ("any") };
 
     e = new MicroContainer (aChildNodes);
     assertNotNull (e);

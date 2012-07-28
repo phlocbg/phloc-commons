@@ -21,11 +21,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
+import com.phloc.commons.microdom.EMicroNodeType;
 import com.phloc.commons.microdom.IMicroComment;
 import com.phloc.commons.microdom.MicroException;
 import com.phloc.commons.mock.PhlocTestUtils;
@@ -56,6 +58,7 @@ public final class MicroCommentTest
     assertEquals (0, e.getChildCount ());
     assertNotNull (e.getNodeName ());
     assertNotNull (e.getNodeValue ());
+    assertSame (EMicroNodeType.COMMENT, e.getType ());
     PhlocTestUtils.testToStringImplementation (e);
 
     e.setData ("allo");

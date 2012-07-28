@@ -21,11 +21,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
+import com.phloc.commons.microdom.EMicroNodeType;
 import com.phloc.commons.microdom.IMicroEntityReference;
 import com.phloc.commons.microdom.MicroException;
 import com.phloc.commons.mock.PhlocTestUtils;
@@ -34,7 +36,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link MicroEntityReference}.
- *
+ * 
  * @author philip
  */
 public final class MicroEntityReferenceTest
@@ -56,6 +58,7 @@ public final class MicroEntityReferenceTest
     assertEquals (0, e.getChildCount ());
     assertNotNull (e.getNodeName ());
     assertNotNull (e.getNodeValue ());
+    assertSame (EMicroNodeType.ENTITY_REFERENCE, e.getType ());
     PhlocTestUtils.testToStringImplementation (e);
 
     assertTrue (e.isEqualContent (e));
