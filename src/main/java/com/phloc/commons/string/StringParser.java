@@ -143,7 +143,7 @@ public class StringParser
   @Nullable
   public static Boolean parseBoolObj (@Nullable final Object aObject, @Nullable final Boolean aDefault)
   {
-    return aObject == null ? aDefault : parseBoolObj (String.valueOf (aObject));
+    return aObject == null ? aDefault : parseBoolObj (aObject.toString ());
   }
 
   /**
@@ -199,7 +199,7 @@ public class StringParser
       return nDefault;
     if (aObject instanceof Number)
       return ((Number) aObject).byteValue ();
-    return parseByte (String.valueOf (aObject), nRadix, nDefault);
+    return parseByte (aObject.toString (), nRadix, nDefault);
   }
 
   /**
@@ -301,7 +301,7 @@ public class StringParser
       return aDefault;
     if (aObject instanceof Number)
       return Byte.valueOf (((Number) aObject).byteValue ());
-    return parseByteObj (String.valueOf (aObject), nRadix, aDefault);
+    return parseByteObj (aObject.toString (), nRadix, aDefault);
   }
 
   /**
@@ -358,6 +358,7 @@ public class StringParser
     if (sStr != null && sStr.length () > 0)
       try
       {
+        Byte.valueOf (sStr);
         return Byte.valueOf (sStr, nRadix);
       }
       catch (final NumberFormatException ex)// NOPMD
@@ -387,7 +388,7 @@ public class StringParser
       return dDefault;
     if (aObject instanceof Number)
       return ((Number) aObject).doubleValue ();
-    return parseDouble (String.valueOf (aObject), dDefault);
+    return parseDouble (aObject.toString (), dDefault);
   }
 
   /**
@@ -510,7 +511,7 @@ public class StringParser
       return fDefault;
     if (aObject instanceof Number)
       return ((Number) aObject).floatValue ();
-    return parseFloat (String.valueOf (aObject), fDefault);
+    return parseFloat (aObject.toString (), fDefault);
   }
 
   /**
@@ -649,7 +650,7 @@ public class StringParser
       return nDefault;
     if (aObject instanceof Number)
       return ((Number) aObject).intValue ();
-    return parseInt (String.valueOf (aObject), nRadix, nDefault);
+    return parseInt (aObject.toString (), nRadix, nDefault);
   }
 
   /**
@@ -751,7 +752,7 @@ public class StringParser
       return aDefault;
     if (aObject instanceof Number)
       return Integer.valueOf (((Number) aObject).intValue ());
-    return parseIntObj (String.valueOf (aObject), nRadix, aDefault);
+    return parseIntObj (aObject.toString (), nRadix, aDefault);
   }
 
   /**
@@ -853,7 +854,7 @@ public class StringParser
       return nDefault;
     if (aObject instanceof Number)
       return ((Number) aObject).longValue ();
-    return parseLong (String.valueOf (aObject), nRadix, nDefault);
+    return parseLong (aObject.toString (), nRadix, nDefault);
   }
 
   /**
@@ -953,7 +954,7 @@ public class StringParser
       return aDefault;
     if (aObject instanceof Number)
       return Long.valueOf (((Number) aObject).longValue ());
-    return parseLongObj (String.valueOf (aObject), nRadix, aDefault);
+    return parseLongObj (aObject.toString (), nRadix, aDefault);
   }
 
   /**
@@ -1055,7 +1056,7 @@ public class StringParser
       return nDefault;
     if (aObject instanceof Number)
       return ((Number) aObject).shortValue ();
-    return parseShort (String.valueOf (aObject), nRadix, nDefault);
+    return parseShort (aObject.toString (), nRadix, nDefault);
   }
 
   /**
@@ -1155,7 +1156,7 @@ public class StringParser
       return aDefault;
     if (aObject instanceof Number)
       return Short.valueOf (((Number) aObject).shortValue ());
-    return parseShortObj (String.valueOf (aObject), nRadix, aDefault);
+    return parseShortObj (aObject.toString (), nRadix, aDefault);
   }
 
   /**

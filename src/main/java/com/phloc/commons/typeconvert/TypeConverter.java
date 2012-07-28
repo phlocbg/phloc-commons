@@ -327,6 +327,8 @@ public final class TypeConverter
     if (aRetVal == null)
     {
       s_aLogger.warn ("Type conversion from '" +
+                      aSrcValue +
+                      "' of class '" +
                       aSrcClass.getName () +
                       "' to '" +
                       aUsableDstClass.getName () +
