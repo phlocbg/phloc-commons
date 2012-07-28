@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.vendor;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
@@ -34,8 +35,17 @@ public final class VendorInfoTest
   @Test
   public void testHeaderLines ()
   {
-    final List <String> aList = VendorInfo.FILE_HEADER_LINES;
+    final List <String> aList = VendorInfo.getFileHeaderLines ();
     assertNotNull (aList);
     assertFalse (aList.isEmpty ());
+  }
+
+  @Test
+  public void testInceptionYear ()
+  {
+    assertEquals (VendorInfo.DEFAULT_INCEPTION_YEAR, VendorInfo.getInceptionYear ());
+    VendorInfo.setInceptionYear (1999);
+    assertEquals (1999, VendorInfo.getInceptionYear ());
+    VendorInfo.setInceptionYear (VendorInfo.DEFAULT_INCEPTION_YEAR);
   }
 }

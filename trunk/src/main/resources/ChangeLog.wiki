@@ -1,7 +1,9 @@
 #summary Change log of phloc-commons
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
-<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr><td>7/28/12</td><td>add</td><td>api</td><td></td><td>Added new methods new...Vector(array) and newVector(...)</td></tr>
+<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr border="1"><td>7/28/12</td><td colspan="4">_Release *3.7.0.RC1*_</td></tr>
+<tr><td>7/28/12</td><td>change</td><td>api</td><td></td><td>Improved VendorInfo to support custom inception year and adopted file header lines</td></tr>
+<tr><td>7/28/12</td><td>add</td><td>api</td><td></td><td>Added new methods new...Vector(array) and newVector(...)</td></tr>
 <tr><td>7/28/12</td><td>add</td><td>api</td><td></td><td>Added new interface method IMultiMap.getTotalValueCount()</td></tr>
 <tr><td>7/28/12</td><td>add</td><td>api</td><td></td><td>Added multi map implementations based on WekHashMap</td></tr>
 <tr><td>7/28/12</td><td>add</td><td>api</td><td></td><td>Extracted the parsing functionality from StringHelper to StringParser</td></tr>

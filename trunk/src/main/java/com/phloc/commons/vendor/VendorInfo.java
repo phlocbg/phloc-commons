@@ -19,12 +19,14 @@ package com.phloc.commons.vendor;
 
 import java.util.List;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.string.StringHelper;
 
@@ -37,42 +39,72 @@ import com.phloc.commons.string.StringHelper;
 @NotThreadSafe
 public final class VendorInfo
 {
-  public static final String VENDOR_NAME = "phloc systems";
-  public static final String VENDOR_URL_NO_HTTP = "www.phloc.com";
-  public static final String VENDOR_URL = "http://" + VENDOR_URL_NO_HTTP;
+  public static final String DEFAULT_VENDOR_NAME = "phloc systems";
+  @Deprecated
+  public static final String VENDOR_NAME = DEFAULT_VENDOR_NAME;
+  public static final String DEFAULT_VENDOR_URL_NO_HTTP = "www.phloc.com";
+  @Deprecated
+  public static final String VENDOR_URL_NO_HTTP = DEFAULT_VENDOR_URL_NO_HTTP;
+  public static final String DEFAULT_VENDOR_URL = "http://" + DEFAULT_VENDOR_URL_NO_HTTP;
+  @Deprecated
+  public static final String VENDOR_URL = DEFAULT_VENDOR_URL;
   public static final String VENDOR_PERSON_BORIS = "Boris Gregorcic";
   public static final String VENDOR_PERSON_PHILIP = "Philip Helger";
-  public static final String VENDOR_EMAIL_SUFFIX = "@phloc.com";
-  public static final String VENDOR_EMAIL = "office" + VENDOR_EMAIL_SUFFIX;
+  public static final String DEFAULT_VENDOR_EMAIL_SUFFIX = "@phloc.com";
+  @Deprecated
+  public static final String VENDOR_EMAIL_SUFFIX = DEFAULT_VENDOR_EMAIL_SUFFIX;
+  public static final String DEFAULT_VENDOR_EMAIL = "office" + DEFAULT_VENDOR_EMAIL_SUFFIX;
+  @Deprecated
+  public static final String VENDOR_EMAIL = DEFAULT_VENDOR_EMAIL;
+  public static final int DEFAULT_INCEPTION_YEAR = 2004;
 
-  // These are the lines that should used for prefixing generated files
+  /** These are the lines that should used for prefixing generated files */
+  @Deprecated
   public static final List <String> FILE_HEADER_LINES = ContainerHelper.newUnmodifiableList ("THIS FILE IS GENERATED - DO NOT EDIT",
                                                                                              "",
                                                                                              "Copyright",
                                                                                              "",
                                                                                              "Copyright (c) " +
-                                                                                                 VENDOR_NAME +
-                                                                                                 " 2004 - " +
+                                                                                                 DEFAULT_VENDOR_NAME +
+                                                                                                 " " +
+                                                                                                 DEFAULT_INCEPTION_YEAR +
+                                                                                                 " - " +
                                                                                                  CGlobal.CURRENT_YEAR,
-                                                                                             VENDOR_URL,
+                                                                                             DEFAULT_VENDOR_URL,
                                                                                              "",
                                                                                              "All Rights Reserved",
                                                                                              "Use, duplication or disclosure restricted by " +
-                                                                                                 VENDOR_NAME,
+                                                                                                 DEFAULT_VENDOR_NAME,
                                                                                              "",
-                                                                                             "Vienna, 2004 - " +
+                                                                                             "Vienna, " +
+                                                                                                 DEFAULT_INCEPTION_YEAR +
+                                                                                                 " - " +
                                                                                                  CGlobal.CURRENT_YEAR);
 
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")
   private static final VendorInfo s_aInstance = new VendorInfo ();
 
-  private static String s_sVendorName = VENDOR_NAME;
-  private static String s_sVendorURL = VENDOR_URL;
-  private static String s_sVendorEmail = VENDOR_EMAIL;
+  private static int s_nInceptionYear = DEFAULT_INCEPTION_YEAR;
+  private static String s_sVendorName = DEFAULT_VENDOR_NAME;
+  private static String s_sVendorURL = DEFAULT_VENDOR_URL;
+  private static String s_sVendorEmail = DEFAULT_VENDOR_EMAIL;
 
   private VendorInfo ()
   {}
+
+  @Nonnegative
+  public static int getInceptionYear ()
+  {
+    return s_nInceptionYear;
+  }
+
+  public static void setInceptionYear (@Nonnegative final int nInceptionYear)
+  {
+    if (nInceptionYear < 0)
+      throw new IllegalArgumentException ("inceptionYear may not be negative");
+    s_nInceptionYear = nInceptionYear;
+  }
 
   @Nonnull
   public static String getVendorName ()
@@ -111,5 +143,30 @@ public final class VendorInfo
     if (StringHelper.hasNoText (sVendorEmail))
       throw new IllegalArgumentException ("vendorEmail");
     s_sVendorEmail = sVendorEmail;
+  }
+
+  /**
+   * @return These are the lines that should used for prefixing generated files.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public static List <String> getFileHeaderLines ()
+  {
+    return ContainerHelper.newList ("THIS FILE IS GENERATED - DO NOT EDIT",
+                                    "",
+                                    "Copyright",
+                                    "",
+                                    "Copyright (c) " +
+                                        getVendorName () +
+                                        " " +
+                                        getInceptionYear () +
+                                        " - " +
+                                        CGlobal.CURRENT_YEAR,
+                                    getVendorURL (),
+                                    "",
+                                    "All Rights Reserved",
+                                    "Use, duplication or disclosure restricted by " + getVendorName (),
+                                    "",
+                                    "Vienna, " + getInceptionYear () + " - " + CGlobal.CURRENT_YEAR);
   }
 }
