@@ -19,7 +19,7 @@ package com.phloc.commons.convert;
 
 import javax.annotation.Nullable;
 
-import com.phloc.commons.string.StringHelper;
+import com.phloc.commons.string.StringParser;
 
 /**
  * Get a generic data converter that converts a string to an Integer. If the
@@ -39,6 +39,6 @@ public final class UnidirectionalConverterStringInteger implements IUnidirection
   @Nullable
   public Integer convert (@Nullable final String sInput)
   {
-    return StringHelper.parseIntObj (sInput, m_aDefaultValue);
+    return StringParser.parseIntObj (sInput, m_aDefaultValue);
   }
 }

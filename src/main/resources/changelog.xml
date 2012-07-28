@@ -20,6 +20,16 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2012-07-28" category="api" action="add">
+    <change>
+      <text locale="en">Extracted the parsing functionality from StringHelper to StringParser</text>
+    </change>
+  </entry>
+  <entry date="2012-07-28" category="api" action="add">
+    <change>
+      <text locale="en">Extended StringHelper to support parsing String to short/Short</text>
+    </change>
+  </entry>
   <entry date="2012-07-27" category="api" action="add">
     <change>
       <text locale="en">Added new constructors for ClassPathResource and FileSystemResource</text>

@@ -46,7 +46,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * An in-memory implementation of the {@link ITextProvider} interface.
- *
+ * 
  * @author philip
  */
 @SuppressFBWarnings ("SE_NO_SERIALVERSIONID")

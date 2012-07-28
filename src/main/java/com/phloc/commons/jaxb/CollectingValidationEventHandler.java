@@ -27,7 +27,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * Deprecated version of {@link CollectingValidationEventHandler}. Use
  * {@link com.phloc.commons.jaxb.validation.CollectingValidationEventHandler}
  * instead!
- *
+ * 
  * @author philip
  */
 @NotThreadSafe

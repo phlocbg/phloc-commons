@@ -29,6 +29,7 @@ import com.phloc.commons.GlobalDebug;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.StringHelper;
+import com.phloc.commons.string.StringParser;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -54,7 +55,7 @@ public final class RegExPattern
       if (nIndex != -1)
       {
         // Is the "$" followed by an int (would indicate a replacement group)
-        if (!StringHelper.isInt (sRegEx.substring (nIndex + 1)))
+        if (!StringParser.isInt (sRegEx.substring (nIndex + 1)))
         {
           if (nIndex + 1 < sRegEx.length () && sRegEx.charAt (nIndex + 1) == ')')
           { // NOPMD

@@ -78,7 +78,8 @@ public final class CollatorUtils
       }
       if (!(aCollator instanceof RuleBasedCollator))
       {
-        s_aLogger.warn ("Collator.getInstance did not return a RulleBasedCollator but a " + aCollator.getClass ().getName ());
+        s_aLogger.warn ("Collator.getInstance did not return a RulleBasedCollator but a " +
+                        aCollator.getClass ().getName ());
         return aCollator;
       }
 

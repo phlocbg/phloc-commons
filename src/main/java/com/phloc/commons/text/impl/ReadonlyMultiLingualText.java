@@ -31,7 +31,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * This class represents a multilingual text. It is internally represented as a
  * map from {@link Locale} to the language dependent string.
- *
+ * 
  * @author philip
  */
 @Immutable

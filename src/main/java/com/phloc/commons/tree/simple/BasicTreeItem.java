@@ -40,7 +40,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Basic implementation of the {@link ITreeItem} interface
- *
+ * 
  * @author philip
  * @param <VALUETYPE>
  *        tree item value type
@@ -77,7 +77,7 @@ public class BasicTreeItem <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, IT
 
   /**
    * Constructor for normal elements.
-   *
+   * 
    * @param aParent
    *        Parent item to use. May never be <code>null</code> since only the
    *        root has no parent and for the root item a special no-argument
@@ -106,7 +106,7 @@ public class BasicTreeItem <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, IT
    * This method is called to validate a data object. This method may be
    * overloaded in derived classes. The default implementation accepts all
    * values.
-   *
+   * 
    * @param aData
    *        The value to validate.
    * @return <code>true</code> if the ID is valid, <code>false</code> otherwise.
@@ -149,7 +149,7 @@ public class BasicTreeItem <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, IT
 
   /**
    * Add a child item to this item.
-   *
+   * 
    * @param aData
    *        the data associated with this item
    * @return the created TreeItem object or <code>null</code> if the ID is

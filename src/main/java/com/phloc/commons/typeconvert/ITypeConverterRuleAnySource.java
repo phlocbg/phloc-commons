@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.typeconvert;
 
-
 /**
  * A special type converter rule marker interface declaring that it can handle
  * any source object. This has to be marked specially, so that these rules are

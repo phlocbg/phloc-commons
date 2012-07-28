@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.lang.GenericReflection;
-import com.phloc.commons.string.StringHelper;
+import com.phloc.commons.string.StringParser;
 
 /**
  * Abstract base class for all kind of string-object mapping container. This
@@ -100,7 +100,7 @@ public abstract class AbstractReadonlyAttributeContainer implements IReadonlyAtt
   public final int getAttributeAsInt (@Nullable final String sName, final int nDefault)
   {
     final String sValue = getAttributeAsString (sName);
-    return StringHelper.parseInt (sValue, nDefault);
+    return StringParser.parseInt (sValue, nDefault);
   }
 
   public final double getAttributeAsDouble (@Nullable final String sName)
@@ -111,7 +111,7 @@ public abstract class AbstractReadonlyAttributeContainer implements IReadonlyAtt
   public final double getAttributeAsDouble (@Nullable final String sName, final double dDefault)
   {
     final String sValue = getAttributeAsString (sName);
-    return StringHelper.parseDouble (sValue, dDefault);
+    return StringParser.parseDouble (sValue, dDefault);
   }
 
   public final boolean getAttributeAsBoolean (@Nullable final String sName)
@@ -122,6 +122,6 @@ public abstract class AbstractReadonlyAttributeContainer implements IReadonlyAtt
   public final boolean getAttributeAsBoolean (@Nullable final String sName, final boolean bDefault)
   {
     final String sValue = getAttributeAsString (sName);
-    return StringHelper.parseBool (sValue, bDefault);
+    return StringParser.parseBool (sValue, bDefault);
   }
 }

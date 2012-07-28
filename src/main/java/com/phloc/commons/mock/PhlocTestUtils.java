@@ -35,7 +35,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * This class contains default test methods to test the correctness of
  * implementations of standard methods.
- *
+ * 
  * @author philip
  */
 @Immutable
@@ -126,7 +126,7 @@ public final class PhlocTestUtils
   /**
    * Test the toString implementation of the passed object. It may not be empty,
    * and consistent.
-   *
+   * 
    * @param aObject
    *        The object to be tested.
    */
@@ -159,7 +159,7 @@ public final class PhlocTestUtils
   /**
    * Check if two different objects (who may not be the same) are equal to each
    * other. Checks toString, equals and hashCode.
-   *
+   * 
    * @param aObject1
    *        First object. May not be <code>null</code>.
    * @param aObject2
@@ -176,7 +176,7 @@ public final class PhlocTestUtils
   /**
    * Check if two different objects are different to each other. Checks
    * toString, equals and hashCode.
-   *
+   * 
    * @param aObject1
    *        First object. May not be <code>null</code>.
    * @param aObject2
@@ -195,7 +195,7 @@ public final class PhlocTestUtils
    * array stream, and then tries to rebuild it from there. After reading it
    * performs an equals check using
    * {@link #testDefaultImplementationWithEqualContentObject(Object, Object)}
-   *
+   * 
    * @param <DATATYPE>
    *        The type of object to be serialized.
    * @param aSerializable
@@ -233,7 +233,7 @@ public final class PhlocTestUtils
    * than uses
    * {@link #testDefaultImplementationWithEqualContentObject(Object, Object)} to
    * check for equality.
-   *
+   * 
    * @param aCloneable
    *        The cloneable object to test
    */

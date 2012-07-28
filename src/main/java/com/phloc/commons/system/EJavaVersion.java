@@ -27,7 +27,7 @@ import com.phloc.commons.CGlobal;
 import com.phloc.commons.SystemProperties;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.equals.EqualsUtils;
-import com.phloc.commons.string.StringHelper;
+import com.phloc.commons.string.StringParser;
 
 /**
  * Helper class that holds the current class version. Must be a separate class
@@ -39,7 +39,7 @@ import com.phloc.commons.string.StringHelper;
 final class JavaVersionConstants
 {
   /** The global Java class version as a double value. */
-  public static final double CLASS_VERSION = StringHelper.parseDouble (SystemProperties.getJavaClassVersion (),
+  public static final double CLASS_VERSION = StringParser.parseDouble (SystemProperties.getJavaClassVersion (),
                                                                        CGlobal.ILLEGAL_DOUBLE);
 
   @PresentForCodeCoverage
