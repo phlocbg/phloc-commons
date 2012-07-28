@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.math;
 
-
 /**
  * Interface for objects having a width and a height.
  * 

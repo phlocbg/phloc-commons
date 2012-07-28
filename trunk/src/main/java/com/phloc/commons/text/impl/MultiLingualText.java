@@ -42,7 +42,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * This class represents a multilingual text. It is internally represented as a
  * map from {@link Locale} to the language dependent name.
- *
+ * 
  * @author philip
  */
 @NotThreadSafe
@@ -59,7 +59,7 @@ public final class MultiLingualText extends TextProvider implements IMultiLingua
 
   /**
    * Constructor especially for the static TextProvider.createXXX methods
-   *
+   * 
    * @param aSimpleMLT
    *        The simple multi lingual text to use.
    */
@@ -225,7 +225,7 @@ public final class MultiLingualText extends TextProvider implements IMultiLingua
   /**
    * Get a copy of this object with the specified locales. The default locale is
    * copied.
-   *
+   * 
    * @param aMLT
    *        The initial multi lingual text.
    * @param aContentLocales

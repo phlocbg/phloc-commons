@@ -26,7 +26,7 @@ import javax.annotation.concurrent.ThreadSafe;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.io.file.SimpleFileIO;
-import com.phloc.commons.string.StringHelper;
+import com.phloc.commons.string.StringParser;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -65,7 +65,7 @@ public class FileIntIDFactory extends AbstractPersistingIntIDFactory
   protected final int readAndUpdateIDCounter (@Nonnegative final int nReserveCount)
   {
     final String sContent = SimpleFileIO.readFileAsString (m_aFile, CHARSET_TO_USE);
-    final int nRead = sContent != null ? StringHelper.parseInt (sContent.trim (), 0) : 0;
+    final int nRead = sContent != null ? StringParser.parseInt (sContent.trim (), 0) : 0;
     SimpleFileIO.writeFile (m_aFile, Integer.toString (nRead + nReserveCount), CHARSET_TO_USE);
     return nRead;
   }

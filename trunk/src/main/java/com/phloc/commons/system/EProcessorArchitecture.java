@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.SystemProperties;
-import com.phloc.commons.string.StringHelper;
+import com.phloc.commons.string.StringParser;
 
 /**
  * Enum for representing the current processor architecture. Works only on Sun
@@ -76,7 +76,7 @@ public enum EProcessorArchitecture
    */
   public static int getCurrentArchitectureBits ()
   {
-    return StringHelper.parseInt (SystemProperties.getPropertyValue (SUN_SYSTEM_PROPERTY), CGlobal.ILLEGAL_UINT);
+    return StringParser.parseInt (SystemProperties.getPropertyValue (SUN_SYSTEM_PROPERTY), CGlobal.ILLEGAL_UINT);
   }
 
   /**

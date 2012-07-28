@@ -35,7 +35,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * A non-synchronized copy of the class {@link java.io.ByteArrayOutputStream}.
- *
+ * 
  * @author philip
  * @see java.io.ByteArrayOutputStream
  */
@@ -66,7 +66,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements
   /**
    * Creates a new byte array output stream, with a buffer capacity of the
    * specified size, in bytes.
-   *
+   * 
    * @param nSize
    *        the initial size.
    * @exception IllegalArgumentException
@@ -89,7 +89,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements
 
   /**
    * Writes the specified byte to this byte array output stream.
-   *
+   * 
    * @param b
    *        the byte to be written.
    */
@@ -116,7 +116,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements
   /**
    * Writes <code>nLen</code> bytes from the specified byte array starting at
    * offset <code>nOfs</code> to this byte array output stream.
-   *
+   * 
    * @param aBuf
    *        the data.
    * @param nOfs
@@ -145,7 +145,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements
    * Writes the complete contents of this byte array output stream to the
    * specified output stream argument, as if by calling the output stream's
    * write method using <code>out.write(buf, 0, count)</code>.
-   *
+   * 
    * @param out
    *        the output stream to which to write the data.
    * @exception IOException
@@ -171,7 +171,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements
    * Creates a newly allocated byte array. Its size is the current size of this
    * output stream and the valid contents of the buffer have been copied into
    * it.
-   *
+   * 
    * @return the current contents of this output stream, as a byte array.
    */
   @Nonnull
@@ -183,7 +183,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements
 
   /**
    * Returns the current size of the buffer.
-   *
+   * 
    * @return the value of the <code>count</code> field, which is the number of
    *         valid bytes in this output stream.
    */
@@ -208,7 +208,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements
    * sequences with the default replacement string for the platform's default
    * character set. The {@linkplain java.nio.charset.CharsetDecoder} class
    * should be used when more control over the decoding process is required.
-   *
+   * 
    * @return String decoded from the buffer's contents.
    */
   @SuppressFBWarnings ("DM_DEFAULT_ENCODING")
@@ -229,7 +229,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements
    * sequences with this charset's default replacement string. The
    * {@link java.nio.charset.CharsetDecoder} class should be used when more
    * control over the decoding process is required.
-   *
+   * 
    * @param sCharset
    *        the name of a supported {@linkplain java.nio.charset.Charset
    *        </code>charset<code>}
@@ -251,7 +251,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements
    * sequences with this charset's default replacement string. The
    * {@link java.nio.charset.CharsetDecoder} class should be used when more
    * control over the decoding process is required.
-   *
+   * 
    * @param aCharset
    *        the charset to be used. May not be <code>null</code>.
    * @return String decoded from the buffer's contents.

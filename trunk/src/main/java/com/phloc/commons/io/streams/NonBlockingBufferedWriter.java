@@ -30,7 +30,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * This is a non-blocking version of {@link java.io.BufferedWriter}. It is 1:1
  * rip without the synchronized statements.
- *
+ * 
  * @author philip
  */
 @NotThreadSafe
@@ -52,7 +52,7 @@ public class NonBlockingBufferedWriter extends Writer
   /**
    * Creates a buffered character-output stream that uses a default-sized output
    * buffer.
-   *
+   * 
    * @param aWriter
    *        A Writer
    */
@@ -64,7 +64,7 @@ public class NonBlockingBufferedWriter extends Writer
   /**
    * Creates a new buffered character-output stream that uses an output buffer
    * of the given size.
-   *
+   * 
    * @param aWriter
    *        A Writer
    * @param nBufSize
@@ -109,7 +109,7 @@ public class NonBlockingBufferedWriter extends Writer
 
   /**
    * Writes a single character.
-   *
+   * 
    * @exception IOException
    *            If an I/O error occurs
    */
@@ -140,7 +140,7 @@ public class NonBlockingBufferedWriter extends Writer
    * method will flush the buffer and write the characters directly to the
    * underlying stream. Thus redundant <code>BufferedWriter</code>s will not
    * copy data unnecessarily.
-   *
+   * 
    * @param cbuf
    *        A character array
    * @param off
@@ -194,7 +194,7 @@ public class NonBlockingBufferedWriter extends Writer
    * are written. This is contrary to the specification of this method in the
    * {@linkplain java.io.Writer#write(java.lang.String,int,int) superclass},
    * which requires that an {@link IndexOutOfBoundsException} be thrown.
-   *
+   * 
    * @param s
    *        String to be written
    * @param off
@@ -227,7 +227,7 @@ public class NonBlockingBufferedWriter extends Writer
    * Writes a line separator. The line separator string is defined by the system
    * property <tt>line.separator</tt>, and is not necessarily a single newline
    * ('\n') character.
-   *
+   * 
    * @exception IOException
    *            If an I/O error occurs
    */
@@ -238,7 +238,7 @@ public class NonBlockingBufferedWriter extends Writer
 
   /**
    * Flushes the stream.
-   *
+   * 
    * @exception IOException
    *            If an I/O error occurs
    */

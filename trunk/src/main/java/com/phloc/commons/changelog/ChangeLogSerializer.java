@@ -48,6 +48,7 @@ import com.phloc.commons.microdom.convert.MicroTypeConverter;
 import com.phloc.commons.microdom.impl.MicroDocument;
 import com.phloc.commons.microdom.serialize.MicroReader;
 import com.phloc.commons.string.StringHelper;
+import com.phloc.commons.string.StringParser;
 import com.phloc.commons.text.impl.MultiLingualText;
 import com.phloc.commons.version.Version;
 import com.phloc.commons.xml.CXML;
@@ -176,7 +177,7 @@ public final class ChangeLogSerializer
           aErrorCallback.run ("Failed to parse change log category '" + sCategory + "'");
           continue;
         }
-        final boolean bIsIncompatible = StringHelper.hasText (sIncompatible) ? StringHelper.parseBool (sIncompatible)
+        final boolean bIsIncompatible = StringHelper.hasText (sIncompatible) ? StringParser.parseBool (sIncompatible)
                                                                             : false;
 
         final ChangeLogEntry aEntry = new ChangeLogEntry (ret, aDate, eAction, eCategory, bIsIncompatible);

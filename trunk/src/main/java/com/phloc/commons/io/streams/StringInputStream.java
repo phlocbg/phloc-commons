@@ -27,7 +27,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * An input stream based on an input String.
- *
+ * 
  * @author philip
  */
 public class StringInputStream extends NonBlockingByteArrayInputStream

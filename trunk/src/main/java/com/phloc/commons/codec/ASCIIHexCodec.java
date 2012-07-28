@@ -40,9 +40,8 @@ public final class ASCIIHexCodec implements IByteArrayDecoder
     {
       boolean bFirstByte = true;
       int nFirstByte = 0;
-      for (int i = 0; i < aEncodedBuffer.length; ++i)
+      for (final byte nEncByte : aEncodedBuffer)
       {
-        final byte nEncByte = aEncodedBuffer[i];
         if (nEncByte == '>')
           break;
 

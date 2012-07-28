@@ -29,6 +29,7 @@ import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.regex.RegExHelper;
 import com.phloc.commons.string.StringHelper;
+import com.phloc.commons.string.StringParser;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -180,7 +181,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
       return aDotParts;
     }
 
-    if (StringHelper.isInt (aDotParts[0]))
+    if (StringParser.isInt (aDotParts[0]))
     {
       // If it is numeric, use the dot parts anyway (e.g. for "-1")
       return aDotParts;
@@ -222,15 +223,15 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
       // split each token
       final String [] aParts = RegExHelper.getSplitToArray (s, "\\.", 4);
       if (aParts.length > 0)
-        m_nMajor = StringHelper.parseInt (aParts[0], 0);
+        m_nMajor = StringParser.parseInt (aParts[0], 0);
       else
         m_nMajor = 0;
       if (aParts.length > 1)
-        m_nMinor = StringHelper.parseInt (aParts[1], 0);
+        m_nMinor = StringParser.parseInt (aParts[1], 0);
       else
         m_nMinor = 0;
       if (aParts.length > 2)
-        m_nMicro = StringHelper.parseInt (aParts[2], 0);
+        m_nMicro = StringParser.parseInt (aParts[2], 0);
       else
         m_nMicro = 0;
       if (aParts.length > 3)
@@ -249,7 +250,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
 
       // Extract major version number
       String [] aParts = _extSplit (s);
-      aMajor = StringHelper.parseIntObj (aParts[0]);
+      aMajor = StringParser.parseIntObj (aParts[0]);
       if (aMajor == null && StringHelper.hasText (aParts[0]))
       {
         // Major version is not numeric, so everything is the qualifier
@@ -262,7 +263,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
       {
         // Parse minor version number part
         aParts = _extSplit (sRest);
-        aMinor = StringHelper.parseIntObj (aParts[0]);
+        aMinor = StringParser.parseIntObj (aParts[0]);
         if (aMinor == null && StringHelper.hasText (aParts[0]))
         {
           // Minor version is not numeric, so everything is the qualifier
@@ -275,7 +276,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
         {
           // Parse micro version number part
           aParts = _extSplit (sRest);
-          aMicro = StringHelper.parseIntObj (aParts[0]);
+          aMicro = StringParser.parseIntObj (aParts[0]);
           if (aMicro == null && StringHelper.hasText (aParts[0]))
           {
             // Micro version is not numeric, so everything is the qualifier

@@ -32,7 +32,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * An input stream provider based on a byte array.
- *
+ * 
  * @author philip
  */
 public class ByteArrayInputStreamProvider implements IInputStreamAndReaderProvider

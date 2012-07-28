@@ -30,7 +30,7 @@ import com.phloc.commons.annotations.IsSPIImplementation;
 import com.phloc.commons.lang.GenericReflection;
 import com.phloc.commons.regex.RegExHelper;
 import com.phloc.commons.state.EChange;
-import com.phloc.commons.string.StringHelper;
+import com.phloc.commons.string.StringParser;
 import com.phloc.commons.typeconvert.ITypeConverter;
 import com.phloc.commons.typeconvert.ITypeConverterRegistrarSPI;
 import com.phloc.commons.typeconvert.ITypeConverterRegistry;
@@ -138,7 +138,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     {
       public Byte convert (@Nonnull final Object aSource)
       {
-        return StringHelper.parseByteObj (aSource);
+        return StringParser.parseByteObj (aSource);
       }
     });
 
@@ -210,7 +210,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     {
       public Double convert (@Nonnull final Object aSource)
       {
-        return StringHelper.parseDoubleObj (aSource.toString (), null);
+        return StringParser.parseDoubleObj (aSource.toString (), null);
       }
     });
 
@@ -249,7 +249,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     {
       public Float convert (@Nonnull final Object aSource)
       {
-        return StringHelper.parseFloatObj (aSource.toString (), null);
+        return StringParser.parseFloatObj (aSource.toString (), null);
       }
     });
 
@@ -288,7 +288,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     {
       public Integer convert (@Nonnull final Object aSource)
       {
-        return StringHelper.parseIntObj (aSource.toString (), null);
+        return StringParser.parseIntObj (aSource.toString (), null);
       }
     });
 
@@ -327,7 +327,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     {
       public Long convert (@Nonnull final Object aSource)
       {
-        return StringHelper.parseLongObj (aSource.toString (), null);
+        return StringParser.parseLongObj (aSource.toString (), null);
       }
     });
 
@@ -428,7 +428,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     {
       public BigDecimal convert (@Nonnull final Object aSource)
       {
-        return StringHelper.parseBigDecimal (aSource.toString ());
+        return StringParser.parseBigDecimal (aSource.toString ());
       }
     });
 
@@ -474,7 +474,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     {
       public BigInteger convert (@Nonnull final Object aSource)
       {
-        return StringHelper.parseBigInteger (aSource.toString ());
+        return StringParser.parseBigInteger (aSource.toString ());
       }
     });
 
