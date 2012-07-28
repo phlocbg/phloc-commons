@@ -28,7 +28,11 @@ import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.email.EmailAddressUtils;
 import com.phloc.commons.string.StringHelper;
+import com.phloc.commons.url.EURLProtocol;
+import com.phloc.commons.url.IURLProtocol;
+import com.phloc.commons.url.URLProtocolRegistry;
 
 /**
  * Contains some general vendor specific information. This is mainly for keeping
@@ -39,13 +43,14 @@ import com.phloc.commons.string.StringHelper;
 @NotThreadSafe
 public final class VendorInfo
 {
+  public static final String DEFAULT_VENDOR_LOCATION = "Vienna, Austria, Europe, World, Milky Way, Universe";
   public static final String DEFAULT_VENDOR_NAME = "phloc systems";
   @Deprecated
   public static final String VENDOR_NAME = DEFAULT_VENDOR_NAME;
-  public static final String DEFAULT_VENDOR_URL_NO_HTTP = "www.phloc.com";
+  public static final String DEFAULT_VENDOR_URL_WITHOUT_PROTOCOL = "www.phloc.com";
   @Deprecated
-  public static final String VENDOR_URL_NO_HTTP = DEFAULT_VENDOR_URL_NO_HTTP;
-  public static final String DEFAULT_VENDOR_URL = "http://" + DEFAULT_VENDOR_URL_NO_HTTP;
+  public static final String VENDOR_URL_NO_HTTP = DEFAULT_VENDOR_URL_WITHOUT_PROTOCOL;
+  public static final String DEFAULT_VENDOR_URL = "http://" + DEFAULT_VENDOR_URL_WITHOUT_PROTOCOL;
   @Deprecated
   public static final String VENDOR_URL = DEFAULT_VENDOR_URL;
   public static final String VENDOR_PERSON_BORIS = "Boris Gregorcic";
@@ -76,7 +81,8 @@ public final class VendorInfo
                                                                                              "Use, duplication or disclosure restricted by " +
                                                                                                  DEFAULT_VENDOR_NAME,
                                                                                              "",
-                                                                                             "Vienna, " +
+                                                                                             DEFAULT_VENDOR_LOCATION +
+                                                                                                 ", " +
                                                                                                  DEFAULT_INCEPTION_YEAR +
                                                                                                  " - " +
                                                                                                  CGlobal.CURRENT_YEAR);
@@ -85,13 +91,29 @@ public final class VendorInfo
   @SuppressWarnings ("unused")
   private static final VendorInfo s_aInstance = new VendorInfo ();
 
+  private static String s_sVendorLocation = DEFAULT_VENDOR_LOCATION;
   private static int s_nInceptionYear = DEFAULT_INCEPTION_YEAR;
   private static String s_sVendorName = DEFAULT_VENDOR_NAME;
+  private static String s_sVendorURLWithoutProtocol = DEFAULT_VENDOR_URL_WITHOUT_PROTOCOL;
   private static String s_sVendorURL = DEFAULT_VENDOR_URL;
+  private static String s_sVendorEmailSuffix = DEFAULT_VENDOR_EMAIL_SUFFIX;
   private static String s_sVendorEmail = DEFAULT_VENDOR_EMAIL;
 
   private VendorInfo ()
   {}
+
+  @Nonnull
+  public static String getVendorLocation ()
+  {
+    return s_sVendorLocation;
+  }
+
+  public static void setVendorLocation (@Nonnull @Nonempty final String sVendorLocation)
+  {
+    if (StringHelper.hasNoText (sVendorLocation))
+      throw new IllegalArgumentException ("vendorLocation");
+    s_sVendorLocation = sVendorLocation;
+  }
 
   @Nonnegative
   public static int getInceptionYear ()
@@ -120,6 +142,12 @@ public final class VendorInfo
   }
 
   @Nonnull
+  public static String getVendorURLWithoutProtocol ()
+  {
+    return s_sVendorURLWithoutProtocol;
+  }
+
+  @Nonnull
   public static String getVendorURL ()
   {
     return s_sVendorURL;
@@ -129,7 +157,20 @@ public final class VendorInfo
   {
     if (StringHelper.hasNoText (sVendorURL))
       throw new IllegalArgumentException ("vendorURL");
-    s_sVendorURL = sVendorURL;
+
+    final IURLProtocol aProtocol = URLProtocolRegistry.getProtocol (sVendorURL);
+    if (aProtocol == null)
+    {
+      // No protocol present - assume HTTP
+      s_sVendorURLWithoutProtocol = sVendorURL;
+      s_sVendorURL = EURLProtocol.HTTP.getWithProtocol (sVendorURL);
+    }
+    else
+    {
+      // Strip leading protocol
+      s_sVendorURLWithoutProtocol = sVendorURL.substring (aProtocol.getProtocol ().length ());
+      s_sVendorURL = sVendorURL;
+    }
   }
 
   @Nonnull
@@ -138,11 +179,21 @@ public final class VendorInfo
     return s_sVendorEmail;
   }
 
+  @Nonnull
+  public static String getVendorEmailSuffix ()
+  {
+    return s_sVendorEmailSuffix;
+  }
+
   public static void setVendorEmail (@Nonnull @Nonempty final String sVendorEmail)
   {
     if (StringHelper.hasNoText (sVendorEmail))
       throw new IllegalArgumentException ("vendorEmail");
+    if (!EmailAddressUtils.isValid (sVendorEmail))
+      throw new IllegalArgumentException ("Illegal vendor email: " + sVendorEmail);
     s_sVendorEmail = sVendorEmail;
+    final int i = sVendorEmail.indexOf ('@');
+    s_sVendorEmailSuffix = sVendorEmail.substring (i);
   }
 
   /**
@@ -167,6 +218,6 @@ public final class VendorInfo
                                     "All Rights Reserved",
                                     "Use, duplication or disclosure restricted by " + getVendorName (),
                                     "",
-                                    "Vienna, " + getInceptionYear () + " - " + CGlobal.CURRENT_YEAR);
+                                    getVendorLocation () + ", " + getInceptionYear () + " - " + CGlobal.CURRENT_YEAR);
   }
 }
