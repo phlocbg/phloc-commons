@@ -26,6 +26,10 @@ import javax.xml.namespace.QName;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathVariableResolver;
 
+import com.phloc.commons.equals.EqualsUtils;
+import com.phloc.commons.hash.HashCodeGenerator;
+import com.phloc.commons.string.ToStringGenerator;
+
 /**
  * Class is used in conjunction with {@link XPathExpression} to resolve variable
  * values used in XPath queries at runtime. The local part of the QName to
@@ -54,5 +58,28 @@ public final class MapBasedXPathVariableResolver implements XPathVariableResolve
 
     final String sLocalName = aVariableName.getLocalPart ();
     return m_aVars.get (sLocalName);
+  }
+
+  @Override
+  public boolean equals (final Object o)
+  {
+    if (o == this)
+      return true;
+    if (!(o instanceof MapBasedXPathVariableResolver))
+      return false;
+    final MapBasedXPathVariableResolver rhs = (MapBasedXPathVariableResolver) o;
+    return EqualsUtils.equals (m_aVars, rhs.m_aVars);
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    return new HashCodeGenerator (this).append (m_aVars).getHashCode ();
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("vars", m_aVars).toString ();
   }
 }

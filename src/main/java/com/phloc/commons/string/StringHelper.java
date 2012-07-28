@@ -159,27 +159,33 @@ public final class StringHelper
   }
 
   /**
-   * Try to interpret the passed object as boolean. This works only if the
-   * passed object is either a {@link String} or a {@link Boolean}.
+   * Try to interpret the passed {@link Object} as {@link Boolean}.
    * 
    * @param aObject
    *        The object to be interpreted. May be <code>null</code>.
    * @param aDefault
-   *        The default value to be returned, if the passed string cannot be
-   *        interpreted. May be <code>null</code>.
-   * @return The passed default value if the passed object cannot be interpreted
-   *         as a boolean, any other {@link Boolean} otherwise.
+   *        The default value to be returned, if the passed object is
+   *        <code>null</code>.
+   * @return The passed default value if the passed object is <code>null</code>,
+   *         the matching {@link Boolean} otherwise.
    */
   @Nullable
   public static Boolean parseBoolObj (@Nullable final Object aObject, @Nullable final Boolean aDefault)
   {
-    if (aObject instanceof Boolean)
-      return (Boolean) aObject;
-    if (aObject instanceof String)
-      return parseBoolObj ((String) aObject);
-    return aDefault;
+    return aObject == null ? aDefault : parseBoolObj (String.valueOf (aObject));
   }
 
+  /**
+   * Returns a <code>Boolean</code> with a value represented by the specified
+   * string. The <code>Boolean</code> returned represents a true value if the
+   * string argument is not <code>null</code> and is equal, ignoring case, to
+   * the string {@code "true"}.
+   * 
+   * @param sStr
+   *        The string to be parsed. May be <code>null</code>.
+   * @return the <code>Boolean</code> value represented by the string. Never
+   *         <code>null</code>.
+   */
   @Nonnull
   public static Boolean parseBoolObj (@Nullable final String sStr)
   {
@@ -187,7 +193,7 @@ public final class StringHelper
   }
 
   /**
-   * Parse the given String as byte with radix 10.
+   * Parse the given {@link Object} as byte with radix {@value #DEFAULT_RADIX}.
    * 
    * @param aObject
    *        The Object to parse. May be <code>null</code>.
@@ -202,19 +208,22 @@ public final class StringHelper
   }
 
   /**
-   * Parse the given String as byte.
+   * Parse the given {@link Object} as byte with the specified radix.
    * 
    * @param aObject
    *        The Object to parse. May be <code>null</code>.
    * @param nRadix
-   *        The radix to use.
+   *        The radix to use. Must be &ge; {@link Character#MIN_RADIX} and &le;
+   *        {@link Character#MAX_RADIX}.
    * @param nDefault
    *        The default value to be returned if the passed object could not be
    *        converted to a valid value.
    * @return The default value if the string does not represent a valid value.
    */
-  public static byte parseByte (@Nullable final Object aObject, final int nRadix, final byte nDefault)
+  public static byte parseByte (@Nullable final Object aObject, @Nonnegative final int nRadix, final byte nDefault)
   {
+    if (aObject == null)
+      return nDefault;
     if (aObject instanceof Number)
       return ((Number) aObject).byteValue ();
     return parseByte (String.valueOf (aObject), nRadix, nDefault);
@@ -237,19 +246,20 @@ public final class StringHelper
   }
 
   /**
-   * Parse the given String as byte.
+   * Parse the given String as byte with the specified radix.
    * 
    * @param sStr
    *        The String to parse. May be <code>null</code>.
    * @param nRadix
-   *        The radix to use.
+   *        The radix to use. Must be &ge; {@link Character#MIN_RADIX} and &le;
+   *        {@link Character#MAX_RADIX}.
    * @param nDefault
    *        The value to be returned if the string cannot be converted to a
    *        valid value.
    * @return The passed default parameter if the string does not represent a
    *         valid value.
    */
-  public static byte parseByte (@Nullable final String sStr, final int nRadix, final byte nDefault)
+  public static byte parseByte (@Nullable final String sStr, @Nonnegative final int nRadix, final byte nDefault)
   {
     if (sStr != null)
       try
@@ -264,26 +274,55 @@ public final class StringHelper
   }
 
   /**
-   * Parse the given object as {@link Byte}.
+   * Parse the given {@link Object} as {@link Byte} with radix
+   * {@value #DEFAULT_RADIX}.
    * 
    * @param aObject
-   *        The object to parse.
+   *        The object to parse. May be <code>null</code>.
    * @return <code>null</code> if the object does not represent a valid value.
    */
   @Nullable
   public static Byte parseByteObj (@Nullable final Object aObject)
   {
-    return parseByteObj (aObject, null);
+    return parseByteObj (aObject, DEFAULT_RADIX, null);
   }
 
+  /**
+   * Parse the given {@link Object} as {@link Byte} with radix
+   * {@value #DEFAULT_RADIX}.
+   * 
+   * @param aObject
+   *        The object to parse. May be <code>null</code>.
+   * @param aDefault
+   *        The default value to be returned, if the passed object cannot be
+   *        converted. May be <code>null</code>.
+   * @return the passed default value if the object does not represent a valid
+   *         value.
+   */
   @Nullable
   public static Byte parseByteObj (@Nullable final Object aObject, @Nullable final Byte aDefault)
   {
     return parseByteObj (aObject, DEFAULT_RADIX, aDefault);
   }
 
+  /**
+   * Parse the given {@link Object} as {@link Byte} with the specified radix.
+   * 
+   * @param aObject
+   *        The object to parse. May be <code>null</code>.
+   * @param nRadix
+   *        The radix to use. Must be &ge; {@link Character#MIN_RADIX} and &le;
+   *        {@link Character#MAX_RADIX}.
+   * @param aDefault
+   *        The default value to be returned, if the passed object cannot be
+   *        converted. May be <code>null</code>.
+   * @return the passed default value if the object does not represent a valid
+   *         value.
+   */
   @Nullable
-  public static Byte parseByteObj (@Nullable final Object aObject, final int nRadix, @Nullable final Byte aDefault)
+  public static Byte parseByteObj (@Nullable final Object aObject,
+                                   @Nonnegative final int nRadix,
+                                   @Nullable final Byte aDefault)
   {
     if (aObject == null)
       return aDefault;
@@ -293,7 +332,8 @@ public final class StringHelper
   }
 
   /**
-   * Parse the given String as {@link Byte}.
+   * Parse the given {@link String} as {@link Byte} with radix
+   * {@value #DEFAULT_RADIX}.
    * 
    * @param sStr
    *        The String to parse.
@@ -306,13 +346,13 @@ public final class StringHelper
   }
 
   /**
-   * Parse the given String as {@link Byte} with radix 10.
+   * Parse the given String as {@link Byte} with radix {@value #DEFAULT_RADIX}.
    * 
    * @param sStr
    *        The String to parse.
    * @param aDefault
    *        The default value to be returned if the passed string could not be
-   *        converted to a valid value.
+   *        converted to a valid value. May be <code>null</code>.
    * @return <code>aDefault</code> if the string does not represent a valid
    *         value.
    */
@@ -323,20 +363,23 @@ public final class StringHelper
   }
 
   /**
-   * Parse the given String as {@link Byte}.
+   * Parse the given {@link String} as {@link Byte} with the specified radix.
    * 
    * @param sStr
    *        The String to parse.
    * @param nRadix
-   *        The radix to use.
+   *        The radix to use. Must be &ge; {@link Character#MIN_RADIX} and &le;
+   *        {@link Character#MAX_RADIX}.
    * @param aDefault
    *        The default value to be returned if the passed string could not be
-   *        converted to a valid value.
+   *        converted to a valid value. May be <code>null</code>.
    * @return <code>aDefault</code> if the string does not represent a valid
    *         value.
    */
   @Nullable
-  public static Byte parseByteObj (@Nullable final String sStr, final int nRadix, @Nullable final Byte aDefault)
+  public static Byte parseByteObj (@Nullable final String sStr,
+                                   @Nonnegative final int nRadix,
+                                   @Nullable final Byte aDefault)
   {
     if (sStr != null)
       try
@@ -351,7 +394,7 @@ public final class StringHelper
   }
 
   /**
-   * Parse the given String as int with radix 10.
+   * Parse the given {@link String} as int with radix {@link #DEFAULT_RADIX}.
    * 
    * @param aObject
    *        The Object to parse. May be <code>null</code>.
@@ -377,7 +420,7 @@ public final class StringHelper
    *        converted to a valid value.
    * @return The default value if the string does not represent a valid value.
    */
-  public static int parseInt (@Nullable final Object aObject, final int nRadix, final int nDefault)
+  public static int parseInt (@Nullable final Object aObject, @Nonnegative final int nRadix, final int nDefault)
   {
     if (aObject instanceof Number)
       return ((Number) aObject).intValue ();
@@ -413,7 +456,7 @@ public final class StringHelper
    * @return The passed default parameter if the string does not represent a
    *         valid value.
    */
-  public static int parseInt (@Nullable final String sStr, final int nRadix, final int nDefault)
+  public static int parseInt (@Nullable final String sStr, @Nonnegative final int nRadix, final int nDefault)
   {
     if (sStr != null)
       try
@@ -447,7 +490,9 @@ public final class StringHelper
   }
 
   @Nullable
-  public static Integer parseIntObj (@Nullable final Object aObject, final int nRadix, @Nullable final Integer aDefault)
+  public static Integer parseIntObj (@Nullable final Object aObject,
+                                     @Nonnegative final int nRadix,
+                                     @Nullable final Integer aDefault)
   {
     if (aObject == null)
       return aDefault;
@@ -500,7 +545,9 @@ public final class StringHelper
    *         value.
    */
   @Nullable
-  public static Integer parseIntObj (@Nullable final String sStr, final int nRadix, @Nullable final Integer aDefault)
+  public static Integer parseIntObj (@Nullable final String sStr,
+                                     @Nonnegative final int nRadix,
+                                     @Nullable final Integer aDefault)
   {
     if (sStr != null)
       try
@@ -541,7 +588,7 @@ public final class StringHelper
    *        converted to a valid value.
    * @return The default value if the object does not represent a valid value.
    */
-  public static long parseLong (@Nullable final Object aObject, final int nRadix, final long nDefault)
+  public static long parseLong (@Nullable final Object aObject, @Nonnegative final int nRadix, final long nDefault)
   {
     if (aObject == null)
       return nDefault;
@@ -577,7 +624,7 @@ public final class StringHelper
    *        converted to a valid value.
    * @return The default if the string does not represent a valid value.
    */
-  public static long parseLong (@Nullable final String sStr, final int nRadix, final long nDefault)
+  public static long parseLong (@Nullable final String sStr, @Nonnegative final int nRadix, final long nDefault)
   {
     if (sStr != null)
       try
@@ -604,7 +651,9 @@ public final class StringHelper
   }
 
   @Nullable
-  public static Long parseLongObj (@Nullable final Object aObject, final int nRadix, @Nullable final Long aDefault)
+  public static Long parseLongObj (@Nullable final Object aObject,
+                                   @Nonnegative final int nRadix,
+                                   @Nullable final Long aDefault)
   {
     if (aObject == null)
       return aDefault;
@@ -633,12 +682,151 @@ public final class StringHelper
   }
 
   @Nullable
-  public static Long parseLongObj (@Nullable final String sStr, final int nRadix, @Nullable final Long aDefault)
+  public static Long parseLongObj (@Nullable final String sStr,
+                                   @Nonnegative final int nRadix,
+                                   @Nullable final Long aDefault)
   {
     if (sStr != null)
       try
       {
         return Long.valueOf (sStr, nRadix);
+      }
+      catch (final NumberFormatException ex)// NOPMD
+      {
+        // Fall through
+      }
+    return aDefault;
+  }
+
+  /**
+   * Parse the given object as short with radix 10.
+   * 
+   * @param aObject
+   *        The object to parse.
+   * @param nDefault
+   *        The default value to be returned if the passed object could not be
+   *        converted to a valid value.
+   * @return The default value if the object does not represent a valid value.
+   */
+  public static short parseShort (@Nullable final Object aObject, final short nDefault)
+  {
+    return parseShort (aObject, DEFAULT_RADIX, nDefault);
+  }
+
+  /**
+   * Parse the given object as short.
+   * 
+   * @param aObject
+   *        The object to parse.
+   * @param nRadix
+   *        The radix to use.
+   * @param nDefault
+   *        The default value to be returned if the passed object could not be
+   *        converted to a valid value.
+   * @return The default value if the object does not represent a valid value.
+   */
+  public static short parseShort (@Nullable final Object aObject, @Nonnegative final int nRadix, final short nDefault)
+  {
+    if (aObject == null)
+      return nDefault;
+    if (aObject instanceof Number)
+      return ((Number) aObject).shortValue ();
+    return parseShort (String.valueOf (aObject), nRadix, nDefault);
+  }
+
+  /**
+   * Parse the given String as short with radix 10.
+   * 
+   * @param sStr
+   *        The string to parse.
+   * @param nDefault
+   *        The default value to be returned if the passed object could not be
+   *        converted to a valid value.
+   * @return The default if the string does not represent a valid value.
+   */
+  public static short parseShort (@Nullable final String sStr, final short nDefault)
+  {
+    return parseShort (sStr, DEFAULT_RADIX, nDefault);
+  }
+
+  /**
+   * Parse the given String as short.
+   * 
+   * @param sStr
+   *        The string to parse.
+   * @param nRadix
+   *        The radix to use.
+   * @param nDefault
+   *        The default value to be returned if the passed object could not be
+   *        converted to a valid value.
+   * @return The default if the string does not represent a valid value.
+   */
+  public static short parseShort (@Nullable final String sStr, @Nonnegative final int nRadix, final short nDefault)
+  {
+    if (sStr != null)
+      try
+      {
+        return Short.parseShort (sStr, nRadix);
+      }
+      catch (final NumberFormatException ex)// NOPMD
+      {
+        // Fall through
+      }
+    return nDefault;
+  }
+
+  @Nullable
+  public static Short parseShortObj (@Nullable final Object aObject)
+  {
+    return parseShortObj (aObject, null);
+  }
+
+  @Nullable
+  public static Short parseShortObj (@Nullable final Object aObject, @Nullable final Short aDefault)
+  {
+    return parseShortObj (aObject, DEFAULT_RADIX, aDefault);
+  }
+
+  @Nullable
+  public static Short parseShortObj (@Nullable final Object aObject,
+                                     @Nonnegative final int nRadix,
+                                     @Nullable final Short aDefault)
+  {
+    if (aObject == null)
+      return aDefault;
+    if (aObject instanceof Number)
+      return Short.valueOf (((Number) aObject).shortValue ());
+    return parseShortObj (String.valueOf (aObject), nRadix, aDefault);
+  }
+
+  /**
+   * Parse the given String as short.
+   * 
+   * @param sStr
+   *        The string to parse.
+   * @return <code>null</code> if the string does not represent a valid value.
+   */
+  @Nullable
+  public static Short parseShortObj (@Nullable final String sStr)
+  {
+    return parseShortObj (sStr, null);
+  }
+
+  @Nullable
+  public static Short parseShortObj (@Nullable final String sStr, @Nullable final Short aDefault)
+  {
+    return parseShortObj (sStr, DEFAULT_RADIX, aDefault);
+  }
+
+  @Nullable
+  public static Short parseShortObj (@Nullable final String sStr,
+                                     @Nonnegative final int nRadix,
+                                     @Nullable final Short aDefault)
+  {
+    if (sStr != null)
+      try
+      {
+        return Short.valueOf (sStr, nRadix);
       }
       catch (final NumberFormatException ex)// NOPMD
       {

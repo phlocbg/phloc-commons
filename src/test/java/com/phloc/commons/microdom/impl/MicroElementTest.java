@@ -45,7 +45,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link MicroElement}.
- *
+ * 
  * @author philip
  */
 public final class MicroElementTest extends AbstractPhlocTestCase
@@ -524,14 +524,6 @@ public final class MicroElementTest extends AbstractPhlocTestCase
     assertNotNull (e.appendProcessingInstruction ("target", "data"));
     assertEquals ("5", e.appendTextWithConversion (Integer.valueOf (5)).getData ());
     assertTrue (e.getChildAtIndex (0).isElement ());
-    try
-    {
-      // No converter present
-      e.appendTextWithConversion (new Object ());
-      fail ();
-    }
-    catch (final TypeConverterException ex)
-    {}
     assertEquals (8, e.getAllChildrenRecursive ().size ());
 
     IMicroNode aChild1 = e.getFirstChild ();
