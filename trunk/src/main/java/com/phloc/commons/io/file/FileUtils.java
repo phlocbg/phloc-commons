@@ -504,23 +504,32 @@ public final class FileUtils
   private static List <File> _getDirectoryContent (@Nonnull final File aDirectory,
                                                    @Nullable final File [] aSelectedContent)
   {
-    if (!canExecute (aDirectory))
-    {
-      // If this happens, the resulting File objects are neither files nor
-      // directories (isFile() and isDirectory() both return false!!)
-      s_aLogger.warn ("Directory is missing the listing permission: " + aDirectory.getAbsolutePath ());
-    }
-
     if (aSelectedContent == null)
     {
       // No content returned
       if (!aDirectory.isDirectory ())
         s_aLogger.warn ("Cannot list non-directory: " + aDirectory.getAbsolutePath ());
       else
-        if (!canRead (aDirectory))
-          s_aLogger.warn ("Cannot list directory because of no read-rights: " + aDirectory.getAbsolutePath ());
+        if (!canExecute (aDirectory))
+        {
+          // If this happens, the resulting File objects are neither files nor
+          // directories (isFile() and isDirectory() both return false!!)
+          s_aLogger.warn ("Existing directory is missing the listing permission: " + aDirectory.getAbsolutePath ());
+        }
         else
-          s_aLogger.warn ("Directory listing failed because of IO error: " + aDirectory.getAbsolutePath ());
+          if (!canRead (aDirectory))
+            s_aLogger.warn ("Cannot list directory because of no read-rights: " + aDirectory.getAbsolutePath ());
+          else
+            s_aLogger.warn ("Directory listing failed because of IO error: " + aDirectory.getAbsolutePath ());
+    }
+    else
+    {
+      if (!canExecute (aDirectory))
+      {
+        // If this happens, the resulting File objects are neither files nor
+        // directories (isFile() and isDirectory() both return false!!)
+        s_aLogger.warn ("Directory is missing the listing permission: " + aDirectory.getAbsolutePath ());
+      }
     }
     return ContainerHelper.newList (aSelectedContent);
   }

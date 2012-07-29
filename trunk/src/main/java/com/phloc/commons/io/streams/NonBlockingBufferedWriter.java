@@ -86,7 +86,7 @@ public class NonBlockingBufferedWriter extends Writer
   }
 
   /** Checks to make sure that the stream has not been closed */
-  private void ensureOpen () throws IOException
+  private void _ensureOpen () throws IOException
   {
     if (m_aWriter == null)
       throw new IOException ("Stream closed");
@@ -99,7 +99,7 @@ public class NonBlockingBufferedWriter extends Writer
    */
   void flushBuffer () throws IOException
   {
-    ensureOpen ();
+    _ensureOpen ();
     if (m_nNextChar != 0)
     {
       m_aWriter.write (m_aBuf, 0, m_nNextChar);
@@ -116,7 +116,7 @@ public class NonBlockingBufferedWriter extends Writer
   @Override
   public void write (final int c) throws IOException
   {
-    ensureOpen ();
+    _ensureOpen ();
     if (m_nNextChar >= m_nChars)
       flushBuffer ();
     m_aBuf[m_nNextChar++] = (char) c;
@@ -154,7 +154,7 @@ public class NonBlockingBufferedWriter extends Writer
   @SuppressFBWarnings ("IL_INFINITE_LOOP")
   public void write (final char cbuf[], final int off, final int len) throws IOException
   {
-    ensureOpen ();
+    _ensureOpen ();
     if ((off < 0) || (off > cbuf.length) || (len < 0) || ((off + len) > cbuf.length) || ((off + len) < 0))
       throw new IndexOutOfBoundsException ();
 
@@ -208,7 +208,7 @@ public class NonBlockingBufferedWriter extends Writer
   @SuppressFBWarnings ("IL_INFINITE_LOOP")
   public void write (final String s, final int off, final int len) throws IOException
   {
-    ensureOpen ();
+    _ensureOpen ();
 
     int b = off;
     final int t = off + len;
