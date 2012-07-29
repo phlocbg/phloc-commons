@@ -1360,7 +1360,7 @@ public class StringParser
     if (sStr != null)
       try
       {
-        Integer.parseInt (sStr);
+        Integer.parseInt (sStr, DEFAULT_RADIX);
         return true;
       }
       catch (final NumberFormatException ex)// NOPMD
@@ -1383,7 +1383,7 @@ public class StringParser
     if (sStr != null)
       try
       {
-        Long.parseLong (sStr);
+        Long.parseLong (sStr, DEFAULT_RADIX);
         return true;
       }
       catch (final NumberFormatException ex)// NOPMD
@@ -1406,7 +1406,7 @@ public class StringParser
     if (sStr != null)
       try
       {
-        final int ret = Integer.parseInt (sStr);
+        final int ret = Integer.parseInt (sStr, DEFAULT_RADIX);
         return ret >= 0;
       }
       catch (final NumberFormatException ex)// NOPMD
@@ -1429,7 +1429,7 @@ public class StringParser
     if (sStr != null)
       try
       {
-        final long ret = Long.parseLong (sStr);
+        final long ret = Long.parseLong (sStr, DEFAULT_RADIX);
         return ret >= 0;
       }
       catch (final NumberFormatException ex)// NOPMD

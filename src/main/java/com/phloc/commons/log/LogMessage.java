@@ -82,22 +82,22 @@ public final class LogMessage implements IHasErrorLevel, ISuccessIndicator, IErr
     return m_aThrowable;
   }
 
-  public final boolean isSuccess ()
+  public boolean isSuccess ()
   {
     return m_eErrorLevel.isSuccess ();
   }
 
-  public final boolean isFailure ()
+  public boolean isFailure ()
   {
     return m_eErrorLevel.isFailure ();
   }
 
-  public final boolean isError ()
+  public boolean isError ()
   {
     return m_eErrorLevel.isError ();
   }
 
-  public final boolean isNoError ()
+  public boolean isNoError ()
   {
     return m_eErrorLevel.isNoError ();
   }
