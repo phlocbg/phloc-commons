@@ -63,16 +63,37 @@ public class FileSystemRecursiveIterator implements IIterableIterator <File>
     return StringHelper.getCharCount (aFile.getAbsolutePath (), File.separatorChar);
   }
 
+  /**
+   * Constructor for recursively iterating a file system directory.
+   * 
+   * @param sBaseDir
+   *        The base directory to start with. May not be <code>null</code>.
+   */
   public FileSystemRecursiveIterator (@Nonnull final String sBaseDir)
   {
     this (new File (sBaseDir), null);
   }
 
+  /**
+   * Constructor for recursively iterating a file system directory.
+   * 
+   * @param aBaseDir
+   *        The base directory to start with. May not be <code>null</code>.
+   */
   public FileSystemRecursiveIterator (@Nonnull final File aBaseDir)
   {
     this (aBaseDir, null);
   }
 
+  /**
+   * Constructor for recursively iterating a file system directory.
+   * 
+   * @param sBaseDir
+   *        The base directory to start with. May not be <code>null</code>.
+   * @param aRecursionFilter
+   *        An optional filter that controls, into which sub-directories this
+   *        iterator should descend to. May be <code>null</code>.
+   */
   public FileSystemRecursiveIterator (@Nonnull final String sBaseDir, @Nullable final IFilter <File> aRecursionFilter)
   {
     this (new File (sBaseDir), aRecursionFilter);
