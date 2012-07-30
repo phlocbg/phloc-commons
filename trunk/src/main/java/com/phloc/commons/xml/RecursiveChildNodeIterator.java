@@ -28,6 +28,7 @@ import org.w3c.dom.NodeList;
 
 import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.collections.iterate.IIterableIterator;
+import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * Iterate all children of the start node, but NOT the start node itself.
@@ -36,7 +37,7 @@ import com.phloc.commons.collections.iterate.IIterableIterator;
  */
 public final class RecursiveChildNodeIterator implements IIterableIterator <Node>
 {
-  private final Iterator <Node> m_it;
+  private final Iterator <Node> m_aIter;
 
   public RecursiveChildNodeIterator (@Nonnull final Node eParent)
   {
@@ -44,18 +45,18 @@ public final class RecursiveChildNodeIterator implements IIterableIterator <Node
       throw new NullPointerException ("parent");
     final List <Node> aNodes = new ArrayList <Node> ();
     _fillListPrefix (eParent, aNodes);
-    m_it = aNodes.iterator ();
+    m_aIter = aNodes.iterator ();
   }
 
   private static void _fillListPrefix (@Nonnull final Node aParent, @Nonnull final List <Node> aNodes)
   {
-    final NodeList nl = aParent.getChildNodes ();
-    if (nl != null)
+    final NodeList aNodeList = aParent.getChildNodes ();
+    if (aNodeList != null)
     {
-      final int nlsize = nl.getLength ();
+      final int nlsize = aNodeList.getLength ();
       for (int i = 0; i < nlsize; ++i)
       {
-        final Node aCurrent = nl.item (i);
+        final Node aCurrent = aNodeList.item (i);
         aNodes.add (aCurrent);
 
         _fillListPrefix (aCurrent, aNodes);
@@ -65,12 +66,12 @@ public final class RecursiveChildNodeIterator implements IIterableIterator <Node
 
   public boolean hasNext ()
   {
-    return m_it.hasNext ();
+    return m_aIter.hasNext ();
   }
 
   public Node next ()
   {
-    return m_it.next ();
+    return m_aIter.next ();
   }
 
   @UnsupportedOperation
@@ -83,5 +84,11 @@ public final class RecursiveChildNodeIterator implements IIterableIterator <Node
   public Iterator <Node> iterator ()
   {
     return this;
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("iter", m_aIter).toString ();
   }
 }

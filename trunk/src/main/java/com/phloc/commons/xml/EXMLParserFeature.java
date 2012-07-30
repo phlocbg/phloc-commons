@@ -18,8 +18,10 @@
 package com.phloc.commons.xml;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.lang.EnumHelper;
 import com.phloc.commons.name.IHasName;
 
 /**
@@ -119,5 +121,11 @@ public enum EXMLParserFeature implements IHasName
   public String getName ()
   {
     return m_sName;
+  }
+
+  @Nullable
+  public static EXMLParserFeature getFromNameOrNull (@Nullable final String sName)
+  {
+    return EnumHelper.getFromNameOrNull (EXMLParserFeature.class, sName);
   }
 }

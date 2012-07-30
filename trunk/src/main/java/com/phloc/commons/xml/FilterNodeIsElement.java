@@ -37,25 +37,31 @@ import com.phloc.commons.string.ToStringGenerator;
 @NotThreadSafe
 public final class FilterNodeIsElement implements IFilter <Node>
 {
-  private final IFilter <Element> m_aCustomFilter;
+  private final IFilter <Element> m_aNestedElementFilter;
 
   public FilterNodeIsElement ()
   {
     this (null);
   }
 
-  public FilterNodeIsElement (@Nullable final IFilter <Element> aCustomFilter)
+  public FilterNodeIsElement (@Nullable final IFilter <Element> aNestedElementFilter)
   {
-    m_aCustomFilter = aCustomFilter;
+    m_aNestedElementFilter = aNestedElementFilter;
   }
 
   public boolean matchesFilter (@Nonnull final Node aNode)
   {
     if (aNode.getNodeType () != Node.ELEMENT_NODE)
       return false;
-    if (m_aCustomFilter == null)
+    if (m_aNestedElementFilter == null)
       return true;
-    return m_aCustomFilter.matchesFilter ((Element) aNode);
+    return m_aNestedElementFilter.matchesFilter ((Element) aNode);
+  }
+
+  @Nullable
+  public IFilter <Element> getNestedElementFilter ()
+  {
+    return m_aNestedElementFilter;
   }
 
   @Override
@@ -66,18 +72,18 @@ public final class FilterNodeIsElement implements IFilter <Node>
     if (!(o instanceof FilterNodeIsElement))
       return false;
     final FilterNodeIsElement rhs = (FilterNodeIsElement) o;
-    return m_aCustomFilter.equals (rhs.m_aCustomFilter);
+    return m_aNestedElementFilter.equals (rhs.m_aNestedElementFilter);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aCustomFilter).getHashCode ();
+    return new HashCodeGenerator (this).append (m_aNestedElementFilter).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("customFilter", m_aCustomFilter).toString ();
+    return new ToStringGenerator (this).append ("customFilter", m_aNestedElementFilter).toString ();
   }
 }
