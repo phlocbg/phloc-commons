@@ -22,19 +22,23 @@ import javax.annotation.Nonnull;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
-public final class StringIDFromGlobalPersistentIntIDFactory implements IIDFactory <String>
+public final class StringIDFromIntIDFactory implements IIDFactory <String>
 {
+  private final IIntIDFactory m_aIntIDFactory;
   private final String m_sPrefix;
 
-  public StringIDFromGlobalPersistentIntIDFactory ()
+  public StringIDFromIntIDFactory (@Nonnull final IIntIDFactory aIntIDFactory)
   {
-    this (GlobalIDFactory.DEFAULT_PREFIX);
+    this (aIntIDFactory, GlobalIDFactory.DEFAULT_PREFIX);
   }
 
-  public StringIDFromGlobalPersistentIntIDFactory (@Nonnull final String sPrefix)
+  public StringIDFromIntIDFactory (@Nonnull final IIntIDFactory aIntIDFactory, @Nonnull final String sPrefix)
   {
+    if (aIntIDFactory == null)
+      throw new NullPointerException ("intIDFactory");
     if (sPrefix == null)
       throw new NullPointerException ("prefix");
+    m_aIntIDFactory = aIntIDFactory;
     m_sPrefix = sPrefix;
   }
 
@@ -47,7 +51,7 @@ public final class StringIDFromGlobalPersistentIntIDFactory implements IIDFactor
   @Nonnull
   public String getNewID ()
   {
-    return m_sPrefix + Integer.toString (GlobalIDFactory.getNewPersistentIntID ());
+    return m_sPrefix + Integer.toString (m_aIntIDFactory.getNewID ());
   }
 
   @Override
@@ -55,21 +59,23 @@ public final class StringIDFromGlobalPersistentIntIDFactory implements IIDFactor
   {
     if (o == this)
       return true;
-    if (!(o instanceof StringIDFromGlobalPersistentIntIDFactory))
+    if (!(o instanceof StringIDFromIntIDFactory))
       return false;
-    final StringIDFromGlobalPersistentIntIDFactory rhs = (StringIDFromGlobalPersistentIntIDFactory) o;
-    return m_sPrefix.equals (rhs.m_sPrefix);
+    final StringIDFromIntIDFactory rhs = (StringIDFromIntIDFactory) o;
+    return m_aIntIDFactory.equals (rhs.m_aIntIDFactory) && m_sPrefix.equals (rhs.m_sPrefix);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_sPrefix).getHashCode ();
+    return new HashCodeGenerator (this).append (m_aIntIDFactory).append (m_sPrefix).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("prefix", m_sPrefix).toString ();
+    return new ToStringGenerator (this).append ("intIDFactory", m_aIntIDFactory)
+                                       .append ("prefix", m_sPrefix)
+                                       .toString ();
   }
 }

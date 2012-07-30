@@ -43,6 +43,12 @@ public final class MemoryStaticIntIDFactory implements IIntIDFactory
   @Nonnegative
   public int getNewID ()
   {
+    return getNewStaticID ();
+  }
+
+  @Nonnegative
+  public static int getNewStaticID ()
+  {
     return s_aID.getAndIncrement ();
   }
 

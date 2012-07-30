@@ -20,7 +20,7 @@ package com.phloc.commons.idfactory;
 import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
 
 /**
- * Interface for an object creating unique integer IDs.
+ * Interface for an object creating unique int IDs.
  * 
  * @author philip
  */
