@@ -48,9 +48,21 @@ public final class GlobalIDFactoryTest
     assertFalse (GlobalIDFactory.setPersistentIntIDFactory (new MemoryIntIDFactory (10)).isChanged ());
     assertTrue (GlobalIDFactory.setIntIDFactory (new MemoryStaticIntIDFactory ()).isChanged ());
     assertFalse (GlobalIDFactory.setIntIDFactory (new MemoryStaticIntIDFactory ()).isChanged ());
-    assertTrue (GlobalIDFactory.setPersistentIntIDFactory (new FileIntIDFactory (new File ("idholder.dat")))
-                               .isChanged ());
+    assertTrue (GlobalIDFactory.setPersistentIntIDFactory (new FileIntIDFactory (new File ("idint.dat"))).isChanged ());
     assertTrue (GlobalIDFactory.hasPersistentIntIDFactory ());
+
+    // long factories
+    assertTrue (GlobalIDFactory.setLongIDFactory (new MemoryLongIDFactory (9)).isChanged ());
+    assertTrue (GlobalIDFactory.setLongIDFactory (new MemoryLongIDFactory (10)).isChanged ());
+    assertFalse (GlobalIDFactory.setLongIDFactory (new MemoryLongIDFactory (10)).isChanged ());
+    assertTrue (GlobalIDFactory.setPersistentLongIDFactory (new MemoryLongIDFactory ()).isChanged ());
+    assertTrue (GlobalIDFactory.setPersistentLongIDFactory (new MemoryLongIDFactory (10)).isChanged ());
+    assertFalse (GlobalIDFactory.setPersistentLongIDFactory (new MemoryLongIDFactory (10)).isChanged ());
+    assertTrue (GlobalIDFactory.setLongIDFactory (new MemoryStaticLongIDFactory ()).isChanged ());
+    assertFalse (GlobalIDFactory.setLongIDFactory (new MemoryStaticLongIDFactory ()).isChanged ());
+    assertTrue (GlobalIDFactory.setPersistentLongIDFactory (new FileLongIDFactory (new File ("idlong.dat")))
+                               .isChanged ());
+    assertTrue (GlobalIDFactory.hasPersistentLongIDFactory ());
 
     // string factories
     assertTrue (GlobalIDFactory.setStringIDFactory (new StringIDFromGlobalIntIDFactory ("prefix1")).isChanged ());
@@ -62,6 +74,15 @@ public final class GlobalIDFactoryTest
                                .isChanged ());
     assertFalse (GlobalIDFactory.setPersistentStringIDFactory (new StringIDFromGlobalPersistentIntIDFactory ("prefix2"))
                                 .isChanged ());
+    assertTrue (GlobalIDFactory.setStringIDFactory (new StringIDFromGlobalLongIDFactory ("prefix1")).isChanged ());
+    assertTrue (GlobalIDFactory.setStringIDFactory (new StringIDFromGlobalLongIDFactory ("prefix2")).isChanged ());
+    assertFalse (GlobalIDFactory.setStringIDFactory (new StringIDFromGlobalLongIDFactory ("prefix2")).isChanged ());
+    assertTrue (GlobalIDFactory.setPersistentStringIDFactory (new StringIDFromGlobalPersistentLongIDFactory ("prefix1"))
+                               .isChanged ());
+    assertTrue (GlobalIDFactory.setPersistentStringIDFactory (new StringIDFromGlobalPersistentLongIDFactory ("prefix2"))
+                               .isChanged ());
+    assertFalse (GlobalIDFactory.setPersistentStringIDFactory (new StringIDFromGlobalPersistentLongIDFactory ("prefix2"))
+                                .isChanged ());
   }
 
   @AfterClass
@@ -69,10 +90,13 @@ public final class GlobalIDFactoryTest
   {
     assertTrue (GlobalIDFactory.setIntIDFactory (new MemoryIntIDFactory ()).isChanged ());
     assertTrue (GlobalIDFactory.setPersistentIntIDFactory (new MemoryIntIDFactory ()).isChanged ());
+    assertTrue (GlobalIDFactory.setLongIDFactory (new MemoryLongIDFactory ()).isChanged ());
+    assertTrue (GlobalIDFactory.setPersistentLongIDFactory (new MemoryLongIDFactory ()).isChanged ());
     assertTrue (GlobalIDFactory.setStringIDFactory (new StringIDFromGlobalIntIDFactory ()).isChanged ());
     assertTrue (GlobalIDFactory.setPersistentStringIDFactory (new StringIDFromGlobalPersistentIntIDFactory ())
                                .isChanged ());
-    FileOperations.deleteFile (new File ("idholder.dat"));
+    FileOperations.deleteFile (new File ("idint.dat"));
+    FileOperations.deleteFile (new File ("idlong.dat"));
   }
 
   @Test

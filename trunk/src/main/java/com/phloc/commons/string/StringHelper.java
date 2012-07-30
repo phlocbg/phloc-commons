@@ -745,7 +745,8 @@ public final class StringHelper extends StringParser
 
   /**
    * Get a concatenated String from all elements of the passed container,
-   * separated by the specified separator string.
+   * separated by the specified separator string. Even <code>null</code>
+   * elements are added.
    * 
    * @param sSep
    *        The separator to use. May not be <code>null</code>.
@@ -763,11 +764,11 @@ public final class StringHelper extends StringParser
     if (aElements != null)
     {
       int nIndex = 0;
-      for (final Object sElement : aElements)
+      for (final Object aElement : aElements)
       {
         if (nIndex++ > 0)
           aSB.append (sSep);
-        aSB.append (sElement);
+        aSB.append (aElement);
       }
     }
     return aSB.toString ();
@@ -872,7 +873,7 @@ public final class StringHelper extends StringParser
   {
     if (sSep == null)
       throw new NullPointerException ("separator");
-    if (aElements == null)
+    if (ArrayHelper.isEmpty (aElements))
       return "";
     return getImploded (sSep, aElements, 0, aElements.length);
   }
@@ -937,6 +938,104 @@ public final class StringHelper extends StringParser
       for (int i = nOfs; i < nOfs + nLen; ++i)
       {
         final ELEMENTTYPE sElement = aElements[i];
+        if (i > nOfs)
+          aSB.append (sSep);
+        aSB.append (sElement);
+      }
+    }
+    return aSB.toString ();
+  }
+
+  /**
+   * Get a concatenated String from all non-<code>null</code> and non empty
+   * elements of the passed container, separated by the specified separator
+   * string. This the very generic version of
+   * {@link #getConcatenatedOnDemand(String, String, String)} for an arbitrary
+   * number of elements.
+   * 
+   * @param sSep
+   *        The separator to use. May not be <code>null</code>.
+   * @param aElements
+   *        The container to convert. May be <code>null</code> or empty.
+   * @return The concatenated string.
+   */
+  @Nonnull
+  public static String getImplodedNonEmpty (@Nonnull final String sSep, @Nullable final Iterable <String> aElements)
+  {
+    if (sSep == null)
+      throw new NullPointerException ("separator");
+
+    final StringBuilder aSB = new StringBuilder ();
+    if (aElements != null)
+    {
+      int nIndex = 0;
+      for (final String sElement : aElements)
+        if (hasText (sElement))
+        {
+          if (nIndex++ > 0)
+            aSB.append (sSep);
+          aSB.append (sElement);
+        }
+    }
+    return aSB.toString ();
+  }
+
+  /**
+   * Get a concatenated String from all elements of the passed array, separated
+   * by the specified separator string. This the very generic version of
+   * {@link #getConcatenatedOnDemand(String, String, String)} for an arbitrary
+   * number of elements.
+   * 
+   * @param sSep
+   *        The separator to use. May not be <code>null</code>.
+   * @param aElements
+   *        The container to convert. May be <code>null</code> or empty.
+   * @return The concatenated string.
+   */
+  @Nonnull
+  public static <ELEMENTTYPE> String getImplodedNonEmpty (@Nonnull final String sSep,
+                                                          @Nullable final String... aElements)
+  {
+    if (sSep == null)
+      throw new NullPointerException ("separator");
+    if (ArrayHelper.isEmpty (aElements))
+      return "";
+    return getImplodedNonEmpty (sSep, aElements, 0, aElements.length);
+  }
+
+  /**
+   * Get a concatenated String from all elements of the passed array, separated
+   * by the specified separator string. This the very generic version of
+   * {@link #getConcatenatedOnDemand(String, String, String)} for an arbitrary
+   * number of elements.
+   * 
+   * @param sSep
+   *        The separator to use. May not be <code>null</code>.
+   * @param aElements
+   *        The container to convert. May be <code>null</code> or empty.
+   * @param nOfs
+   *        The offset to start from.
+   * @param nLen
+   *        The number of elements to implode.
+   * @return The concatenated string.
+   */
+  @Nonnull
+  public static <ELEMENTTYPE> String getImplodedNonEmpty (@Nonnull final String sSep,
+                                                          @Nullable final String [] aElements,
+                                                          @Nonnegative final int nOfs,
+                                                          @Nonnegative final int nLen)
+  {
+    if (sSep == null)
+      throw new NullPointerException ("separator");
+    if (nOfs < 0 || nLen < 0 || (aElements != null && (nOfs + nLen) > aElements.length))
+      throw new IllegalArgumentException ("ofs:" + nOfs + ";len=" + nLen + ";bufLen=" + ArrayHelper.getSize (aElements));
+
+    final StringBuilder aSB = new StringBuilder ();
+    if (aElements != null)
+    {
+      for (int i = nOfs; i < nOfs + nLen; ++i)
+      {
+        final String sElement = aElements[i];
         if (i > nOfs)
           aSB.append (sSep);
         aSB.append (sElement);
