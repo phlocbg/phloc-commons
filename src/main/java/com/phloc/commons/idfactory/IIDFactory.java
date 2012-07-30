@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
 
 /**
- * Interface for an object creating unique object IDs.
+ * Interface for an object creating unique IDs.
  * 
  * @author philip
  */
@@ -30,7 +30,7 @@ import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
 public interface IIDFactory <IDTYPE>
 {
   /**
-   * @return The new unique string ID. May never be <code>null</code>.
+   * @return The new unique ID. May never be <code>null</code>.
    */
   @Nonnull
   IDTYPE getNewID ();

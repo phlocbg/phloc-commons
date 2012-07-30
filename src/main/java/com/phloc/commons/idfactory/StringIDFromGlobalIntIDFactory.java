@@ -39,6 +39,12 @@ public final class StringIDFromGlobalIntIDFactory implements IIDFactory <String>
   }
 
   @Nonnull
+  public String getPrefix ()
+  {
+    return m_sPrefix;
+  }
+
+  @Nonnull
   public String getNewID ()
   {
     return m_sPrefix + Integer.toString (GlobalIDFactory.getNewIntID ());
