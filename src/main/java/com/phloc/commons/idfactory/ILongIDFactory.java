@@ -25,7 +25,7 @@ import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
  * @author philip
  */
 @MustImplementEqualsAndHashcode
-public interface ILongIDFactory
+public interface ILongIDFactory extends IBaseIDFactory
 {
   /**
    * Create a new unique long ID.

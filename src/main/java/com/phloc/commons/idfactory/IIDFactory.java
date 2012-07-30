@@ -27,7 +27,7 @@ import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
  * @author philip
  */
 @MustImplementEqualsAndHashcode
-public interface IIDFactory <IDTYPE>
+public interface IIDFactory <IDTYPE> extends IBaseIDFactory
 {
   /**
    * @return The new unique ID. May never be <code>null</code>.
