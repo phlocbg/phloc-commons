@@ -1446,4 +1446,104 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     assertEquals ("", StringHelper.getWithoutTrailingChars ("", 2));
     assertEquals ("", StringHelper.getWithoutTrailingChars (null, 2));
   }
+
+  @Test
+  public void testGetUntilExcl ()
+  {
+    assertEquals ("", StringHelper.getUntilExcl ("abc@def.com", 'a'));
+    assertEquals ("abc", StringHelper.getUntilExcl ("abc@def.com", '@'));
+    assertEquals ("abc@def", StringHelper.getUntilExcl ("abc@def.com", '.'));
+    assertEquals ("abc@def.co", StringHelper.getUntilExcl ("abc@def.com", 'm'));
+    assertNull (StringHelper.getUntilExcl ("abc@def.com", 'X'));
+    assertNull (StringHelper.getUntilExcl ("", 'X'));
+    assertNull (StringHelper.getUntilExcl (null, 'X'));
+
+    assertEquals ("", StringHelper.getUntilExcl ("abc@def.com", "a"));
+    assertEquals ("", StringHelper.getUntilExcl ("abc@def.com", "ab"));
+    assertEquals ("abc", StringHelper.getUntilExcl ("abc@def.com", "@"));
+    assertEquals ("abc", StringHelper.getUntilExcl ("abc@def.com", "@d"));
+    assertEquals ("abc@def", StringHelper.getUntilExcl ("abc@def.com", "."));
+    assertEquals ("abc@def", StringHelper.getUntilExcl ("abc@def.com", ".c"));
+    assertEquals ("abc@def.co", StringHelper.getUntilExcl ("abc@def.com", "m"));
+    assertNull (StringHelper.getUntilExcl ("abc@def.com", "fg"));
+    assertNull (StringHelper.getUntilExcl ("abc@def.com", "X"));
+    assertNull (StringHelper.getUntilExcl ("", "X"));
+    assertNull (StringHelper.getUntilExcl (null, "X"));
+    assertEquals ("", StringHelper.getUntilExcl ("abc@def.com", ""));
+  }
+
+  @Test
+  public void testGetUntilIncl ()
+  {
+    assertEquals ("a", StringHelper.getUntilIncl ("abc@def.com", 'a'));
+    assertEquals ("abc@", StringHelper.getUntilIncl ("abc@def.com", '@'));
+    assertEquals ("abc@def.", StringHelper.getUntilIncl ("abc@def.com", '.'));
+    assertEquals ("abc@def.com", StringHelper.getUntilIncl ("abc@def.com", 'm'));
+    assertNull (StringHelper.getUntilIncl ("abc@def.com", 'X'));
+    assertNull (StringHelper.getUntilIncl ("", 'X'));
+    assertNull (StringHelper.getUntilIncl (null, 'X'));
+
+    assertEquals ("a", StringHelper.getUntilIncl ("abc@def.com", "a"));
+    assertEquals ("ab", StringHelper.getUntilIncl ("abc@def.com", "ab"));
+    assertEquals ("abc@", StringHelper.getUntilIncl ("abc@def.com", "@"));
+    assertEquals ("abc@d", StringHelper.getUntilIncl ("abc@def.com", "@d"));
+    assertEquals ("abc@def.", StringHelper.getUntilIncl ("abc@def.com", "."));
+    assertEquals ("abc@def.c", StringHelper.getUntilIncl ("abc@def.com", ".c"));
+    assertEquals ("abc@def.com", StringHelper.getUntilIncl ("abc@def.com", "m"));
+    assertNull (StringHelper.getUntilIncl ("abc@def.com", "fg"));
+    assertNull (StringHelper.getUntilIncl ("abc@def.com", "X"));
+    assertNull (StringHelper.getUntilIncl ("", "X"));
+    assertNull (StringHelper.getUntilIncl (null, "X"));
+    assertEquals ("", StringHelper.getUntilIncl ("abc@def.com", ""));
+  }
+
+  @Test
+  public void testGetFromExcl ()
+  {
+    assertEquals ("bc@def.com", StringHelper.getFromExcl ("abc@def.com", 'a'));
+    assertEquals ("def.com", StringHelper.getFromExcl ("abc@def.com", '@'));
+    assertEquals ("com", StringHelper.getFromExcl ("abc@def.com", '.'));
+    assertEquals ("", StringHelper.getFromExcl ("abc@def.com", 'm'));
+    assertNull (StringHelper.getFromExcl ("abc@def.com", 'X'));
+    assertNull (StringHelper.getFromExcl ("", 'X'));
+    assertNull (StringHelper.getFromExcl (null, 'X'));
+
+    assertEquals ("bc@def.com", StringHelper.getFromExcl ("abc@def.com", "a"));
+    assertEquals ("c@def.com", StringHelper.getFromExcl ("abc@def.com", "ab"));
+    assertEquals ("def.com", StringHelper.getFromExcl ("abc@def.com", "@"));
+    assertEquals ("ef.com", StringHelper.getFromExcl ("abc@def.com", "@d"));
+    assertEquals ("com", StringHelper.getFromExcl ("abc@def.com", "."));
+    assertEquals ("om", StringHelper.getFromExcl ("abc@def.com", ".c"));
+    assertEquals ("", StringHelper.getFromExcl ("abc@def.com", "m"));
+    assertNull (StringHelper.getFromExcl ("abc@def.com", "fg"));
+    assertNull (StringHelper.getFromExcl ("abc@def.com", "X"));
+    assertNull (StringHelper.getFromExcl ("", "X"));
+    assertNull (StringHelper.getFromExcl (null, "X"));
+    assertEquals ("abc@def.com", StringHelper.getFromExcl ("abc@def.com", ""));
+  }
+
+  @Test
+  public void testGetFromIncl ()
+  {
+    assertEquals ("abc@def.com", StringHelper.getFromIncl ("abc@def.com", 'a'));
+    assertEquals ("@def.com", StringHelper.getFromIncl ("abc@def.com", '@'));
+    assertEquals (".com", StringHelper.getFromIncl ("abc@def.com", '.'));
+    assertEquals ("m", StringHelper.getFromIncl ("abc@def.com", 'm'));
+    assertNull (StringHelper.getFromIncl ("abc@def.com", 'X'));
+    assertNull (StringHelper.getFromIncl ("", 'X'));
+    assertNull (StringHelper.getFromIncl (null, 'X'));
+
+    assertEquals ("abc@def.com", StringHelper.getFromIncl ("abc@def.com", "a"));
+    assertEquals ("abc@def.com", StringHelper.getFromIncl ("abc@def.com", "ab"));
+    assertEquals ("@def.com", StringHelper.getFromIncl ("abc@def.com", "@"));
+    assertEquals ("@def.com", StringHelper.getFromIncl ("abc@def.com", "@d"));
+    assertEquals (".com", StringHelper.getFromIncl ("abc@def.com", "."));
+    assertEquals (".com", StringHelper.getFromIncl ("abc@def.com", ".c"));
+    assertEquals ("m", StringHelper.getFromIncl ("abc@def.com", "m"));
+    assertNull (StringHelper.getFromIncl ("abc@def.com", "fg"));
+    assertNull (StringHelper.getFromIncl ("abc@def.com", "X"));
+    assertNull (StringHelper.getFromIncl ("", "X"));
+    assertNull (StringHelper.getFromIncl (null, "X"));
+    assertEquals ("abc@def.com", StringHelper.getFromIncl ("abc@def.com", ""));
+  }
 }

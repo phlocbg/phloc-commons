@@ -2673,4 +2673,175 @@ public final class StringHelper extends StringParser
     final int nLength = getLength (sStr);
     return nLength <= nCount ? "" : sStr.substring (0, nLength - nCount);
   }
+
+  @Nullable
+  private static String _getUntil (@Nullable final String sStr, final char cSearch, final boolean bIncludingSearchChar)
+  {
+    final int nIndex = getIndexOf (sStr, cSearch);
+    return nIndex == STRING_NOT_FOUND ? null : sStr.substring (0, nIndex + (bIncludingSearchChar ? 1 : 0));
+  }
+
+  /**
+   * Get everything from the string up to and including the passed char.
+   * 
+   * @param sStr
+   *        The source string. May be <code>null</code>.
+   * @param cSearch
+   *        The character to search.
+   * @return <code>null</code> if the passed string does not contain the search
+   *         character.
+   */
+  @Nullable
+  public static String getUntilIncl (@Nullable final String sStr, final char cSearch)
+  {
+    return _getUntil (sStr, cSearch, true);
+  }
+
+  /**
+   * Get everything from the string up to and excluding the passed char.
+   * 
+   * @param sStr
+   *        The source string. May be <code>null</code>.
+   * @param cSearch
+   *        The character to search.
+   * @return <code>null</code> if the passed string does not contain the search
+   *         character.
+   */
+  @Nullable
+  public static String getUntilExcl (@Nullable final String sStr, final char cSearch)
+  {
+    return _getUntil (sStr, cSearch, false);
+  }
+
+  @Nullable
+  private static String _getUntil (@Nullable final String sStr,
+                                   @Nullable final String sSearch,
+                                   final boolean bIncludingSearchChar)
+  {
+    if (hasNoText (sSearch))
+      return "";
+
+    final int nIndex = getIndexOf (sStr, sSearch);
+    return nIndex == STRING_NOT_FOUND ? null : sStr.substring (0, nIndex +
+                                                                  (bIncludingSearchChar ? sSearch.length () : 0));
+  }
+
+  /**
+   * Get everything from the string up to and including the passed string.
+   * 
+   * @param sStr
+   *        The source string. May be <code>null</code>.
+   * @param sSearch
+   *        The string to search. May be <code>null</code>.
+   * @return <code>null</code> if the passed string does not contain the search
+   *         string. If the search string is empty, the empty string is
+   *         returned.
+   */
+  @Nullable
+  public static String getUntilIncl (@Nullable final String sStr, @Nullable final String sSearch)
+  {
+    return _getUntil (sStr, sSearch, true);
+  }
+
+  /**
+   * Get everything from the string up to and excluding the passed string.
+   * 
+   * @param sStr
+   *        The source string. May be <code>null</code>.
+   * @param sSearch
+   *        The string to search. May be <code>null</code>.
+   * @return <code>null</code> if the passed string does not contain the search
+   *         string. If the search string is empty, the empty string is
+   *         returned.
+   */
+  @Nullable
+  public static String getUntilExcl (@Nullable final String sStr, @Nullable final String sSearch)
+  {
+    return _getUntil (sStr, sSearch, false);
+  }
+
+  @Nullable
+  private static String _getFrom (@Nullable final String sStr, final char cSearch, final boolean bIncludingSearchChar)
+  {
+    final int nIndex = getIndexOf (sStr, cSearch);
+    return nIndex == STRING_NOT_FOUND ? null : sStr.substring (nIndex + (bIncludingSearchChar ? 0 : 1));
+  }
+
+  /**
+   * Get everything from the string from and including the passed char.
+   * 
+   * @param sStr
+   *        The source string. May be <code>null</code>.
+   * @param cSearch
+   *        The character to search.
+   * @return <code>null</code> if the passed string does not contain the search
+   *         character.
+   */
+  @Nullable
+  public static String getFromIncl (@Nullable final String sStr, final char cSearch)
+  {
+    return _getFrom (sStr, cSearch, true);
+  }
+
+  /**
+   * Get everything from the string from and excluding the passed char.
+   * 
+   * @param sStr
+   *        The source string. May be <code>null</code>.
+   * @param cSearch
+   *        The character to search.
+   * @return <code>null</code> if the passed string does not contain the search
+   *         character.
+   */
+  @Nullable
+  public static String getFromExcl (@Nullable final String sStr, final char cSearch)
+  {
+    return _getFrom (sStr, cSearch, false);
+  }
+
+  @Nullable
+  private static String _getFrom (@Nullable final String sStr,
+                                  @Nullable final String sSearch,
+                                  final boolean bIncludingSearchChar)
+  {
+    if (hasNoText (sSearch))
+      return sStr;
+
+    final int nIndex = getIndexOf (sStr, sSearch);
+    return nIndex == STRING_NOT_FOUND ? null : sStr.substring (nIndex + (bIncludingSearchChar ? 0 : sSearch.length ()));
+  }
+
+  /**
+   * Get everything from the string from and including the passed string.
+   * 
+   * @param sStr
+   *        The source string. May be <code>null</code>.
+   * @param sSearch
+   *        The string to search. May be <code>null</code>.
+   * @return <code>null</code> if the passed string does not contain the search
+   *         string. If the search string is empty, the input string is returned
+   *         unmodified.
+   */
+  @Nullable
+  public static String getFromIncl (@Nullable final String sStr, @Nullable final String sSearch)
+  {
+    return _getFrom (sStr, sSearch, true);
+  }
+
+  /**
+   * Get everything from the string from and excluding the passed string.
+   * 
+   * @param sStr
+   *        The source string. May be <code>null</code>.
+   * @param sSearch
+   *        The string to search. May be <code>null</code>.
+   * @return <code>null</code> if the passed string does not contain the search
+   *         string. If the search string is empty, the input string is returned
+   *         unmodified.
+   */
+  @Nullable
+  public static String getFromExcl (@Nullable final String sStr, @Nullable final String sSearch)
+  {
+    return _getFrom (sStr, sSearch, false);
+  }
 }
