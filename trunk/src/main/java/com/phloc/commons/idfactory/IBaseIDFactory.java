@@ -20,17 +20,13 @@ package com.phloc.commons.idfactory;
 import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
 
 /**
- * Interface for an object creating unique int IDs.
+ * Base marker interface for all ID factories. It's only sense is to group all
+ * ID factories with the different types
  * 
  * @author philip
  */
 @MustImplementEqualsAndHashcode
-public interface IIntIDFactory extends IBaseIDFactory
+public interface IBaseIDFactory
 {
-  /**
-   * Create a new unique integer ID.
-   * 
-   * @return The newly created ID.
-   */
-  int getNewID ();
+  /* empty */
 }

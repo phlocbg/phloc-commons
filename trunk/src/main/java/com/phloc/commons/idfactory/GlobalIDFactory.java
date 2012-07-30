@@ -287,6 +287,9 @@ public final class GlobalIDFactory
     }
   }
 
+  /**
+   * @return A new int ID
+   */
   public static int getNewIntID ()
   {
     s_aRWLock.readLock ().lock ();
@@ -302,6 +305,9 @@ public final class GlobalIDFactory
     }
   }
 
+  /**
+   * @return A new persistent int ID
+   */
   public static int getNewPersistentIntID ()
   {
     s_aRWLock.readLock ().lock ();
@@ -317,6 +323,9 @@ public final class GlobalIDFactory
     }
   }
 
+  /**
+   * @return A new long ID
+   */
   public static long getNewLongID ()
   {
     s_aRWLock.readLock ().lock ();
@@ -332,6 +341,9 @@ public final class GlobalIDFactory
     }
   }
 
+  /**
+   * @return A new persistent long ID
+   */
   public static long getNewPersistentLongID ()
   {
     s_aRWLock.readLock ().lock ();
@@ -347,6 +359,9 @@ public final class GlobalIDFactory
     }
   }
 
+  /**
+   * @return A new String ID
+   */
   @Nonnull
   public static String getNewStringID ()
   {
@@ -363,6 +378,9 @@ public final class GlobalIDFactory
     }
   }
 
+  /**
+   * @return A new persistent String ID
+   */
   @Nonnull
   public static String getNewPersistentStringID ()
   {

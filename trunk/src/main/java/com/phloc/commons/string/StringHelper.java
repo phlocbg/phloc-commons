@@ -29,6 +29,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.annotation.CheckForSigned;
 import javax.annotation.CheckReturnValue;
@@ -52,6 +54,11 @@ import com.phloc.commons.math.MathHelper;
 @Immutable
 public final class StringHelper extends StringParser
 {
+  /**
+   * The constant to be returned if an String.indexOf call did not find a match!
+   */
+  public static final int STRING_NOT_FOUND = -1;
+
   private static final int [] s_aSizeTableInt = { 9,
                                                  99,
                                                  999,
@@ -455,7 +462,7 @@ public final class StringHelper extends StringParser
   {
     final int nHex1 = getHexValue (cHigh);
     final int nHex2 = getHexValue (cLow);
-    return nHex1 < 0 || nHex2 < 0 ? CGlobal.ILLEGAL_UINT : (nHex1 << 4) | nHex2;
+    return nHex1 < 0 || nHex2 < 0 ? -1 : (nHex1 << 4) | nHex2;
   }
 
   /**
@@ -518,11 +525,13 @@ public final class StringHelper extends StringParser
    * @deprecated Use {@link #getHexStringLeadingZero(byte,int)} instead
    */
   @Deprecated
+  @Nonnull
   public static String hexStringLeadingZero (final byte nValue, final int nDigits)
   {
     return getHexStringLeadingZero (nValue, nDigits);
   }
 
+  @Nonnull
   public static String getHexStringLeadingZero (final byte nValue, final int nDigits)
   {
     return getLeadingZero (getHexString (nValue), nDigits);
@@ -532,11 +541,13 @@ public final class StringHelper extends StringParser
    * @deprecated Use {@link #getHexString(int)} instead
    */
   @Deprecated
+  @Nonnull
   public static String hexString (final int nValue)
   {
     return getHexString (nValue);
   }
 
+  @Nonnull
   public static String getHexString (final int nValue)
   {
     return Integer.toString (nValue, CGlobal.HEX_RADIX);
@@ -546,11 +557,13 @@ public final class StringHelper extends StringParser
    * @deprecated Use {@link #getHexStringLeadingZero(int,int)} instead
    */
   @Deprecated
+  @Nonnull
   public static String hexStringLeadingZero (final int nValue, final int nDigits)
   {
     return getHexStringLeadingZero (nValue, nDigits);
   }
 
+  @Nonnull
   public static String getHexStringLeadingZero (final int nValue, final int nDigits)
   {
     return getLeadingZero (getHexString (nValue), nDigits);
@@ -560,11 +573,13 @@ public final class StringHelper extends StringParser
    * @deprecated Use {@link #getHexString(long)} instead
    */
   @Deprecated
+  @Nonnull
   public static String hexString (final long nValue)
   {
     return getHexString (nValue);
   }
 
+  @Nonnull
   public static String getHexString (final long nValue)
   {
     return Long.toString (nValue, CGlobal.HEX_RADIX);
@@ -574,11 +589,13 @@ public final class StringHelper extends StringParser
    * @deprecated Use {@link #getHexStringLeadingZero(long,int)} instead
    */
   @Deprecated
+  @Nonnull
   public static String hexStringLeadingZero (final long nValue, final int nDigits)
   {
     return getHexStringLeadingZero (nValue, nDigits);
   }
 
+  @Nonnull
   public static String getHexStringLeadingZero (final long nValue, final int nDigits)
   {
     return getLeadingZero (getHexString (nValue), nDigits);
@@ -588,11 +605,13 @@ public final class StringHelper extends StringParser
    * @deprecated Use {@link #getHexString(short)} instead
    */
   @Deprecated
+  @Nonnull
   public static String hexString (final short nValue)
   {
     return getHexString (nValue);
   }
 
+  @Nonnull
   public static String getHexString (final short nValue)
   {
     return Integer.toString (nValue & 0xffff, CGlobal.HEX_RADIX);
@@ -602,16 +621,26 @@ public final class StringHelper extends StringParser
    * @deprecated Use {@link #getHexStringLeadingZero(short,int)} instead
    */
   @Deprecated
+  @Nonnull
   public static String hexStringLeadingZero (final short nValue, final int nDigits)
   {
     return getHexStringLeadingZero (nValue, nDigits);
   }
 
+  @Nonnull
   public static String getHexStringLeadingZero (final short nValue, final int nDigits)
   {
     return getLeadingZero (getHexString (nValue), nDigits);
   }
 
+  /**
+   * Get the number of leading white spaces according to
+   * {@link Character#isWhitespace(char)}
+   * 
+   * @param s
+   *        The string to be parsed. May be <code>null</code>.
+   * @return Always &ge; 0.
+   */
   @Nonnegative
   public static int getLeadingWhitespaceCount (@Nullable final String s)
   {
@@ -625,6 +654,14 @@ public final class StringHelper extends StringParser
     return ret;
   }
 
+  /**
+   * Get the number of trailing white spaces according to
+   * {@link Character#isWhitespace(char)}
+   * 
+   * @param s
+   *        The string to be parsed. May be <code>null</code>.
+   * @return Always &ge; 0.
+   */
   @Nonnegative
   public static int getTrailingWhitespaceCount (@Nullable final String s)
   {
@@ -641,6 +678,15 @@ public final class StringHelper extends StringParser
     return ret;
   }
 
+  /**
+   * Get the number of specified chars, the passed string starts with.
+   * 
+   * @param s
+   *        The string to be parsed. May be <code>null</code>.
+   * @param c
+   *        The char to be searched.
+   * @return Always &ge; 0.
+   */
   @Nonnegative
   public static int getLeadingCharCount (@Nullable final String s, final char c)
   {
@@ -654,6 +700,15 @@ public final class StringHelper extends StringParser
     return ret;
   }
 
+  /**
+   * Get the number of specified chars, the passed string ends with.
+   * 
+   * @param s
+   *        The string to be parsed. May be <code>null</code>.
+   * @param c
+   *        The char to be searched.
+   * @return Always &ge; 0.
+   */
   @Nonnegative
   public static int getTrailingCharCount (@Nullable final String s, final char c)
   {
@@ -1017,8 +1072,8 @@ public final class StringHelper extends StringParser
   }
 
   /**
-   * Take a concatenated String and return an ordered {@link Set} of all
-   * elements in the passed string, using specified separator string.
+   * Take a concatenated String and return an ordered {@link LinkedHashSet} of
+   * all elements in the passed string, using specified separator string.
    * 
    * @param sSep
    *        The separator to use. May not be <code>null</code>.
@@ -1033,6 +1088,25 @@ public final class StringHelper extends StringParser
   public static Set <String> getExplodedToOrderedSet (@Nonnull final String sSep, @Nullable final String sElements)
   {
     return _getExploded (sSep, sElements, new LinkedHashSet <String> ());
+  }
+
+  /**
+   * Take a concatenated String and return a sorted {@link TreeSet} of all
+   * elements in the passed string, using specified separator string.
+   * 
+   * @param sSep
+   *        The separator to use. May not be <code>null</code>.
+   * @param sElements
+   *        The concatenated String to convert. May be <code>null</code> or
+   *        empty.
+   * @return The sorted {@link Set} represented by the passed string. Never
+   *         <code>null</code>. If the passed input string is <code>null</code>
+   *         or "" an empty list is returned.
+   */
+  @Nonnull
+  public static SortedSet <String> getExplodedToSortedSet (@Nonnull final String sSep, @Nullable final String sElements)
+  {
+    return _getExploded (sSep, sElements, new TreeSet <String> ());
   }
 
   /**
@@ -1116,14 +1190,15 @@ public final class StringHelper extends StringParser
   }
 
   /**
-   * Concatenate the strings sFront and sEnd. If either front or back is null or
-   * empty
+   * Concatenate the strings sFront and sEnd. If either front or back is
+   * <code>null</code> or empty only the other element is returned. If both
+   * strings are <code>null</code> or empty and empty String is returned.
    * 
    * @param sFront
    *        Front string. May be <code>null</code>.
    * @param sEnd
    *        May be <code>null</code>.
-   * @return The concatenated string.
+   * @return The concatenated string. Never <code>null</code>.
    */
   @Nonnull
   public static String getConcatenatedOnDemand (@Nullable final String sFront, @Nullable final String sEnd)
@@ -1270,8 +1345,8 @@ public final class StringHelper extends StringParser
    *        The text to search in. May be <code>null</code>.
    * @param sSearch
    *        The text to search for. May be <code>null</code>.
-   * @return The index of sSearch within sText or -1 if sSearch was not found or
-   *         if any parameter was <code>null</code>.
+   * @return The index of sSearch within sText or {@value #STRING_NOT_FOUND} if
+   *         sSearch was not found or if any parameter was <code>null</code>.
    * @see String#indexOf(String)
    * @deprecated Use {@link #getIndexOf(String,String)} instead
    */
@@ -1288,13 +1363,14 @@ public final class StringHelper extends StringParser
    *        The text to search in. May be <code>null</code>.
    * @param sSearch
    *        The text to search for. May be <code>null</code>.
-   * @return The index of sSearch within sText or -1 if sSearch was not found or
-   *         if any parameter was <code>null</code>.
+   * @return The index of sSearch within sText or {@value #STRING_NOT_FOUND} if
+   *         sSearch was not found or if any parameter was <code>null</code>.
    * @see String#indexOf(String)
    */
   public static int getIndexOf (@Nullable final String sText, @Nullable final String sSearch)
   {
-    return sText != null && sSearch != null && sText.length () >= sSearch.length () ? sText.indexOf (sSearch) : -1;
+    return sText != null && sSearch != null && sText.length () >= sSearch.length () ? sText.indexOf (sSearch)
+                                                                                   : STRING_NOT_FOUND;
   }
 
   /**
@@ -1304,8 +1380,8 @@ public final class StringHelper extends StringParser
    *        The text to search in. May be <code>null</code>.
    * @param cSearch
    *        The character to search for. May be <code>null</code>.
-   * @return The index of sSearch within sText or -1 if cSearch was not found or
-   *         if any parameter was <code>null</code>.
+   * @return The index of sSearch within sText or {@value #STRING_NOT_FOUND} if
+   *         cSearch was not found or if any parameter was <code>null</code>.
    * @see String#indexOf(int)
    * @deprecated Use {@link #getIndexOf(String,char)} instead
    */
@@ -1322,13 +1398,13 @@ public final class StringHelper extends StringParser
    *        The text to search in. May be <code>null</code>.
    * @param cSearch
    *        The character to search for. May be <code>null</code>.
-   * @return The index of sSearch within sText or -1 if cSearch was not found or
-   *         if any parameter was <code>null</code>.
+   * @return The index of sSearch within sText or {@value #STRING_NOT_FOUND} if
+   *         cSearch was not found or if any parameter was <code>null</code>.
    * @see String#indexOf(int)
    */
   public static int getIndexOf (@Nullable final String sText, final char cSearch)
   {
-    return sText != null && sText.length () >= 1 ? sText.indexOf (cSearch) : -1;
+    return sText != null && sText.length () >= 1 ? sText.indexOf (cSearch) : STRING_NOT_FOUND;
   }
 
   /**
@@ -1340,8 +1416,8 @@ public final class StringHelper extends StringParser
    *        The text to search for. May be <code>null</code>.
    * @param aSortLocale
    *        The locale to be used for case unifying.
-   * @return The index of sSearch within sText or -1 if sSearch was not found or
-   *         if any parameter was <code>null</code>.
+   * @return The index of sSearch within sText or {@value #STRING_NOT_FOUND} if
+   *         sSearch was not found or if any parameter was <code>null</code>.
    * @see String#indexOf(String)
    * @deprecated Use {@link #getIndexOfIgnoreCase(String,String,Locale)} instead
    */
@@ -1362,8 +1438,8 @@ public final class StringHelper extends StringParser
    *        The text to search for. May be <code>null</code>.
    * @param aSortLocale
    *        The locale to be used for case unifying.
-   * @return The index of sSearch within sText or -1 if sSearch was not found or
-   *         if any parameter was <code>null</code>.
+   * @return The index of sSearch within sText or {@value #STRING_NOT_FOUND} if
+   *         sSearch was not found or if any parameter was <code>null</code>.
    * @see String#indexOf(String)
    */
   public static int getIndexOfIgnoreCase (@Nullable final String sText,
@@ -1373,7 +1449,7 @@ public final class StringHelper extends StringParser
     return sText != null && sSearch != null && sText.length () >= sSearch.length ()
                                                                                    ? sText.toLowerCase (aSortLocale)
                                                                                           .indexOf (sSearch.toLowerCase (aSortLocale))
-                                                                                   : -1;
+                                                                                   : STRING_NOT_FOUND;
   }
 
   /**
@@ -1385,8 +1461,8 @@ public final class StringHelper extends StringParser
    *        The char to search for. May be <code>null</code>.
    * @param aSortLocale
    *        The locale to be used for case unifying.
-   * @return The index of sSearch within sText or -1 if sSearch was not found or
-   *         if any parameter was <code>null</code>.
+   * @return The index of sSearch within sText or {@value #STRING_NOT_FOUND} if
+   *         sSearch was not found or if any parameter was <code>null</code>.
    * @see String#indexOf(int)
    */
   public static int getIndexOfIgnoreCase (@Nullable final String sText,
@@ -1394,7 +1470,7 @@ public final class StringHelper extends StringParser
                                           @Nonnull final Locale aSortLocale)
   {
     return sText != null && sText.length () >= 1 ? sText.toLowerCase (aSortLocale)
-                                                        .indexOf (Character.toLowerCase (cSearch)) : -1;
+                                                        .indexOf (Character.toLowerCase (cSearch)) : STRING_NOT_FOUND;
   }
 
   /**
@@ -1410,7 +1486,7 @@ public final class StringHelper extends StringParser
    */
   public static boolean contains (@Nullable final String sText, @Nullable final String sSearch)
   {
-    return getIndexOf (sText, sSearch) > -1;
+    return getIndexOf (sText, sSearch) != STRING_NOT_FOUND;
   }
 
   /**
@@ -1426,7 +1502,7 @@ public final class StringHelper extends StringParser
    */
   public static boolean contains (@Nullable final String sText, final char cSearch)
   {
-    return getIndexOf (sText, cSearch) > -1;
+    return getIndexOf (sText, cSearch) != STRING_NOT_FOUND;
   }
 
   /**
@@ -1446,7 +1522,7 @@ public final class StringHelper extends StringParser
                                             @Nullable final String sSearch,
                                             @Nonnull final Locale aSortLocale)
   {
-    return getIndexOfIgnoreCase (sText, sSearch, aSortLocale) > -1;
+    return getIndexOfIgnoreCase (sText, sSearch, aSortLocale) != STRING_NOT_FOUND;
   }
 
   /**
@@ -1466,7 +1542,7 @@ public final class StringHelper extends StringParser
                                             final char cSearch,
                                             @Nonnull final Locale aSortLocale)
   {
-    return getIndexOfIgnoreCase (sText, cSearch, aSortLocale) > -1;
+    return getIndexOfIgnoreCase (sText, cSearch, aSortLocale) != STRING_NOT_FOUND;
   }
 
   /**
@@ -1549,7 +1625,7 @@ public final class StringHelper extends StringParser
       {
         // Start searching from the last result
         nIndex = getIndexOf (sText.substring (nLastIndex), sSearch);
-        if (nIndex > -1)
+        if (nIndex != STRING_NOT_FOUND)
         {
           // Match found
           ++ret;
@@ -1558,7 +1634,7 @@ public final class StringHelper extends StringParser
           // search strings)
           nLastIndex += nIndex + nSearchLength;
         }
-      } while (nIndex != -1);
+      } while (nIndex != STRING_NOT_FOUND);
     }
     return ret;
   }
@@ -1862,7 +1938,7 @@ public final class StringHelper extends StringParser
 
     // Does the old text occur anywhere?
     int nIndex = sInputString.indexOf (sSearchText, 0);
-    if (nIndex == -1)
+    if (nIndex == STRING_NOT_FOUND)
       return sInputString;
 
     // build output buffer
@@ -1874,7 +1950,7 @@ public final class StringHelper extends StringParser
       ret.append (sInputString, nOldIndex, nIndex).append (aReplacementText);
       nIndex += nOldLength;
       nOldIndex = nIndex;
-    } while ((nIndex = sInputString.indexOf (sSearchText, nIndex)) != -1);
+    } while ((nIndex = sInputString.indexOf (sSearchText, nIndex)) != STRING_NOT_FOUND);
     ret.append (sInputString, nOldIndex, sInputString.length ());
     return ret.toString ();
   }
@@ -1915,7 +1991,7 @@ public final class StringHelper extends StringParser
 
     // Does the old text occur anywhere?
     int nIndex = sInputString.indexOf (cSearchChar, 0);
-    if (nIndex == -1)
+    if (nIndex == STRING_NOT_FOUND)
       return sInputString;
 
     // build output buffer
@@ -1926,7 +2002,7 @@ public final class StringHelper extends StringParser
       ret.append (sInputString, nOldIndex, nIndex).append (cReplacementChar);
       nIndex++;
       nOldIndex = nIndex;
-    } while ((nIndex = sInputString.indexOf (cSearchChar, nIndex)) != -1);
+    } while ((nIndex = sInputString.indexOf (cSearchChar, nIndex)) != STRING_NOT_FOUND);
     ret.append (sInputString, nOldIndex, sInputString.length ());
     return ret.toString ();
   }
