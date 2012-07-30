@@ -17,43 +17,39 @@
  */
 package com.phloc.commons.idfactory;
 
-import javax.annotation.Nonnull;
+import java.util.concurrent.atomic.AtomicLong;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.concurrent.ThreadSafe;
 
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * An {@link IStringIDFactory} implementation that uses a constant prefix and an
- * int supplied from {@link GlobalIDFactory#getNewIntID()} to create unique IDs.
+ * An implementation of {@link ILongIDFactory} using a single static
+ * {@link AtomicLong}.
  * 
  * @author philip
  */
-public final class StringIDFromGlobalIntIDFactory implements IStringIDFactory
+@ThreadSafe
+public final class MemoryStaticLongIDFactory implements ILongIDFactory
 {
-  private final String m_sPrefix;
+  public static final long INITIAL_ID = 10000L;
+  private static final AtomicLong s_aID = new AtomicLong (INITIAL_ID);
 
-  public StringIDFromGlobalIntIDFactory ()
+  public MemoryStaticLongIDFactory ()
+  {}
+
+  @Nonnegative
+  public long getNewID ()
   {
-    this (GlobalIDFactory.DEFAULT_PREFIX);
+    return getNewStaticID ();
   }
 
-  public StringIDFromGlobalIntIDFactory (@Nonnull final String sPrefix)
+  @Nonnegative
+  public static long getNewStaticID ()
   {
-    if (sPrefix == null)
-      throw new NullPointerException ("prefix");
-    m_sPrefix = sPrefix;
-  }
-
-  @Nonnull
-  public String getPrefix ()
-  {
-    return m_sPrefix;
-  }
-
-  @Nonnull
-  public String getNewID ()
-  {
-    return m_sPrefix + Integer.toString (GlobalIDFactory.getNewIntID ());
+    return s_aID.getAndIncrement ();
   }
 
   @Override
@@ -61,21 +57,20 @@ public final class StringIDFromGlobalIntIDFactory implements IStringIDFactory
   {
     if (o == this)
       return true;
-    if (!(o instanceof StringIDFromGlobalIntIDFactory))
+    if (!(o instanceof MemoryStaticLongIDFactory))
       return false;
-    final StringIDFromGlobalIntIDFactory rhs = (StringIDFromGlobalIntIDFactory) o;
-    return m_sPrefix.equals (rhs.m_sPrefix);
+    return true;
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_sPrefix).getHashCode ();
+    return new HashCodeGenerator (this).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("prefix", m_sPrefix).toString ();
+    return new ToStringGenerator (this).toString ();
   }
 }

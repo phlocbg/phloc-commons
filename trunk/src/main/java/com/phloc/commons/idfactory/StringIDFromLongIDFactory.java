@@ -23,28 +23,28 @@ import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * A factory that creates String IDs based on a specified {@link IIntIDFactory}.
- * The implementation is as thread-safe as the used {@link IIntIDFactory}.
+ * A factory that creates String IDs based on a specified {@link ILongIDFactory}
+ * . The implementation is as thread-safe as the used {@link ILongIDFactory}.
  * 
  * @author philip
  */
-public class StringIDFromIntIDFactory implements IStringIDFactory
+public final class StringIDFromLongIDFactory implements IStringIDFactory
 {
-  private final IIntIDFactory m_aIntIDFactory;
+  private final ILongIDFactory m_aLongIDFactory;
   private final String m_sPrefix;
 
-  public StringIDFromIntIDFactory (@Nonnull final IIntIDFactory aIntIDFactory)
+  public StringIDFromLongIDFactory (@Nonnull final ILongIDFactory aLongIDFactory)
   {
-    this (aIntIDFactory, GlobalIDFactory.DEFAULT_PREFIX);
+    this (aLongIDFactory, GlobalIDFactory.DEFAULT_PREFIX);
   }
 
-  public StringIDFromIntIDFactory (@Nonnull final IIntIDFactory aIntIDFactory, @Nonnull final String sPrefix)
+  public StringIDFromLongIDFactory (@Nonnull final ILongIDFactory aLongIDFactory, @Nonnull final String sPrefix)
   {
-    if (aIntIDFactory == null)
-      throw new NullPointerException ("intIDFactory");
+    if (aLongIDFactory == null)
+      throw new NullPointerException ("longIDFactory");
     if (sPrefix == null)
       throw new NullPointerException ("prefix");
-    m_aIntIDFactory = aIntIDFactory;
+    m_aLongIDFactory = aLongIDFactory;
     m_sPrefix = sPrefix;
   }
 
@@ -57,7 +57,7 @@ public class StringIDFromIntIDFactory implements IStringIDFactory
   @Nonnull
   public String getNewID ()
   {
-    return m_sPrefix + Integer.toString (m_aIntIDFactory.getNewID ());
+    return m_sPrefix + Long.toString (m_aLongIDFactory.getNewID ());
   }
 
   @Override
@@ -65,22 +65,22 @@ public class StringIDFromIntIDFactory implements IStringIDFactory
   {
     if (o == this)
       return true;
-    if (!(o instanceof StringIDFromIntIDFactory))
+    if (!(o instanceof StringIDFromLongIDFactory))
       return false;
-    final StringIDFromIntIDFactory rhs = (StringIDFromIntIDFactory) o;
-    return m_aIntIDFactory.equals (rhs.m_aIntIDFactory) && m_sPrefix.equals (rhs.m_sPrefix);
+    final StringIDFromLongIDFactory rhs = (StringIDFromLongIDFactory) o;
+    return m_aLongIDFactory.equals (rhs.m_aLongIDFactory) && m_sPrefix.equals (rhs.m_sPrefix);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aIntIDFactory).append (m_sPrefix).getHashCode ();
+    return new HashCodeGenerator (this).append (m_aLongIDFactory).append (m_sPrefix).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("intIDFactory", m_aIntIDFactory)
+    return new ToStringGenerator (this).append ("longIDFactory", m_aLongIDFactory)
                                        .append ("prefix", m_sPrefix)
                                        .toString ();
   }
