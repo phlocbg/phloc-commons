@@ -2604,4 +2604,73 @@ public final class StringHelper extends StringParser
   {
     return aObject == null ? sNullValue : aObject.toString ();
   }
+
+  /**
+   * Get the passed string without the first char.
+   * 
+   * @param sStr
+   *        The source string. May be <code>null</code>.
+   * @return An empty, non-<code>null</code> string if the passed string has a
+   *         length &le; 1.
+   */
+  @Nonnull
+  public static String getWithoutLeadingChar (@Nullable final String sStr)
+  {
+    return getWithoutLeadingChars (sStr, 1);
+  }
+
+  /**
+   * Get the passed string without the specified number of leading chars.
+   * 
+   * @param sStr
+   *        The source string. May be <code>null</code>.
+   * @param nCount
+   *        The number of chars to remove.
+   * @return An empty, non-<code>null</code> string if the passed string has a
+   *         length &le; <code>nCount</code>.
+   */
+  @Nonnull
+  public static String getWithoutLeadingChars (@Nullable final String sStr, @Nonnegative final int nCount)
+  {
+    if (nCount < 0)
+      throw new IllegalArgumentException ("Count may not be negative: " + nCount);
+    if (nCount == 0)
+      return sStr;
+    return getLength (sStr) <= nCount ? "" : sStr.substring (nCount);
+  }
+
+  /**
+   * Get the passed string without the last char.
+   * 
+   * @param sStr
+   *        The source string. May be <code>null</code>.
+   * @return An empty, non-<code>null</code> string if the passed string has a
+   *         length &le; 1.
+   */
+  @Nonnull
+  public static String getWithoutTrailingChar (@Nullable final String sStr)
+  {
+    return getWithoutTrailingChars (sStr, 1);
+  }
+
+  /**
+   * Get the passed string without the specified number of trailing chars.
+   * 
+   * @param sStr
+   *        The source string. May be <code>null</code>.
+   * @param nCount
+   *        The number of chars to remove.
+   * @return An empty, non-<code>null</code> string if the passed string has a
+   *         length &le; <code>nCount</code>.
+   */
+  @Nonnull
+  public static String getWithoutTrailingChars (@Nullable final String sStr, @Nonnegative final int nCount)
+  {
+    if (nCount < 0)
+      throw new IllegalArgumentException ("Count may not be negative: " + nCount);
+    if (nCount == 0)
+      return sStr;
+    final int nLength = getLength (sStr);
+    return nLength <= nCount ? "" : sStr.substring (0, nLength - nCount);
+  }
 }
