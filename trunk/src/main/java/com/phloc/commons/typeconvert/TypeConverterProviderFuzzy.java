@@ -41,9 +41,6 @@ public final class TypeConverterProviderFuzzy implements ITypeConverterProvider
   @Nullable
   public ITypeConverter getTypeConverter (@Nonnull final Class <?> aSrcClass, @Nonnull final Class <?> aDstClass)
   {
-    ITypeConverter ret = TypeConverterRegistry.getRuleBasedConverter (aSrcClass, aDstClass);
-    if (ret == null)
-      ret = TypeConverterRegistry.getFuzzyConverter (aSrcClass, aDstClass);
-    return ret;
+    return TypeConverterRegistry.getFuzzyConverter (aSrcClass, aDstClass);
   }
 }

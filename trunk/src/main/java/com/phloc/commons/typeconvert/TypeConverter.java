@@ -106,7 +106,7 @@ public final class TypeConverter
    * @throws IllegalArgumentException
    *         if the conversion process fails because either the conversion
    *         failed, or no converter was found.
-   * @see TypeConverterProviderExactBeforeFuzzy
+   * @see TypeConverterProviderBestMatch
    * @throws TypeConverterException
    *         if the source value is null
    */
@@ -127,7 +127,7 @@ public final class TypeConverter
    * @throws IllegalArgumentException
    *         if the conversion process fails because either the conversion
    *         failed, or no converter was found.
-   * @see TypeConverterProviderExactBeforeFuzzy
+   * @see TypeConverterProviderBestMatch
    * @throws TypeConverterException
    *         if the source value is null
    */
@@ -148,7 +148,7 @@ public final class TypeConverter
    * @throws IllegalArgumentException
    *         if the conversion process fails because either the conversion
    *         failed, or no converter was found.
-   * @see TypeConverterProviderExactBeforeFuzzy
+   * @see TypeConverterProviderBestMatch
    * @throws TypeConverterException
    *         if the source value is null
    */
@@ -169,7 +169,7 @@ public final class TypeConverter
    * @throws IllegalArgumentException
    *         if the conversion process fails because either the conversion
    *         failed, or no converter was found.
-   * @see TypeConverterProviderExactBeforeFuzzy
+   * @see TypeConverterProviderBestMatch
    * @throws TypeConverterException
    *         if the source value is null
    */
@@ -190,7 +190,7 @@ public final class TypeConverter
    * @throws IllegalArgumentException
    *         if the conversion process fails because either the conversion
    *         failed, or no converter was found.
-   * @see TypeConverterProviderExactBeforeFuzzy
+   * @see TypeConverterProviderBestMatch
    * @throws TypeConverterException
    *         if the source value is null
    */
@@ -211,7 +211,7 @@ public final class TypeConverter
    * @throws IllegalArgumentException
    *         if the conversion process fails because either the conversion
    *         failed, or no converter was found.
-   * @see TypeConverterProviderExactBeforeFuzzy
+   * @see TypeConverterProviderBestMatch
    * @throws TypeConverterException
    *         if the source value is null
    */
@@ -232,7 +232,7 @@ public final class TypeConverter
    * @throws IllegalArgumentException
    *         if the conversion process fails because either the conversion
    *         failed, or no converter was found.
-   * @see TypeConverterProviderExactBeforeFuzzy
+   * @see TypeConverterProviderBestMatch
    * @throws TypeConverterException
    *         if the source value is null
    */
@@ -253,7 +253,7 @@ public final class TypeConverter
    * @throws IllegalArgumentException
    *         if the conversion process fails because either the conversion
    *         failed, or no converter was found.
-   * @see TypeConverterProviderExactBeforeFuzzy
+   * @see TypeConverterProviderBestMatch
    * @throws TypeConverterException
    *         if the source value is null
    */
@@ -279,13 +279,13 @@ public final class TypeConverter
    * @throws IllegalArgumentException
    *         if the conversion process fails because either the conversion
    *         failed, or no converter was found.
-   * @see TypeConverterProviderExactBeforeFuzzy
+   * @see TypeConverterProviderBestMatch
    */
   @Nullable
   public static <DSTTYPE> DSTTYPE convertIfNecessary (@Nullable final Object aSrcValue,
                                                       @Nonnull final Class <DSTTYPE> aDstClass)
   {
-    return convertIfNecessary (TypeConverterProviderExactBeforeFuzzy.getInstance (), aSrcValue, aDstClass);
+    return convertIfNecessary (TypeConverterProviderBestMatch.getInstance (), aSrcValue, aDstClass);
   }
 
   /**

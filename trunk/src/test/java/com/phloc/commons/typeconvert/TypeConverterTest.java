@@ -252,8 +252,8 @@ public final class TypeConverterTest extends AbstractPhlocTestCase
       Object aObj2 = TypeConverter.convertIfNecessary (sValue, aSrcValue.getClass ());
       assertEquals (aSrcValue.toString (), aObj2.toString ());
 
-      sValue = TypeConverter.convertIfNecessary (TypeConverterProviderFuzzy.getInstance (), aSrcValue, String.class);
-      aObj2 = TypeConverter.convertIfNecessary (TypeConverterProviderFuzzy.getInstance (),
+      sValue = TypeConverter.convertIfNecessary (TypeConverterProviderRuleBased.getInstance (), aSrcValue, String.class);
+      aObj2 = TypeConverter.convertIfNecessary (TypeConverterProviderRuleBased.getInstance (),
                                                 sValue,
                                                 aSrcValue.getClass ());
       assertEquals (aSrcValue.toString (), aObj2.toString ());

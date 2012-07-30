@@ -27,15 +27,15 @@ import javax.annotation.Nullable;
  * 
  * @author philip
  */
-public final class TypeConverterProviderExactBeforeFuzzy implements ITypeConverterProvider
+public final class TypeConverterProviderBestMatch implements ITypeConverterProvider
 {
-  private static final TypeConverterProviderExactBeforeFuzzy s_aInstance = new TypeConverterProviderExactBeforeFuzzy ();
+  private static final TypeConverterProviderBestMatch s_aInstance = new TypeConverterProviderBestMatch ();
 
-  private TypeConverterProviderExactBeforeFuzzy ()
+  private TypeConverterProviderBestMatch ()
   {}
 
   @Nonnull
-  public static TypeConverterProviderExactBeforeFuzzy getInstance ()
+  public static TypeConverterProviderBestMatch getInstance ()
   {
     return s_aInstance;
   }
@@ -43,6 +43,7 @@ public final class TypeConverterProviderExactBeforeFuzzy implements ITypeConvert
   @Nullable
   public ITypeConverter getTypeConverter (@Nonnull final Class <?> aSrcClass, @Nonnull final Class <?> aDstClass)
   {
+    // Find exact hit first
     ITypeConverter ret = TypeConverterRegistry.getExactConverter (aSrcClass, aDstClass);
     if (ret == null)
     {
