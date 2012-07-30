@@ -29,6 +29,7 @@ import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.collections.iterate.IIterableIterator;
 import com.phloc.commons.filter.IFilter;
 import com.phloc.commons.filter.collections.FilterIterator;
+import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * Iterate child elements of a single node. Does not iterate recursively.
@@ -71,5 +72,11 @@ public class ChildElementIterator implements IIterableIterator <Element>
   public Iterator <Element> iterator ()
   {
     return this;
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("iter", m_aIter).toString ();
   }
 }

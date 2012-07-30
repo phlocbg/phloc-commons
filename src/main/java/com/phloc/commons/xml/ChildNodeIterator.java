@@ -27,6 +27,7 @@ import org.w3c.dom.NodeList;
 
 import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.collections.iterate.IIterableIterator;
+import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * Iterate child elements of a single node. Does not iterate recursively.
@@ -79,5 +80,14 @@ public final class ChildNodeIterator implements IIterableIterator <Node>
   public Iterator <Node> iterator ()
   {
     return this;
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("nodeList", m_aNL)
+                                       .append ("max", m_nMax)
+                                       .append ("index", m_nIndex)
+                                       .toString ();
   }
 }
