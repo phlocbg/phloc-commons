@@ -1834,27 +1834,56 @@ public final class StringHelper extends StringParser
    * @see String#trim()
    */
   @Nullable
+  @CheckReturnValue
   public static String trim (@Nullable final String s)
   {
     return hasNoText (s) ? s : s.trim ();
   }
 
+  /**
+   * Get the first character of the passed character sequence
+   * 
+   * @param aCS
+   *        The source character sequence
+   * @return {@link CGlobal#ILLEGAL_CHAR} if the passed sequence was empty
+   */
   public static char getFirstChar (@Nullable final CharSequence aCS)
   {
     return hasText (aCS) ? aCS.charAt (0) : CGlobal.ILLEGAL_CHAR;
   }
 
+  /**
+   * Get the first character of the passed array
+   * 
+   * @param aChars
+   *        The character array
+   * @return {@link CGlobal#ILLEGAL_CHAR} if the passed array was empty
+   */
   public static char getFirstChar (@Nullable final char [] aChars)
   {
     return ArrayHelper.getFirst (aChars, CGlobal.ILLEGAL_CHAR);
   }
 
+  /**
+   * Get the last character of the passed character sequence
+   * 
+   * @param aCS
+   *        The source character sequence
+   * @return {@link CGlobal#ILLEGAL_CHAR} if the passed sequence was empty
+   */
   public static char getLastChar (@Nullable final CharSequence aCS)
   {
     final int nLength = getLength (aCS);
     return nLength > 0 ? aCS.charAt (nLength - 1) : CGlobal.ILLEGAL_CHAR;
   }
 
+  /**
+   * Get the last character of the passed array
+   * 
+   * @param aChars
+   *        The character array
+   * @return {@link CGlobal#ILLEGAL_CHAR} if the passed array was empty
+   */
   public static char getLastChar (@Nullable final char [] aChars)
   {
     return ArrayHelper.getLast (aChars, CGlobal.ILLEGAL_CHAR);
