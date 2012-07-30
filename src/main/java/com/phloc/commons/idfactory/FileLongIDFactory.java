@@ -31,12 +31,12 @@ import com.phloc.commons.string.StringParser;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * {@link File} based persisting {@link IIntIDFactory} implementation.
+ * {@link File} based persisting {@link ILongIDFactory} implementation.
  * 
  * @author philip
  */
 @ThreadSafe
-public class FileIntIDFactory extends AbstractPersistingIntIDFactory
+public class FileLongIDFactory extends AbstractPersistingLongIDFactory
 {
   @Nonnull
   public static final Charset CHARSET_TO_USE = CCharset.CHARSET_ISO_8859_1_OBJ;
@@ -46,12 +46,12 @@ public class FileIntIDFactory extends AbstractPersistingIntIDFactory
   @Nonnull
   private final File m_aFile;
 
-  public FileIntIDFactory (@Nonnull final File aFile)
+  public FileLongIDFactory (@Nonnull final File aFile)
   {
     this (aFile, DEFAULT_RESERVE_COUNT);
   }
 
-  public FileIntIDFactory (@Nonnull final File aFile, @Nonnegative final int nReserveCount)
+  public FileLongIDFactory (@Nonnull final File aFile, @Nonnegative final int nReserveCount)
   {
     super (nReserveCount);
     if (aFile == null)
@@ -63,11 +63,11 @@ public class FileIntIDFactory extends AbstractPersistingIntIDFactory
    * Note: this method must only be called from within a locked section!
    */
   @Override
-  protected final int readAndUpdateIDCounter (@Nonnegative final int nReserveCount)
+  protected final long readAndUpdateIDCounter (@Nonnegative final int nReserveCount)
   {
     final String sContent = SimpleFileIO.readFileAsString (m_aFile, CHARSET_TO_USE);
-    final int nRead = sContent != null ? StringParser.parseInt (sContent.trim (), 0) : 0;
-    SimpleFileIO.writeFile (m_aFile, Integer.toString (nRead + nReserveCount), CHARSET_TO_USE);
+    final long nRead = sContent != null ? StringParser.parseLong (sContent.trim (), 0) : 0;
+    SimpleFileIO.writeFile (m_aFile, Long.toString (nRead + nReserveCount), CHARSET_TO_USE);
     return nRead;
   }
 
@@ -76,7 +76,7 @@ public class FileIntIDFactory extends AbstractPersistingIntIDFactory
   {
     if (!super.equals (o))
       return false;
-    final FileIntIDFactory rhs = (FileIntIDFactory) o;
+    final FileLongIDFactory rhs = (FileLongIDFactory) o;
     return m_aFile.equals (rhs.m_aFile);
   }
 

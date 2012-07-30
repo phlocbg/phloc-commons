@@ -47,8 +47,10 @@ public final class GlobalIDFactory
 
   private static IIntIDFactory s_aIntIDFactory = new MemoryIntIDFactory ();
   private static IIntIDFactory s_aPersistentIntIDFactory;
-  private static IIDFactory <String> s_aStringIDFactory = new StringIDFromGlobalIntIDFactory ();
-  private static IIDFactory <String> s_aPersistentStringIDFactory = new StringIDFromGlobalPersistentIntIDFactory ();
+  private static ILongIDFactory s_aLongIDFactory = new MemoryLongIDFactory ();
+  private static ILongIDFactory s_aPersistentLongIDFactory;
+  private static IStringIDFactory s_aStringIDFactory = new StringIDFromGlobalIntIDFactory ();
+  private static IStringIDFactory s_aPersistentStringIDFactory = new StringIDFromGlobalPersistentIntIDFactory ();
 
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")
@@ -57,12 +59,18 @@ public final class GlobalIDFactory
   private GlobalIDFactory ()
   {}
 
-  public static boolean hasPersistentIntIDFactory ()
+  public static boolean hasIntIDFactory ()
+  {
+    return getIntIDFactory () != null;
+  }
+
+  @Nullable
+  public static IIntIDFactory getIntIDFactory ()
   {
     s_aRWLock.readLock ().lock ();
     try
     {
-      return s_aPersistentIntIDFactory != null;
+      return s_aIntIDFactory;
     }
     finally
     {
@@ -89,6 +97,25 @@ public final class GlobalIDFactory
     }
   }
 
+  public static boolean hasPersistentIntIDFactory ()
+  {
+    return getPersistentIntIDFactory () != null;
+  }
+
+  @Nullable
+  public static IIntIDFactory getPersistentIntIDFactory ()
+  {
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      return s_aPersistentIntIDFactory;
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
+
   @Nonnull
   public static EChange setPersistentIntIDFactory (@Nullable final IIntIDFactory aFactory)
   {
@@ -108,8 +135,103 @@ public final class GlobalIDFactory
     }
   }
 
+  public static boolean hasLongIDFactory ()
+  {
+    return getLongIDFactory () != null;
+  }
+
+  @Nullable
+  public static ILongIDFactory getLongIDFactory ()
+  {
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      return s_aLongIDFactory;
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
+
   @Nonnull
-  public static EChange setStringIDFactory (@Nullable final IIDFactory <String> aFactory)
+  public static EChange setLongIDFactory (@Nullable final ILongIDFactory aFactory)
+  {
+    s_aRWLock.writeLock ().lock ();
+    try
+    {
+      if (EqualsUtils.equals (s_aLongIDFactory, aFactory))
+        return EChange.UNCHANGED;
+      if (s_aLogger.isInfoEnabled ())
+        s_aLogger.info ("Setting in-memory long ID factory " + aFactory);
+      s_aLongIDFactory = aFactory;
+      return EChange.CHANGED;
+    }
+    finally
+    {
+      s_aRWLock.writeLock ().unlock ();
+    }
+  }
+
+  public static boolean hasPersistentLongIDFactory ()
+  {
+    return getPersistentLongIDFactory () != null;
+  }
+
+  @Nullable
+  public static ILongIDFactory getPersistentLongIDFactory ()
+  {
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      return s_aPersistentLongIDFactory;
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  @Nonnull
+  public static EChange setPersistentLongIDFactory (@Nullable final ILongIDFactory aFactory)
+  {
+    s_aRWLock.writeLock ().lock ();
+    try
+    {
+      if (EqualsUtils.equals (s_aPersistentLongIDFactory, aFactory))
+        return EChange.UNCHANGED;
+      if (s_aLogger.isInfoEnabled ())
+        s_aLogger.info ("Setting persistent long ID factory " + aFactory);
+      s_aPersistentLongIDFactory = aFactory;
+      return EChange.CHANGED;
+    }
+    finally
+    {
+      s_aRWLock.writeLock ().unlock ();
+    }
+  }
+
+  public static boolean hasStringIDFactory ()
+  {
+    return getStringIDFactory () != null;
+  }
+
+  @Nullable
+  public static IStringIDFactory getStringIDFactory ()
+  {
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      return s_aStringIDFactory;
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  @Nonnull
+  public static EChange setStringIDFactory (@Nullable final IStringIDFactory aFactory)
   {
     s_aRWLock.writeLock ().lock ();
     try
@@ -127,8 +249,27 @@ public final class GlobalIDFactory
     }
   }
 
+  public static boolean hasPersistentStringIDFactory ()
+  {
+    return getPersistentStringIDFactory () != null;
+  }
+
+  @Nullable
+  public static IStringIDFactory getPersistentStringIDFactory ()
+  {
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      return s_aPersistentStringIDFactory;
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
+
   @Nonnull
-  public static EChange setPersistentStringIDFactory (@Nullable final IIDFactory <String> aFactory)
+  public static EChange setPersistentStringIDFactory (@Nullable final IStringIDFactory aFactory)
   {
     s_aRWLock.writeLock ().lock ();
     try
@@ -169,6 +310,36 @@ public final class GlobalIDFactory
       if (s_aPersistentIntIDFactory == null)
         throw new IllegalStateException ("No persistent int ID factory has been supplied. Don't know how to create persistent IDs!");
       return s_aPersistentIntIDFactory.getNewID ();
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  public static long getNewLongID ()
+  {
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      if (s_aLongIDFactory == null)
+        throw new IllegalStateException ("No in-memory long ID factory has been supplied!");
+      return s_aLongIDFactory.getNewID ();
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  public static long getNewPersistentLongID ()
+  {
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      if (s_aPersistentLongIDFactory == null)
+        throw new IllegalStateException ("No persistent long ID factory has been supplied. Don't know how to create persistent IDs!");
+      return s_aPersistentLongIDFactory.getNewID ();
     }
     finally
     {

@@ -22,7 +22,14 @@ import javax.annotation.Nonnull;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
-public final class StringIDFromGlobalPersistentIntIDFactory implements IIDFactory <String>
+/**
+ * An {@link IStringIDFactory} implementation that uses a constant prefix and an
+ * int supplied from {@link GlobalIDFactory#getNewPersistentIntID()} to create
+ * unique IDs.
+ * 
+ * @author philip
+ */
+public final class StringIDFromGlobalPersistentIntIDFactory implements IStringIDFactory
 {
   private final String m_sPrefix;
 

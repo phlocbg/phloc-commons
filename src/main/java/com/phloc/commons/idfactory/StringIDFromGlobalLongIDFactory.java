@@ -23,28 +23,25 @@ import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * A factory that creates String IDs based on a specified {@link IIntIDFactory}.
- * The implementation is as thread-safe as the used {@link IIntIDFactory}.
+ * An {@link IStringIDFactory} implementation that uses a constant prefix and a
+ * long supplied from {@link GlobalIDFactory#getNewLongID()} to create unique
+ * IDs.
  * 
  * @author philip
  */
-public class StringIDFromIntIDFactory implements IStringIDFactory
+public final class StringIDFromGlobalLongIDFactory implements IStringIDFactory
 {
-  private final IIntIDFactory m_aIntIDFactory;
   private final String m_sPrefix;
 
-  public StringIDFromIntIDFactory (@Nonnull final IIntIDFactory aIntIDFactory)
+  public StringIDFromGlobalLongIDFactory ()
   {
-    this (aIntIDFactory, GlobalIDFactory.DEFAULT_PREFIX);
+    this (GlobalIDFactory.DEFAULT_PREFIX);
   }
 
-  public StringIDFromIntIDFactory (@Nonnull final IIntIDFactory aIntIDFactory, @Nonnull final String sPrefix)
+  public StringIDFromGlobalLongIDFactory (@Nonnull final String sPrefix)
   {
-    if (aIntIDFactory == null)
-      throw new NullPointerException ("intIDFactory");
     if (sPrefix == null)
       throw new NullPointerException ("prefix");
-    m_aIntIDFactory = aIntIDFactory;
     m_sPrefix = sPrefix;
   }
 
@@ -57,7 +54,7 @@ public class StringIDFromIntIDFactory implements IStringIDFactory
   @Nonnull
   public String getNewID ()
   {
-    return m_sPrefix + Integer.toString (m_aIntIDFactory.getNewID ());
+    return m_sPrefix + Long.toString (GlobalIDFactory.getNewLongID ());
   }
 
   @Override
@@ -65,23 +62,21 @@ public class StringIDFromIntIDFactory implements IStringIDFactory
   {
     if (o == this)
       return true;
-    if (!(o instanceof StringIDFromIntIDFactory))
+    if (!(o instanceof StringIDFromGlobalLongIDFactory))
       return false;
-    final StringIDFromIntIDFactory rhs = (StringIDFromIntIDFactory) o;
-    return m_aIntIDFactory.equals (rhs.m_aIntIDFactory) && m_sPrefix.equals (rhs.m_sPrefix);
+    final StringIDFromGlobalLongIDFactory rhs = (StringIDFromGlobalLongIDFactory) o;
+    return m_sPrefix.equals (rhs.m_sPrefix);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aIntIDFactory).append (m_sPrefix).getHashCode ();
+    return new HashCodeGenerator (this).append (m_sPrefix).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("intIDFactory", m_aIntIDFactory)
-                                       .append ("prefix", m_sPrefix)
-                                       .toString ();
+    return new ToStringGenerator (this).append ("prefix", m_sPrefix).toString ();
   }
 }
