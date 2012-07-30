@@ -18,6 +18,7 @@
 package com.phloc.commons.typeconvert.impl;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -71,6 +72,8 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
     {
       public ArrayList <?> convert (@Nonnull final Object aSource)
       {
+        if (aSource instanceof Collection <?>)
+          return new ArrayList <Object> ((Collection <?>) aSource);
         final ArrayList <Object> ret = new ArrayList <Object> (1);
         ret.add (aSource);
         return ret;
@@ -82,6 +85,8 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
     {
       public Vector <?> convert (@Nonnull final Object aSource)
       {
+        if (aSource instanceof Collection <?>)
+          return new Vector <Object> ((Collection <?>) aSource);
         final Vector <Object> ret = new Vector <Object> (1);
         ret.add (aSource);
         return ret;
@@ -93,6 +98,8 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
     {
       public LinkedList <?> convert (@Nonnull final Object aSource)
       {
+        if (aSource instanceof Collection <?>)
+          return new LinkedList <Object> ((Collection <?>) aSource);
         final LinkedList <Object> ret = new LinkedList <Object> ();
         ret.add (aSource);
         return ret;
@@ -104,6 +111,8 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
     {
       public CopyOnWriteArrayList <?> convert (@Nonnull final Object aSource)
       {
+        if (aSource instanceof Collection <?>)
+          return new CopyOnWriteArrayList <Object> ((Collection <?>) aSource);
         final CopyOnWriteArrayList <Object> ret = new CopyOnWriteArrayList <Object> ();
         ret.add (aSource);
         return ret;
@@ -115,6 +124,8 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
     {
       public List <?> convert (@Nonnull final Object aSource)
       {
+        if (aSource instanceof Collection <?>)
+          return ContainerHelper.newList ((Collection <?>) aSource);
         return ContainerHelper.newList (aSource);
       }
     });
@@ -124,6 +135,8 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
     {
       public TreeSet <?> convert (@Nonnull final Object aSource)
       {
+        if (aSource instanceof Collection <?>)
+          return new TreeSet <Object> ((Collection <?>) aSource);
         final TreeSet <Object> ret = new TreeSet <Object> ();
         ret.add (aSource);
         return ret;
@@ -135,6 +148,8 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
     {
       public LinkedHashSet <?> convert (@Nonnull final Object aSource)
       {
+        if (aSource instanceof Collection <?>)
+          return new LinkedHashSet <Object> ((Collection <?>) aSource);
         final LinkedHashSet <Object> ret = new LinkedHashSet <Object> (1);
         ret.add (aSource);
         return ret;
@@ -146,6 +161,8 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
     {
       public CopyOnWriteArraySet <?> convert (@Nonnull final Object aSource)
       {
+        if (aSource instanceof Collection <?>)
+          return new CopyOnWriteArraySet <Object> ((Collection <?>) aSource);
         final CopyOnWriteArraySet <Object> ret = new CopyOnWriteArraySet <Object> ();
         ret.add (aSource);
         return ret;
@@ -157,6 +174,8 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
     {
       public Set <?> convert (@Nonnull final Object aSource)
       {
+        if (aSource instanceof Collection <?>)
+          return ContainerHelper.newSet ((Collection <?>) aSource);
         return ContainerHelper.newSet (aSource);
       }
     });
