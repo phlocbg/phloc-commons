@@ -2,7 +2,15 @@
 #labels Featured
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
-<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr border="1"><td>7/28/12</td><td colspan="4">_Release *3.7.0.RC1*_</td></tr>
+<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr border="1"><td>7/30/12</td><td colspan="4">_Release *3.7.0*_</td></tr>
+<tr><td>7/30/12</td><td>add</td><td>api</td><td></td><td>Added class AbstractFilter encapsulating a nested filter</td></tr>
+<tr><td>7/30/12</td><td>change</td><td>api</td><td>*yes*</td><td>Renamed class TypeConverterProviderExactBeforeFuzzy to TypeConverterProviderBestMatch</td></tr>
+<tr><td>7/30/12</td><td>add</td><td>api</td><td></td><td>Added new methods in class StringHelper</td></tr>
+<tr><td>7/30/12</td><td>add</td><td>api</td><td></td><td>Extended GlobalIDFactory API to retrieve and check for all contained ID factories</td></tr>
+<tr><td>7/30/12</td><td>add</td><td>api</td><td></td><td>Extended GlobalIDFactory to also handle long based IDs and created factories as they are present for int IDs</td></tr>
+<tr><td>7/28/12</td><td>add</td><td>tech</td><td></td><td>Added some type converters for Date and Calendar to and from String and Long</td></tr>
+<tr><td>7/28/12</td><td>add</td><td>api</td><td></td><td>Added VendorInfo methods to retrieve vendor URL without protocol, the email address suffix and the vendor location</td></tr>
+<tr border="1"><td>7/28/12</td><td colspan="4">_Release *3.7.0.RC1*_</td></tr>
 <tr><td>7/28/12</td><td>change</td><td>api</td><td></td><td>Improved VendorInfo to support custom inception year and adopted file header lines</td></tr>
 <tr><td>7/28/12</td><td>add</td><td>api</td><td></td><td>Added new methods new...Vector(array) and newVector(...)</td></tr>
 <tr><td>7/28/12</td><td>add</td><td>api</td><td></td><td>Added new interface method IMultiMap.getTotalValueCount()</td></tr>
