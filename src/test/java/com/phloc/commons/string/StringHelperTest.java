@@ -1402,4 +1402,48 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     assertFalse (StringHelper.containsAny (aIn, new char [0]));
     assertFalse (StringHelper.containsAny (new char [0], "a".toCharArray ()));
   }
+
+  @Test
+  public void testGetWithoutLeadingChar ()
+  {
+    assertEquals ("bcd", StringHelper.getWithoutLeadingChar ("abcd"));
+    assertEquals ("b", StringHelper.getWithoutLeadingChar ("ab"));
+    assertEquals ("", StringHelper.getWithoutLeadingChar ("a"));
+    assertEquals ("", StringHelper.getWithoutLeadingChar (""));
+    assertEquals ("", StringHelper.getWithoutLeadingChar (null));
+  }
+
+  @Test
+  public void testGetWithoutLeadingChars ()
+  {
+    assertEquals ("cd", StringHelper.getWithoutLeadingChars ("abcd", 2));
+    assertEquals ("d", StringHelper.getWithoutLeadingChars ("abcd", 3));
+    assertEquals ("c", StringHelper.getWithoutLeadingChars ("abc", 2));
+    assertEquals ("", StringHelper.getWithoutLeadingChars ("ab", 2));
+    assertEquals ("", StringHelper.getWithoutLeadingChars ("a", 2));
+    assertEquals ("", StringHelper.getWithoutLeadingChars ("", 2));
+    assertEquals ("", StringHelper.getWithoutLeadingChars (null, 2));
+  }
+
+  @Test
+  public void testGetWithoutTrailingChar ()
+  {
+    assertEquals ("abc", StringHelper.getWithoutTrailingChar ("abcd"));
+    assertEquals ("a", StringHelper.getWithoutTrailingChar ("ab"));
+    assertEquals ("", StringHelper.getWithoutTrailingChar ("a"));
+    assertEquals ("", StringHelper.getWithoutTrailingChar (""));
+    assertEquals ("", StringHelper.getWithoutTrailingChar (null));
+  }
+
+  @Test
+  public void testGetWithoutTrailingChars ()
+  {
+    assertEquals ("ab", StringHelper.getWithoutTrailingChars ("abcd", 2));
+    assertEquals ("a", StringHelper.getWithoutTrailingChars ("abcd", 3));
+    assertEquals ("a", StringHelper.getWithoutTrailingChars ("abc", 2));
+    assertEquals ("", StringHelper.getWithoutTrailingChars ("ab", 2));
+    assertEquals ("", StringHelper.getWithoutTrailingChars ("a", 2));
+    assertEquals ("", StringHelper.getWithoutTrailingChars ("", 2));
+    assertEquals ("", StringHelper.getWithoutTrailingChars (null, 2));
+  }
 }
