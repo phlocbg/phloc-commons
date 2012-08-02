@@ -775,6 +775,23 @@ public final class StringHelper extends StringParser
   }
 
   /**
+   * Get a concatenated String from all elements of the passed container,
+   * separated by the specified separator char. Even <code>null</code> elements
+   * are added.
+   * 
+   * @param cSep
+   *        The separator to use.
+   * @param aElements
+   *        The container to convert. May be <code>null</code> or empty.
+   * @return The concatenated string.
+   */
+  @Nonnull
+  public static String getImploded (final char cSep, @Nullable final Iterable <?> aElements)
+  {
+    return getImploded (Character.toString (cSep), aElements);
+  }
+
+  /**
    * Get a concatenated String from all elements of the passed map, separated by
    * the specified separator string.
    * 
@@ -800,7 +817,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get a concatenated String from all elements of the passed map, separated by
-   * the specified separator string.
+   * the specified separator strings.
    * 
    * @param sSepOuter
    *        The separator to use for separating the map entries. May not be
@@ -834,6 +851,24 @@ public final class StringHelper extends StringParser
       }
     }
     return aSB.toString ();
+  }
+
+  /**
+   * Get a concatenated String from all elements of the passed map, separated by
+   * the specified separator chars.
+   * 
+   * @param cSepOuter
+   *        The separator to use for separating the map entries.
+   * @param cSepInner
+   *        The separator to use for separating the key from the value.
+   * @param aElements
+   *        The map to convert. May be <code>null</code> or empty.
+   * @return The concatenated string.
+   */
+  @Nonnull
+  public static String getImploded (final char cSepOuter, final char cSepInner, @Nullable final Map <?, ?> aElements)
+  {
+    return getImploded (Character.toString (cSepOuter), Character.toString (cSepInner), aElements);
   }
 
   /**
@@ -876,6 +911,24 @@ public final class StringHelper extends StringParser
     if (ArrayHelper.isEmpty (aElements))
       return "";
     return getImploded (sSep, aElements, 0, aElements.length);
+  }
+
+  /**
+   * Get a concatenated String from all elements of the passed array, separated
+   * by the specified separator char.
+   * 
+   * @param cSep
+   *        The separator to use.
+   * @param aElements
+   *        The container to convert. May be <code>null</code> or empty.
+   * @return The concatenated string.
+   * @param <ELEMENTTYPE>
+   *        The type of elements to be imploded.
+   */
+  @Nonnull
+  public static <ELEMENTTYPE> String getImploded (final char cSep, @Nullable final ELEMENTTYPE... aElements)
+  {
+    return getImploded (Character.toString (cSep), aElements);
   }
 
   /**
@@ -947,6 +1000,31 @@ public final class StringHelper extends StringParser
   }
 
   /**
+   * Get a concatenated String from all elements of the passed array, separated
+   * by the specified separator char.
+   * 
+   * @param cSep
+   *        The separator to use.
+   * @param aElements
+   *        The container to convert. May be <code>null</code> or empty.
+   * @param nOfs
+   *        The offset to start from.
+   * @param nLen
+   *        The number of elements to implode.
+   * @return The concatenated string.
+   * @param <ELEMENTTYPE>
+   *        The type of elements to be imploded.
+   */
+  @Nonnull
+  public static <ELEMENTTYPE> String getImploded (final char cSep,
+                                                  @Nullable final ELEMENTTYPE [] aElements,
+                                                  @Nonnegative final int nOfs,
+                                                  @Nonnegative final int nLen)
+  {
+    return getImploded (Character.toString (cSep), aElements, nOfs, nLen);
+  }
+
+  /**
    * Get a concatenated String from all non-<code>null</code> and non empty
    * elements of the passed container, separated by the specified separator
    * string. This the very generic version of
@@ -981,6 +1059,25 @@ public final class StringHelper extends StringParser
   }
 
   /**
+   * Get a concatenated String from all non-<code>null</code> and non empty
+   * elements of the passed container, separated by the specified separator
+   * char. This the very generic version of
+   * {@link #getConcatenatedOnDemand(String, String, String)} for an arbitrary
+   * number of elements.
+   * 
+   * @param cSep
+   *        The separator to use.
+   * @param aElements
+   *        The container to convert. May be <code>null</code> or empty.
+   * @return The concatenated string.
+   */
+  @Nonnull
+  public static String getImplodedNonEmpty (final char cSep, @Nullable final Iterable <String> aElements)
+  {
+    return getImplodedNonEmpty (Character.toString (cSep), aElements);
+  }
+
+  /**
    * Get a concatenated String from all elements of the passed array, separated
    * by the specified separator string. This the very generic version of
    * {@link #getConcatenatedOnDemand(String, String, String)} for an arbitrary
@@ -993,14 +1090,31 @@ public final class StringHelper extends StringParser
    * @return The concatenated string.
    */
   @Nonnull
-  public static <ELEMENTTYPE> String getImplodedNonEmpty (@Nonnull final String sSep,
-                                                          @Nullable final String... aElements)
+  public static String getImplodedNonEmpty (@Nonnull final String sSep, @Nullable final String... aElements)
   {
     if (sSep == null)
       throw new NullPointerException ("separator");
     if (ArrayHelper.isEmpty (aElements))
       return "";
     return getImplodedNonEmpty (sSep, aElements, 0, aElements.length);
+  }
+
+  /**
+   * Get a concatenated String from all elements of the passed array, separated
+   * by the specified separator char. This the very generic version of
+   * {@link #getConcatenatedOnDemand(String, String, String)} for an arbitrary
+   * number of elements.
+   * 
+   * @param cSep
+   *        The separator to use.
+   * @param aElements
+   *        The container to convert. May be <code>null</code> or empty.
+   * @return The concatenated string.
+   */
+  @Nonnull
+  public static String getImplodedNonEmpty (final char cSep, @Nullable final String... aElements)
+  {
+    return getImplodedNonEmpty (Character.toString (cSep), aElements);
   }
 
   /**
@@ -1020,10 +1134,10 @@ public final class StringHelper extends StringParser
    * @return The concatenated string.
    */
   @Nonnull
-  public static <ELEMENTTYPE> String getImplodedNonEmpty (@Nonnull final String sSep,
-                                                          @Nullable final String [] aElements,
-                                                          @Nonnegative final int nOfs,
-                                                          @Nonnegative final int nLen)
+  public static String getImplodedNonEmpty (@Nonnull final String sSep,
+                                            @Nullable final String [] aElements,
+                                            @Nonnegative final int nOfs,
+                                            @Nonnegative final int nLen)
   {
     if (sSep == null)
       throw new NullPointerException ("separator");
@@ -1042,6 +1156,31 @@ public final class StringHelper extends StringParser
       }
     }
     return aSB.toString ();
+  }
+
+  /**
+   * Get a concatenated String from all elements of the passed array, separated
+   * by the specified separator char. This the very generic version of
+   * {@link #getConcatenatedOnDemand(String, String, String)} for an arbitrary
+   * number of elements.
+   * 
+   * @param cSep
+   *        The separator to use.
+   * @param aElements
+   *        The container to convert. May be <code>null</code> or empty.
+   * @param nOfs
+   *        The offset to start from.
+   * @param nLen
+   *        The number of elements to implode.
+   * @return The concatenated string.
+   */
+  @Nonnull
+  public static String getImplodedNonEmpty (final char cSep,
+                                            @Nullable final String [] aElements,
+                                            @Nonnegative final int nOfs,
+                                            @Nonnegative final int nLen)
+  {
+    return getImplodedNonEmpty (Character.toString (cSep), aElements, nOfs, nLen);
   }
 
   @Nonnull
