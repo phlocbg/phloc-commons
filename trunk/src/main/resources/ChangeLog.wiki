@@ -1,7 +1,8 @@
 #summary Change log of phloc-commons
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
-<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr border="1"><td>7/30/12</td><td colspan="4">_Release *3.7.0*_</td></tr>
+<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr><td>8/2/12</td><td>add</td><td>api</td><td></td><td>Added new StringHelper methods getImploded(NonEmpty) using a char as separator</td></tr>
+<tr border="1"><td>7/30/12</td><td colspan="4">_Release *3.7.0*_</td></tr>
 <tr><td>7/30/12</td><td>add</td><td>api</td><td></td><td>Added class AbstractFilter encapsulating a nested filter</td></tr>
 <tr><td>7/30/12</td><td>change</td><td>api</td><td>*yes*</td><td>Renamed class TypeConverterProviderExactBeforeFuzzy to TypeConverterProviderBestMatch</td></tr>
 <tr><td>7/30/12</td><td>add</td><td>api</td><td></td><td>Added new methods in class StringHelper</td></tr>
