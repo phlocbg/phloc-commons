@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.io.file;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -506,19 +508,13 @@ public final class FileOperations
     // Ensure the targets parent directory is present
     FileUtils.ensureParentDirectoryIsPresent (aTargetFile);
 
-    final InputStream aIS = FileUtils.getInputStream (aSourceFile);
-    final OutputStream aOS = FileUtils.getOutputStream (aTargetFile, EAppend.TRUNCATE);
-    try
-    {
-      final EFileIOErrorCode eError = StreamUtils.copyInputStreamToOutputStream (aIS, aOS).isSuccess ()
-                                                                                                       ? EFileIOErrorCode.NO_ERROR
-                                                                                                       : EFileIOErrorCode.OPERATION_FAILED;
-      return eError.getAsIOError (EFileIOOperation.COPY_FILE, aSourceFile, aTargetFile);
-    }
-    finally
-    {
-      StreamUtils.close (aOS);
-    }
+    // Used buffered streams for better performs
+    final InputStream aIS = new BufferedInputStream (FileUtils.getInputStream (aSourceFile));
+    final OutputStream aOS = new BufferedOutputStream (FileUtils.getOutputStream (aTargetFile, EAppend.TRUNCATE));
+    final EFileIOErrorCode eError = StreamUtils.copyInputStreamToOutputStreamAndCloseOS (aIS, aOS).isSuccess ()
+                                                                                                               ? EFileIOErrorCode.NO_ERROR
+                                                                                                               : EFileIOErrorCode.OPERATION_FAILED;
+    return eError.getAsIOError (EFileIOOperation.COPY_FILE, aSourceFile, aTargetFile);
   }
 
   /**
