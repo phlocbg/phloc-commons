@@ -30,6 +30,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
@@ -95,7 +96,7 @@ public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContain
       return removeAttribute (sName);
 
     final Object aOldValue = m_aAttrs.put (sName, aValue);
-    return EChange.valueOf (!aValue.equals (aOldValue));
+    return EChange.valueOf (!EqualsUtils.equals (aValue, aOldValue));
   }
 
   @Nonnull
