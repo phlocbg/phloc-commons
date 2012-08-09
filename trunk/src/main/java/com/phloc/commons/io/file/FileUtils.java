@@ -150,6 +150,27 @@ public final class FileUtils
     return aFile.canExecute ();
   }
 
+  public static boolean canReadAndWriteFile (@Nonnull final File aFile)
+  {
+    if (aFile == null)
+      throw new NullPointerException ("file");
+    if (existsFile (aFile))
+    {
+      if (!canRead (aFile) || !canWrite (aFile))
+        return false;
+    }
+    else
+    {
+      final File aParentFile = aFile.getParentFile ();
+      if (aParentFile != null)
+      {
+        if (!canRead (aParentFile) || !canWrite (aParentFile))
+          return false;
+      }
+    }
+    return true;
+  }
+
   @Nonnull
   public static EChange ensureParentDirectoryIsPresent (@Nonnull final File aFileObject)
   {

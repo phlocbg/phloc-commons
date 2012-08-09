@@ -26,6 +26,7 @@ import javax.annotation.concurrent.ThreadSafe;
 
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.hash.HashCodeGenerator;
+import com.phloc.commons.io.file.FileUtils;
 import com.phloc.commons.io.file.SimpleFileIO;
 import com.phloc.commons.string.StringParser;
 import com.phloc.commons.string.ToStringGenerator;
@@ -56,6 +57,8 @@ public class FileLongIDFactory extends AbstractPersistingLongIDFactory
     super (nReserveCount);
     if (aFile == null)
       throw new NullPointerException ("file");
+    if (FileUtils.canReadAndWriteFile (aFile))
+      throw new IllegalArgumentException ("Cannot read and/or write the file " + aFile + "!");
     m_aFile = aFile;
   }
 
