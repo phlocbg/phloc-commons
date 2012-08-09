@@ -23,11 +23,15 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.IWritableResource;
 import com.phloc.commons.io.IWritableResourceProvider;
+import com.phloc.commons.io.file.FileUtils;
 import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.io.resource.FileSystemResource;
 import com.phloc.commons.io.resource.URLResource;
@@ -42,6 +46,7 @@ import com.phloc.commons.string.ToStringGenerator;
 @Immutable
 public final class FileSystemResourceProvider implements IWritableResourceProvider
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (FileSystemResourceProvider.class);
   private final File m_aBasePath;
 
   public FileSystemResourceProvider ()
@@ -62,6 +67,10 @@ public final class FileSystemResourceProvider implements IWritableResourceProvid
         throw new IllegalArgumentException ("Passed base path '" + aBasePath + "' does not exist!");
       if (!aBasePath.isDirectory ())
         throw new IllegalArgumentException ("Passed base path '" + aBasePath + "' is not a directory!");
+      if (!FileUtils.canRead (aBasePath))
+        s_aLogger.warn ("Cannot read passed base path '" + aBasePath + "'!");
+      if (!FileUtils.canWrite (aBasePath))
+        s_aLogger.warn ("Cannot write passed base path '" + aBasePath + "'!");
     }
     m_aBasePath = aBasePath;
   }
