@@ -26,6 +26,8 @@ import javax.annotation.concurrent.ThreadSafe;
 
 import com.phloc.commons.state.EChange;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * A caching class that has the ability to fill itself with the abstract
  * getValueToCache(Object) method.
@@ -58,6 +60,7 @@ public abstract class AbstractNotifyingCache <KEYTYPE, VALUETYPE> extends Abstra
   protected abstract VALUETYPE getValueToCache (@Nullable KEYTYPE aKey);
 
   @Override
+  @SuppressFBWarnings ("RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE")
   public final VALUETYPE getFromCache (@Nullable final KEYTYPE aKey)
   {
     VALUETYPE aValue;
