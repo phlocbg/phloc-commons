@@ -181,7 +181,7 @@ public enum EOperatingSystem implements IHasDisplayName
       // Note: double initialization doesn't matter here
       final String sCurrentOSName = getCurrentOSName ();
       s_aInstance = ret = forName (sCurrentOSName);
-      if (ret == null)
+      if (ret == UNKNOWN)
         LoggerFactory.getLogger (EOperatingSystem.class).error ("Failed to resolve operating system from name '" +
                                                                 sCurrentOSName +
                                                                 "'!!!");

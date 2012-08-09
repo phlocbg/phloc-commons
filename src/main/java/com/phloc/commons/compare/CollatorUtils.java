@@ -34,6 +34,8 @@ import com.phloc.commons.cache.AbstractNotifyingCache;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.system.SystemHelper;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Helper class to easily create commonly used {@link Collator} objects.
  * 
@@ -60,6 +62,7 @@ public final class CollatorUtils
 
     @Override
     @Nonnull
+    @SuppressFBWarnings ("RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE")
     protected Collator getValueToCache (@Nullable final Locale aLocale)
     {
       if (aLocale == null)
