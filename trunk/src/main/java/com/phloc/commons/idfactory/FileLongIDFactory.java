@@ -57,7 +57,7 @@ public class FileLongIDFactory extends AbstractPersistingLongIDFactory
     super (nReserveCount);
     if (aFile == null)
       throw new NullPointerException ("file");
-    if (FileUtils.canReadAndWriteFile (aFile))
+    if (!FileUtils.canReadAndWriteFile (aFile))
       throw new IllegalArgumentException ("Cannot read and/or write the file " + aFile + "!");
     m_aFile = aFile;
   }
