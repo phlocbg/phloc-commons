@@ -150,20 +150,32 @@ public final class FileUtils
     return aFile.canExecute ();
   }
 
+  /**
+   * Check if the passed file can read and write. If the file already exists,
+   * the file itself is checked. If the file does not exist, the parent
+   * directory
+   * 
+   * @param aFile
+   *        The file to be checked. May not be <code>null</code>.
+   * @return <code>true</code> if the file can be read or write
+   */
   public static boolean canReadAndWriteFile (@Nonnull final File aFile)
   {
     if (aFile == null)
       throw new NullPointerException ("file");
     if (existsFile (aFile))
     {
+      // File exists
       if (!canRead (aFile) || !canWrite (aFile))
         return false;
     }
     else
     {
+      // File does not exist
       final File aParentFile = aFile.getParentFile ();
-      if (aParentFile != null)
+      if (aParentFile != null && aParentFile.isDirectory ())
       {
+        // Check parent directory
         if (!canRead (aParentFile) || !canWrite (aParentFile))
           return false;
       }
@@ -323,6 +335,8 @@ public final class FileUtils
   {
     if (aFile == null)
       throw new NullPointerException ("file");
+    if (eAppend == null)
+      throw new NullPointerException ("append");
 
     try
     {

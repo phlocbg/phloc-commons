@@ -20,6 +20,11 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2012-08-10" category="api" action="add">
+    <change>
+      <text locale="en">Added new static methods in FileSystemResource</text>
+    </change>
+  </entry>
   <entry date="2012-08-09" category="api" action="add">
     <change>
       <text locale="en">Added new method FileUtils.canReadAndWriteFile and using it in the File(Int|Long)IDFactory</text>
