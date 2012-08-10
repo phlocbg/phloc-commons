@@ -34,6 +34,7 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.io.EAppend;
 import com.phloc.commons.io.IReadWriteResource;
@@ -42,6 +43,7 @@ import com.phloc.commons.io.IWritableResource;
 import com.phloc.commons.io.file.FileUtils;
 import com.phloc.commons.io.file.FilenameHelper;
 import com.phloc.commons.io.streams.StreamUtils;
+import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -118,39 +120,102 @@ public final class FileSystemResource implements IReadWriteResource
   }
 
   @Nullable
+  public static Reader getReader (@Nonnull final File aFile, @Nonnull @Nonempty final String sCharset)
+  {
+    if (aFile == null)
+      throw new NullPointerException ("file");
+    if (StringHelper.hasNoText (sCharset))
+      throw new IllegalArgumentException ("charset");
+
+    return StreamUtils.createReader (getInputStream (aFile), sCharset);
+  }
+
+  @Nullable
+  public static Reader getReader (@Nonnull final File aFile, @Nonnull final Charset aCharset)
+  {
+    if (aFile == null)
+      throw new NullPointerException ("file");
+    if (aCharset == null)
+      throw new NullPointerException ("charset");
+
+    return StreamUtils.createReader (getInputStream (aFile), aCharset);
+  }
+
+  @Nullable
   public InputStream getInputStream ()
   {
     return getInputStream (m_aFile);
   }
 
   @Nullable
-  public Reader getReader (@Nonnull final String sCharset)
+  public Reader getReader (@Nonnull @Nonempty final String sCharset)
   {
-    return StreamUtils.createReader (getInputStream (), sCharset);
+    return getReader (m_aFile, sCharset);
   }
 
   @Nullable
   public Reader getReader (@Nonnull final Charset aCharset)
   {
-    return StreamUtils.createReader (getInputStream (), aCharset);
+    return getReader (m_aFile, aCharset);
+  }
+
+  @Nullable
+  public static OutputStream getOutputStream (@Nonnull final File aFile, @Nonnull final EAppend eAppend)
+  {
+    if (aFile == null)
+      throw new NullPointerException ("file");
+    if (eAppend == null)
+      throw new NullPointerException ("append");
+
+    return FileUtils.getOutputStream (aFile, eAppend);
+  }
+
+  @Nullable
+  public static Writer getWriter (@Nonnull final File aFile,
+                                  @Nonnull @Nonempty final String sCharset,
+                                  @Nonnull final EAppend eAppend)
+  {
+    if (aFile == null)
+      throw new NullPointerException ("file");
+    if (StringHelper.hasNoText (sCharset))
+      throw new IllegalArgumentException ("charset");
+    if (eAppend == null)
+      throw new NullPointerException ("append");
+
+    return StreamUtils.createWriter (getOutputStream (aFile, eAppend), sCharset);
+  }
+
+  @Nullable
+  public static Writer getWriter (@Nonnull final File aFile,
+                                  @Nonnull final Charset aCharset,
+                                  @Nonnull final EAppend eAppend)
+  {
+    if (aFile == null)
+      throw new NullPointerException ("file");
+    if (aCharset == null)
+      throw new NullPointerException ("charset");
+    if (eAppend == null)
+      throw new NullPointerException ("append");
+
+    return StreamUtils.createWriter (getOutputStream (aFile, eAppend), aCharset);
   }
 
   @Nullable
   public OutputStream getOutputStream (@Nonnull final EAppend eAppend)
   {
-    return FileUtils.getOutputStream (m_aFile, eAppend);
+    return getOutputStream (m_aFile, eAppend);
   }
 
   @Nullable
-  public Writer getWriter (@Nonnull final String sCharset, @Nonnull final EAppend eAppend)
+  public Writer getWriter (@Nonnull @Nonempty final String sCharset, @Nonnull final EAppend eAppend)
   {
-    return StreamUtils.createWriter (getOutputStream (eAppend), sCharset);
+    return getWriter (m_aFile, sCharset, eAppend);
   }
 
   @Nullable
   public Writer getWriter (@Nonnull final Charset aCharset, @Nonnull final EAppend eAppend)
   {
-    return StreamUtils.createWriter (getOutputStream (eAppend), aCharset);
+    return getWriter (m_aFile, aCharset, eAppend);
   }
 
   public boolean exists ()
