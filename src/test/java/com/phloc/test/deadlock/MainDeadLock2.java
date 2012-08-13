@@ -23,7 +23,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.phloc.test.deadlock.ThreadDeadlockDetector.Listener;
+import com.phloc.test.deadlock.ThreadDeadlockDetector.ThreadDeadlockListener;
 
 public final class MainDeadLock2
 {
@@ -70,7 +70,7 @@ public final class MainDeadLock2
   public static void main (final String [] args) throws Exception
   {
     final ThreadDeadlockDetector tdc = new ThreadDeadlockDetector ();
-    tdc.addListener (new Listener ()
+    tdc.addListener (new ThreadDeadlockListener ()
     {
       public void deadlockDetected (final Thread [] deadlockedThreads)
       {
