@@ -33,8 +33,11 @@ import com.phloc.commons.regex.RegExPool;
 @Immutable
 public final class EmailAddressUtils
 {
-  /** This is the email RegEx :) - Compile this little pattern only once */
-  private static final Pattern s_aPattern = RegExPool.getPattern ("[a-z0-9!#\\$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#\\$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+  /** This is the email RegEx :) */
+  public static final String EMAIL_ADDRESS_PATTERN = "[a-z0-9!#\\$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#\\$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
+
+  /** Compile this little pattern only once */
+  private static final Pattern s_aPattern = RegExPool.getPattern (EMAIL_ADDRESS_PATTERN);
 
   private EmailAddressUtils ()
   {}
