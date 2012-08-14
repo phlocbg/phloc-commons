@@ -27,14 +27,13 @@ import java.util.regex.PatternSyntaxException;
 
 import org.junit.Test;
 
-import com.phloc.commons.GlobalDebug;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for {@link RegExPool}.
- *
+ * 
  * @author philip
  */
 public final class RegExPoolTest extends AbstractPhlocTestCase
@@ -78,19 +77,6 @@ public final class RegExPoolTest extends AbstractPhlocTestCase
     {
       assertNotNull (ex.getCause ());
       assertTrue (ex.getCause () instanceof PatternSyntaxException);
-    }
-
-    if (GlobalDebug.isDebugMode ())
-    {
-      assertNotNull (RegExPool.getPattern ("any\\$here"));
-      try
-      {
-        // RegEx contains unquoted $!
-        RegExPool.getPattern ("any$here");
-        fail ();
-      }
-      catch (final IllegalArgumentException ex)
-      {}
     }
   }
 }
