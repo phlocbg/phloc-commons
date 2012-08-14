@@ -23,7 +23,9 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.phloc.test.deadlock.ThreadDeadlockDetector.ThreadDeadlockListener;
+import com.phloc.commons.deadlock.IThreadDeadlockListener;
+import com.phloc.commons.deadlock.ThreadDeadlockDetector;
+import com.phloc.commons.deadlock.ThreadDeadlockInfo;
 
 public final class MainDeadLock2
 {
@@ -70,14 +72,15 @@ public final class MainDeadLock2
   public static void main (final String [] args) throws Exception
   {
     final ThreadDeadlockDetector tdc = new ThreadDeadlockDetector ();
-    tdc.addListener (new ThreadDeadlockListener ()
+    tdc.addListener (new IThreadDeadlockListener ()
     {
-      public void deadlockDetected (final Thread [] deadlockedThreads)
+      public void onDeadlockDetected (final ThreadDeadlockInfo [] deadlockedThreads)
       {
         System.err.println ("Deadlocked Threads:");
         System.err.println ("-------------------");
-        for (final Thread thread : deadlockedThreads)
+        for (final ThreadDeadlockInfo threadi : deadlockedThreads)
         {
+          final Thread thread = threadi.getThread ();
           System.err.println (thread);
           for (final StackTraceElement ste : thread.getStackTrace ())
           {

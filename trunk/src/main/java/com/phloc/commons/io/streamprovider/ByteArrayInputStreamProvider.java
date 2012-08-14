@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.nio.charset.Charset;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.io.IInputStreamAndReaderProvider;
@@ -38,13 +39,26 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 public class ByteArrayInputStreamProvider implements IInputStreamAndReaderProvider
 {
   private final byte [] m_aData;
+  private final int m_nOfs;
+  private final int m_nLen;
 
-  @SuppressFBWarnings ({ "EI_EXPOSE_REP2" })
   public ByteArrayInputStreamProvider (@Nonnull final byte [] aData)
   {
-    if (aData == null)
-      throw new NullPointerException ("data");
-    m_aData = aData;
+    this (aData, 0, aData.length);
+  }
+
+  @SuppressFBWarnings ({ "EI_EXPOSE_REP2" })
+  public ByteArrayInputStreamProvider (@Nonnull final byte [] aInput,
+                                       @Nonnegative final int nOfs,
+                                       @Nonnegative final int nLen)
+  {
+    if (aInput == null)
+      throw new NullPointerException ("input");
+    if (nOfs < 0 || nLen < 0 || (nOfs + nLen) > aInput.length)
+      throw new IllegalArgumentException ("ofs:" + nOfs + ";len=" + nLen + ";bufLen=" + aInput.length);
+    m_aData = aInput;
+    m_nOfs = nOfs;
+    m_nLen = nLen;
   }
 
   @Nonnull
@@ -68,6 +82,9 @@ public class ByteArrayInputStreamProvider implements IInputStreamAndReaderProvid
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (null).append ("byteArray[]", m_aData.length + " bytes").toString ();
+    return new ToStringGenerator (null).append ("byteArray[]", m_aData.length + " bytes")
+                                       .append ("ofs", m_nOfs)
+                                       .append ("len", m_nLen)
+                                       .toString ();
   }
 }
