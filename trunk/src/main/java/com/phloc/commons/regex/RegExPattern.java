@@ -29,7 +29,6 @@ import javax.annotation.concurrent.Immutable;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.StringHelper;
-import com.phloc.commons.string.StringParser;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -56,22 +55,22 @@ public final class RegExPattern
       nIndex = sRegEx.indexOf ('$', nIndex);
       if (nIndex != -1)
       {
-        // Is the "$" followed by an int (would indicate a replacement group)
-        if (!StringParser.isInt (sRegEx.substring (nIndex + 1)))
-        {
-          if (nIndex + 1 < sRegEx.length () && sRegEx.charAt (nIndex + 1) == ')')
-          { // NOPMD
-            // "$" is the last char in a group "(...$)"
-          }
-          else
-            if (nIndex > 0 && sRegEx.charAt (nIndex - 1) == '\\')
+        if (nIndex == sRegEx.length () - 1)
+        { // NOPMD
+          // '$' at end of String is OK!
+        }
+        else
+          // Is the "$" followed by an int (would indicate a replacement group)
+          if (!Character.isDigit (sRegEx.charAt (nIndex + 1)))
+          {
+            if (nIndex + 1 < sRegEx.length () && sRegEx.charAt (nIndex + 1) == ')')
             { // NOPMD
-              // '$' is quoted
+              // "$" is the last char in a group "(...$)"
             }
             else
-              if (nIndex == sRegEx.length () - 1)
+              if (nIndex > 0 && sRegEx.charAt (nIndex - 1) == '\\')
               { // NOPMD
-                // '$' at end of String is OK!
+                // '$' is quoted
               }
               else
                 throw new IllegalArgumentException ("The passed regex '" +
@@ -79,7 +78,9 @@ public final class RegExPattern
                                                     "' contains an unquoted '$' sign at index " +
                                                     nIndex +
                                                     "!");
-        }
+          }
+
+        // Move beyond the current $
         nIndex++;
       }
     }
