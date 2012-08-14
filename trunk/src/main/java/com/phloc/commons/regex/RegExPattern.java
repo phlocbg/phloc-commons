@@ -47,7 +47,7 @@ public final class RegExPattern
   private final int m_nOptions;
   private Pattern m_aPattern;
 
-  private static void _checkPatternConsistency (@Nonnull @RegEx final String sRegEx)
+  public static void checkPatternConsistency (@Nonnull @RegEx final String sRegEx) throws IllegalArgumentException
   {
     // Check if a '$' is escaped if no digits follow
     int nIndex = 0;
@@ -101,7 +101,7 @@ public final class RegExPattern
     m_nOptions = nOptions;
 
     if (areDebugConsistencyChecksEnabled ())
-      _checkPatternConsistency (sRegEx);
+      checkPatternConsistency (sRegEx);
 
     try
     {
