@@ -20,6 +20,7 @@ package com.phloc.commons.idfactory;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
@@ -390,6 +391,164 @@ public final class GlobalIDFactory
       if (s_aPersistentStringIDFactory == null)
         throw new IllegalStateException ("No persistent string ID factory has been supplied!");
       return s_aPersistentStringIDFactory.getNewID ();
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  /**
+   * @param nCount
+   *        The number of IDs to retrieve. Must be &gt; 0.
+   * @return An array of new int IDs
+   */
+  public static int [] getBulkNewIntIDs (@Nonnegative final int nCount)
+  {
+    if (nCount <= 0)
+      throw new IllegalArgumentException ("At least 1 ID must be created!");
+
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      if (s_aIntIDFactory == null)
+        throw new IllegalStateException ("No in-memory int ID factory has been supplied!");
+      final int [] ret = new int [nCount];
+      for (int i = 0; i < nCount; ++i)
+        ret[i] = s_aIntIDFactory.getNewID ();
+      return ret;
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  /**
+   * @param nCount
+   *        The number of IDs to retrieve. Must be &gt; 0.
+   * @return An array of new persistent int IDs
+   */
+  public static int [] getBulkNewPersistentIntIDs (@Nonnegative final int nCount)
+  {
+    if (nCount <= 0)
+      throw new IllegalArgumentException ("At least 1 ID must be created!");
+
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      if (s_aPersistentIntIDFactory == null)
+        throw new IllegalStateException ("No persistent int ID factory has been supplied. Don't know how to create persistent IDs!");
+      final int [] ret = new int [nCount];
+      for (int i = 0; i < nCount; ++i)
+        ret[i] = s_aPersistentIntIDFactory.getNewID ();
+      return ret;
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  /**
+   * @param nCount
+   *        The number of IDs to retrieve. Must be &gt; 0.
+   * @return An array of new long IDs
+   */
+  public static long [] getBulkNewLongIDs (@Nonnegative final int nCount)
+  {
+    if (nCount <= 0)
+      throw new IllegalArgumentException ("At least 1 ID must be created!");
+
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      if (s_aLongIDFactory == null)
+        throw new IllegalStateException ("No in-memory long ID factory has been supplied!");
+      final long [] ret = new long [nCount];
+      for (int i = 0; i < nCount; ++i)
+        ret[i] = s_aLongIDFactory.getNewID ();
+      return ret;
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  /**
+   * @param nCount
+   *        The number of IDs to retrieve. Must be &gt; 0.
+   * @return An array of new persistent long IDs
+   */
+  public static long [] getBulkNewPersistentLongIDs (@Nonnegative final int nCount)
+  {
+    if (nCount <= 0)
+      throw new IllegalArgumentException ("At least 1 ID must be created!");
+
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      if (s_aPersistentLongIDFactory == null)
+        throw new IllegalStateException ("No persistent long ID factory has been supplied. Don't know how to create persistent IDs!");
+      final long [] ret = new long [nCount];
+      for (int i = 0; i < nCount; ++i)
+        ret[i] = s_aPersistentLongIDFactory.getNewID ();
+      return ret;
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  /**
+   * @param nCount
+   *        The number of IDs to retrieve
+   * @return An array of new String IDs
+   */
+  @Nonnull
+  public static String [] getBulkNewStringIDs (@Nonnegative final int nCount)
+  {
+    if (nCount <= 0)
+      throw new IllegalArgumentException ("At least 1 ID must be created!");
+
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      if (s_aStringIDFactory == null)
+        throw new IllegalStateException ("No in-memory string ID factory has been supplied!");
+      final String [] ret = new String [nCount];
+      for (int i = 0; i < nCount; ++i)
+        ret[i] = s_aStringIDFactory.getNewID ();
+      return ret;
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  /**
+   * @param nCount
+   *        The number of IDs to retrieve. Must be &gt; 0.
+   * @return An array of new persistent String IDs
+   */
+  @Nonnull
+  public static String [] getBulkNewPersistentStringIDs (@Nonnegative final int nCount)
+  {
+    if (nCount <= 0)
+      throw new IllegalArgumentException ("At least 1 ID must be created!");
+
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      if (s_aPersistentStringIDFactory == null)
+        throw new IllegalStateException ("No persistent string ID factory has been supplied!");
+      final String [] ret = new String [nCount];
+      for (int i = 0; i < nCount; ++i)
+        ret[i] = s_aPersistentStringIDFactory.getNewID ();
+      return ret;
     }
     finally
     {

@@ -23,6 +23,11 @@
   <release date="2012-08-14" version="3.7.2" />
   <entry date="2012-08-14" category="api" action="add">
     <change>
+      <text locale="en">Extended GlobalIDFactory to bulk create multiple IDs at once</text>
+    </change>
+  </entry>
+  <entry date="2012-08-14" category="api" action="add">
+    <change>
       <text locale="en">Added new package deadlock with JMX based deadlock detector</text>
     </change>
   </entry>
