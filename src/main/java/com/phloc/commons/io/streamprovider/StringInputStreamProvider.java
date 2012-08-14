@@ -17,8 +17,10 @@
  */
 package com.phloc.commons.io.streamprovider;
 
+import java.io.InputStream;
 import java.nio.charset.Charset;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.annotations.Nonempty;
@@ -30,7 +32,7 @@ import com.phloc.commons.io.streams.StringInputStream;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * An input stream provider based on a String.
+ * An {@link InputStream} provider based on a {@link String}.
  * 
  * @author philip
  */
@@ -47,6 +49,22 @@ public class StringInputStreamProvider implements IInputStreamAndReaderProvider,
   public StringInputStreamProvider (@Nonnull final char [] aChars, @Nonnull final Charset aCharset)
   {
     this (new String (aChars), aCharset);
+  }
+
+  public StringInputStreamProvider (@Nonnull final char [] aChars,
+                                    @Nonnegative final int nOfs,
+                                    @Nonnegative final int nLen,
+                                    @Nonnull @Nonempty final String sCharset)
+  {
+    this (new String (aChars, nOfs, nLen), sCharset);
+  }
+
+  public StringInputStreamProvider (@Nonnull final char [] aChars,
+                                    @Nonnegative final int nOfs,
+                                    @Nonnegative final int nLen,
+                                    @Nonnull final Charset aCharset)
+  {
+    this (new String (aChars, nOfs, nLen), aCharset);
   }
 
   public StringInputStreamProvider (@Nonnull final CharSequence aData, @Nonnull @Nonempty final String sCharset)

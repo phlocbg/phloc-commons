@@ -17,6 +17,9 @@
  */
 package com.phloc.commons.io.streamprovider;
 
+import java.io.Reader;
+
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.io.IReaderProvider;
@@ -24,7 +27,7 @@ import com.phloc.commons.io.streams.NonBlockingStringReader;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * An input stream provider based on a String.
+ * An {@link Reader} provider based on a {@link String}.
  * 
  * @author philip
  */
@@ -35,6 +38,13 @@ public class StringReaderProvider implements IReaderProvider
   public StringReaderProvider (@Nonnull final char [] aChars)
   {
     this (new String (aChars));
+  }
+
+  public StringReaderProvider (@Nonnull final char [] aChars,
+                               @Nonnegative final int nOfs,
+                               @Nonnegative final int nLength)
+  {
+    this (new String (aChars, nOfs, nLength));
   }
 
   public StringReaderProvider (@Nonnull final CharSequence aData)

@@ -24,6 +24,7 @@ import javax.annotation.Nonnull;
 
 import com.phloc.commons.annotations.DevelopersNote;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
+import com.phloc.commons.base64.Base64.OutputStream;
 import com.phloc.commons.io.EAppend;
 import com.phloc.commons.io.IOutputStreamAndWriterProvider;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
@@ -31,7 +32,7 @@ import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * An output stream provider based on a byte array.
+ * An {@link OutputStream} provider based on a byte array.
  * 
  * @author philip
  */

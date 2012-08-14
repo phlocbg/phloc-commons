@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.regex;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -25,7 +26,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.RegEx;
 import javax.annotation.concurrent.Immutable;
 
-import com.phloc.commons.GlobalDebug;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.StringHelper;
@@ -41,6 +41,8 @@ import com.phloc.commons.string.ToStringGenerator;
 @Immutable
 public final class RegExPattern
 {
+  private static final AtomicBoolean s_aCheckConsistencyEnabled = new AtomicBoolean (false);
+
   private final String m_sRegEx;
   private final int m_nOptions;
   private Pattern m_aPattern;
@@ -72,7 +74,11 @@ public final class RegExPattern
                 // '$' at end of String is OK!
               }
               else
-                throw new IllegalArgumentException ("The passed regex '" + sRegEx + "' contains an unquoted '$' sign!");
+                throw new IllegalArgumentException ("The passed regex '" +
+                                                    sRegEx +
+                                                    "' contains an unquoted '$' sign at index " +
+                                                    nIndex +
+                                                    "!");
         }
         nIndex++;
       }
@@ -94,7 +100,7 @@ public final class RegExPattern
     m_sRegEx = sRegEx;
     m_nOptions = nOptions;
 
-    if (GlobalDebug.isDebugMode ())
+    if (areDebugConsistencyChecksEnabled ())
       _checkPatternConsistency (sRegEx);
 
     try
@@ -153,5 +159,15 @@ public final class RegExPattern
   public String toString ()
   {
     return new ToStringGenerator (this).append ("regex", m_sRegEx).append ("options", m_nOptions).toString ();
+  }
+
+  public static boolean areDebugConsistencyChecksEnabled ()
+  {
+    return s_aCheckConsistencyEnabled.get ();
+  }
+
+  public static void enableDebugConsistencyChecks (final boolean bEnable)
+  {
+    s_aCheckConsistencyEnabled.set (bEnable);
   }
 }
