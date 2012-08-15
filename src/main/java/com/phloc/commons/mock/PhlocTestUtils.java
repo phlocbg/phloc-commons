@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.mock;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -29,6 +31,8 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.io.streamprovider.ByteArrayInputStreamProvider;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.lang.GenericReflection;
+import com.phloc.commons.microdom.IMicroElement;
+import com.phloc.commons.microdom.convert.MicroTypeConverter;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -244,5 +248,30 @@ public final class PhlocTestUtils
     _assertTrue ("Clone returned a different class than the original one",
                  aClone.getClass ().equals (aCloneable.getClass ()));
     testDefaultImplementationWithEqualContentObject (aCloneable, aClone);
+  }
+
+  /**
+   * Test if the {@link MicroTypeConverter} is OK. It converts it to XML and
+   * back and than uses
+   * {@link #testDefaultImplementationWithEqualContentObject(Object, Object)} to
+   * check for equality.
+   * 
+   * @param aObj
+   *        The object to test
+   */
+  public static void testMicroTypeConversion (@Nonnull final Object aObj)
+  {
+    assertNotNull (aObj);
+
+    // Write to XML
+    final IMicroElement e = MicroTypeConverter.convertToMicroElement (aObj, "test");
+    assertNotNull (e);
+
+    // Read from XML
+    final Object o2 = MicroTypeConverter.convertToNative (e, aObj.getClass ());
+    assertNotNull (o2);
+
+    // Ensure they are equals
+    testDefaultImplementationWithEqualContentObject (aObj, o2);
   }
 }
