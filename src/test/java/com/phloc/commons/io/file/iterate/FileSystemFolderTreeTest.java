@@ -28,6 +28,7 @@ import javax.annotation.Nullable;
 import org.junit.Test;
 
 import com.phloc.commons.hierarchy.DefaultHierarchyWalkerCallback;
+import com.phloc.commons.io.file.FileUtils;
 import com.phloc.commons.io.file.filter.FilenameFilterEndsWith;
 import com.phloc.commons.tree.utils.walk.TreeWalker;
 import com.phloc.commons.tree.withid.folder.DefaultFolderTreeItem;
@@ -85,7 +86,7 @@ public final class FileSystemFolderTreeTest
                               {
                                 if (aFolder != null)
                                   for (final File aFile : aFolder.getData ())
-                                    assertTrue (aFile.isFile ());
+                                    assertTrue (FileUtils.existsFile (aFile));
                               }
                             });
 
