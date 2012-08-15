@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -46,19 +47,32 @@ public final class ThreadDeadlockInfo
     m_aStackTrace = ArrayHelper.getCopy (aStackTrace);
   }
 
+  /**
+   * @return The {@link ThreadInfo} as returned from JMX bean
+   */
   @Nonnull
   public ThreadInfo getThreadInfo ()
   {
     return m_aThreadInfo;
   }
 
+  /**
+   * @return The underlying thread. Never <code>null</code>.
+   */
   @Nonnull
   public Thread getThread ()
   {
     return m_aThread;
   }
 
+  /**
+   * @return The stack trace at the time the dead lock was found. May be
+   *         <code>null</code> for certain system threads. Use
+   *         <code>getThread ().getStackTrace ()</code> to retrieve the current
+   *         stack trace.
+   */
   @Nullable
+  @ReturnsMutableCopy
   public StackTraceElement [] getStackTrace ()
   {
     return ArrayHelper.getCopy (m_aStackTrace);
