@@ -42,7 +42,7 @@ import com.phloc.commons.state.EChange;
  * 
  * @author philip
  */
-public final class ThreadDeadlockDetector
+public final class ThreadDeadlockDetectionTimer
 {
   /**
    * The number of milliseconds between checking for deadlocks. It may be
@@ -50,15 +50,16 @@ public final class ThreadDeadlockDetector
    * quickly.
    */
   private static final long DEFAULT_DEADLOCK_CHECK_PERIOD = 10 * CGlobal.MILLISECONDS_PER_SECOND;
-  private static final Logger s_aLogger = LoggerFactory.getLogger (ThreadDeadlockDetector.class);
+  private static final Logger s_aLogger = LoggerFactory.getLogger (ThreadDeadlockDetectionTimer.class);
 
-  private final TimerTask m_aTimerTask;
+  private final ThreadDeadlockDetectionTask m_aTimerTask;
   private final Timer m_aThreadCheck = new Timer ("ThreadDeadlockDetector", true);
-  private final ThreadMXBean m_aMBean = ManagementFactory.getThreadMXBean ();
-  private final Set <IThreadDeadlockListener> m_aListeners = new CopyOnWriteArraySet <IThreadDeadlockListener> ();
 
-  private final class ThreadDeadlockDetectionTask extends TimerTask
+  private static final class ThreadDeadlockDetectionTask extends TimerTask
   {
+    private final ThreadMXBean m_aMBean = ManagementFactory.getThreadMXBean ();
+    final Set <IThreadDeadlockListener> m_aListeners = new CopyOnWriteArraySet <IThreadDeadlockListener> ();
+
     @Override
     public void run ()
     {
@@ -100,12 +101,12 @@ public final class ThreadDeadlockDetector
     }
   }
 
-  public ThreadDeadlockDetector ()
+  public ThreadDeadlockDetectionTimer ()
   {
     this (DEFAULT_DEADLOCK_CHECK_PERIOD);
   }
 
-  public ThreadDeadlockDetector (@Nonnegative final long nDeadlockCheckPeriod)
+  public ThreadDeadlockDetectionTimer (@Nonnegative final long nDeadlockCheckPeriod)
   {
     m_aTimerTask = new ThreadDeadlockDetectionTask ();
     m_aThreadCheck.schedule (m_aTimerTask, 10, nDeadlockCheckPeriod);
@@ -128,27 +129,27 @@ public final class ThreadDeadlockDetector
   {
     if (aListener == null)
       throw new NullPointerException ("listener");
-    return EChange.valueOf (m_aListeners.add (aListener));
+    return EChange.valueOf (m_aTimerTask.m_aListeners.add (aListener));
   }
 
   @Nonnull
   public EChange removeListener (@Nullable final IThreadDeadlockListener aListener)
   {
-    return EChange.valueOf (m_aListeners.remove (aListener));
+    return EChange.valueOf (m_aTimerTask.m_aListeners.remove (aListener));
   }
 
   @Nonnull
   public EChange removeAllListeners ()
   {
-    if (m_aListeners.isEmpty ())
+    if (m_aTimerTask.m_aListeners.isEmpty ())
       return EChange.UNCHANGED;
-    m_aListeners.clear ();
+    m_aTimerTask.m_aListeners.clear ();
     return EChange.CHANGED;
   }
 
   @Nonnegative
   public int getListenerCount ()
   {
-    return m_aListeners.size ();
+    return m_aTimerTask.m_aListeners.size ();
   }
 }

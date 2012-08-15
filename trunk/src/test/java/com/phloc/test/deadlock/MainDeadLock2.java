@@ -24,7 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.deadlock.IThreadDeadlockListener;
-import com.phloc.commons.deadlock.ThreadDeadlockDetector;
+import com.phloc.commons.deadlock.ThreadDeadlockDetectionTimer;
 import com.phloc.commons.deadlock.ThreadDeadlockInfo;
 
 public final class MainDeadLock2
@@ -71,7 +71,7 @@ public final class MainDeadLock2
 
   public static void main (final String [] args) throws Exception
   {
-    final ThreadDeadlockDetector tdc = new ThreadDeadlockDetector ();
+    final ThreadDeadlockDetectionTimer tdc = new ThreadDeadlockDetectionTimer ();
     tdc.addListener (new IThreadDeadlockListener ()
     {
       public void onDeadlockDetected (final ThreadDeadlockInfo [] deadlockedThreads)
