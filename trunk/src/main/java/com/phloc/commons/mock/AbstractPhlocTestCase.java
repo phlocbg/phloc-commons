@@ -31,7 +31,11 @@ import com.phloc.commons.annotations.CodingStyleguideUnaware;
 import com.phloc.commons.annotations.OverrideOnDemand;
 
 /**
- * Base class for all JUnit tests requiring setup and teardown handling.
+ * Base class for all JUnit tests requiring setup and teardown handling.<br>
+ * Note: Annotating a public static void no-argument method with \@BeforeClass
+ * causes it to be run once before any of the test methods in the class. The
+ * \@BeforeClass methods of super classes will be run before those the current
+ * class.
  * 
  * @author philip
  */
@@ -39,11 +43,11 @@ import com.phloc.commons.annotations.OverrideOnDemand;
 public abstract class AbstractPhlocTestCase
 {
   // For test case classes it is ok to have a protected logger
+  @CodingStyleguideUnaware
+  protected final Logger m_aLogger = LoggerFactory.getLogger (getClass ());
   @Deprecated
   @CodingStyleguideUnaware
-  protected final Logger s_aLogger = LoggerFactory.getLogger (getClass ());
-  @CodingStyleguideUnaware
-  protected final Logger m_aLogger = s_aLogger;
+  protected final Logger s_aLogger = m_aLogger;
 
   protected static final Integer I_1 = Integer.valueOf (-1);
   protected static final Integer I0 = Integer.valueOf (0);
@@ -71,12 +75,6 @@ public abstract class AbstractPhlocTestCase
   protected static final boolean ENABLE_GLOBAL_DEBUG = true;
   protected static final boolean ENABLE_GLOBAL_TRACE = false;
 
-  /**
-   * Note: Annotating a public static void no-argument method with \@BeforeClass
-   * causes it to be run once before any of the test methods in the class. The
-   * \@BeforeClass methods of super classes will be run before those the current
-   * class.
-   */
   @OverrideOnDemand
   protected void beforeSingleTest () throws Exception
   {
