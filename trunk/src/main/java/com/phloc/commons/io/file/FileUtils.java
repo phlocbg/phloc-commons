@@ -69,7 +69,7 @@ public final class FileUtils
    * 
    * @param aFile
    *        The file to be checked for existence. May not be <code>null</code> .
-   * @return <code>true</code> if the File is a file and exists,
+   * @return <code>true</code> if the {@link File} is a file and exists,
    *         <code>false</code> otherwise.
    */
   public static boolean existsFile (@Nonnull final File aFile)
@@ -77,7 +77,7 @@ public final class FileUtils
     if (aFile == null)
       throw new NullPointerException ("file");
 
-    return aFile.isFile () && aFile.exists ();
+    return aFile.isFile ();
   }
 
   /**
@@ -87,8 +87,8 @@ public final class FileUtils
    * @param aDir
    *        The directory to be checked for existence. May not be
    *        <code>null</code>.
-   * @return <code>true</code> if the directory exists, <code>false</code>
-   *         otherwise.
+   * @return <code>true</code> if the {@link File} is a directory and exists,
+   *         <code>false</code> otherwise.
    */
   public static boolean existsDir (@Nonnull final File aDir)
   {

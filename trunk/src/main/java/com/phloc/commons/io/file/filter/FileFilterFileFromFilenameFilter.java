@@ -24,6 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.hash.HashCodeGenerator;
+import com.phloc.commons.io.file.FileUtils;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -45,7 +46,9 @@ public final class FileFilterFileFromFilenameFilter extends AbstractFileFilter
 
   public boolean accept (@Nullable final File aFile)
   {
-    return aFile != null && aFile.isFile () && m_aFilenameFilter.accept (aFile.getParentFile (), aFile.getName ());
+    return aFile != null &&
+           FileUtils.existsFile (aFile) &&
+           m_aFilenameFilter.accept (aFile.getParentFile (), aFile.getName ());
   }
 
   @Override
