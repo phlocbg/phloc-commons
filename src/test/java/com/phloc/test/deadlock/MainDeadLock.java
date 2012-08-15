@@ -24,7 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.deadlock.IThreadDeadlockListener;
-import com.phloc.commons.deadlock.ThreadDeadlockDetector;
+import com.phloc.commons.deadlock.ThreadDeadlockDetectionTimer;
 import com.phloc.commons.deadlock.ThreadDeadlockInfo;
 
 public final class MainDeadLock
@@ -91,7 +91,7 @@ public final class MainDeadLock
   {
 
     final LoggingInfoListener aListener = new LoggingInfoListener ();
-    final ThreadDeadlockDetector tdc = new ThreadDeadlockDetector ();
+    final ThreadDeadlockDetectionTimer tdc = new ThreadDeadlockDetectionTimer ();
     tdc.addListener (aListener);
 
     final A a = new A ();
