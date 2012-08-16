@@ -23,12 +23,12 @@ import javax.annotation.concurrent.Immutable;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
+import org.junit.rules.TestRule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.phloc.commons.GlobalDebug;
 import com.phloc.commons.annotations.CodingStyleguideUnaware;
-import com.phloc.commons.annotations.OverrideOnDemand;
 
 /**
  * Base class for all JUnit tests requiring setup and teardown handling.<br>
@@ -72,28 +72,21 @@ public abstract class AbstractPhlocTestCase
   protected static final Locale L_FR_FR = new Locale ("fr", "FR");
 
   /** The global debug flags to use. */
-  protected static final boolean ENABLE_GLOBAL_DEBUG = true;
-  protected static final boolean ENABLE_GLOBAL_TRACE = false;
+  @Deprecated
+  protected static final boolean ENABLE_GLOBAL_DEBUG = DebugModeTestRule.ENABLE_GLOBAL_DEBUG;
+  @Deprecated
+  protected static final boolean ENABLE_GLOBAL_TRACE = DebugModeTestRule.ENABLE_GLOBAL_TRACE;
 
-  @OverrideOnDemand
+  @Rule
+  public final TestRule m_aDebugRule = new DebugModeTestRule ();
+
+  @Deprecated
   protected void beforeSingleTest () throws Exception
-  {
-    // Init global stuff
-    GlobalDebug.setDebugModeDirect (ENABLE_GLOBAL_DEBUG);
-    GlobalDebug.setTraceModeDirect (ENABLE_GLOBAL_TRACE);
+  {}
 
-    // Enable testing with a security manager here :)
-    if (false && System.getSecurityManager () == null)
-      System.setSecurityManager (new SecurityManager ());
-  }
-
-  @OverrideOnDemand
+  @Deprecated
   protected void afterSingleTest () throws Exception
-  {
-    // Reset global stuff
-    GlobalDebug.setDebugModeDirect (GlobalDebug.DEFAULT_DEBUG_MODE);
-    GlobalDebug.setTraceModeDirect (GlobalDebug.DEFAULT_TRACE_MODE);
-  }
+  {}
 
   /**
    * For JUnit 3.x compatibility.<br>
