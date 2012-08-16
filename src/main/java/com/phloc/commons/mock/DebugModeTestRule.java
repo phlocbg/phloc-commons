@@ -11,7 +11,7 @@ public class DebugModeTestRule extends ExternalResource
   public static final boolean ENABLE_GLOBAL_TRACE = false;
 
   @Override
-  protected void before ()
+  public void before ()
   {
     // Init global stuff
     GlobalDebug.setDebugModeDirect (ENABLE_GLOBAL_DEBUG);
@@ -23,7 +23,7 @@ public class DebugModeTestRule extends ExternalResource
   }
 
   @Override
-  protected void after ()
+  public void after ()
   {
     // Reset global stuff
     GlobalDebug.setDebugModeDirect (GlobalDebug.DEFAULT_DEBUG_MODE);
