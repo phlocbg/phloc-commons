@@ -71,6 +71,8 @@ public final class FileSystemResourceProvider implements IWritableResourceProvid
         s_aLogger.warn ("Cannot read passed base path '" + aBasePath + "'!");
       if (!FileUtils.canWrite (aBasePath))
         s_aLogger.warn ("Cannot write passed base path '" + aBasePath + "'!");
+      if (!FileUtils.canExecute (aBasePath))
+        s_aLogger.warn ("Cannot execute in passed base path '" + aBasePath + "'!");
     }
     m_aBasePath = aBasePath;
   }
