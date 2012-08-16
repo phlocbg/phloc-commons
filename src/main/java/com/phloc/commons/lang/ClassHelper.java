@@ -20,6 +20,8 @@ package com.phloc.commons.lang;
 import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashSet;
@@ -77,12 +79,57 @@ public final class ClassHelper
   {}
 
   @Nonnull
+  public static ClassLoader getSystemClassLoader ()
+  {
+    if (System.getSecurityManager () == null)
+      return ClassLoader.getSystemClassLoader ();
+
+    return AccessController.doPrivileged (new PrivilegedAction <ClassLoader> ()
+    {
+      public ClassLoader run ()
+      {
+        return ClassLoader.getSystemClassLoader ();
+      }
+    });
+  }
+
+  @Nonnull
+  public static ClassLoader getContextClassLoader ()
+  {
+    if (System.getSecurityManager () == null)
+      return Thread.currentThread ().getContextClassLoader ();
+
+    return AccessController.doPrivileged (new PrivilegedAction <ClassLoader> ()
+    {
+      public ClassLoader run ()
+      {
+        return Thread.currentThread ().getContextClassLoader ();
+      }
+    });
+  }
+
+  @Nonnull
+  public static ClassLoader getClassClassLoader (@Nonnull final Class <?> aClass)
+  {
+    if (System.getSecurityManager () == null)
+      return aClass.getClassLoader ();
+
+    return AccessController.doPrivileged (new PrivilegedAction <ClassLoader> ()
+    {
+      public ClassLoader run ()
+      {
+        return aClass.getClassLoader ();
+      }
+    });
+  }
+
+  @Nonnull
   public static ClassLoader getDefaultClassLoader ()
   {
     ClassLoader ret = null;
     try
     {
-      ret = Thread.currentThread ().getContextClassLoader ();
+      ret = getContextClassLoader ();
     }
     catch (final Exception ex) // NOPMD
     {
@@ -91,7 +138,7 @@ public final class ClassHelper
 
     // Fallback to class loader of this class
     if (ret == null)
-      ret = ClassHelper.class.getClassLoader (); // NOPMD
+      ret = getClassClassLoader (ClassHelper.class);
 
     return ret;
   }
