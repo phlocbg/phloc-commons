@@ -73,7 +73,7 @@ public abstract class AbstractTextProvider implements ITextProvider
   }
 
   @Nullable
-  public final String getTextWithArgs (@Nonnull final Locale aContentLocale, @Nonnull final Object... aArgs)
+  public final String getTextWithArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)
   {
     final String sText = getText (aContentLocale);
     return TextFormatter.getFormattedText (sText, aArgs);
@@ -81,7 +81,7 @@ public abstract class AbstractTextProvider implements ITextProvider
 
   @Nullable
   public final String getTextWithLocaleFallbackAndArgs (@Nonnull final Locale aContentLocale,
-                                                        @Nonnull final Object... aArgs)
+                                                        @Nullable final Object... aArgs)
   {
     final String sText = getTextWithLocaleFallback (aContentLocale);
     return TextFormatter.getFormattedText (sText, aArgs);

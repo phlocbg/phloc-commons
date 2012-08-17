@@ -52,7 +52,7 @@ public final class HasDisplayTextWithArgs implements IHasDisplayText
   public String getDisplayText (@Nonnull final Locale aContentLocale)
   {
     final String sText = m_aParentText.getDisplayText (aContentLocale);
-    return sText == null ? null : TextFormatter.getFormattedText (sText, m_aArgs);
+    return TextFormatter.getFormattedText (sText, m_aArgs);
   }
 
   @Override

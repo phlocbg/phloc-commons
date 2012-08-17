@@ -66,7 +66,7 @@ public final class DefaultTextResolverTest
     }
 
     @Nullable
-    public String getDisplayTextWithArgs (@Nonnull final Locale aContentLocale, @Nonnull final Object... aArgs)
+    public String getDisplayTextWithArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)
     {
       return DefaultTextResolver.getTextWithArgs (this, m_aTP, aContentLocale, aArgs);
     }

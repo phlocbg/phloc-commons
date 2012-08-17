@@ -57,13 +57,13 @@ public interface IEnumTextResolver
    * @param aContentLocale
    *        The locale to be used. May not be <code>null</code>.
    * @param aArgs
-   *        The arguments to be added into the string. May not be
-   *        <code>null</code>.
+   *        The arguments to be added into the string. May be <code>null</code>
+   *        but this makes no sense.
    * @return <code>null</code> if no text could be resolved.
    */
   @Nullable
   String getTextWithArgs (@Nonnull Enum <?> aEnum,
                           @Nonnull ITextProvider aTP,
                           @Nonnull Locale aContentLocale,
-                          @Nonnull Object [] aArgs);
+                          @Nullable Object... aArgs);
 }

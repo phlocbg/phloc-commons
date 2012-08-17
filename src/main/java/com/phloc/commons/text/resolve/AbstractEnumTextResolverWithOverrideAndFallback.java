@@ -118,7 +118,7 @@ public abstract class AbstractEnumTextResolverWithOverrideAndFallback implements
   public final String getTextWithArgs (@Nonnull final Enum <?> aEnum,
                                        @Nonnull final ITextProvider aTP,
                                        @Nonnull final Locale aContentLocale,
-                                       @Nonnull final Object [] aArgs)
+                                       @Nullable final Object... aArgs)
   {
     // The same as getText
     final String sText = _getText (aEnum, aTP, aContentLocale, true);
