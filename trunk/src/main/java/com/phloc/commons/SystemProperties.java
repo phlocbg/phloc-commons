@@ -58,12 +58,18 @@ public final class SystemProperties
   {}
 
   @Nullable
+  public static String getPropertyValueOrNull (@Nullable final String sKey)
+  {
+    return sKey == null ? null : AccessControllerHelper.call (new PrivilegedActionSystemGetProperty (sKey));
+  }
+
+  @Nullable
   public static String getPropertyValue (@Nullable final String sKey)
   {
     String ret = null;
     if (sKey != null)
     {
-      ret = AccessControllerHelper.call (new PrivilegedActionSystemGetProperty (sKey));
+      ret = getPropertyValueOrNull (sKey);
       if (ret == null && s_aWarnedPropertyNames.add (sKey))
       {
         // don't show anything for phloc ;-)
