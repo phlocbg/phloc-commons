@@ -130,6 +130,9 @@ public final class DefaultTextResolverTest
     assertEquals ("Text3abcde", EText.TEXT3.getDisplayTextWithArgs (aDE, "abc"));
     assertEquals ("Text3abcen", EText.TEXT3.getDisplayTextWithArgs (aEN, "abc"));
 
+    assertEquals (EText.TEXT3.getDisplayText (aEN), EText.TEXT3.getDisplayTextWithArgs (aEN, new Object [] {}));
+    assertEquals (EText.TEXT3.getDisplayText (aEN), EText.TEXT3.getDisplayTextWithArgs (aEN, (Object []) null));
+
     // Clear cache and try again (should not make any difference)
     DefaultTextResolver.clearCache ();
 

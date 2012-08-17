@@ -86,7 +86,8 @@ public final class DefaultTextResolver
    * @param aContentLocale
    *        The locale to be used for resolving
    * @param aArgs
-   *        The arguments to be inserted into the string
+   *        The arguments to be inserted into the string, may be
+   *        <code>null</code>
    * @return The text with the arguments replaced or <code>null</code> if the
    *         passed text could not be resolved.
    */
@@ -94,9 +95,9 @@ public final class DefaultTextResolver
   public static String getTextWithArgs (@Nonnull final Enum <?> aEnum,
                                         @Nonnull final ITextProvider aTP,
                                         @Nonnull final Locale aContentLocale,
-                                        @Nonnull final Object [] aArgs)
+                                        @Nullable final Object [] aArgs)
   {
-    return s_aResolver.getTextWithArgs (aEnum, aTP, aContentLocale, aArgs);
+    return s_aResolver.getTextWithArgs (aEnum, aTP, aContentLocale, aArgs == null ? new Object [] {} : aArgs);
   }
 
   @Nonnull
