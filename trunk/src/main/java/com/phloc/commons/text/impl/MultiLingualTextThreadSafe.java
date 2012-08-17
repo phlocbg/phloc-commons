@@ -110,7 +110,7 @@ public final class MultiLingualTextThreadSafe implements IMultiLingualText
   }
 
   @Nullable
-  public String getTextWithArgs (final Locale aContentLocale, final Object... aArgs)
+  public String getTextWithArgs (final Locale aContentLocale, @Nullable final Object... aArgs)
   {
     m_aRWLock.readLock ().lock ();
     try
@@ -124,7 +124,7 @@ public final class MultiLingualTextThreadSafe implements IMultiLingualText
   }
 
   @Nullable
-  public String getTextWithLocaleFallbackAndArgs (final Locale aContentLocale, final Object... aArgs)
+  public String getTextWithLocaleFallbackAndArgs (final Locale aContentLocale, @Nullable final Object... aArgs)
   {
     m_aRWLock.readLock ().lock ();
     try

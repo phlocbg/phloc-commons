@@ -33,12 +33,12 @@ public interface IHasDisplayTextWithArgs
    * @param aContentLocale
    *        The locale to be used for resolving. May not be <code>null</code>.
    * @param aArgs
-   *        Arguments for formatting the provided text. May not be
-   *        <code>null</code>.
+   *        Arguments for formatting the provided text. May be <code>null</code>
+   *        but this makes no sense.
    * @return The display text of the object in the given locale. May be
    *         <code>null</code> if the text could not be resolved in the passed
    *         locale.
    */
   @Nullable
-  String getDisplayTextWithArgs (@Nonnull Locale aContentLocale, @Nonnull Object... aArgs);
+  String getDisplayTextWithArgs (@Nonnull Locale aContentLocale, @Nullable Object... aArgs);
 }

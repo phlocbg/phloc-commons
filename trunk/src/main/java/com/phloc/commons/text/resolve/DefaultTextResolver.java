@@ -97,7 +97,7 @@ public final class DefaultTextResolver
                                         @Nonnull final Locale aContentLocale,
                                         @Nullable final Object [] aArgs)
   {
-    return s_aResolver.getTextWithArgs (aEnum, aTP, aContentLocale, aArgs == null ? new Object [] {} : aArgs);
+    return s_aResolver.getTextWithArgs (aEnum, aTP, aContentLocale, aArgs);
   }
 
   @Nonnull

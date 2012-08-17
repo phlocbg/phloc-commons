@@ -62,12 +62,12 @@ public interface ITextProvider
    * @param aContentLocale
    *        The locale to use. May not be <code>null</code>.
    * @param aArgs
-   *        The arguments to be added into the string. May not be
-   *        <code>null</code>.
+   *        The arguments to be added into the string. May be <code>null</code>
+   *        but this makes no sense.
    * @return <code>null</code> if no text for the given locale was found.
    */
   @Nullable
-  String getTextWithArgs (@Nonnull Locale aContentLocale, @Nonnull Object... aArgs);
+  String getTextWithArgs (@Nonnull Locale aContentLocale, @Nullable Object... aArgs);
 
   /**
    * Get the text specific for the passed locale. The implementation class MUST
@@ -78,10 +78,10 @@ public interface ITextProvider
    * @param aContentLocale
    *        The locale to use. May not be <code>null</code>.
    * @param aArgs
-   *        The arguments to be added into the string. May not be
-   *        <code>null</code>.
+   *        The arguments to be added into the string. May be <code>null</code>
+   *        but this makes no sense.
    * @return <code>null</code> if no text for the given locale was found.
    */
   @Nullable
-  String getTextWithLocaleFallbackAndArgs (@Nonnull Locale aContentLocale, @Nonnull Object... aArgs);
+  String getTextWithLocaleFallbackAndArgs (@Nonnull Locale aContentLocale, @Nullable Object... aArgs);
 }

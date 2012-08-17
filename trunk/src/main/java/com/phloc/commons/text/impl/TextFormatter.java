@@ -19,7 +19,6 @@ package com.phloc.commons.text.impl;
 
 import java.text.MessageFormat;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
@@ -41,8 +40,10 @@ public final class TextFormatter
   {}
 
   @Nullable
-  public static String getFormattedText (@Nullable final String sText, @Nonnull final Object... aArgs)
+  public static String getFormattedText (@Nullable final String sText, @Nullable final Object... aArgs)
   {
-    return sText == null ? null : MessageFormat.format (sText, aArgs);
+    if (sText == null)
+      return null;
+    return MessageFormat.format (sText, aArgs);
   }
 }
