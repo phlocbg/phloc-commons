@@ -22,8 +22,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.phloc.commons.GlobalDebug;
-
 public final class URLValidatorTest
 {
   private static final String [] VALID1 = new String [] { "http://www.phloc.com",
@@ -283,7 +281,6 @@ public final class URLValidatorTest
   @Test
   public void testValid ()
   {
-    GlobalDebug.setDebugModeDirect (true);
     for (final String sValid : VALID1)
       assertTrue ("Expected '" + sValid + "' to be valid", URLValidator.isValid (sValid));
     for (final String sValid : VALID2)

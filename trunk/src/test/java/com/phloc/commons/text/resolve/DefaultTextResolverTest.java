@@ -27,11 +27,8 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.phloc.commons.GlobalDebug;
 import com.phloc.commons.annotations.NoTranslationRequired;
 import com.phloc.commons.locale.LocaleCache;
 import com.phloc.commons.name.IHasDisplayText;
@@ -70,23 +67,6 @@ public final class DefaultTextResolverTest
     {
       return DefaultTextResolver.getTextWithArgs (this, m_aTP, aContentLocale, aArgs);
     }
-  }
-
-  // DISABLE DEBUG MODE!
-
-  private static boolean s_bDebugMode;
-
-  @BeforeClass
-  public static void before ()
-  {
-    s_bDebugMode = GlobalDebug.isDebugMode ();
-    GlobalDebug.setDebugModeDirect (false);
-  }
-
-  @AfterClass
-  public static void after ()
-  {
-    GlobalDebug.setDebugModeDirect (s_bDebugMode);
   }
 
   @Test

@@ -28,11 +28,14 @@ import static org.junit.Assert.fail;
 import java.util.List;
 import java.util.Locale;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
+import com.phloc.commons.mock.DebugModeTestRule;
 import com.phloc.commons.system.SystemHelper;
 
 /**
@@ -42,6 +45,9 @@ import com.phloc.commons.system.SystemHelper;
  */
 public final class LocaleUtilsTest extends AbstractPhlocTestCase
 {
+  @Rule
+  public final TestRule m_aRule = new DebugModeTestRule ();
+
   @Test
   public void testGetLocaleDisplayName ()
   {

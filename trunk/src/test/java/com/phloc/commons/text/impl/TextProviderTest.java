@@ -24,10 +24,13 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 
 import com.phloc.commons.GlobalDebug;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
+import com.phloc.commons.mock.DebugModeTestRule;
 import com.phloc.commons.text.ISimpleMultiLingualText;
 import com.phloc.commons.text.ITextProvider;
 
@@ -38,6 +41,9 @@ import com.phloc.commons.text.ITextProvider;
  */
 public final class TextProviderTest extends AbstractPhlocTestCase
 {
+  @Rule
+  public final TestRule m_aRule = new DebugModeTestRule ();
+
   @Test
   public void testGetText ()
   {
