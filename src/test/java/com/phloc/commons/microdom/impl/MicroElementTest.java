@@ -28,7 +28,9 @@ import static org.junit.Assert.fail;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 
 import com.phloc.commons.microdom.EMicroNodeType;
 import com.phloc.commons.microdom.IMicroComment;
@@ -38,6 +40,7 @@ import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.microdom.IMicroText;
 import com.phloc.commons.microdom.MicroException;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
+import com.phloc.commons.mock.DebugModeTestRule;
 import com.phloc.commons.mock.PhlocTestUtils;
 import com.phloc.commons.text.impl.MultiLingualText;
 import com.phloc.commons.typeconvert.TypeConverterException;
@@ -51,6 +54,9 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  */
 public final class MicroElementTest extends AbstractPhlocTestCase
 {
+  @Rule
+  public final TestRule m_aRule = new DebugModeTestRule ();
+
   @Test
   @SuppressFBWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testCreation ()
