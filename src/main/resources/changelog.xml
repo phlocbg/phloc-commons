@@ -20,6 +20,32 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <release date="2012-08-18" version="3.7.3" />
+  <entry date="2012-08-18" category="api" action="add">
+    <change>
+      <text locale="en">Added RegEx based URL validator</text>
+    </change>
+  </entry>
+  <entry date="2012-08-17" category="api" action="add">
+    <change>
+      <text locale="en">Added SystemProperties retrieval method without logged warning</text>
+    </change>
+  </entry>
+  <entry date="2012-08-17" category="api" action="change">
+    <change>
+      <text locale="en">Finally made the get...TextWithArgs handling consistent. Technically you can pass null to the arguments array, but practically this makes no sense, as in the case you may call the get...Text method directly. But technically speaking you can do that</text>
+    </change>
+  </entry>
+  <entry date="2012-08-16" category="api" action="add">
+    <change>
+      <text locale="en">Added SecurityManager enabled ClassLoader retrieval in ClassHelper</text>
+    </change>
+  </entry>
+  <entry date="2012-08-15" category="api" action="change">
+    <change>
+      <text locale="en">Extracted new JUnit TestRule class DebugModeTestRule</text>
+    </change>
+  </entry>
   <release date="2012-08-15" version="3.7.2" />
   <entry date="2012-08-15" category="api" action="change">
     <change>

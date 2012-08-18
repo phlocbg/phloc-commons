@@ -23,8 +23,6 @@ import javax.annotation.concurrent.Immutable;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
-import org.junit.rules.TestRule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -76,9 +74,6 @@ public abstract class AbstractPhlocTestCase
   protected static final boolean ENABLE_GLOBAL_DEBUG = DebugModeTestRule.ENABLE_GLOBAL_DEBUG;
   @Deprecated
   protected static final boolean ENABLE_GLOBAL_TRACE = DebugModeTestRule.ENABLE_GLOBAL_TRACE;
-
-  @Rule
-  public final TestRule m_aDebugRule = new DebugModeTestRule ();
 
   @Deprecated
   protected void beforeSingleTest () throws Exception
