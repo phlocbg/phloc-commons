@@ -65,6 +65,11 @@ public final class ThreadDeadlockInfo
     return m_aThread;
   }
 
+  public boolean hasStackTrace ()
+  {
+    return m_aStackTrace != null;
+  }
+
   /**
    * @return The stack trace at the time the dead lock was found. May be
    *         <code>null</code> for certain system threads. Use
