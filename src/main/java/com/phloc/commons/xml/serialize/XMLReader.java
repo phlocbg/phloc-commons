@@ -485,6 +485,12 @@ public final class XMLReader
     {
       // use parser from pool
       final org.xml.sax.XMLReader aParser = s_aPool.borrowObject ();
+      if (aParser == null)
+      {
+        s_aLogger.error ("Failed to get parser from pool!");
+        return ESuccess.FAILURE;
+      }
+
       try
       {
         final StopWatch aSW = new StopWatch (true);
