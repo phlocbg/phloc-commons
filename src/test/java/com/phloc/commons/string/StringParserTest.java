@@ -96,6 +96,20 @@ public final class StringParserTest extends AbstractPhlocTestCase
   }
 
   @Test
+  public void testParseBoolObjExact ()
+  {
+    assertEquals (Boolean.TRUE, StringParser.parseBoolObjExact ("true"));
+    assertEquals (Boolean.TRUE, StringParser.parseBoolObjExact ("trUE"));
+    assertEquals (Boolean.TRUE, StringParser.parseBoolObjExact (Boolean.TRUE.toString ()));
+    assertEquals (Boolean.FALSE, StringParser.parseBoolObjExact ("false"));
+    assertEquals (Boolean.FALSE, StringParser.parseBoolObjExact ("FALse"));
+    assertEquals (Boolean.FALSE, StringParser.parseBoolObjExact (Boolean.FALSE.toString ()));
+    assertNull (StringParser.parseBoolObjExact ("anything"));
+    assertNull (StringParser.parseBoolObjExact (""));
+    assertNull (StringParser.parseBoolObjExact (null));
+  }
+
+  @Test
   public void testParseByte ()
   {
     // Object
