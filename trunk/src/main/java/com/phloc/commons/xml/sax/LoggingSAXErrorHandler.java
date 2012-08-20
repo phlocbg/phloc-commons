@@ -29,6 +29,8 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXParseException;
 
 import com.phloc.commons.annotations.CodingStyleguideUnaware;
+import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.error.EErrorLevel;
 import com.phloc.commons.log.LogUtils;
 
@@ -58,11 +60,19 @@ public class LoggingSAXErrorHandler extends AbstractSAXErrorHandler
     return s_aInstance;
   }
 
-  @Override
-  protected void internalLog (@Nonnull final EErrorLevel eErrorLevel, final SAXParseException aException)
+  @Nonnull
+  @Nonempty
+  @OverrideOnDemand
+  protected String getErrorMessage (@Nonnull final EErrorLevel eErrorLevel, final SAXParseException aException)
   {
     // As the SAX error messages are not localized, we can use a fixed locale
     // here
-    LogUtils.log (s_aLogger, eErrorLevel, "SAX " + getSaxParseError (eErrorLevel, aException).getAsString (Locale.US));
+    return "SAX " + getSaxParseError (eErrorLevel, aException).getAsString (Locale.US);
+  }
+
+  @Override
+  protected void internalLog (@Nonnull final EErrorLevel eErrorLevel, final SAXParseException aException)
+  {
+    LogUtils.log (s_aLogger, eErrorLevel, getErrorMessage (eErrorLevel, aException));
   }
 }
