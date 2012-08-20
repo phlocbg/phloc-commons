@@ -101,7 +101,8 @@ public class StringParser
   /**
    * Parse the given {@link String} as boolean value. All values that are equal
    * to "true" (ignoring case) will result in <code>true</code> return values.
-   * All other values result in <code>false</code> return values.
+   * All other values result in <code>false</code> return values. This method is
+   * equal to {@link Boolean#parseBoolean(String)}
    * 
    * @param sStr
    *        The string to be interpreted. May be <code>null</code>.
@@ -148,9 +149,10 @@ public class StringParser
 
   /**
    * Returns a <code>Boolean</code> with a value represented by the specified
-   * string. The <code>Boolean</code> returned represents a true value if the
-   * string argument is not <code>null</code> and is equal, ignoring case, to
-   * the string {@code "true"}.
+   * string. The <code>Boolean</code> returned represents a <code>true</code>
+   * value if the string argument is not <code>null</code> and is equal,
+   * ignoring case, to the string {@code "true"}. This method is equal to
+   * {@link Boolean#valueOf(String)}
    * 
    * @param sStr
    *        The string to be parsed. May be <code>null</code>.
@@ -161,6 +163,50 @@ public class StringParser
   public static Boolean parseBoolObj (@Nullable final String sStr)
   {
     return Boolean.valueOf (sStr);
+  }
+
+  /**
+   * Returns a <code>Boolean</code> with a value represented by the specified
+   * string. The <code>Boolean</code> returned represents a <code>true</code>
+   * value if the string argument is not <code>null</code> and is equal,
+   * ignoring case, to the string {@code "true"}, and it will return
+   * <code>false</code> if the string argument is not <code>null</code> and is
+   * equal, ignoring case, to the string {@code "false"}. In all other cases
+   * <code>null</code> is returned.
+   * 
+   * @param sStr
+   *        The string to be parsed. May be <code>null</code>.
+   * @return the <code>Boolean</code> value represented by the string. Never
+   *         <code>null</code>.
+   */
+  @Nullable
+  public static Boolean parseBoolObjExact (@Nullable final String sStr)
+  {
+    return parseBoolObjExact (sStr, null);
+  }
+
+  /**
+   * Returns a <code>Boolean</code> with a value represented by the specified
+   * string. The <code>Boolean</code> returned represents a <code>true</code>
+   * value if the string argument is not <code>null</code> and is equal,
+   * ignoring case, to the string {@code "true"}, and it will return
+   * <code>false</code> if the string argument is not <code>null</code> and is
+   * equal, ignoring case, to the string {@code "false"}. In all other cases
+   * <code>aDefault</code> is returned.
+   * 
+   * @param sStr
+   *        The string to be parsed. May be <code>null</code>.
+   * @return the <code>Boolean</code> value represented by the string. Never
+   *         <code>null</code>.
+   */
+  @Nullable
+  public static Boolean parseBoolObjExact (@Nullable final String sStr, @Nullable final Boolean aDefault)
+  {
+    if (Boolean.TRUE.toString ().equalsIgnoreCase (sStr))
+      return Boolean.TRUE;
+    if (Boolean.FALSE.toString ().equalsIgnoreCase (sStr))
+      return Boolean.FALSE;
+    return aDefault;
   }
 
   // ---[byte]---
