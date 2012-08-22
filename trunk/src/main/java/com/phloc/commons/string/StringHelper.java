@@ -1150,9 +1150,12 @@ public final class StringHelper extends StringParser
       for (int i = nOfs; i < nOfs + nLen; ++i)
       {
         final String sElement = aElements[i];
-        if (i > nOfs)
-          aSB.append (sSep);
-        aSB.append (sElement);
+        if (hasText (sElement))
+        {
+          if (i > nOfs)
+            aSB.append (sSep);
+          aSB.append (sElement);
+        }
       }
     }
     return aSB.toString ();
