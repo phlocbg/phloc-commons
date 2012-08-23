@@ -35,4 +35,15 @@ public final class BooleanHelperTest
     assertFalse (BooleanHelper.getInverted (true));
     assertTrue (BooleanHelper.getInverted (false));
   }
+
+  @Test
+  public void testGetBooleanValue ()
+  {
+    assertTrue (BooleanHelper.getBooleanValue (Boolean.TRUE, true));
+    assertTrue (BooleanHelper.getBooleanValue (Boolean.TRUE, false));
+    assertFalse (BooleanHelper.getBooleanValue (Boolean.FALSE, true));
+    assertFalse (BooleanHelper.getBooleanValue (Boolean.FALSE, false));
+    assertTrue (BooleanHelper.getBooleanValue (null, true));
+    assertFalse (BooleanHelper.getBooleanValue (null, false));
+  }
 }
