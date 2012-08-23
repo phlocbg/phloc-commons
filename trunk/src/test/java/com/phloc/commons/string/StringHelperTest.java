@@ -476,6 +476,83 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
+  public void testGetImplodedNonEmptyIterable ()
+  {
+    final List <String> aList = ContainerHelper.newList (null, "a", "", "b", null, "c", "");
+    assertEquals ("", StringHelper.getImplodedNonEmpty (".", (String []) null));
+    assertEquals ("", StringHelper.getImplodedNonEmpty (".", (List <String>) null));
+    assertEquals ("a.b.c", StringHelper.getImplodedNonEmpty (".", aList));
+    assertEquals ("abc", StringHelper.getImplodedNonEmpty ("", aList));
+    assertEquals ("a.b.c", StringHelper.getImplodedNonEmpty (".", aList.toArray (new String [3])));
+    assertEquals ("abc", StringHelper.getImplodedNonEmpty ("", aList.toArray (new String [3])));
+
+    try
+    {
+      StringHelper.getImplodedNonEmpty (null, aList);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+  }
+
+  @Test
+  @SuppressFBWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
+  public void testGetImplodedNonEmptyArray ()
+  {
+    final String [] aArray = new String [] { null, "a", "", "b", null, "c", "" };
+    assertEquals ("a.b", StringHelper.getImplodedNonEmpty (".", aArray, 0, 4));
+    assertEquals ("b.c", StringHelper.getImplodedNonEmpty (".", aArray, 2, 4));
+    assertEquals ("", StringHelper.getImplodedNonEmpty (".", aArray, 0, 0));
+    assertEquals ("", StringHelper.getImplodedNonEmpty (".", aArray, 4, 0));
+    assertEquals ("", StringHelper.getImplodedNonEmpty (".", null, 4, 0));
+
+    try
+    {
+      StringHelper.getImplodedNonEmpty (null, aArray, 2, 2);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+    try
+    {
+      StringHelper.getImplodedNonEmpty (".", aArray, -1, 2);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+    try
+    {
+      StringHelper.getImplodedNonEmpty (".", aArray, 0, -1);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+    try
+    {
+      // too long
+      StringHelper.getImplodedNonEmpty (".", aArray, 6, 2);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+    try
+    {
+      // too long
+      StringHelper.getImplodedNonEmpty (".", aArray, 0, 8);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+    try
+    {
+      StringHelper.getImplodedNonEmpty (null, aArray);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+  }
+
+  @Test
   public void testExplodeToList ()
   {
     List <String> ret = StringHelper.getExploded ("@", "a@b@@c");
