@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.lang;
 
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
@@ -36,9 +37,31 @@ public final class BooleanHelper
   private BooleanHelper ()
   {}
 
+  /**
+   * Get the converted boolean value
+   * 
+   * @param b
+   *        Input boolean value
+   * @return The inverted value
+   */
   public static boolean getInverted (final boolean b)
   {
     // This is trillions of clockticks faster than "return !b" !!!!!
     return b ^ true;
+  }
+
+  /**
+   * Get the primitive value of the passed object value.
+   * 
+   * @param aObj
+   *        The Boolean value to be converted
+   * @param bDefault
+   *        The default value to be returned, if the passed obj is
+   *        <code>null</code>.
+   * @return Either the primitive boolean value or the default value
+   */
+  public static boolean getBooleanValue (@Nullable final Boolean aObj, final boolean bDefault)
+  {
+    return aObj == null ? bDefault : aObj.booleanValue ();
   }
 }
