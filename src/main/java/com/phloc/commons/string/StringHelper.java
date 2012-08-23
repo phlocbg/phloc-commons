@@ -1046,11 +1046,11 @@ public final class StringHelper extends StringParser
     final StringBuilder aSB = new StringBuilder ();
     if (aElements != null)
     {
-      int nIndex = 0;
+      int nElementsAdded = 0;
       for (final String sElement : aElements)
         if (hasText (sElement))
         {
-          if (nIndex++ > 0)
+          if (nElementsAdded++ > 0)
             aSB.append (sSep);
           aSB.append (sElement);
         }
@@ -1147,12 +1147,13 @@ public final class StringHelper extends StringParser
     final StringBuilder aSB = new StringBuilder ();
     if (aElements != null)
     {
+      int nElementsAdded = 0;
       for (int i = nOfs; i < nOfs + nLen; ++i)
       {
         final String sElement = aElements[i];
         if (hasText (sElement))
         {
-          if (i > nOfs)
+          if (nElementsAdded++ > 0)
             aSB.append (sSep);
           aSB.append (sElement);
         }
