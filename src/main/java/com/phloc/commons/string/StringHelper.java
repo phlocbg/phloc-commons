@@ -1726,9 +1726,8 @@ public final class StringHelper extends StringParser
                                           @Nullable final String sSearch,
                                           @Nonnull final Locale aSortLocale)
   {
-    return sText != null && sSearch != null && sText.length () >= sSearch.length ()
-                                                                                   ? sText.toLowerCase (aSortLocale)
-                                                                                          .indexOf (sSearch.toLowerCase (aSortLocale))
+    return sText != null && sSearch != null && sText.length () >= sSearch.length () ? sText.toLowerCase (aSortLocale)
+                                                                                           .indexOf (sSearch.toLowerCase (aSortLocale))
                                                                                    : STRING_NOT_FOUND;
   }
 
@@ -1750,9 +1749,8 @@ public final class StringHelper extends StringParser
                                               @Nullable final String sSearch,
                                               @Nonnull final Locale aSortLocale)
   {
-    return sText != null && sSearch != null && sText.length () >= sSearch.length ()
-                                                                                   ? sText.toLowerCase (aSortLocale)
-                                                                                          .lastIndexOf (sSearch.toLowerCase (aSortLocale))
+    return sText != null && sSearch != null && sText.length () >= sSearch.length () ? sText.toLowerCase (aSortLocale)
+                                                                                           .lastIndexOf (sSearch.toLowerCase (aSortLocale))
                                                                                    : STRING_NOT_FOUND;
   }
 
@@ -2920,9 +2918,27 @@ public final class StringHelper extends StringParser
    *        The character to search.
    * @return <code>null</code> if the passed string does not contain the search
    *         character.
+   * @deprecated Use {@link #getUntilFirstIncl(String,char)} instead
    */
+  @Deprecated
   @Nullable
   public static String getUntilIncl (@Nullable final String sStr, final char cSearch)
+  {
+    return getUntilFirstIncl (sStr, cSearch);
+  }
+
+  /**
+   * Get everything from the string up to and including the first passed char.
+   * 
+   * @param sStr
+   *        The source string. May be <code>null</code>.
+   * @param cSearch
+   *        The character to search.
+   * @return <code>null</code> if the passed string does not contain the search
+   *         character.
+   */
+  @Nullable
+  public static String getUntilFirstIncl (@Nullable final String sStr, final char cSearch)
   {
     return _getUntilFirst (sStr, cSearch, true);
   }
@@ -2936,9 +2952,27 @@ public final class StringHelper extends StringParser
    *        The character to search.
    * @return <code>null</code> if the passed string does not contain the search
    *         character.
+   * @deprecated Use {@link #getUntilFirstExcl(String,char)} instead
    */
+  @Deprecated
   @Nullable
   public static String getUntilExcl (@Nullable final String sStr, final char cSearch)
+  {
+    return getUntilFirstExcl (sStr, cSearch);
+  }
+
+  /**
+   * Get everything from the string up to and excluding first the passed char.
+   * 
+   * @param sStr
+   *        The source string. May be <code>null</code>.
+   * @param cSearch
+   *        The character to search.
+   * @return <code>null</code> if the passed string does not contain the search
+   *         character.
+   */
+  @Nullable
+  public static String getUntilFirstExcl (@Nullable final String sStr, final char cSearch)
   {
     return _getUntilFirst (sStr, cSearch, false);
   }
@@ -2966,9 +3000,28 @@ public final class StringHelper extends StringParser
    * @return <code>null</code> if the passed string does not contain the search
    *         string. If the search string is empty, the empty string is
    *         returned.
+   * @deprecated Use {@link #getUntilFirstIncl(String,String)} instead
    */
+  @Deprecated
   @Nullable
   public static String getUntilIncl (@Nullable final String sStr, @Nullable final String sSearch)
+  {
+    return getUntilFirstIncl (sStr, sSearch);
+  }
+
+  /**
+   * Get everything from the string up to and including the first passed string.
+   * 
+   * @param sStr
+   *        The source string. May be <code>null</code>.
+   * @param sSearch
+   *        The string to search. May be <code>null</code>.
+   * @return <code>null</code> if the passed string does not contain the search
+   *         string. If the search string is empty, the empty string is
+   *         returned.
+   */
+  @Nullable
+  public static String getUntilFirstIncl (@Nullable final String sStr, @Nullable final String sSearch)
   {
     return _getUntilFirst (sStr, sSearch, true);
   }
@@ -2983,11 +3036,118 @@ public final class StringHelper extends StringParser
    * @return <code>null</code> if the passed string does not contain the search
    *         string. If the search string is empty, the empty string is
    *         returned.
+   * @deprecated Use {@link #getUntilFirstExcl(String,String)} instead
    */
+  @Deprecated
   @Nullable
   public static String getUntilExcl (@Nullable final String sStr, @Nullable final String sSearch)
   {
+    return getUntilFirstExcl (sStr, sSearch);
+  }
+
+  /**
+   * Get everything from the string up to and excluding the first passed string.
+   * 
+   * @param sStr
+   *        The source string. May be <code>null</code>.
+   * @param sSearch
+   *        The string to search. May be <code>null</code>.
+   * @return <code>null</code> if the passed string does not contain the search
+   *         string. If the search string is empty, the empty string is
+   *         returned.
+   */
+  @Nullable
+  public static String getUntilFirstExcl (@Nullable final String sStr, @Nullable final String sSearch)
+  {
     return _getUntilFirst (sStr, sSearch, false);
+  }
+
+  @Nullable
+  private static String _getUntilLast (@Nullable final String sStr,
+                                       final char cSearch,
+                                       final boolean bIncludingSearchChar)
+  {
+    final int nIndex = getLastIndexOf (sStr, cSearch);
+    return nIndex == STRING_NOT_FOUND ? null : sStr.substring (0, nIndex + (bIncludingSearchChar ? 1 : 0));
+  }
+
+  /**
+   * Get everything from the string up to and including the first passed char.
+   * 
+   * @param sStr
+   *        The source string. May be <code>null</code>.
+   * @param cSearch
+   *        The character to search.
+   * @return <code>null</code> if the passed string does not contain the search
+   *         character.
+   */
+  @Nullable
+  public static String getUntilLastIncl (@Nullable final String sStr, final char cSearch)
+  {
+    return _getUntilLast (sStr, cSearch, true);
+  }
+
+  /**
+   * Get everything from the string up to and excluding first the passed char.
+   * 
+   * @param sStr
+   *        The source string. May be <code>null</code>.
+   * @param cSearch
+   *        The character to search.
+   * @return <code>null</code> if the passed string does not contain the search
+   *         character.
+   */
+  @Nullable
+  public static String getUntilLastExcl (@Nullable final String sStr, final char cSearch)
+  {
+    return _getUntilLast (sStr, cSearch, false);
+  }
+
+  @Nullable
+  private static String _getUntilLast (@Nullable final String sStr,
+                                       @Nullable final String sSearch,
+                                       final boolean bIncludingSearchChar)
+  {
+    if (hasNoText (sSearch))
+      return "";
+
+    final int nIndex = getLastIndexOf (sStr, sSearch);
+    return nIndex == STRING_NOT_FOUND ? null : sStr.substring (0, nIndex +
+                                                                  (bIncludingSearchChar ? sSearch.length () : 0));
+  }
+
+  /**
+   * Get everything from the string up to and including the first passed string.
+   * 
+   * @param sStr
+   *        The source string. May be <code>null</code>.
+   * @param sSearch
+   *        The string to search. May be <code>null</code>.
+   * @return <code>null</code> if the passed string does not contain the search
+   *         string. If the search string is empty, the empty string is
+   *         returned.
+   */
+  @Nullable
+  public static String getUntilLastIncl (@Nullable final String sStr, @Nullable final String sSearch)
+  {
+    return _getUntilLast (sStr, sSearch, true);
+  }
+
+  /**
+   * Get everything from the string up to and excluding the first passed string.
+   * 
+   * @param sStr
+   *        The source string. May be <code>null</code>.
+   * @param sSearch
+   *        The string to search. May be <code>null</code>.
+   * @return <code>null</code> if the passed string does not contain the search
+   *         string. If the search string is empty, the empty string is
+   *         returned.
+   */
+  @Nullable
+  public static String getUntilLastExcl (@Nullable final String sStr, @Nullable final String sSearch)
+  {
+    return _getUntilLast (sStr, sSearch, false);
   }
 
   @Nullable
@@ -3008,9 +3168,27 @@ public final class StringHelper extends StringParser
    *        The character to search.
    * @return <code>null</code> if the passed string does not contain the search
    *         character.
+   * @deprecated Use {@link #getFromFirstIncl(String,char)} instead
    */
+  @Deprecated
   @Nullable
   public static String getFromIncl (@Nullable final String sStr, final char cSearch)
+  {
+    return getFromFirstIncl (sStr, cSearch);
+  }
+
+  /**
+   * Get everything from the string from and including the first passed char.
+   * 
+   * @param sStr
+   *        The source string. May be <code>null</code>.
+   * @param cSearch
+   *        The character to search.
+   * @return <code>null</code> if the passed string does not contain the search
+   *         character.
+   */
+  @Nullable
+  public static String getFromFirstIncl (@Nullable final String sStr, final char cSearch)
   {
     return _getFromFirst (sStr, cSearch, true);
   }
@@ -3024,9 +3202,27 @@ public final class StringHelper extends StringParser
    *        The character to search.
    * @return <code>null</code> if the passed string does not contain the search
    *         character.
+   * @deprecated Use {@link #getFromFirstExcl(String,char)} instead
    */
+  @Deprecated
   @Nullable
   public static String getFromExcl (@Nullable final String sStr, final char cSearch)
+  {
+    return getFromFirstExcl (sStr, cSearch);
+  }
+
+  /**
+   * Get everything from the string from and excluding the first passed char.
+   * 
+   * @param sStr
+   *        The source string. May be <code>null</code>.
+   * @param cSearch
+   *        The character to search.
+   * @return <code>null</code> if the passed string does not contain the search
+   *         character.
+   */
+  @Nullable
+  public static String getFromFirstExcl (@Nullable final String sStr, final char cSearch)
   {
     return _getFromFirst (sStr, cSearch, false);
   }
@@ -3053,9 +3249,28 @@ public final class StringHelper extends StringParser
    * @return <code>null</code> if the passed string does not contain the search
    *         string. If the search string is empty, the input string is returned
    *         unmodified.
+   * @deprecated Use {@link #getFromFirstIncl(String,String)} instead
    */
+  @Deprecated
   @Nullable
   public static String getFromIncl (@Nullable final String sStr, @Nullable final String sSearch)
+  {
+    return getFromFirstIncl (sStr, sSearch);
+  }
+
+  /**
+   * Get everything from the string from and including the passed string.
+   * 
+   * @param sStr
+   *        The source string. May be <code>null</code>.
+   * @param sSearch
+   *        The string to search. May be <code>null</code>.
+   * @return <code>null</code> if the passed string does not contain the search
+   *         string. If the search string is empty, the input string is returned
+   *         unmodified.
+   */
+  @Nullable
+  public static String getFromFirstIncl (@Nullable final String sStr, @Nullable final String sSearch)
   {
     return _getFromFirst (sStr, sSearch, true);
   }
@@ -3070,10 +3285,116 @@ public final class StringHelper extends StringParser
    * @return <code>null</code> if the passed string does not contain the search
    *         string. If the search string is empty, the input string is returned
    *         unmodified.
+   * @deprecated Use {@link #getFromFirstExcl(String,String)} instead
    */
+  @Deprecated
   @Nullable
   public static String getFromExcl (@Nullable final String sStr, @Nullable final String sSearch)
   {
+    return getFromFirstExcl (sStr, sSearch);
+  }
+
+  /**
+   * Get everything from the string from and excluding the passed string.
+   * 
+   * @param sStr
+   *        The source string. May be <code>null</code>.
+   * @param sSearch
+   *        The string to search. May be <code>null</code>.
+   * @return <code>null</code> if the passed string does not contain the search
+   *         string. If the search string is empty, the input string is returned
+   *         unmodified.
+   */
+  @Nullable
+  public static String getFromFirstExcl (@Nullable final String sStr, @Nullable final String sSearch)
+  {
     return _getFromFirst (sStr, sSearch, false);
+  }
+
+  @Nullable
+  private static String _getFromLast (@Nullable final String sStr,
+                                      final char cSearch,
+                                      final boolean bIncludingSearchChar)
+  {
+    final int nIndex = getLastIndexOf (sStr, cSearch);
+    return nIndex == STRING_NOT_FOUND ? null : sStr.substring (nIndex + (bIncludingSearchChar ? 0 : 1));
+  }
+
+  /**
+   * Get everything from the string from and including the first passed char.
+   * 
+   * @param sStr
+   *        The source string. May be <code>null</code>.
+   * @param cSearch
+   *        The character to search.
+   * @return <code>null</code> if the passed string does not contain the search
+   *         character.
+   */
+  @Nullable
+  public static String getFromLastIncl (@Nullable final String sStr, final char cSearch)
+  {
+    return _getFromLast (sStr, cSearch, true);
+  }
+
+  /**
+   * Get everything from the string from and excluding the first passed char.
+   * 
+   * @param sStr
+   *        The source string. May be <code>null</code>.
+   * @param cSearch
+   *        The character to search.
+   * @return <code>null</code> if the passed string does not contain the search
+   *         character.
+   */
+  @Nullable
+  public static String getFromLastExcl (@Nullable final String sStr, final char cSearch)
+  {
+    return _getFromLast (sStr, cSearch, false);
+  }
+
+  @Nullable
+  private static String _getFromLast (@Nullable final String sStr,
+                                      @Nullable final String sSearch,
+                                      final boolean bIncludingSearchChar)
+  {
+    if (hasNoText (sSearch))
+      return sStr;
+
+    final int nIndex = getLastIndexOf (sStr, sSearch);
+    return nIndex == STRING_NOT_FOUND ? null : sStr.substring (nIndex + (bIncludingSearchChar ? 0 : sSearch.length ()));
+  }
+
+  /**
+   * Get everything from the string from and including the passed string.
+   * 
+   * @param sStr
+   *        The source string. May be <code>null</code>.
+   * @param sSearch
+   *        The string to search. May be <code>null</code>.
+   * @return <code>null</code> if the passed string does not contain the search
+   *         string. If the search string is empty, the input string is returned
+   *         unmodified.
+   */
+  @Nullable
+  public static String getFromLastIncl (@Nullable final String sStr, @Nullable final String sSearch)
+  {
+    return _getFromLast (sStr, sSearch, true);
+  }
+
+  /**
+   * Get everything from the string from and excluding the passed string.
+   * 
+   * @param sStr
+   *        The source string. May be <code>null</code>.
+   * @param sSearch
+   *        The string to search. May be <code>null</code>.
+   * @return <code>null</code> if the passed string does not contain the search
+   *         string. If the search string is empty, the input string is returned
+   *         unmodified.
+   */
+  @Nullable
+  public static String getFromLastExcl (@Nullable final String sStr, @Nullable final String sSearch)
+  {
+    return _getFromLast (sStr, sSearch, false);
   }
 }
