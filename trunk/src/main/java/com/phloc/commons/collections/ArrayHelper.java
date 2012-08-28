@@ -26,6 +26,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.DevelopersNote;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
@@ -280,6 +281,368 @@ public final class ArrayHelper
   }
 
   /**
+   * Get the index of the passed search value in the passed value array.
+   * 
+   * @param aValues
+   *        The value array to be searched. May be <code>null</code>.
+   * @param aSearchValue
+   *        The value to be searched. May be <code>null</code>.
+   * @return <code>-1</code> if the searched value is not contained, a value
+   *         &ge; 0 otherwise.
+   */
+  public static <ELEMENTTYPE> int getFirstIndex (@Nullable final ELEMENTTYPE [] aValues,
+                                                 @Nullable final ELEMENTTYPE aSearchValue)
+  {
+    final int nLength = getSize (aValues);
+    if (nLength > 0)
+      for (int nIndex = 0; nIndex < nLength; ++nIndex)
+        if (EqualsUtils.equals (aValues[nIndex], aSearchValue))
+          return nIndex;
+    return CGlobal.ILLEGAL_UINT;
+  }
+
+  /**
+   * Get the index of the passed search value in the passed value array.
+   * 
+   * @param aValues
+   *        The value array to be searched. May be <code>null</code>.
+   * @param aSearchValue
+   *        The value to be searched. May be <code>null</code>.
+   * @return <code>-1</code> if the searched value is not contained, a value
+   *         &ge; 0 otherwise.
+   */
+  public static int getFirstIndex (@Nullable final boolean [] aValues, final boolean aSearchValue)
+  {
+    final int nLength = getSize (aValues);
+    if (nLength > 0)
+      for (int nIndex = 0; nIndex < nLength; ++nIndex)
+        if (EqualsUtils.equals (aValues[nIndex], aSearchValue))
+          return nIndex;
+    return CGlobal.ILLEGAL_UINT;
+  }
+
+  /**
+   * Get the index of the passed search value in the passed value array.
+   * 
+   * @param aValues
+   *        The value array to be searched. May be <code>null</code>.
+   * @param aSearchValue
+   *        The value to be searched. May be <code>null</code>.
+   * @return <code>-1</code> if the searched value is not contained, a value
+   *         &ge; 0 otherwise.
+   */
+  public static int getFirstIndex (@Nullable final byte [] aValues, final byte aSearchValue)
+  {
+    final int nLength = getSize (aValues);
+    if (nLength > 0)
+      for (int nIndex = 0; nIndex < nLength; ++nIndex)
+        if (EqualsUtils.equals (aValues[nIndex], aSearchValue))
+          return nIndex;
+    return CGlobal.ILLEGAL_UINT;
+  }
+
+  /**
+   * Get the index of the passed search value in the passed value array.
+   * 
+   * @param aValues
+   *        The value array to be searched. May be <code>null</code>.
+   * @param aSearchValue
+   *        The value to be searched. May be <code>null</code>.
+   * @return <code>-1</code> if the searched value is not contained, a value
+   *         &ge; 0 otherwise.
+   */
+  public static int getFirstIndex (@Nullable final char [] aValues, final char aSearchValue)
+  {
+    final int nLength = getSize (aValues);
+    if (nLength > 0)
+      for (int nIndex = 0; nIndex < nLength; ++nIndex)
+        if (EqualsUtils.equals (aValues[nIndex], aSearchValue))
+          return nIndex;
+    return CGlobal.ILLEGAL_UINT;
+  }
+
+  /**
+   * Get the index of the passed search value in the passed value array.
+   * 
+   * @param aValues
+   *        The value array to be searched. May be <code>null</code>.
+   * @param aSearchValue
+   *        The value to be searched. May be <code>null</code>.
+   * @return <code>-1</code> if the searched value is not contained, a value
+   *         &ge; 0 otherwise.
+   */
+  public static int getFirstIndex (@Nullable final double [] aValues, final double aSearchValue)
+  {
+    final int nLength = getSize (aValues);
+    if (nLength > 0)
+      for (int nIndex = 0; nIndex < nLength; ++nIndex)
+        if (EqualsUtils.equals (aValues[nIndex], aSearchValue))
+          return nIndex;
+    return CGlobal.ILLEGAL_UINT;
+  }
+
+  /**
+   * Get the index of the passed search value in the passed value array.
+   * 
+   * @param aValues
+   *        The value array to be searched. May be <code>null</code>.
+   * @param aSearchValue
+   *        The value to be searched. May be <code>null</code>.
+   * @return <code>-1</code> if the searched value is not contained, a value
+   *         &ge; 0 otherwise.
+   */
+  public static int getFirstIndex (@Nullable final float [] aValues, final float aSearchValue)
+  {
+    final int nLength = getSize (aValues);
+    if (nLength > 0)
+      for (int nIndex = 0; nIndex < nLength; ++nIndex)
+        if (EqualsUtils.equals (aValues[nIndex], aSearchValue))
+          return nIndex;
+    return CGlobal.ILLEGAL_UINT;
+  }
+
+  /**
+   * Get the index of the passed search value in the passed value array.
+   * 
+   * @param aValues
+   *        The value array to be searched. May be <code>null</code>.
+   * @param aSearchValue
+   *        The value to be searched. May be <code>null</code>.
+   * @return <code>-1</code> if the searched value is not contained, a value
+   *         &ge; 0 otherwise.
+   */
+  public static int getFirstIndex (@Nullable final int [] aValues, final int aSearchValue)
+  {
+    final int nLength = getSize (aValues);
+    if (nLength > 0)
+      for (int nIndex = 0; nIndex < nLength; ++nIndex)
+        if (EqualsUtils.equals (aValues[nIndex], aSearchValue))
+          return nIndex;
+    return CGlobal.ILLEGAL_UINT;
+  }
+
+  /**
+   * Get the index of the passed search value in the passed value array.
+   * 
+   * @param aValues
+   *        The value array to be searched. May be <code>null</code>.
+   * @param aSearchValue
+   *        The value to be searched. May be <code>null</code>.
+   * @return <code>-1</code> if the searched value is not contained, a value
+   *         &ge; 0 otherwise.
+   */
+  public static int getFirstIndex (@Nullable final long [] aValues, final long aSearchValue)
+  {
+    final int nLength = getSize (aValues);
+    if (nLength > 0)
+      for (int nIndex = 0; nIndex < nLength; ++nIndex)
+        if (EqualsUtils.equals (aValues[nIndex], aSearchValue))
+          return nIndex;
+    return CGlobal.ILLEGAL_UINT;
+  }
+
+  /**
+   * Get the index of the passed search value in the passed value array.
+   * 
+   * @param aValues
+   *        The value array to be searched. May be <code>null</code>.
+   * @param aSearchValue
+   *        The value to be searched. May be <code>null</code>.
+   * @return <code>-1</code> if the searched value is not contained, a value
+   *         &ge; 0 otherwise.
+   */
+  public static int getFirstIndex (@Nullable final short [] aValues, final short aSearchValue)
+  {
+    final int nLength = getSize (aValues);
+    if (nLength > 0)
+      for (int nIndex = 0; nIndex < nLength; ++nIndex)
+        if (EqualsUtils.equals (aValues[nIndex], aSearchValue))
+          return nIndex;
+    return CGlobal.ILLEGAL_UINT;
+  }
+
+  /**
+   * Get the index of the passed search value in the passed value array.
+   * 
+   * @param aValues
+   *        The value array to be searched. May be <code>null</code>.
+   * @param aSearchValue
+   *        The value to be searched. May be <code>null</code>.
+   * @return <code>-1</code> if the searched value is not contained, a value
+   *         &ge; 0 otherwise.
+   */
+  public static <ELEMENTTYPE> int getLastIndex (@Nullable final ELEMENTTYPE [] aValues,
+                                                @Nullable final ELEMENTTYPE aSearchValue)
+  {
+    final int nLength = getSize (aValues);
+    if (nLength > 0)
+      for (int nIndex = nLength - 1; nIndex >= 0; --nIndex)
+        if (EqualsUtils.equals (aValues[nIndex], aSearchValue))
+          return nIndex;
+    return CGlobal.ILLEGAL_UINT;
+  }
+
+  /**
+   * Get the index of the passed search value in the passed value array.
+   * 
+   * @param aValues
+   *        The value array to be searched. May be <code>null</code>.
+   * @param aSearchValue
+   *        The value to be searched. May be <code>null</code>.
+   * @return <code>-1</code> if the searched value is not contained, a value
+   *         &ge; 0 otherwise.
+   */
+  public static int getLastIndex (@Nullable final boolean [] aValues, final boolean aSearchValue)
+  {
+    final int nLength = getSize (aValues);
+    if (nLength > 0)
+      for (int nIndex = nLength - 1; nIndex >= 0; --nIndex)
+        if (EqualsUtils.equals (aValues[nIndex], aSearchValue))
+          return nIndex;
+    return CGlobal.ILLEGAL_UINT;
+  }
+
+  /**
+   * Get the index of the passed search value in the passed value array.
+   * 
+   * @param aValues
+   *        The value array to be searched. May be <code>null</code>.
+   * @param aSearchValue
+   *        The value to be searched. May be <code>null</code>.
+   * @return <code>-1</code> if the searched value is not contained, a value
+   *         &ge; 0 otherwise.
+   */
+  public static int getLastIndex (@Nullable final byte [] aValues, final byte aSearchValue)
+  {
+    final int nLength = getSize (aValues);
+    if (nLength > 0)
+      for (int nIndex = nLength - 1; nIndex >= 0; --nIndex)
+        if (EqualsUtils.equals (aValues[nIndex], aSearchValue))
+          return nIndex;
+    return CGlobal.ILLEGAL_UINT;
+  }
+
+  /**
+   * Get the index of the passed search value in the passed value array.
+   * 
+   * @param aValues
+   *        The value array to be searched. May be <code>null</code>.
+   * @param aSearchValue
+   *        The value to be searched. May be <code>null</code>.
+   * @return <code>-1</code> if the searched value is not contained, a value
+   *         &ge; 0 otherwise.
+   */
+  public static int getLastIndex (@Nullable final char [] aValues, final char aSearchValue)
+  {
+    final int nLength = getSize (aValues);
+    if (nLength > 0)
+      for (int nIndex = nLength - 1; nIndex >= 0; --nIndex)
+        if (EqualsUtils.equals (aValues[nIndex], aSearchValue))
+          return nIndex;
+    return CGlobal.ILLEGAL_UINT;
+  }
+
+  /**
+   * Get the index of the passed search value in the passed value array.
+   * 
+   * @param aValues
+   *        The value array to be searched. May be <code>null</code>.
+   * @param aSearchValue
+   *        The value to be searched. May be <code>null</code>.
+   * @return <code>-1</code> if the searched value is not contained, a value
+   *         &ge; 0 otherwise.
+   */
+  public static int getLastIndex (@Nullable final double [] aValues, final double aSearchValue)
+  {
+    final int nLength = getSize (aValues);
+    if (nLength > 0)
+      for (int nIndex = nLength - 1; nIndex >= 0; --nIndex)
+        if (EqualsUtils.equals (aValues[nIndex], aSearchValue))
+          return nIndex;
+    return CGlobal.ILLEGAL_UINT;
+  }
+
+  /**
+   * Get the index of the passed search value in the passed value array.
+   * 
+   * @param aValues
+   *        The value array to be searched. May be <code>null</code>.
+   * @param aSearchValue
+   *        The value to be searched. May be <code>null</code>.
+   * @return <code>-1</code> if the searched value is not contained, a value
+   *         &ge; 0 otherwise.
+   */
+  public static int getLastIndex (@Nullable final float [] aValues, final float aSearchValue)
+  {
+    final int nLength = getSize (aValues);
+    if (nLength > 0)
+      for (int nIndex = nLength - 1; nIndex >= 0; --nIndex)
+        if (EqualsUtils.equals (aValues[nIndex], aSearchValue))
+          return nIndex;
+    return CGlobal.ILLEGAL_UINT;
+  }
+
+  /**
+   * Get the index of the passed search value in the passed value array.
+   * 
+   * @param aValues
+   *        The value array to be searched. May be <code>null</code>.
+   * @param aSearchValue
+   *        The value to be searched. May be <code>null</code>.
+   * @return <code>-1</code> if the searched value is not contained, a value
+   *         &ge; 0 otherwise.
+   */
+  public static int getLastIndex (@Nullable final int [] aValues, final int aSearchValue)
+  {
+    final int nLength = getSize (aValues);
+    if (nLength > 0)
+      for (int nIndex = nLength - 1; nIndex >= 0; --nIndex)
+        if (EqualsUtils.equals (aValues[nIndex], aSearchValue))
+          return nIndex;
+    return CGlobal.ILLEGAL_UINT;
+  }
+
+  /**
+   * Get the index of the passed search value in the passed value array.
+   * 
+   * @param aValues
+   *        The value array to be searched. May be <code>null</code>.
+   * @param aSearchValue
+   *        The value to be searched. May be <code>null</code>.
+   * @return <code>-1</code> if the searched value is not contained, a value
+   *         &ge; 0 otherwise.
+   */
+  public static int getLastIndex (@Nullable final long [] aValues, final long aSearchValue)
+  {
+    final int nLength = getSize (aValues);
+    if (nLength > 0)
+      for (int nIndex = nLength - 1; nIndex >= 0; --nIndex)
+        if (EqualsUtils.equals (aValues[nIndex], aSearchValue))
+          return nIndex;
+    return CGlobal.ILLEGAL_UINT;
+  }
+
+  /**
+   * Get the index of the passed search value in the passed value array.
+   * 
+   * @param aValues
+   *        The value array to be searched. May be <code>null</code>.
+   * @param aSearchValue
+   *        The value to be searched. May be <code>null</code>.
+   * @return <code>-1</code> if the searched value is not contained, a value
+   *         &ge; 0 otherwise.
+   */
+  public static int getLastIndex (@Nullable final short [] aValues, final short aSearchValue)
+  {
+    final int nLength = getSize (aValues);
+    if (nLength > 0)
+      for (int nIndex = nLength - 1; nIndex >= 0; --nIndex)
+        if (EqualsUtils.equals (aValues[nIndex], aSearchValue))
+          return nIndex;
+    return CGlobal.ILLEGAL_UINT;
+  }
+
+  /**
    * Check if the passed search value is contained in the passed value array.
    * 
    * @param aValues
@@ -292,11 +655,7 @@ public final class ArrayHelper
   public static <ELEMENTTYPE> boolean contains (@Nullable final ELEMENTTYPE [] aValues,
                                                 @Nullable final ELEMENTTYPE aSearchValue)
   {
-    if (!isEmpty (aValues))
-      for (final ELEMENTTYPE aValue : aValues)
-        if (EqualsUtils.equals (aValue, aSearchValue))
-          return true;
-    return false;
+    return getFirstIndex (aValues, aSearchValue) >= 0;
   }
 
   /**
@@ -311,11 +670,7 @@ public final class ArrayHelper
    */
   public static boolean contains (@Nullable final boolean [] aValues, final boolean aSearchValue)
   {
-    if (!isEmpty (aValues))
-      for (final boolean aValue : aValues)
-        if (EqualsUtils.equals (aValue, aSearchValue))
-          return true;
-    return false;
+    return getFirstIndex (aValues, aSearchValue) >= 0;
   }
 
   /**
@@ -330,11 +685,7 @@ public final class ArrayHelper
    */
   public static boolean contains (@Nullable final byte [] aValues, final byte aSearchValue)
   {
-    if (!isEmpty (aValues))
-      for (final byte aValue : aValues)
-        if (EqualsUtils.equals (aValue, aSearchValue))
-          return true;
-    return false;
+    return getFirstIndex (aValues, aSearchValue) >= 0;
   }
 
   /**
@@ -349,11 +700,7 @@ public final class ArrayHelper
    */
   public static boolean contains (@Nullable final char [] aValues, final char aSearchValue)
   {
-    if (!isEmpty (aValues))
-      for (final char aValue : aValues)
-        if (EqualsUtils.equals (aValue, aSearchValue))
-          return true;
-    return false;
+    return getFirstIndex (aValues, aSearchValue) >= 0;
   }
 
   /**
@@ -368,11 +715,7 @@ public final class ArrayHelper
    */
   public static boolean contains (@Nullable final double [] aValues, final double aSearchValue)
   {
-    if (!isEmpty (aValues))
-      for (final double aValue : aValues)
-        if (EqualsUtils.equals (aValue, aSearchValue))
-          return true;
-    return false;
+    return getFirstIndex (aValues, aSearchValue) >= 0;
   }
 
   /**
@@ -387,11 +730,7 @@ public final class ArrayHelper
    */
   public static boolean contains (@Nullable final float [] aValues, final float aSearchValue)
   {
-    if (!isEmpty (aValues))
-      for (final float aValue : aValues)
-        if (EqualsUtils.equals (aValue, aSearchValue))
-          return true;
-    return false;
+    return getFirstIndex (aValues, aSearchValue) >= 0;
   }
 
   /**
@@ -406,11 +745,7 @@ public final class ArrayHelper
    */
   public static boolean contains (@Nullable final int [] aValues, final int aSearchValue)
   {
-    if (!isEmpty (aValues))
-      for (final int aValue : aValues)
-        if (EqualsUtils.equals (aValue, aSearchValue))
-          return true;
-    return false;
+    return getFirstIndex (aValues, aSearchValue) >= 0;
   }
 
   /**
@@ -425,11 +760,7 @@ public final class ArrayHelper
    */
   public static boolean contains (@Nullable final long [] aValues, final long aSearchValue)
   {
-    if (!isEmpty (aValues))
-      for (final long aValue : aValues)
-        if (EqualsUtils.equals (aValue, aSearchValue))
-          return true;
-    return false;
+    return getFirstIndex (aValues, aSearchValue) >= 0;
   }
 
   /**
@@ -444,11 +775,7 @@ public final class ArrayHelper
    */
   public static boolean contains (@Nullable final short [] aValues, final short aSearchValue)
   {
-    if (!isEmpty (aValues))
-      for (final short aValue : aValues)
-        if (EqualsUtils.equals (aValue, aSearchValue))
-          return true;
-    return false;
+    return getFirstIndex (aValues, aSearchValue) >= 0;
   }
 
   /**
@@ -2284,6 +2611,36 @@ public final class ArrayHelper
     if (aArray == null || nElementsToSkip >= aArray.length)
       return null;
     return getCopy (aArray, nElementsToSkip, aArray.length - nElementsToSkip);
+  }
+
+  /**
+   * Get an array that contains all elements, except for the passed elements.
+   * 
+   * @param aArray
+   *        The source array. May be <code>null</code>.
+   * @param aElementsToRemove
+   *        The elements to skip. Must be &gt;= 0!
+   * @return <code>null</code> if the passed array is <code>null</code>. The
+   *         original array, if no elements need to be skipped. A non-
+   *         <code>null</code> copy of the array without the passed elements
+   *         otherwise.
+   */
+  @Nullable
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE> ELEMENTTYPE [] getAllExcept (@Nullable final ELEMENTTYPE [] aArray,
+                                                           @Nullable final ELEMENTTYPE... aElementsToRemove)
+  {
+    if (isEmpty (aArray) || isEmpty (aElementsToRemove))
+      return aArray;
+
+    final ELEMENTTYPE [] tmp = getCopy (aArray);
+    for (final ELEMENTTYPE aElementToRemove : aElementsToRemove)
+    {
+      // FIXME
+      // final int nIndex = i
+    }
+
+    return null;
   }
 
   /**

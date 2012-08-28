@@ -18,7 +18,6 @@
 package com.phloc.commons.xml.serialize;
 
 import java.io.OutputStream;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -335,7 +334,8 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
   public final void write (@Nonnull final NODETYPE aNode, @Nonnull @WillNotClose final OutputStream aOS)
   {
     // Create a writer for the the passed output stream
-    final Writer aWriter = new NonBlockingBufferedWriter (StreamUtils.createWriter (aOS, m_aSettings.getCharsetObj ()));
+    final NonBlockingBufferedWriter aWriter = new NonBlockingBufferedWriter (StreamUtils.createWriter (aOS,
+                                                                                                       m_aSettings.getCharsetObj ()));
     write (aNode, aWriter);
   }
 
