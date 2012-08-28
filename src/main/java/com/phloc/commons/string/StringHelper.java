@@ -1823,9 +1823,8 @@ public final class StringHelper extends StringParser
 
     if (aInput != null)
       for (final char cIn : aInput)
-        for (final char cSearch : aSearchChars)
-          if (cIn == cSearch)
-            return true;
+        if (ArrayHelper.contains (aSearchChars, cIn))
+          return true;
     return false;
   }
 

@@ -22,7 +22,7 @@
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
   <entry date="2012-08-28" category="api" action="add">
     <change>
-      <text locale="en">Added new methods ArrayHelper.getFirstIndex(Object[],Object) and getLastIndex(Object[],Object)</text>
+      <text locale="en">Added new methods ArrayHelper.getFirstIndex(T[],T), getLastIndex(T[],T) and getExcept(T[],T[])</text>
     </change>
   </entry>
   <release date="2012-08-23" version="3.7.4" />
