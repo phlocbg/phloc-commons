@@ -192,7 +192,7 @@ public final class VendorInfo
     if (!EmailAddressUtils.isValid (sVendorEmail))
       throw new IllegalArgumentException ("Illegal vendor email: " + sVendorEmail);
     s_sVendorEmail = sVendorEmail;
-    s_sVendorEmailSuffix = StringHelper.getFromIncl (sVendorEmail, '@');
+    s_sVendorEmailSuffix = StringHelper.getFromFirstIncl (sVendorEmail, '@');
   }
 
   /**
