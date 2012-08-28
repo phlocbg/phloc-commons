@@ -61,7 +61,10 @@ public final class XMLHelper
 {
   // Order is important!
   // Note: for performance reasons they are all char arrays!
-  private static final char [] MASK_PATTERNS_REGULAR = new char [] { 0, '&', '<', '>', '"', '\'' };
+  private static final char [] MASK_PATTERNS_XML10 = new char [] { 0, '&', '<', '>', '"', '\'' };
+
+  // private static final char [] MASK_PATTERNS_XML10_NO_APOS =
+  // ArrayHelper.getAllExcept (MASK_PATTERNS_XML10, '\'');
 
   // Control characters (except 9 - \t and 10 - \n and 13 - \r)
   private static final char [] MASK_PATTERNS_CONTROL = new char [] { 1, 2, 3, 4, 5, 6, 7, 8,
@@ -89,7 +92,7 @@ public final class XMLHelper
                                                                     30,
                                                                     31,
                                                                     '\u2028' };
-  private static final char [] MASK_PATTERNS_ALL = ArrayHelper.getConcatenated (MASK_PATTERNS_REGULAR,
+  private static final char [] MASK_PATTERNS_ALL = ArrayHelper.getConcatenated (MASK_PATTERNS_XML10,
                                                                                 MASK_PATTERNS_CONTROL);
 
   /**
@@ -97,12 +100,12 @@ public final class XMLHelper
    * &#39; is used!<br>
    * Note: &#0; cannot be read so it is emitted as ""<br>
    */
-  private static final char [][] MASK_REPLACE_REGULAR = new char [] [] { "".toCharArray (),
-                                                                        "&amp;".toCharArray (),
-                                                                        "&lt;".toCharArray (),
-                                                                        "&gt;".toCharArray (),
-                                                                        "&quot;".toCharArray (),
-                                                                        "&#39;".toCharArray () };
+  private static final char [][] MASK_REPLACE_XML10 = new char [] [] { "".toCharArray (),
+                                                                      "&amp;".toCharArray (),
+                                                                      "&lt;".toCharArray (),
+                                                                      "&gt;".toCharArray (),
+                                                                      "&quot;".toCharArray (),
+                                                                      "&#39;".toCharArray () };
 
   /**
    * Control character replacements for removal<br>
@@ -138,7 +141,7 @@ public final class XMLHelper
                                                                               "".toCharArray (),
                                                                               "\n".toCharArray () };
 
-  private static final char [][] MASK_REPLACE_ALL_EMPTY = ArrayHelper.getConcatenated (MASK_REPLACE_REGULAR,
+  private static final char [][] MASK_REPLACE_ALL_EMPTY = ArrayHelper.getConcatenated (MASK_REPLACE_XML10,
                                                                                        MASK_REPLACE_CONTROL_EMPTY);
 
   /**
@@ -175,7 +178,7 @@ public final class XMLHelper
                                                                               "&#31;".toCharArray (),
                                                                               "&#2028;".toCharArray () };
 
-  private static final char [][] MASK_REPLACE_ALL_XML11 = ArrayHelper.getConcatenated (MASK_REPLACE_REGULAR,
+  private static final char [][] MASK_REPLACE_ALL_XML11 = ArrayHelper.getConcatenated (MASK_REPLACE_XML10,
                                                                                        MASK_REPLACE_CONTROL_XML11);
 
   static
@@ -204,7 +207,7 @@ public final class XMLHelper
      */
 
     // Check integrity
-    if (MASK_PATTERNS_REGULAR.length != MASK_REPLACE_REGULAR.length)
+    if (MASK_PATTERNS_XML10.length != MASK_REPLACE_XML10.length)
       throw new IllegalStateException ("Regular arrays have different length!");
     if (MASK_PATTERNS_CONTROL.length != MASK_REPLACE_CONTROL_EMPTY.length)
       throw new IllegalStateException ("Empty arrays have different length!");
@@ -545,8 +548,7 @@ public final class XMLHelper
 
     if (eXMLVersion.equals (EXMLVersion.XML_10))
     {
-      // XML 1.0 cannot handle numeric replacements like &#5;
-      return StringHelper.replaceMultiple (s, MASK_PATTERNS_REGULAR, MASK_REPLACE_REGULAR);
+      return StringHelper.replaceMultiple (s, MASK_PATTERNS_XML10, MASK_REPLACE_XML10);
     }
     return StringHelper.replaceMultiple (s, MASK_PATTERNS_ALL, MASK_REPLACE_ALL_XML11);
   }
@@ -574,7 +576,7 @@ public final class XMLHelper
 
     int nResLen;
     if (eXMLVersion.equals (EXMLVersion.XML_10))
-      nResLen = StringHelper.getReplaceMultipleResultLength (aChars, MASK_PATTERNS_REGULAR, MASK_REPLACE_REGULAR);
+      nResLen = StringHelper.getReplaceMultipleResultLength (aChars, MASK_PATTERNS_XML10, MASK_REPLACE_XML10);
     else
       nResLen = StringHelper.getReplaceMultipleResultLength (aChars, MASK_PATTERNS_ALL, MASK_REPLACE_ALL_XML11);
     return nResLen == CGlobal.ILLEGAL_UINT ? s.length () : nResLen;
@@ -600,7 +602,7 @@ public final class XMLHelper
     }
 
     if (eXMLVersion.equals (EXMLVersion.XML_10))
-      StringHelper.replaceMultipleTo (sText, MASK_PATTERNS_REGULAR, MASK_REPLACE_REGULAR, aWriter);
+      StringHelper.replaceMultipleTo (sText, MASK_PATTERNS_XML10, MASK_REPLACE_XML10, aWriter);
     else
       StringHelper.replaceMultipleTo (sText, MASK_PATTERNS_ALL, MASK_REPLACE_ALL_XML11, aWriter);
   }
