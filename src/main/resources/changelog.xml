@@ -22,6 +22,11 @@
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
   <entry date="2012-08-28" category="api" action="add">
     <change>
+      <text locale="en">Added new StringHelper methods for retrieving the last index of a String/char</text>
+    </change>
+  </entry>
+  <entry date="2012-08-28" category="api" action="add">
+    <change>
       <text locale="en">Added new methods ArrayHelper.getFirstIndex(T[],T), getLastIndex(T[],T) and getExcept(T[],T[])</text>
     </change>
   </entry>

@@ -1599,19 +1599,38 @@ public final class StringHelper extends StringParser
   }
 
   /**
-   * Get the index of sSearch within sText.
+   * Get the first index of sSearch within sText.
    * 
    * @param sText
    *        The text to search in. May be <code>null</code>.
    * @param sSearch
    *        The text to search for. May be <code>null</code>.
-   * @return The index of sSearch within sText or {@value #STRING_NOT_FOUND} if
-   *         sSearch was not found or if any parameter was <code>null</code>.
+   * @return The first index of sSearch within sText or
+   *         {@value #STRING_NOT_FOUND} if sSearch was not found or if any
+   *         parameter was <code>null</code>.
    * @see String#indexOf(String)
    */
   public static int getIndexOf (@Nullable final String sText, @Nullable final String sSearch)
   {
     return sText != null && sSearch != null && sText.length () >= sSearch.length () ? sText.indexOf (sSearch)
+                                                                                   : STRING_NOT_FOUND;
+  }
+
+  /**
+   * Get the last index of sSearch within sText.
+   * 
+   * @param sText
+   *        The text to search in. May be <code>null</code>.
+   * @param sSearch
+   *        The text to search for. May be <code>null</code>.
+   * @return The last index of sSearch within sText or
+   *         {@value #STRING_NOT_FOUND} if sSearch was not found or if any
+   *         parameter was <code>null</code>.
+   * @see String#lastIndexOf(String)
+   */
+  public static int getLastIndexOf (@Nullable final String sText, @Nullable final String sSearch)
+  {
+    return sText != null && sSearch != null && sText.length () >= sSearch.length () ? sText.lastIndexOf (sSearch)
                                                                                    : STRING_NOT_FOUND;
   }
 
@@ -1634,19 +1653,37 @@ public final class StringHelper extends StringParser
   }
 
   /**
-   * Get the index of cSearch within sText.
+   * Get the first index of cSearch within sText.
    * 
    * @param sText
    *        The text to search in. May be <code>null</code>.
    * @param cSearch
    *        The character to search for. May be <code>null</code>.
-   * @return The index of sSearch within sText or {@value #STRING_NOT_FOUND} if
-   *         cSearch was not found or if any parameter was <code>null</code>.
+   * @return The first index of sSearch within sText or
+   *         {@value #STRING_NOT_FOUND} if cSearch was not found or if any
+   *         parameter was <code>null</code>.
    * @see String#indexOf(int)
    */
   public static int getIndexOf (@Nullable final String sText, final char cSearch)
   {
     return sText != null && sText.length () >= 1 ? sText.indexOf (cSearch) : STRING_NOT_FOUND;
+  }
+
+  /**
+   * Get the last index of cSearch within sText.
+   * 
+   * @param sText
+   *        The text to search in. May be <code>null</code>.
+   * @param cSearch
+   *        The character to search for. May be <code>null</code>.
+   * @return The last index of sSearch within sText or
+   *         {@value #STRING_NOT_FOUND} if cSearch was not found or if any
+   *         parameter was <code>null</code>.
+   * @see String#lastIndexOf(int)
+   */
+  public static int getLastIndexOf (@Nullable final String sText, final char cSearch)
+  {
+    return sText != null && sText.length () >= 1 ? sText.lastIndexOf (cSearch) : STRING_NOT_FOUND;
   }
 
   /**
@@ -1672,7 +1709,7 @@ public final class StringHelper extends StringParser
   }
 
   /**
-   * Get the index of sSearch within sText ignoring case.
+   * Get the first index of sSearch within sText ignoring case.
    * 
    * @param sText
    *        The text to search in. May be <code>null</code>.
@@ -1680,8 +1717,9 @@ public final class StringHelper extends StringParser
    *        The text to search for. May be <code>null</code>.
    * @param aSortLocale
    *        The locale to be used for case unifying.
-   * @return The index of sSearch within sText or {@value #STRING_NOT_FOUND} if
-   *         sSearch was not found or if any parameter was <code>null</code>.
+   * @return The first index of sSearch within sText or
+   *         {@value #STRING_NOT_FOUND} if sSearch was not found or if any
+   *         parameter was <code>null</code>.
    * @see String#indexOf(String)
    */
   public static int getIndexOfIgnoreCase (@Nullable final String sText,
@@ -1695,7 +1733,31 @@ public final class StringHelper extends StringParser
   }
 
   /**
-   * Get the index of cSearch within sText ignoring case.
+   * Get the last index of sSearch within sText ignoring case.
+   * 
+   * @param sText
+   *        The text to search in. May be <code>null</code>.
+   * @param sSearch
+   *        The text to search for. May be <code>null</code>.
+   * @param aSortLocale
+   *        The locale to be used for case unifying.
+   * @return The last index of sSearch within sText or
+   *         {@value #STRING_NOT_FOUND} if sSearch was not found or if any
+   *         parameter was <code>null</code>.
+   * @see String#lastIndexOf(String)
+   */
+  public static int getLastIndexOfIgnoreCase (@Nullable final String sText,
+                                              @Nullable final String sSearch,
+                                              @Nonnull final Locale aSortLocale)
+  {
+    return sText != null && sSearch != null && sText.length () >= sSearch.length ()
+                                                                                   ? sText.toLowerCase (aSortLocale)
+                                                                                          .lastIndexOf (sSearch.toLowerCase (aSortLocale))
+                                                                                   : STRING_NOT_FOUND;
+  }
+
+  /**
+   * Get the first index of cSearch within sText ignoring case.
    * 
    * @param sText
    *        The text to search in. May be <code>null</code>.
@@ -1703,8 +1765,9 @@ public final class StringHelper extends StringParser
    *        The char to search for. May be <code>null</code>.
    * @param aSortLocale
    *        The locale to be used for case unifying.
-   * @return The index of sSearch within sText or {@value #STRING_NOT_FOUND} if
-   *         sSearch was not found or if any parameter was <code>null</code>.
+   * @return The first index of sSearch within sText or
+   *         {@value #STRING_NOT_FOUND} if sSearch was not found or if any
+   *         parameter was <code>null</code>.
    * @see String#indexOf(int)
    */
   public static int getIndexOfIgnoreCase (@Nullable final String sText,
@@ -1713,6 +1776,29 @@ public final class StringHelper extends StringParser
   {
     return sText != null && sText.length () >= 1 ? sText.toLowerCase (aSortLocale)
                                                         .indexOf (Character.toLowerCase (cSearch)) : STRING_NOT_FOUND;
+  }
+
+  /**
+   * Get the last index of cSearch within sText ignoring case.
+   * 
+   * @param sText
+   *        The text to search in. May be <code>null</code>.
+   * @param cSearch
+   *        The char to search for. May be <code>null</code>.
+   * @param aSortLocale
+   *        The locale to be used for case unifying.
+   * @return The last index of sSearch within sText or
+   *         {@value #STRING_NOT_FOUND} if sSearch was not found or if any
+   *         parameter was <code>null</code>.
+   * @see String#lastIndexOf(int)
+   */
+  public static int getLastIndexOfIgnoreCase (@Nullable final String sText,
+                                              final char cSearch,
+                                              @Nonnull final Locale aSortLocale)
+  {
+    return sText != null && sText.length () >= 1 ? sText.toLowerCase (aSortLocale)
+                                                        .lastIndexOf (Character.toLowerCase (cSearch))
+                                                : STRING_NOT_FOUND;
   }
 
   /**
@@ -2817,14 +2903,16 @@ public final class StringHelper extends StringParser
   }
 
   @Nullable
-  private static String _getUntil (@Nullable final String sStr, final char cSearch, final boolean bIncludingSearchChar)
+  private static String _getUntilFirst (@Nullable final String sStr,
+                                        final char cSearch,
+                                        final boolean bIncludingSearchChar)
   {
     final int nIndex = getIndexOf (sStr, cSearch);
     return nIndex == STRING_NOT_FOUND ? null : sStr.substring (0, nIndex + (bIncludingSearchChar ? 1 : 0));
   }
 
   /**
-   * Get everything from the string up to and including the passed char.
+   * Get everything from the string up to and including the first passed char.
    * 
    * @param sStr
    *        The source string. May be <code>null</code>.
@@ -2836,11 +2924,11 @@ public final class StringHelper extends StringParser
   @Nullable
   public static String getUntilIncl (@Nullable final String sStr, final char cSearch)
   {
-    return _getUntil (sStr, cSearch, true);
+    return _getUntilFirst (sStr, cSearch, true);
   }
 
   /**
-   * Get everything from the string up to and excluding the passed char.
+   * Get everything from the string up to and excluding first the passed char.
    * 
    * @param sStr
    *        The source string. May be <code>null</code>.
@@ -2852,13 +2940,13 @@ public final class StringHelper extends StringParser
   @Nullable
   public static String getUntilExcl (@Nullable final String sStr, final char cSearch)
   {
-    return _getUntil (sStr, cSearch, false);
+    return _getUntilFirst (sStr, cSearch, false);
   }
 
   @Nullable
-  private static String _getUntil (@Nullable final String sStr,
-                                   @Nullable final String sSearch,
-                                   final boolean bIncludingSearchChar)
+  private static String _getUntilFirst (@Nullable final String sStr,
+                                        @Nullable final String sSearch,
+                                        final boolean bIncludingSearchChar)
   {
     if (hasNoText (sSearch))
       return "";
@@ -2869,7 +2957,7 @@ public final class StringHelper extends StringParser
   }
 
   /**
-   * Get everything from the string up to and including the passed string.
+   * Get everything from the string up to and including the first passed string.
    * 
    * @param sStr
    *        The source string. May be <code>null</code>.
@@ -2882,11 +2970,11 @@ public final class StringHelper extends StringParser
   @Nullable
   public static String getUntilIncl (@Nullable final String sStr, @Nullable final String sSearch)
   {
-    return _getUntil (sStr, sSearch, true);
+    return _getUntilFirst (sStr, sSearch, true);
   }
 
   /**
-   * Get everything from the string up to and excluding the passed string.
+   * Get everything from the string up to and excluding the first passed string.
    * 
    * @param sStr
    *        The source string. May be <code>null</code>.
@@ -2899,18 +2987,20 @@ public final class StringHelper extends StringParser
   @Nullable
   public static String getUntilExcl (@Nullable final String sStr, @Nullable final String sSearch)
   {
-    return _getUntil (sStr, sSearch, false);
+    return _getUntilFirst (sStr, sSearch, false);
   }
 
   @Nullable
-  private static String _getFrom (@Nullable final String sStr, final char cSearch, final boolean bIncludingSearchChar)
+  private static String _getFromFirst (@Nullable final String sStr,
+                                       final char cSearch,
+                                       final boolean bIncludingSearchChar)
   {
     final int nIndex = getIndexOf (sStr, cSearch);
     return nIndex == STRING_NOT_FOUND ? null : sStr.substring (nIndex + (bIncludingSearchChar ? 0 : 1));
   }
 
   /**
-   * Get everything from the string from and including the passed char.
+   * Get everything from the string from and including the first passed char.
    * 
    * @param sStr
    *        The source string. May be <code>null</code>.
@@ -2922,11 +3012,11 @@ public final class StringHelper extends StringParser
   @Nullable
   public static String getFromIncl (@Nullable final String sStr, final char cSearch)
   {
-    return _getFrom (sStr, cSearch, true);
+    return _getFromFirst (sStr, cSearch, true);
   }
 
   /**
-   * Get everything from the string from and excluding the passed char.
+   * Get everything from the string from and excluding the first passed char.
    * 
    * @param sStr
    *        The source string. May be <code>null</code>.
@@ -2938,13 +3028,13 @@ public final class StringHelper extends StringParser
   @Nullable
   public static String getFromExcl (@Nullable final String sStr, final char cSearch)
   {
-    return _getFrom (sStr, cSearch, false);
+    return _getFromFirst (sStr, cSearch, false);
   }
 
   @Nullable
-  private static String _getFrom (@Nullable final String sStr,
-                                  @Nullable final String sSearch,
-                                  final boolean bIncludingSearchChar)
+  private static String _getFromFirst (@Nullable final String sStr,
+                                       @Nullable final String sSearch,
+                                       final boolean bIncludingSearchChar)
   {
     if (hasNoText (sSearch))
       return sStr;
@@ -2967,7 +3057,7 @@ public final class StringHelper extends StringParser
   @Nullable
   public static String getFromIncl (@Nullable final String sStr, @Nullable final String sSearch)
   {
-    return _getFrom (sStr, sSearch, true);
+    return _getFromFirst (sStr, sSearch, true);
   }
 
   /**
@@ -2984,6 +3074,6 @@ public final class StringHelper extends StringParser
   @Nullable
   public static String getFromExcl (@Nullable final String sStr, @Nullable final String sSearch)
   {
-    return _getFrom (sStr, sSearch, false);
+    return _getFromFirst (sStr, sSearch, false);
   }
 }
