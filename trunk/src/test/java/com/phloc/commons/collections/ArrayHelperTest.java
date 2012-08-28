@@ -1,4 +1,5 @@
 /**
+
  * Copyright (C) 2006-2012 phloc systems
  * http://www.phloc.com
  * office[at]phloc[dot]com
@@ -19,6 +20,7 @@ package com.phloc.commons.collections;
 
 import static com.phloc.commons.collections.ArrayHelper.contains;
 import static com.phloc.commons.collections.ArrayHelper.containsAnyNullElement;
+import static com.phloc.commons.collections.ArrayHelper.getAllExcept;
 import static com.phloc.commons.collections.ArrayHelper.getAllExceptFirst;
 import static com.phloc.commons.collections.ArrayHelper.getAllExceptLast;
 import static com.phloc.commons.collections.ArrayHelper.getAsObjectArray;
@@ -26,7 +28,9 @@ import static com.phloc.commons.collections.ArrayHelper.getComponentType;
 import static com.phloc.commons.collections.ArrayHelper.getConcatenated;
 import static com.phloc.commons.collections.ArrayHelper.getCopy;
 import static com.phloc.commons.collections.ArrayHelper.getFirst;
+import static com.phloc.commons.collections.ArrayHelper.getFirstIndex;
 import static com.phloc.commons.collections.ArrayHelper.getLast;
+import static com.phloc.commons.collections.ArrayHelper.getLastIndex;
 import static com.phloc.commons.collections.ArrayHelper.getSafeElement;
 import static com.phloc.commons.collections.ArrayHelper.getSize;
 import static com.phloc.commons.collections.ArrayHelper.isArray;
@@ -55,6 +59,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.phloc.commons.CGlobal;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -226,6 +231,118 @@ public final class ArrayHelperTest extends AbstractPhlocTestCase
       assertTrue (contains (x, (short) 1));
       assertFalse (contains (x, (short) 4));
       assertFalse (contains ((short []) null, (short) 6));
+    }
+  }
+
+  @Test
+  public void testGetIndex ()
+  {
+    {
+      final String [] x = new String [] { "Hallo", "Welt", "aus", "Kopenhagen", "Welt" };
+      assertEquals (0, getFirstIndex (x, "Hallo"));
+      assertEquals (0, getLastIndex (x, "Hallo"));
+      assertEquals (3, getFirstIndex (x, "Kopenhagen"));
+      assertEquals (3, getLastIndex (x, "Kopenhagen"));
+      assertEquals (1, getFirstIndex (x, "Welt"));
+      assertEquals (4, getLastIndex (x, "Welt"));
+      assertEquals (CGlobal.ILLEGAL_UINT, getFirstIndex (x, "hallo"));
+      assertEquals (CGlobal.ILLEGAL_UINT, getLastIndex (x, "hallo"));
+      assertEquals (CGlobal.ILLEGAL_UINT, getFirstIndex (null, "hallo"));
+      assertEquals (CGlobal.ILLEGAL_UINT, getLastIndex (null, "hallo"));
+      assertEquals (CGlobal.ILLEGAL_UINT, getFirstIndex (new String [0], "hallo"));
+    }
+
+    {
+      final boolean [] x = new boolean [] { true, true };
+      assertEquals (0, getFirstIndex (x, true));
+      assertEquals (1, getLastIndex (x, true));
+      assertEquals (CGlobal.ILLEGAL_UINT, getFirstIndex (x, false));
+      assertEquals (CGlobal.ILLEGAL_UINT, getLastIndex (x, false));
+      assertEquals (CGlobal.ILLEGAL_UINT, getFirstIndex ((boolean []) null, false));
+      assertEquals (CGlobal.ILLEGAL_UINT, getLastIndex ((boolean []) null, false));
+    }
+
+    {
+      final byte [] x = new byte [] { 1, 2, 3 };
+      assertEquals (0, getFirstIndex (x, (byte) 1));
+      assertEquals (0, getLastIndex (x, (byte) 1));
+      assertEquals (CGlobal.ILLEGAL_UINT, getFirstIndex (x, (byte) 4));
+      assertEquals (CGlobal.ILLEGAL_UINT, getLastIndex (x, (byte) 4));
+      assertEquals (CGlobal.ILLEGAL_UINT, getFirstIndex ((byte []) null, (byte) 1));
+      assertEquals (CGlobal.ILLEGAL_UINT, getLastIndex ((byte []) null, (byte) 1));
+    }
+
+    {
+      final char [] x = new char [] { 1, 2, 3 };
+      assertEquals (0, getFirstIndex (x, (char) 1));
+      assertEquals (0, getLastIndex (x, (char) 1));
+      assertEquals (CGlobal.ILLEGAL_UINT, getFirstIndex (x, (char) 4));
+      assertEquals (CGlobal.ILLEGAL_UINT, getLastIndex (x, (char) 4));
+      assertEquals (CGlobal.ILLEGAL_UINT, getFirstIndex ((char []) null, 'c'));
+      assertEquals (CGlobal.ILLEGAL_UINT, getLastIndex ((char []) null, 'c'));
+    }
+
+    {
+      final double [] x = new double [] { 1, 2, 3 };
+      assertEquals (0, getFirstIndex (x, 1.0));
+      assertEquals (0, getLastIndex (x, 1.0));
+      assertEquals (CGlobal.ILLEGAL_UINT, getFirstIndex (x, 1.1));
+      assertEquals (CGlobal.ILLEGAL_UINT, getLastIndex (x, 1.1));
+      assertEquals (CGlobal.ILLEGAL_UINT, getFirstIndex ((double []) null, 1.0));
+      assertEquals (CGlobal.ILLEGAL_UINT, getLastIndex ((double []) null, 1.0));
+    }
+
+    {
+      final float [] x = new float [] { 1, 2, 3 };
+      assertEquals (0, getFirstIndex (x, 1.0F));
+      assertEquals (0, getLastIndex (x, 1.0F));
+      assertEquals (CGlobal.ILLEGAL_UINT, getFirstIndex (x, 1.1F));
+      assertEquals (CGlobal.ILLEGAL_UINT, getLastIndex (x, 1.1F));
+      assertEquals (CGlobal.ILLEGAL_UINT, getFirstIndex ((float []) null, 1.5f));
+      assertEquals (CGlobal.ILLEGAL_UINT, getLastIndex ((float []) null, 1.5f));
+    }
+
+    {
+      final int [] x = new int [] { 1, 2, 3 };
+      assertEquals (0, getFirstIndex (x, 1));
+      assertEquals (0, getLastIndex (x, 1));
+      assertEquals (CGlobal.ILLEGAL_UINT, getFirstIndex (x, 4));
+      assertEquals (CGlobal.ILLEGAL_UINT, getLastIndex (x, 4));
+      assertEquals (CGlobal.ILLEGAL_UINT, getFirstIndex ((int []) null, 7));
+      assertEquals (CGlobal.ILLEGAL_UINT, getLastIndex ((int []) null, 7));
+    }
+
+    {
+      final long [] x = new long [] { 1, 2, 3 };
+      assertEquals (0, getFirstIndex (x, 1L));
+      assertEquals (0, getLastIndex (x, 1L));
+      assertEquals (CGlobal.ILLEGAL_UINT, getFirstIndex (x, 4L));
+      assertEquals (CGlobal.ILLEGAL_UINT, getLastIndex (x, 4L));
+      assertEquals (CGlobal.ILLEGAL_UINT, getFirstIndex ((long []) null, 7));
+      assertEquals (CGlobal.ILLEGAL_UINT, getLastIndex ((long []) null, 7));
+    }
+
+    {
+      final short [] x = new short [] { 1, 2, 3 };
+      assertEquals (0, getFirstIndex (x, (short) 1));
+      assertEquals (0, getLastIndex (x, (short) 1));
+      assertEquals (CGlobal.ILLEGAL_UINT, getFirstIndex (x, (short) 4));
+      assertEquals (CGlobal.ILLEGAL_UINT, getLastIndex (x, (short) 4));
+      assertEquals (CGlobal.ILLEGAL_UINT, getFirstIndex ((short []) null, (short) 6));
+      assertEquals (CGlobal.ILLEGAL_UINT, getLastIndex ((short []) null, (short) 6));
+    }
+  }
+
+  @Test
+  public void testGetAllExcept ()
+  {
+    {
+      final String [] x = new String [] { "Hallo", "Welt", "aus", "Kopenhagen", "Welt" };
+      assertArrayEquals (new String [] { "Hallo", "aus", "Kopenhagen" }, getAllExcept (x, "Welt"));
+      assertArrayEquals (new String [] { "aus", "Kopenhagen" }, getAllExcept (x, "Hallo", "Welt"));
+      assertArrayEquals (x, getAllExcept (x));
+      assertArrayEquals (x, getAllExcept (x, (String []) null));
+      assertArrayEquals (x, getAllExcept (x, new String [0]));
     }
   }
 

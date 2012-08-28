@@ -2619,7 +2619,7 @@ public final class ArrayHelper
    * @param aArray
    *        The source array. May be <code>null</code>.
    * @param aElementsToRemove
-   *        The elements to skip. Must be &gt;= 0!
+   *        The elements to skip.
    * @return <code>null</code> if the passed array is <code>null</code>. The
    *         original array, if no elements need to be skipped. A non-
    *         <code>null</code> copy of the array without the passed elements
@@ -2634,13 +2634,228 @@ public final class ArrayHelper
       return aArray;
 
     final ELEMENTTYPE [] tmp = getCopy (aArray);
-    for (final ELEMENTTYPE aElementToRemove : aElementsToRemove)
-    {
-      // FIXME
-      // final int nIndex = i
-    }
+    int nDst = 0;
+    for (int nSrc = 0; nSrc < tmp.length; ++nSrc)
+      if (!contains (aElementsToRemove, tmp[nSrc]))
+        tmp[nDst++] = tmp[nSrc];
+    return getCopy (tmp, 0, nDst);
+  }
 
-    return null;
+  /**
+   * Get an array that contains all elements, except for the passed elements.
+   * 
+   * @param aArray
+   *        The source array. May be <code>null</code>.
+   * @param aElementsToRemove
+   *        The elements to skip.
+   * @return <code>null</code> if the passed array is <code>null</code>. The
+   *         original array, if no elements need to be skipped. A non-
+   *         <code>null</code> copy of the array without the passed elements
+   *         otherwise.
+   */
+  @Nullable
+  @ReturnsMutableCopy
+  public static boolean [] getAllExcept (@Nullable final boolean [] aArray,
+                                         @Nullable final boolean... aElementsToRemove)
+  {
+    if (isEmpty (aArray) || isEmpty (aElementsToRemove))
+      return aArray;
+
+    final boolean [] tmp = getCopy (aArray);
+    int nDst = 0;
+    for (int nSrc = 0; nSrc < tmp.length; ++nSrc)
+      if (!contains (aElementsToRemove, tmp[nSrc]))
+        tmp[nDst++] = tmp[nSrc];
+    return getCopy (tmp, 0, nDst);
+  }
+
+  /**
+   * Get an array that contains all elements, except for the passed elements.
+   * 
+   * @param aArray
+   *        The source array. May be <code>null</code>.
+   * @param aElementsToRemove
+   *        The elements to skip.
+   * @return <code>null</code> if the passed array is <code>null</code>. The
+   *         original array, if no elements need to be skipped. A non-
+   *         <code>null</code> copy of the array without the passed elements
+   *         otherwise.
+   */
+  @Nullable
+  @ReturnsMutableCopy
+  public static byte [] getAllExcept (@Nullable final byte [] aArray, @Nullable final byte... aElementsToRemove)
+  {
+    if (isEmpty (aArray) || isEmpty (aElementsToRemove))
+      return aArray;
+
+    final byte [] tmp = getCopy (aArray);
+    int nDst = 0;
+    for (int nSrc = 0; nSrc < tmp.length; ++nSrc)
+      if (!contains (aElementsToRemove, tmp[nSrc]))
+        tmp[nDst++] = tmp[nSrc];
+    return getCopy (tmp, 0, nDst);
+  }
+
+  /**
+   * Get an array that contains all elements, except for the passed elements.
+   * 
+   * @param aArray
+   *        The source array. May be <code>null</code>.
+   * @param aElementsToRemove
+   *        The elements to skip.
+   * @return <code>null</code> if the passed array is <code>null</code>. The
+   *         original array, if no elements need to be skipped. A non-
+   *         <code>null</code> copy of the array without the passed elements
+   *         otherwise.
+   */
+  @Nullable
+  @ReturnsMutableCopy
+  public static char [] getAllExcept (@Nullable final char [] aArray, @Nullable final char... aElementsToRemove)
+  {
+    if (isEmpty (aArray) || isEmpty (aElementsToRemove))
+      return aArray;
+
+    final char [] tmp = getCopy (aArray);
+    int nDst = 0;
+    for (int nSrc = 0; nSrc < tmp.length; ++nSrc)
+      if (!contains (aElementsToRemove, tmp[nSrc]))
+        tmp[nDst++] = tmp[nSrc];
+    return getCopy (tmp, 0, nDst);
+  }
+
+  /**
+   * Get an array that contains all elements, except for the passed elements.
+   * 
+   * @param aArray
+   *        The source array. May be <code>null</code>.
+   * @param aElementsToRemove
+   *        The elements to skip.
+   * @return <code>null</code> if the passed array is <code>null</code>. The
+   *         original array, if no elements need to be skipped. A non-
+   *         <code>null</code> copy of the array without the passed elements
+   *         otherwise.
+   */
+  @Nullable
+  @ReturnsMutableCopy
+  public static double [] getAllExcept (@Nullable final double [] aArray, @Nullable final double... aElementsToRemove)
+  {
+    if (isEmpty (aArray) || isEmpty (aElementsToRemove))
+      return aArray;
+
+    final double [] tmp = getCopy (aArray);
+    int nDst = 0;
+    for (int nSrc = 0; nSrc < tmp.length; ++nSrc)
+      if (!contains (aElementsToRemove, tmp[nSrc]))
+        tmp[nDst++] = tmp[nSrc];
+    return getCopy (tmp, 0, nDst);
+  }
+
+  /**
+   * Get an array that contains all elements, except for the passed elements.
+   * 
+   * @param aArray
+   *        The source array. May be <code>null</code>.
+   * @param aElementsToRemove
+   *        The elements to skip.
+   * @return <code>null</code> if the passed array is <code>null</code>. The
+   *         original array, if no elements need to be skipped. A non-
+   *         <code>null</code> copy of the array without the passed elements
+   *         otherwise.
+   */
+  @Nullable
+  @ReturnsMutableCopy
+  public static float [] getAllExcept (@Nullable final float [] aArray, @Nullable final float... aElementsToRemove)
+  {
+    if (isEmpty (aArray) || isEmpty (aElementsToRemove))
+      return aArray;
+
+    final float [] tmp = getCopy (aArray);
+    int nDst = 0;
+    for (int nSrc = 0; nSrc < tmp.length; ++nSrc)
+      if (!contains (aElementsToRemove, tmp[nSrc]))
+        tmp[nDst++] = tmp[nSrc];
+    return getCopy (tmp, 0, nDst);
+  }
+
+  /**
+   * Get an array that contains all elements, except for the passed elements.
+   * 
+   * @param aArray
+   *        The source array. May be <code>null</code>.
+   * @param aElementsToRemove
+   *        The elements to skip.
+   * @return <code>null</code> if the passed array is <code>null</code>. The
+   *         original array, if no elements need to be skipped. A non-
+   *         <code>null</code> copy of the array without the passed elements
+   *         otherwise.
+   */
+  @Nullable
+  @ReturnsMutableCopy
+  public static int [] getAllExcept (@Nullable final int [] aArray, @Nullable final int... aElementsToRemove)
+  {
+    if (isEmpty (aArray) || isEmpty (aElementsToRemove))
+      return aArray;
+
+    final int [] tmp = getCopy (aArray);
+    int nDst = 0;
+    for (int nSrc = 0; nSrc < tmp.length; ++nSrc)
+      if (!contains (aElementsToRemove, tmp[nSrc]))
+        tmp[nDst++] = tmp[nSrc];
+    return getCopy (tmp, 0, nDst);
+  }
+
+  /**
+   * Get an array that contains all elements, except for the passed elements.
+   * 
+   * @param aArray
+   *        The source array. May be <code>null</code>.
+   * @param aElementsToRemove
+   *        The elements to skip.
+   * @return <code>null</code> if the passed array is <code>null</code>. The
+   *         original array, if no elements need to be skipped. A non-
+   *         <code>null</code> copy of the array without the passed elements
+   *         otherwise.
+   */
+  @Nullable
+  @ReturnsMutableCopy
+  public static long [] getAllExcept (@Nullable final long [] aArray, @Nullable final long... aElementsToRemove)
+  {
+    if (isEmpty (aArray) || isEmpty (aElementsToRemove))
+      return aArray;
+
+    final long [] tmp = getCopy (aArray);
+    int nDst = 0;
+    for (int nSrc = 0; nSrc < tmp.length; ++nSrc)
+      if (!contains (aElementsToRemove, tmp[nSrc]))
+        tmp[nDst++] = tmp[nSrc];
+    return getCopy (tmp, 0, nDst);
+  }
+
+  /**
+   * Get an array that contains all elements, except for the passed elements.
+   * 
+   * @param aArray
+   *        The source array. May be <code>null</code>.
+   * @param aElementsToRemove
+   *        The elements to skip.
+   * @return <code>null</code> if the passed array is <code>null</code>. The
+   *         original array, if no elements need to be skipped. A non-
+   *         <code>null</code> copy of the array without the passed elements
+   *         otherwise.
+   */
+  @Nullable
+  @ReturnsMutableCopy
+  public static short [] getAllExcept (@Nullable final short [] aArray, @Nullable final short... aElementsToRemove)
+  {
+    if (isEmpty (aArray) || isEmpty (aElementsToRemove))
+      return aArray;
+
+    final short [] tmp = getCopy (aArray);
+    int nDst = 0;
+    for (int nSrc = 0; nSrc < tmp.length; ++nSrc)
+      if (!contains (aElementsToRemove, tmp[nSrc]))
+        tmp[nDst++] = tmp[nSrc];
+    return getCopy (tmp, 0, nDst);
   }
 
   /**
