@@ -98,8 +98,12 @@ public interface IXMLIterationHandler
    * 
    * @param sText
    *        The contained text
+   * @param bEscape
+   *        If <code>true</code> the text should be XML masked,
+   *        <code>false</code> if not. The <code>false</code> case is especially
+   *        interesting for HTML inline JS and CSS code.
    */
-  void onText (@Nullable String sText);
+  void onText (@Nullable String sText, boolean bEscape);
 
   /**
    * CDATA node.

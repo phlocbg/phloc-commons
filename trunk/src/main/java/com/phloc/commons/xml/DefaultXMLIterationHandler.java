@@ -54,7 +54,7 @@ public class DefaultXMLIterationHandler implements IXMLIterationHandler
   public void onComment (@Nullable final String sComment)
   {}
 
-  public void onText (@Nullable final String sText)
+  public void onText (@Nullable final String sText, final boolean bEscape)
   {}
 
   public void onCDATA (@Nullable final String sText)

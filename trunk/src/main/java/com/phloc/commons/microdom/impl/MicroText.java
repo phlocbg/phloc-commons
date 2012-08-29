@@ -34,9 +34,11 @@ import com.phloc.commons.string.ToStringGenerator;
 public final class MicroText extends AbstractMicroNode implements IMicroText
 {
   public static final boolean DEFAULT_IGNORABLE_WHITESPACE = false;
+  public static final boolean DEFAULT_ESCAPE = true;
 
   private final MicroDataAware m_aData;
   private final boolean m_bIgnorableWhitespace;
+  private boolean m_bEscape = DEFAULT_ESCAPE;
 
   public MicroText (@Nullable final CharSequence sText)
   {
@@ -49,10 +51,19 @@ public final class MicroText extends AbstractMicroNode implements IMicroText
     m_bIgnorableWhitespace = bIgnorableWhitespace;
   }
 
-  private MicroText (@Nonnull final MicroDataAware aData, final boolean bIgnorableWhitespace)
+  /**
+   * Constructor for cloning
+   * 
+   * @param aData
+   *        Cloned data
+   * @param bIgnorableWhitespace
+   *        ignorable whitespace?
+   */
+  private MicroText (@Nonnull final MicroDataAware aData, final boolean bIgnorableWhitespace, final boolean bEscape)
   {
-    m_aData = aData.getClone ();
+    m_aData = aData;
     m_bIgnorableWhitespace = bIgnorableWhitespace;
+    m_bEscape = bEscape;
   }
 
   @Nonnull
@@ -101,10 +112,22 @@ public final class MicroText extends AbstractMicroNode implements IMicroText
     return m_bIgnorableWhitespace;
   }
 
+  public boolean isEscape ()
+  {
+    return m_bEscape;
+  }
+
+  @Nonnull
+  public MicroText setEscape (final boolean bEscape)
+  {
+    m_bEscape = bEscape;
+    return this;
+  }
+
   @Nonnull
   public IMicroText getClone ()
   {
-    return new MicroText (m_aData, m_bIgnorableWhitespace);
+    return new MicroText (m_aData.getClone (), m_bIgnorableWhitespace, m_bEscape);
   }
 
   public boolean isEqualContent (@Nullable final IMicroNode o)

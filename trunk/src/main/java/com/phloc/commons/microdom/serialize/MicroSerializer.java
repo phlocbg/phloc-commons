@@ -162,7 +162,7 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
 
   private static void _writeText (@Nonnull final IXMLIterationHandler aXMLWriter, @Nonnull final IMicroText aText)
   {
-    aXMLWriter.onText (aText.getData ().toString ());
+    aXMLWriter.onText (aText.getData ().toString (), aText.isEscape ());
   }
 
   private void _writeComment (@Nonnull final IXMLIterationHandler aXMLWriter, @Nonnull final IMicroComment aComment)
