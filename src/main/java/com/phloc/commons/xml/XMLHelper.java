@@ -63,9 +63,6 @@ public final class XMLHelper
   // Note: for performance reasons they are all char arrays!
   private static final char [] MASK_PATTERNS_XML10 = new char [] { 0, '&', '<', '>', '"', '\'' };
 
-  // private static final char [] MASK_PATTERNS_XML10_NO_APOS =
-  // ArrayHelper.getAllExcept (MASK_PATTERNS_XML10, '\'');
-
   // Control characters (except 9 - \t and 10 - \n and 13 - \r)
   private static final char [] MASK_PATTERNS_CONTROL = new char [] { 1, 2, 3, 4, 5, 6, 7, 8,
                                                                     // 9 and 10
@@ -797,8 +794,14 @@ public final class XMLHelper
     return aRes;
   }
 
+  @Nonnegative
+  public static int getLength (@Nullable final NodeList aNL)
+  {
+    return aNL == null ? 0 : aNL.getLength ();
+  }
+
   public static boolean isEmpty (@Nullable final NodeList aNL)
   {
-    return aNL == null || aNL.getLength () == 0;
+    return getLength (aNL) == 0;
   }
 }
