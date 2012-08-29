@@ -51,6 +51,6 @@ public final class XMLEmitterPhlocTest extends AbstractPhlocTestCase
                                                                 new MicroDocumentType ("qname", "pubid", "sysid")));
     PhlocTestUtils.testToStringImplementation (new XMLEmitterPhloc (new ByteArrayOutputStreamProvider ().getWriter (CCharset.CHARSET_ISO_8859_1,
                                                                                                                     EAppend.DEFAULT),
-                                                                    XMLWriterSettings.SUGGESTED_XML_SETTINGS));
+                                                                    XMLWriterSettings.DEFAULT_XML_SETTINGS));
   }
 }
