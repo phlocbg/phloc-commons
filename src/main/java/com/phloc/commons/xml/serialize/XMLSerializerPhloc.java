@@ -145,7 +145,8 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
 
   private static void _writeText (@Nonnull final IXMLIterationHandler aEmitter, @Nonnull final Text aText)
   {
-    aEmitter.onText (aText.getData ());
+    // DOM text is always escaped!
+    aEmitter.onText (aText.getData (), true);
   }
 
   private static void _writeCDATA (@Nonnull final IXMLIterationHandler aEmitter, @Nonnull final Text aText)

@@ -258,9 +258,12 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   }
 
   @Override
-  public void onText (@Nullable final String sText)
+  public void onText (@Nullable final String sText, final boolean bEscape)
   {
-    _appendMasked (sText);
+    if (bEscape)
+      _appendMasked (sText);
+    else
+      _append (sText);
   }
 
   @Override

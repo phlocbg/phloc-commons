@@ -36,6 +36,13 @@ public interface IMicroText extends IMicroNode, IMicroDataAware
   boolean isElementContentWhitespace ();
 
   /**
+   * @return <code>true</code> if the content of this text node should be
+   *         masked, and <code>false</code> if not. By default a text node
+   *         should always be masked.
+   */
+  boolean isEscape ();
+
+  /**
    * {@inheritDoc}
    */
   @Nonnull
