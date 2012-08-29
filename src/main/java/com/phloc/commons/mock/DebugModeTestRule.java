@@ -17,40 +17,54 @@
  */
 package com.phloc.commons.mock;
 
-import javax.annotation.OverridingMethodsMustInvokeSuper;
-
 import org.junit.rules.ExternalResource;
 
 import com.phloc.commons.GlobalDebug;
-import com.phloc.commons.annotations.OverrideOnDemand;
 
-public class DebugModeTestRule extends ExternalResource
+/**
+ * A JUnit test rule that sets global debug and trace flag for a test
+ * 
+ * @author philip
+ */
+public final class DebugModeTestRule extends ExternalResource
 {
-  /** The global debug flags to use. */
+  /** The default debug flags to use. */
   public static final boolean ENABLE_GLOBAL_DEBUG = true;
   public static final boolean ENABLE_GLOBAL_TRACE = false;
 
-  @Override
-  @OverrideOnDemand
-  @OverridingMethodsMustInvokeSuper
-  public void before () throws Throwable
-  {
-    // Init global stuff
-    GlobalDebug.setDebugModeDirect (ENABLE_GLOBAL_DEBUG);
-    GlobalDebug.setTraceModeDirect (ENABLE_GLOBAL_TRACE);
+  private final boolean m_bDebug;
+  private final boolean m_bTrace;
+  private boolean m_bOldDebug;
+  private boolean m_bOldTrace;
 
-    // Enable testing with a security manager here :)
-    if (false && System.getSecurityManager () == null)
-      System.setSecurityManager (new SecurityManager ());
+  public DebugModeTestRule ()
+  {
+    this (ENABLE_GLOBAL_DEBUG, ENABLE_GLOBAL_TRACE);
+  }
+
+  public DebugModeTestRule (final boolean bDebug, final boolean bTrace)
+  {
+    m_bDebug = bDebug;
+    m_bTrace = bTrace;
   }
 
   @Override
-  @OverrideOnDemand
-  @OverridingMethodsMustInvokeSuper
+  public void before () throws Throwable
+  {
+    // Remember old states
+    m_bOldDebug = GlobalDebug.isDebugMode ();
+    m_bOldTrace = GlobalDebug.isTraceMode ();
+
+    // Init debug stuff to state specified in ctor
+    GlobalDebug.setDebugModeDirect (m_bDebug);
+    GlobalDebug.setTraceModeDirect (m_bTrace);
+  }
+
+  @Override
   public void after ()
   {
-    // Reset global stuff
-    GlobalDebug.setDebugModeDirect (GlobalDebug.DEFAULT_DEBUG_MODE);
-    GlobalDebug.setTraceModeDirect (GlobalDebug.DEFAULT_TRACE_MODE);
+    // Reset debug stuff to previous state
+    GlobalDebug.setDebugModeDirect (m_bOldDebug);
+    GlobalDebug.setTraceModeDirect (m_bOldTrace);
   }
 }
