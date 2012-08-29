@@ -20,6 +20,11 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2012-08-28" category="tech" action="change">
+    <change>
+      <text locale="en">The suggested XML writer settings are now the default settings.</text>
+    </change>
+  </entry>
   <entry date="2012-08-28" category="api" action="add">
     <change>
       <text locale="en">Added possibility in IMicroText objects to emit the text unescaped (for HTML style and script elements)</text>

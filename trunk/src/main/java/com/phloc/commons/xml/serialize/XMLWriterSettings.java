@@ -55,14 +55,15 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
    * The suggested settings to be used. Difference from the default settings is
    * the invalid character handling
    */
-  public static final IXMLWriterSettings SUGGESTED_XML_SETTINGS = new XMLWriterSettings ().setIncorrectCharacterHandling (EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING);
+  @Deprecated
+  public static final IXMLWriterSettings SUGGESTED_XML_SETTINGS = DEFAULT_XML_SETTINGS;
 
   private EXMLSerializeFormat m_eFormat = EXMLSerializeFormat.XML;
   private EXMLVersion m_eXMLVersion = EXMLVersion.XML_10;
   private EXMLSerializeDocType m_eSerializeDocType = EXMLSerializeDocType.EMIT;
   private EXMLSerializeComments m_eSerializeComments = EXMLSerializeComments.EMIT;
   private EXMLSerializeIndent m_eIndent = EXMLSerializeIndent.INDENT_AND_ALIGN;
-  private EXMLIncorrectCharacterHandling m_eIncorrectCharacterHandling = EXMLIncorrectCharacterHandling.WRITE_TO_FILE_NO_LOG;
+  private EXMLIncorrectCharacterHandling m_eIncorrectCharacterHandling = EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING;
   private Charset m_aCharset = DEFAULT_XML_CHARSET_OBJ;
   private NamespaceContext m_aNamespaceContext;
   private boolean m_bUseDoubleQuotesForAttributes = DEFAULT_USE_DOUBLE_QUOTES_FOR_ATTRIBUTES;
