@@ -17,7 +17,7 @@
  */
 package com.phloc.commons.url;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -36,7 +36,7 @@ import com.phloc.commons.annotations.DevelopersNote;
  * @author philip
  */
 @NotThreadSafe
-public final class SMap extends HashMap <String, String> implements ICloneable <SMap>
+public final class SMap extends LinkedHashMap <String, String> implements ICloneable <SMap>
 {
   /**
    * Create an empty map.
