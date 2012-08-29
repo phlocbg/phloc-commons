@@ -103,7 +103,7 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
         sXMLVersion = aDocument.getXmlVersion ();
         bIsDocumentStandalone = aDocument.getXmlStandalone ();
       }
-      catch (final Throwable ex)
+      catch (final Throwable t)
       {
         // Happens e.g. in dom4j 1.6.1:
         // AbstractMethodError: getXmlVersion and getXmlStandalone

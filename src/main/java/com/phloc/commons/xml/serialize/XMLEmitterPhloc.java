@@ -48,6 +48,12 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   public static final boolean DEFAULT_THROW_EXCEPTION_ON_NESTED_COMMENTS = true;
   private static final String CDATA_START = "<![CDATA[";
   private static final String CDATA_END = "]]>";
+  private static final String COMMENT_START = "<!--";
+  private static final String COMMENT_END = "-->";
+  private static final char ER_START = '&';
+  private static final char ER_END = ';';
+  private static final String PI_START = "<?";
+  private static final String PI_END = "?>";
   private static final String CRLF = CGlobal.LINE_SEPARATOR;
 
   private static boolean s_bThrowExceptionOnNestedComments = DEFAULT_THROW_EXCEPTION_ON_NESTED_COMMENTS;
@@ -144,12 +150,12 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   {
     if (eVersion != null)
       m_eXMLVersion = eVersion;
-    _append ("<?xml version=")._appendAttr (m_eXMLVersion.getVersion ());
+    _append (PI_START)._append ("xml version=")._appendAttr (m_eXMLVersion.getVersion ());
     if (sEncoding != null)
       _append (" encoding=")._appendAttr (sEncoding);
     if (bStandalone)
       _append (" standalone=")._appendAttr ("yes");
-    _append ("?>")._append (CRLF);
+    _append (PI_END)._append (CRLF);
   }
 
   @Nonnull
@@ -225,16 +231,16 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   @Override
   public void onProcessingInstruction (@Nonnull final String sTarget, @Nullable final String sData)
   {
-    _append ("<?")._append (sTarget);
+    _append (PI_START)._append (sTarget);
     if (StringHelper.hasText (sData))
       _append (' ')._append (sData);
-    _append ("?>")._append (CRLF);
+    _append (PI_END)._append (CRLF);
   }
 
   @Override
   public void onEntityReference (@Nonnull final String sEntityRef)
   {
-    _append ('&')._append (sEntityRef)._append (';');
+    _append (ER_START)._append (sEntityRef)._append (ER_END);
   }
 
   @Override
@@ -250,10 +256,10 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
     if (StringHelper.hasText (sComment))
     {
       if (isThrowExceptionOnNestedComments ())
-        if (sComment.contains ("<!--") || sComment.contains ("-->"))
+        if (sComment.contains (COMMENT_START) || sComment.contains (COMMENT_END))
           throw new IllegalArgumentException ("XML comment contains nested XML comment: " + sComment);
 
-      _append ("<!--")._append (sComment)._append ("-->");
+      _append (COMMENT_START)._append (sComment)._append (COMMENT_END);
     }
   }
 
@@ -271,7 +277,7 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   {
     if (StringHelper.hasText (sText))
     {
-      // Split CDATA sections if the contain the illegal "]]>" marker
+      // Split CDATA sections if they contain the illegal "]]>" marker
       final List <String> aParts = StringHelper.getExploded (CDATA_END, sText);
       final int nParts = aParts.size ();
       for (int i = 0; i < nParts; ++i)
@@ -302,7 +308,9 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
       // Emit all attributes
       for (final Map.Entry <String, String> aEntry : aAttrs.entrySet ())
       {
-        _append (' ')._append (aEntry.getKey ())._append ('=')._appendAttr (aEntry.getValue ());
+        final String sAttrName = aEntry.getKey ();
+        final String sAttrValue = aEntry.getValue ();
+        _append (' ')._append (sAttrName)._append ('=')._appendAttr (sAttrValue);
       }
     }
 
