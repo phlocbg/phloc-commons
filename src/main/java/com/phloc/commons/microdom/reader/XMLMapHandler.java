@@ -242,7 +242,7 @@ public final class XMLMapHandler
     try
     {
       final IMicroDocument aDoc = createMapDocument (aMap);
-      return MicroWriter.writeToStream (aDoc, aOS, XMLWriterSettings.SUGGESTED_XML_SETTINGS);
+      return MicroWriter.writeToStream (aDoc, aOS, XMLWriterSettings.DEFAULT_XML_SETTINGS);
     }
     finally
     {

@@ -236,7 +236,7 @@ public final class XMLListHandler
     try
     {
       final IMicroDocument aDoc = createListDocument (aCollection);
-      return MicroWriter.writeToStream (aDoc, aOS, XMLWriterSettings.SUGGESTED_XML_SETTINGS);
+      return MicroWriter.writeToStream (aDoc, aOS, XMLWriterSettings.DEFAULT_XML_SETTINGS);
     }
     finally
     {
