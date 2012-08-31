@@ -30,6 +30,7 @@ import com.phloc.commons.ICloneable;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.io.streamprovider.ByteArrayInputStreamProvider;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
+import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.lang.GenericReflection;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.convert.MicroTypeConverter;
@@ -214,13 +215,26 @@ public final class PhlocTestUtils
       // Serialize to byte array
       final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
       final ObjectOutputStream aOOS = new ObjectOutputStream (aBAOS);
-      aOOS.writeObject (aSerializable);
-      aOOS.close ();
+      try
+      {
+        aOOS.writeObject (aSerializable);
+      }
+      finally
+      {
+        StreamUtils.close (aOOS);
+      }
 
       // Read new object from byte array
+      DATATYPE aReadObject;
       final ObjectInputStream aOIS = new ObjectInputStream (new ByteArrayInputStreamProvider (aBAOS.toByteArray ()).getInputStream ());
-      final DATATYPE aReadObject = GenericReflection.<Object, DATATYPE> uncheckedCast (aOIS.readObject ());
-      aOIS.close ();
+      try
+      {
+        aReadObject = GenericReflection.<Object, DATATYPE> uncheckedCast (aOIS.readObject ());
+      }
+      finally
+      {
+        StreamUtils.close (aOIS);
+      }
 
       // Now check them for equality
       testDefaultImplementationWithEqualContentObject (aSerializable, aReadObject);
