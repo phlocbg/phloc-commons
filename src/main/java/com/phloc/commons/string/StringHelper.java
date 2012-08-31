@@ -1884,7 +1884,7 @@ public final class StringHelper extends StringParser
    * @deprecated Use {@link #containsAny(char[],char[])} instead
    */
   @Deprecated
-  public static boolean multiContains (@Nonnull final char [] aInput, @Nonnull final char [] aSearchChars)
+  public static boolean multiContains (@Nullable final char [] aInput, @Nonnull final char [] aSearchChars)
   {
     return containsAny (aInput, aSearchChars);
   }
@@ -1900,7 +1900,7 @@ public final class StringHelper extends StringParser
    * @return <code>true</code> if at least any of the search char is contained
    *         in the input char array, <code>false</code> otherwise.
    */
-  public static boolean containsAny (@Nonnull final char [] aInput, @Nonnull final char [] aSearchChars)
+  public static boolean containsAny (@Nullable final char [] aInput, @Nonnull final char [] aSearchChars)
   {
     if (aSearchChars == null)
       throw new NullPointerException ("searchChars");
@@ -1923,7 +1923,7 @@ public final class StringHelper extends StringParser
    * @return <code>true</code> if at least any of the search char is contained
    *         in the input char array, <code>false</code> otherwise.
    */
-  public static boolean containsAny (@Nonnull final String sInput, @Nonnull final char [] aSearchChars)
+  public static boolean containsAny (@Nullable final String sInput, @Nonnull final char [] aSearchChars)
   {
     return sInput == null ? false : containsAny (sInput.toCharArray (), aSearchChars);
   }

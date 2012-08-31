@@ -153,7 +153,7 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsImmutableObject
-  public static <ELEMENTTYPE> Collection <ELEMENTTYPE> makeUnmodifiableNotNull (@Nonnull final Collection <? extends ELEMENTTYPE> aCollection)
+  public static <ELEMENTTYPE> Collection <ELEMENTTYPE> makeUnmodifiableNotNull (@Nullable final Collection <? extends ELEMENTTYPE> aCollection)
   {
     return aCollection == null ? ContainerHelper.<ELEMENTTYPE> newUnmodifiableList ()
                               : Collections.unmodifiableCollection (aCollection);
@@ -161,7 +161,7 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsImmutableObject
-  public static <ELEMENTTYPE> List <ELEMENTTYPE> makeUnmodifiableNotNull (@Nonnull final List <? extends ELEMENTTYPE> aCollection)
+  public static <ELEMENTTYPE> List <ELEMENTTYPE> makeUnmodifiableNotNull (@Nullable final List <? extends ELEMENTTYPE> aCollection)
   {
     return aCollection == null ? ContainerHelper.<ELEMENTTYPE> newUnmodifiableList ()
                               : Collections.unmodifiableList (aCollection);
@@ -169,7 +169,7 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsImmutableObject
-  public static <ELEMENTTYPE> Set <ELEMENTTYPE> makeUnmodifiableNotNull (@Nonnull final Set <? extends ELEMENTTYPE> aCollection)
+  public static <ELEMENTTYPE> Set <ELEMENTTYPE> makeUnmodifiableNotNull (@Nullable final Set <? extends ELEMENTTYPE> aCollection)
   {
     return aCollection == null ? ContainerHelper.<ELEMENTTYPE> newUnmodifiableSet ()
                               : Collections.unmodifiableSet (aCollection);
@@ -177,7 +177,7 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsImmutableObject
-  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> makeUnmodifiableNotNull (@Nonnull final Map <? extends KEYTYPE, ? extends VALUETYPE> aCollection)
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> makeUnmodifiableNotNull (@Nullable final Map <? extends KEYTYPE, ? extends VALUETYPE> aCollection)
   {
     return aCollection == null ? ContainerHelper.<KEYTYPE, VALUETYPE> newUnmodifiableMap ()
                               : Collections.unmodifiableMap (aCollection);
@@ -185,7 +185,7 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsImmutableObject
-  public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> SortedSet <ELEMENTTYPE> makeUnmodifiableNotNull (@Nonnull final SortedSet <ELEMENTTYPE> aCollection)
+  public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> SortedSet <ELEMENTTYPE> makeUnmodifiableNotNull (@Nullable final SortedSet <ELEMENTTYPE> aCollection)
   {
     return aCollection == null ? ContainerHelper.<ELEMENTTYPE> newUnmodifiableSortedSet ()
                               : Collections.unmodifiableSortedSet (aCollection);
@@ -193,10 +193,9 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsImmutableObject
-  public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> SortedMap <KEYTYPE, VALUETYPE> makeUnmodifiableNotNull (@Nonnull final SortedMap <KEYTYPE, ? extends VALUETYPE> aCollection)
+  public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> SortedMap <KEYTYPE, VALUETYPE> makeUnmodifiableNotNull (@Nullable final SortedMap <KEYTYPE, ? extends VALUETYPE> aCollection)
   {
-    return Collections.unmodifiableSortedMap (aCollection == null
-                                                                 ? ContainerHelper.<KEYTYPE, VALUETYPE> newSortedMap ()
+    return Collections.unmodifiableSortedMap (aCollection == null ? ContainerHelper.<KEYTYPE, VALUETYPE> newSortedMap ()
                                                                  : aCollection);
   }
 
@@ -1007,7 +1006,8 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsMutableCopy
-  @SuppressFBWarnings (value = { "NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE" }, justification = "When using the constructor with the Comparator it works with null values!")
+  @SuppressFBWarnings (value = { "NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE" },
+                       justification = "When using the constructor with the Comparator it works with null values!")
   public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> TreeSet <ELEMENTTYPE> newSortedSet (@Nullable final ELEMENTTYPE aValue)
   {
     final TreeSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());

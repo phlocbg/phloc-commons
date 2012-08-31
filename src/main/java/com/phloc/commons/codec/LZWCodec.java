@@ -347,7 +347,6 @@ public class LZWCodec implements ICodec
         {
           // last byte
           aBOS.writeBits (aCurNode.getTableIndex (), nCodeLength);
-          aByteSeq = new byte [0];
           break;
         }
 
