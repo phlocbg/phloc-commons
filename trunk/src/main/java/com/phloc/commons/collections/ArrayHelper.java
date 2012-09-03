@@ -281,6 +281,105 @@ public final class ArrayHelper
   }
 
   /**
+   * @param aArray
+   *        The array to be queried if it is empty. May be <code>null</code>.
+   * @return <code>false</code> if the passed array is <code>null</code> or
+   *         empty.
+   */
+  public static boolean isNotEmpty (@Nullable final boolean... aArray)
+  {
+    return getSize (aArray) > 0;
+  }
+
+  /**
+   * @param aArray
+   *        The array to be queried if it is empty. May be <code>null</code>.
+   * @return <code>false</code> if the passed array is <code>null</code> or
+   *         empty.
+   */
+  public static boolean isNotEmpty (@Nullable final byte... aArray)
+  {
+    return getSize (aArray) > 0;
+  }
+
+  /**
+   * @param aArray
+   *        The array to be queried if it is empty. May be <code>null</code>.
+   * @return <code>false</code> if the passed array is <code>null</code> or
+   *         empty.
+   */
+  public static boolean isNotEmpty (@Nullable final char... aArray)
+  {
+    return getSize (aArray) > 0;
+  }
+
+  /**
+   * @param aArray
+   *        The array to be queried if it is empty. May be <code>null</code>.
+   * @return <code>false</code> if the passed array is <code>null</code> or
+   *         empty.
+   */
+  public static boolean isNotEmpty (@Nullable final double... aArray)
+  {
+    return getSize (aArray) > 0;
+  }
+
+  /**
+   * @param aArray
+   *        The array to be queried if it is empty. May be <code>null</code>.
+   * @return <code>false</code> if the passed array is <code>null</code> or
+   *         empty.
+   */
+  public static boolean isNotEmpty (@Nullable final float... aArray)
+  {
+    return getSize (aArray) > 0;
+  }
+
+  /**
+   * @param aArray
+   *        The array to be queried if it is empty. May be <code>null</code>.
+   * @return <code>false</code> if the passed array is <code>null</code> or
+   *         empty.
+   */
+  public static boolean isNotEmpty (@Nullable final int... aArray)
+  {
+    return getSize (aArray) > 0;
+  }
+
+  /**
+   * @param aArray
+   *        The array to be queried if it is empty. May be <code>null</code>.
+   * @return <code>false</code> if the passed array is <code>null</code> or
+   *         empty.
+   */
+  public static boolean isNotEmpty (@Nullable final long... aArray)
+  {
+    return getSize (aArray) > 0;
+  }
+
+  /**
+   * @param aArray
+   *        The array to be queried if it is empty. May be <code>null</code>.
+   * @return <code>false</code> if the passed array is <code>null</code> or
+   *         empty.
+   */
+  public static boolean isNotEmpty (@Nullable final short... aArray)
+  {
+    return getSize (aArray) > 0;
+  }
+
+  /**
+   * @param aArray
+   *        The array to be queried if it is empty. May be <code>null</code>.
+   * @return <code>false</code> if the passed array is <code>null</code> or
+   *         empty.
+   */
+  public static <ELEMENTTYPE> boolean isNotEmpty (@Nullable final ELEMENTTYPE... aArray)
+  {
+    return getSize (aArray) > 0;
+  }
+
+  /**
    * Get the index of the passed search value in the passed value array.
    * 
    * @param aValues

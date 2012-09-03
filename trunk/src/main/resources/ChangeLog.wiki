@@ -1,7 +1,10 @@
 #summary Change log of phloc-commons
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
-<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr border="1"><td>8/29/12</td><td colspan="4">_Release *3.7.5*_</td></tr>
+<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr><td>9/1/12</td><td>add</td><td>api</td><td></td><td>Added new methods ArrayHelper.isNotEmpty</td></tr>
+<tr><td>9/1/12</td><td>add</td><td>api</td><td></td><td>Added new methods ContainerHelper.isNotEmpty</td></tr>
+<tr><td>9/1/12</td><td>add</td><td>api</td><td></td><td>Extended API of IURLData</td></tr>
+<tr border="1"><td>8/29/12</td><td colspan="4">_Release *3.7.5*_</td></tr>
 <tr><td>8/29/12</td><td>change</td><td>tech</td><td></td><td>The suggested XML writer settings are now the default settings.</td></tr>
 <tr><td>8/29/12</td><td>add</td><td>api</td><td></td><td>Added possibility in IMicroText objects to emit the text unescaped (for HTML style and script elements)</td></tr>
 <tr><td>8/29/12</td><td>add</td><td>api</td><td></td><td>Changed DebugModeTestRule so that the states can be passed in the ctor and after a test, the values are restored to a previous state</td></tr>
