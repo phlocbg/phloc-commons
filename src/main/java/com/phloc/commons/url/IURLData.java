@@ -20,8 +20,12 @@ package com.phloc.commons.url;
 import java.io.Serializable;
 import java.util.Map;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+
+import com.phloc.commons.annotations.ReturnsMutableCopy;
+import com.phloc.commons.annotations.ReturnsMutableObject;
 
 /**
  * Base interface representing the basic elements of a URL from a high level
@@ -51,10 +55,34 @@ public interface IURLData extends Serializable
   String getPath ();
 
   /**
+   * @return <code>true</code> if at least one parameter is present.
+   */
+  boolean hasParams ();
+
+  /**
+   * @return The number of parameters present. Always &ge; 0.
+   */
+  @Nonnegative
+  int getParamCount ();
+
+  /**
    * @return A map of all query string parameters. May be <code>null</code>.
    */
   @Nullable
+  @ReturnsMutableObject (reason = "design")
   Map <String, String> directGetParams ();
+
+  /**
+   * @return A map of all query string parameters. Never <code>null</code>.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  Map <String, String> getAllParams ();
+
+  /**
+   * @return <code>true</code> if an anchor is present
+   */
+  boolean hasAnchor ();
 
   /**
    * @return The name of the anchor (everything after the "#") or

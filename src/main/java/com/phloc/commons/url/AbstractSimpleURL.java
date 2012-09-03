@@ -21,13 +21,16 @@ import java.nio.charset.Charset;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.annotations.ReturnsMutableCopy;
+import com.phloc.commons.annotations.ReturnsMutableObject;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
+import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -101,16 +104,34 @@ public abstract class AbstractSimpleURL implements ISimpleURL
     return m_sPath;
   }
 
+  public final boolean hasParams ()
+  {
+    return !ContainerHelper.isEmpty (m_aParams);
+  }
+
+  @Nonnegative
   public final int getParamCount ()
   {
     return ContainerHelper.getSize (m_aParams);
   }
 
   @Nonnull
-  @ReturnsMutableCopy
+  @ReturnsMutableObject (reason = "design")
   public final Map <String, String> directGetParams ()
   {
+    return m_aParams;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public final Map <String, String> getAllParams ()
+  {
     return ContainerHelper.newOrderedMap (m_aParams);
+  }
+
+  public final boolean hasAnchor ()
+  {
+    return StringHelper.hasText (m_sAnchor);
   }
 
   @Nullable
