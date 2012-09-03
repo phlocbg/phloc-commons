@@ -18,6 +18,7 @@
 package com.phloc.commons.math;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.RoundingMode;
 
 import javax.annotation.CheckReturnValue;
@@ -166,6 +167,26 @@ public final class MathHelper
     return ret;
   }
 
+  @Nonnull
+  public static BigDecimal getMaxBigDecimal (@Nonnull final BigDecimal aValue, @Nonnull final BigDecimal... aValues)
+  {
+    BigDecimal ret = aValue;
+    for (final BigDecimal a : aValues)
+      if (a.compareTo (ret) > 0)
+        ret = a;
+    return ret;
+  }
+
+  @Nonnull
+  public static BigInteger getMaxBigInteger (@Nonnull final BigInteger aValue, @Nonnull final BigInteger... aValues)
+  {
+    BigInteger ret = aValue;
+    for (final BigInteger a : aValues)
+      if (a.compareTo (ret) > 0)
+        ret = a;
+    return ret;
+  }
+
   public static int getMinInt (final int nValue, @Nonnull final int... aValues)
   {
     int ret = nValue;
@@ -195,6 +216,26 @@ public final class MathHelper
     double ret = dValue;
     for (final double d : aValues)
       ret = Math.min (ret, d);
+    return ret;
+  }
+
+  @Nonnull
+  public static BigDecimal getMinBigDecimal (@Nonnull final BigDecimal aValue, @Nonnull final BigDecimal... aValues)
+  {
+    BigDecimal ret = aValue;
+    for (final BigDecimal a : aValues)
+      if (a.compareTo (ret) < 0)
+        ret = a;
+    return ret;
+  }
+
+  @Nonnull
+  public static BigInteger getMinBigInteger (@Nonnull final BigInteger aValue, @Nonnull final BigInteger... aValues)
+  {
+    BigInteger ret = aValue;
+    for (final BigInteger a : aValues)
+      if (a.compareTo (ret) < 0)
+        ret = a;
     return ret;
   }
 
@@ -268,5 +309,35 @@ public final class MathHelper
   public static double abs (final double dValue)
   {
     return Math.abs (dValue);
+  }
+
+  /**
+   * This is a sanity method wrapping <code>BigDecimal.abs (double)</code>, so
+   * that you don't have to think whether you need to invoke the abs method from
+   * this class or the one from BigDecimal directly.
+   * 
+   * @param aValue
+   *        Input value
+   * @return the absolute value of the argument.
+   */
+  @Nonnull
+  public static BigDecimal abs (@Nonnull final BigDecimal aValue)
+  {
+    return aValue.abs ();
+  }
+
+  /**
+   * This is a sanity method wrapping <code>BigInteger.abs (double)</code>, so
+   * that you don't have to think whether you need to invoke the abs method from
+   * this class or the one from BigInteger directly.
+   * 
+   * @param aValue
+   *        Input value
+   * @return the absolute value of the argument.
+   */
+  @Nonnull
+  public static BigInteger abs (@Nonnull final BigInteger aValue)
+  {
+    return aValue.abs ();
   }
 }
