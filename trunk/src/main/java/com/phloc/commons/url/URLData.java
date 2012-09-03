@@ -19,15 +19,17 @@ package com.phloc.commons.url;
 
 import java.util.Map;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import com.phloc.commons.annotations.ReturnsImmutableObject;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.annotations.ReturnsMutableObject;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
+import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -80,11 +82,26 @@ public final class URLData implements IURLData
     return m_sPath;
   }
 
+  public boolean hasParams ()
+  {
+    return !ContainerHelper.isEmpty (m_aParams);
+  }
+
+  @Nonnegative
+  public int getParamCount ()
+  {
+    return ContainerHelper.getSize (m_aParams);
+  }
+
+  /**
+   * @deprecated Use {@link #getAllParams()} instead
+   */
+  @Deprecated
   @Nullable
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public Map <String, String> getParams ()
   {
-    return ContainerHelper.makeUnmodifiable (m_aParams);
+    return getAllParams ();
   }
 
   @Nullable
@@ -92,6 +109,18 @@ public final class URLData implements IURLData
   public Map <String, String> directGetParams ()
   {
     return m_aParams;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public Map <String, String> getAllParams ()
+  {
+    return ContainerHelper.newOrderedMap (m_aParams);
+  }
+
+  public boolean hasAnchor ()
+  {
+    return StringHelper.hasText (m_sAnchor);
   }
 
   @Nullable

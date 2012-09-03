@@ -330,13 +330,13 @@ public final class URLUtils
   @Nonnull
   public static String getURLString (@Nonnull final IURLData aURL, @Nullable final String sParameterCharset)
   {
-    return getURLString (aURL.getPath (), aURL.directGetParams (), aURL.getAnchor (), sParameterCharset);
+    return getURLString (aURL.getPath (), aURL.getAllParams (), aURL.getAnchor (), sParameterCharset);
   }
 
   @Nonnull
   public static String getURLString (@Nonnull final IURLData aURL, @Nullable final Charset aParameterCharset)
   {
-    return getURLString (aURL.getPath (), aURL.directGetParams (), aURL.getAnchor (), aParameterCharset);
+    return getURLString (aURL.getPath (), aURL.getAllParams (), aURL.getAnchor (), aParameterCharset);
   }
 
   /**

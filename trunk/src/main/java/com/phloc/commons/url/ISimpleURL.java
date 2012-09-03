@@ -42,11 +42,6 @@ public interface ISimpleURL extends IURLData, IHasStringRepresentation
   String getParam (@Nullable String sKey);
 
   /**
-   * @return The number of parameters present. Always &ge; 0.
-   */
-  int getParamCount ();
-
-  /**
    * @return The final string representation of this URL not encoding the
    *         request parameters.
    */

@@ -2878,6 +2878,36 @@ public final class ContainerHelper
     return aCont == null || aCont.isEmpty ();
   }
 
+  public static boolean isNotEmpty (@Nullable final Iterable <?> aCont)
+  {
+    return aCont != null && aCont.iterator ().hasNext ();
+  }
+
+  public static boolean isNotEmpty (@Nullable final Iterator <?> aIter)
+  {
+    return aIter != null && aIter.hasNext ();
+  }
+
+  public static boolean isNotEmpty (@Nullable final IIterableIterator <?> aIter)
+  {
+    return aIter != null && aIter.hasNext ();
+  }
+
+  public static boolean isNotEmpty (@Nullable final Enumeration <?> aEnum)
+  {
+    return aEnum != null && aEnum.hasMoreElements ();
+  }
+
+  public static boolean isNotEmpty (@Nullable final Collection <?> aCont)
+  {
+    return aCont != null && !aCont.isEmpty ();
+  }
+
+  public static boolean isNotEmpty (@Nullable final Map <?, ?> aCont)
+  {
+    return aCont != null && !aCont.isEmpty ();
+  }
+
   /**
    * Retrieve the size of the passed {@link Collection}. This method handles
    * <code>null</code> containers.

@@ -18,6 +18,8 @@
 package com.phloc.commons.url;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
@@ -61,5 +63,23 @@ public final class URLUtilsTest
     sEnc = URLUtils.urlEncode (sDec, CCharset.CHARSET_ISO_8859_1);
     assertEquals ("%E4%F6%FC", sEnc);
     assertEquals (sDec, URLUtils.urlDecode (sEnc, CCharset.CHARSET_ISO_8859_1));
+  }
+
+  @Test
+  public void testGetURLData ()
+  {
+    IURLData aData = URLUtils.getAsURLData ("http://www.phloc.com/folder?x=y&a=b#c");
+    assertNotNull (aData);
+    assertEquals (EURLProtocol.HTTP, aData.getProtocol ());
+    assertEquals ("http://www.phloc.com/folder", aData.getPath ());
+    assertEquals (2, aData.getParamCount ());
+    assertEquals ("c", aData.getAnchor ());
+
+    aData = URLUtils.getAsURLData ("?x=y&a=b#c");
+    assertNotNull (aData);
+    assertNull (aData.getProtocol ());
+    assertEquals ("", aData.getPath ());
+    assertEquals (2, aData.getParamCount ());
+    assertEquals ("c", aData.getAnchor ());
   }
 }
