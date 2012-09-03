@@ -1042,7 +1042,7 @@ public final class ContainerHelper
   public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> TreeSet <ELEMENTTYPE> newSortedSet (@Nullable final Collection <? extends ELEMENTTYPE> aCont)
   {
     final TreeSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
-    if (!isEmpty (aCont))
+    if (isNotEmpty (aCont))
       ret.addAll (aCont);
     return ret;
   }
@@ -2402,7 +2402,7 @@ public final class ContainerHelper
   @ReturnsMutableObject (reason = "design")
   public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> List <ELEMENTTYPE> getSortedInline (@Nullable final List <ELEMENTTYPE> aList)
   {
-    if (!isEmpty (aList))
+    if (isNotEmpty (aList))
       Collections.sort (aList);
     return aList;
   }
@@ -2415,7 +2415,7 @@ public final class ContainerHelper
     if (aComparator == null)
       throw new NullPointerException ("comparator");
 
-    if (!isEmpty (aList))
+    if (isNotEmpty (aList))
       Collections.sort (aList, aComparator);
     return aList;
   }
