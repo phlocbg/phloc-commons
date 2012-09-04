@@ -39,10 +39,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * @author philip
  * @see java.io.ByteArrayOutputStream
  */
-public class NonBlockingByteArrayOutputStream extends OutputStream implements
-                                                                  IHasSize,
-                                                                  IHasStringRepresentation,
-                                                                  Serializable
+public class NonBlockingByteArrayOutputStream extends OutputStream implements IHasSize, IHasStringRepresentation, Serializable
 {
   /**
    * The buffer where data is stored.
@@ -191,6 +188,15 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements
   public int size ()
   {
     return m_nCount;
+  }
+
+  /**
+   * @return The number of pre-allocated bytes. Always &ge; 0.
+   */
+  @Nonnegative
+  public int getBufferSize ()
+  {
+    return m_aBuf.length;
   }
 
   public boolean isEmpty ()
