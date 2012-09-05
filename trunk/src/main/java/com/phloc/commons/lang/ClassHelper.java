@@ -347,7 +347,7 @@ public final class ClassHelper
    * classes.
    * 
    * @param aClass
-   *        The source class to get the list from.
+   *        The source class to get the hierarchy from.
    * @return A non-<code>null</code> and non-empty list containing the passed
    *         class and all super classes, and all super-interfaces. This list
    *         may contain duplicates in case a certain interface is implemented
@@ -356,9 +356,29 @@ public final class ClassHelper
   @Nonnull
   @Nonempty
   @ReturnsMutableCopy
-  public static Collection <Class <?>> getClassHierarchy (@Nonnull final Class <?> aClass)
+  public static Set <Class <?>> getClassHierarchy (@Nonnull final Class <?> aClass)
   {
-    return getClassHierarchy (aClass, false);
+    if (aClass == null)
+      throw new NullPointerException ("class");
+
+    final List <Class <?>> aOpenSrc = new ArrayList <Class <?>> ();
+    final Set <Class <?>> ret = new LinkedHashSet <Class <?>> ();
+    // Check the whole class hierarchy of the source class
+    aOpenSrc.add (aClass);
+    while (!aOpenSrc.isEmpty ())
+    {
+      final Class <?> aCurClass = aOpenSrc.remove (0);
+      ret.add (aCurClass);
+
+      // Add super-classes and interfaces
+      // Super-classes have precedence over interfaces!
+      for (final Class <?> aInterface : aCurClass.getInterfaces ())
+        aOpenSrc.add (0, aInterface);
+      if (aCurClass.getSuperclass () != null)
+        aOpenSrc.add (0, aCurClass.getSuperclass ());
+    }
+
+    return ret;
   }
 
   /**
@@ -378,32 +398,13 @@ public final class ClassHelper
    *         implemented more than once and bUniqueClasses is <code>false</code>
    *         !
    */
+  @Deprecated
   @Nonnull
   @Nonempty
   @ReturnsMutableCopy
   public static Collection <Class <?>> getClassHierarchy (@Nonnull final Class <?> aClass, final boolean bUniqueClasses)
   {
-    if (aClass == null)
-      throw new NullPointerException ("class");
-
-    final List <Class <?>> aOpenSrc = new ArrayList <Class <?>> ();
-    final Collection <Class <?>> ret = bUniqueClasses ? new LinkedHashSet <Class <?>> () : new ArrayList <Class <?>> ();
-    // Check the whole class hierarchy of the source class
-    aOpenSrc.add (aClass);
-    while (!aOpenSrc.isEmpty ())
-    {
-      final Class <?> aCurClass = aOpenSrc.remove (0);
-      ret.add (aCurClass);
-
-      // Add super-classes and interfaces
-      // Super-classes have precedence over interfaces!
-      for (final Class <?> aInterface : aCurClass.getInterfaces ())
-        aOpenSrc.add (0, aInterface);
-      if (aCurClass.getSuperclass () != null)
-        aOpenSrc.add (0, aCurClass.getSuperclass ());
-    }
-
-    return ret;
+    return getClassHierarchy (aClass);
   }
 
   /**

@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.hash;
 
+import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -25,6 +27,9 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.lang.ServiceLoaderBackport;
@@ -56,6 +61,7 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
     }
   }
 
+  private static final Logger s_aLogger = LoggerFactory.getLogger (HashCodeImplementationRegistry.class);
   private static final HashCodeImplementationRegistry s_aInstance = new HashCodeImplementationRegistry ();
 
   private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
@@ -63,8 +69,8 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
   // Use a weak hash map, because the key is a class
   private final Map <Class <?>, IHashCodeImplementation> m_aMap = new WeakHashMap <Class <?>, IHashCodeImplementation> ();
 
-  // Use a weak hash map, because the key is a class
-  private final Map <Class <?>, Boolean> m_aExceptions = new WeakHashMap <Class <?>, Boolean> ();
+  // Cache for classes that implement hashCode directly
+  private final Map <String, Boolean> m_aImplementsHashCode = new HashMap <String, Boolean> ();
 
   private HashCodeImplementationRegistry ()
   {
@@ -96,7 +102,7 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
       if (m_aMap.containsKey (aClass))
         throw new IllegalArgumentException ("Another hashCode implementation for class " +
                                             aClass +
-                                            " is already implemented!");
+                                            " is already registered!");
       m_aMap.put (aClass, aImpl);
     }
     finally
@@ -119,12 +125,14 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
     }
   }
 
-  private boolean _implementsHashCodeItself (final Class <?> aClass)
+  private boolean _implementsHashCodeItself (@Nonnull final Class <?> aClass)
   {
+    final String sClassName = aClass.getName ();
+
     m_aRWLock.readLock ().lock ();
     try
     {
-      final Boolean aSavedState = m_aExceptions.get (aClass);
+      final Boolean aSavedState = m_aImplementsHashCode.get (sClassName);
       if (aSavedState != null)
         return aSavedState.booleanValue ();
     }
@@ -137,7 +145,7 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
     try
     {
       // Try again in write lock
-      final Boolean aSavedState = m_aExceptions.get (aClass);
+      final Boolean aSavedState = m_aImplementsHashCode.get (sClassName);
       if (aSavedState != null)
         return aSavedState.booleanValue ();
 
@@ -145,14 +153,15 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
       boolean bRet = false;
       try
       {
-        if (aClass.getDeclaredMethod ("hashCode") != null)
+        final Method aMethod = aClass.getDeclaredMethod ("hashCode");
+        if (aMethod != null && aMethod.getReturnType ().equals (int.class))
           bRet = true;
       }
       catch (final Exception ex)
       {
         // ignore
       }
-      m_aExceptions.put (aClass, Boolean.valueOf (bRet));
+      m_aImplementsHashCode.put (sClassName, Boolean.valueOf (bRet));
       return bRet;
     }
     finally
@@ -161,24 +170,13 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
     }
   }
 
-  public static int getHashCode (@Nullable final Object aObj)
-  {
-    if (aObj == null)
-      return HashCodeCalculator.HASHCODE_NULL;
-    final Class <?> aClass = aObj.getClass ();
-
-    // Get the best matching implementation
-    final IHashCodeImplementation aImpl = s_aInstance.getBestMatchingHashCodeImplementation (aClass);
-    return aImpl == null ? aObj.hashCode () : aImpl.getHashCode (aObj);
-  }
-
   @Nullable
   public IHashCodeImplementation getBestMatchingHashCodeImplementation (@Nullable final Class <?> aClass)
   {
     if (aClass != null)
     {
       IHashCodeImplementation aMatchingImplementation = null;
-      Class <?> aMatchingConverterClass = null;
+      Class <?> aMatchingClass = null;
 
       m_aRWLock.readLock ().lock ();
       try
@@ -186,17 +184,18 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
         // Check for an exact match first
         aMatchingImplementation = m_aMap.get (aClass);
         if (aMatchingImplementation != null)
-          aMatchingConverterClass = aClass;
+          aMatchingClass = aClass;
         else
         {
           // Scan hierarchy
-          for (final Class <?> aCurClass : ClassHelper.getClassHierarchy (aClass, true))
+          for (final Class <?> aCurClass : ClassHelper.getClassHierarchy (aClass))
           {
             final IHashCodeImplementation ret = m_aMap.get (aCurClass);
             if (ret != null)
             {
               aMatchingImplementation = ret;
-              aMatchingConverterClass = aCurClass;
+              aMatchingClass = aCurClass;
+              s_aLogger.warn ("Found hierarchical match with class " + aMatchingClass + " when searching for " + aClass);
               break;
             }
           }
@@ -214,21 +213,38 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
         // implementation class implements hashCode, use the one from the class
         // Example: a converter for "Map" is registered, but "LRUCache" comes
         // with its own "hashCode" implementation
-        if (ClassHelper.isInterface (aMatchingConverterClass) && _implementsHashCodeItself (aClass))
+        if (ClassHelper.isInterface (aMatchingClass) && _implementsHashCodeItself (aClass))
           return null;
 
         return aMatchingImplementation;
       }
+
+      // Handle arrays specially, because we cannot register a converter for
+      // every potential array class
+      if (ClassHelper.isArrayClass (aClass))
+        return new ArrayHashCodeImplementation ();
+
+      // Does the class implement hashCode directly?
+      if (_implementsHashCodeItself (aClass))
+        return null;
     }
 
     // No special handler found
-
-    // Handle arrays specially, because we cannot register a converter for
-    // every potential array class
-    if (ClassHelper.isArrayClass (aClass))
-      return new ArrayHashCodeImplementation ();
+    if (s_aLogger.isDebugEnabled ())
+      s_aLogger.debug ("Found no hashCode implementation for " + aClass);
 
     // Definitely no special implementation
     return null;
+  }
+
+  public static int getHashCode (@Nullable final Object aObj)
+  {
+    if (aObj == null)
+      return HashCodeCalculator.HASHCODE_NULL;
+
+    // Get the best matching implementation
+    final Class <?> aClass = aObj.getClass ();
+    final IHashCodeImplementation aImpl = s_aInstance.getBestMatchingHashCodeImplementation (aClass);
+    return aImpl == null ? aObj.hashCode () : aImpl.getHashCode (aObj);
   }
 }

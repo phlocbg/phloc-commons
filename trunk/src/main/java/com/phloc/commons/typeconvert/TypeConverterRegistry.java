@@ -156,7 +156,7 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
     {
       // Automatically register the destination class, and all parent
       // classes/interfaces
-      for (final Class <?> aCurDstClass : ClassHelper.getClassHierarchy (aDstClass, true))
+      for (final Class <?> aCurDstClass : ClassHelper.getClassHierarchy (aDstClass))
         if (!aSrcMap.containsKey (aCurDstClass))
           if (aSrcMap.put (aCurDstClass, aConverter) != null)
             s_aLogger.warn ("Overwriting converter from " + aSrcClass + " to " + aCurDstClass);
@@ -260,7 +260,7 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
                                                @Nonnull final ITypeConverterCallback aCallback)
   {
     // For all possible source classes
-    for (final Class <?> aCurSrcClass : ClassHelper.getClassHierarchy (aSrcClass, true))
+    for (final Class <?> aCurSrcClass : ClassHelper.getClassHierarchy (aSrcClass))
     {
       // Do we have a source converter?
       final Map <Class <?>, ITypeConverter> aConverterMap = s_aConverter.get (aCurSrcClass);
