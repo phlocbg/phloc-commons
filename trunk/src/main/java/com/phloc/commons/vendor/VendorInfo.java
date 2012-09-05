@@ -37,7 +37,7 @@ import com.phloc.commons.url.URLProtocolRegistry;
 /**
  * Contains some general vendor specific information. This is mainly for keeping
  * the CI in all applications.
- * 
+ *
  * @author philip
  */
 @NotThreadSafe
@@ -45,47 +45,13 @@ public final class VendorInfo
 {
   public static final String DEFAULT_VENDOR_LOCATION = "Vienna, Austria, Europe, World, Milky Way, Universe";
   public static final String DEFAULT_VENDOR_NAME = "phloc systems";
-  @Deprecated
-  public static final String VENDOR_NAME = DEFAULT_VENDOR_NAME;
   public static final String DEFAULT_VENDOR_URL_WITHOUT_PROTOCOL = "www.phloc.com";
-  @Deprecated
-  public static final String VENDOR_URL_NO_HTTP = DEFAULT_VENDOR_URL_WITHOUT_PROTOCOL;
   public static final String DEFAULT_VENDOR_URL = "http://" + DEFAULT_VENDOR_URL_WITHOUT_PROTOCOL;
-  @Deprecated
-  public static final String VENDOR_URL = DEFAULT_VENDOR_URL;
   public static final String VENDOR_PERSON_BORIS = "Boris Gregorcic";
   public static final String VENDOR_PERSON_PHILIP = "Philip Helger";
   public static final String DEFAULT_VENDOR_EMAIL_SUFFIX = "@phloc.com";
-  @Deprecated
-  public static final String VENDOR_EMAIL_SUFFIX = DEFAULT_VENDOR_EMAIL_SUFFIX;
   public static final String DEFAULT_VENDOR_EMAIL = "office" + DEFAULT_VENDOR_EMAIL_SUFFIX;
-  @Deprecated
-  public static final String VENDOR_EMAIL = DEFAULT_VENDOR_EMAIL;
   public static final int DEFAULT_INCEPTION_YEAR = 2004;
-
-  /** These are the lines that should used for prefixing generated files */
-  @Deprecated
-  public static final List <String> FILE_HEADER_LINES = ContainerHelper.newUnmodifiableList ("THIS FILE IS GENERATED - DO NOT EDIT",
-                                                                                             "",
-                                                                                             "Copyright",
-                                                                                             "",
-                                                                                             "Copyright (c) " +
-                                                                                                 DEFAULT_VENDOR_NAME +
-                                                                                                 " " +
-                                                                                                 DEFAULT_INCEPTION_YEAR +
-                                                                                                 " - " +
-                                                                                                 CGlobal.CURRENT_YEAR,
-                                                                                             DEFAULT_VENDOR_URL,
-                                                                                             "",
-                                                                                             "All Rights Reserved",
-                                                                                             "Use, duplication or disclosure restricted by " +
-                                                                                                 DEFAULT_VENDOR_NAME,
-                                                                                             "",
-                                                                                             DEFAULT_VENDOR_LOCATION +
-                                                                                                 ", " +
-                                                                                                 DEFAULT_INCEPTION_YEAR +
-                                                                                                 " - " +
-                                                                                                 CGlobal.CURRENT_YEAR);
 
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")

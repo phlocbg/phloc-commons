@@ -26,14 +26,13 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
-import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.lang.DecimalFormatSymbolsFactory;
 import com.phloc.commons.string.StringHelper;
 
 /**
  * Helper class for rounding numeric values in a flexible way.
- * 
+ *
  * @author philip
  */
 @Immutable
@@ -67,7 +66,7 @@ public final class RoundHelper
 
   /**
    * Source: http://www.luschny.de/java/doubleformat.html
-   * 
+   *
    * @param dValue
    *        The value to be rounded
    * @param nScale
@@ -107,7 +106,7 @@ public final class RoundHelper
 
   /**
    * Round using the {@link RoundingMode#HALF_UP} mode and fix representation
-   * 
+   *
    * @param dValue
    *        The value to be rounded
    * @param nScale
@@ -122,7 +121,7 @@ public final class RoundHelper
   /**
    * Round using the {@link RoundingMode#HALF_UP} mode, fix representation and a
    * precision scale of 2.
-   * 
+   *
    * @param dValue
    *        The value to be rounded
    * @return the rounded value
@@ -135,7 +134,7 @@ public final class RoundHelper
   /**
    * Round using the {@link RoundingMode#HALF_EVEN} mode and exponential
    * representation
-   * 
+   *
    * @param dValue
    *        The value to be rounded
    * @param nScale
@@ -150,7 +149,7 @@ public final class RoundHelper
   /**
    * Round using the {@link RoundingMode#HALF_EVEN} mode, exponential
    * representation and a precision scale of 2.
-   * 
+   *
    * @param dValue
    *        The value to be rounded
    * @return the rounded value
@@ -162,32 +161,7 @@ public final class RoundHelper
 
   /**
    * Source: http://www.luschny.de/java/doubleformat.html
-   * 
-   * @param dValue
-   *        the value to be formatted
-   * @param nScale
-   *        The precision of the decimal scale. If type is
-   *        {@link EDecimalType#FIX} the decimal scale, else the (carrying scale
-   *        - 1). Should be &ge; 0.
-   * @param eType
-   *        The formatting type. May not be <code>null</code>.
-   * @return the string representation of the double value. For NaN and infinite
-   *         values, the return of {@link Double#toString()} is returned.
-   * @deprecated Use {@link #getFormatted(double,int,EDecimalType,Locale)}
-   *             instead
-   */
-  @Deprecated
-  @Nonnull
-  public static String getFormatted (final double dValue,
-                                     @Nonnegative final int nScale,
-                                     @Nonnull final EDecimalType eType)
-  {
-    return getFormatted (dValue, nScale, eType, CGlobal.LOCALE_FIXED_NUMBER_FORMAT);
-  }
-
-  /**
-   * Source: http://www.luschny.de/java/doubleformat.html
-   * 
+   *
    * @param dValue
    *        the value to be formatted
    * @param nScale
@@ -239,30 +213,10 @@ public final class RoundHelper
     return aDF.format (dValue);
   }
 
-  /**
-   * @deprecated Use {@link #getFormattedFix(double,int,Locale)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static String getFormattedFix (final double dValue, @Nonnegative final int nScale)
-  {
-    return getFormattedFix (dValue, nScale, CGlobal.LOCALE_FIXED_NUMBER_FORMAT);
-  }
-
   @Nonnull
   public static String getFormattedFix (final double dValue, @Nonnegative final int nScale, final Locale aLocale)
   {
     return getFormatted (dValue, nScale, EDecimalType.FIX, aLocale);
-  }
-
-  /**
-   * @deprecated Use {@link #getFormattedFix2(double,Locale)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static String getFormattedFix2 (final double dValue)
-  {
-    return getFormattedFix2 (dValue, CGlobal.LOCALE_FIXED_NUMBER_FORMAT);
   }
 
   @Nonnull
@@ -271,30 +225,10 @@ public final class RoundHelper
     return getFormattedFix (dValue, 2, aLocale);
   }
 
-  /**
-   * @deprecated Use {@link #getFormattedExp(double,int,Locale)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static String getFormattedExp (final double dValue, @Nonnegative final int nScale)
-  {
-    return getFormattedExp (dValue, nScale, CGlobal.LOCALE_FIXED_NUMBER_FORMAT);
-  }
-
   @Nonnull
   public static String getFormattedExp (final double dValue, @Nonnegative final int nScale, final Locale aLocale)
   {
     return getFormatted (dValue, nScale, EDecimalType.EXP, aLocale);
-  }
-
-  /**
-   * @deprecated Use {@link #getFormattedExp2(double,Locale)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static String getFormattedExp2 (final double dValue)
-  {
-    return getFormattedExp2 (dValue, CGlobal.LOCALE_FIXED_NUMBER_FORMAT);
   }
 
   @Nonnull

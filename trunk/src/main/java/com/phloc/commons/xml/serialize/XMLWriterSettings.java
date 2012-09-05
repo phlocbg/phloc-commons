@@ -36,7 +36,7 @@ import com.phloc.commons.xml.EXMLVersion;
  * Default implementation of the {@link IXMLWriterSettings} interface.<br>
  * Describes the export settings for the MicroWriter. Defaults to indented and
  * aligned XML in the UTF-8 charset.
- * 
+ *
  * @author philip
  */
 @NotThreadSafe
@@ -50,13 +50,6 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
 
   /** The default settings to use */
   public static final IXMLWriterSettings DEFAULT_XML_SETTINGS = new XMLWriterSettings ();
-
-  /**
-   * The suggested settings to be used. Difference from the default settings is
-   * the invalid character handling
-   */
-  @Deprecated
-  public static final IXMLWriterSettings SUGGESTED_XML_SETTINGS = DEFAULT_XML_SETTINGS;
 
   private EXMLSerializeFormat m_eFormat = EXMLSerializeFormat.XML;
   private EXMLVersion m_eXMLVersion = EXMLVersion.XML_10;
@@ -88,7 +81,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
 
   /**
    * Copy constructor.
-   * 
+   *
    * @param aOther
    *        The object to copy the settings from. May not be <code>null</code>.
    */
@@ -110,7 +103,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
 
   /**
    * Set the XML serialization format to use.
-   * 
+   *
    * @param eFormat
    *        The new format. May not be <code>null</code>.
    * @return this
@@ -132,7 +125,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
 
   /**
    * Set the preferred XML version to use.
-   * 
+   *
    * @param eVersion
    *        The XML version. May not be <code>null</code>.
    * @return this
@@ -154,7 +147,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
 
   /**
    * Set the way how to handle the doc type.
-   * 
+   *
    * @param eSerializeDocType
    *        Doc type handling. May not be <code>null</code>.
    * @return this
@@ -176,7 +169,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
 
   /**
    * Set the way how comments should be handled.
-   * 
+   *
    * @param eSerializeComments
    *        The comment handling. May not be <code>null</code>.
    * @return this
@@ -198,7 +191,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
 
   /**
    * Set the way how to indent/align
-   * 
+   *
    * @param eIndent
    *        Indent and align definition. May not be <code>null</code>.
    * @return this
@@ -220,7 +213,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
 
   /**
    * Set the way how to handle invalid characters.
-   * 
+   *
    * @param eIncorrectCharacterHandling
    *        The invalid character handling. May not be <code>null</code>.
    * @return this
@@ -242,7 +235,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
 
   /**
    * Set the serialization charset.
-   * 
+   *
    * @param aCharset
    *        The charset to be used. May not be <code>null</code>.
    * @return this
@@ -258,7 +251,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
 
   /**
    * Set the serialization charset.
-   * 
+   *
    * @param sCharset
    *        The charset to be used. May not be <code>null</code>.
    * @return this
@@ -283,7 +276,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
 
   /**
    * Set the namespace context to be used.
-   * 
+   *
    * @param aNamespaceContext
    *        The namespace context to be used. May be <code>null</code>.
    * @return this

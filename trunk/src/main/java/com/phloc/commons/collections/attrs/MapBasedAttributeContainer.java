@@ -38,7 +38,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Base class for all kind of string-object mapping container. This
  * implementation is not thread-safe!
- * 
+ *
  * @author philip
  */
 @NotThreadSafe
@@ -128,22 +128,9 @@ public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContain
   }
 
   @Nonnegative
-  @Deprecated
-  public int size ()
-  {
-    return getAttributeCount ();
-  }
-
-  @Nonnegative
   public int getAttributeCount ()
   {
     return m_aAttrs.size ();
-  }
-
-  @Deprecated
-  public boolean isEmpty ()
-  {
-    return containsNoAttribute ();
   }
 
   public boolean containsNoAttribute ()

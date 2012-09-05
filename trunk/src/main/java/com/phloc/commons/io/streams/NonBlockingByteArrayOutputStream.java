@@ -26,12 +26,9 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.IHasSize;
-import com.phloc.commons.IHasStringRepresentation;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.collections.ArrayHelper;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * A non-synchronized copy of the class {@link java.io.ByteArrayOutputStream}.
@@ -39,7 +36,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * @author philip
  * @see java.io.ByteArrayOutputStream
  */
-public class NonBlockingByteArrayOutputStream extends OutputStream implements IHasSize, IHasStringRepresentation, Serializable
+public class NonBlockingByteArrayOutputStream extends OutputStream implements IHasSize, Serializable
 {
   /**
    * The buffer where data is stored.
@@ -202,27 +199,6 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
   public boolean isEmpty ()
   {
     return m_nCount == 0;
-  }
-
-  /**
-   * Converts the buffer's contents into a string decoding bytes using the
-   * platform's default character set. The length of the new <tt>String</tt> is
-   * a function of the character set, and hence may not be equal to the size of
-   * the buffer.
-   * <p>
-   * This method always replaces malformed-input and unmappable-character
-   * sequences with the default replacement string for the platform's default
-   * character set. The {@linkplain java.nio.charset.CharsetDecoder} class
-   * should be used when more control over the decoding process is required.
-   * 
-   * @return String decoded from the buffer's contents.
-   */
-  @SuppressFBWarnings ("DM_DEFAULT_ENCODING")
-  @Nonnull
-  @Deprecated
-  public String getAsString ()
-  {
-    return new String (m_aBuf, 0, m_nCount);
   }
 
   /**

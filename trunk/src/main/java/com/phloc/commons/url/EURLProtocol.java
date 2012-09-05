@@ -27,7 +27,7 @@ import com.phloc.commons.string.StringHelper;
  * Specifies a list of known protocols.<br>
  * Should be extended to the list defined at <a
  * href="http://www.iana.org/assignments/uri-schemes.html">the IANA</a>
- * 
+ *
  * @author philip
  */
 public enum EURLProtocol implements IURLProtocol
@@ -141,20 +141,7 @@ public enum EURLProtocol implements IURLProtocol
 
   /**
    * Tells if the passed String (URL) belongs to this protocol.
-   * 
-   * @param sURL
-   *        The URL to check. May be <code>null</code>.
-   * @return <code>true</code> if the passed URL starts with this protocol
-   */
-  @Deprecated
-  public boolean covers (@Nullable final CharSequence sURL)
-  {
-    return isUsedInURL (sURL);
-  }
-
-  /**
-   * Tells if the passed String (URL) belongs to this protocol.
-   * 
+   *
    * @param sURL
    *        The URL to check. May be <code>null</code>.
    * @return <code>true</code> if the passed URL starts with this protocol
@@ -165,25 +152,11 @@ public enum EURLProtocol implements IURLProtocol
   }
 
   @Nullable
-  @Deprecated
-  public String ensureProtocol (@Nullable final String sURL)
-  {
-    return getWithProtocol (sURL);
-  }
-
-  @Nullable
   public String getWithProtocol (@Nullable final String sURL)
   {
     if (sURL == null)
       return sURL;
     return m_sProtocol + sURL;
-  }
-
-  @Nullable
-  @Deprecated
-  public String ensureProtocolIfNone (@Nullable final String sURL)
-  {
-    return getWithProtocolIfNone (sURL);
   }
 
   @Nullable
@@ -197,38 +170,5 @@ public enum EURLProtocol implements IURLProtocol
   public boolean allowsForQueryParameters ()
   {
     return this == HTTP || this == HTTPS || this == MAILTO || this == SHTTP;
-  }
-
-  @Nullable
-  @Deprecated
-  public static IURLProtocol getProtocol (@Nullable final CharSequence sURL)
-  {
-    return URLProtocolRegistry.getProtocol (sURL);
-  }
-
-  @Nullable
-  @Deprecated
-  public static IURLProtocol getProtocol (@Nullable final ISimpleURL aURL)
-  {
-    return URLProtocolRegistry.getProtocol (aURL);
-  }
-
-  @Deprecated
-  public static boolean hasKnownProtocol (@Nullable final CharSequence sURL)
-  {
-    return URLProtocolRegistry.hasKnownProtocol (sURL);
-  }
-
-  @Deprecated
-  public static boolean hasKnownProtocol (@Nullable final IURLData aURL)
-  {
-    return URLProtocolRegistry.hasKnownProtocol (aURL);
-  }
-
-  @Nullable
-  @Deprecated
-  public static String getWithoutProtocol (@Nullable final String sURL)
-  {
-    return URLProtocolRegistry.getWithoutProtocol (sURL);
   }
 }

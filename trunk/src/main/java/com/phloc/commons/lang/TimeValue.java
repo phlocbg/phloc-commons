@@ -27,7 +27,7 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * Pair of {@link TimeUnit} and a value.
- * 
+ *
  * @author philip
  */
 @Immutable
@@ -51,12 +51,6 @@ public final class TimeValue
   public TimeUnit getTimeUnit ()
   {
     return m_eTimeUnit;
-  }
-
-  @Deprecated
-  public long getValue ()
-  {
-    return getDuration ();
   }
 
   public long getDuration ()
