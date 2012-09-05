@@ -96,7 +96,7 @@ public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegi
         throw new IllegalArgumentException ("A microtype convert for class " + aClass + " is already registered!");
 
       // Automatically register the class, and all parent classes/interfaces
-      for (final Class <?> aCurSrcClass : ClassHelper.getClassHierarchy (aClass, true))
+      for (final Class <?> aCurSrcClass : ClassHelper.getClassHierarchy (aClass))
         if (!s_aMap.containsKey (aCurSrcClass))
           s_aMap.put (aCurSrcClass, aConverter);
     }
@@ -134,7 +134,7 @@ public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegi
       if (ret == null)
       {
         // No exact match found - try fuzzy
-        for (final Class <?> aCurDstClass : ClassHelper.getClassHierarchy (aDstClass, true))
+        for (final Class <?> aCurDstClass : ClassHelper.getClassHierarchy (aDstClass))
           if ((ret = s_aMap.get (aCurDstClass)) != null)
             break;
       }

@@ -213,7 +213,7 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
         else
         {
           // Scan hierarchy
-          for (final Class <?> aCurClass : ClassHelper.getClassHierarchy (aClass, true))
+          for (final Class <?> aCurClass : ClassHelper.getClassHierarchy (aClass))
           {
             final IEqualsImplementation aImpl = m_aMap.get (aCurClass);
             if (aImpl != null)
