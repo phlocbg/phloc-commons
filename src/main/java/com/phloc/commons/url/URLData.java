@@ -34,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * Default implementation of the {@link IURLData} interface.
- * 
+ *
  * @author philip
  */
 @Immutable
@@ -91,17 +91,6 @@ public final class URLData implements IURLData
   public int getParamCount ()
   {
     return ContainerHelper.getSize (m_aParams);
-  }
-
-  /**
-   * @deprecated Use {@link #getAllParams()} instead
-   */
-  @Deprecated
-  @Nullable
-  @ReturnsMutableCopy
-  public Map <String, String> getParams ()
-  {
-    return getAllParams ();
   }
 
   @Nullable

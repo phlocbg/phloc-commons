@@ -30,7 +30,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 
 /**
  * Contains several math help routines.
- * 
+ *
  * @author philip
  */
 @Immutable
@@ -48,7 +48,7 @@ public final class MathHelper
   /**
    * Divides the passed int dividend through the passed divisor (nDividend /
    * nDivisor)
-   * 
+   *
    * @param nDividend
    *        the dividend
    * @param nDivisor
@@ -65,7 +65,7 @@ public final class MathHelper
 
   /**
    * Get the division result using {@link BigDecimal}.
-   * 
+   *
    * @param nDividend
    *        the dividend
    * @param nDivisor
@@ -117,16 +117,6 @@ public final class MathHelper
   public static boolean canConvertLongToInt (final long nValue)
   {
     return (nValue & LONG_HIGH_BITS) == 0 || (nValue & LONG_HIGH_BITS) == LONG_HIGH_BITS;
-  }
-
-  /**
-   * @deprecated Use {@link #getLongAsInt(long,int)} instead
-   */
-  @Deprecated
-  @CheckReturnValue
-  public static int longToInt (final long nValue, final int nFallback)
-  {
-    return getLongAsInt (nValue, nFallback);
   }
 
   @CheckReturnValue
@@ -243,7 +233,7 @@ public final class MathHelper
    * This is a fix for <code>Math.abs</code> as it would return
    * {@link Integer#MIN_VALUE} for {@link Integer#MIN_VALUE} which is very
    * unexpected. Instead an exception is thrown.
-   * 
+   *
    * @param nValue
    *        Input value
    * @return the absolute value of the argument.
@@ -264,7 +254,7 @@ public final class MathHelper
    * This is a fix for <code>Math.abs</code> as it would return
    * {@link Long#MIN_VALUE} for {@link Long#MIN_VALUE} which is very unexpected.
    * Instead an exception is thrown.
-   * 
+   *
    * @param nValue
    *        Input value
    * @return the absolute value of the argument.
@@ -285,7 +275,7 @@ public final class MathHelper
    * This is a sanity method wrapping <code>Math.abs (float)</code>, so that you
    * don't have to think whether you need to invoke the abs method from this
    * class or the one from Math directly.
-   * 
+   *
    * @param fValue
    *        Input value
    * @return the absolute value of the argument.
@@ -300,7 +290,7 @@ public final class MathHelper
    * This is a sanity method wrapping <code>Math.abs (double)</code>, so that
    * you don't have to think whether you need to invoke the abs method from this
    * class or the one from Math directly.
-   * 
+   *
    * @param dValue
    *        Input value
    * @return the absolute value of the argument.
@@ -315,7 +305,7 @@ public final class MathHelper
    * This is a sanity method wrapping <code>BigDecimal.abs (double)</code>, so
    * that you don't have to think whether you need to invoke the abs method from
    * this class or the one from BigDecimal directly.
-   * 
+   *
    * @param aValue
    *        Input value
    * @return the absolute value of the argument.
@@ -330,7 +320,7 @@ public final class MathHelper
    * This is a sanity method wrapping <code>BigInteger.abs (double)</code>, so
    * that you don't have to think whether you need to invoke the abs method from
    * this class or the one from BigInteger directly.
-   * 
+   *
    * @param aValue
    *        Input value
    * @return the absolute value of the argument.

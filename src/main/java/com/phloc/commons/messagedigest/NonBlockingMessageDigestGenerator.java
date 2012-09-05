@@ -17,20 +17,17 @@
  */
 package com.phloc.commons.messagedigest;
 
-import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
-import javax.annotation.WillClose;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.phloc.commons.annotations.DevelopersNote;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsMutableObject;
 import com.phloc.commons.collections.ArrayHelper;
@@ -40,7 +37,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * Base class for creating a cryptographic hash value. Don't mix it up with the
  * {@link com.phloc.commons.hash.HashCodeGenerator} which is used to generate
  * hash values for Java objects.
- * 
+ *
  * @author philip
  */
 @NotThreadSafe
@@ -61,7 +58,7 @@ public final class NonBlockingMessageDigestGenerator extends AbstractMessageDige
 
   /**
    * Create a hash generator with a set of possible algorithms to use.
-   * 
+   *
    * @param aAlgorithms
    *        The parameters to test. May not be <code>null</code>.
    * @throws NullPointerException
@@ -166,33 +163,5 @@ public final class NonBlockingMessageDigestGenerator extends AbstractMessageDige
     return new ToStringGenerator (this).append ("messageDigest", m_aMessageDigest)
                                        .appendIfNotNull ("digest", m_aDigest)
                                        .toString ();
-  }
-
-  @Nonnull
-  @Deprecated
-  @DevelopersNote ("see MessageDigestGeneratorHelper")
-  public static byte [] getDigestFromInputStream (@Nonnull @WillClose final InputStream aIS,
-                                                  @Nonnull @Nonempty final EMessageDigestAlgorithm... aAlgorithms)
-  {
-    return MessageDigestGeneratorHelper.getDigestFromInputStream (aIS, aAlgorithms);
-  }
-
-  @Nonnull
-  @Deprecated
-  @DevelopersNote ("see MessageDigestGeneratorHelper")
-  public static byte [] getDigest (@Nonnull final String sContent,
-                                   @Nonnull @Nonempty final String sCharset,
-                                   @Nonnull @Nonempty final EMessageDigestAlgorithm... aAlgorithms)
-  {
-    return MessageDigestGeneratorHelper.getDigest (sContent, sCharset, aAlgorithms);
-  }
-
-  @Nonnull
-  @Deprecated
-  @DevelopersNote ("see MessageDigestGeneratorHelper")
-  public static byte [] getDigest (@Nonnull final byte [] aContent,
-                                   @Nonnull @Nonempty final EMessageDigestAlgorithm... aAlgorithms)
-  {
-    return MessageDigestGeneratorHelper.getDigest (aContent, aAlgorithms);
   }
 }

@@ -21,8 +21,6 @@ import java.util.Locale;
 
 import javax.annotation.concurrent.Immutable;
 
-import org.junit.After;
-import org.junit.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,9 +41,6 @@ public abstract class AbstractPhlocTestCase
   // For test case classes it is ok to have a protected logger
   @CodingStyleguideUnaware
   protected final Logger m_aLogger = LoggerFactory.getLogger (getClass ());
-  @Deprecated
-  @CodingStyleguideUnaware
-  protected final Logger s_aLogger = m_aLogger;
 
   protected static final Integer I_1 = Integer.valueOf (-1);
   protected static final Integer I0 = Integer.valueOf (0);
@@ -68,46 +63,4 @@ public abstract class AbstractPhlocTestCase
   protected static final Locale L_EN_US = new Locale ("en", "US");
   protected static final Locale L_FR = new Locale ("fr");
   protected static final Locale L_FR_FR = new Locale ("fr", "FR");
-
-  /** The global debug flags to use. */
-  @Deprecated
-  protected static final boolean ENABLE_GLOBAL_DEBUG = DebugModeTestRule.ENABLE_GLOBAL_DEBUG;
-  @Deprecated
-  protected static final boolean ENABLE_GLOBAL_TRACE = DebugModeTestRule.ENABLE_GLOBAL_TRACE;
-
-  @Deprecated
-  protected void beforeSingleTest () throws Exception
-  {}
-
-  @Deprecated
-  protected void afterSingleTest () throws Exception
-  {}
-
-  /**
-   * For JUnit 3.x compatibility.<br>
-   * Also required for the Maven Surefire 2.3 plugin because it cannot evaluate
-   * the \@BeforeClass or \@Before annotations.
-   * 
-   * @throws Exception
-   *         In case of any unexpected error
-   */
-  @Before
-  public final void setUp () throws Exception
-  {
-    beforeSingleTest ();
-  }
-
-  /**
-   * For JUnit 3.x compatibility<br>
-   * Also required for the Maven Surefire 2.3 plugin because it cannot evaluate
-   * the \@BeforeClass or \@Before annotations.
-   * 
-   * @throws Exception
-   *         In case of any unexpected error
-   */
-  @After
-  public final void tearDown () throws Exception
-  {
-    afterSingleTest ();
-  }
 }

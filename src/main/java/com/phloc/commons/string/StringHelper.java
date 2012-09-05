@@ -48,11 +48,11 @@ import com.phloc.commons.math.MathHelper;
 /**
  * Generic string transformation and helper methods. If you need to modify a
  * string, start looking in this class.
- * 
+ *
  * @author philip
  */
 @Immutable
-public final class StringHelper extends StringParser
+public final class StringHelper
 {
   /**
    * The constant to be returned if an String.indexOf call did not find a match!
@@ -97,7 +97,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Check if the string is <code>null</code> or empty.
-   * 
+   *
    * @param aCS
    *        The string to check. May be <code>null</code>.
    * @return <code>true</code> if the string is <code>null</code> or empty
@@ -109,7 +109,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Check if the string is <code>null</code> or empty.
-   * 
+   *
    * @param aCS
    *        The string to check. May be <code>null</code>.
    * @return <code>true</code> if the string is <code>null</code> or empty
@@ -121,7 +121,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Check if the string is <code>null</code> or empty after trimming.
-   * 
+   *
    * @param s
    *        The string to check. May be <code>null</code>.
    * @return <code>true</code> if the string is <code>null</code> or empty or
@@ -134,7 +134,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Check if the string is <code>null</code> or empty after trimming.
-   * 
+   *
    * @param s
    *        The string to check. May be <code>null</code>.
    * @return <code>true</code> if the string is <code>null</code> or empty or
@@ -147,7 +147,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Check if the string contains any char.
-   * 
+   *
    * @param aCS
    *        The string to check
    * @return true if the string contains at least one char public static boolean
@@ -160,7 +160,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Check if the string contains any char.
-   * 
+   *
    * @param aCS
    *        The string to check
    * @return true if the string contains at least one char public static boolean
@@ -173,7 +173,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Check if the string neither <code>null</code> nor empty after trimming.
-   * 
+   *
    * @param s
    *        The string to check. May be <code>null</code>.
    * @return <code>true</code> if the string is neither <code>null</code> nor
@@ -186,7 +186,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Check if the string neither <code>null</code> nor empty after trimming.
-   * 
+   *
    * @param s
    *        The string to check. May be <code>null</code>.
    * @return <code>true</code> if the string is neither <code>null</code> nor
@@ -197,30 +197,10 @@ public final class StringHelper extends StringParser
     return hasTextAfterTrim (s);
   }
 
-  /**
-   * @deprecated Use {@link #getLeadingZero(Byte,int)} instead
-   */
-  @Deprecated
-  @Nullable
-  public static String leadingZero (@Nullable final Byte aValue, final int nChars)
-  {
-    return getLeadingZero (aValue, nChars);
-  }
-
   @Nullable
   public static String getLeadingZero (@Nullable final Byte aValue, final int nChars)
   {
     return aValue == null ? null : getLeadingZero (aValue.byteValue (), nChars);
-  }
-
-  /**
-   * @deprecated Use {@link #getLeadingZero(Integer,int)} instead
-   */
-  @Deprecated
-  @Nullable
-  public static String leadingZero (@Nullable final Integer aValue, final int nChars)
-  {
-    return getLeadingZero (aValue, nChars);
   }
 
   @Nullable
@@ -229,46 +209,16 @@ public final class StringHelper extends StringParser
     return aValue == null ? null : getLeadingZero (aValue.longValue (), nChars);
   }
 
-  /**
-   * @deprecated Use {@link #getLeadingZero(Long,int)} instead
-   */
-  @Deprecated
-  @Nullable
-  public static String leadingZero (@Nullable final Long aValue, final int nChars)
-  {
-    return getLeadingZero (aValue, nChars);
-  }
-
   @Nullable
   public static String getLeadingZero (@Nullable final Long aValue, final int nChars)
   {
     return aValue == null ? null : getLeadingZero (aValue.longValue (), nChars);
   }
 
-  /**
-   * @deprecated Use {@link #getLeadingZero(Short,int)} instead
-   */
-  @Deprecated
-  @Nullable
-  public static String leadingZero (@Nullable final Short aValue, final int nChars)
-  {
-    return getLeadingZero (aValue, nChars);
-  }
-
   @Nullable
   public static String getLeadingZero (@Nullable final Short aValue, final int nChars)
   {
     return aValue == null ? null : getLeadingZero (aValue.shortValue (), nChars);
-  }
-
-  /**
-   * @deprecated Use {@link #getLeadingZero(int,int)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static String leadingZero (final int nValue, final int nChars)
-  {
-    return getLeadingZero (nValue, nChars);
   }
 
   @Nonnull
@@ -288,16 +238,6 @@ public final class StringHelper extends StringParser
     return aSB.append (sValue).toString ();
   }
 
-  /**
-   * @deprecated Use {@link #getLeadingZero(long,int)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static String leadingZero (final long nValue, final int nChars)
-  {
-    return getLeadingZero (nValue, nChars);
-  }
-
   @Nonnull
   public static String getLeadingZero (final long nValue, final int nChars)
   {
@@ -313,16 +253,6 @@ public final class StringHelper extends StringParser
     for (int i = 0; i < nChars - sValue.length (); ++i)
       aSB.append ('0');
     return aSB.append (sValue).toString ();
-  }
-
-  /**
-   * @deprecated Use {@link #getLeadingZero(String,int)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static String leadingZero (@Nonnull final String sValue, final int nChars)
-  {
-    return getLeadingZero (sValue, nChars);
   }
 
   @Nonnull
@@ -341,7 +271,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get the matching hex digit.
-   * 
+   *
    * @param n
    *        The value to get the hex digit from. Must be between 0 and 15.
    * @return The hex character (one of 0-9 or a-f), or '\0' if the value could
@@ -354,23 +284,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Convert a byte array to a hexadecimal encoded string.
-   * 
-   * @param aInput
-   *        The byte array to be converted to a String. May not be
-   *        <code>null</code>.
-   * @return The String representation of the byte array.
-   * @deprecated Use {@link #getHexEncoded(byte[])} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static String hexEncode (@Nonnull final byte [] aInput)
-  {
-    return getHexEncoded (aInput);
-  }
-
-  /**
-   * Convert a byte array to a hexadecimal encoded string.
-   * 
+   *
    * @param aInput
    *        The byte array to be converted to a String. May not be
    *        <code>null</code>.
@@ -387,27 +301,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Convert a byte array to a hexadecimal encoded string.
-   * 
-   * @param aInput
-   *        The byte array to be converted to a String. May not be
-   *        <code>null</code>.
-   * @param nOfs
-   *        Byte array offset
-   * @param nLen
-   *        Number of bytes to encode
-   * @return The String representation of the byte array.
-   * @deprecated Use {@link #getHexEncoded(byte[],int,int)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static String hexEncode (@Nonnull final byte [] aInput, final int nOfs, final int nLen)
-  {
-    return getHexEncoded (aInput, nOfs, nLen);
-  }
-
-  /**
-   * Convert a byte array to a hexadecimal encoded string.
-   * 
+   *
    * @param aInput
    *        The byte array to be converted to a String. May not be
    *        <code>null</code>.
@@ -438,7 +332,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get the decimal value of the passed hex character
-   * 
+   *
    * @param c
    *        The hex char to convert
    * @return A value between 0 and 15, or -1 if the input character is not a hex
@@ -463,16 +357,6 @@ public final class StringHelper extends StringParser
     final int nHex1 = getHexValue (cHigh);
     final int nHex2 = getHexValue (cLow);
     return nHex1 < 0 || nHex2 < 0 ? -1 : (nHex1 << 4) | nHex2;
-  }
-
-  /**
-   * @deprecated Use {@link #getHexDecoded(String)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static byte [] hexDecode (@Nonnull final String sInput)
-  {
-    return getHexDecoded (sInput);
   }
 
   @Nonnull
@@ -505,30 +389,10 @@ public final class StringHelper extends StringParser
     return ret;
   }
 
-  /**
-   * @deprecated Use {@link #getHexString(byte)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static String hexString (final byte nValue)
-  {
-    return getHexString (nValue);
-  }
-
   @Nonnull
   public static String getHexString (final byte nValue)
   {
     return Integer.toString (nValue & 0xff, CGlobal.HEX_RADIX);
-  }
-
-  /**
-   * @deprecated Use {@link #getHexStringLeadingZero(byte,int)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static String hexStringLeadingZero (final byte nValue, final int nDigits)
-  {
-    return getHexStringLeadingZero (nValue, nDigits);
   }
 
   @Nonnull
@@ -537,30 +401,10 @@ public final class StringHelper extends StringParser
     return getLeadingZero (getHexString (nValue), nDigits);
   }
 
-  /**
-   * @deprecated Use {@link #getHexString(int)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static String hexString (final int nValue)
-  {
-    return getHexString (nValue);
-  }
-
   @Nonnull
   public static String getHexString (final int nValue)
   {
     return Integer.toString (nValue, CGlobal.HEX_RADIX);
-  }
-
-  /**
-   * @deprecated Use {@link #getHexStringLeadingZero(int,int)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static String hexStringLeadingZero (final int nValue, final int nDigits)
-  {
-    return getHexStringLeadingZero (nValue, nDigits);
   }
 
   @Nonnull
@@ -569,30 +413,10 @@ public final class StringHelper extends StringParser
     return getLeadingZero (getHexString (nValue), nDigits);
   }
 
-  /**
-   * @deprecated Use {@link #getHexString(long)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static String hexString (final long nValue)
-  {
-    return getHexString (nValue);
-  }
-
   @Nonnull
   public static String getHexString (final long nValue)
   {
     return Long.toString (nValue, CGlobal.HEX_RADIX);
-  }
-
-  /**
-   * @deprecated Use {@link #getHexStringLeadingZero(long,int)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static String hexStringLeadingZero (final long nValue, final int nDigits)
-  {
-    return getHexStringLeadingZero (nValue, nDigits);
   }
 
   @Nonnull
@@ -601,30 +425,10 @@ public final class StringHelper extends StringParser
     return getLeadingZero (getHexString (nValue), nDigits);
   }
 
-  /**
-   * @deprecated Use {@link #getHexString(short)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static String hexString (final short nValue)
-  {
-    return getHexString (nValue);
-  }
-
   @Nonnull
   public static String getHexString (final short nValue)
   {
     return Integer.toString (nValue & 0xffff, CGlobal.HEX_RADIX);
-  }
-
-  /**
-   * @deprecated Use {@link #getHexStringLeadingZero(short,int)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static String hexStringLeadingZero (final short nValue, final int nDigits)
-  {
-    return getHexStringLeadingZero (nValue, nDigits);
   }
 
   @Nonnull
@@ -636,7 +440,7 @@ public final class StringHelper extends StringParser
   /**
    * Get the number of leading white spaces according to
    * {@link Character#isWhitespace(char)}
-   * 
+   *
    * @param s
    *        The string to be parsed. May be <code>null</code>.
    * @return Always &ge; 0.
@@ -657,7 +461,7 @@ public final class StringHelper extends StringParser
   /**
    * Get the number of trailing white spaces according to
    * {@link Character#isWhitespace(char)}
-   * 
+   *
    * @param s
    *        The string to be parsed. May be <code>null</code>.
    * @return Always &ge; 0.
@@ -680,7 +484,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get the number of specified chars, the passed string starts with.
-   * 
+   *
    * @param s
    *        The string to be parsed. May be <code>null</code>.
    * @param c
@@ -702,7 +506,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get the number of specified chars, the passed string ends with.
-   * 
+   *
    * @param s
    *        The string to be parsed. May be <code>null</code>.
    * @param c
@@ -727,27 +531,9 @@ public final class StringHelper extends StringParser
 
   /**
    * Get a concatenated String from all elements of the passed container,
-   * separated by the specified separator string.
-   * 
-   * @param sSep
-   *        The separator to use. May not be <code>null</code>.
-   * @param aElements
-   *        The container to convert. May be <code>null</code> or empty.
-   * @return The concatenated string.
-   * @deprecated Use {@link #getImploded(String,Iterable)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static String implode (@Nonnull final String sSep, @Nullable final Iterable <?> aElements)
-  {
-    return getImploded (sSep, aElements);
-  }
-
-  /**
-   * Get a concatenated String from all elements of the passed container,
    * separated by the specified separator string. Even <code>null</code>
    * elements are added.
-   * 
+   *
    * @param sSep
    *        The separator to use. May not be <code>null</code>.
    * @param aElements
@@ -778,7 +564,7 @@ public final class StringHelper extends StringParser
    * Get a concatenated String from all elements of the passed container,
    * separated by the specified separator char. Even <code>null</code> elements
    * are added.
-   * 
+   *
    * @param cSep
    *        The separator to use.
    * @param aElements
@@ -793,32 +579,8 @@ public final class StringHelper extends StringParser
 
   /**
    * Get a concatenated String from all elements of the passed map, separated by
-   * the specified separator string.
-   * 
-   * @param sSepOuter
-   *        The separator to use for separating the map entries. May not be
-   *        <code>null</code>.
-   * @param sSepInner
-   *        The separator to use for separating the key from the value. May not
-   *        be <code>null</code>.
-   * @param aElements
-   *        The map to convert. May be <code>null</code> or empty.
-   * @return The concatenated string.
-   * @deprecated Use {@link #getImploded(String,String,Map)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static String implode (@Nonnull final String sSepOuter,
-                                @Nonnull final String sSepInner,
-                                @Nullable final Map <?, ?> aElements)
-  {
-    return getImploded (sSepOuter, sSepInner, aElements);
-  }
-
-  /**
-   * Get a concatenated String from all elements of the passed map, separated by
    * the specified separator strings.
-   * 
+   *
    * @param sSepOuter
    *        The separator to use for separating the map entries. May not be
    *        <code>null</code>.
@@ -856,7 +618,7 @@ public final class StringHelper extends StringParser
   /**
    * Get a concatenated String from all elements of the passed map, separated by
    * the specified separator chars.
-   * 
+   *
    * @param cSepOuter
    *        The separator to use for separating the map entries.
    * @param cSepInner
@@ -874,27 +636,7 @@ public final class StringHelper extends StringParser
   /**
    * Get a concatenated String from all elements of the passed array, separated
    * by the specified separator string.
-   * 
-   * @param sSep
-   *        The separator to use. May not be <code>null</code>.
-   * @param aElements
-   *        The container to convert. May be <code>null</code> or empty.
-   * @return The concatenated string.
-   * @param <ELEMENTTYPE>
-   *        The type of elements to be imploded.
-   * @deprecated Use {@link #getImploded(String,Object...)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static <ELEMENTTYPE> String implode (@Nonnull final String sSep, @Nullable final ELEMENTTYPE... aElements)
-  {
-    return getImploded (sSep, aElements);
-  }
-
-  /**
-   * Get a concatenated String from all elements of the passed array, separated
-   * by the specified separator string.
-   * 
+   *
    * @param sSep
    *        The separator to use. May not be <code>null</code>.
    * @param aElements
@@ -916,7 +658,7 @@ public final class StringHelper extends StringParser
   /**
    * Get a concatenated String from all elements of the passed array, separated
    * by the specified separator char.
-   * 
+   *
    * @param cSep
    *        The separator to use.
    * @param aElements
@@ -934,34 +676,7 @@ public final class StringHelper extends StringParser
   /**
    * Get a concatenated String from all elements of the passed array, separated
    * by the specified separator string.
-   * 
-   * @param sSep
-   *        The separator to use. May not be <code>null</code>.
-   * @param aElements
-   *        The container to convert. May be <code>null</code> or empty.
-   * @param nOfs
-   *        The offset to start from.
-   * @param nLen
-   *        The number of elements to implode.
-   * @return The concatenated string.
-   * @param <ELEMENTTYPE>
-   *        The type of elements to be imploded.
-   * @deprecated Use {@link #getImploded(String,Object[],int,int)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static <ELEMENTTYPE> String implode (@Nonnull final String sSep,
-                                              @Nullable final ELEMENTTYPE [] aElements,
-                                              @Nonnegative final int nOfs,
-                                              @Nonnegative final int nLen)
-  {
-    return getImploded (sSep, aElements, nOfs, nLen);
-  }
-
-  /**
-   * Get a concatenated String from all elements of the passed array, separated
-   * by the specified separator string.
-   * 
+   *
    * @param sSep
    *        The separator to use. May not be <code>null</code>.
    * @param aElements
@@ -1002,7 +717,7 @@ public final class StringHelper extends StringParser
   /**
    * Get a concatenated String from all elements of the passed array, separated
    * by the specified separator char.
-   * 
+   *
    * @param cSep
    *        The separator to use.
    * @param aElements
@@ -1030,7 +745,7 @@ public final class StringHelper extends StringParser
    * string. This the very generic version of
    * {@link #getConcatenatedOnDemand(String, String, String)} for an arbitrary
    * number of elements.
-   * 
+   *
    * @param sSep
    *        The separator to use. May not be <code>null</code>.
    * @param aElements
@@ -1064,7 +779,7 @@ public final class StringHelper extends StringParser
    * char. This the very generic version of
    * {@link #getConcatenatedOnDemand(String, String, String)} for an arbitrary
    * number of elements.
-   * 
+   *
    * @param cSep
    *        The separator to use.
    * @param aElements
@@ -1082,7 +797,7 @@ public final class StringHelper extends StringParser
    * by the specified separator string. This the very generic version of
    * {@link #getConcatenatedOnDemand(String, String, String)} for an arbitrary
    * number of elements.
-   * 
+   *
    * @param sSep
    *        The separator to use. May not be <code>null</code>.
    * @param aElements
@@ -1104,7 +819,7 @@ public final class StringHelper extends StringParser
    * by the specified separator char. This the very generic version of
    * {@link #getConcatenatedOnDemand(String, String, String)} for an arbitrary
    * number of elements.
-   * 
+   *
    * @param cSep
    *        The separator to use.
    * @param aElements
@@ -1122,7 +837,7 @@ public final class StringHelper extends StringParser
    * by the specified separator string. This the very generic version of
    * {@link #getConcatenatedOnDemand(String, String, String)} for an arbitrary
    * number of elements.
-   * 
+   *
    * @param sSep
    *        The separator to use. May not be <code>null</code>.
    * @param aElements
@@ -1167,7 +882,7 @@ public final class StringHelper extends StringParser
    * by the specified separator char. This the very generic version of
    * {@link #getConcatenatedOnDemand(String, String, String)} for an arbitrary
    * number of elements.
-   * 
+   *
    * @param cSep
    *        The separator to use.
    * @param aElements
@@ -1215,28 +930,7 @@ public final class StringHelper extends StringParser
   /**
    * Take a concatenated String and return a {@link List} of all elements in the
    * passed string, using specified separator string.
-   * 
-   * @param sSep
-   *        The separator to use. May not be <code>null</code>.
-   * @param sElements
-   *        The concatenated String to convert. May be <code>null</code> or
-   *        empty.
-   * @return The {@link List} represented by the passed string. Never
-   *         <code>null</code>. If the passed input string is <code>null</code>
-   *         or "" an empty list is returned.
-   * @deprecated Use {@link #getExploded(String,String)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static List <String> explode (@Nonnull final String sSep, @Nullable final String sElements)
-  {
-    return getExploded (sSep, sElements);
-  }
-
-  /**
-   * Take a concatenated String and return a {@link List} of all elements in the
-   * passed string, using specified separator string.
-   * 
+   *
    * @param sSep
    *        The separator to use. May not be <code>null</code>.
    * @param sElements
@@ -1255,28 +949,7 @@ public final class StringHelper extends StringParser
   /**
    * Take a concatenated String and return a {@link Set} of all elements in the
    * passed string, using specified separator string.
-   * 
-   * @param sSep
-   *        The separator to use. May not be <code>null</code>.
-   * @param sElements
-   *        The concatenated String to convert. May be <code>null</code> or
-   *        empty.
-   * @return The {@link Set} represented by the passed string. Never
-   *         <code>null</code>. If the passed input string is <code>null</code>
-   *         or "" an empty list is returned.
-   * @deprecated Use {@link #getExplodedToSet(String,String)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static Set <String> explodeToSet (@Nonnull final String sSep, @Nullable final String sElements)
-  {
-    return getExplodedToSet (sSep, sElements);
-  }
-
-  /**
-   * Take a concatenated String and return a {@link Set} of all elements in the
-   * passed string, using specified separator string.
-   * 
+   *
    * @param sSep
    *        The separator to use. May not be <code>null</code>.
    * @param sElements
@@ -1293,30 +966,9 @@ public final class StringHelper extends StringParser
   }
 
   /**
-   * Take a concatenated String and return an ordered {@link Set} of all
-   * elements in the passed string, using specified separator string.
-   * 
-   * @param sSep
-   *        The separator to use. May not be <code>null</code>.
-   * @param sElements
-   *        The concatenated String to convert. May be <code>null</code> or
-   *        empty.
-   * @return The ordered {@link Set} represented by the passed string. Never
-   *         <code>null</code>. If the passed input string is <code>null</code>
-   *         or "" an empty list is returned.
-   * @deprecated Use {@link #getExplodedToOrderedSet(String,String)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static Set <String> explodeToOrderedSet (@Nonnull final String sSep, @Nullable final String sElements)
-  {
-    return getExplodedToOrderedSet (sSep, sElements);
-  }
-
-  /**
    * Take a concatenated String and return an ordered {@link LinkedHashSet} of
    * all elements in the passed string, using specified separator string.
-   * 
+   *
    * @param sSep
    *        The separator to use. May not be <code>null</code>.
    * @param sElements
@@ -1335,7 +987,7 @@ public final class StringHelper extends StringParser
   /**
    * Take a concatenated String and return a sorted {@link TreeSet} of all
    * elements in the passed string, using specified separator string.
-   * 
+   *
    * @param sSep
    *        The separator to use. May not be <code>null</code>.
    * @param sElements
@@ -1354,7 +1006,7 @@ public final class StringHelper extends StringParser
   /**
    * Get the passed string element repeated for a certain number of times. Each
    * string element is simply appended at the end of the string.
-   * 
+   *
    * @param cElement
    *        The character to get repeated.
    * @param nRepeats
@@ -1381,7 +1033,7 @@ public final class StringHelper extends StringParser
   /**
    * Get the passed string element repeated for a certain number of times. Each
    * string element is simply appended at the end of the string.
-   * 
+   *
    * @param sElement
    *        The string to get repeated. May not be <code>null</code>.
    * @param nRepeats
@@ -1414,28 +1066,10 @@ public final class StringHelper extends StringParser
   }
 
   /**
-   * Concatenate the strings sFront and sEnd. If either front or back is null or
-   * empty
-   * 
-   * @param sFront
-   *        Front string. May be <code>null</code>.
-   * @param sEnd
-   *        May be <code>null</code>.
-   * @return The concatenated string.
-   * @deprecated Use {@link #getConcatenatedOnDemand(String,String)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static String concatenateOnDemand (@Nullable final String sFront, @Nullable final String sEnd)
-  {
-    return getConcatenatedOnDemand (sFront, sEnd);
-  }
-
-  /**
    * Concatenate the strings sFront and sEnd. If either front or back is
    * <code>null</code> or empty only the other element is returned. If both
    * strings are <code>null</code> or empty and empty String is returned.
-   * 
+   *
    * @param sFront
    *        Front string. May be <code>null</code>.
    * @param sEnd
@@ -1455,30 +1089,7 @@ public final class StringHelper extends StringParser
   /**
    * Concatenate the strings sFront and sEnd by the "sSep" string. If either
    * front or back is <code>null</code> or empty, the separator is not applied.
-   * 
-   * @param sFront
-   *        Front string. May be <code>null</code>.
-   * @param sSep
-   *        Separator string. May be <code>null</code>.
-   * @param sEnd
-   *        May be <code>null</code>.
-   * @return The concatenated string.
-   * @deprecated Use {@link #getConcatenatedOnDemand(String,String,String)}
-   *             instead
-   */
-  @Deprecated
-  @Nonnull
-  public static String concatenateOnDemand (@Nullable final String sFront,
-                                            @Nullable final String sSep,
-                                            @Nullable final String sEnd)
-  {
-    return getConcatenatedOnDemand (sFront, sSep, sEnd);
-  }
-
-  /**
-   * Concatenate the strings sFront and sEnd by the "sSep" string. If either
-   * front or back is <code>null</code> or empty, the separator is not applied.
-   * 
+   *
    * @param sFront
    *        Front string. May be <code>null</code>.
    * @param sSep
@@ -1581,26 +1192,8 @@ public final class StringHelper extends StringParser
   }
 
   /**
-   * Get the index of sSearch within sText.
-   * 
-   * @param sText
-   *        The text to search in. May be <code>null</code>.
-   * @param sSearch
-   *        The text to search for. May be <code>null</code>.
-   * @return The index of sSearch within sText or {@value #STRING_NOT_FOUND} if
-   *         sSearch was not found or if any parameter was <code>null</code>.
-   * @see String#indexOf(String)
-   * @deprecated Use {@link #getIndexOf(String,String)} instead
-   */
-  @Deprecated
-  public static int indexOf (@Nullable final String sText, @Nullable final String sSearch)
-  {
-    return getIndexOf (sText, sSearch);
-  }
-
-  /**
    * Get the first index of sSearch within sText.
-   * 
+   *
    * @param sText
    *        The text to search in. May be <code>null</code>.
    * @param sSearch
@@ -1618,7 +1211,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get the last index of sSearch within sText.
-   * 
+   *
    * @param sText
    *        The text to search in. May be <code>null</code>.
    * @param sSearch
@@ -1635,26 +1228,8 @@ public final class StringHelper extends StringParser
   }
 
   /**
-   * Get the index of cSearch within sText.
-   * 
-   * @param sText
-   *        The text to search in. May be <code>null</code>.
-   * @param cSearch
-   *        The character to search for. May be <code>null</code>.
-   * @return The index of sSearch within sText or {@value #STRING_NOT_FOUND} if
-   *         cSearch was not found or if any parameter was <code>null</code>.
-   * @see String#indexOf(int)
-   * @deprecated Use {@link #getIndexOf(String,char)} instead
-   */
-  @Deprecated
-  public static int indexOf (@Nullable final String sText, final char cSearch)
-  {
-    return getIndexOf (sText, cSearch);
-  }
-
-  /**
    * Get the first index of cSearch within sText.
-   * 
+   *
    * @param sText
    *        The text to search in. May be <code>null</code>.
    * @param cSearch
@@ -1671,7 +1246,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get the last index of cSearch within sText.
-   * 
+   *
    * @param sText
    *        The text to search in. May be <code>null</code>.
    * @param cSearch
@@ -1687,30 +1262,8 @@ public final class StringHelper extends StringParser
   }
 
   /**
-   * Get the index of sSearch within sText ignoring case.
-   * 
-   * @param sText
-   *        The text to search in. May be <code>null</code>.
-   * @param sSearch
-   *        The text to search for. May be <code>null</code>.
-   * @param aSortLocale
-   *        The locale to be used for case unifying.
-   * @return The index of sSearch within sText or {@value #STRING_NOT_FOUND} if
-   *         sSearch was not found or if any parameter was <code>null</code>.
-   * @see String#indexOf(String)
-   * @deprecated Use {@link #getIndexOfIgnoreCase(String,String,Locale)} instead
-   */
-  @Deprecated
-  public static int indexOfIgnoreCase (@Nullable final String sText,
-                                       @Nullable final String sSearch,
-                                       @Nonnull final Locale aSortLocale)
-  {
-    return getIndexOfIgnoreCase (sText, sSearch, aSortLocale);
-  }
-
-  /**
    * Get the first index of sSearch within sText ignoring case.
-   * 
+   *
    * @param sText
    *        The text to search in. May be <code>null</code>.
    * @param sSearch
@@ -1733,7 +1286,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get the last index of sSearch within sText ignoring case.
-   * 
+   *
    * @param sText
    *        The text to search in. May be <code>null</code>.
    * @param sSearch
@@ -1756,7 +1309,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get the first index of cSearch within sText ignoring case.
-   * 
+   *
    * @param sText
    *        The text to search in. May be <code>null</code>.
    * @param cSearch
@@ -1778,7 +1331,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get the last index of cSearch within sText ignoring case.
-   * 
+   *
    * @param sText
    *        The text to search in. May be <code>null</code>.
    * @param cSearch
@@ -1801,7 +1354,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Check if sSearch is contained within sText.
-   * 
+   *
    * @param sText
    *        The text to search in. May be <code>null</code>.
    * @param sSearch
@@ -1817,7 +1370,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Check if cSearch is contained within sText.
-   * 
+   *
    * @param sText
    *        The text to search in. May be <code>null</code>.
    * @param cSearch
@@ -1833,7 +1386,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Check if sSearch is contained within sText ignoring case.
-   * 
+   *
    * @param sText
    *        The text to search in. May be <code>null</code>.
    * @param sSearch
@@ -1853,7 +1406,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Check if cSearch is contained within sText ignoring case.
-   * 
+   *
    * @param sText
    *        The text to search in. May be <code>null</code>.
    * @param cSearch
@@ -1874,25 +1427,7 @@ public final class StringHelper extends StringParser
   /**
    * Check if any of the passed searched characters is contained in the input
    * char array.
-   * 
-   * @param aInput
-   *        The input char array. May be <code>null</code>.
-   * @param aSearchChars
-   *        The char array to search. May not be <code>null</code>.
-   * @return <code>true</code> if at least any of the search char is contained
-   *         in the input char array, <code>false</code> otherwise.
-   * @deprecated Use {@link #containsAny(char[],char[])} instead
-   */
-  @Deprecated
-  public static boolean multiContains (@Nullable final char [] aInput, @Nonnull final char [] aSearchChars)
-  {
-    return containsAny (aInput, aSearchChars);
-  }
-
-  /**
-   * Check if any of the passed searched characters is contained in the input
-   * char array.
-   * 
+   *
    * @param aInput
    *        The input char array. May be <code>null</code>.
    * @param aSearchChars
@@ -1915,7 +1450,7 @@ public final class StringHelper extends StringParser
   /**
    * Check if any of the passed searched characters in contained in the input
    * string.
-   * 
+   *
    * @param sInput
    *        The input string. May be <code>null</code>.
    * @param aSearchChars
@@ -1930,7 +1465,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Count the number of occurrences of sSearch within sText.
-   * 
+   *
    * @param sText
    *        The text to search in. May be <code>null</code>.
    * @param sSearch
@@ -1966,7 +1501,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Count the number of occurrences of sSearch within sText ignoring case.
-   * 
+   *
    * @param sText
    *        The text to search in. May be <code>null</code>.
    * @param sSearch
@@ -1986,7 +1521,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Remove any leading whitespaces from the passed string.
-   * 
+   *
    * @param s
    *        the String to be trimmed
    * @return the original String with all leading whitespaces removed
@@ -2001,7 +1536,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Remove any trailing whitespaces from the passed string.
-   * 
+   *
    * @param s
    *        the String to be cut
    * @return the original String with all trailing whitespaces removed
@@ -2017,7 +1552,7 @@ public final class StringHelper extends StringParser
   /**
    * Trim the passed lead from the source value. If the source value does not
    * start with the passed lead, nothing happens.
-   * 
+   *
    * @param sSrc
    *        The input source string
    * @param sLead
@@ -2035,7 +1570,7 @@ public final class StringHelper extends StringParser
   /**
    * Trim the passed tail from the source value. If the source value does not
    * end with the passed tail, nothing happens.
-   * 
+   *
    * @param sSrc
    *        The input source string
    * @param sTail
@@ -2052,7 +1587,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Trim the passed string, if it is not <code>null</code>.
-   * 
+   *
    * @param s
    *        The string to be trimmed. May be <code>null</code>.
    * @return <code>null</code> if the input string was <code>null</code>, the
@@ -2068,7 +1603,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get the first character of the passed character sequence
-   * 
+   *
    * @param aCS
    *        The source character sequence
    * @return {@link CGlobal#ILLEGAL_CHAR} if the passed sequence was empty
@@ -2080,7 +1615,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get the first character of the passed array
-   * 
+   *
    * @param aChars
    *        The character array
    * @return {@link CGlobal#ILLEGAL_CHAR} if the passed array was empty
@@ -2092,7 +1627,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get the last character of the passed character sequence
-   * 
+   *
    * @param aCS
    *        The source character sequence
    * @return {@link CGlobal#ILLEGAL_CHAR} if the passed sequence was empty
@@ -2105,7 +1640,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get the last character of the passed array
-   * 
+   *
    * @param aChars
    *        The character array
    * @return {@link CGlobal#ILLEGAL_CHAR} if the passed array was empty
@@ -2148,7 +1683,7 @@ public final class StringHelper extends StringParser
    * Get the number of characters the passed value would occupy in a string
    * representation.<br>
    * Copied from java.lang.Integer#StringSize
-   * 
+   *
    * @param nValue
    *        The integer value to check. May be be positive or negative.
    * @return Number of characters required. Alyways &gt; 0.
@@ -2169,7 +1704,7 @@ public final class StringHelper extends StringParser
   /**
    * Get the number of characters the passed value would occupy in a string
    * representation.
-   * 
+   *
    * @param nValue
    *        The long value to check. May be be positive or negative.
    * @return Number of characters required. Always &gt; 0.
@@ -2185,18 +1720,6 @@ public final class StringHelper extends StringParser
     for (int nIndex = 0;; nIndex++)
       if (nRealValue <= s_aSizeTableLong[nIndex])
         return nPrefix + nIndex;
-  }
-
-  /**
-   * @deprecated Use {@link #getCutAfterLength(String,int,String)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static String cutAfterLength (@Nonnull final String sValue,
-                                       @Nonnegative final int nMaxLength,
-                                       @Nullable final String sNewSuffix)
-  {
-    return getCutAfterLength (sValue, nMaxLength, sNewSuffix);
   }
 
   @Nonnull
@@ -2220,7 +1743,7 @@ public final class StringHelper extends StringParser
    * Same as {@link #replaceAll(String, String, CharSequence)} but allowing for
    * a <code>null</code> new-value, which is than interpreted as an empty string
    * instead.
-   * 
+   *
    * @param sInputString
    *        The input string where the text should be replace. If this parameter
    *        is <code>null</code> or empty, no replacement is done.
@@ -2246,7 +1769,7 @@ public final class StringHelper extends StringParser
    * expressions which use a synchronized block to compile the patterns. This
    * method is inherently thread safe since {@link String} is immutable and
    * we're operating on different temporary {@link StringBuilder} objects.
-   * 
+   *
    * @param sInputString
    *        The input string where the text should be replace. If this parameter
    *        is <code>null</code> or empty, no replacement is done.
@@ -2316,7 +1839,7 @@ public final class StringHelper extends StringParser
    * regular expressions which use a synchronized block to compile the patterns.
    * This method is inherently thread safe since {@link String} is immutable and
    * we're operating on different temporary {@link StringBuilder} objects.
-   * 
+   *
    * @param sInputString
    *        The input string where the text should be replace. If this parameter
    *        is <code>null</code> or empty, no replacement is done.
@@ -2364,7 +1887,7 @@ public final class StringHelper extends StringParser
   /**
    * Just calls <code>replaceAll</code> as long as there are still replacements
    * found
-   * 
+   *
    * @param sInputString
    *        The input string where the text should be replace. If this parameter
    *        is <code>null</code> or empty, no replacement is done.
@@ -2406,7 +1929,7 @@ public final class StringHelper extends StringParser
   /**
    * Get the result length (in characters) when replacing all patterns with the
    * replacements on the passed input array.
-   * 
+   *
    * @param aInputString
    *        Input char array. May not be <code>null</code>.
    * @param aSearchChars
@@ -2444,7 +1967,7 @@ public final class StringHelper extends StringParser
    * Optimized replace method that replaces a set of characters with a set of
    * strings. This method was created for efficient XML special character
    * replacements!
-   * 
+   *
    * @param sInputString
    *        The input string.
    * @param aSearchChars
@@ -2520,7 +2043,7 @@ public final class StringHelper extends StringParser
    * where the object where the output should be appended is passed in as a
    * parameter. This has the advantage, that not length calculation needs to
    * take place!
-   * 
+   *
    * @param sInputString
    *        The input string.
    * @param aSearchChars
@@ -2590,7 +2113,7 @@ public final class StringHelper extends StringParser
    * Perform all string replacements on the input string as defined by the
    * passed map. All replacements are done using
    * {@link #replaceAll(String,String,CharSequence)} which is ok.
-   * 
+   *
    * @param sInputString
    *        The input string where the text should be replaced. May be
    *        <code>null</code>.
@@ -2616,7 +2139,7 @@ public final class StringHelper extends StringParser
    * Perform all string replacements on the input string as defined by the
    * passed map. All replacements are done using
    * {@link #replaceAll(String,String,CharSequence)} which is ok.
-   * 
+   *
    * @param sInputString
    *        The input string where the text should be replaced. May be
    *        <code>null</code>.
@@ -2657,24 +2180,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get the length of the passed character sequence.
-   * 
-   * @param aCS
-   *        The character sequence who's length is to be determined. May be
-   *        <code>null</code>.
-   * @return 0 if the parameter is <code>null</code>, its length otherwise.
-   * @see CharSequence#length()
-   * @deprecated Use {@link #getLength(CharSequence)} instead
-   */
-  @Deprecated
-  @Nonnegative
-  public static int length (@Nullable final CharSequence aCS)
-  {
-    return getLength (aCS);
-  }
-
-  /**
-   * Get the length of the passed character sequence.
-   * 
+   *
    * @param aCS
    *        The character sequence who's length is to be determined. May be
    *        <code>null</code>.
@@ -2690,7 +2196,7 @@ public final class StringHelper extends StringParser
   /**
    * Get the passed string but never return <code>null</code>. If the passed
    * parameter is <code>null</code> an empty string is returned.
-   * 
+   *
    * @param s
    *        The parameter to be not <code>null</code>.
    * @return An empty string if the passed parameter is <code>null</code>, the
@@ -2705,7 +2211,7 @@ public final class StringHelper extends StringParser
   /**
    * Get the passed string but never return <code>null</code>. If the passed
    * parameter is <code>null</code> the second parameter is returned.
-   * 
+   *
    * @param s
    *        The parameter to be not <code>null</code>.
    * @param sDefaultIfNull
@@ -2724,7 +2230,7 @@ public final class StringHelper extends StringParser
   /**
    * Get the passed {@link CharSequence} but never return <code>null</code>. If
    * the passed parameter is <code>null</code> an empty string is returned.
-   * 
+   *
    * @param s
    *        The parameter to be not <code>null</code>.
    * @return An empty string if the passed parameter is <code>null</code>, the
@@ -2739,7 +2245,7 @@ public final class StringHelper extends StringParser
   /**
    * Get the passed {@link CharSequence} but never return <code>null</code>. If
    * the passed parameter is <code>null</code> the second parameter is returned.
-   * 
+   *
    * @param s
    *        The parameter to be not <code>null</code>.
    * @param sDefaultIfNull
@@ -2758,25 +2264,7 @@ public final class StringHelper extends StringParser
   /**
    * Convert the passed object to a string using the {@link Object#toString()}
    * method.
-   * 
-   * @param aObject
-   *        The value to be converted. May be <code>null</code>.
-   * @return An empty string in case the passed object was <code>null</code>.
-   *         Never <code>null</code>.
-   * @see Object#toString()
-   * @deprecated Use {@link #getToString(Object)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static String toString (@Nullable final Object aObject)
-  {
-    return getToString (aObject);
-  }
-
-  /**
-   * Convert the passed object to a string using the {@link Object#toString()}
-   * method.
-   * 
+   *
    * @param aObject
    *        The value to be converted. May be <code>null</code>.
    * @return An empty string in case the passed object was <code>null</code>.
@@ -2792,29 +2280,7 @@ public final class StringHelper extends StringParser
   /**
    * Convert the passed object to a string using the {@link Object#toString()}
    * method or otherwise return the passed default value.
-   * 
-   * @param aObject
-   *        The value to be converted. May be <code>null</code>.
-   * @param sNullValue
-   *        The value to be returned in case the passed object is
-   *        <code>null</code>. May be <code>null</code> itself.
-   * @return The passed default value in case the passed object was
-   *         <code>null</code> or the result of {@link Object#toString()} on the
-   *         passed object.
-   * @see Object#toString()
-   * @deprecated Use {@link #getToString(Object,String)} instead
-   */
-  @Deprecated
-  @Nullable
-  public static String toString (@Nullable final Object aObject, @Nullable final String sNullValue)
-  {
-    return getToString (aObject, sNullValue);
-  }
-
-  /**
-   * Convert the passed object to a string using the {@link Object#toString()}
-   * method or otherwise return the passed default value.
-   * 
+   *
    * @param aObject
    *        The value to be converted. May be <code>null</code>.
    * @param sNullValue
@@ -2833,7 +2299,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get the passed string without the first char.
-   * 
+   *
    * @param sStr
    *        The source string. May be <code>null</code>.
    * @return An empty, non-<code>null</code> string if the passed string has a
@@ -2847,7 +2313,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get the passed string without the specified number of leading chars.
-   * 
+   *
    * @param sStr
    *        The source string. May be <code>null</code>.
    * @param nCount
@@ -2867,7 +2333,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get the passed string without the last char.
-   * 
+   *
    * @param sStr
    *        The source string. May be <code>null</code>.
    * @return An empty, non-<code>null</code> string if the passed string has a
@@ -2881,7 +2347,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get the passed string without the specified number of trailing chars.
-   * 
+   *
    * @param sStr
    *        The source string. May be <code>null</code>.
    * @param nCount
@@ -2911,25 +2377,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get everything from the string up to and including the first passed char.
-   * 
-   * @param sStr
-   *        The source string. May be <code>null</code>.
-   * @param cSearch
-   *        The character to search.
-   * @return <code>null</code> if the passed string does not contain the search
-   *         character.
-   * @deprecated Use {@link #getUntilFirstIncl(String,char)} instead
-   */
-  @Deprecated
-  @Nullable
-  public static String getUntilIncl (@Nullable final String sStr, final char cSearch)
-  {
-    return getUntilFirstIncl (sStr, cSearch);
-  }
-
-  /**
-   * Get everything from the string up to and including the first passed char.
-   * 
+   *
    * @param sStr
    *        The source string. May be <code>null</code>.
    * @param cSearch
@@ -2945,25 +2393,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get everything from the string up to and excluding first the passed char.
-   * 
-   * @param sStr
-   *        The source string. May be <code>null</code>.
-   * @param cSearch
-   *        The character to search.
-   * @return <code>null</code> if the passed string does not contain the search
-   *         character.
-   * @deprecated Use {@link #getUntilFirstExcl(String,char)} instead
-   */
-  @Deprecated
-  @Nullable
-  public static String getUntilExcl (@Nullable final String sStr, final char cSearch)
-  {
-    return getUntilFirstExcl (sStr, cSearch);
-  }
-
-  /**
-   * Get everything from the string up to and excluding first the passed char.
-   * 
+   *
    * @param sStr
    *        The source string. May be <code>null</code>.
    * @param cSearch
@@ -2992,26 +2422,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get everything from the string up to and including the first passed string.
-   * 
-   * @param sStr
-   *        The source string. May be <code>null</code>.
-   * @param sSearch
-   *        The string to search. May be <code>null</code>.
-   * @return <code>null</code> if the passed string does not contain the search
-   *         string. If the search string is empty, the empty string is
-   *         returned.
-   * @deprecated Use {@link #getUntilFirstIncl(String,String)} instead
-   */
-  @Deprecated
-  @Nullable
-  public static String getUntilIncl (@Nullable final String sStr, @Nullable final String sSearch)
-  {
-    return getUntilFirstIncl (sStr, sSearch);
-  }
-
-  /**
-   * Get everything from the string up to and including the first passed string.
-   * 
+   *
    * @param sStr
    *        The source string. May be <code>null</code>.
    * @param sSearch
@@ -3028,26 +2439,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get everything from the string up to and excluding the first passed string.
-   * 
-   * @param sStr
-   *        The source string. May be <code>null</code>.
-   * @param sSearch
-   *        The string to search. May be <code>null</code>.
-   * @return <code>null</code> if the passed string does not contain the search
-   *         string. If the search string is empty, the empty string is
-   *         returned.
-   * @deprecated Use {@link #getUntilFirstExcl(String,String)} instead
-   */
-  @Deprecated
-  @Nullable
-  public static String getUntilExcl (@Nullable final String sStr, @Nullable final String sSearch)
-  {
-    return getUntilFirstExcl (sStr, sSearch);
-  }
-
-  /**
-   * Get everything from the string up to and excluding the first passed string.
-   * 
+   *
    * @param sStr
    *        The source string. May be <code>null</code>.
    * @param sSearch
@@ -3073,7 +2465,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get everything from the string up to and including the first passed char.
-   * 
+   *
    * @param sStr
    *        The source string. May be <code>null</code>.
    * @param cSearch
@@ -3089,7 +2481,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get everything from the string up to and excluding first the passed char.
-   * 
+   *
    * @param sStr
    *        The source string. May be <code>null</code>.
    * @param cSearch
@@ -3118,7 +2510,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get everything from the string up to and including the first passed string.
-   * 
+   *
    * @param sStr
    *        The source string. May be <code>null</code>.
    * @param sSearch
@@ -3135,7 +2527,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get everything from the string up to and excluding the first passed string.
-   * 
+   *
    * @param sStr
    *        The source string. May be <code>null</code>.
    * @param sSearch
@@ -3161,25 +2553,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get everything from the string from and including the first passed char.
-   * 
-   * @param sStr
-   *        The source string. May be <code>null</code>.
-   * @param cSearch
-   *        The character to search.
-   * @return <code>null</code> if the passed string does not contain the search
-   *         character.
-   * @deprecated Use {@link #getFromFirstIncl(String,char)} instead
-   */
-  @Deprecated
-  @Nullable
-  public static String getFromIncl (@Nullable final String sStr, final char cSearch)
-  {
-    return getFromFirstIncl (sStr, cSearch);
-  }
-
-  /**
-   * Get everything from the string from and including the first passed char.
-   * 
+   *
    * @param sStr
    *        The source string. May be <code>null</code>.
    * @param cSearch
@@ -3195,25 +2569,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get everything from the string from and excluding the first passed char.
-   * 
-   * @param sStr
-   *        The source string. May be <code>null</code>.
-   * @param cSearch
-   *        The character to search.
-   * @return <code>null</code> if the passed string does not contain the search
-   *         character.
-   * @deprecated Use {@link #getFromFirstExcl(String,char)} instead
-   */
-  @Deprecated
-  @Nullable
-  public static String getFromExcl (@Nullable final String sStr, final char cSearch)
-  {
-    return getFromFirstExcl (sStr, cSearch);
-  }
-
-  /**
-   * Get everything from the string from and excluding the first passed char.
-   * 
+   *
    * @param sStr
    *        The source string. May be <code>null</code>.
    * @param cSearch
@@ -3241,26 +2597,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get everything from the string from and including the passed string.
-   * 
-   * @param sStr
-   *        The source string. May be <code>null</code>.
-   * @param sSearch
-   *        The string to search. May be <code>null</code>.
-   * @return <code>null</code> if the passed string does not contain the search
-   *         string. If the search string is empty, the input string is returned
-   *         unmodified.
-   * @deprecated Use {@link #getFromFirstIncl(String,String)} instead
-   */
-  @Deprecated
-  @Nullable
-  public static String getFromIncl (@Nullable final String sStr, @Nullable final String sSearch)
-  {
-    return getFromFirstIncl (sStr, sSearch);
-  }
-
-  /**
-   * Get everything from the string from and including the passed string.
-   * 
+   *
    * @param sStr
    *        The source string. May be <code>null</code>.
    * @param sSearch
@@ -3277,26 +2614,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get everything from the string from and excluding the passed string.
-   * 
-   * @param sStr
-   *        The source string. May be <code>null</code>.
-   * @param sSearch
-   *        The string to search. May be <code>null</code>.
-   * @return <code>null</code> if the passed string does not contain the search
-   *         string. If the search string is empty, the input string is returned
-   *         unmodified.
-   * @deprecated Use {@link #getFromFirstExcl(String,String)} instead
-   */
-  @Deprecated
-  @Nullable
-  public static String getFromExcl (@Nullable final String sStr, @Nullable final String sSearch)
-  {
-    return getFromFirstExcl (sStr, sSearch);
-  }
-
-  /**
-   * Get everything from the string from and excluding the passed string.
-   * 
+   *
    * @param sStr
    *        The source string. May be <code>null</code>.
    * @param sSearch
@@ -3322,7 +2640,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get everything from the string from and including the first passed char.
-   * 
+   *
    * @param sStr
    *        The source string. May be <code>null</code>.
    * @param cSearch
@@ -3338,7 +2656,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get everything from the string from and excluding the first passed char.
-   * 
+   *
    * @param sStr
    *        The source string. May be <code>null</code>.
    * @param cSearch
@@ -3366,7 +2684,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get everything from the string from and including the passed string.
-   * 
+   *
    * @param sStr
    *        The source string. May be <code>null</code>.
    * @param sSearch
@@ -3383,7 +2701,7 @@ public final class StringHelper extends StringParser
 
   /**
    * Get everything from the string from and excluding the passed string.
-   * 
+   *
    * @param sStr
    *        The source string. May be <code>null</code>.
    * @param sSearch

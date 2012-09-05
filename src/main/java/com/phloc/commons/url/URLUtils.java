@@ -94,7 +94,7 @@ public final class URLUtils
   /**
    * URL-decode the passed value automatically handling charset issues. The used
    * char set is determined by {@link #CHARSET_URL}.
-   * 
+   *
    * @param sValue
    *        The value to be decoded. May not be <code>null</code>.
    * @return The decoded value.
@@ -107,7 +107,7 @@ public final class URLUtils
 
   /**
    * URL-decode the passed value automatically handling charset issues.
-   * 
+   *
    * @param sValue
    *        The value to be decoded. May not be <code>null</code>.
    * @param aCharset
@@ -125,7 +125,7 @@ public final class URLUtils
 
   /**
    * URL-decode the passed value automatically handling charset issues.
-   * 
+   *
    * @param sValue
    *        The value to be decoded. May not be <code>null</code>.
    * @param sCharset
@@ -150,7 +150,7 @@ public final class URLUtils
   /**
    * URL-encode the passed value automatically handling charset issues. The used
    * char set is determined by {@link #CHARSET_URL}.
-   * 
+   *
    * @param sValue
    *        The value to be encoded. May not be <code>null</code>.
    * @return The encoded value.
@@ -163,7 +163,7 @@ public final class URLUtils
 
   /**
    * URL-encode the passed value automatically handling charset issues.
-   * 
+   *
    * @param sValue
    *        The value to be encoded. May not be <code>null</code>.
    * @param aCharset
@@ -181,7 +181,7 @@ public final class URLUtils
 
   /**
    * URL-encode the passed value automatically handling charset issues.
-   * 
+   *
    * @param sValue
    *        The value to be encoded. May not be <code>null</code>.
    * @param sCharset
@@ -205,7 +205,7 @@ public final class URLUtils
 
   /**
    * Clean an URL part from nasty Umlauts. This mapping needs extension!
-   * 
+   *
    * @param sURLPart
    *        The original URL part. May be <code>null</code>.
    * @return The cleaned version or <code>null</code> if the input was
@@ -217,16 +217,6 @@ public final class URLUtils
     return new String (StringHelper.replaceMultiple (sURLPart, CLEANURL_OLD, CLEANURL_NEW));
   }
 
-  /**
-   * @deprecated Use {@link #getAsURLData(String)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static IURLData parseURL (@Nonnull final String sHref)
-  {
-    return getAsURLData (sHref);
-  }
-
   @Nonnull
   public static IURLData getAsURLData (@Nonnull final String sHref)
   {
@@ -234,18 +224,8 @@ public final class URLUtils
   }
 
   /**
-   * @deprecated Use {@link #getAsURLData(String,IDecoder)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static IURLData parseURL (@Nonnull final String sHref, @Nonnull final IDecoder <String> aParameterDecoder)
-  {
-    return getAsURLData (sHref, aParameterDecoder);
-  }
-
-  /**
    * Parses the passed URL into a structured form
-   * 
+   *
    * @param sHref
    *        The URL to be parsed
    * @return the corresponding {@link IURLData} representation of the passed URL
@@ -341,7 +321,7 @@ public final class URLUtils
 
   /**
    * Get the final representation of the URL using the specified elements.
-   * 
+   *
    * @param sPath
    *        The main path. May be <code>null</code>.
    * @param aParams
@@ -414,7 +394,7 @@ public final class URLUtils
 
   /**
    * Get the final representation of the URL using the specified elements.
-   * 
+   *
    * @param sPath
    *        The main path. May be <code>null</code>.
    * @param aParams
@@ -442,7 +422,7 @@ public final class URLUtils
 
   /**
    * Get the final representation of the URL using the specified elements.
-   * 
+   *
    * @param sPath
    *        The main path. May be <code>null</code>.
    * @param aParams

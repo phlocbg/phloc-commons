@@ -29,7 +29,7 @@ import com.phloc.commons.state.ESuccess;
 
 /**
  * Some thread utility methods.
- * 
+ *
  * @author philip
  */
 @Immutable
@@ -40,7 +40,7 @@ public final class ThreadUtils
 
   /**
    * Sleep the current thread for a certain amount of time
-   * 
+   *
    * @param nMinutes
    *        The minutes to sleep.
    * @return {@link ESuccess#SUCCESS} if sleeping was not interrupted,
@@ -56,7 +56,7 @@ public final class ThreadUtils
 
   /**
    * Sleep the current thread for a certain amount of time
-   * 
+   *
    * @param nSeconds
    *        The seconds to sleep.
    * @return {@link ESuccess#SUCCESS} if sleeping was not interrupted,
@@ -72,25 +72,7 @@ public final class ThreadUtils
 
   /**
    * Sleep the current thread for a certain amount of time
-   * 
-   * @param aTimeUnit
-   *        The time unit to use. May not be <code>null</code>.
-   * @param nDuration
-   *        The duration to sleep.
-   * @return {@link ESuccess#SUCCESS} if sleeping was not interrupted,
-   *         {@link ESuccess#FAILURE} if sleeping was interrupted
-   * @deprecated Use {@link #sleep(long,TimeUnit)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static ESuccess sleep (@Nonnull final TimeUnit aTimeUnit, @Nonnegative final long nDuration)
-  {
-    return sleep (nDuration, aTimeUnit);
-  }
-
-  /**
-   * Sleep the current thread for a certain amount of time
-   * 
+   *
    * @param aTimeValue
    *        The time value to use. May not be <code>null</code>.
    * @return {@link ESuccess#SUCCESS} if sleeping was not interrupted,
@@ -107,7 +89,7 @@ public final class ThreadUtils
 
   /**
    * Sleep the current thread for a certain amount of time
-   * 
+   *
    * @param nDuration
    *        The duration to sleep.
    * @param aTimeUnit
@@ -128,7 +110,7 @@ public final class ThreadUtils
 
   /**
    * Sleep the current thread for a certain amount of time
-   * 
+   *
    * @param nMilliseconds
    *        The milliseconds to sleep.
    * @return {@link ESuccess#SUCCESS} if sleeping was not interrupted,

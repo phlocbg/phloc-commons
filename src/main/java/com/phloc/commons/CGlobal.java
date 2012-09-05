@@ -29,7 +29,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 /**
  * A class declaring system wide constants. Its main use is giving a semantic
  * meaning to constant values.
- * 
+ *
  * @author philip
  */
 @Immutable
@@ -176,10 +176,6 @@ public final class CGlobal
   /** The BigInteger representation of -1 */
   public static final BigInteger BIGINT_MINUS_ONE = BigInteger.valueOf (-1L);
 
-  /** The BigInteger representation of 10 */
-  @Deprecated
-  public static final BigInteger BIGINT_10 = BigInteger.TEN;
-
   /** The BigInteger representation of 100 */
   public static final BigInteger BIGINT_100 = BigInteger.valueOf (100);
 
@@ -197,10 +193,6 @@ public final class CGlobal
 
   /** The BigDecimal representation of -1 */
   public static final BigDecimal BIGDEC_MINUS_ONE = new BigDecimal ("-1");
-
-  /** The BigDecimal representation of 10 */
-  @Deprecated
-  public static final BigDecimal BIGDEC_10 = BigDecimal.TEN;
 
   /** The BigDecimal representation of 100 */
   public static final BigDecimal BIGDEC_100 = new BigDecimal ("100");

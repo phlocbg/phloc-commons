@@ -35,7 +35,7 @@ import com.phloc.commons.annotations.ReturnsMutableObject;
  * A non-synchronized copy of the class {@link java.io.StringWriter}.<br>
  * It uses {@link StringBuilder} instead of {@link StringBuffer} and therefore
  * does not need synchronized access!
- * 
+ *
  * @author philip
  * @see java.io.StringWriter
  */
@@ -55,7 +55,7 @@ public class NonBlockingStringWriter extends Writer implements IHasStringReprese
 
   /**
    * Create a new string writer using the specified initial string-buffer size.
-   * 
+   *
    * @param nInitialSize
    *        The number of <tt>char</tt> values that will fit into this buffer
    *        before it is automatically expanded
@@ -81,7 +81,7 @@ public class NonBlockingStringWriter extends Writer implements IHasStringReprese
 
   /**
    * Write a portion of an array of characters.
-   * 
+   *
    * @param aBuf
    *        Array of characters
    * @param nOfs
@@ -109,7 +109,7 @@ public class NonBlockingStringWriter extends Writer implements IHasStringReprese
 
   /**
    * Write a portion of a string.
-   * 
+   *
    * @param sStr
    *        String to be written
    * @param nOfs
@@ -128,7 +128,7 @@ public class NonBlockingStringWriter extends Writer implements IHasStringReprese
    * <p>
    * An invocation of this method of the form <tt>out.append(csq)</tt> behaves
    * in exactly the same way as the invocation
-   * 
+   *
    * <pre>
    * out.write (csq.toString ())
    * </pre>
@@ -138,7 +138,7 @@ public class NonBlockingStringWriter extends Writer implements IHasStringReprese
    * instance, invoking the <tt>toString</tt> method of a character buffer will
    * return a subsequence whose content depends upon the buffer's position and
    * limit.
-   * 
+   *
    * @param aCS
    *        The character sequence to append. If <tt>csq</tt> is <tt>null</tt>,
    *        then the four characters <tt>"null"</tt> are appended to this
@@ -161,11 +161,11 @@ public class NonBlockingStringWriter extends Writer implements IHasStringReprese
    * An invocation of this method of the form <tt>out.append(csq, start,
    * end)</tt> when <tt>csq</tt> is not <tt>null</tt>, behaves in exactly the
    * same way as the invocation
-   * 
+   *
    * <pre>
    * out.write (csq.subSequence (start, end).toString ())
    * </pre>
-   * 
+   *
    * @param aCS
    *        The character sequence from which a subsequence will be appended. If
    *        <tt>csq</tt> is <tt>null</tt>, then characters will be appended as
@@ -194,11 +194,11 @@ public class NonBlockingStringWriter extends Writer implements IHasStringReprese
    * <p>
    * An invocation of this method of the form <tt>out.append(c)</tt> behaves in
    * exactly the same way as the invocation
-   * 
+   *
    * <pre>
    * out.write (c)
    * </pre>
-   * 
+   *
    * @param c
    *        The 16-bit character to append
    * @return This writer
@@ -208,19 +208,6 @@ public class NonBlockingStringWriter extends Writer implements IHasStringReprese
   {
     write (c);
     return this;
-  }
-
-  /**
-   * Return the string buffer itself.
-   * 
-   * @return StringBuilder holding the current buffer value.
-   */
-  @Nonnull
-  @Deprecated
-  @DevelopersNote ("Unsafe! Usine directGetStringBuilder because it indicates what happens!")
-  public StringBuilder getBuffer ()
-  {
-    return directGetStringBuilder ();
   }
 
   /**
@@ -261,14 +248,6 @@ public class NonBlockingStringWriter extends Writer implements IHasStringReprese
     final char [] ret = new char [nChars];
     m_aSB.getChars (0, nChars, ret, 0);
     return ret;
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  @Deprecated
-  public char [] toCharArray ()
-  {
-    return getAsCharArray ();
   }
 
   /**

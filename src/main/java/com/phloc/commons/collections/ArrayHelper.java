@@ -27,7 +27,6 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.CGlobal;
-import com.phloc.commons.annotations.DevelopersNote;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.annotations.ReturnsMutableObject;
@@ -3808,17 +3807,6 @@ public final class ArrayHelper
   }
 
   /**
-   * @deprecated Use {@link #newArraySameType(Object[],int)} instead
-   */
-  @Deprecated
-  @Nonnull
-  public static <ELEMENTTYPE> ELEMENTTYPE [] newArray (@Nonnull final ELEMENTTYPE [] aArray,
-                                                       @Nonnegative final int nSize)
-  {
-    return newArraySameType (aArray, nSize);
-  }
-
-  /**
    * Create a new empty array with the same type as the passed array.
    * 
    * @param aArray
@@ -3860,30 +3848,6 @@ public final class ArrayHelper
 
     final ELEMENTTYPE [] ret = newArray (aClass, aCollection.size ());
     return aCollection.toArray (ret);
-  }
-
-  /**
-   * Wrapper that allows a single argument to be treated as an array.
-   * 
-   * @param <ELEMENTTYPE>
-   *        Type of element
-   * @param aElement
-   *        The element to be converted to an array. May be <code>null</code>.
-   * @param aClass
-   *        The class of the element. May not be <code>null</code>. Must be
-   *        present because in case the passed element is <code>null</code>
-   *        there is no way to determine the array component type!
-   * @return The created array and never <code>null</code>.
-   * @deprecated Use {@link #newArraySingleElement(Object,Class)} instead
-   */
-  @Deprecated
-  @DevelopersNote ("Was deprecated because of potential name clashes with newArray(ELEMENTTYPE...)")
-  @Nonnull
-  @ReturnsMutableCopy
-  public static <ELEMENTTYPE> ELEMENTTYPE [] newArray (@Nullable final ELEMENTTYPE aElement,
-                                                       @Nonnull final Class <ELEMENTTYPE> aClass)
-  {
-    return newArraySingleElement (aElement, aClass);
   }
 
   /**
@@ -4053,22 +4017,6 @@ public final class ArrayHelper
 
     // No differences found!
     return true;
-  }
-
-  /**
-   * Check if the passed array contains at least one <code>null</code> element.
-   * 
-   * @param aArray
-   *        The array to check. May be <code>null</code>.
-   * @return <code>true</code> only if the passed array is neither
-   *         <code>null</code> nor empty and if at least one <code>null</code>
-   *         element is contained.
-   * @deprecated Use {@link #containsAnyNullElement(Object[])} instead
-   */
-  @Deprecated
-  public static <T> boolean containsNullElement (@Nullable final T [] aArray)
-  {
-    return containsAnyNullElement (aArray);
   }
 
   /**
