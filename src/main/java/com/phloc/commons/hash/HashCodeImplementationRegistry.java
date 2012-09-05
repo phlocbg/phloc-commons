@@ -195,7 +195,11 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
             {
               aMatchingImplementation = ret;
               aMatchingClass = aCurClass;
-              s_aLogger.warn ("Found hierarchical match with class " + aMatchingClass + " when searching for " + aClass);
+              if (s_aLogger.isDebugEnabled ())
+                s_aLogger.debug ("Found hierarchical match with class " +
+                                 aMatchingClass +
+                                 " when searching for " +
+                                 aClass);
               break;
             }
           }

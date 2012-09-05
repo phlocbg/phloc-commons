@@ -39,6 +39,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.collections.SoftHashMap;
 
 /**
  * Small class helper utility stuff class.
@@ -341,6 +342,8 @@ public final class ClassHelper
            BigInteger.class.isAssignableFrom (aClass);
   }
 
+  private static final Map <String, Set <Class <?>>> s_aClassHierarchy = new SoftHashMap <String, Set <Class <?>>> ();
+
   /**
    * Get the complete super class hierarchy of the passed class including all
    * super classes and all interfaces of the passed class and of all parent
@@ -361,9 +364,16 @@ public final class ClassHelper
     if (aClass == null)
       throw new NullPointerException ("class");
 
-    final List <Class <?>> aOpenSrc = new ArrayList <Class <?>> ();
-    final Set <Class <?>> ret = new LinkedHashSet <Class <?>> ();
+    // Get or update from cache
+    final String sKey = aClass.getName ();
+    Set <Class <?>> ret = s_aClassHierarchy.get (sKey);
+    if (ret != null)
+      return ContainerHelper.newOrderedSet (ret);
+    ret = new LinkedHashSet <Class <?>> ();
+    s_aClassHierarchy.put (sKey, ret);
+
     // Check the whole class hierarchy of the source class
+    final List <Class <?>> aOpenSrc = new ArrayList <Class <?>> ();
     aOpenSrc.add (aClass);
     while (!aOpenSrc.isEmpty ())
     {
