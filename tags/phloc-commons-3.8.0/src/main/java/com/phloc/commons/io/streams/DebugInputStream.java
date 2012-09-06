@@ -1,0 +1,106 @@
+/**
+ * Copyright (C) 2006-2012 phloc systems
+ * http://www.phloc.com
+ * office[at]phloc[dot]com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.phloc.commons.io.streams;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.phloc.commons.annotations.OverrideOnDemand;
+import com.phloc.commons.string.ToStringGenerator;
+
+/**
+ * A wrapper around an {@link InputStream} that debugs read and skip actions.
+ * 
+ * @author philip
+ */
+public class DebugInputStream extends WrappedInputStream
+{
+  private static final Logger s_aLogger = LoggerFactory.getLogger (DebugInputStream.class);
+
+  private long m_nPosition = 0;
+
+  public DebugInputStream (@Nonnull final InputStream aSourceIS)
+  {
+    super (aSourceIS);
+  }
+
+  public final long getPosition ()
+  {
+    return m_nPosition;
+  }
+
+  @OverrideOnDemand
+  protected void onRead (final int nBytesRead, final long nNewPosition)
+  {
+    s_aLogger.info ("Read " + nBytesRead + " byte(s); now at " + nNewPosition);
+  }
+
+  @OverrideOnDemand
+  protected void onSkip (final long nBytesSkipped, final long nNewPosition)
+  {
+    s_aLogger.info ("Skipped " + nBytesSkipped + " byte(s); now at " + nNewPosition);
+  }
+
+  @Override
+  public final int read () throws IOException
+  {
+    final int ret = super.read ();
+    if (ret != -1)
+    {
+      m_nPosition++;
+      onRead (1, m_nPosition);
+    }
+    return ret;
+  }
+
+  @Override
+  public final int read (final byte b[], final int nOffset, final int nLength) throws IOException
+  {
+    final int ret = super.read (b, nOffset, nLength);
+    if (ret != -1)
+    {
+      m_nPosition += ret;
+      onRead (ret, m_nPosition);
+    }
+    return ret;
+  }
+
+  @Override
+  public final long skip (@Nonnegative final long n) throws IOException
+  {
+    final long nSkipped = super.skip (n);
+    if (nSkipped > 0)
+    {
+      m_nPosition += nSkipped;
+      onSkip (nSkipped, m_nPosition);
+    }
+    return nSkipped;
+  }
+
+  @Override
+  public String toString ()
+  {
+    return ToStringGenerator.getDerived (super.toString ()).append ("position", m_nPosition).toString ();
+  }
+}
