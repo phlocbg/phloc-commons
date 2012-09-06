@@ -157,7 +157,7 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
         if (aMethod != null && aMethod.getReturnType ().equals (int.class))
           bRet = true;
       }
-      catch (final Exception ex)
+      catch (final NoSuchMethodException ex)
       {
         // ignore
       }
