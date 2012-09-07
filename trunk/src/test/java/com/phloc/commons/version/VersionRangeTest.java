@@ -388,14 +388,6 @@ public final class VersionRangeTest
     assertEquals (_compare ("1.2.0.beta", "1.2.0.gamma"), -1);
   }
 
-  private static boolean _eq (final VersionRange vr1, final VersionRange vr2)
-  {
-    final boolean bEquals = vr1.equals (vr2);
-    final boolean bHashcodeEquals = vr1.hashCode () == vr2.hashCode ();
-    assertTrue (bEquals == bHashcodeEquals);
-    return bEquals;
-  }
-
   @Test
   public void testEquals ()
   {
@@ -403,21 +395,27 @@ public final class VersionRangeTest
     assertTrue (vr1.equals (vr1));
     assertFalse (vr1.equals (null));
     assertFalse (vr1.equals ("Not a VersionRange"));
-    assertTrue (_eq (vr1, new VersionRange ("(1.2,2.0]")));
-    assertFalse (_eq (vr1, new VersionRange ("[1.2,2.0]")));
-    assertFalse (_eq (vr1, new VersionRange ("(1.2,2.0)")));
-    assertFalse (_eq (vr1, new VersionRange ("[1.2,2.0)")));
-    assertFalse (_eq (vr1, new VersionRange ("(1.2,]")));
-    assertFalse (_eq (vr1, new VersionRange ("(,2.0]")));
-    assertFalse (_eq (vr1, new VersionRange ("(1.3,2.0]")));
-    assertFalse (_eq (vr1, new VersionRange ("(1.2,2.1]")));
-    assertFalse (_eq (new VersionRange ("(,2.0]"), new VersionRange ("(,2.1]")));
-    assertFalse (_eq (new VersionRange ("(1.2]"), new VersionRange ("(1.3]")));
-    assertFalse (_eq (new VersionRange ("(1.2,]"), new VersionRange ("(,2.0]")));
-    assertFalse (_eq (new VersionRange ("(,2.0]"), new VersionRange ("(1.2,]")));
+    PhlocTestUtils.testDefaultImplementationWithEqualContentObject (vr1, new VersionRange ("(1.2,2.0]"));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (vr1, new VersionRange ("[1.2,2.0]"));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (vr1, new VersionRange ("(1.2,2.0)"));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (vr1, new VersionRange ("[1.2,2.0)"));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (vr1, new VersionRange ("(1.2,]"));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (vr1, new VersionRange ("(,2.0]"));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (vr1, new VersionRange ("(1.3,2.0]"));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (vr1, new VersionRange ("(1.2,2.1]"));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (new VersionRange ("(,2.0]"),
+                                                                        new VersionRange ("(,2.1]"));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (new VersionRange ("(1.2]"),
+                                                                        new VersionRange ("(1.3]"));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (new VersionRange ("(1.2,]"),
+                                                                        new VersionRange ("(,2.0]"));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (new VersionRange ("(,2.0]"),
+                                                                        new VersionRange ("(1.2,]"));
 
-    assertTrue (_eq (new VersionRange ("(1.2]"), new VersionRange ("(1.2]")));
-    assertFalse (_eq (new VersionRange ("(1.2]"), new VersionRange ("(1.2)")));
+    PhlocTestUtils.testDefaultImplementationWithEqualContentObject (new VersionRange ("(1.2]"),
+                                                                    new VersionRange ("(1.2]"));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (new VersionRange ("(1.2]"),
+                                                                        new VersionRange ("(1.2)"));
   }
 
   @Test

@@ -27,7 +27,6 @@ import javax.annotation.concurrent.Immutable;
 import com.phloc.commons.IHasStringRepresentation;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
-import com.phloc.commons.regex.RegExHelper;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.StringParser;
 import com.phloc.commons.string.ToStringGenerator;
@@ -174,7 +173,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
   @Nonnull
   private static String [] _extSplit (final String s)
   {
-    final String [] aDotParts = RegExHelper.getSplitToArray (s, "\\.", 2);
+    final String [] aDotParts = StringHelper.getExplodedArray ('.', s, 2);
     if (aDotParts.length == 2)
     {
       // Dots always take precedence
@@ -187,7 +186,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
       return aDotParts;
     }
 
-    final String [] aDashParts = RegExHelper.getSplitToArray (s, "\\-", 2);
+    final String [] aDashParts = StringHelper.getExplodedArray ('-', s, 2);
     if (aDashParts.length == 1)
     {
       // Neither dot nor dash present
@@ -221,7 +220,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
       // old version
 
       // split each token
-      final String [] aParts = RegExHelper.getSplitToArray (s, "\\.", 4);
+      final String [] aParts = StringHelper.getExplodedArray ('.', s, 4);
       if (aParts.length > 0)
         m_nMajor = StringParser.parseInt (aParts[0], 0);
       else

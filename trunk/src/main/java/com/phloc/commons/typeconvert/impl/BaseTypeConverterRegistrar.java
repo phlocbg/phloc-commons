@@ -19,6 +19,7 @@ package com.phloc.commons.typeconvert.impl;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
@@ -28,8 +29,8 @@ import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.IsSPIImplementation;
 import com.phloc.commons.lang.GenericReflection;
-import com.phloc.commons.regex.RegExHelper;
 import com.phloc.commons.state.EChange;
+import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.StringParser;
 import com.phloc.commons.typeconvert.ITypeConverter;
 import com.phloc.commons.typeconvert.ITypeConverterRegistrarSPI;
@@ -483,16 +484,16 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
       public Enum <?> convert (@Nonnull final Object aSource)
       {
         // Split class name and enum value name
-        final String [] aParts = RegExHelper.getSplitToArray ((String) aSource, ":", 2);
+        final List <String> aParts = StringHelper.getExploded (':', (String) aSource, 2);
         try
         {
           // Resolve any enum class
           // Note: The explicit EChange is just here, because an explicit enum
           // type is needed. It must of course not only be EChange :)
-          final Class <EChange> aClass = GenericReflection.getClassFromName (aParts[0]);
+          final Class <EChange> aClass = GenericReflection.getClassFromName (aParts.get (0));
 
           // And look up the element by name
-          return Enum.valueOf (aClass, aParts[1]);
+          return Enum.valueOf (aClass, aParts.get (1));
         }
         catch (final ClassNotFoundException ex)
         {

@@ -553,7 +553,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
-  public void testExplodeToList ()
+  public void testGetExplodedToList ()
   {
     List <String> ret = StringHelper.getExploded ("@", "a@b@@c");
     assertEquals (ContainerHelper.newList ("a", "b", "", "c"), ret);
@@ -578,6 +578,34 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     }
     catch (final NullPointerException ex)
     {}
+  }
+
+  @Test
+  public void testGetExplodedToListWithMax ()
+  {
+    assertEquals (ContainerHelper.newList ("a", "b", "", "c"), StringHelper.getExploded ("@", "a@b@@c", 5));
+    assertEquals (ContainerHelper.newList ("a", "b", "", "c"), StringHelper.getExploded ("@", "a@b@@c", 4));
+    assertEquals (ContainerHelper.newList ("a", "b", "@c"), StringHelper.getExploded ("@", "a@b@@c", 3));
+    assertEquals (ContainerHelper.newList ("a", "b@@c"), StringHelper.getExploded ("@", "a@b@@c", 2));
+    assertEquals (ContainerHelper.newList ("a@b@@c"), StringHelper.getExploded ("@", "a@b@@c", 1));
+    assertEquals (ContainerHelper.newList ("a", "b", "", "c"), StringHelper.getExploded ("@", "a@b@@c", 0));
+    assertEquals (ContainerHelper.newList ("a", "b", "", "c"), StringHelper.getExploded ("@", "a@b@@c", -1));
+    assertEquals (ContainerHelper.newList ("a", "b", "", "c"), StringHelper.getExploded ("@", "a@b@@c", -2));
+    assertTrue (StringHelper.getExploded ("@", null, 5).isEmpty ());
+  }
+
+  @Test
+  public void testGetExplodedArray ()
+  {
+    assertArrayEquals (new String [] { "a", "b", "", "c" }, StringHelper.getExplodedArray ('@', "a@b@@c", 5));
+    assertArrayEquals (new String [] { "a", "b", "", "c" }, StringHelper.getExplodedArray ('@', "a@b@@c", 4));
+    assertArrayEquals (new String [] { "a", "b", "@c" }, StringHelper.getExplodedArray ('@', "a@b@@c", 3));
+    assertArrayEquals (new String [] { "a", "b@@c" }, StringHelper.getExplodedArray ('@', "a@b@@c", 2));
+    assertArrayEquals (new String [] { "a@b@@c" }, StringHelper.getExplodedArray ('@', "a@b@@c", 1));
+    assertArrayEquals (new String [] { "a", "b", "", "c" }, StringHelper.getExplodedArray ('@', "a@b@@c", 0));
+    assertArrayEquals (new String [] { "a", "b", "", "c" }, StringHelper.getExplodedArray ('@', "a@b@@c", -1));
+    assertArrayEquals (new String [] { "a", "b", "", "c" }, StringHelper.getExplodedArray ('@', "a@b@@c", -2));
+    assertTrue (StringHelper.getExplodedArray ('@', null, 5).length == 0);
   }
 
   @Test

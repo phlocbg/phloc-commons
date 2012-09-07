@@ -26,14 +26,13 @@ import javax.annotation.concurrent.Immutable;
 import com.phloc.commons.IHasStringRepresentation;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
-import com.phloc.commons.regex.RegExHelper;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * This class represents a range of versions. Each range needs at least a lower
  * bound but can as well have an upper bound. See OSGi v4 reference 3.2.5
- *
+ * 
  * @author philip
  */
 @Immutable
@@ -78,7 +77,7 @@ public final class VersionRange implements Comparable <VersionRange>, IHasString
    * <li><i>null</i> -- 0.0.0 <= x</li>
    * <li>1, 4 -- 1 <= x <= 4</li>
    * </ul>
-   *
+   * 
    * @param sVersionString
    *        the version range in a string format as depicted above
    * @throws IllegalArgumentException
@@ -140,14 +139,14 @@ public final class VersionRange implements Comparable <VersionRange>, IHasString
       }
       else
       {
-        final String [] parts = RegExHelper.getSplitToArray (s.substring (i, s.length () - j), ",");
+        final String [] parts = StringHelper.getExplodedArray (',', s.substring (i, s.length () - j));
         final String sFloor = parts[0].trim ();
         final String sCeiling = parts.length > 1 ? parts[1].trim () : null;
 
         // get floor version
         m_aFloorVersion = new Version (sFloor);
 
-        if (sCeiling == null)
+        if (StringHelper.hasNoText (sCeiling))
           m_aCeilVersion = null;
         else
           m_aCeilVersion = new Version (sCeiling);
@@ -163,7 +162,7 @@ public final class VersionRange implements Comparable <VersionRange>, IHasString
    * Create a new version range depicted by two versions, assuming that both the
    * floor and the ceiling version should be included meaning we have an
    * inclusive interval.
-   *
+   * 
    * @param aFloorVersion
    *        the floor version of the range - may not be null
    * @param aCeilingVersion
@@ -179,7 +178,7 @@ public final class VersionRange implements Comparable <VersionRange>, IHasString
 
   /**
    * Create a new version range depicted by two versions.
-   *
+   * 
    * @param aFloorVersion
    *        the floor version of the range - may not be null
    * @param bIncludeFloorVersion
@@ -257,7 +256,7 @@ public final class VersionRange implements Comparable <VersionRange>, IHasString
   /**
    * Compare this version range to another version range. Returns -1 if this is
    * &lt; than the passed version or +1 if this is &gt; the passed version range
-   *
+   * 
    * @param rhs
    *        the version range to compare to
    * @return 0 if the passed version range is equal to this version range<br>
@@ -319,7 +318,7 @@ public final class VersionRange implements Comparable <VersionRange>, IHasString
    * If a ceiling version is present, the ceiling version is appended with a
    * single comma as a delimiter.<br>
    * Example return: "[1.2.3,4.5.6)"
-   *
+   * 
    * @return The version range in a parseable string format.
    */
   @Nonnull
@@ -334,7 +333,7 @@ public final class VersionRange implements Comparable <VersionRange>, IHasString
    * If a ceiling version is present, the ceiling version is appended with a
    * single comma as a delimiter.<br>
    * Example return: "[1.2.3,4.5.6)"
-   *
+   * 
    * @param bPrintZeroElements
    *        If <code>true</code> than trailing zeroes are printed, otherwise
    *        printed zeroes are not printed.

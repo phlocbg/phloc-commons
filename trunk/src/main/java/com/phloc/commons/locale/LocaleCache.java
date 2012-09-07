@@ -33,14 +33,13 @@ import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
-import com.phloc.commons.regex.RegExHelper;
 import com.phloc.commons.string.StringHelper;
 
 /**
  * This is a global cache for Locale objects to avoid too many object flowing
  * around.<br>
  * This cache is application independent.
- *
+ * 
  * @author philip
  */
 @ThreadSafe
@@ -82,7 +81,7 @@ public final class LocaleCache
 
   /**
    * Get the {@link Locale} object matching the given language.
-   *
+   * 
    * @param sLanguage
    *        The language to use. May be <code>null</code> or empty.
    * @return <code>null</code> if the passed language string is
@@ -94,7 +93,7 @@ public final class LocaleCache
     if (sLanguage != null && sLanguage.length () > 2)
     {
       // parse
-      final String [] aParts = RegExHelper.getSplitToArray (sLanguage, CGlobal.LOCALE_SEPARATOR_STR, 3);
+      final String [] aParts = StringHelper.getExplodedArray (CGlobal.LOCALE_SEPARATOR, sLanguage, 3);
       if (aParts.length == 3)
         return getLocale (aParts[0], aParts[1], aParts[2]);
       if (aParts.length == 2)
@@ -106,7 +105,7 @@ public final class LocaleCache
 
   /**
    * Get the {@link Locale} object matching the given language and country.
-   *
+   * 
    * @param sLanguage
    *        The language to use. May be <code>null</code> or empty.
    * @param sCountry
@@ -123,7 +122,7 @@ public final class LocaleCache
   /**
    * Build the locale key internally used. Note: this is not the same string as
    * returned by {@link Locale#toString()}!!
-   *
+   * 
    * @param sLanguage
    *        Language to use
    * @param sCountry
@@ -149,7 +148,7 @@ public final class LocaleCache
 
   /**
    * Get the {@link Locale} object matching the given locale string
-   *
+   * 
    * @param sLanguage
    *        The language to use. May be <code>null</code> or empty.
    * @param sCountry
@@ -210,7 +209,7 @@ public final class LocaleCache
 
   /**
    * Get all contained locales except the locales "all" and "independent"
-   *
+   * 
    * @return a set with all contained locales, except "all" and "independent"
    */
   @Nonnull
@@ -233,7 +232,7 @@ public final class LocaleCache
 
   /**
    * Get all contained locales that consist only of a non-empty language.
-   *
+   * 
    * @return a set with all contained languages, except "all" and "independent"
    */
   @Nonnull
@@ -252,7 +251,7 @@ public final class LocaleCache
 
   /**
    * Check if the passed language is in the cache.
-   *
+   * 
    * @param sLanguage
    *        The language to check.
    * @return <code>true</code> if it is in the cache, <code>false</code>
@@ -263,7 +262,7 @@ public final class LocaleCache
     if (sLanguage != null && sLanguage.length () > 2)
     {
       // parse
-      final String [] aParts = RegExHelper.getSplitToArray (sLanguage, CGlobal.LOCALE_SEPARATOR_STR, 3);
+      final String [] aParts = StringHelper.getExplodedArray (CGlobal.LOCALE_SEPARATOR, sLanguage, 3);
       if (aParts.length == 3)
         return containsLocale (aParts[0], aParts[1], aParts[2]);
       if (aParts.length == 2)
@@ -275,7 +274,7 @@ public final class LocaleCache
 
   /**
    * Check if the passed language is in the cache.
-   *
+   * 
    * @param sLanguage
    *        The language to check.
    * @param sCountry
@@ -290,7 +289,7 @@ public final class LocaleCache
 
   /**
    * Check if the passed language is in the cache.
-   *
+   * 
    * @param sLanguage
    *        The language to check.
    * @param sCountry

@@ -27,6 +27,7 @@ import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -46,7 +47,6 @@ import com.phloc.commons.encode.IdentityDecoder;
 import com.phloc.commons.encode.IdentityEncoder;
 import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.microdom.reader.XMLMapHandler;
-import com.phloc.commons.regex.RegExHelper;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.url.encode.URLParameterEncoder;
 
@@ -55,14 +55,13 @@ public final class URLUtils
 {
   public static final String CHARSET_URL = CCharset.CHARSET_UTF_8;
   public static final Charset CHARSET_URL_OBJ = CCharset.CHARSET_UTF_8_OBJ;
+  public static final char QUESTIONMARK = '?';
+  public static final char AMPERSAND = '&';
+  public static final char EQUALS = '=';
+  public static final char HASH = '#';
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (URLUtils.class);
-  private static final char QUESTIONMARK = '?';
   private static final String QUESTIONMARK_STR = Character.toString (QUESTIONMARK);
-  private static final char AMPERSAND = '&';
-  private static final String AMPERSAND_STR = Character.toString (AMPERSAND);
-  private static final char HASH = '#';
-  private static final String HASH_STR = Character.toString (HASH);
 
   private static final char [] CLEANURL_OLD;
   private static final char [][] CLEANURL_NEW;
@@ -94,7 +93,7 @@ public final class URLUtils
   /**
    * URL-decode the passed value automatically handling charset issues. The used
    * char set is determined by {@link #CHARSET_URL}.
-   *
+   * 
    * @param sValue
    *        The value to be decoded. May not be <code>null</code>.
    * @return The decoded value.
@@ -107,7 +106,7 @@ public final class URLUtils
 
   /**
    * URL-decode the passed value automatically handling charset issues.
-   *
+   * 
    * @param sValue
    *        The value to be decoded. May not be <code>null</code>.
    * @param aCharset
@@ -125,7 +124,7 @@ public final class URLUtils
 
   /**
    * URL-decode the passed value automatically handling charset issues.
-   *
+   * 
    * @param sValue
    *        The value to be decoded. May not be <code>null</code>.
    * @param sCharset
@@ -150,7 +149,7 @@ public final class URLUtils
   /**
    * URL-encode the passed value automatically handling charset issues. The used
    * char set is determined by {@link #CHARSET_URL}.
-   *
+   * 
    * @param sValue
    *        The value to be encoded. May not be <code>null</code>.
    * @return The encoded value.
@@ -163,7 +162,7 @@ public final class URLUtils
 
   /**
    * URL-encode the passed value automatically handling charset issues.
-   *
+   * 
    * @param sValue
    *        The value to be encoded. May not be <code>null</code>.
    * @param aCharset
@@ -181,7 +180,7 @@ public final class URLUtils
 
   /**
    * URL-encode the passed value automatically handling charset issues.
-   *
+   * 
    * @param sValue
    *        The value to be encoded. May not be <code>null</code>.
    * @param sCharset
@@ -205,7 +204,7 @@ public final class URLUtils
 
   /**
    * Clean an URL part from nasty Umlauts. This mapping needs extension!
-   *
+   * 
    * @param sURLPart
    *        The original URL part. May be <code>null</code>.
    * @return The cleaned version or <code>null</code> if the input was
@@ -225,7 +224,7 @@ public final class URLUtils
 
   /**
    * Parses the passed URL into a structured form
-   *
+   * 
    * @param sHref
    *        The URL to be parsed
    * @return the corresponding {@link IURLData} representation of the passed URL
@@ -280,13 +279,12 @@ public final class URLUtils
       // Maybe empty, if the URL ends with a '?'
       if (StringHelper.hasText (sQueryString))
       {
-        final String [] aKeyValuePairs = RegExHelper.getSplitToArray (sQueryString, AMPERSAND_STR);
-        for (final String sKeyValuePair : aKeyValuePairs)
+        for (final String sKeyValuePair : StringHelper.getExploded (AMPERSAND, sQueryString))
           if (sKeyValuePair.length () > 0)
           {
-            final String [] aParts = RegExHelper.getSplitToArray (sKeyValuePair, "=", 2);
-            final String sKey = aParts[0];
-            final String sValue = aParts.length == 2 ? aParts[1] : "";
+            final List <String> aParts = StringHelper.getExploded (EQUALS, sKeyValuePair, 2);
+            final String sKey = aParts.get (0);
+            final String sValue = aParts.size () == 2 ? aParts.get (1) : "";
             if (StringHelper.hasNoText (sKey))
               throw new IllegalArgumentException ("key may not be empty!");
             if (sValue == null)
@@ -321,7 +319,7 @@ public final class URLUtils
 
   /**
    * Get the final representation of the URL using the specified elements.
-   *
+   * 
    * @param sPath
    *        The main path. May be <code>null</code>.
    * @param aParams
@@ -341,9 +339,9 @@ public final class URLUtils
   {
     if (sPath != null)
     {
-      if (sPath.contains (QUESTIONMARK_STR))
+      if (sPath.indexOf (QUESTIONMARK) >= 0)
         throw new IllegalArgumentException ("Path contains a '?': " + sPath);
-      if (sPath.contains (HASH_STR))
+      if (sPath.indexOf (HASH) >= 0)
         throw new IllegalArgumentException ("Path contains a '#': " + sPath);
     }
     if (aParameterEncoder == null)
@@ -377,7 +375,7 @@ public final class URLUtils
         final String sValue = aEntry.getValue ();
         aSB.append (aParameterEncoder.encode (sKey));
         if (StringHelper.hasText (sValue))
-          aSB.append ('=').append (aParameterEncoder.encode (sValue));
+          aSB.append (EQUALS).append (aParameterEncoder.encode (sValue));
         aSB.append (AMPERSAND);
       }
 
@@ -394,7 +392,7 @@ public final class URLUtils
 
   /**
    * Get the final representation of the URL using the specified elements.
-   *
+   * 
    * @param sPath
    *        The main path. May be <code>null</code>.
    * @param aParams
@@ -422,7 +420,7 @@ public final class URLUtils
 
   /**
    * Get the final representation of the URL using the specified elements.
-   *
+   * 
    * @param sPath
    *        The main path. May be <code>null</code>.
    * @param aParams

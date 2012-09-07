@@ -73,6 +73,8 @@ public final class URLUtilsTest
     assertEquals (EURLProtocol.HTTP, aData.getProtocol ());
     assertEquals ("http://www.phloc.com/folder", aData.getPath ());
     assertEquals (2, aData.getParamCount ());
+    assertEquals ("y", aData.getAllParams ().get ("x"));
+    assertEquals ("b", aData.getAllParams ().get ("a"));
     assertEquals ("c", aData.getAnchor ());
 
     aData = URLUtils.getAsURLData ("?x=y&a=b#c");
@@ -80,6 +82,8 @@ public final class URLUtilsTest
     assertNull (aData.getProtocol ());
     assertEquals ("", aData.getPath ());
     assertEquals (2, aData.getParamCount ());
+    assertEquals ("y", aData.getAllParams ().get ("x"));
+    assertEquals ("b", aData.getAllParams ().get ("a"));
     assertEquals ("c", aData.getAnchor ());
   }
 }

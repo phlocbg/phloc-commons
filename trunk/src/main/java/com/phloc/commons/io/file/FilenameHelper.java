@@ -35,7 +35,6 @@ import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.exceptions.InitializationException;
-import com.phloc.commons.regex.RegExHelper;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.system.SystemHelper;
 
@@ -775,7 +774,7 @@ public final class FilenameHelper
     // Start splitting into paths
     final List <String> aElements = new ArrayList <String> ();
     int nParentFolders = 0;
-    final String [] aPathArray = RegExHelper.getSplitToArray (sPathToUse, UNIX_SEPARATOR_STR);
+    final String [] aPathArray = StringHelper.getExplodedArray (UNIX_SEPARATOR, sPathToUse);
 
     // from right to left
     for (int i = aPathArray.length - 1; i >= 0; i--)

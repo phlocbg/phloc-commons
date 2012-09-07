@@ -26,7 +26,7 @@ import javax.annotation.concurrent.Immutable;
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.SystemProperties;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
-import com.phloc.commons.regex.RegExHelper;
+import com.phloc.commons.string.StringHelper;
 
 /**
  * Utility class for dealing with the Java class path.
@@ -50,7 +50,7 @@ public final class ClassPathHelper
   @Nonnull
   public static List <String> getAllClassPathEntries ()
   {
-    return RegExHelper.getSplitToList (SystemProperties.getJavaClassPath (), SystemProperties.getPathSeparator ());
+    return StringHelper.getExploded (SystemProperties.getPathSeparator (), SystemProperties.getJavaClassPath ());
   }
 
   /**
