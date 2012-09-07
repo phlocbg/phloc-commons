@@ -28,7 +28,6 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.id.IHasID;
 import com.phloc.commons.lang.EnumHelper;
 import com.phloc.commons.name.IHasDisplayText;
-import com.phloc.commons.regex.RegExHelper;
 import com.phloc.commons.string.StringHelper;
 
 /**
@@ -465,7 +464,7 @@ public enum ECountry implements IHasDisplayText, IHasID <String>
   private ECountry (@Nonnull final IHasDisplayText eName)
   {
     m_sID = name ().toLowerCase ();
-    m_sISOCountryCode = RegExHelper.getSplitToArray (m_sID, "_")[0];
+    m_sISOCountryCode = StringHelper.getExplodedArray ('_', m_sID)[0];
     m_aName = eName;
     m_bIsCountrySub = m_sID.indexOf ('_') != -1;
     m_aCountry = CountryCache.getCountry (m_sISOCountryCode);
