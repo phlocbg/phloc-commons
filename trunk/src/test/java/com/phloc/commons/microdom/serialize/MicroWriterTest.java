@@ -290,7 +290,7 @@ public final class MicroWriterTest
 
         // Wont work for \u0000 because it is mapped to ""
         if (i > 0 && i != 13)
-          assertTrue ("0x" + Integer.toHexString (i), aDoc.isEqualContent (aDoc2));
+          assertTrue ("Difference in byte 0x" + Integer.toHexString (i), aDoc.isEqualContent (aDoc2));
       }
   }
 
