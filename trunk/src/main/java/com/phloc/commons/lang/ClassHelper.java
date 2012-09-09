@@ -25,7 +25,6 @@ import java.security.PrivilegedAction;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
@@ -39,7 +38,6 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
-import com.phloc.commons.collections.SoftHashMap;
 
 /**
  * Small class helper utility stuff class.
@@ -342,8 +340,6 @@ public final class ClassHelper
            BigInteger.class.isAssignableFrom (aClass);
   }
 
-  private static final Map <String, Set <Class <?>>> s_aClassHierarchy = new SoftHashMap <String, Set <Class <?>>> ();
-
   /**
    * Get the complete super class hierarchy of the passed class including all
    * super classes and all interfaces of the passed class and of all parent
@@ -361,34 +357,7 @@ public final class ClassHelper
   @ReturnsMutableCopy
   public static Set <Class <?>> getClassHierarchy (@Nonnull final Class <?> aClass)
   {
-    if (aClass == null)
-      throw new NullPointerException ("class");
-
-    // Get or update from cache
-    final String sKey = aClass.getName ();
-    Set <Class <?>> ret = s_aClassHierarchy.get (sKey);
-    if (ret != null)
-      return ContainerHelper.newOrderedSet (ret);
-    ret = new LinkedHashSet <Class <?>> ();
-    s_aClassHierarchy.put (sKey, ret);
-
-    // Check the whole class hierarchy of the source class
-    final List <Class <?>> aOpenSrc = new ArrayList <Class <?>> ();
-    aOpenSrc.add (aClass);
-    while (!aOpenSrc.isEmpty ())
-    {
-      final Class <?> aCurClass = aOpenSrc.remove (0);
-      ret.add (aCurClass);
-
-      // Add super-classes and interfaces
-      // Super-classes have precedence over interfaces!
-      for (final Class <?> aInterface : aCurClass.getInterfaces ())
-        aOpenSrc.add (0, aInterface);
-      if (aCurClass.getSuperclass () != null)
-        aOpenSrc.add (0, aCurClass.getSuperclass ());
-    }
-
-    return ret;
+    return ClassHierarchyCache.getClassHierarchy (aClass);
   }
 
   /**
