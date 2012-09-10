@@ -37,6 +37,7 @@ import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.collections.multimap.IMultiMapListBased;
 import com.phloc.commons.collections.multimap.MultiTreeMapArrayListBased;
 import com.phloc.commons.lang.ClassHelper;
+import com.phloc.commons.lang.ClassHierarchyCache;
 import com.phloc.commons.lang.ServiceLoaderBackport;
 import com.phloc.commons.mutable.Wrapper;
 import com.phloc.commons.state.EContinue;
@@ -156,7 +157,7 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
     {
       // Automatically register the destination class, and all parent
       // classes/interfaces
-      for (final Class <?> aCurDstClass : ClassHelper.getClassHierarchy (aDstClass))
+      for (final Class <?> aCurDstClass : ClassHierarchyCache.getClassHierarchy (aDstClass))
         if (!aSrcMap.containsKey (aCurDstClass))
           if (aSrcMap.put (aCurDstClass, aConverter) != null)
             s_aLogger.warn ("Overwriting converter from " + aSrcClass + " to " + aCurDstClass);
@@ -260,7 +261,7 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
                                                @Nonnull final ITypeConverterCallback aCallback)
   {
     // For all possible source classes
-    for (final Class <?> aCurSrcClass : ClassHelper.getClassHierarchy (aSrcClass))
+    for (final Class <?> aCurSrcClass : ClassHierarchyCache.getClassHierarchy (aSrcClass))
     {
       // Do we have a source converter?
       final Map <Class <?>, ITypeConverter> aConverterMap = s_aConverter.get (aCurSrcClass);

@@ -27,6 +27,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.phloc.commons.lang.ClassHelper;
+import com.phloc.commons.lang.ClassHierarchyCache;
 import com.phloc.commons.lang.ServiceLoaderBackport;
 import com.phloc.commons.state.EChange;
 
@@ -213,7 +214,7 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
         else
         {
           // Scan hierarchy
-          for (final Class <?> aCurClass : ClassHelper.getClassHierarchy (aClass))
+          for (final Class <?> aCurClass : ClassHierarchyCache.getClassHierarchy (aClass))
           {
             final IEqualsImplementation aImpl = m_aMap.get (aCurClass);
             if (aImpl != null)

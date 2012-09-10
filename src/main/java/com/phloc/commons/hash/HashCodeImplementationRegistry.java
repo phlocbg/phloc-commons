@@ -32,6 +32,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.lang.ClassHelper;
+import com.phloc.commons.lang.ClassHierarchyCache;
 import com.phloc.commons.lang.ServiceLoaderBackport;
 import com.phloc.commons.state.EChange;
 
@@ -188,7 +189,7 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
         else
         {
           // Scan hierarchy
-          for (final Class <?> aCurClass : ClassHelper.getClassHierarchy (aClass))
+          for (final Class <?> aCurClass : ClassHierarchyCache.getClassHierarchy (aClass))
           {
             final IHashCodeImplementation ret = m_aMap.get (aCurClass);
             if (ret != null)
