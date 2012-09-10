@@ -22,6 +22,11 @@
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
   <entry date="2012-09-10" category="api" action="fix">
     <change>
+      <text locale="en">Extended LogUtils with an isEnabled method</text>
+    </change>
+  </entry>
+  <entry date="2012-09-10" category="api" action="fix">
+    <change>
       <text locale="en">One constructor of AbstractCollationComparator was not passing on the nested Comparator</text>
     </change>
   </entry>
