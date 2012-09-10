@@ -35,7 +35,7 @@ public interface INonThrowingRunnableWithParameter <PARAMTYPE> extends IThrowing
    * The callback method that is invoked.
    * 
    * @param aCurrentObject
-   *        The current object. May be {@link NullPointerException}.
+   *        The current object. May be <code>null</code>.
    */
   void run (@Nonnull (when = When.MAYBE) PARAMTYPE aCurrentObject);
 }

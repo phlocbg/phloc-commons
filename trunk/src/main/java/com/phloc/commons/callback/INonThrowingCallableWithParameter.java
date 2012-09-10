@@ -33,15 +33,14 @@ import javax.annotation.meta.When;
  * @param <PARAMTYPE>
  *        The parameter type.
  */
-public interface INonThrowingCallableWithParameter <DATATYPE, PARAMTYPE> extends
-                                                                         IThrowingCallableWithParameter <DATATYPE, PARAMTYPE>
+public interface INonThrowingCallableWithParameter <DATATYPE, PARAMTYPE> extends IThrowingCallableWithParameter <DATATYPE, PARAMTYPE>
 {
   /**
    * The call back method to be called.
    * 
    * @param aParameter
    *        The parameter to be passed in. May be <code>null</code>.
-   * @return Anything
+   * @return Anything - even <code>null</code>.
    */
   @Nullable
   DATATYPE call (@Nonnull (when = When.MAYBE) PARAMTYPE aParameter);
