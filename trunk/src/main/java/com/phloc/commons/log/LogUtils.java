@@ -43,6 +43,22 @@ public final class LogUtils
   private LogUtils ()
   {}
 
+  public static boolean isEnabled (@Nonnull final Class <?> aLoggingClass, @Nonnull final EErrorLevel eErrorLevel)
+  {
+    return isEnabled (LoggerFactory.getLogger (aLoggingClass), eErrorLevel);
+  }
+
+  public static boolean isEnabled (@Nonnull final Logger aLogger, @Nonnull final EErrorLevel eErrorLevel)
+  {
+    if (eErrorLevel.isMoreOrEqualSevereThan (EErrorLevel.ERROR))
+      return aLogger.isErrorEnabled ();
+    if (eErrorLevel.isMoreOrEqualSevereThan (EErrorLevel.WARN))
+      return aLogger.isWarnEnabled ();
+    if (eErrorLevel.isMoreOrEqualSevereThan (EErrorLevel.INFO))
+      return aLogger.isInfoEnabled ();
+    return aLogger.isDebugEnabled ();
+  }
+
   public static void log (@Nonnull final Class <?> aLoggingClass,
                           @Nonnull final EErrorLevel eErrorLevel,
                           @Nonnull final String sMsg)
