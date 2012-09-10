@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.lang;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -26,11 +27,11 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.ThreadSafe;
 
-import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
-import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.collections.LRUCache;
 
 /**
@@ -38,11 +39,64 @@ import com.phloc.commons.collections.LRUCache;
  * 
  * @author philip
  */
-@Immutable
+@ThreadSafe
 public final class ClassHierarchyCache
 {
+  @Immutable
+  private static final class ClassList
+  {
+    private final List <WeakReference <Class <?>>> m_aList = new ArrayList <WeakReference <Class <?>>> ();
+
+    public ClassList (@Nonnull final Class <?> aClass)
+    {
+      if (aClass == null)
+        throw new NullPointerException ("class");
+      // Check the whole class hierarchy of the source class
+      final List <Class <?>> aOpenSrc = new ArrayList <Class <?>> ();
+      aOpenSrc.add (aClass);
+      while (!aOpenSrc.isEmpty ())
+      {
+        final Class <?> aCurClass = aOpenSrc.remove (0);
+        // Avoid duplicates
+        if (!contains (aCurClass))
+          m_aList.add (new WeakReference <Class <?>> (aCurClass));
+
+        // Add super-classes and interfaces
+        // Super-classes have precedence over interfaces!
+        for (final Class <?> aInterface : aCurClass.getInterfaces ())
+          aOpenSrc.add (0, aInterface);
+        if (aCurClass.getSuperclass () != null)
+          aOpenSrc.add (0, aCurClass.getSuperclass ());
+      }
+    }
+
+    public boolean contains (@Nullable final Class <?> aClass)
+    {
+      if (aClass != null)
+        for (final WeakReference <Class <?>> aRef : m_aList)
+          if (aClass.equals (aRef.get ()))
+            return true;
+      return false;
+    }
+
+    @Nonnull
+    @ReturnsMutableCopy
+    public Set <Class <?>> getAsSet ()
+    {
+      // Use a linked hash set, to maintain the order
+      final Set <Class <?>> ret = new LinkedHashSet <Class <?>> ();
+      for (final WeakReference <Class <?>> aRef : m_aList)
+      {
+        final Class <?> aClass = aRef.get ();
+        if (aClass != null)
+          ret.add (aClass);
+      }
+      return ret;
+    }
+  }
+
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
-  private static final Map <String, Set <Class <?>>> s_aClassHierarchy = new LRUCache <String, Set <Class <?>>> (1000);
+  private static final Map <String, ClassList> s_aClassHierarchy = new LRUCache <String, ClassList> (1000);
 
   private ClassHierarchyCache ()
   {}
@@ -72,13 +126,12 @@ public final class ClassHierarchyCache
    * 
    * @param aClass
    *        The source class to get the hierarchy from.
-   * @return A non-<code>null</code> and non-empty list containing the passed
+   * @return A non-<code>null</code> and non-empty Set containing the passed
    *         class and all super classes, and all super-interfaces. This list
    *         may contain duplicates in case a certain interface is implemented
    *         more than once!
    */
   @Nonnull
-  @Nonempty
   @ReturnsMutableCopy
   public static Set <Class <?>> getClassHierarchy (@Nonnull final Class <?> aClass)
   {
@@ -87,13 +140,13 @@ public final class ClassHierarchyCache
     final String sKey = aClass.getName ();
 
     // Get or update from cache
-    Set <Class <?>> ret;
+    ClassList aClassList;
     s_aRWLock.readLock ().lock ();
     try
     {
-      ret = s_aClassHierarchy.get (sKey);
-      if (ret != null)
-        return ret;
+      aClassList = s_aClassHierarchy.get (sKey);
+      if (aClassList != null)
+        return aClassList.getAsSet ();
     }
     finally
     {
@@ -104,32 +157,13 @@ public final class ClassHierarchyCache
     try
     {
       // try again in write lock
-      ret = s_aClassHierarchy.get (sKey);
-      if (ret != null)
-        return ret;
-
-      final Set <Class <?>> aSet = new LinkedHashSet <Class <?>> ();
-
-      // Check the whole class hierarchy of the source class
-      final List <Class <?>> aOpenSrc = new ArrayList <Class <?>> ();
-      aOpenSrc.add (aClass);
-      while (!aOpenSrc.isEmpty ())
+      aClassList = s_aClassHierarchy.get (sKey);
+      if (aClassList == null)
       {
-        final Class <?> aCurClass = aOpenSrc.remove (0);
-        aSet.add (aCurClass);
-
-        // Add super-classes and interfaces
-        // Super-classes have precedence over interfaces!
-        for (final Class <?> aInterface : aCurClass.getInterfaces ())
-          aOpenSrc.add (0, aInterface);
-        if (aCurClass.getSuperclass () != null)
-          aOpenSrc.add (0, aCurClass.getSuperclass ());
+        aClassList = new ClassList (aClass);
+        s_aClassHierarchy.put (sKey, aClassList);
       }
-
-      // Put as unmodifiable inside the container
-      ret = ContainerHelper.makeUnmodifiable (aSet);
-      s_aClassHierarchy.put (sKey, ret);
-      return ret;
+      return aClassList.getAsSet ();
     }
     finally
     {
