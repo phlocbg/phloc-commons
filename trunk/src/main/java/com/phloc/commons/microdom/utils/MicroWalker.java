@@ -43,13 +43,13 @@ public final class MicroWalker
   private MicroWalker ()
   {}
 
-  private static void _walkNode (@Nonnull final IMicroNode aNode,
-                                 @Nonnull final IChildrenProvider <IMicroNode> aChildrenResolver,
-                                 @Nonnull final IHierarchyWalkerCallback <? super IMicroNode> aCallback)
+  private static <T extends IMicroNode> void _walkNode (@Nonnull final T aNode,
+                                                        @Nonnull final IChildrenProvider <T> aChildrenResolver,
+                                                        @Nonnull final IHierarchyWalkerCallback <? super T> aCallback)
   {
     aCallback.onItemBeforeChildren (aNode);
     if (aChildrenResolver.hasChildren (aNode))
-      for (final IMicroNode aChildItem : aChildrenResolver.getChildren (aNode))
+      for (final T aChildItem : aChildrenResolver.getChildren (aNode))
       {
         aCallback.onLevelDown ();
         // recursive call
@@ -65,9 +65,9 @@ public final class MicroWalker
     walkNode (aNode, new ChildrenProviderHasChildren <IMicroNode> (), aCallback);
   }
 
-  public static void walkNode (@Nonnull final IMicroNode aNode,
-                               @Nonnull final IChildrenProvider <IMicroNode> aChildrenResolver,
-                               @Nonnull final IHierarchyWalkerCallback <? super IMicroNode> aCallback)
+  public static <T extends IMicroNode> void walkNode (@Nonnull final T aNode,
+                                                      @Nonnull final IChildrenProvider <T> aChildrenResolver,
+                                                      @Nonnull final IHierarchyWalkerCallback <? super T> aCallback)
   {
     if (aNode == null)
       throw new NullPointerException ("node");
@@ -78,7 +78,7 @@ public final class MicroWalker
     try
     {
       if (aChildrenResolver.hasChildren (aNode))
-        for (final IMicroNode aChildItem : aChildrenResolver.getChildren (aNode))
+        for (final T aChildItem : aChildrenResolver.getChildren (aNode))
           _walkNode (aChildItem, aChildrenResolver, aCallback);
     }
     finally

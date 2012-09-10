@@ -31,7 +31,6 @@ import com.phloc.commons.hierarchy.DefaultHierarchyWalkerCallback;
 import com.phloc.commons.id.ComparatorHasIDString;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroElement;
-import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.microdom.impl.MicroElement;
 import com.phloc.commons.microdom.utils.ChildrenProviderElementWithName;
 import com.phloc.commons.microdom.utils.MicroWalker;
@@ -175,14 +174,13 @@ public final class TreeXMLConverter
     aParents.push (aTree.getRootItem ());
     MicroWalker.walkNode (aElement,
                           new ChildrenProviderElementWithName (ELEMENT_ITEM),
-                          new DefaultHierarchyWalkerCallback <IMicroNode> ()
+                          new DefaultHierarchyWalkerCallback <IMicroElement> ()
                           {
                             @Override
-                            public void onItemBeforeChildren (@Nullable final IMicroNode aItem)
+                            public void onItemBeforeChildren (@Nullable final IMicroElement eItem)
                             {
-                              if (aItem != null)
+                              if (eItem != null)
                               {
-                                final IMicroElement eItem = (IMicroElement) aItem;
                                 final KEYTYPE aTreeItemID = aIDConverter.convert (eItem.getAttribute (ATTR_ID));
 
                                 final IMicroElement eData = eItem.getFirstChildElement (ELEMENT_DATA);
@@ -195,7 +193,7 @@ public final class TreeXMLConverter
                             }
 
                             @Override
-                            public void onItemAfterChildren (@Nullable final IMicroNode aItem)
+                            public void onItemAfterChildren (@Nullable final IMicroElement aItem)
                             {
                               if (aItem != null)
                                 aParents.pop ();

@@ -37,7 +37,7 @@ import com.phloc.commons.string.StringHelper;
  * 
  * @author philip
  */
-public final class ChildrenProviderElementWithName implements IChildrenProvider <IMicroNode>
+public final class ChildrenProviderElementWithName implements IChildrenProvider <IMicroElement>
 {
   private final String m_sNamespaceURI;
   private final String m_sTagName;
@@ -55,7 +55,7 @@ public final class ChildrenProviderElementWithName implements IChildrenProvider 
     m_sTagName = sTagName;
   }
 
-  public boolean hasChildren (@Nullable final IMicroNode aCurrent)
+  public boolean hasChildren (@Nullable final IMicroElement aCurrent)
   {
     // Not an element?
     if (aCurrent == null || !aCurrent.isElement ())
@@ -63,27 +63,27 @@ public final class ChildrenProviderElementWithName implements IChildrenProvider 
 
     // Namespace URI defined?
     if (StringHelper.hasText (m_sNamespaceURI))
-      return ((IMicroElement) aCurrent).hasChildElements (m_sNamespaceURI, m_sTagName);
-    return ((IMicroElement) aCurrent).hasChildElements (m_sTagName);
+      return aCurrent.hasChildElements (m_sNamespaceURI, m_sTagName);
+    return aCurrent.hasChildElements (m_sTagName);
   }
 
   @Nonnegative
-  public int getChildCount (@Nullable final IMicroNode aCurrent)
+  public int getChildCount (@Nullable final IMicroElement aCurrent)
   {
     return aCurrent == null ? 0 : getChildren (aCurrent).size ();
   }
 
   @Nonnull
-  public Collection <? extends IMicroNode> getChildren (@Nullable final IMicroNode aCurrent)
+  public Collection <? extends IMicroElement> getChildren (@Nullable final IMicroElement aCurrent)
   {
     // Not an element?
-    if (aCurrent == null || !aCurrent.isElement ())
-      return new ArrayList <IMicroNode> ();
+    if (aCurrent == null)
+      return new ArrayList <IMicroElement> ();
 
     // Namespace URI defined?
     if (StringHelper.hasText (m_sNamespaceURI))
-      return ((IMicroElement) aCurrent).getChildElements (m_sNamespaceURI, m_sTagName);
+      return aCurrent.getChildElements (m_sNamespaceURI, m_sTagName);
 
-    return ((IMicroElement) aCurrent).getChildElements (m_sTagName);
+    return aCurrent.getChildElements (m_sTagName);
   }
 }
