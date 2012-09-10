@@ -1,7 +1,10 @@
 #summary Change log of phloc-commons
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
-<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr border="1"><td>9/7/12</td><td colspan="4">_Release *3.8.1*_</td></tr>
+<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr><td>9/10/12</td><td>change</td><td>api</td><td></td><td>Deprecated ClassHelper.getClassHierarchy - solely using the ClassHierarchyCache</td></tr>
+<tr><td>9/9/12</td><td>add</td><td>api</td><td></td><td>Extracted class hierarchy cache from ClassHelper into a separate class</td></tr>
+<tr><td>9/9/12</td><td>remove</td><td>api</td><td></td><td>Removed SoftHashMap because I didn't understand it, and it was causing troubles in production!</td></tr>
+<tr border="1"><td>9/7/12</td><td colspan="4">_Release *3.8.1*_</td></tr>
 <tr><td>9/7/12</td><td>add</td><td>api</td><td></td><td>Using the new overloads of StringHelper.getExploded... for performance reasons</td></tr>
 <tr><td>9/7/12</td><td>add</td><td>api</td><td></td><td>Added new overloads of StringHelper.getExploded... taking char separators (better performance), having a limit (like in RegExHelper.getSplitToArray) or returning an array of String</td></tr>
 <tr border="1"><td>9/6/12</td><td colspan="4">_Release *3.8.0*_</td></tr>
