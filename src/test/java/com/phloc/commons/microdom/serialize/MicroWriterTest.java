@@ -275,6 +275,7 @@ public final class MicroWriterTest
   @Test
   public void testSpecialCharactersXML10 ()
   {
+    final XMLWriterSettings aSettings = new XMLWriterSettings ().setXMLVersion (EXMLVersion.XML_10);
     for (char i = Character.MIN_VALUE; i < Character.MAX_VALUE; ++i)
       if (!XMLHelper.isInvalidXMLCharacter (i))
       {
@@ -282,8 +283,7 @@ public final class MicroWriterTest
         assertEquals (7, sText.length ());
         final IMicroDocument aDoc = new MicroDocument ();
         aDoc.appendElement ("root").appendText (sText);
-        final String sXML = MicroWriter.getNodeAsString (aDoc,
-                                                         new XMLWriterSettings ().setXMLVersion (EXMLVersion.XML_10));
+        final String sXML = MicroWriter.getNodeAsString (aDoc, aSettings);
         final IMicroDocument aDoc2 = MicroReader.readMicroXML (sXML);
         assertNotNull ("Failed to read with byte " + (int) i, aDoc2);
         assertEquals (i == 0 ? 6 : 7, aDoc2.getDocumentElement ().getTextContent ().length ());
@@ -297,6 +297,7 @@ public final class MicroWriterTest
   @Test
   public void testSpecialCharactersXML11 ()
   {
+    final XMLWriterSettings aSettings = new XMLWriterSettings ().setXMLVersion (EXMLVersion.XML_11);
     for (char i = Character.MIN_VALUE; i < Character.MAX_VALUE; ++i)
       if (!XMLHelper.isInvalidXMLCharacter (i))
       {
@@ -304,8 +305,7 @@ public final class MicroWriterTest
         assertEquals (7, sText.length ());
         final IMicroDocument aDoc = new MicroDocument ();
         aDoc.appendElement ("root").appendText (sText);
-        final String sXML = MicroWriter.getNodeAsString (aDoc,
-                                                         new XMLWriterSettings ().setXMLVersion (EXMLVersion.XML_11));
+        final String sXML = MicroWriter.getNodeAsString (aDoc, aSettings);
         final IMicroDocument aDoc2 = MicroReader.readMicroXML (sXML);
         assertNotNull ("Failed to read with byte " + (int) i, aDoc2);
         assertEquals (i == 0 ? 6 : 7, aDoc2.getDocumentElement ().getTextContent ().length ());
