@@ -37,13 +37,13 @@ import com.phloc.commons.state.EChange;
  * Base class for all kind of string-object mapping container. This
  * implementation is a thread-safe wrapper around
  * {@link MapBasedAttributeContainer}!
- *
+ * 
  * @author philip
  */
 @ThreadSafe
 public class MapBasedAttributeContainerThreadSafe extends MapBasedAttributeContainer
 {
-  protected final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
+  protected final transient ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
 
   public MapBasedAttributeContainerThreadSafe ()
   {
