@@ -457,6 +457,13 @@ public abstract class AbstractMicroNode implements IMicroNode
     return null;
   }
 
+  /*
+   * Note: the implementations with "this instanceof IMicroXXX" is faster than
+   * doing either "getType ().equals (EMicroNodeType....)" and faster than
+   * having "return false;" in here and "return true;" in the respective
+   * implementation classes.
+   */
+
   public final boolean isDocument ()
   {
     return this instanceof IMicroDocument;
