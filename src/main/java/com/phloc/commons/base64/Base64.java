@@ -202,7 +202,7 @@ import com.phloc.commons.io.streams.StreamUtils;
  * @version 2.3.7
  */
 @Immutable
-public class Base64// NOPMD
+public final class Base64// NOPMD
 {
 
   /* ******** P U B L I C F I E L D S ******** */

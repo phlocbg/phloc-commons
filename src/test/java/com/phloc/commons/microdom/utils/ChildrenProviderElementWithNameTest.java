@@ -18,7 +18,6 @@
 package com.phloc.commons.microdom.utils;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -54,18 +53,12 @@ public final class ChildrenProviderElementWithNameTest extends AbstractPhlocTest
     final IMicroElement aDocElement = aDoc.getDocumentElement ();
 
     ChildrenProviderElementWithName x = new ChildrenProviderElementWithName ("any");
-    assertFalse (x.hasChildren (aDoc));
-    assertEquals (0, x.getChildCount (aDoc));
-    assertTrue (x.getChildren (aDoc).isEmpty ());
 
     assertTrue (x.hasChildren (aDocElement));
     assertEquals (2, x.getChildCount (aDocElement));
     assertEquals (2, x.getChildren (aDocElement).size ());
 
     x = new ChildrenProviderElementWithName ("namespace", "any");
-    assertFalse (x.hasChildren (aDoc));
-    assertEquals (0, x.getChildCount (aDoc));
-    assertTrue (x.getChildren (aDoc).isEmpty ());
 
     assertTrue (x.hasChildren (aDocElement));
     assertEquals (1, x.getChildCount (aDocElement));

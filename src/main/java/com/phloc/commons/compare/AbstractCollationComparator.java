@@ -168,7 +168,7 @@ public abstract class AbstractCollationComparator <DATATYPE> extends AbstractCom
   public AbstractCollationComparator (@Nonnull final Collator aCollator,
                                       @Nullable final Comparator <? super DATATYPE> aNestedComparator)
   {
-    this (aCollator, ESortOrder.DEFAULT);
+    this (aCollator, ESortOrder.DEFAULT, aNestedComparator);
   }
 
   /**
