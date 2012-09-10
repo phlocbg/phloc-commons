@@ -353,8 +353,8 @@ public final class ClassHelper
    *         more than once!
    */
   @Nonnull
-  @Nonempty
   @ReturnsMutableCopy
+  @Deprecated
   public static Set <Class <?>> getClassHierarchy (@Nonnull final Class <?> aClass)
   {
     return ClassHierarchyCache.getClassHierarchy (aClass);

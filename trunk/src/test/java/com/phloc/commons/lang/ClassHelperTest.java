@@ -17,30 +17,21 @@
  */
 package com.phloc.commons.lang;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.io.Reader;
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Collection;
 
 import org.junit.Test;
 
-import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
-import com.phloc.commons.id.IHasID;
 import com.phloc.commons.name.IHasName;
 import com.phloc.commons.system.EOperatingSystem;
-import com.phloc.commons.type.IHasType;
-import com.phloc.commons.type.ITypedObject;
-import com.phloc.commons.type.TypedObject;
 
 /**
  * Test class for class {@link ClassHelper}.
@@ -358,39 +349,5 @@ public final class ClassHelperTest
     assertTrue (ClassHelper.isIntegerClass (BigInteger.class));
     assertFalse (ClassHelper.isIntegerClass (null));
     assertFalse (ClassHelper.isIntegerClass (String.class));
-  }
-
-  @Test
-  public void testGetClassHierarchy ()
-  {
-    // Very basic class
-    Collection <Class <?>> aHierarchy = ClassHelper.getClassHierarchy (Object.class);
-    assertEquals (1, aHierarchy.size ());
-    assertTrue (aHierarchy.contains (Object.class));
-
-    // More sophisticated static class (no interfaces)
-    aHierarchy = ClassHelper.getClassHierarchy (CGlobal.class);
-    // Is usually 2, but with Cobertura enabled, it is 3!
-    assertTrue (aHierarchy.size () >= 2);
-    assertTrue (aHierarchy.contains (CGlobal.class));
-    assertTrue (aHierarchy.contains (Object.class));
-
-    // More sophisticated static class (with interfaces)
-    aHierarchy = ClassHelper.getClassHierarchy (TypedObject.class);
-    assertTrue (aHierarchy.size () >= 6);
-    assertTrue (aHierarchy.contains (TypedObject.class));
-    assertTrue (aHierarchy.contains (IHasType.class));
-    assertTrue (aHierarchy.contains (ITypedObject.class));
-    assertTrue (aHierarchy.contains (IHasID.class));
-    assertTrue (aHierarchy.contains (Object.class));
-    assertTrue (aHierarchy.contains (Serializable.class));
-
-    try
-    {
-      ClassHelper.getClassHierarchy (null);
-      fail ();
-    }
-    catch (final NullPointerException ex)
-    {}
   }
 }

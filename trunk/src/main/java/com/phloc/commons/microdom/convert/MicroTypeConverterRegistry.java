@@ -31,7 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.collections.ContainerHelper;
-import com.phloc.commons.lang.ClassHelper;
+import com.phloc.commons.lang.ClassHierarchyCache;
 import com.phloc.commons.lang.ServiceLoaderBackport;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.typeconvert.TypeConverterRegistry;
@@ -96,7 +96,7 @@ public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegi
         throw new IllegalArgumentException ("A microtype convert for class " + aClass + " is already registered!");
 
       // Automatically register the class, and all parent classes/interfaces
-      for (final Class <?> aCurSrcClass : ClassHelper.getClassHierarchy (aClass))
+      for (final Class <?> aCurSrcClass : ClassHierarchyCache.getClassHierarchy (aClass))
         if (!s_aMap.containsKey (aCurSrcClass))
           s_aMap.put (aCurSrcClass, aConverter);
     }
@@ -134,7 +134,7 @@ public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegi
       if (ret == null)
       {
         // No exact match found - try fuzzy
-        for (final Class <?> aCurDstClass : ClassHelper.getClassHierarchy (aDstClass))
+        for (final Class <?> aCurDstClass : ClassHierarchyCache.getClassHierarchy (aDstClass))
           if ((ret = s_aMap.get (aCurDstClass)) != null)
             break;
       }
