@@ -29,6 +29,7 @@ import com.phloc.commons.IHasSize;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.collections.ArrayHelper;
+import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * A non-synchronized copy of the class {@link java.io.ByteArrayOutputStream}.
@@ -253,4 +254,12 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
   @Override
   public void close ()
   {}
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("buf#", ArrayHelper.getSize (m_aBuf))
+                                       .append ("size", m_nCount)
+                                       .toString ();
+  }
 }
