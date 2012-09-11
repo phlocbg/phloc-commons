@@ -46,6 +46,9 @@ import com.phloc.commons.text.ISimpleMultiLingualText;
 @NotThreadSafe
 public final class MultiLingualText extends TextProvider implements IMultiLingualText
 {
+  // Because of the transient field
+  private static final long serialVersionUID = 136888667633487L;
+
   public static final IMultiLingualText EMPTY_MULTILINGUAL_TEXT = new MultiLingualText ();
 
   // A list of callback upon change.

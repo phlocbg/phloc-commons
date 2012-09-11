@@ -43,7 +43,7 @@ import com.phloc.commons.state.EChange;
 @ThreadSafe
 public class MapBasedAttributeContainerThreadSafe extends MapBasedAttributeContainer
 {
-  protected final transient ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
+  protected final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
 
   public MapBasedAttributeContainerThreadSafe ()
   {
