@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.text.resource;
 
-import java.io.Serializable;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -32,7 +31,7 @@ import com.phloc.commons.text.impl.AbstractTextProvider;
  * 
  * @author philip
  */
-public final class ResourceBundleTextProvider extends AbstractTextProvider implements Serializable
+public final class ResourceBundleTextProvider extends AbstractTextProvider
 {
   private final ResourceBundleKey m_aResBundleKey;
 

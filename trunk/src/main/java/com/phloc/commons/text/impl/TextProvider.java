@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.text.impl;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -42,15 +41,12 @@ import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.text.ISimpleMultiLingualText;
 import com.phloc.commons.text.ITextProvider;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 /**
  * An in-memory implementation of the {@link ITextProvider} interface.
  * 
  * @author philip
  */
-@SuppressFBWarnings ("SE_NO_SERIALVERSIONID")
-public class TextProvider extends AbstractTextProvider implements ISimpleMultiLingualText, Serializable
+public class TextProvider extends AbstractTextProvider implements ISimpleMultiLingualText
 {
   public static final Locale DE = LocaleCache.getLocale ("de");
   public static final Locale EN = LocaleCache.getLocale ("en");
