@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.text.impl;
 
-import java.io.Serializable;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -40,11 +39,7 @@ import com.phloc.commons.text.ITextProvider;
  * 
  * @author philip
  */
-public final class ConstantTextProvider extends AbstractTextProvider implements
-                                                                    IHasDisplayText,
-                                                                    IHasDisplayName,
-                                                                    IHasName,
-                                                                    Serializable
+public final class ConstantTextProvider extends AbstractTextProvider implements IHasDisplayText, IHasDisplayName, IHasName
 {
   private final String m_sFixedText;
 

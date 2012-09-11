@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.text;
 
+import java.io.Serializable;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -27,7 +28,7 @@ import javax.annotation.Nullable;
  * 
  * @author philip
  */
-public interface ITextProvider
+public interface ITextProvider extends Serializable
 {
   /**
    * Get the text specific for the passed locale. The implementation class MUST

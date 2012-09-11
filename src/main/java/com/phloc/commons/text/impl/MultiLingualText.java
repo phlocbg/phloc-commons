@@ -37,8 +37,6 @@ import com.phloc.commons.text.IMultiLingualText;
 import com.phloc.commons.text.IReadonlyMultiLingualText;
 import com.phloc.commons.text.ISimpleMultiLingualText;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 /**
  * This class represents a multilingual text. It is internally represented as a
  * map from {@link Locale} to the language dependent name.
@@ -46,7 +44,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * @author philip
  */
 @NotThreadSafe
-@SuppressFBWarnings ("SE_NO_SERIALVERSIONID")
 public final class MultiLingualText extends TextProvider implements IMultiLingualText
 {
   public static final IMultiLingualText EMPTY_MULTILINGUAL_TEXT = new MultiLingualText ();

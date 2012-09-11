@@ -17,13 +17,12 @@
  */
 package com.phloc.commons.text;
 
-import java.io.Serializable;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
 
-public interface IReadonlyMultiLingualText extends ISimpleMultiLingualText, Serializable
+public interface IReadonlyMultiLingualText extends ISimpleMultiLingualText
 {
   /**
    * Checks whether a text with the given locale is contained directly.

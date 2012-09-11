@@ -37,17 +37,17 @@ import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 /**
  * Wraps a class path object as a readable resource.
  * 
  * @author philip
  */
 @Immutable
-@SuppressFBWarnings ("SE_NO_SERIALVERSIONID")
 public final class ClassPathResource implements IReadableResource
 {
+  // Because of transient field
+  private static final long serialVersionUID = 8864321231897321L;
+
   /** Use this prefix to uniquely identify classpath resources */
   public static final String CLASSPATH_PREFIX_LONG = "classpath:";
   /** Use this prefix to uniquely identify classpath resources - alternative */
