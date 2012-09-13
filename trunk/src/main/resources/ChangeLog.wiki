@@ -1,8 +1,9 @@
 #summary Change log of phloc-commons
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
-<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr><td>9/10/12</td><td>change</td><td>api</td><td></td><td>ITextProvider is now Serializable</td></tr>
-<tr><td>9/10/12</td><td>fix</td><td>api</td><td></td><td>Extended LogUtils with an isEnabled method</td></tr>
+<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr><td>9/13/12</td><td>add</td><td>api</td><td></td><td>Extended LogUtils with overloads for IHasErrorLevel</td></tr>
+<tr><td>9/10/12</td><td>change</td><td>api</td><td></td><td>ITextProvider is now Serializable</td></tr>
+<tr><td>9/10/12</td><td>add</td><td>api</td><td></td><td>Extended LogUtils with an isEnabled method</td></tr>
 <tr><td>9/10/12</td><td>fix</td><td>api</td><td></td><td>One constructor of AbstractCollationComparator was not passing on the nested Comparator</td></tr>
 <tr border="1"><td>9/10/12</td><td colspan="4">_Release *3.8.2*_</td></tr>
 <tr><td>9/10/12</td><td>change</td><td>api</td><td></td><td>Deprecated ClassHelper.getClassHierarchy - solely using the ClassHierarchyCache</td></tr>
