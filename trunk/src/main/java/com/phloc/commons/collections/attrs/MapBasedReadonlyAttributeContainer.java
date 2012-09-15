@@ -28,7 +28,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.phloc.commons.annotations.ReturnsImmutableObject;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
@@ -37,7 +37,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * Default implementation of the {@link IReadonlyAttributeContainer} based on a
  * hash map. This implementation may carry <code>null</code> values but that is
  * not recommended.
- *
+ * 
  * @author philip
  */
 @NotThreadSafe
@@ -58,10 +58,10 @@ public final class MapBasedReadonlyAttributeContainer extends AbstractReadonlyAt
   }
 
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public Map <String, Object> getAllAttributes ()
   {
-    return ContainerHelper.makeUnmodifiable (m_aAttrs);
+    return ContainerHelper.newMap (m_aAttrs);
   }
 
   @Nonnull
@@ -71,17 +71,17 @@ public final class MapBasedReadonlyAttributeContainer extends AbstractReadonlyAt
   }
 
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public Set <String> getAllAttributeNames ()
   {
-    return ContainerHelper.makeUnmodifiable (m_aAttrs.keySet ());
+    return ContainerHelper.newSet (m_aAttrs.keySet ());
   }
 
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public Collection <Object> getAllAttributeValues ()
   {
-    return ContainerHelper.makeUnmodifiable (m_aAttrs.values ());
+    return ContainerHelper.newList (m_aAttrs.values ());
   }
 
   @Nullable

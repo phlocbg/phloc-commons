@@ -28,7 +28,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.phloc.commons.annotations.ReturnsImmutableObject;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
@@ -38,7 +38,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Base class for all kind of string-object mapping container. This
  * implementation is not thread-safe!
- *
+ * 
  * @author philip
  */
 @NotThreadSafe
@@ -73,10 +73,10 @@ public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContain
   }
 
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public Map <String, Object> getAllAttributes ()
   {
-    return ContainerHelper.makeUnmodifiable (m_aAttrs);
+    return ContainerHelper.newMap (m_aAttrs);
   }
 
   @Nullable
@@ -114,17 +114,17 @@ public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContain
   }
 
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public Set <String> getAllAttributeNames ()
   {
-    return ContainerHelper.makeUnmodifiable (m_aAttrs.keySet ());
+    return ContainerHelper.newSet (m_aAttrs.keySet ());
   }
 
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public Collection <Object> getAllAttributeValues ()
   {
-    return ContainerHelper.makeUnmodifiable (m_aAttrs.values ());
+    return ContainerHelper.newList (m_aAttrs.values ());
   }
 
   @Nonnegative
