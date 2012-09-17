@@ -377,7 +377,7 @@ public final class ClassPathResource implements IReadableResource
   }
 
   @Nullable
-  private static File _asFile (@Nullable final URL aURL)
+  private static File _getAsFile (@Nullable final URL aURL)
   {
     if (aURL != null)
       try
@@ -408,14 +408,14 @@ public final class ClassPathResource implements IReadableResource
   public static File getAsFile (@Nonnull @Nonempty final String sPath)
   {
     final URL aURL = getAsURL (sPath);
-    return _asFile (aURL);
+    return _getAsFile (aURL);
   }
 
   @Nullable
   public static File getAsFile (@Nonnull @Nonempty final String sPath, @Nonnull final ClassLoader aClassLoader)
   {
     final URL aURL = getAsURL (sPath, aClassLoader);
-    return _asFile (aURL);
+    return _getAsFile (aURL);
   }
 
   @Nullable
@@ -423,14 +423,14 @@ public final class ClassPathResource implements IReadableResource
   {
     // Try to use the cached URL here - avoid double resolution
     final URL aURL = getAsURL ();
-    return _asFile (aURL);
+    return _getAsFile (aURL);
   }
 
   @Nullable
   public File getAsFileNoCache (@Nonnull final ClassLoader aClassLoader)
   {
     final URL aURL = getAsURLNoCache (aClassLoader);
-    return _asFile (aURL);
+    return _getAsFile (aURL);
   }
 
   public static boolean canRead (@Nonnull @Nonempty final String sPath)
