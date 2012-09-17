@@ -379,7 +379,16 @@ public final class ClassPathResource implements IReadableResource
   @Nullable
   private static File _asFile (@Nullable final URL aURL)
   {
-    return aURL == null ? null : URLResource.getAsFile (aURL);
+    if (aURL != null)
+      try
+      {
+        return URLResource.getAsFile (aURL);
+      }
+      catch (final IllegalArgumentException ex)
+      {
+        // Happens for non-file URLs
+      }
+    return null;
   }
 
   /**
