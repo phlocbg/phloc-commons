@@ -96,10 +96,18 @@ public final class CombinationGeneratorFlexibleTest extends AbstractCombinationG
   public void testHugeDataSet ()
   {
     final StopWatch aSW = new StopWatch (true);
-    // Takes approx. 490ms on PH main machine (2012-01-21)
-    // With one element more the time is at approx. 1500ms
-    final Set <List <String>> aResult = CombinationGeneratorFlexible.getCombinations (HUGE_LIST, true);
-    m_aLogger.info ("Regular: " + aSW.stopAndGetMillis () + " ms with " + aResult.size () + " elements");
+    try
+    {
+      // Takes approx. 490ms on PH main machine (2012-01-21)
+      // With one element more the time is at approx. 1500ms
+      final Set <List <String>> aResult = CombinationGeneratorFlexible.getCombinations (HUGE_LIST, true);
+      m_aLogger.info ("Regular: " + aSW.stopAndGetMillis () + " ms with " + aResult.size () + " elements");
+    }
+    catch (final OutOfMemoryError ex)
+    {
+      // Happens e.g. on Jenkins
+      m_aLogger.error ("Out of memory on test!", ex);
+    }
   }
 
   @Ignore ("Simply wrong assumption")
