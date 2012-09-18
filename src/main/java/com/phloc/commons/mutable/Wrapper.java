@@ -37,7 +37,7 @@ import com.phloc.commons.string.ToStringGenerator;
  *        The type of object to be wrapped.
  */
 @NotThreadSafe
-public final class Wrapper <DATATYPE> implements IWrapper <DATATYPE>, ICloneable <Wrapper <DATATYPE>>
+public class Wrapper <DATATYPE> implements IWrapper <DATATYPE>, ICloneable <Wrapper <DATATYPE>>
 {
   private DATATYPE m_aObj;
 
@@ -98,7 +98,7 @@ public final class Wrapper <DATATYPE> implements IWrapper <DATATYPE>, ICloneable
   {
     if (o == this)
       return true;
-    if (!(o instanceof Wrapper <?>))
+    if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final Wrapper <?> rhs = (Wrapper <?>) o;
     return EqualsUtils.equals (m_aObj, rhs.m_aObj);
