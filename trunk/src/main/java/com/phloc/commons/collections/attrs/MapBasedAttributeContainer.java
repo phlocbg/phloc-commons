@@ -138,6 +138,19 @@ public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContain
     return m_aAttrs.isEmpty ();
   }
 
+  public boolean getAndSetAttributeFlag (@Nonnull final String sName)
+  {
+    final Object aOldValue = getAttributeObject (sName);
+    if (aOldValue != null)
+    {
+      // Attribute flag is already present
+      return true;
+    }
+    // Attribute flag is not yet present -> set it
+    setAttribute (sName, Boolean.TRUE);
+    return false;
+  }
+
   @Nonnull
   public EChange clear ()
   {
