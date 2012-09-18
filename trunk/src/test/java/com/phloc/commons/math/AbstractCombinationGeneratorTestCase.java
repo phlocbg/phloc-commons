@@ -48,5 +48,15 @@ public abstract class AbstractCombinationGeneratorTestCase extends AbstractPhloc
                                                                                         "d",
                                                                                         "e",
                                                                                         "f",
-                                                                                        "g");
+                                                                                        "g",
+                                                                                        "h",
+                                                                                        "i",
+                                                                                        "j",
+                                                                                        "k",
+                                                                                        "l",
+                                                                                        "m",
+                                                                                        "n",
+                                                                                        "o",
+                                                                                        "p",
+                                                                                        "q");
 }
