@@ -57,4 +57,20 @@ public interface IAttributeContainer extends IReadonlyAttributeContainer, IClear
    */
   @Nonnull
   EChange removeAttribute (@Nullable String sName);
+
+  /**
+   * Atomic operation to set a flag to <code>true</code> if it was previously
+   * set to <code>false</code> (meaning not existing). There is no possibility
+   * to define a value for this flag. The value used is {@link Boolean#TRUE}.
+   * {@link #containsAttribute(String)} can be used to check if the attribute is
+   * already present.
+   * 
+   * @param sName
+   *        The name of the flag to set.
+   * @return The old value of the flag. If the flag was not present previously,
+   *         than <code>false</code> is returned, whereas if the flag was
+   *         already present, <code>true</code> is returned. Any other than the
+   *         first call for the same flag is always returning <code>true</code>.
+   */
+  boolean getAndSetAttributeFlag (@Nonnull String sName);
 }

@@ -109,4 +109,16 @@ public final class MapBasedAttributeContainerTest
     catch (final NullPointerException ex)
     {}
   }
+
+  @Test
+  public void testGetAndSetAttributeFlag ()
+  {
+    final MapBasedAttributeContainer aCont = new MapBasedAttributeContainer ();
+    // Not yet present
+    assertFalse (aCont.getAndSetAttributeFlag ("any"));
+    // Now it is present
+    assertTrue (aCont.getAndSetAttributeFlag ("any"));
+    for (int i = 0; i < 20; ++i)
+      assertTrue (aCont.getAndSetAttributeFlag ("any"));
+  }
 }

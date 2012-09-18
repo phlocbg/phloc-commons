@@ -230,6 +230,20 @@ public class MapBasedAttributeContainerThreadSafe extends MapBasedAttributeConta
   }
 
   @Override
+  public boolean getAndSetAttributeFlag (@Nonnull final String sName)
+  {
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      return super.getAndSetAttributeFlag (sName);
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
+  }
+
+  @Override
   public boolean equals (final Object o)
   {
     m_aRWLock.readLock ().lock ();
