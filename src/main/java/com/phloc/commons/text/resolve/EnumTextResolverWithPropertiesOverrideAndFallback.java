@@ -50,8 +50,7 @@ import com.phloc.commons.text.resource.ResourceBundleUtils;
  * @author philip
  */
 @ThreadSafe
-public final class EnumTextResolverWithPropertiesOverrideAndFallback extends
-                                                                    AbstractEnumTextResolverWithOverrideAndFallback
+public final class EnumTextResolverWithPropertiesOverrideAndFallback extends AbstractEnumTextResolverWithOverrideAndFallback
 {
   public static final String PREFIX_OVERRIDE = "properties/override-";
   public static final String PREFIX_FALLBACK = "properties/";
@@ -63,7 +62,7 @@ public final class EnumTextResolverWithPropertiesOverrideAndFallback extends
 
   private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
   private final Set <String> m_aUsedOverrideBundles = new HashSet <String> ();
-  private final Map <String, Boolean> m_aUsedFallbackBundles = new HashMap <String, Boolean> ();
+  private final Set <String> m_aUsedFallbackBundles = new HashSet <String> ();
   private boolean m_bUseResourceBundleCache = DEFAULT_USE_RESOURCE_BUNDLE_CACHE;
   private final Map <String, ResourceBundle> m_aResourceBundleCache = new HashMap <String, ResourceBundle> ();
 
@@ -197,7 +196,7 @@ public final class EnumTextResolverWithPropertiesOverrideAndFallback extends
         m_aRWLock.writeLock ().lock ();
         try
         {
-          m_aUsedFallbackBundles.put (sBundleName, Boolean.TRUE);
+          m_aUsedFallbackBundles.add (sBundleName);
         }
         finally
         {
@@ -246,7 +245,7 @@ public final class EnumTextResolverWithPropertiesOverrideAndFallback extends
     m_aRWLock.readLock ().lock ();
     try
     {
-      return ContainerHelper.newSet (m_aUsedFallbackBundles.keySet ());
+      return ContainerHelper.newSet (m_aUsedFallbackBundles);
     }
     finally
     {
