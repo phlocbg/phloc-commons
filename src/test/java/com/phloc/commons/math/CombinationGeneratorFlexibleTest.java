@@ -92,6 +92,7 @@ public final class CombinationGeneratorFlexibleTest extends AbstractCombinationG
     {}
   }
 
+  @Ignore ("Takes too long")
   @Test
   public void testHugeDataSet ()
   {
