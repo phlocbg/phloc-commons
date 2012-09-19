@@ -19,6 +19,7 @@ package com.phloc.commons.lang;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +33,9 @@ import javax.annotation.concurrent.Immutable;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.phloc.commons.annotations.ReturnsMutableCopy;
+import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.collections.LRUCache;
+import com.phloc.commons.collections.iterate.IIterableIterator;
 
 /**
  * A small class hierarchy cache
@@ -45,7 +48,7 @@ public final class ClassHierarchyCache
   @Immutable
   private static final class ClassList
   {
-    private final List <WeakReference <Class <?>>> m_aList = new ArrayList <WeakReference <Class <?>>> ();
+    private final Set <WeakReference <Class <?>>> m_aList = new LinkedHashSet <WeakReference <Class <?>>> ();
 
     public ClassList (@Nonnull final Class <?> aClass)
     {
@@ -84,7 +87,7 @@ public final class ClassHierarchyCache
     public Set <Class <?>> getAsSet ()
     {
       // Use a linked hash set, to maintain the order
-      final Set <Class <?>> ret = new LinkedHashSet <Class <?>> ();
+      final Set <Class <?>> ret = new LinkedHashSet <Class <?>> (m_aList.size ());
       for (final WeakReference <Class <?>> aRef : m_aList)
       {
         final Class <?> aClass = aRef.get ();
@@ -92,6 +95,52 @@ public final class ClassHierarchyCache
           ret.add (aClass);
       }
       return ret;
+    }
+
+    @Nonnull
+    @ReturnsMutableCopy
+    public List <Class <?>> getAsList ()
+    {
+      // Use a list that may contain duplicates
+      final List <Class <?>> ret = new ArrayList <Class <?>> (m_aList.size ());
+      for (final WeakReference <Class <?>> aRef : m_aList)
+      {
+        final Class <?> aClass = aRef.get ();
+        if (aClass != null)
+          ret.add (aClass);
+      }
+      return ret;
+    }
+
+    @Nonnull
+    public IIterableIterator <Class <?>> getIterator ()
+    {
+      // Use a list that may contain duplicates
+      return new IIterableIterator <Class <?>> ()
+      {
+
+        public boolean hasNext ()
+        {
+          return false;
+        }
+
+        public Class <?> next ()
+        {
+          return null;
+        }
+
+        @UnsupportedOperation
+        public void remove ()
+        {
+          throw new UnsupportedOperationException ();
+        }
+
+        @Nonnull
+        public Iterator <Class <?>> iterator ()
+        {
+          return this;
+        }
+      };
     }
   }
 
@@ -119,21 +168,8 @@ public final class ClassHierarchyCache
     }
   }
 
-  /**
-   * Get the complete super class hierarchy of the passed class including all
-   * super classes and all interfaces of the passed class and of all parent
-   * classes.
-   * 
-   * @param aClass
-   *        The source class to get the hierarchy from.
-   * @return A non-<code>null</code> and non-empty Set containing the passed
-   *         class and all super classes, and all super-interfaces. This list
-   *         may contain duplicates in case a certain interface is implemented
-   *         more than once!
-   */
   @Nonnull
-  @ReturnsMutableCopy
-  public static Set <Class <?>> getClassHierarchy (@Nonnull final Class <?> aClass)
+  static ClassList getClassList (@Nonnull final Class <?> aClass)
   {
     if (aClass == null)
       throw new NullPointerException ("class");
@@ -145,29 +181,83 @@ public final class ClassHierarchyCache
     try
     {
       aClassList = s_aClassHierarchy.get (sKey);
-      if (aClassList != null)
-        return aClassList.getAsSet ();
     }
     finally
     {
       s_aRWLock.readLock ().unlock ();
     }
 
-    s_aRWLock.writeLock ().lock ();
-    try
+    if (aClassList == null)
     {
-      // try again in write lock
-      aClassList = s_aClassHierarchy.get (sKey);
-      if (aClassList == null)
+      s_aRWLock.writeLock ().lock ();
+      try
       {
-        aClassList = new ClassList (aClass);
-        s_aClassHierarchy.put (sKey, aClassList);
+        // try again in write lock
+        aClassList = s_aClassHierarchy.get (sKey);
+        if (aClassList == null)
+        {
+          // Create a new class list
+          aClassList = new ClassList (aClass);
+          s_aClassHierarchy.put (sKey, aClassList);
+        }
       }
-      return aClassList.getAsSet ();
+      finally
+      {
+        s_aRWLock.writeLock ().unlock ();
+      }
     }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    return aClassList;
+  }
+
+  /**
+   * Get the complete super class hierarchy of the passed class including all
+   * super classes and all interfaces of the passed class and of all parent
+   * classes.
+   * 
+   * @param aClass
+   *        The source class to get the hierarchy from.
+   * @return A non-<code>null</code> and non-empty Set containing the passed
+   *         class and all super classes, and all super-interfaces.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <Class <?>> getClassHierarchy (@Nonnull final Class <?> aClass)
+  {
+    return getClassList (aClass).getAsSet ();
+  }
+
+  /**
+   * Get the complete super class hierarchy of the passed class including all
+   * super classes and all interfaces of the passed class and of all parent
+   * classes.
+   * 
+   * @param aClass
+   *        The source class to get the hierarchy from.
+   * @return A non-<code>null</code> and non-empty List containing the passed
+   *         class and all super classes, and all super-interfaces. Duplicates
+   *         were already removed.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public static List <Class <?>> getClassHierarchyList (@Nonnull final Class <?> aClass)
+  {
+    return getClassList (aClass).getAsList ();
+  }
+
+  /**
+   * Get the complete super class hierarchy of the passed class including all
+   * super classes and all interfaces of the passed class and of all parent
+   * classes.
+   * 
+   * @param aClass
+   *        The source class to get the hierarchy from.
+   * @return A non-<code>null</code> and non-empty List containing the passed
+   *         class and all super classes, and all super-interfaces. Duplicates
+   *         were already removed.
+   */
+  @Nonnull
+  public static IIterableIterator <Class <?>> getClassHierarchyIterator (@Nonnull final Class <?> aClass)
+  {
+    return getClassList (aClass).getIterator ();
   }
 }
