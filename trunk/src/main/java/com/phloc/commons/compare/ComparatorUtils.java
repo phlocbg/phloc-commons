@@ -43,7 +43,7 @@ public final class ComparatorUtils
   @Nonnull
   public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> Comparator <? super Map.Entry <KEYTYPE, VALUETYPE>> getComparatorMapEntryKey ()
   {
-    return getComparatorMapEntryKey (ESortOrder.DEFAULT);
+    return ComparatorUtils.<KEYTYPE, VALUETYPE> getComparatorMapEntryKey (ESortOrder.DEFAULT);
   }
 
   @Nonnull
@@ -75,7 +75,7 @@ public final class ComparatorUtils
   @Nonnull
   public static <KEYTYPE, VALUETYPE extends Comparable <? super VALUETYPE>> Comparator <? super Map.Entry <KEYTYPE, VALUETYPE>> getComparatorMapEntryValue ()
   {
-    return getComparatorMapEntryValue (ESortOrder.DEFAULT);
+    return ComparatorUtils.<KEYTYPE, VALUETYPE> getComparatorMapEntryValue (ESortOrder.DEFAULT);
   }
 
   @Nonnull
