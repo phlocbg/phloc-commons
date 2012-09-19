@@ -22,6 +22,11 @@
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
   <entry date="2012-09-19" category="api" action="add">
     <change>
+      <text locale="en">Added new Comparator classes ComparatorDisplayNameProvider and ComparatorDisplayTextProvider</text>
+    </change>
+  </entry>
+  <entry date="2012-09-19" category="api" action="add">
+    <change>
       <text locale="en">Extended ContainerHelper API to handle the sort order when sorting maps by key or by value without Comparator</text>
     </change>
   </entry>
