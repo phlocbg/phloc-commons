@@ -29,6 +29,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.IHasSize;
 import com.phloc.commons.annotations.OverrideOnDemand;
+import com.phloc.commons.annotations.UseDirectEqualsAndHashCode;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -42,8 +43,10 @@ import com.phloc.commons.string.ToStringGenerator;
  *        Element type
  */
 @NotThreadSafe
+@UseDirectEqualsAndHashCode
 public class LRUSet <ELEMENTTYPE> extends AbstractSet <ELEMENTTYPE> implements IHasSize, Serializable
 {
+  @UseDirectEqualsAndHashCode
   private final class LRUCacheMap extends LRUCache <ELEMENTTYPE, Boolean>
   {
     private LRUCacheMap (final int nMaxSize)
