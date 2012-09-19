@@ -46,6 +46,8 @@ public final class RegExPattern
   private final int m_nOptions;
   private Pattern m_aPattern;
 
+  private Integer m_aHashCode;
+
   public static void checkPatternConsistency (@Nonnull @RegEx final String sRegEx) throws IllegalArgumentException
   {
     // Check if a '$' is escaped if no digits follow
@@ -153,7 +155,9 @@ public final class RegExPattern
   public int hashCode ()
   {
     // m_aPattern is a state variable
-    return new HashCodeGenerator (this).append (m_sRegEx).append (m_nOptions).getHashCode ();
+    if (m_aHashCode == null)
+      m_aHashCode = new HashCodeGenerator (this).append (m_sRegEx).append (m_nOptions).getHashCodeObj ();
+    return m_aHashCode.intValue ();
   }
 
   @Override
