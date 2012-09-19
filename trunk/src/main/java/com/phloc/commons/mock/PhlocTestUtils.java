@@ -118,14 +118,16 @@ public final class PhlocTestUtils
     _assertTrue ("hashCode() invocations must be consistent", aObject2.hashCode () == aObject.hashCode ());
   }
 
-  private static <DATATYPE> void _testHashcodeImplementationWithDifferentContentObject (@Nonnull final DATATYPE aObject,
+  private static <DATATYPE> void _testHashcodeImplementationWithDifferentContentObject (@Nonnull final DATATYPE aObject1,
                                                                                         @Nonnull final DATATYPE aObject2)// NOPMD
   {
-    _testHashcodeImplementation (aObject);
+    _testHashcodeImplementation (aObject1);
     _testHashcodeImplementation (aObject2);
-    _assertFalse ("Passed objects are identical!", aObject.equals (aObject2));
-    _assertFalse ("This test may not be used with the same object!", aObject == aObject2);// NOPMD
-    _assertFalse ("hashCode() may not be the same for both objects", aObject.hashCode () == aObject2.hashCode ());
+    _assertFalse ("Passed objects are identical!", aObject1.equals (aObject2));
+    _assertFalse ("This test may not be used with the same object!", aObject1 == aObject2);// NOPMD
+    final int nHash1 = aObject1.hashCode ();
+    final int nHash2 = aObject2.hashCode ();
+    _assertFalse ("hashCode() may not be the same for both objects", nHash1 == nHash2);
   }
 
   /**

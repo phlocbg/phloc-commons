@@ -29,7 +29,6 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.IHasSize;
 import com.phloc.commons.annotations.OverrideOnDemand;
-import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -45,30 +44,37 @@ import com.phloc.commons.string.ToStringGenerator;
 @NotThreadSafe
 public class LRUSet <ELEMENTTYPE> extends AbstractSet <ELEMENTTYPE> implements IHasSize, Serializable
 {
-  private final LRUCache <ELEMENTTYPE, Boolean> m_aCache;
+  private final class LRUCacheMap extends LRUCache <ELEMENTTYPE, Boolean>
+  {
+    private LRUCacheMap (final int nMaxSize)
+    {
+      super (nMaxSize);
+    }
+
+    @Override
+    protected void onRemoveEldestEntry (final Map.Entry <ELEMENTTYPE, Boolean> aEldest)
+    {
+      LRUSet.this.onRemoveEldestEntry (aEldest.getKey ());
+    }
+
+    @Override
+    public boolean equals (final Object o)
+    {
+      return super.equals (o);
+    }
+
+    @Override
+    public int hashCode ()
+    {
+      return super.hashCode ();
+    }
+  }
+
+  private final LRUCacheMap m_aCache;
 
   public LRUSet (@Nonnegative final int nMaxSize)
   {
-    m_aCache = new LRUCache <ELEMENTTYPE, Boolean> (nMaxSize)
-    {
-      @Override
-      protected void onRemoveEldestEntry (final Map.Entry <ELEMENTTYPE, Boolean> aEldest)
-      {
-        LRUSet.this.onRemoveEldestEntry (aEldest.getKey ());
-      }
-
-      @Override
-      public boolean equals (final Object o)
-      {
-        return super.equals (o);
-      }
-
-      @Override
-      public int hashCode ()
-      {
-        return super.hashCode ();
-      }
-    };
+    m_aCache = new LRUCacheMap (nMaxSize);
   }
 
   /**
@@ -122,7 +128,7 @@ public class LRUSet <ELEMENTTYPE> extends AbstractSet <ELEMENTTYPE> implements I
     if (!(o instanceof LRUSet <?>))
       return false;
     final LRUSet <?> rhs = (LRUSet <?>) o;
-    return EqualsUtils.equals (m_aCache, rhs.m_aCache);
+    return m_aCache.equals (rhs.m_aCache);
   }
 
   @Override

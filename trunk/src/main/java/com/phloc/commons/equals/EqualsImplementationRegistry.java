@@ -17,6 +17,9 @@
  */
 package com.phloc.commons.equals;
 
+import java.lang.ref.WeakReference;
+import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -25,6 +28,9 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.lang.ClassHierarchyCache;
@@ -55,6 +61,7 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
     }
   }
 
+  private static final Logger s_aLogger = LoggerFactory.getLogger (EqualsImplementationRegistry.class);
   private static final EqualsImplementationRegistry s_aInstance = new EqualsImplementationRegistry ();
 
   private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
@@ -62,8 +69,8 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
   // Use a weak hash map, because the key is a class
   private final Map <Class <?>, IEqualsImplementation> m_aMap = new WeakHashMap <Class <?>, IEqualsImplementation> ();
 
-  // Use a weak hash map, because the key is a class
-  private final Map <Class <?>, Boolean> m_aExceptions = new WeakHashMap <Class <?>, Boolean> ();
+  // Cache for classes that implement equals directly
+  private final Map <String, Boolean> m_aImplementsEquals = new HashMap <String, Boolean> ();
 
   private EqualsImplementationRegistry ()
   {
@@ -86,7 +93,7 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
       throw new NullPointerException ("implementation");
 
     if (aClass.equals (Object.class))
-      throw new IllegalArgumentException ("You provide an equals implementation for Object.class!");
+      throw new IllegalArgumentException ("You cannot provide an equals implementation for Object.class!");
 
     m_aRWLock.writeLock ().lock ();
     try
@@ -117,12 +124,14 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
     }
   }
 
-  private boolean _implementsEqualsItself (final Class <?> aClass)
+  private boolean _implementsEqualsItself (@Nonnull final Class <?> aClass)
   {
+    final String sClassName = aClass.getName ();
+
     m_aRWLock.readLock ().lock ();
     try
     {
-      final Boolean aSavedState = m_aExceptions.get (aClass);
+      final Boolean aSavedState = m_aImplementsEquals.get (sClassName);
       if (aSavedState != null)
         return aSavedState.booleanValue ();
     }
@@ -135,7 +144,7 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
     try
     {
       // Try again in write lock
-      final Boolean aSavedState = m_aExceptions.get (aClass);
+      final Boolean aSavedState = m_aImplementsEquals.get (sClassName);
       if (aSavedState != null)
         return aSavedState.booleanValue ();
 
@@ -143,20 +152,114 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
       boolean bRet = false;
       try
       {
-        if (aClass.getDeclaredMethod ("equals", Object.class) != null)
+        final Method aMethod = aClass.getDeclaredMethod ("equals", Object.class);
+        if (aMethod != null && aMethod.getReturnType ().equals (boolean.class))
           bRet = true;
       }
-      catch (final Exception ex)
+      catch (final NoSuchMethodException ex)
       {
         // ignore
       }
-      m_aExceptions.put (aClass, Boolean.valueOf (bRet));
+      m_aImplementsEquals.put (sClassName, Boolean.valueOf (bRet));
       return bRet;
     }
     finally
     {
       m_aRWLock.writeLock ().unlock ();
     }
+  }
+
+  @Nullable
+  public IEqualsImplementation getBestMatchingEqualsImplementation (@Nullable final Class <?> aClass)
+  {
+    if (aClass != null)
+    {
+      IEqualsImplementation aMatchingImplementation = null;
+      Class <?> aMatchingClass = null;
+
+      m_aRWLock.readLock ().lock ();
+      try
+      {
+        // Check for an exact match first
+        aMatchingImplementation = m_aMap.get (aClass);
+        if (aMatchingImplementation != null)
+          aMatchingClass = aClass;
+        else
+        {
+          // Scan hierarchy in most efficient way
+          for (final WeakReference <Class <?>> aCurWRClass : ClassHierarchyCache.getClassHierarchyIterator (aClass))
+          {
+            final Class <?> aCurClass = aCurWRClass.get ();
+            if (aCurClass != null)
+            {
+              final IEqualsImplementation aImpl = m_aMap.get (aCurClass);
+              if (aImpl != null)
+              {
+                aMatchingImplementation = aImpl;
+                aMatchingClass = aCurClass;
+                if (s_aLogger.isDebugEnabled ())
+                  s_aLogger.debug ("Found hierarchical match with class " +
+                                   aMatchingClass +
+                                   " when searching for " +
+                                   aClass);
+                break;
+              }
+            }
+          }
+        }
+      }
+      finally
+      {
+        m_aRWLock.readLock ().unlock ();
+      }
+
+      // Do this outside of the lock for performance reasons
+      if (aMatchingImplementation != null)
+      {
+        // If the matching implementation is for an interface and the
+        // implementation class implements equals, use the one from the class
+        // Example: a converter for "Map" is registered, but "LRUCache" comes
+        // with its own "equals" implementation
+        if (ClassHelper.isInterface (aMatchingClass) && _implementsEqualsItself (aClass))
+          return null;
+
+        if (!aMatchingClass.equals (aClass))
+        {
+          // We found a match by walking the hierarchy -> put that match in the
+          // direct hit list for further speed up
+          m_aRWLock.writeLock ().lock ();
+          try
+          {
+            if (!m_aMap.containsKey (aClass))
+              m_aMap.put (aClass, aMatchingImplementation);
+            else
+              s_aLogger.warn ("We iterated the hierarchy for " +
+                              aClass +
+                              " and found " +
+                              aMatchingClass +
+                              ", but the sources class is already in the direct access map!");
+          }
+          finally
+          {
+            m_aRWLock.writeLock ().unlock ();
+          }
+        }
+
+        return aMatchingImplementation;
+      }
+
+      // Handle arrays specially, because we cannot register a converter for
+      // every potential array class (but we allow for special implementations)
+      if (ClassHelper.isArrayClass (aClass))
+        return new ArrayEqualsImplementation ();
+    }
+
+    // No special handler found
+    if (s_aLogger.isDebugEnabled ())
+      s_aLogger.debug ("Found no equals implementation for " + aClass);
+
+    // Definitely no special implementation
+    return null;
   }
 
   public static <T> boolean areEqual (@Nullable final T aObj1, @Nullable final T aObj2)
@@ -194,65 +297,5 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
       bAreEqual = aImpl.areEqual (aObj1, aObj2);
     }
     return bAreEqual;
-  }
-
-  @Nullable
-  public IEqualsImplementation getBestMatchingEqualsImplementation (@Nullable final Class <?> aClass)
-  {
-    if (aClass != null)
-    {
-      Class <?> aMatchingConverterClass = null;
-      IEqualsImplementation aMatchingImplementation = null;
-
-      m_aRWLock.readLock ().lock ();
-      try
-      {
-        // Check for an exact match first
-        aMatchingImplementation = m_aMap.get (aClass);
-        if (aMatchingImplementation != null)
-          aMatchingConverterClass = aClass;
-        else
-        {
-          // Scan hierarchy
-          for (final Class <?> aCurClass : ClassHierarchyCache.getClassHierarchy (aClass))
-          {
-            final IEqualsImplementation aImpl = m_aMap.get (aCurClass);
-            if (aImpl != null)
-            {
-              aMatchingImplementation = aImpl;
-              aMatchingConverterClass = aCurClass;
-              break;
-            }
-          }
-        }
-      }
-      finally
-      {
-        m_aRWLock.readLock ().unlock ();
-      }
-
-      // Do this outside of the lock for performance reasons
-      if (aMatchingImplementation != null)
-      {
-        // If the matching implementation is for an interface and the
-        // implementation class implements equals, use the one from the class
-        // Example: a converter for "Map" is registered, but "LRUCache" comes
-        // with its own "equals" implementation
-        if (ClassHelper.isInterface (aMatchingConverterClass) && _implementsEqualsItself (aClass))
-          return null;
-
-        return aMatchingImplementation;
-      }
-    }
-
-    // No special handler found
-
-    // Handle arrays specially, because we cannot register a converter for
-    // every potential array class
-    if (ClassHelper.isArrayClass (aClass))
-      return new ArrayEqualsImplementation ();
-
-    // Definitely no special implementation
-    return null;
   }
 }
