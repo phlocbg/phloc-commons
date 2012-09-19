@@ -28,7 +28,6 @@ import com.phloc.commons.IHasSize;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
-import com.phloc.commons.hash.IHashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -104,25 +103,23 @@ public class LRUCache <KEYTYPE, VALUETYPE> extends LinkedHashMap <KEYTYPE, VALUE
     // Special case because LinkedHashMap implementation is a bit bogus
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    if (!super.equals (o))
-      return false;
     final LRUCache <?, ?> rhs = (LRUCache <?, ?>) o;
-    return EqualsUtils.equals (m_nMaxSize, rhs.m_nMaxSize);
+    return EqualsUtils.equals (m_nMaxSize, rhs.m_nMaxSize) && entrySet ().equals (rhs.entrySet ());
   }
 
   @Override
   public int hashCode ()
   {
     // Special case because LinkedHashMap implementation is a bit bogus
-    final int nSuperHashCode = super.hashCode ();
-    if (nSuperHashCode == IHashCodeGenerator.ILLEGAL_HASHCODE)
-      return new HashCodeGenerator (this).append (m_nMaxSize).getHashCode ();
-    return HashCodeGenerator.getDerived (nSuperHashCode).append (m_nMaxSize).getHashCode ();
+    final HashCodeGenerator aHCG = new HashCodeGenerator (this).append (m_nMaxSize);
+    for (final Map.Entry <KEYTYPE, VALUETYPE> aEntry : entrySet ())
+      aHCG.append (aEntry.getKey ()).append (aEntry.getValue ());
+    return aHCG.getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return ToStringGenerator.getDerived (super.toString ()).append ("maxSize", m_nMaxSize).toString ();
+    return new ToStringGenerator (this).append ("maxSize", m_nMaxSize).append ("map", super.toString ()).toString ();
   }
 }

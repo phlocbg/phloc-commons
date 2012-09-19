@@ -19,7 +19,6 @@ package com.phloc.commons.lang;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -28,14 +27,13 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.phloc.commons.annotations.ReturnsMutableCopy;
-import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.collections.LRUCache;
 import com.phloc.commons.collections.iterate.IIterableIterator;
+import com.phloc.commons.collections.iterate.IterableIterator;
 
 /**
  * A small class hierarchy cache
@@ -48,21 +46,22 @@ public final class ClassHierarchyCache
   @Immutable
   private static final class ClassList
   {
-    private final Set <WeakReference <Class <?>>> m_aList = new LinkedHashSet <WeakReference <Class <?>>> ();
+    // Store it in the correct order, but without duplicates
+    private final List <WeakReference <Class <?>>> m_aList = new ArrayList <WeakReference <Class <?>>> ();
 
     public ClassList (@Nonnull final Class <?> aClass)
     {
       if (aClass == null)
         throw new NullPointerException ("class");
+
       // Check the whole class hierarchy of the source class
+      final Set <Class <?>> aUniqueOrderedClasses = new LinkedHashSet <Class <?>> ();
       final List <Class <?>> aOpenSrc = new ArrayList <Class <?>> ();
       aOpenSrc.add (aClass);
       while (!aOpenSrc.isEmpty ())
       {
         final Class <?> aCurClass = aOpenSrc.remove (0);
-        // Avoid duplicates
-        if (!contains (aCurClass))
-          m_aList.add (new WeakReference <Class <?>> (aCurClass));
+        aUniqueOrderedClasses.add (aCurClass);
 
         // Add super-classes and interfaces
         // Super-classes have precedence over interfaces!
@@ -71,15 +70,10 @@ public final class ClassHierarchyCache
         if (aCurClass.getSuperclass () != null)
           aOpenSrc.add (0, aCurClass.getSuperclass ());
       }
-    }
 
-    public boolean contains (@Nullable final Class <?> aClass)
-    {
-      if (aClass != null)
-        for (final WeakReference <Class <?>> aRef : m_aList)
-          if (aClass.equals (aRef.get ()))
-            return true;
-      return false;
+      // Now convert to list of WeakReference
+      for (final Class <?> aCurClass : aUniqueOrderedClasses)
+        m_aList.add (new WeakReference <Class <?>> (aCurClass));
     }
 
     @Nonnull
@@ -113,34 +107,9 @@ public final class ClassHierarchyCache
     }
 
     @Nonnull
-    public IIterableIterator <Class <?>> getIterator ()
+    public IIterableIterator <WeakReference <Class <?>>> iterator ()
     {
-      // Use a list that may contain duplicates
-      return new IIterableIterator <Class <?>> ()
-      {
-
-        public boolean hasNext ()
-        {
-          return false;
-        }
-
-        public Class <?> next ()
-        {
-          return null;
-        }
-
-        @UnsupportedOperation
-        public void remove ()
-        {
-          throw new UnsupportedOperationException ();
-        }
-
-        @Nonnull
-        public Iterator <Class <?>> iterator ()
-        {
-          return this;
-        }
-      };
+      return IterableIterator.create (m_aList);
     }
   }
 
@@ -245,8 +214,8 @@ public final class ClassHierarchyCache
   }
 
   /**
-   * Get the complete super class hierarchy of the passed class including all
-   * super classes and all interfaces of the passed class and of all parent
+   * Iterate the complete super class hierarchy of the passed class including
+   * all super classes and all interfaces of the passed class and of all parent
    * classes.
    * 
    * @param aClass
@@ -256,8 +225,8 @@ public final class ClassHierarchyCache
    *         were already removed.
    */
   @Nonnull
-  public static IIterableIterator <Class <?>> getClassHierarchyIterator (@Nonnull final Class <?> aClass)
+  public static IIterableIterator <WeakReference <Class <?>>> getClassHierarchyIterator (@Nonnull final Class <?> aClass)
   {
-    return getClassList (aClass).getIterator ();
+    return getClassList (aClass).iterator ();
   }
 }

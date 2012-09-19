@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.hash;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -188,20 +189,24 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
           aMatchingClass = aClass;
         else
         {
-          // Scan hierarchy
-          for (final Class <?> aCurClass : ClassHierarchyCache.getClassHierarchy (aClass))
+          // Scan hierarchy in most efficient way
+          for (final WeakReference <Class <?>> aCurWRClass : ClassHierarchyCache.getClassHierarchyIterator (aClass))
           {
-            final IHashCodeImplementation ret = m_aMap.get (aCurClass);
-            if (ret != null)
+            final Class <?> aCurClass = aCurWRClass.get ();
+            if (aCurClass != null)
             {
-              aMatchingImplementation = ret;
-              aMatchingClass = aCurClass;
-              if (s_aLogger.isDebugEnabled ())
-                s_aLogger.debug ("Found hierarchical match with class " +
-                                 aMatchingClass +
-                                 " when searching for " +
-                                 aClass);
-              break;
+              final IHashCodeImplementation aImpl = m_aMap.get (aCurClass);
+              if (aImpl != null)
+              {
+                aMatchingImplementation = aImpl;
+                aMatchingClass = aCurClass;
+                if (s_aLogger.isDebugEnabled ())
+                  s_aLogger.debug ("Found hierarchical match with class " +
+                                   aMatchingClass +
+                                   " when searching for " +
+                                   aClass);
+                break;
+              }
             }
           }
         }
@@ -221,17 +226,35 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
         if (ClassHelper.isInterface (aMatchingClass) && _implementsHashCodeItself (aClass))
           return null;
 
+        if (!aMatchingClass.equals (aClass))
+        {
+          // We found a match by walking the hierarchy -> put that match in the
+          // direct hit list for further speed up
+          m_aRWLock.writeLock ().lock ();
+          try
+          {
+            if (!m_aMap.containsKey (aClass))
+              m_aMap.put (aClass, aMatchingImplementation);
+            else
+              s_aLogger.warn ("We iterated the hierarchy for " +
+                              aClass +
+                              " and found " +
+                              aMatchingClass +
+                              ", but this class is already in the direct access map!");
+          }
+          finally
+          {
+            m_aRWLock.writeLock ().unlock ();
+          }
+        }
+
         return aMatchingImplementation;
       }
 
       // Handle arrays specially, because we cannot register a converter for
-      // every potential array class
+      // every potential array class (but we allow for special implementations)
       if (ClassHelper.isArrayClass (aClass))
         return new ArrayHashCodeImplementation ();
-
-      // Does the class implement hashCode directly?
-      if (_implementsHashCodeItself (aClass))
-        return null;
     }
 
     // No special handler found
