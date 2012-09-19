@@ -32,6 +32,7 @@ import javax.annotation.concurrent.ThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.annotations.UseDirectEqualsAndHashCode;
 import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.lang.ClassHierarchyCache;
 import com.phloc.commons.lang.ServiceLoaderBackport;
@@ -70,6 +71,9 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
 
   // Use a weak hash map, because the key is a class
   private final Map <Class <?>, IHashCodeImplementation> m_aMap = new WeakHashMap <Class <?>, IHashCodeImplementation> ();
+
+  // Cache for classes where direct implementation should be used
+  private final Map <String, Boolean> m_aDirectHashCode = new HashMap <String, Boolean> ();
 
   // Cache for classes that implement hashCode directly
   private final Map <String, Boolean> m_aImplementsHashCode = new HashMap <String, Boolean> ();
@@ -120,6 +124,41 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
     try
     {
       return EChange.valueOf (m_aMap.remove (aClass) != null);
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
+  }
+
+  private boolean _useDirectHashCode (@Nonnull final Class <?> aClass)
+  {
+    final String sClassName = aClass.getName ();
+
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      final Boolean aSavedState = m_aDirectHashCode.get (sClassName);
+      if (aSavedState != null)
+        return aSavedState.booleanValue ();
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      // Try again in write lock
+      final Boolean aSavedState = m_aDirectHashCode.get (sClassName);
+      if (aSavedState != null)
+        return aSavedState.booleanValue ();
+
+      // Determine
+      final boolean bHasAnnotation = aClass.getAnnotation (UseDirectEqualsAndHashCode.class) != null;
+      m_aDirectHashCode.put (sClassName, Boolean.valueOf (bHasAnnotation));
+      return bHasAnnotation;
     }
     finally
     {
@@ -180,6 +219,10 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
       IHashCodeImplementation aMatchingImplementation = null;
       Class <?> aMatchingClass = null;
 
+      // No check required?
+      if (_useDirectHashCode (aClass))
+        return null;
+
       m_aRWLock.readLock ().lock ();
       try
       {
@@ -230,22 +273,7 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
         {
           // We found a match by walking the hierarchy -> put that match in the
           // direct hit list for further speed up
-          m_aRWLock.writeLock ().lock ();
-          try
-          {
-            if (!m_aMap.containsKey (aClass))
-              m_aMap.put (aClass, aMatchingImplementation);
-            else
-              s_aLogger.warn ("We iterated the hierarchy for " +
-                              aClass +
-                              " and found " +
-                              aMatchingClass +
-                              ", but this class is already in the direct access map!");
-          }
-          finally
-          {
-            m_aRWLock.writeLock ().unlock ();
-          }
+          registerHashCodeImplementation (aClass, aMatchingImplementation);
         }
 
         return aMatchingImplementation;

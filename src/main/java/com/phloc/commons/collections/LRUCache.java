@@ -26,6 +26,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.IHasSize;
 import com.phloc.commons.annotations.OverrideOnDemand;
+import com.phloc.commons.annotations.UseDirectEqualsAndHashCode;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
@@ -41,6 +42,7 @@ import com.phloc.commons.string.ToStringGenerator;
  *        Value type
  */
 @NotThreadSafe
+@UseDirectEqualsAndHashCode
 public class LRUCache <KEYTYPE, VALUETYPE> extends LinkedHashMap <KEYTYPE, VALUETYPE> implements IHasSize
 {
   // Note: 0.75f is the same as HashMap.DEFAULT_LOAD_FACTOR
