@@ -43,9 +43,17 @@ public final class ComparatorUtils
   @Nonnull
   public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> Comparator <? super Map.Entry <KEYTYPE, VALUETYPE>> getComparatorMapEntryKey ()
   {
-    return new Comparator <Map.Entry <KEYTYPE, VALUETYPE>> ()
+    return getComparatorMapEntryKey (ESortOrder.DEFAULT);
+  }
+
+  @Nonnull
+  public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> Comparator <? super Map.Entry <KEYTYPE, VALUETYPE>> getComparatorMapEntryKey (@Nonnull final ESortOrder eSortOrder)
+  {
+    return new AbstractComparator <Map.Entry <KEYTYPE, VALUETYPE>> (eSortOrder)
     {
-      public int compare (final Map.Entry <KEYTYPE, VALUETYPE> aEntry1, final Map.Entry <KEYTYPE, VALUETYPE> aEntry2)
+      @Override
+      protected int mainCompare (final Map.Entry <KEYTYPE, VALUETYPE> aEntry1,
+                                 final Map.Entry <KEYTYPE, VALUETYPE> aEntry2)
       {
         return CompareUtils.nullSafeCompare (aEntry1.getKey (), aEntry2.getKey ());
       }
@@ -67,9 +75,17 @@ public final class ComparatorUtils
   @Nonnull
   public static <KEYTYPE, VALUETYPE extends Comparable <? super VALUETYPE>> Comparator <? super Map.Entry <KEYTYPE, VALUETYPE>> getComparatorMapEntryValue ()
   {
-    return new Comparator <Map.Entry <KEYTYPE, VALUETYPE>> ()
+    return getComparatorMapEntryValue (ESortOrder.DEFAULT);
+  }
+
+  @Nonnull
+  public static <KEYTYPE, VALUETYPE extends Comparable <? super VALUETYPE>> Comparator <? super Map.Entry <KEYTYPE, VALUETYPE>> getComparatorMapEntryValue (@Nonnull final ESortOrder eSortOrder)
+  {
+    return new AbstractComparator <Map.Entry <KEYTYPE, VALUETYPE>> (eSortOrder)
     {
-      public int compare (final Map.Entry <KEYTYPE, VALUETYPE> aEntry1, final Map.Entry <KEYTYPE, VALUETYPE> aEntry2)
+      @Override
+      protected int mainCompare (final Map.Entry <KEYTYPE, VALUETYPE> aEntry1,
+                                 final Map.Entry <KEYTYPE, VALUETYPE> aEntry2)
       {
         return CompareUtils.nullSafeCompare (aEntry1.getValue (), aEntry2.getValue ());
       }
