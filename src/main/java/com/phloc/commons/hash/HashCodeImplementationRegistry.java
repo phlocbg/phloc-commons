@@ -106,7 +106,7 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
     try
     {
       if (m_aMap.containsKey (aClass))
-        s_aLogger.error ("Another hashCode implementation for class " + aClass + " is already registered!");
+        s_aLogger.warn ("Another hashCode implementation for class " + aClass + " is already registered!");
       else
         m_aMap.put (aClass, aImpl);
     }
@@ -130,7 +130,7 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
     }
   }
 
-  private boolean _useDirectHashCode (@Nonnull final Class <?> aClass)
+  private boolean _isUseDirectHashCode (@Nonnull final Class <?> aClass)
   {
     final String sClassName = aClass.getName ();
 
@@ -219,7 +219,7 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
       Class <?> aMatchingClass = null;
 
       // No check required?
-      if (_useDirectHashCode (aClass))
+      if (_isUseDirectHashCode (aClass))
         return null;
 
       m_aRWLock.readLock ().lock ();
@@ -266,7 +266,19 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
         // Example: a converter for "Map" is registered, but "LRUCache" comes
         // with its own "hashCode" implementation
         if (ClassHelper.isInterface (aMatchingClass) && _implementsHashCodeItself (aClass))
+        {
+          // Remember to use direct implementation
+          m_aRWLock.writeLock ().lock ();
+          try
+          {
+            m_aDirectHashCode.put (aClass.getName (), Boolean.TRUE);
+          }
+          finally
+          {
+            m_aRWLock.writeLock ().unlock ();
+          }
           return null;
+        }
 
         if (!aMatchingClass.equals (aClass))
         {
@@ -282,6 +294,17 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
       // every potential array class (but we allow for special implementations)
       if (ClassHelper.isArrayClass (aClass))
         return new ArrayHashCodeImplementation ();
+
+      // Remember to use direct implementation
+      m_aRWLock.writeLock ().lock ();
+      try
+      {
+        m_aDirectHashCode.put (aClass.getName (), Boolean.TRUE);
+      }
+      finally
+      {
+        m_aRWLock.writeLock ().unlock ();
+      }
     }
 
     // No special handler found
