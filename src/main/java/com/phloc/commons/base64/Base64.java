@@ -1393,7 +1393,7 @@ public final class Base64// NOPMD
                                       final int options)
   {
 
-    final byte [] ALPHABET = _getAlphabet (options);
+    final byte [] aAlphabet = _getAlphabet (options);
 
     // 1 2 3
     // 01234567890123456789012345678901 Bit position
@@ -1413,22 +1413,22 @@ public final class Base64// NOPMD
     switch (numSigBytes)
     {
       case 3:
-        destination[destOffset] = ALPHABET[(inBuff >>> 18)];
-        destination[destOffset + 1] = ALPHABET[(inBuff >>> 12) & 0x3f];
-        destination[destOffset + 2] = ALPHABET[(inBuff >>> 6) & 0x3f];
-        destination[destOffset + 3] = ALPHABET[(inBuff) & 0x3f];
+        destination[destOffset] = aAlphabet[(inBuff >>> 18)];
+        destination[destOffset + 1] = aAlphabet[(inBuff >>> 12) & 0x3f];
+        destination[destOffset + 2] = aAlphabet[(inBuff >>> 6) & 0x3f];
+        destination[destOffset + 3] = aAlphabet[(inBuff) & 0x3f];
         return destination;
 
       case 2:
-        destination[destOffset] = ALPHABET[(inBuff >>> 18)];
-        destination[destOffset + 1] = ALPHABET[(inBuff >>> 12) & 0x3f];
-        destination[destOffset + 2] = ALPHABET[(inBuff >>> 6) & 0x3f];
+        destination[destOffset] = aAlphabet[(inBuff >>> 18)];
+        destination[destOffset + 1] = aAlphabet[(inBuff >>> 12) & 0x3f];
+        destination[destOffset + 2] = aAlphabet[(inBuff >>> 6) & 0x3f];
         destination[destOffset + 3] = EQUALS_SIGN;
         return destination;
 
       case 1:
-        destination[destOffset] = ALPHABET[(inBuff >>> 18)];
-        destination[destOffset + 1] = ALPHABET[(inBuff >>> 12) & 0x3f];
+        destination[destOffset] = aAlphabet[(inBuff >>> 18)];
+        destination[destOffset + 1] = aAlphabet[(inBuff >>> 12) & 0x3f];
         destination[destOffset + 2] = EQUALS_SIGN;
         destination[destOffset + 3] = EQUALS_SIGN;
         return destination;
@@ -1979,7 +1979,7 @@ public final class Base64// NOPMD
                                           " and still store three bytes.");
     }
 
-    final byte [] DECODABET = _getDecodabet (options);
+    final byte [] aDecodabet = _getDecodabet (options);
 
     // Example: Dk==
     if (source[srcOffset + 2] == EQUALS_SIGN)
@@ -1987,8 +1987,8 @@ public final class Base64// NOPMD
       // Two ways to do the same thing. Don't know which way I like best.
       // int outBuff = ( ( DECODABET[ source[ srcOffset ] ] << 24 ) >>> 6 )
       // | ( ( DECODABET[ source[ srcOffset + 1] ] << 24 ) >>> 12 );
-      final int outBuff = ((DECODABET[source[srcOffset]] & 0xFF) << 18) |
-                          ((DECODABET[source[srcOffset + 1]] & 0xFF) << 12);
+      final int outBuff = ((aDecodabet[source[srcOffset]] & 0xFF) << 18) |
+                          ((aDecodabet[source[srcOffset + 1]] & 0xFF) << 12);
 
       destination[destOffset] = (byte) (outBuff >>> 16);
       return 1;
@@ -2001,9 +2001,9 @@ public final class Base64// NOPMD
       // int outBuff = ( ( DECODABET[ source[ srcOffset ] ] << 24 ) >>> 6 )
       // | ( ( DECODABET[ source[ srcOffset + 1 ] ] << 24 ) >>> 12 )
       // | ( ( DECODABET[ source[ srcOffset + 2 ] ] << 24 ) >>> 18 );
-      final int outBuff = ((DECODABET[source[srcOffset]] & 0xFF) << 18) |
-                          ((DECODABET[source[srcOffset + 1]] & 0xFF) << 12) |
-                          ((DECODABET[source[srcOffset + 2]] & 0xFF) << 6);
+      final int outBuff = ((aDecodabet[source[srcOffset]] & 0xFF) << 18) |
+                          ((aDecodabet[source[srcOffset + 1]] & 0xFF) << 12) |
+                          ((aDecodabet[source[srcOffset + 2]] & 0xFF) << 6);
 
       destination[destOffset] = (byte) (outBuff >>> 16);
       destination[destOffset + 1] = (byte) (outBuff >>> 8);
@@ -2017,10 +2017,10 @@ public final class Base64// NOPMD
       // | ( ( DECODABET[ source[ srcOffset + 1 ] ] << 24 ) >>> 12 )
       // | ( ( DECODABET[ source[ srcOffset + 2 ] ] << 24 ) >>> 18 )
       // | ( ( DECODABET[ source[ srcOffset + 3 ] ] << 24 ) >>> 24 );
-      final int outBuff = ((DECODABET[source[srcOffset]] & 0xFF) << 18) |
-                          ((DECODABET[source[srcOffset + 1]] & 0xFF) << 12) |
-                          ((DECODABET[source[srcOffset + 2]] & 0xFF) << 6) |
-                          ((DECODABET[source[srcOffset + 3]] & 0xFF));
+      final int outBuff = ((aDecodabet[source[srcOffset]] & 0xFF) << 18) |
+                          ((aDecodabet[source[srcOffset + 1]] & 0xFF) << 12) |
+                          ((aDecodabet[source[srcOffset + 2]] & 0xFF) << 6) |
+                          ((aDecodabet[source[srcOffset + 3]] & 0xFF));
 
       destination[destOffset] = (byte) (outBuff >> 16);
       destination[destOffset + 1] = (byte) (outBuff >> 8);
@@ -2104,7 +2104,7 @@ public final class Base64// NOPMD
                                           len);
     }
 
-    final byte [] DECODABET = _getDecodabet (options);
+    final byte [] aDecodabet = _getDecodabet (options);
 
     final int len34 = len * 3 / 4; // Estimate on array size
     final byte [] outBuff = new byte [len34]; // Upper limit on size of output
@@ -2119,7 +2119,7 @@ public final class Base64// NOPMD
     for (i = off; i < off + len; i++)
     {
       // Loop through source
-      sbiDecode = DECODABET[source[i] & 0xFF];
+      sbiDecode = aDecodabet[source[i] & 0xFF];
 
       // White space, Equals sign, or legit Base64 character
       // Note the values such as -5 and -9 in the
@@ -2227,7 +2227,6 @@ public final class Base64// NOPMD
         }
         catch (final IOException e)
         {
-          e.printStackTrace ();
           // Just return originally-decoded bytes
         }
         finally
@@ -2565,15 +2564,17 @@ public final class Base64// NOPMD
    */
   public static class InputStream extends java.io.FilterInputStream
   {
-    private final boolean encode; // Encoding or decoding
-    private int position; // Current position in the buffer
-    private final byte [] buffer; // Small buffer holding converted data
-    private final int bufferLength; // Length of buffer (3 or 4)
-    private int numSigBytes; // Number of meaningful bytes in the buffer
-    private int lineLength;
-    private final boolean breakLines; // Break lines at less than 80 characters
-    private final int options; // Record options used to create the stream.
-    private final byte [] decodabet; // Local copies to avoid extra method calls
+    private final boolean m_bEncode; // Encoding or decoding
+    private int m_nPosition; // Current position in the buffer
+    private final byte [] m_aBuffer; // Small buffer holding converted data
+    private final int m_nBufferLength; // Length of buffer (3 or 4)
+    private int m_nNumSigBytes; // Number of meaningful bytes in the buffer
+    private int m_nLineLength;
+    private final boolean m_bBreakLines; // Break lines at less than 80
+                                         // characters
+    private final int m_nOptions; // Record options used to create the stream.
+    private final byte [] m_aDecodabet; // Local copies to avoid extra method
+                                        // calls
 
     /**
      * Constructs a {@link Base64.InputStream} in DECODE mode.
@@ -2612,14 +2613,14 @@ public final class Base64// NOPMD
     public InputStream (final java.io.InputStream pin, final int poptions)
     {
       super (pin);
-      this.options = poptions; // Record for later
-      this.breakLines = (poptions & DO_BREAK_LINES) > 0;
-      this.encode = (poptions & ENCODE) > 0;
-      this.bufferLength = encode ? 4 : 3;
-      this.buffer = new byte [bufferLength];
-      this.position = -1;
-      this.lineLength = 0;
-      this.decodabet = _getDecodabet (poptions);
+      this.m_nOptions = poptions; // Record for later
+      this.m_bBreakLines = (poptions & DO_BREAK_LINES) > 0;
+      this.m_bEncode = (poptions & ENCODE) > 0;
+      this.m_nBufferLength = m_bEncode ? 4 : 3;
+      this.m_aBuffer = new byte [m_nBufferLength];
+      this.m_nPosition = -1;
+      this.m_nLineLength = 0;
+      this.m_aDecodabet = _getDecodabet (poptions);
     }
 
     /**
@@ -2633,9 +2634,9 @@ public final class Base64// NOPMD
     public int read () throws IOException// NOPMD
     {
       // Do we need to get data?
-      if (position < 0)
+      if (m_nPosition < 0)
       {
-        if (encode)
+        if (m_bEncode)
         {
           final byte [] b3 = new byte [3];
           int numBinaryBytes = 0;
@@ -2653,9 +2654,9 @@ public final class Base64// NOPMD
 
           if (numBinaryBytes > 0)
           {
-            _encode3to4 (b3, 0, numBinaryBytes, buffer, 0, options);
-            position = 0;
-            numSigBytes = 4;
+            _encode3to4 (b3, 0, numBinaryBytes, m_aBuffer, 0, m_nOptions);
+            m_nPosition = 0;
+            m_nNumSigBytes = 4;
           }
           else
           {
@@ -2675,7 +2676,7 @@ public final class Base64// NOPMD
             do
             {
               b = in.read ();
-            } while (b >= 0 && decodabet[b & 0x7f] <= WHITE_SPACE_ENC);
+            } while (b >= 0 && m_aDecodabet[b & 0x7f] <= WHITE_SPACE_ENC);
 
             if (b < 0)
               break; // Reads a -1 if end of stream
@@ -2685,8 +2686,8 @@ public final class Base64// NOPMD
 
           if (i == 4)
           {
-            numSigBytes = _decode4to3 (b4, 0, buffer, 0, options);
-            position = 0;
+            m_nNumSigBytes = _decode4to3 (b4, 0, m_aBuffer, 0, m_nOptions);
+            m_nPosition = 0;
           }
           else
             if (i == 0)
@@ -2703,27 +2704,27 @@ public final class Base64// NOPMD
       }
 
       // Got data?
-      if (position >= 0)
+      if (m_nPosition >= 0)
       {
-        if ( /* !encode && */position >= numSigBytes)
+        if ( /* !encode && */m_nPosition >= m_nNumSigBytes)
         {
           return -1;
         }
 
-        if (encode && breakLines && lineLength >= MAX_LINE_LENGTH)
+        if (m_bEncode && m_bBreakLines && m_nLineLength >= MAX_LINE_LENGTH)
         {
-          lineLength = 0;
+          m_nLineLength = 0;
           return '\n';
         }
         {
-          lineLength++; // This isn't important when decoding
-                        // but throwing an extra "if" seems
-                        // just as wasteful.
+          m_nLineLength++; // This isn't important when decoding
+          // but throwing an extra "if" seems
+          // just as wasteful.
 
-          final int b = buffer[position++];
+          final int b = m_aBuffer[m_nPosition++];
 
-          if (position >= bufferLength)
-            position = -1;
+          if (m_nPosition >= m_nBufferLength)
+            m_nPosition = -1;
 
           return b & 0xFF; // This is how you "cast" a byte that's
                            // intended to be unsigned.
@@ -2784,16 +2785,17 @@ public final class Base64// NOPMD
    */
   public static class OutputStream extends java.io.FilterOutputStream
   {
-    private final boolean encode;
-    private int position;
-    private byte [] buffer;
-    private final int bufferLength;
-    private int lineLength;
-    private final boolean breakLines;
-    private final byte [] b4; // Scratch used in a few places
-    private boolean suspendEncoding;
-    private final int options; // Record for later
-    private final byte [] decodabet; // Local copies to avoid extra method calls
+    private final boolean m_bEncode;
+    private int m_nPosition;
+    private byte [] m_aBuffer;
+    private final int m_nBufferLength;
+    private int m_nLineLength;
+    private final boolean m_bBreakLines;
+    private final byte [] m_aB4; // Scratch used in a few places
+    private boolean m_bSuspendEncoding;
+    private final int m_nOptions; // Record for later
+    private final byte [] m_aDecodabet; // Local copies to avoid extra method
+                                        // calls
 
     /**
      * Constructs a {@link Base64.OutputStream} in ENCODE mode.
@@ -2832,16 +2834,16 @@ public final class Base64// NOPMD
     public OutputStream (final java.io.OutputStream pout, final int poptions)
     {
       super (pout);
-      this.breakLines = (poptions & DO_BREAK_LINES) != 0;
-      this.encode = (poptions & ENCODE) != 0;
-      this.bufferLength = encode ? 3 : 4;
-      this.buffer = new byte [bufferLength];
-      this.position = 0;
-      this.lineLength = 0;
-      this.suspendEncoding = false;
-      this.b4 = new byte [4];
-      this.options = poptions;
-      this.decodabet = _getDecodabet (poptions);
+      this.m_bBreakLines = (poptions & DO_BREAK_LINES) != 0;
+      this.m_bEncode = (poptions & ENCODE) != 0;
+      this.m_nBufferLength = m_bEncode ? 3 : 4;
+      this.m_aBuffer = new byte [m_nBufferLength];
+      this.m_nPosition = 0;
+      this.m_nLineLength = 0;
+      this.m_bSuspendEncoding = false;
+      this.m_aB4 = new byte [4];
+      this.m_nOptions = poptions;
+      this.m_aDecodabet = _getDecodabet (poptions);
     }
 
     /**
@@ -2858,47 +2860,47 @@ public final class Base64// NOPMD
     public void write (final int theByte) throws IOException
     {
       // Encoding suspended?
-      if (suspendEncoding)
+      if (m_bSuspendEncoding)
       {
         this.out.write (theByte);
         return;
       }
 
       // Encode?
-      if (encode)
+      if (m_bEncode)
       {
-        buffer[position++] = (byte) theByte;
-        if (position >= bufferLength)
+        m_aBuffer[m_nPosition++] = (byte) theByte;
+        if (m_nPosition >= m_nBufferLength)
         { // Enough to encode.
 
-          this.out.write (_encode3to4 (b4, buffer, bufferLength, options));
+          this.out.write (_encode3to4 (m_aB4, m_aBuffer, m_nBufferLength, m_nOptions));
 
-          lineLength += 4;
-          if (breakLines && lineLength >= MAX_LINE_LENGTH)
+          m_nLineLength += 4;
+          if (m_bBreakLines && m_nLineLength >= MAX_LINE_LENGTH)
           {
             this.out.write (NEW_LINE);
-            lineLength = 0;
+            m_nLineLength = 0;
           }
-          position = 0;
+          m_nPosition = 0;
         }
       }
       // Else, Decoding
       else
       {
         // Meaningful Base64 character?
-        if (decodabet[theByte & 0x7f] > WHITE_SPACE_ENC)
+        if (m_aDecodabet[theByte & 0x7f] > WHITE_SPACE_ENC)
         {
-          buffer[position++] = (byte) theByte;
-          if (position >= bufferLength)
+          m_aBuffer[m_nPosition++] = (byte) theByte;
+          if (m_nPosition >= m_nBufferLength)
           { // Enough to output.
 
-            final int len = Base64._decode4to3 (buffer, 0, b4, 0, options);
-            out.write (b4, 0, len);
-            position = 0;
+            final int len = Base64._decode4to3 (m_aBuffer, 0, m_aB4, 0, m_nOptions);
+            out.write (m_aB4, 0, len);
+            m_nPosition = 0;
           }
         }
         else
-          if (decodabet[theByte & 0x7f] != WHITE_SPACE_ENC)
+          if (m_aDecodabet[theByte & 0x7f] != WHITE_SPACE_ENC)
           {
             throw new IOException ("Invalid character in Base64 data.");
           }
@@ -2921,7 +2923,7 @@ public final class Base64// NOPMD
     public void write (final byte [] theBytes, final int off, final int len) throws IOException
     {
       // Encoding suspended?
-      if (suspendEncoding)
+      if (m_bSuspendEncoding)
       {
         this.out.write (theBytes, off, len);
         return;
@@ -2940,12 +2942,12 @@ public final class Base64// NOPMD
      */
     public void flushBase64 () throws IOException
     {
-      if (position > 0)
+      if (m_nPosition > 0)
       {
-        if (encode)
+        if (m_bEncode)
         {
-          out.write (_encode3to4 (b4, buffer, position, options));
-          position = 0;
+          out.write (_encode3to4 (m_aB4, m_aBuffer, m_nPosition, m_nOptions));
+          m_nPosition = 0;
         }
         else
         {
@@ -2970,7 +2972,7 @@ public final class Base64// NOPMD
       if (out != null)
         super.close ();
 
-      buffer = null;
+      m_aBuffer = null;
       out = null;
     }
 
@@ -2985,7 +2987,7 @@ public final class Base64// NOPMD
     public void suspendEncoding () throws IOException
     {
       flushBase64 ();
-      this.suspendEncoding = true;
+      this.m_bSuspendEncoding = true;
     }
 
     /**
@@ -2996,7 +2998,7 @@ public final class Base64// NOPMD
      */
     public void resumeEncoding ()
     {
-      this.suspendEncoding = false;
+      this.m_bSuspendEncoding = false;
     }
   }
 }

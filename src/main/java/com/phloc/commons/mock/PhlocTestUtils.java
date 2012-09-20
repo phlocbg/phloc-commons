@@ -242,9 +242,9 @@ public final class PhlocTestUtils
       testDefaultImplementationWithEqualContentObject (aSerializable, aReadObject);
       return aReadObject;
     }
-    catch (final Exception ex)
+    catch (final Throwable t)
     {
-      throw new IllegalStateException ("testDefaultSerialization failed", ex);
+      throw new IllegalStateException ("testDefaultSerialization failed", t);
     }
   }
 

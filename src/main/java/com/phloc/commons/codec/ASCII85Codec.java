@@ -29,6 +29,10 @@ import com.phloc.commons.io.streams.StreamUtils;
  */
 public final class ASCII85Codec implements IByteArrayDecoder
 {
+  private static final int ENCODED_MAX = 117;
+  private static final int ENCODED_MIN = 33;
+  private static final int EIGHTY_FIVE = 85;
+
   public ASCII85Codec ()
   {}
 
@@ -74,17 +78,17 @@ public final class ASCII85Codec implements IByteArrayDecoder
         }
         else
         {
-          if (nEncByte < 33 || nEncByte > 117)
+          if (nEncByte < ENCODED_MIN || nEncByte > ENCODED_MAX)
             throw new DecoderException ("Illegal character in ASCII85Decode: " + nEncByte);
 
-          aBuffer[nEncodedCount] = (byte) (nEncByte - 33);
+          aBuffer[nEncodedCount] = (byte) (nEncByte - ENCODED_MIN);
           ++nEncodedCount;
           if (nEncodedCount == 5)
           {
             nEncodedCount = 0;
             int r = 0;
             for (int j = 0; j < 5; ++j)
-              r = r * 85 + aBuffer[j];
+              r = r * EIGHTY_FIVE + aBuffer[j];
             aBAOS.write ((byte) (r >> 24));
             aBAOS.write ((byte) (r >> 16));
             aBAOS.write ((byte) (r >> 8));
@@ -99,24 +103,24 @@ public final class ASCII85Codec implements IByteArrayDecoder
         case 1:
           throw new IllegalStateException ("Unexpected end of ASCII85 encoded data!");
         case 2:
-          nRest = (aBuffer[0] * 85 * 85 * 85 * 85) + (aBuffer[1] * 85 * 85 * 85) + (85 * 85 * 85) + (85 * 85) + 85;
+          nRest = (aBuffer[0] * EIGHTY_FIVE * EIGHTY_FIVE * EIGHTY_FIVE * EIGHTY_FIVE) + (aBuffer[1] * EIGHTY_FIVE * EIGHTY_FIVE * EIGHTY_FIVE) + (EIGHTY_FIVE * EIGHTY_FIVE * EIGHTY_FIVE) + (EIGHTY_FIVE * EIGHTY_FIVE) + EIGHTY_FIVE;
           aBAOS.write ((byte) (nRest >> 24));
           break;
         case 3:
-          nRest = (aBuffer[0] * 85 * 85 * 85 * 85) +
-                  (aBuffer[1] * 85 * 85 * 85) +
-                  (aBuffer[2] * 85 * 85) +
-                  (85 * 85) +
-                  85;
+          nRest = (aBuffer[0] * EIGHTY_FIVE * EIGHTY_FIVE * EIGHTY_FIVE * EIGHTY_FIVE) +
+                  (aBuffer[1] * EIGHTY_FIVE * EIGHTY_FIVE * EIGHTY_FIVE) +
+                  (aBuffer[2] * EIGHTY_FIVE * EIGHTY_FIVE) +
+                  (EIGHTY_FIVE * EIGHTY_FIVE) +
+                  EIGHTY_FIVE;
           aBAOS.write ((byte) (nRest >> 24));
           aBAOS.write ((byte) (nRest >> 16));
           break;
         case 4:
-          nRest = (aBuffer[0] * 85 * 85 * 85 * 85) +
-                  (aBuffer[1] * 85 * 85 * 85) +
-                  (aBuffer[2] * 85 * 85) +
-                  (aBuffer[3] * 85) +
-                  85;
+          nRest = (aBuffer[0] * EIGHTY_FIVE * EIGHTY_FIVE * EIGHTY_FIVE * EIGHTY_FIVE) +
+                  (aBuffer[1] * EIGHTY_FIVE * EIGHTY_FIVE * EIGHTY_FIVE) +
+                  (aBuffer[2] * EIGHTY_FIVE * EIGHTY_FIVE) +
+                  (aBuffer[3] * EIGHTY_FIVE) +
+                  EIGHTY_FIVE;
           aBAOS.write ((byte) (nRest >> 24));
           aBAOS.write ((byte) (nRest >> 16));
           aBAOS.write ((byte) (nRest >> 8));

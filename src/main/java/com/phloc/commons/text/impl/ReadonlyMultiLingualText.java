@@ -68,16 +68,4 @@ public final class ReadonlyMultiLingualText extends TextProvider implements IRea
     for (final Map.Entry <Locale, String> aEntry : aMLT.getMap ().entrySet ())
       internalAddText (aEntry.getKey (), aEntry.getValue ());
   }
-
-  @Override
-  public boolean equals (final Object o)
-  {
-    return super.equals (o);
-  }
-
-  @Override
-  public int hashCode ()
-  {
-    return super.hashCode ();
-  }
 }

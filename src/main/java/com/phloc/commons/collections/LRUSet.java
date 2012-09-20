@@ -47,37 +47,28 @@ import com.phloc.commons.string.ToStringGenerator;
 public class LRUSet <ELEMENTTYPE> extends AbstractSet <ELEMENTTYPE> implements IHasSize, Serializable
 {
   @UseDirectEqualsAndHashCode
-  private final class LRUCacheMap extends LRUCache <ELEMENTTYPE, Boolean>
+  private static final class LRUCacheMap <ELEMENTTYPE> extends LRUCache <ELEMENTTYPE, Boolean>
   {
-    private LRUCacheMap (final int nMaxSize)
+    private final LRUSet <ELEMENTTYPE> m_aOwningSet;
+
+    private LRUCacheMap (@Nonnegative final int nMaxSize, @Nonnull final LRUSet <ELEMENTTYPE> aOwningSet)
     {
       super (nMaxSize);
+      m_aOwningSet = aOwningSet;
     }
 
     @Override
     protected void onRemoveEldestEntry (final Map.Entry <ELEMENTTYPE, Boolean> aEldest)
     {
-      LRUSet.this.onRemoveEldestEntry (aEldest.getKey ());
-    }
-
-    @Override
-    public boolean equals (final Object o)
-    {
-      return super.equals (o);
-    }
-
-    @Override
-    public int hashCode ()
-    {
-      return super.hashCode ();
+      m_aOwningSet.onRemoveEldestEntry (aEldest.getKey ());
     }
   }
 
-  private final LRUCacheMap m_aCache;
+  private final LRUCacheMap <ELEMENTTYPE> m_aCache;
 
   public LRUSet (@Nonnegative final int nMaxSize)
   {
-    m_aCache = new LRUCacheMap (nMaxSize);
+    m_aCache = new LRUCacheMap <ELEMENTTYPE> (nMaxSize, this);
   }
 
   /**

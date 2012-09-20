@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.name;
 
+import java.io.Serializable;
+
 import javax.annotation.Nullable;
 
 /**
@@ -26,7 +28,7 @@ import javax.annotation.Nullable;
  * @author philip
  * @param <DATATYPE>
  */
-public interface IDisplayNameProvider <DATATYPE>
+public interface IDisplayNameProvider <DATATYPE> extends Serializable
 {
   /**
    * Get the name of the passed object.

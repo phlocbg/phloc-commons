@@ -34,8 +34,7 @@ import javax.annotation.concurrent.NotThreadSafe;
  *        Collection type consisting of value elements
  */
 @NotThreadSafe
-public class DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends
-                                                                                                 BasicFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>>
+public class DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends BasicFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>>
 {
   /**
    * Constructor for root object
@@ -61,17 +60,5 @@ public class DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collect
                                 @Nonnull final KEYTYPE aDataID)
   {
     super (aParent, aDataID);
-  }
-
-  @Override
-  public boolean equals (final Object o)
-  {
-    return super.equals (o);
-  }
-
-  @Override
-  public int hashCode ()
-  {
-    return super.hashCode ();
   }
 }

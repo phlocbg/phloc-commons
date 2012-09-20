@@ -106,10 +106,9 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
     try
     {
       if (m_aMap.containsKey (aClass))
-        throw new IllegalArgumentException ("Another hashCode implementation for class " +
-                                            aClass +
-                                            " is already registered!");
-      m_aMap.put (aClass, aImpl);
+        s_aLogger.error ("Another hashCode implementation for class " + aClass + " is already registered!");
+      else
+        m_aMap.put (aClass, aImpl);
     }
     finally
     {
