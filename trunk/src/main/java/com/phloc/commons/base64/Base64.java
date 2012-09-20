@@ -208,22 +208,22 @@ public final class Base64// NOPMD
   /* ******** P U B L I C F I E L D S ******** */
 
   /** No options specified. Value is zero. */
-  public final static int NO_OPTIONS = 0;
+  public static final int NO_OPTIONS = 0;
 
   /** Specify encoding in first bit. Value is one. */
-  public final static int ENCODE = 1;
+  public static final int ENCODE = 1;
 
   /** Specify decoding in first bit. Value is zero. */
-  public final static int DECODE = 0;
+  public static final int DECODE = 0;
 
   /** Specify that data should be gzip-compressed in second bit. Value is two. */
-  public final static int GZIP = 2;
+  public static final int GZIP = 2;
 
   /** Specify that gzipped data should <em>not</em> be automatically gunzipped. */
-  public final static int DONT_GUNZIP = 4;
+  public static final int DONT_GUNZIP = 4;
 
   /** Do break lines when encoding. Value is 8. */
-  public final static int DO_BREAK_LINES = 8;
+  public static final int DO_BREAK_LINES = 8;
 
   /**
    * Encode using Base64-like encoding that is URL- and Filename-safe as
@@ -234,32 +234,32 @@ public final class Base64// NOPMD
    * very least should not be called Base64 without also specifying that is was
    * encoded using the URL- and Filename-safe dialect.
    */
-  public final static int URL_SAFE = 16;
+  public static final int URL_SAFE = 16;
 
   /**
    * Encode using the special "ordered" dialect of Base64 described here: <a
    * href ="http://www.faqs.org/qa/rfcc-1940.html">http://www.faqs.org/qa/rfcc-
    * 1940. html</a>.
    */
-  public final static int ORDERED = 32;
+  public static final int ORDERED = 32;
 
   /* ******** P R I V A T E F I E L D S ******** */
 
   /** Maximum line length (76) of Base64 output. */
-  private final static int MAX_LINE_LENGTH = 76;
+  private static final int MAX_LINE_LENGTH = 76;
 
   /** The equals sign (=) as a byte. */
-  private final static byte EQUALS_SIGN = (byte) '=';
+  private static final byte EQUALS_SIGN = (byte) '=';
 
   /** The new line character (\n) as a byte. */
-  private final static byte NEW_LINE = (byte) '\n';
+  private static final byte NEW_LINE = (byte) '\n';
 
   /** Preferred encoding. */
-  private final static Charset PREFERRED_ENCODING = CCharset.CHARSET_US_ASCII_OBJ;
+  private static final Charset PREFERRED_ENCODING = CCharset.CHARSET_US_ASCII_OBJ;
 
-  private final static byte WHITE_SPACE_ENC = -5; // Indicates white space in
+  private static final byte WHITE_SPACE_ENC = -5; // Indicates white space in
                                                   // encoding
-  private final static byte EQUALS_SIGN_ENC = -1; // Indicates equals sign in
+  private static final byte EQUALS_SIGN_ENC = -1; // Indicates equals sign in
                                                   // encoding
 
   /* ******** S T A N D A R D B A S E 6 4 A L P H A B E T ******** */
@@ -269,7 +269,7 @@ public final class Base64// NOPMD
    * Host platform me be something funny like EBCDIC, so we hardcode these
    * values.
    */
-  private final static byte [] _STANDARD_ALPHABET = { (byte) 'A',
+  private static final byte [] _STANDARD_ALPHABET = { (byte) 'A',
                                                      (byte) 'B',
                                                      (byte) 'C',
                                                      (byte) 'D',
@@ -338,7 +338,7 @@ public final class Base64// NOPMD
    * Translates a Base64 value to either its 6-bit reconstruction value or a
    * negative number indicating some other meaning.
    **/
-  private final static byte [] _STANDARD_DECODABET = { -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal
+  private static final byte [] _STANDARD_DECODABET = { -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal
                                                                                            // 0
                                                                                            // -
                                                                                            // 8
@@ -610,7 +610,7 @@ public final class Base64// NOPMD
    * /rfcs/rfc3548.html</a>. Notice that the last two bytes become "hyphen" and
    * "underscore" instead of "plus" and "slash."
    */
-  private final static byte [] _URL_SAFE_ALPHABET = { (byte) 'A',
+  private static final byte [] _URL_SAFE_ALPHABET = { (byte) 'A',
                                                      (byte) 'B',
                                                      (byte) 'C',
                                                      (byte) 'D',
@@ -678,7 +678,7 @@ public final class Base64// NOPMD
   /**
    * Used in decoding URL- and Filename-safe dialects of Base64.
    */
-  private final static byte [] _URL_SAFE_DECODABET = { -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal
+  private static final byte [] _URL_SAFE_DECODABET = { -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal
                                                                                            // 0
                                                                                            // -
                                                                                            // 8
@@ -951,7 +951,7 @@ public final class Base64// NOPMD
    * href="http://www.faqs.org/qa/rfcc-1940.html">http://www
    * .faqs.org/qa/rfcc-1940.html</a>.
    */
-  private final static byte [] _ORDERED_ALPHABET = { (byte) '-',
+  private static final byte [] _ORDERED_ALPHABET = { (byte) '-',
                                                     (byte) '0',
                                                     (byte) '1',
                                                     (byte) '2',
@@ -1019,7 +1019,7 @@ public final class Base64// NOPMD
   /**
    * Used in decoding the "ordered" dialect of Base64.
    */
-  private final static byte [] _ORDERED_DECODABET = { -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal
+  private static final byte [] _ORDERED_DECODABET = { -9, -9, -9, -9, -9, -9, -9, -9, -9, // Decimal
                                                                                           // 0
                                                                                           // -
                                                                                           // 8
