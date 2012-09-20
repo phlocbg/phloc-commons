@@ -52,7 +52,7 @@ public final class MultiLingualText extends TextProvider implements IMultiLingua
   public static final IMultiLingualText EMPTY_MULTILINGUAL_TEXT = new MultiLingualText ();
 
   // A list of callback upon change.
-  private transient List <IChangeNotify <IMultiLingualText>> m_aChangeNotifyList;
+  private List <IChangeNotify <IMultiLingualText>> m_aChangeNotifyList;
 
   public MultiLingualText ()
   {}

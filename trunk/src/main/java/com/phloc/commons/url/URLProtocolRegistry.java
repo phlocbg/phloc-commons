@@ -143,15 +143,21 @@ public final class URLProtocolRegistry
    * @return The corresponding URL protocol or <code>null</code> if unresolved
    */
   @Nullable
-  public static IURLProtocol getProtocol (@Nullable final CharSequence sURL)
+  public static IURLProtocol getProtocol (@Nullable final String sURL)
   {
     if (sURL != null)
     {
-      // Get a copy of the container in read-lock
-      final Collection <IURLProtocol> aAllProtocols = getAllProtocols ();
-      for (final IURLProtocol aProtocol : aAllProtocols)
-        if (aProtocol.isUsedInURL (sURL))
-          return aProtocol;
+      s_aRWLock.readLock ().lock ();
+      try
+      {
+        for (final IURLProtocol aProtocol : s_aProtocols.values ())
+          if (aProtocol.isUsedInURL (sURL))
+            return aProtocol;
+      }
+      finally
+      {
+        s_aRWLock.readLock ().unlock ();
+      }
     }
     return null;
   }
@@ -177,7 +183,7 @@ public final class URLProtocolRegistry
    * @return <code>true</code> if the protocol is known, <code>false</code>
    *         otherwise
    */
-  public static boolean hasKnownProtocol (@Nullable final CharSequence sURL)
+  public static boolean hasKnownProtocol (@Nullable final String sURL)
   {
     return getProtocol (sURL) != null;
   }

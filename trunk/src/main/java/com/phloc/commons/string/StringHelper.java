@@ -2065,7 +2065,8 @@ public final class StringHelper
       ret.append (sInputString, nOldIndex, nIndex).append (aReplacementText);
       nIndex += nOldLength;
       nOldIndex = nIndex;
-    } while ((nIndex = sInputString.indexOf (sSearchText, nIndex)) != STRING_NOT_FOUND);
+      nIndex = sInputString.indexOf (sSearchText, nIndex);
+    } while (nIndex != STRING_NOT_FOUND);
     ret.append (sInputString, nOldIndex, sInputString.length ());
     return ret.toString ();
   }
@@ -2117,7 +2118,8 @@ public final class StringHelper
       ret.append (sInputString, nOldIndex, nIndex).append (cReplacementChar);
       nIndex++;
       nOldIndex = nIndex;
-    } while ((nIndex = sInputString.indexOf (cSearchChar, nIndex)) != STRING_NOT_FOUND);
+      nIndex = sInputString.indexOf (cSearchChar, nIndex);
+    } while (nIndex != STRING_NOT_FOUND);
     ret.append (sInputString, nOldIndex, sInputString.length ());
     return ret.toString ();
   }

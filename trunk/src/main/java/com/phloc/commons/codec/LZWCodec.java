@@ -90,8 +90,11 @@ final class LZWNode
   {
     LZWNode aCurNode = this;
     for (final byte aByte : aBuffer)
-      if ((aCurNode = aCurNode.getChildNode (aByte)) == null)
+    {
+      aCurNode = aCurNode.getChildNode (aByte);
+      if (aCurNode == null)
         break;
+    }
     return aCurNode;
   }
 
@@ -263,15 +266,19 @@ public class LZWCodec implements ICodec
           throw new DecoderException ("Failed to resolve initial code " + nCode);
         aBAOS.write (aByteSeq);
         byte [] aPrevByteSeq = aByteSeq;
-        while ((nCode = aDict.readCode (aBIS)) != AbstractLZWDictionary.CODE_EOF)
+        while (true)
         {
+          nCode = aDict.readCode (aBIS);
+          if (nCode == AbstractLZWDictionary.CODE_EOF)
+            break;
           if (nCode == AbstractLZWDictionary.CODE_CLEARTABLE)
           {
             if (false)
               s_aLogger.info ("Found clear table in decoding");
             aDict.reset ();
 
-            if ((nCode = aDict.readCode (aBIS)) == AbstractLZWDictionary.CODE_EOF)
+            nCode = aDict.readCode (aBIS);
+            if (nCode == AbstractLZWDictionary.CODE_EOF)
               break;
 
             // upon clear table, don't add something to the table

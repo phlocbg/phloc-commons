@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.typeconvert;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -157,10 +158,14 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
     {
       // Automatically register the destination class, and all parent
       // classes/interfaces
-      for (final Class <?> aCurDstClass : ClassHierarchyCache.getClassHierarchy (aDstClass))
-        if (!aSrcMap.containsKey (aCurDstClass))
-          if (aSrcMap.put (aCurDstClass, aConverter) != null)
-            s_aLogger.warn ("Overwriting converter from " + aSrcClass + " to " + aCurDstClass);
+      for (final WeakReference <Class <?>> aCurWRDstClass : ClassHierarchyCache.getClassHierarchyIterator (aDstClass))
+      {
+        final Class <?> aCurDstClass = aCurWRDstClass.get ();
+        if (aCurDstClass != null)
+          if (!aSrcMap.containsKey (aCurDstClass))
+            if (aSrcMap.put (aCurDstClass, aConverter) != null)
+              s_aLogger.warn ("Overwriting converter from " + aSrcClass + " to " + aCurDstClass);
+      }
     }
     finally
     {
@@ -261,19 +266,23 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
                                                @Nonnull final ITypeConverterCallback aCallback)
   {
     // For all possible source classes
-    for (final Class <?> aCurSrcClass : ClassHierarchyCache.getClassHierarchy (aSrcClass))
+    for (final WeakReference <Class <?>> aCurWRSrcClass : ClassHierarchyCache.getClassHierarchyIterator (aSrcClass))
     {
-      // Do we have a source converter?
-      final Map <Class <?>, ITypeConverter> aConverterMap = s_aConverter.get (aCurSrcClass);
-      if (aConverterMap != null)
+      final Class <?> aCurSrcClass = aCurWRSrcClass.get ();
+      if (aCurSrcClass != null)
       {
-        // Check explicit destination classes
-        final ITypeConverter aConverter = aConverterMap.get (aDstClass);
-        if (aConverter != null)
+        // Do we have a source converter?
+        final Map <Class <?>, ITypeConverter> aConverterMap = s_aConverter.get (aCurSrcClass);
+        if (aConverterMap != null)
         {
-          // We found a match -> invoke the callback!
-          if (aCallback.call (aCurSrcClass, aDstClass, aConverter).isBreak ())
-            break;
+          // Check explicit destination classes
+          final ITypeConverter aConverter = aConverterMap.get (aDstClass);
+          if (aConverter != null)
+          {
+            // We found a match -> invoke the callback!
+            if (aCallback.call (aCurSrcClass, aDstClass, aConverter).isBreak ())
+              break;
+          }
         }
       }
     }

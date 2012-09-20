@@ -44,7 +44,7 @@ public interface IURLProtocol
    *        The URL to check. May be <code>null</code>.
    * @return <code>true</code> if the passed URL starts with this protocol
    */
-  boolean isUsedInURL (@Nullable CharSequence sURL);
+  boolean isUsedInURL (@Nullable String sURL);
 
   /**
    * Prefix the passed URL with this protocol.

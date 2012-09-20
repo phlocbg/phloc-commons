@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.random;
 
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 import javax.annotation.Nonnull;
@@ -44,7 +43,7 @@ public final class VerySecureRandom
       // http://www.ibm.com/developerworks/java/jdk/security/50/secguides/JceDocs/api_users_guide.html
       aSecureRandom = SecureRandom.getInstance ("IBMSecureRandom", "IBMJCE");
     }
-    catch (final Exception ex)
+    catch (final Throwable t)
     {
       try
       {
@@ -52,7 +51,7 @@ public final class VerySecureRandom
         // http://java.sun.com/javase/6/docs/technotes/guides/security/crypto/CryptoSpec.html
         aSecureRandom = SecureRandom.getInstance ("SHA1PRNG");
       }
-      catch (final NoSuchAlgorithmException ex2)
+      catch (final Throwable t2)
       {
         // Default
         aSecureRandom = new SecureRandom ();

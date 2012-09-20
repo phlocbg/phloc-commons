@@ -22,7 +22,6 @@ import javax.annotation.Nullable;
 
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.hash.HashCodeGenerator;
-import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -58,16 +57,16 @@ public class URLProtocol implements IURLProtocol
    *        The URL to check. May be <code>null</code>.
    * @return <code>true</code> if the passed URL starts with this protocol
    */
-  public boolean isUsedInURL (@Nullable final CharSequence sURL)
+  public boolean isUsedInURL (@Nullable final String sURL)
   {
-    return sURL != null && StringHelper.startsWith (sURL, m_sProtocol);
+    return sURL != null && sURL.startsWith (m_sProtocol);
   }
 
   @Nullable
   public String getWithProtocol (@Nullable final String sURL)
   {
     if (sURL == null)
-      return sURL;
+      return null;
     return m_sProtocol + sURL;
   }
 

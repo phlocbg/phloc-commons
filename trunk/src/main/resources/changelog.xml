@@ -20,9 +20,19 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2012-09-20" category="performance" action="fix">
+    <change>
+      <text locale="en">XMLHelper.isInvalidXMLCharacter(char) is now quicker</text>
+    </change>
+  </entry>
+  <entry date="2012-09-19" category="api" action="add">
+    <change>
+      <text locale="en">Added new annotation @UseDirectEqualsAndHashCode that prevents (Equals|HashCode)ImplementationRegistry to search for converters.</text>
+    </change>
+  </entry>
   <entry date="2012-09-19" category="performance" action="fix">
     <change>
-      <text locale="en">Fixed performance issues in EqualsImplementationRegistry and HashCodeImplementation registry</text>
+      <text locale="en">Fixed performance issues in EqualsImplementationRegistry and HashCodeImplementationRegistry</text>
     </change>
   </entry>
   <entry date="2012-09-19" category="api" action="add">

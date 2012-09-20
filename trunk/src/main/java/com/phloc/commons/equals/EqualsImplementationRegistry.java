@@ -103,10 +103,9 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
     try
     {
       if (m_aMap.containsKey (aClass))
-        throw new IllegalArgumentException ("Another equals implementation for class " +
-                                            aClass +
-                                            " is already implemented!");
-      m_aMap.put (aClass, aImpl);
+        s_aLogger.error ("Another equals implementation for class " + aClass + " is already implemented!");
+      else
+        m_aMap.put (aClass, aImpl);
     }
     finally
     {

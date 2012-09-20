@@ -178,6 +178,282 @@ public final class XMLHelper
   private static final char [][] MASK_REPLACE_ALL_XML11 = ArrayHelper.getConcatenated (MASK_REPLACE_XML10,
                                                                                        MASK_REPLACE_CONTROL_XML11);
 
+  /**
+   * Contains a boolean mask for all characters from 0x00-0xff which are invalid
+   * (marked as true) and which are valid (marked as false)
+   */
+  private static final boolean [] ILLEGAL_XML_CHARS = new boolean [] { true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      false,
+                                                                      false,
+                                                                      true,
+                                                                      true,
+                                                                      false,
+                                                                      true,
+                                                                      true,
+                                                                      // 16
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      // 32
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      // 48
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      // 64
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      // 80
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      // 96
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      // 112
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      true,
+                                                                      // 128
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      // 144
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      true,
+                                                                      // 160
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      // 176
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      // 192
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      // 208
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      // 224
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      // 240
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false,
+                                                                      false };
+
   static
   {
     /**
@@ -745,18 +1021,24 @@ public final class XMLHelper
   public static boolean isInvalidXMLCharacter (final char c)
   {
     // Based on: http://www.w3.org/TR/2006/REC-xml11-20060816/#charsets
-    // 0x0000 is always invalid
-    return (c >= '\u0000' && c <= '\u0008') || (c >= '\u000b' && c <= '\u000c') || (c >= '\u000e' && c <= '\u001f') ||
-    // Therefore XML 1.1 adds NEL (#x85) to the list of line-end characters.
-           (c >= '\u007f' && c <= '\u009f') ||
-           // For completeness, the Unicode line separator character, #x2028, is
-           // also supported.
-           (c == '\u2028') ||
+
+    // Speed up by separating the most common use cases first
+    if (c < 256)
+    {
+      // Character <= 0x00ff - use precomposed table
+      return ILLEGAL_XML_CHARS[c];
+    }
+
+    // Character >= 0x0100
+    // For completeness, the Unicode line separator character, #x2028, is
+    // also supported.
+    // Surrogate blocks (no Java IDs found)
+    // High surrogate: 0xd800-0xdbff
+    // Low surrogate: 0xdc00-0xdfff
+    return c == '\u2028' ||
            (c >= '\ufdd0' && c <= '\ufddf') ||
-           // Surrogate blocks (no Java IDs found)
-           (c >= '\ufffe' && c <= '\uffff') ||
-           // high: 0xd800-0xdbff
-           // low: 0xdc00-0xdfff
+           c == '\ufffe' ||
+           c == '\uffff' ||
            Character.isHighSurrogate (c) ||
            Character.isLowSurrogate (c);
   }

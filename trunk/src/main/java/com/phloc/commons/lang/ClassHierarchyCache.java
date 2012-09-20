@@ -44,7 +44,7 @@ import com.phloc.commons.collections.iterate.IterableIterator;
 public final class ClassHierarchyCache
 {
   @Immutable
-  private static final class ClassList
+  private static final class ClassList implements Iterable <WeakReference <Class <?>>>
   {
     // Store it in the correct order, but without duplicates
     private final List <WeakReference <Class <?>>> m_aList = new ArrayList <WeakReference <Class <?>>> ();
@@ -225,8 +225,8 @@ public final class ClassHierarchyCache
    *         were already removed.
    */
   @Nonnull
-  public static IIterableIterator <WeakReference <Class <?>>> getClassHierarchyIterator (@Nonnull final Class <?> aClass)
+  public static Iterable <WeakReference <Class <?>>> getClassHierarchyIterator (@Nonnull final Class <?> aClass)
   {
-    return getClassList (aClass).iterator ();
+    return getClassList (aClass);
   }
 }

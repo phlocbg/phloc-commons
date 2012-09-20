@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.name;
 
+import java.io.Serializable;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -29,7 +30,7 @@ import javax.annotation.Nullable;
  * @author philip
  * @param <DATATYPE>
  */
-public interface IDisplayTextProvider <DATATYPE>
+public interface IDisplayTextProvider <DATATYPE> extends Serializable
 {
   /**
    * Get the display text of the passed object in the given locale.

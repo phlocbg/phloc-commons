@@ -95,9 +95,18 @@ public final class FactorialHelper
     {
       final int m = n / 2;
       if (m == 0)
-        return BigInteger.valueOf (m_nCurrentN += 2);
+      {
+        m_nCurrentN += 2;
+        return BigInteger.valueOf (m_nCurrentN);
+      }
       if (n == 2)
-        return BigInteger.valueOf ((m_nCurrentN += 2) * (m_nCurrentN += 2));
+      {
+        m_nCurrentN += 2;
+        final long n1 = m_nCurrentN;
+        m_nCurrentN += 2;
+        final long n2 = m_nCurrentN;
+        return BigInteger.valueOf (n1 * n2);
+      }
       return _getProduct (n - m).multiply (_getProduct (m));
     }
 

@@ -1350,21 +1350,32 @@ public final class StreamUtils
     // Skip all requested lines
     String sLine;
     for (int i = 0; i < nLinesToSkip; ++i)
-      if ((sLine = aBR.readLine ()) == null)
+    {
+      sLine = aBR.readLine ();
+      if (sLine == null)
         break;
+    }
 
     if (bReadAllLines)
     {
       // Read all lines
-      while ((sLine = aBR.readLine ()) != null)
+      while (true)
+      {
+        sLine = aBR.readLine ();
+        if (sLine == null)
+          break;
         aLineCallback.run (sLine);
+      }
     }
     else
     {
       // Read only a certain amount of lines
       int nRead = 0;
-      while ((sLine = aBR.readLine ()) != null)
+      while (true)
       {
+        sLine = aBR.readLine ();
+        if (sLine == null)
+          break;
         aLineCallback.run (sLine);
         ++nRead;
         if (nRead >= nLinesToRead)

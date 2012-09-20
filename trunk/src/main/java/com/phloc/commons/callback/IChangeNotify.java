@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.callback;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.state.EContinue;
@@ -28,7 +30,7 @@ import com.phloc.commons.state.EContinue;
  * @param <DATATYPE>
  *        The type of object that is changed
  */
-public interface IChangeNotify <DATATYPE>
+public interface IChangeNotify <DATATYPE> extends Serializable
 {
   /**
    * Called before the object will be changed.

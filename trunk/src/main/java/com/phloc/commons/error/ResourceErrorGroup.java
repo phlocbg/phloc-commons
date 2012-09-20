@@ -51,7 +51,11 @@ public class ResourceErrorGroup implements IResourceErrorGroup, ICloneable <Reso
     if (aResourceErrors == null)
       throw new NullPointerException ("resourceErrors");
     for (final IResourceError aResourceError : aResourceErrors)
-      addResourceError (aResourceError);
+    {
+      if (aResourceError == null)
+        throw new NullPointerException ("resourceError");
+      m_aErrors.add (aResourceError);
+    }
   }
 
   public ResourceErrorGroup (@Nonnull final Iterable <? extends IResourceError> aResourceErrors)
@@ -59,7 +63,11 @@ public class ResourceErrorGroup implements IResourceErrorGroup, ICloneable <Reso
     if (aResourceErrors == null)
       throw new NullPointerException ("resourceErrors");
     for (final IResourceError aResourceError : aResourceErrors)
-      addResourceError (aResourceError);
+    {
+      if (aResourceError == null)
+        throw new NullPointerException ("resourceError");
+      m_aErrors.add (aResourceError);
+    }
   }
 
   /**

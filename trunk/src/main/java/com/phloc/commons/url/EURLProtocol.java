@@ -21,28 +21,33 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.annotations.Nonempty;
-import com.phloc.commons.string.StringHelper;
 
 /**
  * Specifies a list of known protocols.<br>
  * Should be extended to the list defined at <a
  * href="http://www.iana.org/assignments/uri-schemes.html">the IANA</a>
- *
+ * 
  * @author philip
  */
 public enum EURLProtocol implements IURLProtocol
 {
-  /** Skype. */
-  CALLTO ("callto:"),
+  /** http (RFC2616). */
+  HTTP ("http://"),
 
-  /** Embedded data (RFC2397). */
-  DATA ("data:"),
+  /** https (RFC2818). */
+  HTTPS ("https://"),
 
   /** Local file (RFC1738). */
   FILE ("file://"),
 
   /** ftp (RFC1738). */
   FTP ("ftp://"),
+
+  /** Skype. */
+  CALLTO ("callto:"),
+
+  /** Embedded data (RFC2397). */
+  DATA ("data:"),
 
   /** ftps. */
   FTPS ("ftps://"),
@@ -52,12 +57,6 @@ public enum EURLProtocol implements IURLProtocol
 
   /** Gopher (RFC4266). */
   GOPHER ("gopher://"),
-
-  /** http (RFC2616). */
-  HTTP ("http://"),
-
-  /** https (RFC2818). */
-  HTTPS ("https://"),
 
   /** JavaScript */
   JAVASCRIPT ("javascript:"),
@@ -141,21 +140,21 @@ public enum EURLProtocol implements IURLProtocol
 
   /**
    * Tells if the passed String (URL) belongs to this protocol.
-   *
+   * 
    * @param sURL
    *        The URL to check. May be <code>null</code>.
    * @return <code>true</code> if the passed URL starts with this protocol
    */
-  public boolean isUsedInURL (@Nullable final CharSequence sURL)
+  public boolean isUsedInURL (@Nullable final String sURL)
   {
-    return sURL != null && StringHelper.startsWith (sURL, m_sProtocol);
+    return sURL != null && sURL.startsWith (m_sProtocol, 0);
   }
 
   @Nullable
   public String getWithProtocol (@Nullable final String sURL)
   {
     if (sURL == null)
-      return sURL;
+      return null;
     return m_sProtocol + sURL;
   }
 

@@ -199,9 +199,9 @@ public final class XMLFactory
     {
       return getSaxParserFactory (bValidating).newSAXParser ();
     }
-    catch (final Exception ex)
+    catch (final Throwable t)
     {
-      throw new IllegalStateException ("Failed to create SAX parser");
+      throw new IllegalStateException ("Failed to create new SAX parser", t);
     }
   }
 

@@ -50,9 +50,9 @@ public final class DCTCodec implements IByteArrayDecoder
       if (s_aLogger.isDebugEnabled ())
         s_aLogger.debug ("Read DCT encoded image with " + aEncodedBuffer.length + " bytes");
     }
-    catch (final Exception ex)
+    catch (final Throwable t)
     {
-      throw new DecoderException ("Failed to read image", ex);
+      throw new DecoderException ("Failed to read image", t);
     }
 
     final int nWidth = aImg.getWidth (null);

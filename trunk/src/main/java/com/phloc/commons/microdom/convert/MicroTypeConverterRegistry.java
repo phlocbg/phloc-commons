@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.microdom.convert;
 
+import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -96,9 +97,13 @@ public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegi
         throw new IllegalArgumentException ("A microtype convert for class " + aClass + " is already registered!");
 
       // Automatically register the class, and all parent classes/interfaces
-      for (final Class <?> aCurSrcClass : ClassHierarchyCache.getClassHierarchy (aClass))
-        if (!s_aMap.containsKey (aCurSrcClass))
-          s_aMap.put (aCurSrcClass, aConverter);
+      for (final WeakReference <Class <?>> aCurWRSrcClass : ClassHierarchyCache.getClassHierarchyIterator (aClass))
+      {
+        final Class <?> aCurSrcClass = aCurWRSrcClass.get ();
+        if (aCurSrcClass != null)
+          if (!s_aMap.containsKey (aCurSrcClass))
+            s_aMap.put (aCurSrcClass, aConverter);
+      }
     }
     finally
     {
@@ -134,9 +139,13 @@ public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegi
       if (ret == null)
       {
         // No exact match found - try fuzzy
-        for (final Class <?> aCurDstClass : ClassHierarchyCache.getClassHierarchy (aDstClass))
-          if ((ret = s_aMap.get (aCurDstClass)) != null)
-            break;
+        for (final WeakReference <Class <?>> aCurWRDstClass : ClassHierarchyCache.getClassHierarchyIterator (aDstClass))
+        {
+          final Class <?> aCurDstClass = aCurWRDstClass.get ();
+          if (aCurDstClass != null)
+            if ((ret = s_aMap.get (aCurDstClass)) != null)
+              break;
+        }
       }
       return ret;
     }
