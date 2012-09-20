@@ -29,6 +29,9 @@ import com.phloc.commons.io.streams.StreamUtils;
  */
 public final class ASCII85Codec implements IByteArrayDecoder
 {
+  private static final int BIT1 = 8;
+  private static final int BIT2 = 16;
+  private static final int BIT3 = 24;
   private static final int ENCODED_MAX = 117;
   private static final int ENCODED_MIN = 33;
   private static final int EIGHTY_FIVE = 85;
@@ -89,9 +92,9 @@ public final class ASCII85Codec implements IByteArrayDecoder
             int r = 0;
             for (int j = 0; j < 5; ++j)
               r = r * EIGHTY_FIVE + aBuffer[j];
-            aBAOS.write ((byte) (r >> 24));
-            aBAOS.write ((byte) (r >> 16));
-            aBAOS.write ((byte) (r >> 8));
+            aBAOS.write ((byte) (r >> BIT3));
+            aBAOS.write ((byte) (r >> BIT2));
+            aBAOS.write ((byte) (r >> BIT1));
             aBAOS.write ((byte) r);
           }
         }
@@ -103,8 +106,12 @@ public final class ASCII85Codec implements IByteArrayDecoder
         case 1:
           throw new IllegalStateException ("Unexpected end of ASCII85 encoded data!");
         case 2:
-          nRest = (aBuffer[0] * EIGHTY_FIVE * EIGHTY_FIVE * EIGHTY_FIVE * EIGHTY_FIVE) + (aBuffer[1] * EIGHTY_FIVE * EIGHTY_FIVE * EIGHTY_FIVE) + (EIGHTY_FIVE * EIGHTY_FIVE * EIGHTY_FIVE) + (EIGHTY_FIVE * EIGHTY_FIVE) + EIGHTY_FIVE;
-          aBAOS.write ((byte) (nRest >> 24));
+          nRest = (aBuffer[0] * EIGHTY_FIVE * EIGHTY_FIVE * EIGHTY_FIVE * EIGHTY_FIVE) +
+                  (aBuffer[1] * EIGHTY_FIVE * EIGHTY_FIVE * EIGHTY_FIVE) +
+                  (EIGHTY_FIVE * EIGHTY_FIVE * EIGHTY_FIVE) +
+                  (EIGHTY_FIVE * EIGHTY_FIVE) +
+                  EIGHTY_FIVE;
+          aBAOS.write ((byte) (nRest >> BIT3));
           break;
         case 3:
           nRest = (aBuffer[0] * EIGHTY_FIVE * EIGHTY_FIVE * EIGHTY_FIVE * EIGHTY_FIVE) +
@@ -112,8 +119,8 @@ public final class ASCII85Codec implements IByteArrayDecoder
                   (aBuffer[2] * EIGHTY_FIVE * EIGHTY_FIVE) +
                   (EIGHTY_FIVE * EIGHTY_FIVE) +
                   EIGHTY_FIVE;
-          aBAOS.write ((byte) (nRest >> 24));
-          aBAOS.write ((byte) (nRest >> 16));
+          aBAOS.write ((byte) (nRest >> BIT3));
+          aBAOS.write ((byte) (nRest >> BIT2));
           break;
         case 4:
           nRest = (aBuffer[0] * EIGHTY_FIVE * EIGHTY_FIVE * EIGHTY_FIVE * EIGHTY_FIVE) +
@@ -121,9 +128,9 @@ public final class ASCII85Codec implements IByteArrayDecoder
                   (aBuffer[2] * EIGHTY_FIVE * EIGHTY_FIVE) +
                   (aBuffer[3] * EIGHTY_FIVE) +
                   EIGHTY_FIVE;
-          aBAOS.write ((byte) (nRest >> 24));
-          aBAOS.write ((byte) (nRest >> 16));
-          aBAOS.write ((byte) (nRest >> 8));
+          aBAOS.write ((byte) (nRest >> BIT3));
+          aBAOS.write ((byte) (nRest >> BIT2));
+          aBAOS.write ((byte) (nRest >> BIT1));
           break;
         default:
           break;
