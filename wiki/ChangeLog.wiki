@@ -2,7 +2,13 @@
 #labels Featured
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
-<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr border="1"><td>9/18/12</td><td colspan="4">_Release *3.8.3*_</td></tr>
+<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr border="1"><td>9/20/12</td><td colspan="4">_Release *3.8.4*_</td></tr>
+<tr><td>9/20/12</td><td>fix</td><td>performance</td><td></td><td>XMLHelper.isInvalidXMLCharacter(char) is now quicker</td></tr>
+<tr><td>9/19/12</td><td>add</td><td>api</td><td></td><td>Added new annotation @UseDirectEqualsAndHashCode that prevents (Equals|HashCode)ImplementationRegistry to search for converters.</td></tr>
+<tr><td>9/19/12</td><td>fix</td><td>performance</td><td></td><td>Fixed performance issues in EqualsImplementationRegistry and HashCodeImplementationRegistry</td></tr>
+<tr><td>9/19/12</td><td>add</td><td>api</td><td></td><td>Added new Comparator classes ComparatorDisplayNameProvider and ComparatorDisplayTextProvider</td></tr>
+<tr><td>9/19/12</td><td>add</td><td>api</td><td></td><td>Extended ContainerHelper API to handle the sort order when sorting maps by key or by value without Comparator</td></tr>
+<tr border="1"><td>9/18/12</td><td colspan="4">_Release *3.8.3*_</td></tr>
 <tr><td>9/18/12</td><td>add</td><td>api</td><td></td><td>Added new method IAttributeContainer.getAndSetAttributeFlag(String) for some simplifications</td></tr>
 <tr><td>9/18/12</td><td>change</td><td>api</td><td></td><td>Made class Wrapper non-final for simple reuse</td></tr>
 <tr><td>9/15/12</td><td>fix</td><td>tech</td><td></td><td>Fixed IllegalArgumentException thrown from ClassPathResource.getAsFile because of non-file URL</td></tr>
