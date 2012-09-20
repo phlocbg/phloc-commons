@@ -62,6 +62,18 @@ public class LRUSet <ELEMENTTYPE> extends AbstractSet <ELEMENTTYPE> implements I
     {
       m_aOwningSet.onRemoveEldestEntry (aEldest.getKey ());
     }
+
+    @Override
+    public boolean equals (final Object o)
+    {
+      return super.equals (o);
+    }
+
+    @Override
+    public int hashCode ()
+    {
+      return super.hashCode ();
+    }
   }
 
   private final LRUCacheMap <ELEMENTTYPE> m_aCache;
