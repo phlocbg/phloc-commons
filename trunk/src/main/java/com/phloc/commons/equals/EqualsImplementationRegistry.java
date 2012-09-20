@@ -103,7 +103,7 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
     try
     {
       if (m_aMap.containsKey (aClass))
-        s_aLogger.error ("Another equals implementation for class " + aClass + " is already implemented!");
+        s_aLogger.warn ("Another equals implementation for class " + aClass + " is already implemented!");
       else
         m_aMap.put (aClass, aImpl);
     }
@@ -127,7 +127,7 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
     }
   }
 
-  private boolean _useDirectEquals (@Nonnull final Class <?> aClass)
+  private boolean _isUseDirectEquals (@Nonnull final Class <?> aClass)
   {
     final String sClassName = aClass.getName ();
 
@@ -216,7 +216,7 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
       Class <?> aMatchingClass = null;
 
       // No check required?
-      if (_useDirectEquals (aClass))
+      if (_isUseDirectEquals (aClass))
         return null;
 
       m_aRWLock.readLock ().lock ();
@@ -263,7 +263,19 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
         // Example: a converter for "Map" is registered, but "LRUCache" comes
         // with its own "equals" implementation
         if (ClassHelper.isInterface (aMatchingClass) && _implementsEqualsItself (aClass))
+        {
+          // Remember to use direct implementation
+          m_aRWLock.writeLock ().lock ();
+          try
+          {
+            m_aDirectEquals.put (aClass.getName (), Boolean.TRUE);
+          }
+          finally
+          {
+            m_aRWLock.writeLock ().unlock ();
+          }
           return null;
+        }
 
         if (!aMatchingClass.equals (aClass))
         {
@@ -279,6 +291,17 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
       // every potential array class (but we allow for special implementations)
       if (ClassHelper.isArrayClass (aClass))
         return new ArrayEqualsImplementation ();
+
+      // Remember to use direct implementation
+      m_aRWLock.writeLock ().lock ();
+      try
+      {
+        m_aDirectEquals.put (aClass.getName (), Boolean.TRUE);
+      }
+      finally
+      {
+        m_aRWLock.writeLock ().unlock ();
+      }
     }
 
     // No special handler found
