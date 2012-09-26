@@ -110,6 +110,7 @@ public final class XMLReader
     {
       put (EXMLParserFeature.NAMESPACES, Boolean.TRUE);
       put (EXMLParserFeature.SAX_NAMESPACE_PREFIXES, Boolean.TRUE);
+      put (EXMLParserFeature.AUGMENT_PSVI, Boolean.FALSE);
     }
   };
 
