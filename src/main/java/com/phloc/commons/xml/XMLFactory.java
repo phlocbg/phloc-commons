@@ -52,7 +52,8 @@ public final class XMLFactory
 
   static
   {
-    // Explicitly use Apache Xerces for XSD reading?
+    // Explicitly use Apache Xerces for XSD reading? No in case Xerces is not in
+    // the classpath.
     if (false)
       SystemProperties.setPropertyValue ("javax.xml.validation.SchemaFactory:http://www.w3.org/2001/XMLSchema",
                                          "org.apache.xerces.jaxp.validation.XMLSchemaFactory");

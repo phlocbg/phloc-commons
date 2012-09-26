@@ -22,6 +22,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.net.UnknownHostException;
+import java.util.EnumMap;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -448,6 +450,7 @@ public final class XMLReader
 
   /**
    * Read an XML document via a SAX handler. The stream is closed after reading.
+   * By default namespace and namespace prefix handling is enabled.
    * 
    * @param aIS
    *        The input source to read from. Automatically closed upon success or
@@ -462,7 +465,7 @@ public final class XMLReader
    *        The optional lexical SAX handler to use. Makes only sense if DTD
    *        validation is enabled. May be <code>null</code>.
    * @param bDTDValidating
-   *        If true, validation against a DTD is enabled.
+   *        If <code>true</code>, validation against a DTD is enabled.
    * @param bSchemaValidating
    *        If <code>true</code>, validation against an XML schema is enabled.
    * @return {@link ESuccess#SUCCESS} if reading succeeded,
@@ -474,9 +477,48 @@ public final class XMLReader
                                      final DTDHandler aDTDHdl,
                                      final ContentHandler aContentHdl,
                                      final ErrorHandler aErrorHdl,
-                                     final LexicalHandler aLexicalHdl,
+                                     @Nullable final LexicalHandler aLexicalHdl,
                                      final boolean bDTDValidating,
                                      final boolean bSchemaValidating)
+  {
+    final Map <EXMLParserFeature, Boolean> aFeatures = new EnumMap <EXMLParserFeature, Boolean> (EXMLParserFeature.class);
+    aFeatures.put (EXMLParserFeature.SAX_FEATURE_NAMESPACES, Boolean.TRUE);
+    aFeatures.put (EXMLParserFeature.SAX_FEATURE_NAMESPACE_PREFIXES, Boolean.TRUE);
+    aFeatures.put (EXMLParserFeature.SAX_FEATURE_VALIDATION, Boolean.valueOf (bDTDValidating));
+    aFeatures.put (EXMLParserFeature.SAX_FEATURE_SCHEMA_VALIDATION, Boolean.valueOf (bSchemaValidating));
+    aFeatures.put (EXMLParserFeature.SCHEMA_FULL_CHECKING_FEATURE_ID, Boolean.valueOf (bSchemaValidating));
+    return readXMLSAX (aIS, aEntityResolver, aDTDHdl, aContentHdl, aErrorHdl, aLexicalHdl, aFeatures);
+  }
+
+  /**
+   * Read an XML document via a SAX handler. The stream is closed after reading.
+   * 
+   * @param aIS
+   *        The input source to read from. Automatically closed upon success or
+   *        error.
+   * @param aEntityResolver
+   * @param aDTDHdl
+   * @param aContentHdl
+   * @param aErrorHdl
+   *        The optional error handler to use. In case you want to collect
+   *        errors etc.
+   * @param aLexicalHdl
+   *        The optional lexical SAX handler to use. Makes only sense if DTD
+   *        validation is enabled. May be <code>null</code>.
+   * @param aFeatures
+   *        The feature map to be applied. May be <code>null</code>. All
+   *        contained values must be non-<code>null</code>.
+   * @return {@link ESuccess#SUCCESS} if reading succeeded,
+   *         {@link ESuccess#FAILURE} otherwise
+   */
+  @Nonnull
+  public static ESuccess readXMLSAX (@WillClose @Nonnull final InputSource aIS,
+                                     final EntityResolver aEntityResolver,
+                                     final DTDHandler aDTDHdl,
+                                     final ContentHandler aContentHdl,
+                                     final ErrorHandler aErrorHdl,
+                                     @Nullable final LexicalHandler aLexicalHdl,
+                                     @Nullable final Map <EXMLParserFeature, Boolean> aFeatures)
   {
     if (aIS == null)
       throw new NullPointerException ("inputStream");
@@ -498,12 +540,17 @@ public final class XMLReader
         aParser.setDTDHandler (aDTDHdl);
         aParser.setEntityResolver (aEntityResolver);
         aParser.setErrorHandler (aErrorHdl);
-        _setSAXFeature (aParser, EXMLParserFeature.SAX_FEATURE_NAMESPACES, true);
-        _setSAXFeature (aParser, EXMLParserFeature.SAX_FEATURE_NAMESPACE_PREFIXES, true);
-        _setSAXFeature (aParser, EXMLParserFeature.SAX_FEATURE_VALIDATION, bDTDValidating);
-        _setSAXFeature (aParser, EXMLParserFeature.SAX_FEATURE_SCHEMA_VALIDATION, bSchemaValidating);
+
+        // Set all features
+        if (aFeatures != null)
+          for (final Map.Entry <EXMLParserFeature, Boolean> aEntry : aFeatures.entrySet ())
+            _setSAXFeature (aParser, aEntry.getKey (), aEntry.getValue ().booleanValue ());
+
+        // Seat optional properties
         if (aLexicalHdl != null)
           _setSAXProperty (aParser, EXMLParserFeature.SAX_FEATURE_LEXICAL_HANDLER, aLexicalHdl);
+
+        // Start parsing
         aParser.parse (aIS);
         s_aSaxTimerHdl.addTime (aSW.stopAndGetMillis ());
         return ESuccess.SUCCESS;
@@ -529,7 +576,7 @@ public final class XMLReader
     }
     catch (final IOException ex)
     {
-      s_aLogger.error ("Error reading XML", ex);
+      s_aLogger.error ("Error reading XML from input", ex);
     }
     finally
     {
