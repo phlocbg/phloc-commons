@@ -33,19 +33,27 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
 /**
  * Base interface for a generic read-only attribute container. It maps strings
  * to any Java object.
- *
+ * 
  * @author philip
  */
 public interface IReadonlyAttributeContainer extends Serializable
 {
+  /**
+   * @return The number of contained attributes. Always &ge; 0.
+   */
   @Nonnegative
   int getAttributeCount ();
 
+  /**
+   * @return <code>true</code> if this attribute container does not contain any
+   *         attribute at all, <code>false</code> if at least one attribute is
+   *         contained.
+   */
   boolean containsNoAttribute ();
 
   /**
    * Check if an attribute of the given name is contained.
-   *
+   * 
    * @param sName
    *        name of the attribute to check
    * @return <code>true</code> if the attribute is contained, <code>false</code>
@@ -62,7 +70,7 @@ public interface IReadonlyAttributeContainer extends Serializable
 
   /**
    * Get the attribute value associated to the given attribute name.
-   *
+   * 
    * @param sName
    *        the attribute name
    * @return <code>null</code> if no such value exists
@@ -77,7 +85,7 @@ public interface IReadonlyAttributeContainer extends Serializable
    * retrieve a String, use {@link #getAttributeAsString(String)}!<br>
    * This call is identical to the call
    * <code>getTypedAttribute(sName, null)</code>
-   *
+   * 
    * @param <DATATYPE>
    *        return type
    * @param sName
@@ -92,7 +100,7 @@ public interface IReadonlyAttributeContainer extends Serializable
    * of the attribute in the scope does not match, a
    * {@link java.lang.ClassCastException} is thrown! If you just want to
    * retrieve a String, use {@link #getAttributeAsString(String, String)}!
-   *
+   * 
    * @param <DATATYPE>
    *        return type
    * @param sName
@@ -108,7 +116,7 @@ public interface IReadonlyAttributeContainer extends Serializable
    * Get the attribute value associated to the given attribute name.<br>
    * This is a shortcut for the following call:
    * <code>getAttributeAsString (sName, null)</code>
-   *
+   * 
    * @param sName
    *        the attribute name
    * @return The attribute value or <code>null</code> if no such attribute
@@ -120,7 +128,7 @@ public interface IReadonlyAttributeContainer extends Serializable
   /**
    * Get the attribute value associated to the given attribute name or the
    * passed default value if no such attribute is present.
-   *
+   * 
    * @param sName
    *        the attribute name
    * @param sDefault
@@ -134,7 +142,7 @@ public interface IReadonlyAttributeContainer extends Serializable
 
   /**
    * Get the attribute value associated to the given attribute name.
-   *
+   * 
    * @param sName
    *        the attribute name
    * @return The attribute value or {@link CGlobal#ILLEGAL_UINT} if no such
@@ -144,7 +152,7 @@ public interface IReadonlyAttributeContainer extends Serializable
 
   /**
    * Get the attribute value associated to the given attribute name.
-   *
+   * 
    * @param sName
    *        the attribute name
    * @param nDefault
@@ -156,7 +164,7 @@ public interface IReadonlyAttributeContainer extends Serializable
 
   /**
    * Get the attribute value associated to the given attribute name.
-   *
+   * 
    * @param sName
    *        the attribute name
    * @return The attribute value or {@link CGlobal#ILLEGAL_UINT} if no such
@@ -166,7 +174,7 @@ public interface IReadonlyAttributeContainer extends Serializable
 
   /**
    * Get the attribute value associated to the given attribute name.
-   *
+   * 
    * @param sName
    *        the attribute name
    * @param dDefault
@@ -178,7 +186,7 @@ public interface IReadonlyAttributeContainer extends Serializable
 
   /**
    * Get the attribute value associated to the given attribute name.
-   *
+   * 
    * @param sName
    *        the attribute name
    * @return The attribute value or <code>false</code> if no such attribute
@@ -188,7 +196,7 @@ public interface IReadonlyAttributeContainer extends Serializable
 
   /**
    * Get the attribute value associated to the given attribute name.
-   *
+   * 
    * @param sName
    *        the attribute name
    * @param bDefault
@@ -200,20 +208,20 @@ public interface IReadonlyAttributeContainer extends Serializable
 
   /**
    * Get an enumerator over all contained attribute names.
-   *
+   * 
    * @return an Enumerator over all attribute names
    */
   @Nonnull
   Enumeration <String> getAttributeNames ();
 
   /**
-   * @return A non-null collection of all attribute names
+   * @return A non-null set of all attribute names.
    */
   @Nonnull
   Set <String> getAllAttributeNames ();
 
   /**
-   * @return A non-null collection of all attribute values
+   * @return A non-null collection of all attribute values.
    */
   @Nonnull
   Collection <Object> getAllAttributeValues ();

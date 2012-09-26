@@ -60,6 +60,24 @@ public abstract class AbstractReadonlyAttributeContainer implements IReadonlyAtt
     return getAttributeAsString (sName, null);
   }
 
+  /**
+   * Get the string representation of the passed value, suitable for parameters.
+   * 
+   * @param sParamName
+   *        The name of the parameters. Has just informal character, for
+   *        warnings. May be <code>null</code>.
+   * @param aValue
+   *        The value to be converted to a String. May be <code>null</code>.
+   *        Explicitly supported data types are: String, String[]. All other
+   *        data types are returned as "toString()".
+   * @param sDefault
+   *        The default value to be returned, if the passed value is
+   *        <code>null</code> or an empty String array.
+   * @return The default value if the value is <code>null</code> or an empty
+   *         String array, the value as string otherwise. If the value is a
+   *         String[] than the first element is returned, and the other elements
+   *         are discarded.
+   */
   @Nullable
   public static final String getAsString (@Nullable final String sParamName,
                                           @Nullable final Object aValue,
