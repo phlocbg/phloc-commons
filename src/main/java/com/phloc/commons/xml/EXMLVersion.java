@@ -49,6 +49,9 @@ public enum EXMLVersion
     m_sVersion = sVersion;
   }
 
+  /**
+   * @return The textual representation of the XML version number.
+   */
   @Nonnull
   @Nonempty
   public String getVersion ()
@@ -56,12 +59,29 @@ public enum EXMLVersion
     return m_sVersion;
   }
 
+  /**
+   * Find the {@link EXMLVersion} object matching the passed version string.
+   * 
+   * @param sVersion
+   *        The version string to search. May be <code>null</code>.
+   * @return <code>null</code> if no such {@link EXMLVersion} object is present.
+   */
   @Nullable
   public static EXMLVersion getFromVersionOrNull (@Nullable final String sVersion)
   {
     return getFromVersionOrDefault (sVersion, null);
   }
 
+  /**
+   * Find the {@link EXMLVersion} object matching the passed version string.
+   * 
+   * @param sVersion
+   *        The version string to search. May be <code>null</code>.
+   * @param eDefault
+   *        The default version to be returned, if no such enum value is
+   *        present. May be <code>null</code>.
+   * @return <code>null</code> if no such {@link EXMLVersion} object is present.
+   */
   @Nullable
   public static EXMLVersion getFromVersionOrDefault (@Nullable final String sVersion,
                                                      @Nullable final EXMLVersion eDefault)

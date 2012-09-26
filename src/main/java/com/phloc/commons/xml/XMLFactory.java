@@ -207,18 +207,33 @@ public final class XMLFactory
 
   /**
    * Create a new XML document without document type using version
-   * {@link EXMLVersion#DEFAULT}.
+   * {@link EXMLVersion#DEFAULT}. The default document builder is used.
    * 
    * @return The created document. Never <code>null</code>.
    */
   @Nonnull
   public static Document newDocument ()
   {
-    return newDocument (null);
+    return newDocument (s_aDefaultDocBuilder, null);
   }
 
   /**
-   * Create a new XML document without document type.
+   * Create a new XML document without document type using version
+   * {@link EXMLVersion#DEFAULT}. A custom document builder is used.
+   * 
+   * @param aDocBuilder
+   *        The document builder to use. May not be <code>null</code>.
+   * @return The created document. Never <code>null</code>.
+   */
+  @Nonnull
+  public static Document newDocument (@Nonnull final DocumentBuilder aDocBuilder)
+  {
+    return newDocument (aDocBuilder, null);
+  }
+
+  /**
+   * Create a new XML document without document type using the default document
+   * builder.
    * 
    * @param eVersion
    *        The XML version to use. If <code>null</code> is passed,
@@ -228,7 +243,27 @@ public final class XMLFactory
   @Nonnull
   public static Document newDocument (@Nullable final EXMLVersion eVersion)
   {
-    final Document doc = s_aDefaultDocBuilder.newDocument ();
+    return newDocument (s_aDefaultDocBuilder, eVersion);
+  }
+
+  /**
+   * Create a new XML document without document type using a custom document
+   * builder.
+   * 
+   * @param aDocBuilder
+   *        The document builder to use. May not be <code>null</code>.
+   * @param eVersion
+   *        The XML version to use. If <code>null</code> is passed,
+   *        {@link EXMLVersion#DEFAULT} will be used.
+   * @return The created document. Never <code>null</code>.
+   */
+  @Nonnull
+  public static Document newDocument (@Nonnull final DocumentBuilder aDocBuilder, @Nullable final EXMLVersion eVersion)
+  {
+    if (aDocBuilder == null)
+      throw new NullPointerException ("docBuilder");
+
+    final Document doc = aDocBuilder.newDocument ();
     doc.setXmlVersion ((eVersion != null ? eVersion : EXMLVersion.DEFAULT).getVersion ());
     return doc;
   }
@@ -254,7 +289,8 @@ public final class XMLFactory
   }
 
   /**
-   * Create a new document with a document type.
+   * Create a new document with a document type using the default document
+   * builder.
    * 
    * @param eVersion
    *        The XML version to use. If <code>null</code> is passed,
@@ -273,7 +309,36 @@ public final class XMLFactory
                                       @Nullable final String sPublicId,
                                       @Nullable final String sSystemId)
   {
-    final DOMImplementation aDomImpl = getDOMImplementation ();
+    return newDocument (s_aDefaultDocBuilder, eVersion, sQualifiedName, sPublicId, sSystemId);
+  }
+
+  /**
+   * Create a new document with a document type using a custom document builder.
+   * 
+   * @param aDocBuilder
+   *        the document builder to be used. May not be <code>null</code>.
+   * @param eVersion
+   *        The XML version to use. If <code>null</code> is passed,
+   *        {@link EXMLVersion#DEFAULT} will be used.
+   * @param sQualifiedName
+   *        The qualified name to use.
+   * @param sPublicId
+   *        The public ID of the document type.
+   * @param sSystemId
+   *        The system ID of the document type.
+   * @return The created document. Never <code>null</code>.
+   */
+  @Nonnull
+  public static Document newDocument (@Nonnull final DocumentBuilder aDocBuilder,
+                                      @Nullable final EXMLVersion eVersion,
+                                      @Nonnull final String sQualifiedName,
+                                      @Nullable final String sPublicId,
+                                      @Nullable final String sSystemId)
+  {
+    if (aDocBuilder == null)
+      throw new NullPointerException ("docBuilder");
+
+    final DOMImplementation aDomImpl = aDocBuilder.getDOMImplementation ();
     final DocumentType aDocType = aDomImpl.createDocumentType (sQualifiedName, sPublicId, sSystemId);
 
     final Document doc = aDomImpl.createDocument (sSystemId, sQualifiedName, aDocType);
