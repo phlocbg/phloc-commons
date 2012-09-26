@@ -127,7 +127,18 @@ public final class XMLFactory
   }
 
   /**
-   * @return The default document builder that is not schema specific.
+   * @return The default document builder factory that is not schema specific.
+   *         Never <code>null</code>.
+   */
+  @Nonnull
+  public static DocumentBuilderFactory getDocumentBuilderFactory ()
+  {
+    return s_aDefaultDocBuilderFactory;
+  }
+
+  /**
+   * @return The default document builder that is not schema specific. Never
+   *         <code>null</code>.
    */
   @Nonnull
   public static DocumentBuilder getDocumentBuilder ()
@@ -136,7 +147,8 @@ public final class XMLFactory
   }
 
   /**
-   * @return The DOM implementation of the default document builder.
+   * @return The DOM implementation of the default document builder. Never
+   *         <code>null</code>.
    */
   @Nonnull
   public static DOMImplementation getDOMImplementation ()
@@ -148,7 +160,7 @@ public final class XMLFactory
    * Create a document builder without a certain schema, using the default
    * {@link DocumentBuilderFactory}.
    * 
-   * @return The created document builder.
+   * @return The created document builder. Never <code>null</code>.
    */
   @Nonnull
   public static DocumentBuilder createDocumentBuilder ()
@@ -161,7 +173,7 @@ public final class XMLFactory
    * 
    * @param aSchema
    *        The schema to use. May not be <code>null</code>.
-   * @return The created document builder.
+   * @return The created document builder. Never <code>null</code>.
    */
   @Nonnull
   public static DocumentBuilder createDocumentBuilder (@Nonnull final Schema aSchema)
@@ -176,7 +188,9 @@ public final class XMLFactory
    * @param aDocBuilderFactory
    *        The document builder factory to be used. May not be
    *        <code>null</code>.
-   * @return The created document builder.
+   * @return The created document builder. Never <code>null</code>.
+   * @throws InitializationException
+   *         In case some DOM initialization goes wrong
    */
   @Nonnull
   public static DocumentBuilder createDocumentBuilder (@Nonnull final DocumentBuilderFactory aDocBuilderFactory)
@@ -202,7 +216,7 @@ public final class XMLFactory
    * @param bValidating
    *        if <code>true</code> the validating factory is returned, else the
    *        non-validating factory is returned.
-   * @return The matching SAX parser factory.
+   * @return The matching SAX parser factory. Never <code>null</code>.
    */
   @Nonnull
   public static SAXParserFactory getSaxParserFactory (final boolean bValidating)

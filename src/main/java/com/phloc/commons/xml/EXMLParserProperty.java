@@ -20,6 +20,11 @@ package com.phloc.commons.xml;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.xml.sax.SAXNotRecognizedException;
+import org.xml.sax.SAXNotSupportedException;
+
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.lang.EnumHelper;
 import com.phloc.commons.name.IHasName;
@@ -36,6 +41,8 @@ public enum EXMLParserProperty implements IHasName
    */
   SAX_FEATURE_LEXICAL_HANDLER ("http://xml.org/sax/properties/lexical-handler");
 
+  private static final Logger s_aLogger = LoggerFactory.getLogger (EXMLParserProperty.class);
+
   private final String m_sName;
 
   private EXMLParserProperty (@Nonnull @Nonempty final String sName)
@@ -48,6 +55,22 @@ public enum EXMLParserProperty implements IHasName
   public String getName ()
   {
     return m_sName;
+  }
+
+  public void applyTo (@Nonnull final org.xml.sax.XMLReader aParser, final Object aValue)
+  {
+    try
+    {
+      aParser.setProperty (m_sName, aValue);
+    }
+    catch (final SAXNotRecognizedException ex)
+    {
+      s_aLogger.warn ("XML Parser does not recognize property '" + name () + "'");
+    }
+    catch (final SAXNotSupportedException ex)
+    {
+      s_aLogger.warn ("XML Parser does not support property '" + name () + "'");
+    }
   }
 
   @Nullable
