@@ -27,7 +27,7 @@
   </entry>
   <entry date="2012-09-26" category="api" action="change">
     <change>
-      <text locale="en">Extended XMLFactory with APIs to use a custom document builder.</text>
+      <text locale="en">Extended XMLFactory with APIs to use a custom document builder factory and a custom document builder.</text>
     </change>
   </entry>
   <entry date="2012-09-26" category="api" action="change">

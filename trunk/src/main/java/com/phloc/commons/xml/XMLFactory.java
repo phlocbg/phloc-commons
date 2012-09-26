@@ -43,6 +43,9 @@ import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
  */
 public final class XMLFactory
 {
+  /** The DOM DocumentBuilderFactory. */
+  private static DocumentBuilderFactory s_aDefaultDocBuilderFactory;
+
   /** The DOM DocumentBuilder. */
   private static DocumentBuilder s_aDefaultDocBuilder;
 
@@ -59,15 +62,8 @@ public final class XMLFactory
                                          "org.apache.xerces.jaxp.validation.XMLSchemaFactory");
 
     // create DOM document builder
-    try
-    {
-      s_aDefaultDocBuilder = createDefaultDocumentBuilderFactory ().newDocumentBuilder ();
-      s_aDefaultDocBuilder.setErrorHandler (LoggingSAXErrorHandler.getInstance ());
-    }
-    catch (final ParserConfigurationException ex)
-    {
-      throw new InitializationException ("Failed to create document builder", ex);
-    }
+    s_aDefaultDocBuilderFactory = createDefaultDocumentBuilderFactory ();
+    s_aDefaultDocBuilder = createDocumentBuilder (s_aDefaultDocBuilderFactory);
 
     // init SAX factory
     try
@@ -94,6 +90,12 @@ public final class XMLFactory
   private XMLFactory ()
   {}
 
+  /**
+   * Create a new {@link DocumentBuilderFactory} with the following settings:
+   * coalescing, comment ignoring and namespace aware.
+   * 
+   * @return Never <code>null</code>.
+   */
   @Nonnull
   public static DocumentBuilderFactory createDefaultDocumentBuilderFactory ()
   {
@@ -102,6 +104,25 @@ public final class XMLFactory
     aDocumentBuilderFactory.setCoalescing (true);
     aDocumentBuilderFactory.setIgnoringComments (true);
     aDocumentBuilderFactory.setNamespaceAware (true);
+    return aDocumentBuilderFactory;
+  }
+
+  /**
+   * Create a new {@link DocumentBuilderFactory} for the specified schema, with
+   * the following settings: coalescing, comment ignoring and namespace aware.
+   * 
+   * @param aSchema
+   *        The schema to use. May not be <code>null</code>.
+   * @return Never <code>null</code>.
+   */
+  @Nonnull
+  public static DocumentBuilderFactory createDocumentBuilderFactory (@Nonnull final Schema aSchema)
+  {
+    if (aSchema == null)
+      throw new NullPointerException ("schema");
+
+    final DocumentBuilderFactory aDocumentBuilderFactory = createDefaultDocumentBuilderFactory ();
+    aDocumentBuilderFactory.setSchema (aSchema);
     return aDocumentBuilderFactory;
   }
 
@@ -124,6 +145,18 @@ public final class XMLFactory
   }
 
   /**
+   * Create a document builder without a certain schema, using the default
+   * {@link DocumentBuilderFactory}.
+   * 
+   * @return The created document builder.
+   */
+  @Nonnull
+  public static DocumentBuilder createDocumentBuilder ()
+  {
+    return createDocumentBuilder (s_aDefaultDocBuilderFactory);
+  }
+
+  /**
    * Create a document builder for a certain schema.
    * 
    * @param aSchema
@@ -133,34 +166,26 @@ public final class XMLFactory
   @Nonnull
   public static DocumentBuilder createDocumentBuilder (@Nonnull final Schema aSchema)
   {
-    if (aSchema == null)
-      throw new NullPointerException ("schema");
-
-    try
-    {
-      final DocumentBuilderFactory aDocBuilderFactory = createDefaultDocumentBuilderFactory ();
-      aDocBuilderFactory.setSchema (aSchema);
-      final DocumentBuilder aDocBuilder = aDocBuilderFactory.newDocumentBuilder ();
-      aDocBuilder.setErrorHandler (LoggingSAXErrorHandler.getInstance ());
-      return aDocBuilder;
-    }
-    catch (final ParserConfigurationException ex)
-    {
-      throw new InitializationException ("Failed to create document builder", ex);
-    }
+    return createDocumentBuilder (createDocumentBuilderFactory (aSchema));
   }
 
   /**
-   * Create a document builder without a certain schema.
+   * Create a document builder without a certain schema, using the passed
+   * {@link DocumentBuilderFactory}.
    * 
+   * @param aDocBuilderFactory
+   *        The document builder factory to be used. May not be
+   *        <code>null</code>.
    * @return The created document builder.
    */
   @Nonnull
-  public static DocumentBuilder createDocumentBuilder ()
+  public static DocumentBuilder createDocumentBuilder (@Nonnull final DocumentBuilderFactory aDocBuilderFactory)
   {
+    if (aDocBuilderFactory == null)
+      throw new NullPointerException ("docBuilderFactory");
+
     try
     {
-      final DocumentBuilderFactory aDocBuilderFactory = createDefaultDocumentBuilderFactory ();
       final DocumentBuilder aDocBuilder = aDocBuilderFactory.newDocumentBuilder ();
       aDocBuilder.setErrorHandler (LoggingSAXErrorHandler.getInstance ());
       return aDocBuilder;
