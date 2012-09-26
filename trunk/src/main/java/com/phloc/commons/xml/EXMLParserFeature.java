@@ -20,6 +20,11 @@ package com.phloc.commons.xml;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.xml.sax.SAXNotRecognizedException;
+import org.xml.sax.SAXNotSupportedException;
+
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.lang.EnumHelper;
 import com.phloc.commons.name.IHasName;
@@ -236,6 +241,8 @@ public enum EXMLParserFeature implements IHasName
    */
   SAX_IS_XML11_PARSER (EXMLParserFeatureType.SAX, "http://xml.org/sax/features/xml-1.1");
 
+  private static final Logger s_aLogger = LoggerFactory.getLogger (EXMLParserFeature.class);
+
   private final EXMLParserFeatureType m_eType;
   private final String m_sName;
 
@@ -256,6 +263,25 @@ public enum EXMLParserFeature implements IHasName
   public String getName ()
   {
     return m_sName;
+  }
+
+  public void applyTo (@Nonnull final org.xml.sax.XMLReader aParser, final boolean bValue)
+  {
+    if (m_eType != EXMLParserFeatureType.GENERAL && m_eType != EXMLParserFeatureType.SAX)
+      s_aLogger.warn ("Parser feature type of '" + name () + "' is not applicable for SAX parsers!");
+
+    try
+    {
+      aParser.setFeature (m_sName, bValue);
+    }
+    catch (final SAXNotRecognizedException ex)
+    {
+      s_aLogger.warn ("XML Parser does not recognize feature '" + name () + "'");
+    }
+    catch (final SAXNotSupportedException ex)
+    {
+      s_aLogger.warn ("XML Parser does not support feature '" + name () + "'");
+    }
   }
 
   @Nullable
