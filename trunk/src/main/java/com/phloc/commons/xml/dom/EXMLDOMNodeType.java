@@ -26,7 +26,8 @@ import com.phloc.commons.id.IHasSimpleIntID;
 import com.phloc.commons.lang.EnumHelper;
 
 /**
- * Represents the different DOM node types.
+ * Represents the different DOM node types. This is a type-safe version of the
+ * node types defined in {@link org.w3c.dom.Node}.
  * 
  * @author philip
  */
@@ -92,7 +93,7 @@ public enum EXMLDOMNodeType implements IHasSimpleIntID
    */
   NOTATION_NODE (Node.NOTATION_NODE);
 
-  private final short m_nValue;
+  private final int m_nValue;
 
   private EXMLDOMNodeType (@Nonnegative final short nValue)
   {
