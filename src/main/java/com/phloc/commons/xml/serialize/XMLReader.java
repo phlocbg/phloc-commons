@@ -59,6 +59,7 @@ import com.phloc.commons.stats.IStatisticsHandlerTimer;
 import com.phloc.commons.stats.StatisticsManager;
 import com.phloc.commons.timing.StopWatch;
 import com.phloc.commons.xml.EXMLParserFeature;
+import com.phloc.commons.xml.EXMLParserProperty;
 import com.phloc.commons.xml.XMLFactory;
 import com.phloc.commons.xml.sax.CollectingSAXErrorHandler;
 import com.phloc.commons.xml.sax.InputSourceFactory;
@@ -431,20 +432,20 @@ public final class XMLReader
   }
 
   private static void _setSAXProperty (@Nonnull final org.xml.sax.XMLReader aParser,
-                                       @Nonnull final EXMLParserFeature eFeature,
+                                       @Nonnull final EXMLParserProperty eProperty,
                                        final Object aValue)
   {
     try
     {
-      aParser.setProperty (eFeature.getName (), aValue);
+      aParser.setProperty (eProperty.getName (), aValue);
     }
     catch (final SAXNotRecognizedException ex)
     {
-      s_aLogger.warn ("XML Parser does not recognize property '" + eFeature + "'");
+      s_aLogger.warn ("XML Parser does not recognize property '" + eProperty + "'");
     }
     catch (final SAXNotSupportedException ex)
     {
-      s_aLogger.warn ("XML Parser does not support property '" + eFeature + "'");
+      s_aLogger.warn ("XML Parser does not support property '" + eProperty + "'");
     }
   }
 
@@ -482,11 +483,14 @@ public final class XMLReader
                                      final boolean bSchemaValidating)
   {
     final Map <EXMLParserFeature, Boolean> aFeatures = new EnumMap <EXMLParserFeature, Boolean> (EXMLParserFeature.class);
-    aFeatures.put (EXMLParserFeature.SAX_FEATURE_NAMESPACES, Boolean.TRUE);
-    aFeatures.put (EXMLParserFeature.SAX_FEATURE_NAMESPACE_PREFIXES, Boolean.TRUE);
-    aFeatures.put (EXMLParserFeature.SAX_FEATURE_VALIDATION, Boolean.valueOf (bDTDValidating));
-    aFeatures.put (EXMLParserFeature.SAX_FEATURE_SCHEMA_VALIDATION, Boolean.valueOf (bSchemaValidating));
-    aFeatures.put (EXMLParserFeature.SCHEMA_FULL_CHECKING_FEATURE_ID, Boolean.valueOf (bSchemaValidating));
+    aFeatures.put (EXMLParserFeature.NAMESPACES, Boolean.TRUE);
+    aFeatures.put (EXMLParserFeature.SAX_NAMESPACE_PREFIXES, Boolean.TRUE);
+    aFeatures.put (EXMLParserFeature.VALIDATION, Boolean.valueOf (bDTDValidating));
+    aFeatures.put (EXMLParserFeature.WARN_ON_DUPLICATE_ATTDEF, Boolean.valueOf (bDTDValidating || bSchemaValidating));
+    aFeatures.put (EXMLParserFeature.WARN_ON_UNDECLARED_ELEMDEF, Boolean.valueOf (bDTDValidating || bSchemaValidating));
+    aFeatures.put (EXMLParserFeature.WARN_ON_DUPLICATE_ENTITYDEF, Boolean.valueOf (bDTDValidating || bSchemaValidating));
+    aFeatures.put (EXMLParserFeature.SCHEMA, Boolean.valueOf (bSchemaValidating));
+    aFeatures.put (EXMLParserFeature.SCHEMA_FULL_CHECKING, Boolean.valueOf (bSchemaValidating));
     return readXMLSAX (aIS, aEntityResolver, aDTDHdl, aContentHdl, aErrorHdl, aLexicalHdl, aFeatures);
   }
 
@@ -548,7 +552,7 @@ public final class XMLReader
 
         // Seat optional properties
         if (aLexicalHdl != null)
-          _setSAXProperty (aParser, EXMLParserFeature.SAX_FEATURE_LEXICAL_HANDLER, aLexicalHdl);
+          _setSAXProperty (aParser, EXMLParserProperty.SAX_FEATURE_LEXICAL_HANDLER, aLexicalHdl);
 
         // Start parsing
         aParser.parse (aIS);
