@@ -33,7 +33,7 @@ import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
  * 
  * @author philip
  */
-public final class XMLSchemaCache extends AbstractSchemaCache
+public class XMLSchemaCache extends AbstractSchemaCache
 {
   private static final XMLSchemaCache s_aInstance = new XMLSchemaCache (LoggingSAXErrorHandler.getInstance (),
                                                                         new SimpleLSResourceResolver ());
