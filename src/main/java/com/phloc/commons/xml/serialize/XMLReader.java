@@ -649,7 +649,6 @@ public final class XMLReader
     return s_aDefaultSaxParserFeatures.get (eFeature);
   }
 
-  @Nullable
   public static void setDefaultSaxParserFeatureValue (@Nonnull final EXMLParserFeature eFeature,
                                                       @Nullable final Boolean aValue)
   {
