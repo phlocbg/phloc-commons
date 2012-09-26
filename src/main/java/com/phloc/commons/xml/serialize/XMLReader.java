@@ -486,11 +486,11 @@ public final class XMLReader
     aFeatures.put (EXMLParserFeature.NAMESPACES, Boolean.TRUE);
     aFeatures.put (EXMLParserFeature.SAX_NAMESPACE_PREFIXES, Boolean.TRUE);
     aFeatures.put (EXMLParserFeature.VALIDATION, Boolean.valueOf (bDTDValidating));
+    aFeatures.put (EXMLParserFeature.SCHEMA, Boolean.valueOf (bSchemaValidating));
+    aFeatures.put (EXMLParserFeature.SCHEMA_FULL_CHECKING, Boolean.valueOf (bSchemaValidating));
     aFeatures.put (EXMLParserFeature.WARN_ON_DUPLICATE_ATTDEF, Boolean.valueOf (bDTDValidating || bSchemaValidating));
     aFeatures.put (EXMLParserFeature.WARN_ON_UNDECLARED_ELEMDEF, Boolean.valueOf (bDTDValidating || bSchemaValidating));
     aFeatures.put (EXMLParserFeature.WARN_ON_DUPLICATE_ENTITYDEF, Boolean.valueOf (bDTDValidating || bSchemaValidating));
-    aFeatures.put (EXMLParserFeature.SCHEMA, Boolean.valueOf (bSchemaValidating));
-    aFeatures.put (EXMLParserFeature.SCHEMA_FULL_CHECKING, Boolean.valueOf (bSchemaValidating));
     return readXMLSAX (aIS, aEntityResolver, aDTDHdl, aContentHdl, aErrorHdl, aLexicalHdl, aFeatures);
   }
 

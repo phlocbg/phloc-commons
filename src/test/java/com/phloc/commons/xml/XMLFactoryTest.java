@@ -76,7 +76,7 @@ public final class XMLFactoryTest extends AbstractPhlocTestCase
 
     try
     {
-      XMLFactory.createDocumentBuilder (null);
+      XMLFactory.createDocumentBuilder ((Schema) null);
       fail ();
     }
     catch (final NullPointerException ex)
