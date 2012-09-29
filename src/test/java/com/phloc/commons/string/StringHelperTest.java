@@ -248,6 +248,8 @@ public final class StringHelperTest extends AbstractPhlocTestCase
 
     assertArrayEquals (new byte [] { 0 }, StringHelper.getHexDecoded ("00"));
     assertArrayEquals (new byte [] { 0, 1 }, StringHelper.getHexDecoded ("0001"));
+    assertArrayEquals (new byte [] { 0 }, StringHelper.getHexDecoded ("0001".toCharArray (), 0, 2));
+    assertArrayEquals (new byte [] { 1 }, StringHelper.getHexDecoded ("0001".toCharArray (), 2, 2));
   }
 
   @Test
