@@ -365,7 +365,8 @@ public final class StringHelper
   {
     if (sInput == null)
       throw new NullPointerException ("input");
-    return getHexDecoded (sInput.toCharArray ());
+
+    return getHexDecoded (sInput.toCharArray (), 0, sInput.length ());
   }
 
   @Nonnull
@@ -373,15 +374,28 @@ public final class StringHelper
   {
     if (aInput == null)
       throw new NullPointerException ("input");
-    if ((aInput.length % 2) > 0)
-      throw new IllegalArgumentException ("Passed chars have no even length: " + aInput.length);
 
-    final byte [] ret = new byte [aInput.length / 2];
+    return getHexDecoded (aInput, 0, aInput.length);
+  }
+
+  @Nonnull
+  public static byte [] getHexDecoded (@Nonnull final char [] aInput,
+                                       @Nonnegative final int nOfs,
+                                       @Nonnegative final int nLen)
+  {
+    if (aInput == null)
+      throw new NullPointerException ("input");
+    if (nOfs < 0 || nLen < 0 || (nOfs + nLen) > aInput.length)
+      throw new IllegalArgumentException ("ofs:" + nOfs + ";len=" + nLen + ";bufLen=" + aInput.length);
+    if ((nLen % 2) > 0)
+      throw new IllegalArgumentException ("Passed chars have no even length: " + nLen);
+
+    final byte [] ret = new byte [nLen / 2];
     int nRetIdx = 0;
-    for (int i = 0; i < aInput.length; i += 2)
+    for (int i = 0; i < nLen; i += 2)
     {
-      final char c0 = aInput[i];
-      final char c1 = aInput[i + 1];
+      final char c0 = aInput[nOfs + i];
+      final char c1 = aInput[nOfs + i + 1];
       final int nHexByte = getHexByte (c0, c1);
       if (nHexByte == -1)
         throw new IllegalArgumentException ("Failed to convert '" + c0 + "' or '" + c1 + "' to a hex value!");
@@ -1517,8 +1531,9 @@ public final class StringHelper
                                           @Nullable final String sSearch,
                                           @Nonnull final Locale aSortLocale)
   {
-    return sText != null && sSearch != null && sText.length () >= sSearch.length () ? sText.toLowerCase (aSortLocale)
-                                                                                           .indexOf (sSearch.toLowerCase (aSortLocale))
+    return sText != null && sSearch != null && sText.length () >= sSearch.length ()
+                                                                                   ? sText.toLowerCase (aSortLocale)
+                                                                                          .indexOf (sSearch.toLowerCase (aSortLocale))
                                                                                    : STRING_NOT_FOUND;
   }
 
@@ -1540,8 +1555,9 @@ public final class StringHelper
                                               @Nullable final String sSearch,
                                               @Nonnull final Locale aSortLocale)
   {
-    return sText != null && sSearch != null && sText.length () >= sSearch.length () ? sText.toLowerCase (aSortLocale)
-                                                                                           .lastIndexOf (sSearch.toLowerCase (aSortLocale))
+    return sText != null && sSearch != null && sText.length () >= sSearch.length ()
+                                                                                   ? sText.toLowerCase (aSortLocale)
+                                                                                          .lastIndexOf (sSearch.toLowerCase (aSortLocale))
                                                                                    : STRING_NOT_FOUND;
   }
 
