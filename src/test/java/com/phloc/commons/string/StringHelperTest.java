@@ -1785,4 +1785,15 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     assertNull (StringHelper.getFromLastIncl (null, "X"));
     assertEquals ("abc@def.com", StringHelper.getFromLastIncl ("abc@def.com", ""));
   }
+
+  @Test
+  public void testGetWithoutWhiteSpaces ()
+  {
+    assertEquals ("12345", StringHelper.getWithoutAnySpaces (" 1  2\t3\n4\r5"));
+    assertEquals ("12345", StringHelper.getWithoutAnySpaces ("12345"));
+    // test unicode space
+    assertEquals ("7650", StringHelper.getWithoutAnySpaces ("7 650"));
+    assertEquals ("", StringHelper.getWithoutAnySpaces (""));
+    assertEquals ("", StringHelper.getWithoutAnySpaces (null));
+  }
 }
