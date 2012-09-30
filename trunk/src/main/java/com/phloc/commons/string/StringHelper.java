@@ -2622,6 +2622,30 @@ public final class StringHelper
     return nLength <= nCount ? "" : sStr.substring (0, nLength - nCount);
   }
 
+  /**
+   * Get the passed string where all spaces (white spaces or unicode spaces)
+   * have been removed.
+   * 
+   * @param sStr
+   *        The source string. May be <code>null</code>
+   * @return A non-<code>null</code> string representing the passed string
+   *         without any spaces
+   */
+  @Nonnull
+  public static String getWithoutAnySpaces (@Nullable final String sStr)
+  {
+    if (sStr == null)
+      return "";
+    final StringBuilder aResult = new StringBuilder ();
+    for (int i = 0; i < sStr.length (); i++)
+    {
+      final char c = sStr.charAt (i);
+      if (!Character.isWhitespace (c) && !Character.isSpaceChar (c))
+        aResult.append (c);
+    }
+    return aResult.toString ();
+  }
+
   @Nullable
   private static String _getUntilFirst (@Nullable final String sStr,
                                         final char cSearch,
