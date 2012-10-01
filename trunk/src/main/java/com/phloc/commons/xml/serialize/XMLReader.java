@@ -539,6 +539,7 @@ public final class XMLReader
     if (false)
       aFeatures.put (EXMLParserFeature.SCHEMA_FULL_CHECKING, Boolean.valueOf (bSchemaValidating));
     aFeatures.put (EXMLParserFeature.WARN_ON_DUPLICATE_ATTDEF, Boolean.valueOf (bDTDValidating || bSchemaValidating));
+    // WARN_ON_UNDECLARED_ELEMDEF is not supported by JDK 1.6.0_35
     aFeatures.put (EXMLParserFeature.WARN_ON_DUPLICATE_ENTITYDEF, Boolean.valueOf (bDTDValidating || bSchemaValidating));
     return readXMLSAX (aIS, aEntityResolver, aDTDHdl, aContentHdl, aErrorHdl, aLexicalHdl, aFeatures);
   }
