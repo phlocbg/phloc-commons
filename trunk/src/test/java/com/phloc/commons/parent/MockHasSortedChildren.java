@@ -61,4 +61,16 @@ public final class MockHasSortedChildren implements IHasChildrenSorted <MockHasS
   {
     return m_aList.get (nIndex);
   }
+
+  @Nullable
+  public MockHasSortedChildren getFirstChild ()
+  {
+    return ContainerHelper.getFirstElement (m_aList);
+  }
+
+  @Nullable
+  public MockHasSortedChildren getLastChild ()
+  {
+    return ContainerHelper.getLastElement (m_aList);
+  }
 }

@@ -2637,7 +2637,8 @@ public final class StringHelper
     if (sStr == null)
       return "";
 
-    final char [] aChars = sStr.toCharArray ();
+    // Trim first
+    final char [] aChars = sStr.trim ().toCharArray ();
     final StringBuilder aResult = new StringBuilder (aChars.length);
     for (final char c : aChars)
       if (!Character.isWhitespace (c) && !Character.isSpaceChar (c))

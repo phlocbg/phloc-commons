@@ -1,7 +1,10 @@
 #summary Change log of phloc-commons
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
-<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr><td>9/29/12</td><td>add</td><td>api</td><td></td><td>Added StringHelper.getHexDecoded(char[],int,int) method</td></tr>
+<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr><td>10/1/12</td><td>add</td><td>api</td><td>*yes*</td><td>Extended IHasChildrenSorted to have a getFirstChild and getLastChild method</td></tr>
+<tr><td>10/1/12</td><td>add</td><td>api</td><td></td><td>Re-added FindBugs @SuppressWarnings annotation, because some errors cannot be suppressed with an @SuppressFBWarnings :(</td></tr>
+<tr><td>9/30/12</td><td>add</td><td>api</td><td></td><td>Added new method StringHelper.getWithoutAnySpaces</td></tr>
+<tr><td>9/29/12</td><td>add</td><td>api</td><td></td><td>Added StringHelper.getHexDecoded(char[],int,int) method</td></tr>
 <tr><td>9/26/12</td><td>add</td><td>api</td><td></td><td>Extended XMLReader DOM API to pass a custom entity resolver</td></tr>
 <tr><td>9/26/12</td><td>add</td><td>api</td><td></td><td>Extended XMLReader API to pass arbitrary features to the SAX reader</td></tr>
 <tr><td>9/26/12</td><td>change</td><td>api</td><td></td><td>Extended XMLFactory with APIs to use a custom document builder factory and a custom document builder.</td></tr>
