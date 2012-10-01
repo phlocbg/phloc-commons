@@ -2636,13 +2636,12 @@ public final class StringHelper
   {
     if (sStr == null)
       return "";
-    final StringBuilder aResult = new StringBuilder ();
-    for (int i = 0; i < sStr.length (); i++)
-    {
-      final char c = sStr.charAt (i);
+
+    final char [] aChars = sStr.toCharArray ();
+    final StringBuilder aResult = new StringBuilder (aChars.length);
+    for (final char c : aChars)
       if (!Character.isWhitespace (c) && !Character.isSpaceChar (c))
         aResult.append (c);
-    }
     return aResult.toString ();
   }
 
