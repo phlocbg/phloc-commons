@@ -193,6 +193,18 @@ public class BasicTreeItem <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, IT
     return m_aChildren != null ? m_aChildren.size () : 0;
   }
 
+  @Nullable
+  public ITEMTYPE getFirstChild ()
+  {
+    return ContainerHelper.getFirstElement (m_aChildren);
+  }
+
+  @Nullable
+  public ITEMTYPE getLastChild ()
+  {
+    return ContainerHelper.getLastElement (m_aChildren);
+  }
+
   @SuppressFBWarnings ("IL_INFINITE_LOOP")
   public final boolean isSameOrChildOf (@Nonnull final ITEMTYPE aParent)
   {

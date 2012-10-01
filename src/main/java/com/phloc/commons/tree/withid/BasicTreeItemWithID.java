@@ -70,7 +70,7 @@ public class BasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItem
 
   // child map & list
   private Map <KEYTYPE, ITEMTYPE> m_aChildMap = null;
-  private List <ITEMTYPE> m_aChildList = null;
+  private List <ITEMTYPE> m_aChildren = null;
 
   /**
    * Constructor for root object
@@ -200,15 +200,27 @@ public class BasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItem
   @ReturnsMutableCopy
   public final List <ITEMTYPE> getChildren ()
   {
-    return m_aChildList == null ? null : ContainerHelper.newList (m_aChildList);
+    return m_aChildren == null ? null : ContainerHelper.newList (m_aChildren);
   }
 
   @Nullable
   public final ITEMTYPE getChildAtIndex (@Nonnegative final int nIndex)
   {
-    if (m_aChildList == null)
+    if (m_aChildren == null)
       throw new IndexOutOfBoundsException ("Tree item has no children!");
-    return m_aChildList.get (nIndex);
+    return m_aChildren.get (nIndex);
+  }
+
+  @Nullable
+  public ITEMTYPE getFirstChild ()
+  {
+    return ContainerHelper.getFirstElement (m_aChildren);
+  }
+
+  @Nullable
+  public ITEMTYPE getLastChild ()
+  {
+    return ContainerHelper.getLastElement (m_aChildren);
   }
 
   public final void setData (@Nullable final VALUETYPE aData)
@@ -252,10 +264,10 @@ public class BasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItem
       if (m_aChildMap == null)
       {
         m_aChildMap = new HashMap <KEYTYPE, ITEMTYPE> ();
-        m_aChildList = new ArrayList <ITEMTYPE> ();
+        m_aChildren = new ArrayList <ITEMTYPE> ();
       }
       m_aChildMap.put (aDataID, aItem);
-      m_aChildList.add (aItem);
+      m_aChildren.add (aItem);
     }
     return aItem;
   }
@@ -324,11 +336,11 @@ public class BasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItem
     else
     {
       m_aChildMap = new HashMap <KEYTYPE, ITEMTYPE> ();
-      m_aChildList = new ArrayList <ITEMTYPE> ();
+      m_aChildren = new ArrayList <ITEMTYPE> ();
     }
 
     m_aChildMap.put (aDataID, aChild);
-    m_aChildList.add (aChild);
+    m_aChildren.add (aChild);
     m_aFactory.onAddItem (aChild);
     return EChange.CHANGED;
   }
@@ -347,7 +359,7 @@ public class BasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItem
     final ITEMTYPE aItem = m_aChildMap.remove (aDataID);
     if (aItem == null)
       return EChange.UNCHANGED;
-    if (!m_aChildList.remove (aItem))
+    if (!m_aChildren.remove (aItem))
       throw new IllegalStateException ("Failed to remove item from list: " + aItem);
 
     // Notify factory
@@ -362,11 +374,11 @@ public class BasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItem
       return EChange.UNCHANGED;
 
     // Remember all children
-    final List <ITEMTYPE> aAllChildren = new ArrayList <ITEMTYPE> (m_aChildList);
+    final List <ITEMTYPE> aAllChildren = new ArrayList <ITEMTYPE> (m_aChildren);
 
     // Remove all children
     m_aChildMap.clear ();
-    m_aChildList.clear ();
+    m_aChildren.clear ();
 
     // Notify factory after removal
     for (final ITEMTYPE aItem : aAllChildren)
@@ -376,8 +388,8 @@ public class BasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItem
 
   public final void reorderChildrenByItems (@Nonnull final Comparator <? super ITEMTYPE> aComparator)
   {
-    if (m_aChildList != null)
-      ContainerHelper.getSortedInline (m_aChildList, aComparator);
+    if (m_aChildren != null)
+      ContainerHelper.getSortedInline (m_aChildren, aComparator);
   }
 
   @Override

@@ -44,10 +44,27 @@ public interface IHasChildrenSorted <CHILDTYPE> extends IHasChildren <CHILDTYPE>
    * @param nIndex
    *        The index to be queried. May not be &lt; 0 or &ge; the number of
    *        children
-   * @return The child at the specified index
+   * @return The child at the specified index or <code>null</code> if the index
+   *         is invalid.
    * @throws IndexOutOfBoundsException
    *         in case the index is invalid
    */
   @Nullable
   CHILDTYPE getChildAtIndex (@Nonnegative int nIndex);
+
+  /**
+   * Get the first child node or <code>null</code> if no child is present
+   * 
+   * @return The first child or <code>null</code>.
+   */
+  @Nullable
+  CHILDTYPE getFirstChild ();
+
+  /**
+   * Get the last child node or <code>null</code> if no child is present
+   * 
+   * @return The last child or <code>null</code>.
+   */
+  @Nullable
+  CHILDTYPE getLastChild ();
 }
