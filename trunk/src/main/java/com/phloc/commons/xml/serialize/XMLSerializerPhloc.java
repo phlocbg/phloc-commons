@@ -187,7 +187,7 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
       // resolve Namespace prefix
       final String sElementNamespaceURI = aElement.getNamespaceURI ();
       String sNSPrefix = m_aNSStack.findPrefix (sElementNamespaceURI);
-      final String sDefaultNS = m_aNSStack.getDefaultNamespace ();
+      final String sDefaultNS = m_aNSStack.getDefaultNamespaceURI ();
 
       // Do we have a new namespace to prefix?
       if (StringHelper.hasText (sElementNamespaceURI) && sNSPrefix == null && !sElementNamespaceURI.equals (sDefaultNS))

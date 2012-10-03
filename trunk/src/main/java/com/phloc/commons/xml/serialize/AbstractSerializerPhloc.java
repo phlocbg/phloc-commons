@@ -96,7 +96,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
      *         otherwise.
      */
     @Nullable
-    public String getNamespaceOfPrefix (@Nullable final String sPrefix)
+    public String getNamespaceURIOfPrefix (@Nullable final String sPrefix)
     {
       if (StringHelper.hasNoText (sPrefix))
         return m_sDefaultNamespaceURI;
@@ -108,29 +108,29 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
       return null;
     }
 
-    void addPrefixNamespaceMapping (@Nullable final String sPrefix, @Nonnull @Nonempty final String sNamespace)
+    void addPrefixNamespaceMapping (@Nullable final String sPrefix, @Nonnull @Nonempty final String sNamespaceURI)
     {
       if (s_aLogger.isTraceEnabled ())
-        s_aLogger.trace ("Adding namespace mapping " + sPrefix + ":" + sNamespace);
+        s_aLogger.trace ("Adding namespace mapping " + sPrefix + ":" + sNamespaceURI);
 
       // namespace prefix uniqueness check
-      final String sExistingURI = getNamespaceOfPrefix (sPrefix);
-      if (sExistingURI != null && !sExistingURI.equals (sNamespace))
+      final String sExistingURI = getNamespaceURIOfPrefix (sPrefix);
+      if (sExistingURI != null && !sExistingURI.equals (sNamespaceURI))
         s_aLogger.warn ("Overwriting namespace prefix '" +
                         sPrefix +
                         "' to use URL '" +
-                        sNamespace +
+                        sNamespaceURI +
                         "' instead of '" +
                         sExistingURI +
                         "'");
 
       if (StringHelper.hasNoText (sPrefix))
-        m_sDefaultNamespaceURI = sNamespace;
+        m_sDefaultNamespaceURI = sNamespaceURI;
       else
       {
         if (m_aURL2PrefixMap == null)
           m_aURL2PrefixMap = new HashMap <String, String> ();
-        m_aURL2PrefixMap.put (sNamespace, sPrefix);
+        m_aURL2PrefixMap.put (sNamespaceURI, sPrefix);
       }
     }
 
@@ -141,13 +141,13 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
     }
 
     @Nullable
-    public String getPrefixOfNamespace (@Nullable final String sNamespace)
+    public String getPrefixOfNamespaceURI (@Nullable final String sNamespaceURI)
     {
       // is it the default?
-      if (m_sDefaultNamespaceURI != null && m_sDefaultNamespaceURI.equals (sNamespace))
+      if (m_sDefaultNamespaceURI != null && m_sDefaultNamespaceURI.equals (sNamespaceURI))
         return null;
 
-      return m_aURL2PrefixMap == null ? null : m_aURL2PrefixMap.get (sNamespace);
+      return m_aURL2PrefixMap == null ? null : m_aURL2PrefixMap.get (sNamespaceURI);
     }
 
     @Nonnegative
@@ -159,7 +159,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
     @Override
     public String toString ()
     {
-      return new ToStringGenerator (this).append ("defaultNSURL", m_sDefaultNamespaceURI)
+      return new ToStringGenerator (this).append ("defaultNSURI", m_sDefaultNamespaceURI)
                                          .append ("url2prefix", m_aURL2PrefixMap)
                                          .toString ();
     }
@@ -167,6 +167,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
 
   /**
    * Contains the hierarchy of XML namespaces within a document structure.
+   * Important: null namespace URIs are different from empty namespace URIs!
    * 
    * @author philip
    */
@@ -187,10 +188,10 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
       m_aStack.add (0, aNSL);
     }
 
-    public void addNamespaceMapping (final String sPrefix, final String sNamespace)
+    public void addNamespaceMapping (@Nullable final String sPrefix, @Nonnull @Nonempty final String sNamespaceURI)
     {
       // Add the namespace to the current level
-      ContainerHelper.getFirstElement (m_aStack).addPrefixNamespaceMapping (sPrefix, sNamespace);
+      ContainerHelper.getFirstElement (m_aStack).addPrefixNamespaceMapping (sPrefix, sNamespaceURI);
     }
 
     public void pop ()
@@ -199,12 +200,16 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
       m_aStack.remove (0);
     }
 
+    /**
+     * @return The namespace URI that is currently active in the stack. May be
+     *         <code>null</code> for no specific namespace.
+     */
     @Nullable
-    public String getDefaultNamespace ()
+    public String getDefaultNamespaceURI ()
     {
       // iterate from front to end
       for (final NamespaceLevel aNSLevel : m_aStack)
-        if (aNSLevel.getDefaultNamespaceURI () != null)
+        if (StringHelper.hasText (aNSLevel.getDefaultNamespaceURI ()))
           return aNSLevel.getDefaultNamespaceURI ();
 
       // no default namespace
@@ -214,25 +219,24 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
     /**
      * Resolve the given namespace URI to a prefix.
      * 
-     * @param sNamespace
+     * @param sNamespaceURI
      *        The namespace URI to resolve. May be <code>null</code>.
      * @return <code>null</code> if no namespace prefix is required.
      */
     @Nullable
-    public String findPrefix (@Nullable final String sNamespace)
+    public String findPrefix (@Nullable final String sNamespaceURI)
     {
       // no namespace URI?
-      if (StringHelper.hasNoText (sNamespace))
-        return null;
+      final String sRealNamespaceURI = StringHelper.getNotNull (sNamespaceURI);
 
       // is it the default namespace?
-      if (sNamespace.equals (getDefaultNamespace ()))
+      if (sRealNamespaceURI.equals (getDefaultNamespaceURI ()))
         return null;
 
       // find existing prefix
       for (final NamespaceLevel aNSLevel : m_aStack)
       {
-        final String sPrefix = aNSLevel.getPrefixOfNamespace (sNamespace);
+        final String sPrefix = aNSLevel.getPrefixOfNamespaceURI (sRealNamespaceURI);
         if (sPrefix != null)
           return sPrefix;
       }
@@ -261,9 +265,24 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
     {
       // find existing prefix
       for (final NamespaceLevel aNSLevel : m_aStack)
-        if (aNSLevel.getNamespaceOfPrefix (sPrefix) != null)
+        if (aNSLevel.getNamespaceURIOfPrefix (sPrefix) != null)
           return true;
       return false;
+    }
+
+    @Nullable
+    public String getMappedPrefix (@Nonnull @Nonempty final String sElementNamespaceURI)
+    {
+      // If a mapping is defined, it always takes precedence over the default
+      // namespace
+      if (m_aNamespaceCtx != null)
+      {
+        // Is a mapping defined?
+        final String sPrefix = m_aNamespaceCtx.getPrefix (sElementNamespaceURI);
+        if (sPrefix != null)
+          return sPrefix;
+      }
+      return null;
     }
 
     /**
@@ -279,13 +298,9 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
     {
       // If a mapping is defined, it always takes precedence over the default
       // namespace
-      if (m_aNamespaceCtx != null)
-      {
-        // Is a mapping defined?
-        final String sPrefix = m_aNamespaceCtx.getPrefix (sElementNamespaceURI);
-        if (sPrefix != null)
-          return sPrefix;
-      }
+      final String sPrefix = getMappedPrefix (sElementNamespaceURI);
+      if (sPrefix != null)
+        return sPrefix;
 
       // Is the default namespace available?
       if (!_containsAnyNamespace ())

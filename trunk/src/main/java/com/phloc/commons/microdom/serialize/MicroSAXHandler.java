@@ -43,6 +43,7 @@ import com.phloc.commons.microdom.IMicroText;
 import com.phloc.commons.microdom.impl.MicroDocument;
 import com.phloc.commons.microdom.impl.MicroDocumentType;
 import com.phloc.commons.string.StringHelper;
+import com.phloc.commons.xml.CXML;
 
 /**
  * The SAX handler used by the {@link MicroReader}.
@@ -100,7 +101,7 @@ final class MicroSAXHandler implements EntityResolver, DTDHandler, ContentHandle
     m_bDTDMode = false;
   }
 
-  public void startElement (@Nullable final String sURI,
+  public void startElement (@Nullable final String sNamespaceURI,
                             @Nonnull final String sLocalName,
                             @Nullable final String sQName,
                             @Nullable final Attributes aAttributes)
@@ -108,8 +109,8 @@ final class MicroSAXHandler implements EntityResolver, DTDHandler, ContentHandle
     _createParentDocument ();
 
     IMicroElement aElement;
-    if (StringHelper.hasText (sURI))
-      aElement = m_aParent.appendElement (sURI, sLocalName);
+    if (StringHelper.hasText (sNamespaceURI))
+      aElement = m_aParent.appendElement (sNamespaceURI, sLocalName);
     else
       aElement = m_aParent.appendElement (sLocalName);
 
@@ -118,13 +119,30 @@ final class MicroSAXHandler implements EntityResolver, DTDHandler, ContentHandle
     {
       final int nAttrCount = aAttributes.getLength ();
       for (int i = 0; i < nAttrCount; ++i)
-        aElement.setAttribute (aAttributes.getQName (i), aAttributes.getValue (i));
+      {
+        final String sAttrName = aAttributes.getQName (i);
+        final String sAttrValue = aAttributes.getValue (i);
+        if (!sAttrName.startsWith (CXML.XML_ATTR_XMLNS))
+          aElement.setAttribute (sAttrName, sAttrValue);
+        else
+          if (!sAttrValue.equals (sNamespaceURI))
+          {
+            s_aLogger.warn ("Attribute '" +
+                            sAttrName +
+                            "' contains different value '" +
+                            sAttrValue +
+                            "' than the expected '" +
+                            sNamespaceURI +
+                            "'");
+            aElement.setAttribute (sAttrName, sAttrValue);
+          }
+      }
     }
 
     m_aParent = aElement;
   }
 
-  public void endElement (final String sURI, final String sLocalName, final String sQName)
+  public void endElement (final String sNamespaceURI, final String sLocalName, final String sQName)
   {
     m_aParent = m_aParent.getParent ();
   }
