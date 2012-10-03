@@ -212,26 +212,27 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
     try
     {
       // resolve Namespace prefix
-      final String sElementNamespaceURI = aElement.getNamespaceURI ();
+      final String sElementNamespaceURI = StringHelper.getNotNull (aElement.getNamespaceURI ());
       String sNSPrefix = m_aNSStack.findPrefix (sElementNamespaceURI);
-      final String sDefaultNS = m_aNSStack.getDefaultNamespace ();
+      final String sDefaultNSURI = StringHelper.getNotNull (m_aNSStack.getDefaultNamespaceURI ());
 
       // Do we have a new namespace to prefix?
-      if (StringHelper.hasText (sElementNamespaceURI) && sNSPrefix == null && !sElementNamespaceURI.equals (sDefaultNS))
+      if (sNSPrefix == null && !sElementNamespaceURI.equals (sDefaultNSURI))
       {
-        sNSPrefix = m_aNSStack.createUniquePrefix (sElementNamespaceURI);
-        if (StringHelper.hasNoText (sNSPrefix))
-          aAttrMap.put (CXML.XML_ATTR_XMLNS, sElementNamespaceURI);
+        if (bIsRootElement && StringHelper.hasNoText (sElementNamespaceURI))
+        {
+          // do nothing
+        }
         else
-          aAttrMap.put (CXML.XML_ATTR_XMLNS_WITH_SEP + sNSPrefix, sElementNamespaceURI);
-        m_aNSStack.addNamespaceMapping (sNSPrefix, sElementNamespaceURI);
-      }
-
-      // check for DocType
-      if (bIsRootElement && sDefaultNS != null)
-      {
-        aAttrMap.put (CXML.XML_ATTR_XMLNS, sDefaultNS);
-        m_aNSStack.addNamespaceMapping (null, sDefaultNS);
+        {
+          sNSPrefix = bIsRootElement ? m_aNSStack.getMappedPrefix (sElementNamespaceURI)
+                                    : m_aNSStack.createUniquePrefix (sElementNamespaceURI);
+          if (StringHelper.hasNoText (sNSPrefix))
+            aAttrMap.put (CXML.XML_ATTR_XMLNS, sElementNamespaceURI);
+          else
+            aAttrMap.put (CXML.XML_ATTR_XMLNS_WITH_SEP + sNSPrefix, sElementNamespaceURI);
+          m_aNSStack.addNamespaceMapping (sNSPrefix, sElementNamespaceURI);
+        }
       }
 
       // indent only if predecessor was an element

@@ -115,11 +115,11 @@ public final class MicroReaderTest
                   sCRLF +
                   "  <root xmlns=\"myuri\">" +
                   sCRLF +
-                  "    <child xmlns=\"\">" +
+                  "    <ns0:child xmlns:ns0=\"\">" +
                   sCRLF +
-                  "      <a:child2 xmlns:a=\"foo\">Value text - no entities!</a:child2>" +
+                  "      <ns1:child2 xmlns:ns1=\"foo\">Value text - no entities!</ns1:child2>" +
                   sCRLF +
-                  "    </child>" +
+                  "    </ns0:child>" +
                   sCRLF +
                   "  </root>" +
                   sCRLF +
