@@ -213,26 +213,26 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
     {
       // resolve Namespace prefix
       final String sElementNamespaceURI = StringHelper.getNotNull (aElement.getNamespaceURI ());
-      String sNSPrefix = m_aNSStack.findPrefix (sElementNamespaceURI);
-      final String sDefaultNSURI = StringHelper.getNotNull (m_aNSStack.getDefaultNamespaceURI ());
+      final String sDefaultNamespaceURI = StringHelper.getNotNull (m_aNSStack.getDefaultNamespaceURI ());
+      final boolean bIsDefaultNamespace = sElementNamespaceURI.equals (sDefaultNamespaceURI);
+      String sNSPrefix = bIsDefaultNamespace ? null : m_aNSStack.getUsedPrefixOfNamespace (sElementNamespaceURI);
 
-      // Do we have a new namespace to prefix?
-      if (sNSPrefix == null && !sElementNamespaceURI.equals (sDefaultNSURI))
+      // Do we need to create a prefix?
+      if (sNSPrefix == null && !bIsDefaultNamespace && (!bIsRootElement || sElementNamespaceURI.length () > 0))
       {
-        if (bIsRootElement && StringHelper.hasNoText (sElementNamespaceURI))
-        {
-          // do nothing
-        }
+        // Ensure to use the correct prefix (namespace context)
+        sNSPrefix = m_aNSStack.getMappedPrefix (sElementNamespaceURI);
+
+        // Do not create a prefix for the root element
+        if (sNSPrefix == null && !bIsRootElement)
+          sNSPrefix = m_aNSStack.createUniquePrefix ();
+
+        // Add and remember the attribute
+        if (StringHelper.hasNoText (sNSPrefix))
+          aAttrMap.put (CXML.XML_ATTR_XMLNS, sElementNamespaceURI);
         else
-        {
-          sNSPrefix = bIsRootElement ? m_aNSStack.getMappedPrefix (sElementNamespaceURI)
-                                    : m_aNSStack.createUniquePrefix (sElementNamespaceURI);
-          if (StringHelper.hasNoText (sNSPrefix))
-            aAttrMap.put (CXML.XML_ATTR_XMLNS, sElementNamespaceURI);
-          else
-            aAttrMap.put (CXML.XML_ATTR_XMLNS_WITH_SEP + sNSPrefix, sElementNamespaceURI);
-          m_aNSStack.addNamespaceMapping (sNSPrefix, sElementNamespaceURI);
-        }
+          aAttrMap.put (CXML.XML_ATTR_XMLNS_WITH_SEP + sNSPrefix, sElementNamespaceURI);
+        m_aNSStack.addNamespaceMapping (sNSPrefix, sElementNamespaceURI);
       }
 
       // indent only if predecessor was an element

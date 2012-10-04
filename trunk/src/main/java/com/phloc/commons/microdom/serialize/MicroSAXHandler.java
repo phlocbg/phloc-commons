@@ -122,20 +122,11 @@ final class MicroSAXHandler implements EntityResolver, DTDHandler, ContentHandle
       {
         final String sAttrName = aAttributes.getQName (i);
         final String sAttrValue = aAttributes.getValue (i);
+
+        // Ignore the "xmlns" attributes, as the SAX handler passes the correct
+        // namespace URIs
         if (!sAttrName.startsWith (CXML.XML_ATTR_XMLNS))
           aElement.setAttribute (sAttrName, sAttrValue);
-        else
-          if (!sAttrValue.equals (sNamespaceURI))
-          {
-            s_aLogger.warn ("Attribute '" +
-                            sAttrName +
-                            "' contains different value '" +
-                            sAttrValue +
-                            "' than the expected '" +
-                            sNamespaceURI +
-                            "'");
-            aElement.setAttribute (sAttrName, sAttrValue);
-          }
       }
     }
 

@@ -138,7 +138,7 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   }
 
   @Nonnull
-  private XMLEmitterPhloc _appendAttr (@Nullable final String sValue)
+  private XMLEmitterPhloc _appendAttrValue (@Nullable final String sValue)
   {
     return _append (m_cTextBoundary)._appendMasked (sValue)._append (m_cTextBoundary);
   }
@@ -150,11 +150,11 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   {
     if (eVersion != null)
       m_eXMLVersion = eVersion;
-    _append (PI_START)._append ("xml version=")._appendAttr (m_eXMLVersion.getVersion ());
+    _append (PI_START)._append ("xml version=")._appendAttrValue (m_eXMLVersion.getVersion ());
     if (sEncoding != null)
-      _append (" encoding=")._appendAttr (sEncoding);
+      _append (" encoding=")._appendAttrValue (sEncoding);
     if (bStandalone)
-      _append (" standalone=")._appendAttr ("yes");
+      _append (" standalone=")._appendAttrValue ("yes");
     _append (PI_END)._append (CRLF);
   }
 
@@ -310,7 +310,7 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
       {
         final String sAttrName = aEntry.getKey ();
         final String sAttrValue = aEntry.getValue ();
-        _append (' ')._append (sAttrName)._append ('=')._appendAttr (sAttrValue);
+        _append (' ')._append (sAttrName)._append ('=')._appendAttrValue (sAttrValue);
       }
     }
 
