@@ -105,7 +105,7 @@ public class GraphNode <VALUETYPE> extends AbstractGraphObject implements IGraph
 
   public boolean hasIncomingRelations ()
   {
-    return !ContainerHelper.isEmpty (m_aIncoming);
+    return ContainerHelper.isNotEmpty (m_aIncoming);
   }
 
   @Nonnegative
@@ -188,7 +188,7 @@ public class GraphNode <VALUETYPE> extends AbstractGraphObject implements IGraph
 
   public boolean hasOutgoingRelations ()
   {
-    return !ContainerHelper.isEmpty (m_aOutgoing);
+    return ContainerHelper.isNotEmpty (m_aOutgoing);
   }
 
   @Nonnegative

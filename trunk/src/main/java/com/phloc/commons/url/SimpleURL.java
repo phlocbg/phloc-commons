@@ -93,7 +93,7 @@ public final class SimpleURL extends AbstractSimpleURL implements ICloneable <Si
   @Nonnull
   public SimpleURL addAll (@Nullable final Map <String, String> aParams)
   {
-    if (!ContainerHelper.isEmpty (aParams))
+    if (ContainerHelper.isNotEmpty (aParams))
     {
       if (m_aParams == null)
         m_aParams = new LinkedHashMap <String, String> ();
