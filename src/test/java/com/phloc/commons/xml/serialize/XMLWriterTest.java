@@ -47,13 +47,14 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for {@link XMLWriter}
- *
+ * 
  * @author philip
  */
 public final class XMLWriterTest extends AbstractPhlocTestCase
 {
   private static final String DOCTYPE_XHTML10_QNAME = "-//W3C//DTD XHTML 1.0 Strict//EN";
   private static final String DOCTYPE_XHTML10_URI = "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd";
+  private static final String CRLF = CGlobal.LINE_SEPARATOR;
 
   /**
    * Test the method getXHTMLString
@@ -62,7 +63,6 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
   @Test
   public void testGetXHTMLString ()
   {
-    final String sCRLF = CGlobal.LINE_SEPARATOR;
     final String sSPACER = " ";
     final String sINDENT = "  ";
     final String sTAGNAME = "notext";
@@ -71,9 +71,11 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
     final String sSerTagName = "<" + sTAGNAME + "></" + sTAGNAME + ">";
 
     final Document doc = XMLFactory.newDocument ("html", DOCTYPE_XHTML10_QNAME, DOCTYPE_XHTML10_URI);
-    final Element aHead = (Element) doc.getDocumentElement ().appendChild (doc.createElement ("head"));
+    final Element aHead = (Element) doc.getDocumentElement ().appendChild (doc.createElementNS (DOCTYPE_XHTML10_URI,
+                                                                                                "head"));
     aHead.appendChild (doc.createTextNode ("Hallo"));
-    final Element aNoText = (Element) doc.getDocumentElement ().appendChild (doc.createElement (sTAGNAME));
+    final Element aNoText = (Element) doc.getDocumentElement ().appendChild (doc.createElementNS (DOCTYPE_XHTML10_URI,
+                                                                                                  sTAGNAME));
     aNoText.appendChild (doc.createTextNode (""));
 
     // test including doc type
@@ -87,19 +89,19 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
                     "\"" +
                     DOCTYPE_XHTML10_URI +
                     "\">" +
-                    sCRLF +
+                    CRLF +
                     "<html xmlns=\"" +
                     DOCTYPE_XHTML10_URI +
                     "\">" +
-                    sCRLF +
+                    CRLF +
                     sINDENT +
                     "<head>Hallo</head>" +
-                    sCRLF +
+                    CRLF +
                     sINDENT +
                     sSerTagName +
-                    sCRLF +
+                    CRLF +
                     "</html>" +
-                    sCRLF, sResult);
+                    CRLF, sResult);
       assertEquals (sResult,
                     XMLWriter.getNodeAsString (doc, new XMLWriterSettings ().setFormat (EXMLSerializeFormat.HTML)));
     }
@@ -112,15 +114,15 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
       assertEquals ("<html xmlns=\"" +
                     DOCTYPE_XHTML10_URI +
                     "\">" +
-                    sCRLF +
+                    CRLF +
                     sINDENT +
                     "<head>Hallo</head>" +
-                    sCRLF +
+                    CRLF +
                     sINDENT +
                     sSerTagName +
-                    sCRLF +
+                    CRLF +
                     "</html>" +
-                    sCRLF, sResult);
+                    CRLF, sResult);
     }
 
     {
@@ -138,7 +140,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
 
     // add text element
     aNoText.appendChild (doc.createTextNode ("Hallo "));
-    final Element b = (Element) aNoText.appendChild (doc.createElement ("strong"));
+    final Element b = (Element) aNoText.appendChild (doc.createElementNS (DOCTYPE_XHTML10_URI, "strong"));
     b.appendChild (doc.createTextNode ("Welt"));
     aNoText.appendChild (doc.createCDATASection ("!!!"));
     aNoText.appendChild (doc.createComment ("No"));
@@ -152,15 +154,15 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
       assertEquals ("<html xmlns=\"" +
                     DOCTYPE_XHTML10_URI +
                     "\">" +
-                    sCRLF +
+                    CRLF +
                     sINDENT +
                     "<head>Hallo</head>" +
-                    sCRLF +
+                    CRLF +
                     sINDENT +
                     "<notext>Hallo <strong>Welt</strong><![CDATA[!!!]]><!--No--></notext>" +
-                    sCRLF +
+                    CRLF +
                     "</html>" +
-                    sCRLF, sResult);
+                    CRLF, sResult);
     }
 
     // test as XML (with doc type and indent)
@@ -169,7 +171,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
       assertEquals ("<?xml version=\"1.0\" encoding=\"" +
                     CCharset.CHARSET_UTF_8 +
                     "\"?>" +
-                    sCRLF +
+                    CRLF +
                     "<!DOCTYPE html PUBLIC \"" +
                     DOCTYPE_XHTML10_QNAME +
                     "\"" +
@@ -177,19 +179,19 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
                     "\"" +
                     DOCTYPE_XHTML10_URI +
                     "\">" +
-                    sCRLF +
+                    CRLF +
                     "<html xmlns=\"" +
                     DOCTYPE_XHTML10_URI +
                     "\">" +
-                    sCRLF +
+                    CRLF +
                     sINDENT +
                     "<head>Hallo</head>" +
-                    sCRLF +
+                    CRLF +
                     sINDENT +
                     "<notext>Hallo <strong>Welt</strong><![CDATA[!!!]]><!--No--></notext>" +
-                    sCRLF +
+                    CRLF +
                     "</html>" +
-                    sCRLF, sResult);
+                    CRLF, sResult);
     }
 
     // test as XML (without doc type and comments but indented)
@@ -201,19 +203,19 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
       assertEquals ("<?xml version=\"1.0\" encoding=\"" +
                     CCharset.CHARSET_UTF_8 +
                     "\"?>" +
-                    sCRLF +
+                    CRLF +
                     "<html xmlns=\"" +
                     DOCTYPE_XHTML10_URI +
                     "\">" +
-                    sCRLF +
+                    CRLF +
                     sINDENT +
                     "<head>Hallo</head>" +
-                    sCRLF +
+                    CRLF +
                     sINDENT +
                     "<notext>Hallo <strong>Welt</strong><![CDATA[!!!]]></notext>" +
-                    sCRLF +
+                    CRLF +
                     "</html>" +
-                    sCRLF, sResult);
+                    CRLF, sResult);
     }
 
     assertTrue (XMLWriter.writeToStream (doc, new NonBlockingByteArrayOutputStream ()).isSuccess ());
@@ -228,19 +230,17 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
     // Containing the forbidden CDATA end marker
     Element e = doc.createElement ("a");
     e.appendChild (doc.createCDATASection ("a]]>b"));
-    assertEquals ("<a><![CDATA[a]]>]]&gt;<![CDATA[b]]></a>" + CGlobal.LINE_SEPARATOR, XMLWriter.getXMLString (e));
+    assertEquals ("<a><![CDATA[a]]>]]&gt;<![CDATA[b]]></a>" + CRLF, XMLWriter.getXMLString (e));
 
     // Containing more than one forbidden CDATA end marker
     e = doc.createElement ("a");
     e.appendChild (doc.createCDATASection ("a]]>b]]>c"));
-    assertEquals ("<a><![CDATA[a]]>]]&gt;<![CDATA[b]]>]]&gt;<![CDATA[c]]></a>" + CGlobal.LINE_SEPARATOR,
-                  XMLWriter.getXMLString (e));
+    assertEquals ("<a><![CDATA[a]]>]]&gt;<![CDATA[b]]>]]&gt;<![CDATA[c]]></a>" + CRLF, XMLWriter.getXMLString (e));
 
     // Containing a complete CDATA section
     e = doc.createElement ("a");
     e.appendChild (doc.createCDATASection ("a<![CDATA[x]]>b"));
-    assertEquals ("<a><![CDATA[a<![CDATA[x]]>]]&gt;<![CDATA[b]]></a>" + CGlobal.LINE_SEPARATOR,
-                  XMLWriter.getXMLString (e));
+    assertEquals ("<a><![CDATA[a<![CDATA[x]]>]]&gt;<![CDATA[b]]></a>" + CRLF, XMLWriter.getXMLString (e));
   }
 
   @Test
@@ -255,7 +255,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
                                                                 .setIndent (EXMLSerializeIndent.NONE);
     String s = XMLWriter.getNodeAsString (aDoc, aSettings);
     assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>" +
-                  CGlobal.LINE_SEPARATOR +
+                  CRLF +
                   "<root xmlns=\"ns1url\">" +
                   "<ns0:child1 xmlns:ns0=\"ns2url\" />" +
                   "<ns0:child2 xmlns:ns0=\"ns2url\" />" +
@@ -266,7 +266,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
     aSettings.setNamespaceContext (aCtx);
     s = XMLWriter.getNodeAsString (aDoc, aSettings);
     assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>" +
-                  CGlobal.LINE_SEPARATOR +
+                  CRLF +
                   "<a:root xmlns:a=\"ns1url\">" +
                   "<ns0:child1 xmlns:ns0=\"ns2url\" />" +
                   "<ns0:child2 xmlns:ns0=\"ns2url\" />" +
@@ -275,7 +275,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
     aCtx.addMapping ("xy", "ns2url");
     s = XMLWriter.getNodeAsString (aDoc, aSettings);
     assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>" +
-                  CGlobal.LINE_SEPARATOR +
+                  CRLF +
                   "<a:root xmlns:a=\"ns1url\">" +
                   "<xy:child1 xmlns:xy=\"ns2url\" />" +
                   "<xy:child2 xmlns:xy=\"ns2url\" />" +
@@ -284,7 +284,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
     aSettings.setUseDoubleQuotesForAttributes (false);
     s = XMLWriter.getNodeAsString (aDoc, aSettings);
     assertEquals ("<?xml version='1.0' encoding='ISO-8859-1' standalone='yes'?>" +
-                  CGlobal.LINE_SEPARATOR +
+                  CRLF +
                   "<a:root xmlns:a='ns1url'>" +
                   "<xy:child1 xmlns:xy='ns2url' />" +
                   "<xy:child2 xmlns:xy='ns2url' />" +
@@ -293,7 +293,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
     aSettings.setSpaceOnSelfClosedElement (false);
     s = XMLWriter.getNodeAsString (aDoc, aSettings);
     assertEquals ("<?xml version='1.0' encoding='ISO-8859-1' standalone='yes'?>" +
-                  CGlobal.LINE_SEPARATOR +
+                  CRLF +
                   "<a:root xmlns:a='ns1url'>" +
                   "<xy:child1 xmlns:xy='ns2url'/>" +
                   "<xy:child2 xmlns:xy='ns2url'/>" +
@@ -306,18 +306,12 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
     Document aDoc = XMLFactory.newDocument (EXMLVersion.XML_10);
     aDoc.appendChild (aDoc.createElement ("any"));
     String sXML = XMLWriter.getXMLString (aDoc);
-    assertEquals ("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
-                  CGlobal.LINE_SEPARATOR +
-                  "<any />" +
-                  CGlobal.LINE_SEPARATOR, sXML);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" + CRLF + "<any />" + CRLF, sXML);
 
     aDoc = XMLFactory.newDocument (EXMLVersion.XML_11);
     aDoc.appendChild (aDoc.createElement ("any"));
     sXML = XMLWriter.getXMLString (aDoc);
-    assertEquals ("<?xml version=\"1.1\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
-                  CGlobal.LINE_SEPARATOR +
-                  "<any />" +
-                  CGlobal.LINE_SEPARATOR, sXML);
+    assertEquals ("<?xml version=\"1.1\" encoding=\"UTF-8\" standalone=\"yes\"?>" + CRLF + "<any />" + CRLF, sXML);
   }
 
   @Test

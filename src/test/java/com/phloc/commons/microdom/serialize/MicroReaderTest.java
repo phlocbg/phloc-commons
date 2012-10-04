@@ -44,6 +44,7 @@ import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.io.streams.NonBlockingStringReader;
 import com.phloc.commons.microdom.IMicroDocument;
+import com.phloc.commons.xml.namespace.MapBasedNamespaceContext;
 import com.phloc.commons.xml.sax.InputSourceFactory;
 import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
 import com.phloc.commons.xml.sax.StringSAXInputSource;
@@ -67,6 +68,8 @@ public final class MicroReaderTest
     }
   }
 
+  private static final String CRLF = CGlobal.LINE_SEPARATOR;
+
   @Test
   public void testNull ()
   {
@@ -81,7 +84,14 @@ public final class MicroReaderTest
   @Test
   public void testSimple ()
   {
-    final String s = "<?xml version=\"1.0\"?><verrryoot><root xmlns=\"myuri\"><child xmlns=\"\"><a:child2 xmlns:a=\"foo\">Value text - no entities!</a:child2></child></root></verrryoot>";
+    final String s = "<?xml version=\"1.0\"?>"
+                     + "<verrryoot>"
+                     + "<root xmlns=\"myuri\">"
+                     + "<child xmlns=\"\">"
+                     + "<a:child2 xmlns:a=\"foo\">Value text - no entities!</a:child2>"
+                     + "</child>"
+                     + "</root>"
+                     + "</verrryoot>";
     IMicroDocument aDoc = MicroReader.readMicroXML (s);
     assertNotNull (aDoc);
 
@@ -101,30 +111,24 @@ public final class MicroReaderTest
     aDoc = MicroReader.readMicroXML (new StringSAXInputSource (s), null, LoggingSAXErrorHandler.getInstance ());
     assertNotNull (aDoc);
 
-    // read with expected root element
-    final IMicroDocument aDoc2 = MicroReader.readMicroXML (s);
-    assertNotNull (aDoc2);
-    assertEquals ("verrryoot", aDoc2.getDocumentElement ().getTagName ());
-
     final NonBlockingByteArrayOutputStream baos = new NonBlockingByteArrayOutputStream ();
     new MicroSerializer ().write (aDoc, baos);
-    final String sCRLF = CGlobal.LINE_SEPARATOR;
     assertEquals ("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
-                  sCRLF +
+                  CRLF +
                   "<verrryoot>" +
-                  sCRLF +
+                  CRLF +
                   "  <root xmlns=\"myuri\">" +
-                  sCRLF +
+                  CRLF +
                   "    <ns0:child xmlns:ns0=\"\">" +
-                  sCRLF +
+                  CRLF +
                   "      <ns1:child2 xmlns:ns1=\"foo\">Value text - no entities!</ns1:child2>" +
-                  sCRLF +
+                  CRLF +
                   "    </ns0:child>" +
-                  sCRLF +
+                  CRLF +
                   "  </root>" +
-                  sCRLF +
+                  CRLF +
                   "</verrryoot>" +
-                  sCRLF, baos.getAsString (CCharset.CHARSET_UTF_8));
+                  CRLF, baos.getAsString (CCharset.CHARSET_UTF_8));
 
     final String sXHTML = "<content>"
                           + "<div class=\"css1\">"
@@ -146,7 +150,7 @@ public final class MicroReaderTest
                                                         new XMLWriterSettings ().setIndent (EXMLSerializeIndent.NONE));
 
     assertEquals ("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
-                  CGlobal.LINE_SEPARATOR +
+                  CRLF +
                   "<content>" +
                   "<div class=\"css1\">" +
                   "<span class=\"css2\"><span>Text1 <span>Text1b</span></span> <span>Text1c</span>" +
@@ -154,6 +158,146 @@ public final class MicroReaderTest
                   "</span>" +
                   "</div>" +
                   "</content>", sResult);
+  }
+
+  /**
+   * Test: use namespaces all over the place and mix them quite complex
+   */
+  @Test
+  public void testNamespaces ()
+  {
+    final XMLWriterSettings xs = new XMLWriterSettings ();
+    xs.setIndent (EXMLSerializeIndent.NONE);
+
+    final String s = "<?xml version=\"1.0\"?>"
+                     + "<verrryoot>"
+                     + "<root xmlns=\"myuri\" xmlns:a='foo'>"
+                     + "<child xmlns=\"\">"
+                     + "<a:child2>Value text - no entities!</a:child2>"
+                     + "</child>"
+                     + "</root>"
+                     + "</verrryoot>";
+    final IMicroDocument aDoc = MicroReader.readMicroXML (s);
+    assertNotNull (aDoc);
+
+    final NonBlockingByteArrayOutputStream baos = new NonBlockingByteArrayOutputStream ();
+    new MicroSerializer (xs).write (aDoc, baos);
+    final String sXML = baos.getAsString (CCharset.CHARSET_UTF_8);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
+                  CRLF +
+                  "<verrryoot>" +
+                  "<root xmlns=\"myuri\">" +
+                  "<ns0:child xmlns:ns0=\"\">" +
+                  "<ns1:child2 xmlns:ns1=\"foo\">Value text - no entities!</ns1:child2>" +
+                  "</ns0:child>" +
+                  "</root>" +
+                  "</verrryoot>", sXML);
+  }
+
+  /**
+   * Test: Use 2 different namespaces and use them both more than once
+   */
+  @Test
+  public void testNamespaces2 ()
+  {
+    final XMLWriterSettings xs = new XMLWriterSettings ();
+    xs.setIndent (EXMLSerializeIndent.NONE);
+
+    final String s = "<?xml version=\"1.0\"?>"
+                     + "<verrryoot xmlns='uri1'>"
+                     + "<root>"
+                     + "<child xmlns='uri2'>"
+                     + "<child2>Value text - no entities!</child2>"
+                     + "</child>"
+                     + "</root>"
+                     + "</verrryoot>";
+    final IMicroDocument aDoc = MicroReader.readMicroXML (s);
+    assertNotNull (aDoc);
+
+    final NonBlockingByteArrayOutputStream baos = new NonBlockingByteArrayOutputStream ();
+    new MicroSerializer (xs).write (aDoc, baos);
+    final String sXML = baos.getAsString (CCharset.CHARSET_UTF_8);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
+                  CRLF +
+                  "<verrryoot xmlns=\"uri1\">" +
+                  "<root>" +
+                  "<ns0:child xmlns:ns0=\"uri2\">" +
+                  "<ns0:child2>Value text - no entities!</ns0:child2>" +
+                  "</ns0:child>" +
+                  "</root>" +
+                  "</verrryoot>", sXML);
+  }
+
+  /**
+   * Test: declare all namespaces in the root element and use them in nested
+   * elements
+   */
+  @Test
+  public void testNamespaces3 ()
+  {
+    final XMLWriterSettings xs = new XMLWriterSettings ();
+    xs.setIndent (EXMLSerializeIndent.NONE);
+    xs.setUseDoubleQuotesForAttributes (false);
+
+    final String s = "<?xml version=\"1.0\"?>"
+                     + "<verrryoot xmlns='uri1' xmlns:a='uri2'>"
+                     + "<root>"
+                     + "<a:child>"
+                     + "<a:child2>Value text - no entities!</a:child2>"
+                     + "</a:child>"
+                     + "</root>"
+                     + "</verrryoot>";
+    final IMicroDocument aDoc = MicroReader.readMicroXML (s);
+    assertNotNull (aDoc);
+
+    final NonBlockingByteArrayOutputStream baos = new NonBlockingByteArrayOutputStream ();
+    new MicroSerializer (xs).write (aDoc, baos);
+    final String sXML = baos.getAsString (CCharset.CHARSET_UTF_8);
+    assertEquals ("<?xml version='1.0' encoding='UTF-8' standalone='yes'?>" +
+                  CRLF +
+                  "<verrryoot xmlns='uri1'>" +
+                  "<root>" +
+                  "<ns0:child xmlns:ns0='uri2'>" +
+                  "<ns0:child2>Value text - no entities!</ns0:child2>" +
+                  "</ns0:child>" +
+                  "</root>" +
+                  "</verrryoot>", sXML);
+  }
+
+  /**
+   * Test: same as namespace3 test but with a namespace context map
+   */
+  @Test
+  public void testNamespaces3a ()
+  {
+    final XMLWriterSettings xs = new XMLWriterSettings ();
+    xs.setIndent (EXMLSerializeIndent.NONE);
+    xs.setUseDoubleQuotesForAttributes (false);
+    xs.setNamespaceContext (new MapBasedNamespaceContext ().addMapping ("a1", "uri1").addMapping ("a2", "uri2"));
+
+    final String s = "<?xml version=\"1.0\"?>"
+                     + "<verrryoot xmlns='uri1' xmlns:a='uri2'>"
+                     + "<root>"
+                     + "<a:child>"
+                     + "<a:child2>Value text - no entities!</a:child2>"
+                     + "</a:child>"
+                     + "</root>"
+                     + "</verrryoot>";
+    final IMicroDocument aDoc = MicroReader.readMicroXML (s);
+    assertNotNull (aDoc);
+
+    final NonBlockingByteArrayOutputStream baos = new NonBlockingByteArrayOutputStream ();
+    new MicroSerializer (xs).write (aDoc, baos);
+    final String sXML = baos.getAsString (CCharset.CHARSET_UTF_8);
+    assertEquals ("<?xml version='1.0' encoding='UTF-8' standalone='yes'?>" +
+                  CRLF +
+                  "<a1:verrryoot xmlns:a1='uri1'>" +
+                  "<a1:root>" +
+                  "<a2:child xmlns:a2='uri2'>" +
+                  "<a2:child2>Value text - no entities!</a2:child2>" +
+                  "</a2:child>" +
+                  "</a1:root>" +
+                  "</a1:verrryoot>", sXML);
   }
 
   @Test
