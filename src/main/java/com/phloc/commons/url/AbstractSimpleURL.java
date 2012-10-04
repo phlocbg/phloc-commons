@@ -58,7 +58,7 @@ public abstract class AbstractSimpleURL implements ISimpleURL
   public AbstractSimpleURL (@Nonnull final String sHref, @Nullable final Map <String, String> aParams)
   {
     this (sHref);
-    if (!ContainerHelper.isEmpty (aParams))
+    if (ContainerHelper.isNotEmpty (aParams))
     {
       // m_aParams may already be non-null
       if (m_aParams == null)
@@ -106,7 +106,7 @@ public abstract class AbstractSimpleURL implements ISimpleURL
 
   public final boolean hasParams ()
   {
-    return !ContainerHelper.isEmpty (m_aParams);
+    return ContainerHelper.isNotEmpty (m_aParams);
   }
 
   @Nonnegative

@@ -34,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * Default implementation of the {@link IURLData} interface.
- *
+ * 
  * @author philip
  */
 @Immutable
@@ -84,7 +84,7 @@ public final class URLData implements IURLData
 
   public boolean hasParams ()
   {
-    return !ContainerHelper.isEmpty (m_aParams);
+    return ContainerHelper.isNotEmpty (m_aParams);
   }
 
   @Nonnegative
