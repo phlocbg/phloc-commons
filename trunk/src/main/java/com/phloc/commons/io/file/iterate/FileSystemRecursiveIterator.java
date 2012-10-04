@@ -165,8 +165,7 @@ public class FileSystemRecursiveIterator implements IIterableIterator <File>
 
   /**
    * @return The nesting level of the last file retrieved by {@link #next()}.
-   *         Always &ge; 0. Files on the same level as the starting directory
-   *         have level 0.
+   *         Always &ge; 0. The starting directory has level 0.
    */
   @Nonnegative
   public final int getLevel ()
