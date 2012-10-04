@@ -34,7 +34,6 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.Nonempty;
-import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.io.streams.NonBlockingBufferedWriter;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.string.StringHelper;
@@ -162,7 +161,12 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
     @Nonnegative
     int getNamespaceCount ()
     {
-      return (m_aURL2PrefixMap == null ? 0 : m_aURL2PrefixMap.size ()) + (m_sDefaultNamespaceURI == null ? 0 : 1);
+      return (m_sDefaultNamespaceURI == null ? 0 : 1) + (m_aURL2PrefixMap == null ? 0 : m_aURL2PrefixMap.size ());
+    }
+
+    boolean hasAnyNamespace ()
+    {
+      return m_sDefaultNamespaceURI != null || (m_aURL2PrefixMap != null && !m_aURL2PrefixMap.isEmpty ());
     }
 
     @Override
@@ -200,7 +204,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
     public void addNamespaceMapping (@Nullable final String sPrefix, @Nonnull @Nonempty final String sNamespaceURI)
     {
       // Add the namespace to the current level
-      ContainerHelper.getFirstElement (m_aStack).addPrefixNamespaceMapping (sPrefix, sNamespaceURI);
+      m_aStack.get (0).addPrefixNamespaceMapping (sPrefix, sNamespaceURI);
     }
 
     public void pop ()
@@ -218,8 +222,11 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
     {
       // iterate from front to end
       for (final NamespaceLevel aNSLevel : m_aStack)
-        if (StringHelper.hasText (aNSLevel.getDefaultNamespaceURI ()))
-          return aNSLevel.getDefaultNamespaceURI ();
+      {
+        final String sDefaultNamespaceURI = aNSLevel.getDefaultNamespaceURI ();
+        if (StringHelper.hasText (sDefaultNamespaceURI))
+          return sDefaultNamespaceURI;
+      }
 
       // no default namespace
       return null;
@@ -254,7 +261,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
     private boolean _containsAnyNamespace ()
     {
       for (final NamespaceLevel aNSLevel : m_aStack)
-        if (aNSLevel.getNamespaceCount () > 0)
+        if (aNSLevel.hasAnyNamespace ())
           return true;
       return false;
     }
