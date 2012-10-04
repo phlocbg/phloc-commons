@@ -245,6 +245,7 @@ public enum EXMLParserFeature implements IHasName
 
   private final EXMLParserFeatureType m_eType;
   private final String m_sName;
+  private boolean m_bWarnedOnce = false;
 
   private EXMLParserFeature (@Nonnull final EXMLParserFeatureType eType, @Nonnull @Nonempty final String sName)
   {
@@ -276,7 +277,11 @@ public enum EXMLParserFeature implements IHasName
     }
     catch (final SAXNotRecognizedException ex)
     {
-      s_aLogger.warn ("XML Parser does not recognize feature '" + name () + "'");
+      if (!m_bWarnedOnce)
+      {
+        s_aLogger.warn ("XML Parser does not recognize feature '" + name () + "'");
+        m_bWarnedOnce = true;
+      }
     }
     catch (final SAXNotSupportedException ex)
     {
