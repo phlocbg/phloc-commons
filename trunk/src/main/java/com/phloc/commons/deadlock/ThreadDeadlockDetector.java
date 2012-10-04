@@ -34,7 +34,7 @@ import com.phloc.commons.state.EChange;
 
 /**
  * This is the main dead lock detector, based on JMX {@link ThreadMXBean}
- * 
+ *
  * @author philip
  */
 @NotThreadSafe
@@ -47,7 +47,7 @@ public final class ThreadDeadlockDetector
   {
     final long [] aThreadIDs = m_aMBean.isSynchronizerUsageSupported () ? m_aMBean.findDeadlockedThreads ()
                                                                        : m_aMBean.findMonitorDeadlockedThreads ();
-    if (!ArrayHelper.isEmpty (aThreadIDs))
+    if (ArrayHelper.isNotEmpty (aThreadIDs))
     {
       final Map <Thread, StackTraceElement []> aAllStackTraces = Thread.getAllStackTraces ();
       final ThreadDeadlockInfo [] aThreads = new ThreadDeadlockInfo [aThreadIDs.length];
