@@ -41,12 +41,12 @@ import com.phloc.commons.io.IReadableResource;
 public final class XMLTransformerFactory
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (XMLTransformerFactory.class);
-  private static final TransformerFactory s_aFactory;
+  private static final TransformerFactory s_aDefaultFactory;
 
   static
   {
-    s_aFactory = createTransformerFactory (new LoggingTransformErrorListener (CGlobal.DEFAULT_LOCALE),
-                                           new DefaultTransformURIResolver ());
+    s_aDefaultFactory = createTransformerFactory (new LoggingTransformErrorListener (CGlobal.DEFAULT_LOCALE),
+                                                  new DefaultTransformURIResolver ());
   }
 
   @PresentForCodeCoverage
@@ -71,7 +71,7 @@ public final class XMLTransformerFactory
     }
     catch (final TransformerFactoryConfigurationError ex)
     {
-      throw new InitializationException ("Failed to init XML TransformerFactory", ex);
+      throw new InitializationException ("Failed to create XML TransformerFactory", ex);
     }
   }
 
@@ -81,7 +81,7 @@ public final class XMLTransformerFactory
   @Nonnull
   public static TransformerFactory getDefaultTransformerFactory ()
   {
-    return s_aFactory;
+    return s_aDefaultFactory;
   }
 
   /**
@@ -93,9 +93,25 @@ public final class XMLTransformerFactory
   @Nullable
   public static Transformer newTransformer ()
   {
+    return newTransformer (s_aDefaultFactory);
+  }
+
+  /**
+   * Create a new XSLT transformer for no specific resource.
+   * 
+   * @param aTransformerFactory
+   *        The transformer factory to be used. May not be <code>null</code>.
+   * @return <code>null</code> if something goes wrong
+   */
+  @Nullable
+  public static Transformer newTransformer (@Nonnull final TransformerFactory aTransformerFactory)
+  {
+    if (aTransformerFactory == null)
+      throw new NullPointerException ("transformerFactory");
+
     try
     {
-      return s_aFactory.newTransformer ();
+      return aTransformerFactory.newTransformer ();
     }
     catch (final TransformerConfigurationException ex)
     {
@@ -109,16 +125,32 @@ public final class XMLTransformerFactory
    * central <b>not thread safe</b> transformer factory.
    * 
    * @param aResource
-   *        The resource to be transformed.
+   *        The resource to be transformed. May not be <code>null</code>.
    * @return <code>null</code> if something goes wrong
    */
   @Nullable
   public static Transformer newTransformer (@Nonnull final IReadableResource aResource)
   {
+    return newTransformer (s_aDefaultFactory, aResource);
+  }
+
+  /**
+   * Create a new XSLT transformer for the passed resource.
+   * 
+   * @param aTransformerFactory
+   *        The transformer factory to be used. May not be <code>null</code>.
+   * @param aResource
+   *        The resource to be transformed. May not be <code>null</code>.
+   * @return <code>null</code> if something goes wrong
+   */
+  @Nullable
+  public static Transformer newTransformer (@Nonnull final TransformerFactory aTransformerFactory,
+                                            @Nonnull final IReadableResource aResource)
+  {
     if (aResource == null)
       throw new NullPointerException ("resource");
 
-    return newTransformer (TransformSourceFactory.create (aResource));
+    return newTransformer (aTransformerFactory, TransformSourceFactory.create (aResource));
   }
 
   /**
@@ -126,18 +158,36 @@ public final class XMLTransformerFactory
    * central <b>not thread safe</b> transformer factory.
    * 
    * @param aSource
-   *        The resource to be transformed.
+   *        The resource to be transformed. May not be <code>null</code>.
    * @return <code>null</code> if something goes wrong
    */
   @Nullable
   public static Transformer newTransformer (@Nonnull final Source aSource)
   {
+    return newTransformer (s_aDefaultFactory, aSource);
+  }
+
+  /**
+   * Create a new XSLT transformer for the passed resource.
+   * 
+   * @param aTransformerFactory
+   *        The transformer factory to be used. May not be <code>null</code>.
+   * @param aSource
+   *        The resource to be transformed. May not be <code>null</code>.
+   * @return <code>null</code> if something goes wrong
+   */
+  @Nullable
+  public static Transformer newTransformer (@Nonnull final TransformerFactory aTransformerFactory,
+                                            @Nonnull final Source aSource)
+  {
+    if (aTransformerFactory == null)
+      throw new NullPointerException ("transformerFactory");
     if (aSource == null)
       throw new NullPointerException ("source");
 
     try
     {
-      return s_aFactory.newTransformer (aSource);
+      return aTransformerFactory.newTransformer (aSource);
     }
     catch (final TransformerConfigurationException ex)
     {
@@ -157,7 +207,7 @@ public final class XMLTransformerFactory
   @Nullable
   public static Templates newTemplates (@Nonnull final IReadableResource aResource)
   {
-    return newTemplates (s_aFactory, aResource);
+    return newTemplates (s_aDefaultFactory, aResource);
   }
 
   /**
@@ -171,12 +221,11 @@ public final class XMLTransformerFactory
   @Nullable
   public static Templates newTemplates (@Nonnull final Source aSource)
   {
-    return newTemplates (s_aFactory, aSource);
+    return newTemplates (s_aDefaultFactory, aSource);
   }
 
   /**
-   * Create a new XSLT Template for the passed resource. This uses the central
-   * <b>not thread safe</b> transformer factory.
+   * Create a new XSLT Template for the passed resource.
    * 
    * @param aFactory
    *        The transformer factory to be used. May not be <code>null</code>.
@@ -195,8 +244,7 @@ public final class XMLTransformerFactory
   }
 
   /**
-   * Create a new XSLT Template for the passed resource. This uses the central
-   * <b>not thread safe</b> transformer factory.
+   * Create a new XSLT Template for the passed resource.
    * 
    * @param aFactory
    *        The transformer factory to be used. May not be <code>null</code>.

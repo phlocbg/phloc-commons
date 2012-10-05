@@ -32,7 +32,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @NotThreadSafe
-public final class StringStreamSource extends StreamSource
+public class StringStreamSource extends StreamSource
 {
   public StringStreamSource (@Nonnull final String sInput)
   {

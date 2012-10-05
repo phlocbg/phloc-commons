@@ -39,7 +39,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @NotThreadSafe
-public final class CachingTransformStreamSource extends StreamSource
+public class CachingTransformStreamSource extends StreamSource
 {
   public CachingTransformStreamSource (@Nonnull final IReadableResource aResource)
   {

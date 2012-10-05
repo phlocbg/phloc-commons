@@ -20,9 +20,27 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2012-10-05" category="api" action="change">
+    <change>
+      <text locale="en">Made most classes of package xml.transform non-final</text>
+    </change>
+  </entry>
+  <entry date="2012-10-05" category="api" action="add">
+    <change>
+      <text locale="en">Made XPathHelper and XMLTransformerFactory more flexible</text>
+    </change>
+  </entry>
   <entry date="2012-10-04" category="tech" action="change" incompatible="true">
     <change>
-      <text locale="en">Fixed an error in XML writing, when an empty namespace was used inside a non-empty namespace</text>
+      <text locale="en">Fixed an error in XML writing, when an empty namespace was used inside a non-empty namespace, 
+the namespace was inherited anyway. Example:
+new MicroElement("uri1", "a").appendElement ("b")
+was serialized as
+&lt;a xmlns="uri1"&gt;&lt;b /&gt;&lt;/a&gt;
+after the fix it is serialized as
+&lt;a xmlns="uri1"&gt;&lt;ns0:b xmlns:ns0=""/&gt;&lt;/a&gt;
+to have the previous result use
+new MicroElement("uri1", "a").appendElement ("uri1", "b")</text>
     </change>
   </entry>
   <entry date="2012-10-01" category="api" action="add" incompatible="true">

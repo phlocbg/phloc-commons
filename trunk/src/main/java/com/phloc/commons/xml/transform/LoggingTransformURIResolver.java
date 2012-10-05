@@ -27,12 +27,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * java.xml.transform {@link URIResolver} that logs to the commandline.
+ * java.xml.transform {@link URIResolver} that logs to a logger.
  * 
  * @author philip
  */
 @NotThreadSafe
-public final class LoggingTransformURIResolver extends AbstractTransformURIResolver
+public class LoggingTransformURIResolver extends AbstractTransformURIResolver
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (LoggingTransformURIResolver.class);
 

@@ -31,7 +31,7 @@ import com.phloc.commons.xml.ls.SimpleLSResourceResolver;
  * 
  * @author philip
  */
-public final class DefaultTransformURIResolver extends AbstractTransformURIResolver
+public class DefaultTransformURIResolver extends AbstractTransformURIResolver
 {
   public DefaultTransformURIResolver ()
   {

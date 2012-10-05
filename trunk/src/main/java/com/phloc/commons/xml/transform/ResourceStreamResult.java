@@ -38,7 +38,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @NotThreadSafe
-public final class ResourceStreamResult extends StreamResult
+public class ResourceStreamResult extends StreamResult
 {
   private final IOutputStreamProvider m_aOSP;
 

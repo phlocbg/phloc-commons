@@ -33,7 +33,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @NotThreadSafe
-public final class StringStreamResult extends StreamResult implements IHasStringRepresentation
+public class StringStreamResult extends StreamResult implements IHasStringRepresentation
 {
   private final NonBlockingStringWriter m_aSW;
 

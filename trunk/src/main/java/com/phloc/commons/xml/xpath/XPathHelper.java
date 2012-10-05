@@ -46,18 +46,49 @@ public final class XPathHelper
   {}
 
   /**
-   * Create a new {@link XPath} without any special settings.
+   * @return The default XPath factory. Be careful when manipulating this
+   *         object! Never <code>null</code>.
+   */
+  @Nonnull
+  public static XPathFactory getDefaultXPathFactory ()
+  {
+    return s_aXPathFactory;
+  }
+
+  /**
+   * Create a new {@link XPath} without any special settings using the default
+   * {@link XPathFactory}.
    * 
    * @return The created non-<code>null</code> {@link XPath} object
    */
   @Nonnull
   public static XPath createNewXPath ()
   {
-    return createNewXPath ((XPathVariableResolver) null, (XPathFunctionResolver) null, (NamespaceContext) null);
+    return createNewXPath (s_aXPathFactory,
+                           (XPathVariableResolver) null,
+                           (XPathFunctionResolver) null,
+                           (NamespaceContext) null);
   }
 
   /**
-   * Create a new {@link XPath} with the passed variable resolver.
+   * Create a new {@link XPath} without any special settings.
+   * 
+   * @param aXPathFactory
+   *        The XPath factory object to use. May not be <code>null</code>.
+   * @return The created non-<code>null</code> {@link XPath} object
+   */
+  @Nonnull
+  public static XPath createNewXPath (@Nonnull final XPathFactory aXPathFactory)
+  {
+    return createNewXPath (aXPathFactory,
+                           (XPathVariableResolver) null,
+                           (XPathFunctionResolver) null,
+                           (NamespaceContext) null);
+  }
+
+  /**
+   * Create a new {@link XPath} with the passed variable resolver using the
+   * default {@link XPathFactory}.
    * 
    * @param aVariableResolver
    *        Variable resolver to be used. May be <code>null</code>.
@@ -66,11 +97,28 @@ public final class XPathHelper
   @Nonnull
   public static XPath createNewXPath (@Nullable final XPathVariableResolver aVariableResolver)
   {
-    return createNewXPath (aVariableResolver, (XPathFunctionResolver) null, (NamespaceContext) null);
+    return createNewXPath (s_aXPathFactory, aVariableResolver, (XPathFunctionResolver) null, (NamespaceContext) null);
   }
 
   /**
-   * Create a new {@link XPath} with the passed function resolver.
+   * Create a new {@link XPath} with the passed variable resolver.
+   * 
+   * @param aXPathFactory
+   *        The XPath factory object to use. May not be <code>null</code>.
+   * @param aVariableResolver
+   *        Variable resolver to be used. May be <code>null</code>.
+   * @return The created non-<code>null</code> {@link XPath} object
+   */
+  @Nonnull
+  public static XPath createNewXPath (@Nonnull final XPathFactory aXPathFactory,
+                                      @Nullable final XPathVariableResolver aVariableResolver)
+  {
+    return createNewXPath (aXPathFactory, aVariableResolver, (XPathFunctionResolver) null, (NamespaceContext) null);
+  }
+
+  /**
+   * Create a new {@link XPath} with the passed function resolver using the
+   * default {@link XPathFactory}.
    * 
    * @param aFunctionResolver
    *        Function resolver to be used. May be <code>null</code>.
@@ -79,11 +127,28 @@ public final class XPathHelper
   @Nonnull
   public static XPath createNewXPath (@Nullable final XPathFunctionResolver aFunctionResolver)
   {
-    return createNewXPath ((XPathVariableResolver) null, aFunctionResolver, (NamespaceContext) null);
+    return createNewXPath (s_aXPathFactory, (XPathVariableResolver) null, aFunctionResolver, (NamespaceContext) null);
   }
 
   /**
-   * Create a new {@link XPath} with the passed namespace context.
+   * Create a new {@link XPath} with the passed function resolver.
+   * 
+   * @param aXPathFactory
+   *        The XPath factory object to use. May not be <code>null</code>.
+   * @param aFunctionResolver
+   *        Function resolver to be used. May be <code>null</code>.
+   * @return The created non-<code>null</code> {@link XPath} object
+   */
+  @Nonnull
+  public static XPath createNewXPath (@Nonnull final XPathFactory aXPathFactory,
+                                      @Nullable final XPathFunctionResolver aFunctionResolver)
+  {
+    return createNewXPath (aXPathFactory, (XPathVariableResolver) null, aFunctionResolver, (NamespaceContext) null);
+  }
+
+  /**
+   * Create a new {@link XPath} with the passed namespace context using the
+   * default {@link XPathFactory}.
    * 
    * @param aNamespaceContext
    *        Namespace context to be used. May be <code>null</code>.
@@ -92,12 +157,31 @@ public final class XPathHelper
   @Nonnull
   public static XPath createNewXPath (@Nullable final NamespaceContext aNamespaceContext)
   {
-    return createNewXPath ((XPathVariableResolver) null, (XPathFunctionResolver) null, aNamespaceContext);
+    return createNewXPath (s_aXPathFactory,
+                           (XPathVariableResolver) null,
+                           (XPathFunctionResolver) null,
+                           aNamespaceContext);
+  }
+
+  /**
+   * Create a new {@link XPath} with the passed namespace context.
+   * 
+   * @param aXPathFactory
+   *        The XPath factory object to use. May not be <code>null</code>.
+   * @param aNamespaceContext
+   *        Namespace context to be used. May be <code>null</code>.
+   * @return The created non-<code>null</code> {@link XPath} object
+   */
+  @Nonnull
+  public static XPath createNewXPath (@Nonnull final XPathFactory aXPathFactory,
+                                      @Nullable final NamespaceContext aNamespaceContext)
+  {
+    return createNewXPath (aXPathFactory, (XPathVariableResolver) null, (XPathFunctionResolver) null, aNamespaceContext);
   }
 
   /**
    * Create a new {@link XPath} with the passed variable resolver, function
-   * resolver and namespace context.
+   * resolver and namespace context using the default {@link XPathFactory}.
    * 
    * @param aVariableResolver
    *        Variable resolver to be used. May be <code>null</code>.
@@ -112,7 +196,33 @@ public final class XPathHelper
                                       @Nullable final XPathFunctionResolver aFunctionResolver,
                                       @Nullable final NamespaceContext aNamespaceContext)
   {
-    final XPath aXPath = s_aXPathFactory.newXPath ();
+    return createNewXPath (s_aXPathFactory, aVariableResolver, aFunctionResolver, aNamespaceContext);
+  }
+
+  /**
+   * Create a new {@link XPath} with the passed variable resolver, function
+   * resolver and namespace context.
+   * 
+   * @param aXPathFactory
+   *        The XPath factory object to use. May not be <code>null</code>.
+   * @param aVariableResolver
+   *        Variable resolver to be used. May be <code>null</code>.
+   * @param aFunctionResolver
+   *        Function resolver to be used. May be <code>null</code>.
+   * @param aNamespaceContext
+   *        Namespace context to be used. May be <code>null</code>.
+   * @return The created non-<code>null</code> {@link XPath} object
+   */
+  @Nonnull
+  public static XPath createNewXPath (@Nonnull final XPathFactory aXPathFactory,
+                                      @Nullable final XPathVariableResolver aVariableResolver,
+                                      @Nullable final XPathFunctionResolver aFunctionResolver,
+                                      @Nullable final NamespaceContext aNamespaceContext)
+  {
+    if (aXPathFactory == null)
+      throw new NullPointerException ("XPathFactory");
+
+    final XPath aXPath = aXPathFactory.newXPath ();
     if (aVariableResolver != null)
       aXPath.setXPathVariableResolver (aVariableResolver);
     if (aFunctionResolver != null)
@@ -123,7 +233,8 @@ public final class XPathHelper
   }
 
   /**
-   * Create a new XPath expression for evaluation.
+   * Create a new XPath expression for evaluation using the default
+   * {@link XPathFactory}.
    * 
    * @param aVariableResolver
    *        Variable resolver to be used. May be <code>null</code>.
@@ -147,7 +258,8 @@ public final class XPathHelper
   }
 
   /**
-   * Create a new XPath expression for evaluation.
+   * Create a new XPath expression for evaluation using the default
+   * {@link XPathFactory}.
    * 
    * @param aVariableResolver
    *        Variable resolver to be used. May be <code>null</code>.
@@ -165,7 +277,8 @@ public final class XPathHelper
   }
 
   /**
-   * Create a new XPath expression for evaluation.
+   * Create a new XPath expression for evaluation using the default
+   * {@link XPathFactory}.
    * 
    * @param aFunctionResolver
    *        Function resolver to be used. May be <code>null</code>.
@@ -183,7 +296,8 @@ public final class XPathHelper
   }
 
   /**
-   * Create a new XPath expression for evaluation.
+   * Create a new XPath expression for evaluation using the default
+   * {@link XPathFactory}.
    * 
    * @param aNamespaceContext
    *        Namespace context to be used. May be <code>null</code>.
@@ -201,7 +315,8 @@ public final class XPathHelper
   }
 
   /**
-   * Create a new XPath expression for evaluation.
+   * Create a new XPath expression for evaluatio using the default
+   * {@link XPathFactory}n.
    * 
    * @param sXPath
    *        The main XPath string to be evaluated
