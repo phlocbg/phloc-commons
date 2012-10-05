@@ -39,7 +39,7 @@ import com.phloc.commons.io.streams.StreamUtils;
  * @author philip
  */
 @NotThreadSafe
-public final class CachingSAXInputSource extends InputSource
+public class CachingSAXInputSource extends InputSource
 {
   @Nonnull
   private static NonBlockingByteArrayInputStream _getCachedInputStream (@Nonnull @WillClose final InputStream aIS)

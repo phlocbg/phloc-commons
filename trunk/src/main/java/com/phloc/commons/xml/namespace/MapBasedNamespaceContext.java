@@ -39,7 +39,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @Immutable
-public final class MapBasedNamespaceContext extends AbstractNamespaceContext
+public class MapBasedNamespaceContext extends AbstractNamespaceContext
 {
   private String m_sDefaultNamespaceURI;
   private final Map <String, String> m_aPrefix2NS = new HashMap <String, String> ();

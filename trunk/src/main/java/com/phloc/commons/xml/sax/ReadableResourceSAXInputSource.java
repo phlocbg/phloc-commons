@@ -38,7 +38,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author philip
  */
-public final class ReadableResourceSAXInputSource extends InputSource
+public class ReadableResourceSAXInputSource extends InputSource
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (ReadableResourceSAXInputSource.class);
 
