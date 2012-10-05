@@ -34,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author philip
  */
-public final class ChildNodeIterator implements IIterableIterator <Node>
+public class ChildNodeIterator implements IIterableIterator <Node>
 {
   /** The nodes to iterate. */
   private final NodeList m_aNL;

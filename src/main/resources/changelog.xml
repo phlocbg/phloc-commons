@@ -22,7 +22,7 @@
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
   <entry date="2012-10-05" category="api" action="change">
     <change>
-      <text locale="en">Made most classes of package xml.transform non-final</text>
+      <text locale="en">Made some classes ins packages c.p.c.url.encode, c.p.c.xml, c.p.c.xml.namespace, c.p.c.xml.sax and c.p.c.xml.transform non-final</text>
     </change>
   </entry>
   <entry date="2012-10-05" category="api" action="add">

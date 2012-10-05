@@ -65,7 +65,7 @@ public class MapBasedXPathVariableResolver implements XPathVariableResolver
   {
     if (o == this)
       return true;
-    if (!(o instanceof MapBasedXPathVariableResolver))
+    if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final MapBasedXPathVariableResolver rhs = (MapBasedXPathVariableResolver) o;
     return EqualsUtils.equals (m_aVars, rhs.m_aVars);

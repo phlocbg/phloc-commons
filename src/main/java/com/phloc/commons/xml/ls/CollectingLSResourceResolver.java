@@ -38,7 +38,7 @@ import com.phloc.commons.collections.ContainerHelper;
  * @author philip
  */
 @ThreadSafe
-public final class CollectingLSResourceResolver implements LSResourceResolver
+public class CollectingLSResourceResolver implements LSResourceResolver
 {
   private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
   private final List <LSResourceData> m_aList = new ArrayList <LSResourceData> ();
@@ -70,16 +70,17 @@ public final class CollectingLSResourceResolver implements LSResourceResolver
   }
 
   @Nullable
-  public LSInput resolveResource (final String sType,
-                                  final String sNamespaceURI,
-                                  final String sPublicId,
-                                  final String sSystemId,
-                                  final String sBaseURI)
+  public LSInput resolveResource (@Nullable final String sType,
+                                  @Nullable final String sNamespaceURI,
+                                  @Nullable final String sPublicId,
+                                  @Nullable final String sSystemId,
+                                  @Nullable final String sBaseURI)
   {
+    final LSResourceData aData = new LSResourceData (sType, sNamespaceURI, sPublicId, sSystemId, sBaseURI);
     m_aRWLock.writeLock ().lock ();
     try
     {
-      m_aList.add (new LSResourceData (sType, sNamespaceURI, sPublicId, sSystemId, sBaseURI));
+      m_aList.add (aData);
     }
     finally
     {

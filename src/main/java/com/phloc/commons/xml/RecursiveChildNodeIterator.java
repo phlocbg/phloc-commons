@@ -35,7 +35,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author philip
  */
-public final class RecursiveChildNodeIterator implements IIterableIterator <Node>
+public class RecursiveChildNodeIterator implements IIterableIterator <Node>
 {
   private final Iterator <Node> m_aIter;
 

@@ -35,7 +35,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @Immutable
-public final class SingleElementNamespaceContext extends AbstractNamespaceContext
+public class SingleElementNamespaceContext extends AbstractNamespaceContext
 {
   private final String m_sPrefix;
   private final String m_sNamespaceURI;

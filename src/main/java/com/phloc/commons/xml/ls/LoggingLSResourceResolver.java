@@ -29,7 +29,7 @@ import org.w3c.dom.ls.LSResourceResolver;
  * 
  * @author philip
  */
-public final class LoggingLSResourceResolver implements LSResourceResolver
+public class LoggingLSResourceResolver implements LSResourceResolver
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (LoggingLSResourceResolver.class);
   private final LSResourceResolver m_aParentResolver;
@@ -44,11 +44,11 @@ public final class LoggingLSResourceResolver implements LSResourceResolver
     m_aParentResolver = aParentResolver;
   }
 
-  public LSInput resolveResource (final String sType,
-                                  final String sNamespaceURI,
-                                  final String sPublicId,
-                                  final String sSystemId,
-                                  final String sBaseURI)
+  public LSInput resolveResource (@Nullable final String sType,
+                                  @Nullable final String sNamespaceURI,
+                                  @Nullable final String sPublicId,
+                                  @Nullable final String sSystemId,
+                                  @Nullable final String sBaseURI)
   {
     if (s_aLogger.isInfoEnabled ())
       s_aLogger.info ("resolveResource (" +

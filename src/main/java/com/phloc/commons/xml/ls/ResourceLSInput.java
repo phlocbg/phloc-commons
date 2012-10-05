@@ -35,7 +35,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author philip
  */
-public final class ResourceLSInput implements LSInput
+public class ResourceLSInput implements LSInput
 {
   private final IInputStreamProvider m_aISP;
   private String m_sEncoding;

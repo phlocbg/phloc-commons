@@ -33,7 +33,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author philip
  */
-public final class StringSAXInputSource extends InputSource
+public class StringSAXInputSource extends InputSource
 {
   private final String m_sText;
 

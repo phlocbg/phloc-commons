@@ -30,7 +30,7 @@ import com.phloc.commons.url.URLUtils;
  * 
  * @author philip
  */
-public final class URLParameterEncoder implements IEncoder <String>
+public class URLParameterEncoder implements IEncoder <String>
 {
   private final Charset m_aCharset;
 
