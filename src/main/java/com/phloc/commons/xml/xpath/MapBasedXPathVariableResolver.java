@@ -38,7 +38,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @NotThreadSafe
-public final class MapBasedXPathVariableResolver implements XPathVariableResolver
+public class MapBasedXPathVariableResolver implements XPathVariableResolver
 {
   private final Map <String, Object> m_aVars;
 
