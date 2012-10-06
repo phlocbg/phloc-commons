@@ -20,9 +20,9 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
-  <entry date="2012-10-05" category="api" action="add">
+  <entry date="2012-10-06" category="api" action="add">
     <change>
-      <text locale="en">Added new method IReadonlyGraph.getAllRelations</text>
+      <text locale="en">Extended graph API slightly</text>
     </change>
   </entry>
   <entry date="2012-10-05" category="api" action="change">
