@@ -129,11 +129,7 @@ public class GraphNode <VALUETYPE> extends AbstractGraphObject implements IGraph
 
   public boolean isFromNode (@Nullable final IGraphNode <VALUETYPE> aNode)
   {
-    if (m_aIncoming != null && aNode != null)
-      for (final IGraphRelation <VALUETYPE> aRelation : m_aIncoming.values ())
-        if (aRelation.getFrom ().equals (aNode))
-          return true;
-    return false;
+    return getIncomingRelationFrom (aNode) != null;
   }
 
   @Nonnull
@@ -156,6 +152,16 @@ public class GraphNode <VALUETYPE> extends AbstractGraphObject implements IGraph
       for (final IGraphRelation <VALUETYPE> aRelation : m_aIncoming.values ())
         ret.add (aRelation.getFromValue ());
     return ret;
+  }
+
+  @Nullable
+  public IGraphRelation <VALUETYPE> getIncomingRelationFrom (@Nullable final IGraphNode <VALUETYPE> aFromNode)
+  {
+    if (m_aIncoming != null && aFromNode != null)
+      for (final IGraphRelation <VALUETYPE> aRelation : m_aIncoming.values ())
+        if (aRelation.getFrom ().equals (aFromNode))
+          return aRelation;
+    return null;
   }
 
   public void addOutgoingRelation (@Nonnull final IGraphRelation <VALUETYPE> aNewRelation)
@@ -223,11 +229,7 @@ public class GraphNode <VALUETYPE> extends AbstractGraphObject implements IGraph
 
   public boolean isToNode (@Nullable final IGraphNode <VALUETYPE> aNode)
   {
-    if (m_aOutgoing != null && aNode != null)
-      for (final IGraphRelation <VALUETYPE> aRelation : m_aOutgoing.values ())
-        if (aRelation.getTo ().equals (aNode))
-          return true;
-    return false;
+    return getOutgoingRelationTo (aNode) != null;
   }
 
   @Nonnull
@@ -241,9 +243,28 @@ public class GraphNode <VALUETYPE> extends AbstractGraphObject implements IGraph
     return ret;
   }
 
+  @Nullable
+  public IGraphRelation <VALUETYPE> getOutgoingRelationTo (@Nullable final IGraphNode <VALUETYPE> aToNode)
+  {
+    if (m_aOutgoing != null && aToNode != null)
+      for (final IGraphRelation <VALUETYPE> aRelation : m_aOutgoing.values ())
+        if (aRelation.getTo ().equals (aToNode))
+          return aRelation;
+    return null;
+  }
+
   public boolean isConnectedWith (@Nullable final IGraphNode <VALUETYPE> aNode)
   {
-    return isFromNode (aNode) || isToNode (aNode);
+    return getRelationFromOrTo (aNode) != null;
+  }
+
+  @Nullable
+  public IGraphRelation <VALUETYPE> getRelationFromOrTo (@Nullable final IGraphNode <VALUETYPE> aNode)
+  {
+    IGraphRelation <VALUETYPE> ret = getIncomingRelationFrom (aNode);
+    if (ret == null)
+      ret = getOutgoingRelationTo (aNode);
+    return ret;
   }
 
   public boolean hasIncomingOrOutgoingRelations ()

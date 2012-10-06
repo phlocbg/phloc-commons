@@ -105,6 +105,17 @@ public interface IGraphNode <VALUETYPE> extends IGraphObject
   @ReturnsMutableCopy
   Collection <VALUETYPE> getAllFromValues ();
 
+  /**
+   * Find the incoming relation from the passed node to this node.
+   * 
+   * @param aFromNode
+   *        The from node to use. May be <code>null</code>.
+   * @return <code>null</code> if there exists no incoming relation from the
+   *         passed node to this node.
+   */
+  @Nullable
+  IGraphRelation <VALUETYPE> getIncomingRelationFrom (@Nullable IGraphNode <VALUETYPE> aFromNode);
+
   // --- outgoing ---
 
   /**
@@ -167,6 +178,17 @@ public interface IGraphNode <VALUETYPE> extends IGraphObject
   @ReturnsMutableCopy
   Collection <VALUETYPE> getAllToValues ();
 
+  /**
+   * Find the incoming relation from this node to the passed node.
+   * 
+   * @param aToNode
+   *        The to node to use. May be <code>null</code>.
+   * @return <code>null</code> if there exists no incoming relation from this
+   *         node to the passed node.
+   */
+  @Nullable
+  IGraphRelation <VALUETYPE> getOutgoingRelationTo (@Nullable IGraphNode <VALUETYPE> aToNode);
+
   // --- incoming and/or outgoing
 
   /**
@@ -180,6 +202,18 @@ public interface IGraphNode <VALUETYPE> extends IGraphObject
    * @return <code>true</code> if is connected, <code>false</code> if not
    */
   boolean isConnectedWith (@Nullable IGraphNode <VALUETYPE> aNode);
+
+  /**
+   * Find the incoming relation from this node to the passed node or from the
+   * passed node to this node.
+   * 
+   * @param aNode
+   *        The to node to use. May be <code>null</code>.
+   * @return <code>null</code> if there exists no relation between this node and
+   *         the passed node.
+   */
+  @Nullable
+  IGraphRelation <VALUETYPE> getRelationFromOrTo (@Nullable IGraphNode <VALUETYPE> aNode);
 
   /**
    * Check if this node has incoming <b>or</b> outgoing relations. This is equal
