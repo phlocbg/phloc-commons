@@ -50,6 +50,7 @@ public abstract class AbstractPhlocTestCase
   protected static final Integer I4 = Integer.valueOf (4);
   protected static final Integer I5 = Integer.valueOf (5);
   protected static final Integer I6 = Integer.valueOf (6);
+  protected static final Integer I7 = Integer.valueOf (7);
 
   protected static final Long L_1 = Long.valueOf (-1);
   protected static final Long L0 = Long.valueOf (0);

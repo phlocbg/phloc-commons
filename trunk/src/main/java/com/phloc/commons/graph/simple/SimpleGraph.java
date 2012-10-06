@@ -17,8 +17,8 @@
  */
 package com.phloc.commons.graph.simple;
 
-import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -51,7 +51,7 @@ public class SimpleGraph <VALUETYPE> implements ISimpleGraph <VALUETYPE>
   public static final boolean DEFAULT_CHANGING_CONNECTED_OBJECTS_ALLOWED = true;
 
   private IGraphObjectFactory <VALUETYPE> m_aFactory;
-  private final Map <String, IGraphNode <VALUETYPE>> m_aNodes = new HashMap <String, IGraphNode <VALUETYPE>> ();
+  private final Map <String, IGraphNode <VALUETYPE>> m_aNodes = new LinkedHashMap <String, IGraphNode <VALUETYPE>> ();
   private boolean m_bIsChangingConnectedObjectsAllowed = DEFAULT_CHANGING_CONNECTED_OBJECTS_ALLOWED;
   private ETriState m_eCacheHasCycles = ETriState.UNDEFINED;
 
@@ -235,7 +235,7 @@ public class SimpleGraph <VALUETYPE> implements ISimpleGraph <VALUETYPE>
   @ReturnsMutableCopy
   public Set <IGraphNode <VALUETYPE>> getAllNodes ()
   {
-    return ContainerHelper.newSet (m_aNodes.values ());
+    return ContainerHelper.newOrderedSet (m_aNodes.values ());
   }
 
   @Nonnull
