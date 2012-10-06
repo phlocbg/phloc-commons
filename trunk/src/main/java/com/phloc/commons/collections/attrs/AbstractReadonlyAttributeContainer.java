@@ -117,8 +117,13 @@ public abstract class AbstractReadonlyAttributeContainer implements IReadonlyAtt
 
   public final int getAttributeAsInt (@Nullable final String sName, final int nDefault)
   {
-    final String sValue = getAttributeAsString (sName);
-    return StringParser.parseInt (sValue, nDefault);
+    final Object aValue = getAttributeObject (sName);
+    if (aValue == null)
+      return nDefault;
+    if (aValue instanceof Number)
+      return ((Number) aValue).intValue ();
+    // Interpret as String
+    return StringParser.parseInt (getAsString (sName, aValue, null), nDefault);
   }
 
   public final double getAttributeAsDouble (@Nullable final String sName)
@@ -128,8 +133,13 @@ public abstract class AbstractReadonlyAttributeContainer implements IReadonlyAtt
 
   public final double getAttributeAsDouble (@Nullable final String sName, final double dDefault)
   {
-    final String sValue = getAttributeAsString (sName);
-    return StringParser.parseDouble (sValue, dDefault);
+    final Object aValue = getAttributeObject (sName);
+    if (aValue == null)
+      return dDefault;
+    if (aValue instanceof Number)
+      return ((Number) aValue).doubleValue ();
+    // Interpret as String
+    return StringParser.parseDouble (getAsString (sName, aValue, null), dDefault);
   }
 
   public final boolean getAttributeAsBoolean (@Nullable final String sName)
@@ -139,7 +149,12 @@ public abstract class AbstractReadonlyAttributeContainer implements IReadonlyAtt
 
   public final boolean getAttributeAsBoolean (@Nullable final String sName, final boolean bDefault)
   {
-    final String sValue = getAttributeAsString (sName);
-    return StringParser.parseBool (sValue, bDefault);
+    final Object aValue = getAttributeObject (sName);
+    if (aValue == null)
+      return bDefault;
+    if (aValue instanceof Boolean)
+      return ((Boolean) aValue).booleanValue ();
+    // Interpret as String
+    return StringParser.parseBool (getAsString (sName, aValue, null), bDefault);
   }
 }
