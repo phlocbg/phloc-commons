@@ -24,6 +24,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 
 /**
@@ -33,6 +34,7 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
  * @param <VALUETYPE>
  *        The value type of the graph nodes.
  */
+@MustImplementEqualsAndHashcode
 public interface IGraphNode <VALUETYPE> extends IGraphObject
 {
   /**

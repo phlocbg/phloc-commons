@@ -239,6 +239,16 @@ public class SimpleGraph <VALUETYPE> implements ISimpleGraph <VALUETYPE>
   }
 
   @Nonnull
+  @ReturnsMutableCopy
+  public Set <IGraphRelation <VALUETYPE>> getAllRelations ()
+  {
+    final Set <IGraphRelation <VALUETYPE>> ret = new HashSet <IGraphRelation <VALUETYPE>> ();
+    for (final IGraphNode <VALUETYPE> aNode : m_aNodes.values ())
+      ret.addAll (aNode.getOutgoingRelations ());
+    return ret;
+  }
+
+  @Nonnull
   public EChange clear ()
   {
     if (m_aNodes.isEmpty ())
@@ -259,7 +269,7 @@ public class SimpleGraph <VALUETYPE> implements ISimpleGraph <VALUETYPE>
       if (aNodes.isEmpty ())
       {
         // we have no unique start nodes -> use all nodes
-        aNodes = new HashSet <IGraphNode <VALUETYPE>> (m_aNodes.values ());
+        aNodes = getAllNodes ();
       }
       for (final IGraphNode <VALUETYPE> aCurNode : aNodes)
       {

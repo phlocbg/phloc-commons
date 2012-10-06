@@ -20,6 +20,8 @@ package com.phloc.commons.graph;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
+
 /**
  * Base interface for graph relation implementations.
  * 
@@ -27,6 +29,7 @@ import javax.annotation.Nullable;
  * @param <VALUETYPE>
  *        The value type of the graph nodes.
  */
+@MustImplementEqualsAndHashcode
 public interface IGraphRelation <VALUETYPE> extends IGraphObject
 {
   /**
