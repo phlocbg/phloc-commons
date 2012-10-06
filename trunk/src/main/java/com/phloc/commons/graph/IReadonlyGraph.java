@@ -101,6 +101,14 @@ public interface IReadonlyGraph <VALUETYPE>
   Set <IGraphNode <VALUETYPE>> getAllNodes ();
 
   /**
+   * @return A non-<code>null</code> collection of the relations in this graph,
+   *         in arbitrary order!
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  Set <IGraphRelation <VALUETYPE>> getAllRelations ();
+
+  /**
    * Check if this graph contains cycles. An example for a cycle is e.g. if
    * <code>NodeA</code> has an outgoing relation to <code>NodeB</code>,
    * <code>NodeB</code> has an outgoing relation to <code>NodeC</code> and

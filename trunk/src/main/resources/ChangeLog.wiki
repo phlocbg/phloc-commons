@@ -1,7 +1,10 @@
 #summary Change log of phloc-commons
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
-<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr><td>10/4/12</td><td>change</td><td>tech</td><td>*yes*</td><td>Fixed an error in XML writing, when an empty namespace was used inside a non-empty namespace, 
+<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr><td>10/5/12</td><td>add</td><td>api</td><td></td><td>Added new method IReadonlyGraph.getAllRelations</td></tr>
+<tr><td>10/5/12</td><td>change</td><td>api</td><td></td><td>Made some classes ins packages c.p.c.url.encode, c.p.c.xml, c.p.c.xml.namespace, c.p.c.xml.sax and c.p.c.xml.transform non-final</td></tr>
+<tr><td>10/5/12</td><td>add</td><td>api</td><td></td><td>Made XPathHelper and XMLTransformerFactory more flexible</td></tr>
+<tr><td>10/4/12</td><td>change</td><td>tech</td><td>*yes*</td><td>Fixed an error in XML writing, when an empty namespace was used inside a non-empty namespace, 
 the namespace was inherited anyway. Example:
 new MicroElement("uri1", "a").appendElement ("b")
 was serialized as
