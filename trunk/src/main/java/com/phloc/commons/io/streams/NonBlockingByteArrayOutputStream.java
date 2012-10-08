@@ -24,6 +24,8 @@ import java.nio.charset.Charset;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.WillClose;
+import javax.annotation.WillNotClose;
 
 import com.phloc.commons.IHasSize;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
@@ -141,14 +143,33 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
    * specified output stream argument, as if by calling the output stream's
    * write method using <code>out.write(buf, 0, count)</code>.
    * 
-   * @param out
-   *        the output stream to which to write the data.
+   * @param aOS
+   *        the output stream to which to write the data. May not be
+   *        <code>null</code>.
    * @exception IOException
    *            if an I/O error occurs.
    */
-  public void writeTo (@Nonnull final OutputStream out) throws IOException
+  public void writeTo (@Nonnull @WillNotClose final OutputStream aOS) throws IOException
   {
-    out.write (m_aBuf, 0, m_nCount);
+    aOS.write (m_aBuf, 0, m_nCount);
+  }
+
+  /**
+   * Writes the complete contents of this byte array output stream to the
+   * specified output stream argument, as if by calling the output stream's
+   * write method using <code>out.write(buf, 0, count)</code> and afterwards
+   * closes the passed output stream.
+   * 
+   * @param aOS
+   *        the output stream to which to write the data. May not be
+   *        <code>null</code>.
+   * @exception IOException
+   *            if an I/O error occurs.
+   */
+  public void writeToAndClose (@Nonnull @WillClose final OutputStream aOS) throws IOException
+  {
+    writeTo (aOS);
+    StreamUtils.close (aOS);
   }
 
   /**
