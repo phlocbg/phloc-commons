@@ -62,7 +62,8 @@
   </distributionManagement>
   
   <properties>
-    <jaxb.version>2.2.5-2</jaxb.version>
+    <jaxb.api.version>2.2.6</jaxb.api.version>
+    <jaxb.impl.version>2.2.6</jaxb.impl.version>
   </properties>
 
   <dependencies>
@@ -91,7 +92,7 @@
     <dependency>
       <groupId>javax.xml.bind</groupId>
       <artifactId>jaxb-api</artifactId>
-      <version>2.2.5</version>
+      <version>${jaxb.api.version}</version>
       <optional>true</optional>
       <exclusions>
         <exclusion>
@@ -107,7 +108,7 @@
     <dependency>
       <groupId>com.sun.xml.bind</groupId>
       <artifactId>jaxb-impl</artifactId>
-      <version>${jaxb.version}</version>
+      <version>${jaxb.impl.version}</version>
       <optional>true</optional>
     </dependency>
     
