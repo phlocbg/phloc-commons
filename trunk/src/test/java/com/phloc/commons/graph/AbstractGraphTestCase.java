@@ -20,8 +20,9 @@ package com.phloc.commons.graph;
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.graph.simple.SimpleGraph;
+import com.phloc.commons.mock.AbstractPhlocTestCase;
 
-public abstract class AbstractGraphTestCase
+public abstract class AbstractGraphTestCase extends AbstractPhlocTestCase
 {
   @Nonnull
   private static final IGraphNode <Integer> _createGN (final SimpleGraph <Integer> aGraph, final int i)

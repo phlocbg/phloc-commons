@@ -265,13 +265,9 @@ public class SimpleGraph <VALUETYPE> implements ISimpleGraph <VALUETYPE>
     if (m_eCacheHasCycles.isUndefined ())
     {
       m_eCacheHasCycles = ETriState.FALSE;
-      Set <IGraphNode <VALUETYPE>> aNodes = getAllStartNodes ();
-      if (aNodes.isEmpty ())
-      {
-        // we have no unique start nodes -> use all nodes
-        aNodes = getAllNodes ();
-      }
-      for (final IGraphNode <VALUETYPE> aCurNode : aNodes)
+      // Check all nodes, in case we a small cycle and a set of other nodes (see
+      // test case testCycles2)
+      for (final IGraphNode <VALUETYPE> aCurNode : m_aNodes.values ())
       {
         final GraphIteratorForward <VALUETYPE> it = GraphIteratorForward.create (aCurNode);
         while (it.hasNext () && !it.hasCycles ())

@@ -213,6 +213,30 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
   }
 
   @Test
+  public void testCycles2 ()
+  {
+    final SimpleGraph <Integer> sg = SimpleGraph.create ();
+    for (int i = 1; i <= 6; ++i)
+      sg.createNode (Integer.toString (i), I1);
+
+    // first cycle
+    sg.createRelation ("1", "2");
+    assertFalse (sg.containsCycles ());
+    sg.createRelation ("2", "3");
+    assertFalse (sg.containsCycles ());
+    sg.createRelation ("3", "1");
+    assertTrue (sg.containsCycles ());
+
+    // Second cycle
+    sg.createRelation ("4", "5");
+    assertTrue (sg.containsCycles ());
+    sg.createRelation ("5", "6");
+    assertTrue (sg.containsCycles ());
+    sg.createRelation ("6", "4");
+    assertTrue (sg.containsCycles ());
+  }
+
+  @Test
   public void testSelfContained ()
   {
     final ISimpleGraph <String> sg = new SimpleGraph <String> ();
