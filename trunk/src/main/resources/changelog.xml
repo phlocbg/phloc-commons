@@ -20,6 +20,17 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <release date="2012-10-08" version="3.8.5" />
+  <entry date="2012-10-08" category="api" action="add">
+    <change>
+      <text locale="en">Started some very basic GraphViz wrapping API</text>
+    </change>
+  </entry>
+  <entry date="2012-10-08" category="api" action="add">
+    <change>
+      <text locale="en">Added new method NonBlockingByteArrayOutputStream.writeToAndClose</text>
+    </change>
+  </entry>
   <entry date="2012-10-08" category="tech" action="fix">
     <change>
       <text locale="en">Fixed bug in graph cycle detection in certain cases</text>
