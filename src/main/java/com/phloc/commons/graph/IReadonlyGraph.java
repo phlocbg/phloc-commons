@@ -118,4 +118,16 @@ public interface IReadonlyGraph <VALUETYPE>
    *         <code>false</code> if this graph is cycle-free.
    */
   boolean containsCycles ();
+
+  /**
+   * Check if this graph is completely self contained. As relations between
+   * nodes do not check whether both nodes belong to the same graph it is
+   * possible to link different graphs together with relations. This method
+   * returns true, if all nodes referenced from all relations link to objects
+   * inside this graph.
+   * 
+   * @return <code>true</code> if this graph is self contained,
+   *         <code>false</code> if not.
+   */
+  boolean isSelfContained ();
 }

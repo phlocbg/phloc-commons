@@ -288,6 +288,20 @@ public class SimpleGraph <VALUETYPE> implements ISimpleGraph <VALUETYPE>
     return m_eCacheHasCycles.getAsBooleanValue (true);
   }
 
+  public boolean isSelfContained ()
+  {
+    for (final IGraphNode <VALUETYPE> aNode : m_aNodes.values ())
+    {
+      for (final IGraphRelation <VALUETYPE> aRelation : aNode.getIncomingRelations ())
+        if (!m_aNodes.containsKey (aRelation.getFromID ()))
+          return false;
+      for (final IGraphRelation <VALUETYPE> aRelation : aNode.getOutgoingRelations ())
+        if (!m_aNodes.containsKey (aRelation.getToID ()))
+          return false;
+    }
+    return true;
+  }
+
   @Override
   public boolean equals (final Object o)
   {

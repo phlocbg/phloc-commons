@@ -159,6 +159,7 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
   public void testCycles ()
   {
     SimpleGraph <Integer> sg = _buildGraph ();
+    assertTrue (sg.isSelfContained ());
     assertFalse (sg.containsCycles ());
 
     sg = new SimpleGraph <Integer> ();
@@ -187,11 +188,40 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
     assertTrue (n2.isFromNode (n1));
     assertTrue (n2.isToNode (n1));
 
+    assertTrue (sg.isSelfContained ());
     assertTrue (sg.containsCycles ());
 
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (_buildGraph (), _buildGraph ());
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (new SimpleGraph <Integer> (),
                                                                     new SimpleGraph <Integer> ());
     PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (_buildGraph (), new SimpleGraph <Integer> ());
+  }
+
+  @Test
+  public void testSelfContained ()
+  {
+    final ISimpleGraph <String> sg = new SimpleGraph <String> ();
+    assertTrue (sg.isSelfContained ());
+
+    // n1 belongs to the graph
+    IGraphNode <String> n1 = sg.createNode ("any");
+    assertTrue (sg.isSelfContained ());
+
+    // n2 does not belong to the graph
+    IGraphNode <String> n2 = new GraphNode <String> ("other");
+    sg.createRelation (n1, n2);
+    assertFalse (sg.isSelfContained ());
+
+    assertTrue (sg.clear ().isChanged ());
+    assertFalse (sg.clear ().isChanged ());
+
+    // n1 does not belongs to the graph
+    n1 = new GraphNode <String> ("any");
+    assertTrue (sg.isSelfContained ());
+
+    // n2 belongs to the graph
+    n2 = sg.createNode ("other");
+    sg.createRelation (n1, n2);
+    assertFalse (sg.isSelfContained ());
   }
 }
