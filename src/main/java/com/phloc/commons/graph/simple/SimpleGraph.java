@@ -176,6 +176,18 @@ public class SimpleGraph <VALUETYPE> implements ISimpleGraph <VALUETYPE>
   }
 
   @Nonnull
+  public EChange removeRelation (@Nullable final IGraphRelation <VALUETYPE> aRelation)
+  {
+    EChange ret = EChange.UNCHANGED;
+    if (aRelation != null)
+    {
+      ret = ret.or (aRelation.getFrom ().removeOutgoingRelation (aRelation));
+      ret = ret.or (aRelation.getTo ().removeIncomingRelation (aRelation));
+    }
+    return ret;
+  }
+
+  @Nonnull
   public IGraphNode <VALUETYPE> getSingleStartNode () throws IllegalStateException
   {
     final Set <IGraphNode <VALUETYPE>> aStartNodes = getAllStartNodes ();

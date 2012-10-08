@@ -36,6 +36,7 @@ import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.graph.IGraphNode;
 import com.phloc.commons.graph.IGraphRelation;
 import com.phloc.commons.hash.HashCodeGenerator;
+import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -125,6 +126,13 @@ public class GraphNode <VALUETYPE> extends AbstractGraphObject implements IGraph
   {
     return m_aIncoming == null ? new ArrayList <IGraphRelation <VALUETYPE>> ()
                               : ContainerHelper.newList (m_aIncoming.values ());
+  }
+
+  @Nonnull
+  public EChange removeIncomingRelation (@Nonnull final IGraphRelation <VALUETYPE> aRelation)
+  {
+    return aRelation == null || m_aIncoming == null ? EChange.UNCHANGED
+                                                   : EChange.valueOf (m_aIncoming.remove (aRelation.getID ()) != null);
   }
 
   public boolean isFromNode (@Nullable final IGraphNode <VALUETYPE> aNode)
@@ -225,6 +233,13 @@ public class GraphNode <VALUETYPE> extends AbstractGraphObject implements IGraph
       for (final IGraphRelation <VALUETYPE> aRelation : m_aOutgoing.values ())
         ret.add (aRelation.getTo ());
     return ret;
+  }
+
+  @Nonnull
+  public EChange removeOutgoingRelation (@Nonnull final IGraphRelation <VALUETYPE> aRelation)
+  {
+    return aRelation == null || m_aOutgoing == null ? EChange.UNCHANGED
+                                                   : EChange.valueOf (m_aOutgoing.remove (aRelation.getID ()) != null);
   }
 
   public boolean isToNode (@Nullable final IGraphNode <VALUETYPE> aNode)

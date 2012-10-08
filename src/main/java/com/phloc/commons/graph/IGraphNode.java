@@ -26,6 +26,7 @@ import javax.annotation.Nullable;
 
 import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
+import com.phloc.commons.state.EChange;
 
 /**
  * Base interface for graph node implementations.
@@ -80,6 +81,17 @@ public interface IGraphNode <VALUETYPE> extends IGraphObject
   @Nonnull
   @ReturnsMutableCopy
   Collection <IGraphRelation <VALUETYPE>> getIncomingRelations ();
+
+  /**
+   * Remove the passed relation from the set of incoming relations.
+   * 
+   * @param aRelation
+   *        The relation to be removed. May be <code>null</code>.
+   * @return {@link EChange#CHANGED} if the passed relation was successfully
+   *         removed from the incoming relations.
+   */
+  @Nonnull
+  EChange removeIncomingRelation (@Nonnull IGraphRelation <VALUETYPE> aRelation);
 
   /**
    * Check if this graph node is directly connected to the passed node via an
@@ -153,6 +165,17 @@ public interface IGraphNode <VALUETYPE> extends IGraphObject
   @Nonnull
   @ReturnsMutableCopy
   Collection <IGraphRelation <VALUETYPE>> getOutgoingRelations ();
+
+  /**
+   * Remove the passed relation from the set of outgoing relations.
+   * 
+   * @param aRelation
+   *        The relation to be removed. May be <code>null</code>.
+   * @return {@link EChange#CHANGED} if the passed relation was successfully
+   *         removed from the outgoing relations.
+   */
+  @Nonnull
+  EChange removeOutgoingRelation (@Nonnull IGraphRelation <VALUETYPE> aRelation);
 
   /**
    * Check if this graph node is directly connected to the passed node via an

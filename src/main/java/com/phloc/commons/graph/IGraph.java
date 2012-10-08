@@ -18,6 +18,7 @@
 package com.phloc.commons.graph;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.state.IClearable;
@@ -82,4 +83,15 @@ public interface IGraph <VALUETYPE> extends IReadonlyGraph <VALUETYPE>, IClearab
    */
   @Nonnull
   EChange removeNode (@Nonnull IGraphNode <VALUETYPE> aNode) throws IllegalArgumentException;
+
+  /**
+   * Remove the passed relation from the graph.
+   * 
+   * @param aRelation
+   *        The relation to be removed. May be <code>null</code>.
+   * @return {@link EChange#CHANGED} if the relation was at least removed from
+   *         the from- or the to-node
+   */
+  @Nonnull
+  EChange removeRelation (@Nullable IGraphRelation <VALUETYPE> aRelation);
 }
