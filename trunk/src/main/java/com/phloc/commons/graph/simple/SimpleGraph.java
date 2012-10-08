@@ -145,6 +145,7 @@ public class SimpleGraph <VALUETYPE> implements ISimpleGraph <VALUETYPE>
   {
     aRelation.getFrom ().addOutgoingRelation (aRelation);
     aRelation.getTo ().addIncomingRelation (aRelation);
+    _invalidateCache ();
     return aRelation;
   }
 
@@ -183,6 +184,8 @@ public class SimpleGraph <VALUETYPE> implements ISimpleGraph <VALUETYPE>
     {
       ret = ret.or (aRelation.getFrom ().removeOutgoingRelation (aRelation));
       ret = ret.or (aRelation.getTo ().removeIncomingRelation (aRelation));
+      if (ret.isChanged ())
+        _invalidateCache ();
     }
     return ret;
   }
