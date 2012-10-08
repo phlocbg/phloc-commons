@@ -93,13 +93,17 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
     assertTrue (sg.getAllEndNodes ().contains (n));
     assertFalse (sg.containsCycles ());
     assertEquals (sg.getSingleStartNode (), n);
+    assertEquals (sg.getSingleEndNode (), n);
+    assertTrue (sg.getAllRelations ().isEmpty ());
 
+    // Add a second node
     final GraphNode <String> n2 = new GraphNode <String> ();
     assertTrue (sg.addNode (n2).isChanged ());
     assertFalse (n2.hasIncomingOrOutgoingRelations ());
 
     // node already contained
     assertFalse (sg.addNode (n2).isChanged ());
+    assertTrue (sg.getAllRelations ().isEmpty ());
 
     assertTrue (sg.getAllStartNodes ().contains (n));
     assertTrue (sg.getAllStartNodes ().contains (n2));
@@ -153,6 +157,15 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
     }
     catch (final IllegalStateException ex)
     {}
+
+    try
+    {
+      // no node contained
+      sg.getSingleEndNode ();
+      fail ();
+    }
+    catch (final IllegalStateException ex)
+    {}
   }
 
   @Test
@@ -160,6 +173,7 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
   {
     SimpleGraph <Integer> sg = _buildGraph ();
     assertTrue (sg.isSelfContained ());
+    assertFalse (sg.containsCycles ());
     assertFalse (sg.containsCycles ());
 
     sg = new SimpleGraph <Integer> ();
@@ -190,6 +204,7 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
 
     assertTrue (sg.isSelfContained ());
     assertTrue (sg.containsCycles ());
+    assertTrue (sg.containsCycles ());
 
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (_buildGraph (), _buildGraph ());
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (new SimpleGraph <Integer> (),
@@ -212,7 +227,12 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
     sg.createRelation (n1, n2);
     assertFalse (sg.isSelfContained ());
 
-    assertTrue (sg.clear ().isChanged ());
+    // Get all relations
+    assertEquals (1, sg.getAllRelations ().size ());
+
+    // Remove nodes
+    assertTrue (sg.removeNode (n1).isChanged ());
+    assertFalse (sg.removeNode (n2).isChanged ());
     assertFalse (sg.clear ().isChanged ());
 
     // n1 does not belongs to the graph

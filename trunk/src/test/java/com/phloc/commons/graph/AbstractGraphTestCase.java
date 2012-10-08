@@ -41,7 +41,7 @@ public abstract class AbstractGraphTestCase
     final IGraphNode <Integer> node4 = _createGN (aGraph, 4);
     final IGraphNode <Integer> node5 = _createGN (aGraph, 5);
     final IGraphNode <Integer> node6 = _createGN (aGraph, 6);
-    aGraph.createRelation (node0, node1);
+    aGraph.createRelation (node0.getID (), node1.getID ());
     aGraph.createRelation (node1, node2);
     aGraph.createRelation (node2, node3);
     aGraph.createRelation (node3, node4);
