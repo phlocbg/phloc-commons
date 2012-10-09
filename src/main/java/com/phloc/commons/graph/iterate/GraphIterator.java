@@ -43,9 +43,7 @@ public final class GraphIterator implements IIterableIterator <IGraphNode>
   /**
    * Maps node IDs to node states
    */
-  private final Set <String> m_aStates = new HashSet <String> ();
-
-  private final List <IGraphNode> m_aList = new ArrayList <IGraphNode> ();
+  private final Set <String> m_aHandledObjects = new HashSet <String> ();
 
   private final Iterator <IGraphNode> m_it;
 
@@ -59,22 +57,24 @@ public final class GraphIterator implements IIterableIterator <IGraphNode>
     if (aStartNode == null)
       throw new NullPointerException ("startNode");
 
-    _traverseDFS (aStartNode);
-    m_it = m_aList.iterator ();
+    // Collect all nodes, depth first
+    final List <IGraphNode> aList = new ArrayList <IGraphNode> ();
+    _traverseDFS (aStartNode, aList);
+    m_it = aList.iterator ();
   }
 
-  private void _traverseDFS (@Nonnull final IGraphNode aStartNode)
+  private void _traverseDFS (@Nonnull final IGraphNode aStartNode, @Nonnull final List <IGraphNode> aList)
   {
-    m_aStates.add (aStartNode.getID ());
-    m_aList.add (aStartNode);
+    m_aHandledObjects.add (aStartNode.getID ());
+    aList.add (aStartNode);
     for (final IGraphRelation aRelation : aStartNode.getAllRelations ())
     {
-      if (!m_aStates.add (aRelation.getID ()))
+      if (!m_aHandledObjects.add (aRelation.getID ()))
         m_bHasCycles = true;
       for (final IGraphNode aNode : aRelation.getAllConnectedNodes ())
       {
-        if (!m_aStates.contains (aNode.getID ()))
-          _traverseDFS (aNode);
+        if (!m_aHandledObjects.contains (aNode.getID ()))
+          _traverseDFS (aNode, aList);
       }
     }
   }
