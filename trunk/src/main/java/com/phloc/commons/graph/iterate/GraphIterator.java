@@ -18,10 +18,10 @@
 package com.phloc.commons.graph.iterate;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -40,16 +40,10 @@ import com.phloc.commons.graph.IGraphRelation;
 @NotThreadSafe
 public final class GraphIterator implements IIterableIterator <IGraphNode>
 {
-  private static enum ENodeState
-  {
-    IN_PROGRESS,
-    DONE;
-  }
-
   /**
    * Maps node IDs to node states
    */
-  private final Map <IGraphNode, ENodeState> m_aStates = new HashMap <IGraphNode, ENodeState> ();
+  private final Set <String> m_aStates = new HashSet <String> ();
 
   private final List <IGraphNode> m_aList = new ArrayList <IGraphNode> ();
 
@@ -58,7 +52,7 @@ public final class GraphIterator implements IIterableIterator <IGraphNode>
   /**
    * Does the graph have cycles?
    */
-  private final boolean m_bHasCycles = false;
+  private boolean m_bHasCycles = false;
 
   public GraphIterator (@Nonnull final IGraphNode aStartNode)
   {
@@ -71,16 +65,18 @@ public final class GraphIterator implements IIterableIterator <IGraphNode>
 
   private void _traverseDFS (@Nonnull final IGraphNode aStartNode)
   {
-    m_aStates.put (aStartNode, ENodeState.IN_PROGRESS);
+    m_aStates.add (aStartNode.getID ());
     m_aList.add (aStartNode);
     for (final IGraphRelation aRelation : aStartNode.getAllRelations ())
+    {
+      if (!m_aStates.add (aRelation.getID ()))
+        m_bHasCycles = true;
       for (final IGraphNode aNode : aRelation.getAllConnectedNodes ())
       {
-        final ENodeState eState = m_aStates.get (aNode);
-        if (eState == null)
+        if (!m_aStates.contains (aNode.getID ()))
           _traverseDFS (aNode);
       }
-    m_aStates.put (aStartNode, ENodeState.DONE);
+    }
   }
 
   public boolean hasNext ()
