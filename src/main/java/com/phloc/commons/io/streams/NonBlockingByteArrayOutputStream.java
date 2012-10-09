@@ -168,8 +168,14 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
    */
   public void writeToAndClose (@Nonnull @WillClose final OutputStream aOS) throws IOException
   {
-    writeTo (aOS);
-    StreamUtils.close (aOS);
+    try
+    {
+      writeTo (aOS);
+    }
+    finally
+    {
+      StreamUtils.close (aOS);
+    }
   }
 
   /**
