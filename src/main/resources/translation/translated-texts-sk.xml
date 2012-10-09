@@ -18,11 +18,20 @@
     limitations under the License.
 
 -->
-<translationitems count="2">
+<translationitems count="5">
   <item id="com.phloc.commons.locale.ELocaleName.ID_LANGUAGE_ALL">
     <sk>Všetky jazyky</sk>
   </item>
   <item id="com.phloc.commons.locale.ELocaleName.ID_LANGUAGE_INDEPENDENT">
     <sk>Ľubovolný jazyk</sk>
+  </item>
+  <item id="com.phloc.commons.xml.transform.EXMLTransformTexts.TRANSFORMATION_ERROR">
+    <sk>Chyba pri transformácii</sk>
+  </item>
+  <item id="com.phloc.commons.xml.transform.EXMLTransformTexts.TRANSFORMATION_FATAL_ERROR">
+    <sk>Zásadná chyba pri transformácii</sk>
+  </item>
+  <item id="com.phloc.commons.xml.transform.EXMLTransformTexts.TRANSFORMATION_WARNING">
+    <sk>Varovanie pri transformácii</sk>
   </item>
 </translationitems>
