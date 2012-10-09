@@ -18,36 +18,38 @@
 package com.phloc.commons.graph;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
-import com.phloc.commons.state.EChange;
 
 /**
- * Base interface for a single graph node.
+ * Base interface for a single directed graph relation.
  * 
  * @author philip
  */
 @MustImplementEqualsAndHashcode
-public interface IGraphNode extends IBaseGraphNode <IGraphNode, IGraphRelation>
+public interface IDirectedGraphRelation extends IBaseGraphRelation <IDirectedGraphNode, IDirectedGraphRelation>
 {
   /**
-   * Add a new relation.
-   * 
-   * @param aRelation
-   *        The relation to be added to this node. May be <code>null</code>.
-   * @return {@link EChange#CHANGED} if something changed
+   * @return The from-node of this relation. Never <code>null</code>.
    */
   @Nonnull
-  EChange addRelation (@Nullable IGraphRelation aRelation);
+  IDirectedGraphNode getFrom ();
 
   /**
-   * Remove a new relation.
-   * 
-   * @param aRelation
-   *        The relation to be removed from this node. May be <code>null</code>.
-   * @return {@link EChange#CHANGED} if something changed
+   * @return The ID of the from-node of this relation. Never <code>null</code>.
    */
   @Nonnull
-  EChange removeRelation (@Nullable IGraphRelation aRelation);
+  String getFromID ();
+
+  /**
+   * @return The to-node of this relation. Never <code>null</code>.
+   */
+  @Nonnull
+  IDirectedGraphNode getTo ();
+
+  /**
+   * @return The ID of the to-node of this relation. Never <code>null</code>.
+   */
+  @Nonnull
+  String getToID ();
 }

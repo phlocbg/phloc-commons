@@ -28,15 +28,15 @@ import java.util.NoSuchElementException;
 import org.junit.Test;
 
 import com.phloc.commons.graph.AbstractGraphTestCase;
-import com.phloc.commons.graph.IGraphNode;
-import com.phloc.commons.graph.IReadonlyGraph;
+import com.phloc.commons.graph.IDirectedGraphNode;
+import com.phloc.commons.graph.IReadonlyDirectedGraph;
 
 /**
- * Test class for class {@link GraphIteratorForward}.
+ * Test class for class {@link DirectedGraphIteratorBackward}.
  * 
  * @author philip
  */
-public final class GraphIteratorForwardTest extends AbstractGraphTestCase
+public final class DirectedGraphIteratorBackwardTest extends AbstractGraphTestCase
 {
   @Test
   public void testGraphIterator ()
@@ -44,25 +44,16 @@ public final class GraphIteratorForwardTest extends AbstractGraphTestCase
     try
     {
       // null node not allowed
-      new GraphIteratorForward (null);
+      new DirectedGraphIteratorBackward (null);
       fail ();
     }
     catch (final NullPointerException ex)
     {}
 
-    try
-    {
-      // null node not allowed
-      GraphIteratorForward.create (null);
-      fail ();
-    }
-    catch (final NullPointerException ex)
-    {}
-
-    final IReadonlyGraph aGraph = _buildGraph ();
-    final IGraphNode aStart = aGraph.getSingleStartNode ();
-    assertEquals (aStart.getID (), "0");
-    final GraphIteratorForward it = GraphIteratorForward.create (aStart);
+    final IReadonlyDirectedGraph aGraph = _buildDirectedGraph ();
+    final IDirectedGraphNode aEnd = aGraph.getSingleEndNode ();
+    assertEquals (aEnd.getID (), "4");
+    final DirectedGraphIteratorBackward it = new DirectedGraphIteratorBackward (aEnd);
 
     try
     {
@@ -78,17 +69,17 @@ public final class GraphIteratorForwardTest extends AbstractGraphTestCase
     // different way
     for (int i = 0; i < 100; ++i)
       assertTrue (it.hasNext ());
-    assertEquals (1, _getNodeValue (it.next ()));
+    assertEquals (5, _getNodeValue (it.next ()));
     for (int i = 0; i < 100; ++i)
       assertTrue (it.hasNext ());
-    assertEquals (2, _getNodeValue (it.next ()));
+    assertEquals (4, _getNodeValue (it.next ()));
     for (int i = 0; i < 100; ++i)
       assertTrue (it.hasNext ());
     assertEquals (3, _getNodeValue (it.next ()));
     assertTrue (it.hasNext ());
-    assertEquals (4, _getNodeValue (it.next ()));
+    assertEquals (2, _getNodeValue (it.next ()));
     assertTrue (it.hasNext ());
-    assertEquals (5, _getNodeValue (it.next ()));
+    assertEquals (1, _getNodeValue (it.next ()));
     assertTrue (it.hasNext ());
     assertEquals (6, _getNodeValue (it.next ()));
     assertTrue (it.hasNext ());
@@ -99,32 +90,32 @@ public final class GraphIteratorForwardTest extends AbstractGraphTestCase
   @Test
   public void testStartIteratingInTheMiddleOneWay ()
   {
-    final IReadonlyGraph aGraph = _buildGraph ();
-    final IGraphNode aStartNode = aGraph.getNodeOfID ("1");
-    final GraphIteratorForward it = GraphIteratorForward.create (aStartNode);
+    final IReadonlyDirectedGraph aGraph = _buildDirectedGraph ();
+    final IDirectedGraphNode aEndNode = aGraph.getNodeOfID ("5");
+    final DirectedGraphIteratorBackward it = new DirectedGraphIteratorBackward (aEndNode);
     assertTrue (it.hasNext ());
-    assertEquals (2, _getNodeValue (it.next ()));
+    assertEquals (6, _getNodeValue (it.next ()));
     assertTrue (it.hasNext ());
-    assertEquals (3, _getNodeValue (it.next ()));
-    assertTrue (it.hasNext ());
-    assertEquals (4, _getNodeValue (it.next ()));
-    assertTrue (it.hasNext ());
-    assertEquals (5, _getNodeValue (it.next ()));
+    assertEquals (1, _getNodeValue (it.next ()));
     assertFalse (it.hasNext ());
   }
 
   @Test
   public void testStartIteratingInTheMiddleTwoWays ()
   {
-    final IReadonlyGraph aGraph = _buildGraph ();
-    final IGraphNode aStartNode = aGraph.getNodeOfID ("5");
-    final GraphIteratorForward it = GraphIteratorForward.create (aStartNode);
-    assertTrue (it.hasNext ());
-    assertEquals (6, _getNodeValue (it.next ()));
+    final IReadonlyDirectedGraph aGraph = _buildDirectedGraph ();
+    final IDirectedGraphNode aStartNode = aGraph.getNodeOfID ("3");
+    final DirectedGraphIteratorBackward it = new DirectedGraphIteratorBackward (aStartNode);
     assertTrue (it.hasNext ());
     assertEquals (4, _getNodeValue (it.next ()));
     assertTrue (it.hasNext ());
-    assertEquals (5, _getNodeValue (it.next ()));
+    assertEquals (3, _getNodeValue (it.next ()));
+    assertTrue (it.hasNext ());
+    assertEquals (2, _getNodeValue (it.next ()));
+    assertTrue (it.hasNext ());
+    assertEquals (1, _getNodeValue (it.next ()));
+    assertTrue (it.hasNext ());
+    assertEquals (6, _getNodeValue (it.next ()));
     assertTrue (it.hasNext ());
     assertEquals (7, _getNodeValue (it.next ()));
     assertFalse (it.hasNext ());
@@ -133,8 +124,8 @@ public final class GraphIteratorForwardTest extends AbstractGraphTestCase
   @Test
   public void testCycleIterate1 ()
   {
-    final IReadonlyGraph aGraph = _buildCycleGraphSimple ();
-    final GraphIteratorForward it = GraphIteratorForward.create (aGraph.getNodeOfID ("0"));
+    final IReadonlyDirectedGraph aGraph = _buildSimpleDirectedGraphCycle ();
+    final DirectedGraphIteratorBackward it = new DirectedGraphIteratorBackward (aGraph.getNodeOfID ("0"));
     assertTrue (it.hasNext ());
     // first item has ID 0 and value 1
     assertEquals (1, _getNodeValue (it.next ()));
@@ -147,17 +138,17 @@ public final class GraphIteratorForwardTest extends AbstractGraphTestCase
   @Test
   public void testCycleIterate2 ()
   {
-    final IReadonlyGraph aGraph = _buildCycleGraphSimple2 ();
-    final GraphIteratorForward it = GraphIteratorForward.create (aGraph.getNodeOfID ("0"));
+    final IReadonlyDirectedGraph aGraph = _buildSimpleDirectedGraphCycle2 ();
+    final DirectedGraphIteratorBackward it = new DirectedGraphIteratorBackward (aGraph.getNodeOfID ("3"));
     assertNotNull (it.iterator ());
     assertTrue (it.hasNext ());
-    assertEquals (1, _getNodeValue (it.next ()));
-    assertTrue (it.hasNext ());
-    assertEquals (2, _getNodeValue (it.next ()));
+    assertEquals (4, _getNodeValue (it.next ()));
     assertTrue (it.hasNext ());
     assertEquals (3, _getNodeValue (it.next ()));
     assertTrue (it.hasNext ());
-    assertEquals (4, _getNodeValue (it.next ()));
+    assertEquals (2, _getNodeValue (it.next ()));
+    assertTrue (it.hasNext ());
+    assertEquals (1, _getNodeValue (it.next ()));
     assertFalse (it.hasNext ());
 
     try

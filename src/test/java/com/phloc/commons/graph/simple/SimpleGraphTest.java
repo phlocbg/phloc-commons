@@ -43,28 +43,9 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
   public void testCtor ()
   {
     final IReadonlyGraph sg = new SimpleGraph ();
-    assertTrue (sg.getAllStartNodes ().isEmpty ());
-    assertTrue (sg.getAllEndNodes ().isEmpty ());
-    assertFalse (sg.containsCycles ());
+    assertTrue (sg.getAllNodes ().isEmpty ());
+    assertTrue (sg.getAllRelations ().isEmpty ());
     assertNotNull (sg.toString ());
-
-    try
-    {
-      // no node contained
-      sg.getSingleStartNode ();
-      fail ();
-    }
-    catch (final IllegalStateException ex)
-    {}
-
-    try
-    {
-      // no node contained
-      sg.getSingleEndNode ();
-      fail ();
-    }
-    catch (final IllegalStateException ex)
-    {}
   }
 
   @Test
@@ -84,46 +65,20 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
     final GraphNode n = new GraphNode ();
     assertTrue (sg.addNode (n).isChanged ());
     assertEquals (1, sg.getNodeCount ());
-    assertFalse (n.hasIncomingOrOutgoingRelations ());
+    assertFalse (n.hasRelations ());
 
     // node already contained
     assertFalse (sg.addNode (n).isChanged ());
-
-    assertTrue (sg.getAllStartNodes ().contains (n));
-    assertTrue (sg.getAllEndNodes ().contains (n));
-    assertFalse (sg.containsCycles ());
-    assertEquals (sg.getSingleStartNode (), n);
-    assertEquals (sg.getSingleEndNode (), n);
     assertTrue (sg.getAllRelations ().isEmpty ());
 
     // Add a second node
     final GraphNode n2 = new GraphNode ();
     assertTrue (sg.addNode (n2).isChanged ());
-    assertFalse (n2.hasIncomingOrOutgoingRelations ());
+    assertFalse (n2.hasRelations ());
 
     // node already contained
     assertFalse (sg.addNode (n2).isChanged ());
     assertTrue (sg.getAllRelations ().isEmpty ());
-
-    assertTrue (sg.getAllStartNodes ().contains (n));
-    assertTrue (sg.getAllStartNodes ().contains (n2));
-    assertTrue (sg.getAllEndNodes ().contains (n));
-    assertTrue (sg.getAllEndNodes ().contains (n2));
-    assertFalse (sg.containsCycles ());
-    try
-    {
-      sg.getSingleStartNode ();
-      fail ();
-    }
-    catch (final IllegalStateException ex)
-    {}
-    try
-    {
-      sg.getSingleEndNode ();
-      fail ();
-    }
-    catch (final IllegalStateException ex)
-    {}
 
     assertNotNull (sg.createNode ());
     assertNotNull (sg.createNode ("id4711"));
@@ -143,28 +98,6 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
 
     assertTrue (sg.clear ().isChanged ());
     assertFalse (sg.clear ().isChanged ());
-
-    assertTrue (sg.getAllStartNodes ().isEmpty ());
-    assertTrue (sg.getAllEndNodes ().isEmpty ());
-    assertFalse (sg.containsCycles ());
-
-    try
-    {
-      // no node contained
-      sg.getSingleStartNode ();
-      fail ();
-    }
-    catch (final IllegalStateException ex)
-    {}
-
-    try
-    {
-      // no node contained
-      sg.getSingleEndNode ();
-      fail ();
-    }
-    catch (final IllegalStateException ex)
-    {}
   }
 
   @Test
@@ -172,8 +105,6 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
   {
     SimpleGraph sg = _buildGraph ();
     assertTrue (sg.isSelfContained ());
-    assertFalse (sg.containsCycles ());
-    assertFalse (sg.containsCycles ());
 
     sg = new SimpleGraph ();
     final IGraphNode n1 = sg.createNode (null);
@@ -181,29 +112,13 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
     sg.createRelation (n1, n2);
     sg.createRelation (n2, n1);
 
-    assertEquals (1, n1.getIncomingRelationCount ());
-    assertEquals (1, n1.getOutgoingRelationCount ());
-    assertTrue (n1.hasIncomingRelations ());
-    assertTrue (n1.hasOutgoingRelations ());
-    assertTrue (n1.hasIncomingOrOutgoingRelations ());
-    assertTrue (n1.hasIncomingAndOutgoingRelations ());
+    assertTrue (n1.hasRelations ());
     assertTrue (n1.isConnectedWith (n2));
-    assertTrue (n1.isFromNode (n2));
-    assertTrue (n1.isToNode (n2));
 
-    assertEquals (1, n2.getIncomingRelationCount ());
-    assertEquals (1, n2.getOutgoingRelationCount ());
-    assertTrue (n2.hasIncomingRelations ());
-    assertTrue (n2.hasOutgoingRelations ());
-    assertTrue (n2.hasIncomingOrOutgoingRelations ());
-    assertTrue (n2.hasIncomingAndOutgoingRelations ());
+    assertTrue (n2.hasRelations ());
     assertTrue (n2.isConnectedWith (n1));
-    assertTrue (n2.isFromNode (n1));
-    assertTrue (n2.isToNode (n1));
 
     assertTrue (sg.isSelfContained ());
-    assertTrue (sg.containsCycles ());
-    assertTrue (sg.containsCycles ());
 
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (_buildGraph (), _buildGraph ());
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (new SimpleGraph (), new SimpleGraph ());

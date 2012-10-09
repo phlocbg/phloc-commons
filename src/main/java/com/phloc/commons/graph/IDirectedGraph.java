@@ -19,11 +19,14 @@ package com.phloc.commons.graph;
 
 
 /**
- * Base interface for a read-only undirected graph.
+ * Interface for a modifiable directed graph.
  * 
  * @author philip
  */
-public interface IReadonlyGraph extends IReadonlyBaseGraph <IGraphNode, IGraphRelation>
+public interface IDirectedGraph extends
+                               IBaseGraph <IDirectedGraphNode, IDirectedGraphRelation>,
+                               IReadonlyDirectedGraph,
+                               IDirectedGraphObjectFactory
 {
   /* empty */
 }

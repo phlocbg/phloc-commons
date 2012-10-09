@@ -17,13 +17,13 @@
  */
 package com.phloc.commons.graph;
 
-
 /**
- * Base interface for a read-only undirected graph.
+ * Combined factory interface that encapsulates node and relation factory
+ * methods.
  * 
  * @author philip
  */
-public interface IReadonlyGraph extends IReadonlyBaseGraph <IGraphNode, IGraphRelation>
+public interface IDirectedGraphObjectFactory extends IDirectedGraphNodeFactory, IDirectedGraphRelationFactory
 {
   /* empty */
 }

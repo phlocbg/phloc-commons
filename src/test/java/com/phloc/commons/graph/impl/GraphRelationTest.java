@@ -17,7 +17,8 @@
  */
 package com.phloc.commons.graph.impl;
 
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
@@ -67,8 +68,9 @@ public final class GraphRelationTest
     final GraphNode nf = new GraphNode ();
     final GraphNode nt = new GraphNode ();
     final GraphRelation gr = new GraphRelation (nf, nt);
-    assertSame (gr.getFrom (), nf);
-    assertSame (gr.getTo (), nt);
+    assertEquals (2, gr.getAllConnectedNodes ().size ());
+    assertTrue (gr.getAllConnectedNodes ().contains (nf));
+    assertTrue (gr.getAllConnectedNodes ().contains (nt));
 
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (new GraphRelation ("id1", nf, nt),
                                                                     new GraphRelation ("id1", nf, nt));

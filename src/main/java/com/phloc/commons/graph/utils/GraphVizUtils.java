@@ -18,6 +18,7 @@
 package com.phloc.commons.graph.utils;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -26,8 +27,11 @@ import javax.annotation.concurrent.Immutable;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.charset.CharsetManager;
+import com.phloc.commons.graph.IDirectedGraphNode;
+import com.phloc.commons.graph.IDirectedGraphRelation;
 import com.phloc.commons.graph.IGraphNode;
 import com.phloc.commons.graph.IGraphRelation;
+import com.phloc.commons.graph.IReadonlyDirectedGraph;
 import com.phloc.commons.graph.IReadonlyGraph;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.io.streams.StreamUtils;
@@ -73,7 +77,7 @@ public final class GraphVizUtils
 
     final StringBuilder aSB = new StringBuilder ();
     // It's a directed graph
-    aSB.append ("digraph{\n");
+    aSB.append ("graph{\n");
     aSB.append ("node[shape=box];");
     for (final IGraphNode aGraphNode : aGraph.getAllNodes ())
     {
@@ -89,6 +93,65 @@ public final class GraphVizUtils
     }
     aSB.append ('\n');
     for (final IGraphRelation aGraphRelation : aGraph.getAllRelations ())
+    {
+      final Iterator <IGraphNode> it = aGraphRelation.getAllConnectedNodes ().iterator ();
+      aSB.append (it.next ().getID ()).append ("--").append (it.next ().getID ());
+      if (StringHelper.hasText (sRelationLabelAttr))
+      {
+        final String sLabel = aGraphRelation.getAttributeAsString (sRelationLabelAttr);
+        aSB.append ("[label=<")
+           .append (XMLHelper.getMaskedXMLText (EXMLVersion.XML_10, EXMLIncorrectCharacterHandling.DEFAULT, sLabel))
+           .append (">]");
+      }
+      aSB.append (";\n");
+    }
+    aSB.append ("overlap=false;\n");
+    aSB.append ('}');
+    return aSB.toString ();
+  }
+
+  /**
+   * Get the graph in a simple DOT notation suitable for GraphViz
+   * (http://www.graphviz.org). The DOT specs can be found at
+   * http://www.graphviz.org/content/dot-language<br>
+   * The default file encoding for GraphViz 2.28 is UTF-8!
+   * 
+   * @param aGraph
+   *        The graph to be converted. May not be <code>null</code>.
+   * @param sNodeLabelAttr
+   *        The name of the attribute to be used for node labels. May be
+   *        <code>null</code> to use the node ID as the label.
+   * @param sRelationLabelAttr
+   *        The name of the attribute to be used for relation labels. May be
+   *        <code>null</code> to use no relation label.
+   * @return The string representation to be used as input for DOT.
+   */
+  @Nonnull
+  public static String getAsGraphVizDot (@Nonnull final IReadonlyDirectedGraph aGraph,
+                                         @Nullable final String sNodeLabelAttr,
+                                         @Nullable final String sRelationLabelAttr)
+  {
+    if (aGraph == null)
+      throw new NullPointerException ("graph");
+
+    final StringBuilder aSB = new StringBuilder ();
+    // It's a directed graph
+    aSB.append ("digraph{\n");
+    aSB.append ("node[shape=box];");
+    for (final IDirectedGraphNode aGraphNode : aGraph.getAllNodes ())
+    {
+      aSB.append (aGraphNode.getID ());
+      if (StringHelper.hasText (sNodeLabelAttr))
+      {
+        final String sLabel = aGraphNode.getAttributeAsString (sNodeLabelAttr);
+        aSB.append ("[label=<")
+           .append (XMLHelper.getMaskedXMLText (EXMLVersion.XML_10, EXMLIncorrectCharacterHandling.DEFAULT, sLabel))
+           .append (">]");
+      }
+      aSB.append (';');
+    }
+    aSB.append ('\n');
+    for (final IDirectedGraphRelation aGraphRelation : aGraph.getAllRelations ())
     {
       aSB.append (aGraphRelation.getFromID ()).append ("->").append (aGraphRelation.getToID ());
       if (StringHelper.hasText (sRelationLabelAttr))
@@ -109,17 +172,12 @@ public final class GraphVizUtils
    * Invoked the external process "neato" from the GraphViz package. Attention:
    * this spans a sub-process!
    * 
-   * @param aGraph
-   *        The graph to be converted. May not be <code>null</code>.
-   * @param sNodeLabelAttr
-   *        The name of the attribute to be used for node labels. May be
-   *        <code>null</code> to use the node ID as the label.
-   * @param sRelationLabelAttr
-   *        The name of the attribute to be used for relation labels. May be
-   *        <code>null</code> to use no relation label.
    * @param sFileType
    *        The file type to be generated. E.g. "png" - see neato help for
    *        details. May neither be <code>null</code> nor empty.
+   * @param sDOT
+   *        The DOT file to be converted to an image. May neither be
+   *        <code>null</code> nor empty.
    * @return The byte buffer that keeps the converted image. Never
    *         <code>null</code>.
    * @throws IOException
@@ -128,16 +186,15 @@ public final class GraphVizUtils
    *         If the sub-process did not terminate correctly!
    */
   @Nonnull
-  public static NonBlockingByteArrayOutputStream getGraphAsImageWithGraphVizNeato (@Nonnull final IReadonlyGraph aGraph,
-                                                                                   @Nullable final String sNodeLabelAttr,
-                                                                                   @Nullable final String sRelationLabelAttr,
-                                                                                   @Nonnull @Nonempty final String sFileType) throws IOException,
-                                                                                                                             InterruptedException
+  public static NonBlockingByteArrayOutputStream getGraphAsImageWithGraphVizNeato (@Nonnull @Nonempty final String sFileType,
+                                                                                   @Nonnull final String sDOT) throws IOException,
+                                                                                                              InterruptedException
   {
     if (StringHelper.hasNoText (sFileType))
       throw new IllegalArgumentException ("Empty file type!");
+    if (StringHelper.hasNoText (sDOT))
+      throw new IllegalArgumentException ("Empty DOT!");
 
-    final String sDOT = getAsGraphVizDot (aGraph, sNodeLabelAttr, sRelationLabelAttr);
     final ProcessBuilder aPB = new ProcessBuilder ("neato", "-T" + sFileType).redirectErrorStream (false);
     final Process p = aPB.start ();
     // Set neato stdin
