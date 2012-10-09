@@ -50,8 +50,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 @Immutable
 public final class MicroUtils
 {
-  private static final String BR_TAG = "br";
-
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")
   private static final MicroUtils s_aInstance = new MicroUtils ();
@@ -59,6 +57,7 @@ public final class MicroUtils
   private MicroUtils ()
   {}
 
+  @Deprecated
   @Nullable
   public static List <IMicroNode> nl2br (@Nullable final String sText)
   {
@@ -76,7 +75,7 @@ public final class MicroUtils
       if (start != i)
         ret.add (new MicroText (sText.substring (start, i)));
 
-      ret.add (new MicroElement (BR_TAG));
+      ret.add (new MicroElement ("br"));
 
       // 1 == strlen ("\n")
       start = i + 1;
