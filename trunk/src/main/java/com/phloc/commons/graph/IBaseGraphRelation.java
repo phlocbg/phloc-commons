@@ -17,37 +17,44 @@
  */
 package com.phloc.commons.graph;
 
+import java.util.Set;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
-import com.phloc.commons.state.EChange;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 
 /**
- * Base interface for a single graph node.
+ * Base interface for a single undirected graph relation.
  * 
  * @author philip
  */
 @MustImplementEqualsAndHashcode
-public interface IGraphNode extends IBaseGraphNode <IGraphNode, IGraphRelation>
+public interface IBaseGraphRelation <N extends IBaseGraphNode <N, R>, R extends IBaseGraphRelation <N, R>> extends
+                                                                                                           IGraphObject
 {
   /**
-   * Add a new relation.
+   * Check if this relation is connected to the passed node.
    * 
-   * @param aRelation
-   *        The relation to be added to this node. May be <code>null</code>.
-   * @return {@link EChange#CHANGED} if something changed
+   * @param aNode
+   *        The node to be checked. May be <code>null</code>.
+   * @return <code>true</code> if the passed node is related via this relation,
+   *         <code>false</code> if not.
    */
-  @Nonnull
-  EChange addRelation (@Nullable IGraphRelation aRelation);
+  boolean isRelatedTo (@Nullable N aNode);
 
   /**
-   * Remove a new relation.
-   * 
-   * @param aRelation
-   *        The relation to be removed from this node. May be <code>null</code>.
-   * @return {@link EChange#CHANGED} if something changed
+   * @return A list with all connected nodes. Usually 2 elements.
    */
   @Nonnull
-  EChange removeRelation (@Nullable IGraphRelation aRelation);
+  @ReturnsMutableCopy
+  Set <N> getAllConnectedNodes ();
+
+  /**
+   * @return A list with the ID of all connected nodes. Usually 2 elements.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  Set <String> getAllConnectedNodeIDs ();
 }

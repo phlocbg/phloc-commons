@@ -29,10 +29,10 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
-import com.phloc.commons.graph.IGraphNode;
-import com.phloc.commons.graph.IGraphObjectFactory;
-import com.phloc.commons.graph.IGraphRelation;
-import com.phloc.commons.graph.iterate.GraphIterator;
+import com.phloc.commons.graph.IDirectedGraphNode;
+import com.phloc.commons.graph.IDirectedGraphObjectFactory;
+import com.phloc.commons.graph.IDirectedGraphRelation;
+import com.phloc.commons.graph.iterate.DirectedGraphIteratorForward;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.state.ETriState;
@@ -44,21 +44,21 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @NotThreadSafe
-public class SimpleGraph implements ISimpleGraph
+public class SimpleDirectedGraph implements ISimpleDirectedGraph
 {
   public static final boolean DEFAULT_CHANGING_CONNECTED_OBJECTS_ALLOWED = true;
 
-  private final IGraphObjectFactory m_aFactory;
-  private final Map <String, IGraphNode> m_aNodes = new LinkedHashMap <String, IGraphNode> ();
+  private final IDirectedGraphObjectFactory m_aFactory;
+  private final Map <String, IDirectedGraphNode> m_aNodes = new LinkedHashMap <String, IDirectedGraphNode> ();
   private boolean m_bIsChangingConnectedObjectsAllowed = DEFAULT_CHANGING_CONNECTED_OBJECTS_ALLOWED;
   private ETriState m_eCacheHasCycles = ETriState.UNDEFINED;
 
-  public SimpleGraph ()
+  public SimpleDirectedGraph ()
   {
-    this (new SimpleGraphObjectFactory ());
+    this (new SimpleDirectedGraphObjectFactory ());
   }
 
-  public SimpleGraph (@Nonnull final IGraphObjectFactory aFactory)
+  public SimpleDirectedGraph (@Nonnull final IDirectedGraphObjectFactory aFactory)
   {
     if (aFactory == null)
       throw new NullPointerException ("factory");
@@ -82,24 +82,24 @@ public class SimpleGraph implements ISimpleGraph
   }
 
   @Nonnull
-  public IGraphNode createNode ()
+  public IDirectedGraphNode createNode ()
   {
     // Create node with new ID
-    final IGraphNode aNode = m_aFactory.createNode ();
+    final IDirectedGraphNode aNode = m_aFactory.createNode ();
     if (addNode (aNode).isUnchanged ())
       throw new IllegalStateException ("The ID factory created the ID '" + aNode.getID () + "' that is already in use");
     return aNode;
   }
 
   @Nullable
-  public IGraphNode createNode (@Nullable final String sID)
+  public IDirectedGraphNode createNode (@Nullable final String sID)
   {
-    final IGraphNode aNode = m_aFactory.createNode (sID);
+    final IDirectedGraphNode aNode = m_aFactory.createNode (sID);
     return addNode (aNode).isChanged () ? aNode : null;
   }
 
   @Nonnull
-  public EChange addNode (@Nonnull final IGraphNode aNode)
+  public EChange addNode (@Nonnull final IDirectedGraphNode aNode)
   {
     if (aNode == null)
       throw new NullPointerException ("node");
@@ -117,7 +117,7 @@ public class SimpleGraph implements ISimpleGraph
   }
 
   @Nonnull
-  public EChange removeNode (@Nonnull final IGraphNode aNode)
+  public EChange removeNode (@Nonnull final IDirectedGraphNode aNode)
   {
     if (aNode == null)
       throw new NullPointerException ("node");
@@ -133,56 +133,101 @@ public class SimpleGraph implements ISimpleGraph
   }
 
   @Nonnull
-  private IGraphRelation _connect (@Nonnull final IGraphRelation aRelation)
+  private IDirectedGraphRelation _connect (@Nonnull final IDirectedGraphRelation aRelation)
   {
-    for (final IGraphNode aNode : aRelation.getAllConnectedNodes ())
-      aNode.addRelation (aRelation);
+    aRelation.getFrom ().addOutgoingRelation (aRelation);
+    aRelation.getTo ().addIncomingRelation (aRelation);
     _invalidateCache ();
     return aRelation;
   }
 
   @Nonnull
-  public IGraphRelation createRelation (@Nonnull final String sFromNodeID, @Nonnull final String sToNodeID)
+  public IDirectedGraphRelation createRelation (@Nonnull final String sFromNodeID, @Nonnull final String sToNodeID)
   {
-    final IGraphNode aFromNode = getNodeOfID (sFromNodeID);
+    final IDirectedGraphNode aFromNode = getNodeOfID (sFromNodeID);
     if (aFromNode == null)
       throw new IllegalArgumentException ("Failed to resolve from node ID '" + sFromNodeID + "'");
-    final IGraphNode aToNode = getNodeOfID (sToNodeID);
+    final IDirectedGraphNode aToNode = getNodeOfID (sToNodeID);
     if (aToNode == null)
       throw new IllegalArgumentException ("Failed to resolve to node ID '" + sToNodeID + "'");
     return createRelation (aFromNode, aToNode);
   }
 
   @Nonnull
-  public IGraphRelation createRelation (@Nonnull final IGraphNode aFrom, @Nonnull final IGraphNode aTo)
+  public IDirectedGraphRelation createRelation (@Nonnull final IDirectedGraphNode aFrom,
+                                                @Nonnull final IDirectedGraphNode aTo)
   {
     return _connect (m_aFactory.createRelation (aFrom, aTo));
   }
 
   @Nonnull
-  public IGraphRelation createRelation (@Nullable final String sID,
-                                        @Nonnull final IGraphNode aFrom,
-                                        @Nonnull final IGraphNode aTo)
+  public IDirectedGraphRelation createRelation (@Nullable final String sID,
+                                                @Nonnull final IDirectedGraphNode aFrom,
+                                                @Nonnull final IDirectedGraphNode aTo)
   {
     return _connect (m_aFactory.createRelation (sID, aFrom, aTo));
   }
 
   @Nonnull
-  public EChange removeRelation (@Nullable final IGraphRelation aRelation)
+  public EChange removeRelation (@Nullable final IDirectedGraphRelation aRelation)
   {
     EChange ret = EChange.UNCHANGED;
     if (aRelation != null)
     {
-      for (final IGraphNode aNode : aRelation.getAllConnectedNodes ())
-        ret = ret.or (aNode.removeRelation (aRelation));
+      ret = ret.or (aRelation.getFrom ().removeOutgoingRelation (aRelation));
+      ret = ret.or (aRelation.getTo ().removeIncomingRelation (aRelation));
       if (ret.isChanged ())
         _invalidateCache ();
     }
     return ret;
   }
 
+  @Nonnull
+  public IDirectedGraphNode getSingleStartNode () throws IllegalStateException
+  {
+    final Set <IDirectedGraphNode> aStartNodes = getAllStartNodes ();
+    if (aStartNodes.size () > 1)
+      throw new IllegalStateException ("Graph has more than one starting node");
+    if (aStartNodes.isEmpty ())
+      throw new IllegalStateException ("Graph has no starting node");
+    return ContainerHelper.getFirstElement (aStartNodes);
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public Set <IDirectedGraphNode> getAllStartNodes ()
+  {
+    final Set <IDirectedGraphNode> aResult = new HashSet <IDirectedGraphNode> ();
+    for (final IDirectedGraphNode aNode : m_aNodes.values ())
+      if (!aNode.hasIncomingRelations ())
+        aResult.add (aNode);
+    return aResult;
+  }
+
+  @Nonnull
+  public IDirectedGraphNode getSingleEndNode () throws IllegalStateException
+  {
+    final Set <IDirectedGraphNode> aEndNodes = getAllEndNodes ();
+    if (aEndNodes.size () > 1)
+      throw new IllegalStateException ("Graph has more than one ending node");
+    if (aEndNodes.isEmpty ())
+      throw new IllegalStateException ("Graph has no ending node");
+    return ContainerHelper.getFirstElement (aEndNodes);
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public Set <IDirectedGraphNode> getAllEndNodes ()
+  {
+    final Set <IDirectedGraphNode> aResult = new HashSet <IDirectedGraphNode> ();
+    for (final IDirectedGraphNode aNode : m_aNodes.values ())
+      if (!aNode.hasOutgoingRelations ())
+        aResult.add (aNode);
+    return aResult;
+  }
+
   @Nullable
-  public IGraphNode getNodeOfID (@Nullable final String sID)
+  public IDirectedGraphNode getNodeOfID (@Nullable final String sID)
   {
     return m_aNodes.get (sID);
   }
@@ -195,18 +240,18 @@ public class SimpleGraph implements ISimpleGraph
 
   @Nonnull
   @ReturnsMutableCopy
-  public Set <IGraphNode> getAllNodes ()
+  public Set <IDirectedGraphNode> getAllNodes ()
   {
     return ContainerHelper.newOrderedSet (m_aNodes.values ());
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public Set <IGraphRelation> getAllRelations ()
+  public Set <IDirectedGraphRelation> getAllRelations ()
   {
-    final Set <IGraphRelation> ret = new HashSet <IGraphRelation> ();
-    for (final IGraphNode aNode : m_aNodes.values ())
-      ret.addAll (aNode.getAllRelations ());
+    final Set <IDirectedGraphRelation> ret = new HashSet <IDirectedGraphRelation> ();
+    for (final IDirectedGraphNode aNode : m_aNodes.values ())
+      ret.addAll (aNode.getOutgoingRelations ());
     return ret;
   }
 
@@ -229,9 +274,9 @@ public class SimpleGraph implements ISimpleGraph
       m_eCacheHasCycles = ETriState.FALSE;
       // Check all nodes, in case we a small cycle and a set of other nodes (see
       // test case testCycles2)
-      for (final IGraphNode aCurNode : m_aNodes.values ())
+      for (final IDirectedGraphNode aCurNode : m_aNodes.values ())
       {
-        final GraphIterator it = new GraphIterator (aCurNode);
+        final DirectedGraphIteratorForward it = new DirectedGraphIteratorForward (aCurNode);
         while (it.hasNext () && !it.hasCycles ())
           it.next ();
         if (it.hasCycles ())
@@ -248,11 +293,15 @@ public class SimpleGraph implements ISimpleGraph
 
   public boolean isSelfContained ()
   {
-    for (final IGraphNode aNode : m_aNodes.values ())
-      for (final IGraphRelation aRelation : aNode.getAllRelations ())
-        for (final IGraphNode aRelNode : aRelation.getAllConnectedNodes ())
-          if (!m_aNodes.containsKey (aRelNode.getID ()))
-            return false;
+    for (final IDirectedGraphNode aNode : m_aNodes.values ())
+    {
+      for (final IDirectedGraphRelation aRelation : aNode.getIncomingRelations ())
+        if (!m_aNodes.containsKey (aRelation.getFromID ()))
+          return false;
+      for (final IDirectedGraphRelation aRelation : aNode.getOutgoingRelations ())
+        if (!m_aNodes.containsKey (aRelation.getToID ()))
+          return false;
+    }
     return true;
   }
 
@@ -261,10 +310,10 @@ public class SimpleGraph implements ISimpleGraph
   {
     if (o == this)
       return true;
-    if (!(o instanceof SimpleGraph))
+    if (!(o instanceof SimpleDirectedGraph))
       return false;
     // Do not use m_eHasCycles because this is just a state variable
-    final SimpleGraph rhs = (SimpleGraph) o;
+    final SimpleDirectedGraph rhs = (SimpleDirectedGraph) o;
     return m_aNodes.equals (rhs.m_aNodes);
   }
 
@@ -282,14 +331,14 @@ public class SimpleGraph implements ISimpleGraph
   }
 
   @Nonnull
-  public static SimpleGraph create ()
+  public static SimpleDirectedGraph create ()
   {
-    return new SimpleGraph ();
+    return new SimpleDirectedGraph ();
   }
 
   @Nonnull
-  public static SimpleGraph create (@Nonnull final IGraphObjectFactory aFactory)
+  public static SimpleDirectedGraph create (@Nonnull final IDirectedGraphObjectFactory aFactory)
   {
-    return new SimpleGraph (aFactory);
+    return new SimpleDirectedGraph (aFactory);
   }
 }

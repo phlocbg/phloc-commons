@@ -21,11 +21,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
- * Factory interface for creating undirected graph relations.
+ * Factory interface for creating directed graph relations.
  * 
  * @author philip
  */
-public interface IGraphRelationFactory
+public interface IDirectedGraphRelationFactory
 {
   /**
    * Create a new relation from the passed from-node to the to-node.
@@ -37,7 +37,7 @@ public interface IGraphRelationFactory
    * @return The created graph relation and never <code>null</code>.
    */
   @Nonnull
-  IGraphRelation createRelation (@Nonnull IGraphNode aFrom, @Nonnull IGraphNode aTo);
+  IDirectedGraphRelation createRelation (@Nonnull IDirectedGraphNode aFrom, @Nonnull IDirectedGraphNode aTo);
 
   /**
    * Create a new relation from the passed from-node to the to-node using a
@@ -53,5 +53,7 @@ public interface IGraphRelationFactory
    * @return The created graph relation and never <code>null</code>.
    */
   @Nonnull
-  IGraphRelation createRelation (@Nullable String sID, @Nonnull IGraphNode aFrom, @Nonnull IGraphNode aTo);
+  IDirectedGraphRelation createRelation (@Nullable String sID,
+                                         @Nonnull IDirectedGraphNode aFrom,
+                                         @Nonnull IDirectedGraphNode aTo);
 }

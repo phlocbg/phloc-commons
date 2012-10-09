@@ -17,39 +17,15 @@
  */
 package com.phloc.commons.graph;
 
-import javax.annotation.Nonnull;
-
 import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
 
 /**
- * Base interface for graph relation implementations.
+ * Base interface for a single undirected graph relation.
  * 
  * @author philip
  */
 @MustImplementEqualsAndHashcode
-public interface IGraphRelation extends IGraphObject
+public interface IGraphRelation extends IBaseGraphRelation <IGraphNode, IGraphRelation>
 {
-  /**
-   * @return The from-node of this relation. Never <code>null</code>.
-   */
-  @Nonnull
-  IGraphNode getFrom ();
-
-  /**
-   * @return The ID of the from-node of this relation. Never <code>null</code>.
-   */
-  @Nonnull
-  String getFromID ();
-
-  /**
-   * @return The to-node of this relation. Never <code>null</code>.
-   */
-  @Nonnull
-  IGraphNode getTo ();
-
-  /**
-   * @return The ID of the to-node of this relation. Never <code>null</code>.
-   */
-  @Nonnull
-  String getToID ();
+  /* empty */
 }

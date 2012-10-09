@@ -19,12 +19,21 @@ package com.phloc.commons.graph;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.graph.simple.SimpleDirectedGraph;
 import com.phloc.commons.graph.simple.SimpleGraph;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 
 public abstract class AbstractGraphTestCase extends AbstractPhlocTestCase
 {
   protected static final String ATTR_VALUE = "value";
+
+  @Nonnull
+  private static final IDirectedGraphNode _createDGN (final SimpleDirectedGraph aGraph, final int i)
+  {
+    final IDirectedGraphNode aNode = aGraph.createNode (Integer.toString (i));
+    aNode.setAttribute (ATTR_VALUE, Integer.valueOf (i + 1));
+    return aNode;
+  }
 
   @Nonnull
   private static final IGraphNode _createGN (final SimpleGraph aGraph, final int i)
@@ -34,9 +43,33 @@ public abstract class AbstractGraphTestCase extends AbstractPhlocTestCase
     return aNode;
   }
 
-  protected static final int _getNodeValue (@Nonnull final IGraphNode aGN)
+  protected static final int _getNodeValue (@Nonnull final IBaseGraphNode <?, ?> aGN)
   {
     return aGN.getAttributeAsInt (ATTR_VALUE);
+  }
+
+  @Nonnull
+  protected SimpleDirectedGraph _buildDirectedGraph ()
+  {
+    final SimpleDirectedGraph aGraph = new SimpleDirectedGraph ();
+
+    final IDirectedGraphNode node0 = _createDGN (aGraph, 0);
+    final IDirectedGraphNode node1 = _createDGN (aGraph, 1);
+    final IDirectedGraphNode node2 = _createDGN (aGraph, 2);
+    final IDirectedGraphNode node3 = _createDGN (aGraph, 3);
+    final IDirectedGraphNode node4 = _createDGN (aGraph, 4);
+    final IDirectedGraphNode node5 = _createDGN (aGraph, 5);
+    final IDirectedGraphNode node6 = _createDGN (aGraph, 6);
+    aGraph.createRelation (node0.getID (), node1.getID ());
+    aGraph.createRelation (node1, node2);
+    aGraph.createRelation (node2, node3);
+    aGraph.createRelation (node3, node4);
+    aGraph.createRelation (node0, node5);
+    aGraph.createRelation (node5, node3);
+    aGraph.createRelation (node5, node6);
+    aGraph.createRelation (node6, node3);
+
+    return aGraph;
   }
 
   @Nonnull
@@ -52,19 +85,45 @@ public abstract class AbstractGraphTestCase extends AbstractPhlocTestCase
     final IGraphNode node5 = _createGN (aGraph, 5);
     final IGraphNode node6 = _createGN (aGraph, 6);
     aGraph.createRelation (node0.getID (), node1.getID ());
+    aGraph.createRelation (node0, node5);
     aGraph.createRelation (node1, node2);
     aGraph.createRelation (node2, node3);
     aGraph.createRelation (node3, node4);
-    aGraph.createRelation (node0, node5);
-    aGraph.createRelation (node5, node3);
+    aGraph.createRelation (node3, node5);
+    aGraph.createRelation (node3, node6);
     aGraph.createRelation (node5, node6);
-    aGraph.createRelation (node6, node3);
 
     return aGraph;
   }
 
   @Nonnull
-  protected IReadonlyGraph _buildCycleGraphSimple ()
+  protected IReadonlyDirectedGraph _buildSimpleDirectedGraphCycle ()
+  {
+    final SimpleDirectedGraph aGraph = new SimpleDirectedGraph ();
+    final IDirectedGraphNode node0 = _createDGN (aGraph, 0);
+    final IDirectedGraphNode node1 = _createDGN (aGraph, 1);
+    aGraph.createRelation (node0, node1);
+    aGraph.createRelation (node1, node0);
+    return aGraph;
+  }
+
+  @Nonnull
+  protected IReadonlyDirectedGraph _buildSimpleDirectedGraphCycle2 ()
+  {
+    final SimpleDirectedGraph aGraph = new SimpleDirectedGraph ();
+    final IDirectedGraphNode node0 = _createDGN (aGraph, 0);
+    final IDirectedGraphNode node1 = _createDGN (aGraph, 1);
+    final IDirectedGraphNode node2 = _createDGN (aGraph, 2);
+    final IDirectedGraphNode node3 = _createDGN (aGraph, 3);
+    aGraph.createRelation (node0, node1);
+    aGraph.createRelation (node1, node2);
+    aGraph.createRelation (node2, node3);
+    aGraph.createRelation (node3, node0);
+    return aGraph;
+  }
+
+  @Nonnull
+  protected IReadonlyGraph _buildSimpleGraphCycle ()
   {
     final SimpleGraph aGraph = new SimpleGraph ();
     final IGraphNode node0 = _createGN (aGraph, 0);
@@ -75,7 +134,7 @@ public abstract class AbstractGraphTestCase extends AbstractPhlocTestCase
   }
 
   @Nonnull
-  protected IReadonlyGraph _buildCycleGraphSimple2 ()
+  protected IReadonlyGraph _buildSimpleGraphCycle2 ()
   {
     final SimpleGraph aGraph = new SimpleGraph ();
     final IGraphNode node0 = _createGN (aGraph, 0);

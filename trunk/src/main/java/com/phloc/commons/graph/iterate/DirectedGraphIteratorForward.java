@@ -30,16 +30,16 @@ import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.collections.NonBlockingStack;
 import com.phloc.commons.collections.iterate.IIterableIterator;
 import com.phloc.commons.filter.IFilter;
-import com.phloc.commons.graph.IGraphNode;
-import com.phloc.commons.graph.IGraphRelation;
+import com.phloc.commons.graph.IDirectedGraphNode;
+import com.phloc.commons.graph.IDirectedGraphRelation;
 
 /**
- * A simple forward iterator for simple graphs (following the outgoing nodes).
+ * A simple forward iterator for directed graphs (following the outgoing nodes).
  * 
  * @author philip
  */
 @NotThreadSafe
-public final class GraphIteratorForward implements IIterableIterator <IGraphNode>
+public final class DirectedGraphIteratorForward implements IIterableIterator <IDirectedGraphNode>
 {
   /**
    * This class represents a node in the current iteration process. It is
@@ -49,10 +49,10 @@ public final class GraphIteratorForward implements IIterableIterator <IGraphNode
    */
   private static final class IterationNode
   {
-    private final IGraphNode m_aNode;
-    private final Iterator <IGraphRelation> m_aOutgoingIt;
+    private final IDirectedGraphNode m_aNode;
+    private final Iterator <IDirectedGraphRelation> m_aOutgoingIt;
 
-    private IterationNode (@Nonnull final IGraphNode aNode)
+    private IterationNode (@Nonnull final IDirectedGraphNode aNode)
     {
       if (aNode == null)
         throw new NullPointerException ("node");
@@ -61,21 +61,15 @@ public final class GraphIteratorForward implements IIterableIterator <IGraphNode
     }
 
     @Nonnull
-    public IGraphNode getNode ()
+    public IDirectedGraphNode getNode ()
     {
       return m_aNode;
     }
 
     @Nonnull
-    public Iterator <IGraphRelation> getOutgoingRelationIterator ()
+    public Iterator <IDirectedGraphRelation> getOutgoingRelationIterator ()
     {
       return m_aOutgoingIt;
-    }
-
-    @Nonnull
-    public static IterationNode create (@Nonnull final IGraphNode aNode)
-    {
-      return new IterationNode (aNode);
     }
   }
 
@@ -89,7 +83,7 @@ public final class GraphIteratorForward implements IIterableIterator <IGraphNode
    * Optional filter for graph relations to defined whether thy should be
    * followed or not. May be <code>null</code>.
    */
-  private final IFilter <IGraphRelation> m_aRelationFilter;
+  private final IFilter <IDirectedGraphRelation> m_aRelationFilter;
 
   /**
    * This set keeps track of all the nodes we already visited. This is important
@@ -102,13 +96,13 @@ public final class GraphIteratorForward implements IIterableIterator <IGraphNode
    */
   private boolean m_bHasCycles = false;
 
-  public GraphIteratorForward (@Nonnull final IGraphNode aStartNode)
+  public DirectedGraphIteratorForward (@Nonnull final IDirectedGraphNode aStartNode)
   {
     this (aStartNode, null);
   }
 
-  public GraphIteratorForward (@Nonnull final IGraphNode aStartNode,
-                               @Nullable final IFilter <IGraphRelation> aRelationFilter)
+  public DirectedGraphIteratorForward (@Nonnull final IDirectedGraphNode aStartNode,
+                                       @Nullable final IFilter <IDirectedGraphRelation> aRelationFilter)
   {
     if (aStartNode == null)
       throw new NullPointerException ("startNode");
@@ -116,7 +110,7 @@ public final class GraphIteratorForward implements IIterableIterator <IGraphNode
     m_aRelationFilter = aRelationFilter;
 
     // Ensure that the start node is present
-    m_aNodeStack.push (IterationNode.create (aStartNode));
+    m_aNodeStack.push (new IterationNode (aStartNode));
   }
 
   public boolean hasNext ()
@@ -125,14 +119,14 @@ public final class GraphIteratorForward implements IIterableIterator <IGraphNode
   }
 
   @Nullable
-  public IGraphNode next ()
+  public IDirectedGraphNode next ()
   {
     // If no nodes are left, there ain't no next!
     if (!hasNext ())
       throw new NoSuchElementException ();
 
     // get the node to return
-    final IGraphNode ret = m_aNodeStack.peek ().getNode ();
+    final IDirectedGraphNode ret = m_aNodeStack.peek ().getNode ();
     m_aHandledNodes.add (ret.getID ());
 
     // find next node
@@ -141,10 +135,10 @@ public final class GraphIteratorForward implements IIterableIterator <IGraphNode
       while (!m_aNodeStack.isEmpty () && !bFoundNewNode)
       {
         // check all outgoing relations
-        final Iterator <IGraphRelation> itPeek = m_aNodeStack.peek ().getOutgoingRelationIterator ();
+        final Iterator <IDirectedGraphRelation> itPeek = m_aNodeStack.peek ().getOutgoingRelationIterator ();
         while (itPeek.hasNext ())
         {
-          final IGraphRelation aCurrentRelation = itPeek.next ();
+          final IDirectedGraphRelation aCurrentRelation = itPeek.next ();
 
           // Callback to check whether the current relation should be followed
           // or not
@@ -152,7 +146,7 @@ public final class GraphIteratorForward implements IIterableIterator <IGraphNode
             continue;
 
           // to-node of the current relation
-          final IGraphNode aCurrentOutgoingNode = aCurrentRelation.getTo ();
+          final IDirectedGraphNode aCurrentOutgoingNode = aCurrentRelation.getTo ();
 
           // check if the current node is already contained in the stack
           // If so, we have a cycle
@@ -168,7 +162,7 @@ public final class GraphIteratorForward implements IIterableIterator <IGraphNode
           if (!m_aHandledNodes.contains (aCurrentOutgoingNode.getID ()))
           {
             // Okay, we have a new node
-            m_aNodeStack.push (IterationNode.create (aCurrentOutgoingNode));
+            m_aNodeStack.push (new IterationNode (aCurrentOutgoingNode));
             bFoundNewNode = true;
             break;
           }
@@ -203,38 +197,8 @@ public final class GraphIteratorForward implements IIterableIterator <IGraphNode
   }
 
   @Nonnull
-  public Iterator <IGraphNode> iterator ()
+  public Iterator <IDirectedGraphNode> iterator ()
   {
     return this;
-  }
-
-  /**
-   * Shortcut factory method to spare using the generics parameter manually.
-   * 
-   * @param aStartNode
-   *        The node to start iterating. May not be <code>null</code>.
-   * @return The created graph node iterator and never <code>null</code>.
-   */
-  @Nonnull
-  public static GraphIteratorForward create (@Nonnull final IGraphNode aStartNode)
-  {
-    return new GraphIteratorForward (aStartNode);
-  }
-
-  /**
-   * Shortcut factory method to spare using the generics parameter manually.
-   * 
-   * @param aStartNode
-   *        The node to start iterating. May not be <code>null</code>.
-   * @param aRelationFilter
-   *        a relation filter to specify whether to follow a certain graph
-   *        relation or not. May be <code>null</code>.
-   * @return The created graph node iterator and never <code>null</code>.
-   */
-  @Nonnull
-  public static GraphIteratorForward create (@Nonnull final IGraphNode aStartNode,
-                                             @Nullable final IFilter <IGraphRelation> aRelationFilter)
-  {
-    return new GraphIteratorForward (aStartNode, aRelationFilter);
   }
 }

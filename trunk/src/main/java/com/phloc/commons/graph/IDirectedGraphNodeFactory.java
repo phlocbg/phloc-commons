@@ -20,34 +20,31 @@ package com.phloc.commons.graph;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
-import com.phloc.commons.state.EChange;
-
 /**
- * Base interface for a single graph node.
+ * Factory interface for creating directed graph nodes
  * 
  * @author philip
  */
-@MustImplementEqualsAndHashcode
-public interface IGraphNode extends IBaseGraphNode <IGraphNode, IGraphRelation>
+public interface IDirectedGraphNodeFactory
 {
   /**
-   * Add a new relation.
+   * Create a new graph node with a <code>null</code> value and add it to the
+   * graph. A new ID is generated.<br>
+   * Equal to calling <code>createNode (null);</code>
    * 
-   * @param aRelation
-   *        The relation to be added to this node. May be <code>null</code>.
-   * @return {@link EChange#CHANGED} if something changed
+   * @return The created graph node. Never <code>null</code>.
    */
   @Nonnull
-  EChange addRelation (@Nullable IGraphRelation aRelation);
+  IDirectedGraphNode createNode ();
 
   /**
-   * Remove a new relation.
+   * Create a new graph node with a known ID.
    * 
-   * @param aRelation
-   *        The relation to be removed from this node. May be <code>null</code>.
-   * @return {@link EChange#CHANGED} if something changed
+   * @param sID
+   *        The ID of the graph node. If it is <code>null</code> or empty a new
+   *        ID is automatically created.
+   * @return The created graph node. May not be <code>null</code>.
    */
   @Nonnull
-  EChange removeRelation (@Nullable IGraphRelation aRelation);
+  IDirectedGraphNode createNode (@Nullable String sID);
 }

@@ -21,17 +21,20 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.state.EChange;
+import com.phloc.commons.state.IClearable;
 
 /**
- * Interface for a modifiable undirected graph.
+ * Interface for a modifiable graph.
  * 
  * @author philip
  */
-public interface IGraph extends IBaseGraph <IGraphNode, IGraphRelation>, IReadonlyGraph, IGraphObjectFactory
+public interface IBaseGraph <N extends IBaseGraphNode <N, R>, R extends IBaseGraphRelation <N, R>> extends
+                                                                                                   IReadonlyBaseGraph <N, R>,
+                                                                                                   IClearable
 {
   /**
-   * Allow or disallow that {@link #addNode(IGraphNode)} and
-   * {@link #removeNode(IGraphNode)} can handle graph nodes that are already
+   * Allow or disallow that {@link #addNode(IBaseGraphNode)} and
+   * {@link #removeNode(IBaseGraphNode)} can handle graph nodes that are already
    * connected.
    * 
    * @param bAllow
@@ -61,7 +64,7 @@ public interface IGraph extends IBaseGraph <IGraphNode, IGraphRelation>, IReadon
    * @see #setChangingConnectedObjectsAllowed(boolean)
    */
   @Nonnull
-  EChange addNode (@Nonnull IGraphNode aNode) throws IllegalArgumentException;
+  EChange addNode (@Nonnull N aNode) throws IllegalArgumentException;
 
   /**
    * Remove an existing node from the graph. <br>
@@ -79,7 +82,7 @@ public interface IGraph extends IBaseGraph <IGraphNode, IGraphRelation>, IReadon
    * @see #setChangingConnectedObjectsAllowed(boolean)
    */
   @Nonnull
-  EChange removeNode (@Nonnull IGraphNode aNode) throws IllegalArgumentException;
+  EChange removeNode (@Nonnull N aNode) throws IllegalArgumentException;
 
   /**
    * Remove the passed relation from the graph.
@@ -90,5 +93,5 @@ public interface IGraph extends IBaseGraph <IGraphNode, IGraphRelation>, IReadon
    *         the from- or the to-node
    */
   @Nonnull
-  EChange removeRelation (@Nullable IGraphRelation aRelation);
+  EChange removeRelation (@Nullable R aRelation);
 }
