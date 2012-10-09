@@ -24,24 +24,33 @@ import com.phloc.commons.mock.AbstractPhlocTestCase;
 
 public abstract class AbstractGraphTestCase extends AbstractPhlocTestCase
 {
+  protected static final String ATTR_VALUE = "value";
+
   @Nonnull
-  private static final IGraphNode <Integer> _createGN (final SimpleGraph <Integer> aGraph, final int i)
+  private static final IGraphNode _createGN (final SimpleGraph aGraph, final int i)
   {
-    return aGraph.createNode (Integer.toString (i), Integer.valueOf (i + 1));
+    final IGraphNode aNode = aGraph.createNode (Integer.toString (i));
+    aNode.setAttribute (ATTR_VALUE, Integer.valueOf (i + 1));
+    return aNode;
+  }
+
+  protected static final int _getNodeValue (@Nonnull final IGraphNode aGN)
+  {
+    return aGN.getAttributeAsInt (ATTR_VALUE);
   }
 
   @Nonnull
-  protected SimpleGraph <Integer> _buildGraph ()
+  protected SimpleGraph _buildGraph ()
   {
-    final SimpleGraph <Integer> aGraph = new SimpleGraph <Integer> ();
+    final SimpleGraph aGraph = new SimpleGraph ();
 
-    final IGraphNode <Integer> node0 = _createGN (aGraph, 0);
-    final IGraphNode <Integer> node1 = _createGN (aGraph, 1);
-    final IGraphNode <Integer> node2 = _createGN (aGraph, 2);
-    final IGraphNode <Integer> node3 = _createGN (aGraph, 3);
-    final IGraphNode <Integer> node4 = _createGN (aGraph, 4);
-    final IGraphNode <Integer> node5 = _createGN (aGraph, 5);
-    final IGraphNode <Integer> node6 = _createGN (aGraph, 6);
+    final IGraphNode node0 = _createGN (aGraph, 0);
+    final IGraphNode node1 = _createGN (aGraph, 1);
+    final IGraphNode node2 = _createGN (aGraph, 2);
+    final IGraphNode node3 = _createGN (aGraph, 3);
+    final IGraphNode node4 = _createGN (aGraph, 4);
+    final IGraphNode node5 = _createGN (aGraph, 5);
+    final IGraphNode node6 = _createGN (aGraph, 6);
     aGraph.createRelation (node0.getID (), node1.getID ());
     aGraph.createRelation (node1, node2);
     aGraph.createRelation (node2, node3);
@@ -55,24 +64,24 @@ public abstract class AbstractGraphTestCase extends AbstractPhlocTestCase
   }
 
   @Nonnull
-  protected IReadonlyGraph <Integer> _buildCycleGraphSimple ()
+  protected IReadonlyGraph _buildCycleGraphSimple ()
   {
-    final SimpleGraph <Integer> aGraph = new SimpleGraph <Integer> ();
-    final IGraphNode <Integer> node0 = _createGN (aGraph, 0);
-    final IGraphNode <Integer> node1 = _createGN (aGraph, 1);
+    final SimpleGraph aGraph = new SimpleGraph ();
+    final IGraphNode node0 = _createGN (aGraph, 0);
+    final IGraphNode node1 = _createGN (aGraph, 1);
     aGraph.createRelation (node0, node1);
     aGraph.createRelation (node1, node0);
     return aGraph;
   }
 
   @Nonnull
-  protected IReadonlyGraph <Integer> _buildCycleGraphSimple2 ()
+  protected IReadonlyGraph _buildCycleGraphSimple2 ()
   {
-    final SimpleGraph <Integer> aGraph = new SimpleGraph <Integer> ();
-    final IGraphNode <Integer> node0 = _createGN (aGraph, 0);
-    final IGraphNode <Integer> node1 = _createGN (aGraph, 1);
-    final IGraphNode <Integer> node2 = _createGN (aGraph, 2);
-    final IGraphNode <Integer> node3 = _createGN (aGraph, 3);
+    final SimpleGraph aGraph = new SimpleGraph ();
+    final IGraphNode node0 = _createGN (aGraph, 0);
+    final IGraphNode node1 = _createGN (aGraph, 1);
+    final IGraphNode node2 = _createGN (aGraph, 2);
+    final IGraphNode node3 = _createGN (aGraph, 3);
     aGraph.createRelation (node0, node1);
     aGraph.createRelation (node1, node2);
     aGraph.createRelation (node2, node3);

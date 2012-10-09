@@ -64,7 +64,7 @@ public final class GraphVizUtils
    * @return The string representation to be used as input for DOT.
    */
   @Nonnull
-  public static String getAsGraphVizDot (@Nonnull final IReadonlyGraph <?> aGraph,
+  public static String getAsGraphVizDot (@Nonnull final IReadonlyGraph aGraph,
                                          @Nullable final String sNodeLabelAttr,
                                          @Nullable final String sRelationLabelAttr)
   {
@@ -75,7 +75,7 @@ public final class GraphVizUtils
     // It's a directed graph
     aSB.append ("digraph{\n");
     aSB.append ("node[shape=box];");
-    for (final IGraphNode <?> aGraphNode : aGraph.getAllNodes ())
+    for (final IGraphNode aGraphNode : aGraph.getAllNodes ())
     {
       aSB.append (aGraphNode.getID ());
       if (StringHelper.hasText (sNodeLabelAttr))
@@ -88,7 +88,7 @@ public final class GraphVizUtils
       aSB.append (';');
     }
     aSB.append ('\n');
-    for (final IGraphRelation <?> aGraphRelation : aGraph.getAllRelations ())
+    for (final IGraphRelation aGraphRelation : aGraph.getAllRelations ())
     {
       aSB.append (aGraphRelation.getFromID ()).append ("->").append (aGraphRelation.getToID ());
       if (StringHelper.hasText (sRelationLabelAttr))
@@ -128,7 +128,7 @@ public final class GraphVizUtils
    *         If the sub-process did not terminate correctly!
    */
   @Nonnull
-  public static NonBlockingByteArrayOutputStream getGraphAsImageWithGraphVizNeato (@Nonnull final IReadonlyGraph <?> aGraph,
+  public static NonBlockingByteArrayOutputStream getGraphAsImageWithGraphVizNeato (@Nonnull final IReadonlyGraph aGraph,
                                                                                    @Nullable final String sNodeLabelAttr,
                                                                                    @Nullable final String sRelationLabelAttr,
                                                                                    @Nonnull @Nonempty final String sFileType) throws IOException,

@@ -22,12 +22,8 @@ package com.phloc.commons.graph;
  * methods.
  * 
  * @author philip
- * @param <VALUETYPE>
- *        Graph node value type
  */
-public interface IGraphObjectFactory <VALUETYPE> extends
-                                                 IGraphNodeFactory <VALUETYPE>,
-                                                 IGraphRelationFactory <VALUETYPE>
+public interface IGraphObjectFactory extends IGraphNodeFactory, IGraphRelationFactory
 {
   /* empty */
 }

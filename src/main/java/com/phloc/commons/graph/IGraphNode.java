@@ -32,27 +32,17 @@ import com.phloc.commons.state.EChange;
  * Base interface for graph node implementations.
  * 
  * @author philip
- * @param <VALUETYPE>
- *        The value type of the graph nodes.
  */
 @MustImplementEqualsAndHashcode
-public interface IGraphNode <VALUETYPE> extends IGraphObject
+public interface IGraphNode extends IGraphObject
 {
-  /**
-   * @return The contained value of this object. May be <code>null</code>.
-   */
-  @Nullable
-  VALUETYPE getValue ();
-
-  // --- incoming ---
-
   /**
    * Add a new incoming relation to this node
    * 
    * @param aRelation
    *        The relation to be added. May not be <code>null</code>.
    */
-  void addIncomingRelation (@Nonnull IGraphRelation <VALUETYPE> aRelation);
+  void addIncomingRelation (@Nonnull IGraphRelation aRelation);
 
   /**
    * @return <code>true</code> if this node has at least one incoming relation.
@@ -73,14 +63,14 @@ public interface IGraphNode <VALUETYPE> extends IGraphObject
    * @return <code>true</code> if the passed relation is an incoming relation,
    *         <code>false</code> if not
    */
-  boolean isIncomingRelation (@Nullable IGraphRelation <VALUETYPE> aRelation);
+  boolean isIncomingRelation (@Nullable IGraphRelation aRelation);
 
   /**
    * @return All incoming relations and never <code>null</code>.
    */
   @Nonnull
   @ReturnsMutableCopy
-  Collection <IGraphRelation <VALUETYPE>> getIncomingRelations ();
+  Collection <IGraphRelation> getIncomingRelations ();
 
   /**
    * Remove the passed relation from the set of incoming relations.
@@ -91,7 +81,7 @@ public interface IGraphNode <VALUETYPE> extends IGraphObject
    *         removed from the incoming relations.
    */
   @Nonnull
-  EChange removeIncomingRelation (@Nonnull IGraphRelation <VALUETYPE> aRelation);
+  EChange removeIncomingRelation (@Nonnull IGraphRelation aRelation);
 
   /**
    * Check if this graph node is directly connected to the passed node via an
@@ -101,21 +91,14 @@ public interface IGraphNode <VALUETYPE> extends IGraphObject
    *        The node to be checked. May be <code>null</code>.
    * @return <code>true</code> if is connected, <code>false</code> if not
    */
-  boolean isFromNode (@Nullable IGraphNode <VALUETYPE> aNode);
+  boolean isFromNode (@Nullable IGraphNode aNode);
 
   /**
    * @return All nodes that are connected via incoming relations.
    */
   @Nonnull
   @ReturnsMutableCopy
-  Collection <IGraphNode <VALUETYPE>> getAllFromNodes ();
-
-  /**
-   * @return All values from all nodes connected via incoming relations.
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  Collection <VALUETYPE> getAllFromValues ();
+  Collection <IGraphNode> getAllFromNodes ();
 
   /**
    * Find the incoming relation from the passed node to this node.
@@ -126,7 +109,7 @@ public interface IGraphNode <VALUETYPE> extends IGraphObject
    *         passed node to this node.
    */
   @Nullable
-  IGraphRelation <VALUETYPE> getIncomingRelationFrom (@Nullable IGraphNode <VALUETYPE> aFromNode);
+  IGraphRelation getIncomingRelationFrom (@Nullable IGraphNode aFromNode);
 
   // --- outgoing ---
 
@@ -136,7 +119,7 @@ public interface IGraphNode <VALUETYPE> extends IGraphObject
    * @param aRelation
    *        The relation to be added. May not be <code>null</code>.
    */
-  void addOutgoingRelation (@Nonnull IGraphRelation <VALUETYPE> aRelation);
+  void addOutgoingRelation (@Nonnull IGraphRelation aRelation);
 
   /**
    * @return <code>true</code> if this node has at least one outgoing relation.
@@ -157,14 +140,14 @@ public interface IGraphNode <VALUETYPE> extends IGraphObject
    * @return <code>true</code> if the passed relation is an outgoing relation,
    *         <code>false</code> if not
    */
-  boolean isOutgoingRelation (@Nullable IGraphRelation <VALUETYPE> aRelation);
+  boolean isOutgoingRelation (@Nullable IGraphRelation aRelation);
 
   /**
    * @return All outgoing relations and never <code>null</code>.
    */
   @Nonnull
   @ReturnsMutableCopy
-  Collection <IGraphRelation <VALUETYPE>> getOutgoingRelations ();
+  Collection <IGraphRelation> getOutgoingRelations ();
 
   /**
    * Remove the passed relation from the set of outgoing relations.
@@ -175,7 +158,7 @@ public interface IGraphNode <VALUETYPE> extends IGraphObject
    *         removed from the outgoing relations.
    */
   @Nonnull
-  EChange removeOutgoingRelation (@Nonnull IGraphRelation <VALUETYPE> aRelation);
+  EChange removeOutgoingRelation (@Nonnull IGraphRelation aRelation);
 
   /**
    * Check if this graph node is directly connected to the passed node via an
@@ -185,21 +168,14 @@ public interface IGraphNode <VALUETYPE> extends IGraphObject
    *        The node to be checked. May be <code>null</code>.
    * @return <code>true</code> if is connected, <code>false</code> if not
    */
-  boolean isToNode (@Nullable IGraphNode <VALUETYPE> aNode);
+  boolean isToNode (@Nullable IGraphNode aNode);
 
   /**
    * @return All nodes that are connected via outgoing relations.
    */
   @Nonnull
   @ReturnsMutableCopy
-  Collection <IGraphNode <VALUETYPE>> getAllToNodes ();
-
-  /**
-   * @return All values from all nodes connected via outgoing relations.
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  Collection <VALUETYPE> getAllToValues ();
+  Collection <IGraphNode> getAllToNodes ();
 
   /**
    * Find the incoming relation from this node to the passed node.
@@ -210,7 +186,7 @@ public interface IGraphNode <VALUETYPE> extends IGraphObject
    *         node to the passed node.
    */
   @Nullable
-  IGraphRelation <VALUETYPE> getOutgoingRelationTo (@Nullable IGraphNode <VALUETYPE> aToNode);
+  IGraphRelation getOutgoingRelationTo (@Nullable IGraphNode aToNode);
 
   // --- incoming and/or outgoing
 
@@ -224,7 +200,7 @@ public interface IGraphNode <VALUETYPE> extends IGraphObject
    *        The node to be checked. May be <code>null</code>.
    * @return <code>true</code> if is connected, <code>false</code> if not
    */
-  boolean isConnectedWith (@Nullable IGraphNode <VALUETYPE> aNode);
+  boolean isConnectedWith (@Nullable IGraphNode aNode);
 
   /**
    * Find the incoming relation from this node to the passed node or from the
@@ -236,7 +212,7 @@ public interface IGraphNode <VALUETYPE> extends IGraphObject
    *         the passed node.
    */
   @Nullable
-  IGraphRelation <VALUETYPE> getRelationFromOrTo (@Nullable IGraphNode <VALUETYPE> aNode);
+  IGraphRelation getRelationFromOrTo (@Nullable IGraphNode aNode);
 
   /**
    * Check if this node has incoming <b>or</b> outgoing relations. This is equal
@@ -263,7 +239,7 @@ public interface IGraphNode <VALUETYPE> extends IGraphObject
    */
   @Nonnull
   @ReturnsMutableCopy
-  Set <IGraphRelation <VALUETYPE>> getAllRelations ();
+  Set <IGraphRelation> getAllRelations ();
 
   /**
    * @return A container with all nodes directly connected via incoming or
@@ -271,13 +247,5 @@ public interface IGraphNode <VALUETYPE> extends IGraphObject
    */
   @Nonnull
   @ReturnsMutableCopy
-  Set <IGraphNode <VALUETYPE>> getAllRelatedNodes ();
-
-  /**
-   * @return A container with all values of all nodes directly connected via
-   *         incoming or outgoing relations. Never <code>null</code>.
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  Set <VALUETYPE> getAllRelatedValues ();
+  Set <IGraphNode> getAllRelatedNodes ();
 }

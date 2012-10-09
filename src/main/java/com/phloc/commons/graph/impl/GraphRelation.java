@@ -30,23 +30,19 @@ import com.phloc.commons.string.ToStringGenerator;
  * Default implementation of the {@link IGraphRelation} interface
  * 
  * @author philip
- * @param <VALUETYPE>
- *        The value type of the graph nodes.
  */
 @Immutable
-public class GraphRelation <VALUETYPE> extends AbstractGraphObject implements IGraphRelation <VALUETYPE>
+public class GraphRelation extends AbstractGraphObject implements IGraphRelation
 {
-  private final IGraphNode <VALUETYPE> m_aFrom;
-  private final IGraphNode <VALUETYPE> m_aTo;
+  private final IGraphNode m_aFrom;
+  private final IGraphNode m_aTo;
 
-  public GraphRelation (@Nonnull final IGraphNode <VALUETYPE> aFrom, @Nonnull final IGraphNode <VALUETYPE> aTo)
+  public GraphRelation (@Nonnull final IGraphNode aFrom, @Nonnull final IGraphNode aTo)
   {
     this (null, aFrom, aTo);
   }
 
-  public GraphRelation (@Nullable final String sID,
-                        @Nonnull final IGraphNode <VALUETYPE> aFrom,
-                        @Nonnull final IGraphNode <VALUETYPE> aTo)
+  public GraphRelation (@Nullable final String sID, @Nonnull final IGraphNode aFrom, @Nonnull final IGraphNode aTo)
   {
     super (sID);
     if (aFrom == null)
@@ -58,15 +54,9 @@ public class GraphRelation <VALUETYPE> extends AbstractGraphObject implements IG
   }
 
   @Nonnull
-  public IGraphNode <VALUETYPE> getFrom ()
+  public IGraphNode getFrom ()
   {
     return m_aFrom;
-  }
-
-  @Nullable
-  public VALUETYPE getFromValue ()
-  {
-    return m_aFrom.getValue ();
   }
 
   @Nonnull
@@ -76,15 +66,9 @@ public class GraphRelation <VALUETYPE> extends AbstractGraphObject implements IG
   }
 
   @Nonnull
-  public IGraphNode <VALUETYPE> getTo ()
+  public IGraphNode getTo ()
   {
     return m_aTo;
-  }
-
-  @Nullable
-  public VALUETYPE getToValue ()
-  {
-    return m_aTo.getValue ();
   }
 
   @Nonnull
@@ -100,7 +84,7 @@ public class GraphRelation <VALUETYPE> extends AbstractGraphObject implements IG
       return true;
     if (!super.equals (o))
       return false;
-    final GraphRelation <?> rhs = (GraphRelation <?>) o;
+    final GraphRelation rhs = (GraphRelation) o;
     return m_aFrom.equals (rhs.m_aFrom) && m_aTo.equals (rhs.m_aTo);
   }
 

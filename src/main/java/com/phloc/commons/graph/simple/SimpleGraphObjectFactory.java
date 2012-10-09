@@ -31,41 +31,32 @@ import com.phloc.commons.graph.impl.GraphRelation;
  * {@link GraphNode} and {@link GraphRelation}.
  * 
  * @author philip
- * @param <VALUETYPE>
- *        The value type of the graph nodes.
  */
-public class SimpleGraphObjectFactory <VALUETYPE> implements IGraphObjectFactory <VALUETYPE>
+public class SimpleGraphObjectFactory implements IGraphObjectFactory
 {
   @Nonnull
-  public IGraphNode <VALUETYPE> createNode ()
+  public IGraphNode createNode ()
   {
     return createNode (null);
   }
 
   @Nonnull
-  public IGraphNode <VALUETYPE> createNode (@Nullable final VALUETYPE aValue)
+  public IGraphNode createNode (@Nullable final String sID)
   {
-    return new GraphNode <VALUETYPE> (null, aValue);
+    return new GraphNode (sID);
   }
 
   @Nonnull
-  public IGraphNode <VALUETYPE> createNode (@Nullable final String sID, @Nullable final VALUETYPE aValue)
+  public IGraphRelation createRelation (@Nonnull final IGraphNode aFrom, @Nonnull final IGraphNode aTo)
   {
-    return new GraphNode <VALUETYPE> (sID, aValue);
+    return new GraphRelation (aFrom, aTo);
   }
 
   @Nonnull
-  public IGraphRelation <VALUETYPE> createRelation (@Nonnull final IGraphNode <VALUETYPE> aFrom,
-                                                    @Nonnull final IGraphNode <VALUETYPE> aTo)
+  public IGraphRelation createRelation (@Nullable final String sID,
+                                        @Nonnull final IGraphNode aFrom,
+                                        @Nonnull final IGraphNode aTo)
   {
-    return new GraphRelation <VALUETYPE> (aFrom, aTo);
-  }
-
-  @Nonnull
-  public IGraphRelation <VALUETYPE> createRelation (@Nullable final String sID,
-                                                    @Nonnull final IGraphNode <VALUETYPE> aFrom,
-                                                    @Nonnull final IGraphNode <VALUETYPE> aTo)
-  {
-    return new GraphRelation <VALUETYPE> (sID, aFrom, aTo);
+    return new GraphRelation (sID, aFrom, aTo);
   }
 }

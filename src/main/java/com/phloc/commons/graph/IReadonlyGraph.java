@@ -29,10 +29,8 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
  * Base interface for a read-only simple graph.
  * 
  * @author philip
- * @param <VALUETYPE>
- *        The value type of the graph nodes.
  */
-public interface IReadonlyGraph <VALUETYPE>
+public interface IReadonlyGraph
 {
   /**
    * Try to retrieve the single start node of this graph. A start node is
@@ -43,7 +41,7 @@ public interface IReadonlyGraph <VALUETYPE>
    *         In case the graph has no or more than one start node.
    */
   @Nonnull
-  IGraphNode <VALUETYPE> getSingleStartNode () throws IllegalStateException;
+  IGraphNode getSingleStartNode () throws IllegalStateException;
 
   /**
    * Get all start nodes of this graph. Start nodes are identified by having no
@@ -53,7 +51,7 @@ public interface IReadonlyGraph <VALUETYPE>
    */
   @Nonnull
   @ReturnsMutableCopy
-  Set <IGraphNode <VALUETYPE>> getAllStartNodes ();
+  Set <IGraphNode> getAllStartNodes ();
 
   /**
    * Try to retrieve the single end node of this graph. An end node is
@@ -64,7 +62,7 @@ public interface IReadonlyGraph <VALUETYPE>
    *         In case the graph has no or more than one end node.
    */
   @Nonnull
-  IGraphNode <VALUETYPE> getSingleEndNode () throws IllegalStateException;
+  IGraphNode getSingleEndNode () throws IllegalStateException;
 
   /**
    * Get all end nodes of this graph. End nodes are identified by having no
@@ -74,7 +72,7 @@ public interface IReadonlyGraph <VALUETYPE>
    */
   @Nonnull
   @ReturnsMutableCopy
-  Set <IGraphNode <VALUETYPE>> getAllEndNodes ();
+  Set <IGraphNode> getAllEndNodes ();
 
   /**
    * @return The number of nodes currently in the graph. Always &ge; 0.
@@ -90,7 +88,7 @@ public interface IReadonlyGraph <VALUETYPE>
    * @return <code>null</code> if no such graph node exists in this graph.
    */
   @Nullable
-  IGraphNode <VALUETYPE> getNodeOfID (@Nullable String sID);
+  IGraphNode getNodeOfID (@Nullable String sID);
 
   /**
    * @return A non-<code>null</code> collection of the nodes in this graph, in
@@ -98,7 +96,7 @@ public interface IReadonlyGraph <VALUETYPE>
    */
   @Nonnull
   @ReturnsMutableCopy
-  Set <IGraphNode <VALUETYPE>> getAllNodes ();
+  Set <IGraphNode> getAllNodes ();
 
   /**
    * @return A non-<code>null</code> collection of the relations in this graph,
@@ -106,7 +104,7 @@ public interface IReadonlyGraph <VALUETYPE>
    */
   @Nonnull
   @ReturnsMutableCopy
-  Set <IGraphRelation <VALUETYPE>> getAllRelations ();
+  Set <IGraphRelation> getAllRelations ();
 
   /**
    * Check if this graph contains cycles. An example for a cycle is e.g. if
