@@ -42,7 +42,7 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
   @Test
   public void testCtor ()
   {
-    final IReadonlyGraph <String> sg = new SimpleGraph <String> ();
+    final IReadonlyGraph sg = new SimpleGraph ();
     assertTrue (sg.getAllStartNodes ().isEmpty ());
     assertTrue (sg.getAllEndNodes ().isEmpty ());
     assertFalse (sg.containsCycles ());
@@ -70,18 +70,18 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
   @Test
   public void testAddNode ()
   {
-    final SimpleGraph <String> sg = new SimpleGraph <String> ();
+    final SimpleGraph sg = new SimpleGraph ();
     assertEquals (0, sg.getNodeCount ());
     try
     {
       // null node not allowed
-      sg.addNode ((GraphNode <String>) null);
+      sg.addNode ((GraphNode) null);
       fail ();
     }
     catch (final NullPointerException ex)
     {}
 
-    final GraphNode <String> n = new GraphNode <String> ();
+    final GraphNode n = new GraphNode ();
     assertTrue (sg.addNode (n).isChanged ());
     assertEquals (1, sg.getNodeCount ());
     assertFalse (n.hasIncomingOrOutgoingRelations ());
@@ -97,7 +97,7 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
     assertTrue (sg.getAllRelations ().isEmpty ());
 
     // Add a second node
-    final GraphNode <String> n2 = new GraphNode <String> ();
+    final GraphNode n2 = new GraphNode ();
     assertTrue (sg.addNode (n2).isChanged ());
     assertFalse (n2.hasIncomingOrOutgoingRelations ());
 
@@ -125,21 +125,20 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
     catch (final IllegalStateException ex)
     {}
 
-    assertNotNull (sg.createNode ("value"));
-    assertNotNull (sg.createNode ("value"));
-    assertNotNull (sg.createNode ("id4711", "value"));
-    assertNull (sg.createNode ("id4711", "value"));
+    assertNotNull (sg.createNode ());
+    assertNotNull (sg.createNode ("id4711"));
+    assertNull (sg.createNode ("id4711"));
   }
 
   @Test
   public void testClear ()
   {
-    final SimpleGraph <String> sg = new SimpleGraph <String> ();
+    final SimpleGraph sg = new SimpleGraph ();
 
-    final GraphNode <String> n = new GraphNode <String> ();
+    final GraphNode n = new GraphNode ();
     assertTrue (sg.addNode (n).isChanged ());
 
-    final GraphNode <String> n2 = new GraphNode <String> ();
+    final GraphNode n2 = new GraphNode ();
     assertTrue (sg.addNode (n2).isChanged ());
 
     assertTrue (sg.clear ().isChanged ());
@@ -171,14 +170,14 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
   @Test
   public void testCycles ()
   {
-    SimpleGraph <Integer> sg = _buildGraph ();
+    SimpleGraph sg = _buildGraph ();
     assertTrue (sg.isSelfContained ());
     assertFalse (sg.containsCycles ());
     assertFalse (sg.containsCycles ());
 
-    sg = new SimpleGraph <Integer> ();
-    final IGraphNode <Integer> n1 = sg.createNode (null);
-    final IGraphNode <Integer> n2 = sg.createNode (null);
+    sg = new SimpleGraph ();
+    final IGraphNode n1 = sg.createNode (null);
+    final IGraphNode n2 = sg.createNode (null);
     sg.createRelation (n1, n2);
     sg.createRelation (n2, n1);
 
@@ -207,17 +206,16 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
     assertTrue (sg.containsCycles ());
 
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (_buildGraph (), _buildGraph ());
-    PhlocTestUtils.testDefaultImplementationWithEqualContentObject (new SimpleGraph <Integer> (),
-                                                                    new SimpleGraph <Integer> ());
-    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (_buildGraph (), new SimpleGraph <Integer> ());
+    PhlocTestUtils.testDefaultImplementationWithEqualContentObject (new SimpleGraph (), new SimpleGraph ());
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (_buildGraph (), new SimpleGraph ());
   }
 
   @Test
   public void testCycles2 ()
   {
-    final SimpleGraph <Integer> sg = SimpleGraph.create ();
+    final SimpleGraph sg = SimpleGraph.create ();
     for (int i = 1; i <= 6; ++i)
-      sg.createNode (Integer.toString (i), I1);
+      sg.createNode (Integer.toString (i));
 
     // first cycle
     sg.createRelation ("1", "2");
@@ -239,15 +237,15 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
   @Test
   public void testSelfContained ()
   {
-    final ISimpleGraph <String> sg = new SimpleGraph <String> ();
+    final ISimpleGraph sg = new SimpleGraph ();
     assertTrue (sg.isSelfContained ());
 
     // n1 belongs to the graph
-    IGraphNode <String> n1 = sg.createNode ("any");
+    IGraphNode n1 = sg.createNode ("any");
     assertTrue (sg.isSelfContained ());
 
     // n2 does not belong to the graph
-    IGraphNode <String> n2 = new GraphNode <String> ("other");
+    IGraphNode n2 = new GraphNode ("other");
     sg.createRelation (n1, n2);
     assertFalse (sg.isSelfContained ());
 
@@ -260,7 +258,7 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
     assertFalse (sg.clear ().isChanged ());
 
     // n1 does not belongs to the graph
-    n1 = new GraphNode <String> ("any");
+    n1 = new GraphNode ("any");
     assertTrue (sg.isSelfContained ());
 
     // n2 belongs to the graph

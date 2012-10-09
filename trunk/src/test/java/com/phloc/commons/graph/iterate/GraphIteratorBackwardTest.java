@@ -44,7 +44,7 @@ public final class GraphIteratorBackwardTest extends AbstractGraphTestCase
     try
     {
       // null node not allowed
-      new GraphIteratorBackward <String> (null);
+      new GraphIteratorBackward (null);
       fail ();
     }
     catch (final NullPointerException ex)
@@ -53,16 +53,16 @@ public final class GraphIteratorBackwardTest extends AbstractGraphTestCase
     try
     {
       // null node not allowed
-      GraphIteratorBackward.<String> create (null);
+      GraphIteratorBackward.create (null);
       fail ();
     }
     catch (final NullPointerException ex)
     {}
 
-    final IReadonlyGraph <Integer> aGraph = _buildGraph ();
-    final IGraphNode <Integer> aEnd = aGraph.getSingleEndNode ();
+    final IReadonlyGraph aGraph = _buildGraph ();
+    final IGraphNode aEnd = aGraph.getSingleEndNode ();
     assertEquals (aEnd.getID (), "4");
-    final GraphIteratorBackward <Integer> it = GraphIteratorBackward.create (aEnd);
+    final GraphIteratorBackward it = GraphIteratorBackward.create (aEnd);
 
     try
     {
@@ -78,86 +78,86 @@ public final class GraphIteratorBackwardTest extends AbstractGraphTestCase
     // different way
     for (int i = 0; i < 100; ++i)
       assertTrue (it.hasNext ());
-    assertEquals (Integer.valueOf (5), it.next ().getValue ());
+    assertEquals (5, _getNodeValue (it.next ()));
     for (int i = 0; i < 100; ++i)
       assertTrue (it.hasNext ());
-    assertEquals (Integer.valueOf (4), it.next ().getValue ());
+    assertEquals (4, _getNodeValue (it.next ()));
     for (int i = 0; i < 100; ++i)
       assertTrue (it.hasNext ());
-    assertEquals (Integer.valueOf (3), it.next ().getValue ());
+    assertEquals (3, _getNodeValue (it.next ()));
     assertTrue (it.hasNext ());
-    assertEquals (Integer.valueOf (2), it.next ().getValue ());
+    assertEquals (2, _getNodeValue (it.next ()));
     assertTrue (it.hasNext ());
-    assertEquals (Integer.valueOf (1), it.next ().getValue ());
+    assertEquals (1, _getNodeValue (it.next ()));
     assertTrue (it.hasNext ());
-    assertEquals (Integer.valueOf (6), it.next ().getValue ());
+    assertEquals (6, _getNodeValue (it.next ()));
     assertTrue (it.hasNext ());
-    assertEquals (Integer.valueOf (7), it.next ().getValue ());
+    assertEquals (7, _getNodeValue (it.next ()));
     assertFalse (it.hasNext ());
   }
 
   @Test
   public void testStartIteratingInTheMiddleOneWay ()
   {
-    final IReadonlyGraph <Integer> aGraph = _buildGraph ();
-    final IGraphNode <Integer> aEndNode = aGraph.getNodeOfID ("5");
-    final GraphIteratorBackward <Integer> it = GraphIteratorBackward.create (aEndNode);
+    final IReadonlyGraph aGraph = _buildGraph ();
+    final IGraphNode aEndNode = aGraph.getNodeOfID ("5");
+    final GraphIteratorBackward it = GraphIteratorBackward.create (aEndNode);
     assertTrue (it.hasNext ());
-    assertEquals (Integer.valueOf (6), it.next ().getValue ());
+    assertEquals (6, _getNodeValue (it.next ()));
     assertTrue (it.hasNext ());
-    assertEquals (Integer.valueOf (1), it.next ().getValue ());
+    assertEquals (1, _getNodeValue (it.next ()));
     assertFalse (it.hasNext ());
   }
 
   @Test
   public void testStartIteratingInTheMiddleTwoWays ()
   {
-    final IReadonlyGraph <Integer> aGraph = _buildGraph ();
-    final IGraphNode <Integer> aStartNode = aGraph.getNodeOfID ("3");
-    final GraphIteratorBackward <Integer> it = GraphIteratorBackward.create (aStartNode);
+    final IReadonlyGraph aGraph = _buildGraph ();
+    final IGraphNode aStartNode = aGraph.getNodeOfID ("3");
+    final GraphIteratorBackward it = GraphIteratorBackward.create (aStartNode);
     assertTrue (it.hasNext ());
-    assertEquals (Integer.valueOf (4), it.next ().getValue ());
+    assertEquals (4, _getNodeValue (it.next ()));
     assertTrue (it.hasNext ());
-    assertEquals (Integer.valueOf (3), it.next ().getValue ());
+    assertEquals (3, _getNodeValue (it.next ()));
     assertTrue (it.hasNext ());
-    assertEquals (Integer.valueOf (2), it.next ().getValue ());
+    assertEquals (2, _getNodeValue (it.next ()));
     assertTrue (it.hasNext ());
-    assertEquals (Integer.valueOf (1), it.next ().getValue ());
+    assertEquals (1, _getNodeValue (it.next ()));
     assertTrue (it.hasNext ());
-    assertEquals (Integer.valueOf (6), it.next ().getValue ());
+    assertEquals (6, _getNodeValue (it.next ()));
     assertTrue (it.hasNext ());
-    assertEquals (Integer.valueOf (7), it.next ().getValue ());
+    assertEquals (7, _getNodeValue (it.next ()));
     assertFalse (it.hasNext ());
   }
 
   @Test
   public void testCycleIterate1 ()
   {
-    final IReadonlyGraph <Integer> aGraph = _buildCycleGraphSimple ();
-    final GraphIteratorBackward <Integer> it = GraphIteratorBackward.create (aGraph.getNodeOfID ("0"));
+    final IReadonlyGraph aGraph = _buildCycleGraphSimple ();
+    final GraphIteratorBackward it = GraphIteratorBackward.create (aGraph.getNodeOfID ("0"));
     assertTrue (it.hasNext ());
     // first item has ID 0 and value 1
-    assertEquals (Integer.valueOf (1), it.next ().getValue ());
+    assertEquals (1, _getNodeValue (it.next ()));
     assertTrue (it.hasNext ());
     // second item has ID 1 and value 2
-    assertEquals (Integer.valueOf (2), it.next ().getValue ());
+    assertEquals (2, _getNodeValue (it.next ()));
     assertFalse (it.hasNext ());
   }
 
   @Test
   public void testCycleIterate2 ()
   {
-    final IReadonlyGraph <Integer> aGraph = _buildCycleGraphSimple2 ();
-    final GraphIteratorBackward <Integer> it = GraphIteratorBackward.create (aGraph.getNodeOfID ("3"));
+    final IReadonlyGraph aGraph = _buildCycleGraphSimple2 ();
+    final GraphIteratorBackward it = GraphIteratorBackward.create (aGraph.getNodeOfID ("3"));
     assertNotNull (it.iterator ());
     assertTrue (it.hasNext ());
-    assertEquals (Integer.valueOf (4), it.next ().getValue ());
+    assertEquals (4, _getNodeValue (it.next ()));
     assertTrue (it.hasNext ());
-    assertEquals (Integer.valueOf (3), it.next ().getValue ());
+    assertEquals (3, _getNodeValue (it.next ()));
     assertTrue (it.hasNext ());
-    assertEquals (Integer.valueOf (2), it.next ().getValue ());
+    assertEquals (2, _getNodeValue (it.next ()));
     assertTrue (it.hasNext ());
-    assertEquals (Integer.valueOf (1), it.next ().getValue ());
+    assertEquals (1, _getNodeValue (it.next ()));
     assertFalse (it.hasNext ());
 
     try

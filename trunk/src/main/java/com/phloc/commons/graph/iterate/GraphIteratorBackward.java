@@ -37,26 +37,22 @@ import com.phloc.commons.graph.IGraphRelation;
  * A simple backward iterator for simple graphs (following the incoming nodes).
  * 
  * @author philip
- * @param <VALUETYPE>
- *        The value type of the graph nodes.
  */
 @NotThreadSafe
-public final class GraphIteratorBackward <VALUETYPE> implements IIterableIterator <IGraphNode <VALUETYPE>>
+public final class GraphIteratorBackward implements IIterableIterator <IGraphNode>
 {
   /**
    * This class represents a node in the current iteration process. It is
    * relevant to easily keep the current iterator status and the node together.
    * 
    * @author philip
-   * @param <VALUETYPE>
-   *        Value type of the graph to iterate
    */
-  private static final class IterationNode <VALUETYPE>
+  private static final class IterationNode
   {
-    private final IGraphNode <VALUETYPE> m_aNode;
-    private final Iterator <IGraphRelation <VALUETYPE>> m_aIncomingIt;
+    private final IGraphNode m_aNode;
+    private final Iterator <IGraphRelation> m_aIncomingIt;
 
-    private IterationNode (@Nonnull final IGraphNode <VALUETYPE> aNode)
+    private IterationNode (@Nonnull final IGraphNode aNode)
     {
       if (aNode == null)
         throw new NullPointerException ("node");
@@ -65,21 +61,21 @@ public final class GraphIteratorBackward <VALUETYPE> implements IIterableIterato
     }
 
     @Nonnull
-    public IGraphNode <VALUETYPE> getNode ()
+    public IGraphNode getNode ()
     {
       return m_aNode;
     }
 
     @Nonnull
-    public Iterator <IGraphRelation <VALUETYPE>> getIncomingRelationIterator ()
+    public Iterator <IGraphRelation> getIncomingRelationIterator ()
     {
       return m_aIncomingIt;
     }
 
     @Nonnull
-    public static <VALUETYPE> IterationNode <VALUETYPE> create (@Nonnull final IGraphNode <VALUETYPE> aNode)
+    public static IterationNode create (@Nonnull final IGraphNode aNode)
     {
-      return new IterationNode <VALUETYPE> (aNode);
+      return new IterationNode (aNode);
     }
   }
 
@@ -87,13 +83,13 @@ public final class GraphIteratorBackward <VALUETYPE> implements IIterableIterato
    * Current stack. It contains the current node plus an iterator of the
    * incoming relations of the node
    */
-  private final NonBlockingStack <IterationNode <VALUETYPE>> m_aNodeStack = new NonBlockingStack <IterationNode <VALUETYPE>> ();
+  private final NonBlockingStack <IterationNode> m_aNodeStack = new NonBlockingStack <IterationNode> ();
 
   /**
    * Optional filter for graph relations to defined whether thy should be
    * followed or not. May be <code>null</code>.
    */
-  private IFilter <IGraphRelation <VALUETYPE>> m_aRelationFilter;
+  private final IFilter <IGraphRelation> m_aRelationFilter;
 
   /**
    * This set keeps track of all the nodes we already visited. This is important
@@ -106,13 +102,13 @@ public final class GraphIteratorBackward <VALUETYPE> implements IIterableIterato
    */
   private boolean m_bHasCycles = false;
 
-  public GraphIteratorBackward (@Nonnull final IGraphNode <VALUETYPE> aStartNode)
+  public GraphIteratorBackward (@Nonnull final IGraphNode aStartNode)
   {
     this (aStartNode, null);
   }
 
-  public GraphIteratorBackward (@Nonnull final IGraphNode <VALUETYPE> aStartNode,
-                                @Nullable final IFilter <IGraphRelation <VALUETYPE>> aRelationFilter)
+  public GraphIteratorBackward (@Nonnull final IGraphNode aStartNode,
+                                @Nullable final IFilter <IGraphRelation> aRelationFilter)
   {
     if (aStartNode == null)
       throw new NullPointerException ("startNode");
@@ -129,14 +125,14 @@ public final class GraphIteratorBackward <VALUETYPE> implements IIterableIterato
   }
 
   @Nullable
-  public IGraphNode <VALUETYPE> next ()
+  public IGraphNode next ()
   {
     // If no nodes are left, there ain't no next!
     if (!hasNext ())
       throw new NoSuchElementException ();
 
     // get the node to return
-    final IGraphNode <VALUETYPE> ret = m_aNodeStack.peek ().getNode ();
+    final IGraphNode ret = m_aNodeStack.peek ().getNode ();
     m_aHandledNodes.add (ret.getID ());
 
     // find next node
@@ -145,10 +141,10 @@ public final class GraphIteratorBackward <VALUETYPE> implements IIterableIterato
       while (!m_aNodeStack.isEmpty () && !bFoundNewNode)
       {
         // check all incoming relations
-        final Iterator <IGraphRelation <VALUETYPE>> itPeek = m_aNodeStack.peek ().getIncomingRelationIterator ();
+        final Iterator <IGraphRelation> itPeek = m_aNodeStack.peek ().getIncomingRelationIterator ();
         while (itPeek.hasNext ())
         {
-          final IGraphRelation <VALUETYPE> aCurrentRelation = itPeek.next ();
+          final IGraphRelation aCurrentRelation = itPeek.next ();
 
           // Callback to check whether the current relation should be followed
           // or not
@@ -156,11 +152,11 @@ public final class GraphIteratorBackward <VALUETYPE> implements IIterableIterato
             continue;
 
           // from-node of the current relation
-          final IGraphNode <VALUETYPE> aCurrentIncomingNode = aCurrentRelation.getFrom ();
+          final IGraphNode aCurrentIncomingNode = aCurrentRelation.getFrom ();
 
           // check if the current node is already contained in the stack
           // If so, we have a cycle
-          for (final IterationNode <VALUETYPE> aStackElement : m_aNodeStack)
+          for (final IterationNode aStackElement : m_aNodeStack)
             if (aStackElement.getNode () == aCurrentIncomingNode)
             {
               // we found a cycle!
@@ -207,7 +203,7 @@ public final class GraphIteratorBackward <VALUETYPE> implements IIterableIterato
   }
 
   @Nonnull
-  public Iterator <IGraphNode <VALUETYPE>> iterator ()
+  public Iterator <IGraphNode> iterator ()
   {
     return this;
   }
@@ -215,23 +211,19 @@ public final class GraphIteratorBackward <VALUETYPE> implements IIterableIterato
   /**
    * Shortcut factory method to spare using the generics parameter manually.
    * 
-   * @param <VALUETYPE>
-   *        Graph iterator element type
    * @param aStartNode
    *        The node to start iterating. May not be <code>null</code>.
    * @return The created graph node iterator and never <code>null</code>.
    */
   @Nonnull
-  public static <VALUETYPE> GraphIteratorBackward <VALUETYPE> create (@Nonnull final IGraphNode <VALUETYPE> aStartNode)
+  public static GraphIteratorBackward create (@Nonnull final IGraphNode aStartNode)
   {
-    return new GraphIteratorBackward <VALUETYPE> (aStartNode);
+    return new GraphIteratorBackward (aStartNode);
   }
 
   /**
    * Shortcut factory method to spare using the generics parameter manually.
    * 
-   * @param <VALUETYPE>
-   *        Graph iterator element type
    * @param aStartNode
    *        The node to start iterating. May not be <code>null</code>.
    * @param aRelationFilter
@@ -240,9 +232,9 @@ public final class GraphIteratorBackward <VALUETYPE> implements IIterableIterato
    * @return The created graph node iterator and never <code>null</code>.
    */
   @Nonnull
-  public static <VALUETYPE> GraphIteratorBackward <VALUETYPE> create (@Nonnull final IGraphNode <VALUETYPE> aStartNode,
-                                                                      @Nullable final IFilter <IGraphRelation <VALUETYPE>> aRelationFilter)
+  public static GraphIteratorBackward create (@Nonnull final IGraphNode aStartNode,
+                                              @Nullable final IFilter <IGraphRelation> aRelationFilter)
   {
-    return new GraphIteratorBackward <VALUETYPE> (aStartNode, aRelationFilter);
+    return new GraphIteratorBackward (aStartNode, aRelationFilter);
   }
 }

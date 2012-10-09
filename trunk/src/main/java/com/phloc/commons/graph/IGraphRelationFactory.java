@@ -24,10 +24,8 @@ import javax.annotation.Nullable;
  * Factory interface for creating graph relations.
  * 
  * @author philip
- * @param <VALUETYPE>
- *        The value type of the graph nodes.
  */
-public interface IGraphRelationFactory <VALUETYPE>
+public interface IGraphRelationFactory
 {
   /**
    * Create a new relation from the passed from-node to the to-node.
@@ -39,7 +37,7 @@ public interface IGraphRelationFactory <VALUETYPE>
    * @return The created graph relation and never <code>null</code>.
    */
   @Nonnull
-  IGraphRelation <VALUETYPE> createRelation (@Nonnull IGraphNode <VALUETYPE> aFrom, @Nonnull IGraphNode <VALUETYPE> aTo);
+  IGraphRelation createRelation (@Nonnull IGraphNode aFrom, @Nonnull IGraphNode aTo);
 
   /**
    * Create a new relation from the passed from-node to the to-node using a
@@ -55,7 +53,5 @@ public interface IGraphRelationFactory <VALUETYPE>
    * @return The created graph relation and never <code>null</code>.
    */
   @Nonnull
-  IGraphRelation <VALUETYPE> createRelation (@Nullable String sID,
-                                             @Nonnull IGraphNode <VALUETYPE> aFrom,
-                                             @Nonnull IGraphNode <VALUETYPE> aTo);
+  IGraphRelation createRelation (@Nullable String sID, @Nonnull IGraphNode aFrom, @Nonnull IGraphNode aTo);
 }

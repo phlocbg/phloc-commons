@@ -18,7 +18,6 @@
 package com.phloc.commons.graph;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
 
@@ -26,17 +25,15 @@ import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
  * Base interface for graph relation implementations.
  * 
  * @author philip
- * @param <VALUETYPE>
- *        The value type of the graph nodes.
  */
 @MustImplementEqualsAndHashcode
-public interface IGraphRelation <VALUETYPE> extends IGraphObject
+public interface IGraphRelation extends IGraphObject
 {
   /**
    * @return The from-node of this relation. Never <code>null</code>.
    */
   @Nonnull
-  IGraphNode <VALUETYPE> getFrom ();
+  IGraphNode getFrom ();
 
   /**
    * @return The ID of the from-node of this relation. Never <code>null</code>.
@@ -45,30 +42,14 @@ public interface IGraphRelation <VALUETYPE> extends IGraphObject
   String getFromID ();
 
   /**
-   * This is a sanity method for <code>getFrom ().getValue ()</code>
-   * 
-   * @return <code>null</code> if the from-node has no value.
-   */
-  @Nullable
-  VALUETYPE getFromValue ();
-
-  /**
    * @return The to-node of this relation. Never <code>null</code>.
    */
   @Nonnull
-  IGraphNode <VALUETYPE> getTo ();
+  IGraphNode getTo ();
 
   /**
    * @return The ID of the to-node of this relation. Never <code>null</code>.
    */
   @Nonnull
   String getToID ();
-
-  /**
-   * This is a sanity method for <code>getTo ().getValue ()</code>
-   * 
-   * @return <code>null</code> if the to-node has no value.
-   */
-  @Nullable
-  VALUETYPE getToValue ();
 }

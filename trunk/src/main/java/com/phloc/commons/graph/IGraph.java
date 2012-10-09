@@ -27,10 +27,8 @@ import com.phloc.commons.state.IClearable;
  * Interface for a modifiable graph.
  * 
  * @author philip
- * @param <VALUETYPE>
- *        The value type of the graph nodes.
  */
-public interface IGraph <VALUETYPE> extends IReadonlyGraph <VALUETYPE>, IClearable, IGraphObjectFactory <VALUETYPE>
+public interface IGraph extends IReadonlyGraph, IClearable, IGraphObjectFactory
 {
   /**
    * Allow or disallow that {@link #addNode(IGraphNode)} and
@@ -64,7 +62,7 @@ public interface IGraph <VALUETYPE> extends IReadonlyGraph <VALUETYPE>, IClearab
    * @see #setChangingConnectedObjectsAllowed(boolean)
    */
   @Nonnull
-  EChange addNode (@Nonnull IGraphNode <VALUETYPE> aNode) throws IllegalArgumentException;
+  EChange addNode (@Nonnull IGraphNode aNode) throws IllegalArgumentException;
 
   /**
    * Remove an existing node from the graph. <br>
@@ -82,7 +80,7 @@ public interface IGraph <VALUETYPE> extends IReadonlyGraph <VALUETYPE>, IClearab
    * @see #setChangingConnectedObjectsAllowed(boolean)
    */
   @Nonnull
-  EChange removeNode (@Nonnull IGraphNode <VALUETYPE> aNode) throws IllegalArgumentException;
+  EChange removeNode (@Nonnull IGraphNode aNode) throws IllegalArgumentException;
 
   /**
    * Remove the passed relation from the graph.
@@ -93,5 +91,5 @@ public interface IGraph <VALUETYPE> extends IReadonlyGraph <VALUETYPE>, IClearab
    *         the from- or the to-node
    */
   @Nonnull
-  EChange removeRelation (@Nullable IGraphRelation <VALUETYPE> aRelation);
+  EChange removeRelation (@Nullable IGraphRelation aRelation);
 }

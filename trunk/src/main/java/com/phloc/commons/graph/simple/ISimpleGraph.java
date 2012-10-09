@@ -26,10 +26,8 @@ import com.phloc.commons.graph.IGraphRelation;
  * Interface for a modifiable simple graph.
  * 
  * @author philip
- * @param <VALUETYPE>
- *        The value type of the graph nodes.
  */
-public interface ISimpleGraph <VALUETYPE> extends IGraph <VALUETYPE>
+public interface ISimpleGraph extends IGraph
 {
   /**
    * Create a new relation from the passed fromNode to the toNode. Internally
@@ -43,5 +41,5 @@ public interface ISimpleGraph <VALUETYPE> extends IGraph <VALUETYPE>
    * @return The created graph relation and never <code>null</code>.
    */
   @Nonnull
-  IGraphRelation <VALUETYPE> createRelation (@Nonnull String sFromNodeID, @Nonnull String sToNodeID);
+  IGraphRelation createRelation (@Nonnull String sFromNodeID, @Nonnull String sToNodeID);
 }
