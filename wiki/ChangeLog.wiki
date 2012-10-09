@@ -2,7 +2,31 @@
 #labels Featured
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
-<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr border="1"><td>9/20/12</td><td colspan="4">_Release *3.8.4*_</td></tr>
+<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr border="1"><td>10/8/12</td><td colspan="4">_Release *3.8.5*_</td></tr>
+<tr><td>10/8/12</td><td>add</td><td>api</td><td></td><td>Started some very basic GraphViz wrapping API</td></tr>
+<tr><td>10/8/12</td><td>add</td><td>api</td><td></td><td>Added new method NonBlockingByteArrayOutputStream.writeToAndClose</td></tr>
+<tr><td>10/8/12</td><td>fix</td><td>tech</td><td></td><td>Fixed bug in graph cycle detection in certain cases</td></tr>
+<tr><td>10/6/12</td><td>add</td><td>api</td><td></td><td>Extended graph API slightly</td></tr>
+<tr><td>10/5/12</td><td>change</td><td>api</td><td></td><td>Made some classes ins packages c.p.c.url.encode, c.p.c.xml, c.p.c.xml.namespace, c.p.c.xml.sax and c.p.c.xml.transform non-final</td></tr>
+<tr><td>10/5/12</td><td>add</td><td>api</td><td></td><td>Made XPathHelper and XMLTransformerFactory more flexible</td></tr>
+<tr><td>10/4/12</td><td>change</td><td>tech</td><td>*yes*</td><td>Fixed an error in XML writing, when an empty namespace was used inside a non-empty namespace, 
+the namespace was inherited anyway. Example:
+new MicroElement("uri1", "a").appendElement ("b")
+was serialized as
+`<`a xmlns="uri1"`>``<`b /`>``<`/a`>`
+after the fix it is serialized as
+`<`a xmlns="uri1"`>``<`ns0:b xmlns:ns0=""/`>``<`/a`>`
+to have the previous result use
+new MicroElement("uri1", "a").appendElement ("uri1", "b")</td></tr>
+<tr><td>10/1/12</td><td>add</td><td>api</td><td>*yes*</td><td>Extended IHasChildrenSorted to have a getFirstChild and getLastChild method</td></tr>
+<tr><td>10/1/12</td><td>add</td><td>api</td><td></td><td>Re-added FindBugs @SuppressWarnings annotation, because some errors cannot be suppressed with an @SuppressFBWarnings :(</td></tr>
+<tr><td>9/30/12</td><td>add</td><td>api</td><td></td><td>Added new method StringHelper.getWithoutAnySpaces</td></tr>
+<tr><td>9/29/12</td><td>add</td><td>api</td><td></td><td>Added StringHelper.getHexDecoded(char[],int,int) method</td></tr>
+<tr><td>9/26/12</td><td>add</td><td>api</td><td></td><td>Extended XMLReader DOM API to pass a custom entity resolver</td></tr>
+<tr><td>9/26/12</td><td>add</td><td>api</td><td></td><td>Extended XMLReader API to pass arbitrary features to the SAX reader</td></tr>
+<tr><td>9/26/12</td><td>change</td><td>api</td><td></td><td>Extended XMLFactory with APIs to use a custom document builder factory and a custom document builder.</td></tr>
+<tr><td>9/26/12</td><td>change</td><td>api</td><td></td><td>Made XMLSchemaCache non-public</td></tr>
+<tr border="1"><td>9/20/12</td><td colspan="4">_Release *3.8.4*_</td></tr>
 <tr><td>9/20/12</td><td>fix</td><td>performance</td><td></td><td>XMLHelper.isInvalidXMLCharacter(char) is now quicker</td></tr>
 <tr><td>9/19/12</td><td>add</td><td>api</td><td></td><td>Added new annotation @UseDirectEqualsAndHashCode that prevents (Equals|HashCode)ImplementationRegistry to search for converters.</td></tr>
 <tr><td>9/19/12</td><td>fix</td><td>performance</td><td></td><td>Fixed performance issues in EqualsImplementationRegistry and HashCodeImplementationRegistry</td></tr>
