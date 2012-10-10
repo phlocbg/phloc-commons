@@ -19,6 +19,7 @@ package com.phloc.commons.graph.simple;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -229,15 +230,21 @@ public class SimpleGraph implements ISimpleGraph
       m_eCacheHasCycles = ETriState.FALSE;
       // Check all nodes, in case we a small cycle and a set of other nodes (see
       // test case testCycles2)
-      for (final IGraphNode aCurNode : m_aNodes.values ())
+      final List <IGraphNode> aAllNodes = ContainerHelper.newList (m_aNodes.values ());
+      while (!aAllNodes.isEmpty ())
       {
-        final GraphIterator it = new GraphIterator (aCurNode);
-        while (it.hasNext () && !it.hasCycles ())
-          it.next ();
+        // Iterate from the first node
+        final GraphIterator it = new GraphIterator (aAllNodes.remove (0));
         if (it.hasCycles ())
         {
           m_eCacheHasCycles = ETriState.TRUE;
           break;
+        }
+        while (it.hasNext ())
+        {
+          // Remove from remaining list, because node is reachable from some
+          // other node
+          aAllNodes.remove (it.next ());
         }
       }
     }
