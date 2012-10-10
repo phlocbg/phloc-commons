@@ -107,6 +107,9 @@ public final class CMimeType
   /** Photoshop image. */
   public static final IMimeType IMAGE_PSD = EMimeContentType.IMAGE.buildMimeType ("vnd.adobe.photoshop");
 
+  /** WebP image. */
+  public static final IMimeType IMAGE_WEBP = EMimeContentType.IMAGE.buildMimeType ("webp");
+
   /** Icon image. */
   public static final IMimeType IMAGE_X_ICON = EMimeContentType.IMAGE.buildMimeType ("x-icon");
 
