@@ -20,6 +20,11 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2012-10-10" category="api" action="add">
+    <change>
+      <text locale="en">Added new default MIME type CMimeType.IMAGE_WEBP</text>
+    </change>
+  </entry>
   <entry date="2012-10-09" category="api" action="change" incompatible="true">
     <change>
       <text locale="en">Removed Generics and value from GraphNode because it can be handled more flexible with the attributes</text>
