@@ -55,6 +55,7 @@ import com.phloc.commons.xml.XMLFactory;
  */
 public final class MicroUtilsTest
 {
+  @SuppressWarnings ("deprecation")
   @Test
   public void testNl2Br ()
   {

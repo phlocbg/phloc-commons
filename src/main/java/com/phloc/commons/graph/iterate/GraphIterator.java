@@ -69,13 +69,20 @@ public final class GraphIterator implements IIterableIterator <IGraphNode>
     aList.add (aStartNode);
     for (final IGraphRelation aRelation : aStartNode.getAllRelations ())
     {
-      if (!m_aHandledObjects.add (aRelation.getID ()))
-        m_bHasCycles = true;
+      final boolean bNewRelation = m_aHandledObjects.add (aRelation.getID ());
       for (final IGraphNode aNode : aRelation.getAllConnectedNodes ())
-      {
-        if (!m_aHandledObjects.contains (aNode.getID ()))
-          _traverseDFS (aNode, aList);
-      }
+        if (aNode != aStartNode)
+        {
+          if (!m_aHandledObjects.contains (aNode.getID ()))
+            _traverseDFS (aNode, aList);
+          else
+          {
+            // If an unexplored edge leads to a node visited before, then the
+            // graph contains a cycle.
+            if (bNewRelation)
+              m_bHasCycles = true;
+          }
+        }
     }
   }
 
