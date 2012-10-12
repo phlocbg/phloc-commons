@@ -167,6 +167,28 @@ public interface IReadonlyAttributeContainer extends Serializable
    * 
    * @param sName
    *        the attribute name
+   * @return The attribute value or {@link CGlobal#ILLEGAL_ULONG} if no such
+   *         attribute exists
+   */
+  long getAttributeAsLong (@Nullable String sName);
+
+  /**
+   * Get the attribute value associated to the given attribute name.
+   * 
+   * @param sName
+   *        the attribute name
+   * @param nDefault
+   *        the default value to be returned if the value is not present
+   * @return The attribute value or <code>nDefault</code> if no such attribute
+   *         exists
+   */
+  long getAttributeAsLong (@Nullable String sName, long nDefault);
+
+  /**
+   * Get the attribute value associated to the given attribute name.
+   * 
+   * @param sName
+   *        the attribute name
    * @return The attribute value or {@link CGlobal#ILLEGAL_UINT} if no such
    *         attribute exists
    */

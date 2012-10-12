@@ -126,6 +126,22 @@ public abstract class AbstractReadonlyAttributeContainer implements IReadonlyAtt
     return StringParser.parseInt (getAsString (sName, aValue, null), nDefault);
   }
 
+  public final long getAttributeAsLong (@Nullable final String sName)
+  {
+    return getAttributeAsLong (sName, CGlobal.ILLEGAL_ULONG);
+  }
+
+  public final long getAttributeAsLong (@Nullable final String sName, final long nDefault)
+  {
+    final Object aValue = getAttributeObject (sName);
+    if (aValue == null)
+      return nDefault;
+    if (aValue instanceof Number)
+      return ((Number) aValue).longValue ();
+    // Interpret as String
+    return StringParser.parseLong (getAsString (sName, aValue, null), nDefault);
+  }
+
   public final double getAttributeAsDouble (@Nullable final String sName)
   {
     return getAttributeAsDouble (sName, CGlobal.ILLEGAL_UINT);
