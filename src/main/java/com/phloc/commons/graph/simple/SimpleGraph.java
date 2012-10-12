@@ -287,16 +287,4 @@ public class SimpleGraph implements ISimpleGraph
   {
     return new ToStringGenerator (this).append ("nodes", m_aNodes).append ("hasCycles", m_eCacheHasCycles).toString ();
   }
-
-  @Nonnull
-  public static SimpleGraph create ()
-  {
-    return new SimpleGraph ();
-  }
-
-  @Nonnull
-  public static SimpleGraph create (@Nonnull final IGraphObjectFactory aFactory)
-  {
-    return new SimpleGraph (aFactory);
-  }
 }

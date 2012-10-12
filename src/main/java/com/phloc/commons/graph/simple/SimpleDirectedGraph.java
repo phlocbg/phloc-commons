@@ -329,16 +329,4 @@ public class SimpleDirectedGraph implements ISimpleDirectedGraph
   {
     return new ToStringGenerator (this).append ("nodes", m_aNodes).append ("hasCycles", m_eCacheHasCycles).toString ();
   }
-
-  @Nonnull
-  public static SimpleDirectedGraph create ()
-  {
-    return new SimpleDirectedGraph ();
-  }
-
-  @Nonnull
-  public static SimpleDirectedGraph create (@Nonnull final IDirectedGraphObjectFactory aFactory)
-  {
-    return new SimpleDirectedGraph (aFactory);
-  }
 }
