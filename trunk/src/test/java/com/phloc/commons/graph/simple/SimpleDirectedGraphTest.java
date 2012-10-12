@@ -208,13 +208,14 @@ public final class SimpleDirectedGraphTest extends AbstractGraphTestCase
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (_buildDirectedGraph (), _buildDirectedGraph ());
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (new SimpleDirectedGraph (),
                                                                     new SimpleDirectedGraph ());
-    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (_buildDirectedGraph (), new SimpleDirectedGraph ());
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (_buildDirectedGraph (),
+                                                                        new SimpleDirectedGraph ());
   }
 
   @Test
   public void testCycles2 ()
   {
-    final SimpleDirectedGraph sg = SimpleDirectedGraph.create ();
+    final SimpleDirectedGraph sg = new SimpleDirectedGraph ();
     for (int i = 1; i <= 6; ++i)
       sg.createNode (Integer.toString (i));
 

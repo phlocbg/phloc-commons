@@ -128,7 +128,7 @@ public final class SimpleGraphTest extends AbstractGraphTestCase
   @Test
   public void testCycles2 ()
   {
-    final SimpleGraph sg = SimpleGraph.create ();
+    final SimpleGraph sg = new SimpleGraph ();
     for (int i = 1; i <= 6; ++i)
       sg.createNode (Integer.toString (i));
 
