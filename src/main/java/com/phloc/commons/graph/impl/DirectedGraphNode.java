@@ -18,9 +18,10 @@
 package com.phloc.commons.graph.impl;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -104,7 +105,7 @@ public class DirectedGraphNode extends AbstractGraphObject implements IDirectedG
 
   @Nonnull
   @ReturnsMutableCopy
-  public Collection <IDirectedGraphRelation> getIncomingRelations ()
+  public List <IDirectedGraphRelation> getIncomingRelations ()
   {
     return m_aIncoming == null ? new ArrayList <IDirectedGraphRelation> ()
                               : ContainerHelper.newList (m_aIncoming.values ());
@@ -124,7 +125,7 @@ public class DirectedGraphNode extends AbstractGraphObject implements IDirectedG
 
   @Nonnull
   @ReturnsMutableCopy
-  public Collection <IDirectedGraphNode> getAllFromNodes ()
+  public Set <IDirectedGraphNode> getAllFromNodes ()
   {
     final Set <IDirectedGraphNode> ret = new HashSet <IDirectedGraphNode> ();
     if (m_aIncoming != null)
@@ -189,7 +190,7 @@ public class DirectedGraphNode extends AbstractGraphObject implements IDirectedG
 
   @Nonnull
   @ReturnsMutableCopy
-  public Collection <IDirectedGraphRelation> getOutgoingRelations ()
+  public List <IDirectedGraphRelation> getOutgoingRelations ()
   {
     return m_aOutgoing == null ? new ArrayList <IDirectedGraphRelation> ()
                               : ContainerHelper.newList (m_aOutgoing.values ());
@@ -197,7 +198,7 @@ public class DirectedGraphNode extends AbstractGraphObject implements IDirectedG
 
   @Nonnull
   @ReturnsMutableCopy
-  public Collection <IDirectedGraphNode> getAllToNodes ()
+  public Set <IDirectedGraphNode> getAllToNodes ()
   {
     final Set <IDirectedGraphNode> ret = new HashSet <IDirectedGraphNode> ();
     if (m_aOutgoing != null)
@@ -261,7 +262,7 @@ public class DirectedGraphNode extends AbstractGraphObject implements IDirectedG
   @ReturnsMutableCopy
   public Set <IDirectedGraphRelation> getAllRelations ()
   {
-    final Set <IDirectedGraphRelation> ret = new HashSet <IDirectedGraphRelation> ();
+    final Set <IDirectedGraphRelation> ret = new LinkedHashSet <IDirectedGraphRelation> ();
     if (m_aIncoming != null)
       ret.addAll (m_aIncoming.values ());
     if (m_aOutgoing != null)
@@ -273,7 +274,7 @@ public class DirectedGraphNode extends AbstractGraphObject implements IDirectedG
   @ReturnsMutableCopy
   public Set <IDirectedGraphNode> getAllRelatedNodes ()
   {
-    final Set <IDirectedGraphNode> ret = new HashSet <IDirectedGraphNode> ();
+    final Set <IDirectedGraphNode> ret = new LinkedHashSet <IDirectedGraphNode> ();
     if (m_aIncoming != null)
       for (final IDirectedGraphRelation aRelation : m_aIncoming.values ())
         ret.add (aRelation.getFrom ());

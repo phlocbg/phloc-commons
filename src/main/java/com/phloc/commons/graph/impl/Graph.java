@@ -17,11 +17,9 @@
  */
 package com.phloc.commons.graph.impl;
 
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -180,18 +178,19 @@ public class Graph implements IGraph
 
   @Nonnull
   @ReturnsMutableCopy
-  public Set <IGraphNode> getAllNodes ()
+  public Map <String, IGraphNode> getAllNodes ()
   {
-    return ContainerHelper.newOrderedSet (m_aNodes.values ());
+    return ContainerHelper.newOrderedMap (m_aNodes);
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public Set <IGraphRelation> getAllRelations ()
+  public Map <String, IGraphRelation> getAllRelations ()
   {
-    final Set <IGraphRelation> ret = new HashSet <IGraphRelation> ();
+    final Map <String, IGraphRelation> ret = new LinkedHashMap <String, IGraphRelation> ();
     for (final IGraphNode aNode : m_aNodes.values ())
-      ret.addAll (aNode.getAllRelations ());
+      for (final IGraphRelation aRelation : aNode.getAllRelations ())
+        ret.put (aRelation.getID (), aRelation);
     return ret;
   }
 

@@ -17,7 +17,8 @@
  */
 package com.phloc.commons.graph;
 
-import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -69,7 +70,7 @@ public interface IDirectedGraphNode extends IBaseGraphNode <IDirectedGraphNode, 
    */
   @Nonnull
   @ReturnsMutableCopy
-  Collection <IDirectedGraphRelation> getIncomingRelations ();
+  List <IDirectedGraphRelation> getIncomingRelations ();
 
   /**
    * Remove the passed relation from the set of incoming relations.
@@ -97,7 +98,7 @@ public interface IDirectedGraphNode extends IBaseGraphNode <IDirectedGraphNode, 
    */
   @Nonnull
   @ReturnsMutableCopy
-  Collection <IDirectedGraphNode> getAllFromNodes ();
+  Set <IDirectedGraphNode> getAllFromNodes ();
 
   /**
    * Find the incoming relation from the passed node to this node.
@@ -146,7 +147,7 @@ public interface IDirectedGraphNode extends IBaseGraphNode <IDirectedGraphNode, 
    */
   @Nonnull
   @ReturnsMutableCopy
-  Collection <IDirectedGraphRelation> getOutgoingRelations ();
+  List <IDirectedGraphRelation> getOutgoingRelations ();
 
   /**
    * Remove the passed relation from the set of outgoing relations.
@@ -174,7 +175,7 @@ public interface IDirectedGraphNode extends IBaseGraphNode <IDirectedGraphNode, 
    */
   @Nonnull
   @ReturnsMutableCopy
-  Collection <IDirectedGraphNode> getAllToNodes ();
+  Set <IDirectedGraphNode> getAllToNodes ();
 
   /**
    * Find the incoming relation from this node to the passed node.
