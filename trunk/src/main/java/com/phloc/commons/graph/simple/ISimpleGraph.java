@@ -19,6 +19,7 @@ package com.phloc.commons.graph.simple;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.graph.IGraph;
 import com.phloc.commons.graph.IGraphRelation;
 
@@ -42,4 +43,22 @@ public interface ISimpleGraph extends IGraph
    */
   @Nonnull
   IGraphRelation createRelation (@Nonnull String sFromNodeID, @Nonnull String sToNodeID);
+
+  /**
+   * Create a new relation from the passed fromNode to the toNode. Internally
+   * the IDs are resolved to the respective graph nodes and later on calls
+   * {@link #createRelation(com.phloc.commons.graph.IGraphNode, com.phloc.commons.graph.IGraphNode)}
+   * 
+   * @param sRelationID
+   *        The relation ID to be used. May not be <code>null</code>.
+   * @param sFromNodeID
+   *        The from-node ID. May not be <code>null</code>.
+   * @param sToNodeID
+   *        The to-node ID. May not be <code>null</code>.
+   * @return The created graph relation and never <code>null</code>.
+   */
+  @Nonnull
+  IGraphRelation createRelation (@Nonnull @Nonempty String sRelationID,
+                                 @Nonnull String sFromNodeID,
+                                 @Nonnull String sToNodeID);
 }
