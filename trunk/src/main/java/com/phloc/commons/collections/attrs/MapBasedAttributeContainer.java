@@ -100,6 +100,24 @@ public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContain
   }
 
   @Nonnull
+  public EChange setAttribute (@Nonnull final String sName, final int nValue)
+  {
+    return setAttribute (sName, Integer.valueOf (nValue));
+  }
+
+  @Nonnull
+  public EChange setAttribute (@Nonnull final String sName, final long nValue)
+  {
+    return setAttribute (sName, Long.valueOf (nValue));
+  }
+
+  @Nonnull
+  public EChange setAttribute (@Nonnull final String sName, final double dValue)
+  {
+    return setAttribute (sName, Double.valueOf (dValue));
+  }
+
+  @Nonnull
   public EChange removeAttribute (@Nullable final String sName)
   {
     // Returned value may be null

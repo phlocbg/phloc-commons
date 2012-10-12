@@ -47,6 +47,51 @@ public interface IAttributeContainer extends IReadonlyAttributeContainer, IClear
   EChange setAttribute (@Nonnull String sName, @Nullable Object aValue);
 
   /**
+   * Set/overwrite an in attribute value. This is a shortcut for
+   * <code>setAttribute (sName, Integer.valueOf (nValue));</code>
+   * 
+   * @param sName
+   *        The name of the attribute. May not be <code>null</code>.
+   * @param nValue
+   *        The value of the attribute.
+   * @return {@link EChange#CHANGED} if something changed,
+   *         {@link EChange#UNCHANGED} otherwise.
+   * @see #removeAttribute(String)
+   */
+  @Nonnull
+  EChange setAttribute (@Nonnull String sName, int nValue);
+
+  /**
+   * Set/overwrite an in attribute value. This is a shortcut for
+   * <code>setAttribute (sName, Long.valueOf (nValue));</code>
+   * 
+   * @param sName
+   *        The name of the attribute. May not be <code>null</code>.
+   * @param nValue
+   *        The value of the attribute.
+   * @return {@link EChange#CHANGED} if something changed,
+   *         {@link EChange#UNCHANGED} otherwise.
+   * @see #removeAttribute(String)
+   */
+  @Nonnull
+  EChange setAttribute (@Nonnull String sName, long nValue);
+
+  /**
+   * Set/overwrite an in attribute value. This is a shortcut for
+   * <code>setAttribute (sName, Double.valueOf (nValue));</code>
+   * 
+   * @param sName
+   *        The name of the attribute. May not be <code>null</code>.
+   * @param dValue
+   *        The value of the attribute.
+   * @return {@link EChange#CHANGED} if something changed,
+   *         {@link EChange#UNCHANGED} otherwise.
+   * @see #removeAttribute(String)
+   */
+  @Nonnull
+  EChange setAttribute (@Nonnull String sName, double dValue);
+
+  /**
    * Remove the specified attribute from the container.
    * 
    * @param sName
