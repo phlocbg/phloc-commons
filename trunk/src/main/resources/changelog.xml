@@ -22,6 +22,11 @@
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
   <entry date="2012-10-12" category="api" action="add">
     <change>
+      <text locale="en">Added new methods IReadonlyAttributeContainer.getAttributeAsLong</text>
+    </change>
+  </entry>
+  <entry date="2012-10-12" category="api" action="add">
+    <change>
       <text locale="en">Added new methods IAttributeContainer.setAttribute with value types int, long and double</text>
     </change>
   </entry>
