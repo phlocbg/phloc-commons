@@ -224,18 +224,19 @@ public class DirectedGraph implements IDirectedGraph
 
   @Nonnull
   @ReturnsMutableCopy
-  public Set <IDirectedGraphNode> getAllNodes ()
+  public Map <String, IDirectedGraphNode> getAllNodes ()
   {
-    return ContainerHelper.newOrderedSet (m_aNodes.values ());
+    return ContainerHelper.newOrderedMap (m_aNodes);
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public Set <IDirectedGraphRelation> getAllRelations ()
+  public Map <String, IDirectedGraphRelation> getAllRelations ()
   {
-    final Set <IDirectedGraphRelation> ret = new HashSet <IDirectedGraphRelation> ();
+    final Map <String, IDirectedGraphRelation> ret = new LinkedHashMap <String, IDirectedGraphRelation> ();
     for (final IDirectedGraphNode aNode : m_aNodes.values ())
-      ret.addAll (aNode.getOutgoingRelations ());
+      for (final IDirectedGraphRelation aRelation : aNode.getOutgoingRelations ())
+        ret.put (aRelation.getID (), aRelation);
     return ret;
   }
 

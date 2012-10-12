@@ -79,7 +79,7 @@ public final class GraphVizUtils
     // It's a directed graph
     aSB.append ("graph{\n");
     aSB.append ("node[shape=box];");
-    for (final IGraphNode aGraphNode : aGraph.getAllNodes ())
+    for (final IGraphNode aGraphNode : aGraph.getAllNodes ().values ())
     {
       aSB.append (aGraphNode.getID ());
       if (StringHelper.hasText (sNodeLabelAttr))
@@ -92,7 +92,7 @@ public final class GraphVizUtils
       aSB.append (';');
     }
     aSB.append ('\n');
-    for (final IGraphRelation aGraphRelation : aGraph.getAllRelations ())
+    for (final IGraphRelation aGraphRelation : aGraph.getAllRelations ().values ())
     {
       final Iterator <IGraphNode> it = aGraphRelation.getAllConnectedNodes ().iterator ();
       aSB.append (it.next ().getID ()).append ("--").append (it.next ().getID ());
@@ -138,7 +138,7 @@ public final class GraphVizUtils
     // It's a directed graph
     aSB.append ("digraph{\n");
     aSB.append ("node[shape=box];");
-    for (final IDirectedGraphNode aGraphNode : aGraph.getAllNodes ())
+    for (final IDirectedGraphNode aGraphNode : aGraph.getAllNodes ().values ())
     {
       aSB.append (aGraphNode.getID ());
       if (StringHelper.hasText (sNodeLabelAttr))
@@ -151,7 +151,7 @@ public final class GraphVizUtils
       aSB.append (';');
     }
     aSB.append ('\n');
-    for (final IDirectedGraphRelation aGraphRelation : aGraph.getAllRelations ())
+    for (final IDirectedGraphRelation aGraphRelation : aGraph.getAllRelations ().values ())
     {
       aSB.append (aGraphRelation.getFromID ()).append ("->").append (aGraphRelation.getToID ());
       if (StringHelper.hasText (sRelationLabelAttr))

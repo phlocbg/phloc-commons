@@ -17,7 +17,7 @@
  */
 package com.phloc.commons.graph;
 
-import java.util.Set;
+import java.util.Map;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -54,7 +54,7 @@ public interface IReadonlyBaseGraph <N extends IBaseGraphNode <N, R>, R extends 
    */
   @Nonnull
   @ReturnsMutableCopy
-  Set <N> getAllNodes ();
+  Map <String, N> getAllNodes ();
 
   /**
    * @return A non-<code>null</code> collection of the relations in this graph,
@@ -62,7 +62,7 @@ public interface IReadonlyBaseGraph <N extends IBaseGraphNode <N, R>, R extends 
    */
   @Nonnull
   @ReturnsMutableCopy
-  Set <R> getAllRelations ();
+  Map <String, R> getAllRelations ();
 
   /**
    * Check if this graph contains cycles. An example for a cycle is e.g. if
