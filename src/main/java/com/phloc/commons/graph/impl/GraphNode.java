@@ -38,7 +38,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @NotThreadSafe
-public class GraphNode extends AbstractGraphObject implements IGraphNode
+public class GraphNode extends AbstractBaseGraphObject implements IGraphNode
 {
   private Map <String, IGraphRelation> m_aRelations;
 

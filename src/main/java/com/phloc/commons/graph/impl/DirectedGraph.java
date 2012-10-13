@@ -45,7 +45,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @NotThreadSafe
-public class DirectedGraph implements IDirectedGraph
+public class DirectedGraph extends AbstractBaseGraphObject implements IDirectedGraph
 {
   public static final boolean DEFAULT_CHANGING_CONNECTED_OBJECTS_ALLOWED = true;
 
@@ -54,11 +54,17 @@ public class DirectedGraph implements IDirectedGraph
   private boolean m_bIsChangingConnectedObjectsAllowed = DEFAULT_CHANGING_CONNECTED_OBJECTS_ALLOWED;
   private ETriState m_eCacheHasCycles = ETriState.UNDEFINED;
 
-  public DirectedGraph (@Nonnull final IDirectedGraphObjectFactory aFactory)
+  public DirectedGraph (@Nullable final String sID, @Nonnull final IDirectedGraphObjectFactory aFactory)
   {
+    super (sID);
     if (aFactory == null)
       throw new NullPointerException ("factory");
     m_aFactory = aFactory;
+  }
+
+  public final boolean isDirected ()
+  {
+    return true;
   }
 
   private void _invalidateCache ()
@@ -240,6 +246,7 @@ public class DirectedGraph implements IDirectedGraph
     return ret;
   }
 
+  @Override
   @Nonnull
   public EChange clear ()
   {

@@ -41,7 +41,7 @@ public class SimpleGraph extends Graph implements ISimpleGraph
 
   public SimpleGraph (@Nonnull final IGraphObjectFactory aFactory)
   {
-    super (aFactory);
+    super (null, aFactory);
   }
 
   @Nonnull
