@@ -105,7 +105,7 @@ public class DirectedGraphNode extends AbstractGraphObject implements IDirectedG
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <IDirectedGraphRelation> getIncomingRelations ()
+  public List <IDirectedGraphRelation> getAllIncomingRelations ()
   {
     return m_aIncoming == null ? new ArrayList <IDirectedGraphRelation> ()
                               : ContainerHelper.newList (m_aIncoming.values ());
@@ -190,7 +190,7 @@ public class DirectedGraphNode extends AbstractGraphObject implements IDirectedG
 
   @Nonnull
   @ReturnsMutableCopy
-  public List <IDirectedGraphRelation> getOutgoingRelations ()
+  public List <IDirectedGraphRelation> getAllOutgoingRelations ()
   {
     return m_aOutgoing == null ? new ArrayList <IDirectedGraphRelation> ()
                               : ContainerHelper.newList (m_aOutgoing.values ());
@@ -272,6 +272,18 @@ public class DirectedGraphNode extends AbstractGraphObject implements IDirectedG
 
   @Nonnull
   @ReturnsMutableCopy
+  public Set <String> getAllRelationIDs ()
+  {
+    final Set <String> ret = new LinkedHashSet <String> ();
+    if (m_aIncoming != null)
+      ret.addAll (m_aIncoming.keySet ());
+    if (m_aOutgoing != null)
+      ret.addAll (m_aOutgoing.keySet ());
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
   public Set <IDirectedGraphNode> getAllRelatedNodes ()
   {
     final Set <IDirectedGraphNode> ret = new LinkedHashSet <IDirectedGraphNode> ();
@@ -281,6 +293,20 @@ public class DirectedGraphNode extends AbstractGraphObject implements IDirectedG
     if (m_aOutgoing != null)
       for (final IDirectedGraphRelation aRelation : m_aOutgoing.values ())
         ret.add (aRelation.getTo ());
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public Set <String> getAllRelatedNodeIDs ()
+  {
+    final Set <String> ret = new LinkedHashSet <String> ();
+    if (m_aIncoming != null)
+      for (final IDirectedGraphRelation aRelation : m_aIncoming.values ())
+        ret.add (aRelation.getFromID ());
+    if (m_aOutgoing != null)
+      for (final IDirectedGraphRelation aRelation : m_aOutgoing.values ())
+        ret.add (aRelation.getToID ());
     return ret;
   }
 

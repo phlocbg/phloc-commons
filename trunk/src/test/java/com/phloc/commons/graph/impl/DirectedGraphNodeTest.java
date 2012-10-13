@@ -91,7 +91,7 @@ public final class DirectedGraphNodeTest
     assertFalse (nt.isConnectedWith (nf));
     assertFalse (nt.isConnectedWith (nt));
 
-    Iterator <IDirectedGraphRelation> it = nf.getOutgoingRelations ().iterator ();
+    Iterator <IDirectedGraphRelation> it = nf.getAllOutgoingRelations ().iterator ();
     assertNotNull (it);
     assertTrue (it.hasNext ());
     assertTrue (it.hasNext ());
@@ -99,17 +99,17 @@ public final class DirectedGraphNodeTest
     assertFalse (it.hasNext ());
     assertFalse (it.hasNext ());
 
-    it = nf.getIncomingRelations ().iterator ();
+    it = nf.getAllIncomingRelations ().iterator ();
     assertNotNull (it);
     assertFalse (it.hasNext ());
     assertFalse (it.hasNext ());
 
-    it = nt.getIncomingRelations ().iterator ();
+    it = nt.getAllIncomingRelations ().iterator ();
     assertNotNull (it);
     assertFalse (it.hasNext ());
     assertFalse (it.hasNext ());
 
-    it = nt.getOutgoingRelations ().iterator ();
+    it = nt.getAllOutgoingRelations ().iterator ();
     assertNotNull (it);
     assertFalse (it.hasNext ());
     assertFalse (it.hasNext ());
@@ -121,7 +121,7 @@ public final class DirectedGraphNodeTest
     final DirectedGraphNode nf = new DirectedGraphNode ();
     final DirectedGraphNode nt = new DirectedGraphNode ();
     nf.addOutgoingRelation (new DirectedGraphRelation (nf, nt));
-    Iterator <IDirectedGraphRelation> it = nf.getOutgoingRelations ().iterator ();
+    Iterator <IDirectedGraphRelation> it = nf.getAllOutgoingRelations ().iterator ();
     assertNotNull (it);
     assertTrue (it.hasNext ());
     assertTrue (it.hasNext ());
@@ -129,17 +129,17 @@ public final class DirectedGraphNodeTest
     assertFalse (it.hasNext ());
     assertFalse (it.hasNext ());
 
-    it = nf.getIncomingRelations ().iterator ();
+    it = nf.getAllIncomingRelations ().iterator ();
     assertNotNull (it);
     assertFalse (it.hasNext ());
     assertFalse (it.hasNext ());
 
-    it = nt.getIncomingRelations ().iterator ();
+    it = nt.getAllIncomingRelations ().iterator ();
     assertNotNull (it);
     assertFalse (it.hasNext ());
     assertFalse (it.hasNext ());
 
-    it = nt.getOutgoingRelations ().iterator ();
+    it = nt.getAllOutgoingRelations ().iterator ();
     assertNotNull (it);
     assertFalse (it.hasNext ());
     assertFalse (it.hasNext ());
@@ -151,17 +151,17 @@ public final class DirectedGraphNodeTest
     final DirectedGraphNode nf = new DirectedGraphNode ();
     final DirectedGraphNode nt = new DirectedGraphNode ();
     nt.addIncomingRelation (new DirectedGraphRelation (nf, nt));
-    Iterator <IDirectedGraphRelation> it = nf.getOutgoingRelations ().iterator ();
+    Iterator <IDirectedGraphRelation> it = nf.getAllOutgoingRelations ().iterator ();
     assertNotNull (it);
     assertFalse (it.hasNext ());
     assertFalse (it.hasNext ());
 
-    it = nf.getIncomingRelations ().iterator ();
+    it = nf.getAllIncomingRelations ().iterator ();
     assertNotNull (it);
     assertFalse (it.hasNext ());
     assertFalse (it.hasNext ());
 
-    it = nt.getIncomingRelations ().iterator ();
+    it = nt.getAllIncomingRelations ().iterator ();
     assertNotNull (it);
     assertTrue (it.hasNext ());
     assertTrue (it.hasNext ());
@@ -169,7 +169,7 @@ public final class DirectedGraphNodeTest
     assertFalse (it.hasNext ());
     assertFalse (it.hasNext ());
 
-    it = nt.getOutgoingRelations ().iterator ();
+    it = nt.getAllOutgoingRelations ().iterator ();
     assertNotNull (it);
     assertFalse (it.hasNext ());
     assertFalse (it.hasNext ());
@@ -181,17 +181,17 @@ public final class DirectedGraphNodeTest
     final DirectedGraphNode nf = new DirectedGraphNode ();
     final DirectedGraphNode nt = new DirectedGraphNode ();
     nt.addIncomingRelation (new DirectedGraphRelation (nf, nt));
-    Iterator <IDirectedGraphRelation> it = nf.getOutgoingRelations ().iterator ();
+    Iterator <IDirectedGraphRelation> it = nf.getAllOutgoingRelations ().iterator ();
     assertNotNull (it);
     assertFalse (it.hasNext ());
     assertFalse (it.hasNext ());
 
-    it = nf.getIncomingRelations ().iterator ();
+    it = nf.getAllIncomingRelations ().iterator ();
     assertNotNull (it);
     assertFalse (it.hasNext ());
     assertFalse (it.hasNext ());
 
-    it = nt.getIncomingRelations ().iterator ();
+    it = nt.getAllIncomingRelations ().iterator ();
     assertNotNull (it);
     assertTrue (it.hasNext ());
     assertTrue (it.hasNext ());
@@ -199,7 +199,7 @@ public final class DirectedGraphNodeTest
     assertFalse (it.hasNext ());
     assertFalse (it.hasNext ());
 
-    it = nt.getOutgoingRelations ().iterator ();
+    it = nt.getAllOutgoingRelations ().iterator ();
     assertNotNull (it);
     assertFalse (it.hasNext ());
     assertFalse (it.hasNext ());
@@ -210,7 +210,7 @@ public final class DirectedGraphNodeTest
   {
     final DirectedGraphNode nf = new DirectedGraphNode ();
     nf.addOutgoingRelation (new DirectedGraphRelation (nf, nf));
-    Iterator <IDirectedGraphRelation> it = nf.getOutgoingRelations ().iterator ();
+    Iterator <IDirectedGraphRelation> it = nf.getAllOutgoingRelations ().iterator ();
     assertNotNull (it);
     assertTrue (it.hasNext ());
     assertTrue (it.hasNext ());
@@ -218,7 +218,7 @@ public final class DirectedGraphNodeTest
     assertFalse (it.hasNext ());
     assertFalse (it.hasNext ());
 
-    it = nf.getIncomingRelations ().iterator ();
+    it = nf.getAllIncomingRelations ().iterator ();
     assertNotNull (it);
     assertFalse (it.hasNext ());
     assertFalse (it.hasNext ());

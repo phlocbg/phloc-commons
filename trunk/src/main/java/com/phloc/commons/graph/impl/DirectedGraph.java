@@ -235,7 +235,7 @@ public class DirectedGraph implements IDirectedGraph
   {
     final Map <String, IDirectedGraphRelation> ret = new LinkedHashMap <String, IDirectedGraphRelation> ();
     for (final IDirectedGraphNode aNode : m_aNodes.values ())
-      for (final IDirectedGraphRelation aRelation : aNode.getOutgoingRelations ())
+      for (final IDirectedGraphRelation aRelation : aNode.getAllOutgoingRelations ())
         ret.put (aRelation.getID (), aRelation);
     return ret;
   }
@@ -280,10 +280,10 @@ public class DirectedGraph implements IDirectedGraph
   {
     for (final IDirectedGraphNode aNode : m_aNodes.values ())
     {
-      for (final IDirectedGraphRelation aRelation : aNode.getIncomingRelations ())
+      for (final IDirectedGraphRelation aRelation : aNode.getAllIncomingRelations ())
         if (!m_aNodes.containsKey (aRelation.getFromID ()))
           return false;
-      for (final IDirectedGraphRelation aRelation : aNode.getOutgoingRelations ())
+      for (final IDirectedGraphRelation aRelation : aNode.getAllOutgoingRelations ())
         if (!m_aNodes.containsKey (aRelation.getToID ()))
           return false;
     }
