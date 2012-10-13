@@ -21,7 +21,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
@@ -33,10 +32,8 @@ import com.phloc.commons.graph.IGraphNode;
 import com.phloc.commons.graph.IGraphObjectFactory;
 import com.phloc.commons.graph.IGraphRelation;
 import com.phloc.commons.graph.iterate.GraphIterator;
-import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.state.ETriState;
-import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * A simple graph object that bidirectionally links graph nodes.
@@ -44,13 +41,9 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @NotThreadSafe
-public class Graph extends AbstractBaseGraphObject implements IGraph
+public class Graph extends AbstractBaseGraph <IGraphNode, IGraphRelation> implements IGraph
 {
-  public static final boolean DEFAULT_CHANGING_CONNECTED_OBJECTS_ALLOWED = true;
-
   private final IGraphObjectFactory m_aFactory;
-  private final Map <String, IGraphNode> m_aNodes = new LinkedHashMap <String, IGraphNode> ();
-  private boolean m_bIsChangingConnectedObjectsAllowed = DEFAULT_CHANGING_CONNECTED_OBJECTS_ALLOWED;
   private ETriState m_eCacheHasCycles = ETriState.UNDEFINED;
 
   public Graph (@Nullable final String sID, @Nonnull final IGraphObjectFactory aFactory)
@@ -70,16 +63,6 @@ public class Graph extends AbstractBaseGraphObject implements IGraph
   {
     // Reset the "has cycles" cached value
     m_eCacheHasCycles = ETriState.UNDEFINED;
-  }
-
-  public void setChangingConnectedObjectsAllowed (final boolean bIsChangingConnectedObjectsAllowed)
-  {
-    m_bIsChangingConnectedObjectsAllowed = bIsChangingConnectedObjectsAllowed;
-  }
-
-  public boolean isChangingConnectedObjectsAllowed ()
-  {
-    return m_bIsChangingConnectedObjectsAllowed;
   }
 
   @Nonnull
@@ -172,25 +155,6 @@ public class Graph extends AbstractBaseGraphObject implements IGraph
     return ret;
   }
 
-  @Nullable
-  public IGraphNode getNodeOfID (@Nullable final String sID)
-  {
-    return m_aNodes.get (sID);
-  }
-
-  @Nonnegative
-  public int getNodeCount ()
-  {
-    return m_aNodes.size ();
-  }
-
-  @Nonnull
-  @ReturnsMutableCopy
-  public Map <String, IGraphNode> getAllNodes ()
-  {
-    return ContainerHelper.newOrderedMap (m_aNodes);
-  }
-
   @Nonnull
   @ReturnsMutableCopy
   public Map <String, IGraphRelation> getAllRelations ()
@@ -258,25 +222,12 @@ public class Graph extends AbstractBaseGraphObject implements IGraph
   @Override
   public boolean equals (final Object o)
   {
-    if (o == this)
-      return true;
-    if (!(o instanceof Graph))
-      return false;
-    // Do not use m_eHasCycles because this is just a state variable
-    final Graph rhs = (Graph) o;
-    return m_aNodes.equals (rhs.m_aNodes);
+    return super.equals (o);
   }
 
   @Override
   public int hashCode ()
   {
-    // Do not use m_eHasCycles because this is just a state variable
-    return new HashCodeGenerator (this).append (m_aNodes).getHashCode ();
-  }
-
-  @Override
-  public String toString ()
-  {
-    return new ToStringGenerator (this).append ("nodes", m_aNodes).append ("hasCycles", m_eCacheHasCycles).toString ();
+    return super.hashCode ();
   }
 }

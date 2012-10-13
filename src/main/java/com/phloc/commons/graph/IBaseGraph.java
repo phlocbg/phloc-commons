@@ -21,7 +21,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.state.EChange;
-import com.phloc.commons.state.IClearable;
 
 /**
  * Interface for a modifiable graph.
@@ -29,8 +28,7 @@ import com.phloc.commons.state.IClearable;
  * @author philip
  */
 public interface IBaseGraph <N extends IBaseGraphNode <N, R>, R extends IBaseGraphRelation <N, R>> extends
-                                                                                                   IReadonlyBaseGraph <N, R>,
-                                                                                                   IClearable
+                                                                                                   IReadonlyBaseGraph <N, R>
 {
   /**
    * Allow or disallow that {@link #addNode(IBaseGraphNode)} and
