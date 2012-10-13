@@ -74,10 +74,26 @@ public interface IBaseGraphNode <N extends IBaseGraphNode <N, R>, R extends IBas
   Set <R> getAllRelations ();
 
   /**
-   * @return A container with all nodes directly connected to this node
+   * @return A container with the IDs of all incoming and outgoing relations.
+   *         Never <code>null</code>.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  Set <String> getAllRelationIDs ();
+
+  /**
+   * @return A container with all nodes directly connected to this node's
    *         relations. Never <code>null</code>.
    */
   @Nonnull
   @ReturnsMutableCopy
   Set <N> getAllRelatedNodes ();
+
+  /**
+   * @return A container with the IDs of all nodes directly connected to this
+   *         node's relations. Never <code>null</code>.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  Set <String> getAllRelatedNodeIDs ();
 }

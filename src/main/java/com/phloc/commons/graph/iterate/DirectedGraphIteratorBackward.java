@@ -58,7 +58,7 @@ public final class DirectedGraphIteratorBackward implements IIterableIterator <I
       if (aNode == null)
         throw new NullPointerException ("node");
       m_aNode = aNode;
-      m_aIncomingIt = aNode.getIncomingRelations ().iterator ();
+      m_aIncomingIt = aNode.getAllIncomingRelations ().iterator ();
     }
 
     @Nonnull

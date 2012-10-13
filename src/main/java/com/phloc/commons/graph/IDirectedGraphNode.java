@@ -70,7 +70,7 @@ public interface IDirectedGraphNode extends IBaseGraphNode <IDirectedGraphNode, 
    */
   @Nonnull
   @ReturnsMutableCopy
-  List <IDirectedGraphRelation> getIncomingRelations ();
+  List <IDirectedGraphRelation> getAllIncomingRelations ();
 
   /**
    * Remove the passed relation from the set of incoming relations.
@@ -147,7 +147,7 @@ public interface IDirectedGraphNode extends IBaseGraphNode <IDirectedGraphNode, 
    */
   @Nonnull
   @ReturnsMutableCopy
-  List <IDirectedGraphRelation> getOutgoingRelations ();
+  List <IDirectedGraphRelation> getAllOutgoingRelations ();
 
   /**
    * Remove the passed relation from the set of outgoing relations.

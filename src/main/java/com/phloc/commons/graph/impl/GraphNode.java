@@ -105,12 +105,33 @@ public class GraphNode extends AbstractGraphObject implements IGraphNode
 
   @Nonnull
   @ReturnsMutableCopy
+  public Set <String> getAllRelationIDs ()
+  {
+    final Set <String> ret = new LinkedHashSet <String> ();
+    if (m_aRelations != null)
+      ret.addAll (m_aRelations.keySet ());
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
   public Set <IGraphNode> getAllRelatedNodes ()
   {
     final Set <IGraphNode> ret = new LinkedHashSet <IGraphNode> ();
     if (m_aRelations != null)
       for (final IGraphRelation aRelation : m_aRelations.values ())
         ret.addAll (aRelation.getAllConnectedNodes ());
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public Set <String> getAllRelatedNodeIDs ()
+  {
+    final Set <String> ret = new LinkedHashSet <String> ();
+    if (m_aRelations != null)
+      for (final IGraphRelation aRelation : m_aRelations.values ())
+        ret.addAll (aRelation.getAllConnectedNodeIDs ());
     return ret;
   }
 
