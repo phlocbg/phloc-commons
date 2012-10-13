@@ -46,7 +46,7 @@ public final class ThreadDeadlockDetectionTimer
    * quickly.
    */
   private static final long DEFAULT_DEADLOCK_CHECK_PERIOD = 10 * CGlobal.MILLISECONDS_PER_SECOND;
-  static final Logger s_aLogger = LoggerFactory.getLogger (ThreadDeadlockDetectionTimer.class);
+  private static final Logger s_aLogger = LoggerFactory.getLogger (ThreadDeadlockDetectionTimer.class);
 
   private final ThreadDeadlockDetector m_aTLD = new ThreadDeadlockDetector ();
   private final TimerTask m_aTimerTask;

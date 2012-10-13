@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXNotRecognizedException;
 import org.xml.sax.SAXNotSupportedException;
 
+import com.phloc.commons.annotations.CodingStyleguideUnaware;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.lang.EnumHelper;
 import com.phloc.commons.name.IHasName;
@@ -245,6 +246,7 @@ public enum EXMLParserFeature implements IHasName
 
   private final EXMLParserFeatureType m_eType;
   private final String m_sName;
+  @CodingStyleguideUnaware
   private boolean m_bWarnedOnce = false;
 
   private EXMLParserFeature (@Nonnull final EXMLParserFeatureType eType, @Nonnull @Nonempty final String sName)
