@@ -52,6 +52,11 @@ public class GraphNode extends AbstractGraphObject implements IGraphNode
     super (sID);
   }
 
+  public final boolean isDirected ()
+  {
+    return false;
+  }
+
   @Nonnull
   public EChange addRelation (@Nullable final IGraphRelation aRelation)
   {
@@ -59,9 +64,15 @@ public class GraphNode extends AbstractGraphObject implements IGraphNode
       return EChange.UNCHANGED;
     if (!aRelation.getAllConnectedNodes ().contains (this))
       throw new IllegalArgumentException ("Relation is suitable for this node!");
+
+    final String sRelationID = aRelation.getID ();
     if (m_aRelations == null)
       m_aRelations = new LinkedHashMap <String, IGraphRelation> ();
-    m_aRelations.put (aRelation.getID (), aRelation);
+    else
+      if (m_aRelations.containsKey (sRelationID))
+        return EChange.UNCHANGED;
+
+    m_aRelations.put (sRelationID, aRelation);
     return EChange.CHANGED;
   }
 
@@ -82,9 +93,11 @@ public class GraphNode extends AbstractGraphObject implements IGraphNode
   public IGraphRelation getRelation (@Nullable final IGraphNode aNode)
   {
     if (m_aRelations != null && aNode != null && aNode != this)
+    {
       for (final IGraphRelation aRelation : m_aRelations.values ())
         if (aRelation.isRelatedTo (aNode))
           return aRelation;
+    }
     return null;
   }
 

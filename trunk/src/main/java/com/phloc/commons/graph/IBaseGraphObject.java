@@ -25,7 +25,17 @@ import com.phloc.commons.id.IHasID;
  * 
  * @author philip
  */
-public interface IGraphObject extends IHasID <String>, IAttributeContainer
+public interface IBaseGraphObject extends IHasID <String>, IAttributeContainer
 {
-  /* empty */
+  /**
+   * Check if the object is directed or undirected. Directed nodes must
+   * implement {@link IDirectedGraphNode} whereas undirected relations must
+   * implement {@link IGraphNode}. Directed relations must implement
+   * {@link IDirectedGraphRelation} whereas undirected relations must implement
+   * {@link IGraphRelation}.
+   * 
+   * @return <code>true</code> if it is a directed object "from" and "to"),
+   *         <code>false</code> if it is an undirected object.
+   */
+  boolean isDirected ();
 }

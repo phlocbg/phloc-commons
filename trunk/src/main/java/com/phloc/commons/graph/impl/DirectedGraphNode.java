@@ -58,6 +58,11 @@ public class DirectedGraphNode extends AbstractGraphObject implements IDirectedG
     super (sID);
   }
 
+  public final boolean isDirected ()
+  {
+    return true;
+  }
+
   public void addIncomingRelation (@Nonnull final IDirectedGraphRelation aNewRelation)
   {
     if (aNewRelation == null)

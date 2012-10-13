@@ -23,7 +23,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.collections.attrs.MapBasedAttributeContainer;
-import com.phloc.commons.graph.IGraphObject;
+import com.phloc.commons.graph.IBaseGraphObject;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
@@ -34,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @NotThreadSafe
-public abstract class AbstractGraphObject extends MapBasedAttributeContainer implements IGraphObject
+public abstract class AbstractGraphObject extends MapBasedAttributeContainer implements IBaseGraphObject
 {
   private final String m_sID;
 

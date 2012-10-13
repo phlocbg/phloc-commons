@@ -130,9 +130,11 @@ public class Graph implements IGraph
   @Nonnull
   private IGraphRelation _connect (@Nonnull final IGraphRelation aRelation)
   {
+    EChange eChange = EChange.UNCHANGED;
     for (final IGraphNode aNode : aRelation.getAllConnectedNodes ())
-      aNode.addRelation (aRelation);
-    _invalidateCache ();
+      eChange = eChange.or (aNode.addRelation (aRelation));
+    if (eChange.isChanged ())
+      _invalidateCache ();
     return aRelation;
   }
 
