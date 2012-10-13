@@ -37,7 +37,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @Immutable
-public class GraphRelation extends AbstractGraphObject implements IGraphRelation
+public class GraphRelation extends AbstractBaseGraphObject implements IGraphRelation
 {
   private final Set <IGraphNode> m_aNodes = new HashSet <IGraphNode> ();
 

@@ -37,7 +37,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @Immutable
-public class DirectedGraphRelation extends AbstractGraphObject implements IDirectedGraphRelation
+public class DirectedGraphRelation extends AbstractBaseGraphObject implements IDirectedGraphRelation
 {
   private final IDirectedGraphNode m_aFrom;
   private final IDirectedGraphNode m_aTo;

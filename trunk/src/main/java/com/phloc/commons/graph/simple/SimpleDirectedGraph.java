@@ -41,7 +41,7 @@ public class SimpleDirectedGraph extends DirectedGraph implements ISimpleDirecte
 
   public SimpleDirectedGraph (@Nonnull final IDirectedGraphObjectFactory aFactory)
   {
-    super (aFactory);
+    super (null, aFactory);
   }
 
   @Nonnull

@@ -30,7 +30,8 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
  * 
  * @author philip
  */
-public interface IReadonlyBaseGraph <N extends IBaseGraphNode <N, R>, R extends IBaseGraphRelation <N, R>>
+public interface IReadonlyBaseGraph <N extends IBaseGraphNode <N, R>, R extends IBaseGraphRelation <N, R>> extends
+                                                                                                           IBaseGraphObject
 {
   /**
    * @return The number of nodes currently in the graph. Always &ge; 0.

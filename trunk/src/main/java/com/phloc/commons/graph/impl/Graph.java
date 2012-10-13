@@ -44,7 +44,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @NotThreadSafe
-public class Graph implements IGraph
+public class Graph extends AbstractBaseGraphObject implements IGraph
 {
   public static final boolean DEFAULT_CHANGING_CONNECTED_OBJECTS_ALLOWED = true;
 
@@ -53,11 +53,17 @@ public class Graph implements IGraph
   private boolean m_bIsChangingConnectedObjectsAllowed = DEFAULT_CHANGING_CONNECTED_OBJECTS_ALLOWED;
   private ETriState m_eCacheHasCycles = ETriState.UNDEFINED;
 
-  public Graph (@Nonnull final IGraphObjectFactory aFactory)
+  public Graph (@Nullable final String sID, @Nonnull final IGraphObjectFactory aFactory)
   {
+    super (sID);
     if (aFactory == null)
       throw new NullPointerException ("factory");
     m_aFactory = aFactory;
+  }
+
+  public final boolean isDirected ()
+  {
+    return false;
   }
 
   private void _invalidateCache ()
@@ -196,6 +202,7 @@ public class Graph implements IGraph
     return ret;
   }
 
+  @Override
   @Nonnull
   public EChange clear ()
   {

@@ -43,7 +43,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  */
 @NotThreadSafe
-public class DirectedGraphNode extends AbstractGraphObject implements IDirectedGraphNode
+public class DirectedGraphNode extends AbstractBaseGraphObject implements IDirectedGraphNode
 {
   private Map <String, IDirectedGraphRelation> m_aIncoming;
   private Map <String, IDirectedGraphRelation> m_aOutgoing;
