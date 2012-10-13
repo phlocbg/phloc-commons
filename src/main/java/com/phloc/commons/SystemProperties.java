@@ -154,6 +154,12 @@ public final class SystemProperties
   }
 
   @Nullable
+  public static String getJavaLibraryPath ()
+  {
+    return getPropertyValue ("java.library.path");
+  }
+
+  @Nullable
   public static String getOsName ()
   {
     return getPropertyValue ("os.name");
