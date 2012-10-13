@@ -77,7 +77,7 @@ public final class GraphVizUtils
 
     final StringBuilder aSB = new StringBuilder ();
     // It's a directed graph
-    aSB.append ("graph{\n");
+    aSB.append ("graph ").append (aGraph.getID ()).append ("{\n");
     aSB.append ("node[shape=box];");
     for (final IGraphNode aGraphNode : aGraph.getAllNodes ().values ())
     {
@@ -136,7 +136,7 @@ public final class GraphVizUtils
 
     final StringBuilder aSB = new StringBuilder ();
     // It's a directed graph
-    aSB.append ("digraph{\n");
+    aSB.append ("digraph ").append (aGraph.getID ()).append ("{\n");
     aSB.append ("node[shape=box];");
     for (final IDirectedGraphNode aGraphNode : aGraph.getAllNodes ().values ())
     {
