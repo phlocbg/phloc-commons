@@ -57,7 +57,6 @@ public class GraphRelation extends AbstractGraphObject implements IGraphRelation
     m_aNodes.add (aTo);
   }
 
-  @Nonnull
   public boolean isRelatedTo (@Nullable final IGraphNode aNode)
   {
     return m_aNodes.contains (aNode);

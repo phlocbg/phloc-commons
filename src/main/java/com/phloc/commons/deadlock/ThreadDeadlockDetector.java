@@ -29,17 +29,21 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.state.EChange;
 
 /**
  * This is the main dead lock detector, based on JMX {@link ThreadMXBean}
- *
+ * 
  * @author philip
  */
 @NotThreadSafe
 public final class ThreadDeadlockDetector
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (ThreadDeadlockDetector.class);
   private final ThreadMXBean m_aMBean = ManagementFactory.getThreadMXBean ();
   private final Set <IThreadDeadlockListener> m_aListeners = new CopyOnWriteArraySet <IThreadDeadlockListener> ();
 
@@ -78,9 +82,7 @@ public final class ThreadDeadlockDetector
         aListener.onDeadlockDetected (aThreads);
 
       if (m_aListeners.isEmpty ())
-        ThreadDeadlockDetectionTimer.s_aLogger.warn ("Found a deadlock of " +
-                                                     aThreads.length +
-                                                     " threads but no listeners are present!");
+        s_aLogger.warn ("Found a deadlock of " + aThreads.length + " threads but no listeners are present!");
     }
   }
 
