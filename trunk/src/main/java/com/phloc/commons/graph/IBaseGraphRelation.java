@@ -35,6 +35,17 @@ public interface IBaseGraphRelation <N extends IBaseGraphNode <N, R>, R extends 
                                                                                                            IGraphObject
 {
   /**
+   * Check if the relation is directed or undirected. Directed relations must
+   * implement {@link IDirectedGraphRelation} whereas undirected relations must
+   * implement {@link IGraphRelation}.
+   * 
+   * @return <code>true</code> if it is a directed relation (with a defined
+   *         "from" and "to"), <code>false</code> if it is an undirected
+   *         relation.
+   */
+  boolean isDirected ();
+
+  /**
    * Check if this relation is connected to the passed node.
    * 
    * @param aNode

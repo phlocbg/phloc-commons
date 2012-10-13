@@ -237,10 +237,17 @@ public class DirectedGraphNode extends AbstractGraphObject implements IDirectedG
   @Nullable
   public IDirectedGraphRelation getRelation (@Nullable final IDirectedGraphNode aNode)
   {
-    IDirectedGraphRelation ret = getIncomingRelationFrom (aNode);
-    if (ret == null)
-      ret = getOutgoingRelationTo (aNode);
-    return ret;
+    if (aNode == null)
+      return null;
+    final IDirectedGraphRelation aIncoming = getIncomingRelationFrom (aNode);
+    final IDirectedGraphRelation aOutgoing = getOutgoingRelationTo (aNode);
+    if (aIncoming != null && aOutgoing != null)
+      throw new IllegalStateException ("Both incoming and outgoing relations between node '" +
+                                       getID () +
+                                       "' and '" +
+                                       aNode.getID () +
+                                       "' exist!");
+    return aIncoming != null ? aIncoming : aOutgoing;
   }
 
   public boolean hasRelations ()

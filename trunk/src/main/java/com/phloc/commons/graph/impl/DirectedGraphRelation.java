@@ -60,6 +60,11 @@ public class DirectedGraphRelation extends AbstractGraphObject implements IDirec
     m_aTo = aTo;
   }
 
+  public final boolean isDirected ()
+  {
+    return true;
+  }
+
   public boolean isRelatedTo (@Nullable final IDirectedGraphNode aNode)
   {
     return m_aFrom.equals (aNode) || m_aTo.equals (aNode);
