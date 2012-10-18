@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.typeconvert.impl;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -39,6 +40,7 @@ import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.typeconvert.ITypeConverter;
 import com.phloc.commons.typeconvert.ITypeConverterRegistrarSPI;
 import com.phloc.commons.typeconvert.ITypeConverterRegistry;
+import com.phloc.commons.typeconvert.TypeConverter;
 import com.phloc.commons.typeconvert.rule.AbstractTypeConverterRuleAnySourceFixedDestination;
 
 /**
@@ -216,17 +218,6 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
         return ContainerHelper.newBooleanSortedSet ((boolean []) aSource);
       }
     });
-    aRegistry.registerTypeConverter (boolean [].class, String [].class, new ITypeConverter ()
-    {
-      public String [] convert (@Nonnull final Object aSource)
-      {
-        final boolean [] aArray = (boolean []) aSource;
-        final String [] ret = new String [aArray.length];
-        for (int i = 0; i < aArray.length; ++i)
-          ret[i] = Boolean.toString (aArray[i]);
-        return ret;
-      }
-    });
 
     // byte[]
     aRegistry.registerTypeConverter (byte [].class, String.class, new ITypeConverter ()
@@ -276,17 +267,6 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
       public Set <Byte> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newByteSortedSet ((byte []) aSource);
-      }
-    });
-    aRegistry.registerTypeConverter (byte [].class, String [].class, new ITypeConverter ()
-    {
-      public String [] convert (@Nonnull final Object aSource)
-      {
-        final byte [] aArray = (byte []) aSource;
-        final String [] ret = new String [aArray.length];
-        for (int i = 0; i < aArray.length; ++i)
-          ret[i] = Byte.toString (aArray[i]);
-        return ret;
       }
     });
 
@@ -340,17 +320,6 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
         return ContainerHelper.newCharSortedSet ((char []) aSource);
       }
     });
-    aRegistry.registerTypeConverter (char [].class, String [].class, new ITypeConverter ()
-    {
-      public String [] convert (@Nonnull final Object aSource)
-      {
-        final char [] aArray = (char []) aSource;
-        final String [] ret = new String [aArray.length];
-        for (int i = 0; i < aArray.length; ++i)
-          ret[i] = Character.toString (aArray[i]);
-        return ret;
-      }
-    });
 
     // double[]
     aRegistry.registerTypeConverter (double [].class, ArrayList.class, new ITypeConverter ()
@@ -386,17 +355,6 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
       public Set <Double> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newDoubleSortedSet ((double []) aSource);
-      }
-    });
-    aRegistry.registerTypeConverter (double [].class, String [].class, new ITypeConverter ()
-    {
-      public String [] convert (@Nonnull final Object aSource)
-      {
-        final double [] aArray = (double []) aSource;
-        final String [] ret = new String [aArray.length];
-        for (int i = 0; i < aArray.length; ++i)
-          ret[i] = Double.toString (aArray[i]);
-        return ret;
       }
     });
 
@@ -436,17 +394,6 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
         return ContainerHelper.newFloatSortedSet ((float []) aSource);
       }
     });
-    aRegistry.registerTypeConverter (float [].class, String [].class, new ITypeConverter ()
-    {
-      public String [] convert (@Nonnull final Object aSource)
-      {
-        final float [] aArray = (float []) aSource;
-        final String [] ret = new String [aArray.length];
-        for (int i = 0; i < aArray.length; ++i)
-          ret[i] = Float.toString (aArray[i]);
-        return ret;
-      }
-    });
 
     // int[]
     aRegistry.registerTypeConverter (int [].class, ArrayList.class, new ITypeConverter ()
@@ -482,17 +429,6 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
       public Set <Integer> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newIntSortedSet ((int []) aSource);
-      }
-    });
-    aRegistry.registerTypeConverter (int [].class, String [].class, new ITypeConverter ()
-    {
-      public String [] convert (@Nonnull final Object aSource)
-      {
-        final int [] aArray = (int []) aSource;
-        final String [] ret = new String [aArray.length];
-        for (int i = 0; i < aArray.length; ++i)
-          ret[i] = Integer.toString (aArray[i]);
-        return ret;
       }
     });
 
@@ -532,17 +468,6 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
         return ContainerHelper.newLongSortedSet ((long []) aSource);
       }
     });
-    aRegistry.registerTypeConverter (long [].class, String [].class, new ITypeConverter ()
-    {
-      public String [] convert (@Nonnull final Object aSource)
-      {
-        final long [] aArray = (long []) aSource;
-        final String [] ret = new String [aArray.length];
-        for (int i = 0; i < aArray.length; ++i)
-          ret[i] = Long.toString (aArray[i]);
-        return ret;
-      }
-    });
 
     // short[]
     aRegistry.registerTypeConverter (short [].class, ArrayList.class, new ITypeConverter ()
@@ -580,14 +505,346 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
         return ContainerHelper.newShortSortedSet ((short []) aSource);
       }
     });
-    aRegistry.registerTypeConverter (short [].class, String [].class, new ITypeConverter ()
+
+    // To array
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (boolean [].class)
     {
+      @Override
+      public boolean [] convert (@Nonnull final Object aSource)
+      {
+        boolean [] ret;
+        final Class <?> aSourceClass = aSource.getClass ();
+        if (aSourceClass.isArray ())
+        {
+          // Array to boolean[]
+          final int nLength = Array.getLength (aSource);
+          ret = new boolean [nLength];
+          for (int i = 0; i < nLength; ++i)
+          {
+            final Object aSourceElement = Array.get (aSource, i);
+            ret[i] = TypeConverter.convertToBoolean (aSourceElement);
+          }
+        }
+        else
+          if (aSource instanceof Collection <?>)
+          {
+            // Collection to boolean[]
+            final Collection <?> aSourceCollection = (Collection <?>) aSource;
+            ret = new boolean [aSourceCollection.size ()];
+            int nIndex = 0;
+            for (final Object aSourceElement : aSourceCollection)
+              ret[nIndex++] = TypeConverter.convertToBoolean (aSourceElement);
+          }
+          else
+          {
+            // Use object as is
+            ret = new boolean [1];
+            ret[0] = TypeConverter.convertToBoolean (aSource);
+          }
+        return ret;
+      }
+    });
+
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (byte [].class)
+    {
+      @Override
+      public byte [] convert (@Nonnull final Object aSource)
+      {
+        byte [] ret;
+        final Class <?> aSourceClass = aSource.getClass ();
+        if (aSourceClass.isArray ())
+        {
+          // Array to byte[]
+          final int nLength = Array.getLength (aSource);
+          ret = new byte [nLength];
+          for (int i = 0; i < nLength; ++i)
+          {
+            final Object aSourceElement = Array.get (aSource, i);
+            ret[i] = TypeConverter.convertToByte (aSourceElement);
+          }
+        }
+        else
+          if (aSource instanceof Collection <?>)
+          {
+            // Collection to byte[]
+            final Collection <?> aSourceCollection = (Collection <?>) aSource;
+            ret = new byte [aSourceCollection.size ()];
+            int nIndex = 0;
+            for (final Object aSourceElement : aSourceCollection)
+              ret[nIndex++] = TypeConverter.convertToByte (aSourceElement);
+          }
+          else
+          {
+            // Use object as is
+            ret = new byte [1];
+            ret[0] = TypeConverter.convertToByte (aSource);
+          }
+        return ret;
+      }
+    });
+
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (char [].class)
+    {
+      @Override
+      public char [] convert (@Nonnull final Object aSource)
+      {
+        char [] ret;
+        final Class <?> aSourceClass = aSource.getClass ();
+        if (aSourceClass.isArray ())
+        {
+          // Array to char[]
+          final int nLength = Array.getLength (aSource);
+          ret = new char [nLength];
+          for (int i = 0; i < nLength; ++i)
+          {
+            final Object aSourceElement = Array.get (aSource, i);
+            ret[i] = TypeConverter.convertToChar (aSourceElement);
+          }
+        }
+        else
+          if (aSource instanceof Collection <?>)
+          {
+            // Collection to char[]
+            final Collection <?> aSourceCollection = (Collection <?>) aSource;
+            ret = new char [aSourceCollection.size ()];
+            int nIndex = 0;
+            for (final Object aSourceElement : aSourceCollection)
+              ret[nIndex++] = TypeConverter.convertToChar (aSourceElement);
+          }
+          else
+          {
+            // Use object as is
+            ret = new char [1];
+            ret[0] = TypeConverter.convertToChar (aSource);
+          }
+        return ret;
+      }
+    });
+
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (double [].class)
+    {
+      @Override
+      public double [] convert (@Nonnull final Object aSource)
+      {
+        double [] ret;
+        final Class <?> aSourceClass = aSource.getClass ();
+        if (aSourceClass.isArray ())
+        {
+          // Array to double[]
+          final int nLength = Array.getLength (aSource);
+          ret = new double [nLength];
+          for (int i = 0; i < nLength; ++i)
+          {
+            final Object aSourceElement = Array.get (aSource, i);
+            ret[i] = TypeConverter.convertToDouble (aSourceElement);
+          }
+        }
+        else
+          if (aSource instanceof Collection <?>)
+          {
+            // Collection to double[]
+            final Collection <?> aSourceCollection = (Collection <?>) aSource;
+            ret = new double [aSourceCollection.size ()];
+            int nIndex = 0;
+            for (final Object aSourceElement : aSourceCollection)
+              ret[nIndex++] = TypeConverter.convertToDouble (aSourceElement);
+          }
+          else
+          {
+            // Use object as is
+            ret = new double [1];
+            ret[0] = TypeConverter.convertToDouble (aSource);
+          }
+        return ret;
+      }
+    });
+
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (float [].class)
+    {
+      @Override
+      public float [] convert (@Nonnull final Object aSource)
+      {
+        float [] ret;
+        final Class <?> aSourceClass = aSource.getClass ();
+        if (aSourceClass.isArray ())
+        {
+          // Array to float[]
+          final int nLength = Array.getLength (aSource);
+          ret = new float [nLength];
+          for (int i = 0; i < nLength; ++i)
+          {
+            final Object aSourceElement = Array.get (aSource, i);
+            ret[i] = TypeConverter.convertToFloat (aSourceElement);
+          }
+        }
+        else
+          if (aSource instanceof Collection <?>)
+          {
+            // Collection to float[]
+            final Collection <?> aSourceCollection = (Collection <?>) aSource;
+            ret = new float [aSourceCollection.size ()];
+            int nIndex = 0;
+            for (final Object aSourceElement : aSourceCollection)
+              ret[nIndex++] = TypeConverter.convertToFloat (aSourceElement);
+          }
+          else
+          {
+            // Use object as is
+            ret = new float [1];
+            ret[0] = TypeConverter.convertToFloat (aSource);
+          }
+        return ret;
+      }
+    });
+
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (int [].class)
+    {
+      @Override
+      public int [] convert (@Nonnull final Object aSource)
+      {
+        int [] ret;
+        final Class <?> aSourceClass = aSource.getClass ();
+        if (aSourceClass.isArray ())
+        {
+          // Array to int[]
+          final int nLength = Array.getLength (aSource);
+          ret = new int [nLength];
+          for (int i = 0; i < nLength; ++i)
+          {
+            final Object aSourceElement = Array.get (aSource, i);
+            ret[i] = TypeConverter.convertToInt (aSourceElement);
+          }
+        }
+        else
+          if (aSource instanceof Collection <?>)
+          {
+            // Collection to int[]
+            final Collection <?> aSourceCollection = (Collection <?>) aSource;
+            ret = new int [aSourceCollection.size ()];
+            int nIndex = 0;
+            for (final Object aSourceElement : aSourceCollection)
+              ret[nIndex++] = TypeConverter.convertToInt (aSourceElement);
+          }
+          else
+          {
+            // Use object as is
+            ret = new int [1];
+            ret[0] = TypeConverter.convertToInt (aSource);
+          }
+        return ret;
+      }
+    });
+
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (long [].class)
+    {
+      @Override
+      public long [] convert (@Nonnull final Object aSource)
+      {
+        long [] ret;
+        final Class <?> aSourceClass = aSource.getClass ();
+        if (aSourceClass.isArray ())
+        {
+          // Array to long[]
+          final int nLength = Array.getLength (aSource);
+          ret = new long [nLength];
+          for (int i = 0; i < nLength; ++i)
+          {
+            final Object aSourceElement = Array.get (aSource, i);
+            ret[i] = TypeConverter.convertToLong (aSourceElement);
+          }
+        }
+        else
+          if (aSource instanceof Collection <?>)
+          {
+            // Collection to long[]
+            final Collection <?> aSourceCollection = (Collection <?>) aSource;
+            ret = new long [aSourceCollection.size ()];
+            int nIndex = 0;
+            for (final Object aSourceElement : aSourceCollection)
+              ret[nIndex++] = TypeConverter.convertToLong (aSourceElement);
+          }
+          else
+          {
+            // Use object as is
+            ret = new long [1];
+            ret[0] = TypeConverter.convertToLong (aSource);
+          }
+        return ret;
+      }
+    });
+
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (short [].class)
+    {
+      @Override
+      public short [] convert (@Nonnull final Object aSource)
+      {
+        short [] ret;
+        final Class <?> aSourceClass = aSource.getClass ();
+        if (aSourceClass.isArray ())
+        {
+          // Array to short[]
+          final int nLength = Array.getLength (aSource);
+          ret = new short [nLength];
+          for (int i = 0; i < nLength; ++i)
+          {
+            final Object aSourceElement = Array.get (aSource, i);
+            ret[i] = TypeConverter.convertToShort (aSourceElement);
+          }
+        }
+        else
+          if (aSource instanceof Collection <?>)
+          {
+            // Collection to short[]
+            final Collection <?> aSourceCollection = (Collection <?>) aSource;
+            ret = new short [aSourceCollection.size ()];
+            int nIndex = 0;
+            for (final Object aSourceElement : aSourceCollection)
+              ret[nIndex++] = TypeConverter.convertToShort (aSourceElement);
+          }
+          else
+          {
+            // Use object as is
+            ret = new short [1];
+            ret[0] = TypeConverter.convertToShort (aSource);
+          }
+        return ret;
+      }
+    });
+
+    aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (String [].class)
+    {
+      @Override
       public String [] convert (@Nonnull final Object aSource)
       {
-        final short [] aArray = (short []) aSource;
-        final String [] ret = new String [aArray.length];
-        for (int i = 0; i < aArray.length; ++i)
-          ret[i] = Short.toString (aArray[i]);
+        String [] ret;
+        final Class <?> aSourceClass = aSource.getClass ();
+        if (aSourceClass.isArray ())
+        {
+          // Array to String[]
+          final int nLength = Array.getLength (aSource);
+          ret = new String [nLength];
+          for (int i = 0; i < nLength; ++i)
+          {
+            final Object aSourceElement = Array.get (aSource, i);
+            ret[i] = TypeConverter.convertIfNecessary (aSourceElement, String.class);
+          }
+        }
+        else
+          if (aSource instanceof Collection <?>)
+          {
+            // Collection to String[]
+            final Collection <?> aSourceCollection = (Collection <?>) aSource;
+            ret = new String [aSourceCollection.size ()];
+            int nIndex = 0;
+            for (final Object aSourceElement : aSourceCollection)
+              ret[nIndex++] = TypeConverter.convertIfNecessary (aSourceElement, String.class);
+          }
+          else
+          {
+            // Use object as is
+            ret = new String [1];
+            ret[0] = TypeConverter.convertIfNecessary (aSource, String.class);
+          }
         return ret;
       }
     });
