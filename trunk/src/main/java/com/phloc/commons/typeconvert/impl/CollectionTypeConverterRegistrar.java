@@ -216,6 +216,17 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
         return ContainerHelper.newBooleanSortedSet ((boolean []) aSource);
       }
     });
+    aRegistry.registerTypeConverter (boolean [].class, String [].class, new ITypeConverter ()
+    {
+      public String [] convert (@Nonnull final Object aSource)
+      {
+        final boolean [] aArray = (boolean []) aSource;
+        final String [] ret = new String [aArray.length];
+        for (int i = 0; i < aArray.length; ++i)
+          ret[i] = Boolean.toString (aArray[i]);
+        return ret;
+      }
+    });
 
     // byte[]
     aRegistry.registerTypeConverter (byte [].class, String.class, new ITypeConverter ()
@@ -265,6 +276,17 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
       public Set <Byte> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newByteSortedSet ((byte []) aSource);
+      }
+    });
+    aRegistry.registerTypeConverter (byte [].class, String [].class, new ITypeConverter ()
+    {
+      public String [] convert (@Nonnull final Object aSource)
+      {
+        final byte [] aArray = (byte []) aSource;
+        final String [] ret = new String [aArray.length];
+        for (int i = 0; i < aArray.length; ++i)
+          ret[i] = Byte.toString (aArray[i]);
+        return ret;
       }
     });
 
@@ -318,6 +340,17 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
         return ContainerHelper.newCharSortedSet ((char []) aSource);
       }
     });
+    aRegistry.registerTypeConverter (char [].class, String [].class, new ITypeConverter ()
+    {
+      public String [] convert (@Nonnull final Object aSource)
+      {
+        final char [] aArray = (char []) aSource;
+        final String [] ret = new String [aArray.length];
+        for (int i = 0; i < aArray.length; ++i)
+          ret[i] = Character.toString (aArray[i]);
+        return ret;
+      }
+    });
 
     // double[]
     aRegistry.registerTypeConverter (double [].class, ArrayList.class, new ITypeConverter ()
@@ -353,6 +386,17 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
       public Set <Double> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newDoubleSortedSet ((double []) aSource);
+      }
+    });
+    aRegistry.registerTypeConverter (double [].class, String [].class, new ITypeConverter ()
+    {
+      public String [] convert (@Nonnull final Object aSource)
+      {
+        final double [] aArray = (double []) aSource;
+        final String [] ret = new String [aArray.length];
+        for (int i = 0; i < aArray.length; ++i)
+          ret[i] = Double.toString (aArray[i]);
+        return ret;
       }
     });
 
@@ -392,6 +436,17 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
         return ContainerHelper.newFloatSortedSet ((float []) aSource);
       }
     });
+    aRegistry.registerTypeConverter (float [].class, String [].class, new ITypeConverter ()
+    {
+      public String [] convert (@Nonnull final Object aSource)
+      {
+        final float [] aArray = (float []) aSource;
+        final String [] ret = new String [aArray.length];
+        for (int i = 0; i < aArray.length; ++i)
+          ret[i] = Float.toString (aArray[i]);
+        return ret;
+      }
+    });
 
     // int[]
     aRegistry.registerTypeConverter (int [].class, ArrayList.class, new ITypeConverter ()
@@ -427,6 +482,17 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
       public Set <Integer> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newIntSortedSet ((int []) aSource);
+      }
+    });
+    aRegistry.registerTypeConverter (int [].class, String [].class, new ITypeConverter ()
+    {
+      public String [] convert (@Nonnull final Object aSource)
+      {
+        final int [] aArray = (int []) aSource;
+        final String [] ret = new String [aArray.length];
+        for (int i = 0; i < aArray.length; ++i)
+          ret[i] = Integer.toString (aArray[i]);
+        return ret;
       }
     });
 
@@ -466,6 +532,17 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
         return ContainerHelper.newLongSortedSet ((long []) aSource);
       }
     });
+    aRegistry.registerTypeConverter (long [].class, String [].class, new ITypeConverter ()
+    {
+      public String [] convert (@Nonnull final Object aSource)
+      {
+        final long [] aArray = (long []) aSource;
+        final String [] ret = new String [aArray.length];
+        for (int i = 0; i < aArray.length; ++i)
+          ret[i] = Long.toString (aArray[i]);
+        return ret;
+      }
+    });
 
     // short[]
     aRegistry.registerTypeConverter (short [].class, ArrayList.class, new ITypeConverter ()
@@ -501,6 +578,17 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
       public Set <Short> convert (@Nonnull final Object aSource)
       {
         return ContainerHelper.newShortSortedSet ((short []) aSource);
+      }
+    });
+    aRegistry.registerTypeConverter (short [].class, String [].class, new ITypeConverter ()
+    {
+      public String [] convert (@Nonnull final Object aSource)
+      {
+        final short [] aArray = (short []) aSource;
+        final String [] ret = new String [aArray.length];
+        for (int i = 0; i < aArray.length; ++i)
+          ret[i] = Short.toString (aArray[i]);
+        return ret;
       }
     });
   }
