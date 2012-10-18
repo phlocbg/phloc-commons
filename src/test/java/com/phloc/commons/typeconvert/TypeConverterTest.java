@@ -346,6 +346,7 @@ public final class TypeConverterTest extends AbstractPhlocTestCase
     assertFalse (TypeConverter.convertIfNecessary (aBooleans, Set.class).isEmpty ());
     assertFalse (TypeConverter.convertIfNecessary (aBooleans, HashSet.class).isEmpty ());
     assertFalse (TypeConverter.convertIfNecessary (aBooleans, LinkedHashSet.class).isEmpty ());
+    assertEquals (3, TypeConverter.convertIfNecessary (aBooleans, String [].class).length);
   }
 
   @Test
@@ -357,6 +358,7 @@ public final class TypeConverterTest extends AbstractPhlocTestCase
     assertFalse (TypeConverter.convertIfNecessary (aBytes, Set.class).isEmpty ());
     assertFalse (TypeConverter.convertIfNecessary (aBytes, HashSet.class).isEmpty ());
     assertFalse (TypeConverter.convertIfNecessary (aBytes, LinkedHashSet.class).isEmpty ());
+    assertEquals (3, TypeConverter.convertIfNecessary (aBytes, String [].class).length);
   }
 
   @Test
@@ -368,6 +370,7 @@ public final class TypeConverterTest extends AbstractPhlocTestCase
     assertFalse (TypeConverter.convertIfNecessary (aChars, Set.class).isEmpty ());
     assertFalse (TypeConverter.convertIfNecessary (aChars, HashSet.class).isEmpty ());
     assertFalse (TypeConverter.convertIfNecessary (aChars, LinkedHashSet.class).isEmpty ());
+    assertEquals (3, TypeConverter.convertIfNecessary (aChars, String [].class).length);
   }
 
   @Test
@@ -379,6 +382,7 @@ public final class TypeConverterTest extends AbstractPhlocTestCase
     assertFalse (TypeConverter.convertIfNecessary (aDoubles, Set.class).isEmpty ());
     assertFalse (TypeConverter.convertIfNecessary (aDoubles, HashSet.class).isEmpty ());
     assertFalse (TypeConverter.convertIfNecessary (aDoubles, LinkedHashSet.class).isEmpty ());
+    assertEquals (3, TypeConverter.convertIfNecessary (aDoubles, String [].class).length);
   }
 
   @Test
@@ -390,6 +394,7 @@ public final class TypeConverterTest extends AbstractPhlocTestCase
     assertFalse (TypeConverter.convertIfNecessary (aFloats, Set.class).isEmpty ());
     assertFalse (TypeConverter.convertIfNecessary (aFloats, HashSet.class).isEmpty ());
     assertFalse (TypeConverter.convertIfNecessary (aFloats, LinkedHashSet.class).isEmpty ());
+    assertEquals (3, TypeConverter.convertIfNecessary (aFloats, String [].class).length);
   }
 
   @Test
@@ -401,6 +406,7 @@ public final class TypeConverterTest extends AbstractPhlocTestCase
     assertFalse (TypeConverter.convertIfNecessary (aInts, Set.class).isEmpty ());
     assertFalse (TypeConverter.convertIfNecessary (aInts, HashSet.class).isEmpty ());
     assertFalse (TypeConverter.convertIfNecessary (aInts, LinkedHashSet.class).isEmpty ());
+    assertEquals (3, TypeConverter.convertIfNecessary (aInts, String [].class).length);
   }
 
   @Test
@@ -412,6 +418,7 @@ public final class TypeConverterTest extends AbstractPhlocTestCase
     assertFalse (TypeConverter.convertIfNecessary (aLongs, Set.class).isEmpty ());
     assertFalse (TypeConverter.convertIfNecessary (aLongs, HashSet.class).isEmpty ());
     assertFalse (TypeConverter.convertIfNecessary (aLongs, LinkedHashSet.class).isEmpty ());
+    assertEquals (3, TypeConverter.convertIfNecessary (aLongs, String [].class).length);
   }
 
   @Test
@@ -423,6 +430,7 @@ public final class TypeConverterTest extends AbstractPhlocTestCase
     assertFalse (TypeConverter.convertIfNecessary (aShorts, Set.class).isEmpty ());
     assertFalse (TypeConverter.convertIfNecessary (aShorts, HashSet.class).isEmpty ());
     assertFalse (TypeConverter.convertIfNecessary (aShorts, LinkedHashSet.class).isEmpty ());
+    assertEquals (3, TypeConverter.convertIfNecessary (aShorts, String [].class).length);
   }
 
   @Test
