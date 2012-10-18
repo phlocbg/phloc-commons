@@ -122,6 +122,6 @@ public final class GraphNodeTest
     assertTrue (nf.hasRelations ());
     assertTrue (nf.hasRelations ());
     // relation already contained
-    assertTrue (nf.addRelation (r).isChanged ());
+    assertFalse (nf.addRelation (r).isChanged ());
   }
 }
