@@ -113,7 +113,7 @@ public final class GraphNodeTest
     GraphRelation r = new GraphRelation (n, new GraphNode ());
     assertTrue (n.addRelation (r).isChanged ());
     // exactly the same relation already added
-    assertTrue (n.addRelation (r).isChanged ());
+    assertFalse (n.addRelation (r).isChanged ());
 
     final GraphNode nf = new GraphNode ();
     final GraphNode nt = new GraphNode ();
