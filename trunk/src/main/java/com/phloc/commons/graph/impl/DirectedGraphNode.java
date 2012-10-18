@@ -236,7 +236,9 @@ public class DirectedGraphNode extends AbstractBaseGraphObject implements IDirec
 
   public boolean isConnectedWith (@Nullable final IDirectedGraphNode aNode)
   {
-    return getRelation (aNode) != null;
+    if (aNode == null)
+      return false;
+    return getIncomingRelationFrom (aNode) != null || getOutgoingRelationTo (aNode) != null;
   }
 
   @Nullable
