@@ -1,7 +1,8 @@
 #summary Change log of phloc-commons
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
-<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr><td>10/18/12</td><td>add</td><td>api</td><td></td><td>Added new Iterator-like implementations for array of primitive types (e.g. ArrayIteratorBoolean) incl. the respective interfaces</td></tr>
+<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr><td>10/24/12</td><td>change</td><td>api</td><td></td><td>Made all constants except the logger public in class AbstractPhlocTestCase</td></tr>
+<tr><td>10/18/12</td><td>add</td><td>api</td><td></td><td>Added new Iterator-like implementations for array of primitive types (e.g. ArrayIteratorBoolean) incl. the respective interfaces</td></tr>
 <tr><td>10/18/12</td><td>add</td><td>tech</td><td></td><td>Added new default type converter rules to primitive arrays (e.g. int[]) and String arrays</td></tr>
 <tr><td>10/12/12</td><td>add</td><td>api</td><td></td><td>Added new methods IReadonlyAttributeContainer.getAttributeAsLong</td></tr>
 <tr><td>10/12/12</td><td>add</td><td>api</td><td></td><td>Added new methods IAttributeContainer.setAttribute with value types int, long and double</td></tr>
