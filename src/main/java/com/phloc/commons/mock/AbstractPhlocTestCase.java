@@ -42,26 +42,26 @@ public abstract class AbstractPhlocTestCase
   @CodingStyleguideUnaware
   protected final Logger m_aLogger = LoggerFactory.getLogger (getClass ());
 
-  protected static final Integer I_1 = Integer.valueOf (-1);
-  protected static final Integer I0 = Integer.valueOf (0);
-  protected static final Integer I1 = Integer.valueOf (1);
-  protected static final Integer I2 = Integer.valueOf (2);
-  protected static final Integer I3 = Integer.valueOf (3);
-  protected static final Integer I4 = Integer.valueOf (4);
-  protected static final Integer I5 = Integer.valueOf (5);
-  protected static final Integer I6 = Integer.valueOf (6);
-  protected static final Integer I7 = Integer.valueOf (7);
+  public static final Integer I_1 = Integer.valueOf (-1);
+  public static final Integer I0 = Integer.valueOf (0);
+  public static final Integer I1 = Integer.valueOf (1);
+  public static final Integer I2 = Integer.valueOf (2);
+  public static final Integer I3 = Integer.valueOf (3);
+  public static final Integer I4 = Integer.valueOf (4);
+  public static final Integer I5 = Integer.valueOf (5);
+  public static final Integer I6 = Integer.valueOf (6);
+  public static final Integer I7 = Integer.valueOf (7);
 
-  protected static final Long L_1 = Long.valueOf (-1);
-  protected static final Long L0 = Long.valueOf (0);
-  protected static final Long L1 = Long.valueOf (1);
+  public static final Long L_1 = Long.valueOf (-1);
+  public static final Long L0 = Long.valueOf (0);
+  public static final Long L1 = Long.valueOf (1);
 
-  protected static final Locale L_DE = new Locale ("de");
-  protected static final Locale L_DE_AT = new Locale ("de", "AT");
-  protected static final Locale L_DE_DE = new Locale ("de", "DE");
-  protected static final Locale L_EN = new Locale ("en");
-  protected static final Locale L_EN_GB = new Locale ("en", "GB");
-  protected static final Locale L_EN_US = new Locale ("en", "US");
-  protected static final Locale L_FR = new Locale ("fr");
-  protected static final Locale L_FR_FR = new Locale ("fr", "FR");
+  public static final Locale L_DE = new Locale ("de");
+  public static final Locale L_DE_AT = new Locale ("de", "AT");
+  public static final Locale L_DE_DE = new Locale ("de", "DE");
+  public static final Locale L_EN = new Locale ("en");
+  public static final Locale L_EN_GB = new Locale ("en", "GB");
+  public static final Locale L_EN_US = new Locale ("en", "US");
+  public static final Locale L_FR = new Locale ("fr");
+  public static final Locale L_FR_FR = new Locale ("fr", "FR");
 }
