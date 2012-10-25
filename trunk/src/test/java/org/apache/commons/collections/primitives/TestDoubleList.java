@@ -30,7 +30,7 @@ import org.apache.commons.collections.primitives.adapters.ListDoubleList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class TestDoubleList extends BaseTestList
+public abstract class TestDoubleList extends BaseTestList <Double>
 {
 
   // conventional

@@ -497,13 +497,4 @@ public abstract class TestCharList extends BaseTestList <Character>
       // expected
     }
   }
-
-  public void testCharListToString () throws Exception
-  {
-    final String expected = "The quick brown fox jumped over the lazy dogs.";
-    final CharList list = makeEmptyCharList ();
-    for (int i = 0; i < expected.length (); i++)
-      list.add (expected.charAt (i));
-    assertEquals (expected, list.toString ());
-  }
 }
