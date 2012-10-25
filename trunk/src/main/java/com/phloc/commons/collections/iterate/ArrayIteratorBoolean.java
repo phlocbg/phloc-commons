@@ -23,6 +23,9 @@ import java.util.NoSuchElementException;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
+import org.apache.commons.collections.primitives.BooleanIterator;
+
+import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
@@ -33,7 +36,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author philip
  */
-public final class ArrayIteratorBoolean implements IPrimitiveIteratorBoolean
+public final class ArrayIteratorBoolean implements BooleanIterator
 {
   private final boolean [] m_aArray;
   private int m_nIndex;
@@ -67,6 +70,13 @@ public final class ArrayIteratorBoolean implements IPrimitiveIteratorBoolean
     if (!hasNext ())
       throw new NoSuchElementException ();
     return m_aArray[m_nIndex++];
+  }
+
+  @UnsupportedOperation
+  @Deprecated
+  public void remove ()
+  {
+    throw new UnsupportedOperationException ();
   }
 
   @Override

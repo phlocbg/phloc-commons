@@ -23,6 +23,9 @@ import java.util.NoSuchElementException;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
+import org.apache.commons.collections.primitives.FloatIterator;
+
+import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
@@ -33,7 +36,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author philip
  */
-public final class ArrayIteratorFloat implements IPrimitiveIteratorFloat
+public final class ArrayIteratorFloat implements FloatIterator
 {
   private final float [] m_aArray;
   private int m_nIndex;
@@ -76,6 +79,13 @@ public final class ArrayIteratorFloat implements IPrimitiveIteratorFloat
       return false;
     final ArrayIteratorFloat rhs = (ArrayIteratorFloat) o;
     return EqualsUtils.equals (m_aArray, rhs.m_aArray) && m_nIndex == rhs.m_nIndex;
+  }
+
+  @UnsupportedOperation
+  @Deprecated
+  public void remove ()
+  {
+    throw new UnsupportedOperationException ();
   }
 
   @Override
