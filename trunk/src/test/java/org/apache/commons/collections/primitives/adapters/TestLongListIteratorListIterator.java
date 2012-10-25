@@ -34,13 +34,9 @@ import org.apache.commons.collections.primitives.LongList;
  */
 public class TestLongListIteratorListIterator extends AbstractTestListIterator
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestLongListIteratorListIterator (final String testName)
+  public TestLongListIteratorListIterator (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
@@ -52,13 +48,13 @@ public class TestLongListIteratorListIterator extends AbstractTestListIterator
   // ------------------------------------------------------------------------
 
   @Override
-  public ListIterator makeEmptyListIterator ()
+  public ListIterator <Long> makeEmptyListIterator ()
   {
     return LongListIteratorListIterator.wrap (makeEmptyLongList ().listIterator ());
   }
 
   @Override
-  public ListIterator makeFullListIterator ()
+  public ListIterator <Long> makeFullListIterator ()
   {
     return LongListIteratorListIterator.wrap (makeFullLongList ().listIterator ());
   }
@@ -73,21 +69,22 @@ public class TestLongListIteratorListIterator extends AbstractTestListIterator
     final LongList list = makeEmptyLongList ();
     final long [] elts = getFullElements ();
     for (final long elt : elts)
-    {
       list.add (elt);
-    }
     return list;
   }
 
   public long [] getFullElements ()
   {
-    return new long [] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    final long [] ret = new long [10];
+    for (int i = 0; i < ret.length; ++i)
+      ret[i] = i;
+    return ret;
   }
 
   @Override
   public Object addSetValue ()
   {
-    return new Long (1);
+    return Long.valueOf (1);
   }
 
   // tests
@@ -96,11 +93,11 @@ public class TestLongListIteratorListIterator extends AbstractTestListIterator
   public void testNextHasNextRemove ()
   {
     final long [] elements = getFullElements ();
-    final Iterator iter = makeFullIterator ();
+    final Iterator <?> iter = makeFullIterator ();
     for (final long element : elements)
     {
       assertTrue (iter.hasNext ());
-      assertEquals (new Long (element), iter.next ());
+      assertEquals (Long.valueOf (element), iter.next ());
       if (supportsRemove ())
       {
         iter.remove ();
@@ -156,7 +153,7 @@ public class TestLongListIteratorListIterator extends AbstractTestListIterator
   {
     if (supportsRemove ())
     {
-      final Iterator iter = makeFullIterator ();
+      final Iterator <?> iter = makeFullIterator ();
       iter.next ();
       iter.remove ();
       try
@@ -170,5 +167,4 @@ public class TestLongListIteratorListIterator extends AbstractTestListIterator
       }
     }
   }
-
 }

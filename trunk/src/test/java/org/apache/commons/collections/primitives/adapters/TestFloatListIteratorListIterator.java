@@ -34,13 +34,9 @@ import org.apache.commons.collections.primitives.FloatList;
  */
 public class TestFloatListIteratorListIterator extends AbstractTestListIterator
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestFloatListIteratorListIterator (final String testName)
+  public TestFloatListIteratorListIterator (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
@@ -52,13 +48,13 @@ public class TestFloatListIteratorListIterator extends AbstractTestListIterator
   // ------------------------------------------------------------------------
 
   @Override
-  public ListIterator makeEmptyListIterator ()
+  public ListIterator <Float> makeEmptyListIterator ()
   {
     return FloatListIteratorListIterator.wrap (makeEmptyFloatList ().listIterator ());
   }
 
   @Override
-  public ListIterator makeFullListIterator ()
+  public ListIterator <Float> makeFullListIterator ()
   {
     return FloatListIteratorListIterator.wrap (makeFullFloatList ().listIterator ());
   }
@@ -73,21 +69,22 @@ public class TestFloatListIteratorListIterator extends AbstractTestListIterator
     final FloatList list = makeEmptyFloatList ();
     final float [] elts = getFullElements ();
     for (final float elt : elts)
-    {
       list.add (elt);
-    }
     return list;
   }
 
   public float [] getFullElements ()
   {
-    return new float [] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    final float [] ret = new float [10];
+    for (int i = 0; i < ret.length; ++i)
+      ret[i] = i;
+    return ret;
   }
 
   @Override
   public Object addSetValue ()
   {
-    return new Float (1);
+    return Float.valueOf (1);
   }
 
   // tests
@@ -96,11 +93,11 @@ public class TestFloatListIteratorListIterator extends AbstractTestListIterator
   public void testNextHasNextRemove ()
   {
     final float [] elements = getFullElements ();
-    final Iterator iter = makeFullIterator ();
+    final Iterator <?> iter = makeFullIterator ();
     for (final float element : elements)
     {
       assertTrue (iter.hasNext ());
-      assertEquals (new Float (element), iter.next ());
+      assertEquals (Float.valueOf (element), iter.next ());
       if (supportsRemove ())
       {
         iter.remove ();
@@ -156,7 +153,7 @@ public class TestFloatListIteratorListIterator extends AbstractTestListIterator
   {
     if (supportsRemove ())
     {
-      final Iterator iter = makeFullIterator ();
+      final Iterator <?> iter = makeFullIterator ();
       iter.next ();
       iter.remove ();
       try
@@ -170,5 +167,4 @@ public class TestFloatListIteratorListIterator extends AbstractTestListIterator
       }
     }
   }
-
 }

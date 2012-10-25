@@ -23,25 +23,25 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.AbstractTestObject;
-import org.apache.commons.collections.primitives.ArrayDoubleList;
-import org.apache.commons.collections.primitives.DoubleList;
-import org.apache.commons.collections.primitives.RandomAccessDoubleList;
+import org.apache.commons.collections.primitives.ArrayZZZList;
+import org.apache.commons.collections.primitives.ZZZList;
+import org.apache.commons.collections.primitives.RandomAccessZZZList;
 
 /**
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestDoubleCollectionCollection extends AbstractTestObject
+public class TestZZZCollectionCollection extends AbstractTestObject
 {
-  public TestDoubleCollectionCollection (final String sTestName)
+  public TestZZZCollectionCollection (final String sTestName)
   {
     super (sTestName);
   }
 
   public static Test suite ()
   {
-    return new TestSuite (TestDoubleCollectionCollection.class);
+    return new TestSuite (TestZZZCollectionCollection.class);
   }
 
   // collections testing framework
@@ -50,10 +50,10 @@ public class TestDoubleCollectionCollection extends AbstractTestObject
   @Override
   public Object makeObject ()
   {
-    final DoubleList list = new ArrayDoubleList ();
+    final ZZZList list = new ArrayZZZList ();
     for (int i = 0; i < 10; i++)
-      list.add (i);
-    return new DoubleCollectionCollection (list);
+      list.add ($CASTINT$i);
+    return new ZZZCollectionCollection (list);
   }
 
   @Override
@@ -66,14 +66,14 @@ public class TestDoubleCollectionCollection extends AbstractTestObject
   @Override
   public void testCanonicalEmptyCollectionExists ()
   {
-    // Double FIX ME Double
+    // XXX FIX ME XXX
     // need to add a serialized form to cvs
   }
 
   @Override
   public void testCanonicalFullCollectionExists ()
   {
-    // Double FIX ME Double
+    // XXX FIX ME XXX
     // need to add a serialized form to cvs
   }
 
@@ -82,22 +82,22 @@ public class TestDoubleCollectionCollection extends AbstractTestObject
 
   public void testWrapNull ()
   {
-    assertNull (DoubleCollectionCollection.wrap (null));
+    assertNull (ZZZCollectionCollection.wrap (null));
   }
 
   public void testWrapSerializable ()
   {
-    final Collection <Double> collection = DoubleCollectionCollection.wrap (new ArrayDoubleList ());
+    final Collection <XXX> collection = ZZZCollectionCollection.wrap (new ArrayZZZList ());
     assertNotNull (collection);
     assertTrue (collection instanceof Serializable);
   }
 
   public void testWrapNonSerializable ()
   {
-    final Collection <Double> collection = DoubleCollectionCollection.wrap (new RandomAccessDoubleList ()
+    final Collection <XXX> collection = ZZZCollectionCollection.wrap (new RandomAccessZZZList ()
     {
       @Override
-      public double get (final int i)
+      public YYY get (final int i)
       {
         throw new IndexOutOfBoundsException ();
       }

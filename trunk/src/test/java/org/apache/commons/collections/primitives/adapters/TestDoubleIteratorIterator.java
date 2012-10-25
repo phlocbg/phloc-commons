@@ -18,6 +18,8 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.Iterator;
 
+import javax.annotation.Nonnull;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -32,13 +34,9 @@ import org.apache.commons.collections.primitives.DoubleList;
  */
 public class TestDoubleIteratorIterator extends AbstractTestIterator
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestDoubleIteratorIterator (final String testName)
+  public TestDoubleIteratorIterator (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
@@ -50,39 +48,41 @@ public class TestDoubleIteratorIterator extends AbstractTestIterator
   // ------------------------------------------------------------------------
 
   @Override
-  public Iterator makeEmptyIterator ()
+  @Nonnull
+  public Iterator <Double> makeEmptyIterator ()
   {
     return DoubleIteratorIterator.wrap (makeEmptyDoubleList ().iterator ());
   }
 
   @Override
-  public Iterator makeFullIterator ()
+  @Nonnull
+  public Iterator <Double> makeFullIterator ()
   {
     return DoubleIteratorIterator.wrap (makeFullDoubleList ().iterator ());
   }
 
+  @Nonnull
   protected DoubleList makeEmptyDoubleList ()
   {
     return new ArrayDoubleList ();
   }
 
+  @Nonnull
   protected DoubleList makeFullDoubleList ()
   {
     final DoubleList list = makeEmptyDoubleList ();
     final double [] elts = getFullElements ();
     for (final double elt : elts)
-    {
       list.add (elt);
-    }
     return list;
   }
 
+  @Nonnull
   public double [] getFullElements ()
   {
-    return new double [] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    final double [] ret = new double [10];
+    for (int i = 0; i < ret.length; ++i)
+      ret[i] =  i;
+    return ret;
   }
-
-  // tests
-  // ------------------------------------------------------------------------
-
 }

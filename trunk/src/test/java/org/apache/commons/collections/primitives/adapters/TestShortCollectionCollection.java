@@ -24,8 +24,8 @@ import junit.framework.TestSuite;
 
 import org.apache.commons.collections.AbstractTestObject;
 import org.apache.commons.collections.primitives.ArrayShortList;
-import org.apache.commons.collections.primitives.RandomAccessShortList;
 import org.apache.commons.collections.primitives.ShortList;
+import org.apache.commons.collections.primitives.RandomAccessShortList;
 
 /**
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
@@ -34,13 +34,9 @@ import org.apache.commons.collections.primitives.ShortList;
  */
 public class TestShortCollectionCollection extends AbstractTestObject
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestShortCollectionCollection (final String testName)
+  public TestShortCollectionCollection (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
@@ -56,9 +52,7 @@ public class TestShortCollectionCollection extends AbstractTestObject
   {
     final ShortList list = new ArrayShortList ();
     for (int i = 0; i < 10; i++)
-    {
-      list.add ((short) i);
-    }
+      list.add ((short)i);
     return new ShortCollectionCollection (list);
   }
 
@@ -72,14 +66,14 @@ public class TestShortCollectionCollection extends AbstractTestObject
   @Override
   public void testCanonicalEmptyCollectionExists ()
   {
-    // XXX FIX ME XXX
+    // Short FIX ME Short
     // need to add a serialized form to cvs
   }
 
   @Override
   public void testCanonicalFullCollectionExists ()
   {
-    // XXX FIX ME XXX
+    // Short FIX ME Short
     // need to add a serialized form to cvs
   }
 
@@ -93,14 +87,14 @@ public class TestShortCollectionCollection extends AbstractTestObject
 
   public void testWrapSerializable ()
   {
-    final Collection collection = ShortCollectionCollection.wrap (new ArrayShortList ());
+    final Collection <Short> collection = ShortCollectionCollection.wrap (new ArrayShortList ());
     assertNotNull (collection);
     assertTrue (collection instanceof Serializable);
   }
 
   public void testWrapNonSerializable ()
   {
-    final Collection collection = ShortCollectionCollection.wrap (new RandomAccessShortList ()
+    final Collection <Short> collection = ShortCollectionCollection.wrap (new RandomAccessShortList ()
     {
       @Override
       public short get (final int i)

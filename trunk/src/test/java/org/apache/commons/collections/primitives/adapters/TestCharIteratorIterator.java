@@ -73,24 +73,16 @@ public class TestCharIteratorIterator extends AbstractTestIterator
     final CharList list = makeEmptyCharList ();
     final char [] elts = getFullElements ();
     for (final char elt : elts)
-    {
       list.add (elt);
-    }
     return list;
   }
 
   @Nonnull
   public char [] getFullElements ()
   {
-    return new char [] { (char) 0,
-                        (char) 1,
-                        (char) 2,
-                        (char) 3,
-                        (char) 4,
-                        (char) 5,
-                        (char) 6,
-                        (char) 7,
-                        (char) 8,
-                        (char) 9 };
+    final char [] ret = new char [10];
+    for (int i = 0; i < ret.length; ++i)
+      ret[i] = (char) i;
+    return ret;
   }
 }

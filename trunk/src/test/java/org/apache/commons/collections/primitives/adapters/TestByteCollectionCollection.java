@@ -34,13 +34,9 @@ import org.apache.commons.collections.primitives.RandomAccessByteList;
  */
 public class TestByteCollectionCollection extends AbstractTestObject
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestByteCollectionCollection (final String testName)
+  public TestByteCollectionCollection (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
@@ -56,9 +52,7 @@ public class TestByteCollectionCollection extends AbstractTestObject
   {
     final ByteList list = new ArrayByteList ();
     for (int i = 0; i < 10; i++)
-    {
-      list.add ((byte) i);
-    }
+      list.add ((byte)i);
     return new ByteCollectionCollection (list);
   }
 
@@ -72,14 +66,14 @@ public class TestByteCollectionCollection extends AbstractTestObject
   @Override
   public void testCanonicalEmptyCollectionExists ()
   {
-    // XXX FIX ME XXX
+    // Byte FIX ME Byte
     // need to add a serialized form to cvs
   }
 
   @Override
   public void testCanonicalFullCollectionExists ()
   {
-    // XXX FIX ME XXX
+    // Byte FIX ME Byte
     // need to add a serialized form to cvs
   }
 

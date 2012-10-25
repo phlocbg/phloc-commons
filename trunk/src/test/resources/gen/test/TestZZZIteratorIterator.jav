@@ -24,24 +24,24 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.iterators.AbstractTestIterator;
-import org.apache.commons.collections.primitives.ArrayShortList;
-import org.apache.commons.collections.primitives.ShortList;
+import org.apache.commons.collections.primitives.ArrayZZZList;
+import org.apache.commons.collections.primitives.ZZZList;
 
 /**
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestShortIteratorIterator extends AbstractTestIterator
+public class TestZZZIteratorIterator extends AbstractTestIterator
 {
-  public TestShortIteratorIterator (final String sTestName)
+  public TestZZZIteratorIterator (final String sTestName)
   {
     super (sTestName);
   }
 
   public static Test suite ()
   {
-    return new TestSuite (TestShortIteratorIterator.class);
+    return new TestSuite (TestZZZIteratorIterator.class);
   }
 
   // collections testing framework
@@ -49,40 +49,40 @@ public class TestShortIteratorIterator extends AbstractTestIterator
 
   @Override
   @Nonnull
-  public Iterator <Short> makeEmptyIterator ()
+  public Iterator <XXX> makeEmptyIterator ()
   {
-    return ShortIteratorIterator.wrap (makeEmptyShortList ().iterator ());
+    return ZZZIteratorIterator.wrap (makeEmptyZZZList ().iterator ());
   }
 
   @Override
   @Nonnull
-  public Iterator <Short> makeFullIterator ()
+  public Iterator <XXX> makeFullIterator ()
   {
-    return ShortIteratorIterator.wrap (makeFullShortList ().iterator ());
+    return ZZZIteratorIterator.wrap (makeFullZZZList ().iterator ());
   }
 
   @Nonnull
-  protected ShortList makeEmptyShortList ()
+  protected ZZZList makeEmptyZZZList ()
   {
-    return new ArrayShortList ();
+    return new ArrayZZZList ();
   }
 
   @Nonnull
-  protected ShortList makeFullShortList ()
+  protected ZZZList makeFullZZZList ()
   {
-    final ShortList list = makeEmptyShortList ();
-    final short [] elts = getFullElements ();
-    for (final short elt : elts)
+    final ZZZList list = makeEmptyZZZList ();
+    final YYY [] elts = getFullElements ();
+    for (final YYY elt : elts)
       list.add (elt);
     return list;
   }
 
   @Nonnull
-  public short [] getFullElements ()
+  public YYY [] getFullElements ()
   {
-    final short [] ret = new short [10];
+    final YYY [] ret = new YYY [10];
     for (int i = 0; i < ret.length; ++i)
-      ret[i] = (short) i;
+      ret[i] = $CASTINT$ i;
     return ret;
   }
 }

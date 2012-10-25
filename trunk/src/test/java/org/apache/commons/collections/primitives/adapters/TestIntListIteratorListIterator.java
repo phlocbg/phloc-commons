@@ -34,13 +34,9 @@ import org.apache.commons.collections.primitives.IntList;
  */
 public class TestIntListIteratorListIterator extends AbstractTestListIterator
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestIntListIteratorListIterator (final String testName)
+  public TestIntListIteratorListIterator (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
@@ -52,13 +48,13 @@ public class TestIntListIteratorListIterator extends AbstractTestListIterator
   // ------------------------------------------------------------------------
 
   @Override
-  public ListIterator makeEmptyListIterator ()
+  public ListIterator <Integer> makeEmptyListIterator ()
   {
     return IntListIteratorListIterator.wrap (makeEmptyIntList ().listIterator ());
   }
 
   @Override
-  public ListIterator makeFullListIterator ()
+  public ListIterator <Integer> makeFullListIterator ()
   {
     return IntListIteratorListIterator.wrap (makeFullIntList ().listIterator ());
   }
@@ -73,21 +69,22 @@ public class TestIntListIteratorListIterator extends AbstractTestListIterator
     final IntList list = makeEmptyIntList ();
     final int [] elts = getFullElements ();
     for (final int elt : elts)
-    {
       list.add (elt);
-    }
     return list;
   }
 
   public int [] getFullElements ()
   {
-    return new int [] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    final int [] ret = new int [10];
+    for (int i = 0; i < ret.length; ++i)
+      ret[i] = i;
+    return ret;
   }
 
   @Override
   public Object addSetValue ()
   {
-    return new Integer (1);
+    return Integer.valueOf (1);
   }
 
   // tests
@@ -96,11 +93,11 @@ public class TestIntListIteratorListIterator extends AbstractTestListIterator
   public void testNextHasNextRemove ()
   {
     final int [] elements = getFullElements ();
-    final Iterator iter = makeFullIterator ();
+    final Iterator <?> iter = makeFullIterator ();
     for (final int element : elements)
     {
       assertTrue (iter.hasNext ());
-      assertEquals (new Integer (element), iter.next ());
+      assertEquals (Integer.valueOf (element), iter.next ());
       if (supportsRemove ())
       {
         iter.remove ();
@@ -156,7 +153,7 @@ public class TestIntListIteratorListIterator extends AbstractTestListIterator
   {
     if (supportsRemove ())
     {
-      final Iterator iter = makeFullIterator ();
+      final Iterator <?> iter = makeFullIterator ();
       iter.next ();
       iter.remove ();
       try
@@ -170,5 +167,4 @@ public class TestIntListIteratorListIterator extends AbstractTestListIterator
       }
     }
   }
-
 }

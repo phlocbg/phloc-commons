@@ -34,13 +34,9 @@ import org.apache.commons.collections.primitives.RandomAccessFloatList;
  */
 public class TestFloatCollectionCollection extends AbstractTestObject
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestFloatCollectionCollection (final String testName)
+  public TestFloatCollectionCollection (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
@@ -56,9 +52,7 @@ public class TestFloatCollectionCollection extends AbstractTestObject
   {
     final FloatList list = new ArrayFloatList ();
     for (int i = 0; i < 10; i++)
-    {
       list.add (i);
-    }
     return new FloatCollectionCollection (list);
   }
 
@@ -72,14 +66,14 @@ public class TestFloatCollectionCollection extends AbstractTestObject
   @Override
   public void testCanonicalEmptyCollectionExists ()
   {
-    // XXX FIX ME XXX
+    // Float FIX ME Float
     // need to add a serialized form to cvs
   }
 
   @Override
   public void testCanonicalFullCollectionExists ()
   {
-    // XXX FIX ME XXX
+    // Float FIX ME Float
     // need to add a serialized form to cvs
   }
 
@@ -93,14 +87,14 @@ public class TestFloatCollectionCollection extends AbstractTestObject
 
   public void testWrapSerializable ()
   {
-    final Collection collection = FloatCollectionCollection.wrap (new ArrayFloatList ());
+    final Collection <Float> collection = FloatCollectionCollection.wrap (new ArrayFloatList ());
     assertNotNull (collection);
     assertTrue (collection instanceof Serializable);
   }
 
   public void testWrapNonSerializable ()
   {
-    final Collection collection = FloatCollectionCollection.wrap (new RandomAccessFloatList ()
+    final Collection <Float> collection = FloatCollectionCollection.wrap (new RandomAccessFloatList ()
     {
       @Override
       public float get (final int i)
@@ -117,5 +111,4 @@ public class TestFloatCollectionCollection extends AbstractTestObject
     assertNotNull (collection);
     assertTrue (!(collection instanceof Serializable));
   }
-
 }
