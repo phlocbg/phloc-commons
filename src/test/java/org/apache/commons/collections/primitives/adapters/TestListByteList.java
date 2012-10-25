@@ -28,87 +28,115 @@ import org.apache.commons.collections.primitives.ByteList;
 import org.apache.commons.collections.primitives.TestByteList;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestListByteList extends TestByteList {
+public class TestListByteList extends TestByteList
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestListByteList(String testName) {
-        super(testName);
-    }
+  public TestListByteList (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        TestSuite suite = BulkTest.makeSuite(TestListByteList.class);
-        return suite;
-    }
+  public static Test suite ()
+  {
+    final TestSuite suite = BulkTest.makeSuite (TestListByteList.class);
+    return suite;
+  }
 
-    // collections testing framework
-    // ------------------------------------------------------------------------
+  // collections testing framework
+  // ------------------------------------------------------------------------
 
-    /**
-     * @see org.apache.commons.collections.primitives.TestByteList#makeEmptyByteList()
-     */
-    protected ByteList makeEmptyByteList() {
-        return new ListByteList(new ArrayList());
-    }
-    
-    public String[] ignoredTests() {
-        // sublists are not serializable
-        return new String[] { 
-            "TestListByteList.bulkTestSubList.testFullListSerialization",
-            "TestListByteList.bulkTestSubList.testEmptyListSerialization",
-            "TestListByteList.bulkTestSubList.testCanonicalEmptyCollectionExists",
-            "TestListByteList.bulkTestSubList.testCanonicalFullCollectionExists",
-            "TestListByteList.bulkTestSubList.testEmptyListCompatibility",
-            "TestListByteList.bulkTestSubList.testFullListCompatibility",
-            "TestListByteList.bulkTestSubList.testSerializeDeserializeThenCompare",
-            "TestListByteList.bulkTestSubList.testSimpleSerialization"
-        };
-    }
+  /**
+   * @see org.apache.commons.collections.primitives.TestByteList#makeEmptyByteList()
+   */
+  @Override
+  protected ByteList makeEmptyByteList ()
+  {
+    return new ListByteList (new ArrayList ());
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
+  @Override
+  public String [] ignoredTests ()
+  {
+    // sublists are not serializable
+    return new String [] { "TestListByteList.bulkTestSubList.testFullListSerialization",
+                          "TestListByteList.bulkTestSubList.testEmptyListSerialization",
+                          "TestListByteList.bulkTestSubList.testCanonicalEmptyCollectionExists",
+                          "TestListByteList.bulkTestSubList.testCanonicalFullCollectionExists",
+                          "TestListByteList.bulkTestSubList.testEmptyListCompatibility",
+                          "TestListByteList.bulkTestSubList.testFullListCompatibility",
+                          "TestListByteList.bulkTestSubList.testSerializeDeserializeThenCompare",
+                          "TestListByteList.bulkTestSubList.testSimpleSerialization" };
+  }
 
-    /** @TODO need to add serialized form to cvs */
-    public void testCanonicalEmptyCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+  // tests
+  // ------------------------------------------------------------------------
 
-    public void testCanonicalFullCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+  /** @TODO need to add serialized form to cvs */
+  @Override
+  public void testCanonicalEmptyCollectionExists ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    public void testEmptyListCompatibility() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+  @Override
+  public void testCanonicalFullCollectionExists ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    public void testFullListCompatibility() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
-    public void testWrapNull() {
-        assertNull(ListByteList.wrap(null));
-    }
-    
-    public void testWrapSerializable() {
-        ByteList list = ListByteList.wrap(new ArrayList());
-        assertNotNull(list);
-        assertTrue(list instanceof Serializable);
-    }
-    
-    public void testWrapNonSerializable() {
-        ByteList list = ListByteList.wrap(new AbstractList() { 
-            public Object get(int i) { throw new IndexOutOfBoundsException(); } 
-            public int size() { return 0; } 
-        });
-        assertNotNull(list);
-        assertTrue(!(list instanceof Serializable));
-    }
+  @Override
+  public void testEmptyListCompatibility ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
+
+  @Override
+  public void testFullListCompatibility ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
+
+  public void testWrapNull ()
+  {
+    assertNull (ListByteList.wrap (null));
+  }
+
+  public void testWrapSerializable ()
+  {
+    final ByteList list = ListByteList.wrap (new ArrayList ());
+    assertNotNull (list);
+    assertTrue (list instanceof Serializable);
+  }
+
+  public void testWrapNonSerializable ()
+  {
+    final ByteList list = ListByteList.wrap (new AbstractList ()
+    {
+      @Override
+      public Object get (final int i)
+      {
+        throw new IndexOutOfBoundsException ();
+      }
+
+      @Override
+      public int size ()
+      {
+        return 0;
+      }
+    });
+    assertNotNull (list);
+    assertTrue (!(list instanceof Serializable));
+  }
 
 }

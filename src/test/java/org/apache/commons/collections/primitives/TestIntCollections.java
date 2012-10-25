@@ -21,123 +21,162 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestIntCollections extends TestCase {
+public class TestIntCollections extends TestCase
+{
 
-    //------------------------------------------------------------ Conventional
+  // ------------------------------------------------------------ Conventional
 
-    public TestIntCollections(String testName) {
-        super(testName);
+  public TestIntCollections (final String testName)
+  {
+    super (testName);
+  }
+
+  public static Test suite ()
+  {
+    return new TestSuite (TestIntCollections.class);
+  }
+
+  // ---------------------------------------------------------------- Tests
+
+  public void testSingletonIntListIterator ()
+  {
+    final IntListIterator iter = IntCollections.singletonIntListIterator (17);
+    assertTrue (!iter.hasPrevious ());
+    assertTrue (iter.hasNext ());
+    assertEquals (17, iter.next ());
+    assertTrue (iter.hasPrevious ());
+    assertTrue (!iter.hasNext ());
+    assertEquals (17, iter.previous ());
+    try
+    {
+      iter.set (18);
+      fail ("Expected UnsupportedOperationException");
     }
-
-    public static Test suite() {
-        return new TestSuite(TestIntCollections.class);
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
     }
+  }
 
-    //---------------------------------------------------------------- Tests
-
-    public void testSingletonIntListIterator() {
-        IntListIterator iter = IntCollections.singletonIntListIterator(17);
-        assertTrue(!iter.hasPrevious());        
-        assertTrue(iter.hasNext());        
-        assertEquals(17,iter.next());        
-        assertTrue(iter.hasPrevious());        
-        assertTrue(!iter.hasNext());        
-        assertEquals(17,iter.previous());        
-        try {
-            iter.set(18);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+  public void testSingletonIntIterator ()
+  {
+    final IntIterator iter = IntCollections.singletonIntIterator (17);
+    assertTrue (iter.hasNext ());
+    assertEquals (17, iter.next ());
+    assertTrue (!iter.hasNext ());
+    try
+    {
+      iter.remove ();
+      fail ("Expected UnsupportedOperationException");
     }
-
-    public void testSingletonIntIterator() {
-        IntIterator iter = IntCollections.singletonIntIterator(17);
-        assertTrue(iter.hasNext());        
-        assertEquals(17,iter.next());        
-        assertTrue(!iter.hasNext());        
-        try {
-            iter.remove();
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
     }
+  }
 
-    public void testSingletonIntList() {
-        IntList list = IntCollections.singletonIntList(17);
-        assertEquals(1,list.size());
-        assertEquals(17,list.get(0));        
-        try {
-            list.add(18);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+  public void testSingletonIntList ()
+  {
+    final IntList list = IntCollections.singletonIntList (17);
+    assertEquals (1, list.size ());
+    assertEquals (17, list.get (0));
+    try
+    {
+      list.add (18);
+      fail ("Expected UnsupportedOperationException");
     }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
 
-    public void testUnmodifiableIntListNull() {
-        try {
-            IntCollections.unmodifiableIntList(null);
-            fail("Expected NullPointerException");
-        } catch(NullPointerException e) {
-            // expected
-        }
+  public void testUnmodifiableIntListNull ()
+  {
+    try
+    {
+      IntCollections.unmodifiableIntList (null);
+      fail ("Expected NullPointerException");
     }
+    catch (final NullPointerException e)
+    {
+      // expected
+    }
+  }
 
-    public void testEmptyIntList() {
-        assertSame(IntCollections.EMPTY_INT_LIST,IntCollections.getEmptyIntList());
-        assertTrue(IntCollections.EMPTY_INT_LIST.isEmpty());
-        try {
-            IntCollections.EMPTY_INT_LIST.add(1);
-            fail("Expected UnsupportedOperationExcpetion");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+  public void testEmptyIntList ()
+  {
+    assertSame (IntCollections.EMPTY_INT_LIST, IntCollections.getEmptyIntList ());
+    assertTrue (IntCollections.EMPTY_INT_LIST.isEmpty ());
+    try
+    {
+      IntCollections.EMPTY_INT_LIST.add (1);
+      fail ("Expected UnsupportedOperationExcpetion");
     }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
 
-    public void testUnmodifiableIntIteratorNull() {
-        try {
-            IntCollections.unmodifiableIntIterator(null);
-            fail("Expected NullPointerException");
-        } catch(NullPointerException e) {
-            // expected
-        }
+  public void testUnmodifiableIntIteratorNull ()
+  {
+    try
+    {
+      IntCollections.unmodifiableIntIterator (null);
+      fail ("Expected NullPointerException");
     }
+    catch (final NullPointerException e)
+    {
+      // expected
+    }
+  }
 
-    public void testEmptyIntIterator() {
-        assertSame(IntCollections.EMPTY_INT_ITERATOR,IntCollections.getEmptyIntIterator());
-        assertTrue(! IntCollections.EMPTY_INT_ITERATOR.hasNext());
-        try {
-            IntCollections.EMPTY_INT_ITERATOR.remove();
-            fail("Expected UnsupportedOperationExcpetion");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+  public void testEmptyIntIterator ()
+  {
+    assertSame (IntCollections.EMPTY_INT_ITERATOR, IntCollections.getEmptyIntIterator ());
+    assertTrue (!IntCollections.EMPTY_INT_ITERATOR.hasNext ());
+    try
+    {
+      IntCollections.EMPTY_INT_ITERATOR.remove ();
+      fail ("Expected UnsupportedOperationExcpetion");
     }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
 
-    public void testUnmodifiableIntListIteratorNull() {
-        try {
-            IntCollections.unmodifiableIntListIterator(null);
-            fail("Expected NullPointerException");
-        } catch(NullPointerException e) {
-            // expected
-        }
+  public void testUnmodifiableIntListIteratorNull ()
+  {
+    try
+    {
+      IntCollections.unmodifiableIntListIterator (null);
+      fail ("Expected NullPointerException");
     }
+    catch (final NullPointerException e)
+    {
+      // expected
+    }
+  }
 
-    public void testEmptyIntListIterator() {
-        assertSame(IntCollections.EMPTY_INT_LIST_ITERATOR,IntCollections.getEmptyIntListIterator());
-        assertTrue(! IntCollections.EMPTY_INT_LIST_ITERATOR.hasNext());
-        assertTrue(! IntCollections.EMPTY_INT_LIST_ITERATOR.hasPrevious());
-        try {
-            IntCollections.EMPTY_INT_LIST_ITERATOR.add(1);
-            fail("Expected UnsupportedOperationExcpetion");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+  public void testEmptyIntListIterator ()
+  {
+    assertSame (IntCollections.EMPTY_INT_LIST_ITERATOR, IntCollections.getEmptyIntListIterator ());
+    assertTrue (!IntCollections.EMPTY_INT_LIST_ITERATOR.hasNext ());
+    assertTrue (!IntCollections.EMPTY_INT_LIST_ITERATOR.hasPrevious ());
+    try
+    {
+      IntCollections.EMPTY_INT_LIST_ITERATOR.add (1);
+      fail ("Expected UnsupportedOperationExcpetion");
     }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
 }
-

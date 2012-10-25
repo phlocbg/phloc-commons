@@ -24,161 +24,212 @@ import org.apache.commons.collections.primitives.FloatList;
 import org.apache.commons.collections.primitives.FloatListIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class BaseUnmodifiableFloatListTest extends TestCase {
+public abstract class BaseUnmodifiableFloatListTest extends TestCase
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public BaseUnmodifiableFloatListTest(String testName) {
-        super(testName);
+  public BaseUnmodifiableFloatListTest (final String testName)
+  {
+    super (testName);
+  }
+
+  // framework
+  // ------------------------------------------------------------------------
+
+  protected abstract FloatList makeUnmodifiableFloatList ();
+
+  protected FloatList makeFloatList ()
+  {
+    final FloatList list = new ArrayFloatList ();
+    for (float i = 0; i < 10; i++)
+    {
+      list.add (i);
     }
-    
-    // framework
-    // ------------------------------------------------------------------------
+    return list;
+  }
 
-    protected abstract FloatList makeUnmodifiableFloatList();
+  // tests
+  // ------------------------------------------------------------------------
 
-    protected FloatList makeFloatList() {
-        FloatList list = new ArrayFloatList();
-        for(float i=0;i<10;i++) {
-            list.add(i);
-        }
-        return list;
-    }
+  public final void testNotModifiable () throws Exception
+  {
+    assertListNotModifiable (makeUnmodifiableFloatList ());
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
-    
-    public final void testNotModifiable() throws Exception {
-        assertListNotModifiable(makeUnmodifiableFloatList());
-    }
+  public final void testSublistNotModifiable () throws Exception
+  {
+    final FloatList list = makeUnmodifiableFloatList ();
+    assertListNotModifiable (list.subList (0, list.size () - 2));
+  }
 
-    public final void testSublistNotModifiable() throws Exception {
-        FloatList list = makeUnmodifiableFloatList();
-        assertListNotModifiable(list.subList(0,list.size()-2));
-    }
-    
-    public final void testIteratorNotModifiable() throws Exception {
-        FloatList list = makeUnmodifiableFloatList();
-        assertIteratorNotModifiable(list.iterator());
-        assertIteratorNotModifiable(list.subList(0,list.size()-2).iterator());
-    }
-    
-    public final void testListIteratorNotModifiable() throws Exception {
-        FloatList list = makeUnmodifiableFloatList();
-        assertListIteratorNotModifiable(list.listIterator());
-        assertListIteratorNotModifiable(list.subList(0,list.size()-2).listIterator());
-        assertListIteratorNotModifiable(list.listIterator(1));
-        assertListIteratorNotModifiable(list.subList(0,list.size()-2).listIterator(1));
-    }
+  public final void testIteratorNotModifiable () throws Exception
+  {
+    final FloatList list = makeUnmodifiableFloatList ();
+    assertIteratorNotModifiable (list.iterator ());
+    assertIteratorNotModifiable (list.subList (0, list.size () - 2).iterator ());
+  }
 
-    // util
-    // ------------------------------------------------------------------------
-    
-    private void assertListIteratorNotModifiable(FloatListIterator iter) throws Exception {
-        assertIteratorNotModifiable(iter);
-        
-        assertTrue(iter.hasPrevious());
-        
-        try {
-            iter.set((float)2);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            iter.add((float)2);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-    }
+  public final void testListIteratorNotModifiable () throws Exception
+  {
+    final FloatList list = makeUnmodifiableFloatList ();
+    assertListIteratorNotModifiable (list.listIterator ());
+    assertListIteratorNotModifiable (list.subList (0, list.size () - 2).listIterator ());
+    assertListIteratorNotModifiable (list.listIterator (1));
+    assertListIteratorNotModifiable (list.subList (0, list.size () - 2).listIterator (1));
+  }
 
-    private void assertIteratorNotModifiable(FloatIterator iter) throws Exception {
-        assertTrue(iter.hasNext());
-        iter.next();
-        
-        try {
-            iter.remove();
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+  // util
+  // ------------------------------------------------------------------------
+
+  private void assertListIteratorNotModifiable (final FloatListIterator iter) throws Exception
+  {
+    assertIteratorNotModifiable (iter);
+
+    assertTrue (iter.hasPrevious ());
+
+    try
+    {
+      iter.set (2);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
     }
 
-    private void assertListNotModifiable(FloatList list) throws Exception {
-        try {
-            list.add((float)1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            list.add(1,(float)2);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            list.addAll(makeFloatList());
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            list.addAll(1,makeFloatList());
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            list.removeElementAt(1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            list.removeElement((float)1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            list.removeAll(makeFloatList());
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-                
-        try {
-            list.retainAll(makeFloatList());
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-
-        try {
-            list.clear();
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            list.set(1,(float)2);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+    try
+    {
+      iter.add (2);
+      fail ("Expected UnsupportedOperationException");
     }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  private void assertIteratorNotModifiable (final FloatIterator iter) throws Exception
+  {
+    assertTrue (iter.hasNext ());
+    iter.next ();
+
+    try
+    {
+      iter.remove ();
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  private void assertListNotModifiable (final FloatList list) throws Exception
+  {
+    try
+    {
+      list.add (1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.add (1, 2);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.addAll (makeFloatList ());
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.addAll (1, makeFloatList ());
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.removeElementAt (1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.removeElement (1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.removeAll (makeFloatList ());
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.retainAll (makeFloatList ());
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.clear ();
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.set (1, 2);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
 }

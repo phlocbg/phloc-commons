@@ -26,52 +26,73 @@ import org.apache.commons.collections.primitives.CharIterator;
 import org.apache.commons.collections.primitives.TestCharIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestIteratorCharIterator extends TestCharIterator {
+public class TestIteratorCharIterator extends TestCharIterator
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestIteratorCharIterator(String testName) {
-        super(testName);
-    }
+  public TestIteratorCharIterator (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        return new TestSuite(TestIteratorCharIterator.class);
-    }
+  public static Test suite ()
+  {
+    return new TestSuite (TestIteratorCharIterator.class);
+  }
 
-    // collections testing framework
-    // ------------------------------------------------------------------------
+  // collections testing framework
+  // ------------------------------------------------------------------------
 
-    public CharIterator makeEmptyCharIterator() {
-        return IteratorCharIterator.wrap(makeEmptyList().iterator());
-    }
-    
-    public CharIterator makeFullCharIterator() {
-        return IteratorCharIterator.wrap(makeFullList().iterator());
-    }
+  @Override
+  public CharIterator makeEmptyCharIterator ()
+  {
+    return IteratorCharIterator.wrap (makeEmptyList ().iterator ());
+  }
 
-    public List makeEmptyList() {
-        return new ArrayList();
-    }
-    
-    protected List makeFullList() {
-        List list = makeEmptyList();
-        char[] elts = getFullElements();
-        for(int i=0;i<elts.length;i++) {
-            list.add(new Character(elts[i]));
-        }
-        return list;
-    }
-    
-    public char[] getFullElements() {
-        return new char[] { (char)0, (char)1, (char)2, (char)3, (char)4, (char)5, (char)6, (char)7, (char)8, (char)9 };
-    }
-    
-    // tests
-    // ------------------------------------------------------------------------
+  @Override
+  public CharIterator makeFullCharIterator ()
+  {
+    return IteratorCharIterator.wrap (makeFullList ().iterator ());
+  }
 
+  public List makeEmptyList ()
+  {
+    return new ArrayList ();
+  }
+
+  protected List makeFullList ()
+  {
+    final List list = makeEmptyList ();
+    final char [] elts = getFullElements ();
+    for (final char elt : elts)
+    {
+      list.add (new Character (elt));
+    }
+    return list;
+  }
+
+  @Override
+  public char [] getFullElements ()
+  {
+    return new char [] { (char) 0,
+                        (char) 1,
+                        (char) 2,
+                        (char) 3,
+                        (char) 4,
+                        (char) 5,
+                        (char) 6,
+                        (char) 7,
+                        (char) 8,
+                        (char) 9 };
+  }
+
+  // tests
+  // ------------------------------------------------------------------------
 
 }

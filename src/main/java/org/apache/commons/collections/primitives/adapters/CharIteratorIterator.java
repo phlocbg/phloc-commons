@@ -18,6 +18,9 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.Iterator;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.CharIterator;
 
 /**
@@ -32,8 +35,36 @@ import org.apache.commons.collections.primitives.CharIterator;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class CharIteratorIterator implements Iterator
+public class CharIteratorIterator implements Iterator <Character>
 {
+  private final CharIterator m_aIterator;
+
+  /**
+   * Creates an {@link Iterator Iterator} wrapping the specified
+   * {@link CharIterator CharIterator}.
+   * 
+   * @see #wrap
+   */
+  public CharIteratorIterator (@Nonnull final CharIterator iterator)
+  {
+    m_aIterator = iterator;
+  }
+
+  public boolean hasNext ()
+  {
+    return m_aIterator.hasNext ();
+  }
+
+  @Nonnull
+  public Character next ()
+  {
+    return Character.valueOf (m_aIterator.next ());
+  }
+
+  public void remove ()
+  {
+    m_aIterator.remove ();
+  }
 
   /**
    * Create an {@link Iterator Iterator} wrapping the specified
@@ -46,37 +77,9 @@ public class CharIteratorIterator implements Iterator
    * @return an {@link Iterator Iterator} wrapping the given <i>iterator</i>, or
    *         <code>null</code> when <i>iterator</i> is <code>null</code>.
    */
-  public static Iterator wrap (final CharIterator iterator)
+  @Nullable
+  public static Iterator <Character> wrap (@Nullable final CharIterator iterator)
   {
     return null == iterator ? null : new CharIteratorIterator (iterator);
   }
-
-  /**
-   * Creates an {@link Iterator Iterator} wrapping the specified
-   * {@link CharIterator CharIterator}.
-   * 
-   * @see #wrap
-   */
-  public CharIteratorIterator (final CharIterator iterator)
-  {
-    _iterator = iterator;
-  }
-
-  public boolean hasNext ()
-  {
-    return _iterator.hasNext ();
-  }
-
-  public Object next ()
-  {
-    return new Character (_iterator.next ());
-  }
-
-  public void remove ()
-  {
-    _iterator.remove ();
-  }
-
-  private CharIterator _iterator = null;
-
 }

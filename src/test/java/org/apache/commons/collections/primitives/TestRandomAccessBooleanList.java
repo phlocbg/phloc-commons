@@ -21,94 +21,121 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestRandomAccessBooleanList extends TestCase {
+public class TestRandomAccessBooleanList extends TestCase
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestRandomAccessBooleanList(String testName) {
-        super(testName);
+  public TestRandomAccessBooleanList (final String testName)
+  {
+    super (testName);
+  }
+
+  public static Test suite ()
+  {
+    return new TestSuite (TestRandomAccessBooleanList.class);
+  }
+
+  // tests
+  // ------------------------------------------------------------------------
+
+  public void testAddIsUnsupportedByDefault ()
+  {
+    final RandomAccessBooleanList list = new AbstractRandomAccessBooleanListImpl ();
+    try
+    {
+      list.add (true);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+    try
+    {
+      list.set (0, true);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  public void testAddAllIsUnsupportedByDefault ()
+  {
+    final RandomAccessBooleanList list = new AbstractRandomAccessBooleanListImpl ();
+    final BooleanList list2 = new ArrayBooleanList ();
+    list2.add (true);
+    try
+    {
+      list.addAll (list2);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  public void testSetIsUnsupportedByDefault ()
+  {
+    final RandomAccessBooleanList list = new AbstractRandomAccessBooleanListImpl ();
+    try
+    {
+      list.set (0, true);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  public void testRemoveElementIsUnsupportedByDefault ()
+  {
+    final RandomAccessBooleanList list = new AbstractRandomAccessBooleanListImpl ();
+    try
+    {
+      list.removeElementAt (0);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  // inner classes
+  // ------------------------------------------------------------------------
+
+  static class AbstractRandomAccessBooleanListImpl extends RandomAccessBooleanList
+  {
+    public AbstractRandomAccessBooleanListImpl ()
+    {}
+
+    /**
+     * @see org.apache.commons.collections.primitives.BooleanList#get(Boolean)
+     */
+    @Override
+    public boolean get (final int index)
+    {
+      throw new IndexOutOfBoundsException ();
     }
 
-    public static Test suite() {
-        return new TestSuite(TestRandomAccessBooleanList.class);
+    /**
+     * @see org.apache.commons.collections.primitives.BooleanCollection#size()
+     */
+    @Override
+    public int size ()
+    {
+      return 0;
     }
 
-    // tests
-    // ------------------------------------------------------------------------
-    
-    public void testAddIsUnsupportedByDefault() {
-        RandomAccessBooleanList list = new AbstractRandomAccessBooleanListImpl();
-        try {
-            list.add(true);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }        
-        try {
-            list.set(0,true);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }               
-    }
-
-    public void testAddAllIsUnsupportedByDefault() {
-        RandomAccessBooleanList list = new AbstractRandomAccessBooleanListImpl();
-        BooleanList list2 = new ArrayBooleanList();
-        list2.add(true);
-        try {
-            list.addAll(list2);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }               
-    }
-    
-    public void testSetIsUnsupportedByDefault() {
-        RandomAccessBooleanList list = new AbstractRandomAccessBooleanListImpl();
-        try {
-            list.set(0,true);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }               
-    }
-    
-    public void testRemoveElementIsUnsupportedByDefault() {
-        RandomAccessBooleanList list = new AbstractRandomAccessBooleanListImpl();
-        try {
-            list.removeElementAt(0);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }               
-    }
-    
-    // inner classes
-    // ------------------------------------------------------------------------
-
-
-    static class AbstractRandomAccessBooleanListImpl extends RandomAccessBooleanList {
-        public AbstractRandomAccessBooleanListImpl() {
-        }
-
-        /**
-         * @see org.apache.commons.collections.primitives.BooleanList#get(Boolean)
-         */
-        public boolean get(int index) {
-            throw new IndexOutOfBoundsException();
-        }
-
-        /**
-         * @see org.apache.commons.collections.primitives.BooleanCollection#size()
-         */
-        public int size() {
-            return 0;
-        }
-
-    }
+  }
 }

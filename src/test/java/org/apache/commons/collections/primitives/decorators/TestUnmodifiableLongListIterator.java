@@ -22,44 +22,52 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.primitives.LongListIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestUnmodifiableLongListIterator extends BaseUnmodifiableLongListIteratorTest {
+public class TestUnmodifiableLongListIterator extends BaseUnmodifiableLongListIteratorTest
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestUnmodifiableLongListIterator(String testName) {
-        super(testName);
-    }
-    
+  public TestUnmodifiableLongListIterator (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        return new TestSuite(TestUnmodifiableLongListIterator.class);
-    }
+  public static Test suite ()
+  {
+    return new TestSuite (TestUnmodifiableLongListIterator.class);
+  }
 
-    // framework
-    // ------------------------------------------------------------------------
+  // framework
+  // ------------------------------------------------------------------------
 
-    protected LongListIterator makeUnmodifiableLongListIterator() {
-        return UnmodifiableLongListIterator.wrap(makeLongListIterator());
-    }
+  @Override
+  protected LongListIterator makeUnmodifiableLongListIterator ()
+  {
+    return UnmodifiableLongListIterator.wrap (makeLongListIterator ());
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
+  // tests
+  // ------------------------------------------------------------------------
 
-    public void testWrapNotNull() {
-        assertNotNull(UnmodifiableLongListIterator.wrap(makeLongListIterator()));
-    }
+  public void testWrapNotNull ()
+  {
+    assertNotNull (UnmodifiableLongListIterator.wrap (makeLongListIterator ()));
+  }
 
-    public void testWrapNull() {
-        assertNull(UnmodifiableLongListIterator.wrap(null));
-    }
+  public void testWrapNull ()
+  {
+    assertNull (UnmodifiableLongListIterator.wrap (null));
+  }
 
-    public void testWrapUnmodifiableLongListIterator() {
-        LongListIterator iter = makeUnmodifiableLongListIterator();
-        assertSame(iter,UnmodifiableLongListIterator.wrap(iter));
-    }
+  public void testWrapUnmodifiableLongListIterator ()
+  {
+    final LongListIterator iter = makeUnmodifiableLongListIterator ();
+    assertSame (iter, UnmodifiableLongListIterator.wrap (iter));
+  }
 
 }

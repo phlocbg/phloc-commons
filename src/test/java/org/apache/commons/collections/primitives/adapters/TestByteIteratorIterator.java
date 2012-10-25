@@ -26,52 +26,72 @@ import org.apache.commons.collections.primitives.ArrayByteList;
 import org.apache.commons.collections.primitives.ByteList;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestByteIteratorIterator extends AbstractTestIterator {
+public class TestByteIteratorIterator extends AbstractTestIterator
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestByteIteratorIterator(String testName) {
-        super(testName);
-    }
+  public TestByteIteratorIterator (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        return new TestSuite(TestByteIteratorIterator.class);
-    }
+  public static Test suite ()
+  {
+    return new TestSuite (TestByteIteratorIterator.class);
+  }
 
-    // collections testing framework
-    // ------------------------------------------------------------------------
+  // collections testing framework
+  // ------------------------------------------------------------------------
 
-    public Iterator makeEmptyIterator() {
-        return ByteIteratorIterator.wrap(makeEmptyByteList().iterator());
-    }
-    
-    public Iterator makeFullIterator() {
-        return ByteIteratorIterator.wrap(makeFullByteList().iterator());
-    }
+  @Override
+  public Iterator makeEmptyIterator ()
+  {
+    return ByteIteratorIterator.wrap (makeEmptyByteList ().iterator ());
+  }
 
-    protected ByteList makeEmptyByteList() {
-        return new ArrayByteList();
-    }
-    
-    protected ByteList makeFullByteList() {
-        ByteList list = makeEmptyByteList();
-        byte[] elts = getFullElements();
-        for(int i=0;i<elts.length;i++) {
-            list.add((byte)elts[i]);
-        }
-        return list;
-    }
-    
-    public byte[] getFullElements() {
-        return new byte[] { (byte)0, (byte)1, (byte)2, (byte)3, (byte)4, (byte)5, (byte)6, (byte)7, (byte)8, (byte)9 };
-    }
-    
-    // tests
-    // ------------------------------------------------------------------------
+  @Override
+  public Iterator makeFullIterator ()
+  {
+    return ByteIteratorIterator.wrap (makeFullByteList ().iterator ());
+  }
 
+  protected ByteList makeEmptyByteList ()
+  {
+    return new ArrayByteList ();
+  }
+
+  protected ByteList makeFullByteList ()
+  {
+    final ByteList list = makeEmptyByteList ();
+    final byte [] elts = getFullElements ();
+    for (final byte elt : elts)
+    {
+      list.add (elt);
+    }
+    return list;
+  }
+
+  public byte [] getFullElements ()
+  {
+    return new byte [] { (byte) 0,
+                        (byte) 1,
+                        (byte) 2,
+                        (byte) 3,
+                        (byte) 4,
+                        (byte) 5,
+                        (byte) 6,
+                        (byte) 7,
+                        (byte) 8,
+                        (byte) 9 };
+  }
+
+  // tests
+  // ------------------------------------------------------------------------
 
 }

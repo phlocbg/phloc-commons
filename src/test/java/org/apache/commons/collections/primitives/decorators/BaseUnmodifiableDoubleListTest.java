@@ -24,161 +24,212 @@ import org.apache.commons.collections.primitives.DoubleList;
 import org.apache.commons.collections.primitives.DoubleListIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class BaseUnmodifiableDoubleListTest extends TestCase {
+public abstract class BaseUnmodifiableDoubleListTest extends TestCase
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public BaseUnmodifiableDoubleListTest(String testName) {
-        super(testName);
+  public BaseUnmodifiableDoubleListTest (final String testName)
+  {
+    super (testName);
+  }
+
+  // framework
+  // ------------------------------------------------------------------------
+
+  protected abstract DoubleList makeUnmodifiableDoubleList ();
+
+  protected DoubleList makeDoubleList ()
+  {
+    final DoubleList list = new ArrayDoubleList ();
+    for (double i = 0; i < 10; i++)
+    {
+      list.add (i);
     }
-    
-    // framework
-    // ------------------------------------------------------------------------
+    return list;
+  }
 
-    protected abstract DoubleList makeUnmodifiableDoubleList();
+  // tests
+  // ------------------------------------------------------------------------
 
-    protected DoubleList makeDoubleList() {
-        DoubleList list = new ArrayDoubleList();
-        for(double i=0;i<10;i++) {
-            list.add(i);
-        }
-        return list;
-    }
+  public final void testNotModifiable () throws Exception
+  {
+    assertListNotModifiable (makeUnmodifiableDoubleList ());
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
-    
-    public final void testNotModifiable() throws Exception {
-        assertListNotModifiable(makeUnmodifiableDoubleList());
-    }
+  public final void testSublistNotModifiable () throws Exception
+  {
+    final DoubleList list = makeUnmodifiableDoubleList ();
+    assertListNotModifiable (list.subList (0, list.size () - 2));
+  }
 
-    public final void testSublistNotModifiable() throws Exception {
-        DoubleList list = makeUnmodifiableDoubleList();
-        assertListNotModifiable(list.subList(0,list.size()-2));
-    }
-    
-    public final void testIteratorNotModifiable() throws Exception {
-        DoubleList list = makeUnmodifiableDoubleList();
-        assertIteratorNotModifiable(list.iterator());
-        assertIteratorNotModifiable(list.subList(0,list.size()-2).iterator());
-    }
-    
-    public final void testListIteratorNotModifiable() throws Exception {
-        DoubleList list = makeUnmodifiableDoubleList();
-        assertListIteratorNotModifiable(list.listIterator());
-        assertListIteratorNotModifiable(list.subList(0,list.size()-2).listIterator());
-        assertListIteratorNotModifiable(list.listIterator(1));
-        assertListIteratorNotModifiable(list.subList(0,list.size()-2).listIterator(1));
-    }
+  public final void testIteratorNotModifiable () throws Exception
+  {
+    final DoubleList list = makeUnmodifiableDoubleList ();
+    assertIteratorNotModifiable (list.iterator ());
+    assertIteratorNotModifiable (list.subList (0, list.size () - 2).iterator ());
+  }
 
-    // util
-    // ------------------------------------------------------------------------
-    
-    private void assertListIteratorNotModifiable(DoubleListIterator iter) throws Exception {
-        assertIteratorNotModifiable(iter);
-        
-        assertTrue(iter.hasPrevious());
-        
-        try {
-            iter.set((double)2);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            iter.add((double)2);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-    }
+  public final void testListIteratorNotModifiable () throws Exception
+  {
+    final DoubleList list = makeUnmodifiableDoubleList ();
+    assertListIteratorNotModifiable (list.listIterator ());
+    assertListIteratorNotModifiable (list.subList (0, list.size () - 2).listIterator ());
+    assertListIteratorNotModifiable (list.listIterator (1));
+    assertListIteratorNotModifiable (list.subList (0, list.size () - 2).listIterator (1));
+  }
 
-    private void assertIteratorNotModifiable(DoubleIterator iter) throws Exception {
-        assertTrue(iter.hasNext());
-        iter.next();
-        
-        try {
-            iter.remove();
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+  // util
+  // ------------------------------------------------------------------------
+
+  private void assertListIteratorNotModifiable (final DoubleListIterator iter) throws Exception
+  {
+    assertIteratorNotModifiable (iter);
+
+    assertTrue (iter.hasPrevious ());
+
+    try
+    {
+      iter.set (2);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
     }
 
-    private void assertListNotModifiable(DoubleList list) throws Exception {
-        try {
-            list.add((double)1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            list.add(1,(double)2);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            list.addAll(makeDoubleList());
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            list.addAll(1,makeDoubleList());
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            list.removeElementAt(1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            list.removeElement((double)1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            list.removeAll(makeDoubleList());
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-                
-        try {
-            list.retainAll(makeDoubleList());
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-
-        try {
-            list.clear();
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            list.set(1,(double)2);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+    try
+    {
+      iter.add (2);
+      fail ("Expected UnsupportedOperationException");
     }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  private void assertIteratorNotModifiable (final DoubleIterator iter) throws Exception
+  {
+    assertTrue (iter.hasNext ());
+    iter.next ();
+
+    try
+    {
+      iter.remove ();
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  private void assertListNotModifiable (final DoubleList list) throws Exception
+  {
+    try
+    {
+      list.add (1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.add (1, 2);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.addAll (makeDoubleList ());
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.addAll (1, makeDoubleList ());
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.removeElementAt (1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.removeElement (1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.removeAll (makeDoubleList ());
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.retainAll (makeDoubleList ());
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.clear ();
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.set (1, 2);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
 }

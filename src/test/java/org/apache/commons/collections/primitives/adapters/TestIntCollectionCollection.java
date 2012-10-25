@@ -23,73 +23,99 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.AbstractTestObject;
-import org.apache.commons.collections.primitives.RandomAccessIntList;
 import org.apache.commons.collections.primitives.ArrayIntList;
 import org.apache.commons.collections.primitives.IntList;
+import org.apache.commons.collections.primitives.RandomAccessIntList;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestIntCollectionCollection extends AbstractTestObject {
+public class TestIntCollectionCollection extends AbstractTestObject
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestIntCollectionCollection(String testName) {
-        super(testName);
-    }
+  public TestIntCollectionCollection (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        return new TestSuite(TestIntCollectionCollection.class);
-    }
+  public static Test suite ()
+  {
+    return new TestSuite (TestIntCollectionCollection.class);
+  }
 
-    // collections testing framework
-    // ------------------------------------------------------------------------
+  // collections testing framework
+  // ------------------------------------------------------------------------
 
-    public Object makeObject() {
-        IntList list = new ArrayIntList();
-        for(int i=0;i<10;i++) {
-            list.add(i);
-        }
-        return new IntCollectionCollection(list);
+  @Override
+  public Object makeObject ()
+  {
+    final IntList list = new ArrayIntList ();
+    for (int i = 0; i < 10; i++)
+    {
+      list.add (i);
     }
+    return new IntCollectionCollection (list);
+  }
 
-    public void testSerializeDeserializeThenCompare() {
-        // Collection.equal contract doesn't work that way
-    }
+  @Override
+  public void testSerializeDeserializeThenCompare ()
+  {
+    // Collection.equal contract doesn't work that way
+  }
 
-    /** @TODO need to add serialized form to cvs */
-    public void testCanonicalEmptyCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+  /** @TODO need to add serialized form to cvs */
+  @Override
+  public void testCanonicalEmptyCollectionExists ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    public void testCanonicalFullCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
-    
-    // tests
-    // ------------------------------------------------------------------------
+  @Override
+  public void testCanonicalFullCollectionExists ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    public void testWrapNull() {
-        assertNull(IntCollectionCollection.wrap(null));
-    }
-    
-    public void testWrapSerializable() {
-        Collection collection = IntCollectionCollection.wrap(new ArrayIntList());
-        assertNotNull(collection);
-        assertTrue(collection instanceof Serializable);
-    }
-    
-    public void testWrapNonSerializable() {
-        Collection collection = IntCollectionCollection.wrap(new RandomAccessIntList() { 
-            public int get(int i) { throw new IndexOutOfBoundsException(); } 
-            public int size() { return 0; } 
-        });
-        assertNotNull(collection);
-        assertTrue(!(collection instanceof Serializable));
-    }
+  // tests
+  // ------------------------------------------------------------------------
+
+  public void testWrapNull ()
+  {
+    assertNull (IntCollectionCollection.wrap (null));
+  }
+
+  public void testWrapSerializable ()
+  {
+    final Collection collection = IntCollectionCollection.wrap (new ArrayIntList ());
+    assertNotNull (collection);
+    assertTrue (collection instanceof Serializable);
+  }
+
+  public void testWrapNonSerializable ()
+  {
+    final Collection collection = IntCollectionCollection.wrap (new RandomAccessIntList ()
+    {
+      @Override
+      public int get (final int i)
+      {
+        throw new IndexOutOfBoundsException ();
+      }
+
+      @Override
+      public int size ()
+      {
+        return 0;
+      }
+    });
+    assertNotNull (collection);
+    assertTrue (!(collection instanceof Serializable));
+  }
 
 }

@@ -23,28 +23,32 @@ import junit.framework.TestSuite;
 /**
  * Test all the packages.
  * 
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Stephen Colebourne
  */
-public class AllTestSuite extends TestCase {
-    public AllTestSuite(String testName) {
-        super(testName);
-    }
+public class AllTestSuite extends TestCase
+{
+  public AllTestSuite (final String testName)
+  {
+    super (testName);
+  }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { AllTestSuite.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
-    }
+  public static void main (final String args[])
+  {
+    final String [] testCaseName = { AllTestSuite.class.getName () };
+    junit.textui.TestRunner.main (testCaseName);
+  }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
+  public static Test suite ()
+  {
+    final TestSuite suite = new TestSuite ();
 
-        suite.addTest(org.apache.commons.collections.primitives.PackageTestSuite.suite());
-        suite.addTest(org.apache.commons.collections.primitives.adapters.PackageTestSuite.suite());
-        suite.addTest(org.apache.commons.collections.primitives.adapters.io.PackageTestSuite.suite());
-        suite.addTest(org.apache.commons.collections.primitives.decorators.PackageTestSuite.suite());
-        
-        return suite;
-    }
+    suite.addTest (org.apache.commons.collections.primitives.PackageTestSuite.suite ());
+    suite.addTest (org.apache.commons.collections.primitives.adapters.PackageTestSuite.suite ());
+    suite.addTest (org.apache.commons.collections.primitives.adapters.io.PackageTestSuite.suite ());
+    suite.addTest (org.apache.commons.collections.primitives.decorators.PackageTestSuite.suite ());
+
+    return suite;
+  }
 }
-

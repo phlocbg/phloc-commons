@@ -23,73 +23,99 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.AbstractTestObject;
-import org.apache.commons.collections.primitives.RandomAccessFloatList;
 import org.apache.commons.collections.primitives.ArrayFloatList;
 import org.apache.commons.collections.primitives.FloatList;
+import org.apache.commons.collections.primitives.RandomAccessFloatList;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestFloatCollectionCollection extends AbstractTestObject {
+public class TestFloatCollectionCollection extends AbstractTestObject
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestFloatCollectionCollection(String testName) {
-        super(testName);
-    }
+  public TestFloatCollectionCollection (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        return new TestSuite(TestFloatCollectionCollection.class);
-    }
+  public static Test suite ()
+  {
+    return new TestSuite (TestFloatCollectionCollection.class);
+  }
 
-    // collections testing framework
-    // ------------------------------------------------------------------------
+  // collections testing framework
+  // ------------------------------------------------------------------------
 
-    public Object makeObject() {
-        FloatList list = new ArrayFloatList();
-        for(int i=0;i<10;i++) {
-            list.add((float)i);
-        }
-        return new FloatCollectionCollection(list);
+  @Override
+  public Object makeObject ()
+  {
+    final FloatList list = new ArrayFloatList ();
+    for (int i = 0; i < 10; i++)
+    {
+      list.add (i);
     }
+    return new FloatCollectionCollection (list);
+  }
 
-    public void testSerializeDeserializeThenCompare() {
-        // Collection.equal contract doesn't work that way
-    }
+  @Override
+  public void testSerializeDeserializeThenCompare ()
+  {
+    // Collection.equal contract doesn't work that way
+  }
 
-    /** @TODO need to add serialized form to cvs */
-    public void testCanonicalEmptyCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+  /** @TODO need to add serialized form to cvs */
+  @Override
+  public void testCanonicalEmptyCollectionExists ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    public void testCanonicalFullCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
-    
-    // tests
-    // ------------------------------------------------------------------------
+  @Override
+  public void testCanonicalFullCollectionExists ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    public void testWrapNull() {
-        assertNull(FloatCollectionCollection.wrap(null));
-    }
-    
-    public void testWrapSerializable() {
-        Collection collection = FloatCollectionCollection.wrap(new ArrayFloatList());
-        assertNotNull(collection);
-        assertTrue(collection instanceof Serializable);
-    }
-    
-    public void testWrapNonSerializable() {
-        Collection collection = FloatCollectionCollection.wrap(new RandomAccessFloatList() { 
-            public float get(int i) { throw new IndexOutOfBoundsException(); } 
-            public int size() { return 0; } 
-        });
-        assertNotNull(collection);
-        assertTrue(!(collection instanceof Serializable));
-    }
+  // tests
+  // ------------------------------------------------------------------------
+
+  public void testWrapNull ()
+  {
+    assertNull (FloatCollectionCollection.wrap (null));
+  }
+
+  public void testWrapSerializable ()
+  {
+    final Collection collection = FloatCollectionCollection.wrap (new ArrayFloatList ());
+    assertNotNull (collection);
+    assertTrue (collection instanceof Serializable);
+  }
+
+  public void testWrapNonSerializable ()
+  {
+    final Collection collection = FloatCollectionCollection.wrap (new RandomAccessFloatList ()
+    {
+      @Override
+      public float get (final int i)
+      {
+        throw new IndexOutOfBoundsException ();
+      }
+
+      @Override
+      public int size ()
+      {
+        return 0;
+      }
+    });
+    assertNotNull (collection);
+    assertTrue (!(collection instanceof Serializable));
+  }
 
 }

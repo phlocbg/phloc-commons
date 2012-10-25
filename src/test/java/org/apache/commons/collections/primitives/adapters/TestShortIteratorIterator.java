@@ -26,52 +26,72 @@ import org.apache.commons.collections.primitives.ArrayShortList;
 import org.apache.commons.collections.primitives.ShortList;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestShortIteratorIterator extends AbstractTestIterator {
+public class TestShortIteratorIterator extends AbstractTestIterator
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestShortIteratorIterator(String testName) {
-        super(testName);
-    }
+  public TestShortIteratorIterator (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        return new TestSuite(TestShortIteratorIterator.class);
-    }
+  public static Test suite ()
+  {
+    return new TestSuite (TestShortIteratorIterator.class);
+  }
 
-    // collections testing framework
-    // ------------------------------------------------------------------------
+  // collections testing framework
+  // ------------------------------------------------------------------------
 
-    public Iterator makeEmptyIterator() {
-        return ShortIteratorIterator.wrap(makeEmptyShortList().iterator());
-    }
-    
-    public Iterator makeFullIterator() {
-        return ShortIteratorIterator.wrap(makeFullShortList().iterator());
-    }
+  @Override
+  public Iterator makeEmptyIterator ()
+  {
+    return ShortIteratorIterator.wrap (makeEmptyShortList ().iterator ());
+  }
 
-    protected ShortList makeEmptyShortList() {
-        return new ArrayShortList();
-    }
-    
-    protected ShortList makeFullShortList() {
-        ShortList list = makeEmptyShortList();
-        short[] elts = getFullElements();
-        for(int i=0;i<elts.length;i++) {
-            list.add((short)elts[i]);
-        }
-        return list;
-    }
-    
-    public short[] getFullElements() {
-        return new short[] { (short)0, (short)1, (short)2, (short)3, (short)4, (short)5, (short)6, (short)7, (short)8, (short)9 };
-    }
-    
-    // tests
-    // ------------------------------------------------------------------------
+  @Override
+  public Iterator makeFullIterator ()
+  {
+    return ShortIteratorIterator.wrap (makeFullShortList ().iterator ());
+  }
 
+  protected ShortList makeEmptyShortList ()
+  {
+    return new ArrayShortList ();
+  }
+
+  protected ShortList makeFullShortList ()
+  {
+    final ShortList list = makeEmptyShortList ();
+    final short [] elts = getFullElements ();
+    for (final short elt : elts)
+    {
+      list.add (elt);
+    }
+    return list;
+  }
+
+  public short [] getFullElements ()
+  {
+    return new short [] { (short) 0,
+                         (short) 1,
+                         (short) 2,
+                         (short) 3,
+                         (short) 4,
+                         (short) 5,
+                         (short) 6,
+                         (short) 7,
+                         (short) 8,
+                         (short) 9 };
+  }
+
+  // tests
+  // ------------------------------------------------------------------------
 
 }

@@ -24,161 +24,212 @@ import org.apache.commons.collections.primitives.IntList;
 import org.apache.commons.collections.primitives.IntListIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class BaseUnmodifiableIntListTest extends TestCase {
+public abstract class BaseUnmodifiableIntListTest extends TestCase
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public BaseUnmodifiableIntListTest(String testName) {
-        super(testName);
+  public BaseUnmodifiableIntListTest (final String testName)
+  {
+    super (testName);
+  }
+
+  // framework
+  // ------------------------------------------------------------------------
+
+  protected abstract IntList makeUnmodifiableIntList ();
+
+  protected IntList makeIntList ()
+  {
+    final IntList list = new ArrayIntList ();
+    for (int i = 0; i < 10; i++)
+    {
+      list.add (i);
     }
-    
-    // framework
-    // ------------------------------------------------------------------------
+    return list;
+  }
 
-    protected abstract IntList makeUnmodifiableIntList();
+  // tests
+  // ------------------------------------------------------------------------
 
-    protected IntList makeIntList() {
-        IntList list = new ArrayIntList();
-        for(int i=0;i<10;i++) {
-            list.add(i);
-        }
-        return list;
-    }
+  public final void testNotModifiable () throws Exception
+  {
+    assertListNotModifiable (makeUnmodifiableIntList ());
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
-    
-    public final void testNotModifiable() throws Exception {
-        assertListNotModifiable(makeUnmodifiableIntList());
-    }
+  public final void testSublistNotModifiable () throws Exception
+  {
+    final IntList list = makeUnmodifiableIntList ();
+    assertListNotModifiable (list.subList (0, list.size () - 2));
+  }
 
-    public final void testSublistNotModifiable() throws Exception {
-        IntList list = makeUnmodifiableIntList();
-        assertListNotModifiable(list.subList(0,list.size()-2));
-    }
-    
-    public final void testIteratorNotModifiable() throws Exception {
-        IntList list = makeUnmodifiableIntList();
-        assertIteratorNotModifiable(list.iterator());
-        assertIteratorNotModifiable(list.subList(0,list.size()-2).iterator());
-    }
-    
-    public final void testListIteratorNotModifiable() throws Exception {
-        IntList list = makeUnmodifiableIntList();
-        assertListIteratorNotModifiable(list.listIterator());
-        assertListIteratorNotModifiable(list.subList(0,list.size()-2).listIterator());
-        assertListIteratorNotModifiable(list.listIterator(1));
-        assertListIteratorNotModifiable(list.subList(0,list.size()-2).listIterator(1));
-    }
+  public final void testIteratorNotModifiable () throws Exception
+  {
+    final IntList list = makeUnmodifiableIntList ();
+    assertIteratorNotModifiable (list.iterator ());
+    assertIteratorNotModifiable (list.subList (0, list.size () - 2).iterator ());
+  }
 
-    // util
-    // ------------------------------------------------------------------------
-    
-    private void assertListIteratorNotModifiable(IntListIterator iter) throws Exception {
-        assertIteratorNotModifiable(iter);
-        
-        assertTrue(iter.hasPrevious());
-        
-        try {
-            iter.set(2);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            iter.add(2);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-    }
+  public final void testListIteratorNotModifiable () throws Exception
+  {
+    final IntList list = makeUnmodifiableIntList ();
+    assertListIteratorNotModifiable (list.listIterator ());
+    assertListIteratorNotModifiable (list.subList (0, list.size () - 2).listIterator ());
+    assertListIteratorNotModifiable (list.listIterator (1));
+    assertListIteratorNotModifiable (list.subList (0, list.size () - 2).listIterator (1));
+  }
 
-    private void assertIteratorNotModifiable(IntIterator iter) throws Exception {
-        assertTrue(iter.hasNext());
-        iter.next();
-        
-        try {
-            iter.remove();
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+  // util
+  // ------------------------------------------------------------------------
+
+  private void assertListIteratorNotModifiable (final IntListIterator iter) throws Exception
+  {
+    assertIteratorNotModifiable (iter);
+
+    assertTrue (iter.hasPrevious ());
+
+    try
+    {
+      iter.set (2);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
     }
 
-    private void assertListNotModifiable(IntList list) throws Exception {
-        try {
-            list.add(1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            list.add(1,2);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            list.addAll(makeIntList());
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            list.addAll(1,makeIntList());
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            list.removeElementAt(1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            list.removeElement(1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            list.removeAll(makeIntList());
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-                
-        try {
-            list.retainAll(makeIntList());
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-
-        try {
-            list.clear();
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            list.set(1,2);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+    try
+    {
+      iter.add (2);
+      fail ("Expected UnsupportedOperationException");
     }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  private void assertIteratorNotModifiable (final IntIterator iter) throws Exception
+  {
+    assertTrue (iter.hasNext ());
+    iter.next ();
+
+    try
+    {
+      iter.remove ();
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  private void assertListNotModifiable (final IntList list) throws Exception
+  {
+    try
+    {
+      list.add (1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.add (1, 2);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.addAll (makeIntList ());
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.addAll (1, makeIntList ());
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.removeElementAt (1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.removeElement (1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.removeAll (makeIntList ());
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.retainAll (makeIntList ());
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.clear ();
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.set (1, 2);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
 }

@@ -22,95 +22,116 @@ import org.apache.commons.collections.primitives.LongList;
 import org.apache.commons.collections.primitives.LongListIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class BaseUnmodifiableLongListIteratorTest extends BaseUnmodifiableLongIteratorTest {
+public abstract class BaseUnmodifiableLongListIteratorTest extends BaseUnmodifiableLongIteratorTest
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public BaseUnmodifiableLongListIteratorTest(String testName) {
-        super(testName);
+  public BaseUnmodifiableLongListIteratorTest (final String testName)
+  {
+    super (testName);
+  }
+
+  // framework
+  // ------------------------------------------------------------------------
+
+  protected abstract LongListIterator makeUnmodifiableLongListIterator ();
+
+  @Override
+  protected LongIterator makeUnmodifiableLongIterator ()
+  {
+    return makeUnmodifiableLongListIterator ();
+  }
+
+  @Override
+  protected LongIterator makeLongIterator ()
+  {
+    return makeLongListIterator ();
+  }
+
+  protected LongListIterator makeLongListIterator ()
+  {
+    final LongList list = new ArrayLongList ();
+    for (int i = 0; i < 10; i++)
+    {
+      list.add (i);
     }
-    
+    return list.listIterator ();
+  }
 
-    // framework
-    // ------------------------------------------------------------------------
+  // tests
+  // ------------------------------------------------------------------------
 
-    protected abstract LongListIterator makeUnmodifiableLongListIterator();
+  public final void testLongListIteratorNotModifiable ()
+  {
+    final LongListIterator iter = makeUnmodifiableLongListIterator ();
+    assertTrue (iter.hasNext ());
+    iter.next ();
+    try
+    {
+      iter.remove ();
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+    try
+    {
+      iter.add (1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+    try
+    {
+      iter.set (3);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
 
-    protected LongIterator makeUnmodifiableLongIterator() {
-        return makeUnmodifiableLongListIterator();
+  public final void testIterateLongListIterator ()
+  {
+    final LongListIterator iter = makeUnmodifiableLongListIterator ();
+    final LongListIterator expected = makeLongListIterator ();
+
+    assertTrue (!iter.hasPrevious ());
+
+    while (expected.hasNext ())
+    {
+      assertTrue (iter.hasNext ());
+      assertEquals (expected.nextIndex (), iter.nextIndex ());
+      assertEquals (expected.previousIndex (), iter.previousIndex ());
+      assertEquals (expected.next (), iter.next ());
+      assertTrue (iter.hasPrevious ());
+      assertEquals (expected.nextIndex (), iter.nextIndex ());
+      assertEquals (expected.previousIndex (), iter.previousIndex ());
     }
 
-    protected LongIterator makeLongIterator() {
-        return makeLongListIterator();
+    assertTrue (!iter.hasNext ());
+
+    while (expected.hasPrevious ())
+    {
+      assertTrue (iter.hasPrevious ());
+      assertEquals (expected.nextIndex (), iter.nextIndex ());
+      assertEquals (expected.previousIndex (), iter.previousIndex ());
+      assertEquals (expected.previous (), iter.previous ());
+      assertTrue (iter.hasNext ());
+      assertEquals (expected.nextIndex (), iter.nextIndex ());
+      assertEquals (expected.previousIndex (), iter.previousIndex ());
     }
-    
-    protected LongListIterator makeLongListIterator() {
-        LongList list = new ArrayLongList();
-        for(int i=0;i<10;i++) {
-            list.add(i);
-        }
-        return list.listIterator();
-    }
-
-    // tests
-    // ------------------------------------------------------------------------
-
-    public final void testLongListIteratorNotModifiable() {
-        LongListIterator iter = makeUnmodifiableLongListIterator();
-        assertTrue(iter.hasNext());
-        iter.next();
-        try {
-            iter.remove();
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            iter.add(1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            iter.set(3);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-    }
-
-    public final void testIterateLongListIterator() {        
-        LongListIterator iter = makeUnmodifiableLongListIterator();
-        LongListIterator expected = makeLongListIterator();
-        
-        assertTrue(! iter.hasPrevious());
-        
-        while( expected.hasNext() ) {
-            assertTrue(iter.hasNext());
-            assertEquals(expected.nextIndex(),iter.nextIndex());
-            assertEquals(expected.previousIndex(),iter.previousIndex());
-            assertEquals(expected.next(),iter.next());
-            assertTrue(iter.hasPrevious());
-            assertEquals(expected.nextIndex(),iter.nextIndex());
-            assertEquals(expected.previousIndex(),iter.previousIndex());
-        }
-
-        assertTrue(! iter.hasNext() );
-
-        while( expected.hasPrevious() ) {
-            assertTrue(iter.hasPrevious());
-            assertEquals(expected.nextIndex(),iter.nextIndex());
-            assertEquals(expected.previousIndex(),iter.previousIndex());
-            assertEquals(expected.previous(),iter.previous());
-            assertTrue(iter.hasNext());
-            assertEquals(expected.nextIndex(),iter.nextIndex());
-            assertEquals(expected.previousIndex(),iter.previousIndex());
-        }
-        assertTrue(! iter.hasPrevious() );
-    }
+    assertTrue (!iter.hasPrevious ());
+  }
 
 }

@@ -22,44 +22,52 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.primitives.ShortListIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestUnmodifiableShortListIterator extends BaseUnmodifiableShortListIteratorTest {
+public class TestUnmodifiableShortListIterator extends BaseUnmodifiableShortListIteratorTest
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestUnmodifiableShortListIterator(String testName) {
-        super(testName);
-    }
-    
+  public TestUnmodifiableShortListIterator (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        return new TestSuite(TestUnmodifiableShortListIterator.class);
-    }
+  public static Test suite ()
+  {
+    return new TestSuite (TestUnmodifiableShortListIterator.class);
+  }
 
-    // framework
-    // ------------------------------------------------------------------------
+  // framework
+  // ------------------------------------------------------------------------
 
-    protected ShortListIterator makeUnmodifiableShortListIterator() {
-        return UnmodifiableShortListIterator.wrap(makeShortListIterator());
-    }
+  @Override
+  protected ShortListIterator makeUnmodifiableShortListIterator ()
+  {
+    return UnmodifiableShortListIterator.wrap (makeShortListIterator ());
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
+  // tests
+  // ------------------------------------------------------------------------
 
-    public void testWrapNotNull() {
-        assertNotNull(UnmodifiableShortListIterator.wrap(makeShortListIterator()));
-    }
+  public void testWrapNotNull ()
+  {
+    assertNotNull (UnmodifiableShortListIterator.wrap (makeShortListIterator ()));
+  }
 
-    public void testWrapNull() {
-        assertNull(UnmodifiableShortListIterator.wrap(null));
-    }
+  public void testWrapNull ()
+  {
+    assertNull (UnmodifiableShortListIterator.wrap (null));
+  }
 
-    public void testWrapUnmodifiableShortListIterator() {
-        ShortListIterator iter = makeUnmodifiableShortListIterator();
-        assertSame(iter,UnmodifiableShortListIterator.wrap(iter));
-    }
+  public void testWrapUnmodifiableShortListIterator ()
+  {
+    final ShortListIterator iter = makeUnmodifiableShortListIterator ();
+    assertSame (iter, UnmodifiableShortListIterator.wrap (iter));
+  }
 
 }

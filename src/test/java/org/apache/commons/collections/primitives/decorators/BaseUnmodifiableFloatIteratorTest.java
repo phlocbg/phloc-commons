@@ -23,53 +23,63 @@ import org.apache.commons.collections.primitives.FloatIterator;
 import org.apache.commons.collections.primitives.FloatList;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class BaseUnmodifiableFloatIteratorTest extends TestCase {
+public abstract class BaseUnmodifiableFloatIteratorTest extends TestCase
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public BaseUnmodifiableFloatIteratorTest(String testName) {
-        super(testName);
+  public BaseUnmodifiableFloatIteratorTest (final String testName)
+  {
+    super (testName);
+  }
+
+  // framework
+  // ------------------------------------------------------------------------
+  protected abstract FloatIterator makeUnmodifiableFloatIterator ();
+
+  protected FloatIterator makeFloatIterator ()
+  {
+    final FloatList list = new ArrayFloatList ();
+    for (float i = 0; i < 10; i++)
+    {
+      list.add (i);
     }
-    
+    return list.iterator ();
+  }
 
-    // framework
-    // ------------------------------------------------------------------------
-    protected abstract FloatIterator makeUnmodifiableFloatIterator();
+  // tests
+  // ------------------------------------------------------------------------
 
-    protected FloatIterator makeFloatIterator() {
-        FloatList list = new ArrayFloatList();
-        for(float i=0;i<10;i++) {
-            list.add(i);
-        }
-        return list.iterator();
+  public final void testFloatIteratorNotModifiable ()
+  {
+    final FloatIterator iter = makeUnmodifiableFloatIterator ();
+    assertTrue (iter.hasNext ());
+    iter.next ();
+    try
+    {
+      iter.remove ();
+      fail ("Expected UnsupportedOperationException");
     }
-
-    // tests
-    // ------------------------------------------------------------------------
-
-    public final void testFloatIteratorNotModifiable() {
-        FloatIterator iter = makeUnmodifiableFloatIterator();
-        assertTrue(iter.hasNext());
-        iter.next();
-        try {
-            iter.remove();
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
     }
+  }
 
-    public final void testIterateFloatIterator() {        
-        FloatIterator iter = makeUnmodifiableFloatIterator();
-        for(FloatIterator expected = makeFloatIterator(); expected.hasNext(); ) {
-            assertTrue(iter.hasNext());
-            assertEquals(expected.next(),iter.next(),(float)0);
-        }
-        assertTrue(! iter.hasNext() );
+  public final void testIterateFloatIterator ()
+  {
+    final FloatIterator iter = makeUnmodifiableFloatIterator ();
+    for (final FloatIterator expected = makeFloatIterator (); expected.hasNext ();)
+    {
+      assertTrue (iter.hasNext ());
+      assertEquals (expected.next (), iter.next (), 0);
     }
+    assertTrue (!iter.hasNext ());
+  }
 
 }

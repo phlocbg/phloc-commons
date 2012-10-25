@@ -27,87 +27,120 @@ import org.apache.commons.collections.primitives.ArrayFloatList;
 import org.apache.commons.collections.primitives.RandomAccessFloatList;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestFloatListList extends BaseTestList {
+public class TestFloatListList extends BaseTestList
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestFloatListList(String testName) {
-        super(testName);
+  public TestFloatListList (final String testName)
+  {
+    super (testName);
+  }
+
+  public static Test suite ()
+  {
+    final TestSuite suite = BulkTest.makeSuite (TestFloatListList.class);
+    return suite;
+  }
+
+  // collections testing framework
+  // ------------------------------------------------------------------------
+
+  @Override
+  public List makeEmptyList ()
+  {
+    return new FloatListList (new ArrayFloatList ());
+  }
+
+  @Override
+  public Object [] getFullElements ()
+  {
+    final Float [] elts = new Float [10];
+    for (int i = 0; i < elts.length; i++)
+    {
+      elts[i] = new Float (i);
     }
+    return elts;
+  }
 
-    public static Test suite() {
-        TestSuite suite = BulkTest.makeSuite(TestFloatListList.class);
-        return suite;
+  @Override
+  public Object [] getOtherElements ()
+  {
+    final Float [] elts = new Float [10];
+    for (int i = 0; i < elts.length; i++)
+    {
+      elts[i] = new Float (10 + i);
     }
+    return elts;
+  }
 
-    // collections testing framework
-    // ------------------------------------------------------------------------
+  // tests
+  // ------------------------------------------------------------------------
 
-    public List makeEmptyList() {
-        return new FloatListList(new ArrayFloatList());
-    }
-        
-    public Object[] getFullElements() {
-        Float[] elts = new Float[10];
-        for(int i=0;i<elts.length;i++) {
-            elts[i] = new Float((float)i);
-        }
-        return elts;
-    }
+  /** @TODO need to add serialized form to cvs */
 
-    public Object[] getOtherElements() {
-        Float[] elts = new Float[10];
-        for(int i=0;i<elts.length;i++) {
-            elts[i] = new Float((float)(10 + i));
-        }
-        return elts;
-    }
+  @Override
+  public void testCanonicalEmptyCollectionExists ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
+  @Override
+  public void testCanonicalFullCollectionExists ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    /** @TODO need to add serialized form to cvs */
+  @Override
+  public void testEmptyListCompatibility ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    public void testCanonicalEmptyCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+  @Override
+  public void testFullListCompatibility ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    public void testCanonicalFullCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+  public void testWrapNull ()
+  {
+    assertNull (FloatListList.wrap (null));
+  }
 
-    public void testEmptyListCompatibility() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+  public void testWrapSerializable ()
+  {
+    final List list = FloatListList.wrap (new ArrayFloatList ());
+    assertNotNull (list);
+    assertTrue (list instanceof Serializable);
+  }
 
-    public void testFullListCompatibility() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+  public void testWrapNonSerializable ()
+  {
+    final List list = FloatListList.wrap (new RandomAccessFloatList ()
+    {
+      @Override
+      public float get (final int i)
+      {
+        throw new IndexOutOfBoundsException ();
+      }
 
-    public void testWrapNull() {
-        assertNull(FloatListList.wrap(null));
-    }
-    
-    public void testWrapSerializable() {
-        List list = FloatListList.wrap(new ArrayFloatList());
-        assertNotNull(list);
-        assertTrue(list instanceof Serializable);
-    }
-    
-    public void testWrapNonSerializable() {
-        List list = FloatListList.wrap(new RandomAccessFloatList() { 
-            public float get(int i) { throw new IndexOutOfBoundsException(); } 
-            public int size() { return 0; } 
-        });
-        assertNotNull(list);
-        assertTrue(!(list instanceof Serializable));
-    }
+      @Override
+      public int size ()
+      {
+        return 0;
+      }
+    });
+    assertNotNull (list);
+    assertTrue (!(list instanceof Serializable));
+  }
 }

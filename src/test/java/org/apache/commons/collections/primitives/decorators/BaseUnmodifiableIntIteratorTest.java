@@ -23,53 +23,63 @@ import org.apache.commons.collections.primitives.IntIterator;
 import org.apache.commons.collections.primitives.IntList;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class BaseUnmodifiableIntIteratorTest extends TestCase {
+public abstract class BaseUnmodifiableIntIteratorTest extends TestCase
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public BaseUnmodifiableIntIteratorTest(String testName) {
-        super(testName);
+  public BaseUnmodifiableIntIteratorTest (final String testName)
+  {
+    super (testName);
+  }
+
+  // framework
+  // ------------------------------------------------------------------------
+  protected abstract IntIterator makeUnmodifiableIntIterator ();
+
+  protected IntIterator makeIntIterator ()
+  {
+    final IntList list = new ArrayIntList ();
+    for (int i = 0; i < 10; i++)
+    {
+      list.add (i);
     }
-    
+    return list.iterator ();
+  }
 
-    // framework
-    // ------------------------------------------------------------------------
-    protected abstract IntIterator makeUnmodifiableIntIterator();
+  // tests
+  // ------------------------------------------------------------------------
 
-    protected IntIterator makeIntIterator() {
-        IntList list = new ArrayIntList();
-        for(int i=0;i<10;i++) {
-            list.add(i);
-        }
-        return list.iterator();
+  public final void testIntIteratorNotModifiable ()
+  {
+    final IntIterator iter = makeUnmodifiableIntIterator ();
+    assertTrue (iter.hasNext ());
+    iter.next ();
+    try
+    {
+      iter.remove ();
+      fail ("Expected UnsupportedOperationException");
     }
-
-    // tests
-    // ------------------------------------------------------------------------
-
-    public final void testIntIteratorNotModifiable() {
-        IntIterator iter = makeUnmodifiableIntIterator();
-        assertTrue(iter.hasNext());
-        iter.next();
-        try {
-            iter.remove();
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
     }
+  }
 
-    public final void testIterateIntIterator() {        
-        IntIterator iter = makeUnmodifiableIntIterator();
-        for(IntIterator expected = makeIntIterator(); expected.hasNext(); ) {
-            assertTrue(iter.hasNext());
-            assertEquals(expected.next(),iter.next());
-        }
-        assertTrue(! iter.hasNext() );
+  public final void testIterateIntIterator ()
+  {
+    final IntIterator iter = makeUnmodifiableIntIterator ();
+    for (final IntIterator expected = makeIntIterator (); expected.hasNext ();)
+    {
+      assertTrue (iter.hasNext ());
+      assertEquals (expected.next (), iter.next ());
     }
+    assertTrue (!iter.hasNext ());
+  }
 
 }

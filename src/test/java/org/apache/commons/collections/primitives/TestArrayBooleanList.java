@@ -22,171 +22,211 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.BulkTest;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestArrayBooleanList extends TestBooleanList {
+public class TestArrayBooleanList extends TestBooleanList
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestArrayBooleanList(String testName) {
-        super(testName);
+  public TestArrayBooleanList (final String testName)
+  {
+    super (testName);
+  }
+
+  public static Test suite ()
+  {
+    final TestSuite suite = BulkTest.makeSuite (TestArrayBooleanList.class);
+    return suite;
+  }
+
+  // collections testing framework
+  // ------------------------------------------------------------------------
+
+  @Override
+  protected BooleanList makeEmptyBooleanList ()
+  {
+    return new ArrayBooleanList ();
+  }
+
+  @Override
+  public String [] ignoredTests ()
+  {
+    return new String [] {
+
+                          // having only two unique values breaks these:
+                          "TestArrayBooleanList.bulkTestSubList.testListEquals",
+                          "TestArrayBooleanList.bulkTestSubList.testCollectionRemoveAll",
+                          "TestArrayBooleanList.bulkTestSubList.testCollectionRetainAll",
+
+                          // sublists are not serializable
+                          "TestArrayBooleanList.bulkTestSubList.testFullListSerialization",
+                          "TestArrayBooleanList.bulkTestSubList.testEmptyListSerialization",
+                          "TestArrayBooleanList.bulkTestSubList.testCanonicalEmptyCollectionExists",
+                          "TestArrayBooleanList.bulkTestSubList.testCanonicalFullCollectionExists",
+                          "TestArrayBooleanList.bulkTestSubList.testEmptyListCompatibility",
+                          "TestArrayBooleanList.bulkTestSubList.testFullListCompatibility",
+                          "TestArrayBooleanList.bulkTestSubList.testSerializeDeserializeThenCompare",
+                          "TestArrayBooleanList.bulkTestSubList.testSimpleSerialization" };
+  }
+
+  // tests
+  // ------------------------------------------------------------------------
+
+  /** @TODO need to add serialized form to cvs */
+  @Override
+  public void testCanonicalEmptyCollectionExists ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
+
+  @Override
+  public void testCanonicalFullCollectionExists ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
+
+  @Override
+  public void testEmptyListCompatibility ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
+
+  @Override
+  public void testFullListCompatibility ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
+
+  public void testZeroInitialCapacityIsValid ()
+  {
+    assertNotNull (new ArrayBooleanList (0));
+  }
+
+  public void testNegativeInitialCapacityIsInvalid ()
+  {
+    try
+    {
+      new ArrayBooleanList (-1);
+      fail ("Expected IllegalArgumentException");
     }
-
-    public static Test suite() {
-        TestSuite suite = BulkTest.makeSuite(TestArrayBooleanList.class);
-        return suite;
+    catch (final IllegalArgumentException e)
+    {
+      // expected
     }
+  }
 
-    // collections testing framework
-    // ------------------------------------------------------------------------
-
-    protected BooleanList makeEmptyBooleanList() {
-        return new ArrayBooleanList();
+  public void testCopyConstructor ()
+  {
+    final ArrayBooleanList expected = new ArrayBooleanList ();
+    for (int i = 0; i < 10; i++)
+    {
+      expected.add (i % 2 == 0);
     }
+    final ArrayBooleanList list = new ArrayBooleanList (expected);
+    assertEquals (10, list.size ());
+    assertEquals (expected, list);
+  }
 
-    public String[] ignoredTests() {
-        return new String[] { 
-
-                // having only two unique values breaks these:
-                "TestArrayBooleanList.bulkTestSubList.testListEquals",
-                "TestArrayBooleanList.bulkTestSubList.testCollectionRemoveAll",
-                "TestArrayBooleanList.bulkTestSubList.testCollectionRetainAll",
-
-                // sublists are not serializable                
-            "TestArrayBooleanList.bulkTestSubList.testFullListSerialization",
-            "TestArrayBooleanList.bulkTestSubList.testEmptyListSerialization",
-            "TestArrayBooleanList.bulkTestSubList.testCanonicalEmptyCollectionExists",
-            "TestArrayBooleanList.bulkTestSubList.testCanonicalFullCollectionExists",
-            "TestArrayBooleanList.bulkTestSubList.testEmptyListCompatibility",
-            "TestArrayBooleanList.bulkTestSubList.testFullListCompatibility",
-            "TestArrayBooleanList.bulkTestSubList.testSerializeDeserializeThenCompare",
-            "TestArrayBooleanList.bulkTestSubList.testSimpleSerialization"
-        };
+  public void testCopyConstructorWithNull ()
+  {
+    try
+    {
+      new ArrayBooleanList ((BooleanCollection) null);
+      fail ("Expected NullPointerException");
     }
-
-    // tests
-    // ------------------------------------------------------------------------
-
-    /** @TODO need to add serialized form to cvs */
-    public void testCanonicalEmptyCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
+    catch (final NullPointerException e)
+    {
+      // expected
     }
+  }
 
-    public void testCanonicalFullCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
+  public void testArrayConstructor ()
+  {
+    final ArrayBooleanList expected = new ArrayBooleanList ();
+    for (int i = 0; i < 10; i++)
+    {
+      expected.add (i % 2 == 0);
     }
+    final ArrayBooleanList list = new ArrayBooleanList (expected.toArray ());
+    assertEquals (10, list.size ());
+    assertEquals (expected, list);
+  }
 
-    public void testEmptyListCompatibility() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
+  public void testArrayConstructorWithNull ()
+  {
+    try
+    {
+      new ArrayBooleanList ((boolean []) null);
+      fail ("Expected NullPointerException");
     }
-
-    public void testFullListCompatibility() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
+    catch (final NullPointerException e)
+    {
+      // expected
     }
+  }
 
-    public void testZeroInitialCapacityIsValid() {
-        assertNotNull(new ArrayBooleanList(0));
+  public void testTrimToSize ()
+  {
+    final ArrayBooleanList list = new ArrayBooleanList ();
+    for (int j = 0; j < 3; j++)
+    {
+      assertTrue (list.isEmpty ());
+
+      list.trimToSize ();
+
+      assertTrue (list.isEmpty ());
+
+      for (int i = 0; i < 10; i++)
+      {
+        list.add (i % 2 == 0);
+      }
+
+      for (int i = 0; i < 10; i++)
+      {
+        assertEquals (i % 2 == 0, list.get (i));
+      }
+
+      list.trimToSize ();
+
+      for (int i = 0; i < 10; i++)
+      {
+        assertEquals (i % 2 == 0, list.get (i));
+      }
+
+      for (int i = 0; i < 5; i++)
+      {
+        list.removeElement (true);
+      }
+
+      for (int i = 0; i < 5; i++)
+      {
+        assertEquals (false, list.get (i));
+      }
+
+      list.trimToSize ();
+
+      for (int i = 0; i < 5; i++)
+      {
+        assertEquals (false, list.get (i));
+      }
+
+      list.trimToSize ();
+
+      for (int i = 0; i < 5; i++)
+      {
+        assertEquals (false, list.get (i));
+      }
+
+      list.clear ();
     }
-
-    public void testNegativeInitialCapacityIsInvalid() {
-        try {
-            new ArrayBooleanList(-1);
-            fail("Expected IllegalArgumentException");
-        } catch(IllegalArgumentException e) {
-            // expected
-        }
-    }
-
-    public void testCopyConstructor() {
-        ArrayBooleanList expected = new ArrayBooleanList();
-        for(int i=0;i<10;i++) {
-            expected.add(i%2==0);
-        }
-        ArrayBooleanList list = new ArrayBooleanList(expected);
-        assertEquals(10,list.size());
-        assertEquals(expected,list);
-    }
-
-    public void testCopyConstructorWithNull() {
-        try {
-            new ArrayBooleanList((BooleanCollection) null);
-            fail("Expected NullPointerException");
-        } catch(NullPointerException e) {
-            // expected
-        }
-    }
-
-    public void testArrayConstructor() {
-        ArrayBooleanList expected = new ArrayBooleanList();
-        for (int i = 0; i < 10; i++) {
-            expected.add(i % 2 == 0);
-        }
-        ArrayBooleanList list = new ArrayBooleanList(expected.toArray());
-        assertEquals(10, list.size());
-        assertEquals(expected, list);
-    }
-
-    public void testArrayConstructorWithNull() {
-        try {
-            new ArrayBooleanList((boolean[]) null);
-            fail("Expected NullPointerException");
-        } catch (NullPointerException e) {
-            // expected
-        }
-    }
-
-
-    public void testTrimToSize() {
-        ArrayBooleanList list = new ArrayBooleanList();
-        for(int j=0;j<3;j++) {
-            assertTrue(list.isEmpty());
-    
-            list.trimToSize();
-    
-            assertTrue(list.isEmpty());
-            
-            for(int i=0;i<10;i++) {
-                list.add(i%2==0);
-            }
-            
-            for(int i=0;i<10;i++) {
-                assertEquals(i%2==0,list.get(i));
-            }
-            
-            list.trimToSize();
-    
-            for(int i=0;i<10;i++) {
-                assertEquals(i%2==0,list.get(i));
-            }
-    
-            for(int i=0;i<5;i++) {
-                list.removeElement(true);
-            }
-            
-            for(int i=0;i<5;i++) {
-                assertEquals(false,list.get(i));
-            }
-    
-            list.trimToSize();
-                    
-            for(int i=0;i<5;i++) {
-                assertEquals(false,list.get(i));
-            }
-
-            list.trimToSize();
-                    
-            for(int i=0;i<5;i++) {
-                assertEquals(false,list.get(i));
-            }
-    
-            list.clear();
-        }
-    }
+  }
 
 }

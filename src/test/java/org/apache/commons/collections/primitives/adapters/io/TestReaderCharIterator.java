@@ -27,73 +27,97 @@ import org.apache.commons.collections.primitives.CharIterator;
 import org.apache.commons.collections.primitives.TestCharIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestReaderCharIterator extends TestCharIterator {
+public class TestReaderCharIterator extends TestCharIterator
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestReaderCharIterator(String testName) {
-        super(testName);
+  public TestReaderCharIterator (final String testName)
+  {
+    super (testName);
+  }
+
+  public static Test suite ()
+  {
+    return new TestSuite (TestReaderCharIterator.class);
+  }
+
+  // ------------------------------------------------------------------------
+
+  @Override
+  public boolean supportsRemove ()
+  {
+    return false;
+  }
+
+  @Override
+  protected CharIterator makeEmptyCharIterator ()
+  {
+    return new ReaderCharIterator (new StringReader (""));
+  }
+
+  @Override
+  protected CharIterator makeFullCharIterator ()
+  {
+    return new ReaderCharIterator (new StringReader (new String (getFullElements ())));
+  }
+
+  @Override
+  protected char [] getFullElements ()
+  {
+    return "The quick brown fox jumped over the lazy dogs.".toCharArray ();
+  }
+
+  // ------------------------------------------------------------------------
+
+  public void testErrorThrowingReader ()
+  {
+    final Reader errReader = new Reader ()
+    {
+      @Override
+      public int read (final char [] buf, final int off, final int len) throws IOException
+      {
+        throw new IOException ();
+      }
+
+      @Override
+      public void close () throws IOException
+      {}
+    };
+
+    final CharIterator iter = new ReaderCharIterator (errReader);
+    try
+    {
+      iter.hasNext ();
+      fail ("Expected RuntimeException");
     }
-
-    public static Test suite() {
-        return new TestSuite(TestReaderCharIterator.class);
+    catch (final RuntimeException e)
+    {
+      // expected
     }
-
-    // ------------------------------------------------------------------------
-    
-    public boolean supportsRemove() {
-        return false;
+    try
+    {
+      iter.next ();
+      fail ("Expected RuntimeException");
     }
-
-    protected CharIterator makeEmptyCharIterator() {
-        return new ReaderCharIterator(new StringReader(""));
+    catch (final RuntimeException e)
+    {
+      // expected
     }
+  }
 
-    protected CharIterator makeFullCharIterator() {
-        return new ReaderCharIterator(new StringReader(new String(getFullElements())));
-    }
+  public void testAdaptNull ()
+  {
+    assertNull (ReaderCharIterator.adapt (null));
+  }
 
-    protected char[] getFullElements() {
-        return "The quick brown fox jumped over the lazy dogs.".toCharArray();
-    }
-
-
-    // ------------------------------------------------------------------------
-    
-    public void testErrorThrowingReader() {
-        Reader errReader = new Reader() {
-            public int read(char[] buf, int off, int len) throws IOException {
-                throw new IOException();
-            }
-            
-            public void close() throws IOException {
-            }
-        };
-        
-        CharIterator iter = new ReaderCharIterator(errReader);
-        try {
-            iter.hasNext();
-            fail("Expected RuntimeException");
-        } catch(RuntimeException e) {
-            // expected
-        } 
-        try {
-            iter.next();
-            fail("Expected RuntimeException");
-        } catch(RuntimeException e) {
-            // expected
-        } 
-    }
-    
-    public void testAdaptNull() {
-        assertNull(ReaderCharIterator.adapt(null));
-    }
-
-    public void testAdaptNonNull() {
-        assertNotNull(ReaderCharIterator.adapt(new StringReader("")));
-    }
+  public void testAdaptNonNull ()
+  {
+    assertNotNull (ReaderCharIterator.adapt (new StringReader ("")));
+  }
 }

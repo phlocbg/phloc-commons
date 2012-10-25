@@ -26,52 +26,64 @@ import org.apache.commons.collections.primitives.FloatIterator;
 import org.apache.commons.collections.primitives.TestFloatIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestIteratorFloatIterator extends TestFloatIterator {
+public class TestIteratorFloatIterator extends TestFloatIterator
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestIteratorFloatIterator(String testName) {
-        super(testName);
-    }
+  public TestIteratorFloatIterator (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        return new TestSuite(TestIteratorFloatIterator.class);
-    }
+  public static Test suite ()
+  {
+    return new TestSuite (TestIteratorFloatIterator.class);
+  }
 
-    // collections testing framework
-    // ------------------------------------------------------------------------
+  // collections testing framework
+  // ------------------------------------------------------------------------
 
-    public FloatIterator makeEmptyFloatIterator() {
-        return IteratorFloatIterator.wrap(makeEmptyList().iterator());
-    }
-    
-    public FloatIterator makeFullFloatIterator() {
-        return IteratorFloatIterator.wrap(makeFullList().iterator());
-    }
+  @Override
+  public FloatIterator makeEmptyFloatIterator ()
+  {
+    return IteratorFloatIterator.wrap (makeEmptyList ().iterator ());
+  }
 
-    public List makeEmptyList() {
-        return new ArrayList();
-    }
-    
-    protected List makeFullList() {
-        List list = makeEmptyList();
-        float[] elts = getFullElements();
-        for(int i=0;i<elts.length;i++) {
-            list.add(new Float(elts[i]));
-        }
-        return list;
-    }
-    
-    public float[] getFullElements() {
-        return new float[] { (float)0, (float)1, (float)2, (float)3, (float)4, (float)5, (float)6, (float)7, (float)8, (float)9 };
-    }
-    
-    // tests
-    // ------------------------------------------------------------------------
+  @Override
+  public FloatIterator makeFullFloatIterator ()
+  {
+    return IteratorFloatIterator.wrap (makeFullList ().iterator ());
+  }
 
+  public List makeEmptyList ()
+  {
+    return new ArrayList ();
+  }
+
+  protected List makeFullList ()
+  {
+    final List list = makeEmptyList ();
+    final float [] elts = getFullElements ();
+    for (final float elt : elts)
+    {
+      list.add (new Float (elt));
+    }
+    return list;
+  }
+
+  @Override
+  public float [] getFullElements ()
+  {
+    return new float [] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+  }
+
+  // tests
+  // ------------------------------------------------------------------------
 
 }

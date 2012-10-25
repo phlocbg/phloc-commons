@@ -22,44 +22,52 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.primitives.DoubleListIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestUnmodifiableDoubleListIterator extends BaseUnmodifiableDoubleListIteratorTest {
+public class TestUnmodifiableDoubleListIterator extends BaseUnmodifiableDoubleListIteratorTest
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestUnmodifiableDoubleListIterator(String testName) {
-        super(testName);
-    }
-    
+  public TestUnmodifiableDoubleListIterator (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        return new TestSuite(TestUnmodifiableDoubleListIterator.class);
-    }
+  public static Test suite ()
+  {
+    return new TestSuite (TestUnmodifiableDoubleListIterator.class);
+  }
 
-    // framework
-    // ------------------------------------------------------------------------
+  // framework
+  // ------------------------------------------------------------------------
 
-    protected DoubleListIterator makeUnmodifiableDoubleListIterator() {
-        return UnmodifiableDoubleListIterator.wrap(makeDoubleListIterator());
-    }
+  @Override
+  protected DoubleListIterator makeUnmodifiableDoubleListIterator ()
+  {
+    return UnmodifiableDoubleListIterator.wrap (makeDoubleListIterator ());
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
+  // tests
+  // ------------------------------------------------------------------------
 
-    public void testWrapNotNull() {
-        assertNotNull(UnmodifiableDoubleListIterator.wrap(makeDoubleListIterator()));
-    }
+  public void testWrapNotNull ()
+  {
+    assertNotNull (UnmodifiableDoubleListIterator.wrap (makeDoubleListIterator ()));
+  }
 
-    public void testWrapNull() {
-        assertNull(UnmodifiableDoubleListIterator.wrap(null));
-    }
+  public void testWrapNull ()
+  {
+    assertNull (UnmodifiableDoubleListIterator.wrap (null));
+  }
 
-    public void testWrapUnmodifiableDoubleListIterator() {
-        DoubleListIterator iter = makeUnmodifiableDoubleListIterator();
-        assertSame(iter,UnmodifiableDoubleListIterator.wrap(iter));
-    }
+  public void testWrapUnmodifiableDoubleListIterator ()
+  {
+    final DoubleListIterator iter = makeUnmodifiableDoubleListIterator ();
+    assertSame (iter, UnmodifiableDoubleListIterator.wrap (iter));
+  }
 
 }

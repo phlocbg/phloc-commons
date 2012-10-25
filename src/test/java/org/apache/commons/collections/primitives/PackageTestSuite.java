@@ -23,73 +23,77 @@ import junit.framework.TestSuite;
 /**
  * Test this package.
  * 
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class PackageTestSuite extends TestCase {
-    public PackageTestSuite(String testName) {
-        super(testName);
-    }
+public class PackageTestSuite extends TestCase
+{
+  public PackageTestSuite (final String testName)
+  {
+    super (testName);
+  }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { PackageTestSuite.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
-    }
+  public static void main (final String args[])
+  {
+    final String [] testCaseName = { PackageTestSuite.class.getName () };
+    junit.textui.TestRunner.main (testCaseName);
+  }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
+  public static Test suite ()
+  {
+    final TestSuite suite = new TestSuite ();
 
-        suite.addTest(TestAbstractBooleanCollection.suite());
-        suite.addTest(TestRandomAccessBooleanList.suite());
-        suite.addTest(TestArrayBooleanList.suite());
-        suite.addTest(TestBooleanStack.suite());
-        
-        suite.addTest(TestByteCollections.suite());
-        suite.addTest(TestAbstractByteCollection.suite());
-        suite.addTest(TestRandomAccessByteList.suite());
-        suite.addTest(TestArrayByteList.suite());
-        suite.addTest(TestByteStack.suite());
+    suite.addTest (TestAbstractBooleanCollection.suite ());
+    suite.addTest (TestRandomAccessBooleanList.suite ());
+    suite.addTest (TestArrayBooleanList.suite ());
+    suite.addTest (TestBooleanStack.suite ());
 
-        suite.addTest(TestShortCollections.suite());
-        suite.addTest(TestAbstractShortCollection.suite());
-        suite.addTest(TestRandomAccessShortList.suite());
-        suite.addTest(TestArrayShortList.suite());
-        suite.addTest(TestArrayUnsignedByteList.suite());
-        suite.addTest(TestShortStack.suite());
+    suite.addTest (TestByteCollections.suite ());
+    suite.addTest (TestAbstractByteCollection.suite ());
+    suite.addTest (TestRandomAccessByteList.suite ());
+    suite.addTest (TestArrayByteList.suite ());
+    suite.addTest (TestByteStack.suite ());
 
-        suite.addTest(TestCharCollections.suite());
-        suite.addTest(TestAbstractCharCollection.suite());
-        suite.addTest(TestRandomAccessCharList.suite());
-        suite.addTest(TestArrayCharList.suite());
-        suite.addTest(TestCharStack.suite());
+    suite.addTest (TestShortCollections.suite ());
+    suite.addTest (TestAbstractShortCollection.suite ());
+    suite.addTest (TestRandomAccessShortList.suite ());
+    suite.addTest (TestArrayShortList.suite ());
+    suite.addTest (TestArrayUnsignedByteList.suite ());
+    suite.addTest (TestShortStack.suite ());
 
-        suite.addTest(TestIntCollections.suite());
-        suite.addTest(TestAbstractIntCollection.suite());
-        suite.addTest(TestRandomAccessIntList.suite());
-        suite.addTest(TestArrayIntList.suite());
-        suite.addTest(TestArrayUnsignedShortList.suite());
-        suite.addTest(TestIntStack.suite());
+    suite.addTest (TestCharCollections.suite ());
+    suite.addTest (TestAbstractCharCollection.suite ());
+    suite.addTest (TestRandomAccessCharList.suite ());
+    suite.addTest (TestArrayCharList.suite ());
+    suite.addTest (TestCharStack.suite ());
 
-        suite.addTest(TestLongCollections.suite());
-		suite.addTest(TestAbstractLongCollection.suite());
-		suite.addTest(TestRandomAccessLongList.suite());
-        suite.addTest(TestArrayLongList.suite());
-        suite.addTest(TestArrayUnsignedIntList.suite());
-        suite.addTest(TestLongStack.suite());
+    suite.addTest (TestIntCollections.suite ());
+    suite.addTest (TestAbstractIntCollection.suite ());
+    suite.addTest (TestRandomAccessIntList.suite ());
+    suite.addTest (TestArrayIntList.suite ());
+    suite.addTest (TestArrayUnsignedShortList.suite ());
+    suite.addTest (TestIntStack.suite ());
 
-        suite.addTest(TestFloatCollections.suite());
-        suite.addTest(TestAbstractFloatCollection.suite());
-        suite.addTest(TestRandomAccessFloatList.suite());
-        suite.addTest(TestArrayFloatList.suite());
-        suite.addTest(TestFloatStack.suite());
+    suite.addTest (TestLongCollections.suite ());
+    suite.addTest (TestAbstractLongCollection.suite ());
+    suite.addTest (TestRandomAccessLongList.suite ());
+    suite.addTest (TestArrayLongList.suite ());
+    suite.addTest (TestArrayUnsignedIntList.suite ());
+    suite.addTest (TestLongStack.suite ());
 
-        suite.addTest(TestDoubleCollections.suite());
-        suite.addTest(TestAbstractDoubleCollection.suite());
-        suite.addTest(TestRandomAccessDoubleList.suite());
-        suite.addTest(TestArrayDoubleList.suite());
-        suite.addTest(TestDoubleStack.suite());
+    suite.addTest (TestFloatCollections.suite ());
+    suite.addTest (TestAbstractFloatCollection.suite ());
+    suite.addTest (TestRandomAccessFloatList.suite ());
+    suite.addTest (TestArrayFloatList.suite ());
+    suite.addTest (TestFloatStack.suite ());
 
-        return suite;
-    }
+    suite.addTest (TestDoubleCollections.suite ());
+    suite.addTest (TestAbstractDoubleCollection.suite ());
+    suite.addTest (TestRandomAccessDoubleList.suite ());
+    suite.addTest (TestArrayDoubleList.suite ());
+    suite.addTest (TestDoubleStack.suite ());
+
+    return suite;
+  }
 }
-

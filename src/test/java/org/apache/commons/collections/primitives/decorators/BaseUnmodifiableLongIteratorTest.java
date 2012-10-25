@@ -23,53 +23,63 @@ import org.apache.commons.collections.primitives.LongIterator;
 import org.apache.commons.collections.primitives.LongList;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class BaseUnmodifiableLongIteratorTest extends TestCase {
+public abstract class BaseUnmodifiableLongIteratorTest extends TestCase
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public BaseUnmodifiableLongIteratorTest(String testName) {
-        super(testName);
+  public BaseUnmodifiableLongIteratorTest (final String testName)
+  {
+    super (testName);
+  }
+
+  // framework
+  // ------------------------------------------------------------------------
+  protected abstract LongIterator makeUnmodifiableLongIterator ();
+
+  protected LongIterator makeLongIterator ()
+  {
+    final LongList list = new ArrayLongList ();
+    for (long i = 0; i < 10; i++)
+    {
+      list.add (i);
     }
-    
+    return list.iterator ();
+  }
 
-    // framework
-    // ------------------------------------------------------------------------
-    protected abstract LongIterator makeUnmodifiableLongIterator();
+  // tests
+  // ------------------------------------------------------------------------
 
-    protected LongIterator makeLongIterator() {
-        LongList list = new ArrayLongList();
-        for(long i=0;i<10;i++) {
-            list.add(i);
-        }
-        return list.iterator();
+  public final void testLongIteratorNotModifiable ()
+  {
+    final LongIterator iter = makeUnmodifiableLongIterator ();
+    assertTrue (iter.hasNext ());
+    iter.next ();
+    try
+    {
+      iter.remove ();
+      fail ("Expected UnsupportedOperationException");
     }
-
-    // tests
-    // ------------------------------------------------------------------------
-
-    public final void testLongIteratorNotModifiable() {
-        LongIterator iter = makeUnmodifiableLongIterator();
-        assertTrue(iter.hasNext());
-        iter.next();
-        try {
-            iter.remove();
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
     }
+  }
 
-    public final void testIterateLongIterator() {        
-        LongIterator iter = makeUnmodifiableLongIterator();
-        for(LongIterator expected = makeLongIterator(); expected.hasNext(); ) {
-            assertTrue(iter.hasNext());
-            assertEquals(expected.next(),iter.next());
-        }
-        assertTrue(! iter.hasNext() );
+  public final void testIterateLongIterator ()
+  {
+    final LongIterator iter = makeUnmodifiableLongIterator ();
+    for (final LongIterator expected = makeLongIterator (); expected.hasNext ();)
+    {
+      assertTrue (iter.hasNext ());
+      assertEquals (expected.next (), iter.next ());
     }
+    assertTrue (!iter.hasNext ());
+  }
 
 }

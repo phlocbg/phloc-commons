@@ -27,87 +27,120 @@ import org.apache.commons.collections.primitives.ArrayDoubleList;
 import org.apache.commons.collections.primitives.RandomAccessDoubleList;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestDoubleListList extends BaseTestList {
+public class TestDoubleListList extends BaseTestList
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestDoubleListList(String testName) {
-        super(testName);
+  public TestDoubleListList (final String testName)
+  {
+    super (testName);
+  }
+
+  public static Test suite ()
+  {
+    final TestSuite suite = BulkTest.makeSuite (TestDoubleListList.class);
+    return suite;
+  }
+
+  // collections testing framework
+  // ------------------------------------------------------------------------
+
+  @Override
+  public List makeEmptyList ()
+  {
+    return new DoubleListList (new ArrayDoubleList ());
+  }
+
+  @Override
+  public Object [] getFullElements ()
+  {
+    final Double [] elts = new Double [10];
+    for (int i = 0; i < elts.length; i++)
+    {
+      elts[i] = new Double (i);
     }
+    return elts;
+  }
 
-    public static Test suite() {
-        TestSuite suite = BulkTest.makeSuite(TestDoubleListList.class);
-        return suite;
+  @Override
+  public Object [] getOtherElements ()
+  {
+    final Double [] elts = new Double [10];
+    for (int i = 0; i < elts.length; i++)
+    {
+      elts[i] = new Double (10 + i);
     }
+    return elts;
+  }
 
-    // collections testing framework
-    // ------------------------------------------------------------------------
+  // tests
+  // ------------------------------------------------------------------------
 
-    public List makeEmptyList() {
-        return new DoubleListList(new ArrayDoubleList());
-    }
-        
-    public Object[] getFullElements() {
-        Double[] elts = new Double[10];
-        for(int i=0;i<elts.length;i++) {
-            elts[i] = new Double((double)i);
-        }
-        return elts;
-    }
+  /** @TODO need to add serialized form to cvs */
 
-    public Object[] getOtherElements() {
-        Double[] elts = new Double[10];
-        for(int i=0;i<elts.length;i++) {
-            elts[i] = new Double((double)(10 + i));
-        }
-        return elts;
-    }
+  @Override
+  public void testCanonicalEmptyCollectionExists ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
+  @Override
+  public void testCanonicalFullCollectionExists ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    /** @TODO need to add serialized form to cvs */
+  @Override
+  public void testEmptyListCompatibility ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    public void testCanonicalEmptyCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+  @Override
+  public void testFullListCompatibility ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    public void testCanonicalFullCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+  public void testWrapNull ()
+  {
+    assertNull (DoubleListList.wrap (null));
+  }
 
-    public void testEmptyListCompatibility() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+  public void testWrapSerializable ()
+  {
+    final List list = DoubleListList.wrap (new ArrayDoubleList ());
+    assertNotNull (list);
+    assertTrue (list instanceof Serializable);
+  }
 
-    public void testFullListCompatibility() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+  public void testWrapNonSerializable ()
+  {
+    final List list = DoubleListList.wrap (new RandomAccessDoubleList ()
+    {
+      @Override
+      public double get (final int i)
+      {
+        throw new IndexOutOfBoundsException ();
+      }
 
-    public void testWrapNull() {
-        assertNull(DoubleListList.wrap(null));
-    }
-    
-    public void testWrapSerializable() {
-        List list = DoubleListList.wrap(new ArrayDoubleList());
-        assertNotNull(list);
-        assertTrue(list instanceof Serializable);
-    }
-    
-    public void testWrapNonSerializable() {
-        List list = DoubleListList.wrap(new RandomAccessDoubleList() { 
-            public double get(int i) { throw new IndexOutOfBoundsException(); } 
-            public int size() { return 0; } 
-        });
-        assertNotNull(list);
-        assertTrue(!(list instanceof Serializable));
-    }
+      @Override
+      public int size ()
+      {
+        return 0;
+      }
+    });
+    assertNotNull (list);
+    assertTrue (!(list instanceof Serializable));
+  }
 }

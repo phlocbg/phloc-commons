@@ -26,52 +26,64 @@ import org.apache.commons.collections.primitives.DoubleIterator;
 import org.apache.commons.collections.primitives.TestDoubleIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestIteratorDoubleIterator extends TestDoubleIterator {
+public class TestIteratorDoubleIterator extends TestDoubleIterator
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestIteratorDoubleIterator(String testName) {
-        super(testName);
-    }
+  public TestIteratorDoubleIterator (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        return new TestSuite(TestIteratorDoubleIterator.class);
-    }
+  public static Test suite ()
+  {
+    return new TestSuite (TestIteratorDoubleIterator.class);
+  }
 
-    // collections testing framework
-    // ------------------------------------------------------------------------
+  // collections testing framework
+  // ------------------------------------------------------------------------
 
-    public DoubleIterator makeEmptyDoubleIterator() {
-        return IteratorDoubleIterator.wrap(makeEmptyList().iterator());
-    }
-    
-    public DoubleIterator makeFullDoubleIterator() {
-        return IteratorDoubleIterator.wrap(makeFullList().iterator());
-    }
+  @Override
+  public DoubleIterator makeEmptyDoubleIterator ()
+  {
+    return IteratorDoubleIterator.wrap (makeEmptyList ().iterator ());
+  }
 
-    public List makeEmptyList() {
-        return new ArrayList();
-    }
-    
-    protected List makeFullList() {
-        List list = makeEmptyList();
-        double[] elts = getFullElements();
-        for(int i=0;i<elts.length;i++) {
-            list.add(new Double(elts[i]));
-        }
-        return list;
-    }
-    
-    public double[] getFullElements() {
-        return new double[] { (double)0, (double)1, (double)2, (double)3, (double)4, (double)5, (double)6, (double)7, (double)8, (double)9 };
-    }
-    
-    // tests
-    // ------------------------------------------------------------------------
+  @Override
+  public DoubleIterator makeFullDoubleIterator ()
+  {
+    return IteratorDoubleIterator.wrap (makeFullList ().iterator ());
+  }
 
+  public List makeEmptyList ()
+  {
+    return new ArrayList ();
+  }
+
+  protected List makeFullList ()
+  {
+    final List list = makeEmptyList ();
+    final double [] elts = getFullElements ();
+    for (final double elt : elts)
+    {
+      list.add (new Double (elt));
+    }
+    return list;
+  }
+
+  @Override
+  public double [] getFullElements ()
+  {
+    return new double [] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+  }
+
+  // tests
+  // ------------------------------------------------------------------------
 
 }

@@ -23,65 +23,69 @@ import junit.framework.TestSuite;
 /**
  * Test this package.
  * 
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class PackageTestSuite extends TestCase {
-    public PackageTestSuite(String testName) {
-        super(testName);
-    }
+public class PackageTestSuite extends TestCase
+{
+  public PackageTestSuite (final String testName)
+  {
+    super (testName);
+  }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { PackageTestSuite.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
-    }
+  public static void main (final String args[])
+  {
+    final String [] testCaseName = { PackageTestSuite.class.getName () };
+    junit.textui.TestRunner.main (testCaseName);
+  }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
+  public static Test suite ()
+  {
+    final TestSuite suite = new TestSuite ();
 
-        suite.addTest(TestBaseProxyByteCollection.suite());
-        suite.addTest(TestBaseProxyByteList.suite());
-        suite.addTest(TestUnmodifiableByteList.suite());
-        suite.addTest(TestUnmodifiableByteIterator.suite());
-        suite.addTest(TestUnmodifiableByteListIterator.suite());
+    suite.addTest (TestBaseProxyByteCollection.suite ());
+    suite.addTest (TestBaseProxyByteList.suite ());
+    suite.addTest (TestUnmodifiableByteList.suite ());
+    suite.addTest (TestUnmodifiableByteIterator.suite ());
+    suite.addTest (TestUnmodifiableByteListIterator.suite ());
 
-        suite.addTest(TestBaseProxyCharCollection.suite());
-        suite.addTest(TestBaseProxyCharList.suite());
-        suite.addTest(TestUnmodifiableCharList.suite());
-        suite.addTest(TestUnmodifiableCharIterator.suite());
-        suite.addTest(TestUnmodifiableCharListIterator.suite());
+    suite.addTest (TestBaseProxyCharCollection.suite ());
+    suite.addTest (TestBaseProxyCharList.suite ());
+    suite.addTest (TestUnmodifiableCharList.suite ());
+    suite.addTest (TestUnmodifiableCharIterator.suite ());
+    suite.addTest (TestUnmodifiableCharListIterator.suite ());
 
-        suite.addTest(TestBaseProxyDoubleCollection.suite());
-        suite.addTest(TestBaseProxyDoubleList.suite());
-        suite.addTest(TestUnmodifiableDoubleList.suite());
-        suite.addTest(TestUnmodifiableDoubleIterator.suite());
-        suite.addTest(TestUnmodifiableDoubleListIterator.suite());
+    suite.addTest (TestBaseProxyDoubleCollection.suite ());
+    suite.addTest (TestBaseProxyDoubleList.suite ());
+    suite.addTest (TestUnmodifiableDoubleList.suite ());
+    suite.addTest (TestUnmodifiableDoubleIterator.suite ());
+    suite.addTest (TestUnmodifiableDoubleListIterator.suite ());
 
-        suite.addTest(TestBaseProxyFloatCollection.suite());
-        suite.addTest(TestBaseProxyFloatList.suite());
-        suite.addTest(TestUnmodifiableFloatList.suite());
-        suite.addTest(TestUnmodifiableFloatIterator.suite());
-        suite.addTest(TestUnmodifiableFloatListIterator.suite());
+    suite.addTest (TestBaseProxyFloatCollection.suite ());
+    suite.addTest (TestBaseProxyFloatList.suite ());
+    suite.addTest (TestUnmodifiableFloatList.suite ());
+    suite.addTest (TestUnmodifiableFloatIterator.suite ());
+    suite.addTest (TestUnmodifiableFloatListIterator.suite ());
 
-        suite.addTest(TestBaseProxyShortCollection.suite());
-        suite.addTest(TestBaseProxyShortList.suite());
-        suite.addTest(TestUnmodifiableShortList.suite());
-        suite.addTest(TestUnmodifiableShortIterator.suite());
-        suite.addTest(TestUnmodifiableShortListIterator.suite());
+    suite.addTest (TestBaseProxyShortCollection.suite ());
+    suite.addTest (TestBaseProxyShortList.suite ());
+    suite.addTest (TestUnmodifiableShortList.suite ());
+    suite.addTest (TestUnmodifiableShortIterator.suite ());
+    suite.addTest (TestUnmodifiableShortListIterator.suite ());
 
-        suite.addTest(TestBaseProxyIntCollection.suite());
-        suite.addTest(TestBaseProxyIntList.suite());
-        suite.addTest(TestUnmodifiableIntList.suite());
-        suite.addTest(TestUnmodifiableIntIterator.suite());
-        suite.addTest(TestUnmodifiableIntListIterator.suite());
+    suite.addTest (TestBaseProxyIntCollection.suite ());
+    suite.addTest (TestBaseProxyIntList.suite ());
+    suite.addTest (TestUnmodifiableIntList.suite ());
+    suite.addTest (TestUnmodifiableIntIterator.suite ());
+    suite.addTest (TestUnmodifiableIntListIterator.suite ());
 
-        suite.addTest(TestBaseProxyLongCollection.suite());
-        suite.addTest(TestBaseProxyLongList.suite());
-        suite.addTest(TestUnmodifiableLongList.suite());
-        suite.addTest(TestUnmodifiableLongIterator.suite());
-        suite.addTest(TestUnmodifiableLongListIterator.suite());
+    suite.addTest (TestBaseProxyLongCollection.suite ());
+    suite.addTest (TestBaseProxyLongList.suite ());
+    suite.addTest (TestUnmodifiableLongList.suite ());
+    suite.addTest (TestUnmodifiableLongIterator.suite ());
+    suite.addTest (TestUnmodifiableLongListIterator.suite ());
 
-        return suite;
-    }
+    return suite;
+  }
 }
-

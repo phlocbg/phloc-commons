@@ -23,90 +23,119 @@ import org.apache.commons.collections.iterators.AbstractTestIterator;
 import org.apache.commons.collections.primitives.adapters.FloatIteratorIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class TestFloatIterator extends AbstractTestIterator {
+public abstract class TestFloatIterator extends AbstractTestIterator
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestFloatIterator(String testName) {
-        super(testName);
+  public TestFloatIterator (final String testName)
+  {
+    super (testName);
+  }
+
+  // collections testing framework
+  // ------------------------------------------------------------------------
+
+  @Override
+  public Iterator makeEmptyIterator ()
+  {
+    return FloatIteratorIterator.wrap (makeEmptyFloatIterator ());
+  }
+
+  @Override
+  public Iterator makeFullIterator ()
+  {
+    return FloatIteratorIterator.wrap (makeFullFloatIterator ());
+  }
+
+  protected abstract FloatIterator makeEmptyFloatIterator ();
+
+  protected abstract FloatIterator makeFullFloatIterator ();
+
+  protected abstract float [] getFullElements ();
+
+  // tests
+  // ------------------------------------------------------------------------
+
+  public void testNextHasNextRemove ()
+  {
+    final float [] elements = getFullElements ();
+    final FloatIterator iter = makeFullFloatIterator ();
+    for (final float element : elements)
+    {
+      assertTrue (iter.hasNext ());
+      assertEquals (element, iter.next (), 0f);
+      if (supportsRemove ())
+      {
+        iter.remove ();
+      }
     }
+    assertTrue (!iter.hasNext ());
+  }
 
-    // collections testing framework
-    // ------------------------------------------------------------------------
-
-    public Iterator makeEmptyIterator() {
-        return FloatIteratorIterator.wrap(makeEmptyFloatIterator());
+  public void testEmptyFloatIterator ()
+  {
+    assertTrue (!makeEmptyFloatIterator ().hasNext ());
+    try
+    {
+      makeEmptyFloatIterator ().next ();
+      fail ("Expected NoSuchElementException");
     }
-
-    public Iterator makeFullIterator() {
-        return FloatIteratorIterator.wrap(makeFullFloatIterator());
+    catch (final NoSuchElementException e)
+    {
+      // expected
     }
-
-
-    protected abstract FloatIterator makeEmptyFloatIterator();
-    protected abstract FloatIterator makeFullFloatIterator();
-    protected abstract float[] getFullElements();
-
-    // tests
-    // ------------------------------------------------------------------------
-    
-    public void testNextHasNextRemove() {
-        float[] elements = getFullElements();
-        FloatIterator iter = makeFullFloatIterator();
-        for(int i=0;i<elements.length;i++) {
-            assertTrue(iter.hasNext());
-            assertEquals(elements[i],iter.next(),0f);
-            if(supportsRemove()) {
-                iter.remove();
-            }
-        }        
-        assertTrue(! iter.hasNext() );
+    if (supportsRemove ())
+    {
+      try
+      {
+        makeEmptyFloatIterator ().remove ();
+        fail ("Expected IllegalStateException");
+      }
+      catch (final IllegalStateException e)
+      {
+        // expected
+      }
     }
+  }
 
-    public void testEmptyFloatIterator() {
-        assertTrue( ! makeEmptyFloatIterator().hasNext() );
-        try {
-            makeEmptyFloatIterator().next();
-            fail("Expected NoSuchElementException");
-        } catch(NoSuchElementException e) {
-            // expected
-        }
-        if(supportsRemove()) {
-            try {
-                makeEmptyFloatIterator().remove();
-                fail("Expected IllegalStateException");
-            } catch(IllegalStateException e) {
-                // expected
-            }
-        }        
+  public void testRemoveBeforeNext ()
+  {
+    if (supportsRemove ())
+    {
+      try
+      {
+        makeFullFloatIterator ().remove ();
+        fail ("Expected IllegalStateException");
+      }
+      catch (final IllegalStateException e)
+      {
+        // expected
+      }
     }
+  }
 
-    public void testRemoveBeforeNext() {
-        if(supportsRemove()) {
-            try {
-                makeFullFloatIterator().remove();
-                fail("Expected IllegalStateException");
-            } catch(IllegalStateException e) {
-                // expected
-            }
-        }        
+  public void testRemoveAfterRemove ()
+  {
+    if (supportsRemove ())
+    {
+      final FloatIterator iter = makeFullFloatIterator ();
+      iter.next ();
+      iter.remove ();
+      try
+      {
+        iter.remove ();
+        fail ("Expected IllegalStateException");
+      }
+      catch (final IllegalStateException e)
+      {
+        // expected
+      }
     }
-
-    public void testRemoveAfterRemove() {
-        if(supportsRemove()) {
-            FloatIterator iter = makeFullFloatIterator();
-            iter.next();
-            iter.remove();
-            try {
-                iter.remove();
-                fail("Expected IllegalStateException");
-            } catch(IllegalStateException e) {
-                // expected
-            }
-        }        
-    }
+  }
 }

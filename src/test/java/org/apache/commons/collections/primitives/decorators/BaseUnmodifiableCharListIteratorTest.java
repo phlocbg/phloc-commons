@@ -22,95 +22,116 @@ import org.apache.commons.collections.primitives.CharList;
 import org.apache.commons.collections.primitives.CharListIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class BaseUnmodifiableCharListIteratorTest extends BaseUnmodifiableCharIteratorTest {
+public abstract class BaseUnmodifiableCharListIteratorTest extends BaseUnmodifiableCharIteratorTest
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public BaseUnmodifiableCharListIteratorTest(String testName) {
-        super(testName);
+  public BaseUnmodifiableCharListIteratorTest (final String testName)
+  {
+    super (testName);
+  }
+
+  // framework
+  // ------------------------------------------------------------------------
+
+  protected abstract CharListIterator makeUnmodifiableCharListIterator ();
+
+  @Override
+  protected CharIterator makeUnmodifiableCharIterator ()
+  {
+    return makeUnmodifiableCharListIterator ();
+  }
+
+  @Override
+  protected CharIterator makeCharIterator ()
+  {
+    return makeCharListIterator ();
+  }
+
+  protected CharListIterator makeCharListIterator ()
+  {
+    final CharList list = new ArrayCharList ();
+    for (char i = 0; i < 10; i++)
+    {
+      list.add (i);
     }
-    
+    return list.listIterator ();
+  }
 
-    // framework
-    // ------------------------------------------------------------------------
+  // tests
+  // ------------------------------------------------------------------------
 
-    protected abstract CharListIterator makeUnmodifiableCharListIterator();
+  public final void testCharListIteratorNotModifiable ()
+  {
+    final CharListIterator iter = makeUnmodifiableCharListIterator ();
+    assertTrue (iter.hasNext ());
+    iter.next ();
+    try
+    {
+      iter.remove ();
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+    try
+    {
+      iter.add ((char) 1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+    try
+    {
+      iter.set ((char) 3);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
 
-    protected CharIterator makeUnmodifiableCharIterator() {
-        return makeUnmodifiableCharListIterator();
+  public final void testIterateCharListIterator ()
+  {
+    final CharListIterator iter = makeUnmodifiableCharListIterator ();
+    final CharListIterator expected = makeCharListIterator ();
+
+    assertTrue (!iter.hasPrevious ());
+
+    while (expected.hasNext ())
+    {
+      assertTrue (iter.hasNext ());
+      assertEquals (expected.nextIndex (), iter.nextIndex ());
+      assertEquals (expected.previousIndex (), iter.previousIndex ());
+      assertEquals (expected.next (), iter.next ());
+      assertTrue (iter.hasPrevious ());
+      assertEquals (expected.nextIndex (), iter.nextIndex ());
+      assertEquals (expected.previousIndex (), iter.previousIndex ());
     }
 
-    protected CharIterator makeCharIterator() {
-        return makeCharListIterator();
+    assertTrue (!iter.hasNext ());
+
+    while (expected.hasPrevious ())
+    {
+      assertTrue (iter.hasPrevious ());
+      assertEquals (expected.nextIndex (), iter.nextIndex ());
+      assertEquals (expected.previousIndex (), iter.previousIndex ());
+      assertEquals (expected.previous (), iter.previous ());
+      assertTrue (iter.hasNext ());
+      assertEquals (expected.nextIndex (), iter.nextIndex ());
+      assertEquals (expected.previousIndex (), iter.previousIndex ());
     }
-    
-    protected CharListIterator makeCharListIterator() {
-        CharList list = new ArrayCharList();
-        for(char i=0;i<10;i++) {
-            list.add(i);
-        }
-        return list.listIterator();
-    }
-
-    // tests
-    // ------------------------------------------------------------------------
-
-    public final void testCharListIteratorNotModifiable() {
-        CharListIterator iter = makeUnmodifiableCharListIterator();
-        assertTrue(iter.hasNext());
-        iter.next();
-        try {
-            iter.remove();
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            iter.add((char)1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            iter.set((char)3);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-    }
-
-    public final void testIterateCharListIterator() {        
-        CharListIterator iter = makeUnmodifiableCharListIterator();
-        CharListIterator expected = makeCharListIterator();
-        
-        assertTrue(! iter.hasPrevious());
-        
-        while( expected.hasNext() ) {
-            assertTrue(iter.hasNext());
-            assertEquals(expected.nextIndex(),iter.nextIndex());
-            assertEquals(expected.previousIndex(),iter.previousIndex());
-            assertEquals(expected.next(),iter.next());
-            assertTrue(iter.hasPrevious());
-            assertEquals(expected.nextIndex(),iter.nextIndex());
-            assertEquals(expected.previousIndex(),iter.previousIndex());
-        }
-
-        assertTrue(! iter.hasNext() );
-
-        while( expected.hasPrevious() ) {
-            assertTrue(iter.hasPrevious());
-            assertEquals(expected.nextIndex(),iter.nextIndex());
-            assertEquals(expected.previousIndex(),iter.previousIndex());
-            assertEquals(expected.previous(),iter.previous());
-            assertTrue(iter.hasNext());
-            assertEquals(expected.nextIndex(),iter.nextIndex());
-            assertEquals(expected.previousIndex(),iter.previousIndex());
-        }
-        assertTrue(! iter.hasPrevious() );
-    }
+    assertTrue (!iter.hasPrevious ());
+  }
 
 }

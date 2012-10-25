@@ -23,147 +23,149 @@ import junit.framework.TestSuite;
 
 /**
  * Tests the CharStack class.
- *
+ * 
  * @author Apache Directory Project
  * @since Commons Primitives 1.1
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  */
 public class TestCharStack extends TestCase
 {
-    CharStack stack = null ;
-    
-    
-    /**
-     * Runs the test. 
-     * 
-     * @param args nada
-     */
-    public static void main( String[] args )
+  CharStack stack = null;
+
+  /**
+   * Runs the test.
+   * 
+   * @param args
+   *        nada
+   */
+  public static void main (final String [] args)
+  {
+    junit.textui.TestRunner.run (TestCharStack.class);
+  }
+
+  public static TestSuite suite ()
+  {
+    return new TestSuite (TestCharStack.class);
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see junit.framework.TestCase#setUp()
+   */
+  @Override
+  protected void setUp () throws Exception
+  {
+    super.setUp ();
+    stack = new CharStack ();
+  }
+
+  /**
+   * Constructor for IntStackTest.
+   * 
+   * @param arg0
+   */
+  public TestCharStack (final String arg0)
+  {
+    super (arg0);
+  }
+
+  public void testEmpty ()
+  {
+    assertTrue ("Newly created stacks should be empty", stack.empty ());
+    stack.push ('A');
+    assertFalse ("Stack with item should not be empty", stack.empty ());
+    stack.pop ();
+    assertTrue ("Stack last int popped should be empty", stack.empty ());
+  }
+
+  public void testPeek ()
+  {
+    try
     {
-        junit.textui.TestRunner.run( TestCharStack.class ) ;
+      stack.peek ();
+      fail ("Peek should have thrown an EmptyStackException");
     }
-
-    public static TestSuite suite() {
-        return new TestSuite(TestCharStack.class);
-    }
-
-    
-    /* (non-Javadoc)
-     * @see junit.framework.TestCase#setUp()
-     */
-    protected void setUp() throws Exception
+    catch (final EmptyStackException e)
     {
-        super.setUp() ;
-        stack = new CharStack() ;
+      assertNotNull ("EmptyStackException should not be null", e);
     }
-    
-    
-    /**
-     * Constructor for IntStackTest.
-     * @param arg0
-     */
-    public TestCharStack( String arg0 )
+
+    for (char ii = 0; ii < 10; ii++)
     {
-        super( arg0 ) ;
+      stack.push (ii);
+      assertTrue (ii == stack.peek ());
     }
+  }
 
-    
-    public void testEmpty()
+  public void testPop ()
+  {
+    try
     {
-        assertTrue( "Newly created stacks should be empty", stack.empty() ) ;
-        stack.push( 'A' ) ;
-        assertFalse( "Stack with item should not be empty", stack.empty() ) ;
-        stack.pop() ;
-        assertTrue( "Stack last int popped should be empty", stack.empty() ) ;
+      stack.pop ();
+      fail ("Pop should have thrown an EmptyStackException");
     }
-
-    
-    public void testPeek()
+    catch (final EmptyStackException e)
     {
-        try
-        {
-            stack.peek() ;
-            fail("Peek should have thrown an EmptyStackException" ) ;
-        }
-        catch( EmptyStackException e )
-        {
-            assertNotNull( "EmptyStackException should not be null", e ) ;
-        }
-        
-        for( char ii = 0; ii < 10; ii++ )
-        {    
-            stack.push( ii ) ;
-            assertTrue( ii == stack.peek() ) ;
-        }
+      assertNotNull ("EmptyStackException should not be null", e);
     }
 
-    
-    public void testPop()
+    for (char ii = 0; ii < 10; ii++)
     {
-        try
-        {
-            stack.pop() ;
-            fail("Pop should have thrown an EmptyStackException" ) ;
-        }
-        catch( EmptyStackException e )
-        {
-            assertNotNull( "EmptyStackException should not be null", e ) ;
-        }
-        
-        for( char ii = 0; ii < 10; ii++ )
-        {    
-            stack.push( ii ) ;
-            assertTrue( ii == stack.pop() ) ;
-        }
-
-        for( char ii = 0; ii < 10; ii++ )
-        {    
-            stack.push( ii ) ;
-        }
-        for( char ii = 10; ii < 0; ii-- )
-        {    
-            stack.push( ( char ) ii ) ;
-            assertTrue( ii == stack.pop() ) ;
-        }
+      stack.push (ii);
+      assertTrue (ii == stack.pop ());
     }
 
-    
-    public void testPush()
+    for (char ii = 0; ii < 10; ii++)
     {
-        stack.push( ( char ) 0 ) ;
-        stack.push( ( char ) 0 ) ;
-        assertFalse( stack.empty() ) ;
-        assertTrue( 0 == stack.pop() ) ;
-        assertTrue( 0 == stack.pop() ) ;
+      stack.push (ii);
     }
-
-    
-    public void testSearch()
+    for (char ii = 10; ii < 0; ii--)
     {
-        stack.push( ( char ) 0 ) ;
-        stack.push( ( char ) 1 ) ;
-        assertTrue( 2 == stack.search( ( char ) 0 ) ) ;
-        stack.push( ( char ) 0 ) ;
-        assertTrue( 1 == stack.search( ( char ) 0 ) ) ;
-        stack.push( ( char ) 0 ) ;
-        assertTrue( 3 == stack.search( ( char ) 1 ) ) ;
-        assertTrue( -1 == stack.search( ( char ) 44 ) ) ;
+      stack.push (ii);
+      assertTrue (ii == stack.pop ());
     }
+  }
 
-    public void testArrayConstructor() {
-        char[] array = { 1, 2, 3, 4 };
-        stack  = new CharStack(array);
-        assertEquals(array.length,stack.size());
-        for(int i=array.length-1;i>=0;i--) {
-            assertEquals(array[i],stack.pop());
-        }
+  public void testPush ()
+  {
+    stack.push ((char) 0);
+    stack.push ((char) 0);
+    assertFalse (stack.empty ());
+    assertTrue (0 == stack.pop ());
+    assertTrue (0 == stack.pop ());
+  }
+
+  public void testSearch ()
+  {
+    stack.push ((char) 0);
+    stack.push ((char) 1);
+    assertTrue (2 == stack.search ((char) 0));
+    stack.push ((char) 0);
+    assertTrue (1 == stack.search ((char) 0));
+    stack.push ((char) 0);
+    assertTrue (3 == stack.search ((char) 1));
+    assertTrue (-1 == stack.search ((char) 44));
+  }
+
+  public void testArrayConstructor ()
+  {
+    final char [] array = { 1, 2, 3, 4 };
+    stack = new CharStack (array);
+    assertEquals (array.length, stack.size ());
+    for (int i = array.length - 1; i >= 0; i--)
+    {
+      assertEquals (array[i], stack.pop ());
     }
-    
-    public void testPeekN() {
-        char[] array = { 1, 2, 3, 4 };
-        stack  = new CharStack(array);
-        for(int i=array.length-1;i>=0;i--) {
-            assertEquals(array[i],stack.peek((array.length-1)-i));
-        }
+  }
+
+  public void testPeekN ()
+  {
+    final char [] array = { 1, 2, 3, 4 };
+    stack = new CharStack (array);
+    for (int i = array.length - 1; i >= 0; i--)
+    {
+      assertEquals (array[i], stack.peek ((array.length - 1) - i));
     }
+  }
 }

@@ -24,52 +24,61 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.primitives.ByteList;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestUnmodifiableByteList extends BaseUnmodifiableByteListTest {
+public class TestUnmodifiableByteList extends BaseUnmodifiableByteListTest
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestUnmodifiableByteList(String testName) {
-        super(testName);
-    }
-    
+  public TestUnmodifiableByteList (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        return new TestSuite(TestUnmodifiableByteList.class);
-    }
+  public static Test suite ()
+  {
+    return new TestSuite (TestUnmodifiableByteList.class);
+  }
 
-    // framework
-    // ------------------------------------------------------------------------
+  // framework
+  // ------------------------------------------------------------------------
 
-    protected ByteList makeUnmodifiableByteList() {
-        return UnmodifiableByteList.wrap(makeByteList());
-    }
+  @Override
+  protected ByteList makeUnmodifiableByteList ()
+  {
+    return UnmodifiableByteList.wrap (makeByteList ());
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
+  // tests
+  // ------------------------------------------------------------------------
 
-    public void testWrapNull() {
-        assertNull(UnmodifiableByteList.wrap(null));
-    }
+  public void testWrapNull ()
+  {
+    assertNull (UnmodifiableByteList.wrap (null));
+  }
 
-    public void testWrapUnmodifiableByteList() {
-        ByteList list = makeUnmodifiableByteList();
-        assertSame(list,UnmodifiableByteList.wrap(list));
-    }
+  public void testWrapUnmodifiableByteList ()
+  {
+    final ByteList list = makeUnmodifiableByteList ();
+    assertSame (list, UnmodifiableByteList.wrap (list));
+  }
 
-    public void testWrapSerializableByteList() {
-        ByteList list = makeByteList();
-        assertTrue(list instanceof Serializable);
-        assertTrue(UnmodifiableByteList.wrap(list) instanceof Serializable);
-    }
+  public void testWrapSerializableByteList ()
+  {
+    final ByteList list = makeByteList ();
+    assertTrue (list instanceof Serializable);
+    assertTrue (UnmodifiableByteList.wrap (list) instanceof Serializable);
+  }
 
-    public void testWrapNonSerializableByteList() {
-        ByteList list = makeByteList();
-        ByteList ns = list.subList(0,list.size());
-        assertTrue(!(ns instanceof Serializable));
-        assertTrue(!(UnmodifiableByteList.wrap(ns) instanceof Serializable));
-    }
+  public void testWrapNonSerializableByteList ()
+  {
+    final ByteList list = makeByteList ();
+    final ByteList ns = list.subList (0, list.size ());
+    assertTrue (!(ns instanceof Serializable));
+    assertTrue (!(UnmodifiableByteList.wrap (ns) instanceof Serializable));
+  }
 }

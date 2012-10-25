@@ -23,53 +23,63 @@ import org.apache.commons.collections.primitives.DoubleIterator;
 import org.apache.commons.collections.primitives.DoubleList;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class BaseUnmodifiableDoubleIteratorTest extends TestCase {
+public abstract class BaseUnmodifiableDoubleIteratorTest extends TestCase
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public BaseUnmodifiableDoubleIteratorTest(String testName) {
-        super(testName);
+  public BaseUnmodifiableDoubleIteratorTest (final String testName)
+  {
+    super (testName);
+  }
+
+  // framework
+  // ------------------------------------------------------------------------
+  protected abstract DoubleIterator makeUnmodifiableDoubleIterator ();
+
+  protected DoubleIterator makeDoubleIterator ()
+  {
+    final DoubleList list = new ArrayDoubleList ();
+    for (double i = 0; i < 10; i++)
+    {
+      list.add (i);
     }
-    
+    return list.iterator ();
+  }
 
-    // framework
-    // ------------------------------------------------------------------------
-    protected abstract DoubleIterator makeUnmodifiableDoubleIterator();
+  // tests
+  // ------------------------------------------------------------------------
 
-    protected DoubleIterator makeDoubleIterator() {
-        DoubleList list = new ArrayDoubleList();
-        for(double i=0;i<10;i++) {
-            list.add(i);
-        }
-        return list.iterator();
+  public final void testDoubleIteratorNotModifiable ()
+  {
+    final DoubleIterator iter = makeUnmodifiableDoubleIterator ();
+    assertTrue (iter.hasNext ());
+    iter.next ();
+    try
+    {
+      iter.remove ();
+      fail ("Expected UnsupportedOperationException");
     }
-
-    // tests
-    // ------------------------------------------------------------------------
-
-    public final void testDoubleIteratorNotModifiable() {
-        DoubleIterator iter = makeUnmodifiableDoubleIterator();
-        assertTrue(iter.hasNext());
-        iter.next();
-        try {
-            iter.remove();
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
     }
+  }
 
-    public final void testIterateDoubleIterator() {        
-        DoubleIterator iter = makeUnmodifiableDoubleIterator();
-        for(DoubleIterator expected = makeDoubleIterator(); expected.hasNext(); ) {
-            assertTrue(iter.hasNext());
-            assertEquals(expected.next(),iter.next(),(double)0);
-        }
-        assertTrue(! iter.hasNext() );
+  public final void testIterateDoubleIterator ()
+  {
+    final DoubleIterator iter = makeUnmodifiableDoubleIterator ();
+    for (final DoubleIterator expected = makeDoubleIterator (); expected.hasNext ();)
+    {
+      assertTrue (iter.hasNext ());
+      assertEquals (expected.next (), iter.next (), 0);
     }
+    assertTrue (!iter.hasNext ());
+  }
 
 }

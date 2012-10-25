@@ -28,87 +28,115 @@ import org.apache.commons.collections.primitives.FloatList;
 import org.apache.commons.collections.primitives.TestFloatList;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestListFloatList extends TestFloatList {
+public class TestListFloatList extends TestFloatList
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestListFloatList(String testName) {
-        super(testName);
-    }
+  public TestListFloatList (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        TestSuite suite = BulkTest.makeSuite(TestListFloatList.class);
-        return suite;
-    }
+  public static Test suite ()
+  {
+    final TestSuite suite = BulkTest.makeSuite (TestListFloatList.class);
+    return suite;
+  }
 
-    // collections testing framework
-    // ------------------------------------------------------------------------
+  // collections testing framework
+  // ------------------------------------------------------------------------
 
-    /**
-     * @see org.apache.commons.collections.primitives.TestFloatList#makeEmptyFloatList()
-     */
-    protected FloatList makeEmptyFloatList() {
-        return new ListFloatList(new ArrayList());
-    }
-    
-    public String[] ignoredTests() {
-        // sublists are not serializable
-        return new String[] { 
-            "TestListFloatList.bulkTestSubList.testFullListSerialization",
-            "TestListFloatList.bulkTestSubList.testEmptyListSerialization",
-            "TestListFloatList.bulkTestSubList.testCanonicalEmptyCollectionExists",
-            "TestListFloatList.bulkTestSubList.testCanonicalFullCollectionExists",
-            "TestListFloatList.bulkTestSubList.testEmptyListCompatibility",
-            "TestListFloatList.bulkTestSubList.testFullListCompatibility",
-            "TestListFloatList.bulkTestSubList.testSerializeDeserializeThenCompare",
-            "TestListFloatList.bulkTestSubList.testSimpleSerialization"
-        };
-    }
+  /**
+   * @see org.apache.commons.collections.primitives.TestFloatList#makeEmptyFloatList()
+   */
+  @Override
+  protected FloatList makeEmptyFloatList ()
+  {
+    return new ListFloatList (new ArrayList ());
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
+  @Override
+  public String [] ignoredTests ()
+  {
+    // sublists are not serializable
+    return new String [] { "TestListFloatList.bulkTestSubList.testFullListSerialization",
+                          "TestListFloatList.bulkTestSubList.testEmptyListSerialization",
+                          "TestListFloatList.bulkTestSubList.testCanonicalEmptyCollectionExists",
+                          "TestListFloatList.bulkTestSubList.testCanonicalFullCollectionExists",
+                          "TestListFloatList.bulkTestSubList.testEmptyListCompatibility",
+                          "TestListFloatList.bulkTestSubList.testFullListCompatibility",
+                          "TestListFloatList.bulkTestSubList.testSerializeDeserializeThenCompare",
+                          "TestListFloatList.bulkTestSubList.testSimpleSerialization" };
+  }
 
-    /** @TODO need to add serialized form to cvs */
-    public void testCanonicalEmptyCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+  // tests
+  // ------------------------------------------------------------------------
 
-    public void testCanonicalFullCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+  /** @TODO need to add serialized form to cvs */
+  @Override
+  public void testCanonicalEmptyCollectionExists ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    public void testEmptyListCompatibility() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+  @Override
+  public void testCanonicalFullCollectionExists ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    public void testFullListCompatibility() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
-    public void testWrapNull() {
-        assertNull(ListFloatList.wrap(null));
-    }
-    
-    public void testWrapSerializable() {
-        FloatList list = ListFloatList.wrap(new ArrayList());
-        assertNotNull(list);
-        assertTrue(list instanceof Serializable);
-    }
-    
-    public void testWrapNonSerializable() {
-        FloatList list = ListFloatList.wrap(new AbstractList() { 
-            public Object get(int i) { throw new IndexOutOfBoundsException(); } 
-            public int size() { return 0; } 
-        });
-        assertNotNull(list);
-        assertTrue(!(list instanceof Serializable));
-    }
+  @Override
+  public void testEmptyListCompatibility ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
+
+  @Override
+  public void testFullListCompatibility ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
+
+  public void testWrapNull ()
+  {
+    assertNull (ListFloatList.wrap (null));
+  }
+
+  public void testWrapSerializable ()
+  {
+    final FloatList list = ListFloatList.wrap (new ArrayList ());
+    assertNotNull (list);
+    assertTrue (list instanceof Serializable);
+  }
+
+  public void testWrapNonSerializable ()
+  {
+    final FloatList list = ListFloatList.wrap (new AbstractList ()
+    {
+      @Override
+      public Object get (final int i)
+      {
+        throw new IndexOutOfBoundsException ();
+      }
+
+      @Override
+      public int size ()
+      {
+        return 0;
+      }
+    });
+    assertNotNull (list);
+    assertTrue (!(list instanceof Serializable));
+  }
 
 }

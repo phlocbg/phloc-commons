@@ -23,73 +23,99 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.AbstractTestObject;
-import org.apache.commons.collections.primitives.RandomAccessLongList;
 import org.apache.commons.collections.primitives.ArrayLongList;
 import org.apache.commons.collections.primitives.LongList;
+import org.apache.commons.collections.primitives.RandomAccessLongList;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestLongCollectionCollection extends AbstractTestObject {
+public class TestLongCollectionCollection extends AbstractTestObject
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestLongCollectionCollection(String testName) {
-        super(testName);
-    }
+  public TestLongCollectionCollection (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        return new TestSuite(TestLongCollectionCollection.class);
-    }
+  public static Test suite ()
+  {
+    return new TestSuite (TestLongCollectionCollection.class);
+  }
 
-    // collections testing framework
-    // ------------------------------------------------------------------------
+  // collections testing framework
+  // ------------------------------------------------------------------------
 
-    public Object makeObject() {
-        LongList list = new ArrayLongList();
-        for(int i=0;i<10;i++) {
-            list.add(i);
-        }
-        return new LongCollectionCollection(list);
+  @Override
+  public Object makeObject ()
+  {
+    final LongList list = new ArrayLongList ();
+    for (int i = 0; i < 10; i++)
+    {
+      list.add (i);
     }
+    return new LongCollectionCollection (list);
+  }
 
-    public void testSerializeDeserializeThenCompare() {
-        // Collection.equal contract doesn't work that way
-    }
+  @Override
+  public void testSerializeDeserializeThenCompare ()
+  {
+    // Collection.equal contract doesn't work that way
+  }
 
-    /** @TODO need to add serialized form to cvs */
-    public void testCanonicalEmptyCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+  /** @TODO need to add serialized form to cvs */
+  @Override
+  public void testCanonicalEmptyCollectionExists ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    public void testCanonicalFullCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
-    
-    // tests
-    // ------------------------------------------------------------------------
+  @Override
+  public void testCanonicalFullCollectionExists ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    public void testWrapNull() {
-        assertNull(LongCollectionCollection.wrap(null));
-    }
-    
-    public void testWrapSerializable() {
-        Collection collection = LongCollectionCollection.wrap(new ArrayLongList());
-        assertNotNull(collection);
-        assertTrue(collection instanceof Serializable);
-    }
-    
-    public void testWrapNonSerializable() {
-        Collection collection = LongCollectionCollection.wrap(new RandomAccessLongList() { 
-            public long get(int i) { throw new IndexOutOfBoundsException(); } 
-            public int size() { return 0; } 
-        });
-        assertNotNull(collection);
-        assertTrue(!(collection instanceof Serializable));
-    }
+  // tests
+  // ------------------------------------------------------------------------
+
+  public void testWrapNull ()
+  {
+    assertNull (LongCollectionCollection.wrap (null));
+  }
+
+  public void testWrapSerializable ()
+  {
+    final Collection collection = LongCollectionCollection.wrap (new ArrayLongList ());
+    assertNotNull (collection);
+    assertTrue (collection instanceof Serializable);
+  }
+
+  public void testWrapNonSerializable ()
+  {
+    final Collection collection = LongCollectionCollection.wrap (new RandomAccessLongList ()
+    {
+      @Override
+      public long get (final int i)
+      {
+        throw new IndexOutOfBoundsException ();
+      }
+
+      @Override
+      public int size ()
+      {
+        return 0;
+      }
+    });
+    assertNotNull (collection);
+    assertTrue (!(collection instanceof Serializable));
+  }
 
 }

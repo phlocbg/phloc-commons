@@ -23,90 +23,119 @@ import org.apache.commons.collections.iterators.AbstractTestIterator;
 import org.apache.commons.collections.primitives.adapters.ByteIteratorIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class TestByteIterator extends AbstractTestIterator {
+public abstract class TestByteIterator extends AbstractTestIterator
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestByteIterator(String testName) {
-        super(testName);
+  public TestByteIterator (final String testName)
+  {
+    super (testName);
+  }
+
+  // collections testing framework
+  // ------------------------------------------------------------------------
+
+  @Override
+  public Iterator makeEmptyIterator ()
+  {
+    return ByteIteratorIterator.wrap (makeEmptyByteIterator ());
+  }
+
+  @Override
+  public Iterator makeFullIterator ()
+  {
+    return ByteIteratorIterator.wrap (makeFullByteIterator ());
+  }
+
+  protected abstract ByteIterator makeEmptyByteIterator ();
+
+  protected abstract ByteIterator makeFullByteIterator ();
+
+  protected abstract byte [] getFullElements ();
+
+  // tests
+  // ------------------------------------------------------------------------
+
+  public void testNextHasNextRemove ()
+  {
+    final byte [] elements = getFullElements ();
+    final ByteIterator iter = makeFullByteIterator ();
+    for (final byte element : elements)
+    {
+      assertTrue (iter.hasNext ());
+      assertEquals (element, iter.next (), 0f);
+      if (supportsRemove ())
+      {
+        iter.remove ();
+      }
     }
+    assertTrue (!iter.hasNext ());
+  }
 
-    // collections testing framework
-    // ------------------------------------------------------------------------
-
-    public Iterator makeEmptyIterator() {
-        return ByteIteratorIterator.wrap(makeEmptyByteIterator());
+  public void testEmptyByteIterator ()
+  {
+    assertTrue (!makeEmptyByteIterator ().hasNext ());
+    try
+    {
+      makeEmptyByteIterator ().next ();
+      fail ("Expected NoSuchElementException");
     }
-
-    public Iterator makeFullIterator() {
-        return ByteIteratorIterator.wrap(makeFullByteIterator());
+    catch (final NoSuchElementException e)
+    {
+      // expected
     }
-
-
-    protected abstract ByteIterator makeEmptyByteIterator();
-    protected abstract ByteIterator makeFullByteIterator();
-    protected abstract byte[] getFullElements();
-
-    // tests
-    // ------------------------------------------------------------------------
-    
-    public void testNextHasNextRemove() {
-        byte[] elements = getFullElements();
-        ByteIterator iter = makeFullByteIterator();
-        for(int i=0;i<elements.length;i++) {
-            assertTrue(iter.hasNext());
-            assertEquals(elements[i],iter.next(),0f);
-            if(supportsRemove()) {
-                iter.remove();
-            }
-        }        
-        assertTrue(! iter.hasNext() );
+    if (supportsRemove ())
+    {
+      try
+      {
+        makeEmptyByteIterator ().remove ();
+        fail ("Expected IllegalStateException");
+      }
+      catch (final IllegalStateException e)
+      {
+        // expected
+      }
     }
+  }
 
-    public void testEmptyByteIterator() {
-        assertTrue( ! makeEmptyByteIterator().hasNext() );
-        try {
-            makeEmptyByteIterator().next();
-            fail("Expected NoSuchElementException");
-        } catch(NoSuchElementException e) {
-            // expected
-        }
-        if(supportsRemove()) {
-            try {
-                makeEmptyByteIterator().remove();
-                fail("Expected IllegalStateException");
-            } catch(IllegalStateException e) {
-                // expected
-            }
-        }        
+  public void testRemoveBeforeNext ()
+  {
+    if (supportsRemove ())
+    {
+      try
+      {
+        makeFullByteIterator ().remove ();
+        fail ("Expected IllegalStateException");
+      }
+      catch (final IllegalStateException e)
+      {
+        // expected
+      }
     }
+  }
 
-    public void testRemoveBeforeNext() {
-        if(supportsRemove()) {
-            try {
-                makeFullByteIterator().remove();
-                fail("Expected IllegalStateException");
-            } catch(IllegalStateException e) {
-                // expected
-            }
-        }        
+  public void testRemoveAfterRemove ()
+  {
+    if (supportsRemove ())
+    {
+      final ByteIterator iter = makeFullByteIterator ();
+      iter.next ();
+      iter.remove ();
+      try
+      {
+        iter.remove ();
+        fail ("Expected IllegalStateException");
+      }
+      catch (final IllegalStateException e)
+      {
+        // expected
+      }
     }
-
-    public void testRemoveAfterRemove() {
-        if(supportsRemove()) {
-            ByteIterator iter = makeFullByteIterator();
-            iter.next();
-            iter.remove();
-            try {
-                iter.remove();
-                fail("Expected IllegalStateException");
-            } catch(IllegalStateException e) {
-                // expected
-            }
-        }        
-    }
+  }
 }

@@ -23,53 +23,63 @@ import org.apache.commons.collections.primitives.CharIterator;
 import org.apache.commons.collections.primitives.CharList;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class BaseUnmodifiableCharIteratorTest extends TestCase {
+public abstract class BaseUnmodifiableCharIteratorTest extends TestCase
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public BaseUnmodifiableCharIteratorTest(String testName) {
-        super(testName);
+  public BaseUnmodifiableCharIteratorTest (final String testName)
+  {
+    super (testName);
+  }
+
+  // framework
+  // ------------------------------------------------------------------------
+  protected abstract CharIterator makeUnmodifiableCharIterator ();
+
+  protected CharIterator makeCharIterator ()
+  {
+    final CharList list = new ArrayCharList ();
+    for (char i = 0; i < 10; i++)
+    {
+      list.add (i);
     }
-    
+    return list.iterator ();
+  }
 
-    // framework
-    // ------------------------------------------------------------------------
-    protected abstract CharIterator makeUnmodifiableCharIterator();
+  // tests
+  // ------------------------------------------------------------------------
 
-    protected CharIterator makeCharIterator() {
-        CharList list = new ArrayCharList();
-        for(char i=0;i<10;i++) {
-            list.add(i);
-        }
-        return list.iterator();
+  public final void testCharIteratorNotModifiable ()
+  {
+    final CharIterator iter = makeUnmodifiableCharIterator ();
+    assertTrue (iter.hasNext ());
+    iter.next ();
+    try
+    {
+      iter.remove ();
+      fail ("Expected UnsupportedOperationException");
     }
-
-    // tests
-    // ------------------------------------------------------------------------
-
-    public final void testCharIteratorNotModifiable() {
-        CharIterator iter = makeUnmodifiableCharIterator();
-        assertTrue(iter.hasNext());
-        iter.next();
-        try {
-            iter.remove();
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
     }
+  }
 
-    public final void testIterateCharIterator() {        
-        CharIterator iter = makeUnmodifiableCharIterator();
-        for(CharIterator expected = makeCharIterator(); expected.hasNext(); ) {
-            assertTrue(iter.hasNext());
-            assertEquals(expected.next(),iter.next());
-        }
-        assertTrue(! iter.hasNext() );
+  public final void testIterateCharIterator ()
+  {
+    final CharIterator iter = makeUnmodifiableCharIterator ();
+    for (final CharIterator expected = makeCharIterator (); expected.hasNext ();)
+    {
+      assertTrue (iter.hasNext ());
+      assertEquals (expected.next (), iter.next ());
     }
+    assertTrue (!iter.hasNext ());
+  }
 
 }

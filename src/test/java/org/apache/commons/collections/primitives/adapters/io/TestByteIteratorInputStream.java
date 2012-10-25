@@ -26,55 +26,63 @@ import org.apache.commons.collections.primitives.ArrayByteList;
 import org.apache.commons.collections.primitives.ByteList;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestByteIteratorInputStream extends TestCase {
+public class TestByteIteratorInputStream extends TestCase
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestByteIteratorInputStream(String testName) {
-        super(testName);
+  public TestByteIteratorInputStream (final String testName)
+  {
+    super (testName);
+  }
+
+  public static Test suite ()
+  {
+    return new TestSuite (TestByteIteratorInputStream.class);
+  }
+
+  // ------------------------------------------------------------------------
+
+  // ------------------------------------------------------------------------
+
+  public void testReadNonEmpty () throws Exception
+  {
+    final ByteList list = new ArrayByteList ();
+    for (int i = Byte.MIN_VALUE; i <= Byte.MAX_VALUE; i++)
+    {
+      list.add ((byte) i);
     }
 
-    public static Test suite() {
-        return new TestSuite(TestByteIteratorInputStream.class);
+    final InputStream in = new ByteIteratorInputStream (list.iterator ());
+    for (int i = Byte.MIN_VALUE; i <= Byte.MAX_VALUE; i++)
+    {
+      assertEquals (0xFF & i, in.read ());
     }
+    assertEquals (-1, in.read ());
+    assertEquals (-1, in.read ());
+  }
 
-    // ------------------------------------------------------------------------
-    
+  public void testReadEmpty () throws Exception
+  {
+    final ByteList list = new ArrayByteList ();
+    final InputStream in = new ByteIteratorInputStream (list.iterator ());
+    assertEquals (-1, in.read ());
+    assertEquals (-1, in.read ());
+  }
 
+  public void testAdaptNull ()
+  {
+    assertNull (ByteIteratorInputStream.adapt (null));
+  }
 
-    // ------------------------------------------------------------------------
-    
-    public void testReadNonEmpty() throws Exception {
-        ByteList list = new ArrayByteList();
-        for(int i = Byte.MIN_VALUE; i <= Byte.MAX_VALUE; i++) {
-            list.add((byte)i);
-        }
-       
-        InputStream in = new ByteIteratorInputStream(list.iterator());
-        for(int i = Byte.MIN_VALUE; i <= Byte.MAX_VALUE; i++) {
-            assertEquals(0xFF&i,in.read());
-        }
-        assertEquals(-1,in.read());
-        assertEquals(-1,in.read());
-    }
+  public void testAdaptNonNull ()
+  {
+    assertNotNull (ByteIteratorInputStream.adapt (new ArrayByteList ().iterator ()));
+  }
 
-    public void testReadEmpty() throws Exception {
-        ByteList list = new ArrayByteList();
-        InputStream in = new ByteIteratorInputStream(list.iterator());
-        assertEquals(-1,in.read());
-        assertEquals(-1,in.read());
-    }
-
-    public void testAdaptNull() {
-        assertNull(ByteIteratorInputStream.adapt(null));
-    }
-
-    public void testAdaptNonNull() {
-        assertNotNull(ByteIteratorInputStream.adapt(new ArrayByteList().iterator()));
-    }
-    
 }

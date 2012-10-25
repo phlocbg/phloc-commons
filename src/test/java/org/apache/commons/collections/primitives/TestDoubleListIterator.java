@@ -17,34 +17,41 @@
 package org.apache.commons.collections.primitives;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class TestDoubleListIterator extends TestDoubleIterator {
+public abstract class TestDoubleListIterator extends TestDoubleIterator
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestDoubleListIterator(String testName) {
-        super(testName);
-    }
+  public TestDoubleListIterator (final String testName)
+  {
+    super (testName);
+  }
 
-    // collections testing framework
-    // ------------------------------------------------------------------------
+  // collections testing framework
+  // ------------------------------------------------------------------------
 
-    public DoubleIterator makeEmptyDoubleIterator() {
-        return makeEmptyDoubleListIterator();
-    }
-    
-    public DoubleIterator makeFullDoubleIterator() {
-        return makeFullDoubleListIterator();
-    }
+  @Override
+  public DoubleIterator makeEmptyDoubleIterator ()
+  {
+    return makeEmptyDoubleListIterator ();
+  }
 
-    public abstract DoubleListIterator makeEmptyDoubleListIterator();
-    public abstract DoubleListIterator makeFullDoubleListIterator();
+  @Override
+  public DoubleIterator makeFullDoubleIterator ()
+  {
+    return makeFullDoubleListIterator ();
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
+  public abstract DoubleListIterator makeEmptyDoubleListIterator ();
 
+  public abstract DoubleListIterator makeFullDoubleListIterator ();
+
+  // tests
+  // ------------------------------------------------------------------------
 
 }
