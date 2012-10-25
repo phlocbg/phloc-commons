@@ -27,12 +27,9 @@ import junit.framework.TestSuite;
  */
 public class TestFloatCollections extends TestCase
 {
-
-  // ------------------------------------------------------------ Conventional
-
-  public TestFloatCollections (final String testName)
+  public TestFloatCollections (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
@@ -44,16 +41,16 @@ public class TestFloatCollections extends TestCase
 
   public void testSingletonFloatListIterator ()
   {
-    final FloatListIterator iter = FloatCollections.singletonFloatListIterator (17);
+    final FloatListIterator iter = FloatCollections.singletonFloatListIterator (47.11f);
     assertTrue (!iter.hasPrevious ());
     assertTrue (iter.hasNext ());
-    assertEquals (17, iter.next (), 0);
+    assertEquals (47.11f, iter.next (), 0d);
     assertTrue (iter.hasPrevious ());
     assertTrue (!iter.hasNext ());
-    assertEquals (17, iter.previous (), 0);
+    assertEquals (47.11f, iter.previous (), 0d);
     try
     {
-      iter.set (18);
+      iter.set (47.11f);
       fail ("Expected UnsupportedOperationException");
     }
     catch (final UnsupportedOperationException e)
@@ -64,9 +61,9 @@ public class TestFloatCollections extends TestCase
 
   public void testSingletonFloatIterator ()
   {
-    final FloatIterator iter = FloatCollections.singletonFloatIterator (17);
+    final FloatIterator iter = FloatCollections.singletonFloatIterator (47.11f);
     assertTrue (iter.hasNext ());
-    assertEquals (17, iter.next (), 0);
+    assertEquals (47.11f, iter.next (), 0d);
     assertTrue (!iter.hasNext ());
     try
     {
@@ -81,12 +78,12 @@ public class TestFloatCollections extends TestCase
 
   public void testSingletonFloatList ()
   {
-    final FloatList list = FloatCollections.singletonFloatList (17);
+    final FloatList list = FloatCollections.singletonFloatList (47.11f);
     assertEquals (1, list.size ());
-    assertEquals (17, list.get (0), 0);
+    assertEquals (47.11f, list.get (0), 0d);
     try
     {
-      list.add (18);
+      list.add (47.11f);
       fail ("Expected UnsupportedOperationException");
     }
     catch (final UnsupportedOperationException e)
@@ -114,7 +111,7 @@ public class TestFloatCollections extends TestCase
     assertTrue (FloatCollections.EMPTY_FLOAT_LIST.isEmpty ());
     try
     {
-      FloatCollections.EMPTY_FLOAT_LIST.add (1);
+      FloatCollections.EMPTY_FLOAT_LIST.add (47.11f);
       fail ("Expected UnsupportedOperationExcpetion");
     }
     catch (final UnsupportedOperationException e)
@@ -171,7 +168,7 @@ public class TestFloatCollections extends TestCase
     assertTrue (!FloatCollections.EMPTY_FLOAT_LIST_ITERATOR.hasPrevious ());
     try
     {
-      FloatCollections.EMPTY_FLOAT_LIST_ITERATOR.add (1);
+      FloatCollections.EMPTY_FLOAT_LIST_ITERATOR.add (47.11f);
       fail ("Expected UnsupportedOperationExcpetion");
     }
     catch (final UnsupportedOperationException e)

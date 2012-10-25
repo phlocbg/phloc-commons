@@ -27,12 +27,9 @@ import junit.framework.TestSuite;
  */
 public class TestDoubleCollections extends TestCase
 {
-
-  // ------------------------------------------------------------ Conventional
-
-  public TestDoubleCollections (final String testName)
+  public TestDoubleCollections (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
@@ -44,16 +41,16 @@ public class TestDoubleCollections extends TestCase
 
   public void testSingletonDoubleListIterator ()
   {
-    final DoubleListIterator iter = DoubleCollections.singletonDoubleListIterator (17);
+    final DoubleListIterator iter = DoubleCollections.singletonDoubleListIterator (3.1415);
     assertTrue (!iter.hasPrevious ());
     assertTrue (iter.hasNext ());
-    assertEquals (17, iter.next (), 0);
+    assertEquals (3.1415, iter.next (), 0d);
     assertTrue (iter.hasPrevious ());
     assertTrue (!iter.hasNext ());
-    assertEquals (17, iter.previous (), 0);
+    assertEquals (3.1415, iter.previous (), 0d);
     try
     {
-      iter.set (18);
+      iter.set (3.1415);
       fail ("Expected UnsupportedOperationException");
     }
     catch (final UnsupportedOperationException e)
@@ -64,9 +61,9 @@ public class TestDoubleCollections extends TestCase
 
   public void testSingletonDoubleIterator ()
   {
-    final DoubleIterator iter = DoubleCollections.singletonDoubleIterator (17);
+    final DoubleIterator iter = DoubleCollections.singletonDoubleIterator (3.1415);
     assertTrue (iter.hasNext ());
-    assertEquals (17, iter.next (), 0);
+    assertEquals (3.1415, iter.next (), 0d);
     assertTrue (!iter.hasNext ());
     try
     {
@@ -81,12 +78,12 @@ public class TestDoubleCollections extends TestCase
 
   public void testSingletonDoubleList ()
   {
-    final DoubleList list = DoubleCollections.singletonDoubleList (17);
+    final DoubleList list = DoubleCollections.singletonDoubleList (3.1415);
     assertEquals (1, list.size ());
-    assertEquals (17, list.get (0), 0);
+    assertEquals (3.1415, list.get (0), 0d);
     try
     {
-      list.add (18);
+      list.add (3.1415);
       fail ("Expected UnsupportedOperationException");
     }
     catch (final UnsupportedOperationException e)
@@ -114,7 +111,7 @@ public class TestDoubleCollections extends TestCase
     assertTrue (DoubleCollections.EMPTY_DOUBLE_LIST.isEmpty ());
     try
     {
-      DoubleCollections.EMPTY_DOUBLE_LIST.add (1);
+      DoubleCollections.EMPTY_DOUBLE_LIST.add (3.1415);
       fail ("Expected UnsupportedOperationExcpetion");
     }
     catch (final UnsupportedOperationException e)
@@ -171,7 +168,7 @@ public class TestDoubleCollections extends TestCase
     assertTrue (!DoubleCollections.EMPTY_DOUBLE_LIST_ITERATOR.hasPrevious ());
     try
     {
-      DoubleCollections.EMPTY_DOUBLE_LIST_ITERATOR.add (1);
+      DoubleCollections.EMPTY_DOUBLE_LIST_ITERATOR.add (3.1415);
       fail ("Expected UnsupportedOperationExcpetion");
     }
     catch (final UnsupportedOperationException e)

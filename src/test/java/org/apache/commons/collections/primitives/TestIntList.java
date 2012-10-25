@@ -84,19 +84,19 @@ public abstract class TestIntList extends BaseTestList
   // ------------------------------------------------------------------------
 
   @Override
-  public List makeEmptyList ()
+  public List <Integer> makeEmptyList ()
   {
     return new IntListList (makeEmptyIntList ());
   }
 
   @Override
-  public Object [] getFullElements ()
+  public Integer [] getFullElements ()
   {
     return wrapArray (getFullIntegers ());
   }
 
   @Override
-  public Object [] getOtherElements ()
+  public Integer [] getOtherElements ()
   {
     return wrapArray (getOtherIntegers ());
   }
@@ -275,7 +275,7 @@ public abstract class TestIntList extends BaseTestList
   public void testEqualsWithIntListAndList ()
   {
     final IntList ilist = makeEmptyIntList ();
-    final List list = new ArrayList ();
+    final List <Integer> list = new ArrayList <Integer> ();
 
     assertTrue ("Unwrapped, empty List should not be equal to empty IntList.", !ilist.equals (list));
     assertTrue ("Unwrapped, empty IntList should not be equal to empty List.", !list.equals (ilist));

@@ -84,19 +84,19 @@ public abstract class TestFloatList extends BaseTestList
   // ------------------------------------------------------------------------
 
   @Override
-  public List makeEmptyList ()
+  public List <Float> makeEmptyList ()
   {
     return new FloatListList (makeEmptyFloatList ());
   }
 
   @Override
-  public Object [] getFullElements ()
+  public Float [] getFullElements ()
   {
     return wrapArray (getFullFloats ());
   }
 
   @Override
-  public Object [] getOtherElements ()
+  public Float [] getOtherElements ()
   {
     return wrapArray (getOtherFloats ());
   }
@@ -275,7 +275,7 @@ public abstract class TestFloatList extends BaseTestList
   public void testEqualsWithFloatListAndList ()
   {
     final FloatList ilist = makeEmptyFloatList ();
-    final List list = new ArrayList ();
+    final List <Float> list = new ArrayList <Float> ();
 
     assertTrue ("Unwrapped, empty List should not be equal to empty FloatList.", !ilist.equals (list));
     assertTrue ("Unwrapped, empty FloatList should not be equal to empty List.", !list.equals (ilist));

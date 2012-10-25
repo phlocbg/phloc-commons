@@ -25,32 +25,32 @@ import junit.framework.TestSuite;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestLongCollections extends TestCase
+public class TestZZZCollections extends TestCase
 {
-  public TestLongCollections (final String sTestName)
+  public TestZZZCollections (final String sTestName)
   {
     super (sTestName);
   }
 
   public static Test suite ()
   {
-    return new TestSuite (TestLongCollections.class);
+    return new TestSuite (TestZZZCollections.class);
   }
 
   // ---------------------------------------------------------------- Tests
 
-  public void testSingletonLongListIterator ()
+  public void testSingletonZZZListIterator ()
   {
-    final LongListIterator iter = LongCollections.singletonLongListIterator (424242L);
+    final ZZZListIterator iter = ZZZCollections.singletonZZZListIterator ($DUMMY$);
     assertTrue (!iter.hasPrevious ());
     assertTrue (iter.hasNext ());
-    assertEquals (424242L, iter.next (), 0d);
+    assertEquals ($DUMMY$, iter.next (), 0d);
     assertTrue (iter.hasPrevious ());
     assertTrue (!iter.hasNext ());
-    assertEquals (424242L, iter.previous (), 0d);
+    assertEquals ($DUMMY$, iter.previous (), 0d);
     try
     {
-      iter.set (424242L);
+      iter.set ($DUMMY$);
       fail ("Expected UnsupportedOperationException");
     }
     catch (final UnsupportedOperationException e)
@@ -59,11 +59,11 @@ public class TestLongCollections extends TestCase
     }
   }
 
-  public void testSingletonLongIterator ()
+  public void testSingletonZZZIterator ()
   {
-    final LongIterator iter = LongCollections.singletonLongIterator (424242L);
+    final ZZZIterator iter = ZZZCollections.singletonZZZIterator ($DUMMY$);
     assertTrue (iter.hasNext ());
-    assertEquals (424242L, iter.next (), 0d);
+    assertEquals ($DUMMY$, iter.next (), 0d);
     assertTrue (!iter.hasNext ());
     try
     {
@@ -76,14 +76,14 @@ public class TestLongCollections extends TestCase
     }
   }
 
-  public void testSingletonLongList ()
+  public void testSingletonZZZList ()
   {
-    final LongList list = LongCollections.singletonLongList (424242L);
+    final ZZZList list = ZZZCollections.singletonZZZList ($DUMMY$);
     assertEquals (1, list.size ());
-    assertEquals (424242L, list.get (0), 0d);
+    assertEquals ($DUMMY$, list.get (0), 0d);
     try
     {
-      list.add (424242L);
+      list.add ($DUMMY$);
       fail ("Expected UnsupportedOperationException");
     }
     catch (final UnsupportedOperationException e)
@@ -92,11 +92,11 @@ public class TestLongCollections extends TestCase
     }
   }
 
-  public void testUnmodifiableLongListNull ()
+  public void testUnmodifiableZZZListNull ()
   {
     try
     {
-      LongCollections.unmodifiableLongList (null);
+      ZZZCollections.unmodifiableZZZList (null);
       fail ("Expected NullPointerException");
     }
     catch (final NullPointerException e)
@@ -105,13 +105,13 @@ public class TestLongCollections extends TestCase
     }
   }
 
-  public void testEmptyLongList ()
+  public void testEmptyZZZList ()
   {
-    assertSame (LongCollections.EMPTY_LONG_LIST, LongCollections.getEmptyLongList ());
-    assertTrue (LongCollections.EMPTY_LONG_LIST.isEmpty ());
+    assertSame (ZZZCollections.EMPTY_YYY$UC$_LIST, ZZZCollections.getEmptyZZZList ());
+    assertTrue (ZZZCollections.EMPTY_YYY$UC$_LIST.isEmpty ());
     try
     {
-      LongCollections.EMPTY_LONG_LIST.add (424242L);
+      ZZZCollections.EMPTY_YYY$UC$_LIST.add ($DUMMY$);
       fail ("Expected UnsupportedOperationExcpetion");
     }
     catch (final UnsupportedOperationException e)
@@ -120,11 +120,11 @@ public class TestLongCollections extends TestCase
     }
   }
 
-  public void testUnmodifiableLongIteratorNull ()
+  public void testUnmodifiableZZZIteratorNull ()
   {
     try
     {
-      LongCollections.unmodifiableLongIterator (null);
+      ZZZCollections.unmodifiableZZZIterator (null);
       fail ("Expected NullPointerException");
     }
     catch (final NullPointerException e)
@@ -133,13 +133,13 @@ public class TestLongCollections extends TestCase
     }
   }
 
-  public void testEmptyLongIterator ()
+  public void testEmptyZZZIterator ()
   {
-    assertSame (LongCollections.EMPTY_LONG_ITERATOR, LongCollections.getEmptyLongIterator ());
-    assertTrue (!LongCollections.EMPTY_LONG_ITERATOR.hasNext ());
+    assertSame (ZZZCollections.EMPTY_YYY$UC$_ITERATOR, ZZZCollections.getEmptyZZZIterator ());
+    assertTrue (!ZZZCollections.EMPTY_YYY$UC$_ITERATOR.hasNext ());
     try
     {
-      LongCollections.EMPTY_LONG_ITERATOR.remove ();
+      ZZZCollections.EMPTY_YYY$UC$_ITERATOR.remove ();
       fail ("Expected UnsupportedOperationExcpetion");
     }
     catch (final UnsupportedOperationException e)
@@ -148,11 +148,11 @@ public class TestLongCollections extends TestCase
     }
   }
 
-  public void testUnmodifiableLongListIteratorNull ()
+  public void testUnmodifiableZZZListIteratorNull ()
   {
     try
     {
-      LongCollections.unmodifiableLongListIterator (null);
+      ZZZCollections.unmodifiableZZZListIterator (null);
       fail ("Expected NullPointerException");
     }
     catch (final NullPointerException e)
@@ -161,14 +161,14 @@ public class TestLongCollections extends TestCase
     }
   }
 
-  public void testEmptyLongListIterator ()
+  public void testEmptyZZZListIterator ()
   {
-    assertSame (LongCollections.EMPTY_LONG_LIST_ITERATOR, LongCollections.getEmptyLongListIterator ());
-    assertTrue (!LongCollections.EMPTY_LONG_LIST_ITERATOR.hasNext ());
-    assertTrue (!LongCollections.EMPTY_LONG_LIST_ITERATOR.hasPrevious ());
+    assertSame (ZZZCollections.EMPTY_YYY$UC$_LIST_ITERATOR, ZZZCollections.getEmptyZZZListIterator ());
+    assertTrue (!ZZZCollections.EMPTY_YYY$UC$_LIST_ITERATOR.hasNext ());
+    assertTrue (!ZZZCollections.EMPTY_YYY$UC$_LIST_ITERATOR.hasPrevious ());
     try
     {
-      LongCollections.EMPTY_LONG_LIST_ITERATOR.add (424242L);
+      ZZZCollections.EMPTY_YYY$UC$_LIST_ITERATOR.add ($DUMMY$);
       fail ("Expected UnsupportedOperationExcpetion");
     }
     catch (final UnsupportedOperationException e)

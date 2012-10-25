@@ -84,19 +84,19 @@ public abstract class TestByteList extends BaseTestList
   // ------------------------------------------------------------------------
 
   @Override
-  public List makeEmptyList ()
+  public List <Byte> makeEmptyList ()
   {
     return new ByteListList (makeEmptyByteList ());
   }
 
   @Override
-  public Object [] getFullElements ()
+  public Byte [] getFullElements ()
   {
     return wrapArray (getFullBytes ());
   }
 
   @Override
-  public Object [] getOtherElements ()
+  public Byte [] getOtherElements ()
   {
     return wrapArray (getOtherBytes ());
   }
@@ -275,7 +275,7 @@ public abstract class TestByteList extends BaseTestList
   public void testEqualsWithByteListAndList ()
   {
     final ByteList ilist = makeEmptyByteList ();
-    final List list = new ArrayList ();
+    final List <Byte> list = new ArrayList <Byte> ();
 
     assertTrue ("Unwrapped, empty List should not be equal to empty ByteList.", !ilist.equals (list));
     assertTrue ("Unwrapped, empty ByteList should not be equal to empty List.", !list.equals (ilist));
