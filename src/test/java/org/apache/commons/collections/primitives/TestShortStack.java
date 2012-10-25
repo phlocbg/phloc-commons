@@ -23,7 +23,7 @@ import junit.framework.TestSuite;
 
 /**
  * Tests the ShortStack class.
- * 
+ *
  * @author <a href="mailto:directory-dev@incubator.apache.org">Apache Directory
  *         Project</a>
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
@@ -35,7 +35,7 @@ public class TestShortStack extends TestCase
 
   /**
    * Runs the test.
-   * 
+   *
    * @param args
    *        nada
    */
@@ -62,7 +62,7 @@ public class TestShortStack extends TestCase
 
   /**
    * Constructor for IntStackTest.
-   * 
+   *
    * @param arg0
    */
   public TestShortStack (final String arg0)
@@ -72,11 +72,11 @@ public class TestShortStack extends TestCase
 
   public void testEmpty ()
   {
-    assertTrue ("Newly created stacks should be empty", stack.empty ());
+    assertTrue ("Newly created stacks should be empty", stack.isEmpty ());
     stack.push ((short) 12342);
-    assertFalse ("Stack with item should not be empty", stack.empty ());
+    assertFalse ("Stack with item should not be empty", stack.isEmpty ());
     stack.pop ();
-    assertTrue ("Stack last int popped should be empty", stack.empty ());
+    assertTrue ("Stack last int popped should be empty", stack.isEmpty ());
   }
 
   public void testPeek ()
@@ -131,7 +131,7 @@ public class TestShortStack extends TestCase
   {
     stack.push ((short) 0);
     stack.push ((short) 0);
-    assertFalse (stack.empty ());
+    assertFalse (stack.isEmpty ());
     assertTrue (0 == stack.pop ());
     assertTrue (0 == stack.pop ());
   }

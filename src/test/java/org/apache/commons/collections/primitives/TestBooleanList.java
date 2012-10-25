@@ -84,19 +84,19 @@ public abstract class TestBooleanList extends BaseTestList
   // ------------------------------------------------------------------------
 
   @Override
-  public List makeEmptyList ()
+  public List <Boolean> makeEmptyList ()
   {
     return new BooleanListList (makeEmptyBooleanList ());
   }
 
   @Override
-  public Object [] getFullElements ()
+  public Boolean [] getFullElements ()
   {
     return wrapArray (getFullBooleans ());
   }
 
   @Override
-  public Object [] getOtherElements ()
+  public Boolean [] getOtherElements ()
   {
     return wrapArray (getOtherBooleans ());
   }
@@ -278,7 +278,7 @@ public abstract class TestBooleanList extends BaseTestList
   public void testEqualsWithBooleanListAndList ()
   {
     final BooleanList ilist = makeEmptyBooleanList ();
-    final List list = new ArrayList ();
+    final List <Boolean> list = new ArrayList <Boolean> ();
 
     assertTrue ("Unwrapped, empty List should not be equal to empty BooleanList.", !ilist.equals (list));
     assertTrue ("Unwrapped, empty BooleanList should not be equal to empty List.", !list.equals (ilist));

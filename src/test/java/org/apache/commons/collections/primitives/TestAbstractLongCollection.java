@@ -18,6 +18,9 @@ package org.apache.commons.collections.primitives;
 
 import java.util.Collections;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -31,15 +34,12 @@ import org.apache.commons.collections.primitives.adapters.IteratorLongIterator;
  */
 public class TestAbstractLongCollection extends TestCase
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestAbstractLongCollection (final String testName)
+  public TestAbstractLongCollection (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
+  @Nonnull
   public static Test suite ()
   {
     return new TestSuite (TestAbstractLongCollection.class);
@@ -53,7 +53,7 @@ public class TestAbstractLongCollection extends TestCase
     final LongCollection col = new LongCollectionImpl ();
     try
     {
-      col.add (1);
+      col.add (424242L);
       fail ("Expected UnsupportedOperationException");
     }
     catch (final UnsupportedOperationException e)
@@ -65,7 +65,7 @@ public class TestAbstractLongCollection extends TestCase
   // inner classes
   // ------------------------------------------------------------------------
 
-  static class LongCollectionImpl extends AbstractLongCollection
+  static final class LongCollectionImpl extends AbstractLongCollection
   {
     public LongCollectionImpl ()
     {}
@@ -73,10 +73,11 @@ public class TestAbstractLongCollection extends TestCase
     @Override
     public LongIterator iterator ()
     {
-      return new IteratorLongIterator (Collections.EMPTY_LIST.iterator ());
+      return new IteratorLongIterator (Collections.<Long> emptyList ().iterator ());
     }
 
     @Override
+    @Nonnegative
     public int size ()
     {
       return 0;

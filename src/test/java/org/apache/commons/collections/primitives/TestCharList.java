@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.adapters.BaseTestList;
 import org.apache.commons.collections.primitives.adapters.CharListList;
 import org.apache.commons.collections.primitives.adapters.ListCharList;
@@ -32,13 +34,9 @@ import org.apache.commons.collections.primitives.adapters.ListCharList;
  */
 public abstract class TestCharList extends BaseTestList
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestCharList (final String testName)
+  public TestCharList (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   // collections testing framework
@@ -47,36 +45,34 @@ public abstract class TestCharList extends BaseTestList
   // collections testing framework: char list
   // ------------------------------------------------------------------------
 
+  @Nonnull
   protected abstract CharList makeEmptyCharList ();
 
+  @Nonnull
   protected CharList makeFullCharList ()
   {
     final CharList list = makeEmptyCharList ();
     final char [] values = getFullChars ();
     for (final char value : values)
-    {
       list.add (value);
-    }
     return list;
   }
 
+  @Nonnull
   protected char [] getFullChars ()
   {
     final char [] result = new char [19];
     for (int i = 0; i < result.length; i++)
-    {
       result[i] = (char) (i);
-    }
     return result;
   }
 
+  @Nonnull
   protected char [] getOtherChars ()
   {
     final char [] result = new char [16];
     for (int i = 0; i < result.length; i++)
-    {
       result[i] = (char) (i + 43);
-    }
     return result;
   }
 
@@ -84,33 +80,35 @@ public abstract class TestCharList extends BaseTestList
   // ------------------------------------------------------------------------
 
   @Override
-  public List makeEmptyList ()
+  @Nonnull
+  public List <Character> makeEmptyList ()
   {
     return new CharListList (makeEmptyCharList ());
   }
 
   @Override
-  public Object [] getFullElements ()
+  @Nonnull
+  public Character [] getFullElements ()
   {
-    return wrapArray (getFullChars ());
+    return _wrapArray (getFullChars ());
   }
 
   @Override
-  public Object [] getOtherElements ()
+  @Nonnull
+  public Character [] getOtherElements ()
   {
-    return wrapArray (getOtherChars ());
+    return _wrapArray (getOtherChars ());
   }
 
   // private utils
   // ------------------------------------------------------------------------
 
-  private Character [] wrapArray (final char [] primitives)
+  @Nonnull
+  private Character [] _wrapArray (final char [] primitives)
   {
     final Character [] result = new Character [primitives.length];
     for (int i = 0; i < result.length; i++)
-    {
-      result[i] = new Character (primitives[i]);
-    }
+      result[i] = Character.valueOf (primitives[i]);
     return result;
   }
 
@@ -275,7 +273,7 @@ public abstract class TestCharList extends BaseTestList
   public void testEqualsWithCharListAndList ()
   {
     final CharList ilist = makeEmptyCharList ();
-    final List list = new ArrayList ();
+    final List <Character> list = new ArrayList <Character> ();
 
     assertTrue ("Unwrapped, empty List should not be equal to empty CharList.", !ilist.equals (list));
     assertTrue ("Unwrapped, empty CharList should not be equal to empty List.", !list.equals (ilist));
@@ -314,7 +312,6 @@ public abstract class TestCharList extends BaseTestList
     assertEquals (ilist, new ListCharList (list));
     assertEquals (new CharListList (ilist), list);
     assertEquals (list, new CharListList (ilist));
-
   }
 
   public void testClearAndSize ()
@@ -355,13 +352,9 @@ public abstract class TestCharList extends BaseTestList
   {
     final CharList list = makeEmptyCharList ();
     for (int i = 0; i < 255; i++)
-    {
       list.add ((char) i);
-    }
     for (int i = 0; i < 255; i++)
-    {
       assertEquals ((char) i, list.get (i), 0f);
-    }
   }
 
   public void testAddAndShift ()
@@ -521,9 +514,7 @@ public abstract class TestCharList extends BaseTestList
     final String expected = "The quick brown fox jumped over the lazy dogs.";
     final CharList list = makeEmptyCharList ();
     for (int i = 0; i < expected.length (); i++)
-    {
       list.add (expected.charAt (i));
-    }
     assertEquals (expected, list.toString ());
   }
 }

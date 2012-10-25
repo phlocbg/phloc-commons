@@ -18,6 +18,9 @@ package org.apache.commons.collections.primitives;
 
 import java.util.Collections;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -31,15 +34,12 @@ import org.apache.commons.collections.primitives.adapters.IteratorShortIterator;
  */
 public class TestAbstractShortCollection extends TestCase
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestAbstractShortCollection (final String testName)
+  public TestAbstractShortCollection (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
+  @Nonnull
   public static Test suite ()
   {
     return new TestSuite (TestAbstractShortCollection.class);
@@ -53,7 +53,7 @@ public class TestAbstractShortCollection extends TestCase
     final ShortCollection col = new ShortCollectionImpl ();
     try
     {
-      col.add ((short) 1);
+      col.add ((short) 4712);
       fail ("Expected UnsupportedOperationException");
     }
     catch (final UnsupportedOperationException e)
@@ -65,7 +65,7 @@ public class TestAbstractShortCollection extends TestCase
   // inner classes
   // ------------------------------------------------------------------------
 
-  static class ShortCollectionImpl extends AbstractShortCollection
+  static final class ShortCollectionImpl extends AbstractShortCollection
   {
     public ShortCollectionImpl ()
     {}
@@ -73,10 +73,11 @@ public class TestAbstractShortCollection extends TestCase
     @Override
     public ShortIterator iterator ()
     {
-      return new IteratorShortIterator (Collections.EMPTY_LIST.iterator ());
+      return new IteratorShortIterator (Collections.<Short> emptyList ().iterator ());
     }
 
     @Override
+    @Nonnegative
     public int size ()
     {
       return 0;

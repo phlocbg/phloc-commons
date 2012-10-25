@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives;
 
+import javax.annotation.Nonnull;
+
 /**
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
  *          2006) $
@@ -23,35 +25,31 @@ package org.apache.commons.collections.primitives;
  */
 public abstract class TestShortListIterator extends TestShortIterator
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestShortListIterator (final String testName)
+  public TestShortListIterator (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   // collections testing framework
   // ------------------------------------------------------------------------
 
   @Override
+  @Nonnull
   public ShortIterator makeEmptyShortIterator ()
   {
     return makeEmptyShortListIterator ();
   }
 
   @Override
+  @Nonnull
   public ShortIterator makeFullShortIterator ()
   {
     return makeFullShortListIterator ();
   }
 
+  @Nonnull
   public abstract ShortListIterator makeEmptyShortListIterator ();
 
+  @Nonnull
   public abstract ShortListIterator makeFullShortListIterator ();
-
-  // tests
-  // ------------------------------------------------------------------------
-
 }

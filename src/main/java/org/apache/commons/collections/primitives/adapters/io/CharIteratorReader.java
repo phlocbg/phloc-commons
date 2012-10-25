@@ -18,6 +18,9 @@ package org.apache.commons.collections.primitives.adapters.io;
 
 import java.io.Reader;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.CharIterator;
 
 /**
@@ -29,40 +32,36 @@ import org.apache.commons.collections.primitives.CharIterator;
  */
 public class CharIteratorReader extends Reader
 {
+  private final CharIterator m_aIterator;
 
-  public CharIteratorReader (final CharIterator in)
+  public CharIteratorReader (@Nonnull final CharIterator in)
   {
-    this.iterator = in;
+    m_aIterator = in;
   }
 
   @Override
   public int read (final char [] buf, final int off, final int len)
   {
-    if (iterator.hasNext ())
+    if (m_aIterator.hasNext ())
     {
       int count = 0;
-      while (iterator.hasNext () && count < len)
+      while (m_aIterator.hasNext () && count < len)
       {
-        buf[off + count] = iterator.next ();
+        buf[off + count] = m_aIterator.next ();
         count++;
       }
       return count;
     }
-    else
-    {
-      return -1;
-    }
+    return -1;
   }
 
   @Override
   public void close ()
   {}
 
-  public static Reader adapt (final CharIterator in)
+  @Nullable
+  public static Reader adapt (@Nullable final CharIterator in)
   {
     return null == in ? null : new CharIteratorReader (in);
   }
-
-  private CharIterator iterator = null;
-
 }

@@ -25,16 +25,16 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.primitives.adapters.IteratorDoubleIterator;
+import org.apache.commons.collections.primitives.adapters.IteratorZZZIterator;
 
 /**
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestAbstractDoubleCollection extends TestCase
+public class TestAbstractZZZCollection extends TestCase
 {
-  public TestAbstractDoubleCollection (final String sTestName)
+  public TestAbstractZZZCollection (final String sTestName)
   {
     super (sTestName);
   }
@@ -42,7 +42,7 @@ public class TestAbstractDoubleCollection extends TestCase
   @Nonnull
   public static Test suite ()
   {
-    return new TestSuite (TestAbstractDoubleCollection.class);
+    return new TestSuite (TestAbstractZZZCollection.class);
   }
 
   // tests
@@ -50,10 +50,10 @@ public class TestAbstractDoubleCollection extends TestCase
 
   public void testAddIsUnsupportedByDefault ()
   {
-    final DoubleCollection col = new DoubleCollectionImpl ();
+    final ZZZCollection col = new ZZZCollectionImpl ();
     try
     {
-      col.add (3.1415);
+      col.add ($DUMMY$);
       fail ("Expected UnsupportedOperationException");
     }
     catch (final UnsupportedOperationException e)
@@ -65,15 +65,15 @@ public class TestAbstractDoubleCollection extends TestCase
   // inner classes
   // ------------------------------------------------------------------------
 
-  static final class DoubleCollectionImpl extends AbstractDoubleCollection
+  static final class ZZZCollectionImpl extends AbstractZZZCollection
   {
-    public DoubleCollectionImpl ()
+    public ZZZCollectionImpl ()
     {}
 
     @Override
-    public DoubleIterator iterator ()
+    public ZZZIterator iterator ()
     {
-      return new IteratorDoubleIterator (Collections.<Double> emptyList ().iterator ());
+      return new IteratorZZZIterator (Collections.<XXX> emptyList ().iterator ());
     }
 
     @Override

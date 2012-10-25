@@ -19,6 +19,8 @@ package org.apache.commons.collections.primitives;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.iterators.AbstractTestIterator;
 import org.apache.commons.collections.primitives.adapters.CharIteratorIterator;
 
@@ -29,34 +31,33 @@ import org.apache.commons.collections.primitives.adapters.CharIteratorIterator;
  */
 public abstract class TestCharIterator extends AbstractTestIterator
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestCharIterator (final String testName)
+  public TestCharIterator (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   // collections testing framework
   // ------------------------------------------------------------------------
 
   @Override
-  public Iterator makeEmptyIterator ()
+  public Iterator <Character> makeEmptyIterator ()
   {
     return CharIteratorIterator.wrap (makeEmptyCharIterator ());
   }
 
   @Override
-  public Iterator makeFullIterator ()
+  public Iterator <Character> makeFullIterator ()
   {
     return CharIteratorIterator.wrap (makeFullCharIterator ());
   }
 
+  @Nonnull
   protected abstract CharIterator makeEmptyCharIterator ();
 
+  @Nonnull
   protected abstract CharIterator makeFullCharIterator ();
 
+  @Nonnull
   protected abstract char [] getFullElements ();
 
   // tests
@@ -69,7 +70,7 @@ public abstract class TestCharIterator extends AbstractTestIterator
     for (final char element : elements)
     {
       assertTrue (iter.hasNext ());
-      assertEquals (element, iter.next (), 0f);
+      assertEquals (element, iter.next (), 0d);
       if (supportsRemove ())
       {
         iter.remove ();

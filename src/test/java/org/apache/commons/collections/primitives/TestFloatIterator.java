@@ -19,6 +19,8 @@ package org.apache.commons.collections.primitives;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.iterators.AbstractTestIterator;
 import org.apache.commons.collections.primitives.adapters.FloatIteratorIterator;
 
@@ -29,34 +31,33 @@ import org.apache.commons.collections.primitives.adapters.FloatIteratorIterator;
  */
 public abstract class TestFloatIterator extends AbstractTestIterator
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestFloatIterator (final String testName)
+  public TestFloatIterator (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   // collections testing framework
   // ------------------------------------------------------------------------
 
   @Override
-  public Iterator makeEmptyIterator ()
+  public Iterator <Float> makeEmptyIterator ()
   {
     return FloatIteratorIterator.wrap (makeEmptyFloatIterator ());
   }
 
   @Override
-  public Iterator makeFullIterator ()
+  public Iterator <Float> makeFullIterator ()
   {
     return FloatIteratorIterator.wrap (makeFullFloatIterator ());
   }
 
+  @Nonnull
   protected abstract FloatIterator makeEmptyFloatIterator ();
 
+  @Nonnull
   protected abstract FloatIterator makeFullFloatIterator ();
 
+  @Nonnull
   protected abstract float [] getFullElements ();
 
   // tests
@@ -69,7 +70,7 @@ public abstract class TestFloatIterator extends AbstractTestIterator
     for (final float element : elements)
     {
       assertTrue (iter.hasNext ());
-      assertEquals (element, iter.next (), 0f);
+      assertEquals (element, iter.next (), 0d);
       if (supportsRemove ())
       {
         iter.remove ();

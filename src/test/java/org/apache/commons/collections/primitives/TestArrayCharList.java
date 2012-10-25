@@ -28,13 +28,9 @@ import org.apache.commons.collections.BulkTest;
  */
 public class TestArrayCharList extends TestCharList
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestArrayCharList (final String testName)
+  public TestArrayCharList (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
@@ -162,9 +158,7 @@ public class TestArrayCharList extends TestCharList
   {
     final ArrayCharList expected = new ArrayCharList ();
     for (int i = 0; i < 10; i++)
-    {
       expected.add ((char) i);
-    }
     final ArrayCharList list = new ArrayCharList (expected.toArray ());
     assertEquals (10, list.size ());
     assertEquals (expected, list);
@@ -195,48 +189,33 @@ public class TestArrayCharList extends TestCharList
       assertTrue (list.isEmpty ());
 
       for (int i = 0; i < 10; i++)
-      {
         list.add ((char) i);
-      }
 
       for (int i = 0; i < 10; i++)
-      {
         assertEquals ((char) i, list.get (i), 0f);
-      }
 
       list.trimToSize ();
 
       for (int i = 0; i < 10; i++)
-      {
         assertEquals ((char) i, list.get (i), 0f);
-      }
 
       for (int i = 0; i < 10; i += 2)
-      {
         list.removeElement ((char) i);
-      }
 
       for (int i = 0; i < 5; i++)
-      {
         assertEquals ((char) (2 * i) + 1, list.get (i), 0f);
-      }
 
       list.trimToSize ();
 
       for (int i = 0; i < 5; i++)
-      {
         assertEquals ((char) (2 * i) + 1, list.get (i), 0f);
-      }
 
       list.trimToSize ();
 
       for (int i = 0; i < 5; i++)
-      {
         assertEquals ((char) (2 * i) + 1, list.get (i), 0f);
-      }
 
       list.clear ();
     }
   }
-
 }

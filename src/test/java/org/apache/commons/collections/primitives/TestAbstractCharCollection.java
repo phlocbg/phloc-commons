@@ -18,6 +18,9 @@ package org.apache.commons.collections.primitives;
 
 import java.util.Collections;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -31,15 +34,12 @@ import org.apache.commons.collections.primitives.adapters.IteratorCharIterator;
  */
 public class TestAbstractCharCollection extends TestCase
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestAbstractCharCollection (final String testName)
+  public TestAbstractCharCollection (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
+  @Nonnull
   public static Test suite ()
   {
     return new TestSuite (TestAbstractCharCollection.class);
@@ -53,7 +53,7 @@ public class TestAbstractCharCollection extends TestCase
     final CharCollection col = new CharCollectionImpl ();
     try
     {
-      col.add ((char) 1);
+      col.add ('c');
       fail ("Expected UnsupportedOperationException");
     }
     catch (final UnsupportedOperationException e)
@@ -65,7 +65,7 @@ public class TestAbstractCharCollection extends TestCase
   // inner classes
   // ------------------------------------------------------------------------
 
-  static class CharCollectionImpl extends AbstractCharCollection
+  static final class CharCollectionImpl extends AbstractCharCollection
   {
     public CharCollectionImpl ()
     {}
@@ -73,10 +73,11 @@ public class TestAbstractCharCollection extends TestCase
     @Override
     public CharIterator iterator ()
     {
-      return new IteratorCharIterator (Collections.EMPTY_LIST.iterator ());
+      return new IteratorCharIterator (Collections.<Character> emptyList ().iterator ());
     }
 
     @Override
+    @Nonnegative
     public int size ()
     {
       return 0;

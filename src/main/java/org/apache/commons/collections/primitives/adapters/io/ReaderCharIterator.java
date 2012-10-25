@@ -20,6 +20,9 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.NoSuchElementException;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.CharIterator;
 
 /**
@@ -31,34 +34,27 @@ import org.apache.commons.collections.primitives.CharIterator;
  */
 public class ReaderCharIterator implements CharIterator
 {
+  private final Reader m_aReader;
+  private boolean m_bNextAvailable = false;
+  private int m_nNext;
 
-  public ReaderCharIterator (final Reader in)
+  public ReaderCharIterator (@Nonnull final Reader in)
   {
-    this.reader = in;
-  }
-
-  public static CharIterator adapt (final Reader in)
-  {
-    return null == in ? null : new ReaderCharIterator (in);
+    m_aReader = in;
   }
 
   public boolean hasNext ()
   {
-    ensureNextAvailable ();
-    return (-1 != next);
+    _ensureNextAvailable ();
+    return -1 != m_nNext;
   }
 
   public char next ()
   {
     if (!hasNext ())
-    {
       throw new NoSuchElementException ("No next element");
-    }
-    else
-    {
-      nextAvailable = false;
-      return (char) next;
-    }
+    m_bNextAvailable = false;
+    return (char) m_nNext;
   }
 
   /**
@@ -71,31 +67,28 @@ public class ReaderCharIterator implements CharIterator
     throw new UnsupportedOperationException ("remove() is not supported here");
   }
 
-  private void ensureNextAvailable ()
+  private void _ensureNextAvailable ()
   {
-    if (!nextAvailable)
-    {
-      readNext ();
-    }
+    if (!m_bNextAvailable)
+      _readNext ();
   }
 
-  private void readNext ()
+  private void _readNext ()
   {
     try
     {
-      next = reader.read ();
-      nextAvailable = true;
+      m_nNext = m_aReader.read ();
+      m_bNextAvailable = true;
     }
     catch (final IOException e)
     {
-      // TODO: Use a tunnelled exception instead?
-      // See http://radio.weblogs.com/0122027/2003/04/01.html#a7, for example
-      throw new RuntimeException (e.toString ());
+      throw new RuntimeException (e);
     }
   }
 
-  private Reader reader = null;
-  private boolean nextAvailable = false;
-  private int next;
-
+  @Nullable
+  public static CharIterator adapt (@Nullable final Reader in)
+  {
+    return null == in ? null : new ReaderCharIterator (in);
+  }
 }
