@@ -18,26 +18,27 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 /**
- * @since Commons Primitives 1.1
+ * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
  */
 final class NonSerializableListBooleanList extends AbstractListBooleanList
 {
+  private final List <Boolean> m_aList;
 
-  protected NonSerializableListBooleanList (final List list)
+  protected NonSerializableListBooleanList (@Nonnull final List <Boolean> list)
   {
-    _list = list;
+    m_aList = list;
   }
 
   @Override
-  protected List getList ()
+  @Nonnull
+  protected List <Boolean> getList ()
   {
-    return _list;
+    return m_aList;
   }
-
-  private List _list = null;
-
 }

@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.LongCollection;
 
 /**
@@ -26,21 +28,21 @@ import org.apache.commons.collections.primitives.LongCollection;
  */
 final class NonSerializableLongCollectionCollection extends AbstractLongCollectionCollection
 {
+  private final LongCollection m_aCollection;
 
   /**
    * Creates a {@link java.util.Collection Collection} wrapping the specified
    * {@link LongCollection LongCollection}.
    */
-  public NonSerializableLongCollectionCollection (final LongCollection collection)
+  public NonSerializableLongCollectionCollection (@Nonnull final LongCollection collection)
   {
-    _collection = collection;
+    m_aCollection = collection;
   }
 
   @Override
+  @Nonnull
   protected LongCollection getLongCollection ()
   {
-    return _collection;
+    return m_aCollection;
   }
-
-  private LongCollection _collection = null;
 }

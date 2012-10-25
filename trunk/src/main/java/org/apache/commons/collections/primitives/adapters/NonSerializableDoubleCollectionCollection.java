@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.DoubleCollection;
 
 /**
@@ -26,21 +28,21 @@ import org.apache.commons.collections.primitives.DoubleCollection;
  */
 final class NonSerializableDoubleCollectionCollection extends AbstractDoubleCollectionCollection
 {
+  private final DoubleCollection m_aCollection;
 
   /**
    * Creates a {@link java.util.Collection Collection} wrapping the specified
    * {@link DoubleCollection DoubleCollection}.
    */
-  public NonSerializableDoubleCollectionCollection (final DoubleCollection collection)
+  public NonSerializableDoubleCollectionCollection (@Nonnull final DoubleCollection collection)
   {
-    _collection = collection;
+    m_aCollection = collection;
   }
 
   @Override
+  @Nonnull
   protected DoubleCollection getDoubleCollection ()
   {
-    return _collection;
+    return m_aCollection;
   }
-
-  private DoubleCollection _collection = null;
 }

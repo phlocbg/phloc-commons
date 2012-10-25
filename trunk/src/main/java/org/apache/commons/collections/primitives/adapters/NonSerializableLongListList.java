@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.LongList;
 
 /**
@@ -26,22 +28,21 @@ import org.apache.commons.collections.primitives.LongList;
  */
 final class NonSerializableLongListList extends AbstractLongListList
 {
+  private final LongList m_aList;
 
   /**
    * Creates a {@link java.util.List List} wrapping the specified
    * {@link LongList LongList}.
    */
-  public NonSerializableLongListList (final LongList list)
+  public NonSerializableLongListList (@Nonnull final LongList aList)
   {
-    _list = list;
+    m_aList = aList;
   }
 
   @Override
+  @Nonnull
   protected LongList getLongList ()
   {
-    return _list;
+    return m_aList;
   }
-
-  private LongList _list = null;
-
 }

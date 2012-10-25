@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.CharList;
 
 /**
@@ -26,22 +28,21 @@ import org.apache.commons.collections.primitives.CharList;
  */
 final class NonSerializableCharListList extends AbstractCharListList
 {
+  private final CharList m_aList;
 
   /**
    * Creates a {@link java.util.List List} wrapping the specified
    * {@link CharList CharList}.
    */
-  public NonSerializableCharListList (final CharList list)
+  public NonSerializableCharListList (@Nonnull final CharList aList)
   {
-    _list = list;
+    m_aList = aList;
   }
 
   @Override
+  @Nonnull
   protected CharList getCharList ()
   {
-    return _list;
+    return m_aList;
   }
-
-  private CharList _list = null;
-
 }

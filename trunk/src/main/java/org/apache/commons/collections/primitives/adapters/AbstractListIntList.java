@@ -19,6 +19,9 @@ package org.apache.commons.collections.primitives.adapters;
 import java.util.Collection;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.IntCollection;
 import org.apache.commons.collections.primitives.IntIterator;
 import org.apache.commons.collections.primitives.IntList;
@@ -32,10 +35,19 @@ import org.apache.commons.collections.primitives.IntListIterator;
  */
 abstract class AbstractListIntList extends AbstractCollectionIntCollection implements IntList
 {
-
-  public void add (final int index, final int element)
+  @Override
+  @Nonnull
+  protected final Collection <Integer> getCollection ()
   {
-    getList ().add (index, new Integer (element));
+    return getList ();
+  }
+
+  @Nonnull
+  protected abstract List <Integer> getList ();
+
+  public void add (final int nIndex, final int element)
+  {
+    getList ().add (nIndex, Integer.valueOf (element));
   }
 
   public boolean addAll (final int index, final IntCollection collection)
@@ -45,45 +57,49 @@ abstract class AbstractListIntList extends AbstractCollectionIntCollection imple
 
   public int get (final int index)
   {
-    return ((Number) getList ().get (index)).intValue ();
+    return getList ().get (index).intValue ();
   }
 
   public int indexOf (final int element)
   {
-    return getList ().indexOf (new Integer (element));
+    return getList ().indexOf (Integer.valueOf (element));
   }
 
-  public int lastIndexOf (final int element)
+  public int lastIndexOf (final int aElement)
   {
-    return getList ().lastIndexOf (new Integer (element));
+    return getList ().lastIndexOf (Integer.valueOf (aElement));
   }
 
   /**
-   * {@link ListIteratorIntListIterator#wrap wraps} the {@link IntList IntList}
-   * returned by my underlying {@link IntListIterator IntListIterator}, if any.
+   * {@link ListIteratorIntListIterator#wrap wraps} the {@link IntList
+   * IntList} returned by my underlying {@link IntListIterator
+   * IntListIterator}, if any.
    */
+  @Nonnull
   public IntListIterator listIterator ()
   {
     return ListIteratorIntListIterator.wrap (getList ().listIterator ());
   }
 
   /**
-   * {@link ListIteratorIntListIterator#wrap wraps} the {@link IntList IntList}
-   * returned by my underlying {@link IntListIterator IntListIterator}, if any.
+   * {@link ListIteratorIntListIterator#wrap wraps} the {@link IntList
+   * IntList} returned by my underlying {@link IntListIterator
+   * IntListIterator}, if any.
    */
-  public IntListIterator listIterator (final int index)
+  @Nonnull
+  public IntListIterator listIterator (final int nIndex)
   {
-    return ListIteratorIntListIterator.wrap (getList ().listIterator (index));
+    return ListIteratorIntListIterator.wrap (getList ().listIterator (nIndex));
   }
 
   public int removeElementAt (final int index)
   {
-    return ((Number) getList ().remove (index)).intValue ();
+    return getList ().remove (index).intValue ();
   }
 
   public int set (final int index, final int element)
   {
-    return ((Number) getList ().set (index, new Integer (element))).intValue ();
+    return getList ().set (index, new Integer (element)).intValue ();
   }
 
   public IntList subList (final int fromIndex, final int toIndex)
@@ -92,38 +108,22 @@ abstract class AbstractListIntList extends AbstractCollectionIntCollection imple
   }
 
   @Override
-  public boolean equals (final Object obj)
+  public boolean equals (@Nullable final Object obj)
   {
-    if (obj instanceof IntList)
-    {
-      final IntList that = (IntList) obj;
-      if (this == that)
-      {
-        return true;
-      }
-      else
-        if (this.size () != that.size ())
-        {
-          return false;
-        }
-        else
-        {
-          final IntIterator thisiter = iterator ();
-          final IntIterator thatiter = that.iterator ();
-          while (thisiter.hasNext ())
-          {
-            if (thisiter.next () != thatiter.next ())
-            {
-              return false;
-            }
-          }
-          return true;
-        }
-    }
-    else
-    {
+    if (obj == this)
+      return true;
+    if (!(obj instanceof IntList))
       return false;
-    }
+
+    final IntList that = (IntList) obj;
+    if (this.size () != that.size ())
+      return false;
+    final IntIterator thisiter = iterator ();
+    final IntIterator thatiter = that.iterator ();
+    while (thisiter.hasNext ())
+      if (thisiter.next () != thatiter.next ())
+        return false;
+    return true;
   }
 
   @Override
@@ -131,12 +131,4 @@ abstract class AbstractListIntList extends AbstractCollectionIntCollection imple
   {
     return getList ().hashCode ();
   }
-
-  @Override
-  final protected Collection getCollection ()
-  {
-    return getList ();
-  }
-
-  abstract protected List getList ();
 }

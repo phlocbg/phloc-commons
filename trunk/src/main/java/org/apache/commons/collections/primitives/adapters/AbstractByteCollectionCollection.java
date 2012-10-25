@@ -16,11 +16,15 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
-import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.ByteCollection;
+
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 
 /**
  * @since Commons Primitives 1.0
@@ -28,17 +32,20 @@ import org.apache.commons.collections.primitives.ByteCollection;
  *          2006) $
  * @author Rodney Waldhoff
  */
-abstract class AbstractByteCollectionCollection implements Collection
+abstract class AbstractByteCollectionCollection implements Collection <Byte>
 {
+  @Nonnull
+  protected abstract ByteCollection getByteCollection ();
 
-  public boolean add (final Object element)
+  public boolean add (final Byte element)
   {
-    return getByteCollection ().add (((Number) element).byteValue ());
+    return getByteCollection ().add (element.byteValue ());
   }
 
-  public boolean addAll (final Collection c)
+  @SuppressWarnings ("unchecked")
+  public boolean addAll (final Collection <? extends Byte> c)
   {
-    return getByteCollection ().addAll (CollectionByteCollection.wrap (c));
+    return getByteCollection ().addAll (CollectionByteCollection.wrap ((Collection <Byte>) c));
   }
 
   public void clear ()
@@ -48,12 +55,13 @@ abstract class AbstractByteCollectionCollection implements Collection
 
   public boolean contains (final Object element)
   {
-    return getByteCollection ().contains (((Number) element).byteValue ());
+    return getByteCollection ().contains (((Byte) element).byteValue ());
   }
 
-  public boolean containsAll (final Collection c)
+  @SuppressWarnings ("unchecked")
+  public boolean containsAll (final Collection <?> c)
   {
-    return getByteCollection ().containsAll (CollectionByteCollection.wrap (c));
+    return getByteCollection ().containsAll (CollectionByteCollection.wrap ((Collection <Byte>) c));
   }
 
   @Override
@@ -72,24 +80,26 @@ abstract class AbstractByteCollectionCollection implements Collection
    * {@link org.apache.commons.collections.primitives.ByteIterator ByteIterator}
    * returned by my underlying {@link ByteCollection ByteCollection}, if any.
    */
-  public Iterator iterator ()
+  public Iterator <Byte> iterator ()
   {
     return ByteIteratorIterator.wrap (getByteCollection ().iterator ());
   }
 
   public boolean remove (final Object element)
   {
-    return getByteCollection ().removeElement (((Number) element).byteValue ());
+    return getByteCollection ().removeElement (((Byte) element).byteValue ());
   }
 
-  public boolean removeAll (final Collection c)
+  @SuppressWarnings ("unchecked")
+  public boolean removeAll (final Collection <?> c)
   {
-    return getByteCollection ().removeAll (CollectionByteCollection.wrap (c));
+    return getByteCollection ().removeAll (CollectionByteCollection.wrap ((Collection <Byte>) c));
   }
 
-  public boolean retainAll (final Collection c)
+  @SuppressWarnings ("unchecked")
+  public boolean retainAll (final Collection <?> c)
   {
-    return getByteCollection ().retainAll (CollectionByteCollection.wrap (c));
+    return getByteCollection ().retainAll (CollectionByteCollection.wrap ((Collection <Byte>) c));
   }
 
   public int size ()
@@ -97,35 +107,30 @@ abstract class AbstractByteCollectionCollection implements Collection
     return getByteCollection ().size ();
   }
 
-  public Object [] toArray ()
+  @Nonnull
+  @ReturnsMutableCopy
+  public Byte [] toArray ()
   {
     final byte [] a = getByteCollection ().toArray ();
-    final Object [] A = new Object [a.length];
+    final Byte [] A = new Byte [a.length];
     for (int i = 0; i < a.length; i++)
-    {
-      A[i] = new Byte (a[i]);
-    }
+      A[i] = Byte.valueOf (a[i]);
     return A;
   }
 
-  public Object [] toArray (Object [] A)
+  @SuppressWarnings ("unchecked")
+  public <T> T [] toArray (final T [] a)
   {
-    final byte [] a = getByteCollection ().toArray ();
-    if (A.length < a.length)
+    final Byte [] elementData = toArray ();
+    final int size = size ();
+    if (a.length < size)
     {
-      A = (Object []) (Array.newInstance (A.getClass ().getComponentType (), a.length));
+      // Make a new array of a's runtime type, but my contents:
+      return (T []) Arrays.copyOf (elementData, size, a.getClass ());
     }
-    for (int i = 0; i < a.length; i++)
-    {
-      A[i] = new Byte (a[i]);
-    }
-    if (A.length > a.length)
-    {
-      A[a.length] = null;
-    }
-
-    return A;
+    System.arraycopy (elementData, 0, a, 0, size);
+    if (a.length > size)
+      a[size] = null;
+    return a;
   }
-
-  protected abstract ByteCollection getByteCollection ();
 }

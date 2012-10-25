@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.ByteCollection;
 
 /**
@@ -26,21 +28,21 @@ import org.apache.commons.collections.primitives.ByteCollection;
  */
 final class NonSerializableByteCollectionCollection extends AbstractByteCollectionCollection
 {
+  private final ByteCollection m_aCollection;
 
   /**
    * Creates a {@link java.util.Collection Collection} wrapping the specified
    * {@link ByteCollection ByteCollection}.
    */
-  public NonSerializableByteCollectionCollection (final ByteCollection collection)
+  public NonSerializableByteCollectionCollection (@Nonnull final ByteCollection collection)
   {
-    _collection = collection;
+    m_aCollection = collection;
   }
 
   @Override
+  @Nonnull
   protected ByteCollection getByteCollection ()
   {
-    return _collection;
+    return m_aCollection;
   }
-
-  private ByteCollection _collection = null;
 }

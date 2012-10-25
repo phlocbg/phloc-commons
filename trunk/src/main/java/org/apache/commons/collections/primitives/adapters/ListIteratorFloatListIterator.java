@@ -18,6 +18,9 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.ListIterator;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.FloatListIterator;
 
 /**
@@ -27,7 +30,7 @@ import org.apache.commons.collections.primitives.FloatListIterator;
  * This implementation delegates most methods to the provided
  * {@link FloatListIterator FloatListIterator} implementation in the "obvious"
  * way.
- * 
+ *
  * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
@@ -35,12 +38,69 @@ import org.apache.commons.collections.primitives.FloatListIterator;
  */
 public class ListIteratorFloatListIterator implements FloatListIterator
 {
+  private final ListIterator <Float> m_aIterator;
 
   /**
-   * Create an {@link FloatListIterator FloatListIterator} wrapping the
-   * specified {@link ListIterator ListIterator}. When the given <i>iterator</i>
-   * is <code>null</code>, returns <code>null</code>.
-   * 
+   * Creates an {@link FloatListIterator FloatListIterator} wrapping the specified
+   * {@link ListIterator ListIterator}.
+   *
+   * @see #wrap
+   */
+  public ListIteratorFloatListIterator (@Nonnull final ListIterator <Float> iterator)
+  {
+    m_aIterator = iterator;
+  }
+
+  public int nextIndex ()
+  {
+    return m_aIterator.nextIndex ();
+  }
+
+  public int previousIndex ()
+  {
+    return m_aIterator.previousIndex ();
+  }
+
+  public boolean hasNext ()
+  {
+    return m_aIterator.hasNext ();
+  }
+
+  public boolean hasPrevious ()
+  {
+    return m_aIterator.hasPrevious ();
+  }
+
+  public float next ()
+  {
+    return m_aIterator.next ().floatValue ();
+  }
+
+  public float previous ()
+  {
+    return m_aIterator.previous ().floatValue ();
+  }
+
+  public void add (final float element)
+  {
+    m_aIterator.add (Float.valueOf (element));
+  }
+
+  public void set (final float element)
+  {
+    m_aIterator.set (Float.valueOf (element));
+  }
+
+  public void remove ()
+  {
+    m_aIterator.remove ();
+  }
+
+  /**
+   * Create an {@link FloatListIterator FloatListIterator} wrapping the specified
+   * {@link ListIterator ListIterator}. When the given <i>iterator</i> is
+   * <code>null</code>, returns <code>null</code>.
+   *
    * @param iterator
    *        the (possibly <code>null</code>) {@link ListIterator ListIterator}
    *        to wrap
@@ -48,67 +108,9 @@ public class ListIteratorFloatListIterator implements FloatListIterator
    *         <i>iterator</i>, or <code>null</code> when <i>iterator</i> is
    *         <code>null</code>.
    */
-  public static FloatListIterator wrap (final ListIterator iterator)
+  @Nullable
+  public static FloatListIterator wrap (@Nullable final ListIterator <Float> iterator)
   {
     return null == iterator ? null : new ListIteratorFloatListIterator (iterator);
   }
-
-  /**
-   * Creates an {@link FloatListIterator FloatListIterator} wrapping the
-   * specified {@link ListIterator ListIterator}.
-   * 
-   * @see #wrap
-   */
-  public ListIteratorFloatListIterator (final ListIterator iterator)
-  {
-    _iterator = iterator;
-  }
-
-  public int nextIndex ()
-  {
-    return _iterator.nextIndex ();
-  }
-
-  public int previousIndex ()
-  {
-    return _iterator.previousIndex ();
-  }
-
-  public boolean hasNext ()
-  {
-    return _iterator.hasNext ();
-  }
-
-  public boolean hasPrevious ()
-  {
-    return _iterator.hasPrevious ();
-  }
-
-  public float next ()
-  {
-    return ((Number) _iterator.next ()).floatValue ();
-  }
-
-  public float previous ()
-  {
-    return ((Number) _iterator.previous ()).floatValue ();
-  }
-
-  public void add (final float element)
-  {
-    _iterator.add (new Float (element));
-  }
-
-  public void set (final float element)
-  {
-    _iterator.set (new Float (element));
-  }
-
-  public void remove ()
-  {
-    _iterator.remove ();
-  }
-
-  private ListIterator _iterator = null;
-
 }

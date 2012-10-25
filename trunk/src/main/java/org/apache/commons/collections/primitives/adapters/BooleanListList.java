@@ -19,66 +19,60 @@ package org.apache.commons.collections.primitives.adapters;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.BooleanList;
 
 /**
  * Adapts an {@link BooleanList BooleanList} to the {@link List List} interface.
  * <p />
- * This implementation delegates most methods to the provided
- * {@link BooleanList BooleanList} implementation in the "obvious" way.
- * 
- * @since Commons Primitives 1.1
+ * This implementation delegates most methods to the provided {@link BooleanList
+ * BooleanList} implementation in the "obvious" way.
+ *
+ * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
  */
-final public class BooleanListList extends AbstractBooleanListList implements Serializable
+public final class BooleanListList extends AbstractBooleanListList implements Serializable
 {
-
-  /**
-   * Create a {@link List List} wrapping the specified {@link BooleanList
-   * BooleanList}. When the given <i>list</i> is <code>null</code>, returns
-   * <code>null</code>.
-   * 
-   * @param list
-   *        the (possibly <code>null</code>) {@link BooleanList BooleanList} to
-   *        wrap
-   * @return a {@link List List} wrapping the given <i>list</i>, or
-   *         <code>null</code> when <i>list</i> is <code>null</code>.
-   */
-  public static List wrap (final BooleanList list)
-  {
-    if (null == list)
-    {
-      return null;
-    }
-    else
-      if (list instanceof Serializable)
-      {
-        return new BooleanListList (list);
-      }
-      else
-      {
-        return new NonSerializableBooleanListList (list);
-      }
-  }
+  private final BooleanList m_aList;
 
   /**
    * Creates a {@link List List} wrapping the specified {@link BooleanList
    * BooleanList}.
-   * 
+   *
    * @see #wrap
    */
-  public BooleanListList (final BooleanList list)
+  public BooleanListList (@Nonnull final BooleanList list)
   {
-    _list = list;
+    m_aList = list;
   }
 
   @Override
   protected BooleanList getBooleanList ()
   {
-    return _list;
+    return m_aList;
   }
 
-  private BooleanList _list = null;
+  /**
+   * Create a {@link List List} wrapping the specified {@link BooleanList BooleanList}
+   * . When the given <i>list</i> is <code>null</code>, returns
+   * <code>null</code>.
+   *
+   * @param list
+   *        the (possibly <code>null</code>) {@link BooleanList BooleanList} to wrap
+   * @return a {@link List List} wrapping the given <i>list</i>, or
+   *         <code>null</code> when <i>list</i> is <code>null</code>.
+   */
+  @Nullable
+  public static List <Boolean> wrap (@Nullable final BooleanList list)
+  {
+    if (null == list)
+      return null;
+    if (list instanceof Serializable)
+      return new BooleanListList (list);
+    return new NonSerializableBooleanListList (list);
+  }
 }

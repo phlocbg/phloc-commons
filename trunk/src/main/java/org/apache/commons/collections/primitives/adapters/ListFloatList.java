@@ -17,7 +17,11 @@
 package org.apache.commons.collections.primitives.adapters;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.apache.commons.collections.primitives.FloatList;
 
@@ -27,7 +31,7 @@ import org.apache.commons.collections.primitives.FloatList;
  * <p />
  * This implementation delegates most methods to the provided {@link List List}
  * implementation in the "obvious" way.
- * 
+ *
  * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
@@ -35,51 +39,50 @@ import org.apache.commons.collections.primitives.FloatList;
  */
 public class ListFloatList extends AbstractListFloatList implements Serializable
 {
+  private final List <Float> m_aList;
+
+  /**
+   * Creates an {@link FloatList FloatList} wrapping the specified {@link List
+   * List}.
+   *
+   * @see #wrap
+   */
+  public ListFloatList (@Nonnull final List <Float> aList)
+  {
+    m_aList = aList;
+  }
+
+  @Override
+  @Nonnull
+  protected List <Float> getList ()
+  {
+    return m_aList;
+  }
+
+  @Override
+  public String toString ()
+  {
+    // could cache these like StringBuffer does
+    return Arrays.toString (toArray ());
+  }
 
   /**
    * Create an {@link FloatList FloatList} wrapping the specified {@link List
    * List}. When the given <i>list</i> is <code>null</code>, returns
    * <code>null</code>.
-   * 
+   *
    * @param list
    *        the (possibly <code>null</code>) {@link List List} to wrap
    * @return a {@link FloatList FloatList} wrapping the given <i>list</i>, or
    *         <code>null</code> when <i>list</i> is <code>null</code>.
    */
-  public static FloatList wrap (final List list)
+  @Nullable
+  public static FloatList wrap (@Nullable final List <Float> list)
   {
     if (null == list)
-    {
       return null;
-    }
-    else
-      if (list instanceof Serializable)
-      {
-        return new ListFloatList (list);
-      }
-      else
-      {
-        return new NonSerializableListFloatList (list);
-      }
+    if (list instanceof Serializable)
+      return new ListFloatList (list);
+    return new NonSerializableListFloatList (list);
   }
-
-  /**
-   * Creates an {@link FloatList FloatList} wrapping the specified {@link List
-   * List}.
-   * 
-   * @see #wrap
-   */
-  public ListFloatList (final List list)
-  {
-    _list = list;
-  }
-
-  @Override
-  protected List getList ()
-  {
-    return _list;
-  }
-
-  private List _list = null;
-
 }

@@ -18,11 +18,16 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.Collection;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.ShortCollection;
 import org.apache.commons.collections.primitives.ShortIterator;
 
+import com.phloc.commons.annotations.ReturnsMutableCopy;
+
 /**
- * @since Commons Primitives 1.0
+ * @since Commons Primitives 0.1
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
@@ -32,12 +37,15 @@ abstract class AbstractCollectionShortCollection implements ShortCollection
   protected AbstractCollectionShortCollection ()
   {}
 
-  public boolean add (final short element)
+  @Nonnull
+  protected abstract Collection <Short> getCollection ();
+
+  public boolean add (final short aElement)
   {
-    return getCollection ().add (new Short (element));
+    return getCollection ().add (Short.valueOf (aElement));
   }
 
-  public boolean addAll (final ShortCollection c)
+  public boolean addAll (@Nonnull final ShortCollection c)
   {
     return getCollection ().addAll (ShortCollectionCollection.wrap (c));
   }
@@ -47,20 +55,14 @@ abstract class AbstractCollectionShortCollection implements ShortCollection
     getCollection ().clear ();
   }
 
-  public boolean contains (final short element)
+  public boolean contains (final short aElement)
   {
-    return getCollection ().contains (new Short (element));
+    return getCollection ().contains (Short.valueOf (aElement));
   }
 
-  public boolean containsAll (final ShortCollection c)
+  public boolean containsAll (@Nonnull final ShortCollection c)
   {
     return getCollection ().containsAll (ShortCollectionCollection.wrap (c));
-  }
-
-  @Override
-  public String toString ()
-  {
-    return getCollection ().toString ();
   }
 
   public boolean isEmpty ()
@@ -72,56 +74,61 @@ abstract class AbstractCollectionShortCollection implements ShortCollection
    * {@link IteratorShortIterator#wrap wraps} the {@link java.util.Iterator
    * Iterator} returned by my underlying {@link Collection Collection}, if any.
    */
+  @Nonnull
   public ShortIterator iterator ()
   {
     return IteratorShortIterator.wrap (getCollection ().iterator ());
   }
 
-  public boolean removeElement (final short element)
+  public boolean removeElement (final short aElement)
   {
-    return getCollection ().remove (new Short (element));
+    return getCollection ().remove (Short.valueOf (aElement));
   }
 
-  public boolean removeAll (final ShortCollection c)
+  public boolean removeAll (@Nonnull final ShortCollection c)
   {
     return getCollection ().removeAll (ShortCollectionCollection.wrap (c));
   }
 
-  public boolean retainAll (final ShortCollection c)
+  public boolean retainAll (@Nonnull final ShortCollection c)
   {
     return getCollection ().retainAll (ShortCollectionCollection.wrap (c));
   }
 
+  @Nonnegative
   public int size ()
   {
     return getCollection ().size ();
   }
 
+  @Nonnull
+  @ReturnsMutableCopy
   public short [] toArray ()
   {
-    final Object [] src = getCollection ().toArray ();
-    final short [] dest = new short [src.length];
-    for (int i = 0; i < src.length; i++)
-    {
-      dest[i] = ((Number) (src[i])).shortValue ();
-    }
+    final Object [] aElementData = getCollection ().toArray ();
+    final short [] dest = new short [aElementData.length];
+    for (int i = 0; i < aElementData.length; i++)
+      dest[i] = ((Short) (aElementData[i])).shortValue ();
     return dest;
   }
 
-  public short [] toArray (short [] dest)
+  @Nonnull
+  public short [] toArray (@Nonnull final short [] dest)
   {
-    final Object [] src = getCollection ().toArray ();
-    if (dest.length < src.length)
+    final Object [] aElementData = getCollection ().toArray ();
+    short [] ret = dest;
+    if (ret.length < aElementData.length)
+      ret = new short [aElementData.length];
+    for (int i = 0; i < aElementData.length; i++)
     {
-      dest = new short [src.length];
+      ret[i] = ((Short) (aElementData[i])).shortValue ();
     }
-    for (int i = 0; i < src.length; i++)
-    {
-      dest[i] = ((Number) (src[i])).shortValue ();
-    }
-    return dest;
+    return ret;
   }
 
-  protected abstract Collection getCollection ();
-
+  @Override
+  public String toString ()
+  {
+    return getCollection ().toString ();
+  }
 }

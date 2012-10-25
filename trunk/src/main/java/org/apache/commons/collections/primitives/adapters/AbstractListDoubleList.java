@@ -19,6 +19,9 @@ package org.apache.commons.collections.primitives.adapters;
 import java.util.Collection;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.DoubleCollection;
 import org.apache.commons.collections.primitives.DoubleIterator;
 import org.apache.commons.collections.primitives.DoubleList;
@@ -32,10 +35,19 @@ import org.apache.commons.collections.primitives.DoubleListIterator;
  */
 abstract class AbstractListDoubleList extends AbstractCollectionDoubleCollection implements DoubleList
 {
-
-  public void add (final int index, final double element)
+  @Override
+  @Nonnull
+  protected final Collection <Double> getCollection ()
   {
-    getList ().add (index, new Double (element));
+    return getList ();
+  }
+
+  @Nonnull
+  protected abstract List <Double> getList ();
+
+  public void add (final int nIndex, final double element)
+  {
+    getList ().add (nIndex, Double.valueOf (element));
   }
 
   public boolean addAll (final int index, final DoubleCollection collection)
@@ -45,17 +57,17 @@ abstract class AbstractListDoubleList extends AbstractCollectionDoubleCollection
 
   public double get (final int index)
   {
-    return ((Number) getList ().get (index)).doubleValue ();
+    return getList ().get (index).doubleValue ();
   }
 
   public int indexOf (final double element)
   {
-    return getList ().indexOf (new Double (element));
+    return getList ().indexOf (Double.valueOf (element));
   }
 
-  public int lastIndexOf (final double element)
+  public int lastIndexOf (final double aElement)
   {
-    return getList ().lastIndexOf (new Double (element));
+    return getList ().lastIndexOf (Double.valueOf (aElement));
   }
 
   /**
@@ -63,6 +75,7 @@ abstract class AbstractListDoubleList extends AbstractCollectionDoubleCollection
    * DoubleList} returned by my underlying {@link DoubleListIterator
    * DoubleListIterator}, if any.
    */
+  @Nonnull
   public DoubleListIterator listIterator ()
   {
     return ListIteratorDoubleListIterator.wrap (getList ().listIterator ());
@@ -73,19 +86,20 @@ abstract class AbstractListDoubleList extends AbstractCollectionDoubleCollection
    * DoubleList} returned by my underlying {@link DoubleListIterator
    * DoubleListIterator}, if any.
    */
-  public DoubleListIterator listIterator (final int index)
+  @Nonnull
+  public DoubleListIterator listIterator (final int nIndex)
   {
-    return ListIteratorDoubleListIterator.wrap (getList ().listIterator (index));
+    return ListIteratorDoubleListIterator.wrap (getList ().listIterator (nIndex));
   }
 
   public double removeElementAt (final int index)
   {
-    return ((Number) getList ().remove (index)).doubleValue ();
+    return getList ().remove (index).doubleValue ();
   }
 
   public double set (final int index, final double element)
   {
-    return ((Number) getList ().set (index, new Double (element))).doubleValue ();
+    return getList ().set (index, new Double (element)).doubleValue ();
   }
 
   public DoubleList subList (final int fromIndex, final int toIndex)
@@ -94,38 +108,22 @@ abstract class AbstractListDoubleList extends AbstractCollectionDoubleCollection
   }
 
   @Override
-  public boolean equals (final Object obj)
+  public boolean equals (@Nullable final Object obj)
   {
-    if (obj instanceof DoubleList)
-    {
-      final DoubleList that = (DoubleList) obj;
-      if (this == that)
-      {
-        return true;
-      }
-      else
-        if (this.size () != that.size ())
-        {
-          return false;
-        }
-        else
-        {
-          final DoubleIterator thisiter = iterator ();
-          final DoubleIterator thatiter = that.iterator ();
-          while (thisiter.hasNext ())
-          {
-            if (thisiter.next () != thatiter.next ())
-            {
-              return false;
-            }
-          }
-          return true;
-        }
-    }
-    else
-    {
+    if (obj == this)
+      return true;
+    if (!(obj instanceof DoubleList))
       return false;
-    }
+
+    final DoubleList that = (DoubleList) obj;
+    if (this.size () != that.size ())
+      return false;
+    final DoubleIterator thisiter = iterator ();
+    final DoubleIterator thatiter = that.iterator ();
+    while (thisiter.hasNext ())
+      if (thisiter.next () != thatiter.next ())
+        return false;
+    return true;
   }
 
   @Override
@@ -133,12 +131,4 @@ abstract class AbstractListDoubleList extends AbstractCollectionDoubleCollection
   {
     return getList ().hashCode ();
   }
-
-  @Override
-  final protected Collection getCollection ()
-  {
-    return getList ();
-  }
-
-  abstract protected List getList ();
 }

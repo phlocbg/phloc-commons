@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.IntList;
 
 /**
@@ -26,22 +28,21 @@ import org.apache.commons.collections.primitives.IntList;
  */
 final class NonSerializableIntListList extends AbstractIntListList
 {
+  private final IntList m_aList;
 
   /**
    * Creates a {@link java.util.List List} wrapping the specified
    * {@link IntList IntList}.
    */
-  public NonSerializableIntListList (final IntList list)
+  public NonSerializableIntListList (@Nonnull final IntList aList)
   {
-    _list = list;
+    m_aList = aList;
   }
 
   @Override
+  @Nonnull
   protected IntList getIntList ()
   {
-    return _list;
+    return m_aList;
   }
-
-  private IntList _list = null;
-
 }

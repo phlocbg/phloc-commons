@@ -18,11 +18,14 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.Iterator;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.ShortIterator;
 
 /**
- * Adapts an {@link ShortIterator ShortIterator} to the
- * {@link java.util.Iterator Iterator} interface.
+ * Adapts an {@link ShortIterator ShortIterator} to the {@link java.util.Iterator
+ * Iterator} interface.
  * <p />
  * This implementation delegates most methods to the provided
  * {@link ShortIterator ShortIterator} implementation in the "obvious" way.
@@ -32,24 +35,9 @@ import org.apache.commons.collections.primitives.ShortIterator;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class ShortIteratorIterator implements Iterator
+public class ShortIteratorIterator implements Iterator <Short>
 {
-
-  /**
-   * Create an {@link Iterator Iterator} wrapping the specified
-   * {@link ShortIterator ShortIterator}. When the given <i>iterator</i> is
-   * <code>null</code>, returns <code>null</code>.
-   * 
-   * @param iterator
-   *        the (possibly <code>null</code>) {@link ShortIterator ShortIterator}
-   *        to wrap
-   * @return an {@link Iterator Iterator} wrapping the given <i>iterator</i>, or
-   *         <code>null</code> when <i>iterator</i> is <code>null</code>.
-   */
-  public static Iterator wrap (final ShortIterator iterator)
-  {
-    return null == iterator ? null : new ShortIteratorIterator (iterator);
-  }
+  private final ShortIterator m_aIterator;
 
   /**
    * Creates an {@link Iterator Iterator} wrapping the specified
@@ -57,26 +45,41 @@ public class ShortIteratorIterator implements Iterator
    * 
    * @see #wrap
    */
-  public ShortIteratorIterator (final ShortIterator iterator)
+  public ShortIteratorIterator (@Nonnull final ShortIterator iterator)
   {
-    _iterator = iterator;
+    m_aIterator = iterator;
   }
 
   public boolean hasNext ()
   {
-    return _iterator.hasNext ();
+    return m_aIterator.hasNext ();
   }
 
-  public Object next ()
+  @Nonnull
+  public Short next ()
   {
-    return new Short (_iterator.next ());
+    return Short.valueOf (m_aIterator.next ());
   }
 
   public void remove ()
   {
-    _iterator.remove ();
+    m_aIterator.remove ();
   }
 
-  private ShortIterator _iterator = null;
-
+  /**
+   * Create an {@link Iterator Iterator} wrapping the specified
+   * {@link ShortIterator ShortIterator}. When the given <i>iterator</i> is
+   * <code>null</code>, returns <code>null</code>.
+   * 
+   * @param iterator
+   *        the (possibly <code>null</code>) {@link ShortIterator ShortIterator} to
+   *        wrap
+   * @return an {@link Iterator Iterator} wrapping the given <i>iterator</i>, or
+   *         <code>null</code> when <i>iterator</i> is <code>null</code>.
+   */
+  @Nullable
+  public static Iterator <Short> wrap (@Nullable final ShortIterator iterator)
+  {
+    return null == iterator ? null : new ShortIteratorIterator (iterator);
+  }
 }

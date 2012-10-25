@@ -18,40 +18,26 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.ListIterator;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.BooleanListIterator;
 
 /**
- * Adapts an {@link BooleanListIterator BooleanListIterator} to the
- * {@link ListIterator ListIterator} interface.
+ * Adapts an {@link BooleanListIterator BooleanListIterator} to the {@link ListIterator
+ * ListIterator} interface.
  * <p />
  * This implementation delegates most methods to the provided
- * {@link BooleanListIterator BooleanListIterator} implementation in the
- * "obvious" way.
+ * {@link BooleanListIterator BooleanListIterator} implementation in the "obvious" way.
  * 
- * @since Commons Primitives 1.1
+ * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class BooleanListIteratorListIterator implements ListIterator
+public class BooleanListIteratorListIterator implements ListIterator <Boolean>
 {
-
-  /**
-   * Create a {@link ListIterator ListIterator} wrapping the specified
-   * {@link BooleanListIterator BooleanListIterator}. When the given
-   * <i>iterator</i> is <code>null</code>, returns <code>null</code>.
-   * 
-   * @param iterator
-   *        the (possibly <code>null</code>) {@link BooleanListIterator
-   *        BooleanListIterator} to wrap
-   * @return a {@link ListIterator ListIterator} wrapping the given
-   *         <i>iterator</i>, or <code>null</code> when <i>iterator</i> is
-   *         <code>null</code>.
-   */
-  public static ListIterator wrap (final BooleanListIterator iterator)
-  {
-    return null == iterator ? null : new BooleanListIteratorListIterator (iterator);
-  }
+  private final BooleanListIterator _iterator;
 
   /**
    * Creates an {@link ListIterator ListIterator} wrapping the specified
@@ -59,7 +45,7 @@ public class BooleanListIteratorListIterator implements ListIterator
    * 
    * @see #wrap
    */
-  public BooleanListIteratorListIterator (final BooleanListIterator iterator)
+  public BooleanListIteratorListIterator (@Nonnull final BooleanListIterator iterator)
   {
     _iterator = iterator;
   }
@@ -84,24 +70,26 @@ public class BooleanListIteratorListIterator implements ListIterator
     return _iterator.hasPrevious ();
   }
 
-  public Object next ()
+  @Nonnull
+  public Boolean next ()
   {
-    return new Boolean (_iterator.next ());
+    return Boolean.valueOf (_iterator.next ());
   }
 
-  public Object previous ()
+  @Nonnull
+  public Boolean previous ()
   {
-    return new Boolean (_iterator.previous ());
+    return Boolean.valueOf (_iterator.previous ());
   }
 
-  public void add (final Object obj)
+  public void add (@Nonnull final Boolean obj)
   {
-    _iterator.add (((Boolean) obj).booleanValue ());
+    _iterator.add (obj.booleanValue ());
   }
 
-  public void set (final Object obj)
+  public void set (@Nonnull final Boolean obj)
   {
-    _iterator.set (((Boolean) obj).booleanValue ());
+    _iterator.set (obj.booleanValue ());
   }
 
   public void remove ()
@@ -109,6 +97,21 @@ public class BooleanListIteratorListIterator implements ListIterator
     _iterator.remove ();
   }
 
-  private BooleanListIterator _iterator = null;
-
+  /**
+   * Create a {@link ListIterator ListIterator} wrapping the specified
+   * {@link BooleanListIterator BooleanListIterator}. When the given <i>iterator</i> is
+   * <code>null</code>, returns <code>null</code>.
+   * 
+   * @param iterator
+   *        the (possibly <code>null</code>) {@link BooleanListIterator
+   *        BooleanListIterator} to wrap
+   * @return a {@link ListIterator ListIterator} wrapping the given
+   *         <i>iterator</i>, or <code>null</code> when <i>iterator</i> is
+   *         <code>null</code>.
+   */
+  @Nullable
+  public static ListIterator <Boolean> wrap (@Nullable final BooleanListIterator iterator)
+  {
+    return null == iterator ? null : new BooleanListIteratorListIterator (iterator);
+  }
 }

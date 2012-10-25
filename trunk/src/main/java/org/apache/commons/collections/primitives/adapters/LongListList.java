@@ -19,6 +19,9 @@ package org.apache.commons.collections.primitives.adapters;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.LongList;
 
 /**
@@ -26,58 +29,50 @@ import org.apache.commons.collections.primitives.LongList;
  * <p />
  * This implementation delegates most methods to the provided {@link LongList
  * LongList} implementation in the "obvious" way.
- * 
+ *
  * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
  */
-final public class LongListList extends AbstractLongListList implements Serializable
+public final class LongListList extends AbstractLongListList implements Serializable
 {
-
-  /**
-   * Create a {@link List List} wrapping the specified {@link LongList LongList}
-   * . When the given <i>list</i> is <code>null</code>, returns
-   * <code>null</code>.
-   * 
-   * @param list
-   *        the (possibly <code>null</code>) {@link LongList LongList} to wrap
-   * @return a {@link List List} wrapping the given <i>list</i>, or
-   *         <code>null</code> when <i>list</i> is <code>null</code>.
-   */
-  public static List wrap (final LongList list)
-  {
-    if (null == list)
-    {
-      return null;
-    }
-    else
-      if (list instanceof Serializable)
-      {
-        return new LongListList (list);
-      }
-      else
-      {
-        return new NonSerializableLongListList (list);
-      }
-  }
+  private final LongList m_aList;
 
   /**
    * Creates a {@link List List} wrapping the specified {@link LongList
    * LongList}.
-   * 
+   *
    * @see #wrap
    */
-  public LongListList (final LongList list)
+  public LongListList (@Nonnull final LongList list)
   {
-    _list = list;
+    m_aList = list;
   }
 
   @Override
   protected LongList getLongList ()
   {
-    return _list;
+    return m_aList;
   }
 
-  private LongList _list = null;
+  /**
+   * Create a {@link List List} wrapping the specified {@link LongList LongList}
+   * . When the given <i>list</i> is <code>null</code>, returns
+   * <code>null</code>.
+   *
+   * @param list
+   *        the (possibly <code>null</code>) {@link LongList LongList} to wrap
+   * @return a {@link List List} wrapping the given <i>list</i>, or
+   *         <code>null</code> when <i>list</i> is <code>null</code>.
+   */
+  @Nullable
+  public static List <Long> wrap (@Nullable final LongList list)
+  {
+    if (null == list)
+      return null;
+    if (list instanceof Serializable)
+      return new LongListList (list);
+    return new NonSerializableLongListList (list);
+  }
 }

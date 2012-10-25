@@ -18,11 +18,16 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.Collection;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.FloatCollection;
 import org.apache.commons.collections.primitives.FloatIterator;
 
+import com.phloc.commons.annotations.ReturnsMutableCopy;
+
 /**
- * @since Commons Primitives 1.0
+ * @since Commons Primitives 0.1
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
@@ -32,12 +37,15 @@ abstract class AbstractCollectionFloatCollection implements FloatCollection
   protected AbstractCollectionFloatCollection ()
   {}
 
-  public boolean add (final float element)
+  @Nonnull
+  protected abstract Collection <Float> getCollection ();
+
+  public boolean add (final float aElement)
   {
-    return getCollection ().add (new Float (element));
+    return getCollection ().add (Float.valueOf (aElement));
   }
 
-  public boolean addAll (final FloatCollection c)
+  public boolean addAll (@Nonnull final FloatCollection c)
   {
     return getCollection ().addAll (FloatCollectionCollection.wrap (c));
   }
@@ -47,20 +55,14 @@ abstract class AbstractCollectionFloatCollection implements FloatCollection
     getCollection ().clear ();
   }
 
-  public boolean contains (final float element)
+  public boolean contains (final float aElement)
   {
-    return getCollection ().contains (new Float (element));
+    return getCollection ().contains (Float.valueOf (aElement));
   }
 
-  public boolean containsAll (final FloatCollection c)
+  public boolean containsAll (@Nonnull final FloatCollection c)
   {
     return getCollection ().containsAll (FloatCollectionCollection.wrap (c));
-  }
-
-  @Override
-  public String toString ()
-  {
-    return getCollection ().toString ();
   }
 
   public boolean isEmpty ()
@@ -72,56 +74,61 @@ abstract class AbstractCollectionFloatCollection implements FloatCollection
    * {@link IteratorFloatIterator#wrap wraps} the {@link java.util.Iterator
    * Iterator} returned by my underlying {@link Collection Collection}, if any.
    */
+  @Nonnull
   public FloatIterator iterator ()
   {
     return IteratorFloatIterator.wrap (getCollection ().iterator ());
   }
 
-  public boolean removeElement (final float element)
+  public boolean removeElement (final float aElement)
   {
-    return getCollection ().remove (new Float (element));
+    return getCollection ().remove (Float.valueOf (aElement));
   }
 
-  public boolean removeAll (final FloatCollection c)
+  public boolean removeAll (@Nonnull final FloatCollection c)
   {
     return getCollection ().removeAll (FloatCollectionCollection.wrap (c));
   }
 
-  public boolean retainAll (final FloatCollection c)
+  public boolean retainAll (@Nonnull final FloatCollection c)
   {
     return getCollection ().retainAll (FloatCollectionCollection.wrap (c));
   }
 
+  @Nonnegative
   public int size ()
   {
     return getCollection ().size ();
   }
 
+  @Nonnull
+  @ReturnsMutableCopy
   public float [] toArray ()
   {
-    final Object [] src = getCollection ().toArray ();
-    final float [] dest = new float [src.length];
-    for (int i = 0; i < src.length; i++)
-    {
-      dest[i] = ((Number) (src[i])).floatValue ();
-    }
+    final Object [] aElementData = getCollection ().toArray ();
+    final float [] dest = new float [aElementData.length];
+    for (int i = 0; i < aElementData.length; i++)
+      dest[i] = ((Float) (aElementData[i])).floatValue ();
     return dest;
   }
 
-  public float [] toArray (float [] dest)
+  @Nonnull
+  public float [] toArray (@Nonnull final float [] dest)
   {
-    final Object [] src = getCollection ().toArray ();
-    if (dest.length < src.length)
+    final Object [] aElementData = getCollection ().toArray ();
+    float [] ret = dest;
+    if (ret.length < aElementData.length)
+      ret = new float [aElementData.length];
+    for (int i = 0; i < aElementData.length; i++)
     {
-      dest = new float [src.length];
+      ret[i] = ((Float) (aElementData[i])).floatValue ();
     }
-    for (int i = 0; i < src.length; i++)
-    {
-      dest[i] = ((Number) (src[i])).floatValue ();
-    }
-    return dest;
+    return ret;
   }
 
-  protected abstract Collection getCollection ();
-
+  @Override
+  public String toString ()
+  {
+    return getCollection ().toString ();
+  }
 }

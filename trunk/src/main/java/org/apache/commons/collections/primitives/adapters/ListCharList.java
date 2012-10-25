@@ -17,7 +17,11 @@
 package org.apache.commons.collections.primitives.adapters;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.apache.commons.collections.primitives.CharList;
 
@@ -27,7 +31,7 @@ import org.apache.commons.collections.primitives.CharList;
  * <p />
  * This implementation delegates most methods to the provided {@link List List}
  * implementation in the "obvious" way.
- * 
+ *
  * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
@@ -35,58 +39,50 @@ import org.apache.commons.collections.primitives.CharList;
  */
 public class ListCharList extends AbstractListCharList implements Serializable
 {
-
-  /**
-   * Create an {@link CharList CharList} wrapping the specified {@link List
-   * List}. When the given <i>list</i> is <code>null</code>, returns
-   * <code>null</code>.
-   * 
-   * @param list
-   *        the (possibly <code>null</code>) {@link List List} to wrap
-   * @return a {@link CharList CharList} wrapping the given <i>list</i>, or
-   *         <code>null</code> when <i>list</i> is <code>null</code>.
-   */
-  public static CharList wrap (final List list)
-  {
-    if (null == list)
-    {
-      return null;
-    }
-    else
-      if (list instanceof Serializable)
-      {
-        return new ListCharList (list);
-      }
-      else
-      {
-        return new NonSerializableListCharList (list);
-      }
-  }
+  private final List <Character> m_aList;
 
   /**
    * Creates an {@link CharList CharList} wrapping the specified {@link List
    * List}.
-   * 
+   *
    * @see #wrap
    */
-  public ListCharList (final List list)
+  public ListCharList (@Nonnull final List <Character> aList)
   {
-    _list = list;
+    m_aList = aList;
+  }
+
+  @Override
+  @Nonnull
+  protected List <Character> getList ()
+  {
+    return m_aList;
   }
 
   @Override
   public String toString ()
   {
     // could cache these like StringBuffer does
-    return new String (toArray ());
+    return Arrays.toString (toArray ());
   }
 
-  @Override
-  protected List getList ()
+  /**
+   * Create an {@link CharList CharList} wrapping the specified {@link List
+   * List}. When the given <i>list</i> is <code>null</code>, returns
+   * <code>null</code>.
+   *
+   * @param list
+   *        the (possibly <code>null</code>) {@link List List} to wrap
+   * @return a {@link CharList CharList} wrapping the given <i>list</i>, or
+   *         <code>null</code> when <i>list</i> is <code>null</code>.
+   */
+  @Nullable
+  public static CharList wrap (@Nullable final List <Character> list)
   {
-    return _list;
+    if (null == list)
+      return null;
+    if (list instanceof Serializable)
+      return new ListCharList (list);
+    return new NonSerializableListCharList (list);
   }
-
-  private List _list = null;
-
 }

@@ -19,71 +19,62 @@ package org.apache.commons.collections.primitives.adapters;
 import java.io.Serializable;
 import java.util.Collection;
 
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.BooleanCollection;
 
 /**
- * Adapts an {@link org.apache.commons.collections.primitives.BooleanCollection
- * BooleanCollection} to the {@link java.util.Collection Collection} interface.
+ * Adapts an {@link BooleanCollection BooleanCollection} to the
+ * {@link java.util.Collection Collection} interface.
  * <p />
  * This implementation delegates most methods to the provided
- * {@link org.apache.commons.collections.primitives.BooleanCollection
- * BooleanCollection} implementation in the "obvious" way.
- * 
- * @since Commons Primitives 1.1
+ * {@link BooleanCollection BooleanCollection} implementation in the "obvious" way.
+ *
+ * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
+ * @author Rodney Waldhoff
  */
-final public class BooleanCollectionCollection extends AbstractBooleanCollectionCollection implements Serializable
+public final class BooleanCollectionCollection extends AbstractBooleanCollectionCollection implements Serializable
 {
+  private final BooleanCollection m_aCollection;
 
   /**
-   * Create a {@link java.util.Collection Collection} wrapping the specified
-   * {@link org.apache.commons.collections.primitives.BooleanCollection
-   * BooleanCollection}. When the given <i>collection</i> is <code>null
-   * </code>, returns <code>null</code>.
-   * 
-   * @param collection
-   *        the (possibly <code>null</code>)
-   *        {@link org.apache.commons.collections.primitives.BooleanCollection
-   *        BooleanCollection} to wrap
-   * @return a {@link java.util.Collection Collection} wrapping the given
-   *         <i>collection</i>, or <code>null</code> when <i>collection</i> is
-   *         <code>null</code>.
-   */
-  public static Collection wrap (final BooleanCollection collection)
-  {
-    if (null == collection)
-    {
-      return null;
-    }
-    else
-      if (collection instanceof Serializable)
-      {
-        return new BooleanCollectionCollection (collection);
-      }
-      else
-      {
-        return new NonSerializableBooleanCollectionCollection (collection);
-      }
-  }
-
-  /**
-   * Creates a {@link java.util.Collection Collection} wrapping the specified
-   * {@link org.apache.commons.collections.primitives.BooleanCollection
-   * BooleanCollection}.
-   * 
+   * Creates a {@link Collection Collection} wrapping the specified
+   * {@link BooleanCollection BooleanCollection}.
+   *
    * @see #wrap
    */
   public BooleanCollectionCollection (final BooleanCollection collection)
   {
-    _collection = collection;
+    m_aCollection = collection;
   }
 
   @Override
   protected BooleanCollection getBooleanCollection ()
   {
-    return _collection;
+    return m_aCollection;
   }
 
-  private BooleanCollection _collection = null;
+  /**
+   * Create a {@link Collection Collection} wrapping the specified
+   * {@link BooleanCollection BooleanCollection}. When the given <i>collection</i> is
+   * <code>null</code>, returns <code>null</code>.
+   *
+   * @param collection
+   *        the (possibly <code>null</code>) {@link BooleanCollection
+   *        BooleanCollection} to wrap
+   * @return a {@link Collection Collection} wrapping the given
+   *         <i>collection</i>, or <code>null</code> when <i>collection</i> is
+   *         <code>null</code>.
+   */
+  @Nullable
+  public static Collection <Boolean> wrap (@Nullable final BooleanCollection collection)
+  {
+    if (null == collection)
+      return null;
+    if (collection instanceof Serializable)
+      return new BooleanCollectionCollection (collection);
+    return new NonSerializableBooleanCollectionCollection (collection);
+  }
 }

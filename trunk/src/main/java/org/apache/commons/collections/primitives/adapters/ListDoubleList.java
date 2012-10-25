@@ -17,7 +17,11 @@
 package org.apache.commons.collections.primitives.adapters;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.apache.commons.collections.primitives.DoubleList;
 
@@ -27,7 +31,7 @@ import org.apache.commons.collections.primitives.DoubleList;
  * <p />
  * This implementation delegates most methods to the provided {@link List List}
  * implementation in the "obvious" way.
- * 
+ *
  * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
@@ -35,51 +39,50 @@ import org.apache.commons.collections.primitives.DoubleList;
  */
 public class ListDoubleList extends AbstractListDoubleList implements Serializable
 {
+  private final List <Double> m_aList;
+
+  /**
+   * Creates an {@link DoubleList DoubleList} wrapping the specified {@link List
+   * List}.
+   *
+   * @see #wrap
+   */
+  public ListDoubleList (@Nonnull final List <Double> aList)
+  {
+    m_aList = aList;
+  }
+
+  @Override
+  @Nonnull
+  protected List <Double> getList ()
+  {
+    return m_aList;
+  }
+
+  @Override
+  public String toString ()
+  {
+    // could cache these like StringBuffer does
+    return Arrays.toString (toArray ());
+  }
 
   /**
    * Create an {@link DoubleList DoubleList} wrapping the specified {@link List
    * List}. When the given <i>list</i> is <code>null</code>, returns
    * <code>null</code>.
-   * 
+   *
    * @param list
    *        the (possibly <code>null</code>) {@link List List} to wrap
    * @return a {@link DoubleList DoubleList} wrapping the given <i>list</i>, or
    *         <code>null</code> when <i>list</i> is <code>null</code>.
    */
-  public static DoubleList wrap (final List list)
+  @Nullable
+  public static DoubleList wrap (@Nullable final List <Double> list)
   {
     if (null == list)
-    {
       return null;
-    }
-    else
-      if (list instanceof Serializable)
-      {
-        return new ListDoubleList (list);
-      }
-      else
-      {
-        return new NonSerializableListDoubleList (list);
-      }
+    if (list instanceof Serializable)
+      return new ListDoubleList (list);
+    return new NonSerializableListDoubleList (list);
   }
-
-  /**
-   * Creates an {@link DoubleList DoubleList} wrapping the specified
-   * {@link List List}.
-   * 
-   * @see #wrap
-   */
-  public ListDoubleList (final List list)
-  {
-    _list = list;
-  }
-
-  @Override
-  protected List getList ()
-  {
-    return _list;
-  }
-
-  private List _list = null;
-
 }

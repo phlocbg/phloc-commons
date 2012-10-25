@@ -21,6 +21,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.ByteCollection;
 import org.apache.commons.collections.primitives.ByteList;
 
@@ -30,32 +33,43 @@ import org.apache.commons.collections.primitives.ByteList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-abstract class AbstractByteListList extends AbstractByteCollectionCollection implements List
+abstract class AbstractByteListList extends AbstractByteCollectionCollection implements List <Byte>
 {
+  @Nonnull
+  protected abstract ByteList getByteList ();
 
-  public void add (final int index, final Object element)
+  @Override
+  @Nonnull
+  protected final ByteCollection getByteCollection ()
   {
-    getByteList ().add (index, ((Number) element).byteValue ());
+    return getByteList ();
   }
 
-  public boolean addAll (final int index, final Collection c)
+  public void add (final int index, @Nonnull final Byte aElement)
   {
-    return getByteList ().addAll (index, CollectionByteCollection.wrap (c));
+    getByteList ().add (index, aElement.byteValue ());
   }
 
-  public Object get (final int index)
+  @SuppressWarnings ("unchecked")
+  public boolean addAll (final int index, final Collection <? extends Byte> c)
   {
-    return new Byte (getByteList ().get (index));
+    return getByteList ().addAll (index, CollectionByteCollection.wrap ((Collection <Byte>) c));
+  }
+
+  @Nonnull
+  public Byte get (final int nIndex)
+  {
+    return Byte.valueOf (getByteList ().get (nIndex));
   }
 
   public int indexOf (final Object element)
   {
-    return getByteList ().indexOf (((Number) element).byteValue ());
+    return getByteList ().indexOf (((Byte) element).byteValue ());
   }
 
   public int lastIndexOf (final Object element)
   {
-    return getByteList ().lastIndexOf (((Number) element).byteValue ());
+    return getByteList ().lastIndexOf (((Byte) element).byteValue ());
   }
 
   /**
@@ -64,7 +78,7 @@ abstract class AbstractByteListList extends AbstractByteCollectionCollection imp
    * ByteListIterator} returned by my underlying {@link ByteList ByteList}, if
    * any.
    */
-  public ListIterator listIterator ()
+  public ListIterator <Byte> listIterator ()
   {
     return ByteListIteratorListIterator.wrap (getByteList ().listIterator ());
   }
@@ -75,61 +89,48 @@ abstract class AbstractByteListList extends AbstractByteCollectionCollection imp
    * ByteListIterator} returned by my underlying {@link ByteList ByteList}, if
    * any.
    */
-  public ListIterator listIterator (final int index)
+  public ListIterator <Byte> listIterator (final int index)
   {
     return ByteListIteratorListIterator.wrap (getByteList ().listIterator (index));
   }
 
-  public Object remove (final int index)
+  @Nonnull
+  public Byte remove (final int index)
   {
-    return new Byte (getByteList ().removeElementAt (index));
+    return Byte.valueOf (getByteList ().removeElementAt (index));
   }
 
-  public Object set (final int index, final Object element)
+  @Nonnull
+  public Byte set (final int index, final Byte element)
   {
-    return new Byte (getByteList ().set (index, ((Number) element).byteValue ()));
+    return Byte.valueOf (getByteList ().set (index, element.byteValue ()));
   }
 
-  public List subList (final int fromIndex, final int toIndex)
+  public List <Byte> subList (final int nFromIndex, final int nToIndex)
   {
-    return ByteListList.wrap (getByteList ().subList (fromIndex, toIndex));
+    return ByteListList.wrap (getByteList ().subList (nFromIndex, nToIndex));
   }
 
   @Override
-  public boolean equals (final Object obj)
+  public boolean equals (@Nullable final Object obj)
   {
-    if (obj instanceof List)
-    {
-      final List that = (List) obj;
-      if (this == that)
-      {
-        return true;
-      }
-      else
-        if (this.size () != that.size ())
-        {
-          return false;
-        }
-        else
-        {
-          final Iterator thisiter = iterator ();
-          final Iterator thatiter = that.iterator ();
-          while (thisiter.hasNext ())
-          {
-            final Object thiselt = thisiter.next ();
-            final Object thatelt = thatiter.next ();
-            if (null == thiselt ? null != thatelt : !(thiselt.equals (thatelt)))
-            {
-              return false;
-            }
-          }
-          return true;
-        }
-    }
-    else
-    {
+    if (obj == this)
+      return true;
+    if (!(obj instanceof List <?>))
       return false;
+    final List <?> that = (List <?>) obj;
+    if (size () != that.size ())
+      return false;
+    final Iterator <?> thisiter = iterator ();
+    final Iterator <?> thatiter = that.iterator ();
+    while (thisiter.hasNext ())
+    {
+      final Object thiselt = thisiter.next ();
+      final Object thatelt = thatiter.next ();
+      if (null == thiselt ? null != thatelt : !(thiselt.equals (thatelt)))
+        return false;
     }
+    return true;
   }
 
   @Override
@@ -137,13 +138,4 @@ abstract class AbstractByteListList extends AbstractByteCollectionCollection imp
   {
     return getByteList ().hashCode ();
   }
-
-  @Override
-  protected final ByteCollection getByteCollection ()
-  {
-    return getByteList ();
-  }
-
-  protected abstract ByteList getByteList ();
-
 }

@@ -18,6 +18,9 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.Iterator;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.LongIterator;
 
 /**
@@ -32,24 +35,9 @@ import org.apache.commons.collections.primitives.LongIterator;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class LongIteratorIterator implements Iterator
+public class LongIteratorIterator implements Iterator <Long>
 {
-
-  /**
-   * Create an {@link Iterator Iterator} wrapping the specified
-   * {@link LongIterator LongIterator}. When the given <i>iterator</i> is
-   * <code>null</code>, returns <code>null</code>.
-   * 
-   * @param iterator
-   *        the (possibly <code>null</code>) {@link LongIterator LongIterator}
-   *        to wrap
-   * @return an {@link Iterator Iterator} wrapping the given <i>iterator</i>, or
-   *         <code>null</code> when <i>iterator</i> is <code>null</code>.
-   */
-  public static Iterator wrap (final LongIterator iterator)
-  {
-    return null == iterator ? null : new LongIteratorIterator (iterator);
-  }
+  private final LongIterator m_aIterator;
 
   /**
    * Creates an {@link Iterator Iterator} wrapping the specified
@@ -57,26 +45,41 @@ public class LongIteratorIterator implements Iterator
    * 
    * @see #wrap
    */
-  public LongIteratorIterator (final LongIterator iterator)
+  public LongIteratorIterator (@Nonnull final LongIterator iterator)
   {
-    _iterator = iterator;
+    m_aIterator = iterator;
   }
 
   public boolean hasNext ()
   {
-    return _iterator.hasNext ();
+    return m_aIterator.hasNext ();
   }
 
-  public Object next ()
+  @Nonnull
+  public Long next ()
   {
-    return new Long (_iterator.next ());
+    return Long.valueOf (m_aIterator.next ());
   }
 
   public void remove ()
   {
-    _iterator.remove ();
+    m_aIterator.remove ();
   }
 
-  private LongIterator _iterator = null;
-
+  /**
+   * Create an {@link Iterator Iterator} wrapping the specified
+   * {@link LongIterator LongIterator}. When the given <i>iterator</i> is
+   * <code>null</code>, returns <code>null</code>.
+   * 
+   * @param iterator
+   *        the (possibly <code>null</code>) {@link LongIterator LongIterator} to
+   *        wrap
+   * @return an {@link Iterator Iterator} wrapping the given <i>iterator</i>, or
+   *         <code>null</code> when <i>iterator</i> is <code>null</code>.
+   */
+  @Nullable
+  public static Iterator <Long> wrap (@Nullable final LongIterator iterator)
+  {
+    return null == iterator ? null : new LongIteratorIterator (iterator);
+  }
 }

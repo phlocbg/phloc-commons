@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.FloatCollection;
 
 /**
@@ -26,21 +28,21 @@ import org.apache.commons.collections.primitives.FloatCollection;
  */
 final class NonSerializableFloatCollectionCollection extends AbstractFloatCollectionCollection
 {
+  private final FloatCollection m_aCollection;
 
   /**
    * Creates a {@link java.util.Collection Collection} wrapping the specified
    * {@link FloatCollection FloatCollection}.
    */
-  public NonSerializableFloatCollectionCollection (final FloatCollection collection)
+  public NonSerializableFloatCollectionCollection (@Nonnull final FloatCollection collection)
   {
-    _collection = collection;
+    m_aCollection = collection;
   }
 
   @Override
+  @Nonnull
   protected FloatCollection getFloatCollection ()
   {
-    return _collection;
+    return m_aCollection;
   }
-
-  private FloatCollection _collection = null;
 }

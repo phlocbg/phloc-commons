@@ -19,6 +19,8 @@ package org.apache.commons.collections.primitives.adapters;
 import java.io.Serializable;
 import java.util.Collection;
 
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.DoubleCollection;
 
 /**
@@ -26,22 +28,39 @@ import org.apache.commons.collections.primitives.DoubleCollection;
  * {@link java.util.Collection Collection} interface.
  * <p />
  * This implementation delegates most methods to the provided
- * {@link DoubleCollection DoubleCollection} implementation in the "obvious"
- * way.
- * 
+ * {@link DoubleCollection DoubleCollection} implementation in the "obvious" way.
+ *
  * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
  */
-final public class DoubleCollectionCollection extends AbstractDoubleCollectionCollection implements Serializable
+public final class DoubleCollectionCollection extends AbstractDoubleCollectionCollection implements Serializable
 {
+  private final DoubleCollection m_aCollection;
+
+  /**
+   * Creates a {@link Collection Collection} wrapping the specified
+   * {@link DoubleCollection DoubleCollection}.
+   *
+   * @see #wrap
+   */
+  public DoubleCollectionCollection (final DoubleCollection collection)
+  {
+    m_aCollection = collection;
+  }
+
+  @Override
+  protected DoubleCollection getDoubleCollection ()
+  {
+    return m_aCollection;
+  }
 
   /**
    * Create a {@link Collection Collection} wrapping the specified
-   * {@link DoubleCollection DoubleCollection}. When the given <i>collection</i>
-   * is <code>null</code>, returns <code>null</code>.
-   * 
+   * {@link DoubleCollection DoubleCollection}. When the given <i>collection</i> is
+   * <code>null</code>, returns <code>null</code>.
+   *
    * @param collection
    *        the (possibly <code>null</code>) {@link DoubleCollection
    *        DoubleCollection} to wrap
@@ -49,39 +68,13 @@ final public class DoubleCollectionCollection extends AbstractDoubleCollectionCo
    *         <i>collection</i>, or <code>null</code> when <i>collection</i> is
    *         <code>null</code>.
    */
-  public static Collection wrap (final DoubleCollection collection)
+  @Nullable
+  public static Collection <Double> wrap (@Nullable final DoubleCollection collection)
   {
     if (null == collection)
-    {
       return null;
-    }
-    else
-      if (collection instanceof Serializable)
-      {
-        return new DoubleCollectionCollection (collection);
-      }
-      else
-      {
-        return new NonSerializableDoubleCollectionCollection (collection);
-      }
+    if (collection instanceof Serializable)
+      return new DoubleCollectionCollection (collection);
+    return new NonSerializableDoubleCollectionCollection (collection);
   }
-
-  /**
-   * Creates a {@link Collection Collection} wrapping the specified
-   * {@link DoubleCollection DoubleCollection}.
-   * 
-   * @see #wrap
-   */
-  public DoubleCollectionCollection (final DoubleCollection collection)
-  {
-    _collection = collection;
-  }
-
-  @Override
-  protected DoubleCollection getDoubleCollection ()
-  {
-    return _collection;
-  }
-
-  private DoubleCollection _collection = null;
 }

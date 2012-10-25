@@ -18,11 +18,16 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.Collection;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.ByteCollection;
 import org.apache.commons.collections.primitives.ByteIterator;
 
+import com.phloc.commons.annotations.ReturnsMutableCopy;
+
 /**
- * @since Commons Collections 2.2
+ * @since Commons Primitives 0.1
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
@@ -32,12 +37,15 @@ abstract class AbstractCollectionByteCollection implements ByteCollection
   protected AbstractCollectionByteCollection ()
   {}
 
-  public boolean add (final byte element)
+  @Nonnull
+  protected abstract Collection <Byte> getCollection ();
+
+  public boolean add (final byte aElement)
   {
-    return getCollection ().add (new Byte (element));
+    return getCollection ().add (Byte.valueOf (aElement));
   }
 
-  public boolean addAll (final ByteCollection c)
+  public boolean addAll (@Nonnull final ByteCollection c)
   {
     return getCollection ().addAll (ByteCollectionCollection.wrap (c));
   }
@@ -47,20 +55,14 @@ abstract class AbstractCollectionByteCollection implements ByteCollection
     getCollection ().clear ();
   }
 
-  public boolean contains (final byte element)
+  public boolean contains (final byte aElement)
   {
-    return getCollection ().contains (new Byte (element));
+    return getCollection ().contains (Byte.valueOf (aElement));
   }
 
-  public boolean containsAll (final ByteCollection c)
+  public boolean containsAll (@Nonnull final ByteCollection c)
   {
     return getCollection ().containsAll (ByteCollectionCollection.wrap (c));
-  }
-
-  @Override
-  public String toString ()
-  {
-    return getCollection ().toString ();
   }
 
   public boolean isEmpty ()
@@ -72,56 +74,61 @@ abstract class AbstractCollectionByteCollection implements ByteCollection
    * {@link IteratorByteIterator#wrap wraps} the {@link java.util.Iterator
    * Iterator} returned by my underlying {@link Collection Collection}, if any.
    */
+  @Nonnull
   public ByteIterator iterator ()
   {
     return IteratorByteIterator.wrap (getCollection ().iterator ());
   }
 
-  public boolean removeElement (final byte element)
+  public boolean removeElement (final byte aElement)
   {
-    return getCollection ().remove (new Byte (element));
+    return getCollection ().remove (Byte.valueOf (aElement));
   }
 
-  public boolean removeAll (final ByteCollection c)
+  public boolean removeAll (@Nonnull final ByteCollection c)
   {
     return getCollection ().removeAll (ByteCollectionCollection.wrap (c));
   }
 
-  public boolean retainAll (final ByteCollection c)
+  public boolean retainAll (@Nonnull final ByteCollection c)
   {
     return getCollection ().retainAll (ByteCollectionCollection.wrap (c));
   }
 
+  @Nonnegative
   public int size ()
   {
     return getCollection ().size ();
   }
 
+  @Nonnull
+  @ReturnsMutableCopy
   public byte [] toArray ()
   {
-    final Object [] src = getCollection ().toArray ();
-    final byte [] dest = new byte [src.length];
-    for (int i = 0; i < src.length; i++)
-    {
-      dest[i] = ((Number) (src[i])).byteValue ();
-    }
+    final Object [] aElementData = getCollection ().toArray ();
+    final byte [] dest = new byte [aElementData.length];
+    for (int i = 0; i < aElementData.length; i++)
+      dest[i] = ((Byte) (aElementData[i])).byteValue ();
     return dest;
   }
 
-  public byte [] toArray (byte [] dest)
+  @Nonnull
+  public byte [] toArray (@Nonnull final byte [] dest)
   {
-    final Object [] src = getCollection ().toArray ();
-    if (dest.length < src.length)
+    final Object [] aElementData = getCollection ().toArray ();
+    byte [] ret = dest;
+    if (ret.length < aElementData.length)
+      ret = new byte [aElementData.length];
+    for (int i = 0; i < aElementData.length; i++)
     {
-      dest = new byte [src.length];
+      ret[i] = ((Byte) (aElementData[i])).byteValue ();
     }
-    for (int i = 0; i < src.length; i++)
-    {
-      dest[i] = ((Number) (src[i])).byteValue ();
-    }
-    return dest;
+    return ret;
   }
 
-  protected abstract Collection getCollection ();
-
+  @Override
+  public String toString ()
+  {
+    return getCollection ().toString ();
+  }
 }

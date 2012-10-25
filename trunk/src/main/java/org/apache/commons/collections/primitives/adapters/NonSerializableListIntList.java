@@ -18,6 +18,8 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 /**
  * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
@@ -26,18 +28,17 @@ import java.util.List;
  */
 final class NonSerializableListIntList extends AbstractListIntList
 {
+  private final List <Integer> m_aList;
 
-  protected NonSerializableListIntList (final List list)
+  protected NonSerializableListIntList (@Nonnull final List <Integer> list)
   {
-    _list = list;
+    m_aList = list;
   }
 
   @Override
-  protected List getList ()
+  @Nonnull
+  protected List <Integer> getList ()
   {
-    return _list;
+    return m_aList;
   }
-
-  private List _list = null;
-
 }

@@ -16,32 +16,33 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.BooleanList;
 
 /**
- * @since Commons Primitives 1.1
+ * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
  */
 final class NonSerializableBooleanListList extends AbstractBooleanListList
 {
+  private final BooleanList m_aList;
 
   /**
    * Creates a {@link java.util.List List} wrapping the specified
    * {@link BooleanList BooleanList}.
    */
-  public NonSerializableBooleanListList (final BooleanList list)
+  public NonSerializableBooleanListList (@Nonnull final BooleanList aList)
   {
-    _list = list;
+    m_aList = aList;
   }
 
   @Override
+  @Nonnull
   protected BooleanList getBooleanList ()
   {
-    return _list;
+    return m_aList;
   }
-
-  private BooleanList _list = null;
-
 }

@@ -18,6 +18,8 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.Collection;
 
+import javax.annotation.Nonnull;
+
 /**
  * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
@@ -26,17 +28,17 @@ import java.util.Collection;
  */
 final class NonSerializableCollectionDoubleCollection extends AbstractCollectionDoubleCollection
 {
-  public NonSerializableCollectionDoubleCollection (final Collection collection)
+  private final Collection <Double> m_aCollection;
+
+  public NonSerializableCollectionDoubleCollection (@Nonnull final Collection <Double> collection)
   {
-    _collection = collection;
+    m_aCollection = collection;
   }
 
   @Override
-  protected Collection getCollection ()
+  @Nonnull
+  protected Collection <Double> getCollection ()
   {
-    return _collection;
+    return m_aCollection;
   }
-
-  private Collection _collection = null;
-
 }

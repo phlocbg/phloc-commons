@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.DoubleList;
 
 /**
@@ -26,22 +28,21 @@ import org.apache.commons.collections.primitives.DoubleList;
  */
 final class NonSerializableDoubleListList extends AbstractDoubleListList
 {
+  private final DoubleList m_aList;
 
   /**
    * Creates a {@link java.util.List List} wrapping the specified
    * {@link DoubleList DoubleList}.
    */
-  public NonSerializableDoubleListList (final DoubleList list)
+  public NonSerializableDoubleListList (@Nonnull final DoubleList aList)
   {
-    _list = list;
+    m_aList = aList;
   }
 
   @Override
+  @Nonnull
   protected DoubleList getDoubleList ()
   {
-    return _list;
+    return m_aList;
   }
-
-  private DoubleList _list = null;
-
 }

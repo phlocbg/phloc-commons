@@ -16,28 +16,36 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
-import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.BooleanCollection;
 
+import com.phloc.commons.annotations.ReturnsMutableCopy;
+
 /**
- * @since Commons Primitives 1.1
+ * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
+ * @author Rodney Waldhoff
  */
-abstract class AbstractBooleanCollectionCollection implements Collection
+abstract class AbstractBooleanCollectionCollection implements Collection <Boolean>
 {
+  @Nonnull
+  protected abstract BooleanCollection getBooleanCollection ();
 
-  public boolean add (final Object element)
+  public boolean add (final Boolean element)
   {
-    return getBooleanCollection ().add (((Boolean) element).booleanValue ());
+    return getBooleanCollection ().add (element.booleanValue ());
   }
 
-  public boolean addAll (final Collection c)
+  @SuppressWarnings ("unchecked")
+  public boolean addAll (final Collection <? extends Boolean> c)
   {
-    return getBooleanCollection ().addAll (CollectionBooleanCollection.wrap (c));
+    return getBooleanCollection ().addAll (CollectionBooleanCollection.wrap ((Collection <Boolean>) c));
   }
 
   public void clear ()
@@ -50,9 +58,10 @@ abstract class AbstractBooleanCollectionCollection implements Collection
     return getBooleanCollection ().contains (((Boolean) element).booleanValue ());
   }
 
-  public boolean containsAll (final Collection c)
+  @SuppressWarnings ("unchecked")
+  public boolean containsAll (final Collection <?> c)
   {
-    return getBooleanCollection ().containsAll (CollectionBooleanCollection.wrap (c));
+    return getBooleanCollection ().containsAll (CollectionBooleanCollection.wrap ((Collection <Boolean>) c));
   }
 
   @Override
@@ -68,12 +77,10 @@ abstract class AbstractBooleanCollectionCollection implements Collection
 
   /**
    * {@link BooleanIteratorIterator#wrap wraps} the
-   * {@link org.apache.commons.collections.primitives.BooleanIterator
-   * BooleanIterator} returned by my underlying
-   * {@link org.apache.commons.collections.primitives.BooleanCollection
-   * BooleanCollection}, if any.
+   * {@link org.apache.commons.collections.primitives.BooleanIterator BooleanIterator}
+   * returned by my underlying {@link BooleanCollection BooleanCollection}, if any.
    */
-  public Iterator iterator ()
+  public Iterator <Boolean> iterator ()
   {
     return BooleanIteratorIterator.wrap (getBooleanCollection ().iterator ());
   }
@@ -83,14 +90,16 @@ abstract class AbstractBooleanCollectionCollection implements Collection
     return getBooleanCollection ().removeElement (((Boolean) element).booleanValue ());
   }
 
-  public boolean removeAll (final Collection c)
+  @SuppressWarnings ("unchecked")
+  public boolean removeAll (final Collection <?> c)
   {
-    return getBooleanCollection ().removeAll (CollectionBooleanCollection.wrap (c));
+    return getBooleanCollection ().removeAll (CollectionBooleanCollection.wrap ((Collection <Boolean>) c));
   }
 
-  public boolean retainAll (final Collection c)
+  @SuppressWarnings ("unchecked")
+  public boolean retainAll (final Collection <?> c)
   {
-    return getBooleanCollection ().retainAll (CollectionBooleanCollection.wrap (c));
+    return getBooleanCollection ().retainAll (CollectionBooleanCollection.wrap ((Collection <Boolean>) c));
   }
 
   public int size ()
@@ -98,35 +107,30 @@ abstract class AbstractBooleanCollectionCollection implements Collection
     return getBooleanCollection ().size ();
   }
 
-  public Object [] toArray ()
+  @Nonnull
+  @ReturnsMutableCopy
+  public Boolean [] toArray ()
   {
     final boolean [] a = getBooleanCollection ().toArray ();
-    final Object [] A = new Object [a.length];
+    final Boolean [] A = new Boolean [a.length];
     for (int i = 0; i < a.length; i++)
-    {
-      A[i] = new Boolean (a[i]);
-    }
+      A[i] = Boolean.valueOf (a[i]);
     return A;
   }
 
-  public Object [] toArray (Object [] A)
+  @SuppressWarnings ("unchecked")
+  public <T> T [] toArray (final T [] a)
   {
-    final boolean [] a = getBooleanCollection ().toArray ();
-    if (A.length < a.length)
+    final Boolean [] elementData = toArray ();
+    final int size = size ();
+    if (a.length < size)
     {
-      A = (Object []) (Array.newInstance (A.getClass ().getComponentType (), a.length));
+      // Make a new array of a's runtime type, but my contents:
+      return (T []) Arrays.copyOf (elementData, size, a.getClass ());
     }
-    for (int i = 0; i < a.length; i++)
-    {
-      A[i] = new Boolean (a[i]);
-    }
-    if (A.length > a.length)
-    {
-      A[a.length] = null;
-    }
-
-    return A;
+    System.arraycopy (elementData, 0, a, 0, size);
+    if (a.length > size)
+      a[size] = null;
+    return a;
   }
-
-  protected abstract BooleanCollection getBooleanCollection ();
 }

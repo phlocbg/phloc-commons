@@ -16,11 +16,15 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
-import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.LongCollection;
+
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 
 /**
  * @since Commons Primitives 1.0
@@ -28,17 +32,20 @@ import org.apache.commons.collections.primitives.LongCollection;
  *          2006) $
  * @author Rodney Waldhoff
  */
-abstract class AbstractLongCollectionCollection implements Collection
+abstract class AbstractLongCollectionCollection implements Collection <Long>
 {
+  @Nonnull
+  protected abstract LongCollection getLongCollection ();
 
-  public boolean add (final Object element)
+  public boolean add (final Long element)
   {
-    return getLongCollection ().add (((Number) element).longValue ());
+    return getLongCollection ().add (element.longValue ());
   }
 
-  public boolean addAll (final Collection c)
+  @SuppressWarnings ("unchecked")
+  public boolean addAll (final Collection <? extends Long> c)
   {
-    return getLongCollection ().addAll (CollectionLongCollection.wrap (c));
+    return getLongCollection ().addAll (CollectionLongCollection.wrap ((Collection <Long>) c));
   }
 
   public void clear ()
@@ -48,12 +55,13 @@ abstract class AbstractLongCollectionCollection implements Collection
 
   public boolean contains (final Object element)
   {
-    return getLongCollection ().contains (((Number) element).longValue ());
+    return getLongCollection ().contains (((Long) element).longValue ());
   }
 
-  public boolean containsAll (final Collection c)
+  @SuppressWarnings ("unchecked")
+  public boolean containsAll (final Collection <?> c)
   {
-    return getLongCollection ().containsAll (CollectionLongCollection.wrap (c));
+    return getLongCollection ().containsAll (CollectionLongCollection.wrap ((Collection <Long>) c));
   }
 
   @Override
@@ -72,24 +80,26 @@ abstract class AbstractLongCollectionCollection implements Collection
    * {@link org.apache.commons.collections.primitives.LongIterator LongIterator}
    * returned by my underlying {@link LongCollection LongCollection}, if any.
    */
-  public Iterator iterator ()
+  public Iterator <Long> iterator ()
   {
     return LongIteratorIterator.wrap (getLongCollection ().iterator ());
   }
 
   public boolean remove (final Object element)
   {
-    return getLongCollection ().removeElement (((Number) element).longValue ());
+    return getLongCollection ().removeElement (((Long) element).longValue ());
   }
 
-  public boolean removeAll (final Collection c)
+  @SuppressWarnings ("unchecked")
+  public boolean removeAll (final Collection <?> c)
   {
-    return getLongCollection ().removeAll (CollectionLongCollection.wrap (c));
+    return getLongCollection ().removeAll (CollectionLongCollection.wrap ((Collection <Long>) c));
   }
 
-  public boolean retainAll (final Collection c)
+  @SuppressWarnings ("unchecked")
+  public boolean retainAll (final Collection <?> c)
   {
-    return getLongCollection ().retainAll (CollectionLongCollection.wrap (c));
+    return getLongCollection ().retainAll (CollectionLongCollection.wrap ((Collection <Long>) c));
   }
 
   public int size ()
@@ -97,35 +107,30 @@ abstract class AbstractLongCollectionCollection implements Collection
     return getLongCollection ().size ();
   }
 
-  public Object [] toArray ()
+  @Nonnull
+  @ReturnsMutableCopy
+  public Long [] toArray ()
   {
     final long [] a = getLongCollection ().toArray ();
-    final Object [] A = new Object [a.length];
+    final Long [] A = new Long [a.length];
     for (int i = 0; i < a.length; i++)
-    {
-      A[i] = new Long (a[i]);
-    }
+      A[i] = Long.valueOf (a[i]);
     return A;
   }
 
-  public Object [] toArray (Object [] A)
+  @SuppressWarnings ("unchecked")
+  public <T> T [] toArray (final T [] a)
   {
-    final long [] a = getLongCollection ().toArray ();
-    if (A.length < a.length)
+    final Long [] elementData = toArray ();
+    final int size = size ();
+    if (a.length < size)
     {
-      A = (Object []) (Array.newInstance (A.getClass ().getComponentType (), a.length));
+      // Make a new array of a's runtime type, but my contents:
+      return (T []) Arrays.copyOf (elementData, size, a.getClass ());
     }
-    for (int i = 0; i < a.length; i++)
-    {
-      A[i] = new Long (a[i]);
-    }
-    if (A.length > a.length)
-    {
-      A[a.length] = null;
-    }
-
-    return A;
+    System.arraycopy (elementData, 0, a, 0, size);
+    if (a.length > size)
+      a[size] = null;
+    return a;
   }
-
-  protected abstract LongCollection getLongCollection ();
 }

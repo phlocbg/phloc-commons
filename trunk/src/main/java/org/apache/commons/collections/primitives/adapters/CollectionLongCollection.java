@@ -19,6 +19,9 @@ package org.apache.commons.collections.primitives.adapters;
 import java.io.Serializable;
 import java.util.Collection;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.LongCollection;
 
 /**
@@ -27,58 +30,52 @@ import org.apache.commons.collections.primitives.LongCollection;
  * <p />
  * This implementation delegates most methods to the provided {@link Collection
  * Collection} implementation in the "obvious" way.
- * 
+ *
  * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
  */
-final public class CollectionLongCollection extends AbstractCollectionLongCollection implements Serializable
+public final class CollectionLongCollection extends AbstractCollectionLongCollection implements Serializable
 {
+  private final Collection <Long> m_aCollection;
+
+  /**
+   * Creates an {@link LongCollection LongCollection} wrapping the specified
+   * {@link Collection Collection}.
+   *
+   * @see #wrap
+   */
+  public CollectionLongCollection (@Nonnull final Collection <Long> collection)
+  {
+    m_aCollection = collection;
+  }
+
+  @Override
+  @Nonnull
+  protected Collection <Long> getCollection ()
+  {
+    return m_aCollection;
+  }
+
   /**
    * Create an {@link LongCollection LongCollection} wrapping the specified
    * {@link Collection Collection}. When the given <i>collection</i> is
    * <code>null</code>, returns <code>null</code>.
-   * 
-   * @param collection
+   *
+   * @param aCollection
    *        the (possibly <code>null</code>) {@link Collection} to wrap
    * @return an {@link LongCollection LongCollection} wrapping the given
    *         <i>collection</i>, or <code>null</code> when <i>collection</i> is
    *         <code>null</code>.
    */
-  public static LongCollection wrap (final Collection collection)
+  @Nullable
+  public static LongCollection wrap (@Nullable final Collection <Long> aCollection)
   {
-    if (null == collection)
-    {
+    if (null == aCollection)
       return null;
-    }
-    else
-      if (collection instanceof Serializable)
-      {
-        return new CollectionLongCollection (collection);
-      }
-      else
-      {
-        return new NonSerializableCollectionLongCollection (collection);
-      }
+    if (aCollection instanceof Serializable)
+      return new CollectionLongCollection (aCollection);
+    return new NonSerializableCollectionLongCollection (aCollection);
   }
-
-  /**
-   * Creates an {@link LongCollection LongCollection} wrapping the specified
-   * {@link Collection Collection}.
-   * 
-   * @see #wrap
-   */
-  public CollectionLongCollection (final Collection collection)
-  {
-    _collection = collection;
-  }
-
-  @Override
-  protected Collection getCollection ()
-  {
-    return _collection;
-  }
-
-  private Collection _collection = null;
 }

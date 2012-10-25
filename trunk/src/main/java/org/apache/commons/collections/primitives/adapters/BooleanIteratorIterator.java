@@ -18,69 +18,68 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.Iterator;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.BooleanIterator;
 
 /**
- * Adapts an {@link org.apache.commons.collections.primitives.BooleanIterator
- * BooleanIterator} to the {@link java.util.Iterator Iterator} interface.
+ * Adapts an {@link BooleanIterator BooleanIterator} to the {@link java.util.Iterator
+ * Iterator} interface.
  * <p />
  * This implementation delegates most methods to the provided
- * {@link org.apache.commons.collections.primitives.BooleanIterator
- * BooleanIterator} implementation in the "obvious" way.
+ * {@link BooleanIterator BooleanIterator} implementation in the "obvious" way.
  * 
- * @since Commons Primitives 1.1
+ * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
+ * @author Rodney Waldhoff
  */
-public class BooleanIteratorIterator implements Iterator
+public class BooleanIteratorIterator implements Iterator <Boolean>
 {
+  private final BooleanIterator m_aIterator;
 
   /**
-   * Create an {@link java.util.Iterator Iterator} wrapping the specified
-   * {@link org.apache.commons.collections.primitives.BooleanIterator
-   * BooleanIterator}. When the given <i>iterator</i> is <code>null</code>,
-   * returns <code>null</code>.
-   * 
-   * @param iterator
-   *        the (possibly <code>null</code>)
-   *        {@link org.apache.commons.collections.primitives.BooleanIterator
-   *        BooleanIterator} to wrap
-   * @return an {@link java.util.Iterator Iterator} wrapping the given
-   *         <i>iterator</i>, or <code>null</code> when <i>iterator</i> is
-   *         <code>null</code>.
-   */
-  public static Iterator wrap (final BooleanIterator iterator)
-  {
-    return null == iterator ? null : new BooleanIteratorIterator (iterator);
-  }
-
-  /**
-   * Creates an {@link java.util.Iterator Iterator} wrapping the specified
-   * {@link org.apache.commons.collections.primitives.BooleanIterator
-   * BooleanIterator}.
+   * Creates an {@link Iterator Iterator} wrapping the specified
+   * {@link BooleanIterator BooleanIterator}.
    * 
    * @see #wrap
    */
-  public BooleanIteratorIterator (final BooleanIterator iterator)
+  public BooleanIteratorIterator (@Nonnull final BooleanIterator iterator)
   {
-    _iterator = iterator;
+    m_aIterator = iterator;
   }
 
   public boolean hasNext ()
   {
-    return _iterator.hasNext ();
+    return m_aIterator.hasNext ();
   }
 
-  public Object next ()
+  @Nonnull
+  public Boolean next ()
   {
-    return new Boolean (_iterator.next ());
+    return Boolean.valueOf (m_aIterator.next ());
   }
 
   public void remove ()
   {
-    _iterator.remove ();
+    m_aIterator.remove ();
   }
 
-  private BooleanIterator _iterator = null;
-
+  /**
+   * Create an {@link Iterator Iterator} wrapping the specified
+   * {@link BooleanIterator BooleanIterator}. When the given <i>iterator</i> is
+   * <code>null</code>, returns <code>null</code>.
+   * 
+   * @param iterator
+   *        the (possibly <code>null</code>) {@link BooleanIterator BooleanIterator} to
+   *        wrap
+   * @return an {@link Iterator Iterator} wrapping the given <i>iterator</i>, or
+   *         <code>null</code> when <i>iterator</i> is <code>null</code>.
+   */
+  @Nullable
+  public static Iterator <Boolean> wrap (@Nullable final BooleanIterator iterator)
+  {
+    return null == iterator ? null : new BooleanIteratorIterator (iterator);
+  }
 }

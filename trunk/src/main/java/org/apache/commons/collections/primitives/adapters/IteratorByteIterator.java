@@ -18,6 +18,9 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.Iterator;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.ByteIterator;
 
 /**
@@ -26,7 +29,7 @@ import org.apache.commons.collections.primitives.ByteIterator;
  * <p />
  * This implementation delegates most methods to the provided {@link Iterator
  * Iterator} implementation in the "obvious" way.
- * 
+ *
  * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
@@ -34,30 +37,15 @@ import org.apache.commons.collections.primitives.ByteIterator;
  */
 public class IteratorByteIterator implements ByteIterator
 {
-
-  /**
-   * Create an {@link ByteIterator ByteIterator} wrapping the specified
-   * {@link Iterator Iterator}. When the given <i>iterator</i> is
-   * <code>null</code>, returns <code>null</code>.
-   * 
-   * @param iterator
-   *        the (possibly <code>null</code>) {@link Iterator Iterator} to wrap
-   * @return an {@link ByteIterator ByteIterator} wrapping the given
-   *         <i>iterator</i>, or <code>null</code> when <i>iterator</i> is
-   *         <code>null</code>.
-   */
-  public static ByteIterator wrap (final Iterator iterator)
-  {
-    return null == iterator ? null : new IteratorByteIterator (iterator);
-  }
+  private final Iterator <Byte> _iterator;
 
   /**
    * Creates an {@link ByteIterator ByteIterator} wrapping the specified
    * {@link Iterator Iterator}.
-   * 
+   *
    * @see #wrap
    */
-  public IteratorByteIterator (final Iterator iterator)
+  public IteratorByteIterator (@Nonnull final Iterator <Byte> iterator)
   {
     _iterator = iterator;
   }
@@ -69,7 +57,7 @@ public class IteratorByteIterator implements ByteIterator
 
   public byte next ()
   {
-    return ((Number) (_iterator.next ())).byteValue ();
+    return _iterator.next ().byteValue ();
   }
 
   public void remove ()
@@ -77,6 +65,20 @@ public class IteratorByteIterator implements ByteIterator
     _iterator.remove ();
   }
 
-  private Iterator _iterator = null;
-
+  /**
+   * Create an {@link ByteIterator ByteIterator} wrapping the specified
+   * {@link Iterator Iterator}. When the given <i>iterator</i> is
+   * <code>null</code>, returns <code>null</code>.
+   *
+   * @param iterator
+   *        the (possibly <code>null</code>) {@link Iterator Iterator} to wrap
+   * @return an {@link ByteIterator ByteIterator} wrapping the given
+   *         <i>iterator</i>, or <code>null</code> when <i>iterator</i> is
+   *         <code>null</code>.
+   */
+  @Nullable
+  public static ByteIterator wrap (@Nullable final Iterator <Byte> iterator)
+  {
+    return null == iterator ? null : new IteratorByteIterator (iterator);
+  }
 }

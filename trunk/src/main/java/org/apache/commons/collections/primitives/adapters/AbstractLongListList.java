@@ -21,6 +21,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.LongCollection;
 import org.apache.commons.collections.primitives.LongList;
 
@@ -30,32 +33,43 @@ import org.apache.commons.collections.primitives.LongList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-abstract class AbstractLongListList extends AbstractLongCollectionCollection implements List
+abstract class AbstractLongListList extends AbstractLongCollectionCollection implements List <Long>
 {
+  @Nonnull
+  protected abstract LongList getLongList ();
 
-  public void add (final int index, final Object element)
+  @Override
+  @Nonnull
+  protected final LongCollection getLongCollection ()
   {
-    getLongList ().add (index, ((Number) element).longValue ());
+    return getLongList ();
   }
 
-  public boolean addAll (final int index, final Collection c)
+  public void add (final int index, @Nonnull final Long aElement)
   {
-    return getLongList ().addAll (index, CollectionLongCollection.wrap (c));
+    getLongList ().add (index, aElement.longValue ());
   }
 
-  public Object get (final int index)
+  @SuppressWarnings ("unchecked")
+  public boolean addAll (final int index, final Collection <? extends Long> c)
   {
-    return new Long (getLongList ().get (index));
+    return getLongList ().addAll (index, CollectionLongCollection.wrap ((Collection <Long>) c));
+  }
+
+  @Nonnull
+  public Long get (final int nIndex)
+  {
+    return Long.valueOf (getLongList ().get (nIndex));
   }
 
   public int indexOf (final Object element)
   {
-    return getLongList ().indexOf (((Number) element).longValue ());
+    return getLongList ().indexOf (((Long) element).longValue ());
   }
 
   public int lastIndexOf (final Object element)
   {
-    return getLongList ().lastIndexOf (((Number) element).longValue ());
+    return getLongList ().lastIndexOf (((Long) element).longValue ());
   }
 
   /**
@@ -64,7 +78,7 @@ abstract class AbstractLongListList extends AbstractLongCollectionCollection imp
    * LongListIterator} returned by my underlying {@link LongList LongList}, if
    * any.
    */
-  public ListIterator listIterator ()
+  public ListIterator <Long> listIterator ()
   {
     return LongListIteratorListIterator.wrap (getLongList ().listIterator ());
   }
@@ -75,61 +89,48 @@ abstract class AbstractLongListList extends AbstractLongCollectionCollection imp
    * LongListIterator} returned by my underlying {@link LongList LongList}, if
    * any.
    */
-  public ListIterator listIterator (final int index)
+  public ListIterator <Long> listIterator (final int index)
   {
     return LongListIteratorListIterator.wrap (getLongList ().listIterator (index));
   }
 
-  public Object remove (final int index)
+  @Nonnull
+  public Long remove (final int index)
   {
-    return new Long (getLongList ().removeElementAt (index));
+    return Long.valueOf (getLongList ().removeElementAt (index));
   }
 
-  public Object set (final int index, final Object element)
+  @Nonnull
+  public Long set (final int index, final Long element)
   {
-    return new Long (getLongList ().set (index, ((Number) element).longValue ()));
+    return Long.valueOf (getLongList ().set (index, element.longValue ()));
   }
 
-  public List subList (final int fromIndex, final int toIndex)
+  public List <Long> subList (final int nFromIndex, final int nToIndex)
   {
-    return LongListList.wrap (getLongList ().subList (fromIndex, toIndex));
+    return LongListList.wrap (getLongList ().subList (nFromIndex, nToIndex));
   }
 
   @Override
-  public boolean equals (final Object obj)
+  public boolean equals (@Nullable final Object obj)
   {
-    if (obj instanceof List)
-    {
-      final List that = (List) obj;
-      if (this == that)
-      {
-        return true;
-      }
-      else
-        if (this.size () != that.size ())
-        {
-          return false;
-        }
-        else
-        {
-          final Iterator thisiter = iterator ();
-          final Iterator thatiter = that.iterator ();
-          while (thisiter.hasNext ())
-          {
-            final Object thiselt = thisiter.next ();
-            final Object thatelt = thatiter.next ();
-            if (null == thiselt ? null != thatelt : !(thiselt.equals (thatelt)))
-            {
-              return false;
-            }
-          }
-          return true;
-        }
-    }
-    else
-    {
+    if (obj == this)
+      return true;
+    if (!(obj instanceof List <?>))
       return false;
+    final List <?> that = (List <?>) obj;
+    if (size () != that.size ())
+      return false;
+    final Iterator <?> thisiter = iterator ();
+    final Iterator <?> thatiter = that.iterator ();
+    while (thisiter.hasNext ())
+    {
+      final Object thiselt = thisiter.next ();
+      final Object thatelt = thatiter.next ();
+      if (null == thiselt ? null != thatelt : !(thiselt.equals (thatelt)))
+        return false;
     }
+    return true;
   }
 
   @Override
@@ -137,13 +138,4 @@ abstract class AbstractLongListList extends AbstractLongCollectionCollection imp
   {
     return getLongList ().hashCode ();
   }
-
-  @Override
-  protected final LongCollection getLongCollection ()
-  {
-    return getLongList ();
-  }
-
-  protected abstract LongList getLongList ();
-
 }

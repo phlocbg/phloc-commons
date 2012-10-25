@@ -18,26 +18,34 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.Collection;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.BooleanCollection;
 import org.apache.commons.collections.primitives.BooleanIterator;
 
+import com.phloc.commons.annotations.ReturnsMutableCopy;
+
 /**
- * @since Commons Primitives 1.1
+ * @since Commons Primitives 0.1
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
+ * @author Rodney Waldhoff
  */
 abstract class AbstractCollectionBooleanCollection implements BooleanCollection
 {
-
   protected AbstractCollectionBooleanCollection ()
   {}
 
-  public boolean add (final boolean element)
+  @Nonnull
+  protected abstract Collection <Boolean> getCollection ();
+
+  public boolean add (final boolean aElement)
   {
-    return getCollection ().add (new Boolean (element));
+    return getCollection ().add (Boolean.valueOf (aElement));
   }
 
-  public boolean addAll (final BooleanCollection c)
+  public boolean addAll (@Nonnull final BooleanCollection c)
   {
     return getCollection ().addAll (BooleanCollectionCollection.wrap (c));
   }
@@ -47,20 +55,14 @@ abstract class AbstractCollectionBooleanCollection implements BooleanCollection
     getCollection ().clear ();
   }
 
-  public boolean contains (final boolean element)
+  public boolean contains (final boolean aElement)
   {
-    return getCollection ().contains (new Boolean (element));
+    return getCollection ().contains (Boolean.valueOf (aElement));
   }
 
-  public boolean containsAll (final BooleanCollection c)
+  public boolean containsAll (@Nonnull final BooleanCollection c)
   {
     return getCollection ().containsAll (BooleanCollectionCollection.wrap (c));
-  }
-
-  @Override
-  public String toString ()
-  {
-    return getCollection ().toString ();
   }
 
   public boolean isEmpty ()
@@ -70,59 +72,63 @@ abstract class AbstractCollectionBooleanCollection implements BooleanCollection
 
   /**
    * {@link IteratorBooleanIterator#wrap wraps} the {@link java.util.Iterator
-   * Iterator} returned by my underlying {@link java.util.Collection Collection}
-   * , if any.
+   * Iterator} returned by my underlying {@link Collection Collection}, if any.
    */
+  @Nonnull
   public BooleanIterator iterator ()
   {
     return IteratorBooleanIterator.wrap (getCollection ().iterator ());
   }
 
-  public boolean removeElement (final boolean element)
+  public boolean removeElement (final boolean aElement)
   {
-    return getCollection ().remove (new Boolean (element));
+    return getCollection ().remove (Boolean.valueOf (aElement));
   }
 
-  public boolean removeAll (final BooleanCollection c)
+  public boolean removeAll (@Nonnull final BooleanCollection c)
   {
     return getCollection ().removeAll (BooleanCollectionCollection.wrap (c));
   }
 
-  public boolean retainAll (final BooleanCollection c)
+  public boolean retainAll (@Nonnull final BooleanCollection c)
   {
     return getCollection ().retainAll (BooleanCollectionCollection.wrap (c));
   }
 
+  @Nonnegative
   public int size ()
   {
     return getCollection ().size ();
   }
 
+  @Nonnull
+  @ReturnsMutableCopy
   public boolean [] toArray ()
   {
-    final Object [] src = getCollection ().toArray ();
-    final boolean [] dest = new boolean [src.length];
-    for (int i = 0; i < src.length; i++)
-    {
-      dest[i] = ((Boolean) (src[i])).booleanValue ();
-    }
+    final Object [] aElementData = getCollection ().toArray ();
+    final boolean [] dest = new boolean [aElementData.length];
+    for (int i = 0; i < aElementData.length; i++)
+      dest[i] = ((Boolean) (aElementData[i])).booleanValue ();
     return dest;
   }
 
-  public boolean [] toArray (boolean [] dest)
+  @Nonnull
+  public boolean [] toArray (@Nonnull final boolean [] dest)
   {
-    final Object [] src = getCollection ().toArray ();
-    if (dest.length < src.length)
+    final Object [] aElementData = getCollection ().toArray ();
+    boolean [] ret = dest;
+    if (ret.length < aElementData.length)
+      ret = new boolean [aElementData.length];
+    for (int i = 0; i < aElementData.length; i++)
     {
-      dest = new boolean [src.length];
+      ret[i] = ((Boolean) (aElementData[i])).booleanValue ();
     }
-    for (int i = 0; i < src.length; i++)
-    {
-      dest[i] = ((Boolean) (src[i])).booleanValue ();
-    }
-    return dest;
+    return ret;
   }
 
-  protected abstract Collection getCollection ();
-
+  @Override
+  public String toString ()
+  {
+    return getCollection ().toString ();
+  }
 }
