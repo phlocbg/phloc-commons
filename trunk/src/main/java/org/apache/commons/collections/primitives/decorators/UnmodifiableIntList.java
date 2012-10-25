@@ -52,7 +52,7 @@ import org.apache.commons.collections.primitives.IntList;
  */
 public final class UnmodifiableIntList extends BaseUnmodifiableIntList implements Serializable
 {
-  private IntList m_aProxied;
+  private transient IntList m_aProxied;
 
   UnmodifiableIntList (@Nonnull final IntList list)
   {

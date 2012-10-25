@@ -34,6 +34,9 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.List;
 
@@ -55,7 +58,7 @@ import org.apache.commons.collections.primitives.ShortList;
  */
 public final class ShortListList extends AbstractShortListList implements Serializable
 {
-  private final ShortList m_aList;
+  private transient ShortList m_aList;
 
   /**
    * Creates a {@link List List} wrapping the specified {@link ShortList
@@ -69,9 +72,22 @@ public final class ShortListList extends AbstractShortListList implements Serial
   }
 
   @Override
+  @Nonnull 
   protected ShortList getShortList ()
   {
     return m_aList;
+  }
+
+  private void writeObject (@Nonnull final ObjectOutputStream out) throws IOException
+  {
+    out.defaultWriteObject ();
+    out.writeObject (m_aList);
+  }
+
+  private void readObject (@Nonnull final ObjectInputStream in) throws IOException, ClassNotFoundException
+  {
+    in.defaultReadObject ();
+    m_aList = (ShortList) in.readObject ();
   }
 
   /**

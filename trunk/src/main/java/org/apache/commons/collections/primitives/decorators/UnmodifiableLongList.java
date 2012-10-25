@@ -52,7 +52,7 @@ import org.apache.commons.collections.primitives.LongList;
  */
 public final class UnmodifiableLongList extends BaseUnmodifiableLongList implements Serializable
 {
-  private LongList m_aProxied;
+  private transient LongList m_aProxied;
 
   UnmodifiableLongList (@Nonnull final LongList list)
   {

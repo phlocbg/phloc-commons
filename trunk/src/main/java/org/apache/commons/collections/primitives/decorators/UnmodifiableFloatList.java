@@ -52,7 +52,7 @@ import org.apache.commons.collections.primitives.FloatList;
  */
 public final class UnmodifiableFloatList extends BaseUnmodifiableFloatList implements Serializable
 {
-  private FloatList m_aProxied;
+  private transient FloatList m_aProxied;
 
   UnmodifiableFloatList (@Nonnull final FloatList list)
   {

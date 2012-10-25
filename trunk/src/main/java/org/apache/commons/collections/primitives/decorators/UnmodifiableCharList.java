@@ -52,7 +52,7 @@ import org.apache.commons.collections.primitives.CharList;
  */
 public final class UnmodifiableCharList extends BaseUnmodifiableCharList implements Serializable
 {
-  private CharList m_aProxied;
+  private transient CharList m_aProxied;
 
   UnmodifiableCharList (@Nonnull final CharList list)
   {

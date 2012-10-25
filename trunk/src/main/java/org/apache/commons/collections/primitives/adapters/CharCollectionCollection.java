@@ -34,9 +34,13 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Collection;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.apache.commons.collections.primitives.CharCollection;
@@ -55,7 +59,7 @@ import org.apache.commons.collections.primitives.CharCollection;
  */
 public final class CharCollectionCollection extends AbstractCharCollectionCollection implements Serializable
 {
-  private final CharCollection m_aCollection;
+  private transient CharCollection m_aCollection;
 
   /**
    * Creates a {@link Collection Collection} wrapping the specified
@@ -63,15 +67,28 @@ public final class CharCollectionCollection extends AbstractCharCollectionCollec
    *
    * @see #wrap
    */
-  public CharCollectionCollection (final CharCollection collection)
+  public CharCollectionCollection (@Nonnull final CharCollection collection)
   {
     m_aCollection = collection;
   }
 
   @Override
+  @Nonnull
   protected CharCollection getCharCollection ()
   {
     return m_aCollection;
+  }
+
+  private void writeObject (@Nonnull final ObjectOutputStream out) throws IOException
+  {
+    out.defaultWriteObject ();
+    out.writeObject (m_aCollection);
+  }
+
+  private void readObject (@Nonnull final ObjectInputStream in) throws IOException, ClassNotFoundException
+  {
+    in.defaultReadObject ();
+    m_aCollection = (CharCollection) in.readObject ();
   }
 
   /**

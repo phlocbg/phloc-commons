@@ -117,7 +117,7 @@ abstract class AbstractListLongList extends AbstractCollectionLongCollection imp
 
   public long set (final int index, final long element)
   {
-    return getList ().set (index, new Long (element)).longValue ();
+    return getList ().set (index, Long.valueOf (element)).longValue ();
   }
 
   @Nonnull

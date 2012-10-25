@@ -117,7 +117,7 @@ abstract class AbstractListDoubleList extends AbstractCollectionDoubleCollection
 
   public double set (final int index, final double element)
   {
-    return getList ().set (index, new Double (element)).doubleValue ();
+    return getList ().set (index, Double.valueOf (element)).doubleValue ();
   }
 
   @Nonnull

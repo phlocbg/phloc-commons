@@ -34,6 +34,9 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.List;
 
@@ -55,7 +58,7 @@ import org.apache.commons.collections.primitives.DoubleList;
  */
 public final class DoubleListList extends AbstractDoubleListList implements Serializable
 {
-  private final DoubleList m_aList;
+  private transient DoubleList m_aList;
 
   /**
    * Creates a {@link List List} wrapping the specified {@link DoubleList
@@ -69,9 +72,22 @@ public final class DoubleListList extends AbstractDoubleListList implements Seri
   }
 
   @Override
+  @Nonnull 
   protected DoubleList getDoubleList ()
   {
     return m_aList;
+  }
+
+  private void writeObject (@Nonnull final ObjectOutputStream out) throws IOException
+  {
+    out.defaultWriteObject ();
+    out.writeObject (m_aList);
+  }
+
+  private void readObject (@Nonnull final ObjectInputStream in) throws IOException, ClassNotFoundException
+  {
+    in.defaultReadObject ();
+    m_aList = (DoubleList) in.readObject ();
   }
 
   /**

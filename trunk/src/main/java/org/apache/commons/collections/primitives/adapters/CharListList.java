@@ -34,6 +34,9 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.List;
 
@@ -55,7 +58,7 @@ import org.apache.commons.collections.primitives.CharList;
  */
 public final class CharListList extends AbstractCharListList implements Serializable
 {
-  private final CharList m_aList;
+  private transient CharList m_aList;
 
   /**
    * Creates a {@link List List} wrapping the specified {@link CharList
@@ -69,9 +72,22 @@ public final class CharListList extends AbstractCharListList implements Serializ
   }
 
   @Override
+  @Nonnull 
   protected CharList getCharList ()
   {
     return m_aList;
+  }
+
+  private void writeObject (@Nonnull final ObjectOutputStream out) throws IOException
+  {
+    out.defaultWriteObject ();
+    out.writeObject (m_aList);
+  }
+
+  private void readObject (@Nonnull final ObjectInputStream in) throws IOException, ClassNotFoundException
+  {
+    in.defaultReadObject ();
+    m_aList = (CharList) in.readObject ();
   }
 
   /**

@@ -52,7 +52,7 @@ import org.apache.commons.collections.primitives.ShortList;
  */
 public final class UnmodifiableShortList extends BaseUnmodifiableShortList implements Serializable
 {
-  private ShortList m_aProxied;
+  private transient ShortList m_aProxied;
 
   UnmodifiableShortList (@Nonnull final ShortList list)
   {

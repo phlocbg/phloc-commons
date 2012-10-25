@@ -117,7 +117,7 @@ abstract class AbstractListFloatList extends AbstractCollectionFloatCollection i
 
   public float set (final int index, final float element)
   {
-    return getList ().set (index, new Float (element)).floatValue ();
+    return getList ().set (index, Float.valueOf (element)).floatValue ();
   }
 
   @Nonnull

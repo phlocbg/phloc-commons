@@ -52,7 +52,7 @@ import org.apache.commons.collections.primitives.ZZZList;
  */
 public final class UnmodifiableZZZList extends BaseUnmodifiableZZZList implements Serializable
 {
-  private ZZZList m_aProxied;
+  private transient ZZZList m_aProxied;
 
   UnmodifiableZZZList (@Nonnull final ZZZList list)
   {

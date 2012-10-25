@@ -34,6 +34,9 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.List;
 
@@ -55,7 +58,7 @@ import org.apache.commons.collections.primitives.FloatList;
  */
 public final class FloatListList extends AbstractFloatListList implements Serializable
 {
-  private final FloatList m_aList;
+  private transient FloatList m_aList;
 
   /**
    * Creates a {@link List List} wrapping the specified {@link FloatList
@@ -69,9 +72,22 @@ public final class FloatListList extends AbstractFloatListList implements Serial
   }
 
   @Override
+  @Nonnull 
   protected FloatList getFloatList ()
   {
     return m_aList;
+  }
+
+  private void writeObject (@Nonnull final ObjectOutputStream out) throws IOException
+  {
+    out.defaultWriteObject ();
+    out.writeObject (m_aList);
+  }
+
+  private void readObject (@Nonnull final ObjectInputStream in) throws IOException, ClassNotFoundException
+  {
+    in.defaultReadObject ();
+    m_aList = (FloatList) in.readObject ();
   }
 
   /**

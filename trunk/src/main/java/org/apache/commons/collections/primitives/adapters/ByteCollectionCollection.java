@@ -34,9 +34,13 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Collection;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.apache.commons.collections.primitives.ByteCollection;
@@ -55,7 +59,7 @@ import org.apache.commons.collections.primitives.ByteCollection;
  */
 public final class ByteCollectionCollection extends AbstractByteCollectionCollection implements Serializable
 {
-  private final ByteCollection m_aCollection;
+  private transient ByteCollection m_aCollection;
 
   /**
    * Creates a {@link Collection Collection} wrapping the specified
@@ -63,15 +67,28 @@ public final class ByteCollectionCollection extends AbstractByteCollectionCollec
    *
    * @see #wrap
    */
-  public ByteCollectionCollection (final ByteCollection collection)
+  public ByteCollectionCollection (@Nonnull final ByteCollection collection)
   {
     m_aCollection = collection;
   }
 
   @Override
+  @Nonnull
   protected ByteCollection getByteCollection ()
   {
     return m_aCollection;
+  }
+
+  private void writeObject (@Nonnull final ObjectOutputStream out) throws IOException
+  {
+    out.defaultWriteObject ();
+    out.writeObject (m_aCollection);
+  }
+
+  private void readObject (@Nonnull final ObjectInputStream in) throws IOException, ClassNotFoundException
+  {
+    in.defaultReadObject ();
+    m_aCollection = (ByteCollection) in.readObject ();
   }
 
   /**

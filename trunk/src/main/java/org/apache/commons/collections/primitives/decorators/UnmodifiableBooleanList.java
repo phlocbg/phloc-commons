@@ -52,7 +52,7 @@ import org.apache.commons.collections.primitives.BooleanList;
  */
 public final class UnmodifiableBooleanList extends BaseUnmodifiableBooleanList implements Serializable
 {
-  private BooleanList m_aProxied;
+  private transient BooleanList m_aProxied;
 
   UnmodifiableBooleanList (@Nonnull final BooleanList list)
   {

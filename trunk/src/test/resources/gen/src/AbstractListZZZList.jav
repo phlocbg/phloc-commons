@@ -117,7 +117,7 @@ abstract class AbstractListZZZList extends AbstractCollectionZZZCollection imple
 
   public YYY set (final int index, final YYY element)
   {
-    return getList ().set (index, new XXX (element)).YYYValue ();
+    return getList ().set (index, XXX.valueOf (element)).YYYValue ();
   }
 
   @Nonnull
