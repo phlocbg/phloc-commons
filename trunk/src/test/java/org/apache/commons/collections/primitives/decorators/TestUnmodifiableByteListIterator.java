@@ -22,44 +22,52 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.primitives.ByteListIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestUnmodifiableByteListIterator extends BaseUnmodifiableByteListIteratorTest {
+public class TestUnmodifiableByteListIterator extends BaseUnmodifiableByteListIteratorTest
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestUnmodifiableByteListIterator(String testName) {
-        super(testName);
-    }
-    
+  public TestUnmodifiableByteListIterator (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        return new TestSuite(TestUnmodifiableByteListIterator.class);
-    }
+  public static Test suite ()
+  {
+    return new TestSuite (TestUnmodifiableByteListIterator.class);
+  }
 
-    // framework
-    // ------------------------------------------------------------------------
+  // framework
+  // ------------------------------------------------------------------------
 
-    protected ByteListIterator makeUnmodifiableByteListIterator() {
-        return UnmodifiableByteListIterator.wrap(makeByteListIterator());
-    }
+  @Override
+  protected ByteListIterator makeUnmodifiableByteListIterator ()
+  {
+    return UnmodifiableByteListIterator.wrap (makeByteListIterator ());
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
+  // tests
+  // ------------------------------------------------------------------------
 
-    public void testWrapNotNull() {
-        assertNotNull(UnmodifiableByteListIterator.wrap(makeByteListIterator()));
-    }
+  public void testWrapNotNull ()
+  {
+    assertNotNull (UnmodifiableByteListIterator.wrap (makeByteListIterator ()));
+  }
 
-    public void testWrapNull() {
-        assertNull(UnmodifiableByteListIterator.wrap(null));
-    }
+  public void testWrapNull ()
+  {
+    assertNull (UnmodifiableByteListIterator.wrap (null));
+  }
 
-    public void testWrapUnmodifiableByteListIterator() {
-        ByteListIterator iter = makeUnmodifiableByteListIterator();
-        assertSame(iter,UnmodifiableByteListIterator.wrap(iter));
-    }
+  public void testWrapUnmodifiableByteListIterator ()
+  {
+    final ByteListIterator iter = makeUnmodifiableByteListIterator ();
+    assertSame (iter, UnmodifiableByteListIterator.wrap (iter));
+  }
 
 }

@@ -27,87 +27,120 @@ import org.apache.commons.collections.primitives.ArrayShortList;
 import org.apache.commons.collections.primitives.RandomAccessShortList;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestShortListList extends BaseTestList {
+public class TestShortListList extends BaseTestList
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestShortListList(String testName) {
-        super(testName);
+  public TestShortListList (final String testName)
+  {
+    super (testName);
+  }
+
+  public static Test suite ()
+  {
+    final TestSuite suite = BulkTest.makeSuite (TestShortListList.class);
+    return suite;
+  }
+
+  // collections testing framework
+  // ------------------------------------------------------------------------
+
+  @Override
+  public List makeEmptyList ()
+  {
+    return new ShortListList (new ArrayShortList ());
+  }
+
+  @Override
+  public Object [] getFullElements ()
+  {
+    final Short [] elts = new Short [10];
+    for (int i = 0; i < elts.length; i++)
+    {
+      elts[i] = new Short ((short) i);
     }
+    return elts;
+  }
 
-    public static Test suite() {
-        TestSuite suite = BulkTest.makeSuite(TestShortListList.class);
-        return suite;
+  @Override
+  public Object [] getOtherElements ()
+  {
+    final Short [] elts = new Short [10];
+    for (int i = 0; i < elts.length; i++)
+    {
+      elts[i] = new Short ((short) (10 + i));
     }
+    return elts;
+  }
 
-    // collections testing framework
-    // ------------------------------------------------------------------------
+  // tests
+  // ------------------------------------------------------------------------
 
-    public List makeEmptyList() {
-        return new ShortListList(new ArrayShortList());
-    }
-        
-    public Object[] getFullElements() {
-        Short[] elts = new Short[10];
-        for(int i=0;i<elts.length;i++) {
-            elts[i] = new Short((short)i);
-        }
-        return elts;
-    }
+  /** @TODO need to add serialized form to cvs */
 
-    public Object[] getOtherElements() {
-        Short[] elts = new Short[10];
-        for(int i=0;i<elts.length;i++) {
-            elts[i] = new Short((short)(10 + i));
-        }
-        return elts;
-    }
+  @Override
+  public void testCanonicalEmptyCollectionExists ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
+  @Override
+  public void testCanonicalFullCollectionExists ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    /** @TODO need to add serialized form to cvs */
+  @Override
+  public void testEmptyListCompatibility ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    public void testCanonicalEmptyCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+  @Override
+  public void testFullListCompatibility ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    public void testCanonicalFullCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+  public void testWrapNull ()
+  {
+    assertNull (ShortListList.wrap (null));
+  }
 
-    public void testEmptyListCompatibility() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+  public void testWrapSerializable ()
+  {
+    final List list = ShortListList.wrap (new ArrayShortList ());
+    assertNotNull (list);
+    assertTrue (list instanceof Serializable);
+  }
 
-    public void testFullListCompatibility() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+  public void testWrapNonSerializable ()
+  {
+    final List list = ShortListList.wrap (new RandomAccessShortList ()
+    {
+      @Override
+      public short get (final int i)
+      {
+        throw new IndexOutOfBoundsException ();
+      }
 
-    public void testWrapNull() {
-        assertNull(ShortListList.wrap(null));
-    }
-    
-    public void testWrapSerializable() {
-        List list = ShortListList.wrap(new ArrayShortList());
-        assertNotNull(list);
-        assertTrue(list instanceof Serializable);
-    }
-    
-    public void testWrapNonSerializable() {
-        List list = ShortListList.wrap(new RandomAccessShortList() { 
-            public short get(int i) { throw new IndexOutOfBoundsException(); } 
-            public int size() { return 0; } 
-        });
-        assertNotNull(list);
-        assertTrue(!(list instanceof Serializable));
-    }
+      @Override
+      public int size ()
+      {
+        return 0;
+      }
+    });
+    assertNotNull (list);
+    assertTrue (!(list instanceof Serializable));
+  }
 }

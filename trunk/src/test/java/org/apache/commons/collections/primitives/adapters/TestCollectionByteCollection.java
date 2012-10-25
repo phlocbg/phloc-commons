@@ -28,68 +28,94 @@ import org.apache.commons.collections.AbstractTestObject;
 import org.apache.commons.collections.primitives.ByteCollection;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestCollectionByteCollection extends AbstractTestObject {
+public class TestCollectionByteCollection extends AbstractTestObject
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestCollectionByteCollection(String testName) {
-        super(testName);
-    }
+  public TestCollectionByteCollection (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        return new TestSuite(TestCollectionByteCollection.class);
-    }
+  public static Test suite ()
+  {
+    return new TestSuite (TestCollectionByteCollection.class);
+  }
 
-    // collections testing framework
-    // ------------------------------------------------------------------------
+  // collections testing framework
+  // ------------------------------------------------------------------------
 
-    public Object makeObject() {
-        List list = new ArrayList();
-        for(int i=0;i<10;i++) {
-            list.add(new Byte((byte)i));
-        }
-        return new CollectionByteCollection(list);
+  @Override
+  public Object makeObject ()
+  {
+    final List list = new ArrayList ();
+    for (int i = 0; i < 10; i++)
+    {
+      list.add (new Byte ((byte) i));
     }
+    return new CollectionByteCollection (list);
+  }
 
-    public void testSerializeDeserializeThenCompare() {
-        // Collection.equal contract doesn't work that way
-    }
+  @Override
+  public void testSerializeDeserializeThenCompare ()
+  {
+    // Collection.equal contract doesn't work that way
+  }
 
-    /** @TODO need to add serialized form to cvs */
-    public void testCanonicalEmptyCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+  /** @TODO need to add serialized form to cvs */
+  @Override
+  public void testCanonicalEmptyCollectionExists ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    public void testCanonicalFullCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
-    
-    // tests
-    // ------------------------------------------------------------------------
+  @Override
+  public void testCanonicalFullCollectionExists ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    public void testWrapNull() {
-        assertNull(CollectionByteCollection.wrap(null));
-    }
-    
-    public void testWrapSerializable() {
-        ByteCollection collection = CollectionByteCollection.wrap(new ArrayList());
-        assertNotNull(collection);
-        assertTrue(collection instanceof Serializable);
-    }
-    
-    public void testWrapNonSerializable() {
-        ByteCollection collection = CollectionByteCollection.wrap(new AbstractList() { 
-            public Object get(int i) { throw new IndexOutOfBoundsException(); } 
-            public int size() { return 0; } 
-        });
-        assertNotNull(collection);
-        assertTrue(!(collection instanceof Serializable));
-    }
+  // tests
+  // ------------------------------------------------------------------------
+
+  public void testWrapNull ()
+  {
+    assertNull (CollectionByteCollection.wrap (null));
+  }
+
+  public void testWrapSerializable ()
+  {
+    final ByteCollection collection = CollectionByteCollection.wrap (new ArrayList ());
+    assertNotNull (collection);
+    assertTrue (collection instanceof Serializable);
+  }
+
+  public void testWrapNonSerializable ()
+  {
+    final ByteCollection collection = CollectionByteCollection.wrap (new AbstractList ()
+    {
+      @Override
+      public Object get (final int i)
+      {
+        throw new IndexOutOfBoundsException ();
+      }
+
+      @Override
+      public int size ()
+      {
+        return 0;
+      }
+    });
+    assertNotNull (collection);
+    assertTrue (!(collection instanceof Serializable));
+  }
 
 }

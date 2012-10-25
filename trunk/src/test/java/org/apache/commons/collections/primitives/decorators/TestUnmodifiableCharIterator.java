@@ -22,44 +22,52 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.primitives.CharIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestUnmodifiableCharIterator extends BaseUnmodifiableCharIteratorTest {
+public class TestUnmodifiableCharIterator extends BaseUnmodifiableCharIteratorTest
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestUnmodifiableCharIterator(String testName) {
-        super(testName);
-    }
-    
+  public TestUnmodifiableCharIterator (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        return new TestSuite(TestUnmodifiableCharIterator.class);
-    }
+  public static Test suite ()
+  {
+    return new TestSuite (TestUnmodifiableCharIterator.class);
+  }
 
-    // framework
-    // ------------------------------------------------------------------------
+  // framework
+  // ------------------------------------------------------------------------
 
-    protected CharIterator makeUnmodifiableCharIterator() {
-        return UnmodifiableCharIterator.wrap(makeCharIterator());
-    }
+  @Override
+  protected CharIterator makeUnmodifiableCharIterator ()
+  {
+    return UnmodifiableCharIterator.wrap (makeCharIterator ());
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
+  // tests
+  // ------------------------------------------------------------------------
 
-    public void testWrapNotNull() {
-        assertNotNull(UnmodifiableCharIterator.wrap(makeCharIterator()));
-    }
+  public void testWrapNotNull ()
+  {
+    assertNotNull (UnmodifiableCharIterator.wrap (makeCharIterator ()));
+  }
 
-    public void testWrapNull() {
-        assertNull(UnmodifiableCharIterator.wrap(null));
-    }
+  public void testWrapNull ()
+  {
+    assertNull (UnmodifiableCharIterator.wrap (null));
+  }
 
-    public void testWrapUnmodifiableCharIterator() {
-        CharIterator iter = makeUnmodifiableCharIterator();
-        assertSame(iter,UnmodifiableCharIterator.wrap(iter));
-    }
+  public void testWrapUnmodifiableCharIterator ()
+  {
+    final CharIterator iter = makeUnmodifiableCharIterator ();
+    assertSame (iter, UnmodifiableCharIterator.wrap (iter));
+  }
 
 }

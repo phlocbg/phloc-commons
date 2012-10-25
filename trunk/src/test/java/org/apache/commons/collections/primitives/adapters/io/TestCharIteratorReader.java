@@ -26,58 +26,66 @@ import org.apache.commons.collections.primitives.ArrayCharList;
 import org.apache.commons.collections.primitives.CharList;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestCharIteratorReader extends TestCase {
+public class TestCharIteratorReader extends TestCase
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestCharIteratorReader(String testName) {
-        super(testName);
+  public TestCharIteratorReader (final String testName)
+  {
+    super (testName);
+  }
+
+  public static Test suite ()
+  {
+    return new TestSuite (TestCharIteratorReader.class);
+  }
+
+  // ------------------------------------------------------------------------
+
+  // ------------------------------------------------------------------------
+
+  public void testReadNonEmpty () throws Exception
+  {
+    final String str = "The quick brown fox jumped over the lazy dogs.";
+    final CharList list = new ArrayCharList ();
+    for (int i = 0; i < str.length (); i++)
+    {
+      list.add (str.charAt (i));
     }
 
-    public static Test suite() {
-        return new TestSuite(TestCharIteratorReader.class);
+    final Reader in = new CharIteratorReader (list.iterator ());
+    for (int i = 0; i < str.length (); i++)
+    {
+      assertEquals (str.charAt (i), in.read ());
     }
+    assertEquals (-1, in.read ());
+    assertEquals (-1, in.read ());
+    in.close ();
+  }
 
-    // ------------------------------------------------------------------------
-    
+  public void testReadEmpty () throws Exception
+  {
+    final CharList list = new ArrayCharList ();
+    final Reader in = new CharIteratorReader (list.iterator ());
+    assertEquals (-1, in.read ());
+    assertEquals (-1, in.read ());
+    in.close ();
+  }
 
+  public void testAdaptNull ()
+  {
+    assertNull (CharIteratorReader.adapt (null));
+  }
 
-    // ------------------------------------------------------------------------
-    
-    public void testReadNonEmpty() throws Exception {
-        String str = "The quick brown fox jumped over the lazy dogs.";
-        CharList list = new ArrayCharList();
-        for(int i = 0; i < str.length(); i++) {
-            list.add(str.charAt(i));
-        }
-       
-        Reader in = new CharIteratorReader(list.iterator());
-        for(int i = 0; i < str.length(); i++) {
-            assertEquals(str.charAt(i),in.read());
-        }
-        assertEquals(-1,in.read());
-        assertEquals(-1,in.read());
-        in.close();
-    }
+  public void testAdaptNonNull ()
+  {
+    assertNotNull (CharIteratorReader.adapt (new ArrayCharList ().iterator ()));
+  }
 
-    public void testReadEmpty() throws Exception {
-        CharList list = new ArrayCharList();
-        Reader in = new CharIteratorReader(list.iterator());
-        assertEquals(-1,in.read());
-        assertEquals(-1,in.read());
-        in.close();
-    }
-
-    public void testAdaptNull() {
-        assertNull(CharIteratorReader.adapt(null));
-    }
-
-    public void testAdaptNonNull() {
-        assertNotNull(CharIteratorReader.adapt(new ArrayCharList().iterator()));
-    }
-    
 }

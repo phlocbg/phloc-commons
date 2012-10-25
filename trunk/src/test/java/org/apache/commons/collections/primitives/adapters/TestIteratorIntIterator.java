@@ -26,52 +26,64 @@ import org.apache.commons.collections.primitives.IntIterator;
 import org.apache.commons.collections.primitives.TestIntIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestIteratorIntIterator extends TestIntIterator {
+public class TestIteratorIntIterator extends TestIntIterator
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestIteratorIntIterator(String testName) {
-        super(testName);
-    }
+  public TestIteratorIntIterator (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        return new TestSuite(TestIteratorIntIterator.class);
-    }
+  public static Test suite ()
+  {
+    return new TestSuite (TestIteratorIntIterator.class);
+  }
 
-    // collections testing framework
-    // ------------------------------------------------------------------------
+  // collections testing framework
+  // ------------------------------------------------------------------------
 
-    public IntIterator makeEmptyIntIterator() {
-        return IteratorIntIterator.wrap(makeEmptyList().iterator());
-    }
-    
-    public IntIterator makeFullIntIterator() {
-        return IteratorIntIterator.wrap(makeFullList().iterator());
-    }
+  @Override
+  public IntIterator makeEmptyIntIterator ()
+  {
+    return IteratorIntIterator.wrap (makeEmptyList ().iterator ());
+  }
 
-    public List makeEmptyList() {
-        return new ArrayList();
-    }
-    
-    protected List makeFullList() {
-        List list = makeEmptyList();
-        int[] elts = getFullElements();
-        for(int i=0;i<elts.length;i++) {
-            list.add(new Integer(elts[i]));
-        }
-        return list;
-    }
-    
-    public int[] getFullElements() {
-        return new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-    }
-    
-    // tests
-    // ------------------------------------------------------------------------
+  @Override
+  public IntIterator makeFullIntIterator ()
+  {
+    return IteratorIntIterator.wrap (makeFullList ().iterator ());
+  }
 
+  public List makeEmptyList ()
+  {
+    return new ArrayList ();
+  }
+
+  protected List makeFullList ()
+  {
+    final List list = makeEmptyList ();
+    final int [] elts = getFullElements ();
+    for (final int elt : elts)
+    {
+      list.add (new Integer (elt));
+    }
+    return list;
+  }
+
+  @Override
+  public int [] getFullElements ()
+  {
+    return new int [] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+  }
+
+  // tests
+  // ------------------------------------------------------------------------
 
 }

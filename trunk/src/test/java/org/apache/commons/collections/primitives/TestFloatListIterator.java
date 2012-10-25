@@ -17,34 +17,41 @@
 package org.apache.commons.collections.primitives;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class TestFloatListIterator extends TestFloatIterator {
+public abstract class TestFloatListIterator extends TestFloatIterator
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestFloatListIterator(String testName) {
-        super(testName);
-    }
+  public TestFloatListIterator (final String testName)
+  {
+    super (testName);
+  }
 
-    // collections testing framework
-    // ------------------------------------------------------------------------
+  // collections testing framework
+  // ------------------------------------------------------------------------
 
-    public FloatIterator makeEmptyFloatIterator() {
-        return makeEmptyFloatListIterator();
-    }
-    
-    public FloatIterator makeFullFloatIterator() {
-        return makeFullFloatListIterator();
-    }
+  @Override
+  public FloatIterator makeEmptyFloatIterator ()
+  {
+    return makeEmptyFloatListIterator ();
+  }
 
-    public abstract FloatListIterator makeEmptyFloatListIterator();
-    public abstract FloatListIterator makeFullFloatListIterator();
+  @Override
+  public FloatIterator makeFullFloatIterator ()
+  {
+    return makeFullFloatListIterator ();
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
+  public abstract FloatListIterator makeEmptyFloatListIterator ();
 
+  public abstract FloatListIterator makeFullFloatListIterator ();
+
+  // tests
+  // ------------------------------------------------------------------------
 
 }

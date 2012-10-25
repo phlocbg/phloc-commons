@@ -22,44 +22,52 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.primitives.IntListIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestUnmodifiableIntListIterator extends BaseUnmodifiableIntListIteratorTest {
+public class TestUnmodifiableIntListIterator extends BaseUnmodifiableIntListIteratorTest
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestUnmodifiableIntListIterator(String testName) {
-        super(testName);
-    }
-    
+  public TestUnmodifiableIntListIterator (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        return new TestSuite(TestUnmodifiableIntListIterator.class);
-    }
+  public static Test suite ()
+  {
+    return new TestSuite (TestUnmodifiableIntListIterator.class);
+  }
 
-    // framework
-    // ------------------------------------------------------------------------
+  // framework
+  // ------------------------------------------------------------------------
 
-    protected IntListIterator makeUnmodifiableIntListIterator() {
-        return UnmodifiableIntListIterator.wrap(makeIntListIterator());
-    }
+  @Override
+  protected IntListIterator makeUnmodifiableIntListIterator ()
+  {
+    return UnmodifiableIntListIterator.wrap (makeIntListIterator ());
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
+  // tests
+  // ------------------------------------------------------------------------
 
-    public void testWrapNotNull() {
-        assertNotNull(UnmodifiableIntListIterator.wrap(makeIntListIterator()));
-    }
+  public void testWrapNotNull ()
+  {
+    assertNotNull (UnmodifiableIntListIterator.wrap (makeIntListIterator ()));
+  }
 
-    public void testWrapNull() {
-        assertNull(UnmodifiableIntListIterator.wrap(null));
-    }
+  public void testWrapNull ()
+  {
+    assertNull (UnmodifiableIntListIterator.wrap (null));
+  }
 
-    public void testWrapUnmodifiableIntListIterator() {
-        IntListIterator iter = makeUnmodifiableIntListIterator();
-        assertSame(iter,UnmodifiableIntListIterator.wrap(iter));
-    }
+  public void testWrapUnmodifiableIntListIterator ()
+  {
+    final IntListIterator iter = makeUnmodifiableIntListIterator ();
+    assertSame (iter, UnmodifiableIntListIterator.wrap (iter));
+  }
 
 }

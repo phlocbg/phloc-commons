@@ -22,95 +22,116 @@ import org.apache.commons.collections.primitives.ByteList;
 import org.apache.commons.collections.primitives.ByteListIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class BaseUnmodifiableByteListIteratorTest extends BaseUnmodifiableByteIteratorTest {
+public abstract class BaseUnmodifiableByteListIteratorTest extends BaseUnmodifiableByteIteratorTest
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public BaseUnmodifiableByteListIteratorTest(String testName) {
-        super(testName);
+  public BaseUnmodifiableByteListIteratorTest (final String testName)
+  {
+    super (testName);
+  }
+
+  // framework
+  // ------------------------------------------------------------------------
+
+  protected abstract ByteListIterator makeUnmodifiableByteListIterator ();
+
+  @Override
+  protected ByteIterator makeUnmodifiableByteIterator ()
+  {
+    return makeUnmodifiableByteListIterator ();
+  }
+
+  @Override
+  protected ByteIterator makeByteIterator ()
+  {
+    return makeByteListIterator ();
+  }
+
+  protected ByteListIterator makeByteListIterator ()
+  {
+    final ByteList list = new ArrayByteList ();
+    for (byte i = 0; i < 10; i++)
+    {
+      list.add (i);
     }
-    
+    return list.listIterator ();
+  }
 
-    // framework
-    // ------------------------------------------------------------------------
+  // tests
+  // ------------------------------------------------------------------------
 
-    protected abstract ByteListIterator makeUnmodifiableByteListIterator();
+  public final void testByteListIteratorNotModifiable ()
+  {
+    final ByteListIterator iter = makeUnmodifiableByteListIterator ();
+    assertTrue (iter.hasNext ());
+    iter.next ();
+    try
+    {
+      iter.remove ();
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+    try
+    {
+      iter.add ((byte) 1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+    try
+    {
+      iter.set ((byte) 3);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
 
-    protected ByteIterator makeUnmodifiableByteIterator() {
-        return makeUnmodifiableByteListIterator();
+  public final void testIterateByteListIterator ()
+  {
+    final ByteListIterator iter = makeUnmodifiableByteListIterator ();
+    final ByteListIterator expected = makeByteListIterator ();
+
+    assertTrue (!iter.hasPrevious ());
+
+    while (expected.hasNext ())
+    {
+      assertTrue (iter.hasNext ());
+      assertEquals (expected.nextIndex (), iter.nextIndex ());
+      assertEquals (expected.previousIndex (), iter.previousIndex ());
+      assertEquals (expected.next (), iter.next ());
+      assertTrue (iter.hasPrevious ());
+      assertEquals (expected.nextIndex (), iter.nextIndex ());
+      assertEquals (expected.previousIndex (), iter.previousIndex ());
     }
 
-    protected ByteIterator makeByteIterator() {
-        return makeByteListIterator();
+    assertTrue (!iter.hasNext ());
+
+    while (expected.hasPrevious ())
+    {
+      assertTrue (iter.hasPrevious ());
+      assertEquals (expected.nextIndex (), iter.nextIndex ());
+      assertEquals (expected.previousIndex (), iter.previousIndex ());
+      assertEquals (expected.previous (), iter.previous ());
+      assertTrue (iter.hasNext ());
+      assertEquals (expected.nextIndex (), iter.nextIndex ());
+      assertEquals (expected.previousIndex (), iter.previousIndex ());
     }
-    
-    protected ByteListIterator makeByteListIterator() {
-        ByteList list = new ArrayByteList();
-        for(byte i=0;i<10;i++) {
-            list.add(i);
-        }
-        return list.listIterator();
-    }
-
-    // tests
-    // ------------------------------------------------------------------------
-
-    public final void testByteListIteratorNotModifiable() {
-        ByteListIterator iter = makeUnmodifiableByteListIterator();
-        assertTrue(iter.hasNext());
-        iter.next();
-        try {
-            iter.remove();
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            iter.add((byte)1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            iter.set((byte)3);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-    }
-
-    public final void testIterateByteListIterator() {        
-        ByteListIterator iter = makeUnmodifiableByteListIterator();
-        ByteListIterator expected = makeByteListIterator();
-        
-        assertTrue(! iter.hasPrevious());
-        
-        while( expected.hasNext() ) {
-            assertTrue(iter.hasNext());
-            assertEquals(expected.nextIndex(),iter.nextIndex());
-            assertEquals(expected.previousIndex(),iter.previousIndex());
-            assertEquals(expected.next(),iter.next());
-            assertTrue(iter.hasPrevious());
-            assertEquals(expected.nextIndex(),iter.nextIndex());
-            assertEquals(expected.previousIndex(),iter.previousIndex());
-        }
-
-        assertTrue(! iter.hasNext() );
-
-        while( expected.hasPrevious() ) {
-            assertTrue(iter.hasPrevious());
-            assertEquals(expected.nextIndex(),iter.nextIndex());
-            assertEquals(expected.previousIndex(),iter.previousIndex());
-            assertEquals(expected.previous(),iter.previous());
-            assertTrue(iter.hasNext());
-            assertEquals(expected.nextIndex(),iter.nextIndex());
-            assertEquals(expected.previousIndex(),iter.previousIndex());
-        }
-        assertTrue(! iter.hasPrevious() );
-    }
+    assertTrue (!iter.hasPrevious ());
+  }
 
 }

@@ -21,94 +21,121 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestRandomAccessLongList extends TestCase {
+public class TestRandomAccessLongList extends TestCase
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestRandomAccessLongList(String testName) {
-        super(testName);
+  public TestRandomAccessLongList (final String testName)
+  {
+    super (testName);
+  }
+
+  public static Test suite ()
+  {
+    return new TestSuite (TestRandomAccessLongList.class);
+  }
+
+  // tests
+  // ------------------------------------------------------------------------
+
+  public void testAddIsUnsupportedByDefault ()
+  {
+    final RandomAccessLongList list = new AbstractRandomAccessLongListImpl ();
+    try
+    {
+      list.add (1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+    try
+    {
+      list.set (0, 1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  public void testAddAllIsUnsupportedByDefault ()
+  {
+    final RandomAccessLongList list = new AbstractRandomAccessLongListImpl ();
+    final LongList list2 = new ArrayLongList ();
+    list2.add (3);
+    try
+    {
+      list.addAll (list2);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  public void testSetIsUnsupportedByDefault ()
+  {
+    final RandomAccessLongList list = new AbstractRandomAccessLongListImpl ();
+    try
+    {
+      list.set (0, 1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  public void testRemoveElementIsUnsupportedByDefault ()
+  {
+    final RandomAccessLongList list = new AbstractRandomAccessLongListImpl ();
+    try
+    {
+      list.removeElementAt (0);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  // inner classes
+  // ------------------------------------------------------------------------
+
+  static class AbstractRandomAccessLongListImpl extends RandomAccessLongList
+  {
+    public AbstractRandomAccessLongListImpl ()
+    {}
+
+    /**
+     * @see org.apache.commons.collections.primitives.LongList#get(int)
+     */
+    @Override
+    public long get (final int index)
+    {
+      throw new IndexOutOfBoundsException ();
     }
 
-    public static Test suite() {
-        return new TestSuite(TestRandomAccessLongList.class);
+    /**
+     * @see org.apache.commons.collections.primitives.LongCollection#size()
+     */
+    @Override
+    public int size ()
+    {
+      return 0;
     }
 
-    // tests
-    // ------------------------------------------------------------------------
-    
-    public void testAddIsUnsupportedByDefault() {
-        RandomAccessLongList list = new AbstractRandomAccessLongListImpl();
-        try {
-            list.add((long)1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }        
-        try {
-            list.set(0,(long)1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }               
-    }
-
-    public void testAddAllIsUnsupportedByDefault() {
-        RandomAccessLongList list = new AbstractRandomAccessLongListImpl();
-        LongList list2 = new ArrayLongList();
-        list2.add(3);
-        try {
-            list.addAll(list2);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }               
-    }
-    
-    public void testSetIsUnsupportedByDefault() {
-        RandomAccessLongList list = new AbstractRandomAccessLongListImpl();
-        try {
-            list.set(0,(long)1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }               
-    }
-    
-    public void testRemoveElementIsUnsupportedByDefault() {
-        RandomAccessLongList list = new AbstractRandomAccessLongListImpl();
-        try {
-            list.removeElementAt(0);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }               
-    }
-    
-    // inner classes
-    // ------------------------------------------------------------------------
-
-
-    static class AbstractRandomAccessLongListImpl extends RandomAccessLongList {
-        public AbstractRandomAccessLongListImpl() {
-        }
-
-        /**
-         * @see org.apache.commons.collections.primitives.LongList#get(int)
-         */
-        public long get(int index) {
-            throw new IndexOutOfBoundsException();
-        }
-
-        /**
-         * @see org.apache.commons.collections.primitives.LongCollection#size()
-         */
-        public int size() {
-            return 0;
-        }
-
-    }
+  }
 }

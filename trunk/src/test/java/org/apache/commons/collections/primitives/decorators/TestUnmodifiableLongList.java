@@ -24,52 +24,61 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.primitives.LongList;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestUnmodifiableLongList extends BaseUnmodifiableLongListTest {
+public class TestUnmodifiableLongList extends BaseUnmodifiableLongListTest
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestUnmodifiableLongList(String testName) {
-        super(testName);
-    }
-    
+  public TestUnmodifiableLongList (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        return new TestSuite(TestUnmodifiableLongList.class);
-    }
+  public static Test suite ()
+  {
+    return new TestSuite (TestUnmodifiableLongList.class);
+  }
 
-    // framework
-    // ------------------------------------------------------------------------
+  // framework
+  // ------------------------------------------------------------------------
 
-    protected LongList makeUnmodifiableLongList() {
-        return UnmodifiableLongList.wrap(makeLongList());
-    }
+  @Override
+  protected LongList makeUnmodifiableLongList ()
+  {
+    return UnmodifiableLongList.wrap (makeLongList ());
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
+  // tests
+  // ------------------------------------------------------------------------
 
-    public void testWrapNull() {
-        assertNull(UnmodifiableLongList.wrap(null));
-    }
+  public void testWrapNull ()
+  {
+    assertNull (UnmodifiableLongList.wrap (null));
+  }
 
-    public void testWrapUnmodifiableLongList() {
-        LongList list = makeUnmodifiableLongList();
-        assertSame(list,UnmodifiableLongList.wrap(list));
-    }
+  public void testWrapUnmodifiableLongList ()
+  {
+    final LongList list = makeUnmodifiableLongList ();
+    assertSame (list, UnmodifiableLongList.wrap (list));
+  }
 
-    public void testWrapSerializableLongList() {
-        LongList list = makeLongList();
-        assertTrue(list instanceof Serializable);
-        assertTrue(UnmodifiableLongList.wrap(list) instanceof Serializable);
-    }
+  public void testWrapSerializableLongList ()
+  {
+    final LongList list = makeLongList ();
+    assertTrue (list instanceof Serializable);
+    assertTrue (UnmodifiableLongList.wrap (list) instanceof Serializable);
+  }
 
-    public void testWrapNonSerializableLongList() {
-        LongList list = makeLongList();
-        LongList ns = list.subList(0,list.size());
-        assertTrue(!(ns instanceof Serializable));
-        assertTrue(!(UnmodifiableLongList.wrap(ns) instanceof Serializable));
-    }
+  public void testWrapNonSerializableLongList ()
+  {
+    final LongList list = makeLongList ();
+    final LongList ns = list.subList (0, list.size ());
+    assertTrue (!(ns instanceof Serializable));
+    assertTrue (!(UnmodifiableLongList.wrap (ns) instanceof Serializable));
+  }
 }

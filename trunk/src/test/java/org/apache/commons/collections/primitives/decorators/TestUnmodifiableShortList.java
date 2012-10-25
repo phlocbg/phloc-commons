@@ -24,52 +24,61 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.primitives.ShortList;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestUnmodifiableShortList extends BaseUnmodifiableShortListTest {
+public class TestUnmodifiableShortList extends BaseUnmodifiableShortListTest
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestUnmodifiableShortList(String testName) {
-        super(testName);
-    }
-    
+  public TestUnmodifiableShortList (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        return new TestSuite(TestUnmodifiableShortList.class);
-    }
+  public static Test suite ()
+  {
+    return new TestSuite (TestUnmodifiableShortList.class);
+  }
 
-    // framework
-    // ------------------------------------------------------------------------
+  // framework
+  // ------------------------------------------------------------------------
 
-    protected ShortList makeUnmodifiableShortList() {
-        return UnmodifiableShortList.wrap(makeShortList());
-    }
+  @Override
+  protected ShortList makeUnmodifiableShortList ()
+  {
+    return UnmodifiableShortList.wrap (makeShortList ());
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
+  // tests
+  // ------------------------------------------------------------------------
 
-    public void testWrapNull() {
-        assertNull(UnmodifiableShortList.wrap(null));
-    }
+  public void testWrapNull ()
+  {
+    assertNull (UnmodifiableShortList.wrap (null));
+  }
 
-    public void testWrapUnmodifiableShortList() {
-        ShortList list = makeUnmodifiableShortList();
-        assertSame(list,UnmodifiableShortList.wrap(list));
-    }
+  public void testWrapUnmodifiableShortList ()
+  {
+    final ShortList list = makeUnmodifiableShortList ();
+    assertSame (list, UnmodifiableShortList.wrap (list));
+  }
 
-    public void testWrapSerializableShortList() {
-        ShortList list = makeShortList();
-        assertTrue(list instanceof Serializable);
-        assertTrue(UnmodifiableShortList.wrap(list) instanceof Serializable);
-    }
+  public void testWrapSerializableShortList ()
+  {
+    final ShortList list = makeShortList ();
+    assertTrue (list instanceof Serializable);
+    assertTrue (UnmodifiableShortList.wrap (list) instanceof Serializable);
+  }
 
-    public void testWrapNonSerializableShortList() {
-        ShortList list = makeShortList();
-        ShortList ns = list.subList(0,list.size());
-        assertTrue(!(ns instanceof Serializable));
-        assertTrue(!(UnmodifiableShortList.wrap(ns) instanceof Serializable));
-    }
+  public void testWrapNonSerializableShortList ()
+  {
+    final ShortList list = makeShortList ();
+    final ShortList ns = list.subList (0, list.size ());
+    assertTrue (!(ns instanceof Serializable));
+    assertTrue (!(UnmodifiableShortList.wrap (ns) instanceof Serializable));
+  }
 }

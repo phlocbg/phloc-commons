@@ -25,48 +25,61 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.primitives.adapters.IteratorIntIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestAbstractIntCollection extends TestCase {
+public class TestAbstractIntCollection extends TestCase
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestAbstractIntCollection(String testName) {
-        super(testName);
+  public TestAbstractIntCollection (final String testName)
+  {
+    super (testName);
+  }
+
+  public static Test suite ()
+  {
+    return new TestSuite (TestAbstractIntCollection.class);
+  }
+
+  // tests
+  // ------------------------------------------------------------------------
+
+  public void testAddIsUnsupportedByDefault ()
+  {
+    final IntCollection col = new IntCollectionImpl ();
+    try
+    {
+      col.add (1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  // inner classes
+  // ------------------------------------------------------------------------
+
+  static class IntCollectionImpl extends AbstractIntCollection
+  {
+    public IntCollectionImpl ()
+    {}
+
+    @Override
+    public IntIterator iterator ()
+    {
+      return new IteratorIntIterator (Collections.EMPTY_LIST.iterator ());
     }
 
-    public static Test suite() {
-        return new TestSuite(TestAbstractIntCollection.class);
+    @Override
+    public int size ()
+    {
+      return 0;
     }
-
-    // tests
-    // ------------------------------------------------------------------------
-    
-    public void testAddIsUnsupportedByDefault() {
-        IntCollection col = new IntCollectionImpl();
-        try {
-            col.add(1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }        
-    }
-    // inner classes
-    // ------------------------------------------------------------------------
-
-
-    static class IntCollectionImpl extends AbstractIntCollection {
-        public IntCollectionImpl() {
-        }
-        
-        public IntIterator iterator() {
-            return new IteratorIntIterator(Collections.EMPTY_LIST.iterator());
-        }
-
-        public int size() {
-            return 0;
-        }
-    }
+  }
 }

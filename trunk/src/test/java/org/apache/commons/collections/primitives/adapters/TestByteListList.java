@@ -27,87 +27,120 @@ import org.apache.commons.collections.primitives.ArrayByteList;
 import org.apache.commons.collections.primitives.RandomAccessByteList;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestByteListList extends BaseTestList {
+public class TestByteListList extends BaseTestList
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestByteListList(String testName) {
-        super(testName);
+  public TestByteListList (final String testName)
+  {
+    super (testName);
+  }
+
+  public static Test suite ()
+  {
+    final TestSuite suite = BulkTest.makeSuite (TestByteListList.class);
+    return suite;
+  }
+
+  // collections testing framework
+  // ------------------------------------------------------------------------
+
+  @Override
+  public List makeEmptyList ()
+  {
+    return new ByteListList (new ArrayByteList ());
+  }
+
+  @Override
+  public Object [] getFullElements ()
+  {
+    final Byte [] elts = new Byte [10];
+    for (int i = 0; i < elts.length; i++)
+    {
+      elts[i] = new Byte ((byte) i);
     }
+    return elts;
+  }
 
-    public static Test suite() {
-        TestSuite suite = BulkTest.makeSuite(TestByteListList.class);
-        return suite;
+  @Override
+  public Object [] getOtherElements ()
+  {
+    final Byte [] elts = new Byte [10];
+    for (int i = 0; i < elts.length; i++)
+    {
+      elts[i] = new Byte ((byte) (10 + i));
     }
+    return elts;
+  }
 
-    // collections testing framework
-    // ------------------------------------------------------------------------
+  // tests
+  // ------------------------------------------------------------------------
 
-    public List makeEmptyList() {
-        return new ByteListList(new ArrayByteList());
-    }
-        
-    public Object[] getFullElements() {
-        Byte[] elts = new Byte[10];
-        for(int i=0;i<elts.length;i++) {
-            elts[i] = new Byte((byte)i);
-        }
-        return elts;
-    }
+  /** @TODO need to add serialized form to cvs */
 
-    public Object[] getOtherElements() {
-        Byte[] elts = new Byte[10];
-        for(int i=0;i<elts.length;i++) {
-            elts[i] = new Byte((byte)(10 + i));
-        }
-        return elts;
-    }
+  @Override
+  public void testCanonicalEmptyCollectionExists ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
+  @Override
+  public void testCanonicalFullCollectionExists ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    /** @TODO need to add serialized form to cvs */
+  @Override
+  public void testEmptyListCompatibility ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    public void testCanonicalEmptyCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+  @Override
+  public void testFullListCompatibility ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    public void testCanonicalFullCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+  public void testWrapNull ()
+  {
+    assertNull (ByteListList.wrap (null));
+  }
 
-    public void testEmptyListCompatibility() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+  public void testWrapSerializable ()
+  {
+    final List list = ByteListList.wrap (new ArrayByteList ());
+    assertNotNull (list);
+    assertTrue (list instanceof Serializable);
+  }
 
-    public void testFullListCompatibility() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+  public void testWrapNonSerializable ()
+  {
+    final List list = ByteListList.wrap (new RandomAccessByteList ()
+    {
+      @Override
+      public byte get (final int i)
+      {
+        throw new IndexOutOfBoundsException ();
+      }
 
-    public void testWrapNull() {
-        assertNull(ByteListList.wrap(null));
-    }
-    
-    public void testWrapSerializable() {
-        List list = ByteListList.wrap(new ArrayByteList());
-        assertNotNull(list);
-        assertTrue(list instanceof Serializable);
-    }
-    
-    public void testWrapNonSerializable() {
-        List list = ByteListList.wrap(new RandomAccessByteList() { 
-            public byte get(int i) { throw new IndexOutOfBoundsException(); } 
-            public int size() { return 0; } 
-        });
-        assertNotNull(list);
-        assertTrue(!(list instanceof Serializable));
-    }
+      @Override
+      public int size ()
+      {
+        return 0;
+      }
+    });
+    assertNotNull (list);
+    assertTrue (!(list instanceof Serializable));
+  }
 }

@@ -25,48 +25,61 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.primitives.adapters.IteratorFloatIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestAbstractFloatCollection extends TestCase {
+public class TestAbstractFloatCollection extends TestCase
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestAbstractFloatCollection(String testName) {
-        super(testName);
+  public TestAbstractFloatCollection (final String testName)
+  {
+    super (testName);
+  }
+
+  public static Test suite ()
+  {
+    return new TestSuite (TestAbstractFloatCollection.class);
+  }
+
+  // tests
+  // ------------------------------------------------------------------------
+
+  public void testAddIsUnsupportedByDefault ()
+  {
+    final FloatCollection col = new FloatCollectionImpl ();
+    try
+    {
+      col.add (1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  // inner classes
+  // ------------------------------------------------------------------------
+
+  static class FloatCollectionImpl extends AbstractFloatCollection
+  {
+    public FloatCollectionImpl ()
+    {}
+
+    @Override
+    public FloatIterator iterator ()
+    {
+      return new IteratorFloatIterator (Collections.EMPTY_LIST.iterator ());
     }
 
-    public static Test suite() {
-        return new TestSuite(TestAbstractFloatCollection.class);
+    @Override
+    public int size ()
+    {
+      return 0;
     }
-
-    // tests
-    // ------------------------------------------------------------------------
-    
-    public void testAddIsUnsupportedByDefault() {
-        FloatCollection col = new FloatCollectionImpl();
-        try {
-            col.add((float)1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }        
-    }
-    // inner classes
-    // ------------------------------------------------------------------------
-
-
-    static class FloatCollectionImpl extends AbstractFloatCollection {
-        public FloatCollectionImpl() {
-        }
-        
-        public FloatIterator iterator() {
-            return new IteratorFloatIterator(Collections.EMPTY_LIST.iterator());
-        }
-
-        public int size() {
-            return 0;
-        }
-    }
+  }
 }

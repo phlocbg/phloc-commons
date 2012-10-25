@@ -23,90 +23,119 @@ import org.apache.commons.collections.iterators.AbstractTestIterator;
 import org.apache.commons.collections.primitives.adapters.LongIteratorIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class TestLongIterator extends AbstractTestIterator {
+public abstract class TestLongIterator extends AbstractTestIterator
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestLongIterator(String testName) {
-        super(testName);
+  public TestLongIterator (final String testName)
+  {
+    super (testName);
+  }
+
+  // collections testing framework
+  // ------------------------------------------------------------------------
+
+  @Override
+  public Iterator makeEmptyIterator ()
+  {
+    return LongIteratorIterator.wrap (makeEmptyLongIterator ());
+  }
+
+  @Override
+  public Iterator makeFullIterator ()
+  {
+    return LongIteratorIterator.wrap (makeFullLongIterator ());
+  }
+
+  protected abstract LongIterator makeEmptyLongIterator ();
+
+  protected abstract LongIterator makeFullLongIterator ();
+
+  protected abstract long [] getFullElements ();
+
+  // tests
+  // ------------------------------------------------------------------------
+
+  public void testNextHasNextRemove ()
+  {
+    final long [] elements = getFullElements ();
+    final LongIterator iter = makeFullLongIterator ();
+    for (final long element : elements)
+    {
+      assertTrue (iter.hasNext ());
+      assertEquals (element, iter.next ());
+      if (supportsRemove ())
+      {
+        iter.remove ();
+      }
     }
+    assertTrue (!iter.hasNext ());
+  }
 
-    // collections testing framework
-    // ------------------------------------------------------------------------
-
-    public Iterator makeEmptyIterator() {
-        return LongIteratorIterator.wrap(makeEmptyLongIterator());
+  public void testEmptyLongIterator ()
+  {
+    assertTrue (!makeEmptyLongIterator ().hasNext ());
+    try
+    {
+      makeEmptyLongIterator ().next ();
+      fail ("Expected NoSuchElementException");
     }
-
-    public Iterator makeFullIterator() {
-        return LongIteratorIterator.wrap(makeFullLongIterator());
+    catch (final NoSuchElementException e)
+    {
+      // expected
     }
-
-
-    protected abstract LongIterator makeEmptyLongIterator();
-    protected abstract LongIterator makeFullLongIterator();
-    protected abstract long[] getFullElements();
-
-    // tests
-    // ------------------------------------------------------------------------
-    
-    public void testNextHasNextRemove() {
-        long[] elements = getFullElements();
-        LongIterator iter = makeFullLongIterator();
-        for(int i=0;i<elements.length;i++) {
-            assertTrue(iter.hasNext());
-            assertEquals(elements[i],iter.next());
-            if(supportsRemove()) {
-                iter.remove();
-            }
-        }        
-        assertTrue(! iter.hasNext() );
+    if (supportsRemove ())
+    {
+      try
+      {
+        makeEmptyLongIterator ().remove ();
+        fail ("Expected IllegalStateException");
+      }
+      catch (final IllegalStateException e)
+      {
+        // expected
+      }
     }
+  }
 
-    public void testEmptyLongIterator() {
-        assertTrue( ! makeEmptyLongIterator().hasNext() );
-        try {
-            makeEmptyLongIterator().next();
-            fail("Expected NoSuchElementException");
-        } catch(NoSuchElementException e) {
-            // expected
-        }
-        if(supportsRemove()) {
-            try {
-                makeEmptyLongIterator().remove();
-                fail("Expected IllegalStateException");
-            } catch(IllegalStateException e) {
-                // expected
-            }
-        }        
+  public void testRemoveBeforeNext ()
+  {
+    if (supportsRemove ())
+    {
+      try
+      {
+        makeFullLongIterator ().remove ();
+        fail ("Expected IllegalStateException");
+      }
+      catch (final IllegalStateException e)
+      {
+        // expected
+      }
     }
+  }
 
-    public void testRemoveBeforeNext() {
-        if(supportsRemove()) {
-            try {
-                makeFullLongIterator().remove();
-                fail("Expected IllegalStateException");
-            } catch(IllegalStateException e) {
-                // expected
-            }
-        }        
+  public void testRemoveAfterRemove ()
+  {
+    if (supportsRemove ())
+    {
+      final LongIterator iter = makeFullLongIterator ();
+      iter.next ();
+      iter.remove ();
+      try
+      {
+        iter.remove ();
+        fail ("Expected IllegalStateException");
+      }
+      catch (final IllegalStateException e)
+      {
+        // expected
+      }
     }
-
-    public void testRemoveAfterRemove() {
-        if(supportsRemove()) {
-            LongIterator iter = makeFullLongIterator();
-            iter.next();
-            iter.remove();
-            try {
-                iter.remove();
-                fail("Expected IllegalStateException");
-            } catch(IllegalStateException e) {
-                // expected
-            }
-        }        
-    }
+  }
 }

@@ -24,52 +24,61 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.primitives.DoubleList;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestUnmodifiableDoubleList extends BaseUnmodifiableDoubleListTest {
+public class TestUnmodifiableDoubleList extends BaseUnmodifiableDoubleListTest
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestUnmodifiableDoubleList(String testName) {
-        super(testName);
-    }
-    
+  public TestUnmodifiableDoubleList (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        return new TestSuite(TestUnmodifiableDoubleList.class);
-    }
+  public static Test suite ()
+  {
+    return new TestSuite (TestUnmodifiableDoubleList.class);
+  }
 
-    // framework
-    // ------------------------------------------------------------------------
+  // framework
+  // ------------------------------------------------------------------------
 
-    protected DoubleList makeUnmodifiableDoubleList() {
-        return UnmodifiableDoubleList.wrap(makeDoubleList());
-    }
+  @Override
+  protected DoubleList makeUnmodifiableDoubleList ()
+  {
+    return UnmodifiableDoubleList.wrap (makeDoubleList ());
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
+  // tests
+  // ------------------------------------------------------------------------
 
-    public void testWrapNull() {
-        assertNull(UnmodifiableDoubleList.wrap(null));
-    }
+  public void testWrapNull ()
+  {
+    assertNull (UnmodifiableDoubleList.wrap (null));
+  }
 
-    public void testWrapUnmodifiableDoubleList() {
-        DoubleList list = makeUnmodifiableDoubleList();
-        assertSame(list,UnmodifiableDoubleList.wrap(list));
-    }
+  public void testWrapUnmodifiableDoubleList ()
+  {
+    final DoubleList list = makeUnmodifiableDoubleList ();
+    assertSame (list, UnmodifiableDoubleList.wrap (list));
+  }
 
-    public void testWrapSerializableDoubleList() {
-        DoubleList list = makeDoubleList();
-        assertTrue(list instanceof Serializable);
-        assertTrue(UnmodifiableDoubleList.wrap(list) instanceof Serializable);
-    }
+  public void testWrapSerializableDoubleList ()
+  {
+    final DoubleList list = makeDoubleList ();
+    assertTrue (list instanceof Serializable);
+    assertTrue (UnmodifiableDoubleList.wrap (list) instanceof Serializable);
+  }
 
-    public void testWrapNonSerializableDoubleList() {
-        DoubleList list = makeDoubleList();
-        DoubleList ns = list.subList(0,list.size());
-        assertTrue(!(ns instanceof Serializable));
-        assertTrue(!(UnmodifiableDoubleList.wrap(ns) instanceof Serializable));
-    }
+  public void testWrapNonSerializableDoubleList ()
+  {
+    final DoubleList list = makeDoubleList ();
+    final DoubleList ns = list.subList (0, list.size ());
+    assertTrue (!(ns instanceof Serializable));
+    assertTrue (!(UnmodifiableDoubleList.wrap (ns) instanceof Serializable));
+  }
 }

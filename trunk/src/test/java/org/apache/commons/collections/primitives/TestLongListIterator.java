@@ -17,34 +17,41 @@
 package org.apache.commons.collections.primitives;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class TestLongListIterator extends TestLongIterator {
+public abstract class TestLongListIterator extends TestLongIterator
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestLongListIterator(String testName) {
-        super(testName);
-    }
+  public TestLongListIterator (final String testName)
+  {
+    super (testName);
+  }
 
-    // collections testing framework
-    // ------------------------------------------------------------------------
+  // collections testing framework
+  // ------------------------------------------------------------------------
 
-    public LongIterator makeEmptyLongIterator() {
-        return makeEmptyLongListIterator();
-    }
-    
-    public LongIterator makeFullLongIterator() {
-        return makeFullLongListIterator();
-    }
+  @Override
+  public LongIterator makeEmptyLongIterator ()
+  {
+    return makeEmptyLongListIterator ();
+  }
 
-    public abstract LongListIterator makeEmptyLongListIterator();
-    public abstract LongListIterator makeFullLongListIterator();
+  @Override
+  public LongIterator makeFullLongIterator ()
+  {
+    return makeFullLongListIterator ();
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
+  public abstract LongListIterator makeEmptyLongListIterator ();
 
+  public abstract LongListIterator makeFullLongListIterator ();
+
+  // tests
+  // ------------------------------------------------------------------------
 
 }

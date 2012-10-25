@@ -25,48 +25,61 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.primitives.adapters.IteratorCharIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestAbstractCharCollection extends TestCase {
+public class TestAbstractCharCollection extends TestCase
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestAbstractCharCollection(String testName) {
-        super(testName);
+  public TestAbstractCharCollection (final String testName)
+  {
+    super (testName);
+  }
+
+  public static Test suite ()
+  {
+    return new TestSuite (TestAbstractCharCollection.class);
+  }
+
+  // tests
+  // ------------------------------------------------------------------------
+
+  public void testAddIsUnsupportedByDefault ()
+  {
+    final CharCollection col = new CharCollectionImpl ();
+    try
+    {
+      col.add ((char) 1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  // inner classes
+  // ------------------------------------------------------------------------
+
+  static class CharCollectionImpl extends AbstractCharCollection
+  {
+    public CharCollectionImpl ()
+    {}
+
+    @Override
+    public CharIterator iterator ()
+    {
+      return new IteratorCharIterator (Collections.EMPTY_LIST.iterator ());
     }
 
-    public static Test suite() {
-        return new TestSuite(TestAbstractCharCollection.class);
+    @Override
+    public int size ()
+    {
+      return 0;
     }
-
-    // tests
-    // ------------------------------------------------------------------------
-    
-    public void testAddIsUnsupportedByDefault() {
-        CharCollection col = new CharCollectionImpl();
-        try {
-            col.add((char)1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }        
-    }
-    // inner classes
-    // ------------------------------------------------------------------------
-
-
-    static class CharCollectionImpl extends AbstractCharCollection {
-        public CharCollectionImpl() {
-        }
-        
-        public CharIterator iterator() {
-            return new IteratorCharIterator(Collections.EMPTY_LIST.iterator());
-        }
-
-        public int size() {
-            return 0;
-        }
-    }
+  }
 }

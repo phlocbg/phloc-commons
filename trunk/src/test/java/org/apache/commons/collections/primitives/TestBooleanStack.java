@@ -23,182 +23,184 @@ import junit.framework.TestSuite;
 
 /**
  * Tests the BooleanStack class.
- *
+ * 
  * @author Apache Directory Project
  * @since Commons Primitives 1.1
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  */
 public class TestBooleanStack extends TestCase
 {
-    BooleanStack stack = null ;
-    
-    
-    /**
-     * Runs the test. 
-     * 
-     * @param args nada
-     */
-    public static void main( String[] args )
+  BooleanStack stack = null;
+
+  /**
+   * Runs the test.
+   * 
+   * @param args
+   *        nada
+   */
+  public static void main (final String [] args)
+  {
+    junit.textui.TestRunner.run (TestBooleanStack.class);
+  }
+
+  public static TestSuite suite ()
+  {
+    return new TestSuite (TestBooleanStack.class);
+  }
+
+  /*
+   * (non-Javadoc)
+   * @see junit.framework.TestCase#setUp()
+   */
+  @Override
+  protected void setUp () throws Exception
+  {
+    super.setUp ();
+    stack = new BooleanStack ();
+  }
+
+  /**
+   * Constructor for IntStackTest.
+   * 
+   * @param arg0
+   */
+  public TestBooleanStack (final String arg0)
+  {
+    super (arg0);
+  }
+
+  public void testEmpty ()
+  {
+    assertTrue ("Newly created stacks should be empty", stack.empty ());
+    stack.push (true);
+    assertFalse ("Stack with item should not be empty", stack.empty ());
+    stack.pop ();
+    assertTrue ("Stack last int popped should be empty", stack.empty ());
+  }
+
+  public void testPeek ()
+  {
+    try
     {
-        junit.textui.TestRunner.run( TestBooleanStack.class ) ;
+      stack.peek ();
+      fail ("Peek should have thrown an EmptyStackException");
     }
-
-    public static TestSuite suite() {
-        return new TestSuite(TestBooleanStack.class);
-    }
-
-    
-    /* (non-Javadoc)
-     * @see junit.framework.TestCase#setUp()
-     */
-    protected void setUp() throws Exception
+    catch (final EmptyStackException e)
     {
-        super.setUp() ;
-        stack = new BooleanStack() ;
+      assertNotNull ("EmptyStackException should not be null", e);
     }
-    
-    
-    /**
-     * Constructor for IntStackTest.
-     * @param arg0
-     */
-    public TestBooleanStack( String arg0 )
+
+    for (int ii = 0; ii < 10; ii++)
     {
-        super( arg0 ) ;
+      if (ii % 2 == 0)
+      {
+        stack.push (false);
+        assertFalse (stack.peek ());
+      }
+      else
+      {
+        stack.push (true);
+        assertTrue (stack.peek ());
+      }
     }
+  }
 
-    
-    public void testEmpty()
+  public void testPop ()
+  {
+    try
     {
-        assertTrue( "Newly created stacks should be empty", stack.empty() ) ;
-        stack.push( true ) ;
-        assertFalse( "Stack with item should not be empty", stack.empty() ) ;
-        stack.pop() ;
-        assertTrue( "Stack last int popped should be empty", stack.empty() ) ;
+      stack.pop ();
+      fail ("Pop should have thrown an EmptyStackException");
     }
-
-    
-    public void testPeek()
+    catch (final EmptyStackException e)
     {
-        try
-        {
-            stack.peek() ;
-            fail("Peek should have thrown an EmptyStackException" ) ;
-        }
-        catch( EmptyStackException e )
-        {
-            assertNotNull( "EmptyStackException should not be null", e ) ;
-        }
-        
-        for( int ii = 0; ii < 10; ii++ )
-        {
-            if ( ii % 2 == 0 )
-            {
-                stack.push( false ) ;
-                assertFalse( stack.peek() ) ;
-            }
-            else
-            {
-                stack.push( true ) ;
-                assertTrue( stack.peek() ) ;
-            }
-        }
+      assertNotNull ("EmptyStackException should not be null", e);
     }
 
-    
-    public void testPop()
+    for (int ii = 0; ii < 10; ii++)
     {
-        try
-        {
-            stack.pop() ;
-            fail("Pop should have thrown an EmptyStackException" ) ;
-        }
-        catch( EmptyStackException e )
-        {
-            assertNotNull( "EmptyStackException should not be null", e ) ;
-        }
-        
-        for( int ii = 0; ii < 10; ii++ )
-        {    
-            if ( ii % 2 == 0 )
-            {
-                stack.push( false ) ;
-                assertFalse( stack.pop() ) ;
-            }
-            else
-            {
-                stack.push( true ) ;
-                assertTrue( stack.pop() ) ;
-            }
-        }
-
-        for( int ii = 0; ii < 10; ii++ )
-        {    
-            if ( ii % 2 == 0 )
-            {
-                stack.push( false ) ;
-            }
-            else
-            {
-                stack.push( true ) ;
-            }
-        }
-
-        for( short ii = 10; ii < 0; ii-- )
-        {    
-            if ( ii % 2 == 0 )
-            {
-                stack.push( false ) ;
-                assertFalse( stack.pop() ) ;
-            }
-            else
-            {
-                stack.push( true ) ;
-                assertTrue( stack.pop() ) ;
-            }
-        }
+      if (ii % 2 == 0)
+      {
+        stack.push (false);
+        assertFalse (stack.pop ());
+      }
+      else
+      {
+        stack.push (true);
+        assertTrue (stack.pop ());
+      }
     }
 
-    
-    public void testPush()
+    for (int ii = 0; ii < 10; ii++)
     {
-        stack.push( false ) ;
-        stack.push( false ) ;
-        stack.push( true ) ;
-        assertFalse( stack.empty() ) ;
-        assertTrue( stack.pop() ) ;
-        assertFalse( stack.pop() ) ;
-        assertFalse( stack.pop() ) ;
+      if (ii % 2 == 0)
+      {
+        stack.push (false);
+      }
+      else
+      {
+        stack.push (true);
+      }
     }
 
-    
-    public void testSearch()
+    for (short ii = 10; ii < 0; ii--)
     {
-        stack.push( false ) ;
-        assertTrue( -1 == stack.search( true ) ) ;
-        stack.push( true ) ;
-        assertTrue( 2 == stack.search( false ) ) ;
-        stack.push( false ) ;
-        assertTrue( 1 == stack.search( false ) ) ;
-        stack.push( false ) ;
-        assertTrue( 3 == stack.search( true ) ) ;
+      if (ii % 2 == 0)
+      {
+        stack.push (false);
+        assertFalse (stack.pop ());
+      }
+      else
+      {
+        stack.push (true);
+        assertTrue (stack.pop ());
+      }
     }
-    
-    public void testArrayConstructor() {
-        boolean[] array = { true, false, true, true };
-        stack  = new BooleanStack(array);
-        assertEquals(array.length,stack.size());
-        for(int i=array.length-1;i>=0;i--) {
-            assertEquals(array[i],stack.pop());
-        }
+  }
+
+  public void testPush ()
+  {
+    stack.push (false);
+    stack.push (false);
+    stack.push (true);
+    assertFalse (stack.empty ());
+    assertTrue (stack.pop ());
+    assertFalse (stack.pop ());
+    assertFalse (stack.pop ());
+  }
+
+  public void testSearch ()
+  {
+    stack.push (false);
+    assertTrue (-1 == stack.search (true));
+    stack.push (true);
+    assertTrue (2 == stack.search (false));
+    stack.push (false);
+    assertTrue (1 == stack.search (false));
+    stack.push (false);
+    assertTrue (3 == stack.search (true));
+  }
+
+  public void testArrayConstructor ()
+  {
+    final boolean [] array = { true, false, true, true };
+    stack = new BooleanStack (array);
+    assertEquals (array.length, stack.size ());
+    for (int i = array.length - 1; i >= 0; i--)
+    {
+      assertEquals (array[i], stack.pop ());
     }
-    
-    public void testPeekN() {
-        boolean[] array = { true, false, true, true };
-        stack  = new BooleanStack(array);
-        for(int i=array.length-1;i>=0;i--) {
-            assertEquals(array[i],stack.peek((array.length-1)-i));
-        }
+  }
+
+  public void testPeekN ()
+  {
+    final boolean [] array = { true, false, true, true };
+    stack = new BooleanStack (array);
+    for (int i = array.length - 1; i >= 0; i--)
+    {
+      assertEquals (array[i], stack.peek ((array.length - 1) - i));
     }
-    
+  }
+
 }

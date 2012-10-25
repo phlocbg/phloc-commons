@@ -25,48 +25,61 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.primitives.adapters.IteratorLongIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestAbstractLongCollection extends TestCase {
+public class TestAbstractLongCollection extends TestCase
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestAbstractLongCollection(String testName) {
-        super(testName);
+  public TestAbstractLongCollection (final String testName)
+  {
+    super (testName);
+  }
+
+  public static Test suite ()
+  {
+    return new TestSuite (TestAbstractLongCollection.class);
+  }
+
+  // tests
+  // ------------------------------------------------------------------------
+
+  public void testAddIsUnsupportedByDefault ()
+  {
+    final LongCollection col = new LongCollectionImpl ();
+    try
+    {
+      col.add (1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  // inner classes
+  // ------------------------------------------------------------------------
+
+  static class LongCollectionImpl extends AbstractLongCollection
+  {
+    public LongCollectionImpl ()
+    {}
+
+    @Override
+    public LongIterator iterator ()
+    {
+      return new IteratorLongIterator (Collections.EMPTY_LIST.iterator ());
     }
 
-    public static Test suite() {
-        return new TestSuite(TestAbstractLongCollection.class);
+    @Override
+    public int size ()
+    {
+      return 0;
     }
-
-    // tests
-    // ------------------------------------------------------------------------
-    
-    public void testAddIsUnsupportedByDefault() {
-        LongCollection col = new LongCollectionImpl();
-        try {
-            col.add((long)1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }        
-    }
-    // inner classes
-    // ------------------------------------------------------------------------
-
-
-    static class LongCollectionImpl extends AbstractLongCollection {
-        public LongCollectionImpl() {
-        }
-        
-        public LongIterator iterator() {
-            return new IteratorLongIterator(Collections.EMPTY_LIST.iterator());
-        }
-
-        public int size() {
-            return 0;
-        }
-    }
+  }
 }

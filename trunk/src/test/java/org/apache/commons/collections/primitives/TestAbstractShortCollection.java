@@ -25,48 +25,61 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.primitives.adapters.IteratorShortIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestAbstractShortCollection extends TestCase {
+public class TestAbstractShortCollection extends TestCase
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestAbstractShortCollection(String testName) {
-        super(testName);
+  public TestAbstractShortCollection (final String testName)
+  {
+    super (testName);
+  }
+
+  public static Test suite ()
+  {
+    return new TestSuite (TestAbstractShortCollection.class);
+  }
+
+  // tests
+  // ------------------------------------------------------------------------
+
+  public void testAddIsUnsupportedByDefault ()
+  {
+    final ShortCollection col = new ShortCollectionImpl ();
+    try
+    {
+      col.add ((short) 1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  // inner classes
+  // ------------------------------------------------------------------------
+
+  static class ShortCollectionImpl extends AbstractShortCollection
+  {
+    public ShortCollectionImpl ()
+    {}
+
+    @Override
+    public ShortIterator iterator ()
+    {
+      return new IteratorShortIterator (Collections.EMPTY_LIST.iterator ());
     }
 
-    public static Test suite() {
-        return new TestSuite(TestAbstractShortCollection.class);
+    @Override
+    public int size ()
+    {
+      return 0;
     }
-
-    // tests
-    // ------------------------------------------------------------------------
-    
-    public void testAddIsUnsupportedByDefault() {
-        ShortCollection col = new ShortCollectionImpl();
-        try {
-            col.add((short)1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }        
-    }
-    // inner classes
-    // ------------------------------------------------------------------------
-
-
-    static class ShortCollectionImpl extends AbstractShortCollection {
-        public ShortCollectionImpl() {
-        }
-        
-        public ShortIterator iterator() {
-            return new IteratorShortIterator(Collections.EMPTY_LIST.iterator());
-        }
-
-        public int size() {
-            return 0;
-        }
-    }
+  }
 }

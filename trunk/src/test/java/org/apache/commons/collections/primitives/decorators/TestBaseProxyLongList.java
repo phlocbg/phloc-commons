@@ -25,179 +25,210 @@ import org.apache.commons.collections.primitives.LongList;
 import org.apache.commons.collections.primitives.LongListIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestBaseProxyLongList extends TestCase {
+public class TestBaseProxyLongList extends TestCase
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestBaseProxyLongList(String testName) {
-        super(testName);
+  public TestBaseProxyLongList (final String testName)
+  {
+    super (testName);
+  }
+
+  public static Test suite ()
+  {
+    return new TestSuite (TestBaseProxyLongList.class);
+  }
+
+  // tests
+  // ------------------------------------------------------------------------
+
+  public void testListCallsAreProxied ()
+  {
+    final InvocationCounter proxied = new InvocationCounter ();
+    final BaseProxyLongList list = new BaseProxyLongList ()
+    {
+      @Override
+      protected LongList getProxiedList ()
+      {
+        return proxied;
+      }
+    };
+
+    assertSame (list.getProxiedList (), list.getProxiedCollection ());
+
+    assertEquals (0, proxied.getAddCount ());
+    list.add (1, 1);
+    assertEquals (1, proxied.getAddCount ());
+
+    assertEquals (0, proxied.getAddAllCount ());
+    list.addAll (1, null);
+    assertEquals (1, proxied.getAddAllCount ());
+
+    assertEquals (0, proxied.getGetCount ());
+    list.get (1);
+    assertEquals (1, proxied.getGetCount ());
+
+    assertEquals (0, proxied.getIndexOfCount ());
+    list.indexOf (1);
+    assertEquals (1, proxied.getIndexOfCount ());
+
+    assertEquals (0, proxied.getLastIndexOfCount ());
+    list.lastIndexOf (1);
+    assertEquals (1, proxied.getLastIndexOfCount ());
+
+    assertEquals (0, proxied.getListIteratorCount ());
+    list.listIterator ();
+    assertEquals (1, proxied.getListIteratorCount ());
+
+    assertEquals (0, proxied.getListIteratorFromCount ());
+    list.listIterator (1);
+    assertEquals (1, proxied.getListIteratorFromCount ());
+
+    assertEquals (0, proxied.getRemoveElementAtCount ());
+    list.removeElementAt (1);
+    assertEquals (1, proxied.getRemoveElementAtCount ());
+
+    assertEquals (0, proxied.getSetCount ());
+    list.set (1, 1);
+    assertEquals (1, proxied.getSetCount ());
+
+    assertEquals (0, proxied.getSubListCount ());
+    list.subList (1, 2);
+    assertEquals (1, proxied.getSubListCount ());
+  }
+
+  // inner classes
+  // ------------------------------------------------------------------------
+
+  static class InvocationCounter extends TestBaseProxyLongCollection.InvocationCounter implements LongList
+  {
+    private int addCount;
+    private int addAllCount;
+    private int getCount;
+    private int indexOfCount;
+    private int lastIndexOfCount;
+    private int listIteratorCount;
+    private int listIteratorFromCount;
+    private int removeElementAtCount;
+    private int setCount;
+    private int subListCount;
+
+    public void add (final int index, final long element)
+    {
+      addCount++;
     }
 
-    public static Test suite() {
-        return new TestSuite(TestBaseProxyLongList.class);
+    public boolean addAll (final int index, final LongCollection collection)
+    {
+      addAllCount++;
+      return false;
     }
 
-    // tests
-    // ------------------------------------------------------------------------
-    
-    public void testListCallsAreProxied() {
-        final InvocationCounter proxied = new InvocationCounter();
-        BaseProxyLongList list = new BaseProxyLongList() {
-            protected LongList getProxiedList() {
-                return proxied;
-            }
-        };
-        
-        assertSame(list.getProxiedList(),list.getProxiedCollection());
-        
-        assertEquals(0,proxied.getAddCount());
-        list.add(1,1);
-        assertEquals(1,proxied.getAddCount());
-
-        assertEquals(0,proxied.getAddAllCount());
-        list.addAll(1,null);
-        assertEquals(1,proxied.getAddAllCount());
-
-        assertEquals(0,proxied.getGetCount());
-        list.get(1);
-        assertEquals(1,proxied.getGetCount());
-
-        assertEquals(0,proxied.getIndexOfCount());
-        list.indexOf(1);
-        assertEquals(1,proxied.getIndexOfCount());
-
-        assertEquals(0,proxied.getLastIndexOfCount());
-        list.lastIndexOf(1);
-        assertEquals(1,proxied.getLastIndexOfCount());
-
-        assertEquals(0,proxied.getListIteratorCount());
-        list.listIterator();
-        assertEquals(1,proxied.getListIteratorCount());
-
-        assertEquals(0,proxied.getListIteratorFromCount());
-        list.listIterator(1);
-        assertEquals(1,proxied.getListIteratorFromCount());
-
-        assertEquals(0,proxied.getRemoveElementAtCount());
-        list.removeElementAt(1);
-        assertEquals(1,proxied.getRemoveElementAtCount());
-
-        assertEquals(0,proxied.getSetCount());
-        list.set(1,1);
-        assertEquals(1,proxied.getSetCount());
-
-        assertEquals(0,proxied.getSubListCount());
-        list.subList(1,2);
-        assertEquals(1,proxied.getSubListCount());
+    public long get (final int index)
+    {
+      getCount++;
+      return 0;
     }
-    
-    // inner classes
-    // ------------------------------------------------------------------------
 
-    static class InvocationCounter extends TestBaseProxyLongCollection.InvocationCounter implements LongList {
-        private int addCount;
-        private int addAllCount;
-        private int getCount;
-        private int indexOfCount;
-        private int lastIndexOfCount;
-        private int listIteratorCount;
-        private int listIteratorFromCount;
-        private int removeElementAtCount;
-        private int setCount;
-        private int subListCount;
-        
-        public void add(int index, long element) {
-            addCount++;
-        }
-
-        public boolean addAll(int index, LongCollection collection) {
-            addAllCount++;
-            return false;
-        }
-
-        public long get(int index) {
-            getCount++;
-            return 0;
-        }
-
-        public int indexOf(long element) {
-            indexOfCount++;
-            return 0;
-        }
-
-        public int lastIndexOf(long element) {
-            lastIndexOfCount++;
-            return 0;
-        }
-
-        public LongListIterator listIterator() {
-            listIteratorCount++;
-            return null;
-        }
-
-        public LongListIterator listIterator(int index) {
-            listIteratorFromCount++;
-            return null;
-        }
-
-        public long removeElementAt(int index) {
-            removeElementAtCount++;
-            return 0;
-        }
-
-        public long set(int index, long element) {
-            setCount++;
-            return 0;
-        }
-
-        public LongList subList(int fromIndex, int toIndex) {
-            subListCount++;
-            return null;
-        }
-
-        public int getAddAllCount() {
-            return addAllCount;
-        }
-
-        public int getAddCount() {
-            return addCount;
-        }
-
-        public int getGetCount() {
-            return getCount;
-        }
-
-        public int getIndexOfCount() {
-            return indexOfCount;
-        }
-
-        public int getLastIndexOfCount() {
-            return lastIndexOfCount;
-        }
-
-        public int getListIteratorCount() {
-            return listIteratorCount;
-        }
-
-        public int getListIteratorFromCount() {
-            return listIteratorFromCount;
-        }
-
-        public int getRemoveElementAtCount() {
-            return removeElementAtCount;
-        }
-
-        public int getSetCount() {
-            return setCount;
-        }
-
-        public int getSubListCount() {
-            return subListCount;
-        }
-
+    public int indexOf (final long element)
+    {
+      indexOfCount++;
+      return 0;
     }
+
+    public int lastIndexOf (final long element)
+    {
+      lastIndexOfCount++;
+      return 0;
+    }
+
+    public LongListIterator listIterator ()
+    {
+      listIteratorCount++;
+      return null;
+    }
+
+    public LongListIterator listIterator (final int index)
+    {
+      listIteratorFromCount++;
+      return null;
+    }
+
+    public long removeElementAt (final int index)
+    {
+      removeElementAtCount++;
+      return 0;
+    }
+
+    public long set (final int index, final long element)
+    {
+      setCount++;
+      return 0;
+    }
+
+    public LongList subList (final int fromIndex, final int toIndex)
+    {
+      subListCount++;
+      return null;
+    }
+
+    @Override
+    public int getAddAllCount ()
+    {
+      return addAllCount;
+    }
+
+    @Override
+    public int getAddCount ()
+    {
+      return addCount;
+    }
+
+    public int getGetCount ()
+    {
+      return getCount;
+    }
+
+    public int getIndexOfCount ()
+    {
+      return indexOfCount;
+    }
+
+    public int getLastIndexOfCount ()
+    {
+      return lastIndexOfCount;
+    }
+
+    public int getListIteratorCount ()
+    {
+      return listIteratorCount;
+    }
+
+    public int getListIteratorFromCount ()
+    {
+      return listIteratorFromCount;
+    }
+
+    public int getRemoveElementAtCount ()
+    {
+      return removeElementAtCount;
+    }
+
+    public int getSetCount ()
+    {
+      return setCount;
+    }
+
+    public int getSubListCount ()
+    {
+      return subListCount;
+    }
+
+  }
 }

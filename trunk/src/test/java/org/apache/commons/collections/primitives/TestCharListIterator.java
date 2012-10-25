@@ -17,34 +17,41 @@
 package org.apache.commons.collections.primitives;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class TestCharListIterator extends TestCharIterator {
+public abstract class TestCharListIterator extends TestCharIterator
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestCharListIterator(String testName) {
-        super(testName);
-    }
+  public TestCharListIterator (final String testName)
+  {
+    super (testName);
+  }
 
-    // collections testing framework
-    // ------------------------------------------------------------------------
+  // collections testing framework
+  // ------------------------------------------------------------------------
 
-    public CharIterator makeEmptyCharIterator() {
-        return makeEmptyCharListIterator();
-    }
-    
-    public CharIterator makeFullCharIterator() {
-        return makeFullCharListIterator();
-    }
+  @Override
+  public CharIterator makeEmptyCharIterator ()
+  {
+    return makeEmptyCharListIterator ();
+  }
 
-    public abstract CharListIterator makeEmptyCharListIterator();
-    public abstract CharListIterator makeFullCharListIterator();
+  @Override
+  public CharIterator makeFullCharIterator ()
+  {
+    return makeFullCharListIterator ();
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
+  public abstract CharListIterator makeEmptyCharListIterator ();
 
+  public abstract CharListIterator makeFullCharListIterator ();
+
+  // tests
+  // ------------------------------------------------------------------------
 
 }

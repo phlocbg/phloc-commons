@@ -25,146 +25,192 @@ import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.list.AbstractTestList;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class BaseTestList extends AbstractTestList {
+public abstract class BaseTestList extends AbstractTestList
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public BaseTestList(String testName) {
-        super(testName);
+  public BaseTestList (final String testName)
+  {
+    super (testName);
+  }
+
+  // tests
+  // ------------------------------------------------------------------------
+
+  public final void testAddAllAtIndex ()
+  {
+    final List source = makeFullList ();
+    final List dest = makeFullList ();
+
+    dest.addAll (1, source);
+
+    final Iterator iter = dest.iterator ();
+    assertTrue (iter.hasNext ());
+    assertEquals (source.get (0), iter.next ());
+    for (int i = 0; i < source.size (); i++)
+    {
+      assertTrue (iter.hasNext ());
+      assertEquals (source.get (i), iter.next ());
+    }
+    for (int i = 1; i < source.size (); i++)
+    {
+      assertTrue (iter.hasNext ());
+      assertEquals (source.get (i), iter.next ());
+    }
+    assertFalse (iter.hasNext ());
+  }
+
+  /**
+   * Override to change assertSame to assertEquals.
+   */
+  public void testListListIteratorPreviousRemove ()
+  {
+    if (isRemoveSupported () == false)
+      return;
+    resetFull ();
+    final ListIterator it = getList ().listIterator ();
+    final Object zero = it.next ();
+    final Object one = it.next ();
+    final Object two = it.next ();
+    final Object two2 = it.previous ();
+    final Object one2 = it.previous ();
+    assertEquals (one, one2);
+    assertEquals (two, two2);
+    assertEquals (zero, getList ().get (0));
+    assertEquals (one, getList ().get (1));
+    assertEquals (two, getList ().get (2));
+    it.remove ();
+    assertEquals (zero, getList ().get (0));
+    assertEquals (two, getList ().get (1));
+  }
+
+  /**
+   * Override to change assertSame to assertEquals.
+   */
+  @Override
+  public BulkTest bulkTestSubList ()
+  {
+    if (getFullElements ().length - 6 < 10)
+      return null;
+    return new PrimitiveBulkTestSubList (this);
+  }
+
+  /**
+   * Whole class copied as sub list constructor was package scoped in 3.1.
+   */
+  public static class PrimitiveBulkTestSubList extends BaseTestList
+  {
+    private final BaseTestList outer;
+
+    PrimitiveBulkTestSubList (final BaseTestList outer)
+    {
+      super ("");
+      this.outer = outer;
     }
 
-    // tests
-    // ------------------------------------------------------------------------
+    @Override
+    public Object [] getFullElements ()
+    {
+      final List l = Arrays.asList (outer.getFullElements ());
+      return l.subList (3, l.size () - 3).toArray ();
+    }
 
-    public final void testAddAllAtIndex() {
-        List source = makeFullList();
-        List dest = makeFullList();
-        
-        dest.addAll(1,source);
-         
-        Iterator iter = dest.iterator();
-        assertTrue(iter.hasNext());
-        assertEquals(source.get(0),iter.next());
-        for(int i=0;i<source.size();i++) {
-            assertTrue(iter.hasNext());
-            assertEquals(source.get(i),iter.next());
-        }
-        for(int i=1;i<source.size();i++) {
-            assertTrue(iter.hasNext());
-            assertEquals(source.get(i),iter.next());
-        }
-        assertFalse(iter.hasNext());
+    @Override
+    public Object [] getOtherElements ()
+    {
+      return outer.getOtherElements ();
+    }
+
+    @Override
+    public boolean isAddSupported ()
+    {
+      return outer.isAddSupported ();
+    }
+
+    @Override
+    public boolean isSetSupported ()
+    {
+      return outer.isSetSupported ();
+    }
+
+    @Override
+    public boolean isRemoveSupported ()
+    {
+      return outer.isRemoveSupported ();
+    }
+
+    @Override
+    public List makeEmptyList ()
+    {
+      return outer.makeFullList ().subList (4, 4);
+    }
+
+    @Override
+    public List makeFullList ()
+    {
+      final int size = getFullElements ().length;
+      return outer.makeFullList ().subList (3, size - 3);
+    }
+
+    @Override
+    public void resetEmpty ()
+    {
+      outer.resetFull ();
+      this.collection = outer.getList ().subList (4, 4);
+      this.confirmed = outer.getConfirmedList ().subList (4, 4);
+    }
+
+    @Override
+    public void resetFull ()
+    {
+      outer.resetFull ();
+      final int size = outer.confirmed.size ();
+      this.collection = outer.getList ().subList (3, size - 3);
+      this.confirmed = outer.getConfirmedList ().subList (3, size - 3);
+    }
+
+    @Override
+    public void verify ()
+    {
+      super.verify ();
+      outer.verify ();
+    }
+
+    @Override
+    public boolean isTestSerialization ()
+    {
+      return false;
     }
 
     /**
      * Override to change assertSame to assertEquals.
      */
-    public void testListListIteratorPreviousRemove() {
-        if (isRemoveSupported() == false) return;
-        resetFull();
-        ListIterator it = getList().listIterator();
-        Object zero = it.next();
-        Object one = it.next();
-        Object two = it.next();
-        Object two2 = it.previous();
-        Object one2 = it.previous();
-        assertEquals(one, one2);
-        assertEquals(two, two2);
-        assertEquals(zero, getList().get(0));
-        assertEquals(one, getList().get(1));
-        assertEquals(two, getList().get(2));
-        it.remove();
-        assertEquals(zero, getList().get(0));
-        assertEquals(two, getList().get(1));
+    @Override
+    public void testListListIteratorPreviousRemove ()
+    {
+      if (isRemoveSupported () == false)
+        return;
+      resetFull ();
+      final ListIterator it = getList ().listIterator ();
+      final Object zero = it.next ();
+      final Object one = it.next ();
+      final Object two = it.next ();
+      final Object two2 = it.previous ();
+      final Object one2 = it.previous ();
+      assertEquals (one, one2);
+      assertEquals (two, two2);
+      assertEquals (zero, getList ().get (0));
+      assertEquals (one, getList ().get (1));
+      assertEquals (two, getList ().get (2));
+      it.remove ();
+      assertEquals (zero, getList ().get (0));
+      assertEquals (two, getList ().get (1));
     }
-
-    /**
-     * Override to change assertSame to assertEquals.
-     */
-    public BulkTest bulkTestSubList() {
-        if (getFullElements().length - 6 < 10) return null;
-        return new PrimitiveBulkTestSubList(this);
-    }
-
-
-    /**
-     * Whole class copied as sub list constructor was package scoped in 3.1.
-     */
-    public static class PrimitiveBulkTestSubList extends BaseTestList {
-        private BaseTestList outer;
-    
-        PrimitiveBulkTestSubList(BaseTestList outer) {
-            super("");
-            this.outer = outer;
-        }
-    
-        public Object[] getFullElements() {
-            List l = Arrays.asList(outer.getFullElements());
-            return l.subList(3, l.size() - 3).toArray();
-        }
-        public Object[] getOtherElements() {
-            return outer.getOtherElements();
-        }
-        public boolean isAddSupported() {
-            return outer.isAddSupported();
-        }
-        public boolean isSetSupported() {
-            return outer.isSetSupported();
-        }
-        public boolean isRemoveSupported() {
-            return outer.isRemoveSupported();
-        }
-    
-        public List makeEmptyList() {
-            return outer.makeFullList().subList(4, 4);
-        }
-        public List makeFullList() {
-            int size = getFullElements().length;
-            return outer.makeFullList().subList(3, size - 3);
-        }
-        public void resetEmpty() {
-            outer.resetFull();
-            this.collection = outer.getList().subList(4, 4);
-            this.confirmed = outer.getConfirmedList().subList(4, 4);
-        }
-        public void resetFull() {
-            outer.resetFull();
-            int size = outer.confirmed.size();
-            this.collection = outer.getList().subList(3, size - 3);
-            this.confirmed = outer.getConfirmedList().subList(3, size - 3);
-        }
-        public void verify() {
-            super.verify();
-            outer.verify();
-        }
-        public boolean isTestSerialization() {
-            return false;
-        }
-        /**
-         * Override to change assertSame to assertEquals.
-         */
-        public void testListListIteratorPreviousRemove() {
-            if (isRemoveSupported() == false)
-                return;
-            resetFull();
-            ListIterator it = getList().listIterator();
-            Object zero = it.next();
-            Object one = it.next();
-            Object two = it.next();
-            Object two2 = it.previous();
-            Object one2 = it.previous();
-            assertEquals(one, one2);
-            assertEquals(two, two2);
-            assertEquals(zero, getList().get(0));
-            assertEquals(one, getList().get(1));
-            assertEquals(two, getList().get(2));
-            it.remove();
-            assertEquals(zero, getList().get(0));
-            assertEquals(two, getList().get(1));
-        }
-    }
+  }
 }

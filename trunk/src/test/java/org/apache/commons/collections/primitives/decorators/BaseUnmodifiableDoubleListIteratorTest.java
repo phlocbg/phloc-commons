@@ -22,95 +22,116 @@ import org.apache.commons.collections.primitives.DoubleList;
 import org.apache.commons.collections.primitives.DoubleListIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class BaseUnmodifiableDoubleListIteratorTest extends BaseUnmodifiableDoubleIteratorTest {
+public abstract class BaseUnmodifiableDoubleListIteratorTest extends BaseUnmodifiableDoubleIteratorTest
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public BaseUnmodifiableDoubleListIteratorTest(String testName) {
-        super(testName);
+  public BaseUnmodifiableDoubleListIteratorTest (final String testName)
+  {
+    super (testName);
+  }
+
+  // framework
+  // ------------------------------------------------------------------------
+
+  protected abstract DoubleListIterator makeUnmodifiableDoubleListIterator ();
+
+  @Override
+  protected DoubleIterator makeUnmodifiableDoubleIterator ()
+  {
+    return makeUnmodifiableDoubleListIterator ();
+  }
+
+  @Override
+  protected DoubleIterator makeDoubleIterator ()
+  {
+    return makeDoubleListIterator ();
+  }
+
+  protected DoubleListIterator makeDoubleListIterator ()
+  {
+    final DoubleList list = new ArrayDoubleList ();
+    for (double i = 0; i < 10; i++)
+    {
+      list.add (i);
     }
-    
+    return list.listIterator ();
+  }
 
-    // framework
-    // ------------------------------------------------------------------------
+  // tests
+  // ------------------------------------------------------------------------
 
-    protected abstract DoubleListIterator makeUnmodifiableDoubleListIterator();
+  public final void testDoubleListIteratorNotModifiable ()
+  {
+    final DoubleListIterator iter = makeUnmodifiableDoubleListIterator ();
+    assertTrue (iter.hasNext ());
+    iter.next ();
+    try
+    {
+      iter.remove ();
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+    try
+    {
+      iter.add (1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+    try
+    {
+      iter.set (3);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
 
-    protected DoubleIterator makeUnmodifiableDoubleIterator() {
-        return makeUnmodifiableDoubleListIterator();
+  public final void testIterateDoubleListIterator ()
+  {
+    final DoubleListIterator iter = makeUnmodifiableDoubleListIterator ();
+    final DoubleListIterator expected = makeDoubleListIterator ();
+
+    assertTrue (!iter.hasPrevious ());
+
+    while (expected.hasNext ())
+    {
+      assertTrue (iter.hasNext ());
+      assertEquals (expected.nextIndex (), iter.nextIndex ());
+      assertEquals (expected.previousIndex (), iter.previousIndex ());
+      assertEquals (expected.next (), iter.next (), 0);
+      assertTrue (iter.hasPrevious ());
+      assertEquals (expected.nextIndex (), iter.nextIndex ());
+      assertEquals (expected.previousIndex (), iter.previousIndex ());
     }
 
-    protected DoubleIterator makeDoubleIterator() {
-        return makeDoubleListIterator();
+    assertTrue (!iter.hasNext ());
+
+    while (expected.hasPrevious ())
+    {
+      assertTrue (iter.hasPrevious ());
+      assertEquals (expected.nextIndex (), iter.nextIndex ());
+      assertEquals (expected.previousIndex (), iter.previousIndex ());
+      assertEquals (expected.previous (), iter.previous (), 0);
+      assertTrue (iter.hasNext ());
+      assertEquals (expected.nextIndex (), iter.nextIndex ());
+      assertEquals (expected.previousIndex (), iter.previousIndex ());
     }
-    
-    protected DoubleListIterator makeDoubleListIterator() {
-        DoubleList list = new ArrayDoubleList();
-        for(double i=0;i<10;i++) {
-            list.add(i);
-        }
-        return list.listIterator();
-    }
-
-    // tests
-    // ------------------------------------------------------------------------
-
-    public final void testDoubleListIteratorNotModifiable() {
-        DoubleListIterator iter = makeUnmodifiableDoubleListIterator();
-        assertTrue(iter.hasNext());
-        iter.next();
-        try {
-            iter.remove();
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            iter.add((double)1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        try {
-            iter.set((double)3);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-    }
-
-    public final void testIterateDoubleListIterator() {        
-        DoubleListIterator iter = makeUnmodifiableDoubleListIterator();
-        DoubleListIterator expected = makeDoubleListIterator();
-        
-        assertTrue(! iter.hasPrevious());
-        
-        while( expected.hasNext() ) {
-            assertTrue(iter.hasNext());
-            assertEquals(expected.nextIndex(),iter.nextIndex());
-            assertEquals(expected.previousIndex(),iter.previousIndex());
-            assertEquals(expected.next(),iter.next(),(double)0);
-            assertTrue(iter.hasPrevious());
-            assertEquals(expected.nextIndex(),iter.nextIndex());
-            assertEquals(expected.previousIndex(),iter.previousIndex());
-        }
-
-        assertTrue(! iter.hasNext() );
-
-        while( expected.hasPrevious() ) {
-            assertTrue(iter.hasPrevious());
-            assertEquals(expected.nextIndex(),iter.nextIndex());
-            assertEquals(expected.previousIndex(),iter.previousIndex());
-            assertEquals(expected.previous(),iter.previous(),(double)0);
-            assertTrue(iter.hasNext());
-            assertEquals(expected.nextIndex(),iter.nextIndex());
-            assertEquals(expected.previousIndex(),iter.previousIndex());
-        }
-        assertTrue(! iter.hasPrevious() );
-    }
+    assertTrue (!iter.hasPrevious ());
+  }
 
 }

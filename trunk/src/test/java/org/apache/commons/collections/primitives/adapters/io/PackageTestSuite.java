@@ -23,24 +23,27 @@ import junit.framework.TestSuite;
 /**
  * Test this package.
  * 
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class PackageTestSuite extends TestCase {
-    public PackageTestSuite(String testName) {
-        super(testName);
-    }
+public class PackageTestSuite extends TestCase
+{
+  public PackageTestSuite (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
-        
-        suite.addTest(TestInputStreamByteIterator.suite());
-        suite.addTest(TestByteIteratorInputStream.suite());
+  public static Test suite ()
+  {
+    final TestSuite suite = new TestSuite ();
 
-        suite.addTest(TestReaderCharIterator.suite());
-        suite.addTest(TestCharIteratorReader.suite());
+    suite.addTest (TestInputStreamByteIterator.suite ());
+    suite.addTest (TestByteIteratorInputStream.suite ());
 
-        return suite;
-    }
+    suite.addTest (TestReaderCharIterator.suite ());
+    suite.addTest (TestCharIteratorReader.suite ());
+
+    return suite;
+  }
 }
-

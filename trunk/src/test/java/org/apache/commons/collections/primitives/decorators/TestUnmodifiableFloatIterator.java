@@ -22,44 +22,52 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.primitives.FloatIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestUnmodifiableFloatIterator extends BaseUnmodifiableFloatIteratorTest {
+public class TestUnmodifiableFloatIterator extends BaseUnmodifiableFloatIteratorTest
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestUnmodifiableFloatIterator(String testName) {
-        super(testName);
-    }
-    
+  public TestUnmodifiableFloatIterator (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        return new TestSuite(TestUnmodifiableFloatIterator.class);
-    }
+  public static Test suite ()
+  {
+    return new TestSuite (TestUnmodifiableFloatIterator.class);
+  }
 
-    // framework
-    // ------------------------------------------------------------------------
+  // framework
+  // ------------------------------------------------------------------------
 
-    protected FloatIterator makeUnmodifiableFloatIterator() {
-        return UnmodifiableFloatIterator.wrap(makeFloatIterator());
-    }
+  @Override
+  protected FloatIterator makeUnmodifiableFloatIterator ()
+  {
+    return UnmodifiableFloatIterator.wrap (makeFloatIterator ());
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
+  // tests
+  // ------------------------------------------------------------------------
 
-    public void testWrapNotNull() {
-        assertNotNull(UnmodifiableFloatIterator.wrap(makeFloatIterator()));
-    }
+  public void testWrapNotNull ()
+  {
+    assertNotNull (UnmodifiableFloatIterator.wrap (makeFloatIterator ()));
+  }
 
-    public void testWrapNull() {
-        assertNull(UnmodifiableFloatIterator.wrap(null));
-    }
+  public void testWrapNull ()
+  {
+    assertNull (UnmodifiableFloatIterator.wrap (null));
+  }
 
-    public void testWrapUnmodifiableFloatIterator() {
-        FloatIterator iter = makeUnmodifiableFloatIterator();
-        assertSame(iter,UnmodifiableFloatIterator.wrap(iter));
-    }
+  public void testWrapUnmodifiableFloatIterator ()
+  {
+    final FloatIterator iter = makeUnmodifiableFloatIterator ();
+    assertSame (iter, UnmodifiableFloatIterator.wrap (iter));
+  }
 
 }

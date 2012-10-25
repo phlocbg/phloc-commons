@@ -21,94 +21,121 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestRandomAccessFloatList extends TestCase {
+public class TestRandomAccessFloatList extends TestCase
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestRandomAccessFloatList(String testName) {
-        super(testName);
+  public TestRandomAccessFloatList (final String testName)
+  {
+    super (testName);
+  }
+
+  public static Test suite ()
+  {
+    return new TestSuite (TestRandomAccessFloatList.class);
+  }
+
+  // tests
+  // ------------------------------------------------------------------------
+
+  public void testAddIsUnsupportedByDefault ()
+  {
+    final RandomAccessFloatList list = new AbstractRandomAccessFloatListImpl ();
+    try
+    {
+      list.add (1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+    try
+    {
+      list.set (0, 1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  public void testAddAllIsUnsupportedByDefault ()
+  {
+    final RandomAccessFloatList list = new AbstractRandomAccessFloatListImpl ();
+    final FloatList list2 = new ArrayFloatList ();
+    list2.add (3);
+    try
+    {
+      list.addAll (list2);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  public void testSetIsUnsupportedByDefault ()
+  {
+    final RandomAccessFloatList list = new AbstractRandomAccessFloatListImpl ();
+    try
+    {
+      list.set (0, 1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  public void testRemoveElementIsUnsupportedByDefault ()
+  {
+    final RandomAccessFloatList list = new AbstractRandomAccessFloatListImpl ();
+    try
+    {
+      list.removeElementAt (0);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  // inner classes
+  // ------------------------------------------------------------------------
+
+  static class AbstractRandomAccessFloatListImpl extends RandomAccessFloatList
+  {
+    public AbstractRandomAccessFloatListImpl ()
+    {}
+
+    /**
+     * @see org.apache.commons.collections.primitives.FloatList#get(int)
+     */
+    @Override
+    public float get (final int index)
+    {
+      throw new IndexOutOfBoundsException ();
     }
 
-    public static Test suite() {
-        return new TestSuite(TestRandomAccessFloatList.class);
+    /**
+     * @see org.apache.commons.collections.primitives.FloatCollection#size()
+     */
+    @Override
+    public int size ()
+    {
+      return 0;
     }
 
-    // tests
-    // ------------------------------------------------------------------------
-    
-    public void testAddIsUnsupportedByDefault() {
-        RandomAccessFloatList list = new AbstractRandomAccessFloatListImpl();
-        try {
-            list.add((float)1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }        
-        try {
-            list.set(0,(float)1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }               
-    }
-
-    public void testAddAllIsUnsupportedByDefault() {
-        RandomAccessFloatList list = new AbstractRandomAccessFloatListImpl();
-        FloatList list2 = new ArrayFloatList();
-        list2.add((float)3);
-        try {
-            list.addAll(list2);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }               
-    }
-    
-    public void testSetIsUnsupportedByDefault() {
-        RandomAccessFloatList list = new AbstractRandomAccessFloatListImpl();
-        try {
-            list.set(0,(float)1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }               
-    }
-    
-    public void testRemoveElementIsUnsupportedByDefault() {
-        RandomAccessFloatList list = new AbstractRandomAccessFloatListImpl();
-        try {
-            list.removeElementAt(0);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }               
-    }
-    
-    // inner classes
-    // ------------------------------------------------------------------------
-
-
-    static class AbstractRandomAccessFloatListImpl extends RandomAccessFloatList {
-        public AbstractRandomAccessFloatListImpl() {
-        }
-
-        /**
-         * @see org.apache.commons.collections.primitives.FloatList#get(int)
-         */
-        public float get(int index) {
-            throw new IndexOutOfBoundsException();
-        }
-
-        /**
-         * @see org.apache.commons.collections.primitives.FloatCollection#size()
-         */
-        public int size() {
-            return 0;
-        }
-
-    }
+  }
 }

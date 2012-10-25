@@ -21,123 +21,162 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestLongCollections extends TestCase {
+public class TestLongCollections extends TestCase
+{
 
-    //------------------------------------------------------------ Conventional
+  // ------------------------------------------------------------ Conventional
 
-    public TestLongCollections(String testName) {
-        super(testName);
+  public TestLongCollections (final String testName)
+  {
+    super (testName);
+  }
+
+  public static Test suite ()
+  {
+    return new TestSuite (TestLongCollections.class);
+  }
+
+  // ---------------------------------------------------------------- Tests
+
+  public void testSingletonLongListIterator ()
+  {
+    final LongListIterator iter = LongCollections.singletonLongListIterator (17);
+    assertTrue (!iter.hasPrevious ());
+    assertTrue (iter.hasNext ());
+    assertEquals (17, iter.next ());
+    assertTrue (iter.hasPrevious ());
+    assertTrue (!iter.hasNext ());
+    assertEquals (17, iter.previous ());
+    try
+    {
+      iter.set (18);
+      fail ("Expected UnsupportedOperationException");
     }
-
-    public static Test suite() {
-        return new TestSuite(TestLongCollections.class);
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
     }
+  }
 
-    //---------------------------------------------------------------- Tests
-
-    public void testSingletonLongListIterator() {
-        LongListIterator iter = LongCollections.singletonLongListIterator(17);
-        assertTrue(!iter.hasPrevious());        
-        assertTrue(iter.hasNext());        
-        assertEquals(17,iter.next());        
-        assertTrue(iter.hasPrevious());        
-        assertTrue(!iter.hasNext());        
-        assertEquals(17,iter.previous());        
-        try {
-            iter.set(18);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+  public void testSingletonLongIterator ()
+  {
+    final LongIterator iter = LongCollections.singletonLongIterator (17);
+    assertTrue (iter.hasNext ());
+    assertEquals (17, iter.next ());
+    assertTrue (!iter.hasNext ());
+    try
+    {
+      iter.remove ();
+      fail ("Expected UnsupportedOperationException");
     }
-
-    public void testSingletonLongIterator() {
-        LongIterator iter = LongCollections.singletonLongIterator(17);
-        assertTrue(iter.hasNext());        
-        assertEquals(17,iter.next());        
-        assertTrue(!iter.hasNext());        
-        try {
-            iter.remove();
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
     }
+  }
 
-    public void testSingletonLongList() {
-        LongList list = LongCollections.singletonLongList(17);
-        assertEquals(1,list.size());
-        assertEquals(17,list.get(0));        
-        try {
-            list.add(18);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+  public void testSingletonLongList ()
+  {
+    final LongList list = LongCollections.singletonLongList (17);
+    assertEquals (1, list.size ());
+    assertEquals (17, list.get (0));
+    try
+    {
+      list.add (18);
+      fail ("Expected UnsupportedOperationException");
     }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
 
-    public void testUnmodifiableLongListNull() {
-        try {
-            LongCollections.unmodifiableLongList(null);
-            fail("Expected NullPointerException");
-        } catch(NullPointerException e) {
-            // expected
-        }
+  public void testUnmodifiableLongListNull ()
+  {
+    try
+    {
+      LongCollections.unmodifiableLongList (null);
+      fail ("Expected NullPointerException");
     }
+    catch (final NullPointerException e)
+    {
+      // expected
+    }
+  }
 
-    public void testEmptyLongList() {
-        assertSame(LongCollections.EMPTY_LONG_LIST,LongCollections.getEmptyLongList());
-        assertTrue(LongCollections.EMPTY_LONG_LIST.isEmpty());
-        try {
-            LongCollections.EMPTY_LONG_LIST.add(1);
-            fail("Expected UnsupportedOperationExcpetion");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+  public void testEmptyLongList ()
+  {
+    assertSame (LongCollections.EMPTY_LONG_LIST, LongCollections.getEmptyLongList ());
+    assertTrue (LongCollections.EMPTY_LONG_LIST.isEmpty ());
+    try
+    {
+      LongCollections.EMPTY_LONG_LIST.add (1);
+      fail ("Expected UnsupportedOperationExcpetion");
     }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
 
-    public void testUnmodifiableLongIteratorNull() {
-        try {
-            LongCollections.unmodifiableLongIterator(null);
-            fail("Expected NullPointerException");
-        } catch(NullPointerException e) {
-            // expected
-        }
+  public void testUnmodifiableLongIteratorNull ()
+  {
+    try
+    {
+      LongCollections.unmodifiableLongIterator (null);
+      fail ("Expected NullPointerException");
     }
+    catch (final NullPointerException e)
+    {
+      // expected
+    }
+  }
 
-    public void testEmptyLongIterator() {
-        assertSame(LongCollections.EMPTY_LONG_ITERATOR,LongCollections.getEmptyLongIterator());
-        assertTrue(! LongCollections.EMPTY_LONG_ITERATOR.hasNext());
-        try {
-            LongCollections.EMPTY_LONG_ITERATOR.remove();
-            fail("Expected UnsupportedOperationExcpetion");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+  public void testEmptyLongIterator ()
+  {
+    assertSame (LongCollections.EMPTY_LONG_ITERATOR, LongCollections.getEmptyLongIterator ());
+    assertTrue (!LongCollections.EMPTY_LONG_ITERATOR.hasNext ());
+    try
+    {
+      LongCollections.EMPTY_LONG_ITERATOR.remove ();
+      fail ("Expected UnsupportedOperationExcpetion");
     }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
 
-    public void testUnmodifiableLongListIteratorNull() {
-        try {
-            LongCollections.unmodifiableLongListIterator(null);
-            fail("Expected NullPointerException");
-        } catch(NullPointerException e) {
-            // expected
-        }
+  public void testUnmodifiableLongListIteratorNull ()
+  {
+    try
+    {
+      LongCollections.unmodifiableLongListIterator (null);
+      fail ("Expected NullPointerException");
     }
+    catch (final NullPointerException e)
+    {
+      // expected
+    }
+  }
 
-    public void testEmptyLongListIterator() {
-        assertSame(LongCollections.EMPTY_LONG_LIST_ITERATOR,LongCollections.getEmptyLongListIterator());
-        assertTrue(! LongCollections.EMPTY_LONG_LIST_ITERATOR.hasNext());
-        assertTrue(! LongCollections.EMPTY_LONG_LIST_ITERATOR.hasPrevious());
-        try {
-            LongCollections.EMPTY_LONG_LIST_ITERATOR.add(1);
-            fail("Expected UnsupportedOperationExcpetion");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+  public void testEmptyLongListIterator ()
+  {
+    assertSame (LongCollections.EMPTY_LONG_LIST_ITERATOR, LongCollections.getEmptyLongListIterator ());
+    assertTrue (!LongCollections.EMPTY_LONG_LIST_ITERATOR.hasNext ());
+    assertTrue (!LongCollections.EMPTY_LONG_LIST_ITERATOR.hasPrevious ());
+    try
+    {
+      LongCollections.EMPTY_LONG_LIST_ITERATOR.add (1);
+      fail ("Expected UnsupportedOperationExcpetion");
     }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
 }
-

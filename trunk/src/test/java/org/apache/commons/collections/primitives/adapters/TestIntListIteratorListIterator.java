@@ -28,112 +28,147 @@ import org.apache.commons.collections.primitives.ArrayIntList;
 import org.apache.commons.collections.primitives.IntList;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestIntListIteratorListIterator extends AbstractTestListIterator {
+public class TestIntListIteratorListIterator extends AbstractTestListIterator
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestIntListIteratorListIterator(String testName) {
-        super(testName);
-    }
+  public TestIntListIteratorListIterator (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        return new TestSuite(TestIntListIteratorListIterator.class);
-    }
+  public static Test suite ()
+  {
+    return new TestSuite (TestIntListIteratorListIterator.class);
+  }
 
-    // collections testing framework
-    // ------------------------------------------------------------------------
+  // collections testing framework
+  // ------------------------------------------------------------------------
 
-    public ListIterator makeEmptyListIterator() {
-        return IntListIteratorListIterator.wrap(makeEmptyIntList().listIterator());
-    }
-    
-    public ListIterator makeFullListIterator() {
-        return IntListIteratorListIterator.wrap(makeFullIntList().listIterator());
-    }
+  @Override
+  public ListIterator makeEmptyListIterator ()
+  {
+    return IntListIteratorListIterator.wrap (makeEmptyIntList ().listIterator ());
+  }
 
-    protected IntList makeEmptyIntList() {
-        return new ArrayIntList();
-    }
-    
-    protected IntList makeFullIntList() {
-        IntList list = makeEmptyIntList();
-        int[] elts = getFullElements();
-        for(int i=0;i<elts.length;i++) {
-            list.add(elts[i]);
-        }
-        return list;
-    }
-    
-    public int[] getFullElements() {
-        return new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-    }
-    
-    public Object addSetValue() {
-        return new Integer(1);
-    }
+  @Override
+  public ListIterator makeFullListIterator ()
+  {
+    return IntListIteratorListIterator.wrap (makeFullIntList ().listIterator ());
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
+  protected IntList makeEmptyIntList ()
+  {
+    return new ArrayIntList ();
+  }
 
-    
-    public void testNextHasNextRemove() {
-        int[] elements = getFullElements();
-        Iterator iter = makeFullIterator();
-        for(int i=0;i<elements.length;i++) {
-            assertTrue(iter.hasNext());
-            assertEquals(new Integer(elements[i]),iter.next());
-            if(supportsRemove()) {
-                iter.remove();
-            }
-        }        
-        assertTrue(! iter.hasNext() );
+  protected IntList makeFullIntList ()
+  {
+    final IntList list = makeEmptyIntList ();
+    final int [] elts = getFullElements ();
+    for (final int elt : elts)
+    {
+      list.add (elt);
     }
+    return list;
+  }
 
-    public void testEmptyIterator() {
-        assertTrue( ! makeEmptyIterator().hasNext() );
-        try {
-            makeEmptyIterator().next();
-            fail("Expected NoSuchElementException");
-        } catch(NoSuchElementException e) {
-            // expected
-        }
-        if(supportsRemove()) {
-            try {
-                makeEmptyIterator().remove();
-                fail("Expected IllegalStateException");
-            } catch(IllegalStateException e) {
-                // expected
-            }
-        }        
-    }
+  public int [] getFullElements ()
+  {
+    return new int [] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+  }
 
-    public void testRemoveBeforeNext() {
-        if(supportsRemove()) {
-            try {
-                makeFullIterator().remove();
-                fail("Expected IllegalStateException");
-            } catch(IllegalStateException e) {
-                // expected
-            }
-        }        
-    }
+  @Override
+  public Object addSetValue ()
+  {
+    return new Integer (1);
+  }
 
-    public void testRemoveAfterRemove() {
-        if(supportsRemove()) {
-            Iterator iter = makeFullIterator();
-            iter.next();
-            iter.remove();
-            try {
-                iter.remove();
-                fail("Expected IllegalStateException");
-            } catch(IllegalStateException e) {
-                // expected
-            }
-        }        
+  // tests
+  // ------------------------------------------------------------------------
+
+  public void testNextHasNextRemove ()
+  {
+    final int [] elements = getFullElements ();
+    final Iterator iter = makeFullIterator ();
+    for (final int element : elements)
+    {
+      assertTrue (iter.hasNext ());
+      assertEquals (new Integer (element), iter.next ());
+      if (supportsRemove ())
+      {
+        iter.remove ();
+      }
     }
+    assertTrue (!iter.hasNext ());
+  }
+
+  @Override
+  public void testEmptyIterator ()
+  {
+    assertTrue (!makeEmptyIterator ().hasNext ());
+    try
+    {
+      makeEmptyIterator ().next ();
+      fail ("Expected NoSuchElementException");
+    }
+    catch (final NoSuchElementException e)
+    {
+      // expected
+    }
+    if (supportsRemove ())
+    {
+      try
+      {
+        makeEmptyIterator ().remove ();
+        fail ("Expected IllegalStateException");
+      }
+      catch (final IllegalStateException e)
+      {
+        // expected
+      }
+    }
+  }
+
+  public void testRemoveBeforeNext ()
+  {
+    if (supportsRemove ())
+    {
+      try
+      {
+        makeFullIterator ().remove ();
+        fail ("Expected IllegalStateException");
+      }
+      catch (final IllegalStateException e)
+      {
+        // expected
+      }
+    }
+  }
+
+  public void testRemoveAfterRemove ()
+  {
+    if (supportsRemove ())
+    {
+      final Iterator iter = makeFullIterator ();
+      iter.next ();
+      iter.remove ();
+      try
+      {
+        iter.remove ();
+        fail ("Expected IllegalStateException");
+      }
+      catch (final IllegalStateException e)
+      {
+        // expected
+      }
+    }
+  }
 
 }

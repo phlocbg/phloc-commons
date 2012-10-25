@@ -21,94 +21,121 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestRandomAccessShortList extends TestCase {
+public class TestRandomAccessShortList extends TestCase
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestRandomAccessShortList(String testName) {
-        super(testName);
+  public TestRandomAccessShortList (final String testName)
+  {
+    super (testName);
+  }
+
+  public static Test suite ()
+  {
+    return new TestSuite (TestRandomAccessShortList.class);
+  }
+
+  // tests
+  // ------------------------------------------------------------------------
+
+  public void testAddIsUnsupportedByDefault ()
+  {
+    final RandomAccessShortList list = new AbstractRandomAccessShortListImpl ();
+    try
+    {
+      list.add ((short) 1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+    try
+    {
+      list.set (0, (short) 1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  public void testAddAllIsUnsupportedByDefault ()
+  {
+    final RandomAccessShortList list = new AbstractRandomAccessShortListImpl ();
+    final ShortList list2 = new ArrayShortList ();
+    list2.add ((short) 3);
+    try
+    {
+      list.addAll (list2);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  public void testSetIsUnsupportedByDefault ()
+  {
+    final RandomAccessShortList list = new AbstractRandomAccessShortListImpl ();
+    try
+    {
+      list.set (0, (short) 1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  public void testRemoveElementIsUnsupportedByDefault ()
+  {
+    final RandomAccessShortList list = new AbstractRandomAccessShortListImpl ();
+    try
+    {
+      list.removeElementAt (0);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  // inner classes
+  // ------------------------------------------------------------------------
+
+  static class AbstractRandomAccessShortListImpl extends RandomAccessShortList
+  {
+    public AbstractRandomAccessShortListImpl ()
+    {}
+
+    /**
+     * @see org.apache.commons.collections.primitives.ShortList#get(int)
+     */
+    @Override
+    public short get (final int index)
+    {
+      throw new IndexOutOfBoundsException ();
     }
 
-    public static Test suite() {
-        return new TestSuite(TestRandomAccessShortList.class);
+    /**
+     * @see org.apache.commons.collections.primitives.ShortCollection#size()
+     */
+    @Override
+    public int size ()
+    {
+      return 0;
     }
 
-    // tests
-    // ------------------------------------------------------------------------
-    
-    public void testAddIsUnsupportedByDefault() {
-        RandomAccessShortList list = new AbstractRandomAccessShortListImpl();
-        try {
-            list.add((short)1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }        
-        try {
-            list.set(0,(short)1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }               
-    }
-
-    public void testAddAllIsUnsupportedByDefault() {
-        RandomAccessShortList list = new AbstractRandomAccessShortListImpl();
-        ShortList list2 = new ArrayShortList();
-        list2.add((short)3);
-        try {
-            list.addAll(list2);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }               
-    }
-    
-    public void testSetIsUnsupportedByDefault() {
-        RandomAccessShortList list = new AbstractRandomAccessShortListImpl();
-        try {
-            list.set(0,(short)1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }               
-    }
-    
-    public void testRemoveElementIsUnsupportedByDefault() {
-        RandomAccessShortList list = new AbstractRandomAccessShortListImpl();
-        try {
-            list.removeElementAt(0);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }               
-    }
-    
-    // inner classes
-    // ------------------------------------------------------------------------
-
-
-    static class AbstractRandomAccessShortListImpl extends RandomAccessShortList {
-        public AbstractRandomAccessShortListImpl() {
-        }
-
-        /**
-         * @see org.apache.commons.collections.primitives.ShortList#get(int)
-         */
-        public short get(int index) {
-            throw new IndexOutOfBoundsException();
-        }
-
-        /**
-         * @see org.apache.commons.collections.primitives.ShortCollection#size()
-         */
-        public int size() {
-            return 0;
-        }
-
-    }
+  }
 }

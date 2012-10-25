@@ -24,161 +24,212 @@ import org.apache.commons.collections.primitives.ByteList;
 import org.apache.commons.collections.primitives.ByteListIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class BaseUnmodifiableByteListTest extends TestCase {
+public abstract class BaseUnmodifiableByteListTest extends TestCase
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public BaseUnmodifiableByteListTest(String testName) {
-        super(testName);
+  public BaseUnmodifiableByteListTest (final String testName)
+  {
+    super (testName);
+  }
+
+  // framework
+  // ------------------------------------------------------------------------
+
+  protected abstract ByteList makeUnmodifiableByteList ();
+
+  protected ByteList makeByteList ()
+  {
+    final ByteList list = new ArrayByteList ();
+    for (byte i = 0; i < 10; i++)
+    {
+      list.add (i);
     }
-    
-    // framework
-    // ------------------------------------------------------------------------
+    return list;
+  }
 
-    protected abstract ByteList makeUnmodifiableByteList();
+  // tests
+  // ------------------------------------------------------------------------
 
-    protected ByteList makeByteList() {
-        ByteList list = new ArrayByteList();
-        for(byte i=0;i<10;i++) {
-            list.add(i);
-        }
-        return list;
-    }
+  public final void testNotModifiable () throws Exception
+  {
+    assertListNotModifiable (makeUnmodifiableByteList ());
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
-    
-    public final void testNotModifiable() throws Exception {
-        assertListNotModifiable(makeUnmodifiableByteList());
-    }
+  public final void testSublistNotModifiable () throws Exception
+  {
+    final ByteList list = makeUnmodifiableByteList ();
+    assertListNotModifiable (list.subList (0, list.size () - 2));
+  }
 
-    public final void testSublistNotModifiable() throws Exception {
-        ByteList list = makeUnmodifiableByteList();
-        assertListNotModifiable(list.subList(0,list.size()-2));
-    }
-    
-    public final void testIteratorNotModifiable() throws Exception {
-        ByteList list = makeUnmodifiableByteList();
-        assertIteratorNotModifiable(list.iterator());
-        assertIteratorNotModifiable(list.subList(0,list.size()-2).iterator());
-    }
-    
-    public final void testListIteratorNotModifiable() throws Exception {
-        ByteList list = makeUnmodifiableByteList();
-        assertListIteratorNotModifiable(list.listIterator());
-        assertListIteratorNotModifiable(list.subList(0,list.size()-2).listIterator());
-        assertListIteratorNotModifiable(list.listIterator(1));
-        assertListIteratorNotModifiable(list.subList(0,list.size()-2).listIterator(1));
-    }
+  public final void testIteratorNotModifiable () throws Exception
+  {
+    final ByteList list = makeUnmodifiableByteList ();
+    assertIteratorNotModifiable (list.iterator ());
+    assertIteratorNotModifiable (list.subList (0, list.size () - 2).iterator ());
+  }
 
-    // util
-    // ------------------------------------------------------------------------
-    
-    private void assertListIteratorNotModifiable(ByteListIterator iter) throws Exception {
-        assertIteratorNotModifiable(iter);
-        
-        assertTrue(iter.hasPrevious());
-        
-        try {
-            iter.set((byte)2);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            iter.add((byte)2);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-    }
+  public final void testListIteratorNotModifiable () throws Exception
+  {
+    final ByteList list = makeUnmodifiableByteList ();
+    assertListIteratorNotModifiable (list.listIterator ());
+    assertListIteratorNotModifiable (list.subList (0, list.size () - 2).listIterator ());
+    assertListIteratorNotModifiable (list.listIterator (1));
+    assertListIteratorNotModifiable (list.subList (0, list.size () - 2).listIterator (1));
+  }
 
-    private void assertIteratorNotModifiable(ByteIterator iter) throws Exception {
-        assertTrue(iter.hasNext());
-        iter.next();
-        
-        try {
-            iter.remove();
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+  // util
+  // ------------------------------------------------------------------------
+
+  private void assertListIteratorNotModifiable (final ByteListIterator iter) throws Exception
+  {
+    assertIteratorNotModifiable (iter);
+
+    assertTrue (iter.hasPrevious ());
+
+    try
+    {
+      iter.set ((byte) 2);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
     }
 
-    private void assertListNotModifiable(ByteList list) throws Exception {
-        try {
-            list.add((byte)1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            list.add(1,(byte)2);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            list.addAll(makeByteList());
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            list.addAll(1,makeByteList());
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            list.removeElementAt(1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            list.removeElement((byte)1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            list.removeAll(makeByteList());
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-                
-        try {
-            list.retainAll(makeByteList());
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-
-        try {
-            list.clear();
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
-        
-        try {
-            list.set(1,(byte)2);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+    try
+    {
+      iter.add ((byte) 2);
+      fail ("Expected UnsupportedOperationException");
     }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  private void assertIteratorNotModifiable (final ByteIterator iter) throws Exception
+  {
+    assertTrue (iter.hasNext ());
+    iter.next ();
+
+    try
+    {
+      iter.remove ();
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  private void assertListNotModifiable (final ByteList list) throws Exception
+  {
+    try
+    {
+      list.add ((byte) 1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.add (1, (byte) 2);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.addAll (makeByteList ());
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.addAll (1, makeByteList ());
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.removeElementAt (1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.removeElement ((byte) 1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.removeAll (makeByteList ());
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.retainAll (makeByteList ());
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.clear ();
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+
+    try
+    {
+      list.set (1, (byte) 2);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
 }

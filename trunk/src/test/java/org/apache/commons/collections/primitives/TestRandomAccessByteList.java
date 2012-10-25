@@ -21,94 +21,121 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestRandomAccessByteList extends TestCase {
+public class TestRandomAccessByteList extends TestCase
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestRandomAccessByteList(String testName) {
-        super(testName);
+  public TestRandomAccessByteList (final String testName)
+  {
+    super (testName);
+  }
+
+  public static Test suite ()
+  {
+    return new TestSuite (TestRandomAccessByteList.class);
+  }
+
+  // tests
+  // ------------------------------------------------------------------------
+
+  public void testAddIsUnsupportedByDefault ()
+  {
+    final RandomAccessByteList list = new AbstractRandomAccessByteListImpl ();
+    try
+    {
+      list.add ((byte) 1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+    try
+    {
+      list.set (0, (byte) 1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  public void testAddAllIsUnsupportedByDefault ()
+  {
+    final RandomAccessByteList list = new AbstractRandomAccessByteListImpl ();
+    final ByteList list2 = new ArrayByteList ();
+    list2.add ((byte) 3);
+    try
+    {
+      list.addAll (list2);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  public void testSetIsUnsupportedByDefault ()
+  {
+    final RandomAccessByteList list = new AbstractRandomAccessByteListImpl ();
+    try
+    {
+      list.set (0, (byte) 1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  public void testRemoveElementIsUnsupportedByDefault ()
+  {
+    final RandomAccessByteList list = new AbstractRandomAccessByteListImpl ();
+    try
+    {
+      list.removeElementAt (0);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  // inner classes
+  // ------------------------------------------------------------------------
+
+  static class AbstractRandomAccessByteListImpl extends RandomAccessByteList
+  {
+    public AbstractRandomAccessByteListImpl ()
+    {}
+
+    /**
+     * @see org.apache.commons.collections.primitives.ByteList#get(int)
+     */
+    @Override
+    public byte get (final int index)
+    {
+      throw new IndexOutOfBoundsException ();
     }
 
-    public static Test suite() {
-        return new TestSuite(TestRandomAccessByteList.class);
+    /**
+     * @see org.apache.commons.collections.primitives.ByteCollection#size()
+     */
+    @Override
+    public int size ()
+    {
+      return 0;
     }
 
-    // tests
-    // ------------------------------------------------------------------------
-    
-    public void testAddIsUnsupportedByDefault() {
-        RandomAccessByteList list = new AbstractRandomAccessByteListImpl();
-        try {
-            list.add((byte)1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }        
-        try {
-            list.set(0,(byte)1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }               
-    }
-
-    public void testAddAllIsUnsupportedByDefault() {
-        RandomAccessByteList list = new AbstractRandomAccessByteListImpl();
-        ByteList list2 = new ArrayByteList();
-        list2.add((byte)3);
-        try {
-            list.addAll(list2);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }               
-    }
-    
-    public void testSetIsUnsupportedByDefault() {
-        RandomAccessByteList list = new AbstractRandomAccessByteListImpl();
-        try {
-            list.set(0,(byte)1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }               
-    }
-    
-    public void testRemoveElementIsUnsupportedByDefault() {
-        RandomAccessByteList list = new AbstractRandomAccessByteListImpl();
-        try {
-            list.removeElementAt(0);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }               
-    }
-    
-    // inner classes
-    // ------------------------------------------------------------------------
-
-
-    static class AbstractRandomAccessByteListImpl extends RandomAccessByteList {
-        public AbstractRandomAccessByteListImpl() {
-        }
-
-        /**
-         * @see org.apache.commons.collections.primitives.ByteList#get(int)
-         */
-        public byte get(int index) {
-            throw new IndexOutOfBoundsException();
-        }
-
-        /**
-         * @see org.apache.commons.collections.primitives.ByteCollection#size()
-         */
-        public int size() {
-            return 0;
-        }
-
-    }
+  }
 }

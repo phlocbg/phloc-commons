@@ -21,123 +21,162 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestDoubleCollections extends TestCase {
+public class TestDoubleCollections extends TestCase
+{
 
-    //------------------------------------------------------------ Conventional
+  // ------------------------------------------------------------ Conventional
 
-    public TestDoubleCollections(String testName) {
-        super(testName);
+  public TestDoubleCollections (final String testName)
+  {
+    super (testName);
+  }
+
+  public static Test suite ()
+  {
+    return new TestSuite (TestDoubleCollections.class);
+  }
+
+  // ---------------------------------------------------------------- Tests
+
+  public void testSingletonDoubleListIterator ()
+  {
+    final DoubleListIterator iter = DoubleCollections.singletonDoubleListIterator (17);
+    assertTrue (!iter.hasPrevious ());
+    assertTrue (iter.hasNext ());
+    assertEquals (17, iter.next (), 0);
+    assertTrue (iter.hasPrevious ());
+    assertTrue (!iter.hasNext ());
+    assertEquals (17, iter.previous (), 0);
+    try
+    {
+      iter.set (18);
+      fail ("Expected UnsupportedOperationException");
     }
-
-    public static Test suite() {
-        return new TestSuite(TestDoubleCollections.class);
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
     }
+  }
 
-    //---------------------------------------------------------------- Tests
-
-    public void testSingletonDoubleListIterator() {
-        DoubleListIterator iter = DoubleCollections.singletonDoubleListIterator((double)17);
-        assertTrue(!iter.hasPrevious());        
-        assertTrue(iter.hasNext());        
-        assertEquals(17,iter.next(),(double)0);        
-        assertTrue(iter.hasPrevious());        
-        assertTrue(!iter.hasNext());        
-        assertEquals(17,iter.previous(),(double)0);        
-        try {
-            iter.set((double)18);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+  public void testSingletonDoubleIterator ()
+  {
+    final DoubleIterator iter = DoubleCollections.singletonDoubleIterator (17);
+    assertTrue (iter.hasNext ());
+    assertEquals (17, iter.next (), 0);
+    assertTrue (!iter.hasNext ());
+    try
+    {
+      iter.remove ();
+      fail ("Expected UnsupportedOperationException");
     }
-
-    public void testSingletonDoubleIterator() {
-        DoubleIterator iter = DoubleCollections.singletonDoubleIterator((double)17);
-        assertTrue(iter.hasNext());        
-        assertEquals(17,iter.next(),(double)0);        
-        assertTrue(!iter.hasNext());        
-        try {
-            iter.remove();
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
     }
+  }
 
-    public void testSingletonDoubleList() {
-        DoubleList list = DoubleCollections.singletonDoubleList((double)17);
-        assertEquals(1,list.size());
-        assertEquals(17,list.get(0),(double)0);        
-        try {
-            list.add((double)18);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+  public void testSingletonDoubleList ()
+  {
+    final DoubleList list = DoubleCollections.singletonDoubleList (17);
+    assertEquals (1, list.size ());
+    assertEquals (17, list.get (0), 0);
+    try
+    {
+      list.add (18);
+      fail ("Expected UnsupportedOperationException");
     }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
 
-    public void testUnmodifiableDoubleListNull() {
-        try {
-            DoubleCollections.unmodifiableDoubleList(null);
-            fail("Expected NullPointerException");
-        } catch(NullPointerException e) {
-            // expected
-        }
+  public void testUnmodifiableDoubleListNull ()
+  {
+    try
+    {
+      DoubleCollections.unmodifiableDoubleList (null);
+      fail ("Expected NullPointerException");
     }
+    catch (final NullPointerException e)
+    {
+      // expected
+    }
+  }
 
-    public void testEmptyDoubleList() {
-        assertSame(DoubleCollections.EMPTY_DOUBLE_LIST,DoubleCollections.getEmptyDoubleList());
-        assertTrue(DoubleCollections.EMPTY_DOUBLE_LIST.isEmpty());
-        try {
-            DoubleCollections.EMPTY_DOUBLE_LIST.add((double)1);
-            fail("Expected UnsupportedOperationExcpetion");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+  public void testEmptyDoubleList ()
+  {
+    assertSame (DoubleCollections.EMPTY_DOUBLE_LIST, DoubleCollections.getEmptyDoubleList ());
+    assertTrue (DoubleCollections.EMPTY_DOUBLE_LIST.isEmpty ());
+    try
+    {
+      DoubleCollections.EMPTY_DOUBLE_LIST.add (1);
+      fail ("Expected UnsupportedOperationExcpetion");
     }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
 
-    public void testUnmodifiableDoubleIteratorNull() {
-        try {
-            DoubleCollections.unmodifiableDoubleIterator(null);
-            fail("Expected NullPointerException");
-        } catch(NullPointerException e) {
-            // expected
-        }
+  public void testUnmodifiableDoubleIteratorNull ()
+  {
+    try
+    {
+      DoubleCollections.unmodifiableDoubleIterator (null);
+      fail ("Expected NullPointerException");
     }
+    catch (final NullPointerException e)
+    {
+      // expected
+    }
+  }
 
-    public void testEmptyDoubleIterator() {
-        assertSame(DoubleCollections.EMPTY_DOUBLE_ITERATOR,DoubleCollections.getEmptyDoubleIterator());
-        assertTrue(! DoubleCollections.EMPTY_DOUBLE_ITERATOR.hasNext());
-        try {
-            DoubleCollections.EMPTY_DOUBLE_ITERATOR.remove();
-            fail("Expected UnsupportedOperationExcpetion");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+  public void testEmptyDoubleIterator ()
+  {
+    assertSame (DoubleCollections.EMPTY_DOUBLE_ITERATOR, DoubleCollections.getEmptyDoubleIterator ());
+    assertTrue (!DoubleCollections.EMPTY_DOUBLE_ITERATOR.hasNext ());
+    try
+    {
+      DoubleCollections.EMPTY_DOUBLE_ITERATOR.remove ();
+      fail ("Expected UnsupportedOperationExcpetion");
     }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
 
-    public void testUnmodifiableDoubleListIteratorNull() {
-        try {
-            DoubleCollections.unmodifiableDoubleListIterator(null);
-            fail("Expected NullPointerException");
-        } catch(NullPointerException e) {
-            // expected
-        }
+  public void testUnmodifiableDoubleListIteratorNull ()
+  {
+    try
+    {
+      DoubleCollections.unmodifiableDoubleListIterator (null);
+      fail ("Expected NullPointerException");
     }
+    catch (final NullPointerException e)
+    {
+      // expected
+    }
+  }
 
-    public void testEmptyDoubleListIterator() {
-        assertSame(DoubleCollections.EMPTY_DOUBLE_LIST_ITERATOR,DoubleCollections.getEmptyDoubleListIterator());
-        assertTrue(! DoubleCollections.EMPTY_DOUBLE_LIST_ITERATOR.hasNext());
-        assertTrue(! DoubleCollections.EMPTY_DOUBLE_LIST_ITERATOR.hasPrevious());
-        try {
-            DoubleCollections.EMPTY_DOUBLE_LIST_ITERATOR.add((double)1);
-            fail("Expected UnsupportedOperationExcpetion");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+  public void testEmptyDoubleListIterator ()
+  {
+    assertSame (DoubleCollections.EMPTY_DOUBLE_LIST_ITERATOR, DoubleCollections.getEmptyDoubleListIterator ());
+    assertTrue (!DoubleCollections.EMPTY_DOUBLE_LIST_ITERATOR.hasNext ());
+    assertTrue (!DoubleCollections.EMPTY_DOUBLE_LIST_ITERATOR.hasPrevious ());
+    try
+    {
+      DoubleCollections.EMPTY_DOUBLE_LIST_ITERATOR.add (1);
+      fail ("Expected UnsupportedOperationExcpetion");
     }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
 }
-

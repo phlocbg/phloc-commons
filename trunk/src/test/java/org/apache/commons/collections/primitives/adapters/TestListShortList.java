@@ -28,87 +28,115 @@ import org.apache.commons.collections.primitives.ShortList;
 import org.apache.commons.collections.primitives.TestShortList;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestListShortList extends TestShortList {
+public class TestListShortList extends TestShortList
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestListShortList(String testName) {
-        super(testName);
-    }
+  public TestListShortList (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        TestSuite suite = BulkTest.makeSuite(TestListShortList.class);
-        return suite;
-    }
+  public static Test suite ()
+  {
+    final TestSuite suite = BulkTest.makeSuite (TestListShortList.class);
+    return suite;
+  }
 
-    // collections testing framework
-    // ------------------------------------------------------------------------
+  // collections testing framework
+  // ------------------------------------------------------------------------
 
-    /**
-     * @see org.apache.commons.collections.primitives.TestShortList#makeEmptyShortList()
-     */
-    protected ShortList makeEmptyShortList() {
-        return new ListShortList(new ArrayList());
-    }
-    
-    public String[] ignoredTests() {
-        // sublists are not serializable
-        return new String[] { 
-            "TestListShortList.bulkTestSubList.testFullListSerialization",
-            "TestListShortList.bulkTestSubList.testEmptyListSerialization",
-            "TestListShortList.bulkTestSubList.testCanonicalEmptyCollectionExists",
-            "TestListShortList.bulkTestSubList.testCanonicalFullCollectionExists",
-            "TestListShortList.bulkTestSubList.testEmptyListCompatibility",
-            "TestListShortList.bulkTestSubList.testFullListCompatibility",
-            "TestListShortList.bulkTestSubList.testSerializeDeserializeThenCompare",
-            "TestListShortList.bulkTestSubList.testSimpleSerialization"
-        };
-    }
+  /**
+   * @see org.apache.commons.collections.primitives.TestShortList#makeEmptyShortList()
+   */
+  @Override
+  protected ShortList makeEmptyShortList ()
+  {
+    return new ListShortList (new ArrayList ());
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
+  @Override
+  public String [] ignoredTests ()
+  {
+    // sublists are not serializable
+    return new String [] { "TestListShortList.bulkTestSubList.testFullListSerialization",
+                          "TestListShortList.bulkTestSubList.testEmptyListSerialization",
+                          "TestListShortList.bulkTestSubList.testCanonicalEmptyCollectionExists",
+                          "TestListShortList.bulkTestSubList.testCanonicalFullCollectionExists",
+                          "TestListShortList.bulkTestSubList.testEmptyListCompatibility",
+                          "TestListShortList.bulkTestSubList.testFullListCompatibility",
+                          "TestListShortList.bulkTestSubList.testSerializeDeserializeThenCompare",
+                          "TestListShortList.bulkTestSubList.testSimpleSerialization" };
+  }
 
-    /** @TODO need to add serialized form to cvs */
-    public void testCanonicalEmptyCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+  // tests
+  // ------------------------------------------------------------------------
 
-    public void testCanonicalFullCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+  /** @TODO need to add serialized form to cvs */
+  @Override
+  public void testCanonicalEmptyCollectionExists ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    public void testEmptyListCompatibility() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+  @Override
+  public void testCanonicalFullCollectionExists ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    public void testFullListCompatibility() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
-    public void testWrapNull() {
-        assertNull(ListShortList.wrap(null));
-    }
-    
-    public void testWrapSerializable() {
-        ShortList list = ListShortList.wrap(new ArrayList());
-        assertNotNull(list);
-        assertTrue(list instanceof Serializable);
-    }
-    
-    public void testWrapNonSerializable() {
-        ShortList list = ListShortList.wrap(new AbstractList() { 
-            public Object get(int i) { throw new IndexOutOfBoundsException(); } 
-            public int size() { return 0; } 
-        });
-        assertNotNull(list);
-        assertTrue(!(list instanceof Serializable));
-    }
+  @Override
+  public void testEmptyListCompatibility ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
+
+  @Override
+  public void testFullListCompatibility ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
+
+  public void testWrapNull ()
+  {
+    assertNull (ListShortList.wrap (null));
+  }
+
+  public void testWrapSerializable ()
+  {
+    final ShortList list = ListShortList.wrap (new ArrayList ());
+    assertNotNull (list);
+    assertTrue (list instanceof Serializable);
+  }
+
+  public void testWrapNonSerializable ()
+  {
+    final ShortList list = ListShortList.wrap (new AbstractList ()
+    {
+      @Override
+      public Object get (final int i)
+      {
+        throw new IndexOutOfBoundsException ();
+      }
+
+      @Override
+      public int size ()
+      {
+        return 0;
+      }
+    });
+    assertNotNull (list);
+    assertTrue (!(list instanceof Serializable));
+  }
 
 }

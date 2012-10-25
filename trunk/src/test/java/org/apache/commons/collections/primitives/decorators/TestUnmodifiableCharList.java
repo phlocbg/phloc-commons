@@ -24,52 +24,61 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.primitives.CharList;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestUnmodifiableCharList extends BaseUnmodifiableCharListTest {
+public class TestUnmodifiableCharList extends BaseUnmodifiableCharListTest
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestUnmodifiableCharList(String testName) {
-        super(testName);
-    }
-    
+  public TestUnmodifiableCharList (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        return new TestSuite(TestUnmodifiableCharList.class);
-    }
+  public static Test suite ()
+  {
+    return new TestSuite (TestUnmodifiableCharList.class);
+  }
 
-    // framework
-    // ------------------------------------------------------------------------
+  // framework
+  // ------------------------------------------------------------------------
 
-    protected CharList makeUnmodifiableCharList() {
-        return UnmodifiableCharList.wrap(makeCharList());
-    }
+  @Override
+  protected CharList makeUnmodifiableCharList ()
+  {
+    return UnmodifiableCharList.wrap (makeCharList ());
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
+  // tests
+  // ------------------------------------------------------------------------
 
-    public void testWrapNull() {
-        assertNull(UnmodifiableCharList.wrap(null));
-    }
+  public void testWrapNull ()
+  {
+    assertNull (UnmodifiableCharList.wrap (null));
+  }
 
-    public void testWrapUnmodifiableCharList() {
-        CharList list = makeUnmodifiableCharList();
-        assertSame(list,UnmodifiableCharList.wrap(list));
-    }
+  public void testWrapUnmodifiableCharList ()
+  {
+    final CharList list = makeUnmodifiableCharList ();
+    assertSame (list, UnmodifiableCharList.wrap (list));
+  }
 
-    public void testWrapSerializableCharList() {
-        CharList list = makeCharList();
-        assertTrue(list instanceof Serializable);
-        assertTrue(UnmodifiableCharList.wrap(list) instanceof Serializable);
-    }
+  public void testWrapSerializableCharList ()
+  {
+    final CharList list = makeCharList ();
+    assertTrue (list instanceof Serializable);
+    assertTrue (UnmodifiableCharList.wrap (list) instanceof Serializable);
+  }
 
-    public void testWrapNonSerializableCharList() {
-        CharList list = makeCharList();
-        CharList ns = list.subList(0,list.size());
-        assertTrue(!(ns instanceof Serializable));
-        assertTrue(!(UnmodifiableCharList.wrap(ns) instanceof Serializable));
-    }
+  public void testWrapNonSerializableCharList ()
+  {
+    final CharList list = makeCharList ();
+    final CharList ns = list.subList (0, list.size ());
+    assertTrue (!(ns instanceof Serializable));
+    assertTrue (!(UnmodifiableCharList.wrap (ns) instanceof Serializable));
+  }
 }

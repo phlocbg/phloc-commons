@@ -23,53 +23,63 @@ import org.apache.commons.collections.primitives.ShortIterator;
 import org.apache.commons.collections.primitives.ShortList;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class BaseUnmodifiableShortIteratorTest extends TestCase {
+public abstract class BaseUnmodifiableShortIteratorTest extends TestCase
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public BaseUnmodifiableShortIteratorTest(String testName) {
-        super(testName);
+  public BaseUnmodifiableShortIteratorTest (final String testName)
+  {
+    super (testName);
+  }
+
+  // framework
+  // ------------------------------------------------------------------------
+  protected abstract ShortIterator makeUnmodifiableShortIterator ();
+
+  protected ShortIterator makeShortIterator ()
+  {
+    final ShortList list = new ArrayShortList ();
+    for (short i = 0; i < 10; i++)
+    {
+      list.add (i);
     }
-    
+    return list.iterator ();
+  }
 
-    // framework
-    // ------------------------------------------------------------------------
-    protected abstract ShortIterator makeUnmodifiableShortIterator();
+  // tests
+  // ------------------------------------------------------------------------
 
-    protected ShortIterator makeShortIterator() {
-        ShortList list = new ArrayShortList();
-        for(short i=0;i<10;i++) {
-            list.add(i);
-        }
-        return list.iterator();
+  public final void testShortIteratorNotModifiable ()
+  {
+    final ShortIterator iter = makeUnmodifiableShortIterator ();
+    assertTrue (iter.hasNext ());
+    iter.next ();
+    try
+    {
+      iter.remove ();
+      fail ("Expected UnsupportedOperationException");
     }
-
-    // tests
-    // ------------------------------------------------------------------------
-
-    public final void testShortIteratorNotModifiable() {
-        ShortIterator iter = makeUnmodifiableShortIterator();
-        assertTrue(iter.hasNext());
-        iter.next();
-        try {
-            iter.remove();
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
     }
+  }
 
-    public final void testIterateShortIterator() {        
-        ShortIterator iter = makeUnmodifiableShortIterator();
-        for(ShortIterator expected = makeShortIterator(); expected.hasNext(); ) {
-            assertTrue(iter.hasNext());
-            assertEquals(expected.next(),iter.next());
-        }
-        assertTrue(! iter.hasNext() );
+  public final void testIterateShortIterator ()
+  {
+    final ShortIterator iter = makeUnmodifiableShortIterator ();
+    for (final ShortIterator expected = makeShortIterator (); expected.hasNext ();)
+    {
+      assertTrue (iter.hasNext ());
+      assertEquals (expected.next (), iter.next ());
     }
+    assertTrue (!iter.hasNext ());
+  }
 
 }

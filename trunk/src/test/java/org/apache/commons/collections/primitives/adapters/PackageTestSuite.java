@@ -23,88 +23,92 @@ import junit.framework.TestSuite;
 /**
  * Test this package.
  * 
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class PackageTestSuite extends TestCase {
-    public PackageTestSuite(String testName) {
-        super(testName);
-    }
+public class PackageTestSuite extends TestCase
+{
+  public PackageTestSuite (final String testName)
+  {
+    super (testName);
+  }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { PackageTestSuite.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
-    }
+  public static void main (final String args[])
+  {
+    final String [] testCaseName = { PackageTestSuite.class.getName () };
+    junit.textui.TestRunner.main (testCaseName);
+  }
 
-    public static Test suite() {
-        TestSuite suite = new TestSuite();
+  public static Test suite ()
+  {
+    final TestSuite suite = new TestSuite ();
 
-        suite.addTest(TestAdapt.suite());
-        
-        suite.addTest(TestCollectionByteCollection.suite());
-        suite.addTest(TestByteCollectionCollection.suite());
-        suite.addTest(TestByteListList.suite());
-        suite.addTest(TestListByteList.suite());
-        suite.addTest(TestIteratorByteIterator.suite());
-        suite.addTest(TestListIteratorByteListIterator.suite());
-        suite.addTest(TestByteIteratorIterator.suite());
-        suite.addTest(TestByteListIteratorListIterator.suite());
+    suite.addTest (TestAdapt.suite ());
 
-        suite.addTest(TestCollectionShortCollection.suite());
-        suite.addTest(TestShortCollectionCollection.suite());
-        suite.addTest(TestShortListList.suite());
-        suite.addTest(TestListShortList.suite());
-        suite.addTest(TestIteratorShortIterator.suite());
-        suite.addTest(TestListIteratorShortListIterator.suite());
-        suite.addTest(TestShortIteratorIterator.suite());
-        suite.addTest(TestShortListIteratorListIterator.suite());
+    suite.addTest (TestCollectionByteCollection.suite ());
+    suite.addTest (TestByteCollectionCollection.suite ());
+    suite.addTest (TestByteListList.suite ());
+    suite.addTest (TestListByteList.suite ());
+    suite.addTest (TestIteratorByteIterator.suite ());
+    suite.addTest (TestListIteratorByteListIterator.suite ());
+    suite.addTest (TestByteIteratorIterator.suite ());
+    suite.addTest (TestByteListIteratorListIterator.suite ());
 
-        suite.addTest(TestCollectionCharCollection.suite());
-        suite.addTest(TestCharCollectionCollection.suite());
-        suite.addTest(TestCharListList.suite());
-        suite.addTest(TestListCharList.suite());
-        suite.addTest(TestIteratorCharIterator.suite());
-        suite.addTest(TestListIteratorCharListIterator.suite());
-        suite.addTest(TestCharIteratorIterator.suite());
-        suite.addTest(TestCharListIteratorListIterator.suite());
+    suite.addTest (TestCollectionShortCollection.suite ());
+    suite.addTest (TestShortCollectionCollection.suite ());
+    suite.addTest (TestShortListList.suite ());
+    suite.addTest (TestListShortList.suite ());
+    suite.addTest (TestIteratorShortIterator.suite ());
+    suite.addTest (TestListIteratorShortListIterator.suite ());
+    suite.addTest (TestShortIteratorIterator.suite ());
+    suite.addTest (TestShortListIteratorListIterator.suite ());
 
-        suite.addTest(TestCollectionIntCollection.suite());
-        suite.addTest(TestIntCollectionCollection.suite());
-        suite.addTest(TestIntListList.suite());
-        suite.addTest(TestListIntList.suite());
-        suite.addTest(TestIteratorIntIterator.suite());
-        suite.addTest(TestListIteratorIntListIterator.suite());
-        suite.addTest(TestIntIteratorIterator.suite());
-        suite.addTest(TestIntListIteratorListIterator.suite());
-        
-		suite.addTest(TestCollectionLongCollection.suite());
-		suite.addTest(TestLongCollectionCollection.suite());
-		suite.addTest(TestLongListList.suite());
-		suite.addTest(TestListLongList.suite());
-		suite.addTest(TestIteratorLongIterator.suite());
-		suite.addTest(TestListIteratorLongListIterator.suite());
-		suite.addTest(TestLongIteratorIterator.suite());
-		suite.addTest(TestLongListIteratorListIterator.suite());
+    suite.addTest (TestCollectionCharCollection.suite ());
+    suite.addTest (TestCharCollectionCollection.suite ());
+    suite.addTest (TestCharListList.suite ());
+    suite.addTest (TestListCharList.suite ());
+    suite.addTest (TestIteratorCharIterator.suite ());
+    suite.addTest (TestListIteratorCharListIterator.suite ());
+    suite.addTest (TestCharIteratorIterator.suite ());
+    suite.addTest (TestCharListIteratorListIterator.suite ());
 
-        suite.addTest(TestCollectionFloatCollection.suite());
-        suite.addTest(TestFloatCollectionCollection.suite());
-        suite.addTest(TestFloatListList.suite());
-        suite.addTest(TestListFloatList.suite());
-        suite.addTest(TestIteratorFloatIterator.suite());
-        suite.addTest(TestListIteratorFloatListIterator.suite());
-        suite.addTest(TestFloatIteratorIterator.suite());
-        suite.addTest(TestFloatListIteratorListIterator.suite());
+    suite.addTest (TestCollectionIntCollection.suite ());
+    suite.addTest (TestIntCollectionCollection.suite ());
+    suite.addTest (TestIntListList.suite ());
+    suite.addTest (TestListIntList.suite ());
+    suite.addTest (TestIteratorIntIterator.suite ());
+    suite.addTest (TestListIteratorIntListIterator.suite ());
+    suite.addTest (TestIntIteratorIterator.suite ());
+    suite.addTest (TestIntListIteratorListIterator.suite ());
 
-        suite.addTest(TestCollectionDoubleCollection.suite());
-        suite.addTest(TestDoubleCollectionCollection.suite());
-        suite.addTest(TestDoubleListList.suite());
-        suite.addTest(TestListDoubleList.suite());
-        suite.addTest(TestIteratorDoubleIterator.suite());
-        suite.addTest(TestListIteratorDoubleListIterator.suite());
-        suite.addTest(TestDoubleIteratorIterator.suite());
-        suite.addTest(TestDoubleListIteratorListIterator.suite());
+    suite.addTest (TestCollectionLongCollection.suite ());
+    suite.addTest (TestLongCollectionCollection.suite ());
+    suite.addTest (TestLongListList.suite ());
+    suite.addTest (TestListLongList.suite ());
+    suite.addTest (TestIteratorLongIterator.suite ());
+    suite.addTest (TestListIteratorLongListIterator.suite ());
+    suite.addTest (TestLongIteratorIterator.suite ());
+    suite.addTest (TestLongListIteratorListIterator.suite ());
 
-        return suite;
-    }
+    suite.addTest (TestCollectionFloatCollection.suite ());
+    suite.addTest (TestFloatCollectionCollection.suite ());
+    suite.addTest (TestFloatListList.suite ());
+    suite.addTest (TestListFloatList.suite ());
+    suite.addTest (TestIteratorFloatIterator.suite ());
+    suite.addTest (TestListIteratorFloatListIterator.suite ());
+    suite.addTest (TestFloatIteratorIterator.suite ());
+    suite.addTest (TestFloatListIteratorListIterator.suite ());
+
+    suite.addTest (TestCollectionDoubleCollection.suite ());
+    suite.addTest (TestDoubleCollectionCollection.suite ());
+    suite.addTest (TestDoubleListList.suite ());
+    suite.addTest (TestListDoubleList.suite ());
+    suite.addTest (TestIteratorDoubleIterator.suite ());
+    suite.addTest (TestListIteratorDoubleListIterator.suite ());
+    suite.addTest (TestDoubleIteratorIterator.suite ());
+    suite.addTest (TestDoubleListIteratorListIterator.suite ());
+
+    return suite;
+  }
 }
-

@@ -24,52 +24,61 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.primitives.FloatList;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestUnmodifiableFloatList extends BaseUnmodifiableFloatListTest {
+public class TestUnmodifiableFloatList extends BaseUnmodifiableFloatListTest
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestUnmodifiableFloatList(String testName) {
-        super(testName);
-    }
-    
+  public TestUnmodifiableFloatList (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        return new TestSuite(TestUnmodifiableFloatList.class);
-    }
+  public static Test suite ()
+  {
+    return new TestSuite (TestUnmodifiableFloatList.class);
+  }
 
-    // framework
-    // ------------------------------------------------------------------------
+  // framework
+  // ------------------------------------------------------------------------
 
-    protected FloatList makeUnmodifiableFloatList() {
-        return UnmodifiableFloatList.wrap(makeFloatList());
-    }
+  @Override
+  protected FloatList makeUnmodifiableFloatList ()
+  {
+    return UnmodifiableFloatList.wrap (makeFloatList ());
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
+  // tests
+  // ------------------------------------------------------------------------
 
-    public void testWrapNull() {
-        assertNull(UnmodifiableFloatList.wrap(null));
-    }
+  public void testWrapNull ()
+  {
+    assertNull (UnmodifiableFloatList.wrap (null));
+  }
 
-    public void testWrapUnmodifiableFloatList() {
-        FloatList list = makeUnmodifiableFloatList();
-        assertSame(list,UnmodifiableFloatList.wrap(list));
-    }
+  public void testWrapUnmodifiableFloatList ()
+  {
+    final FloatList list = makeUnmodifiableFloatList ();
+    assertSame (list, UnmodifiableFloatList.wrap (list));
+  }
 
-    public void testWrapSerializableFloatList() {
-        FloatList list = makeFloatList();
-        assertTrue(list instanceof Serializable);
-        assertTrue(UnmodifiableFloatList.wrap(list) instanceof Serializable);
-    }
+  public void testWrapSerializableFloatList ()
+  {
+    final FloatList list = makeFloatList ();
+    assertTrue (list instanceof Serializable);
+    assertTrue (UnmodifiableFloatList.wrap (list) instanceof Serializable);
+  }
 
-    public void testWrapNonSerializableFloatList() {
-        FloatList list = makeFloatList();
-        FloatList ns = list.subList(0,list.size());
-        assertTrue(!(ns instanceof Serializable));
-        assertTrue(!(UnmodifiableFloatList.wrap(ns) instanceof Serializable));
-    }
+  public void testWrapNonSerializableFloatList ()
+  {
+    final FloatList list = makeFloatList ();
+    final FloatList ns = list.subList (0, list.size ());
+    assertTrue (!(ns instanceof Serializable));
+    assertTrue (!(UnmodifiableFloatList.wrap (ns) instanceof Serializable));
+  }
 }

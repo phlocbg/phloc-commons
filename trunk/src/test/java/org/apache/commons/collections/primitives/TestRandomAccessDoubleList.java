@@ -21,94 +21,121 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestRandomAccessDoubleList extends TestCase {
+public class TestRandomAccessDoubleList extends TestCase
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestRandomAccessDoubleList(String testName) {
-        super(testName);
+  public TestRandomAccessDoubleList (final String testName)
+  {
+    super (testName);
+  }
+
+  public static Test suite ()
+  {
+    return new TestSuite (TestRandomAccessDoubleList.class);
+  }
+
+  // tests
+  // ------------------------------------------------------------------------
+
+  public void testAddIsUnsupportedByDefault ()
+  {
+    final RandomAccessDoubleList list = new AbstractRandomAccessDoubleListImpl ();
+    try
+    {
+      list.add (1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+    try
+    {
+      list.set (0, 1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  public void testAddAllIsUnsupportedByDefault ()
+  {
+    final RandomAccessDoubleList list = new AbstractRandomAccessDoubleListImpl ();
+    final DoubleList list2 = new ArrayDoubleList ();
+    list2.add (3);
+    try
+    {
+      list.addAll (list2);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  public void testSetIsUnsupportedByDefault ()
+  {
+    final RandomAccessDoubleList list = new AbstractRandomAccessDoubleListImpl ();
+    try
+    {
+      list.set (0, 1);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  public void testRemoveElementIsUnsupportedByDefault ()
+  {
+    final RandomAccessDoubleList list = new AbstractRandomAccessDoubleListImpl ();
+    try
+    {
+      list.removeElementAt (0);
+      fail ("Expected UnsupportedOperationException");
+    }
+    catch (final UnsupportedOperationException e)
+    {
+      // expected
+    }
+  }
+
+  // inner classes
+  // ------------------------------------------------------------------------
+
+  static class AbstractRandomAccessDoubleListImpl extends RandomAccessDoubleList
+  {
+    public AbstractRandomAccessDoubleListImpl ()
+    {}
+
+    /**
+     * @see org.apache.commons.collections.primitives.DoubleList#get(int)
+     */
+    @Override
+    public double get (final int index)
+    {
+      throw new IndexOutOfBoundsException ();
     }
 
-    public static Test suite() {
-        return new TestSuite(TestRandomAccessDoubleList.class);
+    /**
+     * @see org.apache.commons.collections.primitives.DoubleCollection#size()
+     */
+    @Override
+    public int size ()
+    {
+      return 0;
     }
 
-    // tests
-    // ------------------------------------------------------------------------
-    
-    public void testAddIsUnsupportedByDefault() {
-        RandomAccessDoubleList list = new AbstractRandomAccessDoubleListImpl();
-        try {
-            list.add((double)1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }        
-        try {
-            list.set(0,(double)1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }               
-    }
-
-    public void testAddAllIsUnsupportedByDefault() {
-        RandomAccessDoubleList list = new AbstractRandomAccessDoubleListImpl();
-        DoubleList list2 = new ArrayDoubleList();
-        list2.add((double)3);
-        try {
-            list.addAll(list2);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }               
-    }
-    
-    public void testSetIsUnsupportedByDefault() {
-        RandomAccessDoubleList list = new AbstractRandomAccessDoubleListImpl();
-        try {
-            list.set(0,(double)1);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }               
-    }
-    
-    public void testRemoveElementIsUnsupportedByDefault() {
-        RandomAccessDoubleList list = new AbstractRandomAccessDoubleListImpl();
-        try {
-            list.removeElementAt(0);
-            fail("Expected UnsupportedOperationException");
-        } catch(UnsupportedOperationException e) {
-            // expected
-        }               
-    }
-    
-    // inner classes
-    // ------------------------------------------------------------------------
-
-
-    static class AbstractRandomAccessDoubleListImpl extends RandomAccessDoubleList {
-        public AbstractRandomAccessDoubleListImpl() {
-        }
-
-        /**
-         * @see org.apache.commons.collections.primitives.DoubleList#get(int)
-         */
-        public double get(int index) {
-            throw new IndexOutOfBoundsException();
-        }
-
-        /**
-         * @see org.apache.commons.collections.primitives.DoubleCollection#size()
-         */
-        public int size() {
-            return 0;
-        }
-
-    }
+  }
 }

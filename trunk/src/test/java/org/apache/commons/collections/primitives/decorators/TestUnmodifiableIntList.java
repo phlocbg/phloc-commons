@@ -24,52 +24,61 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.primitives.IntList;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestUnmodifiableIntList extends BaseUnmodifiableIntListTest {
+public class TestUnmodifiableIntList extends BaseUnmodifiableIntListTest
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestUnmodifiableIntList(String testName) {
-        super(testName);
-    }
-    
+  public TestUnmodifiableIntList (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        return new TestSuite(TestUnmodifiableIntList.class);
-    }
+  public static Test suite ()
+  {
+    return new TestSuite (TestUnmodifiableIntList.class);
+  }
 
-    // framework
-    // ------------------------------------------------------------------------
+  // framework
+  // ------------------------------------------------------------------------
 
-    protected IntList makeUnmodifiableIntList() {
-        return UnmodifiableIntList.wrap(makeIntList());
-    }
+  @Override
+  protected IntList makeUnmodifiableIntList ()
+  {
+    return UnmodifiableIntList.wrap (makeIntList ());
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
+  // tests
+  // ------------------------------------------------------------------------
 
-    public void testWrapNull() {
-        assertNull(UnmodifiableIntList.wrap(null));
-    }
+  public void testWrapNull ()
+  {
+    assertNull (UnmodifiableIntList.wrap (null));
+  }
 
-    public void testWrapUnmodifiableIntList() {
-        IntList list = makeUnmodifiableIntList();
-        assertSame(list,UnmodifiableIntList.wrap(list));
-    }
+  public void testWrapUnmodifiableIntList ()
+  {
+    final IntList list = makeUnmodifiableIntList ();
+    assertSame (list, UnmodifiableIntList.wrap (list));
+  }
 
-    public void testWrapSerializableIntList() {
-        IntList list = makeIntList();
-        assertTrue(list instanceof Serializable);
-        assertTrue(UnmodifiableIntList.wrap(list) instanceof Serializable);
-    }
+  public void testWrapSerializableIntList ()
+  {
+    final IntList list = makeIntList ();
+    assertTrue (list instanceof Serializable);
+    assertTrue (UnmodifiableIntList.wrap (list) instanceof Serializable);
+  }
 
-    public void testWrapNonSerializableIntList() {
-        IntList list = makeIntList();
-        IntList ns = list.subList(0,list.size());
-        assertTrue(!(ns instanceof Serializable));
-        assertTrue(!(UnmodifiableIntList.wrap(ns) instanceof Serializable));
-    }
+  public void testWrapNonSerializableIntList ()
+  {
+    final IntList list = makeIntList ();
+    final IntList ns = list.subList (0, list.size ());
+    assertTrue (!(ns instanceof Serializable));
+    assertTrue (!(UnmodifiableIntList.wrap (ns) instanceof Serializable));
+  }
 }

@@ -23,73 +23,99 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.AbstractTestObject;
-import org.apache.commons.collections.primitives.RandomAccessDoubleList;
 import org.apache.commons.collections.primitives.ArrayDoubleList;
 import org.apache.commons.collections.primitives.DoubleList;
+import org.apache.commons.collections.primitives.RandomAccessDoubleList;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestDoubleCollectionCollection extends AbstractTestObject {
+public class TestDoubleCollectionCollection extends AbstractTestObject
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestDoubleCollectionCollection(String testName) {
-        super(testName);
-    }
+  public TestDoubleCollectionCollection (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        return new TestSuite(TestDoubleCollectionCollection.class);
-    }
+  public static Test suite ()
+  {
+    return new TestSuite (TestDoubleCollectionCollection.class);
+  }
 
-    // collections testing framework
-    // ------------------------------------------------------------------------
+  // collections testing framework
+  // ------------------------------------------------------------------------
 
-    public Object makeObject() {
-        DoubleList list = new ArrayDoubleList();
-        for(int i=0;i<10;i++) {
-            list.add((double)i);
-        }
-        return new DoubleCollectionCollection(list);
+  @Override
+  public Object makeObject ()
+  {
+    final DoubleList list = new ArrayDoubleList ();
+    for (int i = 0; i < 10; i++)
+    {
+      list.add (i);
     }
+    return new DoubleCollectionCollection (list);
+  }
 
-    public void testSerializeDeserializeThenCompare() {
-        // Collection.equal contract doesn't work that way
-    }
+  @Override
+  public void testSerializeDeserializeThenCompare ()
+  {
+    // Collection.equal contract doesn't work that way
+  }
 
-    /** @TODO need to add serialized form to cvs */
-    public void testCanonicalEmptyCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
+  /** @TODO need to add serialized form to cvs */
+  @Override
+  public void testCanonicalEmptyCollectionExists ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    public void testCanonicalFullCollectionExists() {
-        // XXX FIX ME XXX
-        // need to add a serialized form to cvs
-    }
-    
-    // tests
-    // ------------------------------------------------------------------------
+  @Override
+  public void testCanonicalFullCollectionExists ()
+  {
+    // XXX FIX ME XXX
+    // need to add a serialized form to cvs
+  }
 
-    public void testWrapNull() {
-        assertNull(DoubleCollectionCollection.wrap(null));
-    }
-    
-    public void testWrapSerializable() {
-        Collection collection = DoubleCollectionCollection.wrap(new ArrayDoubleList());
-        assertNotNull(collection);
-        assertTrue(collection instanceof Serializable);
-    }
-    
-    public void testWrapNonSerializable() {
-        Collection collection = DoubleCollectionCollection.wrap(new RandomAccessDoubleList() { 
-            public double get(int i) { throw new IndexOutOfBoundsException(); } 
-            public int size() { return 0; } 
-        });
-        assertNotNull(collection);
-        assertTrue(!(collection instanceof Serializable));
-    }
+  // tests
+  // ------------------------------------------------------------------------
+
+  public void testWrapNull ()
+  {
+    assertNull (DoubleCollectionCollection.wrap (null));
+  }
+
+  public void testWrapSerializable ()
+  {
+    final Collection collection = DoubleCollectionCollection.wrap (new ArrayDoubleList ());
+    assertNotNull (collection);
+    assertTrue (collection instanceof Serializable);
+  }
+
+  public void testWrapNonSerializable ()
+  {
+    final Collection collection = DoubleCollectionCollection.wrap (new RandomAccessDoubleList ()
+    {
+      @Override
+      public double get (final int i)
+      {
+        throw new IndexOutOfBoundsException ();
+      }
+
+      @Override
+      public int size ()
+      {
+        return 0;
+      }
+    });
+    assertNotNull (collection);
+    assertTrue (!(collection instanceof Serializable));
+  }
 
 }

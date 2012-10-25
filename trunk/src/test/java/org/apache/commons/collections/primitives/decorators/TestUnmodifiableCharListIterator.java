@@ -22,44 +22,52 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.primitives.CharListIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestUnmodifiableCharListIterator extends BaseUnmodifiableCharListIteratorTest {
+public class TestUnmodifiableCharListIterator extends BaseUnmodifiableCharListIteratorTest
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestUnmodifiableCharListIterator(String testName) {
-        super(testName);
-    }
-    
+  public TestUnmodifiableCharListIterator (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        return new TestSuite(TestUnmodifiableCharListIterator.class);
-    }
+  public static Test suite ()
+  {
+    return new TestSuite (TestUnmodifiableCharListIterator.class);
+  }
 
-    // framework
-    // ------------------------------------------------------------------------
+  // framework
+  // ------------------------------------------------------------------------
 
-    protected CharListIterator makeUnmodifiableCharListIterator() {
-        return UnmodifiableCharListIterator.wrap(makeCharListIterator());
-    }
+  @Override
+  protected CharListIterator makeUnmodifiableCharListIterator ()
+  {
+    return UnmodifiableCharListIterator.wrap (makeCharListIterator ());
+  }
 
-    // tests
-    // ------------------------------------------------------------------------
+  // tests
+  // ------------------------------------------------------------------------
 
-    public void testWrapNotNull() {
-        assertNotNull(UnmodifiableCharListIterator.wrap(makeCharListIterator()));
-    }
+  public void testWrapNotNull ()
+  {
+    assertNotNull (UnmodifiableCharListIterator.wrap (makeCharListIterator ()));
+  }
 
-    public void testWrapNull() {
-        assertNull(UnmodifiableCharListIterator.wrap(null));
-    }
+  public void testWrapNull ()
+  {
+    assertNull (UnmodifiableCharListIterator.wrap (null));
+  }
 
-    public void testWrapUnmodifiableCharListIterator() {
-        CharListIterator iter = makeUnmodifiableCharListIterator();
-        assertSame(iter,UnmodifiableCharListIterator.wrap(iter));
-    }
+  public void testWrapUnmodifiableCharListIterator ()
+  {
+    final CharListIterator iter = makeUnmodifiableCharListIterator ();
+    assertSame (iter, UnmodifiableCharListIterator.wrap (iter));
+  }
 
 }

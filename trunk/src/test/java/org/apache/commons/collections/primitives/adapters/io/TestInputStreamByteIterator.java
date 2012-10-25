@@ -27,74 +27,98 @@ import org.apache.commons.collections.primitives.ByteIterator;
 import org.apache.commons.collections.primitives.TestByteIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestInputStreamByteIterator extends TestByteIterator {
+public class TestInputStreamByteIterator extends TestByteIterator
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestInputStreamByteIterator(String testName) {
-        super(testName);
+  public TestInputStreamByteIterator (final String testName)
+  {
+    super (testName);
+  }
+
+  public static Test suite ()
+  {
+    return new TestSuite (TestInputStreamByteIterator.class);
+  }
+
+  // ------------------------------------------------------------------------
+
+  @Override
+  public boolean supportsRemove ()
+  {
+    return false;
+  }
+
+  @Override
+  protected ByteIterator makeEmptyByteIterator ()
+  {
+    return new InputStreamByteIterator (new ByteArrayInputStream (new byte [0]));
+  }
+
+  @Override
+  protected ByteIterator makeFullByteIterator ()
+  {
+    return new InputStreamByteIterator (new ByteArrayInputStream (getFullElements ()));
+  }
+
+  @Override
+  protected byte [] getFullElements ()
+  {
+    final byte [] bytes = new byte [256];
+    for (int i = 0; i < 256; i++)
+    {
+      bytes[i] = (byte) (i - 128);
     }
+    return bytes;
+  }
 
-    public static Test suite() {
-        return new TestSuite(TestInputStreamByteIterator.class);
-    }
+  // ------------------------------------------------------------------------
 
-    // ------------------------------------------------------------------------
-    
-    public boolean supportsRemove() {
-        return false;
-    }
+  public void testErrorThrowingStream ()
+  {
+    final InputStream errStream = new InputStream ()
+    {
+      @Override
+      public int read () throws IOException
+      {
+        throw new IOException ();
+      }
+    };
 
-    protected ByteIterator makeEmptyByteIterator() {
-        return new InputStreamByteIterator(new ByteArrayInputStream(new byte[0]));
+    final ByteIterator iter = new InputStreamByteIterator (errStream);
+    try
+    {
+      iter.hasNext ();
+      fail ("Expected RuntimeException");
     }
+    catch (final RuntimeException e)
+    {
+      // expected
+    }
+    try
+    {
+      iter.next ();
+      fail ("Expected RuntimeException");
+    }
+    catch (final RuntimeException e)
+    {
+      // expected
+    }
+  }
 
-    protected ByteIterator makeFullByteIterator() {
-        return new InputStreamByteIterator(new ByteArrayInputStream(getFullElements()));
-    }
+  public void testAdaptNull ()
+  {
+    assertNull (InputStreamByteIterator.adapt (null));
+  }
 
-    protected byte[] getFullElements() {
-        byte[] bytes = new byte[256];
-        for(int i=0; i < 256; i++) {
-            bytes[i] = (byte)(i-128);
-        }
-        return bytes;
-    }
-
-
-    // ------------------------------------------------------------------------
-    
-    public void testErrorThrowingStream() {
-        InputStream errStream = new InputStream() {
-            public int read() throws IOException {
-                throw new IOException();
-            }
-        };
-        
-        ByteIterator iter = new InputStreamByteIterator(errStream);
-        try {
-            iter.hasNext();
-            fail("Expected RuntimeException");
-        } catch(RuntimeException e) {
-            // expected
-        } 
-        try {
-            iter.next();
-            fail("Expected RuntimeException");
-        } catch(RuntimeException e) {
-            // expected
-        } 
-    }
-    
-    public void testAdaptNull() {
-        assertNull(InputStreamByteIterator.adapt(null));
-    }
-
-    public void testAdaptNonNull() {
-        assertNotNull(InputStreamByteIterator.adapt(new ByteArrayInputStream(new byte[0])));
-    }
+  public void testAdaptNonNull ()
+  {
+    assertNotNull (InputStreamByteIterator.adapt (new ByteArrayInputStream (new byte [0])));
+  }
 }

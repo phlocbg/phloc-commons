@@ -26,52 +26,64 @@ import org.apache.commons.collections.primitives.LongIterator;
 import org.apache.commons.collections.primitives.TestLongIterator;
 
 /**
- * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov 2006) $
+ * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
+ *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestIteratorLongIterator extends TestLongIterator {
+public class TestIteratorLongIterator extends TestLongIterator
+{
 
-    // conventional
-    // ------------------------------------------------------------------------
+  // conventional
+  // ------------------------------------------------------------------------
 
-    public TestIteratorLongIterator(String testName) {
-        super(testName);
-    }
+  public TestIteratorLongIterator (final String testName)
+  {
+    super (testName);
+  }
 
-    public static Test suite() {
-        return new TestSuite(TestIteratorLongIterator.class);
-    }
+  public static Test suite ()
+  {
+    return new TestSuite (TestIteratorLongIterator.class);
+  }
 
-    // collections testing framework
-    // ------------------------------------------------------------------------
+  // collections testing framework
+  // ------------------------------------------------------------------------
 
-    public LongIterator makeEmptyLongIterator() {
-        return IteratorLongIterator.wrap(makeEmptyList().iterator());
-    }
-    
-    public LongIterator makeFullLongIterator() {
-        return IteratorLongIterator.wrap(makeFullList().iterator());
-    }
+  @Override
+  public LongIterator makeEmptyLongIterator ()
+  {
+    return IteratorLongIterator.wrap (makeEmptyList ().iterator ());
+  }
 
-    public List makeEmptyList() {
-        return new ArrayList();
-    }
-    
-    protected List makeFullList() {
-        List list = makeEmptyList();
-        long[] elts = getFullElements();
-        for(int i=0;i<elts.length;i++) {
-            list.add(new Long(elts[i]));
-        }
-        return list;
-    }
-    
-    public long[] getFullElements() {
-        return new long[] { (long)0, (long)1, (long)2, (long)3, (long)4, (long)5, (long)6, (long)7, (long)8, (long)9 };
-    }
-    
-    // tests
-    // ------------------------------------------------------------------------
+  @Override
+  public LongIterator makeFullLongIterator ()
+  {
+    return IteratorLongIterator.wrap (makeFullList ().iterator ());
+  }
 
+  public List makeEmptyList ()
+  {
+    return new ArrayList ();
+  }
+
+  protected List makeFullList ()
+  {
+    final List list = makeEmptyList ();
+    final long [] elts = getFullElements ();
+    for (final long elt : elts)
+    {
+      list.add (new Long (elt));
+    }
+    return list;
+  }
+
+  @Override
+  public long [] getFullElements ()
+  {
+    return new long [] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+  }
+
+  // tests
+  // ------------------------------------------------------------------------
 
 }
