@@ -16,11 +16,15 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
-import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.FloatCollection;
+
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 
 /**
  * @since Commons Primitives 1.0
@@ -28,17 +32,20 @@ import org.apache.commons.collections.primitives.FloatCollection;
  *          2006) $
  * @author Rodney Waldhoff
  */
-abstract class AbstractFloatCollectionCollection implements Collection
+abstract class AbstractFloatCollectionCollection implements Collection <Float>
 {
+  @Nonnull
+  protected abstract FloatCollection getFloatCollection ();
 
-  public boolean add (final Object element)
+  public boolean add (final Float element)
   {
-    return getFloatCollection ().add (((Number) element).floatValue ());
+    return getFloatCollection ().add (element.floatValue ());
   }
 
-  public boolean addAll (final Collection c)
+  @SuppressWarnings ("unchecked")
+  public boolean addAll (final Collection <? extends Float> c)
   {
-    return getFloatCollection ().addAll (CollectionFloatCollection.wrap (c));
+    return getFloatCollection ().addAll (CollectionFloatCollection.wrap ((Collection <Float>) c));
   }
 
   public void clear ()
@@ -48,12 +55,13 @@ abstract class AbstractFloatCollectionCollection implements Collection
 
   public boolean contains (final Object element)
   {
-    return getFloatCollection ().contains (((Number) element).floatValue ());
+    return getFloatCollection ().contains (((Float) element).floatValue ());
   }
 
-  public boolean containsAll (final Collection c)
+  @SuppressWarnings ("unchecked")
+  public boolean containsAll (final Collection <?> c)
   {
-    return getFloatCollection ().containsAll (CollectionFloatCollection.wrap (c));
+    return getFloatCollection ().containsAll (CollectionFloatCollection.wrap ((Collection <Float>) c));
   }
 
   @Override
@@ -69,28 +77,29 @@ abstract class AbstractFloatCollectionCollection implements Collection
 
   /**
    * {@link FloatIteratorIterator#wrap wraps} the
-   * {@link org.apache.commons.collections.primitives.FloatIterator
-   * FloatIterator} returned by my underlying {@link FloatCollection
-   * FloatCollection}, if any.
+   * {@link org.apache.commons.collections.primitives.FloatIterator FloatIterator}
+   * returned by my underlying {@link FloatCollection FloatCollection}, if any.
    */
-  public Iterator iterator ()
+  public Iterator <Float> iterator ()
   {
     return FloatIteratorIterator.wrap (getFloatCollection ().iterator ());
   }
 
   public boolean remove (final Object element)
   {
-    return getFloatCollection ().removeElement (((Number) element).floatValue ());
+    return getFloatCollection ().removeElement (((Float) element).floatValue ());
   }
 
-  public boolean removeAll (final Collection c)
+  @SuppressWarnings ("unchecked")
+  public boolean removeAll (final Collection <?> c)
   {
-    return getFloatCollection ().removeAll (CollectionFloatCollection.wrap (c));
+    return getFloatCollection ().removeAll (CollectionFloatCollection.wrap ((Collection <Float>) c));
   }
 
-  public boolean retainAll (final Collection c)
+  @SuppressWarnings ("unchecked")
+  public boolean retainAll (final Collection <?> c)
   {
-    return getFloatCollection ().retainAll (CollectionFloatCollection.wrap (c));
+    return getFloatCollection ().retainAll (CollectionFloatCollection.wrap ((Collection <Float>) c));
   }
 
   public int size ()
@@ -98,35 +107,30 @@ abstract class AbstractFloatCollectionCollection implements Collection
     return getFloatCollection ().size ();
   }
 
-  public Object [] toArray ()
+  @Nonnull
+  @ReturnsMutableCopy
+  public Float [] toArray ()
   {
     final float [] a = getFloatCollection ().toArray ();
-    final Object [] A = new Object [a.length];
+    final Float [] A = new Float [a.length];
     for (int i = 0; i < a.length; i++)
-    {
-      A[i] = new Float (a[i]);
-    }
+      A[i] = Float.valueOf (a[i]);
     return A;
   }
 
-  public Object [] toArray (Object [] A)
+  @SuppressWarnings ("unchecked")
+  public <T> T [] toArray (final T [] a)
   {
-    final float [] a = getFloatCollection ().toArray ();
-    if (A.length < a.length)
+    final Float [] elementData = toArray ();
+    final int size = size ();
+    if (a.length < size)
     {
-      A = (Object []) (Array.newInstance (A.getClass ().getComponentType (), a.length));
+      // Make a new array of a's runtime type, but my contents:
+      return (T []) Arrays.copyOf (elementData, size, a.getClass ());
     }
-    for (int i = 0; i < a.length; i++)
-    {
-      A[i] = new Float (a[i]);
-    }
-    if (A.length > a.length)
-    {
-      A[a.length] = null;
-    }
-
-    return A;
+    System.arraycopy (elementData, 0, a, 0, size);
+    if (a.length > size)
+      a[size] = null;
+    return a;
   }
-
-  protected abstract FloatCollection getFloatCollection ();
 }

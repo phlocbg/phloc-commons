@@ -18,6 +18,9 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.Iterator;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.ByteIterator;
 
 /**
@@ -32,24 +35,9 @@ import org.apache.commons.collections.primitives.ByteIterator;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class ByteIteratorIterator implements Iterator
+public class ByteIteratorIterator implements Iterator <Byte>
 {
-
-  /**
-   * Create an {@link Iterator Iterator} wrapping the specified
-   * {@link ByteIterator ByteIterator}. When the given <i>iterator</i> is
-   * <code>null</code>, returns <code>null</code>.
-   * 
-   * @param iterator
-   *        the (possibly <code>null</code>) {@link ByteIterator ByteIterator}
-   *        to wrap
-   * @return an {@link Iterator Iterator} wrapping the given <i>iterator</i>, or
-   *         <code>null</code> when <i>iterator</i> is <code>null</code>.
-   */
-  public static Iterator wrap (final ByteIterator iterator)
-  {
-    return null == iterator ? null : new ByteIteratorIterator (iterator);
-  }
+  private final ByteIterator m_aIterator;
 
   /**
    * Creates an {@link Iterator Iterator} wrapping the specified
@@ -57,26 +45,41 @@ public class ByteIteratorIterator implements Iterator
    * 
    * @see #wrap
    */
-  public ByteIteratorIterator (final ByteIterator iterator)
+  public ByteIteratorIterator (@Nonnull final ByteIterator iterator)
   {
-    _iterator = iterator;
+    m_aIterator = iterator;
   }
 
   public boolean hasNext ()
   {
-    return _iterator.hasNext ();
+    return m_aIterator.hasNext ();
   }
 
-  public Object next ()
+  @Nonnull
+  public Byte next ()
   {
-    return new Byte (_iterator.next ());
+    return Byte.valueOf (m_aIterator.next ());
   }
 
   public void remove ()
   {
-    _iterator.remove ();
+    m_aIterator.remove ();
   }
 
-  private ByteIterator _iterator = null;
-
+  /**
+   * Create an {@link Iterator Iterator} wrapping the specified
+   * {@link ByteIterator ByteIterator}. When the given <i>iterator</i> is
+   * <code>null</code>, returns <code>null</code>.
+   * 
+   * @param iterator
+   *        the (possibly <code>null</code>) {@link ByteIterator ByteIterator} to
+   *        wrap
+   * @return an {@link Iterator Iterator} wrapping the given <i>iterator</i>, or
+   *         <code>null</code> when <i>iterator</i> is <code>null</code>.
+   */
+  @Nullable
+  public static Iterator <Byte> wrap (@Nullable final ByteIterator iterator)
+  {
+    return null == iterator ? null : new ByteIteratorIterator (iterator);
+  }
 }

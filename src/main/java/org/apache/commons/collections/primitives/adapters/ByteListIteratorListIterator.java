@@ -18,40 +18,26 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.ListIterator;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.ByteListIterator;
 
 /**
- * Adapts an {@link ByteListIterator ByteListIterator} to the
- * {@link ListIterator ListIterator} interface.
+ * Adapts an {@link ByteListIterator ByteListIterator} to the {@link ListIterator
+ * ListIterator} interface.
  * <p />
  * This implementation delegates most methods to the provided
- * {@link ByteListIterator ByteListIterator} implementation in the "obvious"
- * way.
+ * {@link ByteListIterator ByteListIterator} implementation in the "obvious" way.
  * 
  * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class ByteListIteratorListIterator implements ListIterator
+public class ByteListIteratorListIterator implements ListIterator <Byte>
 {
-
-  /**
-   * Create a {@link ListIterator ListIterator} wrapping the specified
-   * {@link ByteListIterator ByteListIterator}. When the given <i>iterator</i>
-   * is <code>null</code>, returns <code>null</code>.
-   * 
-   * @param iterator
-   *        the (possibly <code>null</code>) {@link ByteListIterator
-   *        ByteListIterator} to wrap
-   * @return a {@link ListIterator ListIterator} wrapping the given
-   *         <i>iterator</i>, or <code>null</code> when <i>iterator</i> is
-   *         <code>null</code>.
-   */
-  public static ListIterator wrap (final ByteListIterator iterator)
-  {
-    return null == iterator ? null : new ByteListIteratorListIterator (iterator);
-  }
+  private final ByteListIterator _iterator;
 
   /**
    * Creates an {@link ListIterator ListIterator} wrapping the specified
@@ -59,7 +45,7 @@ public class ByteListIteratorListIterator implements ListIterator
    * 
    * @see #wrap
    */
-  public ByteListIteratorListIterator (final ByteListIterator iterator)
+  public ByteListIteratorListIterator (@Nonnull final ByteListIterator iterator)
   {
     _iterator = iterator;
   }
@@ -84,24 +70,26 @@ public class ByteListIteratorListIterator implements ListIterator
     return _iterator.hasPrevious ();
   }
 
-  public Object next ()
+  @Nonnull
+  public Byte next ()
   {
-    return new Byte (_iterator.next ());
+    return Byte.valueOf (_iterator.next ());
   }
 
-  public Object previous ()
+  @Nonnull
+  public Byte previous ()
   {
-    return new Byte (_iterator.previous ());
+    return Byte.valueOf (_iterator.previous ());
   }
 
-  public void add (final Object obj)
+  public void add (@Nonnull final Byte obj)
   {
-    _iterator.add (((Number) obj).byteValue ());
+    _iterator.add (obj.byteValue ());
   }
 
-  public void set (final Object obj)
+  public void set (@Nonnull final Byte obj)
   {
-    _iterator.set (((Number) obj).byteValue ());
+    _iterator.set (obj.byteValue ());
   }
 
   public void remove ()
@@ -109,6 +97,21 @@ public class ByteListIteratorListIterator implements ListIterator
     _iterator.remove ();
   }
 
-  private ByteListIterator _iterator = null;
-
+  /**
+   * Create a {@link ListIterator ListIterator} wrapping the specified
+   * {@link ByteListIterator ByteListIterator}. When the given <i>iterator</i> is
+   * <code>null</code>, returns <code>null</code>.
+   * 
+   * @param iterator
+   *        the (possibly <code>null</code>) {@link ByteListIterator
+   *        ByteListIterator} to wrap
+   * @return a {@link ListIterator ListIterator} wrapping the given
+   *         <i>iterator</i>, or <code>null</code> when <i>iterator</i> is
+   *         <code>null</code>.
+   */
+  @Nullable
+  public static ListIterator <Byte> wrap (@Nullable final ByteListIterator iterator)
+  {
+    return null == iterator ? null : new ByteListIteratorListIterator (iterator);
+  }
 }

@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.ByteList;
 
 /**
@@ -26,22 +28,21 @@ import org.apache.commons.collections.primitives.ByteList;
  */
 final class NonSerializableByteListList extends AbstractByteListList
 {
+  private final ByteList m_aList;
 
   /**
    * Creates a {@link java.util.List List} wrapping the specified
    * {@link ByteList ByteList}.
    */
-  public NonSerializableByteListList (final ByteList list)
+  public NonSerializableByteListList (@Nonnull final ByteList aList)
   {
-    _list = list;
+    m_aList = aList;
   }
 
   @Override
+  @Nonnull
   protected ByteList getByteList ()
   {
-    return _list;
+    return m_aList;
   }
-
-  private ByteList _list = null;
-
 }

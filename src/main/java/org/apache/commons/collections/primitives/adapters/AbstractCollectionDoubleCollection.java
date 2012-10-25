@@ -18,11 +18,16 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.Collection;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.DoubleCollection;
 import org.apache.commons.collections.primitives.DoubleIterator;
 
+import com.phloc.commons.annotations.ReturnsMutableCopy;
+
 /**
- * @since Commons Primitives 1.0
+ * @since Commons Primitives 0.1
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
@@ -32,12 +37,15 @@ abstract class AbstractCollectionDoubleCollection implements DoubleCollection
   protected AbstractCollectionDoubleCollection ()
   {}
 
-  public boolean add (final double element)
+  @Nonnull
+  protected abstract Collection <Double> getCollection ();
+
+  public boolean add (final double aElement)
   {
-    return getCollection ().add (new Double (element));
+    return getCollection ().add (Double.valueOf (aElement));
   }
 
-  public boolean addAll (final DoubleCollection c)
+  public boolean addAll (@Nonnull final DoubleCollection c)
   {
     return getCollection ().addAll (DoubleCollectionCollection.wrap (c));
   }
@@ -47,20 +55,14 @@ abstract class AbstractCollectionDoubleCollection implements DoubleCollection
     getCollection ().clear ();
   }
 
-  public boolean contains (final double element)
+  public boolean contains (final double aElement)
   {
-    return getCollection ().contains (new Double (element));
+    return getCollection ().contains (Double.valueOf (aElement));
   }
 
-  public boolean containsAll (final DoubleCollection c)
+  public boolean containsAll (@Nonnull final DoubleCollection c)
   {
     return getCollection ().containsAll (DoubleCollectionCollection.wrap (c));
-  }
-
-  @Override
-  public String toString ()
-  {
-    return getCollection ().toString ();
   }
 
   public boolean isEmpty ()
@@ -72,56 +74,61 @@ abstract class AbstractCollectionDoubleCollection implements DoubleCollection
    * {@link IteratorDoubleIterator#wrap wraps} the {@link java.util.Iterator
    * Iterator} returned by my underlying {@link Collection Collection}, if any.
    */
+  @Nonnull
   public DoubleIterator iterator ()
   {
     return IteratorDoubleIterator.wrap (getCollection ().iterator ());
   }
 
-  public boolean removeElement (final double element)
+  public boolean removeElement (final double aElement)
   {
-    return getCollection ().remove (new Double (element));
+    return getCollection ().remove (Double.valueOf (aElement));
   }
 
-  public boolean removeAll (final DoubleCollection c)
+  public boolean removeAll (@Nonnull final DoubleCollection c)
   {
     return getCollection ().removeAll (DoubleCollectionCollection.wrap (c));
   }
 
-  public boolean retainAll (final DoubleCollection c)
+  public boolean retainAll (@Nonnull final DoubleCollection c)
   {
     return getCollection ().retainAll (DoubleCollectionCollection.wrap (c));
   }
 
+  @Nonnegative
   public int size ()
   {
     return getCollection ().size ();
   }
 
+  @Nonnull
+  @ReturnsMutableCopy
   public double [] toArray ()
   {
-    final Object [] src = getCollection ().toArray ();
-    final double [] dest = new double [src.length];
-    for (int i = 0; i < src.length; i++)
-    {
-      dest[i] = ((Number) (src[i])).doubleValue ();
-    }
+    final Object [] aElementData = getCollection ().toArray ();
+    final double [] dest = new double [aElementData.length];
+    for (int i = 0; i < aElementData.length; i++)
+      dest[i] = ((Double) (aElementData[i])).doubleValue ();
     return dest;
   }
 
-  public double [] toArray (double [] dest)
+  @Nonnull
+  public double [] toArray (@Nonnull final double [] dest)
   {
-    final Object [] src = getCollection ().toArray ();
-    if (dest.length < src.length)
+    final Object [] aElementData = getCollection ().toArray ();
+    double [] ret = dest;
+    if (ret.length < aElementData.length)
+      ret = new double [aElementData.length];
+    for (int i = 0; i < aElementData.length; i++)
     {
-      dest = new double [src.length];
+      ret[i] = ((Double) (aElementData[i])).doubleValue ();
     }
-    for (int i = 0; i < src.length; i++)
-    {
-      dest[i] = ((Number) (src[i])).doubleValue ();
-    }
-    return dest;
+    return ret;
   }
 
-  protected abstract Collection getCollection ();
-
+  @Override
+  public String toString ()
+  {
+    return getCollection ().toString ();
+  }
 }

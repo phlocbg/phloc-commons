@@ -18,11 +18,14 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.Iterator;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.DoubleIterator;
 
 /**
- * Adapts an {@link DoubleIterator DoubleIterator} to the
- * {@link java.util.Iterator Iterator} interface.
+ * Adapts an {@link DoubleIterator DoubleIterator} to the {@link java.util.Iterator
+ * Iterator} interface.
  * <p />
  * This implementation delegates most methods to the provided
  * {@link DoubleIterator DoubleIterator} implementation in the "obvious" way.
@@ -32,24 +35,9 @@ import org.apache.commons.collections.primitives.DoubleIterator;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class DoubleIteratorIterator implements Iterator
+public class DoubleIteratorIterator implements Iterator <Double>
 {
-
-  /**
-   * Create an {@link Iterator Iterator} wrapping the specified
-   * {@link DoubleIterator DoubleIterator}. When the given <i>iterator</i> is
-   * <code>null</code>, returns <code>null</code>.
-   * 
-   * @param iterator
-   *        the (possibly <code>null</code>) {@link DoubleIterator
-   *        DoubleIterator} to wrap
-   * @return an {@link Iterator Iterator} wrapping the given <i>iterator</i>, or
-   *         <code>null</code> when <i>iterator</i> is <code>null</code>.
-   */
-  public static Iterator wrap (final DoubleIterator iterator)
-  {
-    return null == iterator ? null : new DoubleIteratorIterator (iterator);
-  }
+  private final DoubleIterator m_aIterator;
 
   /**
    * Creates an {@link Iterator Iterator} wrapping the specified
@@ -57,26 +45,41 @@ public class DoubleIteratorIterator implements Iterator
    * 
    * @see #wrap
    */
-  public DoubleIteratorIterator (final DoubleIterator iterator)
+  public DoubleIteratorIterator (@Nonnull final DoubleIterator iterator)
   {
-    _iterator = iterator;
+    m_aIterator = iterator;
   }
 
   public boolean hasNext ()
   {
-    return _iterator.hasNext ();
+    return m_aIterator.hasNext ();
   }
 
-  public Object next ()
+  @Nonnull
+  public Double next ()
   {
-    return new Double (_iterator.next ());
+    return Double.valueOf (m_aIterator.next ());
   }
 
   public void remove ()
   {
-    _iterator.remove ();
+    m_aIterator.remove ();
   }
 
-  private DoubleIterator _iterator = null;
-
+  /**
+   * Create an {@link Iterator Iterator} wrapping the specified
+   * {@link DoubleIterator DoubleIterator}. When the given <i>iterator</i> is
+   * <code>null</code>, returns <code>null</code>.
+   * 
+   * @param iterator
+   *        the (possibly <code>null</code>) {@link DoubleIterator DoubleIterator} to
+   *        wrap
+   * @return an {@link Iterator Iterator} wrapping the given <i>iterator</i>, or
+   *         <code>null</code> when <i>iterator</i> is <code>null</code>.
+   */
+  @Nullable
+  public static Iterator <Double> wrap (@Nullable final DoubleIterator iterator)
+  {
+    return null == iterator ? null : new DoubleIteratorIterator (iterator);
+  }
 }

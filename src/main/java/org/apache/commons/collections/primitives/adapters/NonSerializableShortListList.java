@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.ShortList;
 
 /**
@@ -26,22 +28,21 @@ import org.apache.commons.collections.primitives.ShortList;
  */
 final class NonSerializableShortListList extends AbstractShortListList
 {
+  private final ShortList m_aList;
 
   /**
    * Creates a {@link java.util.List List} wrapping the specified
    * {@link ShortList ShortList}.
    */
-  public NonSerializableShortListList (final ShortList list)
+  public NonSerializableShortListList (@Nonnull final ShortList aList)
   {
-    _list = list;
+    m_aList = aList;
   }
 
   @Override
+  @Nonnull
   protected ShortList getShortList ()
   {
-    return _list;
+    return m_aList;
   }
-
-  private ShortList _list = null;
-
 }

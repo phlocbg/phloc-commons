@@ -21,6 +21,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.ShortCollection;
 import org.apache.commons.collections.primitives.ShortList;
 
@@ -30,41 +33,52 @@ import org.apache.commons.collections.primitives.ShortList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-abstract class AbstractShortListList extends AbstractShortCollectionCollection implements List
+abstract class AbstractShortListList extends AbstractShortCollectionCollection implements List <Short>
 {
+  @Nonnull
+  protected abstract ShortList getShortList ();
 
-  public void add (final int index, final Object element)
+  @Override
+  @Nonnull
+  protected final ShortCollection getShortCollection ()
   {
-    getShortList ().add (index, ((Number) element).shortValue ());
+    return getShortList ();
   }
 
-  public boolean addAll (final int index, final Collection c)
+  public void add (final int index, @Nonnull final Short aElement)
   {
-    return getShortList ().addAll (index, CollectionShortCollection.wrap (c));
+    getShortList ().add (index, aElement.shortValue ());
   }
 
-  public Object get (final int index)
+  @SuppressWarnings ("unchecked")
+  public boolean addAll (final int index, final Collection <? extends Short> c)
   {
-    return new Short (getShortList ().get (index));
+    return getShortList ().addAll (index, CollectionShortCollection.wrap ((Collection <Short>) c));
+  }
+
+  @Nonnull
+  public Short get (final int nIndex)
+  {
+    return Short.valueOf (getShortList ().get (nIndex));
   }
 
   public int indexOf (final Object element)
   {
-    return getShortList ().indexOf (((Number) element).shortValue ());
+    return getShortList ().indexOf (((Short) element).shortValue ());
   }
 
   public int lastIndexOf (final Object element)
   {
-    return getShortList ().lastIndexOf (((Number) element).shortValue ());
+    return getShortList ().lastIndexOf (((Short) element).shortValue ());
   }
 
   /**
    * {@link ShortListIteratorListIterator#wrap wraps} the
    * {@link org.apache.commons.collections.primitives.ShortListIterator
-   * ShortListIterator} returned by my underlying {@link ShortList ShortList},
-   * if any.
+   * ShortListIterator} returned by my underlying {@link ShortList ShortList}, if
+   * any.
    */
-  public ListIterator listIterator ()
+  public ListIterator <Short> listIterator ()
   {
     return ShortListIteratorListIterator.wrap (getShortList ().listIterator ());
   }
@@ -72,64 +86,51 @@ abstract class AbstractShortListList extends AbstractShortCollectionCollection i
   /**
    * {@link ShortListIteratorListIterator#wrap wraps} the
    * {@link org.apache.commons.collections.primitives.ShortListIterator
-   * ShortListIterator} returned by my underlying {@link ShortList ShortList},
-   * if any.
+   * ShortListIterator} returned by my underlying {@link ShortList ShortList}, if
+   * any.
    */
-  public ListIterator listIterator (final int index)
+  public ListIterator <Short> listIterator (final int index)
   {
     return ShortListIteratorListIterator.wrap (getShortList ().listIterator (index));
   }
 
-  public Object remove (final int index)
+  @Nonnull
+  public Short remove (final int index)
   {
-    return new Short (getShortList ().removeElementAt (index));
+    return Short.valueOf (getShortList ().removeElementAt (index));
   }
 
-  public Object set (final int index, final Object element)
+  @Nonnull
+  public Short set (final int index, final Short element)
   {
-    return new Short (getShortList ().set (index, ((Number) element).shortValue ()));
+    return Short.valueOf (getShortList ().set (index, element.shortValue ()));
   }
 
-  public List subList (final int fromIndex, final int toIndex)
+  public List <Short> subList (final int nFromIndex, final int nToIndex)
   {
-    return ShortListList.wrap (getShortList ().subList (fromIndex, toIndex));
+    return ShortListList.wrap (getShortList ().subList (nFromIndex, nToIndex));
   }
 
   @Override
-  public boolean equals (final Object obj)
+  public boolean equals (@Nullable final Object obj)
   {
-    if (obj instanceof List)
-    {
-      final List that = (List) obj;
-      if (this == that)
-      {
-        return true;
-      }
-      else
-        if (this.size () != that.size ())
-        {
-          return false;
-        }
-        else
-        {
-          final Iterator thisiter = iterator ();
-          final Iterator thatiter = that.iterator ();
-          while (thisiter.hasNext ())
-          {
-            final Object thiselt = thisiter.next ();
-            final Object thatelt = thatiter.next ();
-            if (null == thiselt ? null != thatelt : !(thiselt.equals (thatelt)))
-            {
-              return false;
-            }
-          }
-          return true;
-        }
-    }
-    else
-    {
+    if (obj == this)
+      return true;
+    if (!(obj instanceof List <?>))
       return false;
+    final List <?> that = (List <?>) obj;
+    if (size () != that.size ())
+      return false;
+    final Iterator <?> thisiter = iterator ();
+    final Iterator <?> thatiter = that.iterator ();
+    while (thisiter.hasNext ())
+    {
+      final Object thiselt = thisiter.next ();
+      final Object thatelt = thatiter.next ();
+      if (null == thiselt ? null != thatelt : !(thiselt.equals (thatelt)))
+        return false;
     }
+    return true;
   }
 
   @Override
@@ -137,13 +138,4 @@ abstract class AbstractShortListList extends AbstractShortCollectionCollection i
   {
     return getShortList ().hashCode ();
   }
-
-  @Override
-  protected final ShortCollection getShortCollection ()
-  {
-    return getShortList ();
-  }
-
-  protected abstract ShortList getShortList ();
-
 }

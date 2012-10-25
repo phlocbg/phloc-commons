@@ -16,31 +16,33 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.BooleanCollection;
 
 /**
- * @since Commons Primitives 1.1
+ * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
+ * @author Rodney Waldhoff
  */
 final class NonSerializableBooleanCollectionCollection extends AbstractBooleanCollectionCollection
 {
+  private final BooleanCollection m_aCollection;
 
   /**
    * Creates a {@link java.util.Collection Collection} wrapping the specified
-   * {@link org.apache.commons.collections.primitives.BooleanCollection
-   * BooleanCollection}.
+   * {@link BooleanCollection BooleanCollection}.
    */
-  public NonSerializableBooleanCollectionCollection (final BooleanCollection collection)
+  public NonSerializableBooleanCollectionCollection (@Nonnull final BooleanCollection collection)
   {
-    _collection = collection;
+    m_aCollection = collection;
   }
 
   @Override
+  @Nonnull
   protected BooleanCollection getBooleanCollection ()
   {
-    return _collection;
+    return m_aCollection;
   }
-
-  private BooleanCollection _collection = null;
 }

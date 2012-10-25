@@ -19,23 +19,35 @@ package org.apache.commons.collections.primitives.adapters;
 import java.util.Collection;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.BooleanCollection;
 import org.apache.commons.collections.primitives.BooleanIterator;
 import org.apache.commons.collections.primitives.BooleanList;
 import org.apache.commons.collections.primitives.BooleanListIterator;
 
 /**
- * @since Commons Primitives 1.1
+ * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
  */
 abstract class AbstractListBooleanList extends AbstractCollectionBooleanCollection implements BooleanList
 {
-
-  public void add (final int index, final boolean element)
+  @Override
+  @Nonnull
+  protected final Collection <Boolean> getCollection ()
   {
-    getList ().add (index, new Boolean (element));
+    return getList ();
+  }
+
+  @Nonnull
+  protected abstract List <Boolean> getList ();
+
+  public void add (final int nIndex, final boolean element)
+  {
+    getList ().add (nIndex, Boolean.valueOf (element));
   }
 
   public boolean addAll (final int index, final BooleanCollection collection)
@@ -45,17 +57,17 @@ abstract class AbstractListBooleanList extends AbstractCollectionBooleanCollecti
 
   public boolean get (final int index)
   {
-    return ((Boolean) getList ().get (index)).booleanValue ();
+    return getList ().get (index).booleanValue ();
   }
 
   public int indexOf (final boolean element)
   {
-    return getList ().indexOf (new Boolean (element));
+    return getList ().indexOf (Boolean.valueOf (element));
   }
 
-  public int lastIndexOf (final boolean element)
+  public int lastIndexOf (final boolean aElement)
   {
-    return getList ().lastIndexOf (new Boolean (element));
+    return getList ().lastIndexOf (Boolean.valueOf (aElement));
   }
 
   /**
@@ -63,6 +75,7 @@ abstract class AbstractListBooleanList extends AbstractCollectionBooleanCollecti
    * BooleanList} returned by my underlying {@link BooleanListIterator
    * BooleanListIterator}, if any.
    */
+  @Nonnull
   public BooleanListIterator listIterator ()
   {
     return ListIteratorBooleanListIterator.wrap (getList ().listIterator ());
@@ -73,19 +86,20 @@ abstract class AbstractListBooleanList extends AbstractCollectionBooleanCollecti
    * BooleanList} returned by my underlying {@link BooleanListIterator
    * BooleanListIterator}, if any.
    */
-  public BooleanListIterator listIterator (final int index)
+  @Nonnull
+  public BooleanListIterator listIterator (final int nIndex)
   {
-    return ListIteratorBooleanListIterator.wrap (getList ().listIterator (index));
+    return ListIteratorBooleanListIterator.wrap (getList ().listIterator (nIndex));
   }
 
   public boolean removeElementAt (final int index)
   {
-    return ((Boolean) getList ().remove (index)).booleanValue ();
+    return getList ().remove (index).booleanValue ();
   }
 
   public boolean set (final int index, final boolean element)
   {
-    return ((Boolean) getList ().set (index, new Boolean (element))).booleanValue ();
+    return getList ().set (index, new Boolean (element)).booleanValue ();
   }
 
   public BooleanList subList (final int fromIndex, final int toIndex)
@@ -94,38 +108,22 @@ abstract class AbstractListBooleanList extends AbstractCollectionBooleanCollecti
   }
 
   @Override
-  public boolean equals (final Object obj)
+  public boolean equals (@Nullable final Object obj)
   {
-    if (obj instanceof BooleanList)
-    {
-      final BooleanList that = (BooleanList) obj;
-      if (this == that)
-      {
-        return true;
-      }
-      else
-        if (this.size () != that.size ())
-        {
-          return false;
-        }
-        else
-        {
-          final BooleanIterator thisiter = iterator ();
-          final BooleanIterator thatiter = that.iterator ();
-          while (thisiter.hasNext ())
-          {
-            if (thisiter.next () != thatiter.next ())
-            {
-              return false;
-            }
-          }
-          return true;
-        }
-    }
-    else
-    {
+    if (obj == this)
+      return true;
+    if (!(obj instanceof BooleanList))
       return false;
-    }
+
+    final BooleanList that = (BooleanList) obj;
+    if (this.size () != that.size ())
+      return false;
+    final BooleanIterator thisiter = iterator ();
+    final BooleanIterator thatiter = that.iterator ();
+    while (thisiter.hasNext ())
+      if (thisiter.next () != thatiter.next ())
+        return false;
+    return true;
   }
 
   @Override
@@ -133,12 +131,4 @@ abstract class AbstractListBooleanList extends AbstractCollectionBooleanCollecti
   {
     return getList ().hashCode ();
   }
-
-  @Override
-  final protected Collection getCollection ()
-  {
-    return getList ();
-  }
-
-  abstract protected List getList ();
 }

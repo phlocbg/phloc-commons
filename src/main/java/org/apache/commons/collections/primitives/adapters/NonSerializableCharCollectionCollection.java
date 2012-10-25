@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.CharCollection;
 
 /**
@@ -26,21 +28,21 @@ import org.apache.commons.collections.primitives.CharCollection;
  */
 final class NonSerializableCharCollectionCollection extends AbstractCharCollectionCollection
 {
+  private final CharCollection m_aCollection;
 
   /**
    * Creates a {@link java.util.Collection Collection} wrapping the specified
    * {@link CharCollection CharCollection}.
    */
-  public NonSerializableCharCollectionCollection (final CharCollection collection)
+  public NonSerializableCharCollectionCollection (@Nonnull final CharCollection collection)
   {
-    _collection = collection;
+    m_aCollection = collection;
   }
 
   @Override
+  @Nonnull
   protected CharCollection getCharCollection ()
   {
-    return _collection;
+    return m_aCollection;
   }
-
-  private CharCollection _collection = null;
 }

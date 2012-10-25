@@ -18,6 +18,9 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.ListIterator;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.IntListIterator;
 
 /**
@@ -32,25 +35,9 @@ import org.apache.commons.collections.primitives.IntListIterator;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class IntListIteratorListIterator implements ListIterator
+public class IntListIteratorListIterator implements ListIterator <Integer>
 {
-
-  /**
-   * Create a {@link ListIterator ListIterator} wrapping the specified
-   * {@link IntListIterator IntListIterator}. When the given <i>iterator</i> is
-   * <code>null</code>, returns <code>null</code>.
-   * 
-   * @param iterator
-   *        the (possibly <code>null</code>) {@link IntListIterator
-   *        IntListIterator} to wrap
-   * @return a {@link ListIterator ListIterator} wrapping the given
-   *         <i>iterator</i>, or <code>null</code> when <i>iterator</i> is
-   *         <code>null</code>.
-   */
-  public static ListIterator wrap (final IntListIterator iterator)
-  {
-    return null == iterator ? null : new IntListIteratorListIterator (iterator);
-  }
+  private final IntListIterator _iterator;
 
   /**
    * Creates an {@link ListIterator ListIterator} wrapping the specified
@@ -58,7 +45,7 @@ public class IntListIteratorListIterator implements ListIterator
    * 
    * @see #wrap
    */
-  public IntListIteratorListIterator (final IntListIterator iterator)
+  public IntListIteratorListIterator (@Nonnull final IntListIterator iterator)
   {
     _iterator = iterator;
   }
@@ -83,24 +70,26 @@ public class IntListIteratorListIterator implements ListIterator
     return _iterator.hasPrevious ();
   }
 
-  public Object next ()
+  @Nonnull
+  public Integer next ()
   {
-    return new Integer (_iterator.next ());
+    return Integer.valueOf (_iterator.next ());
   }
 
-  public Object previous ()
+  @Nonnull
+  public Integer previous ()
   {
-    return new Integer (_iterator.previous ());
+    return Integer.valueOf (_iterator.previous ());
   }
 
-  public void add (final Object obj)
+  public void add (@Nonnull final Integer obj)
   {
-    _iterator.add (((Number) obj).intValue ());
+    _iterator.add (obj.intValue ());
   }
 
-  public void set (final Object obj)
+  public void set (@Nonnull final Integer obj)
   {
-    _iterator.set (((Number) obj).intValue ());
+    _iterator.set (obj.intValue ());
   }
 
   public void remove ()
@@ -108,6 +97,21 @@ public class IntListIteratorListIterator implements ListIterator
     _iterator.remove ();
   }
 
-  private IntListIterator _iterator = null;
-
+  /**
+   * Create a {@link ListIterator ListIterator} wrapping the specified
+   * {@link IntListIterator IntListIterator}. When the given <i>iterator</i> is
+   * <code>null</code>, returns <code>null</code>.
+   * 
+   * @param iterator
+   *        the (possibly <code>null</code>) {@link IntListIterator
+   *        IntListIterator} to wrap
+   * @return a {@link ListIterator ListIterator} wrapping the given
+   *         <i>iterator</i>, or <code>null</code> when <i>iterator</i> is
+   *         <code>null</code>.
+   */
+  @Nullable
+  public static ListIterator <Integer> wrap (@Nullable final IntListIterator iterator)
+  {
+    return null == iterator ? null : new IntListIteratorListIterator (iterator);
+  }
 }

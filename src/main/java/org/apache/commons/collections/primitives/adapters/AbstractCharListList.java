@@ -21,6 +21,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.CharCollection;
 import org.apache.commons.collections.primitives.CharList;
 
@@ -30,22 +33,33 @@ import org.apache.commons.collections.primitives.CharList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-abstract class AbstractCharListList extends AbstractCharCollectionCollection implements List
+abstract class AbstractCharListList extends AbstractCharCollectionCollection implements List <Character>
 {
+  @Nonnull
+  protected abstract CharList getCharList ();
 
-  public void add (final int index, final Object element)
+  @Override
+  @Nonnull
+  protected final CharCollection getCharCollection ()
   {
-    getCharList ().add (index, ((Character) element).charValue ());
+    return getCharList ();
   }
 
-  public boolean addAll (final int index, final Collection c)
+  public void add (final int index, @Nonnull final Character aElement)
   {
-    return getCharList ().addAll (index, CollectionCharCollection.wrap (c));
+    getCharList ().add (index, aElement.charValue ());
   }
 
-  public Object get (final int index)
+  @SuppressWarnings ("unchecked")
+  public boolean addAll (final int index, final Collection <? extends Character> c)
   {
-    return new Character (getCharList ().get (index));
+    return getCharList ().addAll (index, CollectionCharCollection.wrap ((Collection <Character>) c));
+  }
+
+  @Nonnull
+  public Character get (final int nIndex)
+  {
+    return Character.valueOf (getCharList ().get (nIndex));
   }
 
   public int indexOf (final Object element)
@@ -64,7 +78,7 @@ abstract class AbstractCharListList extends AbstractCharCollectionCollection imp
    * CharListIterator} returned by my underlying {@link CharList CharList}, if
    * any.
    */
-  public ListIterator listIterator ()
+  public ListIterator <Character> listIterator ()
   {
     return CharListIteratorListIterator.wrap (getCharList ().listIterator ());
   }
@@ -75,61 +89,48 @@ abstract class AbstractCharListList extends AbstractCharCollectionCollection imp
    * CharListIterator} returned by my underlying {@link CharList CharList}, if
    * any.
    */
-  public ListIterator listIterator (final int index)
+  public ListIterator <Character> listIterator (final int index)
   {
     return CharListIteratorListIterator.wrap (getCharList ().listIterator (index));
   }
 
-  public Object remove (final int index)
+  @Nonnull
+  public Character remove (final int index)
   {
-    return new Character (getCharList ().removeElementAt (index));
+    return Character.valueOf (getCharList ().removeElementAt (index));
   }
 
-  public Object set (final int index, final Object element)
+  @Nonnull
+  public Character set (final int index, final Character element)
   {
-    return new Character (getCharList ().set (index, ((Character) element).charValue ()));
+    return Character.valueOf (getCharList ().set (index, element.charValue ()));
   }
 
-  public List subList (final int fromIndex, final int toIndex)
+  public List <Character> subList (final int nFromIndex, final int nToIndex)
   {
-    return CharListList.wrap (getCharList ().subList (fromIndex, toIndex));
+    return CharListList.wrap (getCharList ().subList (nFromIndex, nToIndex));
   }
 
   @Override
-  public boolean equals (final Object obj)
+  public boolean equals (@Nullable final Object obj)
   {
-    if (obj instanceof List)
-    {
-      final List that = (List) obj;
-      if (this == that)
-      {
-        return true;
-      }
-      else
-        if (this.size () != that.size ())
-        {
-          return false;
-        }
-        else
-        {
-          final Iterator thisiter = iterator ();
-          final Iterator thatiter = that.iterator ();
-          while (thisiter.hasNext ())
-          {
-            final Object thiselt = thisiter.next ();
-            final Object thatelt = thatiter.next ();
-            if (null == thiselt ? null != thatelt : !(thiselt.equals (thatelt)))
-            {
-              return false;
-            }
-          }
-          return true;
-        }
-    }
-    else
-    {
+    if (obj == this)
+      return true;
+    if (!(obj instanceof List <?>))
       return false;
+    final List <?> that = (List <?>) obj;
+    if (size () != that.size ())
+      return false;
+    final Iterator <?> thisiter = iterator ();
+    final Iterator <?> thatiter = that.iterator ();
+    while (thisiter.hasNext ())
+    {
+      final Object thiselt = thisiter.next ();
+      final Object thatelt = thatiter.next ();
+      if (null == thiselt ? null != thatelt : !(thiselt.equals (thatelt)))
+        return false;
     }
+    return true;
   }
 
   @Override
@@ -137,13 +138,4 @@ abstract class AbstractCharListList extends AbstractCharCollectionCollection imp
   {
     return getCharList ().hashCode ();
   }
-
-  @Override
-  protected final CharCollection getCharCollection ()
-  {
-    return getCharList ();
-  }
-
-  protected abstract CharList getCharList ();
-
 }

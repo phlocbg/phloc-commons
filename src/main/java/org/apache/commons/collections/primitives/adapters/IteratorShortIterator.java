@@ -18,6 +18,9 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.Iterator;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.ShortIterator;
 
 /**
@@ -26,7 +29,7 @@ import org.apache.commons.collections.primitives.ShortIterator;
  * <p />
  * This implementation delegates most methods to the provided {@link Iterator
  * Iterator} implementation in the "obvious" way.
- * 
+ *
  * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
@@ -34,30 +37,15 @@ import org.apache.commons.collections.primitives.ShortIterator;
  */
 public class IteratorShortIterator implements ShortIterator
 {
-
-  /**
-   * Create an {@link ShortIterator ShortIterator} wrapping the specified
-   * {@link Iterator Iterator}. When the given <i>iterator</i> is
-   * <code>null</code>, returns <code>null</code>.
-   * 
-   * @param iterator
-   *        the (possibly <code>null</code>) {@link Iterator Iterator} to wrap
-   * @return an {@link ShortIterator ShortIterator} wrapping the given
-   *         <i>iterator</i>, or <code>null</code> when <i>iterator</i> is
-   *         <code>null</code>.
-   */
-  public static ShortIterator wrap (final Iterator iterator)
-  {
-    return null == iterator ? null : new IteratorShortIterator (iterator);
-  }
+  private final Iterator <Short> _iterator;
 
   /**
    * Creates an {@link ShortIterator ShortIterator} wrapping the specified
    * {@link Iterator Iterator}.
-   * 
+   *
    * @see #wrap
    */
-  public IteratorShortIterator (final Iterator iterator)
+  public IteratorShortIterator (@Nonnull final Iterator <Short> iterator)
   {
     _iterator = iterator;
   }
@@ -69,7 +57,7 @@ public class IteratorShortIterator implements ShortIterator
 
   public short next ()
   {
-    return ((Number) (_iterator.next ())).shortValue ();
+    return _iterator.next ().shortValue ();
   }
 
   public void remove ()
@@ -77,6 +65,20 @@ public class IteratorShortIterator implements ShortIterator
     _iterator.remove ();
   }
 
-  private Iterator _iterator = null;
-
+  /**
+   * Create an {@link ShortIterator ShortIterator} wrapping the specified
+   * {@link Iterator Iterator}. When the given <i>iterator</i> is
+   * <code>null</code>, returns <code>null</code>.
+   *
+   * @param iterator
+   *        the (possibly <code>null</code>) {@link Iterator Iterator} to wrap
+   * @return an {@link ShortIterator ShortIterator} wrapping the given
+   *         <i>iterator</i>, or <code>null</code> when <i>iterator</i> is
+   *         <code>null</code>.
+   */
+  @Nullable
+  public static ShortIterator wrap (@Nullable final Iterator <Short> iterator)
+  {
+    return null == iterator ? null : new IteratorShortIterator (iterator);
+  }
 }

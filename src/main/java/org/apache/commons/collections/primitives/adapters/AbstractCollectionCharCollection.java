@@ -18,8 +18,13 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.Collection;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.CharCollection;
 import org.apache.commons.collections.primitives.CharIterator;
+
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 
 /**
  * @since Commons Primitives 0.1
@@ -32,12 +37,15 @@ abstract class AbstractCollectionCharCollection implements CharCollection
   protected AbstractCollectionCharCollection ()
   {}
 
-  public boolean add (final char element)
+  @Nonnull
+  protected abstract Collection <Character> getCollection ();
+
+  public boolean add (final char aElement)
   {
-    return getCollection ().add (new Character (element));
+    return getCollection ().add (Character.valueOf (aElement));
   }
 
-  public boolean addAll (final CharCollection c)
+  public boolean addAll (@Nonnull final CharCollection c)
   {
     return getCollection ().addAll (CharCollectionCollection.wrap (c));
   }
@@ -47,20 +55,14 @@ abstract class AbstractCollectionCharCollection implements CharCollection
     getCollection ().clear ();
   }
 
-  public boolean contains (final char element)
+  public boolean contains (final char aElement)
   {
-    return getCollection ().contains (new Character (element));
+    return getCollection ().contains (Character.valueOf (aElement));
   }
 
-  public boolean containsAll (final CharCollection c)
+  public boolean containsAll (@Nonnull final CharCollection c)
   {
     return getCollection ().containsAll (CharCollectionCollection.wrap (c));
-  }
-
-  @Override
-  public String toString ()
-  {
-    return getCollection ().toString ();
   }
 
   public boolean isEmpty ()
@@ -72,56 +74,61 @@ abstract class AbstractCollectionCharCollection implements CharCollection
    * {@link IteratorCharIterator#wrap wraps} the {@link java.util.Iterator
    * Iterator} returned by my underlying {@link Collection Collection}, if any.
    */
+  @Nonnull
   public CharIterator iterator ()
   {
     return IteratorCharIterator.wrap (getCollection ().iterator ());
   }
 
-  public boolean removeElement (final char element)
+  public boolean removeElement (final char aElement)
   {
-    return getCollection ().remove (new Character (element));
+    return getCollection ().remove (Character.valueOf (aElement));
   }
 
-  public boolean removeAll (final CharCollection c)
+  public boolean removeAll (@Nonnull final CharCollection c)
   {
     return getCollection ().removeAll (CharCollectionCollection.wrap (c));
   }
 
-  public boolean retainAll (final CharCollection c)
+  public boolean retainAll (@Nonnull final CharCollection c)
   {
     return getCollection ().retainAll (CharCollectionCollection.wrap (c));
   }
 
+  @Nonnegative
   public int size ()
   {
     return getCollection ().size ();
   }
 
+  @Nonnull
+  @ReturnsMutableCopy
   public char [] toArray ()
   {
-    final Object [] src = getCollection ().toArray ();
-    final char [] dest = new char [src.length];
-    for (int i = 0; i < src.length; i++)
-    {
-      dest[i] = ((Character) (src[i])).charValue ();
-    }
+    final Object [] aElementData = getCollection ().toArray ();
+    final char [] dest = new char [aElementData.length];
+    for (int i = 0; i < aElementData.length; i++)
+      dest[i] = ((Character) (aElementData[i])).charValue ();
     return dest;
   }
 
-  public char [] toArray (char [] dest)
+  @Nonnull
+  public char [] toArray (@Nonnull final char [] dest)
   {
-    final Object [] src = getCollection ().toArray ();
-    if (dest.length < src.length)
+    final Object [] aElementData = getCollection ().toArray ();
+    char [] ret = dest;
+    if (ret.length < aElementData.length)
+      ret = new char [aElementData.length];
+    for (int i = 0; i < aElementData.length; i++)
     {
-      dest = new char [src.length];
+      ret[i] = ((Character) (aElementData[i])).charValue ();
     }
-    for (int i = 0; i < src.length; i++)
-    {
-      dest[i] = ((Character) (src[i])).charValue ();
-    }
-    return dest;
+    return ret;
   }
 
-  protected abstract Collection getCollection ();
-
+  @Override
+  public String toString ()
+  {
+    return getCollection ().toString ();
+  }
 }

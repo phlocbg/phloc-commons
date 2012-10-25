@@ -19,6 +19,9 @@ package org.apache.commons.collections.primitives.adapters;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.IntList;
 
 /**
@@ -26,56 +29,50 @@ import org.apache.commons.collections.primitives.IntList;
  * <p />
  * This implementation delegates most methods to the provided {@link IntList
  * IntList} implementation in the "obvious" way.
- * 
+ *
  * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
  */
-final public class IntListList extends AbstractIntListList implements Serializable
+public final class IntListList extends AbstractIntListList implements Serializable
 {
+  private final IntList m_aList;
 
   /**
-   * Create a {@link List List} wrapping the specified {@link IntList IntList}.
-   * When the given <i>list</i> is <code>null</code>, returns <code>null</code>.
-   * 
-   * @param list
-   *        the (possibly <code>null</code>) {@link IntList IntList} to wrap
-   * @return a {@link List List} wrapping the given <i>list</i>, or
-   *         <code>null</code> when <i>list</i> is <code>null</code>.
-   */
-  public static List wrap (final IntList list)
-  {
-    if (null == list)
-    {
-      return null;
-    }
-    else
-      if (list instanceof Serializable)
-      {
-        return new IntListList (list);
-      }
-      else
-      {
-        return new NonSerializableIntListList (list);
-      }
-  }
-
-  /**
-   * Creates a {@link List List} wrapping the specified {@link IntList IntList}.
-   * 
+   * Creates a {@link List List} wrapping the specified {@link IntList
+   * IntList}.
+   *
    * @see #wrap
    */
-  public IntListList (final IntList list)
+  public IntListList (@Nonnull final IntList list)
   {
-    _list = list;
+    m_aList = list;
   }
 
   @Override
   protected IntList getIntList ()
   {
-    return _list;
+    return m_aList;
   }
 
-  private IntList _list = null;
+  /**
+   * Create a {@link List List} wrapping the specified {@link IntList IntList}
+   * . When the given <i>list</i> is <code>null</code>, returns
+   * <code>null</code>.
+   *
+   * @param list
+   *        the (possibly <code>null</code>) {@link IntList IntList} to wrap
+   * @return a {@link List List} wrapping the given <i>list</i>, or
+   *         <code>null</code> when <i>list</i> is <code>null</code>.
+   */
+  @Nullable
+  public static List <Integer> wrap (@Nullable final IntList list)
+  {
+    if (null == list)
+      return null;
+    if (list instanceof Serializable)
+      return new IntListList (list);
+    return new NonSerializableIntListList (list);
+  }
 }

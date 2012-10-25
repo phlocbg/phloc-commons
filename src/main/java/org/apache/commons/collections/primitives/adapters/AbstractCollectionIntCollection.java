@@ -18,11 +18,16 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.Collection;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.IntCollection;
 import org.apache.commons.collections.primitives.IntIterator;
 
+import com.phloc.commons.annotations.ReturnsMutableCopy;
+
 /**
- * @since Commons Primitives 1.0
+ * @since Commons Primitives 0.1
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
@@ -32,12 +37,15 @@ abstract class AbstractCollectionIntCollection implements IntCollection
   protected AbstractCollectionIntCollection ()
   {}
 
-  public boolean add (final int element)
+  @Nonnull
+  protected abstract Collection <Integer> getCollection ();
+
+  public boolean add (final int aElement)
   {
-    return getCollection ().add (new Integer (element));
+    return getCollection ().add (Integer.valueOf (aElement));
   }
 
-  public boolean addAll (final IntCollection c)
+  public boolean addAll (@Nonnull final IntCollection c)
   {
     return getCollection ().addAll (IntCollectionCollection.wrap (c));
   }
@@ -47,20 +55,14 @@ abstract class AbstractCollectionIntCollection implements IntCollection
     getCollection ().clear ();
   }
 
-  public boolean contains (final int element)
+  public boolean contains (final int aElement)
   {
-    return getCollection ().contains (new Integer (element));
+    return getCollection ().contains (Integer.valueOf (aElement));
   }
 
-  public boolean containsAll (final IntCollection c)
+  public boolean containsAll (@Nonnull final IntCollection c)
   {
     return getCollection ().containsAll (IntCollectionCollection.wrap (c));
-  }
-
-  @Override
-  public String toString ()
-  {
-    return getCollection ().toString ();
   }
 
   public boolean isEmpty ()
@@ -72,56 +74,61 @@ abstract class AbstractCollectionIntCollection implements IntCollection
    * {@link IteratorIntIterator#wrap wraps} the {@link java.util.Iterator
    * Iterator} returned by my underlying {@link Collection Collection}, if any.
    */
+  @Nonnull
   public IntIterator iterator ()
   {
     return IteratorIntIterator.wrap (getCollection ().iterator ());
   }
 
-  public boolean removeElement (final int element)
+  public boolean removeElement (final int aElement)
   {
-    return getCollection ().remove (new Integer (element));
+    return getCollection ().remove (Integer.valueOf (aElement));
   }
 
-  public boolean removeAll (final IntCollection c)
+  public boolean removeAll (@Nonnull final IntCollection c)
   {
     return getCollection ().removeAll (IntCollectionCollection.wrap (c));
   }
 
-  public boolean retainAll (final IntCollection c)
+  public boolean retainAll (@Nonnull final IntCollection c)
   {
     return getCollection ().retainAll (IntCollectionCollection.wrap (c));
   }
 
+  @Nonnegative
   public int size ()
   {
     return getCollection ().size ();
   }
 
+  @Nonnull
+  @ReturnsMutableCopy
   public int [] toArray ()
   {
-    final Object [] src = getCollection ().toArray ();
-    final int [] dest = new int [src.length];
-    for (int i = 0; i < src.length; i++)
-    {
-      dest[i] = ((Number) (src[i])).intValue ();
-    }
+    final Object [] aElementData = getCollection ().toArray ();
+    final int [] dest = new int [aElementData.length];
+    for (int i = 0; i < aElementData.length; i++)
+      dest[i] = ((Integer) (aElementData[i])).intValue ();
     return dest;
   }
 
-  public int [] toArray (int [] dest)
+  @Nonnull
+  public int [] toArray (@Nonnull final int [] dest)
   {
-    final Object [] src = getCollection ().toArray ();
-    if (dest.length < src.length)
+    final Object [] aElementData = getCollection ().toArray ();
+    int [] ret = dest;
+    if (ret.length < aElementData.length)
+      ret = new int [aElementData.length];
+    for (int i = 0; i < aElementData.length; i++)
     {
-      dest = new int [src.length];
+      ret[i] = ((Integer) (aElementData[i])).intValue ();
     }
-    for (int i = 0; i < src.length; i++)
-    {
-      dest[i] = ((Number) (src[i])).intValue ();
-    }
-    return dest;
+    return ret;
   }
 
-  protected abstract Collection getCollection ();
-
+  @Override
+  public String toString ()
+  {
+    return getCollection ().toString ();
+  }
 }

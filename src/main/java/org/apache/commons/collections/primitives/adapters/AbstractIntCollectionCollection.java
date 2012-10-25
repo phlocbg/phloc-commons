@@ -16,11 +16,15 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
-import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.IntCollection;
+
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 
 /**
  * @since Commons Primitives 1.0
@@ -28,17 +32,20 @@ import org.apache.commons.collections.primitives.IntCollection;
  *          2006) $
  * @author Rodney Waldhoff
  */
-abstract class AbstractIntCollectionCollection implements Collection
+abstract class AbstractIntCollectionCollection implements Collection <Integer>
 {
+  @Nonnull
+  protected abstract IntCollection getIntCollection ();
 
-  public boolean add (final Object element)
+  public boolean add (final Integer element)
   {
-    return getIntCollection ().add (((Number) element).intValue ());
+    return getIntCollection ().add (element.intValue ());
   }
 
-  public boolean addAll (final Collection c)
+  @SuppressWarnings ("unchecked")
+  public boolean addAll (final Collection <? extends Integer> c)
   {
-    return getIntCollection ().addAll (CollectionIntCollection.wrap (c));
+    return getIntCollection ().addAll (CollectionIntCollection.wrap ((Collection <Integer>) c));
   }
 
   public void clear ()
@@ -48,12 +55,13 @@ abstract class AbstractIntCollectionCollection implements Collection
 
   public boolean contains (final Object element)
   {
-    return getIntCollection ().contains (((Number) element).intValue ());
+    return getIntCollection ().contains (((Integer) element).intValue ());
   }
 
-  public boolean containsAll (final Collection c)
+  @SuppressWarnings ("unchecked")
+  public boolean containsAll (final Collection <?> c)
   {
-    return getIntCollection ().containsAll (CollectionIntCollection.wrap (c));
+    return getIntCollection ().containsAll (CollectionIntCollection.wrap ((Collection <Integer>) c));
   }
 
   @Override
@@ -72,24 +80,26 @@ abstract class AbstractIntCollectionCollection implements Collection
    * {@link org.apache.commons.collections.primitives.IntIterator IntIterator}
    * returned by my underlying {@link IntCollection IntCollection}, if any.
    */
-  public Iterator iterator ()
+  public Iterator <Integer> iterator ()
   {
     return IntIteratorIterator.wrap (getIntCollection ().iterator ());
   }
 
   public boolean remove (final Object element)
   {
-    return getIntCollection ().removeElement (((Number) element).intValue ());
+    return getIntCollection ().removeElement (((Integer) element).intValue ());
   }
 
-  public boolean removeAll (final Collection c)
+  @SuppressWarnings ("unchecked")
+  public boolean removeAll (final Collection <?> c)
   {
-    return getIntCollection ().removeAll (CollectionIntCollection.wrap (c));
+    return getIntCollection ().removeAll (CollectionIntCollection.wrap ((Collection <Integer>) c));
   }
 
-  public boolean retainAll (final Collection c)
+  @SuppressWarnings ("unchecked")
+  public boolean retainAll (final Collection <?> c)
   {
-    return getIntCollection ().retainAll (CollectionIntCollection.wrap (c));
+    return getIntCollection ().retainAll (CollectionIntCollection.wrap ((Collection <Integer>) c));
   }
 
   public int size ()
@@ -97,35 +107,30 @@ abstract class AbstractIntCollectionCollection implements Collection
     return getIntCollection ().size ();
   }
 
-  public Object [] toArray ()
+  @Nonnull
+  @ReturnsMutableCopy
+  public Integer [] toArray ()
   {
     final int [] a = getIntCollection ().toArray ();
-    final Object [] A = new Object [a.length];
+    final Integer [] A = new Integer [a.length];
     for (int i = 0; i < a.length; i++)
-    {
-      A[i] = new Integer (a[i]);
-    }
+      A[i] = Integer.valueOf (a[i]);
     return A;
   }
 
-  public Object [] toArray (Object [] A)
+  @SuppressWarnings ("unchecked")
+  public <T> T [] toArray (final T [] a)
   {
-    final int [] a = getIntCollection ().toArray ();
-    if (A.length < a.length)
+    final Integer [] elementData = toArray ();
+    final int size = size ();
+    if (a.length < size)
     {
-      A = (Object []) (Array.newInstance (A.getClass ().getComponentType (), a.length));
+      // Make a new array of a's runtime type, but my contents:
+      return (T []) Arrays.copyOf (elementData, size, a.getClass ());
     }
-    for (int i = 0; i < a.length; i++)
-    {
-      A[i] = new Integer (a[i]);
-    }
-    if (A.length > a.length)
-    {
-      A[a.length] = null;
-    }
-
-    return A;
+    System.arraycopy (elementData, 0, a, 0, size);
+    if (a.length > size)
+      a[size] = null;
+    return a;
   }
-
-  protected abstract IntCollection getIntCollection ();
 }

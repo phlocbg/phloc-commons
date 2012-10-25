@@ -19,6 +19,8 @@ package org.apache.commons.collections.primitives.adapters;
 import java.io.Serializable;
 import java.util.Collection;
 
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.ByteCollection;
 
 /**
@@ -27,20 +29,38 @@ import org.apache.commons.collections.primitives.ByteCollection;
  * <p />
  * This implementation delegates most methods to the provided
  * {@link ByteCollection ByteCollection} implementation in the "obvious" way.
- * 
+ *
  * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
  */
-final public class ByteCollectionCollection extends AbstractByteCollectionCollection implements Serializable
+public final class ByteCollectionCollection extends AbstractByteCollectionCollection implements Serializable
 {
+  private final ByteCollection m_aCollection;
+
+  /**
+   * Creates a {@link Collection Collection} wrapping the specified
+   * {@link ByteCollection ByteCollection}.
+   *
+   * @see #wrap
+   */
+  public ByteCollectionCollection (final ByteCollection collection)
+  {
+    m_aCollection = collection;
+  }
+
+  @Override
+  protected ByteCollection getByteCollection ()
+  {
+    return m_aCollection;
+  }
 
   /**
    * Create a {@link Collection Collection} wrapping the specified
    * {@link ByteCollection ByteCollection}. When the given <i>collection</i> is
    * <code>null</code>, returns <code>null</code>.
-   * 
+   *
    * @param collection
    *        the (possibly <code>null</code>) {@link ByteCollection
    *        ByteCollection} to wrap
@@ -48,39 +68,13 @@ final public class ByteCollectionCollection extends AbstractByteCollectionCollec
    *         <i>collection</i>, or <code>null</code> when <i>collection</i> is
    *         <code>null</code>.
    */
-  public static Collection wrap (final ByteCollection collection)
+  @Nullable
+  public static Collection <Byte> wrap (@Nullable final ByteCollection collection)
   {
     if (null == collection)
-    {
       return null;
-    }
-    else
-      if (collection instanceof Serializable)
-      {
-        return new ByteCollectionCollection (collection);
-      }
-      else
-      {
-        return new NonSerializableByteCollectionCollection (collection);
-      }
+    if (collection instanceof Serializable)
+      return new ByteCollectionCollection (collection);
+    return new NonSerializableByteCollectionCollection (collection);
   }
-
-  /**
-   * Creates a {@link Collection Collection} wrapping the specified
-   * {@link ByteCollection ByteCollection}.
-   * 
-   * @see #wrap
-   */
-  public ByteCollectionCollection (final ByteCollection collection)
-  {
-    _collection = collection;
-  }
-
-  @Override
-  protected ByteCollection getByteCollection ()
-  {
-    return _collection;
-  }
-
-  private ByteCollection _collection = null;
 }

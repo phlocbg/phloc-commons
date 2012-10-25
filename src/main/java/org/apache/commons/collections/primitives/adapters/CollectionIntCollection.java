@@ -19,6 +19,9 @@ package org.apache.commons.collections.primitives.adapters;
 import java.io.Serializable;
 import java.util.Collection;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.IntCollection;
 
 /**
@@ -27,58 +30,52 @@ import org.apache.commons.collections.primitives.IntCollection;
  * <p />
  * This implementation delegates most methods to the provided {@link Collection
  * Collection} implementation in the "obvious" way.
- * 
+ *
  * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
  */
-final public class CollectionIntCollection extends AbstractCollectionIntCollection implements Serializable
+public final class CollectionIntCollection extends AbstractCollectionIntCollection implements Serializable
 {
+  private final Collection <Integer> m_aCollection;
+
+  /**
+   * Creates an {@link IntCollection IntCollection} wrapping the specified
+   * {@link Collection Collection}.
+   *
+   * @see #wrap
+   */
+  public CollectionIntCollection (@Nonnull final Collection <Integer> collection)
+  {
+    m_aCollection = collection;
+  }
+
+  @Override
+  @Nonnull
+  protected Collection <Integer> getCollection ()
+  {
+    return m_aCollection;
+  }
+
   /**
    * Create an {@link IntCollection IntCollection} wrapping the specified
    * {@link Collection Collection}. When the given <i>collection</i> is
    * <code>null</code>, returns <code>null</code>.
-   * 
-   * @param collection
+   *
+   * @param aCollection
    *        the (possibly <code>null</code>) {@link Collection} to wrap
    * @return an {@link IntCollection IntCollection} wrapping the given
    *         <i>collection</i>, or <code>null</code> when <i>collection</i> is
    *         <code>null</code>.
    */
-  public static IntCollection wrap (final Collection collection)
+  @Nullable
+  public static IntCollection wrap (@Nullable final Collection <Integer> aCollection)
   {
-    if (null == collection)
-    {
+    if (null == aCollection)
       return null;
-    }
-    else
-      if (collection instanceof Serializable)
-      {
-        return new CollectionIntCollection (collection);
-      }
-      else
-      {
-        return new NonSerializableCollectionIntCollection (collection);
-      }
+    if (aCollection instanceof Serializable)
+      return new CollectionIntCollection (aCollection);
+    return new NonSerializableCollectionIntCollection (aCollection);
   }
-
-  /**
-   * Creates an {@link IntCollection IntCollection} wrapping the specified
-   * {@link Collection Collection}.
-   * 
-   * @see #wrap
-   */
-  public CollectionIntCollection (final Collection collection)
-  {
-    _collection = collection;
-  }
-
-  @Override
-  protected Collection getCollection ()
-  {
-    return _collection;
-  }
-
-  private Collection _collection = null;
 }

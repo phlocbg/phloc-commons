@@ -18,11 +18,14 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.Iterator;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.FloatIterator;
 
 /**
- * Adapts an {@link FloatIterator FloatIterator} to the
- * {@link java.util.Iterator Iterator} interface.
+ * Adapts an {@link FloatIterator FloatIterator} to the {@link java.util.Iterator
+ * Iterator} interface.
  * <p />
  * This implementation delegates most methods to the provided
  * {@link FloatIterator FloatIterator} implementation in the "obvious" way.
@@ -32,24 +35,9 @@ import org.apache.commons.collections.primitives.FloatIterator;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class FloatIteratorIterator implements Iterator
+public class FloatIteratorIterator implements Iterator <Float>
 {
-
-  /**
-   * Create an {@link Iterator Iterator} wrapping the specified
-   * {@link FloatIterator FloatIterator}. When the given <i>iterator</i> is
-   * <code>null</code>, returns <code>null</code>.
-   * 
-   * @param iterator
-   *        the (possibly <code>null</code>) {@link FloatIterator FloatIterator}
-   *        to wrap
-   * @return an {@link Iterator Iterator} wrapping the given <i>iterator</i>, or
-   *         <code>null</code> when <i>iterator</i> is <code>null</code>.
-   */
-  public static Iterator wrap (final FloatIterator iterator)
-  {
-    return null == iterator ? null : new FloatIteratorIterator (iterator);
-  }
+  private final FloatIterator m_aIterator;
 
   /**
    * Creates an {@link Iterator Iterator} wrapping the specified
@@ -57,26 +45,41 @@ public class FloatIteratorIterator implements Iterator
    * 
    * @see #wrap
    */
-  public FloatIteratorIterator (final FloatIterator iterator)
+  public FloatIteratorIterator (@Nonnull final FloatIterator iterator)
   {
-    _iterator = iterator;
+    m_aIterator = iterator;
   }
 
   public boolean hasNext ()
   {
-    return _iterator.hasNext ();
+    return m_aIterator.hasNext ();
   }
 
-  public Object next ()
+  @Nonnull
+  public Float next ()
   {
-    return new Float (_iterator.next ());
+    return Float.valueOf (m_aIterator.next ());
   }
 
   public void remove ()
   {
-    _iterator.remove ();
+    m_aIterator.remove ();
   }
 
-  private FloatIterator _iterator = null;
-
+  /**
+   * Create an {@link Iterator Iterator} wrapping the specified
+   * {@link FloatIterator FloatIterator}. When the given <i>iterator</i> is
+   * <code>null</code>, returns <code>null</code>.
+   * 
+   * @param iterator
+   *        the (possibly <code>null</code>) {@link FloatIterator FloatIterator} to
+   *        wrap
+   * @return an {@link Iterator Iterator} wrapping the given <i>iterator</i>, or
+   *         <code>null</code> when <i>iterator</i> is <code>null</code>.
+   */
+  @Nullable
+  public static Iterator <Float> wrap (@Nullable final FloatIterator iterator)
+  {
+    return null == iterator ? null : new FloatIteratorIterator (iterator);
+  }
 }

@@ -18,6 +18,9 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.Iterator;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.IntIterator;
 
 /**
@@ -32,8 +35,36 @@ import org.apache.commons.collections.primitives.IntIterator;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class IntIteratorIterator implements Iterator
+public class IntIteratorIterator implements Iterator <Integer>
 {
+  private final IntIterator m_aIterator;
+
+  /**
+   * Creates an {@link Iterator Iterator} wrapping the specified
+   * {@link IntIterator IntIterator}.
+   * 
+   * @see #wrap
+   */
+  public IntIteratorIterator (@Nonnull final IntIterator iterator)
+  {
+    m_aIterator = iterator;
+  }
+
+  public boolean hasNext ()
+  {
+    return m_aIterator.hasNext ();
+  }
+
+  @Nonnull
+  public Integer next ()
+  {
+    return Integer.valueOf (m_aIterator.next ());
+  }
+
+  public void remove ()
+  {
+    m_aIterator.remove ();
+  }
 
   /**
    * Create an {@link Iterator Iterator} wrapping the specified
@@ -46,37 +77,9 @@ public class IntIteratorIterator implements Iterator
    * @return an {@link Iterator Iterator} wrapping the given <i>iterator</i>, or
    *         <code>null</code> when <i>iterator</i> is <code>null</code>.
    */
-  public static Iterator wrap (final IntIterator iterator)
+  @Nullable
+  public static Iterator <Integer> wrap (@Nullable final IntIterator iterator)
   {
     return null == iterator ? null : new IntIteratorIterator (iterator);
   }
-
-  /**
-   * Creates an {@link Iterator Iterator} wrapping the specified
-   * {@link IntIterator IntIterator}.
-   * 
-   * @see #wrap
-   */
-  public IntIteratorIterator (final IntIterator iterator)
-  {
-    _iterator = iterator;
-  }
-
-  public boolean hasNext ()
-  {
-    return _iterator.hasNext ();
-  }
-
-  public Object next ()
-  {
-    return new Integer (_iterator.next ());
-  }
-
-  public void remove ()
-  {
-    _iterator.remove ();
-  }
-
-  private IntIterator _iterator = null;
-
 }

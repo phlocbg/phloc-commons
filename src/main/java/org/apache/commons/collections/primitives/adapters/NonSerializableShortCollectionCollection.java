@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.ShortCollection;
 
 /**
@@ -26,21 +28,21 @@ import org.apache.commons.collections.primitives.ShortCollection;
  */
 final class NonSerializableShortCollectionCollection extends AbstractShortCollectionCollection
 {
+  private final ShortCollection m_aCollection;
 
   /**
    * Creates a {@link java.util.Collection Collection} wrapping the specified
    * {@link ShortCollection ShortCollection}.
    */
-  public NonSerializableShortCollectionCollection (final ShortCollection collection)
+  public NonSerializableShortCollectionCollection (@Nonnull final ShortCollection collection)
   {
-    _collection = collection;
+    m_aCollection = collection;
   }
 
   @Override
+  @Nonnull
   protected ShortCollection getShortCollection ()
   {
-    return _collection;
+    return m_aCollection;
   }
-
-  private ShortCollection _collection = null;
 }

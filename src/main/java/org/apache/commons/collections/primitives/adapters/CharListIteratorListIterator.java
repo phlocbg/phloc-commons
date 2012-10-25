@@ -24,12 +24,11 @@ import javax.annotation.Nullable;
 import org.apache.commons.collections.primitives.CharListIterator;
 
 /**
- * Adapts an {@link CharListIterator CharListIterator} to the
- * {@link ListIterator ListIterator} interface.
+ * Adapts an {@link CharListIterator CharListIterator} to the {@link ListIterator
+ * ListIterator} interface.
  * <p />
  * This implementation delegates most methods to the provided
- * {@link CharListIterator CharListIterator} implementation in the "obvious"
- * way.
+ * {@link CharListIterator CharListIterator} implementation in the "obvious" way.
  * 
  * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
@@ -100,8 +99,8 @@ public class CharListIteratorListIterator implements ListIterator <Character>
 
   /**
    * Create a {@link ListIterator ListIterator} wrapping the specified
-   * {@link CharListIterator CharListIterator}. When the given <i>iterator</i>
-   * is <code>null</code>, returns <code>null</code>.
+   * {@link CharListIterator CharListIterator}. When the given <i>iterator</i> is
+   * <code>null</code>, returns <code>null</code>.
    * 
    * @param iterator
    *        the (possibly <code>null</code>) {@link CharListIterator

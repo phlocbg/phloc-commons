@@ -19,6 +19,9 @@ package org.apache.commons.collections.primitives.adapters;
 import java.util.Collection;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.FloatCollection;
 import org.apache.commons.collections.primitives.FloatIterator;
 import org.apache.commons.collections.primitives.FloatList;
@@ -32,10 +35,19 @@ import org.apache.commons.collections.primitives.FloatListIterator;
  */
 abstract class AbstractListFloatList extends AbstractCollectionFloatCollection implements FloatList
 {
-
-  public void add (final int index, final float element)
+  @Override
+  @Nonnull
+  protected final Collection <Float> getCollection ()
   {
-    getList ().add (index, new Float (element));
+    return getList ();
+  }
+
+  @Nonnull
+  protected abstract List <Float> getList ();
+
+  public void add (final int nIndex, final float element)
+  {
+    getList ().add (nIndex, Float.valueOf (element));
   }
 
   public boolean addAll (final int index, final FloatCollection collection)
@@ -45,17 +57,17 @@ abstract class AbstractListFloatList extends AbstractCollectionFloatCollection i
 
   public float get (final int index)
   {
-    return ((Number) getList ().get (index)).floatValue ();
+    return getList ().get (index).floatValue ();
   }
 
   public int indexOf (final float element)
   {
-    return getList ().indexOf (new Float (element));
+    return getList ().indexOf (Float.valueOf (element));
   }
 
-  public int lastIndexOf (final float element)
+  public int lastIndexOf (final float aElement)
   {
-    return getList ().lastIndexOf (new Float (element));
+    return getList ().lastIndexOf (Float.valueOf (aElement));
   }
 
   /**
@@ -63,6 +75,7 @@ abstract class AbstractListFloatList extends AbstractCollectionFloatCollection i
    * FloatList} returned by my underlying {@link FloatListIterator
    * FloatListIterator}, if any.
    */
+  @Nonnull
   public FloatListIterator listIterator ()
   {
     return ListIteratorFloatListIterator.wrap (getList ().listIterator ());
@@ -73,19 +86,20 @@ abstract class AbstractListFloatList extends AbstractCollectionFloatCollection i
    * FloatList} returned by my underlying {@link FloatListIterator
    * FloatListIterator}, if any.
    */
-  public FloatListIterator listIterator (final int index)
+  @Nonnull
+  public FloatListIterator listIterator (final int nIndex)
   {
-    return ListIteratorFloatListIterator.wrap (getList ().listIterator (index));
+    return ListIteratorFloatListIterator.wrap (getList ().listIterator (nIndex));
   }
 
   public float removeElementAt (final int index)
   {
-    return ((Number) getList ().remove (index)).floatValue ();
+    return getList ().remove (index).floatValue ();
   }
 
   public float set (final int index, final float element)
   {
-    return ((Number) getList ().set (index, new Float (element))).floatValue ();
+    return getList ().set (index, new Float (element)).floatValue ();
   }
 
   public FloatList subList (final int fromIndex, final int toIndex)
@@ -94,38 +108,22 @@ abstract class AbstractListFloatList extends AbstractCollectionFloatCollection i
   }
 
   @Override
-  public boolean equals (final Object obj)
+  public boolean equals (@Nullable final Object obj)
   {
-    if (obj instanceof FloatList)
-    {
-      final FloatList that = (FloatList) obj;
-      if (this == that)
-      {
-        return true;
-      }
-      else
-        if (this.size () != that.size ())
-        {
-          return false;
-        }
-        else
-        {
-          final FloatIterator thisiter = iterator ();
-          final FloatIterator thatiter = that.iterator ();
-          while (thisiter.hasNext ())
-          {
-            if (thisiter.next () != thatiter.next ())
-            {
-              return false;
-            }
-          }
-          return true;
-        }
-    }
-    else
-    {
+    if (obj == this)
+      return true;
+    if (!(obj instanceof FloatList))
       return false;
-    }
+
+    final FloatList that = (FloatList) obj;
+    if (this.size () != that.size ())
+      return false;
+    final FloatIterator thisiter = iterator ();
+    final FloatIterator thatiter = that.iterator ();
+    while (thisiter.hasNext ())
+      if (thisiter.next () != thatiter.next ())
+        return false;
+    return true;
   }
 
   @Override
@@ -133,12 +131,4 @@ abstract class AbstractListFloatList extends AbstractCollectionFloatCollection i
   {
     return getList ().hashCode ();
   }
-
-  @Override
-  final protected Collection getCollection ()
-  {
-    return getList ();
-  }
-
-  abstract protected List getList ();
 }

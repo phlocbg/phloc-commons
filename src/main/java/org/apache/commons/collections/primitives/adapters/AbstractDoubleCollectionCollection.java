@@ -16,11 +16,15 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
-import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.DoubleCollection;
+
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 
 /**
  * @since Commons Primitives 1.0
@@ -28,17 +32,20 @@ import org.apache.commons.collections.primitives.DoubleCollection;
  *          2006) $
  * @author Rodney Waldhoff
  */
-abstract class AbstractDoubleCollectionCollection implements Collection
+abstract class AbstractDoubleCollectionCollection implements Collection <Double>
 {
+  @Nonnull
+  protected abstract DoubleCollection getDoubleCollection ();
 
-  public boolean add (final Object element)
+  public boolean add (final Double element)
   {
-    return getDoubleCollection ().add (((Number) element).doubleValue ());
+    return getDoubleCollection ().add (element.doubleValue ());
   }
 
-  public boolean addAll (final Collection c)
+  @SuppressWarnings ("unchecked")
+  public boolean addAll (final Collection <? extends Double> c)
   {
-    return getDoubleCollection ().addAll (CollectionDoubleCollection.wrap (c));
+    return getDoubleCollection ().addAll (CollectionDoubleCollection.wrap ((Collection <Double>) c));
   }
 
   public void clear ()
@@ -48,12 +55,13 @@ abstract class AbstractDoubleCollectionCollection implements Collection
 
   public boolean contains (final Object element)
   {
-    return getDoubleCollection ().contains (((Number) element).doubleValue ());
+    return getDoubleCollection ().contains (((Double) element).doubleValue ());
   }
 
-  public boolean containsAll (final Collection c)
+  @SuppressWarnings ("unchecked")
+  public boolean containsAll (final Collection <?> c)
   {
-    return getDoubleCollection ().containsAll (CollectionDoubleCollection.wrap (c));
+    return getDoubleCollection ().containsAll (CollectionDoubleCollection.wrap ((Collection <Double>) c));
   }
 
   @Override
@@ -69,28 +77,29 @@ abstract class AbstractDoubleCollectionCollection implements Collection
 
   /**
    * {@link DoubleIteratorIterator#wrap wraps} the
-   * {@link org.apache.commons.collections.primitives.DoubleIterator
-   * DoubleIterator} returned by my underlying {@link DoubleCollection
-   * DoubleCollection}, if any.
+   * {@link org.apache.commons.collections.primitives.DoubleIterator DoubleIterator}
+   * returned by my underlying {@link DoubleCollection DoubleCollection}, if any.
    */
-  public Iterator iterator ()
+  public Iterator <Double> iterator ()
   {
     return DoubleIteratorIterator.wrap (getDoubleCollection ().iterator ());
   }
 
   public boolean remove (final Object element)
   {
-    return getDoubleCollection ().removeElement (((Number) element).doubleValue ());
+    return getDoubleCollection ().removeElement (((Double) element).doubleValue ());
   }
 
-  public boolean removeAll (final Collection c)
+  @SuppressWarnings ("unchecked")
+  public boolean removeAll (final Collection <?> c)
   {
-    return getDoubleCollection ().removeAll (CollectionDoubleCollection.wrap (c));
+    return getDoubleCollection ().removeAll (CollectionDoubleCollection.wrap ((Collection <Double>) c));
   }
 
-  public boolean retainAll (final Collection c)
+  @SuppressWarnings ("unchecked")
+  public boolean retainAll (final Collection <?> c)
   {
-    return getDoubleCollection ().retainAll (CollectionDoubleCollection.wrap (c));
+    return getDoubleCollection ().retainAll (CollectionDoubleCollection.wrap ((Collection <Double>) c));
   }
 
   public int size ()
@@ -98,35 +107,30 @@ abstract class AbstractDoubleCollectionCollection implements Collection
     return getDoubleCollection ().size ();
   }
 
-  public Object [] toArray ()
+  @Nonnull
+  @ReturnsMutableCopy
+  public Double [] toArray ()
   {
     final double [] a = getDoubleCollection ().toArray ();
-    final Object [] A = new Object [a.length];
+    final Double [] A = new Double [a.length];
     for (int i = 0; i < a.length; i++)
-    {
-      A[i] = new Double (a[i]);
-    }
+      A[i] = Double.valueOf (a[i]);
     return A;
   }
 
-  public Object [] toArray (Object [] A)
+  @SuppressWarnings ("unchecked")
+  public <T> T [] toArray (final T [] a)
   {
-    final double [] a = getDoubleCollection ().toArray ();
-    if (A.length < a.length)
+    final Double [] elementData = toArray ();
+    final int size = size ();
+    if (a.length < size)
     {
-      A = (Object []) (Array.newInstance (A.getClass ().getComponentType (), a.length));
+      // Make a new array of a's runtime type, but my contents:
+      return (T []) Arrays.copyOf (elementData, size, a.getClass ());
     }
-    for (int i = 0; i < a.length; i++)
-    {
-      A[i] = new Double (a[i]);
-    }
-    if (A.length > a.length)
-    {
-      A[a.length] = null;
-    }
-
-    return A;
+    System.arraycopy (elementData, 0, a, 0, size);
+    if (a.length > size)
+      a[size] = null;
+    return a;
   }
-
-  protected abstract DoubleCollection getDoubleCollection ();
 }

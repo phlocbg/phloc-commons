@@ -18,6 +18,9 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.Iterator;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.DoubleIterator;
 
 /**
@@ -26,7 +29,7 @@ import org.apache.commons.collections.primitives.DoubleIterator;
  * <p />
  * This implementation delegates most methods to the provided {@link Iterator
  * Iterator} implementation in the "obvious" way.
- * 
+ *
  * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
@@ -34,30 +37,15 @@ import org.apache.commons.collections.primitives.DoubleIterator;
  */
 public class IteratorDoubleIterator implements DoubleIterator
 {
-
-  /**
-   * Create an {@link DoubleIterator DoubleIterator} wrapping the specified
-   * {@link Iterator Iterator}. When the given <i>iterator</i> is
-   * <code>null</code>, returns <code>null</code>.
-   * 
-   * @param iterator
-   *        the (possibly <code>null</code>) {@link Iterator Iterator} to wrap
-   * @return an {@link DoubleIterator DoubleIterator} wrapping the given
-   *         <i>iterator</i>, or <code>null</code> when <i>iterator</i> is
-   *         <code>null</code>.
-   */
-  public static DoubleIterator wrap (final Iterator iterator)
-  {
-    return null == iterator ? null : new IteratorDoubleIterator (iterator);
-  }
+  private final Iterator <Double> _iterator;
 
   /**
    * Creates an {@link DoubleIterator DoubleIterator} wrapping the specified
    * {@link Iterator Iterator}.
-   * 
+   *
    * @see #wrap
    */
-  public IteratorDoubleIterator (final Iterator iterator)
+  public IteratorDoubleIterator (@Nonnull final Iterator <Double> iterator)
   {
     _iterator = iterator;
   }
@@ -69,7 +57,7 @@ public class IteratorDoubleIterator implements DoubleIterator
 
   public double next ()
   {
-    return ((Number) (_iterator.next ())).doubleValue ();
+    return _iterator.next ().doubleValue ();
   }
 
   public void remove ()
@@ -77,6 +65,20 @@ public class IteratorDoubleIterator implements DoubleIterator
     _iterator.remove ();
   }
 
-  private Iterator _iterator = null;
-
+  /**
+   * Create an {@link DoubleIterator DoubleIterator} wrapping the specified
+   * {@link Iterator Iterator}. When the given <i>iterator</i> is
+   * <code>null</code>, returns <code>null</code>.
+   *
+   * @param iterator
+   *        the (possibly <code>null</code>) {@link Iterator Iterator} to wrap
+   * @return an {@link DoubleIterator DoubleIterator} wrapping the given
+   *         <i>iterator</i>, or <code>null</code> when <i>iterator</i> is
+   *         <code>null</code>.
+   */
+  @Nullable
+  public static DoubleIterator wrap (@Nullable final Iterator <Double> iterator)
+  {
+    return null == iterator ? null : new IteratorDoubleIterator (iterator);
+  }
 }

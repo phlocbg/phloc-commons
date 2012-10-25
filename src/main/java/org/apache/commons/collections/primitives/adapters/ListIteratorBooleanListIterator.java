@@ -18,6 +18,9 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.ListIterator;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.BooleanListIterator;
 
 /**
@@ -25,90 +28,89 @@ import org.apache.commons.collections.primitives.BooleanListIterator;
  * {@link BooleanListIterator BooleanListIterator} interface.
  * <p />
  * This implementation delegates most methods to the provided
- * {@link BooleanListIterator BooleanListIterator} implementation in the
- * "obvious" way.
- * 
- * @since Commons Primitives 1.1
+ * {@link BooleanListIterator BooleanListIterator} implementation in the "obvious"
+ * way.
+ *
+ * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
  */
 public class ListIteratorBooleanListIterator implements BooleanListIterator
 {
+  private final ListIterator <Boolean> m_aIterator;
 
   /**
-   * Create an {@link BooleanListIterator BooleanListIterator} wrapping the
-   * specified {@link ListIterator ListIterator}. When the given <i>iterator</i>
-   * is <code>null</code>, returns <code>null</code>.
-   * 
-   * @param iterator
-   *        the (possibly <code>null</code>) {@link ListIterator ListIterator}
-   *        to wrap
-   * @return an {@link BooleanListIterator BooleanListIterator} wrapping the
-   *         given <i>iterator</i>, or <code>null</code> when <i>iterator</i> is
-   *         <code>null</code>.
-   */
-  public static BooleanListIterator wrap (final ListIterator iterator)
-  {
-    return null == iterator ? null : new ListIteratorBooleanListIterator (iterator);
-  }
-
-  /**
-   * Creates an {@link BooleanListIterator BooleanListIterator} wrapping the
-   * specified {@link ListIterator ListIterator}.
-   * 
+   * Creates an {@link BooleanListIterator BooleanListIterator} wrapping the specified
+   * {@link ListIterator ListIterator}.
+   *
    * @see #wrap
    */
-  public ListIteratorBooleanListIterator (final ListIterator iterator)
+  public ListIteratorBooleanListIterator (@Nonnull final ListIterator <Boolean> iterator)
   {
-    _iterator = iterator;
+    m_aIterator = iterator;
   }
 
   public int nextIndex ()
   {
-    return _iterator.nextIndex ();
+    return m_aIterator.nextIndex ();
   }
 
   public int previousIndex ()
   {
-    return _iterator.previousIndex ();
+    return m_aIterator.previousIndex ();
   }
 
   public boolean hasNext ()
   {
-    return _iterator.hasNext ();
+    return m_aIterator.hasNext ();
   }
 
   public boolean hasPrevious ()
   {
-    return _iterator.hasPrevious ();
+    return m_aIterator.hasPrevious ();
   }
 
   public boolean next ()
   {
-    return ((Boolean) _iterator.next ()).booleanValue ();
+    return m_aIterator.next ().booleanValue ();
   }
 
   public boolean previous ()
   {
-    return ((Boolean) _iterator.previous ()).booleanValue ();
+    return m_aIterator.previous ().booleanValue ();
   }
 
   public void add (final boolean element)
   {
-    _iterator.add (new Boolean (element));
+    m_aIterator.add (Boolean.valueOf (element));
   }
 
   public void set (final boolean element)
   {
-    _iterator.set (new Boolean (element));
+    m_aIterator.set (Boolean.valueOf (element));
   }
 
   public void remove ()
   {
-    _iterator.remove ();
+    m_aIterator.remove ();
   }
 
-  private ListIterator _iterator = null;
-
+  /**
+   * Create an {@link BooleanListIterator BooleanListIterator} wrapping the specified
+   * {@link ListIterator ListIterator}. When the given <i>iterator</i> is
+   * <code>null</code>, returns <code>null</code>.
+   *
+   * @param iterator
+   *        the (possibly <code>null</code>) {@link ListIterator ListIterator}
+   *        to wrap
+   * @return an {@link BooleanListIterator BooleanListIterator} wrapping the given
+   *         <i>iterator</i>, or <code>null</code> when <i>iterator</i> is
+   *         <code>null</code>.
+   */
+  @Nullable
+  public static BooleanListIterator wrap (@Nullable final ListIterator <Boolean> iterator)
+  {
+    return null == iterator ? null : new ListIteratorBooleanListIterator (iterator);
+  }
 }

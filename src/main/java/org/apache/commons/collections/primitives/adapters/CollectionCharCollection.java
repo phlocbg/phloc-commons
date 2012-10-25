@@ -19,6 +19,9 @@ package org.apache.commons.collections.primitives.adapters;
 import java.io.Serializable;
 import java.util.Collection;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.CharCollection;
 
 /**
@@ -27,58 +30,52 @@ import org.apache.commons.collections.primitives.CharCollection;
  * <p />
  * This implementation delegates most methods to the provided {@link Collection
  * Collection} implementation in the "obvious" way.
- * 
+ *
  * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
  */
-final public class CollectionCharCollection extends AbstractCollectionCharCollection implements Serializable
+public final class CollectionCharCollection extends AbstractCollectionCharCollection implements Serializable
 {
+  private final Collection <Character> m_aCollection;
+
+  /**
+   * Creates an {@link CharCollection CharCollection} wrapping the specified
+   * {@link Collection Collection}.
+   *
+   * @see #wrap
+   */
+  public CollectionCharCollection (@Nonnull final Collection <Character> collection)
+  {
+    m_aCollection = collection;
+  }
+
+  @Override
+  @Nonnull
+  protected Collection <Character> getCollection ()
+  {
+    return m_aCollection;
+  }
+
   /**
    * Create an {@link CharCollection CharCollection} wrapping the specified
    * {@link Collection Collection}. When the given <i>collection</i> is
    * <code>null</code>, returns <code>null</code>.
-   * 
-   * @param collection
+   *
+   * @param aCollection
    *        the (possibly <code>null</code>) {@link Collection} to wrap
    * @return an {@link CharCollection CharCollection} wrapping the given
    *         <i>collection</i>, or <code>null</code> when <i>collection</i> is
    *         <code>null</code>.
    */
-  public static CharCollection wrap (final Collection collection)
+  @Nullable
+  public static CharCollection wrap (@Nullable final Collection <Character> aCollection)
   {
-    if (null == collection)
-    {
+    if (null == aCollection)
       return null;
-    }
-    else
-      if (collection instanceof Serializable)
-      {
-        return new CollectionCharCollection (collection);
-      }
-      else
-      {
-        return new NonSerializableCollectionCharCollection (collection);
-      }
+    if (aCollection instanceof Serializable)
+      return new CollectionCharCollection (aCollection);
+    return new NonSerializableCollectionCharCollection (aCollection);
   }
-
-  /**
-   * Creates an {@link CharCollection CharCollection} wrapping the specified
-   * {@link Collection Collection}.
-   * 
-   * @see #wrap
-   */
-  public CollectionCharCollection (final Collection collection)
-  {
-    _collection = collection;
-  }
-
-  @Override
-  protected Collection getCollection ()
-  {
-    return _collection;
-  }
-
-  private Collection _collection = null;
 }

@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.IntCollection;
 
 /**
@@ -26,21 +28,21 @@ import org.apache.commons.collections.primitives.IntCollection;
  */
 final class NonSerializableIntCollectionCollection extends AbstractIntCollectionCollection
 {
+  private final IntCollection m_aCollection;
 
   /**
    * Creates a {@link java.util.Collection Collection} wrapping the specified
    * {@link IntCollection IntCollection}.
    */
-  public NonSerializableIntCollectionCollection (final IntCollection collection)
+  public NonSerializableIntCollectionCollection (@Nonnull final IntCollection collection)
   {
-    _collection = collection;
+    m_aCollection = collection;
   }
 
   @Override
+  @Nonnull
   protected IntCollection getIntCollection ()
   {
-    return _collection;
+    return m_aCollection;
   }
-
-  private IntCollection _collection = null;
 }

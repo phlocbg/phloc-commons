@@ -19,6 +19,9 @@ package org.apache.commons.collections.primitives.adapters;
 import java.io.Serializable;
 import java.util.Collection;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.DoubleCollection;
 
 /**
@@ -27,58 +30,52 @@ import org.apache.commons.collections.primitives.DoubleCollection;
  * <p />
  * This implementation delegates most methods to the provided {@link Collection
  * Collection} implementation in the "obvious" way.
- * 
+ *
  * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
  */
-final public class CollectionDoubleCollection extends AbstractCollectionDoubleCollection implements Serializable
+public final class CollectionDoubleCollection extends AbstractCollectionDoubleCollection implements Serializable
 {
+  private final Collection <Double> m_aCollection;
+
+  /**
+   * Creates an {@link DoubleCollection DoubleCollection} wrapping the specified
+   * {@link Collection Collection}.
+   *
+   * @see #wrap
+   */
+  public CollectionDoubleCollection (@Nonnull final Collection <Double> collection)
+  {
+    m_aCollection = collection;
+  }
+
+  @Override
+  @Nonnull
+  protected Collection <Double> getCollection ()
+  {
+    return m_aCollection;
+  }
+
   /**
    * Create an {@link DoubleCollection DoubleCollection} wrapping the specified
    * {@link Collection Collection}. When the given <i>collection</i> is
    * <code>null</code>, returns <code>null</code>.
-   * 
-   * @param collection
+   *
+   * @param aCollection
    *        the (possibly <code>null</code>) {@link Collection} to wrap
    * @return an {@link DoubleCollection DoubleCollection} wrapping the given
    *         <i>collection</i>, or <code>null</code> when <i>collection</i> is
    *         <code>null</code>.
    */
-  public static DoubleCollection wrap (final Collection collection)
+  @Nullable
+  public static DoubleCollection wrap (@Nullable final Collection <Double> aCollection)
   {
-    if (null == collection)
-    {
+    if (null == aCollection)
       return null;
-    }
-    else
-      if (collection instanceof Serializable)
-      {
-        return new CollectionDoubleCollection (collection);
-      }
-      else
-      {
-        return new NonSerializableCollectionDoubleCollection (collection);
-      }
+    if (aCollection instanceof Serializable)
+      return new CollectionDoubleCollection (aCollection);
+    return new NonSerializableCollectionDoubleCollection (aCollection);
   }
-
-  /**
-   * Creates an {@link DoubleCollection DoubleCollection} wrapping the specified
-   * {@link Collection Collection}.
-   * 
-   * @see #wrap
-   */
-  public CollectionDoubleCollection (final Collection collection)
-  {
-    _collection = collection;
-  }
-
-  @Override
-  protected Collection getCollection ()
-  {
-    return _collection;
-  }
-
-  private Collection _collection = null;
 }

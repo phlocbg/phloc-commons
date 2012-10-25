@@ -18,11 +18,16 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.Collection;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.LongCollection;
 import org.apache.commons.collections.primitives.LongIterator;
 
+import com.phloc.commons.annotations.ReturnsMutableCopy;
+
 /**
- * @since Commons Primitives 1.0
+ * @since Commons Primitives 0.1
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
@@ -32,12 +37,15 @@ abstract class AbstractCollectionLongCollection implements LongCollection
   protected AbstractCollectionLongCollection ()
   {}
 
-  public boolean add (final long element)
+  @Nonnull
+  protected abstract Collection <Long> getCollection ();
+
+  public boolean add (final long aElement)
   {
-    return getCollection ().add (new Long (element));
+    return getCollection ().add (Long.valueOf (aElement));
   }
 
-  public boolean addAll (final LongCollection c)
+  public boolean addAll (@Nonnull final LongCollection c)
   {
     return getCollection ().addAll (LongCollectionCollection.wrap (c));
   }
@@ -47,20 +55,14 @@ abstract class AbstractCollectionLongCollection implements LongCollection
     getCollection ().clear ();
   }
 
-  public boolean contains (final long element)
+  public boolean contains (final long aElement)
   {
-    return getCollection ().contains (new Long (element));
+    return getCollection ().contains (Long.valueOf (aElement));
   }
 
-  public boolean containsAll (final LongCollection c)
+  public boolean containsAll (@Nonnull final LongCollection c)
   {
     return getCollection ().containsAll (LongCollectionCollection.wrap (c));
-  }
-
-  @Override
-  public String toString ()
-  {
-    return getCollection ().toString ();
   }
 
   public boolean isEmpty ()
@@ -72,56 +74,61 @@ abstract class AbstractCollectionLongCollection implements LongCollection
    * {@link IteratorLongIterator#wrap wraps} the {@link java.util.Iterator
    * Iterator} returned by my underlying {@link Collection Collection}, if any.
    */
+  @Nonnull
   public LongIterator iterator ()
   {
     return IteratorLongIterator.wrap (getCollection ().iterator ());
   }
 
-  public boolean removeElement (final long element)
+  public boolean removeElement (final long aElement)
   {
-    return getCollection ().remove (new Long (element));
+    return getCollection ().remove (Long.valueOf (aElement));
   }
 
-  public boolean removeAll (final LongCollection c)
+  public boolean removeAll (@Nonnull final LongCollection c)
   {
     return getCollection ().removeAll (LongCollectionCollection.wrap (c));
   }
 
-  public boolean retainAll (final LongCollection c)
+  public boolean retainAll (@Nonnull final LongCollection c)
   {
     return getCollection ().retainAll (LongCollectionCollection.wrap (c));
   }
 
+  @Nonnegative
   public int size ()
   {
     return getCollection ().size ();
   }
 
+  @Nonnull
+  @ReturnsMutableCopy
   public long [] toArray ()
   {
-    final Object [] src = getCollection ().toArray ();
-    final long [] dest = new long [src.length];
-    for (int i = 0; i < src.length; i++)
-    {
-      dest[i] = ((Number) (src[i])).longValue ();
-    }
+    final Object [] aElementData = getCollection ().toArray ();
+    final long [] dest = new long [aElementData.length];
+    for (int i = 0; i < aElementData.length; i++)
+      dest[i] = ((Long) (aElementData[i])).longValue ();
     return dest;
   }
 
-  public long [] toArray (long [] dest)
+  @Nonnull
+  public long [] toArray (@Nonnull final long [] dest)
   {
-    final Object [] src = getCollection ().toArray ();
-    if (dest.length < src.length)
+    final Object [] aElementData = getCollection ().toArray ();
+    long [] ret = dest;
+    if (ret.length < aElementData.length)
+      ret = new long [aElementData.length];
+    for (int i = 0; i < aElementData.length; i++)
     {
-      dest = new long [src.length];
+      ret[i] = ((Long) (aElementData[i])).longValue ();
     }
-    for (int i = 0; i < src.length; i++)
-    {
-      dest[i] = ((Number) (src[i])).longValue ();
-    }
-    return dest;
+    return ret;
   }
 
-  protected abstract Collection getCollection ();
-
+  @Override
+  public String toString ()
+  {
+    return getCollection ().toString ();
+  }
 }

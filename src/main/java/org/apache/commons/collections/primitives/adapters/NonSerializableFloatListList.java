@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.FloatList;
 
 /**
@@ -26,22 +28,21 @@ import org.apache.commons.collections.primitives.FloatList;
  */
 final class NonSerializableFloatListList extends AbstractFloatListList
 {
+  private final FloatList m_aList;
 
   /**
    * Creates a {@link java.util.List List} wrapping the specified
    * {@link FloatList FloatList}.
    */
-  public NonSerializableFloatListList (final FloatList list)
+  public NonSerializableFloatListList (@Nonnull final FloatList aList)
   {
-    _list = list;
+    m_aList = aList;
   }
 
   @Override
+  @Nonnull
   protected FloatList getFloatList ()
   {
-    return _list;
+    return m_aList;
   }
-
-  private FloatList _list = null;
-
 }

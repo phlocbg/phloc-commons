@@ -16,11 +16,15 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
-import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.CharCollection;
+
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 
 /**
  * @since Commons Primitives 1.0
@@ -28,17 +32,20 @@ import org.apache.commons.collections.primitives.CharCollection;
  *          2006) $
  * @author Rodney Waldhoff
  */
-abstract class AbstractCharCollectionCollection implements Collection
+abstract class AbstractCharCollectionCollection implements Collection <Character>
 {
+  @Nonnull
+  protected abstract CharCollection getCharCollection ();
 
-  public boolean add (final Object element)
+  public boolean add (final Character element)
   {
-    return getCharCollection ().add (((Character) element).charValue ());
+    return getCharCollection ().add (element.charValue ());
   }
 
-  public boolean addAll (final Collection c)
+  @SuppressWarnings ("unchecked")
+  public boolean addAll (final Collection <? extends Character> c)
   {
-    return getCharCollection ().addAll (CollectionCharCollection.wrap (c));
+    return getCharCollection ().addAll (CollectionCharCollection.wrap ((Collection <Character>) c));
   }
 
   public void clear ()
@@ -51,9 +58,10 @@ abstract class AbstractCharCollectionCollection implements Collection
     return getCharCollection ().contains (((Character) element).charValue ());
   }
 
-  public boolean containsAll (final Collection c)
+  @SuppressWarnings ("unchecked")
+  public boolean containsAll (final Collection <?> c)
   {
-    return getCharCollection ().containsAll (CollectionCharCollection.wrap (c));
+    return getCharCollection ().containsAll (CollectionCharCollection.wrap ((Collection <Character>) c));
   }
 
   @Override
@@ -72,7 +80,7 @@ abstract class AbstractCharCollectionCollection implements Collection
    * {@link org.apache.commons.collections.primitives.CharIterator CharIterator}
    * returned by my underlying {@link CharCollection CharCollection}, if any.
    */
-  public Iterator iterator ()
+  public Iterator <Character> iterator ()
   {
     return CharIteratorIterator.wrap (getCharCollection ().iterator ());
   }
@@ -82,14 +90,16 @@ abstract class AbstractCharCollectionCollection implements Collection
     return getCharCollection ().removeElement (((Character) element).charValue ());
   }
 
-  public boolean removeAll (final Collection c)
+  @SuppressWarnings ("unchecked")
+  public boolean removeAll (final Collection <?> c)
   {
-    return getCharCollection ().removeAll (CollectionCharCollection.wrap (c));
+    return getCharCollection ().removeAll (CollectionCharCollection.wrap ((Collection <Character>) c));
   }
 
-  public boolean retainAll (final Collection c)
+  @SuppressWarnings ("unchecked")
+  public boolean retainAll (final Collection <?> c)
   {
-    return getCharCollection ().retainAll (CollectionCharCollection.wrap (c));
+    return getCharCollection ().retainAll (CollectionCharCollection.wrap ((Collection <Character>) c));
   }
 
   public int size ()
@@ -97,35 +107,30 @@ abstract class AbstractCharCollectionCollection implements Collection
     return getCharCollection ().size ();
   }
 
-  public Object [] toArray ()
+  @Nonnull
+  @ReturnsMutableCopy
+  public Character [] toArray ()
   {
     final char [] a = getCharCollection ().toArray ();
-    final Object [] A = new Object [a.length];
+    final Character [] A = new Character [a.length];
     for (int i = 0; i < a.length; i++)
-    {
-      A[i] = new Character (a[i]);
-    }
+      A[i] = Character.valueOf (a[i]);
     return A;
   }
 
-  public Object [] toArray (Object [] A)
+  @SuppressWarnings ("unchecked")
+  public <T> T [] toArray (final T [] a)
   {
-    final char [] a = getCharCollection ().toArray ();
-    if (A.length < a.length)
+    final Character [] elementData = toArray ();
+    final int size = size ();
+    if (a.length < size)
     {
-      A = (Object []) (Array.newInstance (A.getClass ().getComponentType (), a.length));
+      // Make a new array of a's runtime type, but my contents:
+      return (T []) Arrays.copyOf (elementData, size, a.getClass ());
     }
-    for (int i = 0; i < a.length; i++)
-    {
-      A[i] = new Character (a[i]);
-    }
-    if (A.length > a.length)
-    {
-      A[a.length] = null;
-    }
-
-    return A;
+    System.arraycopy (elementData, 0, a, 0, size);
+    if (a.length > size)
+      a[size] = null;
+    return a;
   }
-
-  protected abstract CharCollection getCharCollection ();
 }

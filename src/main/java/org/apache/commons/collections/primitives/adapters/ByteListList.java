@@ -19,6 +19,9 @@ package org.apache.commons.collections.primitives.adapters;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.ByteList;
 
 /**
@@ -26,58 +29,50 @@ import org.apache.commons.collections.primitives.ByteList;
  * <p />
  * This implementation delegates most methods to the provided {@link ByteList
  * ByteList} implementation in the "obvious" way.
- * 
+ *
  * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
  */
-final public class ByteListList extends AbstractByteListList implements Serializable
+public final class ByteListList extends AbstractByteListList implements Serializable
 {
-
-  /**
-   * Create a {@link List List} wrapping the specified {@link ByteList ByteList}
-   * . When the given <i>list</i> is <code>null</code>, returns
-   * <code>null</code>.
-   * 
-   * @param list
-   *        the (possibly <code>null</code>) {@link ByteList ByteList} to wrap
-   * @return a {@link List List} wrapping the given <i>list</i>, or
-   *         <code>null</code> when <i>list</i> is <code>null</code>.
-   */
-  public static List wrap (final ByteList list)
-  {
-    if (null == list)
-    {
-      return null;
-    }
-    else
-      if (list instanceof Serializable)
-      {
-        return new ByteListList (list);
-      }
-      else
-      {
-        return new NonSerializableByteListList (list);
-      }
-  }
+  private final ByteList m_aList;
 
   /**
    * Creates a {@link List List} wrapping the specified {@link ByteList
    * ByteList}.
-   * 
+   *
    * @see #wrap
    */
-  public ByteListList (final ByteList list)
+  public ByteListList (@Nonnull final ByteList list)
   {
-    _list = list;
+    m_aList = list;
   }
 
   @Override
   protected ByteList getByteList ()
   {
-    return _list;
+    return m_aList;
   }
 
-  private ByteList _list = null;
+  /**
+   * Create a {@link List List} wrapping the specified {@link ByteList ByteList}
+   * . When the given <i>list</i> is <code>null</code>, returns
+   * <code>null</code>.
+   *
+   * @param list
+   *        the (possibly <code>null</code>) {@link ByteList ByteList} to wrap
+   * @return a {@link List List} wrapping the given <i>list</i>, or
+   *         <code>null</code> when <i>list</i> is <code>null</code>.
+   */
+  @Nullable
+  public static List <Byte> wrap (@Nullable final ByteList list)
+  {
+    if (null == list)
+      return null;
+    if (list instanceof Serializable)
+      return new ByteListList (list);
+    return new NonSerializableByteListList (list);
+  }
 }

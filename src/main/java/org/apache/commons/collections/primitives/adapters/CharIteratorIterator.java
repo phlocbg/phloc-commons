@@ -72,8 +72,8 @@ public class CharIteratorIterator implements Iterator <Character>
    * <code>null</code>, returns <code>null</code>.
    * 
    * @param iterator
-   *        the (possibly <code>null</code>) {@link CharIterator CharIterator}
-   *        to wrap
+   *        the (possibly <code>null</code>) {@link CharIterator CharIterator} to
+   *        wrap
    * @return an {@link Iterator Iterator} wrapping the given <i>iterator</i>, or
    *         <code>null</code> when <i>iterator</i> is <code>null</code>.
    */

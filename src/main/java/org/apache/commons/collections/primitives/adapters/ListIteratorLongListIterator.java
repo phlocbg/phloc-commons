@@ -18,6 +18,9 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.ListIterator;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.LongListIterator;
 
 /**
@@ -27,7 +30,7 @@ import org.apache.commons.collections.primitives.LongListIterator;
  * This implementation delegates most methods to the provided
  * {@link LongListIterator LongListIterator} implementation in the "obvious"
  * way.
- * 
+ *
  * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
@@ -35,12 +38,69 @@ import org.apache.commons.collections.primitives.LongListIterator;
  */
 public class ListIteratorLongListIterator implements LongListIterator
 {
+  private final ListIterator <Long> m_aIterator;
+
+  /**
+   * Creates an {@link LongListIterator LongListIterator} wrapping the specified
+   * {@link ListIterator ListIterator}.
+   *
+   * @see #wrap
+   */
+  public ListIteratorLongListIterator (@Nonnull final ListIterator <Long> iterator)
+  {
+    m_aIterator = iterator;
+  }
+
+  public int nextIndex ()
+  {
+    return m_aIterator.nextIndex ();
+  }
+
+  public int previousIndex ()
+  {
+    return m_aIterator.previousIndex ();
+  }
+
+  public boolean hasNext ()
+  {
+    return m_aIterator.hasNext ();
+  }
+
+  public boolean hasPrevious ()
+  {
+    return m_aIterator.hasPrevious ();
+  }
+
+  public long next ()
+  {
+    return m_aIterator.next ().longValue ();
+  }
+
+  public long previous ()
+  {
+    return m_aIterator.previous ().longValue ();
+  }
+
+  public void add (final long element)
+  {
+    m_aIterator.add (Long.valueOf (element));
+  }
+
+  public void set (final long element)
+  {
+    m_aIterator.set (Long.valueOf (element));
+  }
+
+  public void remove ()
+  {
+    m_aIterator.remove ();
+  }
 
   /**
    * Create an {@link LongListIterator LongListIterator} wrapping the specified
    * {@link ListIterator ListIterator}. When the given <i>iterator</i> is
    * <code>null</code>, returns <code>null</code>.
-   * 
+   *
    * @param iterator
    *        the (possibly <code>null</code>) {@link ListIterator ListIterator}
    *        to wrap
@@ -48,67 +108,9 @@ public class ListIteratorLongListIterator implements LongListIterator
    *         <i>iterator</i>, or <code>null</code> when <i>iterator</i> is
    *         <code>null</code>.
    */
-  public static LongListIterator wrap (final ListIterator iterator)
+  @Nullable
+  public static LongListIterator wrap (@Nullable final ListIterator <Long> iterator)
   {
     return null == iterator ? null : new ListIteratorLongListIterator (iterator);
   }
-
-  /**
-   * Creates an {@link LongListIterator LongListIterator} wrapping the specified
-   * {@link ListIterator ListIterator}.
-   * 
-   * @see #wrap
-   */
-  public ListIteratorLongListIterator (final ListIterator iterator)
-  {
-    _iterator = iterator;
-  }
-
-  public int nextIndex ()
-  {
-    return _iterator.nextIndex ();
-  }
-
-  public int previousIndex ()
-  {
-    return _iterator.previousIndex ();
-  }
-
-  public boolean hasNext ()
-  {
-    return _iterator.hasNext ();
-  }
-
-  public boolean hasPrevious ()
-  {
-    return _iterator.hasPrevious ();
-  }
-
-  public long next ()
-  {
-    return ((Number) _iterator.next ()).longValue ();
-  }
-
-  public long previous ()
-  {
-    return ((Number) _iterator.previous ()).longValue ();
-  }
-
-  public void add (final long element)
-  {
-    _iterator.add (new Long (element));
-  }
-
-  public void set (final long element)
-  {
-    _iterator.set (new Long (element));
-  }
-
-  public void remove ()
-  {
-    _iterator.remove ();
-  }
-
-  private ListIterator _iterator = null;
-
 }

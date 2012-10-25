@@ -19,6 +19,8 @@ package org.apache.commons.collections.primitives.adapters;
 import java.io.Serializable;
 import java.util.Collection;
 
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.ShortCollection;
 
 /**
@@ -27,20 +29,38 @@ import org.apache.commons.collections.primitives.ShortCollection;
  * <p />
  * This implementation delegates most methods to the provided
  * {@link ShortCollection ShortCollection} implementation in the "obvious" way.
- * 
+ *
  * @since Commons Primitives 1.0
  * @version $Revision: 480462 $ $Date: 2006-11-29 09:15:00 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
  */
-final public class ShortCollectionCollection extends AbstractShortCollectionCollection implements Serializable
+public final class ShortCollectionCollection extends AbstractShortCollectionCollection implements Serializable
 {
+  private final ShortCollection m_aCollection;
+
+  /**
+   * Creates a {@link Collection Collection} wrapping the specified
+   * {@link ShortCollection ShortCollection}.
+   *
+   * @see #wrap
+   */
+  public ShortCollectionCollection (final ShortCollection collection)
+  {
+    m_aCollection = collection;
+  }
+
+  @Override
+  protected ShortCollection getShortCollection ()
+  {
+    return m_aCollection;
+  }
 
   /**
    * Create a {@link Collection Collection} wrapping the specified
-   * {@link ShortCollection ShortCollection}. When the given <i>collection</i>
-   * is <code>null</code>, returns <code>null</code>.
-   * 
+   * {@link ShortCollection ShortCollection}. When the given <i>collection</i> is
+   * <code>null</code>, returns <code>null</code>.
+   *
    * @param collection
    *        the (possibly <code>null</code>) {@link ShortCollection
    *        ShortCollection} to wrap
@@ -48,39 +68,13 @@ final public class ShortCollectionCollection extends AbstractShortCollectionColl
    *         <i>collection</i>, or <code>null</code> when <i>collection</i> is
    *         <code>null</code>.
    */
-  public static Collection wrap (final ShortCollection collection)
+  @Nullable
+  public static Collection <Short> wrap (@Nullable final ShortCollection collection)
   {
     if (null == collection)
-    {
       return null;
-    }
-    else
-      if (collection instanceof Serializable)
-      {
-        return new ShortCollectionCollection (collection);
-      }
-      else
-      {
-        return new NonSerializableShortCollectionCollection (collection);
-      }
+    if (collection instanceof Serializable)
+      return new ShortCollectionCollection (collection);
+    return new NonSerializableShortCollectionCollection (collection);
   }
-
-  /**
-   * Creates a {@link Collection Collection} wrapping the specified
-   * {@link ShortCollection ShortCollection}.
-   * 
-   * @see #wrap
-   */
-  public ShortCollectionCollection (final ShortCollection collection)
-  {
-    _collection = collection;
-  }
-
-  @Override
-  protected ShortCollection getShortCollection ()
-  {
-    return _collection;
-  }
-
-  private ShortCollection _collection = null;
 }
