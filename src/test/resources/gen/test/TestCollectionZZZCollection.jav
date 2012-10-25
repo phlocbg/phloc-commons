@@ -25,27 +25,27 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.AbstractTestObject;
-import org.apache.commons.collections.primitives.DoubleCollection;
+import org.apache.commons.collections.primitives.ZZZCollection;
 
 /**
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestCollectionDoubleCollection extends AbstractTestObject
+public class TestCollectionZZZCollection extends AbstractTestObject
 {
 
   // conventional
   // ------------------------------------------------------------------------
 
-  public TestCollectionDoubleCollection (final String testName)
+  public TestCollectionZZZCollection (final String testName)
   {
     super (testName);
   }
 
   public static Test suite ()
   {
-    return new TestSuite (TestCollectionDoubleCollection.class);
+    return new TestSuite (TestCollectionZZZCollection.class);
   }
 
   // collections testing framework
@@ -54,12 +54,12 @@ public class TestCollectionDoubleCollection extends AbstractTestObject
   @Override
   public Object makeObject ()
   {
-    final List <Double> list = new ArrayList <Double> ();
+    final List <XXX> list = new ArrayList <XXX> ();
     for (int i = 0; i < 10; i++)
     {
-      list.add (Double.valueOf (i));
+      list.add (XXX.valueOf ($CASTINT$i));
     }
-    return new CollectionDoubleCollection (list);
+    return new CollectionZZZCollection (list);
   }
 
   @Override
@@ -72,14 +72,14 @@ public class TestCollectionDoubleCollection extends AbstractTestObject
   @Override
   public void testCanonicalEmptyCollectionExists ()
   {
-    // Double FIX ME Double
+    // XXX FIX ME XXX
     // need to add a serialized form to cvs
   }
 
   @Override
   public void testCanonicalFullCollectionExists ()
   {
-    // Double FIX ME Double
+    // XXX FIX ME XXX
     // need to add a serialized form to cvs
   }
 
@@ -88,22 +88,22 @@ public class TestCollectionDoubleCollection extends AbstractTestObject
 
   public void testWrapNull ()
   {
-    assertNull (CollectionDoubleCollection.wrap (null));
+    assertNull (CollectionZZZCollection.wrap (null));
   }
 
   public void testWrapSerializable ()
   {
-    final DoubleCollection collection = CollectionDoubleCollection.wrap (new ArrayList <Double> ());
+    final ZZZCollection collection = CollectionZZZCollection.wrap (new ArrayList <XXX> ());
     assertNotNull (collection);
     assertTrue (collection instanceof Serializable);
   }
 
   public void testWrapNonSerializable ()
   {
-    final DoubleCollection collection = CollectionDoubleCollection.wrap (new AbstractList <Double> ()
+    final ZZZCollection collection = CollectionZZZCollection.wrap (new AbstractList <XXX> ()
     {
       @Override
-      public Double get (final int i)
+      public XXX get (final int i)
       {
         throw new IndexOutOfBoundsException ();
       }

@@ -54,10 +54,10 @@ public class TestCollectionCharCollection extends AbstractTestObject
   @Override
   public Object makeObject ()
   {
-    final List list = new ArrayList ();
+    final List <Character> list = new ArrayList <Character> ();
     for (int i = 0; i < 10; i++)
     {
-      list.add (new Character ((char) i));
+      list.add (Character.valueOf ((char)i));
     }
     return new CollectionCharCollection (list);
   }
@@ -72,14 +72,14 @@ public class TestCollectionCharCollection extends AbstractTestObject
   @Override
   public void testCanonicalEmptyCollectionExists ()
   {
-    // XXX FIX ME XXX
+    // Character FIX ME Character
     // need to add a serialized form to cvs
   }
 
   @Override
   public void testCanonicalFullCollectionExists ()
   {
-    // XXX FIX ME XXX
+    // Character FIX ME Character
     // need to add a serialized form to cvs
   }
 
@@ -93,17 +93,17 @@ public class TestCollectionCharCollection extends AbstractTestObject
 
   public void testWrapSerializable ()
   {
-    final CharCollection collection = CollectionCharCollection.wrap (new ArrayList ());
+    final CharCollection collection = CollectionCharCollection.wrap (new ArrayList <Character> ());
     assertNotNull (collection);
     assertTrue (collection instanceof Serializable);
   }
 
   public void testWrapNonSerializable ()
   {
-    final CharCollection collection = CollectionCharCollection.wrap (new AbstractList ()
+    final CharCollection collection = CollectionCharCollection.wrap (new AbstractList <Character> ()
     {
       @Override
-      public Object get (final int i)
+      public Character get (final int i)
       {
         throw new IndexOutOfBoundsException ();
       }
@@ -117,5 +117,4 @@ public class TestCollectionCharCollection extends AbstractTestObject
     assertNotNull (collection);
     assertTrue (!(collection instanceof Serializable));
   }
-
 }

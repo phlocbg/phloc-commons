@@ -50,13 +50,13 @@ public class TestByteIteratorIterator extends AbstractTestIterator
   // ------------------------------------------------------------------------
 
   @Override
-  public Iterator makeEmptyIterator ()
+  public Iterator <Byte> makeEmptyIterator ()
   {
     return ByteIteratorIterator.wrap (makeEmptyByteList ().iterator ());
   }
 
   @Override
-  public Iterator makeFullIterator ()
+  public Iterator <Byte> makeFullIterator ()
   {
     return ByteIteratorIterator.wrap (makeFullByteList ().iterator ());
   }
