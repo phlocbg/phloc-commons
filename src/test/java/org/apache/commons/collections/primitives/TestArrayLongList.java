@@ -19,8 +19,6 @@ package org.apache.commons.collections.primitives;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.BulkTest;
-
 /**
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
  *          2006) $
@@ -39,7 +37,7 @@ public class TestArrayLongList extends TestLongList
 
   public static Test suite ()
   {
-    final TestSuite suite = BulkTest.makeSuite (TestArrayLongList.class);
+    final TestSuite suite = new TestSuite (TestArrayLongList.class);
     return suite;
   }
 
@@ -50,52 +48,6 @@ public class TestArrayLongList extends TestLongList
   protected LongList makeEmptyLongList ()
   {
     return new ArrayLongList ();
-  }
-
-  @Override
-  public String [] ignoredTests ()
-  {
-    // sublists are not serializable
-    return new String [] { "TestArrayLongList.bulkTestSubList.testFullListSerialization",
-                          "TestArrayLongList.bulkTestSubList.testEmptyListSerialization",
-                          "TestArrayLongList.bulkTestSubList.testCanonicalEmptyCollectionExists",
-                          "TestArrayLongList.bulkTestSubList.testCanonicalFullCollectionExists",
-                          "TestArrayLongList.bulkTestSubList.testEmptyListCompatibility",
-                          "TestArrayLongList.bulkTestSubList.testFullListCompatibility",
-                          "TestArrayLongList.bulkTestSubList.testSerializeDeserializeThenCompare",
-                          "TestArrayLongList.bulkTestSubList.testSimpleSerialization" };
-  }
-
-  // tests
-  // ------------------------------------------------------------------------
-
-  /** @TODO need to add serialized form to cvs */
-  @Override
-  public void testCanonicalEmptyCollectionExists ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testCanonicalFullCollectionExists ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testEmptyListCompatibility ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testFullListCompatibility ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
   }
 
   public void testAddGetLargeValues ()

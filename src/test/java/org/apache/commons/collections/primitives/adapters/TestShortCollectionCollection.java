@@ -117,5 +117,4 @@ public class TestShortCollectionCollection extends AbstractTestObject
     assertNotNull (collection);
     assertTrue (!(collection instanceof Serializable));
   }
-
 }

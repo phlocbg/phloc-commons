@@ -93,14 +93,14 @@ public class TestByteCollectionCollection extends AbstractTestObject
 
   public void testWrapSerializable ()
   {
-    final Collection collection = ByteCollectionCollection.wrap (new ArrayByteList ());
+    final Collection <Byte> collection = ByteCollectionCollection.wrap (new ArrayByteList ());
     assertNotNull (collection);
     assertTrue (collection instanceof Serializable);
   }
 
   public void testWrapNonSerializable ()
   {
-    final Collection collection = ByteCollectionCollection.wrap (new RandomAccessByteList ()
+    final Collection <Byte> collection = ByteCollectionCollection.wrap (new RandomAccessByteList ()
     {
       @Override
       public byte get (final int i)
@@ -117,5 +117,4 @@ public class TestByteCollectionCollection extends AbstractTestObject
     assertNotNull (collection);
     assertTrue (!(collection instanceof Serializable));
   }
-
 }

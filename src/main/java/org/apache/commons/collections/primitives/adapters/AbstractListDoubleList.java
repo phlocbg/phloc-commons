@@ -116,7 +116,7 @@ abstract class AbstractListDoubleList extends AbstractCollectionDoubleCollection
       return false;
 
     final DoubleList that = (DoubleList) obj;
-    if (this.size () != that.size ())
+    if (size () != that.size ())
       return false;
     final DoubleIterator thisiter = iterator ();
     final DoubleIterator thatiter = that.iterator ();

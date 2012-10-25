@@ -18,6 +18,8 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.Iterator;
 
+import javax.annotation.Nonnull;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -32,13 +34,9 @@ import org.apache.commons.collections.primitives.CharList;
  */
 public class TestCharIteratorIterator extends AbstractTestIterator
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestCharIteratorIterator (final String testName)
+  public TestCharIteratorIterator (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
@@ -50,22 +48,26 @@ public class TestCharIteratorIterator extends AbstractTestIterator
   // ------------------------------------------------------------------------
 
   @Override
-  public Iterator makeEmptyIterator ()
+  @Nonnull
+  public Iterator <Character> makeEmptyIterator ()
   {
     return CharIteratorIterator.wrap (makeEmptyCharList ().iterator ());
   }
 
   @Override
-  public Iterator makeFullIterator ()
+  @Nonnull
+  public Iterator <Character> makeFullIterator ()
   {
     return CharIteratorIterator.wrap (makeFullCharList ().iterator ());
   }
 
+  @Nonnull
   protected CharList makeEmptyCharList ()
   {
     return new ArrayCharList ();
   }
 
+  @Nonnull
   protected CharList makeFullCharList ()
   {
     final CharList list = makeEmptyCharList ();
@@ -77,6 +79,7 @@ public class TestCharIteratorIterator extends AbstractTestIterator
     return list;
   }
 
+  @Nonnull
   public char [] getFullElements ()
   {
     return new char [] { (char) 0,
@@ -90,8 +93,4 @@ public class TestCharIteratorIterator extends AbstractTestIterator
                         (char) 8,
                         (char) 9 };
   }
-
-  // tests
-  // ------------------------------------------------------------------------
-
 }

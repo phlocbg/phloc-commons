@@ -2,6 +2,7 @@ package com.phloc.test.tools;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -41,26 +42,30 @@ public class MainGenCode
     }
   };
 
-  private static String _get (final String s,
-                              final String sXXX,
-                              final String sYYY,
-                              final String sZZZ,
-                              final String sDummy)
+  private static final Set <String> CASTINT = new HashSet <String> ()
+  {
+    {
+      add ("byte");
+      add ("char");
+      add ("short");
+    }
+  };
+
+  private static String _get (final String s, final Map <String, String> aMacros)
   {
     String ret = s;
-    ret = StringHelper.replaceAll (ret, "XXX", sXXX);
-    ret = StringHelper.replaceAll (ret, "YYY$UC$", sYYY.toUpperCase (Locale.US));
-    ret = StringHelper.replaceAll (ret, "YYY", sYYY);
-    ret = StringHelper.replaceAll (ret, "ZZZ", sZZZ);
-    ret = StringHelper.replaceAll (ret, "$DUMMY$", sDummy);
+    for (final Map.Entry <String, String> e : aMacros.entrySet ())
+      ret = StringHelper.replaceAll (ret, e.getKey (), e.getValue ());
     return ret;
   }
 
   public static void main (final String [] args)
   {
     final Set <String> aAvoidFilenames = ContainerHelper.newSet ();
-    if (false)
-      aAvoidFilenames.add ("BooleanCollections.java");
+    aAvoidFilenames.add ("TestBooleanCollections.java");
+    aAvoidFilenames.add ("TestBooleanIterator.java");
+    aAvoidFilenames.add ("TestBooleanListIterator.java");
+    aAvoidFilenames.add ("TestBooleanListList.java");
 
     for (final String [] aDirs : DIRS)
     {
@@ -71,13 +76,16 @@ public class MainGenCode
         System.out.println ("  " + aFile.getName ());
         for (final String [] aPart : TYPES)
         {
-          final String sYYY = aPart[0];
-          final String sXXX = aPart[1];
-          final String sZZZ = sXXX.substring (0, sYYY.length ());
-          final String sDummy = DUMMIES.get (sYYY);
+          final Map <String, String> aMacros = new HashMap <String, String> ();
+          aMacros.put ("YYY", aPart[0]);
+          aMacros.put ("YYY$UC$", aPart[0].toUpperCase (Locale.US));
+          aMacros.put ("XXX", aPart[1]);
+          aMacros.put ("ZZZ", aPart[1].substring (0, aPart[0].length ()));
+          aMacros.put ("$DUMMY$", DUMMIES.get (aPart[0]));
+          aMacros.put ("$CASTINT$", CASTINT.contains (aPart[0]) ? "(" + aPart[0] + ")" : "");
 
           // Target filename
-          final String sTargetFilename = _get (aFile.getName (), sXXX, sYYY, sZZZ, sDummy) + 'a';
+          final String sTargetFilename = _get (aFile.getName (), aMacros) + 'a';
           if (aAvoidFilenames.contains (sTargetFilename))
             continue;
 
@@ -90,7 +98,7 @@ public class MainGenCode
           final String sTargetFile = aDirs[1] + sPackage.replace ('.', '/') + '/' + sTargetFilename;
 
           // Write file
-          final String sRealContent = _get (sContent, sXXX, sYYY, sZZZ, sDummy);
+          final String sRealContent = _get (sContent, aMacros);
           SimpleFileIO.writeFile (new File (sTargetFile), sRealContent, CCharset.CHARSET_UTF_8_OBJ);
         }
       }

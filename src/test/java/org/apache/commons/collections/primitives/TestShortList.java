@@ -201,17 +201,6 @@ public abstract class TestShortList extends BaseTestList
     }
   }
 
-  public void testHashCodeSpecification ()
-  {
-    final ShortList list = makeFullShortList ();
-    int hash = 1;
-    for (final ShortIterator iter = list.iterator (); iter.hasNext ();)
-    {
-      hash = 31 * hash + iter.next ();
-    }
-    assertEquals (hash, list.hashCode ());
-  }
-
   public void testEqualsWithTwoShortLists ()
   {
     final ShortList one = makeEmptyShortList ();

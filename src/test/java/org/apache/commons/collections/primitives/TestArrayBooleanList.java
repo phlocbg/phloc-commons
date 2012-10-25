@@ -19,8 +19,6 @@ package org.apache.commons.collections.primitives;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.BulkTest;
-
 /**
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
  *          2006) $
@@ -39,7 +37,7 @@ public class TestArrayBooleanList extends TestBooleanList
 
   public static Test suite ()
   {
-    final TestSuite suite = BulkTest.makeSuite (TestArrayBooleanList.class);
+    final TestSuite suite = new TestSuite (TestArrayBooleanList.class);
     return suite;
   }
 
@@ -52,58 +50,8 @@ public class TestArrayBooleanList extends TestBooleanList
     return new ArrayBooleanList ();
   }
 
-  @Override
-  public String [] ignoredTests ()
-  {
-    return new String [] {
-
-                          // having only two unique values breaks these:
-                          "TestArrayBooleanList.bulkTestSubList.testListEquals",
-                          "TestArrayBooleanList.bulkTestSubList.testCollectionRemoveAll",
-                          "TestArrayBooleanList.bulkTestSubList.testCollectionRetainAll",
-
-                          // sublists are not serializable
-                          "TestArrayBooleanList.bulkTestSubList.testFullListSerialization",
-                          "TestArrayBooleanList.bulkTestSubList.testEmptyListSerialization",
-                          "TestArrayBooleanList.bulkTestSubList.testCanonicalEmptyCollectionExists",
-                          "TestArrayBooleanList.bulkTestSubList.testCanonicalFullCollectionExists",
-                          "TestArrayBooleanList.bulkTestSubList.testEmptyListCompatibility",
-                          "TestArrayBooleanList.bulkTestSubList.testFullListCompatibility",
-                          "TestArrayBooleanList.bulkTestSubList.testSerializeDeserializeThenCompare",
-                          "TestArrayBooleanList.bulkTestSubList.testSimpleSerialization" };
-  }
-
   // tests
   // ------------------------------------------------------------------------
-
-  /** @TODO need to add serialized form to cvs */
-  @Override
-  public void testCanonicalEmptyCollectionExists ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testCanonicalFullCollectionExists ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testEmptyListCompatibility ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testFullListCompatibility ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
 
   public void testZeroInitialCapacityIsValid ()
   {

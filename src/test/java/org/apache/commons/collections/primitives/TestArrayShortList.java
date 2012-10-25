@@ -19,8 +19,6 @@ package org.apache.commons.collections.primitives;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.BulkTest;
-
 /**
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
  *          2006) $
@@ -39,7 +37,7 @@ public class TestArrayShortList extends TestShortList
 
   public static Test suite ()
   {
-    final TestSuite suite = BulkTest.makeSuite (TestArrayShortList.class);
+    final TestSuite suite = new TestSuite (TestArrayShortList.class);
     return suite;
   }
 
@@ -50,52 +48,6 @@ public class TestArrayShortList extends TestShortList
   protected ShortList makeEmptyShortList ()
   {
     return new ArrayShortList ();
-  }
-
-  @Override
-  public String [] ignoredTests ()
-  {
-    // sublists are not serializable
-    return new String [] { "TestArrayShortList.bulkTestSubList.testFullListSerialization",
-                          "TestArrayShortList.bulkTestSubList.testEmptyListSerialization",
-                          "TestArrayShortList.bulkTestSubList.testCanonicalEmptyCollectionExists",
-                          "TestArrayShortList.bulkTestSubList.testCanonicalFullCollectionExists",
-                          "TestArrayShortList.bulkTestSubList.testEmptyListCompatibility",
-                          "TestArrayShortList.bulkTestSubList.testFullListCompatibility",
-                          "TestArrayShortList.bulkTestSubList.testSerializeDeserializeThenCompare",
-                          "TestArrayShortList.bulkTestSubList.testSimpleSerialization" };
-  }
-
-  // tests
-  // ------------------------------------------------------------------------
-
-  /** @TODO need to add serialized form to cvs */
-  @Override
-  public void testCanonicalEmptyCollectionExists ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testCanonicalFullCollectionExists ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testEmptyListCompatibility ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testFullListCompatibility ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
   }
 
   public void testAddGetLargeValues ()

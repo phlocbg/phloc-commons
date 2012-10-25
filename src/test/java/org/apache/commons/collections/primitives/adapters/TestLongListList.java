@@ -22,7 +22,6 @@ import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.primitives.ArrayLongList;
 import org.apache.commons.collections.primitives.RandomAccessLongList;
 
@@ -31,20 +30,16 @@ import org.apache.commons.collections.primitives.RandomAccessLongList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestLongListList extends BaseTestList
+public class TestLongListList extends BaseTestList <Long>
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestLongListList (final String testName)
+  public TestLongListList (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
   {
-    final TestSuite suite = BulkTest.makeSuite (TestLongListList.class);
+    final TestSuite suite = new TestSuite (TestLongListList.class);
     return suite;
   }
 
@@ -52,64 +47,31 @@ public class TestLongListList extends BaseTestList
   // ------------------------------------------------------------------------
 
   @Override
-  public List makeEmptyList ()
+  public List <Long> makeEmptyList ()
   {
     return new LongListList (new ArrayLongList ());
   }
 
   @Override
-  public Object [] getFullElements ()
+  public Long [] getFullElements ()
   {
     final Long [] elts = new Long [10];
     for (int i = 0; i < elts.length; i++)
     {
-      elts[i] = new Long (i);
+      elts[i] = Long.valueOf (i);
     }
     return elts;
   }
 
   @Override
-  public Object [] getOtherElements ()
+  public Long [] getOtherElements ()
   {
     final Long [] elts = new Long [10];
     for (int i = 0; i < elts.length; i++)
     {
-      elts[i] = new Long (10 + i);
+      elts[i] = Long.valueOf ((10 + i));
     }
     return elts;
-  }
-
-  // tests
-  // ------------------------------------------------------------------------
-
-  /** @TODO need to add serialized form to cvs */
-
-  @Override
-  public void testCanonicalEmptyCollectionExists ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testCanonicalFullCollectionExists ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testEmptyListCompatibility ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testFullListCompatibility ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
   }
 
   public void testWrapNull ()
@@ -119,14 +81,14 @@ public class TestLongListList extends BaseTestList
 
   public void testWrapSerializable ()
   {
-    final List list = LongListList.wrap (new ArrayLongList ());
+    final List <Long> list = LongListList.wrap (new ArrayLongList ());
     assertNotNull (list);
     assertTrue (list instanceof Serializable);
   }
 
   public void testWrapNonSerializable ()
   {
-    final List list = LongListList.wrap (new RandomAccessLongList ()
+    final List <Long> list = LongListList.wrap (new RandomAccessLongList ()
     {
       @Override
       public long get (final int i)

@@ -116,7 +116,7 @@ abstract class AbstractListIntList extends AbstractCollectionIntCollection imple
       return false;
 
     final IntList that = (IntList) obj;
-    if (this.size () != that.size ())
+    if (size () != that.size ())
       return false;
     final IntIterator thisiter = iterator ();
     final IntIterator thatiter = that.iterator ();

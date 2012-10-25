@@ -116,7 +116,7 @@ abstract class AbstractListShortList extends AbstractCollectionShortCollection i
       return false;
 
     final ShortList that = (ShortList) obj;
-    if (this.size () != that.size ())
+    if (size () != that.size ())
       return false;
     final ShortIterator thisiter = iterator ();
     final ShortIterator thatiter = that.iterator ();

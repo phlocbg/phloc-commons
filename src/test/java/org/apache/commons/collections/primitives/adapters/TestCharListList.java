@@ -22,7 +22,6 @@ import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.primitives.ArrayCharList;
 import org.apache.commons.collections.primitives.RandomAccessCharList;
 
@@ -31,20 +30,16 @@ import org.apache.commons.collections.primitives.RandomAccessCharList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestCharListList extends BaseTestList
+public class TestCharListList extends BaseTestList <Character>
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestCharListList (final String testName)
+  public TestCharListList (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
   {
-    final TestSuite suite = BulkTest.makeSuite (TestCharListList.class);
+    final TestSuite suite = new TestSuite (TestCharListList.class);
     return suite;
   }
 
@@ -52,64 +47,31 @@ public class TestCharListList extends BaseTestList
   // ------------------------------------------------------------------------
 
   @Override
-  public List makeEmptyList ()
+  public List <Character> makeEmptyList ()
   {
     return new CharListList (new ArrayCharList ());
   }
 
   @Override
-  public Object [] getFullElements ()
+  public Character [] getFullElements ()
   {
     final Character [] elts = new Character [10];
     for (int i = 0; i < elts.length; i++)
     {
-      elts[i] = new Character ((char) i);
+      elts[i] = Character.valueOf ((char)i);
     }
     return elts;
   }
 
   @Override
-  public Object [] getOtherElements ()
+  public Character [] getOtherElements ()
   {
     final Character [] elts = new Character [10];
     for (int i = 0; i < elts.length; i++)
     {
-      elts[i] = new Character ((char) (10 + i));
+      elts[i] = Character.valueOf ((char)(10 + i));
     }
     return elts;
-  }
-
-  // tests
-  // ------------------------------------------------------------------------
-
-  /** @TODO need to add serialized form to cvs */
-
-  @Override
-  public void testCanonicalEmptyCollectionExists ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testCanonicalFullCollectionExists ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testEmptyListCompatibility ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testFullListCompatibility ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
   }
 
   public void testWrapNull ()
@@ -119,14 +81,14 @@ public class TestCharListList extends BaseTestList
 
   public void testWrapSerializable ()
   {
-    final List list = CharListList.wrap (new ArrayCharList ());
+    final List <Character> list = CharListList.wrap (new ArrayCharList ());
     assertNotNull (list);
     assertTrue (list instanceof Serializable);
   }
 
   public void testWrapNonSerializable ()
   {
-    final List list = CharListList.wrap (new RandomAccessCharList ()
+    final List <Character> list = CharListList.wrap (new RandomAccessCharList ()
     {
       @Override
       public char get (final int i)

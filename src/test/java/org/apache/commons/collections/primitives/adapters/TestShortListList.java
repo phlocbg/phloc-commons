@@ -22,7 +22,6 @@ import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.primitives.ArrayShortList;
 import org.apache.commons.collections.primitives.RandomAccessShortList;
 
@@ -31,20 +30,16 @@ import org.apache.commons.collections.primitives.RandomAccessShortList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestShortListList extends BaseTestList
+public class TestShortListList extends BaseTestList <Short>
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestShortListList (final String testName)
+  public TestShortListList (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
   {
-    final TestSuite suite = BulkTest.makeSuite (TestShortListList.class);
+    final TestSuite suite = new TestSuite (TestShortListList.class);
     return suite;
   }
 
@@ -52,64 +47,31 @@ public class TestShortListList extends BaseTestList
   // ------------------------------------------------------------------------
 
   @Override
-  public List makeEmptyList ()
+  public List <Short> makeEmptyList ()
   {
     return new ShortListList (new ArrayShortList ());
   }
 
   @Override
-  public Object [] getFullElements ()
+  public Short [] getFullElements ()
   {
     final Short [] elts = new Short [10];
     for (int i = 0; i < elts.length; i++)
     {
-      elts[i] = new Short ((short) i);
+      elts[i] = Short.valueOf ((short)i);
     }
     return elts;
   }
 
   @Override
-  public Object [] getOtherElements ()
+  public Short [] getOtherElements ()
   {
     final Short [] elts = new Short [10];
     for (int i = 0; i < elts.length; i++)
     {
-      elts[i] = new Short ((short) (10 + i));
+      elts[i] = Short.valueOf ((short)(10 + i));
     }
     return elts;
-  }
-
-  // tests
-  // ------------------------------------------------------------------------
-
-  /** @TODO need to add serialized form to cvs */
-
-  @Override
-  public void testCanonicalEmptyCollectionExists ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testCanonicalFullCollectionExists ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testEmptyListCompatibility ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testFullListCompatibility ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
   }
 
   public void testWrapNull ()
@@ -119,14 +81,14 @@ public class TestShortListList extends BaseTestList
 
   public void testWrapSerializable ()
   {
-    final List list = ShortListList.wrap (new ArrayShortList ());
+    final List <Short> list = ShortListList.wrap (new ArrayShortList ());
     assertNotNull (list);
     assertTrue (list instanceof Serializable);
   }
 
   public void testWrapNonSerializable ()
   {
-    final List list = ShortListList.wrap (new RandomAccessShortList ()
+    final List <Short> list = ShortListList.wrap (new RandomAccessShortList ()
     {
       @Override
       public short get (final int i)

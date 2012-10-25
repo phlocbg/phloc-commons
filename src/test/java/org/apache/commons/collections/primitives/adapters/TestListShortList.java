@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.primitives.ShortList;
 import org.apache.commons.collections.primitives.TestShortList;
 
@@ -45,7 +44,7 @@ public class TestListShortList extends TestShortList
 
   public static Test suite ()
   {
-    final TestSuite suite = BulkTest.makeSuite (TestListShortList.class);
+    final TestSuite suite = new TestSuite (TestListShortList.class);
     return suite;
   }
 
@@ -58,54 +57,11 @@ public class TestListShortList extends TestShortList
   @Override
   protected ShortList makeEmptyShortList ()
   {
-    return new ListShortList (new ArrayList ());
-  }
-
-  @Override
-  public String [] ignoredTests ()
-  {
-    // sublists are not serializable
-    return new String [] { "TestListShortList.bulkTestSubList.testFullListSerialization",
-                          "TestListShortList.bulkTestSubList.testEmptyListSerialization",
-                          "TestListShortList.bulkTestSubList.testCanonicalEmptyCollectionExists",
-                          "TestListShortList.bulkTestSubList.testCanonicalFullCollectionExists",
-                          "TestListShortList.bulkTestSubList.testEmptyListCompatibility",
-                          "TestListShortList.bulkTestSubList.testFullListCompatibility",
-                          "TestListShortList.bulkTestSubList.testSerializeDeserializeThenCompare",
-                          "TestListShortList.bulkTestSubList.testSimpleSerialization" };
+    return new ListShortList (new ArrayList <Short> ());
   }
 
   // tests
   // ------------------------------------------------------------------------
-
-  /** @TODO need to add serialized form to cvs */
-  @Override
-  public void testCanonicalEmptyCollectionExists ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testCanonicalFullCollectionExists ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testEmptyListCompatibility ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testFullListCompatibility ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
 
   public void testWrapNull ()
   {
@@ -114,17 +70,17 @@ public class TestListShortList extends TestShortList
 
   public void testWrapSerializable ()
   {
-    final ShortList list = ListShortList.wrap (new ArrayList ());
+    final ShortList list = ListShortList.wrap (new ArrayList <Short> ());
     assertNotNull (list);
     assertTrue (list instanceof Serializable);
   }
 
   public void testWrapNonSerializable ()
   {
-    final ShortList list = ListShortList.wrap (new AbstractList ()
+    final ShortList list = ListShortList.wrap (new AbstractList <Short> ()
     {
       @Override
-      public Object get (final int i)
+      public Short get (final int i)
       {
         throw new IndexOutOfBoundsException ();
       }

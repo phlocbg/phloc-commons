@@ -116,7 +116,7 @@ abstract class AbstractListBooleanList extends AbstractCollectionBooleanCollecti
       return false;
 
     final BooleanList that = (BooleanList) obj;
-    if (this.size () != that.size ())
+    if (size () != that.size ())
       return false;
     final BooleanIterator thisiter = iterator ();
     final BooleanIterator thatiter = that.iterator ();

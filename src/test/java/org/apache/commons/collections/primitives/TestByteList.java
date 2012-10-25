@@ -30,7 +30,7 @@ import org.apache.commons.collections.primitives.adapters.ListByteList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class TestByteList extends BaseTestList
+public abstract class TestByteList extends BaseTestList <Byte>
 {
 
   // conventional
@@ -199,17 +199,6 @@ public abstract class TestByteList extends BaseTestList
     {
       assertEquals (iter.next (), dest2[i]);
     }
-  }
-
-  public void testHashCodeSpecification ()
-  {
-    final ByteList list = makeFullByteList ();
-    int hash = 1;
-    for (final ByteIterator iter = list.iterator (); iter.hasNext ();)
-    {
-      hash = 31 * hash + (iter.next ());
-    }
-    assertEquals (hash, list.hashCode ());
   }
 
   public void testEqualsWithTwoByteLists ()

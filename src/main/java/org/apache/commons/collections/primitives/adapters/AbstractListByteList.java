@@ -116,7 +116,7 @@ abstract class AbstractListByteList extends AbstractCollectionByteCollection imp
       return false;
 
     final ByteList that = (ByteList) obj;
-    if (this.size () != that.size ())
+    if (size () != that.size ())
       return false;
     final ByteIterator thisiter = iterator ();
     final ByteIterator thatiter = that.iterator ();

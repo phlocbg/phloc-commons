@@ -22,24 +22,24 @@ import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.primitives.ArrayDoubleList;
-import org.apache.commons.collections.primitives.RandomAccessDoubleList;
+import org.apache.commons.collections.primitives.ArrayZZZList;
+import org.apache.commons.collections.primitives.RandomAccessZZZList;
 
 /**
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestDoubleListList extends BaseTestList <Double>
+public class TestZZZListList extends BaseTestList <XXX>
 {
-  public TestDoubleListList (final String sTestName)
+  public TestZZZListList (final String sTestName)
   {
     super (sTestName);
   }
 
   public static Test suite ()
   {
-    final TestSuite suite = new TestSuite (TestDoubleListList.class);
+    final TestSuite suite = new TestSuite (TestZZZListList.class);
     return suite;
   }
 
@@ -47,51 +47,51 @@ public class TestDoubleListList extends BaseTestList <Double>
   // ------------------------------------------------------------------------
 
   @Override
-  public List <Double> makeEmptyList ()
+  public List <XXX> makeEmptyList ()
   {
-    return new DoubleListList (new ArrayDoubleList ());
+    return new ZZZListList (new ArrayZZZList ());
   }
 
   @Override
-  public Double [] getFullElements ()
+  public XXX [] getFullElements ()
   {
-    final Double [] elts = new Double [10];
+    final XXX [] elts = new XXX [10];
     for (int i = 0; i < elts.length; i++)
     {
-      elts[i] = Double.valueOf (i);
+      elts[i] = XXX.valueOf ($CASTINT$i);
     }
     return elts;
   }
 
   @Override
-  public Double [] getOtherElements ()
+  public XXX [] getOtherElements ()
   {
-    final Double [] elts = new Double [10];
+    final XXX [] elts = new XXX [10];
     for (int i = 0; i < elts.length; i++)
     {
-      elts[i] = Double.valueOf ((10 + i));
+      elts[i] = XXX.valueOf ($CASTINT$(10 + i));
     }
     return elts;
   }
 
   public void testWrapNull ()
   {
-    assertNull (DoubleListList.wrap (null));
+    assertNull (ZZZListList.wrap (null));
   }
 
   public void testWrapSerializable ()
   {
-    final List <Double> list = DoubleListList.wrap (new ArrayDoubleList ());
+    final List <XXX> list = ZZZListList.wrap (new ArrayZZZList ());
     assertNotNull (list);
     assertTrue (list instanceof Serializable);
   }
 
   public void testWrapNonSerializable ()
   {
-    final List <Double> list = DoubleListList.wrap (new RandomAccessDoubleList ()
+    final List <XXX> list = ZZZListList.wrap (new RandomAccessZZZList ()
     {
       @Override
-      public double get (final int i)
+      public YYY get (final int i)
       {
         throw new IndexOutOfBoundsException ();
       }

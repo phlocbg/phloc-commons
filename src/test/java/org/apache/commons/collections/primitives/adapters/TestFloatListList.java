@@ -22,7 +22,6 @@ import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.primitives.ArrayFloatList;
 import org.apache.commons.collections.primitives.RandomAccessFloatList;
 
@@ -31,20 +30,16 @@ import org.apache.commons.collections.primitives.RandomAccessFloatList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestFloatListList extends BaseTestList
+public class TestFloatListList extends BaseTestList <Float>
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestFloatListList (final String testName)
+  public TestFloatListList (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
   {
-    final TestSuite suite = BulkTest.makeSuite (TestFloatListList.class);
+    final TestSuite suite = new TestSuite (TestFloatListList.class);
     return suite;
   }
 
@@ -52,64 +47,31 @@ public class TestFloatListList extends BaseTestList
   // ------------------------------------------------------------------------
 
   @Override
-  public List makeEmptyList ()
+  public List <Float> makeEmptyList ()
   {
     return new FloatListList (new ArrayFloatList ());
   }
 
   @Override
-  public Object [] getFullElements ()
+  public Float [] getFullElements ()
   {
     final Float [] elts = new Float [10];
     for (int i = 0; i < elts.length; i++)
     {
-      elts[i] = new Float (i);
+      elts[i] = Float.valueOf (i);
     }
     return elts;
   }
 
   @Override
-  public Object [] getOtherElements ()
+  public Float [] getOtherElements ()
   {
     final Float [] elts = new Float [10];
     for (int i = 0; i < elts.length; i++)
     {
-      elts[i] = new Float (10 + i);
+      elts[i] = Float.valueOf ((10 + i));
     }
     return elts;
-  }
-
-  // tests
-  // ------------------------------------------------------------------------
-
-  /** @TODO need to add serialized form to cvs */
-
-  @Override
-  public void testCanonicalEmptyCollectionExists ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testCanonicalFullCollectionExists ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testEmptyListCompatibility ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testFullListCompatibility ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
   }
 
   public void testWrapNull ()
@@ -119,14 +81,14 @@ public class TestFloatListList extends BaseTestList
 
   public void testWrapSerializable ()
   {
-    final List list = FloatListList.wrap (new ArrayFloatList ());
+    final List <Float> list = FloatListList.wrap (new ArrayFloatList ());
     assertNotNull (list);
     assertTrue (list instanceof Serializable);
   }
 
   public void testWrapNonSerializable ()
   {
-    final List list = FloatListList.wrap (new RandomAccessFloatList ()
+    final List <Float> list = FloatListList.wrap (new RandomAccessFloatList ()
     {
       @Override
       public float get (final int i)

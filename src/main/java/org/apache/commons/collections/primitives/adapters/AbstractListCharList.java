@@ -116,7 +116,7 @@ abstract class AbstractListCharList extends AbstractCollectionCharCollection imp
       return false;
 
     final CharList that = (CharList) obj;
-    if (this.size () != that.size ())
+    if (size () != that.size ())
       return false;
     final CharIterator thisiter = iterator ();
     final CharIterator thatiter = that.iterator ();

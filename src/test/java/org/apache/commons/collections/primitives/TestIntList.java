@@ -201,17 +201,6 @@ public abstract class TestIntList extends BaseTestList
     }
   }
 
-  public void testHashCodeSpecification ()
-  {
-    final IntList list = makeFullIntList ();
-    int hash = 1;
-    for (final IntIterator iter = list.iterator (); iter.hasNext ();)
-    {
-      hash = 31 * hash + iter.next ();
-    }
-    assertEquals (hash, list.hashCode ());
-  }
-
   public void testEqualsWithTwoIntLists ()
   {
     final IntList one = makeEmptyIntList ();

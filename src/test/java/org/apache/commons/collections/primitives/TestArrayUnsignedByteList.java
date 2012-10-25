@@ -19,8 +19,6 @@ package org.apache.commons.collections.primitives;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.BulkTest;
-
 /**
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
  *          2006) $
@@ -39,7 +37,7 @@ public class TestArrayUnsignedByteList extends TestShortList
 
   public static Test suite ()
   {
-    final TestSuite suite = BulkTest.makeSuite (TestArrayUnsignedByteList.class);
+    final TestSuite suite = new TestSuite (TestArrayUnsignedByteList.class);
     return suite;
   }
 
@@ -50,20 +48,6 @@ public class TestArrayUnsignedByteList extends TestShortList
   protected ShortList makeEmptyShortList ()
   {
     return new ArrayUnsignedByteList ();
-  }
-
-  @Override
-  public String [] ignoredTests ()
-  {
-    // sublists are not serializable
-    return new String [] { "TestArrayUnsignedByteList.bulkTestSubList.testFullListSerialization",
-                          "TestArrayUnsignedByteList.bulkTestSubList.testEmptyListSerialization",
-                          "TestArrayUnsignedByteList.bulkTestSubList.testCanonicalEmptyCollectionExists",
-                          "TestArrayUnsignedByteList.bulkTestSubList.testCanonicalFullCollectionExists",
-                          "TestArrayUnsignedByteList.bulkTestSubList.testEmptyListCompatibility",
-                          "TestArrayUnsignedByteList.bulkTestSubList.testFullListCompatibility",
-                          "TestArrayUnsignedByteList.bulkTestSubList.testSerializeDeserializeThenCompare",
-                          "TestArrayUnsignedByteList.bulkTestSubList.testSimpleSerialization" };
   }
 
   @Override
@@ -90,35 +74,6 @@ public class TestArrayUnsignedByteList extends TestShortList
     }
     data[0] = 17;
     assertEquals (1, list.get (0));
-  }
-
-  // @TODO need to add serialized form to cvs
-  @Override
-  public void testCanonicalEmptyCollectionExists ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testCanonicalFullCollectionExists ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testEmptyListCompatibility ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testFullListCompatibility ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
   }
 
   public void testZeroInitialCapacityIsValid ()

@@ -22,7 +22,6 @@ import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.primitives.ArrayByteList;
 import org.apache.commons.collections.primitives.RandomAccessByteList;
 
@@ -31,20 +30,16 @@ import org.apache.commons.collections.primitives.RandomAccessByteList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestByteListList extends BaseTestList
+public class TestByteListList extends BaseTestList <Byte>
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestByteListList (final String testName)
+  public TestByteListList (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
   {
-    final TestSuite suite = BulkTest.makeSuite (TestByteListList.class);
+    final TestSuite suite = new TestSuite (TestByteListList.class);
     return suite;
   }
 
@@ -52,64 +47,31 @@ public class TestByteListList extends BaseTestList
   // ------------------------------------------------------------------------
 
   @Override
-  public List makeEmptyList ()
+  public List <Byte> makeEmptyList ()
   {
     return new ByteListList (new ArrayByteList ());
   }
 
   @Override
-  public Object [] getFullElements ()
+  public Byte [] getFullElements ()
   {
     final Byte [] elts = new Byte [10];
     for (int i = 0; i < elts.length; i++)
     {
-      elts[i] = new Byte ((byte) i);
+      elts[i] = Byte.valueOf ((byte)i);
     }
     return elts;
   }
 
   @Override
-  public Object [] getOtherElements ()
+  public Byte [] getOtherElements ()
   {
     final Byte [] elts = new Byte [10];
     for (int i = 0; i < elts.length; i++)
     {
-      elts[i] = new Byte ((byte) (10 + i));
+      elts[i] = Byte.valueOf ((byte)(10 + i));
     }
     return elts;
-  }
-
-  // tests
-  // ------------------------------------------------------------------------
-
-  /** @TODO need to add serialized form to cvs */
-
-  @Override
-  public void testCanonicalEmptyCollectionExists ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testCanonicalFullCollectionExists ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testEmptyListCompatibility ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testFullListCompatibility ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
   }
 
   public void testWrapNull ()
@@ -119,14 +81,14 @@ public class TestByteListList extends BaseTestList
 
   public void testWrapSerializable ()
   {
-    final List list = ByteListList.wrap (new ArrayByteList ());
+    final List <Byte> list = ByteListList.wrap (new ArrayByteList ());
     assertNotNull (list);
     assertTrue (list instanceof Serializable);
   }
 
   public void testWrapNonSerializable ()
   {
-    final List list = ByteListList.wrap (new RandomAccessByteList ()
+    final List <Byte> list = ByteListList.wrap (new RandomAccessByteList ()
     {
       @Override
       public byte get (final int i)
