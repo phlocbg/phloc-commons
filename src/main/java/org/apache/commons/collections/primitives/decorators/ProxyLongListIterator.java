@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.LongIterator;
 import org.apache.commons.collections.primitives.LongListIterator;
 
@@ -51,11 +53,12 @@ abstract class ProxyLongListIterator extends ProxyLongIterator implements LongLi
   }
 
   @Override
+  @Nonnull
   protected final LongIterator getIterator ()
   {
     return getListIterator ();
   }
-
+  
+  @Nonnull
   protected abstract LongListIterator getListIterator ();
-
 }

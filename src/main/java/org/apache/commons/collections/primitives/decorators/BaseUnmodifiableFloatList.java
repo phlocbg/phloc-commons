@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.FloatCollection;
 import org.apache.commons.collections.primitives.FloatIterator;
 import org.apache.commons.collections.primitives.FloatList;
@@ -29,7 +31,6 @@ import org.apache.commons.collections.primitives.FloatListIterator;
  */
 abstract class BaseUnmodifiableFloatList extends BaseProxyFloatList
 {
-
   @Override
   public final void add (final int index, final float element)
   {
@@ -37,7 +38,7 @@ abstract class BaseUnmodifiableFloatList extends BaseProxyFloatList
   }
 
   @Override
-  public final boolean addAll (final int index, final FloatCollection collection)
+  public final boolean addAll (final int index, @Nonnull final FloatCollection collection)
   {
     throw new UnsupportedOperationException ("This FloatList is not modifiable.");
   }
@@ -61,7 +62,7 @@ abstract class BaseUnmodifiableFloatList extends BaseProxyFloatList
   }
 
   @Override
-  public final boolean addAll (final FloatCollection c)
+  public final boolean addAll (@Nonnull final FloatCollection c)
   {
     throw new UnsupportedOperationException ("This FloatList is not modifiable.");
   }
@@ -73,7 +74,7 @@ abstract class BaseUnmodifiableFloatList extends BaseProxyFloatList
   }
 
   @Override
-  public final boolean removeAll (final FloatCollection c)
+  public final boolean removeAll (@Nonnull final FloatCollection c)
   {
     throw new UnsupportedOperationException ("This FloatList is not modifiable.");
   }
@@ -85,7 +86,7 @@ abstract class BaseUnmodifiableFloatList extends BaseProxyFloatList
   }
 
   @Override
-  public final boolean retainAll (final FloatCollection c)
+  public final boolean retainAll (@Nonnull final FloatCollection c)
   {
     throw new UnsupportedOperationException ("This FloatList is not modifiable.");
   }
@@ -97,18 +98,21 @@ abstract class BaseUnmodifiableFloatList extends BaseProxyFloatList
   }
 
   @Override
+  @Nonnull 
   public final FloatIterator iterator ()
   {
     return UnmodifiableFloatIterator.wrap (getProxiedList ().iterator ());
   }
 
   @Override
+  @Nonnull 
   public FloatListIterator listIterator ()
   {
     return UnmodifiableFloatListIterator.wrap (getProxiedList ().listIterator ());
   }
 
   @Override
+  @Nonnull 
   public FloatListIterator listIterator (final int index)
   {
     return UnmodifiableFloatListIterator.wrap (getProxiedList ().listIterator (index));

@@ -18,6 +18,9 @@ package org.apache.commons.collections.primitives.decorators;
 
 import java.io.Serializable;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.ByteList;
 
 /**
@@ -28,38 +31,29 @@ import org.apache.commons.collections.primitives.ByteList;
  */
 public final class UnmodifiableByteList extends BaseUnmodifiableByteList implements Serializable
 {
-  UnmodifiableByteList (final ByteList list)
-  {
-    this.proxied = list;
-  }
+  private ByteList m_aProxied;
 
-  public static final ByteList wrap (final ByteList list)
+  UnmodifiableByteList (@Nonnull final ByteList list)
   {
-    if (null == list)
-    {
-      return null;
-    }
-    else
-      if (list instanceof UnmodifiableByteList)
-      {
-        return list;
-      }
-      else
-        if (list instanceof Serializable)
-        {
-          return new UnmodifiableByteList (list);
-        }
-        else
-        {
-          return new NonSerializableUnmodifiableByteList (list);
-        }
+    m_aProxied = list;
   }
 
   @Override
+  @Nonnull 
   protected ByteList getProxiedList ()
   {
-    return proxied;
+    return m_aProxied;
   }
 
-  private ByteList proxied = null;
+  @Nullable
+  public static final ByteList wrap (@Nullable final ByteList list)
+  {
+    if (null == list)
+      return null;
+    if (list instanceof UnmodifiableByteList)
+      return list;
+    if (list instanceof Serializable)
+      return new UnmodifiableByteList (list);
+    return new NonSerializableUnmodifiableByteList (list);
+  }
 }

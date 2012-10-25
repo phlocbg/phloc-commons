@@ -26,16 +26,16 @@ import org.apache.commons.collections.primitives.ShortList;
  */
 final class NonSerializableUnmodifiableShortList extends BaseUnmodifiableShortList
 {
+  private final ShortList m_aProxied;
+
   NonSerializableUnmodifiableShortList (final ShortList list)
   {
-    this.proxied = list;
+    m_aProxied = list;
   }
 
   @Override
   protected ShortList getProxiedList ()
   {
-    return proxied;
+    return m_aProxied;
   }
-
-  private ShortList proxied = null;
 }

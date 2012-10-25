@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.CharCollection;
 import org.apache.commons.collections.primitives.CharIterator;
 import org.apache.commons.collections.primitives.CharList;
@@ -29,7 +31,6 @@ import org.apache.commons.collections.primitives.CharListIterator;
  */
 abstract class BaseUnmodifiableCharList extends BaseProxyCharList
 {
-
   @Override
   public final void add (final int index, final char element)
   {
@@ -37,7 +38,7 @@ abstract class BaseUnmodifiableCharList extends BaseProxyCharList
   }
 
   @Override
-  public final boolean addAll (final int index, final CharCollection collection)
+  public final boolean addAll (final int index, @Nonnull final CharCollection collection)
   {
     throw new UnsupportedOperationException ("This CharList is not modifiable.");
   }
@@ -61,7 +62,7 @@ abstract class BaseUnmodifiableCharList extends BaseProxyCharList
   }
 
   @Override
-  public final boolean addAll (final CharCollection c)
+  public final boolean addAll (@Nonnull final CharCollection c)
   {
     throw new UnsupportedOperationException ("This CharList is not modifiable.");
   }
@@ -73,7 +74,7 @@ abstract class BaseUnmodifiableCharList extends BaseProxyCharList
   }
 
   @Override
-  public final boolean removeAll (final CharCollection c)
+  public final boolean removeAll (@Nonnull final CharCollection c)
   {
     throw new UnsupportedOperationException ("This CharList is not modifiable.");
   }
@@ -85,7 +86,7 @@ abstract class BaseUnmodifiableCharList extends BaseProxyCharList
   }
 
   @Override
-  public final boolean retainAll (final CharCollection c)
+  public final boolean retainAll (@Nonnull final CharCollection c)
   {
     throw new UnsupportedOperationException ("This CharList is not modifiable.");
   }
@@ -97,18 +98,21 @@ abstract class BaseUnmodifiableCharList extends BaseProxyCharList
   }
 
   @Override
+  @Nonnull 
   public final CharIterator iterator ()
   {
     return UnmodifiableCharIterator.wrap (getProxiedList ().iterator ());
   }
 
   @Override
+  @Nonnull 
   public CharListIterator listIterator ()
   {
     return UnmodifiableCharListIterator.wrap (getProxiedList ().listIterator ());
   }
 
   @Override
+  @Nonnull 
   public CharListIterator listIterator (final int index)
   {
     return UnmodifiableCharListIterator.wrap (getProxiedList ().listIterator (index));

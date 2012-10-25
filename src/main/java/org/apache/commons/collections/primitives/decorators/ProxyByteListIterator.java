@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.ByteIterator;
 import org.apache.commons.collections.primitives.ByteListIterator;
 
@@ -51,11 +53,12 @@ abstract class ProxyByteListIterator extends ProxyByteIterator implements ByteLi
   }
 
   @Override
+  @Nonnull
   protected final ByteIterator getIterator ()
   {
     return getListIterator ();
   }
-
+  
+  @Nonnull
   protected abstract ByteListIterator getListIterator ();
-
 }

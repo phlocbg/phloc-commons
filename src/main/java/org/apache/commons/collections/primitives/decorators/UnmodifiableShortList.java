@@ -18,6 +18,9 @@ package org.apache.commons.collections.primitives.decorators;
 
 import java.io.Serializable;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.ShortList;
 
 /**
@@ -28,38 +31,29 @@ import org.apache.commons.collections.primitives.ShortList;
  */
 public final class UnmodifiableShortList extends BaseUnmodifiableShortList implements Serializable
 {
-  UnmodifiableShortList (final ShortList list)
-  {
-    this.proxied = list;
-  }
+  private ShortList m_aProxied;
 
-  public static final ShortList wrap (final ShortList list)
+  UnmodifiableShortList (@Nonnull final ShortList list)
   {
-    if (null == list)
-    {
-      return null;
-    }
-    else
-      if (list instanceof UnmodifiableShortList)
-      {
-        return list;
-      }
-      else
-        if (list instanceof Serializable)
-        {
-          return new UnmodifiableShortList (list);
-        }
-        else
-        {
-          return new NonSerializableUnmodifiableShortList (list);
-        }
+    m_aProxied = list;
   }
 
   @Override
+  @Nonnull 
   protected ShortList getProxiedList ()
   {
-    return proxied;
+    return m_aProxied;
   }
 
-  private ShortList proxied = null;
+  @Nullable
+  public static final ShortList wrap (@Nullable final ShortList list)
+  {
+    if (null == list)
+      return null;
+    if (list instanceof UnmodifiableShortList)
+      return list;
+    if (list instanceof Serializable)
+      return new UnmodifiableShortList (list);
+    return new NonSerializableUnmodifiableShortList (list);
+  }
 }

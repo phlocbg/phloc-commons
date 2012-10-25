@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.DoubleIterator;
 
 /**
@@ -26,9 +29,11 @@ import org.apache.commons.collections.primitives.DoubleIterator;
  */
 public final class UnmodifiableDoubleIterator extends ProxyDoubleIterator
 {
-  UnmodifiableDoubleIterator (final DoubleIterator iterator)
+  private DoubleIterator m_aProxied;
+
+  UnmodifiableDoubleIterator (@Nonnull final DoubleIterator iterator)
   {
-    this.proxied = iterator;
+    m_aProxied = iterator;
   }
 
   public void remove ()
@@ -37,27 +42,19 @@ public final class UnmodifiableDoubleIterator extends ProxyDoubleIterator
   }
 
   @Override
+  @Nonnull 
   protected DoubleIterator getIterator ()
   {
-    return proxied;
+    return m_aProxied;
   }
 
-  public static final DoubleIterator wrap (final DoubleIterator iterator)
+  @Nullable
+  public static final DoubleIterator wrap (@Nullable final DoubleIterator iterator)
   {
     if (null == iterator)
-    {
       return null;
-    }
-    else
-      if (iterator instanceof UnmodifiableDoubleIterator)
-      {
-        return iterator;
-      }
-      else
-      {
-        return new UnmodifiableDoubleIterator (iterator);
-      }
+    if (iterator instanceof UnmodifiableDoubleIterator)
+      return iterator;
+    return new UnmodifiableDoubleIterator (iterator);
   }
-
-  private DoubleIterator proxied = null;
 }

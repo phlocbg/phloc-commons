@@ -18,6 +18,9 @@ package org.apache.commons.collections.primitives.decorators;
 
 import java.io.Serializable;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.DoubleList;
 
 /**
@@ -28,38 +31,29 @@ import org.apache.commons.collections.primitives.DoubleList;
  */
 public final class UnmodifiableDoubleList extends BaseUnmodifiableDoubleList implements Serializable
 {
-  UnmodifiableDoubleList (final DoubleList list)
-  {
-    this.proxied = list;
-  }
+  private DoubleList m_aProxied;
 
-  public static final DoubleList wrap (final DoubleList list)
+  UnmodifiableDoubleList (@Nonnull final DoubleList list)
   {
-    if (null == list)
-    {
-      return null;
-    }
-    else
-      if (list instanceof UnmodifiableDoubleList)
-      {
-        return list;
-      }
-      else
-        if (list instanceof Serializable)
-        {
-          return new UnmodifiableDoubleList (list);
-        }
-        else
-        {
-          return new NonSerializableUnmodifiableDoubleList (list);
-        }
+    m_aProxied = list;
   }
 
   @Override
+  @Nonnull 
   protected DoubleList getProxiedList ()
   {
-    return proxied;
+    return m_aProxied;
   }
 
-  private DoubleList proxied = null;
+  @Nullable
+  public static final DoubleList wrap (@Nullable final DoubleList list)
+  {
+    if (null == list)
+      return null;
+    if (list instanceof UnmodifiableDoubleList)
+      return list;
+    if (list instanceof Serializable)
+      return new UnmodifiableDoubleList (list);
+    return new NonSerializableUnmodifiableDoubleList (list);
+  }
 }

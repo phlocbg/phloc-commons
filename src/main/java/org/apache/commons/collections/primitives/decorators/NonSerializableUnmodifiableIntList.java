@@ -26,16 +26,16 @@ import org.apache.commons.collections.primitives.IntList;
  */
 final class NonSerializableUnmodifiableIntList extends BaseUnmodifiableIntList
 {
+  private final IntList m_aProxied;
+
   NonSerializableUnmodifiableIntList (final IntList list)
   {
-    this.proxied = list;
+    m_aProxied = list;
   }
 
   @Override
   protected IntList getProxiedList ()
   {
-    return proxied;
+    return m_aProxied;
   }
-
-  private IntList proxied = null;
 }

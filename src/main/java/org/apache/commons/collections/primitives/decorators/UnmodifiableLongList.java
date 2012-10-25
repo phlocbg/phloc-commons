@@ -18,6 +18,9 @@ package org.apache.commons.collections.primitives.decorators;
 
 import java.io.Serializable;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.LongList;
 
 /**
@@ -28,38 +31,29 @@ import org.apache.commons.collections.primitives.LongList;
  */
 public final class UnmodifiableLongList extends BaseUnmodifiableLongList implements Serializable
 {
-  UnmodifiableLongList (final LongList list)
-  {
-    this.proxied = list;
-  }
+  private LongList m_aProxied;
 
-  public static final LongList wrap (final LongList list)
+  UnmodifiableLongList (@Nonnull final LongList list)
   {
-    if (null == list)
-    {
-      return null;
-    }
-    else
-      if (list instanceof UnmodifiableLongList)
-      {
-        return list;
-      }
-      else
-        if (list instanceof Serializable)
-        {
-          return new UnmodifiableLongList (list);
-        }
-        else
-        {
-          return new NonSerializableUnmodifiableLongList (list);
-        }
+    m_aProxied = list;
   }
 
   @Override
+  @Nonnull 
   protected LongList getProxiedList ()
   {
-    return proxied;
+    return m_aProxied;
   }
 
-  private LongList proxied = null;
+  @Nullable
+  public static final LongList wrap (@Nullable final LongList list)
+  {
+    if (null == list)
+      return null;
+    if (list instanceof UnmodifiableLongList)
+      return list;
+    if (list instanceof Serializable)
+      return new UnmodifiableLongList (list);
+    return new NonSerializableUnmodifiableLongList (list);
+  }
 }

@@ -18,6 +18,9 @@ package org.apache.commons.collections.primitives.decorators;
 
 import java.io.Serializable;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.IntList;
 
 /**
@@ -28,38 +31,29 @@ import org.apache.commons.collections.primitives.IntList;
  */
 public final class UnmodifiableIntList extends BaseUnmodifiableIntList implements Serializable
 {
-  UnmodifiableIntList (final IntList list)
-  {
-    this.proxied = list;
-  }
+  private IntList m_aProxied;
 
-  public static final IntList wrap (final IntList list)
+  UnmodifiableIntList (@Nonnull final IntList list)
   {
-    if (null == list)
-    {
-      return null;
-    }
-    else
-      if (list instanceof UnmodifiableIntList)
-      {
-        return list;
-      }
-      else
-        if (list instanceof Serializable)
-        {
-          return new UnmodifiableIntList (list);
-        }
-        else
-        {
-          return new NonSerializableUnmodifiableIntList (list);
-        }
+    m_aProxied = list;
   }
 
   @Override
+  @Nonnull 
   protected IntList getProxiedList ()
   {
-    return proxied;
+    return m_aProxied;
   }
 
-  private IntList proxied = null;
+  @Nullable
+  public static final IntList wrap (@Nullable final IntList list)
+  {
+    if (null == list)
+      return null;
+    if (list instanceof UnmodifiableIntList)
+      return list;
+    if (list instanceof Serializable)
+      return new UnmodifiableIntList (list);
+    return new NonSerializableUnmodifiableIntList (list);
+  }
 }

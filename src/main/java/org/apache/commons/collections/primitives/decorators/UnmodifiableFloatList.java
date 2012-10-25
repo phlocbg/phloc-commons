@@ -18,6 +18,9 @@ package org.apache.commons.collections.primitives.decorators;
 
 import java.io.Serializable;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.FloatList;
 
 /**
@@ -28,38 +31,29 @@ import org.apache.commons.collections.primitives.FloatList;
  */
 public final class UnmodifiableFloatList extends BaseUnmodifiableFloatList implements Serializable
 {
-  UnmodifiableFloatList (final FloatList list)
-  {
-    this.proxied = list;
-  }
+  private FloatList m_aProxied;
 
-  public static final FloatList wrap (final FloatList list)
+  UnmodifiableFloatList (@Nonnull final FloatList list)
   {
-    if (null == list)
-    {
-      return null;
-    }
-    else
-      if (list instanceof UnmodifiableFloatList)
-      {
-        return list;
-      }
-      else
-        if (list instanceof Serializable)
-        {
-          return new UnmodifiableFloatList (list);
-        }
-        else
-        {
-          return new NonSerializableUnmodifiableFloatList (list);
-        }
+    m_aProxied = list;
   }
 
   @Override
+  @Nonnull 
   protected FloatList getProxiedList ()
   {
-    return proxied;
+    return m_aProxied;
   }
 
-  private FloatList proxied = null;
+  @Nullable
+  public static final FloatList wrap (@Nullable final FloatList list)
+  {
+    if (null == list)
+      return null;
+    if (list instanceof UnmodifiableFloatList)
+      return list;
+    if (list instanceof Serializable)
+      return new UnmodifiableFloatList (list);
+    return new NonSerializableUnmodifiableFloatList (list);
+  }
 }

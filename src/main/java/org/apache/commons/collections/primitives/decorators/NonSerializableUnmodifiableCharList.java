@@ -26,16 +26,16 @@ import org.apache.commons.collections.primitives.CharList;
  */
 final class NonSerializableUnmodifiableCharList extends BaseUnmodifiableCharList
 {
+  private final CharList m_aProxied;
+
   NonSerializableUnmodifiableCharList (final CharList list)
   {
-    this.proxied = list;
+    m_aProxied = list;
   }
 
   @Override
   protected CharList getProxiedList ()
   {
-    return proxied;
+    return m_aProxied;
   }
-
-  private CharList proxied = null;
 }

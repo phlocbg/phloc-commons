@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.DoubleCollection;
 import org.apache.commons.collections.primitives.DoubleIterator;
 
@@ -27,17 +30,18 @@ import org.apache.commons.collections.primitives.DoubleIterator;
  */
 abstract class BaseProxyDoubleCollection implements DoubleCollection
 {
-  protected abstract DoubleCollection getProxiedCollection ();
-
   protected BaseProxyDoubleCollection ()
   {}
+
+  @Nonnull
+  protected abstract DoubleCollection getProxiedCollection ();
 
   public boolean add (final double element)
   {
     return getProxiedCollection ().add (element);
   }
 
-  public boolean addAll (final DoubleCollection c)
+  public boolean addAll (@Nonnull final DoubleCollection c)
   {
     return getProxiedCollection ().addAll (c);
   }
@@ -52,7 +56,7 @@ abstract class BaseProxyDoubleCollection implements DoubleCollection
     return getProxiedCollection ().contains (element);
   }
 
-  public boolean containsAll (final DoubleCollection c)
+  public boolean containsAll (@Nonnull final DoubleCollection c)
   {
     return getProxiedCollection ().containsAll (c);
   }
@@ -67,7 +71,7 @@ abstract class BaseProxyDoubleCollection implements DoubleCollection
     return getProxiedCollection ().iterator ();
   }
 
-  public boolean removeAll (final DoubleCollection c)
+  public boolean removeAll (@Nonnull final DoubleCollection c)
   {
     return getProxiedCollection ().removeAll (c);
   }
@@ -77,7 +81,7 @@ abstract class BaseProxyDoubleCollection implements DoubleCollection
     return getProxiedCollection ().removeElement (element);
   }
 
-  public boolean retainAll (final DoubleCollection c)
+  public boolean retainAll (@Nonnull final DoubleCollection c)
   {
     return getProxiedCollection ().retainAll (c);
   }
@@ -97,10 +101,12 @@ abstract class BaseProxyDoubleCollection implements DoubleCollection
     return getProxiedCollection ().toArray (a);
   }
 
-  // TODO: Add note about possible contract violations here.
-
+  /**
+   * Important: is equal to the proxied collection!<br>
+   * Therefore violates the contract of equals!
+   */  
   @Override
-  public boolean equals (final Object obj)
+  public boolean equals (@Nullable final Object obj)
   {
     return getProxiedCollection ().equals (obj);
   }
@@ -116,5 +122,4 @@ abstract class BaseProxyDoubleCollection implements DoubleCollection
   {
     return getProxiedCollection ().toString ();
   }
-
 }

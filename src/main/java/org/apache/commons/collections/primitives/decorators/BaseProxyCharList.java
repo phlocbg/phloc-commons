@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.CharCollection;
 import org.apache.commons.collections.primitives.CharList;
 import org.apache.commons.collections.primitives.CharListIterator;
@@ -44,7 +46,7 @@ abstract class BaseProxyCharList extends BaseProxyCharCollection implements Char
     getProxiedList ().add (index, element);
   }
 
-  public boolean addAll (final int index, final CharCollection collection)
+  public boolean addAll (final int index, @Nonnull final CharCollection collection)
   {
     return getProxiedList ().addAll (index, collection);
   }
@@ -88,5 +90,4 @@ abstract class BaseProxyCharList extends BaseProxyCharCollection implements Char
   {
     return getProxiedList ().subList (fromIndex, toIndex);
   }
-
 }

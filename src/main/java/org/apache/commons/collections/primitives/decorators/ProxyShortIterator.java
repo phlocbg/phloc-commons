@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.ShortIterator;
 
 /**
@@ -39,5 +41,6 @@ abstract class ProxyShortIterator implements ShortIterator
     return getIterator ().next ();
   }
 
+  @Nonnull
   protected abstract ShortIterator getIterator ();
 }

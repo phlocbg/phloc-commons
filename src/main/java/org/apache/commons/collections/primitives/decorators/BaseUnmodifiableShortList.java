@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.ShortCollection;
 import org.apache.commons.collections.primitives.ShortIterator;
 import org.apache.commons.collections.primitives.ShortList;
@@ -29,7 +31,6 @@ import org.apache.commons.collections.primitives.ShortListIterator;
  */
 abstract class BaseUnmodifiableShortList extends BaseProxyShortList
 {
-
   @Override
   public final void add (final int index, final short element)
   {
@@ -37,7 +38,7 @@ abstract class BaseUnmodifiableShortList extends BaseProxyShortList
   }
 
   @Override
-  public final boolean addAll (final int index, final ShortCollection collection)
+  public final boolean addAll (final int index, @Nonnull final ShortCollection collection)
   {
     throw new UnsupportedOperationException ("This ShortList is not modifiable.");
   }
@@ -61,7 +62,7 @@ abstract class BaseUnmodifiableShortList extends BaseProxyShortList
   }
 
   @Override
-  public final boolean addAll (final ShortCollection c)
+  public final boolean addAll (@Nonnull final ShortCollection c)
   {
     throw new UnsupportedOperationException ("This ShortList is not modifiable.");
   }
@@ -73,7 +74,7 @@ abstract class BaseUnmodifiableShortList extends BaseProxyShortList
   }
 
   @Override
-  public final boolean removeAll (final ShortCollection c)
+  public final boolean removeAll (@Nonnull final ShortCollection c)
   {
     throw new UnsupportedOperationException ("This ShortList is not modifiable.");
   }
@@ -85,7 +86,7 @@ abstract class BaseUnmodifiableShortList extends BaseProxyShortList
   }
 
   @Override
-  public final boolean retainAll (final ShortCollection c)
+  public final boolean retainAll (@Nonnull final ShortCollection c)
   {
     throw new UnsupportedOperationException ("This ShortList is not modifiable.");
   }
@@ -97,18 +98,21 @@ abstract class BaseUnmodifiableShortList extends BaseProxyShortList
   }
 
   @Override
+  @Nonnull 
   public final ShortIterator iterator ()
   {
     return UnmodifiableShortIterator.wrap (getProxiedList ().iterator ());
   }
 
   @Override
+  @Nonnull 
   public ShortListIterator listIterator ()
   {
     return UnmodifiableShortListIterator.wrap (getProxiedList ().listIterator ());
   }
 
   @Override
+  @Nonnull 
   public ShortListIterator listIterator (final int index)
   {
     return UnmodifiableShortListIterator.wrap (getProxiedList ().listIterator (index));

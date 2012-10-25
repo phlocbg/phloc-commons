@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.IntCollection;
 import org.apache.commons.collections.primitives.IntIterator;
 
@@ -27,17 +30,18 @@ import org.apache.commons.collections.primitives.IntIterator;
  */
 abstract class BaseProxyIntCollection implements IntCollection
 {
-  protected abstract IntCollection getProxiedCollection ();
-
   protected BaseProxyIntCollection ()
   {}
+
+  @Nonnull
+  protected abstract IntCollection getProxiedCollection ();
 
   public boolean add (final int element)
   {
     return getProxiedCollection ().add (element);
   }
 
-  public boolean addAll (final IntCollection c)
+  public boolean addAll (@Nonnull final IntCollection c)
   {
     return getProxiedCollection ().addAll (c);
   }
@@ -52,7 +56,7 @@ abstract class BaseProxyIntCollection implements IntCollection
     return getProxiedCollection ().contains (element);
   }
 
-  public boolean containsAll (final IntCollection c)
+  public boolean containsAll (@Nonnull final IntCollection c)
   {
     return getProxiedCollection ().containsAll (c);
   }
@@ -67,7 +71,7 @@ abstract class BaseProxyIntCollection implements IntCollection
     return getProxiedCollection ().iterator ();
   }
 
-  public boolean removeAll (final IntCollection c)
+  public boolean removeAll (@Nonnull final IntCollection c)
   {
     return getProxiedCollection ().removeAll (c);
   }
@@ -77,7 +81,7 @@ abstract class BaseProxyIntCollection implements IntCollection
     return getProxiedCollection ().removeElement (element);
   }
 
-  public boolean retainAll (final IntCollection c)
+  public boolean retainAll (@Nonnull final IntCollection c)
   {
     return getProxiedCollection ().retainAll (c);
   }
@@ -97,10 +101,12 @@ abstract class BaseProxyIntCollection implements IntCollection
     return getProxiedCollection ().toArray (a);
   }
 
-  // TODO: Add note about possible contract violations here.
-
+  /**
+   * Important: is equal to the proxied collection!<br>
+   * Therefore violates the contract of equals!
+   */  
   @Override
-  public boolean equals (final Object obj)
+  public boolean equals (@Nullable final Object obj)
   {
     return getProxiedCollection ().equals (obj);
   }
@@ -116,5 +122,4 @@ abstract class BaseProxyIntCollection implements IntCollection
   {
     return getProxiedCollection ().toString ();
   }
-
 }

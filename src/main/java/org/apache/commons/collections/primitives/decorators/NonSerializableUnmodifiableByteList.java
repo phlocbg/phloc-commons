@@ -26,16 +26,16 @@ import org.apache.commons.collections.primitives.ByteList;
  */
 final class NonSerializableUnmodifiableByteList extends BaseUnmodifiableByteList
 {
+  private final ByteList m_aProxied;
+
   NonSerializableUnmodifiableByteList (final ByteList list)
   {
-    this.proxied = list;
+    m_aProxied = list;
   }
 
   @Override
   protected ByteList getProxiedList ()
   {
-    return proxied;
+    return m_aProxied;
   }
-
-  private ByteList proxied = null;
 }

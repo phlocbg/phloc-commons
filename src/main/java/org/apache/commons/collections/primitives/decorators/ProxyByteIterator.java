@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.ByteIterator;
 
 /**
@@ -39,5 +41,6 @@ abstract class ProxyByteIterator implements ByteIterator
     return getIterator ().next ();
   }
 
+  @Nonnull
   protected abstract ByteIterator getIterator ();
 }

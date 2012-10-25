@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.LongCollection;
 import org.apache.commons.collections.primitives.LongIterator;
 import org.apache.commons.collections.primitives.LongList;
@@ -29,7 +31,6 @@ import org.apache.commons.collections.primitives.LongListIterator;
  */
 abstract class BaseUnmodifiableLongList extends BaseProxyLongList
 {
-
   @Override
   public final void add (final int index, final long element)
   {
@@ -37,7 +38,7 @@ abstract class BaseUnmodifiableLongList extends BaseProxyLongList
   }
 
   @Override
-  public final boolean addAll (final int index, final LongCollection collection)
+  public final boolean addAll (final int index, @Nonnull final LongCollection collection)
   {
     throw new UnsupportedOperationException ("This LongList is not modifiable.");
   }
@@ -61,7 +62,7 @@ abstract class BaseUnmodifiableLongList extends BaseProxyLongList
   }
 
   @Override
-  public final boolean addAll (final LongCollection c)
+  public final boolean addAll (@Nonnull final LongCollection c)
   {
     throw new UnsupportedOperationException ("This LongList is not modifiable.");
   }
@@ -73,7 +74,7 @@ abstract class BaseUnmodifiableLongList extends BaseProxyLongList
   }
 
   @Override
-  public final boolean removeAll (final LongCollection c)
+  public final boolean removeAll (@Nonnull final LongCollection c)
   {
     throw new UnsupportedOperationException ("This LongList is not modifiable.");
   }
@@ -85,7 +86,7 @@ abstract class BaseUnmodifiableLongList extends BaseProxyLongList
   }
 
   @Override
-  public final boolean retainAll (final LongCollection c)
+  public final boolean retainAll (@Nonnull final LongCollection c)
   {
     throw new UnsupportedOperationException ("This LongList is not modifiable.");
   }
@@ -97,18 +98,21 @@ abstract class BaseUnmodifiableLongList extends BaseProxyLongList
   }
 
   @Override
+  @Nonnull 
   public final LongIterator iterator ()
   {
     return UnmodifiableLongIterator.wrap (getProxiedList ().iterator ());
   }
 
   @Override
+  @Nonnull 
   public LongListIterator listIterator ()
   {
     return UnmodifiableLongListIterator.wrap (getProxiedList ().listIterator ());
   }
 
   @Override
+  @Nonnull 
   public LongListIterator listIterator (final int index)
   {
     return UnmodifiableLongListIterator.wrap (getProxiedList ().listIterator (index));

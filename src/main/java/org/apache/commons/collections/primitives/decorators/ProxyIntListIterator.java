@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.IntIterator;
 import org.apache.commons.collections.primitives.IntListIterator;
 
@@ -51,11 +53,12 @@ abstract class ProxyIntListIterator extends ProxyIntIterator implements IntListI
   }
 
   @Override
+  @Nonnull
   protected final IntIterator getIterator ()
   {
     return getListIterator ();
   }
-
+  
+  @Nonnull
   protected abstract IntListIterator getListIterator ();
-
 }

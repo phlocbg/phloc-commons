@@ -26,16 +26,16 @@ import org.apache.commons.collections.primitives.LongList;
  */
 final class NonSerializableUnmodifiableLongList extends BaseUnmodifiableLongList
 {
+  private final LongList m_aProxied;
+
   NonSerializableUnmodifiableLongList (final LongList list)
   {
-    this.proxied = list;
+    m_aProxied = list;
   }
 
   @Override
   protected LongList getProxiedList ()
   {
-    return proxied;
+    return m_aProxied;
   }
-
-  private LongList proxied = null;
 }

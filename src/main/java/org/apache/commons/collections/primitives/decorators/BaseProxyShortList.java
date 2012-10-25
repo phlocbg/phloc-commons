@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.ShortCollection;
 import org.apache.commons.collections.primitives.ShortList;
 import org.apache.commons.collections.primitives.ShortListIterator;
@@ -44,7 +46,7 @@ abstract class BaseProxyShortList extends BaseProxyShortCollection implements Sh
     getProxiedList ().add (index, element);
   }
 
-  public boolean addAll (final int index, final ShortCollection collection)
+  public boolean addAll (final int index, @Nonnull final ShortCollection collection)
   {
     return getProxiedList ().addAll (index, collection);
   }
@@ -88,5 +90,4 @@ abstract class BaseProxyShortList extends BaseProxyShortCollection implements Sh
   {
     return getProxiedList ().subList (fromIndex, toIndex);
   }
-
 }

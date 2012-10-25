@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.LongCollection;
 import org.apache.commons.collections.primitives.LongIterator;
 
@@ -27,17 +30,18 @@ import org.apache.commons.collections.primitives.LongIterator;
  */
 abstract class BaseProxyLongCollection implements LongCollection
 {
-  protected abstract LongCollection getProxiedCollection ();
-
   protected BaseProxyLongCollection ()
   {}
+
+  @Nonnull
+  protected abstract LongCollection getProxiedCollection ();
 
   public boolean add (final long element)
   {
     return getProxiedCollection ().add (element);
   }
 
-  public boolean addAll (final LongCollection c)
+  public boolean addAll (@Nonnull final LongCollection c)
   {
     return getProxiedCollection ().addAll (c);
   }
@@ -52,7 +56,7 @@ abstract class BaseProxyLongCollection implements LongCollection
     return getProxiedCollection ().contains (element);
   }
 
-  public boolean containsAll (final LongCollection c)
+  public boolean containsAll (@Nonnull final LongCollection c)
   {
     return getProxiedCollection ().containsAll (c);
   }
@@ -67,7 +71,7 @@ abstract class BaseProxyLongCollection implements LongCollection
     return getProxiedCollection ().iterator ();
   }
 
-  public boolean removeAll (final LongCollection c)
+  public boolean removeAll (@Nonnull final LongCollection c)
   {
     return getProxiedCollection ().removeAll (c);
   }
@@ -77,7 +81,7 @@ abstract class BaseProxyLongCollection implements LongCollection
     return getProxiedCollection ().removeElement (element);
   }
 
-  public boolean retainAll (final LongCollection c)
+  public boolean retainAll (@Nonnull final LongCollection c)
   {
     return getProxiedCollection ().retainAll (c);
   }
@@ -97,10 +101,12 @@ abstract class BaseProxyLongCollection implements LongCollection
     return getProxiedCollection ().toArray (a);
   }
 
-  // TODO: Add note about possible contract violations here.
-
+  /**
+   * Important: is equal to the proxied collection!<br>
+   * Therefore violates the contract of equals!
+   */  
   @Override
-  public boolean equals (final Object obj)
+  public boolean equals (@Nullable final Object obj)
   {
     return getProxiedCollection ().equals (obj);
   }
@@ -116,5 +122,4 @@ abstract class BaseProxyLongCollection implements LongCollection
   {
     return getProxiedCollection ().toString ();
   }
-
 }
