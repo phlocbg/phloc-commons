@@ -32,13 +32,9 @@ import org.apache.commons.collections.primitives.TestLongListIterator;
  */
 public class TestListIteratorLongListIterator extends TestLongListIterator
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestListIteratorLongListIterator (final String testName)
+  public TestListIteratorLongListIterator (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
@@ -61,29 +57,26 @@ public class TestListIteratorLongListIterator extends TestLongListIterator
     return ListIteratorLongListIterator.wrap (makeFullList ().listIterator ());
   }
 
-  public List makeEmptyList ()
+  public List <Long> makeEmptyList ()
   {
-    return new ArrayList ();
+    return new ArrayList <Long> ();
   }
 
-  protected List makeFullList ()
+  protected List <Long> makeFullList ()
   {
-    final List list = makeEmptyList ();
+    final List <Long> list = makeEmptyList ();
     final long [] elts = getFullElements ();
     for (final long elt : elts)
-    {
-      list.add (new Long (elt));
-    }
+      list.add (Long.valueOf (elt));
     return list;
   }
 
   @Override
   public long [] getFullElements ()
   {
-    return new long [] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    final long [] ret = new long [10];
+    for (int i = 0; i < ret.length; ++i)
+      ret[i] = i;
+    return ret;
   }
-
-  // tests
-  // ------------------------------------------------------------------------
-
 }

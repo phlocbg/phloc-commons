@@ -57,7 +57,7 @@ public class TestCollectionShortCollection extends AbstractTestObject
     final List <Short> list = new ArrayList <Short> ();
     for (int i = 0; i < 10; i++)
     {
-      list.add (Short.valueOf ((short)i));
+      list.add (Short.valueOf ((short) i));
     }
     return new CollectionShortCollection (list);
   }

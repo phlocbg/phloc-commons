@@ -82,7 +82,7 @@ public class TestShortIteratorIterator extends AbstractTestIterator
   {
     final short [] ret = new short [10];
     for (int i = 0; i < ret.length; ++i)
-      ret[i] = (short) i;
+      ret[i] = (short)  i;
     return ret;
   }
 }

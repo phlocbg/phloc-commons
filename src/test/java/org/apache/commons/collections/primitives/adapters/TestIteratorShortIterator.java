@@ -19,6 +19,8 @@ package org.apache.commons.collections.primitives.adapters;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -32,13 +34,9 @@ import org.apache.commons.collections.primitives.TestShortIterator;
  */
 public class TestIteratorShortIterator extends TestShortIterator
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestIteratorShortIterator (final String testName)
+  public TestIteratorShortIterator (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
@@ -61,38 +59,27 @@ public class TestIteratorShortIterator extends TestShortIterator
     return IteratorShortIterator.wrap (makeFullList ().iterator ());
   }
 
-  public List makeEmptyList ()
+  @Nonnull
+  public List <Short> makeEmptyList ()
   {
-    return new ArrayList ();
+    return new ArrayList <Short> ();
   }
 
-  protected List makeFullList ()
+  protected List <Short> makeFullList ()
   {
-    final List list = makeEmptyList ();
+    final List <Short> list = makeEmptyList ();
     final short [] elts = getFullElements ();
     for (final short elt : elts)
-    {
-      list.add (new Short (elt));
-    }
+      list.add (Short.valueOf (elt));
     return list;
   }
 
   @Override
   public short [] getFullElements ()
   {
-    return new short [] { (short) 0,
-                         (short) 1,
-                         (short) 2,
-                         (short) 3,
-                         (short) 4,
-                         (short) 5,
-                         (short) 6,
-                         (short) 7,
-                         (short) 8,
-                         (short) 9 };
+    final short [] ret = new short [10];
+    for (int i = 0; i < ret.length; ++i)
+      ret[i] = (short) i;
+    return ret;
   }
-
-  // tests
-  // ------------------------------------------------------------------------
-
 }

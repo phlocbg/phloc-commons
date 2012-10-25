@@ -57,7 +57,7 @@ public class TestCollectionByteCollection extends AbstractTestObject
     final List <Byte> list = new ArrayList <Byte> ();
     for (int i = 0; i < 10; i++)
     {
-      list.add (Byte.valueOf ((byte)i));
+      list.add (Byte.valueOf ((byte) i));
     }
     return new CollectionByteCollection (list);
   }

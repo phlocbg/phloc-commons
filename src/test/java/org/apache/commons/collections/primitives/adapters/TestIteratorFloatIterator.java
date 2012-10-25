@@ -19,6 +19,8 @@ package org.apache.commons.collections.primitives.adapters;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -32,13 +34,9 @@ import org.apache.commons.collections.primitives.TestFloatIterator;
  */
 public class TestIteratorFloatIterator extends TestFloatIterator
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestIteratorFloatIterator (final String testName)
+  public TestIteratorFloatIterator (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
@@ -61,29 +59,27 @@ public class TestIteratorFloatIterator extends TestFloatIterator
     return IteratorFloatIterator.wrap (makeFullList ().iterator ());
   }
 
-  public List makeEmptyList ()
+  @Nonnull
+  public List <Float> makeEmptyList ()
   {
-    return new ArrayList ();
+    return new ArrayList <Float> ();
   }
 
-  protected List makeFullList ()
+  protected List <Float> makeFullList ()
   {
-    final List list = makeEmptyList ();
+    final List <Float> list = makeEmptyList ();
     final float [] elts = getFullElements ();
     for (final float elt : elts)
-    {
-      list.add (new Float (elt));
-    }
+      list.add (Float.valueOf (elt));
     return list;
   }
 
   @Override
   public float [] getFullElements ()
   {
-    return new float [] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    final float [] ret = new float [10];
+    for (int i = 0; i < ret.length; ++i)
+      ret[i] = i;
+    return ret;
   }
-
-  // tests
-  // ------------------------------------------------------------------------
-
 }

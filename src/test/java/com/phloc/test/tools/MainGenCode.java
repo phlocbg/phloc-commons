@@ -70,6 +70,8 @@ public class MainGenCode
     aAvoidFilenames.add ("TestBooleanListIteratorListIterator.java");
     aAvoidFilenames.add ("TestBooleanListList.java");
     aAvoidFilenames.add ("TestCollectionBooleanCollection.java");
+    aAvoidFilenames.add ("TestIteratorBooleanIterator.java");
+    aAvoidFilenames.add ("TestListIteratorBooleanListIterator.java");
 
     for (final String [] aDirs : DIRS)
     {
@@ -86,7 +88,7 @@ public class MainGenCode
           aMacros.put ("XXX", aPart[1]);
           aMacros.put ("ZZZ", aPart[1].substring (0, aPart[0].length ()));
           aMacros.put ("$DUMMY$", DUMMIES.get (aPart[0]));
-          aMacros.put ("$CASTINT$", CASTINT.contains (aPart[0]) ? "(" + aPart[0] + ")" : "");
+          aMacros.put ("$CASTINT$", CASTINT.contains (aPart[0]) ? "(" + aPart[0] + ") " : "");
 
           // Target filename
           final String sTargetFilename = _get (aFile.getName (), aMacros) + 'a';

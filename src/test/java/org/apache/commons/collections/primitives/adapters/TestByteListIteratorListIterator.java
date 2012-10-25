@@ -77,14 +77,14 @@ public class TestByteListIteratorListIterator extends AbstractTestListIterator
   {
     final byte [] ret = new byte [10];
     for (int i = 0; i < ret.length; ++i)
-      ret[i] = (byte)i;
+      ret[i] = (byte) i;
     return ret;
   }
 
   @Override
   public Object addSetValue ()
   {
-    return Byte.valueOf ((byte)1);
+    return Byte.valueOf ((byte) 1);
   }
 
   // tests

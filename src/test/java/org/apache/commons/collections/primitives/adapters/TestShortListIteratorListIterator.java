@@ -77,14 +77,14 @@ public class TestShortListIteratorListIterator extends AbstractTestListIterator
   {
     final short [] ret = new short [10];
     for (int i = 0; i < ret.length; ++i)
-      ret[i] = (short)i;
+      ret[i] = (short) i;
     return ret;
   }
 
   @Override
   public Object addSetValue ()
   {
-    return Short.valueOf ((short)1);
+    return Short.valueOf ((short) 1);
   }
 
   // tests
