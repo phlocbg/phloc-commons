@@ -35,7 +35,7 @@ import java.io.Serializable;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class ArrayUnsignedIntList extends RandomAccessLongList implements LongList, Serializable
+public class ArrayUnsignedIntList extends RandomAccessLongList implements Serializable
 {
 
   // constructors

@@ -44,13 +44,25 @@ public class LongStack
   /**
    * Creates a stack prepopulating it with values.
    *
-   * @param bits
+   * @param aElements
    *        the array to add
    */
-  public LongStack (final long [] bits)
+  public LongStack (final long [] aElements)
   {
-    for (final long bit : bits)
-      m_aList.add (bit);
+    for (final long aElement : aElements)
+      m_aList.add (aElement);
+  }
+
+  /**
+   * Tests if this stack is empty.
+   *
+   * @return true if and only if this stack is empty; false otherwise
+   * @deprecated Use #isEmpty() instead
+   */
+  @Deprecated 
+  public boolean empty ()
+  {
+    return isEmpty ();
   }
 
   /**
@@ -58,7 +70,7 @@ public class LongStack
    *
    * @return true if and only if this stack is empty; false otherwise
    */
-  public boolean empty ()
+  public boolean isEmpty ()
   {
     return m_aList.isEmpty ();
   }

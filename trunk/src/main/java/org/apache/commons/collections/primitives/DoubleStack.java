@@ -44,13 +44,25 @@ public class DoubleStack
   /**
    * Creates a stack prepopulating it with values.
    *
-   * @param bits
+   * @param aElements
    *        the array to add
    */
-  public DoubleStack (final double [] bits)
+  public DoubleStack (final double [] aElements)
   {
-    for (final double bit : bits)
-      m_aList.add (bit);
+    for (final double aElement : aElements)
+      m_aList.add (aElement);
+  }
+
+  /**
+   * Tests if this stack is empty.
+   *
+   * @return true if and only if this stack is empty; false otherwise
+   * @deprecated Use #isEmpty() instead
+   */
+  @Deprecated 
+  public boolean empty ()
+  {
+    return isEmpty ();
   }
 
   /**
@@ -58,7 +70,7 @@ public class DoubleStack
    *
    * @return true if and only if this stack is empty; false otherwise
    */
-  public boolean empty ()
+  public boolean isEmpty ()
   {
     return m_aList.isEmpty ();
   }
