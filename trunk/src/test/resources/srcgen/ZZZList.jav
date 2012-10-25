@@ -21,14 +21,14 @@ import javax.annotation.Nullable;
 
 /**
  * An ordered collection of <code>byte</code> values.
- * 
- * @see org.apache.commons.collections.primitives.adapters.XXXListList
- * @see org.apache.commons.collections.primitives.adapters.ListXXXList
+ *
+ * @see org.apache.commons.collections.primitives.adapters.ZZZListList
+ * @see org.apache.commons.collections.primitives.adapters.ListZZZList
  * @since Commons Primitives 1.1
  * @version $Revision: 480460 $ $Date: 2006-11-29 09:14:21 +0100 (Mi, 29 Nov
  *          2006) $
  */
-public interface XXXList extends XXXCollection
+public interface ZZZList extends ZZZCollection
 {
   /**
    * Appends the specified element to the end of me (optional operation).
@@ -39,7 +39,7 @@ public interface XXXList extends XXXCollection
    * exception (rather than simply returning <tt>false</tt>). This preserves the
    * invariant that a collection always contains the specified element after
    * this call returns.
-   * 
+   *
    * @param aElement
    *        the value whose presence within me is to be ensured
    * @return <code>true</code> if I changed as a result of this call
@@ -55,7 +55,7 @@ public interface XXXList extends XXXCollection
    * Inserts the specified element at the specified position (optional
    * operation). Shifts the element currently at that position (if any) and any
    * subsequent elements to the right, increasing their indices.
-   * 
+   *
    * @param nIndex
    *        the index at which to insert the element
    * @param aElement
@@ -75,41 +75,41 @@ public interface XXXList extends XXXCollection
    * specified position (optional operation). Shifts the element currently at
    * that position (if any) and any subsequent elements to the right, increasing
    * their indices. The new elements will appear in the order that they are
-   * returned by the given collection's {@link XXXCollection#iterator iterator}.
-   * 
+   * returned by the given collection's {@link ZZZCollection#iterator iterator}.
+   *
    * @param index
    *        the index at which to insert the first element from the specified
    *        collection
    * @param aCollection
-   *        the {@link XXXCollection ByteCollection} of elements to add
+   *        the {@link ZZZCollection ByteCollection} of elements to add
    * @return <code>true</code> if I changed as a result of this call
    * @throws UnsupportedOperationException
    *         when this operation is not supported
    * @throws IndexOutOfBoundsException
    *         if the specified index is out of range
    */
-  boolean addAll (int index, @Nonnull XXXCollection aCollection);
+  boolean addAll (int index, @Nonnull ZZZCollection aCollection);
 
   /**
-   * Returns <code>true</code> if <i>that</i> is an <code>XXXList</code>
+   * Returns <code>true</code> if <i>that</i> is an <code>ZZZList</code>
    * that contains the same elements in the same order as me. In other words,
-   * returns <code>true</code> if <i>that</i> is a <code>XXXList</code> that
+   * returns <code>true</code> if <i>that</i> is a <code>ZZZList</code> that
    * has the same {@link #size() size} as me, and for which the elements
-   * returned by its {@link XXXList#iterator iterator} are equal (
+   * returned by its {@link ZZZList#iterator iterator} are equal (
    * <code>==</code>) to the corresponding elements within me. (This contract
    * ensures that this method works properly across different implementations of
-   * the <code>XXXList</code> interface.)
-   * 
+   * the <code>ZZZList</code> interface.)
+   *
    * @param that
    *        the object to compare to me
-   * @return <code>true</code> if <i>that</i> is an <code>XXXList</code>
+   * @return <code>true</code> if <i>that</i> is an <code>ZZZList</code>
    *         that contains the same elements in the same order as me
    */
   boolean equals (@Nullable Object that);
 
   /**
    * Returns the value of the element at the specified position within me.
-   * 
+   *
    * @param index
    *        the index of the element to return
    * @return the value of the element at the specified position
@@ -119,12 +119,12 @@ public interface XXXList extends XXXCollection
   YYY get (int index);
 
   /**
-   * The hash code of an {@link XXXList} is defined to be the result of the
+   * The hash code of an {@link ZZZList} is defined to be the result of the
    * following calculation:
-   * 
+   *
    * <pre>
    * int hash = 1;
-   * for (XXXIterator iter = iterator (); iter.hasNext ();)
+   * for (ZZZIterator iter = iterator (); iter.hasNext ();)
    * {
    *   YYY value = iter.next ();
    *   hash = 31 * hash + (int) (value &circ; (value &gt;&gt;&gt; 32));
@@ -134,7 +134,7 @@ public interface XXXList extends XXXCollection
    * This contract ensures that this method is consistent with {@link #equals
    * equals} and with the {@link java.util.List#hashCode hashCode} method of a
    * {@link java.util.List List} of {@link XXX} s.
-   * 
+   *
    * @return my hash code
    */
   int hashCode ();
@@ -142,7 +142,7 @@ public interface XXXList extends XXXCollection
   /**
    * Returns the index of the first occurrence of the specified element within
    * me, or <code>-1</code> if I do not contain the element.
-   * 
+   *
    * @param aElement
    *        the element to search for
    * @return the smallest index of an element matching the specified value, or
@@ -151,18 +151,18 @@ public interface XXXList extends XXXCollection
   int indexOf (YYY aElement);
 
   /**
-   * Returns an {@link XXXIterator iterator} over all my elements, in the
+   * Returns an {@link ZZZIterator iterator} over all my elements, in the
    * appropriate sequence.
-   * 
-   * @return an {@link XXXIterator iterator} over all my elements.
+   *
+   * @return an {@link ZZZIterator iterator} over all my elements.
    */
   @Nonnull
-  XXXIterator iterator ();
+  ZZZIterator iterator ();
 
   /**
    * Returns the index of the last occurrence of the specified element within
    * me, or -1 if I do not contain the element.
-   * 
+   *
    * @param aElement
    *        the element to search for
    * @return the largest index of an element matching the specified value, or
@@ -171,31 +171,31 @@ public interface XXXList extends XXXCollection
   int lastIndexOf (YYY aElement);
 
   /**
-   * Returns a {@link XXXListIterator bidirectional iterator} over all my
+   * Returns a {@link ZZZListIterator bidirectional iterator} over all my
    * elements, in the appropriate sequence.
    */
   @Nonnull
-  XXXListIterator listIterator ();
+  ZZZListIterator listIterator ();
 
   /**
-   * Returns a {@link XXXListIterator bidirectional iterator} over all my
+   * Returns a {@link ZZZListIterator bidirectional iterator} over all my
    * elements, in the appropriate sequence, starting at the specified position.
    * The specified <i>index</i> indicates the first element that would be
-   * returned by an initial call to the {@link XXXListIterator#next next}
-   * method. An initial call to the {@link XXXListIterator#previous previous}
+   * returned by an initial call to the {@link ZZZListIterator#next next}
+   * method. An initial call to the {@link ZZZListIterator#previous previous}
    * method would return the element with the specified <i>index</i> minus one.
-   * 
+   *
    * @throws IndexOutOfBoundsException
    *         if the specified index is out of range
    */
   @Nonnull
-  XXXListIterator listIterator (int nIndex);
+  ZZZListIterator listIterator (int nIndex);
 
   /**
    * Removes the element at the specified position in (optional operation). Any
    * subsequent elements are shifted to the left, subtracting one from their
    * indices. Returns the element that was removed.
-   * 
+   *
    * @param nIndex
    *        the index of the element to remove
    * @return the value of the element that was removed
@@ -204,12 +204,12 @@ public interface XXXList extends XXXCollection
    * @throws IndexOutOfBoundsException
    *         if the specified index is out of range
    */
-  boolean removeElementAt (int nIndex);
+  YYY removeElementAt (int nIndex);
 
   /**
    * Replaces the element at the specified position in me with the specified
    * element (optional operation).
-   * 
+   *
    * @param nIndex
    *        the index of the element to change
    * @param aElement
@@ -220,12 +220,12 @@ public interface XXXList extends XXXCollection
    * @throws IndexOutOfBoundsException
    *         if the specified index is out of range
    */
-  boolean set (int nIndex, YYY aElement);
+  YYY set (int nIndex, YYY aElement);
 
   /**
    * Returns a view of the elements within me between the specified
    * <i>fromIndex</i>, inclusive, and <i>toIndex</i>, exclusive. The returned
-   * <code>XXXList</code> is backed by me, so that any changes in the
+   * <code>ZZZList</code> is backed by me, so that any changes in the
    * returned list are reflected in me, and vice-versa. The returned list
    * supports all of the optional operations that I support.
    * <p/>
@@ -236,7 +236,7 @@ public interface XXXList extends XXXCollection
    * <p/>
    * The semantics of the returned list become undefined if I am structurally
    * modified in any way other than via the returned list.
-   * 
+   *
    * @param nFromIndex
    *        the smallest index (inclusive) in me that appears in the returned
    *        list
@@ -249,5 +249,5 @@ public interface XXXList extends XXXCollection
    *         if either specified index is out of range
    */
   @Nonnull
-  XXXList subList (int nFromIndex, int nToIndex);
+  ZZZList subList (int nFromIndex, int nToIndex);
 }

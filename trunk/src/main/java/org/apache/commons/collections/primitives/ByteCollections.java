@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.decorators.UnmodifiableByteIterator;
 import org.apache.commons.collections.primitives.decorators.UnmodifiableByteList;
 import org.apache.commons.collections.primitives.decorators.UnmodifiableByteListIterator;
@@ -24,7 +26,7 @@ import org.apache.commons.collections.primitives.decorators.UnmodifiableByteList
  * This class consists exclusively of static methods that operate on or return
  * ByteCollections.
  * <p>
- * The methods of this class all throw a NullPoByteerException if the provided
+ * The methods of this class all throw a NullPointerException if the provided
  * collection is null.
  * 
  * @version $Revision: 480460 $ $Date: 2006-11-29 09:14:21 +0100 (Mi, 29 Nov
@@ -33,6 +35,8 @@ import org.apache.commons.collections.primitives.decorators.UnmodifiableByteList
  */
 public final class ByteCollections
 {
+  private ByteCollections ()
+  {}
 
   /**
    * Returns an unmodifiable ByteList containing only the specified element.
@@ -41,9 +45,10 @@ public final class ByteCollections
    *        the single value
    * @return an unmodifiable ByteList containing only the specified element.
    */
+  @Nonnull 
   public static ByteList singletonByteList (final byte value)
   {
-    // TODO: a specialized implementation of ByteList may be more performant
+    // hint: a specialized implementation of ByteList may be more performant
     final ByteList list = new ArrayByteList (1);
     list.add (value);
     return UnmodifiableByteList.wrap (list);
@@ -56,6 +61,7 @@ public final class ByteCollections
    *        the single value
    * @return an unmodifiable ByteIterator containing only the specified element.
    */
+  @Nonnull 
   public static ByteIterator singletonByteIterator (final byte value)
   {
     return singletonByteList (value).iterator ();
@@ -70,6 +76,7 @@ public final class ByteCollections
    * @return an unmodifiable ByteListIterator containing only the specified
    *         element.
    */
+  @Nonnull 
   public static ByteListIterator singletonByteListIterator (final byte value)
   {
     return singletonByteList (value).listIterator ();
@@ -85,12 +92,11 @@ public final class ByteCollections
    *         if the given ByteList is null
    * @see org.apache.commons.collections.primitives.decorators.UnmodifiableByteList#wrap
    */
-  public static ByteList unmodifiableByteList (final ByteList list) throws NullPointerException
+  @Nonnull 
+  public static ByteList unmodifiableByteList (@Nonnull final ByteList list) throws NullPointerException
   {
     if (null == list)
-    {
       throw new NullPointerException ();
-    }
     return UnmodifiableByteList.wrap (list);
   }
 
@@ -104,12 +110,11 @@ public final class ByteCollections
    *         if the given ByteIterator is null
    * @see org.apache.commons.collections.primitives.decorators.UnmodifiableByteIterator#wrap
    */
-  public static ByteIterator unmodifiableByteIterator (final ByteIterator iter)
+  @Nonnull
+  public static ByteIterator unmodifiableByteIterator (@Nonnull final ByteIterator iter)
   {
     if (null == iter)
-    {
       throw new NullPointerException ();
-    }
     return UnmodifiableByteIterator.wrap (iter);
   }
 
@@ -123,12 +128,11 @@ public final class ByteCollections
    *         if the given ByteListIterator is null
    * @see org.apache.commons.collections.primitives.decorators.UnmodifiableByteListIterator#wrap
    */
-  public static ByteListIterator unmodifiableByteListIterator (final ByteListIterator iter)
+  @Nonnull
+  public static ByteListIterator unmodifiableByteListIterator (@Nonnull final ByteListIterator iter)
   {
     if (null == iter)
-    {
       throw new NullPointerException ();
-    }
     return UnmodifiableByteListIterator.wrap (iter);
   }
 
@@ -138,6 +142,7 @@ public final class ByteCollections
    * @return an unmodifiable, empty ByteList.
    * @see #EMPTY_BYTE_LIST
    */
+  @Nonnull
   public static ByteList getEmptyByteList ()
   {
     return EMPTY_BYTE_LIST;
@@ -149,6 +154,7 @@ public final class ByteCollections
    * @return an unmodifiable, empty ByteIterator.
    * @see #EMPTY_BYTE_ITERATOR
    */
+  @Nonnull
   public static ByteIterator getEmptyByteIterator ()
   {
     return EMPTY_BYTE_ITERATOR;
@@ -160,6 +166,7 @@ public final class ByteCollections
    * @return an unmodifiable, empty ByteListIterator.
    * @see #EMPTY_BYTE_LIST_ITERATOR
    */
+  @Nonnull
   public static ByteListIterator getEmptyByteListIterator ()
   {
     return EMPTY_BYTE_LIST_ITERATOR;

@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.decorators.UnmodifiableLongIterator;
 import org.apache.commons.collections.primitives.decorators.UnmodifiableLongList;
 import org.apache.commons.collections.primitives.decorators.UnmodifiableLongListIterator;
@@ -24,7 +26,7 @@ import org.apache.commons.collections.primitives.decorators.UnmodifiableLongList
  * This class consists exclusively of static methods that operate on or return
  * LongCollections.
  * <p>
- * The methods of this class all throw a NullPoLongerException if the provided
+ * The methods of this class all throw a NullPointerException if the provided
  * collection is null.
  * 
  * @version $Revision: 480460 $ $Date: 2006-11-29 09:14:21 +0100 (Mi, 29 Nov
@@ -33,6 +35,8 @@ import org.apache.commons.collections.primitives.decorators.UnmodifiableLongList
  */
 public final class LongCollections
 {
+  private LongCollections ()
+  {}
 
   /**
    * Returns an unmodifiable LongList containing only the specified element.
@@ -41,9 +45,10 @@ public final class LongCollections
    *        the single value
    * @return an unmodifiable LongList containing only the specified element.
    */
+  @Nonnull 
   public static LongList singletonLongList (final long value)
   {
-    // TODO: a specialized implementation of LongList may be more performant
+    // hint: a specialized implementation of LongList may be more performant
     final LongList list = new ArrayLongList (1);
     list.add (value);
     return UnmodifiableLongList.wrap (list);
@@ -56,6 +61,7 @@ public final class LongCollections
    *        the single value
    * @return an unmodifiable LongIterator containing only the specified element.
    */
+  @Nonnull 
   public static LongIterator singletonLongIterator (final long value)
   {
     return singletonLongList (value).iterator ();
@@ -70,6 +76,7 @@ public final class LongCollections
    * @return an unmodifiable LongListIterator containing only the specified
    *         element.
    */
+  @Nonnull 
   public static LongListIterator singletonLongListIterator (final long value)
   {
     return singletonLongList (value).listIterator ();
@@ -85,12 +92,11 @@ public final class LongCollections
    *         if the given LongList is null
    * @see org.apache.commons.collections.primitives.decorators.UnmodifiableLongList#wrap
    */
-  public static LongList unmodifiableLongList (final LongList list) throws NullPointerException
+  @Nonnull 
+  public static LongList unmodifiableLongList (@Nonnull final LongList list) throws NullPointerException
   {
     if (null == list)
-    {
       throw new NullPointerException ();
-    }
     return UnmodifiableLongList.wrap (list);
   }
 
@@ -104,12 +110,11 @@ public final class LongCollections
    *         if the given LongIterator is null
    * @see org.apache.commons.collections.primitives.decorators.UnmodifiableLongIterator#wrap
    */
-  public static LongIterator unmodifiableLongIterator (final LongIterator iter)
+  @Nonnull
+  public static LongIterator unmodifiableLongIterator (@Nonnull final LongIterator iter)
   {
     if (null == iter)
-    {
       throw new NullPointerException ();
-    }
     return UnmodifiableLongIterator.wrap (iter);
   }
 
@@ -123,12 +128,11 @@ public final class LongCollections
    *         if the given LongListIterator is null
    * @see org.apache.commons.collections.primitives.decorators.UnmodifiableLongListIterator#wrap
    */
-  public static LongListIterator unmodifiableLongListIterator (final LongListIterator iter)
+  @Nonnull
+  public static LongListIterator unmodifiableLongListIterator (@Nonnull final LongListIterator iter)
   {
     if (null == iter)
-    {
       throw new NullPointerException ();
-    }
     return UnmodifiableLongListIterator.wrap (iter);
   }
 
@@ -138,6 +142,7 @@ public final class LongCollections
    * @return an unmodifiable, empty LongList.
    * @see #EMPTY_LONG_LIST
    */
+  @Nonnull
   public static LongList getEmptyLongList ()
   {
     return EMPTY_LONG_LIST;
@@ -149,6 +154,7 @@ public final class LongCollections
    * @return an unmodifiable, empty LongIterator.
    * @see #EMPTY_LONG_ITERATOR
    */
+  @Nonnull
   public static LongIterator getEmptyLongIterator ()
   {
     return EMPTY_LONG_ITERATOR;
@@ -160,6 +166,7 @@ public final class LongCollections
    * @return an unmodifiable, empty LongListIterator.
    * @see #EMPTY_LONG_LIST_ITERATOR
    */
+  @Nonnull
   public static LongListIterator getEmptyLongListIterator ()
   {
     return EMPTY_LONG_LIST_ITERATOR;

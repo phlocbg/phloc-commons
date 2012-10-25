@@ -22,32 +22,32 @@ import javax.annotation.Nonnegative;
 
 /**
  * A primitive YYY based Stack. The underlying backing store is an
- * ArrayXXXList where the front of the list is the bottom of the stack and
+ * ArrayZZZList where the front of the list is the bottom of the stack and
  * the tail of the list is the top of the stack.
- * 
+ *
  * @author Apache Directory Project
  * @since Commons Primitives 1.1
  * @version $Revision: 480460 $ $Date: 2006-11-29 09:14:21 +0100 (Mi, 29 Nov
  *          2006) $
  */
-public class XXXStack
+public class ZZZStack
 {
   /** the underlying dynamic primitive backing store */
-  private final ArrayXXXList m_aList = new ArrayXXXList ();
+  private final ArrayZZZList m_aList = new ArrayZZZList ();
 
   /**
    * Creates an empty primitive stack.
    */
-  public XXXStack ()
+  public ZZZStack ()
   {}
 
   /**
    * Creates a stack prepopulating it with values.
-   * 
+   *
    * @param bits
    *        the array to add
    */
-  public XXXStack (final YYY [] bits)
+  public ZZZStack (final YYY [] bits)
   {
     for (final YYY bit : bits)
       m_aList.add (bit);
@@ -55,7 +55,7 @@ public class XXXStack
 
   /**
    * Tests if this stack is empty.
-   * 
+   *
    * @return true if and only if this stack is empty; false otherwise
    */
   public boolean empty ()
@@ -65,7 +65,7 @@ public class XXXStack
 
   /**
    * Looks at the top of this stack without removing it.
-   * 
+   *
    * @return the value at the top of this stack
    * @throws java.util.EmptyStackException
    *         if this stack is empty
@@ -81,7 +81,7 @@ public class XXXStack
   /**
    * Return the n'th YYY down the stack, where 0 is the top element and
    * [size()-1] is the bottom element.
-   * 
+   *
    * @param n
    *        the element index
    * @return the element at the index
@@ -100,7 +100,7 @@ public class XXXStack
 
   /**
    * Removes the value at the top of this stack and returns it.
-   * 
+   *
    * @return value at the top of this stack
    * @throws java.util.EmptyStackException
    *         if this stack is empty
@@ -115,7 +115,7 @@ public class XXXStack
 
   /**
    * Pushes a value onto the top of this stack.
-   * 
+   *
    * @param item
    *        the value to push onto this stack
    * @return the item argument for call chaining
@@ -131,7 +131,7 @@ public class XXXStack
    * occurs as an item in this stack, this method returns the distance from the
    * top of the stack of the occurrence nearest the top of the stack; the
    * topmost item on the stack is considered to be at distance 1.
-   * 
+   *
    * @param item
    *        the value to search for from the top down
    * @return the 1-based position from the top of the stack where the int is
@@ -150,7 +150,7 @@ public class XXXStack
    * Gets items from the stack where the index is zero based and the top of the
    * stack is at an index of size()-1 with the bottom of the stack at an index
    * of 0.
-   * 
+   *
    * @param index
    *        the index into the stack treated as a list
    * @return the value at the index
@@ -162,7 +162,7 @@ public class XXXStack
 
   /**
    * Gets the size of this stack.
-   * 
+   *
    * @return the size of this stack
    */
   @Nonnegative

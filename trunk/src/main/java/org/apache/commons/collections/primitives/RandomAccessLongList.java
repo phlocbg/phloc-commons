@@ -19,6 +19,11 @@ package org.apache.commons.collections.primitives;
 import java.util.ConcurrentModificationException;
 import java.util.NoSuchElementException;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.phloc.commons.hash.HashCodeGenerator;
+
 /**
  * Abstract base class for {@link LongList}s backed by random access structures
  * like arrays.
@@ -29,11 +34,9 @@ import java.util.NoSuchElementException;
  * other methods have at least some base implementation derived from these.
  * Subclasses may choose to override these methods to provide a more efficient
  * implementation.
- * 
- * @since Commons Primitives 0.1
- * @version $Revision: 480460 $ $Date: 2006-11-29 09:14:21 +0100 (Mi, 29 Nov
- *          2006) $
- * @author Rodney Waldhoff
+ *
+ * @since Commons Primitives 1.2
+ * @version $Revision: 480460 $
  */
 public abstract class RandomAccessLongList extends AbstractLongCollection implements LongList
 {
@@ -48,7 +51,7 @@ public abstract class RandomAccessLongList extends AbstractLongCollection implem
   // fully abstract methods
   // -------------------------------------------------------------------------
 
-  public abstract long get (int index);
+  public abstract long get (int nIndex);
 
   @Override
   public abstract int size ();
@@ -58,7 +61,7 @@ public abstract class RandomAccessLongList extends AbstractLongCollection implem
 
   /**
    * Unsupported in this implementation.
-   * 
+   *
    * @throws UnsupportedOperationException
    *         since this method is not supported
    */
@@ -69,22 +72,22 @@ public abstract class RandomAccessLongList extends AbstractLongCollection implem
 
   /**
    * Unsupported in this implementation.
-   * 
+   *
    * @throws UnsupportedOperationException
    *         since this method is not supported
    */
-  public long set (final int index, final long element)
+  public long set (final int index, final long aElement)
   {
     throw new UnsupportedOperationException ();
   }
 
   /**
    * Unsupported in this implementation.
-   * 
+   *
    * @throws UnsupportedOperationException
    *         since this method is not supported
    */
-  public void add (final int index, final long element)
+  public void add (final int index, final long aElement)
   {
     throw new UnsupportedOperationException ();
   }
@@ -94,49 +97,41 @@ public abstract class RandomAccessLongList extends AbstractLongCollection implem
   // javadocs here are inherited
 
   @Override
-  public boolean add (final long element)
+  public boolean add (final long aElement)
   {
-    add (size (), element);
+    add (size (), aElement);
     return true;
   }
 
-  public boolean addAll (int index, final LongCollection collection)
+  public boolean addAll (final int nIndex, @Nonnull final LongCollection aCollection)
   {
-    boolean modified = false;
-    for (final LongIterator iter = collection.iterator (); iter.hasNext ();)
+    int index = nIndex;
+    boolean bModified = false;
+    for (final LongIterator iter = aCollection.iterator (); iter.hasNext ();)
     {
       add (index++, iter.next ());
-      modified = true;
+      bModified = true;
     }
-    return modified;
+    return bModified;
   }
 
-  public int indexOf (final long element)
+  public int indexOf (final long aElement)
   {
     int i = 0;
     for (final LongIterator iter = iterator (); iter.hasNext ();)
     {
-      if (iter.next () == element)
-      {
+      if (iter.next () == aElement)
         return i;
-      }
-      else
-      {
-        i++;
-      }
+      i++;
     }
     return -1;
   }
 
-  public int lastIndexOf (final long element)
+  public int lastIndexOf (final long aElement)
   {
     for (final LongListIterator iter = listIterator (size ()); iter.hasPrevious ();)
-    {
-      if (iter.previous () == element)
-      {
+      if (iter.previous () == aElement)
         return iter.nextIndex ();
-      }
-    }
     return -1;
   }
 
@@ -151,63 +146,46 @@ public abstract class RandomAccessLongList extends AbstractLongCollection implem
     return listIterator (0);
   }
 
-  public LongListIterator listIterator (final int index)
+  public LongListIterator listIterator (final int nIndex)
   {
-    return new RandomAccessLongListIterator (this, index);
+    return new RandomAccessLongListIterator (this, nIndex);
   }
 
-  public LongList subList (final int fromIndex, final int toIndex)
+  public LongList subList (final int nFromIndex, final int nToIndex)
   {
-    return new RandomAccessLongSubList (this, fromIndex, toIndex);
+    return new RandomAccessLongSubList (this, nFromIndex, nToIndex);
   }
 
   @Override
-  public boolean equals (final Object that)
+  public boolean equals (@Nullable final Object that)
   {
     if (this == that)
-    {
       return true;
-    }
-    else
-      if (that instanceof LongList)
-      {
-        final LongList thatList = (LongList) that;
-        if (size () != thatList.size ())
-        {
-          return false;
-        }
-        for (LongIterator thatIter = thatList.iterator (), thisIter = iterator (); thisIter.hasNext ();)
-        {
-          if (thisIter.next () != thatIter.next ())
-          {
-            return false;
-          }
-        }
-        return true;
-      }
-      else
-      {
+    if (!(that instanceof LongList))
+      return false;
+    final LongList thatList = (LongList) that;
+    if (size () != thatList.size ())
+      return false;
+    for (LongIterator thatIter = thatList.iterator (), thisIter = iterator (); thisIter.hasNext ();)
+      if (thisIter.next () != thatIter.next ())
         return false;
-      }
+    return true;
   }
 
   @Override
   public int hashCode ()
   {
-    int hash = 1;
+    final HashCodeGenerator aHC = new HashCodeGenerator (this);
     for (final LongIterator iter = iterator (); iter.hasNext ();)
-    {
-      final long val = iter.next ();
-      hash = 31 * hash + ((int) (val ^ (val >>> 32)));
-    }
-    return hash;
+      aHC.append (iter.next ());
+    return aHC.getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    final StringBuffer buf = new StringBuffer ();
-    buf.append ("[");
+    final StringBuilder buf = new StringBuilder ();
+    buf.append ('[');
     for (final LongIterator iter = iterator (); iter.hasNext ();)
     {
       buf.append (iter.next ());
@@ -216,7 +194,7 @@ public abstract class RandomAccessLongList extends AbstractLongCollection implem
         buf.append (", ");
       }
     }
-    buf.append ("]");
+    buf.append (']');
     return buf.toString ();
   }
 
@@ -245,6 +223,9 @@ public abstract class RandomAccessLongList extends AbstractLongCollection implem
 
   private static class ComodChecker
   {
+    private RandomAccessLongList _source = null;
+    private int _expectedModCount = -1;
+
     ComodChecker (final RandomAccessLongList source)
     {
       _source = source;
@@ -259,34 +240,27 @@ public abstract class RandomAccessLongList extends AbstractLongCollection implem
     protected void assertNotComodified () throws ConcurrentModificationException
     {
       if (_expectedModCount != getList ().getModCount ())
-      {
         throw new ConcurrentModificationException ();
-      }
     }
 
     protected void resyncModCount ()
     {
       _expectedModCount = getList ().getModCount ();
     }
-
-    private RandomAccessLongList _source = null;
-    private int _expectedModCount = -1;
   }
 
   protected static class RandomAccessLongListIterator extends ComodChecker implements LongListIterator
   {
+    private int _nextIndex = 0;
+    private int _lastReturnedIndex = -1;
+
     RandomAccessLongListIterator (final RandomAccessLongList list, final int index)
     {
       super (list);
       if (index < 0 || index > getList ().size ())
-      {
         throw new IndexOutOfBoundsException ("Index " + index + " not in [0," + getList ().size () + ")");
-      }
-      else
-      {
-        _nextIndex = index;
-        resyncModCount ();
-      }
+      _nextIndex = index;
+      resyncModCount ();
     }
 
     public boolean hasNext ()
@@ -317,32 +291,22 @@ public abstract class RandomAccessLongList extends AbstractLongCollection implem
     {
       assertNotComodified ();
       if (!hasNext ())
-      {
         throw new NoSuchElementException ();
-      }
-      else
-      {
-        final long val = getList ().get (_nextIndex);
-        _lastReturnedIndex = _nextIndex;
-        _nextIndex++;
-        return val;
-      }
+      final long val = getList ().get (_nextIndex);
+      _lastReturnedIndex = _nextIndex;
+      _nextIndex++;
+      return val;
     }
 
     public long previous ()
     {
       assertNotComodified ();
       if (!hasPrevious ())
-      {
         throw new NoSuchElementException ();
-      }
-      else
-      {
-        final long val = getList ().get (_nextIndex - 1);
-        _lastReturnedIndex = _nextIndex - 1;
-        _nextIndex--;
-        return val;
-      }
+      final long val = getList ().get (_nextIndex - 1);
+      _lastReturnedIndex = _nextIndex - 1;
+      _nextIndex--;
+      return val;
     }
 
     public void add (final long value)
@@ -380,41 +344,30 @@ public abstract class RandomAccessLongList extends AbstractLongCollection implem
     {
       assertNotComodified ();
       if (-1 == _lastReturnedIndex)
-      {
         throw new IllegalStateException ();
-      }
-      else
-      {
-        getList ().set (_lastReturnedIndex, value);
-        resyncModCount ();
-      }
+      getList ().set (_lastReturnedIndex, value);
+      resyncModCount ();
     }
-
-    private int _nextIndex = 0;
-    private int _lastReturnedIndex = -1;
   }
 
-  protected static class RandomAccessLongSubList extends RandomAccessLongList implements LongList
+  protected static class RandomAccessLongSubList extends RandomAccessLongList
   {
+    private int _offset = 0;
+    private int _limit = 0;
+    private RandomAccessLongList _list = null;
+    private ComodChecker _comod = null;
+
     RandomAccessLongSubList (final RandomAccessLongList list, final int fromIndex, final int toIndex)
     {
       if (fromIndex < 0 || toIndex > list.size ())
-      {
         throw new IndexOutOfBoundsException ();
-      }
-      else
-        if (fromIndex > toIndex)
-        {
-          throw new IllegalArgumentException ();
-        }
-        else
-        {
-          _list = list;
-          _offset = fromIndex;
-          _limit = toIndex - fromIndex;
-          _comod = new ComodChecker (list);
-          _comod.resyncModCount ();
-        }
+      if (fromIndex > toIndex)
+        throw new IllegalArgumentException ();
+      _list = list;
+      _offset = fromIndex;
+      _limit = toIndex - fromIndex;
+      _comod = new ComodChecker (list);
+      _comod.resyncModCount ();
     }
 
     @Override
@@ -469,28 +422,18 @@ public abstract class RandomAccessLongList extends AbstractLongCollection implem
     private void checkRange (final int index)
     {
       if (index < 0 || index >= size ())
-      {
         throw new IndexOutOfBoundsException ("index " + index + " not in [0," + size () + ")");
-      }
     }
 
     private void checkRangeIncludingEndpoint (final int index)
     {
       if (index < 0 || index > size ())
-      {
         throw new IndexOutOfBoundsException ("index " + index + " not in [0," + size () + "]");
-      }
     }
 
     private int toUnderlyingIndex (final int index)
     {
       return (index + _offset);
     }
-
-    private int _offset = 0;
-    private int _limit = 0;
-    private RandomAccessLongList _list = null;
-    private ComodChecker _comod = null;
-
   }
 }

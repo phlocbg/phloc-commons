@@ -18,27 +18,27 @@ package org.apache.commons.collections.primitives;
 
 /**
  * An iterator over <code>YYY</code> values.
- * 
- * @see org.apache.commons.collections.primitives.adapters.XXXIteratorIterator
- * @see org.apache.commons.collections.primitives.adapters.IteratorXXXIterator
+ *
+ * @see org.apache.commons.collections.primitives.adapters.ZZZIteratorIterator
+ * @see org.apache.commons.collections.primitives.adapters.IteratorZZZIterator
  * @since Commons Primitives 1.1
  * @version $Revision: 480460 $ $Date: 2006-11-29 09:14:21 +0100 (Mi, 29 Nov
  *          2006) $
  */
-public interface XXXIterator
+public interface ZZZIterator
 {
   /**
    * Returns <code>true</code> if I have more elements. (In other words, returns
    * <code>true</code> if a subsequent call to {@link #next next} will return an
    * element rather than throwing an exception.)
-   * 
+   *
    * @return <code>true</code> if I have more elements
    */
   boolean hasNext ();
 
   /**
    * Returns the next element in me.
-   * 
+   *
    * @return the next element in me
    * @throws java.util.NoSuchElementException
    *         if there is no next element
@@ -48,7 +48,7 @@ public interface XXXIterator
   /**
    * Removes from my underlying collection the last element {@link #next
    * returned} by me (optional operation).
-   * 
+   *
    * @throws UnsupportedOperationException
    *         if this operation is not supported
    * @throws IllegalStateException

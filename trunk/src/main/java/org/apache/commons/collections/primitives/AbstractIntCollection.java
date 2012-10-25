@@ -16,142 +16,130 @@
  */
 package org.apache.commons.collections.primitives;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+
+import com.phloc.commons.annotations.ReturnsMutableCopy;
+
 /**
  * Abstract base class for {@link IntCollection}s.
- * <p />
+ * <p/>
  * Read-only subclasses must override {@link #iterator} and {@link #size}.
  * Mutable subclasses should also override {@link #add} and
  * {@link IntIterator#remove IntIterator.remove}. All other methods have at
  * least some base implementation derived from these. Subclasses may choose to
  * override these methods to provide a more efficient implementation.
- * 
- * @since Commons Primitives 1.0
+ *
+ * @since Commons Primitives 1.1
  * @version $Revision: 480460 $ $Date: 2006-11-29 09:14:21 +0100 (Mi, 29 Nov
  *          2006) $
- * @author Rodney Waldhoff
  */
 public abstract class AbstractIntCollection implements IntCollection
 {
-  public abstract IntIterator iterator ();
-
-  public abstract int size ();
-
   protected AbstractIntCollection ()
   {}
 
+  @Nonnull
+  public abstract IntIterator iterator ();
+
+  @Nonnegative
+  public abstract int size ();
+
   /** Unsupported in this base implementation. */
-  public boolean add (final int element)
+  public boolean add (final int aElement)
   {
     throw new UnsupportedOperationException ("add(int) is not supported.");
   }
 
-  public boolean addAll (final IntCollection c)
+  public boolean addAll (@Nonnull final IntCollection aCont)
   {
-    boolean modified = false;
-    for (final IntIterator iter = c.iterator (); iter.hasNext ();)
-    {
-      modified |= add (iter.next ());
-    }
-    return modified;
+    boolean bModified = false;
+    for (final IntIterator aIter = aCont.iterator (); aIter.hasNext ();)
+      bModified |= add (aIter.next ());
+    return bModified;
   }
 
   public void clear ()
   {
-    for (final IntIterator iter = iterator (); iter.hasNext ();)
+    for (final IntIterator aIter = iterator (); aIter.hasNext ();)
     {
-      iter.next ();
-      iter.remove ();
+      aIter.next ();
+      aIter.remove ();
     }
   }
 
-  public boolean contains (final int element)
+  public boolean contains (final int aElement)
   {
-    for (final IntIterator iter = iterator (); iter.hasNext ();)
-    {
-      if (iter.next () == element)
-      {
+    for (final IntIterator aIter = iterator (); aIter.hasNext ();)
+      if (aIter.next () == aElement)
         return true;
-      }
-    }
     return false;
   }
 
-  public boolean containsAll (final IntCollection c)
+  public boolean containsAll (@Nonnull final IntCollection aCont)
   {
-    for (final IntIterator iter = c.iterator (); iter.hasNext ();)
-    {
-      if (!contains (iter.next ()))
-      {
+    for (final IntIterator aIter = aCont.iterator (); aIter.hasNext ();)
+      if (!contains (aIter.next ()))
         return false;
-      }
-    }
     return true;
   }
 
   public boolean isEmpty ()
   {
-    return (0 == size ());
+    return 0 == size ();
   }
 
-  public boolean removeElement (final int element)
+  public boolean removeElement (final int aElement)
   {
-    for (final IntIterator iter = iterator (); iter.hasNext ();)
-    {
-      if (iter.next () == element)
+    for (final IntIterator aIter = iterator (); aIter.hasNext ();)
+      if (aIter.next () == aElement)
       {
-        iter.remove ();
+        aIter.remove ();
         return true;
       }
-    }
     return false;
   }
 
-  public boolean removeAll (final IntCollection c)
+  public boolean removeAll (@Nonnull final IntCollection aCont)
   {
-    boolean modified = false;
-    for (final IntIterator iter = c.iterator (); iter.hasNext ();)
-    {
-      modified |= removeElement (iter.next ());
-    }
-    return modified;
+    boolean bModified = false;
+    for (final IntIterator aIter = aCont.iterator (); aIter.hasNext ();)
+      bModified |= removeElement (aIter.next ());
+    return bModified;
   }
 
-  public boolean retainAll (final IntCollection c)
+  public boolean retainAll (@Nonnull final IntCollection aCont)
   {
-    boolean modified = false;
-    for (final IntIterator iter = iterator (); iter.hasNext ();)
-    {
-      if (!c.contains (iter.next ()))
+    boolean bModified = false;
+    for (final IntIterator aIter = iterator (); aIter.hasNext ();)
+      if (!aCont.contains (aIter.next ()))
       {
-        iter.remove ();
-        modified = true;
+        aIter.remove ();
+        bModified = true;
       }
-    }
-    return modified;
+    return bModified;
   }
 
+  @Nonnull
+  @ReturnsMutableCopy
   public int [] toArray ()
   {
-    final int [] array = new int [size ()];
+    final int [] ret = new int [size ()];
     int i = 0;
-    for (final IntIterator iter = iterator (); iter.hasNext ();)
-    {
-      array[i] = iter.next ();
-      i++;
-    }
-    return array;
+    for (final IntIterator aIter = iterator (); aIter.hasNext ();)
+      ret[i++] = aIter.next ();
+    return ret;
   }
 
-  public int [] toArray (final int [] a)
+  @Nonnull
+  @ReturnsMutableCopy
+  public int [] toArray (@Nonnull final int [] aTarget)
   {
-    if (a.length < size ())
+    if (aTarget.length < size ())
       return toArray ();
     int i = 0;
-    for (final IntIterator iter = iterator (); iter.hasNext ();)
-    {
-      a[i] = iter.next ();
-      i++;
-    }
-    return a;
+    for (final IntIterator aIter = iterator (); aIter.hasNext ();)
+      aTarget[i++] = aIter.next ();
+    return aTarget;
   }
 }

@@ -18,9 +18,13 @@ package org.apache.commons.collections.primitives;
 
 import java.util.EmptyStackException;
 
+import javax.annotation.Nonnegative;
+
 /**
- * A primitive int based Stack.
- * 
+ * A primitive int based Stack. The underlying backing store is an
+ * ArrayIntList where the front of the list is the bottom of the stack and
+ * the tail of the list is the top of the stack.
+ *
  * @author Apache Directory Project
  * @since Commons Primitives 1.1
  * @version $Revision: 480460 $ $Date: 2006-11-29 09:14:21 +0100 (Mi, 29 Nov
@@ -29,51 +33,55 @@ import java.util.EmptyStackException;
 public class IntStack
 {
   /** the underlying dynamic primitive backing store */
-  private final ArrayIntList list = new ArrayIntList ();
+  private final ArrayIntList m_aList = new ArrayIntList ();
 
+  /**
+   * Creates an empty primitive stack.
+   */
   public IntStack ()
   {}
 
-  public IntStack (final int [] numbas)
+  /**
+   * Creates a stack prepopulating it with values.
+   *
+   * @param bits
+   *        the array to add
+   */
+  public IntStack (final int [] bits)
   {
-    for (final int numba : numbas)
-    {
-      list.add (numba);
-    }
+    for (final int bit : bits)
+      m_aList.add (bit);
   }
 
   /**
    * Tests if this stack is empty.
-   * 
-   * @return true if and only if this stack contains no ints; false otherwise
+   *
+   * @return true if and only if this stack is empty; false otherwise
    */
   public boolean empty ()
   {
-    return list.isEmpty ();
+    return m_aList.isEmpty ();
   }
 
   /**
-   * Looks at the int at the top of this stack without removing it from the
-   * stack.
-   * 
-   * @return int at the top of this stack (last int in ArrayIntList)
-   * @throws EmptyStackException
+   * Looks at the top of this stack without removing it.
+   *
+   * @return the value at the top of this stack
+   * @throws java.util.EmptyStackException
    *         if this stack is empty
    */
   public int peek ()
   {
-    if (list.isEmpty ())
-    {
+    if (m_aList.isEmpty ())
       throw new EmptyStackException ();
-    }
 
-    return list.get (list.size () - 1);
+    return m_aList.get (m_aList.size () - 1);
   }
 
   /**
    * Return the n'th int down the stack, where 0 is the top element and
    * [size()-1] is the bottom element.
-   * 
+   *
    * @param n
    *        the element index
    * @return the element at the index
@@ -84,67 +92,57 @@ public class IntStack
    */
   public int peek (final int n)
   {
-    if (list.isEmpty ())
-    {
+    if (m_aList.isEmpty ())
       throw new EmptyStackException ();
-    }
 
-    return list.get (list.size () - n - 1);
+    return m_aList.get (m_aList.size () - n - 1);
   }
 
   /**
-   * Removes the int at the top of this stack and returns that object as the
-   * value of this function.
-   * 
-   * @return int at the top of this stack (last int in ArrayIntList)
-   * @throws EmptyStackException
+   * Removes the value at the top of this stack and returns it.
+   *
+   * @return value at the top of this stack
+   * @throws java.util.EmptyStackException
    *         if this stack is empty
    */
   public int pop ()
   {
-    if (list.isEmpty ())
-    {
+    if (m_aList.isEmpty ())
       throw new EmptyStackException ();
-    }
 
-    return list.removeElementAt (list.size () - 1);
+    return m_aList.removeElementAt (m_aList.size () - 1);
   }
 
   /**
-   * Pushes an int item onto the top of this stack.
-   * 
+   * Pushes a value onto the top of this stack.
+   *
    * @param item
-   *        the int item to push onto this stack
+   *        the value to push onto this stack
    * @return the item argument for call chaining
    */
   public int push (final int item)
   {
-    list.add (item);
+    m_aList.add (item);
     return item;
   }
 
   /**
-   * Returns the 1-based position where an int is on this stack. If the int
+   * Returns the 1-based position where a value is on this stack. If the value
    * occurs as an item in this stack, this method returns the distance from the
    * top of the stack of the occurrence nearest the top of the stack; the
    * topmost item on the stack is considered to be at distance 1.
-   * 
+   *
    * @param item
-   *        the int to search for from the top down
+   *        the value to search for from the top down
    * @return the 1-based position from the top of the stack where the int is
    *         located; the return value -1 indicates that the int is not on the
    *         stack
    */
   public int search (final int item)
   {
-    for (int ii = list.size () - 1; ii >= 0; ii--)
-    {
-      if (list.get (ii) == item)
-      {
-        return list.size () - ii;
-      }
-    }
-
+    for (int i = m_aList.size () - 1; i >= 0; i--)
+      if (m_aList.get (i) == item)
+        return m_aList.size () - i;
     return -1;
   }
 
@@ -152,24 +150,25 @@ public class IntStack
    * Gets items from the stack where the index is zero based and the top of the
    * stack is at an index of size()-1 with the bottom of the stack at an index
    * of 0.
-   * 
+   *
    * @param index
    *        the index into the stack treated as a list
-   * @return the int value at the index
+   * @return the value at the index
    */
   public int get (final int index)
   {
-    return list.get (index);
+    return m_aList.get (index);
   }
 
   /**
    * Gets the size of this stack.
-   * 
+   *
    * @return the size of this stack
    */
+  @Nonnegative
   public int size ()
   {
-    return list.size ();
+    return m_aList.size ();
   }
 
   /**
@@ -177,6 +176,6 @@ public class IntStack
    */
   public void clear ()
   {
-    list.clear ();
+    m_aList.clear ();
   }
 }

@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.decorators.UnmodifiableCharIterator;
 import org.apache.commons.collections.primitives.decorators.UnmodifiableCharList;
 import org.apache.commons.collections.primitives.decorators.UnmodifiableCharListIterator;
@@ -24,7 +26,7 @@ import org.apache.commons.collections.primitives.decorators.UnmodifiableCharList
  * This class consists exclusively of static methods that operate on or return
  * CharCollections.
  * <p>
- * The methods of this class all throw a NullPoCharerException if the provided
+ * The methods of this class all throw a NullPointerException if the provided
  * collection is null.
  * 
  * @version $Revision: 480460 $ $Date: 2006-11-29 09:14:21 +0100 (Mi, 29 Nov
@@ -33,6 +35,8 @@ import org.apache.commons.collections.primitives.decorators.UnmodifiableCharList
  */
 public final class CharCollections
 {
+  private CharCollections ()
+  {}
 
   /**
    * Returns an unmodifiable CharList containing only the specified element.
@@ -41,9 +45,10 @@ public final class CharCollections
    *        the single value
    * @return an unmodifiable CharList containing only the specified element.
    */
+  @Nonnull 
   public static CharList singletonCharList (final char value)
   {
-    // TODO: a specialized implementation of CharList may be more performant
+    // hint: a specialized implementation of CharList may be more performant
     final CharList list = new ArrayCharList (1);
     list.add (value);
     return UnmodifiableCharList.wrap (list);
@@ -56,6 +61,7 @@ public final class CharCollections
    *        the single value
    * @return an unmodifiable CharIterator containing only the specified element.
    */
+  @Nonnull 
   public static CharIterator singletonCharIterator (final char value)
   {
     return singletonCharList (value).iterator ();
@@ -70,6 +76,7 @@ public final class CharCollections
    * @return an unmodifiable CharListIterator containing only the specified
    *         element.
    */
+  @Nonnull 
   public static CharListIterator singletonCharListIterator (final char value)
   {
     return singletonCharList (value).listIterator ();
@@ -85,12 +92,11 @@ public final class CharCollections
    *         if the given CharList is null
    * @see org.apache.commons.collections.primitives.decorators.UnmodifiableCharList#wrap
    */
-  public static CharList unmodifiableCharList (final CharList list) throws NullPointerException
+  @Nonnull 
+  public static CharList unmodifiableCharList (@Nonnull final CharList list) throws NullPointerException
   {
     if (null == list)
-    {
       throw new NullPointerException ();
-    }
     return UnmodifiableCharList.wrap (list);
   }
 
@@ -104,12 +110,11 @@ public final class CharCollections
    *         if the given CharIterator is null
    * @see org.apache.commons.collections.primitives.decorators.UnmodifiableCharIterator#wrap
    */
-  public static CharIterator unmodifiableCharIterator (final CharIterator iter)
+  @Nonnull
+  public static CharIterator unmodifiableCharIterator (@Nonnull final CharIterator iter)
   {
     if (null == iter)
-    {
       throw new NullPointerException ();
-    }
     return UnmodifiableCharIterator.wrap (iter);
   }
 
@@ -123,12 +128,11 @@ public final class CharCollections
    *         if the given CharListIterator is null
    * @see org.apache.commons.collections.primitives.decorators.UnmodifiableCharListIterator#wrap
    */
-  public static CharListIterator unmodifiableCharListIterator (final CharListIterator iter)
+  @Nonnull
+  public static CharListIterator unmodifiableCharListIterator (@Nonnull final CharListIterator iter)
   {
     if (null == iter)
-    {
       throw new NullPointerException ();
-    }
     return UnmodifiableCharListIterator.wrap (iter);
   }
 
@@ -138,6 +142,7 @@ public final class CharCollections
    * @return an unmodifiable, empty CharList.
    * @see #EMPTY_CHAR_LIST
    */
+  @Nonnull
   public static CharList getEmptyCharList ()
   {
     return EMPTY_CHAR_LIST;
@@ -149,6 +154,7 @@ public final class CharCollections
    * @return an unmodifiable, empty CharIterator.
    * @see #EMPTY_CHAR_ITERATOR
    */
+  @Nonnull
   public static CharIterator getEmptyCharIterator ()
   {
     return EMPTY_CHAR_ITERATOR;
@@ -160,6 +166,7 @@ public final class CharCollections
    * @return an unmodifiable, empty CharListIterator.
    * @see #EMPTY_CHAR_LIST_ITERATOR
    */
+  @Nonnull
   public static CharListIterator getEmptyCharListIterator ()
   {
     return EMPTY_CHAR_LIST_ITERATOR;

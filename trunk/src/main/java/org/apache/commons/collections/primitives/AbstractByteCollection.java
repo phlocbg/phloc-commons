@@ -16,142 +16,130 @@
  */
 package org.apache.commons.collections.primitives;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+
+import com.phloc.commons.annotations.ReturnsMutableCopy;
+
 /**
  * Abstract base class for {@link ByteCollection}s.
- * <p />
+ * <p/>
  * Read-only subclasses must override {@link #iterator} and {@link #size}.
  * Mutable subclasses should also override {@link #add} and
  * {@link ByteIterator#remove ByteIterator.remove}. All other methods have at
  * least some base implementation derived from these. Subclasses may choose to
  * override these methods to provide a more efficient implementation.
- * 
- * @since Commons Primitives 1.0
+ *
+ * @since Commons Primitives 1.1
  * @version $Revision: 480460 $ $Date: 2006-11-29 09:14:21 +0100 (Mi, 29 Nov
  *          2006) $
- * @author Rodney Waldhoff
  */
 public abstract class AbstractByteCollection implements ByteCollection
 {
-  public abstract ByteIterator iterator ();
-
-  public abstract int size ();
-
   protected AbstractByteCollection ()
   {}
 
+  @Nonnull
+  public abstract ByteIterator iterator ();
+
+  @Nonnegative
+  public abstract int size ();
+
   /** Unsupported in this base implementation. */
-  public boolean add (final byte element)
+  public boolean add (final byte aElement)
   {
     throw new UnsupportedOperationException ("add(byte) is not supported.");
   }
 
-  public boolean addAll (final ByteCollection c)
+  public boolean addAll (@Nonnull final ByteCollection aCont)
   {
-    boolean modified = false;
-    for (final ByteIterator iter = c.iterator (); iter.hasNext ();)
-    {
-      modified |= add (iter.next ());
-    }
-    return modified;
+    boolean bModified = false;
+    for (final ByteIterator aIter = aCont.iterator (); aIter.hasNext ();)
+      bModified |= add (aIter.next ());
+    return bModified;
   }
 
   public void clear ()
   {
-    for (final ByteIterator iter = iterator (); iter.hasNext ();)
+    for (final ByteIterator aIter = iterator (); aIter.hasNext ();)
     {
-      iter.next ();
-      iter.remove ();
+      aIter.next ();
+      aIter.remove ();
     }
   }
 
-  public boolean contains (final byte element)
+  public boolean contains (final byte aElement)
   {
-    for (final ByteIterator iter = iterator (); iter.hasNext ();)
-    {
-      if (iter.next () == element)
-      {
+    for (final ByteIterator aIter = iterator (); aIter.hasNext ();)
+      if (aIter.next () == aElement)
         return true;
-      }
-    }
     return false;
   }
 
-  public boolean containsAll (final ByteCollection c)
+  public boolean containsAll (@Nonnull final ByteCollection aCont)
   {
-    for (final ByteIterator iter = c.iterator (); iter.hasNext ();)
-    {
-      if (!contains (iter.next ()))
-      {
+    for (final ByteIterator aIter = aCont.iterator (); aIter.hasNext ();)
+      if (!contains (aIter.next ()))
         return false;
-      }
-    }
     return true;
   }
 
   public boolean isEmpty ()
   {
-    return (0 == size ());
+    return 0 == size ();
   }
 
-  public boolean removeElement (final byte element)
+  public boolean removeElement (final byte aElement)
   {
-    for (final ByteIterator iter = iterator (); iter.hasNext ();)
-    {
-      if (iter.next () == element)
+    for (final ByteIterator aIter = iterator (); aIter.hasNext ();)
+      if (aIter.next () == aElement)
       {
-        iter.remove ();
+        aIter.remove ();
         return true;
       }
-    }
     return false;
   }
 
-  public boolean removeAll (final ByteCollection c)
+  public boolean removeAll (@Nonnull final ByteCollection aCont)
   {
-    boolean modified = false;
-    for (final ByteIterator iter = c.iterator (); iter.hasNext ();)
-    {
-      modified |= removeElement (iter.next ());
-    }
-    return modified;
+    boolean bModified = false;
+    for (final ByteIterator aIter = aCont.iterator (); aIter.hasNext ();)
+      bModified |= removeElement (aIter.next ());
+    return bModified;
   }
 
-  public boolean retainAll (final ByteCollection c)
+  public boolean retainAll (@Nonnull final ByteCollection aCont)
   {
-    boolean modified = false;
-    for (final ByteIterator iter = iterator (); iter.hasNext ();)
-    {
-      if (!c.contains (iter.next ()))
+    boolean bModified = false;
+    for (final ByteIterator aIter = iterator (); aIter.hasNext ();)
+      if (!aCont.contains (aIter.next ()))
       {
-        iter.remove ();
-        modified = true;
+        aIter.remove ();
+        bModified = true;
       }
-    }
-    return modified;
+    return bModified;
   }
 
+  @Nonnull
+  @ReturnsMutableCopy
   public byte [] toArray ()
   {
-    final byte [] array = new byte [size ()];
+    final byte [] ret = new byte [size ()];
     int i = 0;
-    for (final ByteIterator iter = iterator (); iter.hasNext ();)
-    {
-      array[i] = iter.next ();
-      i++;
-    }
-    return array;
+    for (final ByteIterator aIter = iterator (); aIter.hasNext ();)
+      ret[i++] = aIter.next ();
+    return ret;
   }
 
-  public byte [] toArray (final byte [] a)
+  @Nonnull
+  @ReturnsMutableCopy
+  public byte [] toArray (@Nonnull final byte [] aTarget)
   {
-    if (a.length < size ())
+    if (aTarget.length < size ())
       return toArray ();
     int i = 0;
-    for (final ByteIterator iter = iterator (); iter.hasNext ();)
-    {
-      a[i] = iter.next ();
-      i++;
-    }
-    return a;
+    for (final ByteIterator aIter = iterator (); aIter.hasNext ();)
+      aTarget[i++] = aIter.next ();
+    return aTarget;
   }
 }

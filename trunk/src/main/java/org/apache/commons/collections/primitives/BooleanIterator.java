@@ -18,7 +18,7 @@ package org.apache.commons.collections.primitives;
 
 /**
  * An iterator over <code>boolean</code> values.
- * 
+ *
  * @see org.apache.commons.collections.primitives.adapters.BooleanIteratorIterator
  * @see org.apache.commons.collections.primitives.adapters.IteratorBooleanIterator
  * @since Commons Primitives 1.1
@@ -28,17 +28,17 @@ package org.apache.commons.collections.primitives;
 public interface BooleanIterator
 {
   /**
-   * Returns <code>true</code> iff I have more elements. (In other words,
-   * returns <code>true</code> iff a subsequent call to {@link #next next} will
-   * return an element rather than throwing an exception.)
-   * 
-   * @return <code>true</code> iff I have more elements
+   * Returns <code>true</code> if I have more elements. (In other words, returns
+   * <code>true</code> if a subsequent call to {@link #next next} will return an
+   * element rather than throwing an exception.)
+   *
+   * @return <code>true</code> if I have more elements
    */
   boolean hasNext ();
 
   /**
    * Returns the next element in me.
-   * 
+   *
    * @return the next element in me
    * @throws java.util.NoSuchElementException
    *         if there is no next element
@@ -48,7 +48,7 @@ public interface BooleanIterator
   /**
    * Removes from my underlying collection the last element {@link #next
    * returned} by me (optional operation).
-   * 
+   *
    * @throws UnsupportedOperationException
    *         if this operation is not supported
    * @throws IllegalStateException
