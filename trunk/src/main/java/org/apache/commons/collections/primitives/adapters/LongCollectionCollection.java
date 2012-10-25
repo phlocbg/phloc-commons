@@ -45,6 +45,8 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.collections.primitives.LongCollection;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Adapts an {@link LongCollection LongCollection} to the
  * {@link java.util.Collection Collection} interface.
@@ -57,6 +59,7 @@ import org.apache.commons.collections.primitives.LongCollection;
  *          2006) $
  * @author Rodney Waldhoff
  */
+@SuppressFBWarnings ("SE_NO_SERIALVERSIONID")
 public final class LongCollectionCollection extends AbstractLongCollectionCollection implements Serializable
 {
   private transient LongCollection m_aCollection;

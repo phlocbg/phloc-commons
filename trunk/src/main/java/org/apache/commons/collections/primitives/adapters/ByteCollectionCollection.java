@@ -45,6 +45,8 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.collections.primitives.ByteCollection;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Adapts an {@link ByteCollection ByteCollection} to the
  * {@link java.util.Collection Collection} interface.
@@ -57,6 +59,7 @@ import org.apache.commons.collections.primitives.ByteCollection;
  *          2006) $
  * @author Rodney Waldhoff
  */
+@SuppressFBWarnings ("SE_NO_SERIALVERSIONID")
 public final class ByteCollectionCollection extends AbstractByteCollectionCollection implements Serializable
 {
   private transient ByteCollection m_aCollection;

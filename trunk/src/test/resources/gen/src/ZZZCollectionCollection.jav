@@ -45,6 +45,8 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.collections.primitives.ZZZCollection;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Adapts an {@link ZZZCollection ZZZCollection} to the
  * {@link java.util.Collection Collection} interface.
@@ -57,6 +59,7 @@ import org.apache.commons.collections.primitives.ZZZCollection;
  *          2006) $
  * @author Rodney Waldhoff
  */
+@SuppressFBWarnings ("SE_NO_SERIALVERSIONID")
 public final class ZZZCollectionCollection extends AbstractZZZCollectionCollection implements Serializable
 {
   private transient ZZZCollection m_aCollection;
