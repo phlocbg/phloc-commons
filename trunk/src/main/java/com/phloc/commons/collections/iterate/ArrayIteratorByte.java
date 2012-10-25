@@ -70,6 +70,13 @@ public final class ArrayIteratorByte implements ByteIterator
     return m_aArray[m_nIndex++];
   }
 
+  @UnsupportedOperation
+  @Deprecated
+  public void remove ()
+  {
+    throw new UnsupportedOperationException ();
+  }
+
   @Override
   public boolean equals (final Object o)
   {
@@ -79,13 +86,6 @@ public final class ArrayIteratorByte implements ByteIterator
       return false;
     final ArrayIteratorByte rhs = (ArrayIteratorByte) o;
     return EqualsUtils.equals (m_aArray, rhs.m_aArray) && m_nIndex == rhs.m_nIndex;
-  }
-
-  @UnsupportedOperation
-  @Deprecated
-  public void remove ()
-  {
-    throw new UnsupportedOperationException ();
   }
 
   @Override
