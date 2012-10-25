@@ -84,19 +84,19 @@ public abstract class TestLongList extends BaseTestList
   // ------------------------------------------------------------------------
 
   @Override
-  public List makeEmptyList ()
+  public List <Long> makeEmptyList ()
   {
     return new LongListList (makeEmptyLongList ());
   }
 
   @Override
-  public Object [] getFullElements ()
+  public Long [] getFullElements ()
   {
     return wrapArray (getFullLongs ());
   }
 
   @Override
-  public Object [] getOtherElements ()
+  public Long [] getOtherElements ()
   {
     return wrapArray (getOtherLongs ());
   }
@@ -201,18 +201,6 @@ public abstract class TestLongList extends BaseTestList
     }
   }
 
-  public void testHashCodeSpecification ()
-  {
-    final LongList list = makeFullLongList ();
-    int hash = 1;
-    for (final LongIterator iter = list.iterator (); iter.hasNext ();)
-    {
-      final long val = iter.next ();
-      hash = 31 * hash + ((int) (val ^ (val >>> 32)));
-    }
-    assertEquals (hash, list.hashCode ());
-  }
-
   public void testEqualsWithTwoLongLists ()
   {
     final LongList one = makeEmptyLongList ();
@@ -276,7 +264,7 @@ public abstract class TestLongList extends BaseTestList
   public void testEqualsWithLongListAndList ()
   {
     final LongList ilist = makeEmptyLongList ();
-    final List list = new ArrayList ();
+    final List <Long> list = new ArrayList <Long> ();
 
     assertTrue ("Unwrapped, empty List should not be equal to empty LongList.", !ilist.equals (list));
     assertTrue ("Unwrapped, empty LongList should not be equal to empty List.", !list.equals (ilist));

@@ -32,7 +32,7 @@ import org.apache.commons.collections.primitives.adapters.ListCharList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class TestCharList extends BaseTestList
+public abstract class TestCharList extends BaseTestList <Character>
 {
   public TestCharList (final String sTestName)
   {
@@ -197,17 +197,6 @@ public abstract class TestCharList extends BaseTestList
     {
       assertEquals (iter.next (), dest2[i], 0f);
     }
-  }
-
-  public void testHashCodeSpecification ()
-  {
-    final CharList list = makeFullCharList ();
-    int hash = 1;
-    for (final CharIterator iter = list.iterator (); iter.hasNext ();)
-    {
-      hash = 31 * hash + (iter.next ());
-    }
-    assertEquals (hash, list.hashCode ());
   }
 
   public void testEqualsWithTwoCharLists ()

@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nullable;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -226,7 +228,7 @@ public class TestBaseProxyLongCollection extends TestCase
     }
 
     @Override
-    public boolean equals (final Object obj)
+    public boolean equals (@Nullable final Object obj)
     {
       _equals++;
       return false;

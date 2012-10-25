@@ -201,18 +201,6 @@ public abstract class TestDoubleList extends BaseTestList
     }
   }
 
-  public void testHashCodeSpecification ()
-  {
-    final DoubleList list = makeFullDoubleList ();
-    int hash = 1;
-    for (final DoubleIterator iter = list.iterator (); iter.hasNext ();)
-    {
-      final long bits = Double.doubleToLongBits (iter.next ());
-      hash = 31 * hash + ((int) (bits ^ (bits >>> 32)));
-    }
-    assertEquals (hash, list.hashCode ());
-  }
-
   public void testEqualsWithTwoDoubleLists ()
   {
     final DoubleList one = makeEmptyDoubleList ();

@@ -16,41 +16,88 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.apache.commons.collections.BulkTest;
-import org.apache.commons.collections.list.AbstractTestList;
+import junit.framework.TestCase;
+
+import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
+import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 
 /**
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class BaseTestList extends AbstractTestList
+public abstract class BaseTestList <T> extends TestCase
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
+  private List <T> m_aList;
 
   public BaseTestList (final String testName)
   {
     super (testName);
   }
 
+  public abstract List <T> makeEmptyList ();
+
+  public List <T> makeFullList ()
+  {
+    final List <T> list = makeEmptyList ();
+    final T [] elts = getFullElements ();
+    for (final T elt : elts)
+      list.add (elt);
+    return list;
+  }
+
+  public List <T> getList ()
+  {
+    if (m_aList == null)
+      m_aList = makeFullList ();
+    return m_aList;
+  }
+
+  public abstract T [] getFullElements ();
+
+  public abstract T [] getOtherElements ();
+
+  public boolean isAddSupported ()
+  {
+    return true;
+  }
+
+  public boolean isSetSupported ()
+  {
+    return true;
+  }
+
+  public boolean isRemoveSupported ()
+  {
+    return true;
+  }
+
+  public void resetFull ()
+  {
+    m_aList = null;
+  }
+
   // tests
   // ------------------------------------------------------------------------
 
+  @SuppressWarnings ("unchecked")
   public final void testAddAllAtIndex ()
   {
-    final List source = makeFullList ();
-    final List dest = makeFullList ();
+    final List <T> source = makeFullList ();
+    final List <T> dest = makeFullList ();
 
     dest.addAll (1, source);
 
-    final Iterator iter = dest.iterator ();
+    final Iterator <T> iter = dest.iterator ();
     assertTrue (iter.hasNext ());
     assertEquals (source.get (0), iter.next ());
     for (int i = 0; i < source.size (); i++)
@@ -74,7 +121,7 @@ public abstract class BaseTestList extends AbstractTestList
     if (isRemoveSupported () == false)
       return;
     resetFull ();
-    final ListIterator it = getList ().listIterator ();
+    final ListIterator <?> it = getList ().listIterator ();
     final Object zero = it.next ();
     final Object one = it.next ();
     final Object two = it.next ();
@@ -93,99 +140,101 @@ public abstract class BaseTestList extends AbstractTestList
   /**
    * Override to change assertSame to assertEquals.
    */
-  @Override
-  public BulkTest bulkTestSubList ()
+  public BaseTestList <T> bulkTestSubList ()
   {
     if (getFullElements ().length - 6 < 10)
       return null;
-    return new PrimitiveBulkTestSubList (this);
+    return new PrimitiveBulkTestSubList <T> (this);
+  }
+
+  protected final byte [] writeExternalFormToBytes (final Serializable x)
+  {
+    try
+    {
+      final NonBlockingByteArrayOutputStream aOS = new NonBlockingByteArrayOutputStream ();
+      final ObjectOutputStream aOOS = new ObjectOutputStream (aOS);
+      aOOS.writeObject (x);
+      aOOS.close ();
+      return aOS.toByteArray ();
+    }
+    catch (final IOException ex)
+    {
+      throw new RuntimeException (ex);
+    }
+  }
+
+  protected final Object readExternalFormFromBytes (final byte [] ser)
+  {
+    try
+    {
+      final ObjectInputStream aOIS = new ObjectInputStream (new NonBlockingByteArrayInputStream (ser));
+      final Object ret = aOIS.readObject ();
+      aOIS.close ();
+      return ret;
+    }
+    catch (final Exception ex)
+    {
+      throw new RuntimeException (ex);
+    }
   }
 
   /**
    * Whole class copied as sub list constructor was package scoped in 3.1.
    */
-  public static class PrimitiveBulkTestSubList extends BaseTestList
+  public static class PrimitiveBulkTestSubList <T> extends BaseTestList <T>
   {
-    private final BaseTestList outer;
+    private final BaseTestList <T> m_aOuter;
 
-    PrimitiveBulkTestSubList (final BaseTestList outer)
+    PrimitiveBulkTestSubList (final BaseTestList <T> outer)
     {
       super ("");
-      this.outer = outer;
+      m_aOuter = outer;
+    }
+
+    @SuppressWarnings ("unchecked")
+    @Override
+    public T [] getFullElements ()
+    {
+      final List <T> l = Arrays.asList (m_aOuter.getFullElements ());
+      return l.subList (3, l.size () - 3).toArray ((T []) new Object [0]);
     }
 
     @Override
-    public Object [] getFullElements ()
+    public T [] getOtherElements ()
     {
-      final List l = Arrays.asList (outer.getFullElements ());
-      return l.subList (3, l.size () - 3).toArray ();
-    }
-
-    @Override
-    public Object [] getOtherElements ()
-    {
-      return outer.getOtherElements ();
+      return m_aOuter.getOtherElements ();
     }
 
     @Override
     public boolean isAddSupported ()
     {
-      return outer.isAddSupported ();
+      return m_aOuter.isAddSupported ();
     }
 
     @Override
     public boolean isSetSupported ()
     {
-      return outer.isSetSupported ();
+      return m_aOuter.isSetSupported ();
     }
 
     @Override
     public boolean isRemoveSupported ()
     {
-      return outer.isRemoveSupported ();
+      return m_aOuter.isRemoveSupported ();
     }
 
+    @SuppressWarnings ("unchecked")
     @Override
-    public List makeEmptyList ()
+    public List <T> makeEmptyList ()
     {
-      return outer.makeFullList ().subList (4, 4);
+      return m_aOuter.makeFullList ().subList (4, 4);
     }
 
     @Override
-    public List makeFullList ()
+    public List <T> makeFullList ()
     {
       final int size = getFullElements ().length;
-      return outer.makeFullList ().subList (3, size - 3);
-    }
-
-    @Override
-    public void resetEmpty ()
-    {
-      outer.resetFull ();
-      this.collection = outer.getList ().subList (4, 4);
-      this.confirmed = outer.getConfirmedList ().subList (4, 4);
-    }
-
-    @Override
-    public void resetFull ()
-    {
-      outer.resetFull ();
-      final int size = outer.confirmed.size ();
-      this.collection = outer.getList ().subList (3, size - 3);
-      this.confirmed = outer.getConfirmedList ().subList (3, size - 3);
-    }
-
-    @Override
-    public void verify ()
-    {
-      super.verify ();
-      outer.verify ();
-    }
-
-    @Override
-    public boolean isTestSerialization ()
-    {
-      return false;
+      return m_aOuter.makeFullList ().subList (3, size - 3);
     }
 
     /**
@@ -197,7 +246,7 @@ public abstract class BaseTestList extends AbstractTestList
       if (isRemoveSupported () == false)
         return;
       resetFull ();
-      final ListIterator it = getList ().listIterator ();
+      final ListIterator <?> it = getList ().listIterator ();
       final Object zero = it.next ();
       final Object one = it.next ();
       final Object two = it.next ();

@@ -30,7 +30,7 @@ import org.apache.commons.collections.primitives.adapters.ListFloatList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class TestFloatList extends BaseTestList
+public abstract class TestFloatList extends BaseTestList <Float>
 {
 
   // conventional
@@ -199,17 +199,6 @@ public abstract class TestFloatList extends BaseTestList
     {
       assertEquals (iter.next (), dest2[i], 0f);
     }
-  }
-
-  public void testHashCodeSpecification ()
-  {
-    final FloatList list = makeFullFloatList ();
-    int hash = 1;
-    for (final FloatIterator iter = list.iterator (); iter.hasNext ();)
-    {
-      hash = 31 * hash + Float.floatToIntBits (iter.next ());
-    }
-    assertEquals (hash, list.hashCode ());
   }
 
   public void testEqualsWithTwoFloatLists ()

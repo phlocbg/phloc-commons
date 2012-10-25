@@ -116,7 +116,7 @@ abstract class AbstractListZZZList extends AbstractCollectionZZZCollection imple
       return false;
 
     final ZZZList that = (ZZZList) obj;
-    if (this.size () != that.size ())
+    if (size () != that.size ())
       return false;
     final ZZZIterator thisiter = iterator ();
     final ZZZIterator thatiter = that.iterator ();

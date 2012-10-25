@@ -116,7 +116,7 @@ abstract class AbstractListFloatList extends AbstractCollectionFloatCollection i
       return false;
 
     final FloatList that = (FloatList) obj;
-    if (this.size () != that.size ())
+    if (size () != that.size ())
       return false;
     final FloatIterator thisiter = iterator ();
     final FloatIterator thatiter = that.iterator ();

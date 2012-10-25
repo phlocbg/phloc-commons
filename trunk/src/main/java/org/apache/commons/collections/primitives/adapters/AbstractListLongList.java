@@ -116,7 +116,7 @@ abstract class AbstractListLongList extends AbstractCollectionLongCollection imp
       return false;
 
     final LongList that = (LongList) obj;
-    if (this.size () != that.size ())
+    if (size () != that.size ())
       return false;
     final LongIterator thisiter = iterator ();
     final LongIterator thatiter = that.iterator ();

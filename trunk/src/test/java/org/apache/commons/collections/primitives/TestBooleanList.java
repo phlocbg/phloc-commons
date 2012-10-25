@@ -25,12 +25,14 @@ import org.apache.commons.collections.primitives.adapters.BaseTestList;
 import org.apache.commons.collections.primitives.adapters.BooleanListList;
 import org.apache.commons.collections.primitives.adapters.ListBooleanList;
 
+import com.phloc.commons.hash.HashCodeGenerator;
+
 /**
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class TestBooleanList extends BaseTestList
+public abstract class TestBooleanList extends BaseTestList <Boolean>
 {
 
   // conventional
@@ -204,12 +206,10 @@ public abstract class TestBooleanList extends BaseTestList
   public void testHashCodeSpecification ()
   {
     final BooleanList list = makeFullBooleanList ();
-    int hash = 1;
+    final HashCodeGenerator aHC = new HashCodeGenerator (list);
     for (final BooleanIterator iter = list.iterator (); iter.hasNext ();)
-    {
-      hash = 31 * hash + new Boolean (iter.next ()).hashCode ();
-    }
-    assertEquals (hash, list.hashCode ());
+      aHC.append (new Boolean (iter.next ()).hashCode ());
+    assertEquals (aHC.getHashCode (), list.hashCode ());
   }
 
   public void testEqualsWithTwoBooleanLists ()
@@ -514,7 +514,6 @@ public abstract class TestBooleanList extends BaseTestList
     }
   }
 
-  @Override
   public void testCollectionRemoveAll ()
   {
     // Super's impl doesn't work because there are only two unique values in my
@@ -567,7 +566,6 @@ public abstract class TestBooleanList extends BaseTestList
     assertTrue (list.isEmpty ());
   }
 
-  @Override
   public void testCollectionRetainAll ()
   {
     // Super's impl doesn't work because there are only two unique values in my
@@ -610,12 +608,5 @@ public abstract class TestBooleanList extends BaseTestList
 
     assertTrue (list.retainAll (trueList));
     assertTrue (list.isEmpty ());
-  }
-
-  @Override
-  public void testListEquals ()
-  {
-    // Super type doesn't work because there are only two unique values in my
-    // list.
   }
 }

@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.primitives.FloatList;
 import org.apache.commons.collections.primitives.TestFloatList;
 
@@ -45,7 +44,7 @@ public class TestListFloatList extends TestFloatList
 
   public static Test suite ()
   {
-    final TestSuite suite = BulkTest.makeSuite (TestListFloatList.class);
+    final TestSuite suite = new TestSuite (TestListFloatList.class);
     return suite;
   }
 
@@ -58,54 +57,11 @@ public class TestListFloatList extends TestFloatList
   @Override
   protected FloatList makeEmptyFloatList ()
   {
-    return new ListFloatList (new ArrayList ());
-  }
-
-  @Override
-  public String [] ignoredTests ()
-  {
-    // sublists are not serializable
-    return new String [] { "TestListFloatList.bulkTestSubList.testFullListSerialization",
-                          "TestListFloatList.bulkTestSubList.testEmptyListSerialization",
-                          "TestListFloatList.bulkTestSubList.testCanonicalEmptyCollectionExists",
-                          "TestListFloatList.bulkTestSubList.testCanonicalFullCollectionExists",
-                          "TestListFloatList.bulkTestSubList.testEmptyListCompatibility",
-                          "TestListFloatList.bulkTestSubList.testFullListCompatibility",
-                          "TestListFloatList.bulkTestSubList.testSerializeDeserializeThenCompare",
-                          "TestListFloatList.bulkTestSubList.testSimpleSerialization" };
+    return new ListFloatList (new ArrayList <Float> ());
   }
 
   // tests
   // ------------------------------------------------------------------------
-
-  /** @TODO need to add serialized form to cvs */
-  @Override
-  public void testCanonicalEmptyCollectionExists ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testCanonicalFullCollectionExists ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testEmptyListCompatibility ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
-
-  @Override
-  public void testFullListCompatibility ()
-  {
-    // XXX FIX ME XXX
-    // need to add a serialized form to cvs
-  }
 
   public void testWrapNull ()
   {
@@ -114,17 +70,17 @@ public class TestListFloatList extends TestFloatList
 
   public void testWrapSerializable ()
   {
-    final FloatList list = ListFloatList.wrap (new ArrayList ());
+    final FloatList list = ListFloatList.wrap (new ArrayList <Float> ());
     assertNotNull (list);
     assertTrue (list instanceof Serializable);
   }
 
   public void testWrapNonSerializable ()
   {
-    final FloatList list = ListFloatList.wrap (new AbstractList ()
+    final FloatList list = ListFloatList.wrap (new AbstractList <Float> ()
     {
       @Override
-      public Object get (final int i)
+      public Float get (final int i)
       {
         throw new IndexOutOfBoundsException ();
       }

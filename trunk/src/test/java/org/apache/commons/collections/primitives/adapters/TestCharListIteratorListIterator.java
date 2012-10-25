@@ -34,13 +34,9 @@ import org.apache.commons.collections.primitives.CharList;
  */
 public class TestCharListIteratorListIterator extends AbstractTestListIterator
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestCharListIteratorListIterator (final String testName)
+  public TestCharListIteratorListIterator (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
@@ -52,13 +48,13 @@ public class TestCharListIteratorListIterator extends AbstractTestListIterator
   // ------------------------------------------------------------------------
 
   @Override
-  public ListIterator makeEmptyListIterator ()
+  public ListIterator <Character> makeEmptyListIterator ()
   {
     return CharListIteratorListIterator.wrap (makeEmptyCharList ().listIterator ());
   }
 
   @Override
-  public ListIterator makeFullListIterator ()
+  public ListIterator <Character> makeFullListIterator ()
   {
     return CharListIteratorListIterator.wrap (makeFullCharList ().listIterator ());
   }
@@ -105,11 +101,11 @@ public class TestCharListIteratorListIterator extends AbstractTestListIterator
   public void testNextHasNextRemove ()
   {
     final char [] elements = getFullElements ();
-    final Iterator iter = makeFullIterator ();
+    final Iterator <?> iter = makeFullIterator ();
     for (final char element : elements)
     {
       assertTrue (iter.hasNext ());
-      assertEquals (new Character (element), iter.next ());
+      assertEquals (Character.valueOf (element), iter.next ());
       if (supportsRemove ())
       {
         iter.remove ();
@@ -165,7 +161,7 @@ public class TestCharListIteratorListIterator extends AbstractTestListIterator
   {
     if (supportsRemove ())
     {
-      final Iterator iter = makeFullIterator ();
+      final Iterator <?> iter = makeFullIterator ();
       iter.next ();
       iter.remove ();
       try
@@ -179,5 +175,4 @@ public class TestCharListIteratorListIterator extends AbstractTestListIterator
       }
     }
   }
-
 }

@@ -61,14 +61,14 @@ public class TestListIteratorByteListIterator extends TestByteListIterator
     return ListIteratorByteListIterator.wrap (makeFullList ().listIterator ());
   }
 
-  public List makeEmptyList ()
+  public List <Byte> makeEmptyList ()
   {
-    return new ArrayList ();
+    return new ArrayList <Byte> ();
   }
 
-  protected List makeFullList ()
+  protected List <Byte> makeFullList ()
   {
-    final List list = makeEmptyList ();
+    final List <Byte> list = makeEmptyList ();
     final byte [] elts = getFullElements ();
     for (final byte elt : elts)
     {

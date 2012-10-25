@@ -120,7 +120,7 @@ public class TestRandomAccessBooleanList extends TestCase
     {}
 
     /**
-     * @see org.apache.commons.collections.primitives.BooleanList#get(Boolean)
+     * @see org.apache.commons.collections.primitives.BooleanList#get(int)
      */
     @Override
     public boolean get (final int index)
@@ -136,6 +136,5 @@ public class TestRandomAccessBooleanList extends TestCase
     {
       return 0;
     }
-
   }
 }
