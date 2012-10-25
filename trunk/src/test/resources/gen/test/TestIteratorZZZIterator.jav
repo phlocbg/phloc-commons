@@ -16,73 +16,70 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.iterators.AbstractTestIterator;
-import org.apache.commons.collections.primitives.ArrayByteList;
-import org.apache.commons.collections.primitives.ByteList;
+import org.apache.commons.collections.primitives.ZZZIterator;
+import org.apache.commons.collections.primitives.TestZZZIterator;
 
 /**
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestByteIteratorIterator extends AbstractTestIterator
+public class TestIteratorZZZIterator extends TestZZZIterator
 {
-  public TestByteIteratorIterator (final String sTestName)
+  public TestIteratorZZZIterator (final String sTestName)
   {
     super (sTestName);
   }
 
   public static Test suite ()
   {
-    return new TestSuite (TestByteIteratorIterator.class);
+    return new TestSuite (TestIteratorZZZIterator.class);
   }
 
   // collections testing framework
   // ------------------------------------------------------------------------
 
   @Override
-  @Nonnull
-  public Iterator <Byte> makeEmptyIterator ()
+  public ZZZIterator makeEmptyZZZIterator ()
   {
-    return ByteIteratorIterator.wrap (makeEmptyByteList ().iterator ());
+    return IteratorZZZIterator.wrap (makeEmptyList ().iterator ());
   }
 
   @Override
-  @Nonnull
-  public Iterator <Byte> makeFullIterator ()
+  public ZZZIterator makeFullZZZIterator ()
   {
-    return ByteIteratorIterator.wrap (makeFullByteList ().iterator ());
+    return IteratorZZZIterator.wrap (makeFullList ().iterator ());
   }
 
   @Nonnull
-  protected ByteList makeEmptyByteList ()
+  public List <XXX> makeEmptyList ()
   {
-    return new ArrayByteList ();
+    return new ArrayList <XXX> ();
   }
 
-  @Nonnull
-  protected ByteList makeFullByteList ()
+  protected List <XXX> makeFullList ()
   {
-    final ByteList list = makeEmptyByteList ();
-    final byte [] elts = getFullElements ();
-    for (final byte elt : elts)
-      list.add (elt);
+    final List <XXX> list = makeEmptyList ();
+    final YYY [] elts = getFullElements ();
+    for (final YYY elt : elts)
+      list.add (XXX.valueOf (elt));
     return list;
   }
 
-  @Nonnull
-  public byte [] getFullElements ()
+  @Override
+  public YYY [] getFullElements ()
   {
-    final byte [] ret = new byte [10];
+    final YYY [] ret = new YYY [10];
     for (int i = 0; i < ret.length; ++i)
-      ret[i] = (byte)  i;
+      ret[i] = $CASTINT$i;
     return ret;
   }
 }

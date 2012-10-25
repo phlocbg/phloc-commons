@@ -52,7 +52,7 @@ public class TestByteCollectionCollection extends AbstractTestObject
   {
     final ByteList list = new ArrayByteList ();
     for (int i = 0; i < 10; i++)
-      list.add ((byte)i);
+      list.add ((byte) i);
     return new ByteCollectionCollection (list);
   }
 

@@ -32,13 +32,9 @@ import org.apache.commons.collections.primitives.TestFloatListIterator;
  */
 public class TestListIteratorFloatListIterator extends TestFloatListIterator
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestListIteratorFloatListIterator (final String testName)
+  public TestListIteratorFloatListIterator (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
@@ -61,29 +57,26 @@ public class TestListIteratorFloatListIterator extends TestFloatListIterator
     return ListIteratorFloatListIterator.wrap (makeFullList ().listIterator ());
   }
 
-  public List makeEmptyList ()
+  public List <Float> makeEmptyList ()
   {
-    return new ArrayList ();
+    return new ArrayList <Float> ();
   }
 
-  protected List makeFullList ()
+  protected List <Float> makeFullList ()
   {
-    final List list = makeEmptyList ();
+    final List <Float> list = makeEmptyList ();
     final float [] elts = getFullElements ();
     for (final float elt : elts)
-    {
-      list.add (new Float (elt));
-    }
+      list.add (Float.valueOf (elt));
     return list;
   }
 
   @Override
   public float [] getFullElements ()
   {
-    return new float [] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    final float [] ret = new float [10];
+    for (int i = 0; i < ret.length; ++i)
+      ret[i] = i;
+    return ret;
   }
-
-  // tests
-  // ------------------------------------------------------------------------
-
 }

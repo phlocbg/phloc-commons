@@ -58,7 +58,7 @@ public class TestByteListList extends BaseTestList <Byte>
     final Byte [] elts = new Byte [10];
     for (int i = 0; i < elts.length; i++)
     {
-      elts[i] = Byte.valueOf ((byte)i);
+      elts[i] = Byte.valueOf ((byte) i);
     }
     return elts;
   }
@@ -69,7 +69,7 @@ public class TestByteListList extends BaseTestList <Byte>
     final Byte [] elts = new Byte [10];
     for (int i = 0; i < elts.length; i++)
     {
-      elts[i] = Byte.valueOf ((byte)(10 + i));
+      elts[i] = Byte.valueOf ((byte) (10 + i));
     }
     return elts;
   }

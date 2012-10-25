@@ -58,7 +58,7 @@ public class TestCharListList extends BaseTestList <Character>
     final Character [] elts = new Character [10];
     for (int i = 0; i < elts.length; i++)
     {
-      elts[i] = Character.valueOf ((char)i);
+      elts[i] = Character.valueOf ((char) i);
     }
     return elts;
   }
@@ -69,7 +69,7 @@ public class TestCharListList extends BaseTestList <Character>
     final Character [] elts = new Character [10];
     for (int i = 0; i < elts.length; i++)
     {
-      elts[i] = Character.valueOf ((char)(10 + i));
+      elts[i] = Character.valueOf ((char) (10 + i));
     }
     return elts;
   }

@@ -57,7 +57,7 @@ public class TestCollectionCharCollection extends AbstractTestObject
     final List <Character> list = new ArrayList <Character> ();
     for (int i = 0; i < 10; i++)
     {
-      list.add (Character.valueOf ((char)i));
+      list.add (Character.valueOf ((char) i));
     }
     return new CollectionCharCollection (list);
   }

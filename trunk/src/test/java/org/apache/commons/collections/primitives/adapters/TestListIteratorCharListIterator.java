@@ -32,13 +32,9 @@ import org.apache.commons.collections.primitives.TestCharListIterator;
  */
 public class TestListIteratorCharListIterator extends TestCharListIterator
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestListIteratorCharListIterator (final String testName)
+  public TestListIteratorCharListIterator (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
@@ -61,38 +57,26 @@ public class TestListIteratorCharListIterator extends TestCharListIterator
     return ListIteratorCharListIterator.wrap (makeFullList ().listIterator ());
   }
 
-  public List makeEmptyList ()
+  public List <Character> makeEmptyList ()
   {
-    return new ArrayList ();
+    return new ArrayList <Character> ();
   }
 
-  protected List makeFullList ()
+  protected List <Character> makeFullList ()
   {
-    final List list = makeEmptyList ();
+    final List <Character> list = makeEmptyList ();
     final char [] elts = getFullElements ();
     for (final char elt : elts)
-    {
-      list.add (new Character (elt));
-    }
+      list.add (Character.valueOf (elt));
     return list;
   }
 
   @Override
   public char [] getFullElements ()
   {
-    return new char [] { (char) 0,
-                        (char) 1,
-                        (char) 2,
-                        (char) 3,
-                        (char) 4,
-                        (char) 5,
-                        (char) 6,
-                        (char) 7,
-                        (char) 8,
-                        (char) 9 };
+    final char [] ret = new char [10];
+    for (int i = 0; i < ret.length; ++i)
+      ret[i] = (char) i;
+    return ret;
   }
-
-  // tests
-  // ------------------------------------------------------------------------
-
 }

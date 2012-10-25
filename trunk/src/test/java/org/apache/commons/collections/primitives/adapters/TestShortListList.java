@@ -58,7 +58,7 @@ public class TestShortListList extends BaseTestList <Short>
     final Short [] elts = new Short [10];
     for (int i = 0; i < elts.length; i++)
     {
-      elts[i] = Short.valueOf ((short)i);
+      elts[i] = Short.valueOf ((short) i);
     }
     return elts;
   }
@@ -69,7 +69,7 @@ public class TestShortListList extends BaseTestList <Short>
     final Short [] elts = new Short [10];
     for (int i = 0; i < elts.length; i++)
     {
-      elts[i] = Short.valueOf ((short)(10 + i));
+      elts[i] = Short.valueOf ((short) (10 + i));
     }
     return elts;
   }

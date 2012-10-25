@@ -32,13 +32,9 @@ import org.apache.commons.collections.primitives.TestByteListIterator;
  */
 public class TestListIteratorByteListIterator extends TestByteListIterator
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestListIteratorByteListIterator (final String testName)
+  public TestListIteratorByteListIterator (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
@@ -71,28 +67,16 @@ public class TestListIteratorByteListIterator extends TestByteListIterator
     final List <Byte> list = makeEmptyList ();
     final byte [] elts = getFullElements ();
     for (final byte elt : elts)
-    {
-      list.add (new Byte (elt));
-    }
+      list.add (Byte.valueOf (elt));
     return list;
   }
 
   @Override
   public byte [] getFullElements ()
   {
-    return new byte [] { (byte) 0,
-                        (byte) 1,
-                        (byte) 2,
-                        (byte) 3,
-                        (byte) 4,
-                        (byte) 5,
-                        (byte) 6,
-                        (byte) 7,
-                        (byte) 8,
-                        (byte) 9 };
+    final byte [] ret = new byte [10];
+    for (int i = 0; i < ret.length; ++i)
+      ret[i] = (byte) i;
+    return ret;
   }
-
-  // tests
-  // ------------------------------------------------------------------------
-
 }

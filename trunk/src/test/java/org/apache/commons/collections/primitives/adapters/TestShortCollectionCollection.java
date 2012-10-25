@@ -52,7 +52,7 @@ public class TestShortCollectionCollection extends AbstractTestObject
   {
     final ShortList list = new ArrayShortList ();
     for (int i = 0; i < 10; i++)
-      list.add ((short)i);
+      list.add ((short) i);
     return new ShortCollectionCollection (list);
   }
 

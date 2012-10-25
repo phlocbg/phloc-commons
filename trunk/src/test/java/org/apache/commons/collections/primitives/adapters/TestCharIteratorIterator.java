@@ -82,7 +82,7 @@ public class TestCharIteratorIterator extends AbstractTestIterator
   {
     final char [] ret = new char [10];
     for (int i = 0; i < ret.length; ++i)
-      ret[i] = (char) i;
+      ret[i] = (char)  i;
     return ret;
   }
 }

@@ -77,14 +77,14 @@ public class TestCharListIteratorListIterator extends AbstractTestListIterator
   {
     final char [] ret = new char [10];
     for (int i = 0; i < ret.length; ++i)
-      ret[i] = (char)i;
+      ret[i] = (char) i;
     return ret;
   }
 
   @Override
   public Object addSetValue ()
   {
-    return Character.valueOf ((char)1);
+    return Character.valueOf ((char) 1);
   }
 
   // tests
