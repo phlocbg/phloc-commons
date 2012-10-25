@@ -34,6 +34,9 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.List;
 
@@ -55,7 +58,7 @@ import org.apache.commons.collections.primitives.LongList;
  */
 public final class LongListList extends AbstractLongListList implements Serializable
 {
-  private final LongList m_aList;
+  private transient LongList m_aList;
 
   /**
    * Creates a {@link List List} wrapping the specified {@link LongList
@@ -69,9 +72,22 @@ public final class LongListList extends AbstractLongListList implements Serializ
   }
 
   @Override
+  @Nonnull 
   protected LongList getLongList ()
   {
     return m_aList;
+  }
+
+  private void writeObject (@Nonnull final ObjectOutputStream out) throws IOException
+  {
+    out.defaultWriteObject ();
+    out.writeObject (m_aList);
+  }
+
+  private void readObject (@Nonnull final ObjectInputStream in) throws IOException, ClassNotFoundException
+  {
+    in.defaultReadObject ();
+    m_aList = (LongList) in.readObject ();
   }
 
   /**

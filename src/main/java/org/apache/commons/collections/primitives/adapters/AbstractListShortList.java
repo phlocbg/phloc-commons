@@ -117,7 +117,7 @@ abstract class AbstractListShortList extends AbstractCollectionShortCollection i
 
   public short set (final int index, final short element)
   {
-    return getList ().set (index, new Short (element)).shortValue ();
+    return getList ().set (index, Short.valueOf (element)).shortValue ();
   }
 
   @Nonnull

@@ -117,7 +117,7 @@ abstract class AbstractListIntList extends AbstractCollectionIntCollection imple
 
   public int set (final int index, final int element)
   {
-    return getList ().set (index, new Integer (element)).intValue ();
+    return getList ().set (index, Integer.valueOf (element)).intValue ();
   }
 
   @Nonnull

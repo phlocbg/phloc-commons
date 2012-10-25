@@ -52,7 +52,7 @@ import org.apache.commons.collections.primitives.ByteList;
  */
 public final class UnmodifiableByteList extends BaseUnmodifiableByteList implements Serializable
 {
-  private ByteList m_aProxied;
+  private transient ByteList m_aProxied;
 
   UnmodifiableByteList (@Nonnull final ByteList list)
   {

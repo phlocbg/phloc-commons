@@ -34,6 +34,9 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.List;
 
@@ -55,7 +58,7 @@ import org.apache.commons.collections.primitives.BooleanList;
  */
 public final class BooleanListList extends AbstractBooleanListList implements Serializable
 {
-  private final BooleanList m_aList;
+  private transient BooleanList m_aList;
 
   /**
    * Creates a {@link List List} wrapping the specified {@link BooleanList
@@ -69,9 +72,22 @@ public final class BooleanListList extends AbstractBooleanListList implements Se
   }
 
   @Override
+  @Nonnull 
   protected BooleanList getBooleanList ()
   {
     return m_aList;
+  }
+
+  private void writeObject (@Nonnull final ObjectOutputStream out) throws IOException
+  {
+    out.defaultWriteObject ();
+    out.writeObject (m_aList);
+  }
+
+  private void readObject (@Nonnull final ObjectInputStream in) throws IOException, ClassNotFoundException
+  {
+    in.defaultReadObject ();
+    m_aList = (BooleanList) in.readObject ();
   }
 
   /**

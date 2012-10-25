@@ -117,7 +117,7 @@ abstract class AbstractListBooleanList extends AbstractCollectionBooleanCollecti
 
   public boolean set (final int index, final boolean element)
   {
-    return getList ().set (index, new Boolean (element)).booleanValue ();
+    return getList ().set (index, Boolean.valueOf (element)).booleanValue ();
   }
 
   @Nonnull

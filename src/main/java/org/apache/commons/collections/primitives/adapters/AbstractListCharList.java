@@ -117,7 +117,7 @@ abstract class AbstractListCharList extends AbstractCollectionCharCollection imp
 
   public char set (final int index, final char element)
   {
-    return getList ().set (index, new Character (element)).charValue ();
+    return getList ().set (index, Character.valueOf (element)).charValue ();
   }
 
   @Nonnull

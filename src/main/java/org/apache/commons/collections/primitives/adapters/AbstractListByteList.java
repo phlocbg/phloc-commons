@@ -117,7 +117,7 @@ abstract class AbstractListByteList extends AbstractCollectionByteCollection imp
 
   public byte set (final int index, final byte element)
   {
-    return getList ().set (index, new Byte (element)).byteValue ();
+    return getList ().set (index, Byte.valueOf (element)).byteValue ();
   }
 
   @Nonnull

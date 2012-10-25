@@ -52,7 +52,7 @@ import org.apache.commons.collections.primitives.DoubleList;
  */
 public final class UnmodifiableDoubleList extends BaseUnmodifiableDoubleList implements Serializable
 {
-  private DoubleList m_aProxied;
+  private transient DoubleList m_aProxied;
 
   UnmodifiableDoubleList (@Nonnull final DoubleList list)
   {
