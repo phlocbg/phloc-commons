@@ -45,6 +45,8 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.collections.primitives.DoubleList;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Adapts an {@link DoubleList DoubleList} to the {@link List List} interface.
  * <p />
@@ -56,6 +58,7 @@ import org.apache.commons.collections.primitives.DoubleList;
  *          2006) $
  * @author Rodney Waldhoff
  */
+@SuppressFBWarnings ("SE_NO_SERIALVERSIONID")
 public final class DoubleListList extends AbstractDoubleListList implements Serializable
 {
   private transient DoubleList m_aList;

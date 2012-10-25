@@ -45,6 +45,8 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.collections.primitives.ByteList;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Adapts an {@link ByteList ByteList} to the {@link List List} interface.
  * <p />
@@ -56,6 +58,7 @@ import org.apache.commons.collections.primitives.ByteList;
  *          2006) $
  * @author Rodney Waldhoff
  */
+@SuppressFBWarnings ("SE_NO_SERIALVERSIONID")
 public final class ByteListList extends AbstractByteListList implements Serializable
 {
   private transient ByteList m_aList;

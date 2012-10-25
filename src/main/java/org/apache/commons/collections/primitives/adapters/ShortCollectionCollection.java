@@ -45,6 +45,8 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.collections.primitives.ShortCollection;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Adapts an {@link ShortCollection ShortCollection} to the
  * {@link java.util.Collection Collection} interface.
@@ -57,6 +59,7 @@ import org.apache.commons.collections.primitives.ShortCollection;
  *          2006) $
  * @author Rodney Waldhoff
  */
+@SuppressFBWarnings ("SE_NO_SERIALVERSIONID")
 public final class ShortCollectionCollection extends AbstractShortCollectionCollection implements Serializable
 {
   private transient ShortCollection m_aCollection;

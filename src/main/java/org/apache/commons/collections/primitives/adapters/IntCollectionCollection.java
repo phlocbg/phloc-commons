@@ -45,6 +45,8 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.collections.primitives.IntCollection;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Adapts an {@link IntCollection IntCollection} to the
  * {@link java.util.Collection Collection} interface.
@@ -57,6 +59,7 @@ import org.apache.commons.collections.primitives.IntCollection;
  *          2006) $
  * @author Rodney Waldhoff
  */
+@SuppressFBWarnings ("SE_NO_SERIALVERSIONID")
 public final class IntCollectionCollection extends AbstractIntCollectionCollection implements Serializable
 {
   private transient IntCollection m_aCollection;

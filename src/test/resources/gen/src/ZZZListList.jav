@@ -45,6 +45,8 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.collections.primitives.ZZZList;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Adapts an {@link ZZZList ZZZList} to the {@link List List} interface.
  * <p />
@@ -56,6 +58,7 @@ import org.apache.commons.collections.primitives.ZZZList;
  *          2006) $
  * @author Rodney Waldhoff
  */
+@SuppressFBWarnings ("SE_NO_SERIALVERSIONID")
 public final class ZZZListList extends AbstractZZZListList implements Serializable
 {
   private transient ZZZList m_aList;

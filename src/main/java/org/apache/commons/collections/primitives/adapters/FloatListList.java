@@ -45,6 +45,8 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.collections.primitives.FloatList;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Adapts an {@link FloatList FloatList} to the {@link List List} interface.
  * <p />
@@ -56,6 +58,7 @@ import org.apache.commons.collections.primitives.FloatList;
  *          2006) $
  * @author Rodney Waldhoff
  */
+@SuppressFBWarnings ("SE_NO_SERIALVERSIONID")
 public final class FloatListList extends AbstractFloatListList implements Serializable
 {
   private transient FloatList m_aList;

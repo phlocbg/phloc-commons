@@ -45,6 +45,8 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.collections.primitives.IntList;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Adapts an {@link IntList IntList} to the {@link List List} interface.
  * <p />
@@ -56,6 +58,7 @@ import org.apache.commons.collections.primitives.IntList;
  *          2006) $
  * @author Rodney Waldhoff
  */
+@SuppressFBWarnings ("SE_NO_SERIALVERSIONID")
 public final class IntListList extends AbstractIntListList implements Serializable
 {
   private transient IntList m_aList;
