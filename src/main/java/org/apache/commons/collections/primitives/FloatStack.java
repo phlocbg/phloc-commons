@@ -44,13 +44,25 @@ public class FloatStack
   /**
    * Creates a stack prepopulating it with values.
    *
-   * @param bits
+   * @param aElements
    *        the array to add
    */
-  public FloatStack (final float [] bits)
+  public FloatStack (final float [] aElements)
   {
-    for (final float bit : bits)
-      m_aList.add (bit);
+    for (final float aElement : aElements)
+      m_aList.add (aElement);
+  }
+
+  /**
+   * Tests if this stack is empty.
+   *
+   * @return true if and only if this stack is empty; false otherwise
+   * @deprecated Use #isEmpty() instead
+   */
+  @Deprecated 
+  public boolean empty ()
+  {
+    return isEmpty ();
   }
 
   /**
@@ -58,7 +70,7 @@ public class FloatStack
    *
    * @return true if and only if this stack is empty; false otherwise
    */
-  public boolean empty ()
+  public boolean isEmpty ()
   {
     return m_aList.isEmpty ();
   }

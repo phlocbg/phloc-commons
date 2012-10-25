@@ -44,13 +44,25 @@ public class ShortStack
   /**
    * Creates a stack prepopulating it with values.
    *
-   * @param bits
+   * @param aElements
    *        the array to add
    */
-  public ShortStack (final short [] bits)
+  public ShortStack (final short [] aElements)
   {
-    for (final short bit : bits)
-      m_aList.add (bit);
+    for (final short aElement : aElements)
+      m_aList.add (aElement);
+  }
+
+  /**
+   * Tests if this stack is empty.
+   *
+   * @return true if and only if this stack is empty; false otherwise
+   * @deprecated Use #isEmpty() instead
+   */
+  @Deprecated 
+  public boolean empty ()
+  {
+    return isEmpty ();
   }
 
   /**
@@ -58,7 +70,7 @@ public class ShortStack
    *
    * @return true if and only if this stack is empty; false otherwise
    */
-  public boolean empty ()
+  public boolean isEmpty ()
   {
     return m_aList.isEmpty ();
   }
