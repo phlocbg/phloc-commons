@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -137,16 +136,6 @@ public abstract class BaseTestList <T> extends TestCase
     assertEquals (two, getList ().get (1));
   }
 
-  /**
-   * Override to change assertSame to assertEquals.
-   */
-  public BaseTestList <T> bulkTestSubList ()
-  {
-    if (getFullElements ().length - 6 < 10)
-      return null;
-    return new PrimitiveBulkTestSubList <T> (this);
-  }
-
   protected final byte [] writeExternalFormToBytes (final Serializable x)
   {
     try
@@ -175,91 +164,6 @@ public abstract class BaseTestList <T> extends TestCase
     catch (final Exception ex)
     {
       throw new RuntimeException (ex);
-    }
-  }
-
-  /**
-   * Whole class copied as sub list constructor was package scoped in 3.1.
-   */
-  public static class PrimitiveBulkTestSubList <T> extends BaseTestList <T>
-  {
-    private final BaseTestList <T> m_aOuter;
-
-    PrimitiveBulkTestSubList (final BaseTestList <T> outer)
-    {
-      super ("");
-      m_aOuter = outer;
-    }
-
-    @SuppressWarnings ("unchecked")
-    @Override
-    public T [] getFullElements ()
-    {
-      final List <T> l = Arrays.asList (m_aOuter.getFullElements ());
-      return l.subList (3, l.size () - 3).toArray ((T []) new Object [0]);
-    }
-
-    @Override
-    public T [] getOtherElements ()
-    {
-      return m_aOuter.getOtherElements ();
-    }
-
-    @Override
-    public boolean isAddSupported ()
-    {
-      return m_aOuter.isAddSupported ();
-    }
-
-    @Override
-    public boolean isSetSupported ()
-    {
-      return m_aOuter.isSetSupported ();
-    }
-
-    @Override
-    public boolean isRemoveSupported ()
-    {
-      return m_aOuter.isRemoveSupported ();
-    }
-
-    @SuppressWarnings ("unchecked")
-    @Override
-    public List <T> makeEmptyList ()
-    {
-      return m_aOuter.makeFullList ().subList (4, 4);
-    }
-
-    @Override
-    public List <T> makeFullList ()
-    {
-      final int size = getFullElements ().length;
-      return m_aOuter.makeFullList ().subList (3, size - 3);
-    }
-
-    /**
-     * Override to change assertSame to assertEquals.
-     */
-    @Override
-    public void testListListIteratorPreviousRemove ()
-    {
-      if (isRemoveSupported () == false)
-        return;
-      resetFull ();
-      final ListIterator <?> it = getList ().listIterator ();
-      final Object zero = it.next ();
-      final Object one = it.next ();
-      final Object two = it.next ();
-      final Object two2 = it.previous ();
-      final Object one2 = it.previous ();
-      assertEquals (one, one2);
-      assertEquals (two, two2);
-      assertEquals (zero, getList ().get (0));
-      assertEquals (one, getList ().get (1));
-      assertEquals (two, getList ().get (2));
-      it.remove ();
-      assertEquals (zero, getList ().get (0));
-      assertEquals (two, getList ().get (1));
     }
   }
 }

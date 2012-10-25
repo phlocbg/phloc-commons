@@ -30,7 +30,7 @@ import org.apache.commons.collections.primitives.adapters.LongListList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class TestLongList extends BaseTestList
+public abstract class TestLongList extends BaseTestList <Long>
 {
 
   // conventional

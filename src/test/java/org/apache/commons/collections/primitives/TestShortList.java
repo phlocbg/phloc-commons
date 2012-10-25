@@ -30,7 +30,7 @@ import org.apache.commons.collections.primitives.adapters.ShortListList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class TestShortList extends BaseTestList
+public abstract class TestShortList extends BaseTestList <Short>
 {
 
   // conventional

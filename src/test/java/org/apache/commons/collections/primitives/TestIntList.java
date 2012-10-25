@@ -30,7 +30,7 @@ import org.apache.commons.collections.primitives.adapters.ListIntList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class TestIntList extends BaseTestList
+public abstract class TestIntList extends BaseTestList <Integer>
 {
 
   // conventional
