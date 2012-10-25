@@ -52,13 +52,13 @@ public class TestByteListIteratorListIterator extends AbstractTestListIterator
   // ------------------------------------------------------------------------
 
   @Override
-  public ListIterator makeEmptyListIterator ()
+  public ListIterator <Byte> makeEmptyListIterator ()
   {
     return ByteListIteratorListIterator.wrap (makeEmptyByteList ().listIterator ());
   }
 
   @Override
-  public ListIterator makeFullListIterator ()
+  public ListIterator <Byte> makeFullListIterator ()
   {
     return ByteListIteratorListIterator.wrap (makeFullByteList ().listIterator ());
   }
@@ -105,7 +105,7 @@ public class TestByteListIteratorListIterator extends AbstractTestListIterator
   public void testNextHasNextRemove ()
   {
     final byte [] elements = getFullElements ();
-    final Iterator iter = makeFullIterator ();
+    final Iterator <?> iter = makeFullIterator ();
     for (final byte element : elements)
     {
       assertTrue (iter.hasNext ());
@@ -165,7 +165,7 @@ public class TestByteListIteratorListIterator extends AbstractTestListIterator
   {
     if (supportsRemove ())
     {
-      final Iterator iter = makeFullIterator ();
+      final Iterator <?> iter = makeFullIterator ();
       iter.next ();
       iter.remove ();
       try

@@ -54,10 +54,10 @@ public class TestCollectionIntCollection extends AbstractTestObject
   @Override
   public Object makeObject ()
   {
-    final List list = new ArrayList ();
+    final List <Integer> list = new ArrayList <Integer> ();
     for (int i = 0; i < 10; i++)
     {
-      list.add (new Integer (i));
+      list.add (Integer.valueOf (i));
     }
     return new CollectionIntCollection (list);
   }
@@ -72,14 +72,14 @@ public class TestCollectionIntCollection extends AbstractTestObject
   @Override
   public void testCanonicalEmptyCollectionExists ()
   {
-    // XXX FIX ME XXX
+    // Integer FIX ME Integer
     // need to add a serialized form to cvs
   }
 
   @Override
   public void testCanonicalFullCollectionExists ()
   {
-    // XXX FIX ME XXX
+    // Integer FIX ME Integer
     // need to add a serialized form to cvs
   }
 
@@ -93,17 +93,17 @@ public class TestCollectionIntCollection extends AbstractTestObject
 
   public void testWrapSerializable ()
   {
-    final IntCollection collection = CollectionIntCollection.wrap (new ArrayList ());
+    final IntCollection collection = CollectionIntCollection.wrap (new ArrayList <Integer> ());
     assertNotNull (collection);
     assertTrue (collection instanceof Serializable);
   }
 
   public void testWrapNonSerializable ()
   {
-    final IntCollection collection = CollectionIntCollection.wrap (new AbstractList ()
+    final IntCollection collection = CollectionIntCollection.wrap (new AbstractList <Integer> ()
     {
       @Override
-      public Object get (final int i)
+      public Integer get (final int i)
       {
         throw new IndexOutOfBoundsException ();
       }
@@ -117,5 +117,4 @@ public class TestCollectionIntCollection extends AbstractTestObject
     assertNotNull (collection);
     assertTrue (!(collection instanceof Serializable));
   }
-
 }

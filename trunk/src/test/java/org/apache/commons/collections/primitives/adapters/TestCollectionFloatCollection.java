@@ -54,10 +54,10 @@ public class TestCollectionFloatCollection extends AbstractTestObject
   @Override
   public Object makeObject ()
   {
-    final List list = new ArrayList ();
+    final List <Float> list = new ArrayList <Float> ();
     for (int i = 0; i < 10; i++)
     {
-      list.add (new Float (i));
+      list.add (Float.valueOf (i));
     }
     return new CollectionFloatCollection (list);
   }
@@ -72,14 +72,14 @@ public class TestCollectionFloatCollection extends AbstractTestObject
   @Override
   public void testCanonicalEmptyCollectionExists ()
   {
-    // XXX FIX ME XXX
+    // Float FIX ME Float
     // need to add a serialized form to cvs
   }
 
   @Override
   public void testCanonicalFullCollectionExists ()
   {
-    // XXX FIX ME XXX
+    // Float FIX ME Float
     // need to add a serialized form to cvs
   }
 
@@ -93,17 +93,17 @@ public class TestCollectionFloatCollection extends AbstractTestObject
 
   public void testWrapSerializable ()
   {
-    final FloatCollection collection = CollectionFloatCollection.wrap (new ArrayList ());
+    final FloatCollection collection = CollectionFloatCollection.wrap (new ArrayList <Float> ());
     assertNotNull (collection);
     assertTrue (collection instanceof Serializable);
   }
 
   public void testWrapNonSerializable ()
   {
-    final FloatCollection collection = CollectionFloatCollection.wrap (new AbstractList ()
+    final FloatCollection collection = CollectionFloatCollection.wrap (new AbstractList <Float> ()
     {
       @Override
-      public Object get (final int i)
+      public Float get (final int i)
       {
         throw new IndexOutOfBoundsException ();
       }
@@ -117,5 +117,4 @@ public class TestCollectionFloatCollection extends AbstractTestObject
     assertNotNull (collection);
     assertTrue (!(collection instanceof Serializable));
   }
-
 }

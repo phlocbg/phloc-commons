@@ -54,10 +54,10 @@ public class TestCollectionByteCollection extends AbstractTestObject
   @Override
   public Object makeObject ()
   {
-    final List list = new ArrayList ();
+    final List <Byte> list = new ArrayList <Byte> ();
     for (int i = 0; i < 10; i++)
     {
-      list.add (new Byte ((byte) i));
+      list.add (Byte.valueOf ((byte)i));
     }
     return new CollectionByteCollection (list);
   }
@@ -72,14 +72,14 @@ public class TestCollectionByteCollection extends AbstractTestObject
   @Override
   public void testCanonicalEmptyCollectionExists ()
   {
-    // XXX FIX ME XXX
+    // Byte FIX ME Byte
     // need to add a serialized form to cvs
   }
 
   @Override
   public void testCanonicalFullCollectionExists ()
   {
-    // XXX FIX ME XXX
+    // Byte FIX ME Byte
     // need to add a serialized form to cvs
   }
 
@@ -93,17 +93,17 @@ public class TestCollectionByteCollection extends AbstractTestObject
 
   public void testWrapSerializable ()
   {
-    final ByteCollection collection = CollectionByteCollection.wrap (new ArrayList ());
+    final ByteCollection collection = CollectionByteCollection.wrap (new ArrayList <Byte> ());
     assertNotNull (collection);
     assertTrue (collection instanceof Serializable);
   }
 
   public void testWrapNonSerializable ()
   {
-    final ByteCollection collection = CollectionByteCollection.wrap (new AbstractList ()
+    final ByteCollection collection = CollectionByteCollection.wrap (new AbstractList <Byte> ()
     {
       @Override
-      public Object get (final int i)
+      public Byte get (final int i)
       {
         throw new IndexOutOfBoundsException ();
       }
@@ -117,5 +117,4 @@ public class TestCollectionByteCollection extends AbstractTestObject
     assertNotNull (collection);
     assertTrue (!(collection instanceof Serializable));
   }
-
 }
