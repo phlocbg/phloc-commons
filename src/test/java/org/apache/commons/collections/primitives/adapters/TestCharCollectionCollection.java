@@ -52,9 +52,7 @@ public class TestCharCollectionCollection extends AbstractTestObject
   {
     final CharList list = new ArrayCharList ();
     for (int i = 0; i < 10; i++)
-    {
-      list.add ((char) i);
-    }
+      list.add ((char)i);
     return new CharCollectionCollection (list);
   }
 
@@ -68,14 +66,14 @@ public class TestCharCollectionCollection extends AbstractTestObject
   @Override
   public void testCanonicalEmptyCollectionExists ()
   {
-    // XXX FIX ME XXX
+    // Character FIX ME Character
     // need to add a serialized form to cvs
   }
 
   @Override
   public void testCanonicalFullCollectionExists ()
   {
-    // XXX FIX ME XXX
+    // Character FIX ME Character
     // need to add a serialized form to cvs
   }
 

@@ -34,13 +34,9 @@ import org.apache.commons.collections.primitives.DoubleList;
  */
 public class TestDoubleListIteratorListIterator extends AbstractTestListIterator
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestDoubleListIteratorListIterator (final String testName)
+  public TestDoubleListIteratorListIterator (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
@@ -52,13 +48,13 @@ public class TestDoubleListIteratorListIterator extends AbstractTestListIterator
   // ------------------------------------------------------------------------
 
   @Override
-  public ListIterator makeEmptyListIterator ()
+  public ListIterator <Double> makeEmptyListIterator ()
   {
     return DoubleListIteratorListIterator.wrap (makeEmptyDoubleList ().listIterator ());
   }
 
   @Override
-  public ListIterator makeFullListIterator ()
+  public ListIterator <Double> makeFullListIterator ()
   {
     return DoubleListIteratorListIterator.wrap (makeFullDoubleList ().listIterator ());
   }
@@ -73,21 +69,22 @@ public class TestDoubleListIteratorListIterator extends AbstractTestListIterator
     final DoubleList list = makeEmptyDoubleList ();
     final double [] elts = getFullElements ();
     for (final double elt : elts)
-    {
       list.add (elt);
-    }
     return list;
   }
 
   public double [] getFullElements ()
   {
-    return new double [] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    final double [] ret = new double [10];
+    for (int i = 0; i < ret.length; ++i)
+      ret[i] = i;
+    return ret;
   }
 
   @Override
   public Object addSetValue ()
   {
-    return new Double (1);
+    return Double.valueOf (1);
   }
 
   // tests
@@ -96,11 +93,11 @@ public class TestDoubleListIteratorListIterator extends AbstractTestListIterator
   public void testNextHasNextRemove ()
   {
     final double [] elements = getFullElements ();
-    final Iterator iter = makeFullIterator ();
+    final Iterator <?> iter = makeFullIterator ();
     for (final double element : elements)
     {
       assertTrue (iter.hasNext ());
-      assertEquals (new Double (element), iter.next ());
+      assertEquals (Double.valueOf (element), iter.next ());
       if (supportsRemove ())
       {
         iter.remove ();
@@ -156,7 +153,7 @@ public class TestDoubleListIteratorListIterator extends AbstractTestListIterator
   {
     if (supportsRemove ())
     {
-      final Iterator iter = makeFullIterator ();
+      final Iterator <?> iter = makeFullIterator ();
       iter.next ();
       iter.remove ();
       try
@@ -170,5 +167,4 @@ public class TestDoubleListIteratorListIterator extends AbstractTestListIterator
       }
     }
   }
-
 }

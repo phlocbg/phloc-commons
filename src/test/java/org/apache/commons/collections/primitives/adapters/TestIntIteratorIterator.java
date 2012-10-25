@@ -18,6 +18,8 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.Iterator;
 
+import javax.annotation.Nonnull;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -32,13 +34,9 @@ import org.apache.commons.collections.primitives.IntList;
  */
 public class TestIntIteratorIterator extends AbstractTestIterator
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestIntIteratorIterator (final String testName)
+  public TestIntIteratorIterator (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
@@ -50,39 +48,41 @@ public class TestIntIteratorIterator extends AbstractTestIterator
   // ------------------------------------------------------------------------
 
   @Override
-  public Iterator makeEmptyIterator ()
+  @Nonnull
+  public Iterator <Integer> makeEmptyIterator ()
   {
     return IntIteratorIterator.wrap (makeEmptyIntList ().iterator ());
   }
 
   @Override
-  public Iterator makeFullIterator ()
+  @Nonnull
+  public Iterator <Integer> makeFullIterator ()
   {
     return IntIteratorIterator.wrap (makeFullIntList ().iterator ());
   }
 
+  @Nonnull
   protected IntList makeEmptyIntList ()
   {
     return new ArrayIntList ();
   }
 
+  @Nonnull
   protected IntList makeFullIntList ()
   {
     final IntList list = makeEmptyIntList ();
     final int [] elts = getFullElements ();
     for (final int elt : elts)
-    {
       list.add (elt);
-    }
     return list;
   }
 
+  @Nonnull
   public int [] getFullElements ()
   {
-    return new int [] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    final int [] ret = new int [10];
+    for (int i = 0; i < ret.length; ++i)
+      ret[i] =  i;
+    return ret;
   }
-
-  // tests
-  // ------------------------------------------------------------------------
-
 }

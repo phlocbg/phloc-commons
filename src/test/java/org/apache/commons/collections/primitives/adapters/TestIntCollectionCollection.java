@@ -34,13 +34,9 @@ import org.apache.commons.collections.primitives.RandomAccessIntList;
  */
 public class TestIntCollectionCollection extends AbstractTestObject
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestIntCollectionCollection (final String testName)
+  public TestIntCollectionCollection (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
@@ -56,9 +52,7 @@ public class TestIntCollectionCollection extends AbstractTestObject
   {
     final IntList list = new ArrayIntList ();
     for (int i = 0; i < 10; i++)
-    {
       list.add (i);
-    }
     return new IntCollectionCollection (list);
   }
 
@@ -72,14 +66,14 @@ public class TestIntCollectionCollection extends AbstractTestObject
   @Override
   public void testCanonicalEmptyCollectionExists ()
   {
-    // XXX FIX ME XXX
+    // Integer FIX ME Integer
     // need to add a serialized form to cvs
   }
 
   @Override
   public void testCanonicalFullCollectionExists ()
   {
-    // XXX FIX ME XXX
+    // Integer FIX ME Integer
     // need to add a serialized form to cvs
   }
 
@@ -93,14 +87,14 @@ public class TestIntCollectionCollection extends AbstractTestObject
 
   public void testWrapSerializable ()
   {
-    final Collection collection = IntCollectionCollection.wrap (new ArrayIntList ());
+    final Collection <Integer> collection = IntCollectionCollection.wrap (new ArrayIntList ());
     assertNotNull (collection);
     assertTrue (collection instanceof Serializable);
   }
 
   public void testWrapNonSerializable ()
   {
-    final Collection collection = IntCollectionCollection.wrap (new RandomAccessIntList ()
+    final Collection <Integer> collection = IntCollectionCollection.wrap (new RandomAccessIntList ()
     {
       @Override
       public int get (final int i)
@@ -117,5 +111,4 @@ public class TestIntCollectionCollection extends AbstractTestObject
     assertNotNull (collection);
     assertTrue (!(collection instanceof Serializable));
   }
-
 }

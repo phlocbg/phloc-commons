@@ -24,67 +24,67 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.iterators.AbstractTestListIterator;
-import org.apache.commons.collections.primitives.ArrayShortList;
-import org.apache.commons.collections.primitives.ShortList;
+import org.apache.commons.collections.primitives.ArrayZZZList;
+import org.apache.commons.collections.primitives.ZZZList;
 
 /**
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestShortListIteratorListIterator extends AbstractTestListIterator
+public class TestZZZListIteratorListIterator extends AbstractTestListIterator
 {
-  public TestShortListIteratorListIterator (final String sTestName)
+  public TestZZZListIteratorListIterator (final String sTestName)
   {
     super (sTestName);
   }
 
   public static Test suite ()
   {
-    return new TestSuite (TestShortListIteratorListIterator.class);
+    return new TestSuite (TestZZZListIteratorListIterator.class);
   }
 
   // collections testing framework
   // ------------------------------------------------------------------------
 
   @Override
-  public ListIterator <Short> makeEmptyListIterator ()
+  public ListIterator <XXX> makeEmptyListIterator ()
   {
-    return ShortListIteratorListIterator.wrap (makeEmptyShortList ().listIterator ());
+    return ZZZListIteratorListIterator.wrap (makeEmptyZZZList ().listIterator ());
   }
 
   @Override
-  public ListIterator <Short> makeFullListIterator ()
+  public ListIterator <XXX> makeFullListIterator ()
   {
-    return ShortListIteratorListIterator.wrap (makeFullShortList ().listIterator ());
+    return ZZZListIteratorListIterator.wrap (makeFullZZZList ().listIterator ());
   }
 
-  protected ShortList makeEmptyShortList ()
+  protected ZZZList makeEmptyZZZList ()
   {
-    return new ArrayShortList ();
+    return new ArrayZZZList ();
   }
 
-  protected ShortList makeFullShortList ()
+  protected ZZZList makeFullZZZList ()
   {
-    final ShortList list = makeEmptyShortList ();
-    final short [] elts = getFullElements ();
-    for (final short elt : elts)
+    final ZZZList list = makeEmptyZZZList ();
+    final YYY [] elts = getFullElements ();
+    for (final YYY elt : elts)
       list.add (elt);
     return list;
   }
 
-  public short [] getFullElements ()
+  public YYY [] getFullElements ()
   {
-    final short [] ret = new short [10];
+    final YYY [] ret = new YYY [10];
     for (int i = 0; i < ret.length; ++i)
-      ret[i] = (short)i;
+      ret[i] = $CASTINT$i;
     return ret;
   }
 
   @Override
   public Object addSetValue ()
   {
-    return Short.valueOf ((short)1);
+    return XXX.valueOf ($CASTINT$1);
   }
 
   // tests
@@ -92,12 +92,12 @@ public class TestShortListIteratorListIterator extends AbstractTestListIterator
 
   public void testNextHasNextRemove ()
   {
-    final short [] elements = getFullElements ();
+    final YYY [] elements = getFullElements ();
     final Iterator <?> iter = makeFullIterator ();
-    for (final short element : elements)
+    for (final YYY element : elements)
     {
       assertTrue (iter.hasNext ());
-      assertEquals (Short.valueOf (element), iter.next ());
+      assertEquals (XXX.valueOf (element), iter.next ());
       if (supportsRemove ())
       {
         iter.remove ();

@@ -62,9 +62,12 @@ public class MainGenCode
   public static void main (final String [] args)
   {
     final Set <String> aAvoidFilenames = ContainerHelper.newSet ();
+    aAvoidFilenames.add ("TestBooleanCollectionCollection.java");
     aAvoidFilenames.add ("TestBooleanCollections.java");
     aAvoidFilenames.add ("TestBooleanIterator.java");
+    aAvoidFilenames.add ("TestBooleanIteratorIterator.java");
     aAvoidFilenames.add ("TestBooleanListIterator.java");
+    aAvoidFilenames.add ("TestBooleanListIteratorListIterator.java");
     aAvoidFilenames.add ("TestBooleanListList.java");
     aAvoidFilenames.add ("TestCollectionBooleanCollection.java");
 

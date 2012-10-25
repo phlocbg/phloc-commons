@@ -34,13 +34,9 @@ import org.apache.commons.collections.primitives.ByteList;
  */
 public class TestByteListIteratorListIterator extends AbstractTestListIterator
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestByteListIteratorListIterator (final String testName)
+  public TestByteListIteratorListIterator (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
@@ -73,30 +69,22 @@ public class TestByteListIteratorListIterator extends AbstractTestListIterator
     final ByteList list = makeEmptyByteList ();
     final byte [] elts = getFullElements ();
     for (final byte elt : elts)
-    {
       list.add (elt);
-    }
     return list;
   }
 
   public byte [] getFullElements ()
   {
-    return new byte [] { (byte) 0,
-                        (byte) 1,
-                        (byte) 2,
-                        (byte) 3,
-                        (byte) 4,
-                        (byte) 5,
-                        (byte) 6,
-                        (byte) 7,
-                        (byte) 8,
-                        (byte) 9 };
+    final byte [] ret = new byte [10];
+    for (int i = 0; i < ret.length; ++i)
+      ret[i] = (byte)i;
+    return ret;
   }
 
   @Override
   public Object addSetValue ()
   {
-    return new Byte ((byte) 1);
+    return Byte.valueOf ((byte)1);
   }
 
   // tests
@@ -109,7 +97,7 @@ public class TestByteListIteratorListIterator extends AbstractTestListIterator
     for (final byte element : elements)
     {
       assertTrue (iter.hasNext ());
-      assertEquals (new Byte (element), iter.next ());
+      assertEquals (Byte.valueOf (element), iter.next ());
       if (supportsRemove ())
       {
         iter.remove ();
@@ -179,5 +167,4 @@ public class TestByteListIteratorListIterator extends AbstractTestListIterator
       }
     }
   }
-
 }

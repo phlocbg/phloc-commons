@@ -34,13 +34,9 @@ import org.apache.commons.collections.primitives.RandomAccessLongList;
  */
 public class TestLongCollectionCollection extends AbstractTestObject
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestLongCollectionCollection (final String testName)
+  public TestLongCollectionCollection (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
@@ -56,9 +52,7 @@ public class TestLongCollectionCollection extends AbstractTestObject
   {
     final LongList list = new ArrayLongList ();
     for (int i = 0; i < 10; i++)
-    {
       list.add (i);
-    }
     return new LongCollectionCollection (list);
   }
 
@@ -72,14 +66,14 @@ public class TestLongCollectionCollection extends AbstractTestObject
   @Override
   public void testCanonicalEmptyCollectionExists ()
   {
-    // XXX FIX ME XXX
+    // Long FIX ME Long
     // need to add a serialized form to cvs
   }
 
   @Override
   public void testCanonicalFullCollectionExists ()
   {
-    // XXX FIX ME XXX
+    // Long FIX ME Long
     // need to add a serialized form to cvs
   }
 
@@ -93,14 +87,14 @@ public class TestLongCollectionCollection extends AbstractTestObject
 
   public void testWrapSerializable ()
   {
-    final Collection collection = LongCollectionCollection.wrap (new ArrayLongList ());
+    final Collection <Long> collection = LongCollectionCollection.wrap (new ArrayLongList ());
     assertNotNull (collection);
     assertTrue (collection instanceof Serializable);
   }
 
   public void testWrapNonSerializable ()
   {
-    final Collection collection = LongCollectionCollection.wrap (new RandomAccessLongList ()
+    final Collection <Long> collection = LongCollectionCollection.wrap (new RandomAccessLongList ()
     {
       @Override
       public long get (final int i)
@@ -117,5 +111,4 @@ public class TestLongCollectionCollection extends AbstractTestObject
     assertNotNull (collection);
     assertTrue (!(collection instanceof Serializable));
   }
-
 }

@@ -18,6 +18,8 @@ package org.apache.commons.collections.primitives.adapters;
 
 import java.util.Iterator;
 
+import javax.annotation.Nonnull;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -32,13 +34,9 @@ import org.apache.commons.collections.primitives.ByteList;
  */
 public class TestByteIteratorIterator extends AbstractTestIterator
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestByteIteratorIterator (final String testName)
+  public TestByteIteratorIterator (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
@@ -50,48 +48,41 @@ public class TestByteIteratorIterator extends AbstractTestIterator
   // ------------------------------------------------------------------------
 
   @Override
+  @Nonnull
   public Iterator <Byte> makeEmptyIterator ()
   {
     return ByteIteratorIterator.wrap (makeEmptyByteList ().iterator ());
   }
 
   @Override
+  @Nonnull
   public Iterator <Byte> makeFullIterator ()
   {
     return ByteIteratorIterator.wrap (makeFullByteList ().iterator ());
   }
 
+  @Nonnull
   protected ByteList makeEmptyByteList ()
   {
     return new ArrayByteList ();
   }
 
+  @Nonnull
   protected ByteList makeFullByteList ()
   {
     final ByteList list = makeEmptyByteList ();
     final byte [] elts = getFullElements ();
     for (final byte elt : elts)
-    {
       list.add (elt);
-    }
     return list;
   }
 
+  @Nonnull
   public byte [] getFullElements ()
   {
-    return new byte [] { (byte) 0,
-                        (byte) 1,
-                        (byte) 2,
-                        (byte) 3,
-                        (byte) 4,
-                        (byte) 5,
-                        (byte) 6,
-                        (byte) 7,
-                        (byte) 8,
-                        (byte) 9 };
+    final byte [] ret = new byte [10];
+    for (int i = 0; i < ret.length; ++i)
+      ret[i] = (byte) i;
+    return ret;
   }
-
-  // tests
-  // ------------------------------------------------------------------------
-
 }
