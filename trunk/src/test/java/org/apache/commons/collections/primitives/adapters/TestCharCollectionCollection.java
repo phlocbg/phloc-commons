@@ -34,13 +34,9 @@ import org.apache.commons.collections.primitives.RandomAccessCharList;
  */
 public class TestCharCollectionCollection extends AbstractTestObject
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestCharCollectionCollection (final String testName)
+  public TestCharCollectionCollection (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
@@ -93,14 +89,14 @@ public class TestCharCollectionCollection extends AbstractTestObject
 
   public void testWrapSerializable ()
   {
-    final Collection collection = CharCollectionCollection.wrap (new ArrayCharList ());
+    final Collection <Character> collection = CharCollectionCollection.wrap (new ArrayCharList ());
     assertNotNull (collection);
     assertTrue (collection instanceof Serializable);
   }
 
   public void testWrapNonSerializable ()
   {
-    final Collection collection = CharCollectionCollection.wrap (new RandomAccessCharList ()
+    final Collection <Character> collection = CharCollectionCollection.wrap (new RandomAccessCharList ()
     {
       @Override
       public char get (final int i)
@@ -117,5 +113,4 @@ public class TestCharCollectionCollection extends AbstractTestObject
     assertNotNull (collection);
     assertTrue (!(collection instanceof Serializable));
   }
-
 }
