@@ -23,7 +23,7 @@ import java.util.NoSuchElementException;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
-import org.apache.commons.collections.primitives.BooleanIterator;
+import org.apache.commons.collections.primitives.ZZZIterator;
 
 import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.collections.ArrayHelper;
@@ -32,21 +32,21 @@ import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * This is a small helper class for iterating over arrays of boolean.
+ * This is a small helper class for iterating over arrays of YYY.
  * 
  * @author philip
  */
-public final class ArrayIteratorBoolean implements BooleanIterator
+public final class ArrayIteratorZZZ implements ZZZIterator
 {
-  private final boolean [] m_aArray;
+  private final YYY [] m_aArray;
   private int m_nIndex;
 
-  public ArrayIteratorBoolean (@Nonnull final boolean... aArray)
+  public ArrayIteratorZZZ (@Nonnull final YYY... aArray)
   {
     this (aArray, 0, aArray.length);
   }
 
-  public ArrayIteratorBoolean (@Nonnull final boolean [] aArray, @Nonnegative final int nBegin, @Nonnegative final int nEnd)
+  public ArrayIteratorZZZ (@Nonnull final YYY [] aArray, @Nonnegative final int nBegin, @Nonnegative final int nEnd)
   {
     if (aArray == null)
       throw new NullPointerException ("array");
@@ -63,7 +63,7 @@ public final class ArrayIteratorBoolean implements BooleanIterator
     return m_nIndex < m_aArray.length;
   }
 
-  public boolean next ()
+  public YYY next ()
   {
     if (!hasNext ())
       throw new NoSuchElementException ();
@@ -82,9 +82,9 @@ public final class ArrayIteratorBoolean implements BooleanIterator
   {
     if (o == this)
       return true;
-    if (!(o instanceof ArrayIteratorBoolean))
+    if (!(o instanceof ArrayIteratorZZZ))
       return false;
-    final ArrayIteratorBoolean rhs = (ArrayIteratorBoolean) o;
+    final ArrayIteratorZZZ rhs = (ArrayIteratorZZZ) o;
     return EqualsUtils.equals (m_aArray, rhs.m_aArray) && m_nIndex == rhs.m_nIndex;
   }
 
