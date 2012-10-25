@@ -26,16 +26,16 @@ import org.apache.commons.collections.primitives.FloatList;
  */
 final class NonSerializableUnmodifiableFloatList extends BaseUnmodifiableFloatList
 {
+  private final FloatList m_aProxied;
+
   NonSerializableUnmodifiableFloatList (final FloatList list)
   {
-    this.proxied = list;
+    m_aProxied = list;
   }
 
   @Override
   protected FloatList getProxiedList ()
   {
-    return proxied;
+    return m_aProxied;
   }
-
-  private FloatList proxied = null;
 }

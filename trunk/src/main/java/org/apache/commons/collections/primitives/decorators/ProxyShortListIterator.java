@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.ShortIterator;
 import org.apache.commons.collections.primitives.ShortListIterator;
 
@@ -51,11 +53,12 @@ abstract class ProxyShortListIterator extends ProxyShortIterator implements Shor
   }
 
   @Override
+  @Nonnull
   protected final ShortIterator getIterator ()
   {
     return getListIterator ();
   }
-
+  
+  @Nonnull
   protected abstract ShortListIterator getListIterator ();
-
 }

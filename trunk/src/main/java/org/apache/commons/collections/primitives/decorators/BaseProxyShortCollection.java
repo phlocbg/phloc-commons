@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.ShortCollection;
 import org.apache.commons.collections.primitives.ShortIterator;
 
@@ -27,17 +30,18 @@ import org.apache.commons.collections.primitives.ShortIterator;
  */
 abstract class BaseProxyShortCollection implements ShortCollection
 {
-  protected abstract ShortCollection getProxiedCollection ();
-
   protected BaseProxyShortCollection ()
   {}
+
+  @Nonnull
+  protected abstract ShortCollection getProxiedCollection ();
 
   public boolean add (final short element)
   {
     return getProxiedCollection ().add (element);
   }
 
-  public boolean addAll (final ShortCollection c)
+  public boolean addAll (@Nonnull final ShortCollection c)
   {
     return getProxiedCollection ().addAll (c);
   }
@@ -52,7 +56,7 @@ abstract class BaseProxyShortCollection implements ShortCollection
     return getProxiedCollection ().contains (element);
   }
 
-  public boolean containsAll (final ShortCollection c)
+  public boolean containsAll (@Nonnull final ShortCollection c)
   {
     return getProxiedCollection ().containsAll (c);
   }
@@ -67,7 +71,7 @@ abstract class BaseProxyShortCollection implements ShortCollection
     return getProxiedCollection ().iterator ();
   }
 
-  public boolean removeAll (final ShortCollection c)
+  public boolean removeAll (@Nonnull final ShortCollection c)
   {
     return getProxiedCollection ().removeAll (c);
   }
@@ -77,7 +81,7 @@ abstract class BaseProxyShortCollection implements ShortCollection
     return getProxiedCollection ().removeElement (element);
   }
 
-  public boolean retainAll (final ShortCollection c)
+  public boolean retainAll (@Nonnull final ShortCollection c)
   {
     return getProxiedCollection ().retainAll (c);
   }
@@ -97,10 +101,12 @@ abstract class BaseProxyShortCollection implements ShortCollection
     return getProxiedCollection ().toArray (a);
   }
 
-  // TODO: Add note about possible contract violations here.
-
+  /**
+   * Important: is equal to the proxied collection!<br>
+   * Therefore violates the contract of equals!
+   */  
   @Override
-  public boolean equals (final Object obj)
+  public boolean equals (@Nullable final Object obj)
   {
     return getProxiedCollection ().equals (obj);
   }
@@ -116,5 +122,4 @@ abstract class BaseProxyShortCollection implements ShortCollection
   {
     return getProxiedCollection ().toString ();
   }
-
 }

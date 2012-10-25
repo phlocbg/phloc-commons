@@ -25,7 +25,9 @@ public class MainGenCode
 
   public static void main (final String [] args)
   {
-    final Set <String> aAvoidFilenames = ContainerHelper.newSet ("BooleanCollections.java");
+    final Set <String> aAvoidFilenames = ContainerHelper.newSet ();
+    if (false)
+      aAvoidFilenames.add ("BooleanCollections.java");
 
     for (final File aFile : FileSystemIterator.create (new File ("src/test/resources/srcgen"),
                                                        new FilenameFilterEndsWith (".jav")))

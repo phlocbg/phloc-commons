@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.FloatIterator;
 import org.apache.commons.collections.primitives.FloatListIterator;
 
@@ -51,11 +53,12 @@ abstract class ProxyFloatListIterator extends ProxyFloatIterator implements Floa
   }
 
   @Override
+  @Nonnull
   protected final FloatIterator getIterator ()
   {
     return getListIterator ();
   }
-
+  
+  @Nonnull
   protected abstract FloatListIterator getListIterator ();
-
 }

@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.CharIterator;
 import org.apache.commons.collections.primitives.CharListIterator;
 
@@ -51,11 +53,12 @@ abstract class ProxyCharListIterator extends ProxyCharIterator implements CharLi
   }
 
   @Override
+  @Nonnull
   protected final CharIterator getIterator ()
   {
     return getListIterator ();
   }
-
+  
+  @Nonnull
   protected abstract CharListIterator getListIterator ();
-
 }

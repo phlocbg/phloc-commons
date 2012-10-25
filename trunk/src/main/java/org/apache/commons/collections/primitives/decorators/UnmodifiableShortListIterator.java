@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.ShortListIterator;
 
 /**
@@ -26,9 +29,11 @@ import org.apache.commons.collections.primitives.ShortListIterator;
  */
 public final class UnmodifiableShortListIterator extends ProxyShortListIterator
 {
-  UnmodifiableShortListIterator (final ShortListIterator iterator)
+  private ShortListIterator m_aProxied;
+
+  UnmodifiableShortListIterator (@Nonnull final ShortListIterator iterator)
   {
-    this.proxied = iterator;
+    m_aProxied = iterator;
   }
 
   public void remove ()
@@ -49,25 +54,16 @@ public final class UnmodifiableShortListIterator extends ProxyShortListIterator
   @Override
   protected ShortListIterator getListIterator ()
   {
-    return proxied;
+    return m_aProxied;
   }
 
-  public static final ShortListIterator wrap (final ShortListIterator iterator)
+  @Nullable
+  public static final ShortListIterator wrap (@Nullable final ShortListIterator iterator)
   {
     if (null == iterator)
-    {
       return null;
-    }
-    else
-      if (iterator instanceof UnmodifiableShortListIterator)
-      {
-        return iterator;
-      }
-      else
-      {
-        return new UnmodifiableShortListIterator (iterator);
-      }
+    if (iterator instanceof UnmodifiableShortListIterator)
+      return iterator;
+    return new UnmodifiableShortListIterator (iterator);
   }
-
-  private ShortListIterator proxied = null;
 }

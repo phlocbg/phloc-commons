@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.IntCollection;
 import org.apache.commons.collections.primitives.IntList;
 import org.apache.commons.collections.primitives.IntListIterator;
@@ -44,7 +46,7 @@ abstract class BaseProxyIntList extends BaseProxyIntCollection implements IntLis
     getProxiedList ().add (index, element);
   }
 
-  public boolean addAll (final int index, final IntCollection collection)
+  public boolean addAll (final int index, @Nonnull final IntCollection collection)
   {
     return getProxiedList ().addAll (index, collection);
   }
@@ -88,5 +90,4 @@ abstract class BaseProxyIntList extends BaseProxyIntCollection implements IntLis
   {
     return getProxiedList ().subList (fromIndex, toIndex);
   }
-
 }

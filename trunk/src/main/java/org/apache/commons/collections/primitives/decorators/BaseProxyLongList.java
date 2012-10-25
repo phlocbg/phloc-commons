@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.LongCollection;
 import org.apache.commons.collections.primitives.LongList;
 import org.apache.commons.collections.primitives.LongListIterator;
@@ -44,7 +46,7 @@ abstract class BaseProxyLongList extends BaseProxyLongCollection implements Long
     getProxiedList ().add (index, element);
   }
 
-  public boolean addAll (final int index, final LongCollection collection)
+  public boolean addAll (final int index, @Nonnull final LongCollection collection)
   {
     return getProxiedList ().addAll (index, collection);
   }
@@ -88,5 +90,4 @@ abstract class BaseProxyLongList extends BaseProxyLongCollection implements Long
   {
     return getProxiedList ().subList (fromIndex, toIndex);
   }
-
 }

@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.IntCollection;
 import org.apache.commons.collections.primitives.IntIterator;
 import org.apache.commons.collections.primitives.IntList;
@@ -29,7 +31,6 @@ import org.apache.commons.collections.primitives.IntListIterator;
  */
 abstract class BaseUnmodifiableIntList extends BaseProxyIntList
 {
-
   @Override
   public final void add (final int index, final int element)
   {
@@ -37,7 +38,7 @@ abstract class BaseUnmodifiableIntList extends BaseProxyIntList
   }
 
   @Override
-  public final boolean addAll (final int index, final IntCollection collection)
+  public final boolean addAll (final int index, @Nonnull final IntCollection collection)
   {
     throw new UnsupportedOperationException ("This IntList is not modifiable.");
   }
@@ -61,7 +62,7 @@ abstract class BaseUnmodifiableIntList extends BaseProxyIntList
   }
 
   @Override
-  public final boolean addAll (final IntCollection c)
+  public final boolean addAll (@Nonnull final IntCollection c)
   {
     throw new UnsupportedOperationException ("This IntList is not modifiable.");
   }
@@ -73,7 +74,7 @@ abstract class BaseUnmodifiableIntList extends BaseProxyIntList
   }
 
   @Override
-  public final boolean removeAll (final IntCollection c)
+  public final boolean removeAll (@Nonnull final IntCollection c)
   {
     throw new UnsupportedOperationException ("This IntList is not modifiable.");
   }
@@ -85,7 +86,7 @@ abstract class BaseUnmodifiableIntList extends BaseProxyIntList
   }
 
   @Override
-  public final boolean retainAll (final IntCollection c)
+  public final boolean retainAll (@Nonnull final IntCollection c)
   {
     throw new UnsupportedOperationException ("This IntList is not modifiable.");
   }
@@ -97,18 +98,21 @@ abstract class BaseUnmodifiableIntList extends BaseProxyIntList
   }
 
   @Override
+  @Nonnull 
   public final IntIterator iterator ()
   {
     return UnmodifiableIntIterator.wrap (getProxiedList ().iterator ());
   }
 
   @Override
+  @Nonnull 
   public IntListIterator listIterator ()
   {
     return UnmodifiableIntListIterator.wrap (getProxiedList ().listIterator ());
   }
 
   @Override
+  @Nonnull 
   public IntListIterator listIterator (final int index)
   {
     return UnmodifiableIntListIterator.wrap (getProxiedList ().listIterator (index));

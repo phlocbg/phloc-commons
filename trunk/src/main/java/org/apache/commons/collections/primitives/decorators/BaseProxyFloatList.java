@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.FloatCollection;
 import org.apache.commons.collections.primitives.FloatList;
 import org.apache.commons.collections.primitives.FloatListIterator;
@@ -44,7 +46,7 @@ abstract class BaseProxyFloatList extends BaseProxyFloatCollection implements Fl
     getProxiedList ().add (index, element);
   }
 
-  public boolean addAll (final int index, final FloatCollection collection)
+  public boolean addAll (final int index, @Nonnull final FloatCollection collection)
   {
     return getProxiedList ().addAll (index, collection);
   }
@@ -88,5 +90,4 @@ abstract class BaseProxyFloatList extends BaseProxyFloatCollection implements Fl
   {
     return getProxiedList ().subList (fromIndex, toIndex);
   }
-
 }

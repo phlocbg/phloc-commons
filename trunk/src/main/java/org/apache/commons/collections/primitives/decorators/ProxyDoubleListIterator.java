@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.DoubleIterator;
 import org.apache.commons.collections.primitives.DoubleListIterator;
 
@@ -51,11 +53,12 @@ abstract class ProxyDoubleListIterator extends ProxyDoubleIterator implements Do
   }
 
   @Override
+  @Nonnull
   protected final DoubleIterator getIterator ()
   {
     return getListIterator ();
   }
-
+  
+  @Nonnull
   protected abstract DoubleListIterator getListIterator ();
-
 }

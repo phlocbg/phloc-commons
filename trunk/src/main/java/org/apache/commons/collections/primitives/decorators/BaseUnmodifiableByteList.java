@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.ByteCollection;
 import org.apache.commons.collections.primitives.ByteIterator;
 import org.apache.commons.collections.primitives.ByteList;
@@ -29,7 +31,6 @@ import org.apache.commons.collections.primitives.ByteListIterator;
  */
 abstract class BaseUnmodifiableByteList extends BaseProxyByteList
 {
-
   @Override
   public final void add (final int index, final byte element)
   {
@@ -37,7 +38,7 @@ abstract class BaseUnmodifiableByteList extends BaseProxyByteList
   }
 
   @Override
-  public final boolean addAll (final int index, final ByteCollection collection)
+  public final boolean addAll (final int index, @Nonnull final ByteCollection collection)
   {
     throw new UnsupportedOperationException ("This ByteList is not modifiable.");
   }
@@ -61,7 +62,7 @@ abstract class BaseUnmodifiableByteList extends BaseProxyByteList
   }
 
   @Override
-  public final boolean addAll (final ByteCollection c)
+  public final boolean addAll (@Nonnull final ByteCollection c)
   {
     throw new UnsupportedOperationException ("This ByteList is not modifiable.");
   }
@@ -73,7 +74,7 @@ abstract class BaseUnmodifiableByteList extends BaseProxyByteList
   }
 
   @Override
-  public final boolean removeAll (final ByteCollection c)
+  public final boolean removeAll (@Nonnull final ByteCollection c)
   {
     throw new UnsupportedOperationException ("This ByteList is not modifiable.");
   }
@@ -85,7 +86,7 @@ abstract class BaseUnmodifiableByteList extends BaseProxyByteList
   }
 
   @Override
-  public final boolean retainAll (final ByteCollection c)
+  public final boolean retainAll (@Nonnull final ByteCollection c)
   {
     throw new UnsupportedOperationException ("This ByteList is not modifiable.");
   }
@@ -97,18 +98,21 @@ abstract class BaseUnmodifiableByteList extends BaseProxyByteList
   }
 
   @Override
+  @Nonnull 
   public final ByteIterator iterator ()
   {
     return UnmodifiableByteIterator.wrap (getProxiedList ().iterator ());
   }
 
   @Override
+  @Nonnull 
   public ByteListIterator listIterator ()
   {
     return UnmodifiableByteListIterator.wrap (getProxiedList ().listIterator ());
   }
 
   @Override
+  @Nonnull 
   public ByteListIterator listIterator (final int index)
   {
     return UnmodifiableByteListIterator.wrap (getProxiedList ().listIterator (index));

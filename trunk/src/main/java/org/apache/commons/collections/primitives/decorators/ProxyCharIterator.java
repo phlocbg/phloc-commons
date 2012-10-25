@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.CharIterator;
 
 /**
@@ -39,5 +41,6 @@ abstract class ProxyCharIterator implements CharIterator
     return getIterator ().next ();
   }
 
+  @Nonnull
   protected abstract CharIterator getIterator ();
 }

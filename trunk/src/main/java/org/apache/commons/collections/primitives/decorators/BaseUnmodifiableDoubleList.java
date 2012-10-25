@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.DoubleCollection;
 import org.apache.commons.collections.primitives.DoubleIterator;
 import org.apache.commons.collections.primitives.DoubleList;
@@ -29,7 +31,6 @@ import org.apache.commons.collections.primitives.DoubleListIterator;
  */
 abstract class BaseUnmodifiableDoubleList extends BaseProxyDoubleList
 {
-
   @Override
   public final void add (final int index, final double element)
   {
@@ -37,7 +38,7 @@ abstract class BaseUnmodifiableDoubleList extends BaseProxyDoubleList
   }
 
   @Override
-  public final boolean addAll (final int index, final DoubleCollection collection)
+  public final boolean addAll (final int index, @Nonnull final DoubleCollection collection)
   {
     throw new UnsupportedOperationException ("This DoubleList is not modifiable.");
   }
@@ -61,7 +62,7 @@ abstract class BaseUnmodifiableDoubleList extends BaseProxyDoubleList
   }
 
   @Override
-  public final boolean addAll (final DoubleCollection c)
+  public final boolean addAll (@Nonnull final DoubleCollection c)
   {
     throw new UnsupportedOperationException ("This DoubleList is not modifiable.");
   }
@@ -73,7 +74,7 @@ abstract class BaseUnmodifiableDoubleList extends BaseProxyDoubleList
   }
 
   @Override
-  public final boolean removeAll (final DoubleCollection c)
+  public final boolean removeAll (@Nonnull final DoubleCollection c)
   {
     throw new UnsupportedOperationException ("This DoubleList is not modifiable.");
   }
@@ -85,7 +86,7 @@ abstract class BaseUnmodifiableDoubleList extends BaseProxyDoubleList
   }
 
   @Override
-  public final boolean retainAll (final DoubleCollection c)
+  public final boolean retainAll (@Nonnull final DoubleCollection c)
   {
     throw new UnsupportedOperationException ("This DoubleList is not modifiable.");
   }
@@ -97,18 +98,21 @@ abstract class BaseUnmodifiableDoubleList extends BaseProxyDoubleList
   }
 
   @Override
+  @Nonnull 
   public final DoubleIterator iterator ()
   {
     return UnmodifiableDoubleIterator.wrap (getProxiedList ().iterator ());
   }
 
   @Override
+  @Nonnull 
   public DoubleListIterator listIterator ()
   {
     return UnmodifiableDoubleListIterator.wrap (getProxiedList ().listIterator ());
   }
 
   @Override
+  @Nonnull 
   public DoubleListIterator listIterator (final int index)
   {
     return UnmodifiableDoubleListIterator.wrap (getProxiedList ().listIterator (index));

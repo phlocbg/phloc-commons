@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.DoubleCollection;
 import org.apache.commons.collections.primitives.DoubleList;
 import org.apache.commons.collections.primitives.DoubleListIterator;
@@ -44,7 +46,7 @@ abstract class BaseProxyDoubleList extends BaseProxyDoubleCollection implements 
     getProxiedList ().add (index, element);
   }
 
-  public boolean addAll (final int index, final DoubleCollection collection)
+  public boolean addAll (final int index, @Nonnull final DoubleCollection collection)
   {
     return getProxiedList ().addAll (index, collection);
   }
@@ -88,5 +90,4 @@ abstract class BaseProxyDoubleList extends BaseProxyDoubleCollection implements 
   {
     return getProxiedList ().subList (fromIndex, toIndex);
   }
-
 }

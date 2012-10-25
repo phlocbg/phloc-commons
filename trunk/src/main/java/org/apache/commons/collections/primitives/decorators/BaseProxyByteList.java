@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.ByteCollection;
 import org.apache.commons.collections.primitives.ByteList;
 import org.apache.commons.collections.primitives.ByteListIterator;
@@ -44,7 +46,7 @@ abstract class BaseProxyByteList extends BaseProxyByteCollection implements Byte
     getProxiedList ().add (index, element);
   }
 
-  public boolean addAll (final int index, final ByteCollection collection)
+  public boolean addAll (final int index, @Nonnull final ByteCollection collection)
   {
     return getProxiedList ().addAll (index, collection);
   }
@@ -88,5 +90,4 @@ abstract class BaseProxyByteList extends BaseProxyByteCollection implements Byte
   {
     return getProxiedList ().subList (fromIndex, toIndex);
   }
-
 }

@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.FloatIterator;
 
 /**
@@ -26,9 +29,11 @@ import org.apache.commons.collections.primitives.FloatIterator;
  */
 public final class UnmodifiableFloatIterator extends ProxyFloatIterator
 {
-  UnmodifiableFloatIterator (final FloatIterator iterator)
+  private FloatIterator m_aProxied;
+
+  UnmodifiableFloatIterator (@Nonnull final FloatIterator iterator)
   {
-    this.proxied = iterator;
+    m_aProxied = iterator;
   }
 
   public void remove ()
@@ -37,27 +42,19 @@ public final class UnmodifiableFloatIterator extends ProxyFloatIterator
   }
 
   @Override
+  @Nonnull 
   protected FloatIterator getIterator ()
   {
-    return proxied;
+    return m_aProxied;
   }
 
-  public static final FloatIterator wrap (final FloatIterator iterator)
+  @Nullable
+  public static final FloatIterator wrap (@Nullable final FloatIterator iterator)
   {
     if (null == iterator)
-    {
       return null;
-    }
-    else
-      if (iterator instanceof UnmodifiableFloatIterator)
-      {
-        return iterator;
-      }
-      else
-      {
-        return new UnmodifiableFloatIterator (iterator);
-      }
+    if (iterator instanceof UnmodifiableFloatIterator)
+      return iterator;
+    return new UnmodifiableFloatIterator (iterator);
   }
-
-  private FloatIterator proxied = null;
 }

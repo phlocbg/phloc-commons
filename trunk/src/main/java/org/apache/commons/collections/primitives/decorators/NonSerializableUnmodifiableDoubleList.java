@@ -26,16 +26,16 @@ import org.apache.commons.collections.primitives.DoubleList;
  */
 final class NonSerializableUnmodifiableDoubleList extends BaseUnmodifiableDoubleList
 {
+  private final DoubleList m_aProxied;
+
   NonSerializableUnmodifiableDoubleList (final DoubleList list)
   {
-    this.proxied = list;
+    m_aProxied = list;
   }
 
   @Override
   protected DoubleList getProxiedList ()
   {
-    return proxied;
+    return m_aProxied;
   }
-
-  private DoubleList proxied = null;
 }
