@@ -51,8 +51,8 @@ import javax.annotation.Nonnull;
  */
 public class ArrayShortList extends RandomAccessShortList implements Serializable
 {
-  private transient short [] _data = null;
-  private int _size = 0;
+  private transient short [] _data;
+  private int _size;
 
   // constructors
   // -------------------------------------------------------------------------
@@ -89,7 +89,7 @@ public class ArrayShortList extends RandomAccessShortList implements Serializabl
    * @throws NullPointerException
    *         if <i>that</i> is <code>null</code>
    */
-  public ArrayShortList (final ShortCollection that)
+  public ArrayShortList (@Nonnull final ShortCollection that)
   {
     this (that.size ());
     addAll (that);
@@ -103,7 +103,7 @@ public class ArrayShortList extends RandomAccessShortList implements Serializabl
    * @throws NullPointerException
    *         if the array is <code>null</code>
    */
-  public ArrayShortList (final short [] array)
+  public ArrayShortList (@Nonnull final short [] array)
   {
     this (array.length);
     System.arraycopy (array, 0, _data, 0, array.length);
@@ -281,17 +281,15 @@ public class ArrayShortList extends RandomAccessShortList implements Serializabl
   // private methods
   // -------------------------------------------------------------------------
 
-  private void writeObject (final ObjectOutputStream out) throws IOException
+  private void writeObject (@Nonnull final ObjectOutputStream out) throws IOException
   {
     out.defaultWriteObject ();
     out.writeInt (_data.length);
     for (int i = 0; i < _size; i++)
-    {
       out.writeShort (_data[i]);
-    }
   }
 
-  private void readObject (final ObjectInputStream in) throws IOException, ClassNotFoundException
+  private void readObject (@Nonnull final ObjectInputStream in) throws IOException, ClassNotFoundException
   {
     in.defaultReadObject ();
     _data = new short [in.readInt ()];

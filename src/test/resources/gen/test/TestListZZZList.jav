@@ -23,24 +23,24 @@ import java.util.ArrayList;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.primitives.ByteList;
-import org.apache.commons.collections.primitives.TestByteList;
+import org.apache.commons.collections.primitives.ZZZList;
+import org.apache.commons.collections.primitives.TestZZZList;
 
 /**
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestListByteList extends TestByteList
+public class TestListZZZList extends TestZZZList
 {
-  public TestListByteList (final String sTestName)
+  public TestListZZZList (final String sTestName)
   {
     super (sTestName);
   }
 
   public static Test suite ()
   {
-    final TestSuite suite = new TestSuite (TestListByteList.class);
+    final TestSuite suite = new TestSuite (TestListZZZList.class);
     return suite;
   }
 
@@ -48,12 +48,12 @@ public class TestListByteList extends TestByteList
   // ------------------------------------------------------------------------
 
   /**
-   * @see org.apache.commons.collections.primitives.TestByteList#makeEmptyByteList()
+   * @see org.apache.commons.collections.primitives.TestZZZList#makeEmptyZZZList()
    */
   @Override
-  protected ByteList makeEmptyByteList ()
+  protected ZZZList makeEmptyZZZList ()
   {
-    return new ListByteList (new ArrayList <Byte> ());
+    return new ListZZZList (new ArrayList <XXX> ());
   }
 
   // tests
@@ -61,21 +61,21 @@ public class TestListByteList extends TestByteList
 
   public void testWrapNull ()
   {
-    assertNull (ListByteList.wrap (null));
+    assertNull (ListZZZList.wrap (null));
   }
 
   public void testWrapSerializable ()
   {
-    final ByteList list = ListByteList.wrap (new ArrayList <Byte> ());
+    final ZZZList list = ListZZZList.wrap (new ArrayList <XXX> ());
     assertNotNull (list);
   }
 
   public void testWrapNonSerializable ()
   {
-    final ByteList list = ListByteList.wrap (new AbstractList <Byte> ()
+    final ZZZList list = ListZZZList.wrap (new AbstractList <XXX> ()
     {
       @Override
-      public Byte get (final int i)
+      public XXX get (final int i)
       {
         throw new IndexOutOfBoundsException ();
       }

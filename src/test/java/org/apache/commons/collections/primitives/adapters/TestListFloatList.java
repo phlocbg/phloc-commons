@@ -17,7 +17,6 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
-import java.io.Serializable;
 import java.util.AbstractList;
 import java.util.ArrayList;
 
@@ -34,13 +33,9 @@ import org.apache.commons.collections.primitives.TestFloatList;
  */
 public class TestListFloatList extends TestFloatList
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestListFloatList (final String testName)
+  public TestListFloatList (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
@@ -73,7 +68,6 @@ public class TestListFloatList extends TestFloatList
   {
     final FloatList list = ListFloatList.wrap (new ArrayList <Float> ());
     assertNotNull (list);
-    assertTrue (list instanceof Serializable);
   }
 
   public void testWrapNonSerializable ()
@@ -93,7 +87,5 @@ public class TestListFloatList extends TestFloatList
       }
     });
     assertNotNull (list);
-    assertTrue (!(list instanceof Serializable));
   }
-
 }
