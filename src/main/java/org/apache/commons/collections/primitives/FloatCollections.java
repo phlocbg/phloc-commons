@@ -1,3 +1,21 @@
+/**
+ * Copyright (C) 2006-2012 phloc systems
+ * http://www.phloc.com
+ * office[at]phloc[dot]com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -28,7 +46,7 @@ import org.apache.commons.collections.primitives.decorators.UnmodifiableFloatLis
  * <p>
  * The methods of this class all throw a NullPointerException if the provided
  * collection is null.
- * 
+ *
  * @version $Revision: 480460 $ $Date: 2006-11-29 09:14:21 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
@@ -40,12 +58,12 @@ public final class FloatCollections
 
   /**
    * Returns an unmodifiable FloatList containing only the specified element.
-   * 
+   *
    * @param value
    *        the single value
    * @return an unmodifiable FloatList containing only the specified element.
    */
-  @Nonnull 
+  @Nonnull
   public static FloatList singletonFloatList (final float value)
   {
     // hint: a specialized implementation of FloatList may be more performant
@@ -56,12 +74,12 @@ public final class FloatCollections
 
   /**
    * Returns an unmodifiable FloatIterator containing only the specified element.
-   * 
+   *
    * @param value
    *        the single value
    * @return an unmodifiable FloatIterator containing only the specified element.
    */
-  @Nonnull 
+  @Nonnull
   public static FloatIterator singletonFloatIterator (final float value)
   {
     return singletonFloatList (value).iterator ();
@@ -70,13 +88,13 @@ public final class FloatCollections
   /**
    * Returns an unmodifiable FloatListIterator containing only the specified
    * element.
-   * 
+   *
    * @param value
    *        the single value
    * @return an unmodifiable FloatListIterator containing only the specified
    *         element.
    */
-  @Nonnull 
+  @Nonnull
   public static FloatListIterator singletonFloatListIterator (final float value)
   {
     return singletonFloatList (value).listIterator ();
@@ -84,7 +102,7 @@ public final class FloatCollections
 
   /**
    * Returns an unmodifiable version of the given non-null FloatList.
-   * 
+   *
    * @param list
    *        the non-null FloatList to wrap in an unmodifiable decorator
    * @return an unmodifiable version of the given non-null FloatList
@@ -92,7 +110,7 @@ public final class FloatCollections
    *         if the given FloatList is null
    * @see org.apache.commons.collections.primitives.decorators.UnmodifiableFloatList#wrap
    */
-  @Nonnull 
+  @Nonnull
   public static FloatList unmodifiableFloatList (@Nonnull final FloatList list) throws NullPointerException
   {
     if (null == list)
@@ -102,7 +120,7 @@ public final class FloatCollections
 
   /**
    * Returns an unmodifiable version of the given non-null FloatIterator.
-   * 
+   *
    * @param iter
    *        the non-null FloatIterator to wrap in an unmodifiable decorator
    * @return an unmodifiable version of the given non-null FloatIterator
@@ -120,7 +138,7 @@ public final class FloatCollections
 
   /**
    * Returns an unmodifiable version of the given non-null FloatListIterator.
-   * 
+   *
    * @param iter
    *        the non-null FloatListIterator to wrap in an unmodifiable decorator
    * @return an unmodifiable version of the given non-null FloatListIterator
@@ -138,7 +156,7 @@ public final class FloatCollections
 
   /**
    * Returns an unmodifiable, empty FloatList.
-   * 
+   *
    * @return an unmodifiable, empty FloatList.
    * @see #EMPTY_FLOAT_LIST
    */
@@ -150,7 +168,7 @@ public final class FloatCollections
 
   /**
    * Returns an unmodifiable, empty FloatIterator
-   * 
+   *
    * @return an unmodifiable, empty FloatIterator.
    * @see #EMPTY_FLOAT_ITERATOR
    */
@@ -162,7 +180,7 @@ public final class FloatCollections
 
   /**
    * Returns an unmodifiable, empty FloatListIterator
-   * 
+   *
    * @return an unmodifiable, empty FloatListIterator.
    * @see #EMPTY_FLOAT_LIST_ITERATOR
    */
@@ -174,21 +192,21 @@ public final class FloatCollections
 
   /**
    * An unmodifiable, empty FloatList
-   * 
+   *
    * @see #getEmptyFloatList
    */
   public static final FloatList EMPTY_FLOAT_LIST = unmodifiableFloatList (new ArrayFloatList (0));
 
   /**
    * An unmodifiable, empty FloatIterator
-   * 
+   *
    * @see #getEmptyFloatIterator
    */
   public static final FloatIterator EMPTY_FLOAT_ITERATOR = unmodifiableFloatIterator (EMPTY_FLOAT_LIST.iterator ());
 
   /**
    * An unmodifiable, empty FloatListIterator
-   * 
+   *
    * @see #getEmptyFloatListIterator
    */
   public static final FloatListIterator EMPTY_FLOAT_LIST_ITERATOR = unmodifiableFloatListIterator (EMPTY_FLOAT_LIST.listIterator ());

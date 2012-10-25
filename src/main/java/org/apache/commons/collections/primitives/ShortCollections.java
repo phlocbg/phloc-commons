@@ -1,3 +1,21 @@
+/**
+ * Copyright (C) 2006-2012 phloc systems
+ * http://www.phloc.com
+ * office[at]phloc[dot]com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -28,7 +46,7 @@ import org.apache.commons.collections.primitives.decorators.UnmodifiableShortLis
  * <p>
  * The methods of this class all throw a NullPointerException if the provided
  * collection is null.
- * 
+ *
  * @version $Revision: 480460 $ $Date: 2006-11-29 09:14:21 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
@@ -40,12 +58,12 @@ public final class ShortCollections
 
   /**
    * Returns an unmodifiable ShortList containing only the specified element.
-   * 
+   *
    * @param value
    *        the single value
    * @return an unmodifiable ShortList containing only the specified element.
    */
-  @Nonnull 
+  @Nonnull
   public static ShortList singletonShortList (final short value)
   {
     // hint: a specialized implementation of ShortList may be more performant
@@ -56,12 +74,12 @@ public final class ShortCollections
 
   /**
    * Returns an unmodifiable ShortIterator containing only the specified element.
-   * 
+   *
    * @param value
    *        the single value
    * @return an unmodifiable ShortIterator containing only the specified element.
    */
-  @Nonnull 
+  @Nonnull
   public static ShortIterator singletonShortIterator (final short value)
   {
     return singletonShortList (value).iterator ();
@@ -70,13 +88,13 @@ public final class ShortCollections
   /**
    * Returns an unmodifiable ShortListIterator containing only the specified
    * element.
-   * 
+   *
    * @param value
    *        the single value
    * @return an unmodifiable ShortListIterator containing only the specified
    *         element.
    */
-  @Nonnull 
+  @Nonnull
   public static ShortListIterator singletonShortListIterator (final short value)
   {
     return singletonShortList (value).listIterator ();
@@ -84,7 +102,7 @@ public final class ShortCollections
 
   /**
    * Returns an unmodifiable version of the given non-null ShortList.
-   * 
+   *
    * @param list
    *        the non-null ShortList to wrap in an unmodifiable decorator
    * @return an unmodifiable version of the given non-null ShortList
@@ -92,7 +110,7 @@ public final class ShortCollections
    *         if the given ShortList is null
    * @see org.apache.commons.collections.primitives.decorators.UnmodifiableShortList#wrap
    */
-  @Nonnull 
+  @Nonnull
   public static ShortList unmodifiableShortList (@Nonnull final ShortList list) throws NullPointerException
   {
     if (null == list)
@@ -102,7 +120,7 @@ public final class ShortCollections
 
   /**
    * Returns an unmodifiable version of the given non-null ShortIterator.
-   * 
+   *
    * @param iter
    *        the non-null ShortIterator to wrap in an unmodifiable decorator
    * @return an unmodifiable version of the given non-null ShortIterator
@@ -120,7 +138,7 @@ public final class ShortCollections
 
   /**
    * Returns an unmodifiable version of the given non-null ShortListIterator.
-   * 
+   *
    * @param iter
    *        the non-null ShortListIterator to wrap in an unmodifiable decorator
    * @return an unmodifiable version of the given non-null ShortListIterator
@@ -138,7 +156,7 @@ public final class ShortCollections
 
   /**
    * Returns an unmodifiable, empty ShortList.
-   * 
+   *
    * @return an unmodifiable, empty ShortList.
    * @see #EMPTY_SHORT_LIST
    */
@@ -150,7 +168,7 @@ public final class ShortCollections
 
   /**
    * Returns an unmodifiable, empty ShortIterator
-   * 
+   *
    * @return an unmodifiable, empty ShortIterator.
    * @see #EMPTY_SHORT_ITERATOR
    */
@@ -162,7 +180,7 @@ public final class ShortCollections
 
   /**
    * Returns an unmodifiable, empty ShortListIterator
-   * 
+   *
    * @return an unmodifiable, empty ShortListIterator.
    * @see #EMPTY_SHORT_LIST_ITERATOR
    */
@@ -174,21 +192,21 @@ public final class ShortCollections
 
   /**
    * An unmodifiable, empty ShortList
-   * 
+   *
    * @see #getEmptyShortList
    */
   public static final ShortList EMPTY_SHORT_LIST = unmodifiableShortList (new ArrayShortList (0));
 
   /**
    * An unmodifiable, empty ShortIterator
-   * 
+   *
    * @see #getEmptyShortIterator
    */
   public static final ShortIterator EMPTY_SHORT_ITERATOR = unmodifiableShortIterator (EMPTY_SHORT_LIST.iterator ());
 
   /**
    * An unmodifiable, empty ShortListIterator
-   * 
+   *
    * @see #getEmptyShortListIterator
    */
   public static final ShortListIterator EMPTY_SHORT_LIST_ITERATOR = unmodifiableShortListIterator (EMPTY_SHORT_LIST.listIterator ());

@@ -1,3 +1,21 @@
+/**
+ * Copyright (C) 2006-2012 phloc systems
+ * http://www.phloc.com
+ * office[at]phloc[dot]com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -28,7 +46,7 @@ import org.apache.commons.collections.primitives.decorators.UnmodifiableBooleanL
  * <p>
  * The methods of this class all throw a NullPointerException if the provided
  * collection is null.
- * 
+ *
  * @version $Revision: 480460 $ $Date: 2006-11-29 09:14:21 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
@@ -40,12 +58,12 @@ public final class BooleanCollections
 
   /**
    * Returns an unmodifiable BooleanList containing only the specified element.
-   * 
+   *
    * @param value
    *        the single value
    * @return an unmodifiable BooleanList containing only the specified element.
    */
-  @Nonnull 
+  @Nonnull
   public static BooleanList singletonBooleanList (final boolean value)
   {
     // hint: a specialized implementation of BooleanList may be more performant
@@ -56,12 +74,12 @@ public final class BooleanCollections
 
   /**
    * Returns an unmodifiable BooleanIterator containing only the specified element.
-   * 
+   *
    * @param value
    *        the single value
    * @return an unmodifiable BooleanIterator containing only the specified element.
    */
-  @Nonnull 
+  @Nonnull
   public static BooleanIterator singletonBooleanIterator (final boolean value)
   {
     return singletonBooleanList (value).iterator ();
@@ -70,13 +88,13 @@ public final class BooleanCollections
   /**
    * Returns an unmodifiable BooleanListIterator containing only the specified
    * element.
-   * 
+   *
    * @param value
    *        the single value
    * @return an unmodifiable BooleanListIterator containing only the specified
    *         element.
    */
-  @Nonnull 
+  @Nonnull
   public static BooleanListIterator singletonBooleanListIterator (final boolean value)
   {
     return singletonBooleanList (value).listIterator ();
@@ -84,7 +102,7 @@ public final class BooleanCollections
 
   /**
    * Returns an unmodifiable version of the given non-null BooleanList.
-   * 
+   *
    * @param list
    *        the non-null BooleanList to wrap in an unmodifiable decorator
    * @return an unmodifiable version of the given non-null BooleanList
@@ -92,7 +110,7 @@ public final class BooleanCollections
    *         if the given BooleanList is null
    * @see org.apache.commons.collections.primitives.decorators.UnmodifiableBooleanList#wrap
    */
-  @Nonnull 
+  @Nonnull
   public static BooleanList unmodifiableBooleanList (@Nonnull final BooleanList list) throws NullPointerException
   {
     if (null == list)
@@ -102,7 +120,7 @@ public final class BooleanCollections
 
   /**
    * Returns an unmodifiable version of the given non-null BooleanIterator.
-   * 
+   *
    * @param iter
    *        the non-null BooleanIterator to wrap in an unmodifiable decorator
    * @return an unmodifiable version of the given non-null BooleanIterator
@@ -120,7 +138,7 @@ public final class BooleanCollections
 
   /**
    * Returns an unmodifiable version of the given non-null BooleanListIterator.
-   * 
+   *
    * @param iter
    *        the non-null BooleanListIterator to wrap in an unmodifiable decorator
    * @return an unmodifiable version of the given non-null BooleanListIterator
@@ -138,7 +156,7 @@ public final class BooleanCollections
 
   /**
    * Returns an unmodifiable, empty BooleanList.
-   * 
+   *
    * @return an unmodifiable, empty BooleanList.
    * @see #EMPTY_BOOLEAN_LIST
    */
@@ -150,7 +168,7 @@ public final class BooleanCollections
 
   /**
    * Returns an unmodifiable, empty BooleanIterator
-   * 
+   *
    * @return an unmodifiable, empty BooleanIterator.
    * @see #EMPTY_BOOLEAN_ITERATOR
    */
@@ -162,7 +180,7 @@ public final class BooleanCollections
 
   /**
    * Returns an unmodifiable, empty BooleanListIterator
-   * 
+   *
    * @return an unmodifiable, empty BooleanListIterator.
    * @see #EMPTY_BOOLEAN_LIST_ITERATOR
    */
@@ -174,21 +192,21 @@ public final class BooleanCollections
 
   /**
    * An unmodifiable, empty BooleanList
-   * 
+   *
    * @see #getEmptyBooleanList
    */
   public static final BooleanList EMPTY_BOOLEAN_LIST = unmodifiableBooleanList (new ArrayBooleanList (0));
 
   /**
    * An unmodifiable, empty BooleanIterator
-   * 
+   *
    * @see #getEmptyBooleanIterator
    */
   public static final BooleanIterator EMPTY_BOOLEAN_ITERATOR = unmodifiableBooleanIterator (EMPTY_BOOLEAN_LIST.iterator ());
 
   /**
    * An unmodifiable, empty BooleanListIterator
-   * 
+   *
    * @see #getEmptyBooleanListIterator
    */
   public static final BooleanListIterator EMPTY_BOOLEAN_LIST_ITERATOR = unmodifiableBooleanListIterator (EMPTY_BOOLEAN_LIST.listIterator ());
