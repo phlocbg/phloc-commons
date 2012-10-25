@@ -26,6 +26,8 @@ import org.apache.commons.collections.primitives.adapters.BaseTestList;
 import org.apache.commons.collections.primitives.adapters.ByteListList;
 import org.apache.commons.collections.primitives.adapters.ListByteList;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
  *          2006) $
@@ -262,6 +264,7 @@ public abstract class TestByteList extends BaseTestList <Byte>
     assertEquals (one.subList (3, 5), one.subList (3, 5));
   }
 
+  @SuppressFBWarnings ("EC_UNRELATED_TYPES")
   public void testEqualsWithByteListAndList ()
   {
     final ByteList ilist = makeEmptyByteList ();

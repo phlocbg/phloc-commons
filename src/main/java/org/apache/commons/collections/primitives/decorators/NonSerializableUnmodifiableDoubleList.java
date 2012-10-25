@@ -34,6 +34,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.DoubleList;
 
 /**
@@ -46,12 +48,13 @@ final class NonSerializableUnmodifiableDoubleList extends BaseUnmodifiableDouble
 {
   private final DoubleList m_aProxied;
 
-  NonSerializableUnmodifiableDoubleList (final DoubleList list)
+  NonSerializableUnmodifiableDoubleList (@Nonnull final DoubleList list)
   {
     m_aProxied = list;
   }
 
   @Override
+  @Nonnull 
   protected DoubleList getProxiedList ()
   {
     return m_aProxied;

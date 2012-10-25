@@ -48,64 +48,69 @@ import org.apache.commons.collections.primitives.FloatListIterator;
  */
 abstract class BaseProxyFloatList extends BaseProxyFloatCollection implements FloatList
 {
+  protected BaseProxyFloatList ()
+  {}
+
+  @Nonnull
   protected abstract FloatList getProxiedList ();
 
   @Override
+  @Nonnull
   protected final FloatCollection getProxiedCollection ()
   {
     return getProxiedList ();
   }
 
-  protected BaseProxyFloatList ()
-  {}
-
-  public void add (final int index, final float element)
+  public void add (final int nIndex, final float aElement)
   {
-    getProxiedList ().add (index, element);
+    getProxiedList ().add (nIndex, aElement);
   }
 
-  public boolean addAll (final int index, @Nonnull final FloatCollection collection)
+  public boolean addAll (final int nIndex, @Nonnull final FloatCollection collection)
   {
-    return getProxiedList ().addAll (index, collection);
+    return getProxiedList ().addAll (nIndex, collection);
   }
 
-  public float get (final int index)
+  public float get (final int nIndex)
   {
-    return getProxiedList ().get (index);
+    return getProxiedList ().get (nIndex);
   }
 
-  public int indexOf (final float element)
+  public int indexOf (final float aElement)
   {
-    return getProxiedList ().indexOf (element);
+    return getProxiedList ().indexOf (aElement);
   }
 
-  public int lastIndexOf (final float element)
+  public int lastIndexOf (final float aElement)
   {
-    return getProxiedList ().lastIndexOf (element);
+    return getProxiedList ().lastIndexOf (aElement);
   }
 
+  @Nonnull
   public FloatListIterator listIterator ()
   {
     return getProxiedList ().listIterator ();
   }
 
-  public FloatListIterator listIterator (final int index)
+  @Nonnull
+  public FloatListIterator listIterator (final int nIndex)
   {
-    return getProxiedList ().listIterator (index);
+    return getProxiedList ().listIterator (nIndex);
   }
 
-  public float removeElementAt (final int index)
+  public float removeElementAt (final int nIndex)
   {
-    return getProxiedList ().removeElementAt (index);
+    return getProxiedList ().removeElementAt (nIndex);
   }
 
-  public float set (final int index, final float element)
+  public float set (final int nIndex, final float aElement)
   {
-    return getProxiedList ().set (index, element);
+    return getProxiedList ().set (nIndex, aElement);
   }
 
-  public FloatList subList (final int fromIndex, final int toIndex)
+  @Nonnull
+  public FloatList subList (final int nFromIndex, final int nToIndex)
   {
-    return getProxiedList ().subList (fromIndex, toIndex);
+    return getProxiedList ().subList (nFromIndex, nToIndex);
   }
 }

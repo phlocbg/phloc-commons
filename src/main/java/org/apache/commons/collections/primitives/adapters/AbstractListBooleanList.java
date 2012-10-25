@@ -68,7 +68,7 @@ abstract class AbstractListBooleanList extends AbstractCollectionBooleanCollecti
     getList ().add (nIndex, Boolean.valueOf (element));
   }
 
-  public boolean addAll (final int index, final BooleanCollection collection)
+  public boolean addAll (final int index, @Nonnull final BooleanCollection collection)
   {
     return getList ().addAll (index, BooleanCollectionCollection.wrap (collection));
   }
@@ -120,9 +120,10 @@ abstract class AbstractListBooleanList extends AbstractCollectionBooleanCollecti
     return getList ().set (index, new Boolean (element)).booleanValue ();
   }
 
-  public BooleanList subList (final int fromIndex, final int toIndex)
+  @Nonnull
+  public BooleanList subList (final int nFromIndex, final int nToIndex)
   {
-    return ListBooleanList.wrap (getList ().subList (fromIndex, toIndex));
+    return ListBooleanList.wrap (getList ().subList (nFromIndex, nToIndex));
   }
 
   @Override

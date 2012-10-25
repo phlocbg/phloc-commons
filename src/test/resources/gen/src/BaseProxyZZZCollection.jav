@@ -34,6 +34,7 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -54,9 +55,9 @@ abstract class BaseProxyZZZCollection implements ZZZCollection
   @Nonnull
   protected abstract ZZZCollection getProxiedCollection ();
 
-  public boolean add (final YYY element)
+  public boolean add (final YYY aElement)
   {
-    return getProxiedCollection ().add (element);
+    return getProxiedCollection ().add (aElement);
   }
 
   public boolean addAll (@Nonnull final ZZZCollection c)
@@ -69,9 +70,9 @@ abstract class BaseProxyZZZCollection implements ZZZCollection
     getProxiedCollection ().clear ();
   }
 
-  public boolean contains (final YYY element)
+  public boolean contains (final YYY aElement)
   {
-    return getProxiedCollection ().contains (element);
+    return getProxiedCollection ().contains (aElement);
   }
 
   public boolean containsAll (@Nonnull final ZZZCollection c)
@@ -84,6 +85,7 @@ abstract class BaseProxyZZZCollection implements ZZZCollection
     return getProxiedCollection ().isEmpty ();
   }
 
+  @Nonnull
   public ZZZIterator iterator ()
   {
     return getProxiedCollection ().iterator ();
@@ -94,9 +96,9 @@ abstract class BaseProxyZZZCollection implements ZZZCollection
     return getProxiedCollection ().removeAll (c);
   }
 
-  public boolean removeElement (final YYY element)
+  public boolean removeElement (final YYY aElement)
   {
-    return getProxiedCollection ().removeElement (element);
+    return getProxiedCollection ().removeElement (aElement);
   }
 
   public boolean retainAll (@Nonnull final ZZZCollection c)
@@ -104,17 +106,20 @@ abstract class BaseProxyZZZCollection implements ZZZCollection
     return getProxiedCollection ().retainAll (c);
   }
 
+  @Nonnegative
   public int size ()
   {
     return getProxiedCollection ().size ();
   }
 
+  @Nonnull
   public YYY [] toArray ()
   {
     return getProxiedCollection ().toArray ();
   }
 
-  public YYY [] toArray (final YYY [] a)
+  @Nonnull
+  public YYY [] toArray (@Nonnull final YYY [] a)
   {
     return getProxiedCollection ().toArray (a);
   }

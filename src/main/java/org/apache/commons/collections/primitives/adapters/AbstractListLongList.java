@@ -68,7 +68,7 @@ abstract class AbstractListLongList extends AbstractCollectionLongCollection imp
     getList ().add (nIndex, Long.valueOf (element));
   }
 
-  public boolean addAll (final int index, final LongCollection collection)
+  public boolean addAll (final int index, @Nonnull final LongCollection collection)
   {
     return getList ().addAll (index, LongCollectionCollection.wrap (collection));
   }
@@ -120,9 +120,10 @@ abstract class AbstractListLongList extends AbstractCollectionLongCollection imp
     return getList ().set (index, new Long (element)).longValue ();
   }
 
-  public LongList subList (final int fromIndex, final int toIndex)
+  @Nonnull
+  public LongList subList (final int nFromIndex, final int nToIndex)
   {
-    return ListLongList.wrap (getList ().subList (fromIndex, toIndex));
+    return ListLongList.wrap (getList ().subList (nFromIndex, nToIndex));
   }
 
   @Override

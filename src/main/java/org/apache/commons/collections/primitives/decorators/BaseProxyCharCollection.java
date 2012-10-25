@@ -34,6 +34,7 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -54,9 +55,9 @@ abstract class BaseProxyCharCollection implements CharCollection
   @Nonnull
   protected abstract CharCollection getProxiedCollection ();
 
-  public boolean add (final char element)
+  public boolean add (final char aElement)
   {
-    return getProxiedCollection ().add (element);
+    return getProxiedCollection ().add (aElement);
   }
 
   public boolean addAll (@Nonnull final CharCollection c)
@@ -69,9 +70,9 @@ abstract class BaseProxyCharCollection implements CharCollection
     getProxiedCollection ().clear ();
   }
 
-  public boolean contains (final char element)
+  public boolean contains (final char aElement)
   {
-    return getProxiedCollection ().contains (element);
+    return getProxiedCollection ().contains (aElement);
   }
 
   public boolean containsAll (@Nonnull final CharCollection c)
@@ -84,6 +85,7 @@ abstract class BaseProxyCharCollection implements CharCollection
     return getProxiedCollection ().isEmpty ();
   }
 
+  @Nonnull
   public CharIterator iterator ()
   {
     return getProxiedCollection ().iterator ();
@@ -94,9 +96,9 @@ abstract class BaseProxyCharCollection implements CharCollection
     return getProxiedCollection ().removeAll (c);
   }
 
-  public boolean removeElement (final char element)
+  public boolean removeElement (final char aElement)
   {
-    return getProxiedCollection ().removeElement (element);
+    return getProxiedCollection ().removeElement (aElement);
   }
 
   public boolean retainAll (@Nonnull final CharCollection c)
@@ -104,17 +106,20 @@ abstract class BaseProxyCharCollection implements CharCollection
     return getProxiedCollection ().retainAll (c);
   }
 
+  @Nonnegative
   public int size ()
   {
     return getProxiedCollection ().size ();
   }
 
+  @Nonnull
   public char [] toArray ()
   {
     return getProxiedCollection ().toArray ();
   }
 
-  public char [] toArray (final char [] a)
+  @Nonnull
+  public char [] toArray (@Nonnull final char [] a)
   {
     return getProxiedCollection ().toArray (a);
   }

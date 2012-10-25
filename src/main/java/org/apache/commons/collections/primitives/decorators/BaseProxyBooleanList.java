@@ -48,64 +48,69 @@ import org.apache.commons.collections.primitives.BooleanListIterator;
  */
 abstract class BaseProxyBooleanList extends BaseProxyBooleanCollection implements BooleanList
 {
+  protected BaseProxyBooleanList ()
+  {}
+
+  @Nonnull
   protected abstract BooleanList getProxiedList ();
 
   @Override
+  @Nonnull
   protected final BooleanCollection getProxiedCollection ()
   {
     return getProxiedList ();
   }
 
-  protected BaseProxyBooleanList ()
-  {}
-
-  public void add (final int index, final boolean element)
+  public void add (final int nIndex, final boolean aElement)
   {
-    getProxiedList ().add (index, element);
+    getProxiedList ().add (nIndex, aElement);
   }
 
-  public boolean addAll (final int index, @Nonnull final BooleanCollection collection)
+  public boolean addAll (final int nIndex, @Nonnull final BooleanCollection collection)
   {
-    return getProxiedList ().addAll (index, collection);
+    return getProxiedList ().addAll (nIndex, collection);
   }
 
-  public boolean get (final int index)
+  public boolean get (final int nIndex)
   {
-    return getProxiedList ().get (index);
+    return getProxiedList ().get (nIndex);
   }
 
-  public int indexOf (final boolean element)
+  public int indexOf (final boolean aElement)
   {
-    return getProxiedList ().indexOf (element);
+    return getProxiedList ().indexOf (aElement);
   }
 
-  public int lastIndexOf (final boolean element)
+  public int lastIndexOf (final boolean aElement)
   {
-    return getProxiedList ().lastIndexOf (element);
+    return getProxiedList ().lastIndexOf (aElement);
   }
 
+  @Nonnull
   public BooleanListIterator listIterator ()
   {
     return getProxiedList ().listIterator ();
   }
 
-  public BooleanListIterator listIterator (final int index)
+  @Nonnull
+  public BooleanListIterator listIterator (final int nIndex)
   {
-    return getProxiedList ().listIterator (index);
+    return getProxiedList ().listIterator (nIndex);
   }
 
-  public boolean removeElementAt (final int index)
+  public boolean removeElementAt (final int nIndex)
   {
-    return getProxiedList ().removeElementAt (index);
+    return getProxiedList ().removeElementAt (nIndex);
   }
 
-  public boolean set (final int index, final boolean element)
+  public boolean set (final int nIndex, final boolean aElement)
   {
-    return getProxiedList ().set (index, element);
+    return getProxiedList ().set (nIndex, aElement);
   }
 
-  public BooleanList subList (final int fromIndex, final int toIndex)
+  @Nonnull
+  public BooleanList subList (final int nFromIndex, final int nToIndex)
   {
-    return getProxiedList ().subList (fromIndex, toIndex);
+    return getProxiedList ().subList (nFromIndex, nToIndex);
   }
 }

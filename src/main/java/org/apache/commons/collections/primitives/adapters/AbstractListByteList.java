@@ -68,7 +68,7 @@ abstract class AbstractListByteList extends AbstractCollectionByteCollection imp
     getList ().add (nIndex, Byte.valueOf (element));
   }
 
-  public boolean addAll (final int index, final ByteCollection collection)
+  public boolean addAll (final int index, @Nonnull final ByteCollection collection)
   {
     return getList ().addAll (index, ByteCollectionCollection.wrap (collection));
   }
@@ -120,9 +120,10 @@ abstract class AbstractListByteList extends AbstractCollectionByteCollection imp
     return getList ().set (index, new Byte (element)).byteValue ();
   }
 
-  public ByteList subList (final int fromIndex, final int toIndex)
+  @Nonnull
+  public ByteList subList (final int nFromIndex, final int nToIndex)
   {
-    return ListByteList.wrap (getList ().subList (fromIndex, toIndex));
+    return ListByteList.wrap (getList ().subList (nFromIndex, nToIndex));
   }
 
   @Override

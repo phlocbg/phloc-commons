@@ -34,6 +34,7 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -54,9 +55,9 @@ abstract class BaseProxyShortCollection implements ShortCollection
   @Nonnull
   protected abstract ShortCollection getProxiedCollection ();
 
-  public boolean add (final short element)
+  public boolean add (final short aElement)
   {
-    return getProxiedCollection ().add (element);
+    return getProxiedCollection ().add (aElement);
   }
 
   public boolean addAll (@Nonnull final ShortCollection c)
@@ -69,9 +70,9 @@ abstract class BaseProxyShortCollection implements ShortCollection
     getProxiedCollection ().clear ();
   }
 
-  public boolean contains (final short element)
+  public boolean contains (final short aElement)
   {
-    return getProxiedCollection ().contains (element);
+    return getProxiedCollection ().contains (aElement);
   }
 
   public boolean containsAll (@Nonnull final ShortCollection c)
@@ -84,6 +85,7 @@ abstract class BaseProxyShortCollection implements ShortCollection
     return getProxiedCollection ().isEmpty ();
   }
 
+  @Nonnull
   public ShortIterator iterator ()
   {
     return getProxiedCollection ().iterator ();
@@ -94,9 +96,9 @@ abstract class BaseProxyShortCollection implements ShortCollection
     return getProxiedCollection ().removeAll (c);
   }
 
-  public boolean removeElement (final short element)
+  public boolean removeElement (final short aElement)
   {
-    return getProxiedCollection ().removeElement (element);
+    return getProxiedCollection ().removeElement (aElement);
   }
 
   public boolean retainAll (@Nonnull final ShortCollection c)
@@ -104,17 +106,20 @@ abstract class BaseProxyShortCollection implements ShortCollection
     return getProxiedCollection ().retainAll (c);
   }
 
+  @Nonnegative
   public int size ()
   {
     return getProxiedCollection ().size ();
   }
 
+  @Nonnull
   public short [] toArray ()
   {
     return getProxiedCollection ().toArray ();
   }
 
-  public short [] toArray (final short [] a)
+  @Nonnull
+  public short [] toArray (@Nonnull final short [] a)
   {
     return getProxiedCollection ().toArray (a);
   }

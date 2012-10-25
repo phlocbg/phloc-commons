@@ -34,6 +34,7 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -54,9 +55,9 @@ abstract class BaseProxyLongCollection implements LongCollection
   @Nonnull
   protected abstract LongCollection getProxiedCollection ();
 
-  public boolean add (final long element)
+  public boolean add (final long aElement)
   {
-    return getProxiedCollection ().add (element);
+    return getProxiedCollection ().add (aElement);
   }
 
   public boolean addAll (@Nonnull final LongCollection c)
@@ -69,9 +70,9 @@ abstract class BaseProxyLongCollection implements LongCollection
     getProxiedCollection ().clear ();
   }
 
-  public boolean contains (final long element)
+  public boolean contains (final long aElement)
   {
-    return getProxiedCollection ().contains (element);
+    return getProxiedCollection ().contains (aElement);
   }
 
   public boolean containsAll (@Nonnull final LongCollection c)
@@ -84,6 +85,7 @@ abstract class BaseProxyLongCollection implements LongCollection
     return getProxiedCollection ().isEmpty ();
   }
 
+  @Nonnull
   public LongIterator iterator ()
   {
     return getProxiedCollection ().iterator ();
@@ -94,9 +96,9 @@ abstract class BaseProxyLongCollection implements LongCollection
     return getProxiedCollection ().removeAll (c);
   }
 
-  public boolean removeElement (final long element)
+  public boolean removeElement (final long aElement)
   {
-    return getProxiedCollection ().removeElement (element);
+    return getProxiedCollection ().removeElement (aElement);
   }
 
   public boolean retainAll (@Nonnull final LongCollection c)
@@ -104,17 +106,20 @@ abstract class BaseProxyLongCollection implements LongCollection
     return getProxiedCollection ().retainAll (c);
   }
 
+  @Nonnegative
   public int size ()
   {
     return getProxiedCollection ().size ();
   }
 
+  @Nonnull
   public long [] toArray ()
   {
     return getProxiedCollection ().toArray ();
   }
 
-  public long [] toArray (final long [] a)
+  @Nonnull
+  public long [] toArray (@Nonnull final long [] a)
   {
     return getProxiedCollection ().toArray (a);
   }

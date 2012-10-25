@@ -26,6 +26,8 @@ import org.apache.commons.collections.primitives.adapters.BaseTestList;
 import org.apache.commons.collections.primitives.adapters.IntListList;
 import org.apache.commons.collections.primitives.adapters.ListIntList;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
  *          2006) $
@@ -33,7 +35,6 @@ import org.apache.commons.collections.primitives.adapters.ListIntList;
  */
 public abstract class TestIntList extends BaseTestList <Integer>
 {
-
   // conventional
   // ------------------------------------------------------------------------
 
@@ -262,6 +263,7 @@ public abstract class TestIntList extends BaseTestList <Integer>
     assertEquals (one.subList (3, 5), one.subList (3, 5));
   }
 
+  @SuppressFBWarnings ("EC_UNRELATED_TYPES")
   public void testEqualsWithIntListAndList ()
   {
     final IntList ilist = makeEmptyIntList ();

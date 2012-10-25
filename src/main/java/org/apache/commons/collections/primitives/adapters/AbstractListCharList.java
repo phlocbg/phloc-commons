@@ -68,7 +68,7 @@ abstract class AbstractListCharList extends AbstractCollectionCharCollection imp
     getList ().add (nIndex, Character.valueOf (element));
   }
 
-  public boolean addAll (final int index, final CharCollection collection)
+  public boolean addAll (final int index, @Nonnull final CharCollection collection)
   {
     return getList ().addAll (index, CharCollectionCollection.wrap (collection));
   }
@@ -120,9 +120,10 @@ abstract class AbstractListCharList extends AbstractCollectionCharCollection imp
     return getList ().set (index, new Character (element)).charValue ();
   }
 
-  public CharList subList (final int fromIndex, final int toIndex)
+  @Nonnull
+  public CharList subList (final int nFromIndex, final int nToIndex)
   {
-    return ListCharList.wrap (getList ().subList (fromIndex, toIndex));
+    return ListCharList.wrap (getList ().subList (nFromIndex, nToIndex));
   }
 
   @Override

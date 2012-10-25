@@ -34,6 +34,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.FloatList;
 
 /**
@@ -46,12 +48,13 @@ final class NonSerializableUnmodifiableFloatList extends BaseUnmodifiableFloatLi
 {
   private final FloatList m_aProxied;
 
-  NonSerializableUnmodifiableFloatList (final FloatList list)
+  NonSerializableUnmodifiableFloatList (@Nonnull final FloatList list)
   {
     m_aProxied = list;
   }
 
   @Override
+  @Nonnull 
   protected FloatList getProxiedList ()
   {
     return m_aProxied;

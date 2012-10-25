@@ -34,6 +34,7 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -54,9 +55,9 @@ abstract class BaseProxyByteCollection implements ByteCollection
   @Nonnull
   protected abstract ByteCollection getProxiedCollection ();
 
-  public boolean add (final byte element)
+  public boolean add (final byte aElement)
   {
-    return getProxiedCollection ().add (element);
+    return getProxiedCollection ().add (aElement);
   }
 
   public boolean addAll (@Nonnull final ByteCollection c)
@@ -69,9 +70,9 @@ abstract class BaseProxyByteCollection implements ByteCollection
     getProxiedCollection ().clear ();
   }
 
-  public boolean contains (final byte element)
+  public boolean contains (final byte aElement)
   {
-    return getProxiedCollection ().contains (element);
+    return getProxiedCollection ().contains (aElement);
   }
 
   public boolean containsAll (@Nonnull final ByteCollection c)
@@ -84,6 +85,7 @@ abstract class BaseProxyByteCollection implements ByteCollection
     return getProxiedCollection ().isEmpty ();
   }
 
+  @Nonnull
   public ByteIterator iterator ()
   {
     return getProxiedCollection ().iterator ();
@@ -94,9 +96,9 @@ abstract class BaseProxyByteCollection implements ByteCollection
     return getProxiedCollection ().removeAll (c);
   }
 
-  public boolean removeElement (final byte element)
+  public boolean removeElement (final byte aElement)
   {
-    return getProxiedCollection ().removeElement (element);
+    return getProxiedCollection ().removeElement (aElement);
   }
 
   public boolean retainAll (@Nonnull final ByteCollection c)
@@ -104,17 +106,20 @@ abstract class BaseProxyByteCollection implements ByteCollection
     return getProxiedCollection ().retainAll (c);
   }
 
+  @Nonnegative
   public int size ()
   {
     return getProxiedCollection ().size ();
   }
 
+  @Nonnull
   public byte [] toArray ()
   {
     return getProxiedCollection ().toArray ();
   }
 
-  public byte [] toArray (final byte [] a)
+  @Nonnull
+  public byte [] toArray (@Nonnull final byte [] a)
   {
     return getProxiedCollection ().toArray (a);
   }
