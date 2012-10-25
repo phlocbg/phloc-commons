@@ -22,6 +22,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * An {@link IntList} backed by an array of unsigned <code>short</code> values.
  * This list stores <code>int</code> values in the range [{@link #MIN_VALUE
@@ -36,6 +38,7 @@ import java.io.Serializable;
  *          2006) $
  * @author Rodney Waldhoff
  */
+@SuppressFBWarnings ("SE_NO_SERIALVERSIONID")
 public class ArrayUnsignedShortList extends RandomAccessIntList implements Serializable
 {
   /** The maximum possible unsigned 16-bit value (<code>0xFFFF</code>). */
@@ -44,7 +47,7 @@ public class ArrayUnsignedShortList extends RandomAccessIntList implements Seria
   /** The minimum possible unsigned 16-bit value (<code>0x0000</code>). */
   public static final int MIN_VALUE = 0;
 
-  private short [] _data;
+  private transient short [] _data;
   private int _size;
 
   /**
@@ -100,7 +103,7 @@ public class ArrayUnsignedShortList extends RandomAccessIntList implements Seria
     this (array.length);
     for (int i = 0; i < array.length; i++)
     {
-      _data[i] = fromInt (array[i]);
+      _data[i] = _fromInt (array[i]);
     }
     _size = array.length;
   }
@@ -122,8 +125,8 @@ public class ArrayUnsignedShortList extends RandomAccessIntList implements Seria
   @Override
   public int get (final int index)
   {
-    checkRange (index);
-    return toInt (_data[index]);
+    _checkRange (index);
+    return _toInt (_data[index]);
   }
 
   @Override
@@ -150,9 +153,9 @@ public class ArrayUnsignedShortList extends RandomAccessIntList implements Seria
   @Override
   public int removeElementAt (final int index)
   {
-    checkRange (index);
+    _checkRange (index);
     incrModCount ();
-    final int oldval = toInt (_data[index]);
+    final int oldval = _toInt (_data[index]);
     final int numtomove = _size - index - 1;
     if (numtomove > 0)
     {
@@ -181,11 +184,11 @@ public class ArrayUnsignedShortList extends RandomAccessIntList implements Seria
   @Override
   public int set (final int index, final int element)
   {
-    assertValidUnsignedShort (element);
-    checkRange (index);
+    _assertValidUnsignedShort (element);
+    _checkRange (index);
     incrModCount ();
-    final int oldval = toInt (_data[index]);
-    _data[index] = fromInt (element);
+    final int oldval = _toInt (_data[index]);
+    _data[index] = _fromInt (element);
     return oldval;
   }
 
@@ -211,13 +214,13 @@ public class ArrayUnsignedShortList extends RandomAccessIntList implements Seria
   @Override
   public void add (final int index, final int element)
   {
-    assertValidUnsignedShort (element);
-    checkRangeIncludingEndpoint (index);
+    _assertValidUnsignedShort (element);
+    _checkRangeIncludingEndpoint (index);
     incrModCount ();
     ensureCapacity (_size + 1);
     final int numtomove = _size - index;
     System.arraycopy (_data, index, _data, index + 1, numtomove);
-    _data[index] = fromInt (element);
+    _data[index] = _fromInt (element);
     _size++;
   }
 
@@ -265,17 +268,17 @@ public class ArrayUnsignedShortList extends RandomAccessIntList implements Seria
   // private methods
   // -------------------------------------------------------------------------
 
-  private final int toInt (final short value)
+  private final int _toInt (final short value)
   {
     return value & MAX_VALUE;
   }
 
-  private final short fromInt (final int value)
+  private final short _fromInt (final int value)
   {
     return (short) (value & MAX_VALUE);
   }
 
-  private final void assertValidUnsignedShort (final int value) throws IllegalArgumentException
+  private final void _assertValidUnsignedShort (final int value) throws IllegalArgumentException
   {
     if (value > MAX_VALUE)
     {
@@ -292,9 +295,7 @@ public class ArrayUnsignedShortList extends RandomAccessIntList implements Seria
     out.defaultWriteObject ();
     out.writeInt (_data.length);
     for (int i = 0; i < _size; i++)
-    {
       out.writeShort (_data[i]);
-    }
   }
 
   private void readObject (final ObjectInputStream in) throws IOException, ClassNotFoundException
@@ -302,24 +303,18 @@ public class ArrayUnsignedShortList extends RandomAccessIntList implements Seria
     in.defaultReadObject ();
     _data = new short [in.readInt ()];
     for (int i = 0; i < _size; i++)
-    {
       _data[i] = in.readShort ();
-    }
   }
 
-  private final void checkRange (final int index)
+  private final void _checkRange (final int index)
   {
     if (index < 0 || index >= _size)
-    {
       throw new IndexOutOfBoundsException ("Should be at least 0 and less than " + _size + ", found " + index);
-    }
   }
 
-  private final void checkRangeIncludingEndpoint (final int index)
+  private final void _checkRangeIncludingEndpoint (final int index)
   {
     if (index < 0 || index > _size)
-    {
       throw new IndexOutOfBoundsException ("Should be at least 0 and at most " + _size + ", found " + index);
-    }
   }
 }
