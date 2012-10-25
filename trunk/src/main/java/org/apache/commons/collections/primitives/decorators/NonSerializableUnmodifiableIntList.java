@@ -34,6 +34,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.IntList;
 
 /**
@@ -46,12 +48,13 @@ final class NonSerializableUnmodifiableIntList extends BaseUnmodifiableIntList
 {
   private final IntList m_aProxied;
 
-  NonSerializableUnmodifiableIntList (final IntList list)
+  NonSerializableUnmodifiableIntList (@Nonnull final IntList list)
   {
     m_aProxied = list;
   }
 
   @Override
+  @Nonnull 
   protected IntList getProxiedList ()
   {
     return m_aProxied;

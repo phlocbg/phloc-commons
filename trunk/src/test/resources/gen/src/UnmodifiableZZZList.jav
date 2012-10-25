@@ -34,6 +34,9 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import javax.annotation.Nonnull;
@@ -61,6 +64,18 @@ public final class UnmodifiableZZZList extends BaseUnmodifiableZZZList implement
   protected ZZZList getProxiedList ()
   {
     return m_aProxied;
+  }
+
+  private void writeObject (@Nonnull final ObjectOutputStream out) throws IOException
+  {
+    out.defaultWriteObject ();
+    out.writeObject (m_aProxied);
+  }
+
+  private void readObject (@Nonnull final ObjectInputStream in) throws IOException, ClassNotFoundException
+  {
+    in.defaultReadObject ();
+    m_aProxied = (ZZZList) in.readObject ();
   }
 
   @Nullable

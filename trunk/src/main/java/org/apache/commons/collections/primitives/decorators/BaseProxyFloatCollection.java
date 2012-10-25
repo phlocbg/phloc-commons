@@ -34,6 +34,7 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -54,9 +55,9 @@ abstract class BaseProxyFloatCollection implements FloatCollection
   @Nonnull
   protected abstract FloatCollection getProxiedCollection ();
 
-  public boolean add (final float element)
+  public boolean add (final float aElement)
   {
-    return getProxiedCollection ().add (element);
+    return getProxiedCollection ().add (aElement);
   }
 
   public boolean addAll (@Nonnull final FloatCollection c)
@@ -69,9 +70,9 @@ abstract class BaseProxyFloatCollection implements FloatCollection
     getProxiedCollection ().clear ();
   }
 
-  public boolean contains (final float element)
+  public boolean contains (final float aElement)
   {
-    return getProxiedCollection ().contains (element);
+    return getProxiedCollection ().contains (aElement);
   }
 
   public boolean containsAll (@Nonnull final FloatCollection c)
@@ -84,6 +85,7 @@ abstract class BaseProxyFloatCollection implements FloatCollection
     return getProxiedCollection ().isEmpty ();
   }
 
+  @Nonnull
   public FloatIterator iterator ()
   {
     return getProxiedCollection ().iterator ();
@@ -94,9 +96,9 @@ abstract class BaseProxyFloatCollection implements FloatCollection
     return getProxiedCollection ().removeAll (c);
   }
 
-  public boolean removeElement (final float element)
+  public boolean removeElement (final float aElement)
   {
-    return getProxiedCollection ().removeElement (element);
+    return getProxiedCollection ().removeElement (aElement);
   }
 
   public boolean retainAll (@Nonnull final FloatCollection c)
@@ -104,17 +106,20 @@ abstract class BaseProxyFloatCollection implements FloatCollection
     return getProxiedCollection ().retainAll (c);
   }
 
+  @Nonnegative
   public int size ()
   {
     return getProxiedCollection ().size ();
   }
 
+  @Nonnull
   public float [] toArray ()
   {
     return getProxiedCollection ().toArray ();
   }
 
-  public float [] toArray (final float [] a)
+  @Nonnull
+  public float [] toArray (@Nonnull final float [] a)
   {
     return getProxiedCollection ().toArray (a);
   }

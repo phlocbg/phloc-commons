@@ -34,6 +34,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.ByteList;
 
 /**
@@ -46,12 +48,13 @@ final class NonSerializableUnmodifiableByteList extends BaseUnmodifiableByteList
 {
   private final ByteList m_aProxied;
 
-  NonSerializableUnmodifiableByteList (final ByteList list)
+  NonSerializableUnmodifiableByteList (@Nonnull final ByteList list)
   {
     m_aProxied = list;
   }
 
   @Override
+  @Nonnull 
   protected ByteList getProxiedList ()
   {
     return m_aProxied;

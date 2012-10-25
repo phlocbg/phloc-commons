@@ -34,6 +34,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.BooleanList;
 
 /**
@@ -46,12 +48,13 @@ final class NonSerializableUnmodifiableBooleanList extends BaseUnmodifiableBoole
 {
   private final BooleanList m_aProxied;
 
-  NonSerializableUnmodifiableBooleanList (final BooleanList list)
+  NonSerializableUnmodifiableBooleanList (@Nonnull final BooleanList list)
   {
     m_aProxied = list;
   }
 
   @Override
+  @Nonnull 
   protected BooleanList getProxiedList ()
   {
     return m_aProxied;

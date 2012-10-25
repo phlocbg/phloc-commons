@@ -48,64 +48,69 @@ import org.apache.commons.collections.primitives.ZZZListIterator;
  */
 abstract class BaseProxyZZZList extends BaseProxyZZZCollection implements ZZZList
 {
+  protected BaseProxyZZZList ()
+  {}
+
+  @Nonnull
   protected abstract ZZZList getProxiedList ();
 
   @Override
+  @Nonnull
   protected final ZZZCollection getProxiedCollection ()
   {
     return getProxiedList ();
   }
 
-  protected BaseProxyZZZList ()
-  {}
-
-  public void add (final int index, final YYY element)
+  public void add (final int nIndex, final YYY aElement)
   {
-    getProxiedList ().add (index, element);
+    getProxiedList ().add (nIndex, aElement);
   }
 
-  public boolean addAll (final int index, @Nonnull final ZZZCollection collection)
+  public boolean addAll (final int nIndex, @Nonnull final ZZZCollection collection)
   {
-    return getProxiedList ().addAll (index, collection);
+    return getProxiedList ().addAll (nIndex, collection);
   }
 
-  public YYY get (final int index)
+  public YYY get (final int nIndex)
   {
-    return getProxiedList ().get (index);
+    return getProxiedList ().get (nIndex);
   }
 
-  public int indexOf (final YYY element)
+  public int indexOf (final YYY aElement)
   {
-    return getProxiedList ().indexOf (element);
+    return getProxiedList ().indexOf (aElement);
   }
 
-  public int lastIndexOf (final YYY element)
+  public int lastIndexOf (final YYY aElement)
   {
-    return getProxiedList ().lastIndexOf (element);
+    return getProxiedList ().lastIndexOf (aElement);
   }
 
+  @Nonnull
   public ZZZListIterator listIterator ()
   {
     return getProxiedList ().listIterator ();
   }
 
-  public ZZZListIterator listIterator (final int index)
+  @Nonnull
+  public ZZZListIterator listIterator (final int nIndex)
   {
-    return getProxiedList ().listIterator (index);
+    return getProxiedList ().listIterator (nIndex);
   }
 
-  public YYY removeElementAt (final int index)
+  public YYY removeElementAt (final int nIndex)
   {
-    return getProxiedList ().removeElementAt (index);
+    return getProxiedList ().removeElementAt (nIndex);
   }
 
-  public YYY set (final int index, final YYY element)
+  public YYY set (final int nIndex, final YYY aElement)
   {
-    return getProxiedList ().set (index, element);
+    return getProxiedList ().set (nIndex, aElement);
   }
 
-  public ZZZList subList (final int fromIndex, final int toIndex)
+  @Nonnull
+  public ZZZList subList (final int nFromIndex, final int nToIndex)
   {
-    return getProxiedList ().subList (fromIndex, toIndex);
+    return getProxiedList ().subList (nFromIndex, nToIndex);
   }
 }

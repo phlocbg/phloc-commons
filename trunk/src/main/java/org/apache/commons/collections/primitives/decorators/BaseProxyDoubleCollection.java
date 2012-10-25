@@ -34,6 +34,7 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -54,9 +55,9 @@ abstract class BaseProxyDoubleCollection implements DoubleCollection
   @Nonnull
   protected abstract DoubleCollection getProxiedCollection ();
 
-  public boolean add (final double element)
+  public boolean add (final double aElement)
   {
-    return getProxiedCollection ().add (element);
+    return getProxiedCollection ().add (aElement);
   }
 
   public boolean addAll (@Nonnull final DoubleCollection c)
@@ -69,9 +70,9 @@ abstract class BaseProxyDoubleCollection implements DoubleCollection
     getProxiedCollection ().clear ();
   }
 
-  public boolean contains (final double element)
+  public boolean contains (final double aElement)
   {
-    return getProxiedCollection ().contains (element);
+    return getProxiedCollection ().contains (aElement);
   }
 
   public boolean containsAll (@Nonnull final DoubleCollection c)
@@ -84,6 +85,7 @@ abstract class BaseProxyDoubleCollection implements DoubleCollection
     return getProxiedCollection ().isEmpty ();
   }
 
+  @Nonnull
   public DoubleIterator iterator ()
   {
     return getProxiedCollection ().iterator ();
@@ -94,9 +96,9 @@ abstract class BaseProxyDoubleCollection implements DoubleCollection
     return getProxiedCollection ().removeAll (c);
   }
 
-  public boolean removeElement (final double element)
+  public boolean removeElement (final double aElement)
   {
-    return getProxiedCollection ().removeElement (element);
+    return getProxiedCollection ().removeElement (aElement);
   }
 
   public boolean retainAll (@Nonnull final DoubleCollection c)
@@ -104,17 +106,20 @@ abstract class BaseProxyDoubleCollection implements DoubleCollection
     return getProxiedCollection ().retainAll (c);
   }
 
+  @Nonnegative
   public int size ()
   {
     return getProxiedCollection ().size ();
   }
 
+  @Nonnull
   public double [] toArray ()
   {
     return getProxiedCollection ().toArray ();
   }
 
-  public double [] toArray (final double [] a)
+  @Nonnull
+  public double [] toArray (@Nonnull final double [] a)
   {
     return getProxiedCollection ().toArray (a);
   }

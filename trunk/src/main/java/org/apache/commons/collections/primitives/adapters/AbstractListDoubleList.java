@@ -68,7 +68,7 @@ abstract class AbstractListDoubleList extends AbstractCollectionDoubleCollection
     getList ().add (nIndex, Double.valueOf (element));
   }
 
-  public boolean addAll (final int index, final DoubleCollection collection)
+  public boolean addAll (final int index, @Nonnull final DoubleCollection collection)
   {
     return getList ().addAll (index, DoubleCollectionCollection.wrap (collection));
   }
@@ -120,9 +120,10 @@ abstract class AbstractListDoubleList extends AbstractCollectionDoubleCollection
     return getList ().set (index, new Double (element)).doubleValue ();
   }
 
-  public DoubleList subList (final int fromIndex, final int toIndex)
+  @Nonnull
+  public DoubleList subList (final int nFromIndex, final int nToIndex)
   {
-    return ListDoubleList.wrap (getList ().subList (fromIndex, toIndex));
+    return ListDoubleList.wrap (getList ().subList (nFromIndex, nToIndex));
   }
 
   @Override

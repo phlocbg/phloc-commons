@@ -34,6 +34,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.ShortList;
 
 /**
@@ -46,12 +48,13 @@ final class NonSerializableUnmodifiableShortList extends BaseUnmodifiableShortLi
 {
   private final ShortList m_aProxied;
 
-  NonSerializableUnmodifiableShortList (final ShortList list)
+  NonSerializableUnmodifiableShortList (@Nonnull final ShortList list)
   {
     m_aProxied = list;
   }
 
   @Override
+  @Nonnull 
   protected ShortList getProxiedList ()
   {
     return m_aProxied;

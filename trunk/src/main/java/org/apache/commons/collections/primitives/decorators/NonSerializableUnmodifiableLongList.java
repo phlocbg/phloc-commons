@@ -34,6 +34,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.LongList;
 
 /**
@@ -46,12 +48,13 @@ final class NonSerializableUnmodifiableLongList extends BaseUnmodifiableLongList
 {
   private final LongList m_aProxied;
 
-  NonSerializableUnmodifiableLongList (final LongList list)
+  NonSerializableUnmodifiableLongList (@Nonnull final LongList list)
   {
     m_aProxied = list;
   }
 
   @Override
+  @Nonnull 
   protected LongList getProxiedList ()
   {
     return m_aProxied;

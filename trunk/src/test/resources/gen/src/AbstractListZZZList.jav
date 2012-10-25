@@ -68,7 +68,7 @@ abstract class AbstractListZZZList extends AbstractCollectionZZZCollection imple
     getList ().add (nIndex, XXX.valueOf (element));
   }
 
-  public boolean addAll (final int index, final ZZZCollection collection)
+  public boolean addAll (final int index, @Nonnull final ZZZCollection collection)
   {
     return getList ().addAll (index, ZZZCollectionCollection.wrap (collection));
   }
@@ -120,9 +120,10 @@ abstract class AbstractListZZZList extends AbstractCollectionZZZCollection imple
     return getList ().set (index, new XXX (element)).YYYValue ();
   }
 
-  public ZZZList subList (final int fromIndex, final int toIndex)
+  @Nonnull
+  public ZZZList subList (final int nFromIndex, final int nToIndex)
   {
-    return ListZZZList.wrap (getList ().subList (fromIndex, toIndex));
+    return ListZZZList.wrap (getList ().subList (nFromIndex, nToIndex));
   }
 
   @Override

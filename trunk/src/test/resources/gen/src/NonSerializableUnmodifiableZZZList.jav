@@ -34,6 +34,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.ZZZList;
 
 /**
@@ -46,12 +48,13 @@ final class NonSerializableUnmodifiableZZZList extends BaseUnmodifiableZZZList
 {
   private final ZZZList m_aProxied;
 
-  NonSerializableUnmodifiableZZZList (final ZZZList list)
+  NonSerializableUnmodifiableZZZList (@Nonnull final ZZZList list)
   {
     m_aProxied = list;
   }
 
   @Override
+  @Nonnull 
   protected ZZZList getProxiedList ()
   {
     return m_aProxied;

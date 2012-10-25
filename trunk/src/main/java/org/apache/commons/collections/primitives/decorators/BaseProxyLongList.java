@@ -48,64 +48,69 @@ import org.apache.commons.collections.primitives.LongListIterator;
  */
 abstract class BaseProxyLongList extends BaseProxyLongCollection implements LongList
 {
+  protected BaseProxyLongList ()
+  {}
+
+  @Nonnull
   protected abstract LongList getProxiedList ();
 
   @Override
+  @Nonnull
   protected final LongCollection getProxiedCollection ()
   {
     return getProxiedList ();
   }
 
-  protected BaseProxyLongList ()
-  {}
-
-  public void add (final int index, final long element)
+  public void add (final int nIndex, final long aElement)
   {
-    getProxiedList ().add (index, element);
+    getProxiedList ().add (nIndex, aElement);
   }
 
-  public boolean addAll (final int index, @Nonnull final LongCollection collection)
+  public boolean addAll (final int nIndex, @Nonnull final LongCollection collection)
   {
-    return getProxiedList ().addAll (index, collection);
+    return getProxiedList ().addAll (nIndex, collection);
   }
 
-  public long get (final int index)
+  public long get (final int nIndex)
   {
-    return getProxiedList ().get (index);
+    return getProxiedList ().get (nIndex);
   }
 
-  public int indexOf (final long element)
+  public int indexOf (final long aElement)
   {
-    return getProxiedList ().indexOf (element);
+    return getProxiedList ().indexOf (aElement);
   }
 
-  public int lastIndexOf (final long element)
+  public int lastIndexOf (final long aElement)
   {
-    return getProxiedList ().lastIndexOf (element);
+    return getProxiedList ().lastIndexOf (aElement);
   }
 
+  @Nonnull
   public LongListIterator listIterator ()
   {
     return getProxiedList ().listIterator ();
   }
 
-  public LongListIterator listIterator (final int index)
+  @Nonnull
+  public LongListIterator listIterator (final int nIndex)
   {
-    return getProxiedList ().listIterator (index);
+    return getProxiedList ().listIterator (nIndex);
   }
 
-  public long removeElementAt (final int index)
+  public long removeElementAt (final int nIndex)
   {
-    return getProxiedList ().removeElementAt (index);
+    return getProxiedList ().removeElementAt (nIndex);
   }
 
-  public long set (final int index, final long element)
+  public long set (final int nIndex, final long aElement)
   {
-    return getProxiedList ().set (index, element);
+    return getProxiedList ().set (nIndex, aElement);
   }
 
-  public LongList subList (final int fromIndex, final int toIndex)
+  @Nonnull
+  public LongList subList (final int nFromIndex, final int nToIndex)
   {
-    return getProxiedList ().subList (fromIndex, toIndex);
+    return getProxiedList ().subList (nFromIndex, nToIndex);
   }
 }

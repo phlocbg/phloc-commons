@@ -34,6 +34,8 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.CharList;
 
 /**
@@ -46,12 +48,13 @@ final class NonSerializableUnmodifiableCharList extends BaseUnmodifiableCharList
 {
   private final CharList m_aProxied;
 
-  NonSerializableUnmodifiableCharList (final CharList list)
+  NonSerializableUnmodifiableCharList (@Nonnull final CharList list)
   {
     m_aProxied = list;
   }
 
   @Override
+  @Nonnull 
   protected CharList getProxiedList ()
   {
     return m_aProxied;

@@ -68,7 +68,7 @@ abstract class AbstractListFloatList extends AbstractCollectionFloatCollection i
     getList ().add (nIndex, Float.valueOf (element));
   }
 
-  public boolean addAll (final int index, final FloatCollection collection)
+  public boolean addAll (final int index, @Nonnull final FloatCollection collection)
   {
     return getList ().addAll (index, FloatCollectionCollection.wrap (collection));
   }
@@ -120,9 +120,10 @@ abstract class AbstractListFloatList extends AbstractCollectionFloatCollection i
     return getList ().set (index, new Float (element)).floatValue ();
   }
 
-  public FloatList subList (final int fromIndex, final int toIndex)
+  @Nonnull
+  public FloatList subList (final int nFromIndex, final int nToIndex)
   {
-    return ListFloatList.wrap (getList ().subList (fromIndex, toIndex));
+    return ListFloatList.wrap (getList ().subList (nFromIndex, nToIndex));
   }
 
   @Override

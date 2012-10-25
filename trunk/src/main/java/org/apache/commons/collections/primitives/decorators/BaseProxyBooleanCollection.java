@@ -34,6 +34,7 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -54,9 +55,9 @@ abstract class BaseProxyBooleanCollection implements BooleanCollection
   @Nonnull
   protected abstract BooleanCollection getProxiedCollection ();
 
-  public boolean add (final boolean element)
+  public boolean add (final boolean aElement)
   {
-    return getProxiedCollection ().add (element);
+    return getProxiedCollection ().add (aElement);
   }
 
   public boolean addAll (@Nonnull final BooleanCollection c)
@@ -69,9 +70,9 @@ abstract class BaseProxyBooleanCollection implements BooleanCollection
     getProxiedCollection ().clear ();
   }
 
-  public boolean contains (final boolean element)
+  public boolean contains (final boolean aElement)
   {
-    return getProxiedCollection ().contains (element);
+    return getProxiedCollection ().contains (aElement);
   }
 
   public boolean containsAll (@Nonnull final BooleanCollection c)
@@ -84,6 +85,7 @@ abstract class BaseProxyBooleanCollection implements BooleanCollection
     return getProxiedCollection ().isEmpty ();
   }
 
+  @Nonnull
   public BooleanIterator iterator ()
   {
     return getProxiedCollection ().iterator ();
@@ -94,9 +96,9 @@ abstract class BaseProxyBooleanCollection implements BooleanCollection
     return getProxiedCollection ().removeAll (c);
   }
 
-  public boolean removeElement (final boolean element)
+  public boolean removeElement (final boolean aElement)
   {
-    return getProxiedCollection ().removeElement (element);
+    return getProxiedCollection ().removeElement (aElement);
   }
 
   public boolean retainAll (@Nonnull final BooleanCollection c)
@@ -104,17 +106,20 @@ abstract class BaseProxyBooleanCollection implements BooleanCollection
     return getProxiedCollection ().retainAll (c);
   }
 
+  @Nonnegative
   public int size ()
   {
     return getProxiedCollection ().size ();
   }
 
+  @Nonnull
   public boolean [] toArray ()
   {
     return getProxiedCollection ().toArray ();
   }
 
-  public boolean [] toArray (final boolean [] a)
+  @Nonnull
+  public boolean [] toArray (@Nonnull final boolean [] a)
   {
     return getProxiedCollection ().toArray (a);
   }

@@ -34,6 +34,7 @@
  */
 package org.apache.commons.collections.primitives.decorators;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -54,9 +55,9 @@ abstract class BaseProxyIntCollection implements IntCollection
   @Nonnull
   protected abstract IntCollection getProxiedCollection ();
 
-  public boolean add (final int element)
+  public boolean add (final int aElement)
   {
-    return getProxiedCollection ().add (element);
+    return getProxiedCollection ().add (aElement);
   }
 
   public boolean addAll (@Nonnull final IntCollection c)
@@ -69,9 +70,9 @@ abstract class BaseProxyIntCollection implements IntCollection
     getProxiedCollection ().clear ();
   }
 
-  public boolean contains (final int element)
+  public boolean contains (final int aElement)
   {
-    return getProxiedCollection ().contains (element);
+    return getProxiedCollection ().contains (aElement);
   }
 
   public boolean containsAll (@Nonnull final IntCollection c)
@@ -84,6 +85,7 @@ abstract class BaseProxyIntCollection implements IntCollection
     return getProxiedCollection ().isEmpty ();
   }
 
+  @Nonnull
   public IntIterator iterator ()
   {
     return getProxiedCollection ().iterator ();
@@ -94,9 +96,9 @@ abstract class BaseProxyIntCollection implements IntCollection
     return getProxiedCollection ().removeAll (c);
   }
 
-  public boolean removeElement (final int element)
+  public boolean removeElement (final int aElement)
   {
-    return getProxiedCollection ().removeElement (element);
+    return getProxiedCollection ().removeElement (aElement);
   }
 
   public boolean retainAll (@Nonnull final IntCollection c)
@@ -104,17 +106,20 @@ abstract class BaseProxyIntCollection implements IntCollection
     return getProxiedCollection ().retainAll (c);
   }
 
+  @Nonnegative
   public int size ()
   {
     return getProxiedCollection ().size ();
   }
 
+  @Nonnull
   public int [] toArray ()
   {
     return getProxiedCollection ().toArray ();
   }
 
-  public int [] toArray (final int [] a)
+  @Nonnull
+  public int [] toArray (@Nonnull final int [] a)
   {
     return getProxiedCollection ().toArray (a);
   }

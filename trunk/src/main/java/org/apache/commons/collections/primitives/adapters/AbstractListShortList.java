@@ -68,7 +68,7 @@ abstract class AbstractListShortList extends AbstractCollectionShortCollection i
     getList ().add (nIndex, Short.valueOf (element));
   }
 
-  public boolean addAll (final int index, final ShortCollection collection)
+  public boolean addAll (final int index, @Nonnull final ShortCollection collection)
   {
     return getList ().addAll (index, ShortCollectionCollection.wrap (collection));
   }
@@ -120,9 +120,10 @@ abstract class AbstractListShortList extends AbstractCollectionShortCollection i
     return getList ().set (index, new Short (element)).shortValue ();
   }
 
-  public ShortList subList (final int fromIndex, final int toIndex)
+  @Nonnull
+  public ShortList subList (final int nFromIndex, final int nToIndex)
   {
-    return ListShortList.wrap (getList ().subList (fromIndex, toIndex));
+    return ListShortList.wrap (getList ().subList (nFromIndex, nToIndex));
   }
 
   @Override

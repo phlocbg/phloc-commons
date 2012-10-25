@@ -48,64 +48,69 @@ import org.apache.commons.collections.primitives.ByteListIterator;
  */
 abstract class BaseProxyByteList extends BaseProxyByteCollection implements ByteList
 {
+  protected BaseProxyByteList ()
+  {}
+
+  @Nonnull
   protected abstract ByteList getProxiedList ();
 
   @Override
+  @Nonnull
   protected final ByteCollection getProxiedCollection ()
   {
     return getProxiedList ();
   }
 
-  protected BaseProxyByteList ()
-  {}
-
-  public void add (final int index, final byte element)
+  public void add (final int nIndex, final byte aElement)
   {
-    getProxiedList ().add (index, element);
+    getProxiedList ().add (nIndex, aElement);
   }
 
-  public boolean addAll (final int index, @Nonnull final ByteCollection collection)
+  public boolean addAll (final int nIndex, @Nonnull final ByteCollection collection)
   {
-    return getProxiedList ().addAll (index, collection);
+    return getProxiedList ().addAll (nIndex, collection);
   }
 
-  public byte get (final int index)
+  public byte get (final int nIndex)
   {
-    return getProxiedList ().get (index);
+    return getProxiedList ().get (nIndex);
   }
 
-  public int indexOf (final byte element)
+  public int indexOf (final byte aElement)
   {
-    return getProxiedList ().indexOf (element);
+    return getProxiedList ().indexOf (aElement);
   }
 
-  public int lastIndexOf (final byte element)
+  public int lastIndexOf (final byte aElement)
   {
-    return getProxiedList ().lastIndexOf (element);
+    return getProxiedList ().lastIndexOf (aElement);
   }
 
+  @Nonnull
   public ByteListIterator listIterator ()
   {
     return getProxiedList ().listIterator ();
   }
 
-  public ByteListIterator listIterator (final int index)
+  @Nonnull
+  public ByteListIterator listIterator (final int nIndex)
   {
-    return getProxiedList ().listIterator (index);
+    return getProxiedList ().listIterator (nIndex);
   }
 
-  public byte removeElementAt (final int index)
+  public byte removeElementAt (final int nIndex)
   {
-    return getProxiedList ().removeElementAt (index);
+    return getProxiedList ().removeElementAt (nIndex);
   }
 
-  public byte set (final int index, final byte element)
+  public byte set (final int nIndex, final byte aElement)
   {
-    return getProxiedList ().set (index, element);
+    return getProxiedList ().set (nIndex, aElement);
   }
 
-  public ByteList subList (final int fromIndex, final int toIndex)
+  @Nonnull
+  public ByteList subList (final int nFromIndex, final int nToIndex)
   {
-    return getProxiedList ().subList (fromIndex, toIndex);
+    return getProxiedList ().subList (nFromIndex, nToIndex);
   }
 }
