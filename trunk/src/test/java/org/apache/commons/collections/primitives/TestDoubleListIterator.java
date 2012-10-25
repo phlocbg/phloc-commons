@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives;
 
+import javax.annotation.Nonnull;
+
 /**
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
  *          2006) $
@@ -23,35 +25,31 @@ package org.apache.commons.collections.primitives;
  */
 public abstract class TestDoubleListIterator extends TestDoubleIterator
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestDoubleListIterator (final String testName)
+  public TestDoubleListIterator (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   // collections testing framework
   // ------------------------------------------------------------------------
 
   @Override
+  @Nonnull
   public DoubleIterator makeEmptyDoubleIterator ()
   {
     return makeEmptyDoubleListIterator ();
   }
 
   @Override
+  @Nonnull
   public DoubleIterator makeFullDoubleIterator ()
   {
     return makeFullDoubleListIterator ();
   }
 
+  @Nonnull
   public abstract DoubleListIterator makeEmptyDoubleListIterator ();
 
+  @Nonnull
   public abstract DoubleListIterator makeFullDoubleListIterator ();
-
-  // tests
-  // ------------------------------------------------------------------------
-
 }

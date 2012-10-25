@@ -23,9 +23,9 @@ import javax.annotation.Nonnull;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class TestLongListIterator extends TestLongIterator
+public abstract class TestZZZListIterator extends TestZZZIterator
 {
-  public TestLongListIterator (final String sTestName)
+  public TestZZZListIterator (final String sTestName)
   {
     super (sTestName);
   }
@@ -35,21 +35,21 @@ public abstract class TestLongListIterator extends TestLongIterator
 
   @Override
   @Nonnull
-  public LongIterator makeEmptyLongIterator ()
+  public ZZZIterator makeEmptyZZZIterator ()
   {
-    return makeEmptyLongListIterator ();
+    return makeEmptyZZZListIterator ();
   }
 
   @Override
   @Nonnull
-  public LongIterator makeFullLongIterator ()
+  public ZZZIterator makeFullZZZIterator ()
   {
-    return makeFullLongListIterator ();
+    return makeFullZZZListIterator ();
   }
 
   @Nonnull
-  public abstract LongListIterator makeEmptyLongListIterator ();
+  public abstract ZZZListIterator makeEmptyZZZListIterator ();
 
   @Nonnull
-  public abstract LongListIterator makeFullLongListIterator ();
+  public abstract ZZZListIterator makeFullZZZListIterator ();
 }

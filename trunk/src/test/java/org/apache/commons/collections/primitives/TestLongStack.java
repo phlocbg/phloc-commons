@@ -23,7 +23,7 @@ import junit.framework.TestSuite;
 
 /**
  * Tests the LongStack class.
- * 
+ *
  * @author Apache Directory Project
  * @since Commons Primitives 1.1
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
@@ -35,7 +35,7 @@ public class TestLongStack extends TestCase
 
   /**
    * Runs the test.
-   * 
+   *
    * @param args
    *        nada
    */
@@ -62,7 +62,7 @@ public class TestLongStack extends TestCase
 
   /**
    * Constructor for IntStackTest.
-   * 
+   *
    * @param arg0
    */
   public TestLongStack (final String arg0)
@@ -72,11 +72,11 @@ public class TestLongStack extends TestCase
 
   public void testEmpty ()
   {
-    assertTrue ("Newly created stacks should be empty", stack.empty ());
+    assertTrue ("Newly created stacks should be empty", stack.isEmpty ());
     stack.push (1234223332233234322l);
-    assertFalse ("Stack with item should not be empty", stack.empty ());
+    assertFalse ("Stack with item should not be empty", stack.isEmpty ());
     stack.pop ();
-    assertTrue ("Stack last int popped should be empty", stack.empty ());
+    assertTrue ("Stack last int popped should be empty", stack.isEmpty ());
   }
 
   public void testPeek ()
@@ -131,7 +131,7 @@ public class TestLongStack extends TestCase
   {
     stack.push (0L);
     stack.push (0L);
-    assertFalse (stack.empty ());
+    assertFalse (stack.isEmpty ());
     assertTrue (0L == stack.pop ());
     assertTrue (0L == stack.pop ());
   }

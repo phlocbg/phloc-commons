@@ -31,7 +31,7 @@ import junit.framework.TestSuite;
  */
 public class TestCharStack extends TestCase
 {
-  CharStack stack = null;
+  private CharStack stack = null;
 
   /**
    * Runs the test.
@@ -72,11 +72,11 @@ public class TestCharStack extends TestCase
 
   public void testEmpty ()
   {
-    assertTrue ("Newly created stacks should be empty", stack.empty ());
+    assertTrue ("Newly created stacks should be empty", stack.isEmpty ());
     stack.push ('A');
-    assertFalse ("Stack with item should not be empty", stack.empty ());
+    assertFalse ("Stack with item should not be empty", stack.isEmpty ());
     stack.pop ();
-    assertTrue ("Stack last int popped should be empty", stack.empty ());
+    assertTrue ("Stack last int popped should be empty", stack.isEmpty ());
   }
 
   public void testPeek ()
@@ -131,7 +131,7 @@ public class TestCharStack extends TestCase
   {
     stack.push ((char) 0);
     stack.push ((char) 0);
-    assertFalse (stack.empty ());
+    assertFalse (stack.isEmpty ());
     assertTrue (0 == stack.pop ());
     assertTrue (0 == stack.pop ());
   }

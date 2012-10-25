@@ -18,6 +18,9 @@ package org.apache.commons.collections.primitives;
 
 import java.util.Collections;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -31,15 +34,12 @@ import org.apache.commons.collections.primitives.adapters.IteratorBooleanIterato
  */
 public class TestAbstractBooleanCollection extends TestCase
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestAbstractBooleanCollection (final String testName)
+  public TestAbstractBooleanCollection (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
+  @Nonnull
   public static Test suite ()
   {
     return new TestSuite (TestAbstractBooleanCollection.class);
@@ -65,7 +65,7 @@ public class TestAbstractBooleanCollection extends TestCase
   // inner classes
   // ------------------------------------------------------------------------
 
-  static class BooleanCollectionImpl extends AbstractBooleanCollection
+  static final class BooleanCollectionImpl extends AbstractBooleanCollection
   {
     public BooleanCollectionImpl ()
     {}
@@ -73,10 +73,11 @@ public class TestAbstractBooleanCollection extends TestCase
     @Override
     public BooleanIterator iterator ()
     {
-      return new IteratorBooleanIterator (Collections.EMPTY_LIST.iterator ());
+      return new IteratorBooleanIterator (Collections.<Boolean> emptyList ().iterator ());
     }
 
     @Override
+    @Nonnegative
     public int size ()
     {
       return 0;

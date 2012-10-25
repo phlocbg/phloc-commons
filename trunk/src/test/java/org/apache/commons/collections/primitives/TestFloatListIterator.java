@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives;
 
+import javax.annotation.Nonnull;
+
 /**
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
  *          2006) $
@@ -23,35 +25,31 @@ package org.apache.commons.collections.primitives;
  */
 public abstract class TestFloatListIterator extends TestFloatIterator
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestFloatListIterator (final String testName)
+  public TestFloatListIterator (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   // collections testing framework
   // ------------------------------------------------------------------------
 
   @Override
+  @Nonnull
   public FloatIterator makeEmptyFloatIterator ()
   {
     return makeEmptyFloatListIterator ();
   }
 
   @Override
+  @Nonnull
   public FloatIterator makeFullFloatIterator ()
   {
     return makeFullFloatListIterator ();
   }
 
+  @Nonnull
   public abstract FloatListIterator makeEmptyFloatListIterator ();
 
+  @Nonnull
   public abstract FloatListIterator makeFullFloatListIterator ();
-
-  // tests
-  // ------------------------------------------------------------------------
-
 }

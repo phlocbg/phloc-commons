@@ -22,16 +22,16 @@ import java.util.NoSuchElementException;
 import javax.annotation.Nonnull;
 
 import org.apache.commons.collections.iterators.AbstractTestIterator;
-import org.apache.commons.collections.primitives.adapters.DoubleIteratorIterator;
+import org.apache.commons.collections.primitives.adapters.ZZZIteratorIterator;
 
 /**
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class TestDoubleIterator extends AbstractTestIterator
+public abstract class TestZZZIterator extends AbstractTestIterator
 {
-  public TestDoubleIterator (final String sTestName)
+  public TestZZZIterator (final String sTestName)
   {
     super (sTestName);
   }
@@ -40,34 +40,34 @@ public abstract class TestDoubleIterator extends AbstractTestIterator
   // ------------------------------------------------------------------------
 
   @Override
-  public Iterator <Double> makeEmptyIterator ()
+  public Iterator <XXX> makeEmptyIterator ()
   {
-    return DoubleIteratorIterator.wrap (makeEmptyDoubleIterator ());
+    return ZZZIteratorIterator.wrap (makeEmptyZZZIterator ());
   }
 
   @Override
-  public Iterator <Double> makeFullIterator ()
+  public Iterator <XXX> makeFullIterator ()
   {
-    return DoubleIteratorIterator.wrap (makeFullDoubleIterator ());
+    return ZZZIteratorIterator.wrap (makeFullZZZIterator ());
   }
 
   @Nonnull
-  protected abstract DoubleIterator makeEmptyDoubleIterator ();
+  protected abstract ZZZIterator makeEmptyZZZIterator ();
 
   @Nonnull
-  protected abstract DoubleIterator makeFullDoubleIterator ();
+  protected abstract ZZZIterator makeFullZZZIterator ();
 
   @Nonnull
-  protected abstract double [] getFullElements ();
+  protected abstract YYY [] getFullElements ();
 
   // tests
   // ------------------------------------------------------------------------
 
   public void testNextHasNextRemove ()
   {
-    final double [] elements = getFullElements ();
-    final DoubleIterator iter = makeFullDoubleIterator ();
-    for (final double element : elements)
+    final YYY [] elements = getFullElements ();
+    final ZZZIterator iter = makeFullZZZIterator ();
+    for (final YYY element : elements)
     {
       assertTrue (iter.hasNext ());
       assertEquals (element, iter.next (), 0d);
@@ -79,12 +79,12 @@ public abstract class TestDoubleIterator extends AbstractTestIterator
     assertTrue (!iter.hasNext ());
   }
 
-  public void testEmptyDoubleIterator ()
+  public void testEmptyZZZIterator ()
   {
-    assertTrue (!makeEmptyDoubleIterator ().hasNext ());
+    assertTrue (!makeEmptyZZZIterator ().hasNext ());
     try
     {
-      makeEmptyDoubleIterator ().next ();
+      makeEmptyZZZIterator ().next ();
       fail ("Expected NoSuchElementException");
     }
     catch (final NoSuchElementException e)
@@ -95,7 +95,7 @@ public abstract class TestDoubleIterator extends AbstractTestIterator
     {
       try
       {
-        makeEmptyDoubleIterator ().remove ();
+        makeEmptyZZZIterator ().remove ();
         fail ("Expected IllegalStateException");
       }
       catch (final IllegalStateException e)
@@ -111,7 +111,7 @@ public abstract class TestDoubleIterator extends AbstractTestIterator
     {
       try
       {
-        makeFullDoubleIterator ().remove ();
+        makeFullZZZIterator ().remove ();
         fail ("Expected IllegalStateException");
       }
       catch (final IllegalStateException e)
@@ -125,7 +125,7 @@ public abstract class TestDoubleIterator extends AbstractTestIterator
   {
     if (supportsRemove ())
     {
-      final DoubleIterator iter = makeFullDoubleIterator ();
+      final ZZZIterator iter = makeFullZZZIterator ();
       iter.next ();
       iter.remove ();
       try

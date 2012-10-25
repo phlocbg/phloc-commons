@@ -18,6 +18,9 @@ package org.apache.commons.collections.primitives;
 
 import java.util.Collections;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -31,15 +34,12 @@ import org.apache.commons.collections.primitives.adapters.IteratorFloatIterator;
  */
 public class TestAbstractFloatCollection extends TestCase
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestAbstractFloatCollection (final String testName)
+  public TestAbstractFloatCollection (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
+  @Nonnull
   public static Test suite ()
   {
     return new TestSuite (TestAbstractFloatCollection.class);
@@ -53,7 +53,7 @@ public class TestAbstractFloatCollection extends TestCase
     final FloatCollection col = new FloatCollectionImpl ();
     try
     {
-      col.add (1);
+      col.add (47.11f);
       fail ("Expected UnsupportedOperationException");
     }
     catch (final UnsupportedOperationException e)
@@ -65,7 +65,7 @@ public class TestAbstractFloatCollection extends TestCase
   // inner classes
   // ------------------------------------------------------------------------
 
-  static class FloatCollectionImpl extends AbstractFloatCollection
+  static final class FloatCollectionImpl extends AbstractFloatCollection
   {
     public FloatCollectionImpl ()
     {}
@@ -73,10 +73,11 @@ public class TestAbstractFloatCollection extends TestCase
     @Override
     public FloatIterator iterator ()
     {
-      return new IteratorFloatIterator (Collections.EMPTY_LIST.iterator ());
+      return new IteratorFloatIterator (Collections.<Float> emptyList ().iterator ());
     }
 
     @Override
+    @Nonnegative
     public int size ()
     {
       return 0;

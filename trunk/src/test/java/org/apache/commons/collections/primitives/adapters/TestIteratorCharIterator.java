@@ -19,6 +19,8 @@ package org.apache.commons.collections.primitives.adapters;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -61,12 +63,13 @@ public class TestIteratorCharIterator extends TestCharIterator
     return IteratorCharIterator.wrap (makeFullList ().iterator ());
   }
 
-  public List makeEmptyList ()
+  @Nonnull
+  public List <Character> makeEmptyList ()
   {
-    return new ArrayList ();
+    return new ArrayList <Character> ();
   }
 
-  protected List makeFullList ()
+  protected List <Character> makeFullList ()
   {
     final List list = makeEmptyList ();
     final char [] elts = getFullElements ();

@@ -20,6 +20,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.NoSuchElementException;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.ByteIterator;
 
 /**
@@ -31,29 +34,27 @@ import org.apache.commons.collections.primitives.ByteIterator;
  */
 public class InputStreamByteIterator implements ByteIterator
 {
+  private final InputStream m_aStream;
+  private boolean m_bNextAvailable = false;
+  private int m_nNext;
 
-  public InputStreamByteIterator (final InputStream in)
+  public InputStreamByteIterator (@Nonnull final InputStream in)
   {
-    this.stream = in;
+    m_aStream = in;
   }
 
   public boolean hasNext ()
   {
-    ensureNextAvailable ();
-    return (-1 != next);
+    _ensureNextAvailable ();
+    return -1 != m_nNext;
   }
 
   public byte next ()
   {
     if (!hasNext ())
-    {
       throw new NoSuchElementException ("No next element");
-    }
-    else
-    {
-      nextAvailable = false;
-      return (byte) next;
-    }
+    m_bNextAvailable = false;
+    return (byte) m_nNext;
   }
 
   /**
@@ -66,35 +67,28 @@ public class InputStreamByteIterator implements ByteIterator
     throw new UnsupportedOperationException ("remove() is not supported here");
   }
 
-  public static ByteIterator adapt (final InputStream in)
+  private void _ensureNextAvailable ()
   {
-    return null == in ? null : new InputStreamByteIterator (in);
+    if (!m_bNextAvailable)
+      _readNext ();
   }
 
-  private void ensureNextAvailable ()
-  {
-    if (!nextAvailable)
-    {
-      readNext ();
-    }
-  }
-
-  private void readNext ()
+  private void _readNext ()
   {
     try
     {
-      next = stream.read ();
-      nextAvailable = true;
+      m_nNext = m_aStream.read ();
+      m_bNextAvailable = true;
     }
     catch (final IOException e)
     {
-      // TODO: Use a tunnelled exception instead?
-      // See http://radio.weblogs.com/0122027/2003/04/01.html#a7, for example
-      throw new RuntimeException (e.toString ());
+      throw new RuntimeException (e);
     }
   }
 
-  private InputStream stream = null;
-  private boolean nextAvailable = false;
-  private int next;
+  @Nullable
+  public static ByteIterator adapt (@Nullable final InputStream in)
+  {
+    return null == in ? null : new InputStreamByteIterator (in);
+  }
 }

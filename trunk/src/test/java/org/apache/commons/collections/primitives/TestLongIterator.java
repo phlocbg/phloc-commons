@@ -19,6 +19,8 @@ package org.apache.commons.collections.primitives;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.iterators.AbstractTestIterator;
 import org.apache.commons.collections.primitives.adapters.LongIteratorIterator;
 
@@ -29,34 +31,33 @@ import org.apache.commons.collections.primitives.adapters.LongIteratorIterator;
  */
 public abstract class TestLongIterator extends AbstractTestIterator
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestLongIterator (final String testName)
+  public TestLongIterator (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   // collections testing framework
   // ------------------------------------------------------------------------
 
   @Override
-  public Iterator makeEmptyIterator ()
+  public Iterator <Long> makeEmptyIterator ()
   {
     return LongIteratorIterator.wrap (makeEmptyLongIterator ());
   }
 
   @Override
-  public Iterator makeFullIterator ()
+  public Iterator <Long> makeFullIterator ()
   {
     return LongIteratorIterator.wrap (makeFullLongIterator ());
   }
 
+  @Nonnull
   protected abstract LongIterator makeEmptyLongIterator ();
 
+  @Nonnull
   protected abstract LongIterator makeFullLongIterator ();
 
+  @Nonnull
   protected abstract long [] getFullElements ();
 
   // tests
@@ -69,7 +70,7 @@ public abstract class TestLongIterator extends AbstractTestIterator
     for (final long element : elements)
     {
       assertTrue (iter.hasNext ());
-      assertEquals (element, iter.next ());
+      assertEquals (element, iter.next (), 0d);
       if (supportsRemove ())
       {
         iter.remove ();

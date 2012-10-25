@@ -18,6 +18,9 @@ package org.apache.commons.collections.primitives;
 
 import java.util.Collections;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -31,15 +34,12 @@ import org.apache.commons.collections.primitives.adapters.IteratorByteIterator;
  */
 public class TestAbstractByteCollection extends TestCase
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestAbstractByteCollection (final String testName)
+  public TestAbstractByteCollection (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
+  @Nonnull
   public static Test suite ()
   {
     return new TestSuite (TestAbstractByteCollection.class);
@@ -65,7 +65,7 @@ public class TestAbstractByteCollection extends TestCase
   // inner classes
   // ------------------------------------------------------------------------
 
-  static class ByteCollectionImpl extends AbstractByteCollection
+  static final class ByteCollectionImpl extends AbstractByteCollection
   {
     public ByteCollectionImpl ()
     {}
@@ -73,10 +73,11 @@ public class TestAbstractByteCollection extends TestCase
     @Override
     public ByteIterator iterator ()
     {
-      return new IteratorByteIterator (Collections.EMPTY_LIST.iterator ());
+      return new IteratorByteIterator (Collections.<Byte> emptyList ().iterator ());
     }
 
     @Override
+    @Nonnegative
     public int size ()
     {
       return 0;

@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives;
 
+import javax.annotation.Nonnull;
+
 /**
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
  *          2006) $
@@ -23,35 +25,31 @@ package org.apache.commons.collections.primitives;
  */
 public abstract class TestByteListIterator extends TestByteIterator
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestByteListIterator (final String testName)
+  public TestByteListIterator (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   // collections testing framework
   // ------------------------------------------------------------------------
 
   @Override
+  @Nonnull
   public ByteIterator makeEmptyByteIterator ()
   {
     return makeEmptyByteListIterator ();
   }
 
   @Override
+  @Nonnull
   public ByteIterator makeFullByteIterator ()
   {
     return makeFullByteListIterator ();
   }
 
+  @Nonnull
   public abstract ByteListIterator makeEmptyByteListIterator ();
 
+  @Nonnull
   public abstract ByteListIterator makeFullByteListIterator ();
-
-  // tests
-  // ------------------------------------------------------------------------
-
 }

@@ -18,6 +18,9 @@ package org.apache.commons.collections.primitives.adapters.io;
 
 import java.io.InputStream;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.apache.commons.collections.primitives.ByteIterator;
 
 /**
@@ -29,30 +32,24 @@ import org.apache.commons.collections.primitives.ByteIterator;
  */
 public class ByteIteratorInputStream extends InputStream
 {
+  private final ByteIterator m_aIterator;
 
-  public ByteIteratorInputStream (final ByteIterator in)
+  public ByteIteratorInputStream (@Nonnull final ByteIterator in)
   {
-    this.iterator = in;
+    m_aIterator = in;
   }
 
   @Override
   public int read ()
   {
-    if (iterator.hasNext ())
-    {
-      return (0xFF & iterator.next ());
-    }
-    else
-    {
-      return -1;
-    }
+    if (m_aIterator.hasNext ())
+      return (0xFF & m_aIterator.next ());
+    return -1;
   }
 
-  public static InputStream adapt (final ByteIterator in)
+  @Nullable
+  public static InputStream adapt (@Nullable final ByteIterator in)
   {
     return null == in ? null : new ByteIteratorInputStream (in);
   }
-
-  private ByteIterator iterator = null;
-
 }

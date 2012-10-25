@@ -84,19 +84,19 @@ public abstract class TestShortList extends BaseTestList
   // ------------------------------------------------------------------------
 
   @Override
-  public List makeEmptyList ()
+  public List <Short> makeEmptyList ()
   {
     return new ShortListList (makeEmptyShortList ());
   }
 
   @Override
-  public Object [] getFullElements ()
+  public Short [] getFullElements ()
   {
     return wrapArray (getFullShorts ());
   }
 
   @Override
-  public Object [] getOtherElements ()
+  public Short [] getOtherElements ()
   {
     return wrapArray (getOtherShorts ());
   }
@@ -275,7 +275,7 @@ public abstract class TestShortList extends BaseTestList
   public void testEqualsWithShortListAndList ()
   {
     final ShortList ilist = makeEmptyShortList ();
-    final List list = new ArrayList ();
+    final List <Short> list = new ArrayList <Short> ();
 
     assertTrue ("Unwrapped, empty List should not be equal to empty ShortList.", !ilist.equals (list));
     assertTrue ("Unwrapped, empty ShortList should not be equal to empty List.", !list.equals (ilist));
