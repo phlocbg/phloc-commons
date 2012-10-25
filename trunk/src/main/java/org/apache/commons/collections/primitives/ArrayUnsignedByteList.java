@@ -22,6 +22,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * A {@link ShortList} backed by an array of unsigned <code>byte</code> values.
  * This list stores <code>short</code> values in the range [{@link #MIN_VALUE},
@@ -36,6 +38,7 @@ import java.io.Serializable;
  *          2006) $
  * @author Rodney Waldhoff
  */
+@SuppressFBWarnings ("SE_NO_SERIALVERSIONID")
 public class ArrayUnsignedByteList extends RandomAccessShortList implements Serializable
 {
   /**
@@ -48,8 +51,8 @@ public class ArrayUnsignedByteList extends RandomAccessShortList implements Seri
    */
   public static final short MIN_VALUE = 0;
 
-  private transient byte [] _data = null;
-  private int _size = 0;
+  private transient byte [] _data;
+  private int _size;
 
   /**
    * Construct an empty list with the default initial capacity.
@@ -104,7 +107,7 @@ public class ArrayUnsignedByteList extends RandomAccessShortList implements Seri
     this (array.length);
     for (int i = 0; i < array.length; i++)
     {
-      _data[i] = fromShort (array[i]);
+      _data[i] = _fromShort (array[i]);
     }
     _size = array.length;
   }
@@ -126,8 +129,8 @@ public class ArrayUnsignedByteList extends RandomAccessShortList implements Seri
   @Override
   public short get (final int index)
   {
-    checkRange (index);
-    return toShort (_data[index]);
+    _checkRange (index);
+    return _toShort (_data[index]);
   }
 
   @Override
@@ -154,9 +157,9 @@ public class ArrayUnsignedByteList extends RandomAccessShortList implements Seri
   @Override
   public short removeElementAt (final int index)
   {
-    checkRange (index);
+    _checkRange (index);
     incrModCount ();
-    final short oldval = toShort (_data[index]);
+    final short oldval = _toShort (_data[index]);
     final int numtomove = _size - index - 1;
     if (numtomove > 0)
     {
@@ -185,11 +188,11 @@ public class ArrayUnsignedByteList extends RandomAccessShortList implements Seri
   @Override
   public short set (final int index, final short element)
   {
-    assertValidUnsignedByte (element);
-    checkRange (index);
+    _assertValidUnsignedByte (element);
+    _checkRange (index);
     incrModCount ();
-    final short oldval = toShort (_data[index]);
-    _data[index] = fromShort (element);
+    final short oldval = _toShort (_data[index]);
+    _data[index] = _fromShort (element);
     return oldval;
   }
 
@@ -215,13 +218,13 @@ public class ArrayUnsignedByteList extends RandomAccessShortList implements Seri
   @Override
   public void add (final int index, final short element)
   {
-    assertValidUnsignedByte (element);
-    checkRangeIncludingEndpoint (index);
+    _assertValidUnsignedByte (element);
+    _checkRangeIncludingEndpoint (index);
     incrModCount ();
     ensureCapacity (_size + 1);
     final int numtomove = _size - index;
     System.arraycopy (_data, index, _data, index + 1, numtomove);
-    _data[index] = fromShort (element);
+    _data[index] = _fromShort (element);
     _size++;
   }
 
@@ -269,17 +272,17 @@ public class ArrayUnsignedByteList extends RandomAccessShortList implements Seri
   // private methods
   // -------------------------------------------------------------------------
 
-  private final short toShort (final byte value)
+  private final short _toShort (final byte value)
   {
     return (short) (value & MAX_VALUE);
   }
 
-  private final byte fromShort (final short value)
+  private final byte _fromShort (final short value)
   {
     return (byte) (value & MAX_VALUE);
   }
 
-  private final void assertValidUnsignedByte (final short value) throws IllegalArgumentException
+  private final void _assertValidUnsignedByte (final short value) throws IllegalArgumentException
   {
     if (value > MAX_VALUE)
     {
@@ -311,7 +314,7 @@ public class ArrayUnsignedByteList extends RandomAccessShortList implements Seri
     }
   }
 
-  private final void checkRange (final int index)
+  private final void _checkRange (final int index)
   {
     if (index < 0 || index >= _size)
     {
@@ -319,7 +322,7 @@ public class ArrayUnsignedByteList extends RandomAccessShortList implements Seri
     }
   }
 
-  private final void checkRangeIncludingEndpoint (final int index)
+  private final void _checkRangeIncludingEndpoint (final int index)
   {
     if (index < 0 || index > _size)
     {

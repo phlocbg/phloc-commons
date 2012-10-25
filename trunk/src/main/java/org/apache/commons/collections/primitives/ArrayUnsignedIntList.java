@@ -24,6 +24,8 @@ import java.io.Serializable;
 
 import javax.annotation.Nonnull;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * An {@link IntList} backed by an array of unsigned <code>int</code> values.
  * This list stores <code>int</code> values in the range [{@link #MIN_VALUE
@@ -38,6 +40,7 @@ import javax.annotation.Nonnull;
  *          2006) $
  * @author Rodney Waldhoff
  */
+@SuppressFBWarnings ("SE_NO_SERIALVERSIONID")
 public class ArrayUnsignedIntList extends RandomAccessLongList implements Serializable
 {
   /**
@@ -107,7 +110,7 @@ public class ArrayUnsignedIntList extends RandomAccessLongList implements Serial
     this (array.length);
     for (int i = 0; i < array.length; i++)
     {
-      _data[i] = fromLong (array[i]);
+      _data[i] = _fromLong (array[i]);
     }
     _size = array.length;
   }
@@ -129,8 +132,8 @@ public class ArrayUnsignedIntList extends RandomAccessLongList implements Serial
   @Override
   public long get (final int index)
   {
-    checkRange (index);
-    return toLong (_data[index]);
+    _checkRange (index);
+    return _toLong (_data[index]);
   }
 
   @Override
@@ -157,9 +160,9 @@ public class ArrayUnsignedIntList extends RandomAccessLongList implements Serial
   @Override
   public long removeElementAt (final int index)
   {
-    checkRange (index);
+    _checkRange (index);
     incrModCount ();
-    final long oldval = toLong (_data[index]);
+    final long oldval = _toLong (_data[index]);
     final int numtomove = _size - index - 1;
     if (numtomove > 0)
     {
@@ -188,11 +191,11 @@ public class ArrayUnsignedIntList extends RandomAccessLongList implements Serial
   @Override
   public long set (final int index, final long element)
   {
-    assertValidUnsignedInt (element);
-    checkRange (index);
+    _assertValidUnsignedInt (element);
+    _checkRange (index);
     incrModCount ();
-    final long oldval = toLong (_data[index]);
-    _data[index] = fromLong (element);
+    final long oldval = _toLong (_data[index]);
+    _data[index] = _fromLong (element);
     return oldval;
   }
 
@@ -218,13 +221,13 @@ public class ArrayUnsignedIntList extends RandomAccessLongList implements Serial
   @Override
   public void add (final int index, final long element)
   {
-    assertValidUnsignedInt (element);
-    checkRangeIncludingEndpoint (index);
+    _assertValidUnsignedInt (element);
+    _checkRangeIncludingEndpoint (index);
     incrModCount ();
     ensureCapacity (_size + 1);
     final int numtomove = _size - index;
     System.arraycopy (_data, index, _data, index + 1, numtomove);
-    _data[index] = fromLong (element);
+    _data[index] = _fromLong (element);
     _size++;
   }
 
@@ -272,17 +275,17 @@ public class ArrayUnsignedIntList extends RandomAccessLongList implements Serial
   // private methods
   // -------------------------------------------------------------------------
 
-  private final long toLong (final int value)
+  private final long _toLong (final int value)
   {
     return value & MAX_VALUE;
   }
 
-  private final int fromLong (final long value)
+  private final int _fromLong (final long value)
   {
     return (int) (value & MAX_VALUE);
   }
 
-  private final void assertValidUnsignedInt (final long value) throws IllegalArgumentException
+  private final void _assertValidUnsignedInt (final long value) throws IllegalArgumentException
   {
     if (value > MAX_VALUE)
     {
@@ -314,7 +317,7 @@ public class ArrayUnsignedIntList extends RandomAccessLongList implements Serial
     }
   }
 
-  private final void checkRange (final int index)
+  private final void _checkRange (final int index)
   {
     if (index < 0 || index >= _size)
     {
@@ -322,7 +325,7 @@ public class ArrayUnsignedIntList extends RandomAccessLongList implements Serial
     }
   }
 
-  private final void checkRangeIncludingEndpoint (final int index)
+  private final void _checkRangeIncludingEndpoint (final int index)
   {
     if (index < 0 || index > _size)
     {

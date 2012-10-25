@@ -41,6 +41,8 @@ import java.io.Serializable;
 
 import javax.annotation.Nonnull;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * An {@link LongList} backed by an array of <code>long</code>s. This
  * implementation supports all optional methods.
@@ -49,6 +51,7 @@ import javax.annotation.Nonnull;
  * @version $Revision: 480460 $ $Date: 2006-11-29 09:14:21 +0100 (Mi, 29 Nov
  *          2006) $
  */
+@SuppressFBWarnings ("SE_NO_SERIALVERSIONID")
 public class ArrayLongList extends RandomAccessLongList implements Serializable
 {
   private transient long [] _data;
