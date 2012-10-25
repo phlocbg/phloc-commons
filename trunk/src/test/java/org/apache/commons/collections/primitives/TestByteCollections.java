@@ -27,12 +27,9 @@ import junit.framework.TestSuite;
  */
 public class TestByteCollections extends TestCase
 {
-
-  // ------------------------------------------------------------ Conventional
-
-  public TestByteCollections (final String testName)
+  public TestByteCollections (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
@@ -44,16 +41,16 @@ public class TestByteCollections extends TestCase
 
   public void testSingletonByteListIterator ()
   {
-    final ByteListIterator iter = ByteCollections.singletonByteListIterator ((byte) 17);
+    final ByteListIterator iter = ByteCollections.singletonByteListIterator ((byte) 1);
     assertTrue (!iter.hasPrevious ());
     assertTrue (iter.hasNext ());
-    assertEquals (17, iter.next ());
+    assertEquals ((byte) 1, iter.next (), 0d);
     assertTrue (iter.hasPrevious ());
     assertTrue (!iter.hasNext ());
-    assertEquals (17, iter.previous ());
+    assertEquals ((byte) 1, iter.previous (), 0d);
     try
     {
-      iter.set ((byte) 18);
+      iter.set ((byte) 1);
       fail ("Expected UnsupportedOperationException");
     }
     catch (final UnsupportedOperationException e)
@@ -64,9 +61,9 @@ public class TestByteCollections extends TestCase
 
   public void testSingletonByteIterator ()
   {
-    final ByteIterator iter = ByteCollections.singletonByteIterator ((byte) 17);
+    final ByteIterator iter = ByteCollections.singletonByteIterator ((byte) 1);
     assertTrue (iter.hasNext ());
-    assertEquals (17, iter.next ());
+    assertEquals ((byte) 1, iter.next (), 0d);
     assertTrue (!iter.hasNext ());
     try
     {
@@ -81,12 +78,12 @@ public class TestByteCollections extends TestCase
 
   public void testSingletonByteList ()
   {
-    final ByteList list = ByteCollections.singletonByteList ((byte) 17);
+    final ByteList list = ByteCollections.singletonByteList ((byte) 1);
     assertEquals (1, list.size ());
-    assertEquals (17, list.get (0));
+    assertEquals ((byte) 1, list.get (0), 0d);
     try
     {
-      list.add ((byte) 18);
+      list.add ((byte) 1);
       fail ("Expected UnsupportedOperationException");
     }
     catch (final UnsupportedOperationException e)

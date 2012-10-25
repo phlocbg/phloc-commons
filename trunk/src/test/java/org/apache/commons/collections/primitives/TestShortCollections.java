@@ -27,12 +27,9 @@ import junit.framework.TestSuite;
  */
 public class TestShortCollections extends TestCase
 {
-
-  // ------------------------------------------------------------ Conventional
-
-  public TestShortCollections (final String testName)
+  public TestShortCollections (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
@@ -44,16 +41,16 @@ public class TestShortCollections extends TestCase
 
   public void testSingletonShortListIterator ()
   {
-    final ShortListIterator iter = ShortCollections.singletonShortListIterator ((short) 17);
+    final ShortListIterator iter = ShortCollections.singletonShortListIterator ((short) 4712);
     assertTrue (!iter.hasPrevious ());
     assertTrue (iter.hasNext ());
-    assertEquals (17, iter.next ());
+    assertEquals ((short) 4712, iter.next (), 0d);
     assertTrue (iter.hasPrevious ());
     assertTrue (!iter.hasNext ());
-    assertEquals (17, iter.previous ());
+    assertEquals ((short) 4712, iter.previous (), 0d);
     try
     {
-      iter.set ((short) 18);
+      iter.set ((short) 4712);
       fail ("Expected UnsupportedOperationException");
     }
     catch (final UnsupportedOperationException e)
@@ -64,9 +61,9 @@ public class TestShortCollections extends TestCase
 
   public void testSingletonShortIterator ()
   {
-    final ShortIterator iter = ShortCollections.singletonShortIterator ((short) 17);
+    final ShortIterator iter = ShortCollections.singletonShortIterator ((short) 4712);
     assertTrue (iter.hasNext ());
-    assertEquals (17, iter.next ());
+    assertEquals ((short) 4712, iter.next (), 0d);
     assertTrue (!iter.hasNext ());
     try
     {
@@ -81,12 +78,12 @@ public class TestShortCollections extends TestCase
 
   public void testSingletonShortList ()
   {
-    final ShortList list = ShortCollections.singletonShortList ((short) 17);
+    final ShortList list = ShortCollections.singletonShortList ((short) 4712);
     assertEquals (1, list.size ());
-    assertEquals (17, list.get (0));
+    assertEquals ((short) 4712, list.get (0), 0d);
     try
     {
-      list.add ((short) 18);
+      list.add ((short) 4712);
       fail ("Expected UnsupportedOperationException");
     }
     catch (final UnsupportedOperationException e)
@@ -114,7 +111,7 @@ public class TestShortCollections extends TestCase
     assertTrue (ShortCollections.EMPTY_SHORT_LIST.isEmpty ());
     try
     {
-      ShortCollections.EMPTY_SHORT_LIST.add ((short) 1);
+      ShortCollections.EMPTY_SHORT_LIST.add ((short) 4712);
       fail ("Expected UnsupportedOperationExcpetion");
     }
     catch (final UnsupportedOperationException e)
@@ -171,7 +168,7 @@ public class TestShortCollections extends TestCase
     assertTrue (!ShortCollections.EMPTY_SHORT_LIST_ITERATOR.hasPrevious ());
     try
     {
-      ShortCollections.EMPTY_SHORT_LIST_ITERATOR.add ((short) 1);
+      ShortCollections.EMPTY_SHORT_LIST_ITERATOR.add ((short) 4712);
       fail ("Expected UnsupportedOperationExcpetion");
     }
     catch (final UnsupportedOperationException e)

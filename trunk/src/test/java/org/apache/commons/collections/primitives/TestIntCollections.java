@@ -27,12 +27,9 @@ import junit.framework.TestSuite;
  */
 public class TestIntCollections extends TestCase
 {
-
-  // ------------------------------------------------------------ Conventional
-
-  public TestIntCollections (final String testName)
+  public TestIntCollections (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
@@ -44,16 +41,16 @@ public class TestIntCollections extends TestCase
 
   public void testSingletonIntListIterator ()
   {
-    final IntListIterator iter = IntCollections.singletonIntListIterator (17);
+    final IntListIterator iter = IntCollections.singletonIntListIterator (42);
     assertTrue (!iter.hasPrevious ());
     assertTrue (iter.hasNext ());
-    assertEquals (17, iter.next ());
+    assertEquals (42, iter.next (), 0d);
     assertTrue (iter.hasPrevious ());
     assertTrue (!iter.hasNext ());
-    assertEquals (17, iter.previous ());
+    assertEquals (42, iter.previous (), 0d);
     try
     {
-      iter.set (18);
+      iter.set (42);
       fail ("Expected UnsupportedOperationException");
     }
     catch (final UnsupportedOperationException e)
@@ -64,9 +61,9 @@ public class TestIntCollections extends TestCase
 
   public void testSingletonIntIterator ()
   {
-    final IntIterator iter = IntCollections.singletonIntIterator (17);
+    final IntIterator iter = IntCollections.singletonIntIterator (42);
     assertTrue (iter.hasNext ());
-    assertEquals (17, iter.next ());
+    assertEquals (42, iter.next (), 0d);
     assertTrue (!iter.hasNext ());
     try
     {
@@ -81,12 +78,12 @@ public class TestIntCollections extends TestCase
 
   public void testSingletonIntList ()
   {
-    final IntList list = IntCollections.singletonIntList (17);
+    final IntList list = IntCollections.singletonIntList (42);
     assertEquals (1, list.size ());
-    assertEquals (17, list.get (0));
+    assertEquals (42, list.get (0), 0d);
     try
     {
-      list.add (18);
+      list.add (42);
       fail ("Expected UnsupportedOperationException");
     }
     catch (final UnsupportedOperationException e)
@@ -114,7 +111,7 @@ public class TestIntCollections extends TestCase
     assertTrue (IntCollections.EMPTY_INT_LIST.isEmpty ());
     try
     {
-      IntCollections.EMPTY_INT_LIST.add (1);
+      IntCollections.EMPTY_INT_LIST.add (42);
       fail ("Expected UnsupportedOperationExcpetion");
     }
     catch (final UnsupportedOperationException e)
@@ -171,7 +168,7 @@ public class TestIntCollections extends TestCase
     assertTrue (!IntCollections.EMPTY_INT_LIST_ITERATOR.hasPrevious ());
     try
     {
-      IntCollections.EMPTY_INT_LIST_ITERATOR.add (1);
+      IntCollections.EMPTY_INT_LIST_ITERATOR.add (42);
       fail ("Expected UnsupportedOperationExcpetion");
     }
     catch (final UnsupportedOperationException e)

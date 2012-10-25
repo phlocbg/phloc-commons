@@ -41,16 +41,16 @@ public class TestCharCollections extends TestCase
 
   public void testSingletonCharListIterator ()
   {
-    final CharListIterator iter = CharCollections.singletonCharListIterator ((char) 17);
+    final CharListIterator iter = CharCollections.singletonCharListIterator ('c');
     assertTrue (!iter.hasPrevious ());
     assertTrue (iter.hasNext ());
-    assertEquals (17, iter.next ());
+    assertEquals ('c', iter.next (), 0d);
     assertTrue (iter.hasPrevious ());
     assertTrue (!iter.hasNext ());
-    assertEquals (17, iter.previous ());
+    assertEquals ('c', iter.previous (), 0d);
     try
     {
-      iter.set ((char) 18);
+      iter.set ('c');
       fail ("Expected UnsupportedOperationException");
     }
     catch (final UnsupportedOperationException e)
@@ -61,9 +61,9 @@ public class TestCharCollections extends TestCase
 
   public void testSingletonCharIterator ()
   {
-    final CharIterator iter = CharCollections.singletonCharIterator ((char) 17);
+    final CharIterator iter = CharCollections.singletonCharIterator ('c');
     assertTrue (iter.hasNext ());
-    assertEquals (17, iter.next ());
+    assertEquals ('c', iter.next (), 0d);
     assertTrue (!iter.hasNext ());
     try
     {
@@ -78,12 +78,12 @@ public class TestCharCollections extends TestCase
 
   public void testSingletonCharList ()
   {
-    final CharList list = CharCollections.singletonCharList ((char) 17);
+    final CharList list = CharCollections.singletonCharList ('c');
     assertEquals (1, list.size ());
-    assertEquals (17, list.get (0));
+    assertEquals ('c', list.get (0), 0d);
     try
     {
-      list.add ((char) 18);
+      list.add ('c');
       fail ("Expected UnsupportedOperationException");
     }
     catch (final UnsupportedOperationException e)
@@ -111,7 +111,7 @@ public class TestCharCollections extends TestCase
     assertTrue (CharCollections.EMPTY_CHAR_LIST.isEmpty ());
     try
     {
-      CharCollections.EMPTY_CHAR_LIST.add ((char) 1);
+      CharCollections.EMPTY_CHAR_LIST.add ('c');
       fail ("Expected UnsupportedOperationExcpetion");
     }
     catch (final UnsupportedOperationException e)
@@ -168,7 +168,7 @@ public class TestCharCollections extends TestCase
     assertTrue (!CharCollections.EMPTY_CHAR_LIST_ITERATOR.hasPrevious ());
     try
     {
-      CharCollections.EMPTY_CHAR_LIST_ITERATOR.add ((char) 1);
+      CharCollections.EMPTY_CHAR_LIST_ITERATOR.add ('c');
       fail ("Expected UnsupportedOperationExcpetion");
     }
     catch (final UnsupportedOperationException e)

@@ -84,19 +84,19 @@ public abstract class TestDoubleList extends BaseTestList
   // ------------------------------------------------------------------------
 
   @Override
-  public List makeEmptyList ()
+  public List <Double> makeEmptyList ()
   {
     return new DoubleListList (makeEmptyDoubleList ());
   }
 
   @Override
-  public Object [] getFullElements ()
+  public Double [] getFullElements ()
   {
     return wrapArray (getFullDoubles ());
   }
 
   @Override
-  public Object [] getOtherElements ()
+  public Double [] getOtherElements ()
   {
     return wrapArray (getOtherDoubles ());
   }
@@ -276,7 +276,7 @@ public abstract class TestDoubleList extends BaseTestList
   public void testEqualsWithDoubleListAndList ()
   {
     final DoubleList ilist = makeEmptyDoubleList ();
-    final List list = new ArrayList ();
+    final List <Double> list = new ArrayList <Double> ();
 
     assertTrue ("Unwrapped, empty List should not be equal to empty DoubleList.", !ilist.equals (list));
     assertTrue ("Unwrapped, empty DoubleList should not be equal to empty List.", !list.equals (ilist));
