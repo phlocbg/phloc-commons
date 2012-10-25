@@ -16,142 +16,130 @@
  */
 package org.apache.commons.collections.primitives;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+
+import com.phloc.commons.annotations.ReturnsMutableCopy;
+
 /**
  * Abstract base class for {@link DoubleCollection}s.
- * <p />
+ * <p/>
  * Read-only subclasses must override {@link #iterator} and {@link #size}.
  * Mutable subclasses should also override {@link #add} and
- * {@link DoubleIterator#remove DoubleIterator.remove}. All other methods have
- * at least some base implementation derived from these. Subclasses may choose
- * to override these methods to provide a more efficient implementation.
- * 
- * @since Commons Primitives 1.0
+ * {@link DoubleIterator#remove DoubleIterator.remove}. All other methods have at
+ * least some base implementation derived from these. Subclasses may choose to
+ * override these methods to provide a more efficient implementation.
+ *
+ * @since Commons Primitives 1.1
  * @version $Revision: 480460 $ $Date: 2006-11-29 09:14:21 +0100 (Mi, 29 Nov
  *          2006) $
- * @author Rodney Waldhoff
  */
 public abstract class AbstractDoubleCollection implements DoubleCollection
 {
-  public abstract DoubleIterator iterator ();
-
-  public abstract int size ();
-
   protected AbstractDoubleCollection ()
   {}
 
+  @Nonnull
+  public abstract DoubleIterator iterator ();
+
+  @Nonnegative
+  public abstract int size ();
+
   /** Unsupported in this base implementation. */
-  public boolean add (final double element)
+  public boolean add (final double aElement)
   {
     throw new UnsupportedOperationException ("add(double) is not supported.");
   }
 
-  public boolean addAll (final DoubleCollection c)
+  public boolean addAll (@Nonnull final DoubleCollection aCont)
   {
-    boolean modified = false;
-    for (final DoubleIterator iter = c.iterator (); iter.hasNext ();)
-    {
-      modified |= add (iter.next ());
-    }
-    return modified;
+    boolean bModified = false;
+    for (final DoubleIterator aIter = aCont.iterator (); aIter.hasNext ();)
+      bModified |= add (aIter.next ());
+    return bModified;
   }
 
   public void clear ()
   {
-    for (final DoubleIterator iter = iterator (); iter.hasNext ();)
+    for (final DoubleIterator aIter = iterator (); aIter.hasNext ();)
     {
-      iter.next ();
-      iter.remove ();
+      aIter.next ();
+      aIter.remove ();
     }
   }
 
-  public boolean contains (final double element)
+  public boolean contains (final double aElement)
   {
-    for (final DoubleIterator iter = iterator (); iter.hasNext ();)
-    {
-      if (iter.next () == element)
-      {
+    for (final DoubleIterator aIter = iterator (); aIter.hasNext ();)
+      if (aIter.next () == aElement)
         return true;
-      }
-    }
     return false;
   }
 
-  public boolean containsAll (final DoubleCollection c)
+  public boolean containsAll (@Nonnull final DoubleCollection aCont)
   {
-    for (final DoubleIterator iter = c.iterator (); iter.hasNext ();)
-    {
-      if (!contains (iter.next ()))
-      {
+    for (final DoubleIterator aIter = aCont.iterator (); aIter.hasNext ();)
+      if (!contains (aIter.next ()))
         return false;
-      }
-    }
     return true;
   }
 
   public boolean isEmpty ()
   {
-    return (0 == size ());
+    return 0 == size ();
   }
 
-  public boolean removeElement (final double element)
+  public boolean removeElement (final double aElement)
   {
-    for (final DoubleIterator iter = iterator (); iter.hasNext ();)
-    {
-      if (iter.next () == element)
+    for (final DoubleIterator aIter = iterator (); aIter.hasNext ();)
+      if (aIter.next () == aElement)
       {
-        iter.remove ();
+        aIter.remove ();
         return true;
       }
-    }
     return false;
   }
 
-  public boolean removeAll (final DoubleCollection c)
+  public boolean removeAll (@Nonnull final DoubleCollection aCont)
   {
-    boolean modified = false;
-    for (final DoubleIterator iter = c.iterator (); iter.hasNext ();)
-    {
-      modified |= removeElement (iter.next ());
-    }
-    return modified;
+    boolean bModified = false;
+    for (final DoubleIterator aIter = aCont.iterator (); aIter.hasNext ();)
+      bModified |= removeElement (aIter.next ());
+    return bModified;
   }
 
-  public boolean retainAll (final DoubleCollection c)
+  public boolean retainAll (@Nonnull final DoubleCollection aCont)
   {
-    boolean modified = false;
-    for (final DoubleIterator iter = iterator (); iter.hasNext ();)
-    {
-      if (!c.contains (iter.next ()))
+    boolean bModified = false;
+    for (final DoubleIterator aIter = iterator (); aIter.hasNext ();)
+      if (!aCont.contains (aIter.next ()))
       {
-        iter.remove ();
-        modified = true;
+        aIter.remove ();
+        bModified = true;
       }
-    }
-    return modified;
+    return bModified;
   }
 
+  @Nonnull
+  @ReturnsMutableCopy
   public double [] toArray ()
   {
-    final double [] array = new double [size ()];
+    final double [] ret = new double [size ()];
     int i = 0;
-    for (final DoubleIterator iter = iterator (); iter.hasNext ();)
-    {
-      array[i] = iter.next ();
-      i++;
-    }
-    return array;
+    for (final DoubleIterator aIter = iterator (); aIter.hasNext ();)
+      ret[i++] = aIter.next ();
+    return ret;
   }
 
-  public double [] toArray (final double [] a)
+  @Nonnull
+  @ReturnsMutableCopy
+  public double [] toArray (@Nonnull final double [] aTarget)
   {
-    if (a.length < size ())
+    if (aTarget.length < size ())
       return toArray ();
     int i = 0;
-    for (final DoubleIterator iter = iterator (); iter.hasNext ();)
-    {
-      a[i] = iter.next ();
-      i++;
-    }
-    return a;
+    for (final DoubleIterator aIter = iterator (); aIter.hasNext ();)
+      aTarget[i++] = aIter.next ();
+    return aTarget;
   }
 }

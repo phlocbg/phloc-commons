@@ -16,142 +16,130 @@
  */
 package org.apache.commons.collections.primitives;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+
+import com.phloc.commons.annotations.ReturnsMutableCopy;
+
 /**
  * Abstract base class for {@link LongCollection}s.
- * <p />
+ * <p/>
  * Read-only subclasses must override {@link #iterator} and {@link #size}.
  * Mutable subclasses should also override {@link #add} and
  * {@link LongIterator#remove LongIterator.remove}. All other methods have at
  * least some base implementation derived from these. Subclasses may choose to
  * override these methods to provide a more efficient implementation.
- * 
- * @since Commons Primitives 1.0
+ *
+ * @since Commons Primitives 1.1
  * @version $Revision: 480460 $ $Date: 2006-11-29 09:14:21 +0100 (Mi, 29 Nov
  *          2006) $
- * @author Rodney Waldhoff
  */
 public abstract class AbstractLongCollection implements LongCollection
 {
-  public abstract LongIterator iterator ();
-
-  public abstract int size ();
-
   protected AbstractLongCollection ()
   {}
 
+  @Nonnull
+  public abstract LongIterator iterator ();
+
+  @Nonnegative
+  public abstract int size ();
+
   /** Unsupported in this base implementation. */
-  public boolean add (final long element)
+  public boolean add (final long aElement)
   {
     throw new UnsupportedOperationException ("add(long) is not supported.");
   }
 
-  public boolean addAll (final LongCollection c)
+  public boolean addAll (@Nonnull final LongCollection aCont)
   {
-    boolean modified = false;
-    for (final LongIterator iter = c.iterator (); iter.hasNext ();)
-    {
-      modified |= add (iter.next ());
-    }
-    return modified;
+    boolean bModified = false;
+    for (final LongIterator aIter = aCont.iterator (); aIter.hasNext ();)
+      bModified |= add (aIter.next ());
+    return bModified;
   }
 
   public void clear ()
   {
-    for (final LongIterator iter = iterator (); iter.hasNext ();)
+    for (final LongIterator aIter = iterator (); aIter.hasNext ();)
     {
-      iter.next ();
-      iter.remove ();
+      aIter.next ();
+      aIter.remove ();
     }
   }
 
-  public boolean contains (final long element)
+  public boolean contains (final long aElement)
   {
-    for (final LongIterator iter = iterator (); iter.hasNext ();)
-    {
-      if (iter.next () == element)
-      {
+    for (final LongIterator aIter = iterator (); aIter.hasNext ();)
+      if (aIter.next () == aElement)
         return true;
-      }
-    }
     return false;
   }
 
-  public boolean containsAll (final LongCollection c)
+  public boolean containsAll (@Nonnull final LongCollection aCont)
   {
-    for (final LongIterator iter = c.iterator (); iter.hasNext ();)
-    {
-      if (!contains (iter.next ()))
-      {
+    for (final LongIterator aIter = aCont.iterator (); aIter.hasNext ();)
+      if (!contains (aIter.next ()))
         return false;
-      }
-    }
     return true;
   }
 
   public boolean isEmpty ()
   {
-    return (0 == size ());
+    return 0 == size ();
   }
 
-  public boolean removeElement (final long element)
+  public boolean removeElement (final long aElement)
   {
-    for (final LongIterator iter = iterator (); iter.hasNext ();)
-    {
-      if (iter.next () == element)
+    for (final LongIterator aIter = iterator (); aIter.hasNext ();)
+      if (aIter.next () == aElement)
       {
-        iter.remove ();
+        aIter.remove ();
         return true;
       }
-    }
     return false;
   }
 
-  public boolean removeAll (final LongCollection c)
+  public boolean removeAll (@Nonnull final LongCollection aCont)
   {
-    boolean modified = false;
-    for (final LongIterator iter = c.iterator (); iter.hasNext ();)
-    {
-      modified |= removeElement (iter.next ());
-    }
-    return modified;
+    boolean bModified = false;
+    for (final LongIterator aIter = aCont.iterator (); aIter.hasNext ();)
+      bModified |= removeElement (aIter.next ());
+    return bModified;
   }
 
-  public boolean retainAll (final LongCollection c)
+  public boolean retainAll (@Nonnull final LongCollection aCont)
   {
-    boolean modified = false;
-    for (final LongIterator iter = iterator (); iter.hasNext ();)
-    {
-      if (!c.contains (iter.next ()))
+    boolean bModified = false;
+    for (final LongIterator aIter = iterator (); aIter.hasNext ();)
+      if (!aCont.contains (aIter.next ()))
       {
-        iter.remove ();
-        modified = true;
+        aIter.remove ();
+        bModified = true;
       }
-    }
-    return modified;
+    return bModified;
   }
 
+  @Nonnull
+  @ReturnsMutableCopy
   public long [] toArray ()
   {
-    final long [] array = new long [size ()];
+    final long [] ret = new long [size ()];
     int i = 0;
-    for (final LongIterator iter = iterator (); iter.hasNext ();)
-    {
-      array[i] = iter.next ();
-      i++;
-    }
-    return array;
+    for (final LongIterator aIter = iterator (); aIter.hasNext ();)
+      ret[i++] = aIter.next ();
+    return ret;
   }
 
-  public long [] toArray (final long [] a)
+  @Nonnull
+  @ReturnsMutableCopy
+  public long [] toArray (@Nonnull final long [] aTarget)
   {
-    if (a.length < size ())
+    if (aTarget.length < size ())
       return toArray ();
     int i = 0;
-    for (final LongIterator iter = iterator (); iter.hasNext ();)
-    {
-      a[i] = iter.next ();
-      i++;
-    }
-    return a;
+    for (final LongIterator aIter = iterator (); aIter.hasNext ();)
+      aTarget[i++] = aIter.next ();
+    return aTarget;
   }
 }

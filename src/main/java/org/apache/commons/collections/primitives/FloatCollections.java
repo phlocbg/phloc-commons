@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.decorators.UnmodifiableFloatIterator;
 import org.apache.commons.collections.primitives.decorators.UnmodifiableFloatList;
 import org.apache.commons.collections.primitives.decorators.UnmodifiableFloatListIterator;
@@ -24,7 +26,7 @@ import org.apache.commons.collections.primitives.decorators.UnmodifiableFloatLis
  * This class consists exclusively of static methods that operate on or return
  * FloatCollections.
  * <p>
- * The methods of this class all throw a NullPoFloaterException if the provided
+ * The methods of this class all throw a NullPointerException if the provided
  * collection is null.
  * 
  * @version $Revision: 480460 $ $Date: 2006-11-29 09:14:21 +0100 (Mi, 29 Nov
@@ -33,6 +35,8 @@ import org.apache.commons.collections.primitives.decorators.UnmodifiableFloatLis
  */
 public final class FloatCollections
 {
+  private FloatCollections ()
+  {}
 
   /**
    * Returns an unmodifiable FloatList containing only the specified element.
@@ -41,23 +45,23 @@ public final class FloatCollections
    *        the single value
    * @return an unmodifiable FloatList containing only the specified element.
    */
+  @Nonnull 
   public static FloatList singletonFloatList (final float value)
   {
-    // TODO: a specialized implementation of FloatList may be more performant
+    // hint: a specialized implementation of FloatList may be more performant
     final FloatList list = new ArrayFloatList (1);
     list.add (value);
     return UnmodifiableFloatList.wrap (list);
   }
 
   /**
-   * Returns an unmodifiable FloatIterator containing only the specified
-   * element.
+   * Returns an unmodifiable FloatIterator containing only the specified element.
    * 
    * @param value
    *        the single value
-   * @return an unmodifiable FloatIterator containing only the specified
-   *         element.
+   * @return an unmodifiable FloatIterator containing only the specified element.
    */
+  @Nonnull 
   public static FloatIterator singletonFloatIterator (final float value)
   {
     return singletonFloatList (value).iterator ();
@@ -72,6 +76,7 @@ public final class FloatCollections
    * @return an unmodifiable FloatListIterator containing only the specified
    *         element.
    */
+  @Nonnull 
   public static FloatListIterator singletonFloatListIterator (final float value)
   {
     return singletonFloatList (value).listIterator ();
@@ -87,12 +92,11 @@ public final class FloatCollections
    *         if the given FloatList is null
    * @see org.apache.commons.collections.primitives.decorators.UnmodifiableFloatList#wrap
    */
-  public static FloatList unmodifiableFloatList (final FloatList list) throws NullPointerException
+  @Nonnull 
+  public static FloatList unmodifiableFloatList (@Nonnull final FloatList list) throws NullPointerException
   {
     if (null == list)
-    {
       throw new NullPointerException ();
-    }
     return UnmodifiableFloatList.wrap (list);
   }
 
@@ -106,12 +110,11 @@ public final class FloatCollections
    *         if the given FloatIterator is null
    * @see org.apache.commons.collections.primitives.decorators.UnmodifiableFloatIterator#wrap
    */
-  public static FloatIterator unmodifiableFloatIterator (final FloatIterator iter)
+  @Nonnull
+  public static FloatIterator unmodifiableFloatIterator (@Nonnull final FloatIterator iter)
   {
     if (null == iter)
-    {
       throw new NullPointerException ();
-    }
     return UnmodifiableFloatIterator.wrap (iter);
   }
 
@@ -125,12 +128,11 @@ public final class FloatCollections
    *         if the given FloatListIterator is null
    * @see org.apache.commons.collections.primitives.decorators.UnmodifiableFloatListIterator#wrap
    */
-  public static FloatListIterator unmodifiableFloatListIterator (final FloatListIterator iter)
+  @Nonnull
+  public static FloatListIterator unmodifiableFloatListIterator (@Nonnull final FloatListIterator iter)
   {
     if (null == iter)
-    {
       throw new NullPointerException ();
-    }
     return UnmodifiableFloatListIterator.wrap (iter);
   }
 
@@ -140,6 +142,7 @@ public final class FloatCollections
    * @return an unmodifiable, empty FloatList.
    * @see #EMPTY_FLOAT_LIST
    */
+  @Nonnull
   public static FloatList getEmptyFloatList ()
   {
     return EMPTY_FLOAT_LIST;
@@ -151,6 +154,7 @@ public final class FloatCollections
    * @return an unmodifiable, empty FloatIterator.
    * @see #EMPTY_FLOAT_ITERATOR
    */
+  @Nonnull
   public static FloatIterator getEmptyFloatIterator ()
   {
     return EMPTY_FLOAT_ITERATOR;
@@ -162,6 +166,7 @@ public final class FloatCollections
    * @return an unmodifiable, empty FloatListIterator.
    * @see #EMPTY_FLOAT_LIST_ITERATOR
    */
+  @Nonnull
   public static FloatListIterator getEmptyFloatListIterator ()
   {
     return EMPTY_FLOAT_LIST_ITERATOR;

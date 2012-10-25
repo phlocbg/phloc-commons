@@ -19,9 +19,14 @@ package org.apache.commons.collections.primitives;
 import java.util.ConcurrentModificationException;
 import java.util.NoSuchElementException;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.phloc.commons.hash.HashCodeGenerator;
+
 /**
- * Abstract base class for {@link BooleanList}s backed by random access
- * structures like arrays.
+ * Abstract base class for {@link BooleanList}s backed by random access structures
+ * like arrays.
  * <p />
  * Read-only subclasses must override {@link #get} and {@link #size}. Mutable
  * subclasses should also override {@link #set}. Variably-sized subclasses
@@ -29,7 +34,7 @@ import java.util.NoSuchElementException;
  * other methods have at least some base implementation derived from these.
  * Subclasses may choose to override these methods to provide a more efficient
  * implementation.
- * 
+ *
  * @since Commons Primitives 1.2
  * @version $Revision: 480460 $
  */
@@ -46,7 +51,7 @@ public abstract class RandomAccessBooleanList extends AbstractBooleanCollection 
   // fully abstract methods
   // -------------------------------------------------------------------------
 
-  public abstract boolean get (int index);
+  public abstract boolean get (int nIndex);
 
   @Override
   public abstract int size ();
@@ -56,7 +61,7 @@ public abstract class RandomAccessBooleanList extends AbstractBooleanCollection 
 
   /**
    * Unsupported in this implementation.
-   * 
+   *
    * @throws UnsupportedOperationException
    *         since this method is not supported
    */
@@ -67,22 +72,22 @@ public abstract class RandomAccessBooleanList extends AbstractBooleanCollection 
 
   /**
    * Unsupported in this implementation.
-   * 
+   *
    * @throws UnsupportedOperationException
    *         since this method is not supported
    */
-  public boolean set (final int index, final boolean element)
+  public boolean set (final int index, final boolean aElement)
   {
     throw new UnsupportedOperationException ();
   }
 
   /**
    * Unsupported in this implementation.
-   * 
+   *
    * @throws UnsupportedOperationException
    *         since this method is not supported
    */
-  public void add (final int index, final boolean element)
+  public void add (final int index, final boolean aElement)
   {
     throw new UnsupportedOperationException ();
   }
@@ -92,49 +97,41 @@ public abstract class RandomAccessBooleanList extends AbstractBooleanCollection 
   // javadocs here are inherited
 
   @Override
-  public boolean add (final boolean element)
+  public boolean add (final boolean aElement)
   {
-    add (size (), element);
+    add (size (), aElement);
     return true;
   }
 
-  public boolean addAll (int index, final BooleanCollection collection)
+  public boolean addAll (final int nIndex, @Nonnull final BooleanCollection aCollection)
   {
-    boolean modified = false;
-    for (final BooleanIterator iter = collection.iterator (); iter.hasNext ();)
+    int index = nIndex;
+    boolean bModified = false;
+    for (final BooleanIterator iter = aCollection.iterator (); iter.hasNext ();)
     {
       add (index++, iter.next ());
-      modified = true;
+      bModified = true;
     }
-    return modified;
+    return bModified;
   }
 
-  public int indexOf (final boolean element)
+  public int indexOf (final boolean aElement)
   {
     int i = 0;
     for (final BooleanIterator iter = iterator (); iter.hasNext ();)
     {
-      if (iter.next () == element)
-      {
+      if (iter.next () == aElement)
         return i;
-      }
-      else
-      {
-        i++;
-      }
+      i++;
     }
     return -1;
   }
 
-  public int lastIndexOf (final boolean element)
+  public int lastIndexOf (final boolean aElement)
   {
     for (final BooleanListIterator iter = listIterator (size ()); iter.hasPrevious ();)
-    {
-      if (iter.previous () == element)
-      {
+      if (iter.previous () == aElement)
         return iter.nextIndex ();
-      }
-    }
     return -1;
   }
 
@@ -149,62 +146,46 @@ public abstract class RandomAccessBooleanList extends AbstractBooleanCollection 
     return listIterator (0);
   }
 
-  public BooleanListIterator listIterator (final int index)
+  public BooleanListIterator listIterator (final int nIndex)
   {
-    return new RandomAccessBooleanListIterator (this, index);
+    return new RandomAccessBooleanListIterator (this, nIndex);
   }
 
-  public BooleanList subList (final int fromIndex, final int toIndex)
+  public BooleanList subList (final int nFromIndex, final int nToIndex)
   {
-    return new RandomAccessBooleanSubList (this, fromIndex, toIndex);
+    return new RandomAccessBooleanSubList (this, nFromIndex, nToIndex);
   }
 
   @Override
-  public boolean equals (final Object that)
+  public boolean equals (@Nullable final Object that)
   {
     if (this == that)
-    {
       return true;
-    }
-    else
-      if (that instanceof BooleanList)
-      {
-        final BooleanList thatList = (BooleanList) that;
-        if (size () != thatList.size ())
-        {
-          return false;
-        }
-        for (BooleanIterator thatIter = thatList.iterator (), thisIter = iterator (); thisIter.hasNext ();)
-        {
-          if (thisIter.next () != thatIter.next ())
-          {
-            return false;
-          }
-        }
-        return true;
-      }
-      else
-      {
+    if (!(that instanceof BooleanList))
+      return false;
+    final BooleanList thatList = (BooleanList) that;
+    if (size () != thatList.size ())
+      return false;
+    for (BooleanIterator thatIter = thatList.iterator (), thisIter = iterator (); thisIter.hasNext ();)
+      if (thisIter.next () != thatIter.next ())
         return false;
-      }
+    return true;
   }
 
   @Override
   public int hashCode ()
   {
-    int hash = 1;
+    final HashCodeGenerator aHC = new HashCodeGenerator (this);
     for (final BooleanIterator iter = iterator (); iter.hasNext ();)
-    {
-      hash = 31 * hash + (iter.next () ? 1231 : 1237);
-    }
-    return hash;
+      aHC.append (iter.next ());
+    return aHC.getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    final StringBuffer buf = new StringBuffer ();
-    buf.append ("[");
+    final StringBuilder buf = new StringBuilder ();
+    buf.append ('[');
     for (final BooleanIterator iter = iterator (); iter.hasNext ();)
     {
       buf.append (iter.next ());
@@ -213,7 +194,7 @@ public abstract class RandomAccessBooleanList extends AbstractBooleanCollection 
         buf.append (", ");
       }
     }
-    buf.append ("]");
+    buf.append (']');
     return buf.toString ();
   }
 
@@ -242,6 +223,9 @@ public abstract class RandomAccessBooleanList extends AbstractBooleanCollection 
 
   private static class ComodChecker
   {
+    private RandomAccessBooleanList _source = null;
+    private int _expectedModCount = -1;
+
     ComodChecker (final RandomAccessBooleanList source)
     {
       _source = source;
@@ -256,34 +240,27 @@ public abstract class RandomAccessBooleanList extends AbstractBooleanCollection 
     protected void assertNotComodified () throws ConcurrentModificationException
     {
       if (_expectedModCount != getList ().getModCount ())
-      {
         throw new ConcurrentModificationException ();
-      }
     }
 
     protected void resyncModCount ()
     {
       _expectedModCount = getList ().getModCount ();
     }
-
-    private RandomAccessBooleanList _source = null;
-    private int _expectedModCount = -1;
   }
 
   protected static class RandomAccessBooleanListIterator extends ComodChecker implements BooleanListIterator
   {
+    private int _nextIndex = 0;
+    private int _lastReturnedIndex = -1;
+
     RandomAccessBooleanListIterator (final RandomAccessBooleanList list, final int index)
     {
       super (list);
       if (index < 0 || index > getList ().size ())
-      {
         throw new IndexOutOfBoundsException ("Index " + index + " not in [0," + getList ().size () + ")");
-      }
-      else
-      {
-        _nextIndex = index;
-        resyncModCount ();
-      }
+      _nextIndex = index;
+      resyncModCount ();
     }
 
     public boolean hasNext ()
@@ -314,32 +291,22 @@ public abstract class RandomAccessBooleanList extends AbstractBooleanCollection 
     {
       assertNotComodified ();
       if (!hasNext ())
-      {
         throw new NoSuchElementException ();
-      }
-      else
-      {
-        final boolean val = getList ().get (_nextIndex);
-        _lastReturnedIndex = _nextIndex;
-        _nextIndex++;
-        return val;
-      }
+      final boolean val = getList ().get (_nextIndex);
+      _lastReturnedIndex = _nextIndex;
+      _nextIndex++;
+      return val;
     }
 
     public boolean previous ()
     {
       assertNotComodified ();
       if (!hasPrevious ())
-      {
         throw new NoSuchElementException ();
-      }
-      else
-      {
-        final boolean val = getList ().get (_nextIndex - 1);
-        _lastReturnedIndex = _nextIndex - 1;
-        _nextIndex--;
-        return val;
-      }
+      final boolean val = getList ().get (_nextIndex - 1);
+      _lastReturnedIndex = _nextIndex - 1;
+      _nextIndex--;
+      return val;
     }
 
     public void add (final boolean value)
@@ -377,41 +344,30 @@ public abstract class RandomAccessBooleanList extends AbstractBooleanCollection 
     {
       assertNotComodified ();
       if (-1 == _lastReturnedIndex)
-      {
         throw new IllegalStateException ();
-      }
-      else
-      {
-        getList ().set (_lastReturnedIndex, value);
-        resyncModCount ();
-      }
+      getList ().set (_lastReturnedIndex, value);
+      resyncModCount ();
     }
-
-    private int _nextIndex = 0;
-    private int _lastReturnedIndex = -1;
   }
 
-  protected static class RandomAccessBooleanSubList extends RandomAccessBooleanList implements BooleanList
+  protected static class RandomAccessBooleanSubList extends RandomAccessBooleanList
   {
+    private int _offset = 0;
+    private int _limit = 0;
+    private RandomAccessBooleanList _list = null;
+    private ComodChecker _comod = null;
+
     RandomAccessBooleanSubList (final RandomAccessBooleanList list, final int fromIndex, final int toIndex)
     {
       if (fromIndex < 0 || toIndex > list.size ())
-      {
         throw new IndexOutOfBoundsException ();
-      }
-      else
-        if (fromIndex > toIndex)
-        {
-          throw new IllegalArgumentException ();
-        }
-        else
-        {
-          _list = list;
-          _offset = fromIndex;
-          _limit = toIndex - fromIndex;
-          _comod = new ComodChecker (list);
-          _comod.resyncModCount ();
-        }
+      if (fromIndex > toIndex)
+        throw new IllegalArgumentException ();
+      _list = list;
+      _offset = fromIndex;
+      _limit = toIndex - fromIndex;
+      _comod = new ComodChecker (list);
+      _comod.resyncModCount ();
     }
 
     @Override
@@ -466,28 +422,18 @@ public abstract class RandomAccessBooleanList extends AbstractBooleanCollection 
     private void checkRange (final int index)
     {
       if (index < 0 || index >= size ())
-      {
         throw new IndexOutOfBoundsException ("index " + index + " not in [0," + size () + ")");
-      }
     }
 
     private void checkRangeIncludingEndpoint (final int index)
     {
       if (index < 0 || index > size ())
-      {
         throw new IndexOutOfBoundsException ("index " + index + " not in [0," + size () + "]");
-      }
     }
 
     private int toUnderlyingIndex (final int index)
     {
       return (index + _offset);
     }
-
-    private int _offset = 0;
-    private int _limit = 0;
-    private RandomAccessBooleanList _list = null;
-    private ComodChecker _comod = null;
-
   }
 }

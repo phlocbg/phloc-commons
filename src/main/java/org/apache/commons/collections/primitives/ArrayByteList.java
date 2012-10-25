@@ -21,17 +21,20 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import javax.annotation.Nonnull;
+
 /**
  * An {@link ByteList} backed by an array of <code>byte</code>s. This
  * implementation supports all optional methods.
- * 
- * @since Commons Primitives 1.0
+ *
+ * @since Commons Primitives 1.1
  * @version $Revision: 480460 $ $Date: 2006-11-29 09:14:21 +0100 (Mi, 29 Nov
  *          2006) $
- * @author Rodney Waldhoff
  */
-public class ArrayByteList extends RandomAccessByteList implements ByteList, Serializable
+public class ArrayByteList extends RandomAccessByteList implements Serializable
 {
+  private transient byte [] _data = null;
+  private int _size = 0;
 
   // constructors
   // -------------------------------------------------------------------------
@@ -46,16 +49,14 @@ public class ArrayByteList extends RandomAccessByteList implements ByteList, Ser
 
   /**
    * Construct an empty list with the given initial capacity.
-   * 
+   *
    * @throws IllegalArgumentException
    *         when <i>initialCapacity</i> is negative
    */
   public ArrayByteList (final int initialCapacity)
   {
     if (initialCapacity < 0)
-    {
       throw new IllegalArgumentException ("capacity " + initialCapacity);
-    }
     _data = new byte [initialCapacity];
     _size = 0;
   }
@@ -63,8 +64,8 @@ public class ArrayByteList extends RandomAccessByteList implements ByteList, Ser
   /**
    * Constructs a list containing the elements of the given collection, in the
    * order they are returned by that collection's iterator.
-   * 
-   * @see ArrayByteList#addAll(org.apache.commons.collections.primitives.ByteCollection)
+   *
+   * @see ArrayByteList#addAll(ByteCollection)
    * @param that
    *        the non-<code>null</code> collection of <code>byte</code>s to add
    * @throws NullPointerException
@@ -78,7 +79,7 @@ public class ArrayByteList extends RandomAccessByteList implements ByteList, Ser
 
   /**
    * Constructs a list by copying the specified array.
-   * 
+   *
    * @param array
    *        the array to initialize the collection with
    * @throws NullPointerException
@@ -97,7 +98,7 @@ public class ArrayByteList extends RandomAccessByteList implements ByteList, Ser
   @Override
   public byte get (final int index)
   {
-    checkRange (index);
+    _checkRange (index);
     return _data[index];
   }
 
@@ -111,7 +112,7 @@ public class ArrayByteList extends RandomAccessByteList implements ByteList, Ser
    * Removes the element at the specified position in (optional operation). Any
    * subsequent elements are shifted to the left, subtracting one from their
    * indices. Returns the element that was removed.
-   * 
+   *
    * @param index
    *        the index of the element to remove
    * @return the value of the element that was removed
@@ -123,7 +124,7 @@ public class ArrayByteList extends RandomAccessByteList implements ByteList, Ser
   @Override
   public byte removeElementAt (final int index)
   {
-    checkRange (index);
+    _checkRange (index);
     incrModCount ();
     final byte oldval = _data[index];
     final int numtomove = _size - index - 1;
@@ -138,7 +139,7 @@ public class ArrayByteList extends RandomAccessByteList implements ByteList, Ser
   /**
    * Replaces the element at the specified position in me with the specified
    * element (optional operation).
-   * 
+   *
    * @param index
    *        the index of the element to change
    * @param element
@@ -152,7 +153,7 @@ public class ArrayByteList extends RandomAccessByteList implements ByteList, Ser
   @Override
   public byte set (final int index, final byte element)
   {
-    checkRange (index);
+    _checkRange (index);
     incrModCount ();
     final byte oldval = _data[index];
     _data[index] = element;
@@ -163,7 +164,7 @@ public class ArrayByteList extends RandomAccessByteList implements ByteList, Ser
    * Inserts the specified element at the specified position (optional
    * operation). Shifts the element currently at that position (if any) and any
    * subsequent elements to the right, increasing their indices.
-   * 
+   *
    * @param index
    *        the index at which to insert the element
    * @param element
@@ -179,7 +180,7 @@ public class ArrayByteList extends RandomAccessByteList implements ByteList, Ser
   @Override
   public void add (final int index, final byte element)
   {
-    checkRangeIncludingEndpoint (index);
+    _checkRangeIncludingEndpoint (index);
     incrModCount ();
     ensureCapacity (_size + 1);
     final int numtomove = _size - index;
@@ -196,19 +197,19 @@ public class ArrayByteList extends RandomAccessByteList implements ByteList, Ser
   }
 
   @Override
-  public boolean addAll (final ByteCollection collection)
+  public boolean addAll (@Nonnull final ByteCollection collection)
   {
     return addAll (size (), collection);
   }
 
   @Override
-  public boolean addAll (int index, final ByteCollection collection)
+  public boolean addAll (final int nIndex, @Nonnull final ByteCollection collection)
   {
     if (collection.size () == 0)
-    {
       return false;
-    }
-    checkRangeIncludingEndpoint (index);
+
+    int index = nIndex;
+    _checkRangeIncludingEndpoint (index);
     incrModCount ();
     ensureCapacity (_size + collection.size ());
     if (index != _size)
@@ -277,31 +278,18 @@ public class ArrayByteList extends RandomAccessByteList implements ByteList, Ser
     in.defaultReadObject ();
     _data = new byte [in.readInt ()];
     for (int i = 0; i < _size; i++)
-    {
       _data[i] = in.readByte ();
-    }
   }
 
-  private final void checkRange (final int index)
+  private final void _checkRange (final int index)
   {
     if (index < 0 || index >= _size)
-    {
       throw new IndexOutOfBoundsException ("Should be at least 0 and less than " + _size + ", found " + index);
-    }
   }
 
-  private final void checkRangeIncludingEndpoint (final int index)
+  private final void _checkRangeIncludingEndpoint (final int index)
   {
     if (index < 0 || index > _size)
-    {
       throw new IndexOutOfBoundsException ("Should be at least 0 and at most " + _size + ", found " + index);
-    }
   }
-
-  // attributes
-  // -------------------------------------------------------------------------
-
-  private transient byte [] _data = null;
-  private int _size = 0;
-
 }

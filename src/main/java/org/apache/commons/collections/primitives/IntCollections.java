@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.primitives;
 
+import javax.annotation.Nonnull;
+
 import org.apache.commons.collections.primitives.decorators.UnmodifiableIntIterator;
 import org.apache.commons.collections.primitives.decorators.UnmodifiableIntList;
 import org.apache.commons.collections.primitives.decorators.UnmodifiableIntListIterator;
@@ -33,6 +35,8 @@ import org.apache.commons.collections.primitives.decorators.UnmodifiableIntListI
  */
 public final class IntCollections
 {
+  private IntCollections ()
+  {}
 
   /**
    * Returns an unmodifiable IntList containing only the specified element.
@@ -41,9 +45,10 @@ public final class IntCollections
    *        the single value
    * @return an unmodifiable IntList containing only the specified element.
    */
+  @Nonnull 
   public static IntList singletonIntList (final int value)
   {
-    // TODO: a specialized implementation of IntList may be more performant
+    // hint: a specialized implementation of IntList may be more performant
     final IntList list = new ArrayIntList (1);
     list.add (value);
     return UnmodifiableIntList.wrap (list);
@@ -56,6 +61,7 @@ public final class IntCollections
    *        the single value
    * @return an unmodifiable IntIterator containing only the specified element.
    */
+  @Nonnull 
   public static IntIterator singletonIntIterator (final int value)
   {
     return singletonIntList (value).iterator ();
@@ -70,6 +76,7 @@ public final class IntCollections
    * @return an unmodifiable IntListIterator containing only the specified
    *         element.
    */
+  @Nonnull 
   public static IntListIterator singletonIntListIterator (final int value)
   {
     return singletonIntList (value).listIterator ();
@@ -85,12 +92,11 @@ public final class IntCollections
    *         if the given IntList is null
    * @see org.apache.commons.collections.primitives.decorators.UnmodifiableIntList#wrap
    */
-  public static IntList unmodifiableIntList (final IntList list) throws NullPointerException
+  @Nonnull 
+  public static IntList unmodifiableIntList (@Nonnull final IntList list) throws NullPointerException
   {
     if (null == list)
-    {
       throw new NullPointerException ();
-    }
     return UnmodifiableIntList.wrap (list);
   }
 
@@ -104,12 +110,11 @@ public final class IntCollections
    *         if the given IntIterator is null
    * @see org.apache.commons.collections.primitives.decorators.UnmodifiableIntIterator#wrap
    */
-  public static IntIterator unmodifiableIntIterator (final IntIterator iter)
+  @Nonnull
+  public static IntIterator unmodifiableIntIterator (@Nonnull final IntIterator iter)
   {
     if (null == iter)
-    {
       throw new NullPointerException ();
-    }
     return UnmodifiableIntIterator.wrap (iter);
   }
 
@@ -123,12 +128,11 @@ public final class IntCollections
    *         if the given IntListIterator is null
    * @see org.apache.commons.collections.primitives.decorators.UnmodifiableIntListIterator#wrap
    */
-  public static IntListIterator unmodifiableIntListIterator (final IntListIterator iter)
+  @Nonnull
+  public static IntListIterator unmodifiableIntListIterator (@Nonnull final IntListIterator iter)
   {
     if (null == iter)
-    {
       throw new NullPointerException ();
-    }
     return UnmodifiableIntListIterator.wrap (iter);
   }
 
@@ -138,6 +142,7 @@ public final class IntCollections
    * @return an unmodifiable, empty IntList.
    * @see #EMPTY_INT_LIST
    */
+  @Nonnull
   public static IntList getEmptyIntList ()
   {
     return EMPTY_INT_LIST;
@@ -149,6 +154,7 @@ public final class IntCollections
    * @return an unmodifiable, empty IntIterator.
    * @see #EMPTY_INT_ITERATOR
    */
+  @Nonnull
   public static IntIterator getEmptyIntIterator ()
   {
     return EMPTY_INT_ITERATOR;
@@ -160,6 +166,7 @@ public final class IntCollections
    * @return an unmodifiable, empty IntListIterator.
    * @see #EMPTY_INT_LIST_ITERATOR
    */
+  @Nonnull
   public static IntListIterator getEmptyIntListIterator ()
   {
     return EMPTY_INT_LIST_ITERATOR;

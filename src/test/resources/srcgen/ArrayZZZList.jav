@@ -21,15 +21,17 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import javax.annotation.Nonnull;
+
 /**
- * An {@link XXXList} backed by an array of <code>YYY</code>s. This
+ * An {@link ZZZList} backed by an array of <code>YYY</code>s. This
  * implementation supports all optional methods.
- * 
+ *
  * @since Commons Primitives 1.1
  * @version $Revision: 480460 $ $Date: 2006-11-29 09:14:21 +0100 (Mi, 29 Nov
  *          2006) $
  */
-public class ArrayXXXList extends RandomAccessXXXList implements Serializable
+public class ArrayZZZList extends RandomAccessZZZList implements Serializable
 {
   private transient YYY [] _data = null;
   private int _size = 0;
@@ -40,18 +42,18 @@ public class ArrayXXXList extends RandomAccessXXXList implements Serializable
   /**
    * Construct an empty list with the default initial capacity.
    */
-  public ArrayXXXList ()
+  public ArrayZZZList ()
   {
     this (8);
   }
 
   /**
    * Construct an empty list with the given initial capacity.
-   * 
+   *
    * @throws IllegalArgumentException
    *         when <i>initialCapacity</i> is negative
    */
-  public ArrayXXXList (final int initialCapacity)
+  public ArrayZZZList (final int initialCapacity)
   {
     if (initialCapacity < 0)
       throw new IllegalArgumentException ("capacity " + initialCapacity);
@@ -62,14 +64,14 @@ public class ArrayXXXList extends RandomAccessXXXList implements Serializable
   /**
    * Constructs a list containing the elements of the given collection, in the
    * order they are returned by that collection's iterator.
-   * 
-   * @see ArrayXXXList#addAll(XXXCollection)
+   *
+   * @see ArrayZZZList#addAll(ZZZCollection)
    * @param that
    *        the non-<code>null</code> collection of <code>YYY</code>s to add
    * @throws NullPointerException
    *         if <i>that</i> is <code>null</code>
    */
-  public ArrayXXXList (final XXXCollection that)
+  public ArrayZZZList (final ZZZCollection that)
   {
     this (that.size ());
     addAll (that);
@@ -77,20 +79,20 @@ public class ArrayXXXList extends RandomAccessXXXList implements Serializable
 
   /**
    * Constructs a list by copying the specified array.
-   * 
+   *
    * @param array
    *        the array to initialize the collection with
    * @throws NullPointerException
    *         if the array is <code>null</code>
    */
-  public ArrayXXXList (final YYY [] array)
+  public ArrayZZZList (final YYY [] array)
   {
     this (array.length);
     System.arraycopy (array, 0, _data, 0, array.length);
     _size = array.length;
   }
 
-  // XXXList methods
+  // ZZZList methods
   // -------------------------------------------------------------------------
 
   @Override
@@ -110,7 +112,7 @@ public class ArrayXXXList extends RandomAccessXXXList implements Serializable
    * Removes the element at the specified position in (optional operation). Any
    * subsequent elements are shifted to the left, subtracting one from their
    * indices. Returns the element that was removed.
-   * 
+   *
    * @param index
    *        the index of the element to remove
    * @return the value of the element that was removed
@@ -137,7 +139,7 @@ public class ArrayXXXList extends RandomAccessXXXList implements Serializable
   /**
    * Replaces the element at the specified position in me with the specified
    * element (optional operation).
-   * 
+   *
    * @param index
    *        the index of the element to change
    * @param element
@@ -162,7 +164,7 @@ public class ArrayXXXList extends RandomAccessXXXList implements Serializable
    * Inserts the specified element at the specified position (optional
    * operation). Shifts the element currently at that position (if any) and any
    * subsequent elements to the right, increasing their indices.
-   * 
+   *
    * @param index
    *        the index at which to insert the element
    * @param element
@@ -195,13 +197,13 @@ public class ArrayXXXList extends RandomAccessXXXList implements Serializable
   }
 
   @Override
-  public boolean addAll (@Nonnull final XXXCollection collection)
+  public boolean addAll (@Nonnull final ZZZCollection collection)
   {
     return addAll (size (), collection);
   }
 
   @Override
-  public boolean addAll (final int nIndex, @Nonnull final XXXCollection collection)
+  public boolean addAll (final int nIndex, @Nonnull final ZZZCollection collection)
   {
     if (collection.size () == 0)
       return false;
@@ -215,7 +217,7 @@ public class ArrayXXXList extends RandomAccessXXXList implements Serializable
       // Need to move some elements
       System.arraycopy (_data, index, _data, index + collection.size (), _size - index);
     }
-    for (final XXXIterator it = collection.iterator (); it.hasNext ();)
+    for (final ZZZIterator it = collection.iterator (); it.hasNext ();)
     {
       _data[index] = it.next ();
       index++;
@@ -267,7 +269,7 @@ public class ArrayXXXList extends RandomAccessXXXList implements Serializable
     out.writeInt (_data.length);
     for (int i = 0; i < _size; i++)
     {
-      out.writeXXX (_data[i]);
+      out.writeZZZ (_data[i]);
     }
   }
 
@@ -276,7 +278,7 @@ public class ArrayXXXList extends RandomAccessXXXList implements Serializable
     in.defaultReadObject ();
     _data = new YYY [in.readInt ()];
     for (int i = 0; i < _size; i++)
-      _data[i] = in.readXXX ();
+      _data[i] = in.readZZZ ();
   }
 
   private final void _checkRange (final int index)

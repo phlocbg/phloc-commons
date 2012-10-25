@@ -18,14 +18,14 @@ package org.apache.commons.collections.primitives;
 
 /**
  * A bi-directional iterator over <code>YYY</code> values.
- * 
- * @see org.apache.commons.collections.primitives.adapters.XXXListIteratorListIterator
- * @see org.apache.commons.collections.primitives.adapters.ListIteratorXXXListIterator
+ *
+ * @see org.apache.commons.collections.primitives.adapters.ZZZListIteratorListIterator
+ * @see org.apache.commons.collections.primitives.adapters.ListIteratorZZZListIterator
  * @since Commons Primitives 1.1
  * @version $Revision: 480460 $ $Date: 2006-11-29 09:14:21 +0100 (Mi, 29 Nov
  *          2006) $
  */
-public interface XXXListIterator extends XXXIterator
+public interface ZZZListIterator extends ZZZIterator
 {
   /**
    * Inserts the specified element into my underlying collection (optional
@@ -39,7 +39,7 @@ public interface XXXListIterator extends XXXIterator
    * subsequent call to {@link #next} will be unaffected. This call increases by
    * one the value that would be returned by a call to {@link #nextIndex} or
    * {@link #previousIndex}.
-   * 
+   *
    * @param aElement
    *        the value to be inserted
    * @throws UnsupportedOperationException
@@ -54,7 +54,7 @@ public interface XXXListIterator extends XXXIterator
    * Returns <code>true</code> if I have more elements when traversed in the
    * forward direction. (In other words, returns <code>true</code> if a call to
    * {@link #next} will return an element rather than throwing an exception.
-   * 
+   *
    * @return <code>true</code> if I have more elements when traversed in the
    *         forward direction
    */
@@ -64,7 +64,7 @@ public interface XXXListIterator extends XXXIterator
    * Returns <code>true</code> if I have more elements when traversed in the
    * reverse direction. (In other words, returns <code>true</code> if a call to
    * {@link #previous} will return an element rather than throwing an exception.
-   * 
+   *
    * @return <code>true</code> if I have more elements when traversed in the
    *         reverse direction
    */
@@ -72,7 +72,7 @@ public interface XXXListIterator extends XXXIterator
 
   /**
    * Returns the next element in me when traversed in the forward direction.
-   * 
+   *
    * @return the next element in me
    * @throws java.util.NoSuchElementException
    *         if there is no next element
@@ -83,14 +83,14 @@ public interface XXXListIterator extends XXXIterator
    * Returns the index of the element that would be returned by a subsequent
    * call to {@link #next}, or the number of elements in my iteration if I have
    * no next element.
-   * 
+   *
    * @return the index of the next element in me
    */
   int nextIndex ();
 
   /**
    * Returns the next element in me when traversed in the reverse direction.
-   * 
+   *
    * @return the previous element in me
    * @throws java.util.NoSuchElementException
    *         if there is no previous element
@@ -101,7 +101,7 @@ public interface XXXListIterator extends XXXIterator
    * Returns the index of the element that would be returned by a subsequent
    * call to {@link #previous}, or <code>-1</code> if I have no previous
    * element.
-   * 
+   *
    * @return the index of the previous element in me
    */
   int previousIndex ();
@@ -109,7 +109,7 @@ public interface XXXListIterator extends XXXIterator
   /**
    * Removes from my underlying collection the last element returned by
    * {@link #next} or {@link #previous} (optional operation).
-   * 
+   *
    * @throws UnsupportedOperationException
    *         if this operation is not supported
    * @throws IllegalStateException
@@ -123,7 +123,7 @@ public interface XXXListIterator extends XXXIterator
    * Replaces in my underlying collection the last element returned by
    * {@link #next} or {@link #previous} with the specified value (optional
    * operation).
-   * 
+   *
    * @param aElement
    *        the value to replace the last returned element with
    * @throws UnsupportedOperationException

@@ -20,11 +20,12 @@ import java.util.ConcurrentModificationException;
 import java.util.NoSuchElementException;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.phloc.commons.hash.HashCodeGenerator;
 
 /**
- * Abstract base class for {@link XXXList}s backed by random access structures
+ * Abstract base class for {@link ZZZList}s backed by random access structures
  * like arrays.
  * <p />
  * Read-only subclasses must override {@link #get} and {@link #size}. Mutable
@@ -33,18 +34,18 @@ import com.phloc.commons.hash.HashCodeGenerator;
  * other methods have at least some base implementation derived from these.
  * Subclasses may choose to override these methods to provide a more efficient
  * implementation.
- * 
+ *
  * @since Commons Primitives 1.2
  * @version $Revision: 480460 $
  */
-public abstract class RandomAccessXXXList extends AbstractXXXCollection implements XXXList
+public abstract class RandomAccessZZZList extends AbstractZZZCollection implements ZZZList
 {
 
   // constructors
   // -------------------------------------------------------------------------
 
   /** Constructs an empty list. */
-  protected RandomAccessXXXList ()
+  protected RandomAccessZZZList ()
   {}
 
   // fully abstract methods
@@ -60,7 +61,7 @@ public abstract class RandomAccessXXXList extends AbstractXXXCollection implemen
 
   /**
    * Unsupported in this implementation.
-   * 
+   *
    * @throws UnsupportedOperationException
    *         since this method is not supported
    */
@@ -71,7 +72,7 @@ public abstract class RandomAccessXXXList extends AbstractXXXCollection implemen
 
   /**
    * Unsupported in this implementation.
-   * 
+   *
    * @throws UnsupportedOperationException
    *         since this method is not supported
    */
@@ -82,7 +83,7 @@ public abstract class RandomAccessXXXList extends AbstractXXXCollection implemen
 
   /**
    * Unsupported in this implementation.
-   * 
+   *
    * @throws UnsupportedOperationException
    *         since this method is not supported
    */
@@ -102,11 +103,11 @@ public abstract class RandomAccessXXXList extends AbstractXXXCollection implemen
     return true;
   }
 
-  public boolean addAll (final int nIndex, @Nonnull final XXXCollection aCollection)
+  public boolean addAll (final int nIndex, @Nonnull final ZZZCollection aCollection)
   {
     int index = nIndex;
     boolean bModified = false;
-    for (final XXXIterator iter = aCollection.iterator (); iter.hasNext ();)
+    for (final ZZZIterator iter = aCollection.iterator (); iter.hasNext ();)
     {
       add (index++, iter.next ());
       bModified = true;
@@ -117,7 +118,7 @@ public abstract class RandomAccessXXXList extends AbstractXXXCollection implemen
   public int indexOf (final YYY aElement)
   {
     int i = 0;
-    for (final XXXIterator iter = iterator (); iter.hasNext ();)
+    for (final ZZZIterator iter = iterator (); iter.hasNext ();)
     {
       if (iter.next () == aElement)
         return i;
@@ -128,44 +129,44 @@ public abstract class RandomAccessXXXList extends AbstractXXXCollection implemen
 
   public int lastIndexOf (final YYY aElement)
   {
-    for (final XXXListIterator iter = listIterator (size ()); iter.hasPrevious ();)
+    for (final ZZZListIterator iter = listIterator (size ()); iter.hasPrevious ();)
       if (iter.previous () == aElement)
         return iter.nextIndex ();
     return -1;
   }
 
   @Override
-  public XXXIterator iterator ()
+  public ZZZIterator iterator ()
   {
     return listIterator ();
   }
 
-  public XXXListIterator listIterator ()
+  public ZZZListIterator listIterator ()
   {
     return listIterator (0);
   }
 
-  public XXXListIterator listIterator (final int nIndex)
+  public ZZZListIterator listIterator (final int nIndex)
   {
     return new RandomAccessXXXListIterator (this, nIndex);
   }
 
-  public XXXList subList (final int nFromIndex, final int nToIndex)
+  public ZZZList subList (final int nFromIndex, final int nToIndex)
   {
     return new RandomAccessXXXSubList (this, nFromIndex, nToIndex);
   }
 
   @Override
-  public boolean equals (final Object that)
+  public boolean equals (@Nullable final Object that)
   {
     if (this == that)
       return true;
-    if (!(that instanceof XXXList))
+    if (!(that instanceof ZZZList))
       return false;
-    final XXXList thatList = (XXXList) that;
+    final ZZZList thatList = (ZZZList) that;
     if (size () != thatList.size ())
       return false;
-    for (XXXIterator thatIter = thatList.iterator (), thisIter = iterator (); thisIter.hasNext ();)
+    for (ZZZIterator thatIter = thatList.iterator (), thisIter = iterator (); thisIter.hasNext ();)
       if (thisIter.next () != thatIter.next ())
         return false;
     return true;
@@ -175,7 +176,7 @@ public abstract class RandomAccessXXXList extends AbstractXXXCollection implemen
   public int hashCode ()
   {
     final HashCodeGenerator aHC = new HashCodeGenerator (this);
-    for (final XXXIterator iter = iterator (); iter.hasNext ();)
+    for (final ZZZIterator iter = iterator (); iter.hasNext ();)
       aHC.append (iter.next ());
     return aHC.getHashCode ();
   }
@@ -185,7 +186,7 @@ public abstract class RandomAccessXXXList extends AbstractXXXCollection implemen
   {
     final StringBuilder buf = new StringBuilder ();
     buf.append ('[');
-    for (final XXXIterator iter = iterator (); iter.hasNext ();)
+    for (final ZZZIterator iter = iterator (); iter.hasNext ();)
     {
       buf.append (iter.next ());
       if (iter.hasNext ())
@@ -222,16 +223,16 @@ public abstract class RandomAccessXXXList extends AbstractXXXCollection implemen
 
   private static class ComodChecker
   {
-    private RandomAccessXXXList _source = null;
+    private RandomAccessZZZList _source = null;
     private int _expectedModCount = -1;
 
-    ComodChecker (final RandomAccessXXXList source)
+    ComodChecker (final RandomAccessZZZList source)
     {
       _source = source;
       resyncModCount ();
     }
 
-    protected RandomAccessXXXList getList ()
+    protected RandomAccessZZZList getList ()
     {
       return _source;
     }
@@ -248,12 +249,12 @@ public abstract class RandomAccessXXXList extends AbstractXXXCollection implemen
     }
   }
 
-  protected static class RandomAccessXXXListIterator extends ComodChecker implements XXXListIterator
+  protected static class RandomAccessXXXListIterator extends ComodChecker implements ZZZListIterator
   {
     private int _nextIndex = 0;
     private int _lastReturnedIndex = -1;
 
-    RandomAccessXXXListIterator (final RandomAccessXXXList list, final int index)
+    RandomAccessXXXListIterator (final RandomAccessZZZList list, final int index)
     {
       super (list);
       if (index < 0 || index > getList ().size ())
@@ -349,14 +350,14 @@ public abstract class RandomAccessXXXList extends AbstractXXXCollection implemen
     }
   }
 
-  protected static class RandomAccessXXXSubList extends RandomAccessXXXList
+  protected static class RandomAccessXXXSubList extends RandomAccessZZZList
   {
     private int _offset = 0;
     private int _limit = 0;
-    private RandomAccessXXXList _list = null;
+    private RandomAccessZZZList _list = null;
     private ComodChecker _comod = null;
 
-    RandomAccessXXXSubList (final RandomAccessXXXList list, final int fromIndex, final int toIndex)
+    RandomAccessXXXSubList (final RandomAccessZZZList list, final int fromIndex, final int toIndex)
     {
       if (fromIndex < 0 || toIndex > list.size ())
         throw new IndexOutOfBoundsException ();

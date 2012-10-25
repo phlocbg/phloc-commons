@@ -22,25 +22,25 @@ import javax.annotation.Nonnull;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 
 /**
- * Abstract base class for {@link XXXCollection}s.
+ * Abstract base class for {@link ZZZCollection}s.
  * <p/>
  * Read-only subclasses must override {@link #iterator} and {@link #size}.
  * Mutable subclasses should also override {@link #add} and
- * {@link XXXIterator#remove XXXIterator.remove}. All other methods have at
+ * {@link ZZZIterator#remove ZZZIterator.remove}. All other methods have at
  * least some base implementation derived from these. Subclasses may choose to
  * override these methods to provide a more efficient implementation.
- * 
+ *
  * @since Commons Primitives 1.1
  * @version $Revision: 480460 $ $Date: 2006-11-29 09:14:21 +0100 (Mi, 29 Nov
  *          2006) $
  */
-public abstract class AbstractXXXCollection implements XXXCollection
+public abstract class AbstractZZZCollection implements ZZZCollection
 {
-  protected AbstractXXXCollection ()
+  protected AbstractZZZCollection ()
   {}
 
   @Nonnull
-  public abstract XXXIterator iterator ();
+  public abstract ZZZIterator iterator ();
 
   @Nonnegative
   public abstract int size ();
@@ -51,17 +51,17 @@ public abstract class AbstractXXXCollection implements XXXCollection
     throw new UnsupportedOperationException ("add(YYY) is not supported.");
   }
 
-  public boolean addAll (@Nonnull final XXXCollection aCont)
+  public boolean addAll (@Nonnull final ZZZCollection aCont)
   {
     boolean bModified = false;
-    for (final XXXIterator aIter = aCont.iterator (); aIter.hasNext ();)
+    for (final ZZZIterator aIter = aCont.iterator (); aIter.hasNext ();)
       bModified |= add (aIter.next ());
     return bModified;
   }
 
   public void clear ()
   {
-    for (final XXXIterator aIter = iterator (); aIter.hasNext ();)
+    for (final ZZZIterator aIter = iterator (); aIter.hasNext ();)
     {
       aIter.next ();
       aIter.remove ();
@@ -70,15 +70,15 @@ public abstract class AbstractXXXCollection implements XXXCollection
 
   public boolean contains (final YYY aElement)
   {
-    for (final XXXIterator aIter = iterator (); aIter.hasNext ();)
+    for (final ZZZIterator aIter = iterator (); aIter.hasNext ();)
       if (aIter.next () == aElement)
         return true;
     return false;
   }
 
-  public boolean containsAll (@Nonnull final XXXCollection aCont)
+  public boolean containsAll (@Nonnull final ZZZCollection aCont)
   {
-    for (final XXXIterator aIter = aCont.iterator (); aIter.hasNext ();)
+    for (final ZZZIterator aIter = aCont.iterator (); aIter.hasNext ();)
       if (!contains (aIter.next ()))
         return false;
     return true;
@@ -91,7 +91,7 @@ public abstract class AbstractXXXCollection implements XXXCollection
 
   public boolean removeElement (final YYY aElement)
   {
-    for (final XXXIterator aIter = iterator (); aIter.hasNext ();)
+    for (final ZZZIterator aIter = iterator (); aIter.hasNext ();)
       if (aIter.next () == aElement)
       {
         aIter.remove ();
@@ -100,18 +100,18 @@ public abstract class AbstractXXXCollection implements XXXCollection
     return false;
   }
 
-  public boolean removeAll (@Nonnull final XXXCollection aCont)
+  public boolean removeAll (@Nonnull final ZZZCollection aCont)
   {
     boolean bModified = false;
-    for (final XXXIterator aIter = aCont.iterator (); aIter.hasNext ();)
+    for (final ZZZIterator aIter = aCont.iterator (); aIter.hasNext ();)
       bModified |= removeElement (aIter.next ());
     return bModified;
   }
 
-  public boolean retainAll (@Nonnull final XXXCollection aCont)
+  public boolean retainAll (@Nonnull final ZZZCollection aCont)
   {
     boolean bModified = false;
-    for (final XXXIterator aIter = iterator (); aIter.hasNext ();)
+    for (final ZZZIterator aIter = iterator (); aIter.hasNext ();)
       if (!aCont.contains (aIter.next ()))
       {
         aIter.remove ();
@@ -126,7 +126,7 @@ public abstract class AbstractXXXCollection implements XXXCollection
   {
     final YYY [] ret = new YYY [size ()];
     int i = 0;
-    for (final XXXIterator aIter = iterator (); aIter.hasNext ();)
+    for (final ZZZIterator aIter = iterator (); aIter.hasNext ();)
       ret[i++] = aIter.next ();
     return ret;
   }
@@ -138,7 +138,7 @@ public abstract class AbstractXXXCollection implements XXXCollection
     if (aTarget.length < size ())
       return toArray ();
     int i = 0;
-    for (final XXXIterator aIter = iterator (); aIter.hasNext ();)
+    for (final ZZZIterator aIter = iterator (); aIter.hasNext ();)
       aTarget[i++] = aIter.next ();
     return aTarget;
   }

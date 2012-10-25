@@ -16,142 +16,130 @@
  */
 package org.apache.commons.collections.primitives;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+
+import com.phloc.commons.annotations.ReturnsMutableCopy;
+
 /**
  * Abstract base class for {@link ShortCollection}s.
- * <p />
+ * <p/>
  * Read-only subclasses must override {@link #iterator} and {@link #size}.
  * Mutable subclasses should also override {@link #add} and
  * {@link ShortIterator#remove ShortIterator.remove}. All other methods have at
  * least some base implementation derived from these. Subclasses may choose to
  * override these methods to provide a more efficient implementation.
- * 
- * @since Commons Primitives 1.0
+ *
+ * @since Commons Primitives 1.1
  * @version $Revision: 480460 $ $Date: 2006-11-29 09:14:21 +0100 (Mi, 29 Nov
  *          2006) $
- * @author Rodney Waldhoff
  */
 public abstract class AbstractShortCollection implements ShortCollection
 {
-  public abstract ShortIterator iterator ();
-
-  public abstract int size ();
-
   protected AbstractShortCollection ()
   {}
 
+  @Nonnull
+  public abstract ShortIterator iterator ();
+
+  @Nonnegative
+  public abstract int size ();
+
   /** Unsupported in this base implementation. */
-  public boolean add (final short element)
+  public boolean add (final short aElement)
   {
     throw new UnsupportedOperationException ("add(short) is not supported.");
   }
 
-  public boolean addAll (final ShortCollection c)
+  public boolean addAll (@Nonnull final ShortCollection aCont)
   {
-    boolean modified = false;
-    for (final ShortIterator iter = c.iterator (); iter.hasNext ();)
-    {
-      modified |= add (iter.next ());
-    }
-    return modified;
+    boolean bModified = false;
+    for (final ShortIterator aIter = aCont.iterator (); aIter.hasNext ();)
+      bModified |= add (aIter.next ());
+    return bModified;
   }
 
   public void clear ()
   {
-    for (final ShortIterator iter = iterator (); iter.hasNext ();)
+    for (final ShortIterator aIter = iterator (); aIter.hasNext ();)
     {
-      iter.next ();
-      iter.remove ();
+      aIter.next ();
+      aIter.remove ();
     }
   }
 
-  public boolean contains (final short element)
+  public boolean contains (final short aElement)
   {
-    for (final ShortIterator iter = iterator (); iter.hasNext ();)
-    {
-      if (iter.next () == element)
-      {
+    for (final ShortIterator aIter = iterator (); aIter.hasNext ();)
+      if (aIter.next () == aElement)
         return true;
-      }
-    }
     return false;
   }
 
-  public boolean containsAll (final ShortCollection c)
+  public boolean containsAll (@Nonnull final ShortCollection aCont)
   {
-    for (final ShortIterator iter = c.iterator (); iter.hasNext ();)
-    {
-      if (!contains (iter.next ()))
-      {
+    for (final ShortIterator aIter = aCont.iterator (); aIter.hasNext ();)
+      if (!contains (aIter.next ()))
         return false;
-      }
-    }
     return true;
   }
 
   public boolean isEmpty ()
   {
-    return (0 == size ());
+    return 0 == size ();
   }
 
-  public boolean removeElement (final short element)
+  public boolean removeElement (final short aElement)
   {
-    for (final ShortIterator iter = iterator (); iter.hasNext ();)
-    {
-      if (iter.next () == element)
+    for (final ShortIterator aIter = iterator (); aIter.hasNext ();)
+      if (aIter.next () == aElement)
       {
-        iter.remove ();
+        aIter.remove ();
         return true;
       }
-    }
     return false;
   }
 
-  public boolean removeAll (final ShortCollection c)
+  public boolean removeAll (@Nonnull final ShortCollection aCont)
   {
-    boolean modified = false;
-    for (final ShortIterator iter = c.iterator (); iter.hasNext ();)
-    {
-      modified |= removeElement (iter.next ());
-    }
-    return modified;
+    boolean bModified = false;
+    for (final ShortIterator aIter = aCont.iterator (); aIter.hasNext ();)
+      bModified |= removeElement (aIter.next ());
+    return bModified;
   }
 
-  public boolean retainAll (final ShortCollection c)
+  public boolean retainAll (@Nonnull final ShortCollection aCont)
   {
-    boolean modified = false;
-    for (final ShortIterator iter = iterator (); iter.hasNext ();)
-    {
-      if (!c.contains (iter.next ()))
+    boolean bModified = false;
+    for (final ShortIterator aIter = iterator (); aIter.hasNext ();)
+      if (!aCont.contains (aIter.next ()))
       {
-        iter.remove ();
-        modified = true;
+        aIter.remove ();
+        bModified = true;
       }
-    }
-    return modified;
+    return bModified;
   }
 
+  @Nonnull
+  @ReturnsMutableCopy
   public short [] toArray ()
   {
-    final short [] array = new short [size ()];
+    final short [] ret = new short [size ()];
     int i = 0;
-    for (final ShortIterator iter = iterator (); iter.hasNext ();)
-    {
-      array[i] = iter.next ();
-      i++;
-    }
-    return array;
+    for (final ShortIterator aIter = iterator (); aIter.hasNext ();)
+      ret[i++] = aIter.next ();
+    return ret;
   }
 
-  public short [] toArray (final short [] a)
+  @Nonnull
+  @ReturnsMutableCopy
+  public short [] toArray (@Nonnull final short [] aTarget)
   {
-    if (a.length < size ())
+    if (aTarget.length < size ())
       return toArray ();
     int i = 0;
-    for (final ShortIterator iter = iterator (); iter.hasNext ();)
-    {
-      a[i] = iter.next ();
-      i++;
-    }
-    return a;
+    for (final ShortIterator aIter = iterator (); aIter.hasNext ();)
+      aTarget[i++] = aIter.next ();
+    return aTarget;
   }
 }

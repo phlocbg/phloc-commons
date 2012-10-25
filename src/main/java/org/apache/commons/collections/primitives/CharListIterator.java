@@ -18,13 +18,12 @@ package org.apache.commons.collections.primitives;
 
 /**
  * A bi-directional iterator over <code>char</code> values.
- * 
+ *
  * @see org.apache.commons.collections.primitives.adapters.CharListIteratorListIterator
  * @see org.apache.commons.collections.primitives.adapters.ListIteratorCharListIterator
- * @since Commons Primitives 1.0
+ * @since Commons Primitives 1.1
  * @version $Revision: 480460 $ $Date: 2006-11-29 09:14:21 +0100 (Mi, 29 Nov
  *          2006) $
- * @author Rodney Waldhoff
  */
 public interface CharListIterator extends CharIterator
 {
@@ -40,8 +39,8 @@ public interface CharListIterator extends CharIterator
    * subsequent call to {@link #next} will be unaffected. This call increases by
    * one the value that would be returned by a call to {@link #nextIndex} or
    * {@link #previousIndex}.
-   * 
-   * @param element
+   *
+   * @param aElement
    *        the value to be inserted
    * @throws UnsupportedOperationException
    *         when this operation is not supported
@@ -49,31 +48,31 @@ public interface CharListIterator extends CharIterator
    *         if some aspect of the specified element prevents it from being
    *         added
    */
-  void add (char element);
+  void add (char aElement);
 
   /**
-   * Returns <code>true</code> iff I have more elements when traversed in the
-   * forward direction. (In other words, returns <code>true</code> iff a call to
+   * Returns <code>true</code> if I have more elements when traversed in the
+   * forward direction. (In other words, returns <code>true</code> if a call to
    * {@link #next} will return an element rather than throwing an exception.
-   * 
-   * @return <code>true</code> iff I have more elements when traversed in the
+   *
+   * @return <code>true</code> if I have more elements when traversed in the
    *         forward direction
    */
   boolean hasNext ();
 
   /**
-   * Returns <code>true</code> iff I have more elements when traversed in the
-   * reverse direction. (In other words, returns <code>true</code> iff a call to
+   * Returns <code>true</code> if I have more elements when traversed in the
+   * reverse direction. (In other words, returns <code>true</code> if a call to
    * {@link #previous} will return an element rather than throwing an exception.
-   * 
-   * @return <code>true</code> iff I have more elements when traversed in the
+   *
+   * @return <code>true</code> if I have more elements when traversed in the
    *         reverse direction
    */
   boolean hasPrevious ();
 
   /**
    * Returns the next element in me when traversed in the forward direction.
-   * 
+   *
    * @return the next element in me
    * @throws java.util.NoSuchElementException
    *         if there is no next element
@@ -84,14 +83,14 @@ public interface CharListIterator extends CharIterator
    * Returns the index of the element that would be returned by a subsequent
    * call to {@link #next}, or the number of elements in my iteration if I have
    * no next element.
-   * 
+   *
    * @return the index of the next element in me
    */
   int nextIndex ();
 
   /**
    * Returns the next element in me when traversed in the reverse direction.
-   * 
+   *
    * @return the previous element in me
    * @throws java.util.NoSuchElementException
    *         if there is no previous element
@@ -102,7 +101,7 @@ public interface CharListIterator extends CharIterator
    * Returns the index of the element that would be returned by a subsequent
    * call to {@link #previous}, or <code>-1</code> if I have no previous
    * element.
-   * 
+   *
    * @return the index of the previous element in me
    */
   int previousIndex ();
@@ -110,7 +109,7 @@ public interface CharListIterator extends CharIterator
   /**
    * Removes from my underlying collection the last element returned by
    * {@link #next} or {@link #previous} (optional operation).
-   * 
+   *
    * @throws UnsupportedOperationException
    *         if this operation is not supported
    * @throws IllegalStateException
@@ -124,8 +123,8 @@ public interface CharListIterator extends CharIterator
    * Replaces in my underlying collection the last element returned by
    * {@link #next} or {@link #previous} with the specified value (optional
    * operation).
-   * 
-   * @param element
+   *
+   * @param aElement
    *        the value to replace the last returned element with
    * @throws UnsupportedOperationException
    *         if this operation is not supported
@@ -137,5 +136,5 @@ public interface CharListIterator extends CharIterator
    *         if some aspect of the specified element prevents it from being
    *         added
    */
-  void set (char element);
+  void set (char aElement);
 }

@@ -18,28 +18,27 @@ package org.apache.commons.collections.primitives;
 
 /**
  * An iterator over <code>long</code> values.
- * 
+ *
  * @see org.apache.commons.collections.primitives.adapters.LongIteratorIterator
  * @see org.apache.commons.collections.primitives.adapters.IteratorLongIterator
- * @since Commons Primitives 1.0
+ * @since Commons Primitives 1.1
  * @version $Revision: 480460 $ $Date: 2006-11-29 09:14:21 +0100 (Mi, 29 Nov
  *          2006) $
- * @author Rodney Waldhoff
  */
 public interface LongIterator
 {
   /**
-   * Returns <code>true</code> iff I have more elements. (In other words,
-   * returns <code>true</code> iff a subsequent call to {@link #next next} will
-   * return an element rather than throwing an exception.)
-   * 
-   * @return <code>true</code> iff I have more elements
+   * Returns <code>true</code> if I have more elements. (In other words, returns
+   * <code>true</code> if a subsequent call to {@link #next next} will return an
+   * element rather than throwing an exception.)
+   *
+   * @return <code>true</code> if I have more elements
    */
   boolean hasNext ();
 
   /**
    * Returns the next element in me.
-   * 
+   *
    * @return the next element in me
    * @throws java.util.NoSuchElementException
    *         if there is no next element
@@ -49,7 +48,7 @@ public interface LongIterator
   /**
    * Removes from my underlying collection the last element {@link #next
    * returned} by me (optional operation).
-   * 
+   *
    * @throws UnsupportedOperationException
    *         if this operation is not supported
    * @throws IllegalStateException

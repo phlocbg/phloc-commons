@@ -16,86 +16,90 @@
  */
 package org.apache.commons.collections.primitives;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+
+import com.phloc.commons.annotations.ReturnsMutableCopy;
+
 /**
  * A collection of <code>char</code> values.
- * 
+ *
  * @see org.apache.commons.collections.primitives.adapters.CharCollectionCollection
  * @see org.apache.commons.collections.primitives.adapters.CollectionCharCollection
- * @since Commons Primitives 1.0
+ * @since Commons Primitives 1.1
  * @version $Revision: 480460 $ $Date: 2006-11-29 09:14:21 +0100 (Mi, 29 Nov
  *          2006) $
- * @author Rodney Waldhoff
  */
 public interface CharCollection
 {
   /**
    * Ensures that I contain the specified element (optional operation). Returns
-   * <code>true</code> iff I changed as a result of this call.
+   * <code>true</code> if I changed as a result of this call.
    * <p/>
    * If a collection refuses to add the specified element for any reason other
    * than that it already contains the element, it <i>must</i> throw an
    * exception (rather than simply returning <tt>false</tt>). This preserves the
    * invariant that a collection always contains the specified element after
    * this call returns.
-   * 
-   * @param element
+   *
+   * @param aElement
    *        the value whose presence within me is to be ensured
-   * @return <code>true</code> iff I changed as a result of this call
+   * @return <code>true</code> if I changed as a result of this call
    * @throws UnsupportedOperationException
    *         when this operation is not supported
    * @throws IllegalArgumentException
    *         may be thrown if some aspect of the specified element prevents it
    *         from being added to me
    */
-  boolean add (char element);
+  boolean add (char aElement);
 
   /**
    * {@link #add Adds} all of the elements in the specified collection to me
    * (optional operation).
-   * 
-   * @param c
+   *
+   * @param aCont
    *        the collection of elements whose presence within me is to be ensured
-   * @return <code>true</code> iff I changed as a result of this call
+   * @return <code>true</code> if I changed as a result of this call
    * @throws UnsupportedOperationException
    *         when this operation is not supported
    * @throws IllegalArgumentException
    *         may be thrown if some aspect of some specified element prevents it
    *         from being added to me
    */
-  boolean addAll (CharCollection c);
+  boolean addAll (@Nonnull CharCollection aCont);
 
   /**
    * Removes all my elements (optional operation). I will be {@link #isEmpty
    * empty} after this method successfully returns.
-   * 
+   *
    * @throws UnsupportedOperationException
    *         when this operation is not supported
    */
   void clear ();
 
   /**
-   * Returns <code>true</code> iff I contain the specified element.
-   * 
-   * @param element
+   * Returns <code>true</code> if I contain the specified element.
+   *
+   * @param aElement
    *        the value whose presence within me is to be tested
-   * @return <code>true</code> iff I contain the specified element
+   * @return <code>true</code> if I contain the specified element
    */
-  boolean contains (char element);
+  boolean contains (char aElement);
 
   /**
-   * Returns <code>true</code> iff I {@link #contains contain} all of the
+   * Returns <code>true</code> if I {@link #contains contain} all of the
    * elements in the given collection.
-   * 
-   * @param c
+   *
+   * @param aCont
    *        the collection of elements whose presence within me is to be tested
-   * @return <code>true</code> iff I contain the all the specified elements
+   * @return <code>true</code> if I contain the all the specified elements
    */
-  boolean containsAll (CharCollection c);
+  boolean containsAll (@Nonnull CharCollection aCont);
 
   /**
-   * Returns <code>true</code> iff I contain no elements.
-   * 
-   * @return <code>true</code> iff I contain no elements.
+   * Returns <code>true</code> if I contain no elements.
+   *
+   * @return <code>true</code> if I contain no elements.
    */
   boolean isEmpty ();
 
@@ -103,60 +107,62 @@ public interface CharCollection
    * Returns an {@link CharIterator iterator} over all my elements. This base
    * interface places no constraints on the order in which the elements are
    * returned by the returned iterator.
-   * 
+   *
    * @return an {@link CharIterator iterator} over all my elements.
    */
+  @Nonnull
   CharIterator iterator ();
 
   /**
    * Removes all of my elements that are contained in the specified collection
-   * (optional operation). The behavior of this method is unspecified if the
+   * (optional operation). The behaviour of this method is unspecified if the
    * given collection is modified while this method is executing. Note that this
    * includes the case in which the given collection is this collection, and it
    * is not empty.
-   * 
-   * @param c
+   *
+   * @param aCont
    *        the collection of elements to remove
-   * @return <code>true</code> iff I contained the at least one of the specified
-   *         elements, in other words, returns <code>true</code> iff I changed
-   *         as a result of this call
+   * @return <code>true</code> if I contained the at least one of the specified
+   *         elements, in other words, returns <code>true</code> if I changed as
+   *         a result of this call
    * @throws UnsupportedOperationException
    *         when this operation is not supported
    */
-  boolean removeAll (CharCollection c);
+  boolean removeAll (@Nonnull CharCollection aCont);
 
   /**
    * Removes a single occurrence of the specified element (optional operation).
-   * 
-   * @param element
+   *
+   * @param aElement
    *        the element to remove, if present
-   * @return <code>true</code> iff I contained the specified element, in other
-   *         words, iff I changed as a result of this call
+   * @return <code>true</code> if I contained the specified element, in other
+   *         words, if I changed as a result of this call
    * @throws UnsupportedOperationException
    *         when this operation is not supported
    */
-  boolean removeElement (char element);
+  boolean removeElement (char aElement);
 
   /**
    * Removes all of my elements that are <i>not</i> contained in the specified
    * collection (optional operation). (In other words, retains <i>only</i> my
-   * elements that are contained in the specified collection.) The behavior of
+   * elements that are contained in the specified collection.) The behaviour of
    * this method is unspecified if the given collection is modified while this
    * method is executing.
-   * 
-   * @param c
+   *
+   * @param aCont
    *        the collection of elements to retain
-   * @return <code>true</code> iff I changed as a result of this call
+   * @return <code>true</code> if I changed as a result of this call
    * @throws UnsupportedOperationException
    *         when this operation is not supported
    */
-  boolean retainAll (CharCollection c);
+  boolean retainAll (@Nonnull CharCollection aCont);
 
   /**
    * Returns the number of elements I contain.
-   * 
+   *
    * @return the number of elements I contain
    */
+  @Nonnegative
   int size ();
 
   /**
@@ -169,9 +175,11 @@ public interface CharCollection
    * When I guarantee the order in which elements are returned by an
    * {@link #iterator iterator}, the returned array will contain elements in the
    * same order.
-   * 
+   *
    * @return an array containing all my elements
    */
+  @Nonnull
+  @ReturnsMutableCopy
   char [] toArray ();
 
   /**
@@ -185,10 +193,11 @@ public interface CharCollection
    * When I guarantee the order in which elements are returned by an
    * {@link #iterator iterator}, the returned array will contain elements in the
    * same order.
-   * 
-   * @param a
+   *
+   * @param aTarget
    *        an array that may be used to contain the elements
    * @return an array containing all my elements
    */
-  char [] toArray (char [] a);
+  @Nonnull
+  char [] toArray (@Nonnull char [] aTarget);
 }

@@ -19,6 +19,11 @@ package org.apache.commons.collections.primitives;
 import java.util.ConcurrentModificationException;
 import java.util.NoSuchElementException;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.phloc.commons.hash.HashCodeGenerator;
+
 /**
  * Abstract base class for {@link CharList}s backed by random access structures
  * like arrays.
@@ -29,11 +34,9 @@ import java.util.NoSuchElementException;
  * other methods have at least some base implementation derived from these.
  * Subclasses may choose to override these methods to provide a more efficient
  * implementation.
- * 
- * @since Commons Primitives 1.0
- * @version $Revision: 480460 $ $Date: 2006-11-29 09:14:21 +0100 (Mi, 29 Nov
- *          2006) $
- * @author Rodney Waldhoff
+ *
+ * @since Commons Primitives 1.2
+ * @version $Revision: 480460 $
  */
 public abstract class RandomAccessCharList extends AbstractCharCollection implements CharList
 {
@@ -48,7 +51,7 @@ public abstract class RandomAccessCharList extends AbstractCharCollection implem
   // fully abstract methods
   // -------------------------------------------------------------------------
 
-  public abstract char get (int index);
+  public abstract char get (int nIndex);
 
   @Override
   public abstract int size ();
@@ -58,7 +61,7 @@ public abstract class RandomAccessCharList extends AbstractCharCollection implem
 
   /**
    * Unsupported in this implementation.
-   * 
+   *
    * @throws UnsupportedOperationException
    *         since this method is not supported
    */
@@ -69,22 +72,22 @@ public abstract class RandomAccessCharList extends AbstractCharCollection implem
 
   /**
    * Unsupported in this implementation.
-   * 
+   *
    * @throws UnsupportedOperationException
    *         since this method is not supported
    */
-  public char set (final int index, final char element)
+  public char set (final int index, final char aElement)
   {
     throw new UnsupportedOperationException ();
   }
 
   /**
    * Unsupported in this implementation.
-   * 
+   *
    * @throws UnsupportedOperationException
    *         since this method is not supported
    */
-  public void add (final int index, final char element)
+  public void add (final int index, final char aElement)
   {
     throw new UnsupportedOperationException ();
   }
@@ -94,49 +97,41 @@ public abstract class RandomAccessCharList extends AbstractCharCollection implem
   // javadocs here are inherited
 
   @Override
-  public boolean add (final char element)
+  public boolean add (final char aElement)
   {
-    add (size (), element);
+    add (size (), aElement);
     return true;
   }
 
-  public boolean addAll (int index, final CharCollection collection)
+  public boolean addAll (final int nIndex, @Nonnull final CharCollection aCollection)
   {
-    boolean modified = false;
-    for (final CharIterator iter = collection.iterator (); iter.hasNext ();)
+    int index = nIndex;
+    boolean bModified = false;
+    for (final CharIterator iter = aCollection.iterator (); iter.hasNext ();)
     {
       add (index++, iter.next ());
-      modified = true;
+      bModified = true;
     }
-    return modified;
+    return bModified;
   }
 
-  public int indexOf (final char element)
+  public int indexOf (final char aElement)
   {
     int i = 0;
     for (final CharIterator iter = iterator (); iter.hasNext ();)
     {
-      if (iter.next () == element)
-      {
+      if (iter.next () == aElement)
         return i;
-      }
-      else
-      {
-        i++;
-      }
+      i++;
     }
     return -1;
   }
 
-  public int lastIndexOf (final char element)
+  public int lastIndexOf (final char aElement)
   {
     for (final CharListIterator iter = listIterator (size ()); iter.hasPrevious ();)
-    {
-      if (iter.previous () == element)
-      {
+      if (iter.previous () == aElement)
         return iter.nextIndex ();
-      }
-    }
     return -1;
   }
 
@@ -151,62 +146,56 @@ public abstract class RandomAccessCharList extends AbstractCharCollection implem
     return listIterator (0);
   }
 
-  public CharListIterator listIterator (final int index)
+  public CharListIterator listIterator (final int nIndex)
   {
-    return new RandomAccessCharListIterator (this, index);
+    return new RandomAccessCharacterListIterator (this, nIndex);
   }
 
-  public CharList subList (final int fromIndex, final int toIndex)
+  public CharList subList (final int nFromIndex, final int nToIndex)
   {
-    return new RandomAccessCharSubList (this, fromIndex, toIndex);
+    return new RandomAccessCharacterSubList (this, nFromIndex, nToIndex);
   }
 
   @Override
-  public boolean equals (final Object that)
+  public boolean equals (@Nullable final Object that)
   {
     if (this == that)
-    {
       return true;
-    }
-    else
-      if (that instanceof CharList)
-      {
-        final CharList thatList = (CharList) that;
-        if (size () != thatList.size ())
-        {
-          return false;
-        }
-        for (CharIterator thatIter = thatList.iterator (), thisIter = iterator (); thisIter.hasNext ();)
-        {
-          if (thisIter.next () != thatIter.next ())
-          {
-            return false;
-          }
-        }
-        return true;
-      }
-      else
-      {
+    if (!(that instanceof CharList))
+      return false;
+    final CharList thatList = (CharList) that;
+    if (size () != thatList.size ())
+      return false;
+    for (CharIterator thatIter = thatList.iterator (), thisIter = iterator (); thisIter.hasNext ();)
+      if (thisIter.next () != thatIter.next ())
         return false;
-      }
+    return true;
   }
 
   @Override
   public int hashCode ()
   {
-    int hash = 1;
+    final HashCodeGenerator aHC = new HashCodeGenerator (this);
     for (final CharIterator iter = iterator (); iter.hasNext ();)
-    {
-      hash = 31 * hash + iter.next ();
-    }
-    return hash;
+      aHC.append (iter.next ());
+    return aHC.getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    // could cache these like StringBuffer does
-    return new String (toArray ());
+    final StringBuilder buf = new StringBuilder ();
+    buf.append ('[');
+    for (final CharIterator iter = iterator (); iter.hasNext ();)
+    {
+      buf.append (iter.next ());
+      if (iter.hasNext ())
+      {
+        buf.append (", ");
+      }
+    }
+    buf.append (']');
+    return buf.toString ();
   }
 
   // protected utilities
@@ -234,6 +223,9 @@ public abstract class RandomAccessCharList extends AbstractCharCollection implem
 
   private static class ComodChecker
   {
+    private RandomAccessCharList _source = null;
+    private int _expectedModCount = -1;
+
     ComodChecker (final RandomAccessCharList source)
     {
       _source = source;
@@ -248,34 +240,27 @@ public abstract class RandomAccessCharList extends AbstractCharCollection implem
     protected void assertNotComodified () throws ConcurrentModificationException
     {
       if (_expectedModCount != getList ().getModCount ())
-      {
         throw new ConcurrentModificationException ();
-      }
     }
 
     protected void resyncModCount ()
     {
       _expectedModCount = getList ().getModCount ();
     }
-
-    private RandomAccessCharList _source = null;
-    private int _expectedModCount = -1;
   }
 
-  protected static class RandomAccessCharListIterator extends ComodChecker implements CharListIterator
+  protected static class RandomAccessCharacterListIterator extends ComodChecker implements CharListIterator
   {
-    RandomAccessCharListIterator (final RandomAccessCharList list, final int index)
+    private int _nextIndex = 0;
+    private int _lastReturnedIndex = -1;
+
+    RandomAccessCharacterListIterator (final RandomAccessCharList list, final int index)
     {
       super (list);
       if (index < 0 || index > getList ().size ())
-      {
         throw new IndexOutOfBoundsException ("Index " + index + " not in [0," + getList ().size () + ")");
-      }
-      else
-      {
-        _nextIndex = index;
-        resyncModCount ();
-      }
+      _nextIndex = index;
+      resyncModCount ();
     }
 
     public boolean hasNext ()
@@ -306,32 +291,22 @@ public abstract class RandomAccessCharList extends AbstractCharCollection implem
     {
       assertNotComodified ();
       if (!hasNext ())
-      {
         throw new NoSuchElementException ();
-      }
-      else
-      {
-        final char val = getList ().get (_nextIndex);
-        _lastReturnedIndex = _nextIndex;
-        _nextIndex++;
-        return val;
-      }
+      final char val = getList ().get (_nextIndex);
+      _lastReturnedIndex = _nextIndex;
+      _nextIndex++;
+      return val;
     }
 
     public char previous ()
     {
       assertNotComodified ();
       if (!hasPrevious ())
-      {
         throw new NoSuchElementException ();
-      }
-      else
-      {
-        final char val = getList ().get (_nextIndex - 1);
-        _lastReturnedIndex = _nextIndex - 1;
-        _nextIndex--;
-        return val;
-      }
+      final char val = getList ().get (_nextIndex - 1);
+      _lastReturnedIndex = _nextIndex - 1;
+      _nextIndex--;
+      return val;
     }
 
     public void add (final char value)
@@ -369,41 +344,30 @@ public abstract class RandomAccessCharList extends AbstractCharCollection implem
     {
       assertNotComodified ();
       if (-1 == _lastReturnedIndex)
-      {
         throw new IllegalStateException ();
-      }
-      else
-      {
-        getList ().set (_lastReturnedIndex, value);
-        resyncModCount ();
-      }
+      getList ().set (_lastReturnedIndex, value);
+      resyncModCount ();
     }
-
-    private int _nextIndex = 0;
-    private int _lastReturnedIndex = -1;
   }
 
-  protected static class RandomAccessCharSubList extends RandomAccessCharList implements CharList
+  protected static class RandomAccessCharacterSubList extends RandomAccessCharList
   {
-    RandomAccessCharSubList (final RandomAccessCharList list, final int fromIndex, final int toIndex)
+    private int _offset = 0;
+    private int _limit = 0;
+    private RandomAccessCharList _list = null;
+    private ComodChecker _comod = null;
+
+    RandomAccessCharacterSubList (final RandomAccessCharList list, final int fromIndex, final int toIndex)
     {
       if (fromIndex < 0 || toIndex > list.size ())
-      {
         throw new IndexOutOfBoundsException ();
-      }
-      else
-        if (fromIndex > toIndex)
-        {
-          throw new IllegalArgumentException ();
-        }
-        else
-        {
-          _list = list;
-          _offset = fromIndex;
-          _limit = toIndex - fromIndex;
-          _comod = new ComodChecker (list);
-          _comod.resyncModCount ();
-        }
+      if (fromIndex > toIndex)
+        throw new IllegalArgumentException ();
+      _list = list;
+      _offset = fromIndex;
+      _limit = toIndex - fromIndex;
+      _comod = new ComodChecker (list);
+      _comod.resyncModCount ();
     }
 
     @Override
@@ -458,28 +422,18 @@ public abstract class RandomAccessCharList extends AbstractCharCollection implem
     private void checkRange (final int index)
     {
       if (index < 0 || index >= size ())
-      {
         throw new IndexOutOfBoundsException ("index " + index + " not in [0," + size () + ")");
-      }
     }
 
     private void checkRangeIncludingEndpoint (final int index)
     {
       if (index < 0 || index > size ())
-      {
         throw new IndexOutOfBoundsException ("index " + index + " not in [0," + size () + "]");
-      }
     }
 
     private int toUnderlyingIndex (final int index)
     {
       return (index + _offset);
     }
-
-    private int _offset = 0;
-    private int _limit = 0;
-    private RandomAccessCharList _list = null;
-    private ComodChecker _comod = null;
-
   }
 }
