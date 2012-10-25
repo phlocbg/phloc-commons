@@ -17,10 +17,6 @@
 package org.apache.commons.collections.primitives.adapters;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -33,33 +29,19 @@ import org.apache.commons.collections.primitives.ArrayFloatList;
 import org.apache.commons.collections.primitives.ArrayIntList;
 import org.apache.commons.collections.primitives.ArrayLongList;
 import org.apache.commons.collections.primitives.ArrayShortList;
-import org.apache.commons.collections.primitives.ByteCollection;
 import org.apache.commons.collections.primitives.ByteIterator;
-import org.apache.commons.collections.primitives.ByteList;
 import org.apache.commons.collections.primitives.ByteListIterator;
-import org.apache.commons.collections.primitives.CharCollection;
 import org.apache.commons.collections.primitives.CharIterator;
-import org.apache.commons.collections.primitives.CharList;
 import org.apache.commons.collections.primitives.CharListIterator;
-import org.apache.commons.collections.primitives.DoubleCollection;
 import org.apache.commons.collections.primitives.DoubleIterator;
-import org.apache.commons.collections.primitives.DoubleList;
 import org.apache.commons.collections.primitives.DoubleListIterator;
-import org.apache.commons.collections.primitives.FloatCollection;
 import org.apache.commons.collections.primitives.FloatIterator;
-import org.apache.commons.collections.primitives.FloatList;
 import org.apache.commons.collections.primitives.FloatListIterator;
-import org.apache.commons.collections.primitives.IntCollection;
 import org.apache.commons.collections.primitives.IntIterator;
-import org.apache.commons.collections.primitives.IntList;
 import org.apache.commons.collections.primitives.IntListIterator;
-import org.apache.commons.collections.primitives.LongCollection;
 import org.apache.commons.collections.primitives.LongIterator;
-import org.apache.commons.collections.primitives.LongList;
 import org.apache.commons.collections.primitives.LongListIterator;
-import org.apache.commons.collections.primitives.ShortCollection;
 import org.apache.commons.collections.primitives.ShortIterator;
-import org.apache.commons.collections.primitives.ShortList;
 import org.apache.commons.collections.primitives.ShortListIterator;
 
 /**
@@ -97,73 +79,73 @@ public class TestAdapt extends TestCase
   public void testToCollection ()
   {
     assertNull (Adapt.toCollection ((ArrayByteList) null));
-    assertTrue (Adapt.toCollection (new ArrayByteList ()) instanceof Collection);
+    assertNotNull (Adapt.toCollection (new ArrayByteList ()));
     assertNull (Adapt.toCollection ((ArrayCharList) null));
-    assertTrue (Adapt.toCollection (new ArrayCharList ()) instanceof Collection);
+    assertNotNull (Adapt.toCollection (new ArrayCharList ()));
     assertNull (Adapt.toCollection ((ArrayDoubleList) null));
-    assertTrue (Adapt.toCollection (new ArrayDoubleList ()) instanceof Collection);
+    assertNotNull (Adapt.toCollection (new ArrayDoubleList ()));
     assertNull (Adapt.toCollection ((ArrayFloatList) null));
-    assertTrue (Adapt.toCollection (new ArrayFloatList ()) instanceof Collection);
+    assertNotNull (Adapt.toCollection (new ArrayFloatList ()));
     assertNull (Adapt.toCollection ((ArrayIntList) null));
-    assertTrue (Adapt.toCollection (new ArrayIntList ()) instanceof Collection);
+    assertNotNull (Adapt.toCollection (new ArrayIntList ()));
     assertNull (Adapt.toCollection ((ArrayLongList) null));
-    assertTrue (Adapt.toCollection (new ArrayLongList ()) instanceof Collection);
+    assertNotNull (Adapt.toCollection (new ArrayLongList ()));
     assertNull (Adapt.toCollection ((ArrayShortList) null));
-    assertTrue (Adapt.toCollection (new ArrayShortList ()) instanceof Collection);
+    assertNotNull (Adapt.toCollection (new ArrayShortList ()));
   }
 
   public void testToList ()
   {
     assertNull (Adapt.toList ((ArrayByteList) null));
-    assertTrue (Adapt.toList (new ArrayByteList ()) instanceof List);
+    assertNotNull (Adapt.toList (new ArrayByteList ()));
     assertNull (Adapt.toList ((ArrayCharList) null));
-    assertTrue (Adapt.toList (new ArrayCharList ()) instanceof List);
+    assertNotNull (Adapt.toList (new ArrayCharList ()));
     assertNull (Adapt.toList ((ArrayDoubleList) null));
-    assertTrue (Adapt.toList (new ArrayDoubleList ()) instanceof List);
+    assertNotNull (Adapt.toList (new ArrayDoubleList ()));
     assertNull (Adapt.toList ((ArrayFloatList) null));
-    assertTrue (Adapt.toList (new ArrayFloatList ()) instanceof List);
+    assertNotNull (Adapt.toList (new ArrayFloatList ()));
     assertNull (Adapt.toList ((ArrayIntList) null));
-    assertTrue (Adapt.toList (new ArrayIntList ()) instanceof List);
+    assertNotNull (Adapt.toList (new ArrayIntList ()));
     assertNull (Adapt.toList ((ArrayLongList) null));
-    assertTrue (Adapt.toList (new ArrayLongList ()) instanceof List);
+    assertNotNull (Adapt.toList (new ArrayLongList ()));
     assertNull (Adapt.toList ((ArrayShortList) null));
-    assertTrue (Adapt.toList (new ArrayShortList ()) instanceof List);
+    assertNotNull (Adapt.toList (new ArrayShortList ()));
   }
 
   public void testToIterator ()
   {
     assertNull (Adapt.toIterator ((ByteIterator) null));
-    assertTrue (Adapt.toIterator (new ArrayByteList ().iterator ()) instanceof Iterator);
+    assertNotNull (Adapt.toIterator (new ArrayByteList ().iterator ()));
     assertNull (Adapt.toIterator ((CharIterator) null));
-    assertTrue (Adapt.toIterator (new ArrayCharList ().iterator ()) instanceof Iterator);
+    assertNotNull (Adapt.toIterator (new ArrayCharList ().iterator ()));
     assertNull (Adapt.toIterator ((DoubleIterator) null));
-    assertTrue (Adapt.toIterator (new ArrayDoubleList ().iterator ()) instanceof Iterator);
+    assertNotNull (Adapt.toIterator (new ArrayDoubleList ().iterator ()));
     assertNull (Adapt.toIterator ((FloatIterator) null));
-    assertTrue (Adapt.toIterator (new ArrayFloatList ().iterator ()) instanceof Iterator);
+    assertNotNull (Adapt.toIterator (new ArrayFloatList ().iterator ()));
     assertNull (Adapt.toIterator ((IntIterator) null));
-    assertTrue (Adapt.toIterator (new ArrayIntList ().iterator ()) instanceof Iterator);
+    assertNotNull (Adapt.toIterator (new ArrayIntList ().iterator ()));
     assertNull (Adapt.toIterator ((LongIterator) null));
-    assertTrue (Adapt.toIterator (new ArrayLongList ().iterator ()) instanceof Iterator);
+    assertNotNull (Adapt.toIterator (new ArrayLongList ().iterator ()));
     assertNull (Adapt.toIterator ((ShortIterator) null));
-    assertTrue (Adapt.toIterator (new ArrayShortList ().iterator ()) instanceof Iterator);
+    assertNotNull (Adapt.toIterator (new ArrayShortList ().iterator ()));
   }
 
   public void testToListIterator ()
   {
     assertNull (Adapt.toListIterator ((ByteListIterator) null));
-    assertTrue (Adapt.toListIterator (new ArrayByteList ().listIterator ()) instanceof ListIterator);
+    assertNotNull (Adapt.toListIterator (new ArrayByteList ().listIterator ()));
     assertNull (Adapt.toListIterator ((CharListIterator) null));
-    assertTrue (Adapt.toListIterator (new ArrayCharList ().listIterator ()) instanceof ListIterator);
+    assertNotNull (Adapt.toListIterator (new ArrayCharList ().listIterator ()));
     assertNull (Adapt.toListIterator ((DoubleListIterator) null));
-    assertTrue (Adapt.toListIterator (new ArrayDoubleList ().listIterator ()) instanceof ListIterator);
+    assertNotNull (Adapt.toListIterator (new ArrayDoubleList ().listIterator ()));
     assertNull (Adapt.toListIterator ((FloatListIterator) null));
-    assertTrue (Adapt.toListIterator (new ArrayFloatList ().listIterator ()) instanceof ListIterator);
+    assertNotNull (Adapt.toListIterator (new ArrayFloatList ().listIterator ()));
     assertNull (Adapt.toListIterator ((IntListIterator) null));
-    assertTrue (Adapt.toListIterator (new ArrayIntList ().listIterator ()) instanceof ListIterator);
+    assertNotNull (Adapt.toListIterator (new ArrayIntList ().listIterator ()));
     assertNull (Adapt.toListIterator ((LongListIterator) null));
-    assertTrue (Adapt.toListIterator (new ArrayLongList ().listIterator ()) instanceof ListIterator);
+    assertNotNull (Adapt.toListIterator (new ArrayLongList ().listIterator ()));
     assertNull (Adapt.toListIterator ((ShortListIterator) null));
-    assertTrue (Adapt.toListIterator (new ArrayShortList ().listIterator ()) instanceof ListIterator);
+    assertNotNull (Adapt.toListIterator (new ArrayShortList ().listIterator ()));
   }
 
   // to byte based
@@ -171,10 +153,10 @@ public class TestAdapt extends TestCase
 
   public void testToByteType ()
   {
-    assertTrue (Adapt.toByteCollection (new ArrayList ()) instanceof ByteCollection);
-    assertTrue (Adapt.toByteList (new ArrayList ()) instanceof ByteList);
-    assertTrue (Adapt.toByteIterator (new ArrayList ().iterator ()) instanceof ByteIterator);
-    assertTrue (Adapt.toByteListIterator (new ArrayList ().listIterator ()) instanceof ByteListIterator);
+    assertNotNull (Adapt.toByteCollection (new ArrayList <Byte> ()));
+    assertNotNull (Adapt.toByteList (new ArrayList <Byte> ()));
+    assertNotNull (Adapt.toByteIterator (new ArrayList <Byte> ().iterator ()));
+    assertNotNull (Adapt.toByteListIterator (new ArrayList <Byte> ().listIterator ()));
   }
 
   public void testToByteTypeFromNull ()
@@ -190,10 +172,10 @@ public class TestAdapt extends TestCase
 
   public void testToCharType ()
   {
-    assertTrue (Adapt.toCharCollection (new ArrayList ()) instanceof CharCollection);
-    assertTrue (Adapt.toCharList (new ArrayList ()) instanceof CharList);
-    assertTrue (Adapt.toCharIterator (new ArrayList ().iterator ()) instanceof CharIterator);
-    assertTrue (Adapt.toCharListIterator (new ArrayList ().listIterator ()) instanceof CharListIterator);
+    assertNotNull (Adapt.toCharCollection (new ArrayList <Character> ()));
+    assertNotNull (Adapt.toCharList (new ArrayList <Character> ()));
+    assertNotNull (Adapt.toCharIterator (new ArrayList <Character> ().iterator ()));
+    assertNotNull (Adapt.toCharListIterator (new ArrayList <Character> ().listIterator ()));
   }
 
   public void testToCharTypeFromNull ()
@@ -209,10 +191,10 @@ public class TestAdapt extends TestCase
 
   public void testToDoubleType ()
   {
-    assertTrue (Adapt.toDoubleCollection (new ArrayList ()) instanceof DoubleCollection);
-    assertTrue (Adapt.toDoubleList (new ArrayList ()) instanceof DoubleList);
-    assertTrue (Adapt.toDoubleIterator (new ArrayList ().iterator ()) instanceof DoubleIterator);
-    assertTrue (Adapt.toDoubleListIterator (new ArrayList ().listIterator ()) instanceof DoubleListIterator);
+    assertNotNull (Adapt.toDoubleCollection (new ArrayList <Double> ()));
+    assertNotNull (Adapt.toDoubleList (new ArrayList <Double> ()));
+    assertNotNull (Adapt.toDoubleIterator (new ArrayList <Double> ().iterator ()));
+    assertNotNull (Adapt.toDoubleListIterator (new ArrayList <Double> ().listIterator ()));
   }
 
   public void testToDoubleTypeFromNull ()
@@ -228,10 +210,10 @@ public class TestAdapt extends TestCase
 
   public void testToFloatType ()
   {
-    assertTrue (Adapt.toFloatCollection (new ArrayList ()) instanceof FloatCollection);
-    assertTrue (Adapt.toFloatList (new ArrayList ()) instanceof FloatList);
-    assertTrue (Adapt.toFloatIterator (new ArrayList ().iterator ()) instanceof FloatIterator);
-    assertTrue (Adapt.toFloatListIterator (new ArrayList ().listIterator ()) instanceof FloatListIterator);
+    assertNotNull (Adapt.toFloatCollection (new ArrayList <Float> ()));
+    assertNotNull (Adapt.toFloatList (new ArrayList <Float> ()));
+    assertNotNull (Adapt.toFloatIterator (new ArrayList <Float> ().iterator ()));
+    assertNotNull (Adapt.toFloatListIterator (new ArrayList <Float> ().listIterator ()));
   }
 
   public void testToFloatTypeFromNull ()
@@ -247,10 +229,10 @@ public class TestAdapt extends TestCase
 
   public void testToIntType ()
   {
-    assertTrue (Adapt.toIntCollection (new ArrayList ()) instanceof IntCollection);
-    assertTrue (Adapt.toIntList (new ArrayList ()) instanceof IntList);
-    assertTrue (Adapt.toIntIterator (new ArrayList ().iterator ()) instanceof IntIterator);
-    assertTrue (Adapt.toIntListIterator (new ArrayList ().listIterator ()) instanceof IntListIterator);
+    assertNotNull (Adapt.toIntCollection (new ArrayList <Integer> ()));
+    assertNotNull (Adapt.toIntList (new ArrayList <Integer> ()));
+    assertNotNull (Adapt.toIntIterator (new ArrayList <Integer> ().iterator ()));
+    assertNotNull (Adapt.toIntListIterator (new ArrayList <Integer> ().listIterator ()));
   }
 
   public void testToIntTypeFromNull ()
@@ -266,10 +248,10 @@ public class TestAdapt extends TestCase
 
   public void testToLongType ()
   {
-    assertTrue (Adapt.toLongCollection (new ArrayList ()) instanceof LongCollection);
-    assertTrue (Adapt.toLongList (new ArrayList ()) instanceof LongList);
-    assertTrue (Adapt.toLongIterator (new ArrayList ().iterator ()) instanceof LongIterator);
-    assertTrue (Adapt.toLongListIterator (new ArrayList ().listIterator ()) instanceof LongListIterator);
+    assertNotNull (Adapt.toLongCollection (new ArrayList <Long> ()));
+    assertNotNull (Adapt.toLongList (new ArrayList <Long> ()));
+    assertNotNull (Adapt.toLongIterator (new ArrayList <Long> ().iterator ()));
+    assertNotNull (Adapt.toLongListIterator (new ArrayList <Long> ().listIterator ()));
   }
 
   public void testToLongTypeFromNull ()
@@ -285,10 +267,10 @@ public class TestAdapt extends TestCase
 
   public void testToShortType ()
   {
-    assertTrue (Adapt.toShortCollection (new ArrayList ()) instanceof ShortCollection);
-    assertTrue (Adapt.toShortList (new ArrayList ()) instanceof ShortList);
-    assertTrue (Adapt.toShortIterator (new ArrayList ().iterator ()) instanceof ShortIterator);
-    assertTrue (Adapt.toShortListIterator (new ArrayList ().listIterator ()) instanceof ShortListIterator);
+    assertNotNull (Adapt.toShortCollection (new ArrayList <Short> ()));
+    assertNotNull (Adapt.toShortList (new ArrayList <Short> ()));
+    assertNotNull (Adapt.toShortIterator (new ArrayList <Short> ().iterator ()));
+    assertNotNull (Adapt.toShortListIterator (new ArrayList <Short> ().listIterator ()));
   }
 
   public void testToShortTypeFromNull ()
