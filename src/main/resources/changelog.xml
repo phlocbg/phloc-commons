@@ -20,7 +20,7 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
-  <release date="2012-10-25" version="3.8.5" />
+  <release date="2012-10-25" version="3.9.0" />
   <entry date="2012-10-25" category="api" action="add">
     <change>
       <text locale="en">Integrated the primitive collections from Apache commons-primitive in a Java5 type-safe version!</text>

@@ -44,12 +44,15 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.collections.primitives.FloatList;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * @since Commons Primitives 1.0
  * @version $Revision: 480463 $ $Date: 2006-11-29 09:15:23 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
  */
+@SuppressFBWarnings ("SE_NO_SERIALVERSIONID")
 public final class UnmodifiableFloatList extends BaseUnmodifiableFloatList implements Serializable
 {
   private transient FloatList m_aProxied;
