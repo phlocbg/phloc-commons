@@ -51,8 +51,8 @@ import javax.annotation.Nonnull;
  */
 public class ArrayDoubleList extends RandomAccessDoubleList implements Serializable
 {
-  private transient double [] _data = null;
-  private int _size = 0;
+  private transient double [] _data;
+  private int _size;
 
   // constructors
   // -------------------------------------------------------------------------
@@ -89,7 +89,7 @@ public class ArrayDoubleList extends RandomAccessDoubleList implements Serializa
    * @throws NullPointerException
    *         if <i>that</i> is <code>null</code>
    */
-  public ArrayDoubleList (final DoubleCollection that)
+  public ArrayDoubleList (@Nonnull final DoubleCollection that)
   {
     this (that.size ());
     addAll (that);
@@ -103,7 +103,7 @@ public class ArrayDoubleList extends RandomAccessDoubleList implements Serializa
    * @throws NullPointerException
    *         if the array is <code>null</code>
    */
-  public ArrayDoubleList (final double [] array)
+  public ArrayDoubleList (@Nonnull final double [] array)
   {
     this (array.length);
     System.arraycopy (array, 0, _data, 0, array.length);
@@ -281,17 +281,15 @@ public class ArrayDoubleList extends RandomAccessDoubleList implements Serializa
   // private methods
   // -------------------------------------------------------------------------
 
-  private void writeObject (final ObjectOutputStream out) throws IOException
+  private void writeObject (@Nonnull final ObjectOutputStream out) throws IOException
   {
     out.defaultWriteObject ();
     out.writeInt (_data.length);
     for (int i = 0; i < _size; i++)
-    {
       out.writeDouble (_data[i]);
-    }
   }
 
-  private void readObject (final ObjectInputStream in) throws IOException, ClassNotFoundException
+  private void readObject (@Nonnull final ObjectInputStream in) throws IOException, ClassNotFoundException
   {
     in.defaultReadObject ();
     _data = new double [in.readInt ()];

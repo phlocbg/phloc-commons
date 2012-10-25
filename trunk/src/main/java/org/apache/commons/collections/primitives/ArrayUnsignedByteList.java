@@ -38,9 +38,18 @@ import java.io.Serializable;
  */
 public class ArrayUnsignedByteList extends RandomAccessShortList implements Serializable
 {
+  /**
+   * The maximum possible unsigned 8-bit value.
+   */
+  public static final short MAX_VALUE = 0xFF;
 
-  // constructors
-  // -------------------------------------------------------------------------
+  /**
+   * The minimum possible unsigned 8-bit value.
+   */
+  public static final short MIN_VALUE = 0;
+
+  private transient byte [] _data = null;
+  private int _size = 0;
 
   /**
    * Construct an empty list with the default initial capacity.
@@ -317,18 +326,5 @@ public class ArrayUnsignedByteList extends RandomAccessShortList implements Seri
       throw new IndexOutOfBoundsException ("Should be at least 0 and at most " + _size + ", found " + index);
     }
   }
-
-  private transient byte [] _data = null;
-  private int _size = 0;
-
-  /**
-   * The maximum possible unsigned 8-bit value.
-   */
-  public static final short MAX_VALUE = 0xFF;
-
-  /**
-   * The minimum possible unsigned 8-bit value.
-   */
-  public static final short MIN_VALUE = 0;
 
 }

@@ -38,9 +38,14 @@ import java.io.Serializable;
  */
 public class ArrayUnsignedShortList extends RandomAccessIntList implements Serializable
 {
+  /** The maximum possible unsigned 16-bit value (<code>0xFFFF</code>). */
+  public static final int MAX_VALUE = 0xFFFF;
 
-  // constructors
-  // -------------------------------------------------------------------------
+  /** The minimum possible unsigned 16-bit value (<code>0x0000</code>). */
+  public static final int MIN_VALUE = 0;
+
+  private short [] _data;
+  private int _size;
 
   /**
    * Construct an empty list with the default initial capacity.
@@ -317,17 +322,4 @@ public class ArrayUnsignedShortList extends RandomAccessIntList implements Seria
       throw new IndexOutOfBoundsException ("Should be at least 0 and at most " + _size + ", found " + index);
     }
   }
-
-  // attributes
-  // -------------------------------------------------------------------------
-
-  /** The maximum possible unsigned 16-bit value (<code>0xFFFF</code>). */
-  public static final int MAX_VALUE = 0xFFFF;
-
-  /** The minimum possible unsigned 16-bit value (<code>0x0000</code>). */
-  public static final int MIN_VALUE = 0;
-
-  private transient short [] _data = null;
-  private int _size = 0;
-
 }

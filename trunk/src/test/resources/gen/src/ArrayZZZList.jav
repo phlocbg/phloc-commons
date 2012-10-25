@@ -51,8 +51,8 @@ import javax.annotation.Nonnull;
  */
 public class ArrayZZZList extends RandomAccessZZZList implements Serializable
 {
-  private transient YYY [] _data = null;
-  private int _size = 0;
+  private transient YYY [] _data;
+  private int _size;
 
   // constructors
   // -------------------------------------------------------------------------
@@ -89,7 +89,7 @@ public class ArrayZZZList extends RandomAccessZZZList implements Serializable
    * @throws NullPointerException
    *         if <i>that</i> is <code>null</code>
    */
-  public ArrayZZZList (final ZZZCollection that)
+  public ArrayZZZList (@Nonnull final ZZZCollection that)
   {
     this (that.size ());
     addAll (that);
@@ -103,7 +103,7 @@ public class ArrayZZZList extends RandomAccessZZZList implements Serializable
    * @throws NullPointerException
    *         if the array is <code>null</code>
    */
-  public ArrayZZZList (final YYY [] array)
+  public ArrayZZZList (@Nonnull final YYY [] array)
   {
     this (array.length);
     System.arraycopy (array, 0, _data, 0, array.length);
@@ -281,17 +281,15 @@ public class ArrayZZZList extends RandomAccessZZZList implements Serializable
   // private methods
   // -------------------------------------------------------------------------
 
-  private void writeObject (final ObjectOutputStream out) throws IOException
+  private void writeObject (@Nonnull final ObjectOutputStream out) throws IOException
   {
     out.defaultWriteObject ();
     out.writeInt (_data.length);
     for (int i = 0; i < _size; i++)
-    {
       out.writeZZZ (_data[i]);
-    }
   }
 
-  private void readObject (final ObjectInputStream in) throws IOException, ClassNotFoundException
+  private void readObject (@Nonnull final ObjectInputStream in) throws IOException, ClassNotFoundException
   {
     in.defaultReadObject ();
     _data = new YYY [in.readInt ()];

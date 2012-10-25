@@ -17,7 +17,6 @@
  */
 package org.apache.commons.collections.primitives.adapters;
 
-import java.io.Serializable;
 import java.util.AbstractList;
 import java.util.ArrayList;
 
@@ -34,13 +33,9 @@ import org.apache.commons.collections.primitives.TestLongList;
  */
 public class TestListLongList extends TestLongList
 {
-
-  // conventional
-  // ------------------------------------------------------------------------
-
-  public TestListLongList (final String testName)
+  public TestListLongList (final String sTestName)
   {
-    super (testName);
+    super (sTestName);
   }
 
   public static Test suite ()
@@ -73,7 +68,6 @@ public class TestListLongList extends TestLongList
   {
     final LongList list = ListLongList.wrap (new ArrayList <Long> ());
     assertNotNull (list);
-    assertTrue (list instanceof Serializable);
   }
 
   public void testWrapNonSerializable ()
@@ -93,7 +87,5 @@ public class TestListLongList extends TestLongList
       }
     });
     assertNotNull (list);
-    assertTrue (!(list instanceof Serializable));
   }
-
 }

@@ -22,6 +22,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+import javax.annotation.Nonnull;
+
 /**
  * An {@link IntList} backed by an array of unsigned <code>int</code> values.
  * This list stores <code>int</code> values in the range [{@link #MIN_VALUE
@@ -38,6 +40,18 @@ import java.io.Serializable;
  */
 public class ArrayUnsignedIntList extends RandomAccessLongList implements Serializable
 {
+  /**
+   * The maximum possible unsigned 32-bit value.
+   */
+  public static final long MAX_VALUE = 0xFFFFFFFFL;
+
+  /**
+   * The minimum possible unsigned 32-bit value.
+   */
+  public static final long MIN_VALUE = 0L;
+
+  private transient int [] _data;
+  private int _size;
 
   // constructors
   // -------------------------------------------------------------------------
@@ -59,9 +73,7 @@ public class ArrayUnsignedIntList extends RandomAccessLongList implements Serial
   public ArrayUnsignedIntList (final int initialCapacity)
   {
     if (initialCapacity < 0)
-    {
       throw new IllegalArgumentException ("capacity " + initialCapacity);
-    }
     _data = new int [initialCapacity];
     _size = 0;
   }
@@ -76,7 +88,7 @@ public class ArrayUnsignedIntList extends RandomAccessLongList implements Serial
    * @throws NullPointerException
    *         if <i>that</i> is <code>null</code>
    */
-  public ArrayUnsignedIntList (final LongCollection that)
+  public ArrayUnsignedIntList (@Nonnull final LongCollection that)
   {
     this (that.size ());
     addAll (that);
@@ -90,7 +102,7 @@ public class ArrayUnsignedIntList extends RandomAccessLongList implements Serial
    * @throws NullPointerException
    *         if the array is <code>null</code>
    */
-  public ArrayUnsignedIntList (final long [] array)
+  public ArrayUnsignedIntList (@Nonnull final long [] array)
   {
     this (array.length);
     for (int i = 0; i < array.length; i++)
@@ -317,21 +329,4 @@ public class ArrayUnsignedIntList extends RandomAccessLongList implements Serial
       throw new IndexOutOfBoundsException ("Should be at least 0 and at most " + _size + ", found " + index);
     }
   }
-
-  // attributes
-  // -------------------------------------------------------------------------
-
-  /**
-   * The maximum possible unsigned 32-bit value.
-   */
-  public static final long MAX_VALUE = 0xFFFFFFFFL;
-
-  /**
-   * The minimum possible unsigned 32-bit value.
-   */
-  public static final long MIN_VALUE = 0L;
-
-  private transient int [] _data = null;
-  private int _size = 0;
-
 }

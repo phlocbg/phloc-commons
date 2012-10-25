@@ -89,6 +89,7 @@ public class MainGenCode
     aAvoidFilenames.add ("TestCollectionBooleanCollection.java");
     aAvoidFilenames.add ("TestIteratorBooleanIterator.java");
     aAvoidFilenames.add ("TestListIteratorBooleanListIterator.java");
+    aAvoidFilenames.add ("TestListBooleanList.java");
 
     for (final String [] aDirs : DIRS)
     {
