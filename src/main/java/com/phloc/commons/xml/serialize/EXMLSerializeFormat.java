@@ -32,6 +32,7 @@ import com.phloc.commons.lang.EnumHelper;
 public enum EXMLSerializeFormat implements IHasID <String>
 {
   HTML ("html"),
+  XHTML ("xhtml"),
   XML ("xml");
 
   private final String m_sID;
@@ -52,9 +53,10 @@ public enum EXMLSerializeFormat implements IHasID <String>
    * @return <code>true</code> if the XML header (&lt;?xml ...?>) should be
    *         emitted
    */
+  @Deprecated
   public boolean hasXMLHeader ()
   {
-    return this == XML;
+    return isXML ();
   }
 
   /**
@@ -63,6 +65,22 @@ public enum EXMLSerializeFormat implements IHasID <String>
   public boolean isHTML ()
   {
     return this == HTML;
+  }
+
+  /**
+   * @return <code>true</code> if the serialization format is XHTML
+   */
+  public boolean isXHTML ()
+  {
+    return this == XHTML;
+  }
+
+  /**
+   * @return <code>true</code> if the serialization format is XML
+   */
+  public boolean isXML ()
+  {
+    return this == XML;
   }
 
   @Nullable

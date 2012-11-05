@@ -18,6 +18,7 @@
 package com.phloc.commons.xml.serialize;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
@@ -34,8 +35,22 @@ public final class EXMLSerializeFormatTest
   public void testAll ()
   {
     for (final EXMLSerializeFormat e : EXMLSerializeFormat.values ())
+    {
+      assertNotNull (e.getID ());
       assertSame (e, EXMLSerializeFormat.valueOf (e.name ()));
-    assertTrue (EXMLSerializeFormat.XML.hasXMLHeader ());
-    assertFalse (EXMLSerializeFormat.HTML.hasXMLHeader ());
+      assertSame (e, EXMLSerializeFormat.getFromIDOrNull (e.getID ()));
+    }
+
+    assertTrue (EXMLSerializeFormat.HTML.isHTML ());
+    assertFalse (EXMLSerializeFormat.XHTML.isHTML ());
+    assertFalse (EXMLSerializeFormat.XML.isHTML ());
+
+    assertFalse (EXMLSerializeFormat.HTML.isXHTML ());
+    assertTrue (EXMLSerializeFormat.XHTML.isXHTML ());
+    assertFalse (EXMLSerializeFormat.XML.isXHTML ());
+
+    assertFalse (EXMLSerializeFormat.HTML.isXML ());
+    assertFalse (EXMLSerializeFormat.XHTML.isXML ());
+    assertTrue (EXMLSerializeFormat.XML.isXML ());
   }
 }

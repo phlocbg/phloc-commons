@@ -128,7 +128,7 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
 
   private void _writeDocument (@Nonnull final IXMLIterationHandler aXMLWriter, final IMicroDocument aDocument)
   {
-    if (m_aSettings.getFormat ().hasXMLHeader ())
+    if (m_aSettings.getFormat ().isXML ())
       aXMLWriter.onDocumentStart (m_aSettings.getXMLVersion (), m_aSettings.getCharset (), aDocument.isStandalone ());
 
     if (aDocument.hasChildren ())

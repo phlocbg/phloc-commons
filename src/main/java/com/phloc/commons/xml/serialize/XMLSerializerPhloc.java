@@ -94,7 +94,7 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
 
   private void _writeDocument (@Nonnull final IXMLIterationHandler aEmitter, @Nonnull final Document aDocument)
   {
-    if (m_aSettings.getFormat ().hasXMLHeader ())
+    if (m_aSettings.getFormat ().isXML ())
     {
       String sXMLVersion = null;
       boolean bIsDocumentStandalone = false;
