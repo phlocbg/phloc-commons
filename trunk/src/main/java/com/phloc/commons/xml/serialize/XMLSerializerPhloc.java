@@ -162,7 +162,6 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
     // May be null!
     final Document aDoc = aElement.getOwnerDocument ();
     final NodeList aChildNodeList = aElement.getChildNodes ();
-    final boolean bIsEmptyHTML = m_aSettings.getFormat ().isHTML () && HTMLdtd.isEmptyTag (sTagName);
     final boolean bHasChildren = aChildNodeList.getLength () > 0;
 
     final boolean bIsRootElement = aDoc != null && aElement.equals (aDoc.getDocumentElement ());
@@ -213,10 +212,10 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
       if (m_aSettings.getIndent ().isIndent () && bIndentPrev && m_aIndent.length () > 0)
         aEmitter.onContentElementWhitespace (m_aIndent);
 
-      aEmitter.onElementStart (sNSPrefix, sTagName, aAttrMap, bHasChildren, bIsEmptyHTML);
+      aEmitter.onElementStart (sNSPrefix, sTagName, aAttrMap, bHasChildren);
 
       // write child nodes (if present)
-      if (bHasChildren && !bIsEmptyHTML)
+      if (bHasChildren)
       {
         // do we have enclosing elements?
         if (m_aSettings.getIndent ().isAlign () && bHasChildElement)
@@ -235,9 +234,9 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
         // add closing tag
         if (m_aSettings.getIndent ().isIndent () && bHasChildElement && m_aIndent.length () > 0)
           aEmitter.onContentElementWhitespace (m_aIndent);
-
-        aEmitter.onElementEnd (sNSPrefix, sTagName);
       }
+
+      aEmitter.onElementEnd (sNSPrefix, sTagName, bHasChildren);
 
       if (m_aSettings.getIndent ().isAlign () && bIndentNext)
         aEmitter.onContentElementWhitespace (NEWLINE);
