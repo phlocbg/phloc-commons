@@ -296,8 +296,7 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   public void onElementStart (@Nullable final String sNamespacePrefix,
                               @Nonnull final String sTagName,
                               @Nullable final Map <String, String> aAttrs,
-                              final boolean bHasChildren,
-                              final boolean bIsEmptyHTML)
+                              final boolean bHasChildren)
   {
     _append ('<');
     if (StringHelper.hasText (sNamespacePrefix))
@@ -315,19 +314,38 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
       }
     }
 
-    // Either leave tag open or close it
-    // Note: according to HTML compatibility guideline a space should be added
-    // before the self-closing
-    _append (bHasChildren || bIsEmptyHTML ? ">" : m_aSettings.isSpaceOnSelfClosedElement () ? " />" : "/>");
+    if (m_aSettings.getFormat ().isHTML ())
+    {
+      // HTML has no self closed tags!
+      _append ('>');
+    }
+    else
+    {
+      // Either leave tag open or close it
+      // Note: according to HTML compatibility guideline a space should be added
+      // before the self-closing
+      _append (bHasChildren ? ">" : m_aSettings.isSpaceOnSelfClosedElement () ? " />" : "/>");
+    }
   }
 
   @Override
-  public void onElementEnd (@Nullable final String sNamespacePrefix, @Nonnull final String sTagName)
+  public void onElementEnd (@Nullable final String sNamespacePrefix,
+                            @Nonnull final String sTagName,
+                            final boolean bHasChildren)
   {
-    _append ("</");
-    if (StringHelper.hasText (sNamespacePrefix))
-      _append (sNamespacePrefix)._append (CXML.XML_PREFIX_NAMESPACE_SEP);
-    _append (sTagName)._append ('>');
+    boolean bPrintClosingTag;
+    if (m_aSettings.getFormat ().isHTML ())
+      bPrintClosingTag = !HTMLdtd.isEmptyTag (sTagName);
+    else
+      bPrintClosingTag = bHasChildren;
+
+    if (bPrintClosingTag)
+    {
+      _append ("</");
+      if (StringHelper.hasText (sNamespacePrefix))
+        _append (sNamespacePrefix)._append (CXML.XML_PREFIX_NAMESPACE_SEP);
+      _append (sTagName)._append ('>');
+    }
   }
 
   @Override
