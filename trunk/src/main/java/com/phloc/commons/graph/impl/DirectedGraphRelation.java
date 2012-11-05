@@ -22,7 +22,7 @@ import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.graph.IDirectedGraphNode;
@@ -36,7 +36,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author philip
  */
-@Immutable
+@NotThreadSafe
 public class DirectedGraphRelation extends AbstractBaseGraphObject implements IDirectedGraphRelation
 {
   private final IDirectedGraphNode m_aFrom;
