@@ -335,7 +335,10 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   {
     boolean bPrintClosingTag;
     if (m_aSettings.getFormat ().isHTML ())
-      bPrintClosingTag = !HTMLdtd.isEmptyTag (sTagName);
+    {
+      // In HTML all tags are closed, if not explicitly marked as empty
+      bPrintClosingTag = bHasChildren || !HTMLdtd.isEmptyTag (sTagName);
+    }
     else
       bPrintClosingTag = bHasChildren;
 
