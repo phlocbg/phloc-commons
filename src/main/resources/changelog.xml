@@ -22,6 +22,11 @@
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
   <entry date="2012-11-05" category="api" action="add">
     <change>
+      <text locale="en">Added new (Directed)Graph(Relation|Node)Fast implementations, with quicker but not 100% accurate equals and hashCode implementation</text>
+    </change>
+  </entry>
+  <entry date="2012-11-05" category="api" action="add">
+    <change>
       <text locale="en">All XML serialization enums now implement IHasID&lt;String&gt;</text>
     </change>
   </entry>

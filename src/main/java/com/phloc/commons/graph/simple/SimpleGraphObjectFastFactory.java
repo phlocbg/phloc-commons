@@ -23,33 +23,33 @@ import javax.annotation.Nullable;
 import com.phloc.commons.graph.IGraphNode;
 import com.phloc.commons.graph.IGraphObjectFactory;
 import com.phloc.commons.graph.IGraphRelation;
-import com.phloc.commons.graph.impl.GraphNode;
-import com.phloc.commons.graph.impl.GraphRelation;
+import com.phloc.commons.graph.impl.GraphNodeFast;
+import com.phloc.commons.graph.impl.GraphRelationFast;
 
 /**
  * Default implementation of the {@link IGraphObjectFactory} with
- * {@link GraphNode} and {@link GraphRelation}.
+ * {@link GraphNodeFast} and {@link GraphRelationFast}.
  * 
  * @author philip
  */
-public class SimpleGraphObjectFactory implements IGraphObjectFactory
+public class SimpleGraphObjectFastFactory implements IGraphObjectFactory
 {
   @Nonnull
   public IGraphNode createNode ()
   {
-    return new GraphNode ();
+    return new GraphNodeFast ();
   }
 
   @Nonnull
   public IGraphNode createNode (@Nullable final String sID)
   {
-    return new GraphNode (sID);
+    return new GraphNodeFast (sID);
   }
 
   @Nonnull
   public IGraphRelation createRelation (@Nonnull final IGraphNode aFrom, @Nonnull final IGraphNode aTo)
   {
-    return new GraphRelation (aFrom, aTo);
+    return new GraphRelationFast (aFrom, aTo);
   }
 
   @Nonnull
@@ -57,6 +57,6 @@ public class SimpleGraphObjectFactory implements IGraphObjectFactory
                                         @Nonnull final IGraphNode aFrom,
                                         @Nonnull final IGraphNode aTo)
   {
-    return new GraphRelation (sID, aFrom, aTo);
+    return new GraphRelationFast (sID, aFrom, aTo);
   }
 }

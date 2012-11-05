@@ -23,34 +23,34 @@ import javax.annotation.Nullable;
 import com.phloc.commons.graph.IDirectedGraphNode;
 import com.phloc.commons.graph.IDirectedGraphObjectFactory;
 import com.phloc.commons.graph.IDirectedGraphRelation;
-import com.phloc.commons.graph.impl.DirectedGraphNode;
-import com.phloc.commons.graph.impl.DirectedGraphRelation;
+import com.phloc.commons.graph.impl.DirectedGraphNodeFast;
+import com.phloc.commons.graph.impl.DirectedGraphRelationFast;
 
 /**
  * Default implementation of the {@link IDirectedGraphObjectFactory} with
- * {@link DirectedGraphNode} and {@link DirectedGraphRelation}.
+ * {@link DirectedGraphNodeFast} and {@link DirectedGraphRelationFast}.
  * 
  * @author philip
  */
-public class SimpleDirectedGraphObjectFactory implements IDirectedGraphObjectFactory
+public class SimpleDirectedGraphObjectFastFactory implements IDirectedGraphObjectFactory
 {
   @Nonnull
   public IDirectedGraphNode createNode ()
   {
-    return new DirectedGraphNode ();
+    return new DirectedGraphNodeFast ();
   }
 
   @Nonnull
   public IDirectedGraphNode createNode (@Nullable final String sID)
   {
-    return new DirectedGraphNode (sID);
+    return new DirectedGraphNodeFast (sID);
   }
 
   @Nonnull
   public IDirectedGraphRelation createRelation (@Nonnull final IDirectedGraphNode aFrom,
                                                 @Nonnull final IDirectedGraphNode aTo)
   {
-    return new DirectedGraphRelation (aFrom, aTo);
+    return new DirectedGraphRelationFast (aFrom, aTo);
   }
 
   @Nonnull
@@ -58,6 +58,6 @@ public class SimpleDirectedGraphObjectFactory implements IDirectedGraphObjectFac
                                                 @Nonnull final IDirectedGraphNode aFrom,
                                                 @Nonnull final IDirectedGraphNode aTo)
   {
-    return new DirectedGraphRelation (sID, aFrom, aTo);
+    return new DirectedGraphRelationFast (sID, aFrom, aTo);
   }
 }
