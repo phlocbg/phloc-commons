@@ -17,19 +17,46 @@
  */
 package com.phloc.commons.xml.serialize;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.id.IHasID;
+import com.phloc.commons.lang.EnumHelper;
+
 /**
  * Used for creating string representation of XML. Determines whether the
  * Document Type should be emitted or ignored.
  * 
  * @author philip
  */
-public enum EXMLSerializeDocType
+public enum EXMLSerializeDocType implements IHasID <String>
 {
-  EMIT,
-  IGNORE;
+  EMIT ("emit"),
+  IGNORE ("ignore");
+
+  private final String m_sID;
+
+  private EXMLSerializeDocType (@Nonnull @Nonempty final String sID)
+  {
+    m_sID = sID;
+  }
+
+  @Nonnull
+  @Nonempty
+  public String getID ()
+  {
+    return m_sID;
+  }
 
   public boolean emit ()
   {
     return this == EMIT;
+  }
+
+  @Nullable
+  public static EXMLSerializeDocType getFromIDOrNull (@Nullable final String sID)
+  {
+    return EnumHelper.getFromIDOrNull (EXMLSerializeDocType.class, sID);
   }
 }

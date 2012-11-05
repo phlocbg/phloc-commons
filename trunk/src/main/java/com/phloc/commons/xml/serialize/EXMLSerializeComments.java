@@ -17,18 +17,45 @@
  */
 package com.phloc.commons.xml.serialize;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.id.IHasID;
+import com.phloc.commons.lang.EnumHelper;
+
 /**
  * Determines whether comments should be serialized or not.
  * 
  * @author philip
  */
-public enum EXMLSerializeComments
+public enum EXMLSerializeComments implements IHasID <String>
 {
-  EMIT,
-  IGNORE;
+  EMIT ("emit"),
+  IGNORE ("ignore");
+
+  private final String m_sID;
+
+  private EXMLSerializeComments (@Nonnull @Nonempty final String sID)
+  {
+    m_sID = sID;
+  }
+
+  @Nonnull
+  @Nonempty
+  public String getID ()
+  {
+    return m_sID;
+  }
 
   public boolean emit ()
   {
     return this == EMIT;
+  }
+
+  @Nullable
+  public static EXMLSerializeComments getFromIDOrNull (@Nullable final String sID)
+  {
+    return EnumHelper.getFromIDOrNull (EXMLSerializeComments.class, sID);
   }
 }

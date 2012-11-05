@@ -17,6 +17,13 @@
  */
 package com.phloc.commons.xml.serialize;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.id.IHasID;
+import com.phloc.commons.lang.EnumHelper;
+
 /**
  * Determines the indentation and alignment mode of XML serialization. Alignment
  * means: newlines after certain elements. Indent means: adding blanks at the
@@ -25,19 +32,28 @@ package com.phloc.commons.xml.serialize;
  * 
  * @author philip
  */
-public enum EXMLSerializeIndent
+public enum EXMLSerializeIndent implements IHasID <String>
 {
-  NONE (false, false),
-  ALIGN_ONLY (true, false),
-  INDENT_AND_ALIGN (true, true);
+  NONE ("none", false, false),
+  ALIGN_ONLY ("align", true, false),
+  INDENT_AND_ALIGN ("indentalign", true, true);
 
+  private final String m_sID;
   private final boolean m_bAlign;
   private final boolean m_bIndent;
 
-  private EXMLSerializeIndent (final boolean bAlign, final boolean bIndent)
+  private EXMLSerializeIndent (@Nonnull @Nonempty final String sID, final boolean bAlign, final boolean bIndent)
   {
+    m_sID = sID;
     m_bAlign = bAlign;
     m_bIndent = bIndent;
+  }
+
+  @Nonnull
+  @Nonempty
+  public String getID ()
+  {
+    return m_sID;
   }
 
   public boolean isAlign ()
@@ -48,5 +64,11 @@ public enum EXMLSerializeIndent
   public boolean isIndent ()
   {
     return m_bIndent;
+  }
+
+  @Nullable
+  public static EXMLSerializeIndent getFromIDOrNull (@Nullable final String sID)
+  {
+    return EnumHelper.getFromIDOrNull (EXMLSerializeIndent.class, sID);
   }
 }

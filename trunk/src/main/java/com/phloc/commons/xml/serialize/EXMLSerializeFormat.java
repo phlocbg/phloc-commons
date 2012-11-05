@@ -17,15 +17,36 @@
  */
 package com.phloc.commons.xml.serialize;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.id.IHasID;
+import com.phloc.commons.lang.EnumHelper;
+
 /**
  * Determines the output format for XML serialization. XML or HTML?
  * 
  * @author philip
  */
-public enum EXMLSerializeFormat
+public enum EXMLSerializeFormat implements IHasID <String>
 {
-  HTML,
-  XML;
+  HTML ("html"),
+  XML ("xml");
+
+  private final String m_sID;
+
+  private EXMLSerializeFormat (@Nonnull @Nonempty final String sID)
+  {
+    m_sID = sID;
+  }
+
+  @Nonnull
+  @Nonempty
+  public String getID ()
+  {
+    return m_sID;
+  }
 
   /**
    * @return <code>true</code> if the XML header (&lt;?xml ...?>) should be
@@ -34,5 +55,19 @@ public enum EXMLSerializeFormat
   public boolean hasXMLHeader ()
   {
     return this == XML;
+  }
+
+  /**
+   * @return <code>true</code> if the serialization format is HTML
+   */
+  public boolean isHTML ()
+  {
+    return this == HTML;
+  }
+
+  @Nullable
+  public static EXMLSerializeFormat getFromIDOrNull (@Nullable final String sID)
+  {
+    return EnumHelper.getFromIDOrNull (EXMLSerializeFormat.class, sID);
   }
 }
