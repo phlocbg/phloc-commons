@@ -63,7 +63,8 @@ public class DefaultXMLIterationHandler implements IXMLIterationHandler
   public void onElementStart (@Nullable final String sNamespacePrefix,
                               @Nonnull final String sTagName,
                               @Nullable final Map <String, String> aAttrs,
-                              final boolean bHasChildren)
+                              final boolean bHasChildren,
+                              final boolean bIsEmptyHTML)
   {}
 
   public void onElementEnd (@Nullable final String sNamespacePrefix, @Nonnull final String sTagName)

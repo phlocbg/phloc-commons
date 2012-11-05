@@ -160,11 +160,12 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
     final String sTagName = aElement.getLocalName () != null ? aElement.getLocalName () : aElement.getTagName ();
 
     // May be null!
-    final Document doc = aElement.getOwnerDocument ();
+    final Document aDoc = aElement.getOwnerDocument ();
     final NodeList aChildNodeList = aElement.getChildNodes ();
+    final boolean bIsEmptyHTML = m_aSettings.getFormat ().isHTML () && HTMLdtd.isEmptyTag (sTagName);
     final boolean bHasChildren = aChildNodeList.getLength () > 0;
 
-    final boolean bIsRootElement = doc != null && aElement.equals (doc.getDocumentElement ());
+    final boolean bIsRootElement = aDoc != null && aElement.equals (aDoc.getDocumentElement ());
     final boolean bIndentPrev = aElement.getPreviousSibling () == null ||
                                 !XMLHelper.isTextNode (aElement.getPreviousSibling ()) ||
                                 bIsRootElement;
@@ -212,10 +213,10 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
       if (m_aSettings.getIndent ().isIndent () && bIndentPrev && m_aIndent.length () > 0)
         aEmitter.onContentElementWhitespace (m_aIndent);
 
-      aEmitter.onElementStart (sNSPrefix, sTagName, aAttrMap, bHasChildren);
+      aEmitter.onElementStart (sNSPrefix, sTagName, aAttrMap, bHasChildren, bIsEmptyHTML);
 
       // write child nodes (if present)
-      if (bHasChildren)
+      if (bHasChildren && !bIsEmptyHTML)
       {
         // do we have enclosing elements?
         if (m_aSettings.getIndent ().isAlign () && bHasChildElement)

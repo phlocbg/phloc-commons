@@ -296,7 +296,8 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   public void onElementStart (@Nullable final String sNamespacePrefix,
                               @Nonnull final String sTagName,
                               @Nullable final Map <String, String> aAttrs,
-                              final boolean bHasChildren)
+                              final boolean bHasChildren,
+                              final boolean bIsEmptyHTML)
   {
     _append ('<');
     if (StringHelper.hasText (sNamespacePrefix))
@@ -317,7 +318,7 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
     // Either leave tag open or close it
     // Note: according to HTML compatibility guideline a space should be added
     // before the self-closing
-    _append (bHasChildren ? ">" : m_aSettings.isSpaceOnSelfClosedElement () ? " />" : "/>");
+    _append (bHasChildren || bIsEmptyHTML ? ">" : m_aSettings.isSpaceOnSelfClosedElement () ? " />" : "/>");
   }
 
   @Override

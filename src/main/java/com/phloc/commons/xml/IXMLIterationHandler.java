@@ -124,11 +124,15 @@ public interface IXMLIterationHandler
    *        Optional set of attributes.
    * @param bHasChildren
    *        <code>true</code> if the current element has children
+   * @param bIsEmptyHTML
+   *        <code>true</code> if this is a self-closed HTML element, meaning
+   *        that only "&lt;" should be emitted
    */
   void onElementStart (@Nullable String sNamespacePrefix,
                        @Nonnull String sTagName,
                        @Nullable Map <String, String> aAttrs,
-                       boolean bHasChildren);
+                       boolean bHasChildren,
+                       boolean bIsEmptyHTML);
 
   /**
    * End of an element.

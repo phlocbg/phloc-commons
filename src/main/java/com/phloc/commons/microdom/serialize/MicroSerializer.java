@@ -41,6 +41,7 @@ import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.xml.CXML;
 import com.phloc.commons.xml.IXMLIterationHandler;
 import com.phloc.commons.xml.serialize.AbstractSerializerPhloc;
+import com.phloc.commons.xml.serialize.HTMLdtd;
 import com.phloc.commons.xml.serialize.IXMLWriterSettings;
 import com.phloc.commons.xml.serialize.XMLEmitterPhloc;
 import com.phloc.commons.xml.serialize.XMLWriterSettings;
@@ -196,6 +197,7 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
     final String sTagName = aElement.getLocalName () != null ? aElement.getLocalName () : aElement.getTagName ();
 
     final List <IMicroNode> aChildNodeList = aElement.getChildren ();
+    final boolean bIsEmptyHTML = m_aSettings.getFormat ().isHTML () && HTMLdtd.isEmptyTag (sTagName);
     final boolean bHasChildren = aElement.hasChildren ();
 
     final boolean bIsRootElement = aElement.getParent () != null && aElement.getParent ().isDocument ();
@@ -239,10 +241,10 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
       if (m_aSettings.getIndent ().isIndent () && bIndentPrev && m_aIndent.length () > 0)
         aXMLWriter.onContentElementWhitespace (m_aIndent);
 
-      aXMLWriter.onElementStart (sNSPrefix, sTagName, aAttrMap, bHasChildren);
+      aXMLWriter.onElementStart (sNSPrefix, sTagName, aAttrMap, bHasChildren, bIsEmptyHTML);
 
       // write child nodes (if present)
-      if (bHasChildren)
+      if (bHasChildren && !bIsEmptyHTML)
       {
         // do we have enclosing elements?
         if (m_aSettings.getIndent ().isAlign () && bHasChildElement)
