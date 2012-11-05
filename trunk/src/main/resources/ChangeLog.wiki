@@ -1,8 +1,10 @@
 #summary Change log of phloc-commons
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
-<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr><td>11/5/12</td><td>add</td><td>api</td><td></td><td>Added new (Directed)Graph(Relation|Node)Fast implementations, with quicker but not 100% accurate equals and hashCode implementation</td></tr>
+<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr border="1"><td>11/5/12</td><td colspan="4">_Release *3.9.1*_</td></tr>
+<tr><td>11/5/12</td><td>add</td><td>api</td><td></td><td>Added new (Directed)Graph(Relation|Node)Fast implementations, with quicker but not 100% accurate equals and hashCode implementation</td></tr>
 <tr><td>11/5/12</td><td>add</td><td>api</td><td></td><td>All XML serialization enums now implement IHasID`<`String`>`</td></tr>
+<tr><td>11/5/12</td><td>change</td><td>api</td><td>*yes*</td><td>Changed the EXMLSerializeFormat to differentiate between HTML and XHTML</td></tr>
 <tr><td>11/5/12</td><td>update</td><td>tech</td><td></td><td>Improved HTML serialization by adding special handling for non-closed tags</td></tr>
 <tr border="1"><td>10/25/12</td><td colspan="4">_Release *3.9.0*_</td></tr>
 <tr><td>10/25/12</td><td>add</td><td>api</td><td></td><td>Integrated the primitive collections from Apache commons-primitive in a Java5 type-safe version!</td></tr>
