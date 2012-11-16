@@ -19,8 +19,6 @@ package com.phloc.commons.callback;
 
 import java.util.concurrent.Callable;
 
-import javax.annotation.Nullable;
-
 /**
  * Like the {@link Callable} interface but not throwing an exception!
  * 
@@ -33,8 +31,8 @@ public interface INonThrowingCallable <DATATYPE> extends IThrowingCallable <DATA
   /**
    * The call back method to be called.
    * 
-   * @return Anything
+   * @return Anything. May be <code>null</code> or non- <code>null</code>
+   *         depending on the implementation.
    */
-  @Nullable
   DATATYPE call ();
 }
