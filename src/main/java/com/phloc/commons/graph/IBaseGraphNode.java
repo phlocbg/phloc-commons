@@ -19,6 +19,7 @@ package com.phloc.commons.graph;
 
 import java.util.Set;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -64,6 +65,13 @@ public interface IBaseGraphNode <N extends IBaseGraphNode <N, R>, R extends IBas
    *         outgoing relation.
    */
   boolean hasRelations ();
+
+  /**
+   * @return A non-negative amount of all incoming and outgoing relations.
+   *         Always &ge; 0.
+   */
+  @Nonnegative
+  int getRelationCount ();
 
   /**
    * @return A container with all incoming and outgoing relations. Never

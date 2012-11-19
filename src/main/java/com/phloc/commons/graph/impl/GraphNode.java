@@ -22,11 +22,13 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.annotations.ReturnsMutableCopy;
+import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.graph.IGraphNode;
 import com.phloc.commons.graph.IGraphRelation;
 import com.phloc.commons.state.EChange;
@@ -103,7 +105,13 @@ public class GraphNode extends AbstractBaseGraphObject implements IGraphNode
 
   public boolean hasRelations ()
   {
-    return m_aRelations != null && !m_aRelations.isEmpty ();
+    return ContainerHelper.isNotEmpty (m_aRelations);
+  }
+
+  @Nonnegative
+  public int getRelationCount ()
+  {
+    return ContainerHelper.getSize (m_aRelations);
   }
 
   @Nonnull
