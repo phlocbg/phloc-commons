@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.collections.attrs;
 
+import java.util.Map;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -45,6 +47,21 @@ public interface IAttributeContainer extends IReadonlyAttributeContainer, IClear
    */
   @Nonnull
   EChange setAttribute (@Nonnull String sName, @Nullable Object aValue);
+
+  /**
+   * Set/overwrite an in attribute value. This is a shortcut for
+   * <code>setAttribute (sName, Boolean.valueOf (bValue));</code>
+   * 
+   * @param sName
+   *        The name of the attribute. May not be <code>null</code>.
+   * @param bValue
+   *        The value of the attribute.
+   * @return {@link EChange#CHANGED} if something changed,
+   *         {@link EChange#UNCHANGED} otherwise.
+   * @see #removeAttribute(String)
+   */
+  @Nonnull
+  EChange setAttribute (@Nonnull String sName, boolean bValue);
 
   /**
    * Set/overwrite an in attribute value. This is a shortcut for
@@ -90,6 +107,18 @@ public interface IAttributeContainer extends IReadonlyAttributeContainer, IClear
    */
   @Nonnull
   EChange setAttribute (@Nonnull String sName, double dValue);
+
+  /**
+   * Set/overwrite an arbitrary number of attribute values.
+   * 
+   * @param aValues
+   *        The map of attributes to be set. May be <code>null</code>.
+   * @return {@link EChange#CHANGED} if something changed,
+   *         {@link EChange#UNCHANGED} otherwise.
+   * @see #setAttribute(String,Object)
+   */
+  @Nonnull
+  EChange setAttributes (@Nullable Map <String, ?> aValues);
 
   /**
    * Remove the specified attribute from the container.

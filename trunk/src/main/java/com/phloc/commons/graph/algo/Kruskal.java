@@ -20,7 +20,6 @@ package com.phloc.commons.graph.algo;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.TreeSet;
 
 import javax.annotation.Nonnull;
@@ -131,9 +130,7 @@ public final class Kruskal
     for (final IGraphNode aNode : aGraph.getAllNodes ().values ())
     {
       final IGraphNode aNewNode = ret.createNode (aNode.getID ());
-      // Copy all attributes
-      for (final Map.Entry <String, Object> aEntry : aNode.getAllAttributes ().entrySet ())
-        aNewNode.setAttribute (aEntry.getKey (), aEntry.getValue ());
+      aNewNode.setAttributes (aNode.getAllAttributes ());
     }
 
     // Now start adding the relations (undirected!)
@@ -146,9 +143,7 @@ public final class Kruskal
       if (aNodeIDs.size () != 2)
         throw new IllegalArgumentException ("Having weird number of nodes!");
       final IGraphRelation aNewRelation = ret.createRelation (aNodeIDs.get (0), aNodeIDs.get (1));
-      // Copy all attributes
-      for (final Map.Entry <String, Object> aEntry : aRelation.getAllAttributes ().entrySet ())
-        aNewRelation.setAttribute (aEntry.getKey (), aEntry.getValue ());
+      aNewRelation.setAttributes (aRelation.getAllAttributes ());
       if (ret.containsCycles ())
       {
         if (GlobalDebug.isDebugMode ())

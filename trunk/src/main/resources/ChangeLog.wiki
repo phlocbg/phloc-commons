@@ -1,7 +1,8 @@
 #summary Change log of phloc-commons
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
-<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr><td>11/19/12</td><td>add</td><td>api</td><td></td><td>Added some Graph algorithms (shortest path and minimum spanning tree)</td></tr>
+<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr><td>11/19/12</td><td>add</td><td>api</td><td></td><td>Extended IAttributeContainer API to have a sanity wrapper for boolean as well as a method to set multiple attributes at once</td></tr>
+<tr><td>11/19/12</td><td>add</td><td>api</td><td></td><td>Added some Graph algorithms (shortest path and minimum spanning tree)</td></tr>
 <tr><td>11/19/12</td><td>add</td><td>api</td><td></td><td>Extended GraphNode API slightly</td></tr>
 <tr border="1"><td>11/5/12</td><td colspan="4">_Release *3.9.1*_</td></tr>
 <tr><td>11/5/12</td><td>add</td><td>api</td><td></td><td>Added new (Directed)Graph(Relation|Node)Fast implementations, with quicker but not 100% accurate equals and hashCode implementation</td></tr>
