@@ -123,6 +123,15 @@ public class DirectedGraphNode extends AbstractBaseGraphObject implements IDirec
                                                    : EChange.valueOf (m_aIncoming.remove (aRelation.getID ()) != null);
   }
 
+  @Nonnull
+  public EChange removeAllIncomingRelations ()
+  {
+    if (!hasIncomingRelations ())
+      return EChange.UNCHANGED;
+    m_aIncoming = null;
+    return EChange.CHANGED;
+  }
+
   public boolean isFromNode (@Nullable final IDirectedGraphNode aNode)
   {
     return getIncomingRelationFrom (aNode) != null;
@@ -217,6 +226,15 @@ public class DirectedGraphNode extends AbstractBaseGraphObject implements IDirec
   {
     return aRelation == null || m_aOutgoing == null ? EChange.UNCHANGED
                                                    : EChange.valueOf (m_aOutgoing.remove (aRelation.getID ()) != null);
+  }
+
+  @Nonnull
+  public EChange removeAllOutgoingRelations ()
+  {
+    if (!hasOutgoingRelations ())
+      return EChange.UNCHANGED;
+    m_aOutgoing = null;
+    return EChange.CHANGED;
   }
 
   public boolean isToNode (@Nullable final IDirectedGraphNode aNode)
@@ -327,6 +345,15 @@ public class DirectedGraphNode extends AbstractBaseGraphObject implements IDirec
     if (m_aOutgoing != null)
       for (final IDirectedGraphRelation aRelation : m_aOutgoing.values ())
         ret.add (aRelation.getToID ());
+    return ret;
+  }
+
+  @Nonnull
+  public EChange removeAllRelations ()
+  {
+    EChange ret = EChange.UNCHANGED;
+    ret = ret.or (removeAllIncomingRelations ());
+    ret = ret.or (removeAllOutgoingRelations ());
     return ret;
   }
 
