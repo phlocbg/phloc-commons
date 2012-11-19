@@ -272,6 +272,12 @@ public class DirectedGraphNode extends AbstractBaseGraphObject implements IDirec
     return hasIncomingRelations () && hasOutgoingRelations ();
   }
 
+  @Nonnegative
+  public int getRelationCount ()
+  {
+    return getIncomingRelationCount () + getOutgoingRelationCount ();
+  }
+
   @Nonnull
   @ReturnsMutableCopy
   public Set <IDirectedGraphRelation> getAllRelations ()
