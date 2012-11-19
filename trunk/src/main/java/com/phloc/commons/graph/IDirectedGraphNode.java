@@ -84,6 +84,15 @@ public interface IDirectedGraphNode extends IBaseGraphNode <IDirectedGraphNode, 
   EChange removeIncomingRelation (@Nonnull IDirectedGraphRelation aRelation);
 
   /**
+   * Remove all incoming relations.
+   * 
+   * @return {@link EChange#CHANGED} if the at least one relation was
+   *         successfully removed from the incoming relations.
+   */
+  @Nonnull
+  EChange removeAllIncomingRelations ();
+
+  /**
    * Check if this graph node is directly connected to the passed node via an
    * incoming relation.
    * 
@@ -159,6 +168,15 @@ public interface IDirectedGraphNode extends IBaseGraphNode <IDirectedGraphNode, 
    */
   @Nonnull
   EChange removeOutgoingRelation (@Nonnull IDirectedGraphRelation aRelation);
+
+  /**
+   * Remove all outgoing relations.
+   * 
+   * @return {@link EChange#CHANGED} if the at least one relation was
+   *         successfully removed from the outgoing relations.
+   */
+  @Nonnull
+  EChange removeAllOutgoingRelations ();
 
   /**
    * Check if this graph node is directly connected to the passed node via an

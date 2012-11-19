@@ -25,6 +25,7 @@ import javax.annotation.Nullable;
 
 import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
+import com.phloc.commons.state.EChange;
 
 /**
  * Base interface for a single graph node.
@@ -104,4 +105,12 @@ public interface IBaseGraphNode <N extends IBaseGraphNode <N, R>, R extends IBas
   @Nonnull
   @ReturnsMutableCopy
   Set <String> getAllRelatedNodeIDs ();
+
+  /**
+   * Remove all relations of this node.
+   * 
+   * @return {@link EChange}
+   */
+  @Nonnull
+  EChange removeAllRelations ();
 }

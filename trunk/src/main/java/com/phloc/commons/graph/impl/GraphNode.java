@@ -86,6 +86,15 @@ public class GraphNode extends AbstractBaseGraphObject implements IGraphNode
     return EChange.valueOf (m_aRelations.remove (aRelation.getID ()) != null);
   }
 
+  @Nonnull
+  public EChange removeAllRelations ()
+  {
+    if (!hasRelations ())
+      return EChange.UNCHANGED;
+    m_aRelations = null;
+    return EChange.CHANGED;
+  }
+
   public boolean isConnectedWith (@Nullable final IGraphNode aNode)
   {
     return getRelation (aNode) != null;
