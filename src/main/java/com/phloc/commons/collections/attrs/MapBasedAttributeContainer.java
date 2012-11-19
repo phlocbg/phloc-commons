@@ -100,21 +100,37 @@ public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContain
   }
 
   @Nonnull
-  public EChange setAttribute (@Nonnull final String sName, final int nValue)
+  public final EChange setAttribute (@Nonnull final String sName, final boolean dValue)
+  {
+    return setAttribute (sName, Boolean.valueOf (dValue));
+  }
+
+  @Nonnull
+  public final EChange setAttribute (@Nonnull final String sName, final int nValue)
   {
     return setAttribute (sName, Integer.valueOf (nValue));
   }
 
   @Nonnull
-  public EChange setAttribute (@Nonnull final String sName, final long nValue)
+  public final EChange setAttribute (@Nonnull final String sName, final long nValue)
   {
     return setAttribute (sName, Long.valueOf (nValue));
   }
 
   @Nonnull
-  public EChange setAttribute (@Nonnull final String sName, final double dValue)
+  public final EChange setAttribute (@Nonnull final String sName, final double dValue)
   {
     return setAttribute (sName, Double.valueOf (dValue));
+  }
+
+  @Nonnull
+  public final EChange setAttributes (@Nullable final Map <String, ?> aValues)
+  {
+    EChange ret = EChange.UNCHANGED;
+    if (aValues != null)
+      for (final Map.Entry <String, ?> aEntry : aValues.entrySet ())
+        ret = ret.or (setAttribute (aEntry.getKey (), aEntry.getValue ()));
+    return ret;
   }
 
   @Nonnull
