@@ -19,6 +19,7 @@ package com.phloc.commons.graph.impl;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -80,6 +81,13 @@ public abstract class AbstractBaseGraph <N extends IBaseGraphNode <N, R>, R exte
   public Map <String, N> getAllNodes ()
   {
     return ContainerHelper.newOrderedMap (m_aNodes);
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public Set <String> getAllNodeIDs ()
+  {
+    return ContainerHelper.newOrderedSet (m_aNodes.keySet ());
   }
 
   @Override

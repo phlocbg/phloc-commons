@@ -18,8 +18,10 @@
 package com.phloc.commons.graph.impl;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -117,6 +119,24 @@ public class Graph extends AbstractBaseGraph <IGraphNode, IGraphRelation> implem
   }
 
   @Nonnull
+  public EChange removeNodeAndAllRelations (@Nonnull final IGraphNode aNode)
+  {
+    if (aNode == null)
+      throw new NullPointerException ("node");
+
+    if (!m_aNodes.containsKey (aNode.getID ()))
+      return EChange.UNCHANGED;
+
+    // Remove all affected relations from all nodes
+    for (final IGraphRelation aRelation : ContainerHelper.newList (aNode.getAllRelations ()))
+      for (final IGraphNode aNode2 : aRelation.getAllConnectedNodes ())
+        aNode2.removeRelation (aRelation);
+    if (removeNode (aNode).isUnchanged ())
+      throw new IllegalStateException ("Inconsistency removing node and all relations");
+    return EChange.CHANGED;
+  }
+
+  @Nonnull
   private IGraphRelation _connect (@Nonnull final IGraphRelation aRelation)
   {
     EChange eChange = EChange.UNCHANGED;
@@ -163,6 +183,16 @@ public class Graph extends AbstractBaseGraph <IGraphNode, IGraphRelation> implem
     for (final IGraphNode aNode : m_aNodes.values ())
       for (final IGraphRelation aRelation : aNode.getAllRelations ())
         ret.put (aRelation.getID (), aRelation);
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public Set <String> getAllRelationIDs ()
+  {
+    final Set <String> ret = new LinkedHashSet <String> ();
+    for (final IGraphNode aNode : m_aNodes.values ())
+      ret.addAll (aNode.getAllRelationIDs ());
     return ret;
   }
 
