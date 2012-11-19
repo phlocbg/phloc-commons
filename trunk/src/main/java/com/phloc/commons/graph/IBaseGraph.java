@@ -83,6 +83,16 @@ public interface IBaseGraph <N extends IBaseGraphNode <N, R>, R extends IBaseGra
   EChange removeNode (@Nonnull N aNode) throws IllegalArgumentException;
 
   /**
+   * Remove an existing node and all connected relations from the graph.
+   * 
+   * @param aNode
+   *        The node to be removed. May not be <code>null</code>.
+   * @return {@link EChange}
+   */
+  @Nonnull
+  EChange removeNodeAndAllRelations (@Nonnull N aNode);
+
+  /**
    * Remove the passed relation from the graph.
    * 
    * @param aRelation

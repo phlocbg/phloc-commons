@@ -51,6 +51,18 @@ public final class GraphVizUtils
   private GraphVizUtils ()
   {}
 
+  @Nonnull
+  @Nonempty
+  public static String getAttribute (@Nonnull @Nonempty final String sName, @Nonnull final String sValue)
+  {
+    return new StringBuilder (sName).append ("=<")
+                                    .append (XMLHelper.getMaskedXMLText (EXMLVersion.XML_10,
+                                                                         EXMLIncorrectCharacterHandling.DEFAULT,
+                                                                         sValue))
+                                    .append ('>')
+                                    .toString ();
+  }
+
   /**
    * Get the graph in a simple DOT notation suitable for GraphViz
    * (http://www.graphviz.org). The DOT specs can be found at
@@ -85,9 +97,7 @@ public final class GraphVizUtils
       if (StringHelper.hasText (sNodeLabelAttr))
       {
         final String sLabel = aGraphNode.getAttributeAsString (sNodeLabelAttr);
-        aSB.append ("[label=<")
-           .append (XMLHelper.getMaskedXMLText (EXMLVersion.XML_10, EXMLIncorrectCharacterHandling.DEFAULT, sLabel))
-           .append (">]");
+        aSB.append ("[").append (getAttribute ("label", sLabel)).append ("]");
       }
       aSB.append (';');
     }
@@ -99,9 +109,7 @@ public final class GraphVizUtils
       if (StringHelper.hasText (sRelationLabelAttr))
       {
         final String sLabel = aGraphRelation.getAttributeAsString (sRelationLabelAttr);
-        aSB.append ("[label=<")
-           .append (XMLHelper.getMaskedXMLText (EXMLVersion.XML_10, EXMLIncorrectCharacterHandling.DEFAULT, sLabel))
-           .append (">]");
+        aSB.append ("[").append (getAttribute ("label", sLabel)).append ("]");
       }
       aSB.append (";\n");
     }

@@ -19,6 +19,7 @@ package com.phloc.commons.graph.impl;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -119,6 +120,27 @@ public class DirectedGraph extends AbstractBaseGraph <IDirectedGraphNode, IDirec
   }
 
   @Nonnull
+  public EChange removeNodeAndAllRelations (@Nonnull final IDirectedGraphNode aNode)
+  {
+    if (aNode == null)
+      throw new NullPointerException ("node");
+
+    if (!m_aNodes.containsKey (aNode.getID ()))
+      return EChange.UNCHANGED;
+
+    // Remove all affected relations from all nodes
+    for (final IDirectedGraphRelation aRelation : aNode.getAllOutgoingRelations ())
+      aRelation.getTo ().removeIncomingRelation (aRelation);
+    for (final IDirectedGraphRelation aRelation : aNode.getAllIncomingRelations ())
+      aRelation.getFrom ().removeOutgoingRelation (aRelation);
+
+    aNode.removeAllRelations ();
+    if (removeNode (aNode).isUnchanged ())
+      throw new IllegalStateException ("Inconsistency removing node and all relations");
+    return EChange.CHANGED;
+  }
+
+  @Nonnull
   private IDirectedGraphRelation _connect (@Nonnull final IDirectedGraphRelation aRelation)
   {
     aRelation.getFrom ().addOutgoingRelation (aRelation);
@@ -206,8 +228,18 @@ public class DirectedGraph extends AbstractBaseGraph <IDirectedGraphNode, IDirec
   {
     final Map <String, IDirectedGraphRelation> ret = new LinkedHashMap <String, IDirectedGraphRelation> ();
     for (final IDirectedGraphNode aNode : m_aNodes.values ())
-      for (final IDirectedGraphRelation aRelation : aNode.getAllOutgoingRelations ())
+      for (final IDirectedGraphRelation aRelation : aNode.getAllRelations ())
         ret.put (aRelation.getID (), aRelation);
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public Set <String> getAllRelationIDs ()
+  {
+    final Set <String> ret = new LinkedHashSet <String> ();
+    for (final IDirectedGraphNode aNode : m_aNodes.values ())
+      ret.addAll (aNode.getAllRelationIDs ());
     return ret;
   }
 
