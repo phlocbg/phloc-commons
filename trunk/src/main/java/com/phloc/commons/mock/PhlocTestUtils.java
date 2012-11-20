@@ -24,16 +24,19 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.ICloneable;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.io.streamprovider.ByteArrayInputStreamProvider;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.lang.GenericReflection;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.convert.MicroTypeConverter;
+import com.phloc.commons.microdom.serialize.MicroWriter;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -69,6 +72,12 @@ public final class PhlocTestUtils
   {
     if (aObj == null)
       throw new IllegalStateException (sMsg);
+  }
+
+  private static <T> void _assertEquals (@Nonnull final String sMsg, @Nullable final T aObj1, @Nullable final T aObj2)
+  {
+    if (!EqualsUtils.equals (aObj1, aObj2))
+      throw new IllegalStateException (sMsg + "\nOBJ1: " + aObj1 + "\nOBJ2: " + aObj2);
   }
 
   @SuppressFBWarnings ({ "EC_NULL_ARG" })
@@ -284,10 +293,17 @@ public final class PhlocTestUtils
     assertNotNull (e);
 
     // Read from XML
-    final Object o2 = MicroTypeConverter.convertToNative (e, aObj.getClass ());
-    assertNotNull (o2);
+    final Object aObj2 = MicroTypeConverter.convertToNative (e, aObj.getClass ());
+    assertNotNull (aObj2);
+
+    // Write to XML again
+    final IMicroElement e2 = MicroTypeConverter.convertToMicroElement (aObj2, "test");
+    assertNotNull (e2);
+
+    // Ensure XML representation is identical
+    _assertEquals ("XML representation must be identical", MicroWriter.getXMLString (e), MicroWriter.getXMLString (e2));
 
     // Ensure they are equals
-    testDefaultImplementationWithEqualContentObject (aObj, o2);
+    testDefaultImplementationWithEqualContentObject (aObj, aObj2);
   }
 }
