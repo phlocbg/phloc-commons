@@ -301,7 +301,9 @@ public final class PhlocTestUtils
     assertNotNull (e2);
 
     // Ensure XML representation is identical
-    _assertEquals ("XML representation must be identical", MicroWriter.getXMLString (e), MicroWriter.getXMLString (e2));
+    final String sXML1 = MicroWriter.getXMLString (e);
+    final String sXML2 = MicroWriter.getXMLString (e2);
+    _assertEquals ("XML representation must be identical", sXML1, sXML2);
 
     // Ensure they are equals
     testDefaultImplementationWithEqualContentObject (aObj, aObj2);
