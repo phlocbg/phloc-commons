@@ -260,7 +260,10 @@ public final class Dijkstra
           R aRelation;
           if (aNode.isDirected ())
           {
-            final IDirectedGraphRelation r = ((IDirectedGraphNode) aNode).getIncomingRelationFrom ((IDirectedGraphNode) aLastMatch.getToNode ());
+            // Cast to Object required for JDK command line compiler
+            final Object aDirectedNode = aNode;
+            final Object aDirectedToNode = aLastMatch.getToNode ();
+            final IDirectedGraphRelation r = ((IDirectedGraphNode) aDirectedNode).getIncomingRelationFrom ((IDirectedGraphNode) aDirectedToNode);
             aRelation = GenericReflection.<IDirectedGraphRelation, R> uncheckedCast (r);
           }
           else
