@@ -295,10 +295,11 @@ public final class Dijkstra
 
       if (GlobalDebug.isDebugMode ())
       {
-        String s = "Iteration[" + nIteration + "]: ";
+        final StringBuilder aSB = new StringBuilder ("Iteration[").append (nIteration).append ("]: ");
         for (final WorkElement <N> e : aRow.getAllElements ())
-          s += e.getAsString ();
-        s_aLogger.info (s + " ==> " + aClosest.getAsString ());
+          aSB.append (e.getAsString ());
+        aSB.append (" ==> ").append (aClosest.getAsString ());
+        s_aLogger.info (aSB.toString ());
       }
 
       aAllNodes.remove (aClosest.getToNode ());
