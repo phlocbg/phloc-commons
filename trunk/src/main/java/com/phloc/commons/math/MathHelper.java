@@ -370,4 +370,32 @@ public final class MathHelper
   {
     return aValue.compareTo (BigInteger.ZERO) >= 0;
   }
+
+  /**
+   * @param a
+   *        a
+   * @param b
+   *        b
+   * @return sqrt(a^2 + b^2) without under/overflow.
+   */
+  public static double hypot (final double a, final double b)
+  {
+    double r;
+    final double dAbsA = Math.abs (a);
+    final double dAbsB = Math.abs (b);
+    if (dAbsA > dAbsB)
+    {
+      r = b / a;
+      r = dAbsA * Math.sqrt (1 + r * r);
+    }
+    else
+      if (b != 0)
+      {
+        r = a / b;
+        r = dAbsB * Math.sqrt (1 + r * r);
+      }
+      else
+        r = 0.0;
+    return r;
+  }
 }
