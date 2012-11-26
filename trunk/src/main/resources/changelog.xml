@@ -20,6 +20,12 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <release date="2012-11-26" version="3.9.5" />
+  <entry date="2012-11-26" category="api" action="remove" incompatible="true">
+    <change>
+      <text locale="en">Moved Graph and Matrix API to new project phloc-math</text>
+    </change>
+  </entry>
   <entry date="2012-11-20" category="tech" action="update">
     <change>
       <text locale="en">Improved PhlocTestUtils.testMicroTypeConversion to compare the XML-String representation</text>
