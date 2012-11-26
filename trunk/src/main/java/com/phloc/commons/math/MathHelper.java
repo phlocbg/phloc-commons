@@ -381,8 +381,8 @@ public final class MathHelper
   public static double hypot (final double a, final double b)
   {
     double r;
-    final double dAbsA = Math.abs (a);
-    final double dAbsB = Math.abs (b);
+    final double dAbsA = MathHelper.abs (a);
+    final double dAbsB = MathHelper.abs (b);
     if (dAbsA > dAbsB)
     {
       r = b / a;
