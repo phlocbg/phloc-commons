@@ -91,6 +91,7 @@ public class BitOutputStream implements Closeable, Flushable
    * @param aBit
    *        1 if the bit should be set, 0 if not
    * @throws IOException
+   *         In case writing to the output stream failed
    */
   public void writeBit (final int aBit) throws IOException
   {
@@ -127,6 +128,7 @@ public class BitOutputStream implements Closeable, Flushable
    * @param nNumBits
    *        how many bits of the integer should be written to the stream.
    * @throws IOException
+   *         In case writing to the output stream failed
    */
   public void writeBits (final int aValue, @Nonnegative final int nNumBits) throws IOException
   {
@@ -140,6 +142,7 @@ public class BitOutputStream implements Closeable, Flushable
    * Write the current cache to the stream and reset the buffer.
    * 
    * @throws IOException
+   *         In case writing to the output stream failed
    */
   public void flush () throws IOException
   {

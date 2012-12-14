@@ -46,6 +46,7 @@ import com.phloc.commons.xml.CXML;
  * 
  * @author philip
  * @param <NODETYPE>
+ *        The DOM node type to use
  */
 public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializer <NODETYPE>
 {

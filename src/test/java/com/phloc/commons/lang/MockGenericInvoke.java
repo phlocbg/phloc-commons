@@ -29,7 +29,9 @@ public final class MockGenericInvoke
 
   /**
    * @param s
+   *        first param
    * @param i
+   *        second param
    */
   public MockGenericInvoke (final String s, final int i)
   {
@@ -48,7 +50,9 @@ public final class MockGenericInvoke
 
   /**
    * @param s
+   *        first param
    * @param i
+   *        second param
    */
   public static void staticTwoArgs (final String s, final int i)
   {
@@ -72,7 +76,9 @@ public final class MockGenericInvoke
 
   /**
    * @param s
+   *        first param
    * @param i
+   *        second param
    */
   public void twoArgs (final String s, final int i)
   {

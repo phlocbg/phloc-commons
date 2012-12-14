@@ -29,6 +29,7 @@ import javax.annotation.Nullable;
  * 
  * @author philip
  * @param <DATATYPE>
+ *        The data type to retrieve the display text from
  */
 public interface IDisplayTextProvider <DATATYPE> extends Serializable
 {

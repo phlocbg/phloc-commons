@@ -24,7 +24,7 @@ import junit.framework.TestSuite;
 
 /**
  * Tests the LongStack class.
- *
+ * 
  * @author Apache Directory Project
  * @since Commons Primitives 1.1
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
@@ -36,7 +36,7 @@ public class TestLongStack extends TestCase
 
   /**
    * Runs the test.
-   *
+   * 
    * @param args
    *        nada
    */
@@ -61,11 +61,6 @@ public class TestLongStack extends TestCase
     stack = new LongStack ();
   }
 
-  /**
-   * Constructor for IntStackTest.
-   *
-   * @param arg0
-   */
   public TestLongStack (final String arg0)
   {
     super (arg0);

@@ -2312,6 +2312,7 @@ public final class StringHelper
    *        <code>null</code>.
    * @return The number of replacements performed. Always &ge; 0.
    * @throws IOException
+   *         In case writing to the Writer fails
    */
   @Nonnegative
   public static int replaceMultipleTo (@Nullable final String sInputString,

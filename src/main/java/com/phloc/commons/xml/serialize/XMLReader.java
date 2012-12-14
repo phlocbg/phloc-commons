@@ -464,9 +464,13 @@ public final class XMLReader
    *        The input stream to read from. After parsing - no matter whether
    *        successful or not - the stream is closed!
    * @param aEntityResolver
+   *        The entity resolver to use.
    * @param aDTDHdl
+   *        The DTD handler to use.
    * @param aContentHdl
+   *        The content handler to use.
    * @param aErrorHdl
+   *        The error handler to use.
    * @param aLexicalHdl
    *        The optional lexical SAX handler to use. Makes only sense if DTD
    *        validation is enabled. May be <code>null</code>.
@@ -483,7 +487,7 @@ public final class XMLReader
                                      final DTDHandler aDTDHdl,
                                      final ContentHandler aContentHdl,
                                      final ErrorHandler aErrorHdl,
-                                     final LexicalHandler aLexicalHdl,
+                                     @Nullable final LexicalHandler aLexicalHdl,
                                      final boolean bDTDValidating,
                                      final boolean bSchemaValidating)
   {
@@ -508,8 +512,11 @@ public final class XMLReader
    *        The input source to read from. Automatically closed upon success or
    *        error.
    * @param aEntityResolver
+   *        The entity resolver to use.
    * @param aDTDHdl
+   *        The DTD handler to use.
    * @param aContentHdl
+   *        The content handler to use.
    * @param aErrorHdl
    *        The optional error handler to use. In case you want to collect
    *        errors etc.

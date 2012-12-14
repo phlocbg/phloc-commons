@@ -22,9 +22,11 @@ import java.util.EmptyStackException;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import com.phloc.commons.mock.PhlocAssert;
+
 /**
  * Tests the DoubleStack class.
- *
+ * 
  * @author Apache Directory Project
  * @since Commons Primitives 1.1
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
@@ -36,7 +38,7 @@ public class TestDoubleStack extends TestCase
 
   /**
    * Runs the test.
-   *
+   * 
    * @param args
    *        nada
    */
@@ -61,11 +63,6 @@ public class TestDoubleStack extends TestCase
     stack = new DoubleStack ();
   }
 
-  /**
-   * Constructor for IntStackTest.
-   *
-   * @param arg0
-   */
   public TestDoubleStack (final String arg0)
   {
     super (arg0);
@@ -114,7 +111,7 @@ public class TestDoubleStack extends TestCase
     for (double ii = 0; ii < 10; ii++)
     {
       stack.push (ii);
-      assertTrue (ii == stack.pop ());
+      PhlocAssert.assertEquals (ii, stack.pop ());
     }
 
     for (double ii = 0; ii < 10; ii++)
@@ -124,7 +121,7 @@ public class TestDoubleStack extends TestCase
     for (double ii = 10; ii < 0; ii--)
     {
       stack.push (ii);
-      assertTrue (ii == stack.pop ());
+      PhlocAssert.assertEquals (ii, stack.pop ());
     }
   }
 

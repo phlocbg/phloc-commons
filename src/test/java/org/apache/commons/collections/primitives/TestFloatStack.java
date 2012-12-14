@@ -22,9 +22,11 @@ import java.util.EmptyStackException;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import com.phloc.commons.mock.PhlocAssert;
+
 /**
  * Tests the FloatStack class.
- *
+ * 
  * @author Apache Directory Project
  * @since Commons Primitives 1.1
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
@@ -36,7 +38,7 @@ public class TestFloatStack extends TestCase
 
   /**
    * Runs the test.
-   *
+   * 
    * @param args
    *        nada
    */
@@ -61,11 +63,6 @@ public class TestFloatStack extends TestCase
     stack = new FloatStack ();
   }
 
-  /**
-   * Constructor for IntStackTest.
-   *
-   * @param arg0
-   */
   public TestFloatStack (final String arg0)
   {
     super (arg0);
@@ -95,7 +92,7 @@ public class TestFloatStack extends TestCase
     for (float ii = 0; ii < 10; ii++)
     {
       stack.push (ii);
-      assertTrue (ii == stack.peek ());
+      PhlocAssert.assertEquals (ii, stack.peek ());
     }
   }
 
@@ -114,7 +111,7 @@ public class TestFloatStack extends TestCase
     for (float ii = 0; ii < 10; ii++)
     {
       stack.push (ii);
-      assertTrue (ii == stack.pop ());
+      PhlocAssert.assertEquals (ii, stack.pop ());
     }
 
     for (float ii = 0; ii < 10; ii++)
@@ -124,7 +121,7 @@ public class TestFloatStack extends TestCase
     for (float ii = 10; ii < 0; ii--)
     {
       stack.push (ii);
-      assertTrue (ii == stack.pop ());
+      PhlocAssert.assertEquals (ii, stack.pop ());
     }
   }
 
@@ -133,8 +130,8 @@ public class TestFloatStack extends TestCase
     stack.push (1.4f);
     stack.push (2.67f);
     assertFalse (stack.isEmpty ());
-    assertTrue (2.67f == stack.pop ());
-    assertTrue (1.4f == stack.pop ());
+    PhlocAssert.assertEquals (2.67f, stack.pop ());
+    PhlocAssert.assertEquals (1.4f, stack.pop ());
   }
 
   public void testSearch ()
