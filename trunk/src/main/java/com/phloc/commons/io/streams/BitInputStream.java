@@ -87,6 +87,7 @@ public class BitInputStream implements Closeable
    *        defines how many bits to read from the stream.
    * @return integer value containing the bits read from the stream.
    * @throws IOException
+   *         In case EOF is reached
    */
   public int readBits (@Nonnegative final int aNumberOfBits) throws IOException
   {
@@ -104,6 +105,7 @@ public class BitInputStream implements Closeable
    * 
    * @return 0 if the bit is 0, 1 if the bit is 1.
    * @throws IOException
+   *         In case EOF is reached
    */
   public int readBit () throws IOException
   {

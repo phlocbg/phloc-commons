@@ -24,6 +24,7 @@ import javax.annotation.Nullable;
  * 
  * @author philip
  * @param <DATATYPE>
+ *        The data type to retrieve the name from
  */
 public interface INameProvider <DATATYPE>
 {

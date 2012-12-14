@@ -24,7 +24,7 @@ import junit.framework.TestSuite;
 
 /**
  * Tests the ShortStack class.
- *
+ * 
  * @author <a href="mailto:directory-dev@incubator.apache.org">Apache Directory
  *         Project</a>
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
@@ -36,7 +36,7 @@ public class TestShortStack extends TestCase
 
   /**
    * Runs the test.
-   *
+   * 
    * @param args
    *        nada
    */
@@ -61,11 +61,6 @@ public class TestShortStack extends TestCase
     stack = new ShortStack ();
   }
 
-  /**
-   * Constructor for IntStackTest.
-   *
-   * @param arg0
-   */
   public TestShortStack (final String arg0)
   {
     super (arg0);

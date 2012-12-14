@@ -61,11 +61,6 @@ public class TestCharStack extends TestCase
     stack = new CharStack ();
   }
 
-  /**
-   * Constructor for IntStackTest.
-   * 
-   * @param arg0
-   */
   public TestCharStack (final String arg0)
   {
     super (arg0);

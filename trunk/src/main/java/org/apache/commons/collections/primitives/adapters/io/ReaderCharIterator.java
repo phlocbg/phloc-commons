@@ -26,6 +26,8 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.collections.primitives.CharIterator;
 
+import com.phloc.commons.annotations.UnsupportedOperation;
+
 /**
  * Adapts a {@link Reader} to the {@link CharIterator} interface.
  * 
@@ -62,7 +64,9 @@ public class ReaderCharIterator implements CharIterator
    * Not supported.
    * 
    * @throws UnsupportedOperationException
+   *         always
    */
+  @UnsupportedOperation
   public void remove () throws UnsupportedOperationException
   {
     throw new UnsupportedOperationException ("remove() is not supported here");

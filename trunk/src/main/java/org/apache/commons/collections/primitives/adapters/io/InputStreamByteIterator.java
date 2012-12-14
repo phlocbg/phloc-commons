@@ -26,6 +26,8 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.collections.primitives.ByteIterator;
 
+import com.phloc.commons.annotations.UnsupportedOperation;
+
 /**
  * Adapts an {@link InputStream} to the {@link ByteIterator} interface.
  * 
@@ -62,7 +64,9 @@ public class InputStreamByteIterator implements ByteIterator
    * Not supported.
    * 
    * @throws UnsupportedOperationException
+   *         Always
    */
+  @UnsupportedOperation
   public void remove () throws UnsupportedOperationException
   {
     throw new UnsupportedOperationException ("remove() is not supported here");

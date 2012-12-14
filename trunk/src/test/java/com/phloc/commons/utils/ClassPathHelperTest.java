@@ -50,6 +50,7 @@ public final class ClassPathHelperTest
    * Test for method printClassPathEntries
    * 
    * @throws UnsupportedEncodingException
+   *         never
    */
   @Test
   public void testPrintClassPathEntries () throws UnsupportedEncodingException

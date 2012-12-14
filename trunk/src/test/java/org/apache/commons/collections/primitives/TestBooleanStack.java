@@ -61,11 +61,6 @@ public class TestBooleanStack extends TestCase
     stack = new BooleanStack ();
   }
 
-  /**
-   * Constructor for IntStackTest.
-   * 
-   * @param arg0
-   */
   public TestBooleanStack (final String arg0)
   {
     super (arg0);

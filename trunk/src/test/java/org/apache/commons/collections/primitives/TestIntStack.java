@@ -24,7 +24,7 @@ import junit.framework.TestSuite;
 
 /**
  * Tests the IntStack class.
- *
+ * 
  * @author Apache Directory Project
  * @since Commons Primitives 1.1
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
@@ -36,7 +36,7 @@ public class TestIntStack extends TestCase
 
   /**
    * Runs the test.
-   *
+   * 
    * @param args
    *        nada
    */
@@ -61,11 +61,6 @@ public class TestIntStack extends TestCase
     stack = new IntStack ();
   }
 
-  /**
-   * Constructor for IntStackTest.
-   *
-   * @param arg0
-   */
   public TestIntStack (final String arg0)
   {
     super (arg0);

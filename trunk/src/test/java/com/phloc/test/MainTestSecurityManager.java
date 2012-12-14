@@ -29,9 +29,10 @@ public class MainTestSecurityManager
    * -Djava.security.manager
    * -Djava.security.policy=src/test/resources/grant-all.policy
    * -Djava.security.debug=all
-   *
+   * 
    * @param args
    * @throws Exception
+   *         Hopefully never
    */
   @SuppressFBWarnings (value = "DM_STRING_CTOR")
   public static void main (final String args[]) throws Exception

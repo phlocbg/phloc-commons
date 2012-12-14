@@ -23,6 +23,7 @@ package com.phloc.commons.tree.utils.xml;
  * 
  * @author philip
  * @param <VALUETYPE>
+ *        The type of the tree item data
  */
 public interface IConverterTreeXML <VALUETYPE> extends
                                                IConverterTreeItemToMicroNode <VALUETYPE>,

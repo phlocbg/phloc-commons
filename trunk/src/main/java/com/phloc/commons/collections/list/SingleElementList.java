@@ -46,6 +46,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author philip
  * @param <ELEMENTTYPE>
+ *        The type of the element in the list
  */
 @NotThreadSafe
 public class SingleElementList <ELEMENTTYPE> implements List <ELEMENTTYPE>, IHasSize

@@ -205,6 +205,7 @@ public final class URLProtocolRegistry
    * Return the passed URL where the protocol has been stripped (if known)
    * 
    * @param sURL
+   *        The URL to strip the protocol from. May be <code>null</code>.
    * @return The passed URL where any known protocol has been stripped
    */
   @Nullable

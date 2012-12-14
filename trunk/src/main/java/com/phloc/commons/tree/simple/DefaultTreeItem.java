@@ -25,6 +25,7 @@ import javax.annotation.concurrent.NotThreadSafe;
  * 
  * @author philip
  * @param <VALUETYPE>
+ *        tree item value type
  */
 @NotThreadSafe
 public class DefaultTreeItem <VALUETYPE> extends BasicTreeItem <VALUETYPE, DefaultTreeItem <VALUETYPE>>
