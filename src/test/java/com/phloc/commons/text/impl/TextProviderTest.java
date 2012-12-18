@@ -28,7 +28,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 
-import com.phloc.commons.GlobalDebug;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 import com.phloc.commons.mock.DebugModeTestRule;
 import com.phloc.commons.text.ISimpleMultiLingualText;
@@ -91,52 +90,53 @@ public final class TextProviderTest extends AbstractPhlocTestCase
   @Test
   public void testQuotes ()
   {
-    assertTrue (GlobalDebug.isDebugMode ());
-
     assertNotNull (TextProvider.create_DE_EN ("Test 123!", ""));
     assertNotNull (TextProvider.create_DE_EN ("Test {0} 123!", ""));
     assertNotNull (TextProvider.create_DE_EN ("Test ''{0}'' 123!", ""));
 
+    TextProvider.setPerformConsistencyChecks (true);
     try
     {
-      // Must use two single quotes
-      TextProvider.create_DE_EN ("Test '{0}' 123!", "");
-      fail ();
-    }
-    catch (final IllegalArgumentException ex)
-    {}
-
-    try
-    {
-      TextProvider.create_DE_EN ("'{0}' 123!", "");
-      fail ();
-    }
-    catch (final IllegalArgumentException ex)
-    {}
-
-    try
-    {
-      TextProvider.create_DE_EN ("Test '{0}'", "");
-      fail ();
-    }
-    catch (final IllegalArgumentException ex)
-    {}
-
-    try
-    {
+      // should log a warning
       TextProvider.create_DE_EN ("Test\\nmasked new line", "");
-      fail ();
-    }
-    catch (final IllegalArgumentException ex)
-    {}
 
-    try
-    {
-      // Requires only a single quote
-      TextProvider.create_DE ("Test '' no arguments");
-      fail ();
+      try
+      {
+        // Must use two single quotes
+        TextProvider.create_DE_EN ("Test '{0}' 123!", "");
+        fail ();
+      }
+      catch (final IllegalArgumentException ex)
+      {}
+
+      try
+      {
+        TextProvider.create_DE_EN ("'{0}' 123!", "");
+        fail ();
+      }
+      catch (final IllegalArgumentException ex)
+      {}
+
+      try
+      {
+        TextProvider.create_DE_EN ("Test '{0}'", "");
+        fail ();
+      }
+      catch (final IllegalArgumentException ex)
+      {}
+
+      try
+      {
+        // Requires only a single quote
+        TextProvider.create_DE ("Test '' no arguments");
+        fail ();
+      }
+      catch (final IllegalArgumentException ex)
+      {}
     }
-    catch (final IllegalArgumentException ex)
-    {}
+    finally
+    {
+      TextProvider.setPerformConsistencyChecks (false);
+    }
   }
 }
