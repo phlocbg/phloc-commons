@@ -21,11 +21,15 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.GlobalDebug;
 import com.phloc.commons.annotations.OverrideOnDemand;
@@ -50,17 +54,41 @@ public class TextProvider extends AbstractTextProvider implements ISimpleMultiLi
 {
   public static final Locale DE = LocaleCache.getLocale ("de");
   public static final Locale EN = LocaleCache.getLocale ("en");
+  private static final Logger s_aLogger = LoggerFactory.getLogger (TextProvider.class);
+  private static final AtomicBoolean s_aConsistencyChecksEnabled = new AtomicBoolean (GlobalDebug.isDebugMode ());
 
   private final Map <Locale, String> m_aTexts = new HashMap <Locale, String> ();
 
   protected TextProvider ()
   {}
 
-  private static void _performDebugOnlyConsistencyChecks (@Nonnull final String sValue)
+  /**
+   * Enable or disable the internal consistency checks.
+   * 
+   * @param bPerformConsistencyChecks
+   *        <code>true</code> to enable them, <code>false</code> to disable
+   *        them.
+   */
+  public static void setPerformConsistencyChecks (final boolean bPerformConsistencyChecks)
   {
-    // String contains masked newline?
+    s_aConsistencyChecksEnabled.set (bPerformConsistencyChecks);
+  }
+
+  /**
+   * @return <code>true</code> if consistency checks are enabled,
+   *         <code>false</code> if not. The default value is
+   *         {@link GlobalDebug#isDebugMode()}.
+   */
+  public static boolean isPerformConsistencyChecks ()
+  {
+    return s_aConsistencyChecksEnabled.get ();
+  }
+
+  private static void _performConsistencyChecks (@Nonnull final String sValue)
+  {
+    // String contains masked newline? warning only!
     if (sValue.indexOf ("\\n") >= 0)
-      throw new IllegalArgumentException ("Passed string contains a masked newline - replace with an inline one!");
+      s_aLogger.warn ("Passed string contains a masked newline - replace with an inline one:\n" + sValue);
 
     if (sValue.indexOf ("{0}") >= 0)
     {
@@ -93,8 +121,8 @@ public class TextProvider extends AbstractTextProvider implements ISimpleMultiLi
   @Nonnull
   protected final TextProvider internalSetText (@Nonnull final Locale aContentLocale, @Nullable final String sValue)
   {
-    if (GlobalDebug.isDebugMode () && sValue != null)
-      _performDebugOnlyConsistencyChecks (sValue);
+    if (sValue != null && s_aConsistencyChecksEnabled.get ())
+      _performConsistencyChecks (sValue);
 
     m_aTexts.put (aContentLocale, sValue);
     return this;
