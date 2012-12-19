@@ -110,12 +110,52 @@ public class NonBlockingStack <ELEMENTTYPE> extends ArrayList <ELEMENTTYPE> impl
     return get (size () - 1);
   }
 
+  /**
+   * Looks at the object at the top of this stack without removing it from the
+   * stack. Synonym for {@link #peek()}
+   * 
+   * @return the object at the top of this stack (the last item of the list).
+   * @exception EmptyStackException
+   *            if this stack is empty.
+   * @see #peek()
+   */
+  @Nullable
+  public ELEMENTTYPE top ()
+  {
+    return peek ();
+  }
+
+  /**
+   * @return The first element in the stack (the oldest element) in comparison
+   *         to {@link #peek()} delivering the last element.
+   * @throws EmptyStackException
+   *         if the stack is empty
+   */
   @Nullable
   public ELEMENTTYPE firstElement ()
   {
     if (isEmpty ())
       throw new EmptyStackException ();
     return get (0);
+  }
+
+  /**
+   * Replaces the top element in the stack. This is a shortcut for
+   * <code>pop (); push (aItem);</code>
+   * 
+   * @param aItem
+   *        the item to be pushed onto this stack.
+   * @return the <code>aItem</code> argument.
+   * @throws EmptyStackException
+   *         if the stack is empty
+   */
+  @Nullable
+  public ELEMENTTYPE replaceTopElement (@Nullable final ELEMENTTYPE aItem)
+  {
+    if (isEmpty ())
+      throw new EmptyStackException ();
+    set (size () - 1, aItem);
+    return aItem;
   }
 
   @Nonnull

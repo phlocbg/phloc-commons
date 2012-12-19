@@ -89,11 +89,37 @@ public final class NonBlockingStackTest
     assertTrue (aStack.isEmpty ());
     aStack.push ("a");
     assertEquals ("a", aStack.peek ());
+    assertEquals ("a", aStack.top ());
+    assertEquals (1, aStack.size ());
     assertEquals ("a", aStack.pop ());
+    assertEquals (0, aStack.size ());
+
+    assertEquals ("a", aStack.push ("a"));
+    assertEquals (1, aStack.size ());
+    assertEquals ("a", aStack.peek ());
+    assertEquals ("b", aStack.replaceTopElement ("b"));
+    assertEquals (1, aStack.size ());
+    assertEquals ("b", aStack.peek ());
+    assertEquals ("b", aStack.pop ());
+    assertEquals (0, aStack.size ());
 
     try
     {
+      aStack.replaceTopElement ("c");
+      fail ();
+    }
+    catch (final EmptyStackException ex)
+    {}
+    try
+    {
       aStack.peek ();
+      fail ();
+    }
+    catch (final EmptyStackException ex)
+    {}
+    try
+    {
+      aStack.top ();
       fail ();
     }
     catch (final EmptyStackException ex)

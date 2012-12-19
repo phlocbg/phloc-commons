@@ -19,6 +19,7 @@ package com.phloc.commons.collections.attrs;
 
 import java.util.Arrays;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -28,6 +29,7 @@ import org.slf4j.LoggerFactory;
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.lang.GenericReflection;
 import com.phloc.commons.string.StringParser;
+import com.phloc.commons.typeconvert.TypeConverter;
 
 /**
  * Abstract base class for all kind of string-object mapping container. This
@@ -51,6 +53,22 @@ public abstract class AbstractReadonlyAttributeContainer implements IReadonlyAtt
   public final <DATATYPE> DATATYPE getCastedAttribute (@Nullable final String sName, @Nullable final DATATYPE aDefault)
   {
     final DATATYPE aValue = this.<DATATYPE> getCastedAttribute (sName);
+    return aValue == null ? aDefault : aValue;
+  }
+
+  @Nullable
+  public final <DATATYPE> DATATYPE getTypedAttribute (@Nullable final String sName,
+                                                      @Nonnull final Class <DATATYPE> aDstClass)
+  {
+    return TypeConverter.convertIfNecessary (getAttributeObject (sName), aDstClass);
+  }
+
+  @Nullable
+  public final <DATATYPE> DATATYPE getTypedAttribute (@Nullable final String sName,
+                                                      @Nonnull final Class <DATATYPE> aDstClass,
+                                                      @Nullable final DATATYPE aDefault)
+  {
+    final DATATYPE aValue = this.<DATATYPE> getTypedAttribute (sName, aDstClass);
     return aValue == null ? aDefault : aValue;
   }
 
