@@ -84,7 +84,7 @@ public interface IReadonlyAttributeContainer extends Serializable
    * {@link java.lang.ClassCastException} is thrown! If you just want to
    * retrieve a String, use {@link #getAttributeAsString(String)}!<br>
    * This call is identical to the call
-   * <code>getTypedAttribute(sName, null)</code>
+   * <code>getCastedAttribute(sName, null)</code>
    * 
    * @param <DATATYPE>
    *        return type
@@ -111,6 +111,46 @@ public interface IReadonlyAttributeContainer extends Serializable
    */
   @Nullable
   <DATATYPE> DATATYPE getCastedAttribute (@Nullable String sName, @Nullable DATATYPE aDefault);
+
+  /**
+   * Get the attribute value associated to the given attribute name. If the type
+   * of the attribute in the scope does not match, the TypeConverter is invoked!
+   * If you just want to retrieve a String, use
+   * {@link #getAttributeAsString(String)}!<br>
+   * This call is identical to the call
+   * <code>getTypedAttribute(sName, null)</code>
+   * 
+   * @param <DATATYPE>
+   *        return type
+   * @param sName
+   *        the attribute name
+   * @param aDstClass
+   *        The destination class to convert to. May not be <code>null</code>.
+   * @return <code>null</code> if no such value exists
+   */
+  @Nullable
+  <DATATYPE> DATATYPE getTypedAttribute (@Nullable String sName, @Nonnull Class <DATATYPE> aDstClass);
+
+  /**
+   * Get the attribute value associated to the given attribute name. If the type
+   * of the attribute in the scope does not match, the TypeConverter is invoked!
+   * If you just want to retrieve a String, use
+   * {@link #getAttributeAsString(String, String)}!<br>
+   * 
+   * @param <DATATYPE>
+   *        return type
+   * @param sName
+   *        The attribute name.
+   * @param aDstClass
+   *        The destination class to convert to. May not be <code>null</code>.
+   * @param aDefault
+   *        The default value to be returned if no such attribute exists
+   * @return The passed default value if no such attribute exists
+   */
+  @Nullable
+  <DATATYPE> DATATYPE getTypedAttribute (@Nullable String sName,
+                                         @Nonnull Class <DATATYPE> aDstClass,
+                                         @Nullable DATATYPE aDefault);
 
   /**
    * Get the attribute value associated to the given attribute name.<br>

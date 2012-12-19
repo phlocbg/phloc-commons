@@ -55,8 +55,10 @@ public final class MapBasedAttributeContainerTest
     assertFalse (x.setAttribute ("key", "value3").isChanged ());
     assertEquals ("value2", x.getAttributeObject ("key2"));
     assertEquals ("value2", x.getAttributeAsString ("key2"));
-    assertEquals ("value2", x.getCastedAttribute ("key2"));
-    assertEquals ("def", x.getCastedAttribute ("key none", "def"));
+    assertEquals ("value2", x.<String> getCastedAttribute ("key2"));
+    assertEquals ("value2", x.getTypedAttribute ("key2", String.class));
+    assertEquals ("def", x.<String> getCastedAttribute ("key none", "def"));
+    assertEquals ("def", x.getTypedAttribute ("key none", String.class, "def"));
     assertTrue (x.containsAttribute ("key2"));
     assertTrue (x.clear ().isChanged ());
     assertFalse (x.clear ().isChanged ());
