@@ -1,7 +1,8 @@
 #summary Change log of phloc-commons
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
-<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr><td>12/19/12</td><td>add</td><td>api</td><td></td><td>Extended IReadonlyAttributeContainer with two methods getTypedAttribute invoking the TypeConverter</td></tr>
+<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr><td>12/31/12</td><td>add</td><td>api</td><td></td><td>Added EBaseType from [http://code.google.com/p/phloc-types phloc-types] as the rest of the library is very rarely used</td></tr>
+<tr><td>12/19/12</td><td>add</td><td>api</td><td></td><td>Extended IReadonlyAttributeContainer with two methods getTypedAttribute invoking the TypeConverter</td></tr>
 <tr><td>12/19/12</td><td>add</td><td>api</td><td></td><td>Slightly extended API of NonBlockingStack (top and replaceTopElement were added)</td></tr>
 <tr><td>12/18/12</td><td>add</td><td>api</td><td></td><td>Added possibility to enable or disable consistency checks in TextProvider</td></tr>
 <tr border="1"><td>11/26/12</td><td colspan="4">_Release *3.9.2*_</td></tr>
