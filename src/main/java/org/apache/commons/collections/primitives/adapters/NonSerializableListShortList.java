@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2006-2012 phloc systems
+ * Copyright (C) 2006-2013 phloc systems
  * http://www.phloc.com
  * office[at]phloc[dot]com
  *
@@ -15,7 +15,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
