@@ -57,9 +57,7 @@ public class MapBasedAttributeContainerThreadSafe extends MapBasedAttributeConta
 
   public MapBasedAttributeContainerThreadSafe (@Nonnull final IReadonlyAttributeContainer aCont)
   {
-    if (aCont == null)
-      throw new NullPointerException ("cont");
-    m_aAttrs.putAll (aCont.getAllAttributes ());
+    super (aCont);
   }
 
   @Override
