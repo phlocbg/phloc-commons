@@ -19,7 +19,6 @@ package com.phloc.commons.collections.attrs;
 
 import java.util.Collection;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -49,7 +48,14 @@ public final class MapBasedReadonlyAttributeContainer extends AbstractReadonlyAt
   {
     if (aMap == null)
       throw new NullPointerException ("map");
-    m_aAttrs = new HashMap <String, Object> (aMap);
+    m_aAttrs = ContainerHelper.newMap (aMap);
+  }
+
+  public MapBasedReadonlyAttributeContainer (@Nonnull final IReadonlyAttributeContainer aCont)
+  {
+    if (aCont == null)
+      throw new NullPointerException ("Cont");
+    m_aAttrs = ContainerHelper.newMap (aCont.getAllAttributes ());
   }
 
   public boolean containsAttribute (@Nullable final String sName)

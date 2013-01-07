@@ -47,23 +47,25 @@ public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContain
   /**
    * attribute storage.
    */
-  protected final Map <String, Object> m_aAttrs = new HashMap <String, Object> ();
+  protected final Map <String, Object> m_aAttrs;
 
   public MapBasedAttributeContainer ()
-  {}
+  {
+    m_aAttrs = new HashMap <String, Object> ();
+  }
 
   public MapBasedAttributeContainer (@Nonnull final Map <String, Object> aMap)
   {
     if (aMap == null)
       throw new NullPointerException ("map");
-    m_aAttrs.putAll (aMap);
+    m_aAttrs = ContainerHelper.newMap (aMap);
   }
 
   public MapBasedAttributeContainer (@Nonnull final IReadonlyAttributeContainer aCont)
   {
     if (aCont == null)
       throw new NullPointerException ("cont");
-    m_aAttrs.putAll (aCont.getAllAttributes ());
+    m_aAttrs = ContainerHelper.newMap (aCont.getAllAttributes ());
   }
 
   public boolean containsAttribute (@Nullable final String sName)
