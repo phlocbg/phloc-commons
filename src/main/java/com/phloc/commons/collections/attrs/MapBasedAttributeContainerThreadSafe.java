@@ -30,7 +30,6 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.phloc.commons.annotations.ReturnsMutableCopy;
-import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.state.EChange;
 
 /**
@@ -82,7 +81,7 @@ public class MapBasedAttributeContainerThreadSafe extends MapBasedAttributeConta
     m_aRWLock.readLock ().lock ();
     try
     {
-      return ContainerHelper.newMap (m_aAttrs);
+      return super.getAllAttributes ();
     }
     finally
     {
@@ -143,7 +142,7 @@ public class MapBasedAttributeContainerThreadSafe extends MapBasedAttributeConta
     m_aRWLock.readLock ().lock ();
     try
     {
-      return ContainerHelper.getEnumeration (ContainerHelper.newSet (m_aAttrs.keySet ()));
+      return super.getAttributeNames ();
     }
     finally
     {
@@ -159,7 +158,7 @@ public class MapBasedAttributeContainerThreadSafe extends MapBasedAttributeConta
     m_aRWLock.readLock ().lock ();
     try
     {
-      return ContainerHelper.newSet (m_aAttrs.keySet ());
+      return super.getAllAttributeNames ();
     }
     finally
     {
@@ -175,7 +174,7 @@ public class MapBasedAttributeContainerThreadSafe extends MapBasedAttributeConta
     m_aRWLock.readLock ().lock ();
     try
     {
-      return ContainerHelper.newList (m_aAttrs.values ());
+      return super.getAllAttributeValues ();
     }
     finally
     {

@@ -47,7 +47,7 @@ public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContain
   /**
    * attribute storage.
    */
-  protected final Map <String, Object> m_aAttrs;
+  private final Map <String, Object> m_aAttrs;
 
   public MapBasedAttributeContainer ()
   {
