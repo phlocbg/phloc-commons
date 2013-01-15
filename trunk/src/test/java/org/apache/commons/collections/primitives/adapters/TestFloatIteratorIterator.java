@@ -49,7 +49,7 @@ import org.apache.commons.collections.primitives.FloatList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestFloatIteratorIterator extends AbstractTestIterator
+public class TestFloatIteratorIterator extends AbstractTestIterator <Float>
 {
   public TestFloatIteratorIterator (final String sTestName)
   {

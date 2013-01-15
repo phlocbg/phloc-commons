@@ -46,7 +46,7 @@ import org.apache.commons.collections.primitives.adapters.ShortIteratorIterator;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class TestShortIterator extends AbstractTestIterator
+public abstract class TestShortIterator extends AbstractTestIterator <Short>
 {
   public TestShortIterator (final String sTestName)
   {

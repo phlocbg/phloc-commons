@@ -49,7 +49,7 @@ import org.apache.commons.collections.primitives.LongList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestLongListIteratorListIterator extends AbstractTestListIterator
+public class TestLongListIteratorListIterator extends AbstractTestListIterator <Long>
 {
   public TestLongListIteratorListIterator (final String sTestName)
   {
@@ -99,7 +99,7 @@ public class TestLongListIteratorListIterator extends AbstractTestListIterator
   }
 
   @Override
-  public Object addSetValue ()
+  public Long addSetValue ()
   {
     return Long.valueOf (1);
   }

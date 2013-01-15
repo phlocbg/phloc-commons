@@ -49,7 +49,7 @@ import org.apache.commons.collections.primitives.CharList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestCharListIteratorListIterator extends AbstractTestListIterator
+public class TestCharListIteratorListIterator extends AbstractTestListIterator <Character>
 {
   public TestCharListIteratorListIterator (final String sTestName)
   {
@@ -99,7 +99,7 @@ public class TestCharListIteratorListIterator extends AbstractTestListIterator
   }
 
   @Override
-  public Object addSetValue ()
+  public Character addSetValue ()
   {
     return Character.valueOf ((char) 1);
   }

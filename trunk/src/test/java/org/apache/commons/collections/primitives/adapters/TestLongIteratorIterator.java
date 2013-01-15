@@ -49,7 +49,7 @@ import org.apache.commons.collections.primitives.LongList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestLongIteratorIterator extends AbstractTestIterator
+public class TestLongIteratorIterator extends AbstractTestIterator <Long>
 {
   public TestLongIteratorIterator (final String sTestName)
   {

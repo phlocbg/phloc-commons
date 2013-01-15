@@ -46,7 +46,7 @@ import org.apache.commons.collections.primitives.adapters.LongIteratorIterator;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class TestLongIterator extends AbstractTestIterator
+public abstract class TestLongIterator extends AbstractTestIterator <Long>
 {
   public TestLongIterator (final String sTestName)
   {

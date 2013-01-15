@@ -49,7 +49,7 @@ import org.apache.commons.collections.primitives.FloatList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestFloatListIteratorListIterator extends AbstractTestListIterator
+public class TestFloatListIteratorListIterator extends AbstractTestListIterator <Float>
 {
   public TestFloatListIteratorListIterator (final String sTestName)
   {
@@ -99,7 +99,7 @@ public class TestFloatListIteratorListIterator extends AbstractTestListIterator
   }
 
   @Override
-  public Object addSetValue ()
+  public Float addSetValue ()
   {
     return Float.valueOf (1);
   }

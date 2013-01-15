@@ -49,7 +49,7 @@ import org.apache.commons.collections.primitives.DoubleList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestDoubleIteratorIterator extends AbstractTestIterator
+public class TestDoubleIteratorIterator extends AbstractTestIterator <Double>
 {
   public TestDoubleIteratorIterator (final String sTestName)
   {

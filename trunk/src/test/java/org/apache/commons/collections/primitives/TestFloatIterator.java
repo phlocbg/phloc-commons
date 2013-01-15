@@ -46,7 +46,7 @@ import org.apache.commons.collections.primitives.adapters.FloatIteratorIterator;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class TestFloatIterator extends AbstractTestIterator
+public abstract class TestFloatIterator extends AbstractTestIterator <Float>
 {
   public TestFloatIterator (final String sTestName)
   {

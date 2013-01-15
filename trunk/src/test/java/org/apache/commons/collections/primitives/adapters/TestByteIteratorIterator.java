@@ -49,7 +49,7 @@ import org.apache.commons.collections.primitives.ByteList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestByteIteratorIterator extends AbstractTestIterator
+public class TestByteIteratorIterator extends AbstractTestIterator <Byte>
 {
   public TestByteIteratorIterator (final String sTestName)
   {

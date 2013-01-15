@@ -46,7 +46,7 @@ import org.apache.commons.collections.primitives.adapters.ZZZIteratorIterator;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class TestZZZIterator extends AbstractTestIterator <ZZZ>
+public abstract class TestZZZIterator extends AbstractTestIterator <XXX>
 {
   public TestZZZIterator (final String sTestName)
   {
