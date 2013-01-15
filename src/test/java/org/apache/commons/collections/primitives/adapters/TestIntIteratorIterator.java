@@ -49,7 +49,7 @@ import org.apache.commons.collections.primitives.IntList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestIntIteratorIterator extends AbstractTestIterator
+public class TestIntIteratorIterator extends AbstractTestIterator <Integer>
 {
   public TestIntIteratorIterator (final String sTestName)
   {

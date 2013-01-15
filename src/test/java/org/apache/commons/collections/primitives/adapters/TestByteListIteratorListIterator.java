@@ -49,7 +49,7 @@ import org.apache.commons.collections.primitives.ByteList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestByteListIteratorListIterator extends AbstractTestListIterator
+public class TestByteListIteratorListIterator extends AbstractTestListIterator <Byte>
 {
   public TestByteListIteratorListIterator (final String sTestName)
   {
@@ -99,7 +99,7 @@ public class TestByteListIteratorListIterator extends AbstractTestListIterator
   }
 
   @Override
-  public Object addSetValue ()
+  public Byte addSetValue ()
   {
     return Byte.valueOf ((byte) 1);
   }

@@ -49,7 +49,7 @@ import org.apache.commons.collections.primitives.ShortList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestShortListIteratorListIterator extends AbstractTestListIterator
+public class TestShortListIteratorListIterator extends AbstractTestListIterator <Short>
 {
   public TestShortListIteratorListIterator (final String sTestName)
   {
@@ -99,7 +99,7 @@ public class TestShortListIteratorListIterator extends AbstractTestListIterator
   }
 
   @Override
-  public Object addSetValue ()
+  public Short addSetValue ()
   {
     return Short.valueOf ((short) 1);
   }

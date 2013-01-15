@@ -46,7 +46,7 @@ import org.apache.commons.collections.primitives.adapters.ByteIteratorIterator;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class TestByteIterator extends AbstractTestIterator
+public abstract class TestByteIterator extends AbstractTestIterator <Byte>
 {
   public TestByteIterator (final String sTestName)
   {

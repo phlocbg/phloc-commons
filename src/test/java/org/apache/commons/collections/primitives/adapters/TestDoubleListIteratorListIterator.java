@@ -49,7 +49,7 @@ import org.apache.commons.collections.primitives.DoubleList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestDoubleListIteratorListIterator extends AbstractTestListIterator
+public class TestDoubleListIteratorListIterator extends AbstractTestListIterator <Double>
 {
   public TestDoubleListIteratorListIterator (final String sTestName)
   {
@@ -99,7 +99,7 @@ public class TestDoubleListIteratorListIterator extends AbstractTestListIterator
   }
 
   @Override
-  public Object addSetValue ()
+  public Double addSetValue ()
   {
     return Double.valueOf (1);
   }

@@ -46,7 +46,7 @@ import org.apache.commons.collections.primitives.adapters.IntIteratorIterator;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class TestIntIterator extends AbstractTestIterator
+public abstract class TestIntIterator extends AbstractTestIterator <Integer>
 {
   public TestIntIterator (final String sTestName)
   {

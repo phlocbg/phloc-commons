@@ -46,7 +46,7 @@ import org.apache.commons.collections.primitives.adapters.DoubleIteratorIterator
  *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class TestDoubleIterator extends AbstractTestIterator
+public abstract class TestDoubleIterator extends AbstractTestIterator <Double>
 {
   public TestDoubleIterator (final String sTestName)
   {

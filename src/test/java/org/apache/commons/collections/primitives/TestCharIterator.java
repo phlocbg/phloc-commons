@@ -46,7 +46,7 @@ import org.apache.commons.collections.primitives.adapters.CharIteratorIterator;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class TestCharIterator extends AbstractTestIterator
+public abstract class TestCharIterator extends AbstractTestIterator <Character>
 {
   public TestCharIterator (final String sTestName)
   {

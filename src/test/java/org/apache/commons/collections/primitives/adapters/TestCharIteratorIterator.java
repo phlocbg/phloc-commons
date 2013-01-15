@@ -49,7 +49,7 @@ import org.apache.commons.collections.primitives.CharList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestCharIteratorIterator extends AbstractTestIterator
+public class TestCharIteratorIterator extends AbstractTestIterator <Character>
 {
   public TestCharIteratorIterator (final String sTestName)
   {

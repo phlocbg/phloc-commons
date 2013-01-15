@@ -40,7 +40,7 @@ import javax.annotation.Nonnull;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public abstract class TestZZZListIterator extends TestZZZIterator <ZZZ>
+public abstract class TestZZZListIterator extends TestZZZIterator
 {
   public TestZZZListIterator (final String sTestName)
   {

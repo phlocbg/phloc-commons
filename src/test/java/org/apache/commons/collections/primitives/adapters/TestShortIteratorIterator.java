@@ -49,7 +49,7 @@ import org.apache.commons.collections.primitives.ShortList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestShortIteratorIterator extends AbstractTestIterator
+public class TestShortIteratorIterator extends AbstractTestIterator <Short>
 {
   public TestShortIteratorIterator (final String sTestName)
   {

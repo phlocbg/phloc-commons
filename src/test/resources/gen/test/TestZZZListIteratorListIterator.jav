@@ -49,7 +49,7 @@ import org.apache.commons.collections.primitives.ZZZList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestZZZListIteratorListIterator extends AbstractTestListIterator <ZZZ>
+public class TestZZZListIteratorListIterator extends AbstractTestListIterator <XXX>
 {
   public TestZZZListIteratorListIterator (final String sTestName)
   {
@@ -99,7 +99,7 @@ public class TestZZZListIteratorListIterator extends AbstractTestListIterator <Z
   }
 
   @Override
-  public Object addSetValue ()
+  public XXX addSetValue ()
   {
     return XXX.valueOf ($CASTINT$1);
   }

@@ -49,7 +49,7 @@ import org.apache.commons.collections.primitives.IntList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestIntListIteratorListIterator extends AbstractTestListIterator
+public class TestIntListIteratorListIterator extends AbstractTestListIterator <Integer>
 {
   public TestIntListIteratorListIterator (final String sTestName)
   {
@@ -99,7 +99,7 @@ public class TestIntListIteratorListIterator extends AbstractTestListIterator
   }
 
   @Override
-  public Object addSetValue ()
+  public Integer addSetValue ()
   {
     return Integer.valueOf (1);
   }
