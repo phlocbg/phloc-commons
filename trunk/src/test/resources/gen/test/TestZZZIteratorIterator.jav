@@ -49,7 +49,7 @@ import org.apache.commons.collections.primitives.ZZZList;
  *          2006) $
  * @author Rodney Waldhoff
  */
-public class TestZZZIteratorIterator extends AbstractTestIterator
+public class TestZZZIteratorIterator extends AbstractTestIterator <ZZZ>
 {
   public TestZZZIteratorIterator (final String sTestName)
   {

@@ -26,11 +26,14 @@ import junit.framework.TestSuite;
 import org.apache.commons.collections.primitives.CharCollection;
 import org.apache.commons.collections.primitives.CharIterator;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
  *          2006) $
  * @author Rodney Waldhoff
  */
+@SuppressFBWarnings ({ "NP_NONNULL_PARAM_VIOLATION", "NP_NONNULL_RETURN_VIOLATION", "NP_TOSTRING_COULD_RETURN_NULL" })
 public class TestBaseProxyCharCollection extends TestCase
 {
 
