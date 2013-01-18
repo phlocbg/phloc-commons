@@ -127,7 +127,7 @@ public interface ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
    * @return {@link EChange}
    */
   @Nonnull
-  EChange removeChild (KEYTYPE aDataID);
+  EChange removeChild (@Nullable KEYTYPE aDataID);
 
   /**
    * Remove all children from this node.
