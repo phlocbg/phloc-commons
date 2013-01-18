@@ -34,6 +34,16 @@ public interface ITreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE exte
                                                                                                                                     ITreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE>
 {
   /**
+   * Check if an item with the given ID is contained.
+   * 
+   * @param aDataID
+   *        The data ID to look up.
+   * @return <code>true</code> if such an item is contained, <code>false</code>
+   *         otherwise.
+   */
+  boolean containsItemWithDataID (@Nullable KEYTYPE aDataID);
+
+  /**
    * Try to retrieve the stored item with the given ID.
    * 
    * @param aDataID

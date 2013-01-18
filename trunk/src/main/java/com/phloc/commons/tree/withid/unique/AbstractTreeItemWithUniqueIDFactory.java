@@ -106,6 +106,11 @@ public abstract class AbstractTreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, I
     addToItemStore (internalGetItemID (aTreeItem), aTreeItem);
   }
 
+  public final boolean containsItemWithDataID (@Nullable final KEYTYPE aDataID)
+  {
+    return m_aItemStore.containsKey (aDataID);
+  }
+
   @Nullable
   public final ITEMTYPE getItemOfDataID (@Nullable final KEYTYPE aDataID)
   {

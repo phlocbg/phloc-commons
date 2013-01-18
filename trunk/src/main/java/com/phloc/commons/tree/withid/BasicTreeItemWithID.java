@@ -272,6 +272,11 @@ public class BasicTreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItem
     return aItem;
   }
 
+  public final boolean containsChildItemWithDataID (@Nullable final KEYTYPE aDataID)
+  {
+    return m_aChildMap == null ? false : m_aChildMap.containsKey (aDataID);
+  }
+
   @Nullable
   public final ITEMTYPE getChildItemOfDataID (@Nullable final KEYTYPE aDataID)
   {

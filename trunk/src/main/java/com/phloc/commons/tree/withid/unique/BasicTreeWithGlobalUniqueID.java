@@ -63,6 +63,11 @@ public class BasicTreeWithGlobalUniqueID <KEYTYPE, VALUETYPE, ITEMTYPE extends I
     return m_aFactory;
   }
 
+  public final boolean containsItemWithID (@Nullable final KEYTYPE aDataID)
+  {
+    return m_aFactory.containsItemWithDataID (aDataID);
+  }
+
   @Nullable
   public final ITEMTYPE getItemWithID (@Nullable final KEYTYPE aDataID)
   {
