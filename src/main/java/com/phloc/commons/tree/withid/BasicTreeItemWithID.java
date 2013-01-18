@@ -361,11 +361,20 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
     return EChange.CHANGED;
   }
 
+  private void _removeFromFactory (@Nonnull final ITEMTYPE aItem)
+  {
+    // Recursively remove this node and all child nodes from the factory!
+    if (aItem.hasChildren ())
+      for (final ITEMTYPE aChild : aItem.getChildren ())
+        _removeFromFactory (aChild);
+    m_aFactory.onRemoveItem (aItem);
+  }
+
   @Nonnull
-  public final EChange removeChild (@Nonnull final KEYTYPE aDataID)
+  public final EChange removeChild (@Nullable final KEYTYPE aDataID)
   {
     if (aDataID == null)
-      throw new NullPointerException ("dataID");
+      return EChange.UNCHANGED;
 
     // Any children present
     if (m_aChildMap == null)
@@ -379,7 +388,7 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
       throw new IllegalStateException ("Failed to remove item from list: " + aItem);
 
     // Notify factory
-    m_aFactory.onRemoveItem (aItem);
+    _removeFromFactory (aItem);
     return EChange.CHANGED;
   }
 
@@ -397,8 +406,8 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
     m_aChildren.clear ();
 
     // Notify factory after removal
-    for (final ITEMTYPE aItem : aAllChildren)
-      m_aFactory.onRemoveItem (aItem);
+    for (final ITEMTYPE aChild : aAllChildren)
+      _removeFromFactory (aChild);
     return EChange.CHANGED;
   }
 
