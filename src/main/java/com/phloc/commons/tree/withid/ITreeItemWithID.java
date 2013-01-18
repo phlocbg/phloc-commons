@@ -55,12 +55,22 @@ public interface ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItem
   KEYTYPE getID ();
 
   /**
+   * Check if a direct child item with the given ID is present
+   * 
+   * @param aDataID
+   *        The ID to search. May be <code>null</code>.
+   * @return <code>true</code> if this item has a child with the given ID,
+   *         <code>false</code> otherwise
+   */
+  boolean containsChildItemWithDataID (@Nullable KEYTYPE aDataID);
+
+  /**
    * Find the direct child item with the given ID
    * 
    * @param aDataID
    *        The ID to search. May be <code>null</code>.
-   * @return <code>null</code> if this item has no child with the given ID the
-   *         item otherwise
+   * @return <code>null</code> if this item has no child with the given ID. The
+   *         item otherwise.
    */
   @Nullable
   ITEMTYPE getChildItemOfDataID (@Nullable KEYTYPE aDataID);

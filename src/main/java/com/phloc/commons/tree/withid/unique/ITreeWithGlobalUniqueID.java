@@ -46,6 +46,15 @@ public interface ITreeWithGlobalUniqueID <KEYTYPE, VALUETYPE, ITEMTYPE extends I
                                                                                                                                IChildrenProviderWithUniqueID <KEYTYPE, ITEMTYPE>
 {
   /**
+   * Check if a tree item corresponding to the given ID is present.
+   * 
+   * @param aDataID
+   *        The ID of the tree item to search.
+   * @return <code>true</code> if such an item is present
+   */
+  boolean containsItemWithID (@Nullable KEYTYPE aDataID);
+
+  /**
    * Get the {@link ITreeItemWithID} that corresponds to the given ID.
    * 
    * @param aDataID
