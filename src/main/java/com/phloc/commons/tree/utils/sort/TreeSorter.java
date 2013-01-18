@@ -45,8 +45,8 @@ public final class TreeSorter
   private TreeSorter ()
   {}
 
-  private static <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> void _sort (@Nonnull final IBasicTree <VALUETYPE, ITEMTYPE> aTree,
-                                                                                           @Nonnull final Comparator <? super ITEMTYPE> aComparator)
+  private static <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEMTYPE>> void _sort (@Nonnull final IBasicTree <DATATYPE, ITEMTYPE> aTree,
+                                                                                         @Nonnull final Comparator <? super ITEMTYPE> aComparator)
   {
     if (aTree == null)
       throw new NullPointerException ("tree");
@@ -76,10 +76,10 @@ public final class TreeSorter
    * @param aValueComparator
    *        The comparator to be used for sorting the tree items on each level.
    */
-  public static <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> void sort (@Nonnull final IBasicTree <VALUETYPE, ITEMTYPE> aTree,
-                                                                                         @Nonnull final Comparator <? super VALUETYPE> aValueComparator)
+  public static <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEMTYPE>> void sort (@Nonnull final IBasicTree <DATATYPE, ITEMTYPE> aTree,
+                                                                                       @Nonnull final Comparator <? super DATATYPE> aValueComparator)
   {
-    final ComparatorTreeItemValue <VALUETYPE, ITEMTYPE> aItemComp = new ComparatorTreeItemValue <VALUETYPE, ITEMTYPE> (aValueComparator);
+    final ComparatorTreeItemValue <DATATYPE, ITEMTYPE> aItemComp = new ComparatorTreeItemValue <DATATYPE, ITEMTYPE> (aValueComparator);
     _sort (aTree, aItemComp);
   }
 
@@ -91,9 +91,9 @@ public final class TreeSorter
    * @param aTree
    *        The tree to be sorted.
    */
-  public static <VALUETYPE extends Comparable <? super VALUETYPE>, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> void sort (@Nonnull final IBasicTree <VALUETYPE, ITEMTYPE> aTree)
+  public static <DATATYPE extends Comparable <? super DATATYPE>, ITEMTYPE extends ITreeItem <DATATYPE, ITEMTYPE>> void sort (@Nonnull final IBasicTree <DATATYPE, ITEMTYPE> aTree)
   {
-    final ComparatorTreeItemValueComparable <VALUETYPE, ITEMTYPE> aItemComp = new ComparatorTreeItemValueComparable <VALUETYPE, ITEMTYPE> ();
+    final ComparatorTreeItemValueComparable <DATATYPE, ITEMTYPE> aItemComp = new ComparatorTreeItemValueComparable <DATATYPE, ITEMTYPE> ();
     _sort (aTree, aItemComp);
   }
 }

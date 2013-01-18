@@ -30,15 +30,15 @@ import com.phloc.commons.tree.withid.ITreeItemWithID;
  * @author philip
  * @param <KEYTYPE>
  *        Key type
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        Value type
  * @param <COLLTYPE>
  *        Collection type consisting of value elements
  * @param <ITEMTYPE>
  *        the implementation item type
  */
-public interface IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>, ITEMTYPE extends IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>> extends
-                                                                                                                                                                          ITreeItemWithID <KEYTYPE, COLLTYPE, ITEMTYPE>
+public interface IFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE extends Collection <DATATYPE>, ITEMTYPE extends IFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE, ITEMTYPE>> extends
+                                                                                                                                                                       ITreeItemWithID <KEYTYPE, COLLTYPE, ITEMTYPE>
 {
   /**
    * @return The globally unique ID of this folder. This can e.g. be an

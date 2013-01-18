@@ -24,16 +24,16 @@ import javax.annotation.concurrent.NotThreadSafe;
  * Default implementation of the {@link ITreeItem} interface
  * 
  * @author philip
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        tree item value type
  */
 @NotThreadSafe
-public class DefaultTreeItem <VALUETYPE> extends BasicTreeItem <VALUETYPE, DefaultTreeItem <VALUETYPE>>
+public class DefaultTreeItem <DATATYPE> extends BasicTreeItem <DATATYPE, DefaultTreeItem <DATATYPE>>
 {
   /**
    * Constructor for root object.
    */
-  public DefaultTreeItem (@Nonnull final ITreeItemFactory <VALUETYPE, DefaultTreeItem <VALUETYPE>> aFactory)
+  public DefaultTreeItem (@Nonnull final ITreeItemFactory <DATATYPE, DefaultTreeItem <DATATYPE>> aFactory)
   {
     super (aFactory);
   }
@@ -46,7 +46,7 @@ public class DefaultTreeItem <VALUETYPE> extends BasicTreeItem <VALUETYPE, Defau
    *        root has no parent and for the root item a special no-argument
    *        constructor is present.
    */
-  public DefaultTreeItem (@Nonnull final DefaultTreeItem <VALUETYPE> aParent)
+  public DefaultTreeItem (@Nonnull final DefaultTreeItem <DATATYPE> aParent)
   {
     super (aParent);
   }

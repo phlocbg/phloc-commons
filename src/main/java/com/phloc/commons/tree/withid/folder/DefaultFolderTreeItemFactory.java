@@ -31,14 +31,14 @@ import com.phloc.commons.combine.ICombinator;
  * @author philip
  * @param <KEYTYPE>
  *        Key type
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        Value type
  * @param <COLLTYPE>
  *        Collection type consisting of value elements
  */
 @NotThreadSafe
-public class DefaultFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends
-                                                                                                        AbstractFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>>
+public class DefaultFolderTreeItemFactory <KEYTYPE, DATATYPE, COLLTYPE extends Collection <DATATYPE>> extends
+                                                                                                      AbstractFolderTreeItemFactory <KEYTYPE, DATATYPE, COLLTYPE, DefaultFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE>>
 {
   public DefaultFolderTreeItemFactory (@Nullable final ICombinator <KEYTYPE> aKeyCombinator)
   {
@@ -46,16 +46,16 @@ public class DefaultFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE extends 
   }
 
   @Override
-  protected final DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> internalCreateRoot ()
+  protected final DefaultFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE> internalCreateRoot ()
   {
-    return new DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> (this);
+    return new DefaultFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE> (this);
   }
 
   @Override
   @Nonnull
-  protected DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> internalCreate (@Nonnull final DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> aParent,
-                                                                                 @Nonnull final KEYTYPE aDataID)
+  protected DefaultFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE> internalCreate (@Nonnull final DefaultFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE> aParent,
+                                                                                @Nonnull final KEYTYPE aDataID)
   {
-    return new DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> (aParent, aDataID);
+    return new DefaultFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE> (aParent, aDataID);
   }
 }

@@ -28,20 +28,20 @@ import com.phloc.commons.tree.withid.DefaultTreeItemWithID;
  * @author philip
  */
 @NotThreadSafe
-public class DefaultTreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE> extends
-                                                                     AbstractTreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, DefaultTreeItemWithID <KEYTYPE, VALUETYPE>>
+public class DefaultTreeItemWithUniqueIDFactory <KEYTYPE, DATATYPE> extends
+                                                                    AbstractTreeItemWithUniqueIDFactory <KEYTYPE, DATATYPE, DefaultTreeItemWithID <KEYTYPE, DATATYPE>>
 {
   @Override
   @Nonnull
-  protected DefaultTreeItemWithID <KEYTYPE, VALUETYPE> internalCreate (@Nonnull final DefaultTreeItemWithID <KEYTYPE, VALUETYPE> aParent,
-                                                                       @Nonnull final KEYTYPE aDataID)
+  protected DefaultTreeItemWithID <KEYTYPE, DATATYPE> internalCreate (@Nonnull final DefaultTreeItemWithID <KEYTYPE, DATATYPE> aParent,
+                                                                      @Nonnull final KEYTYPE aDataID)
   {
-    return new DefaultTreeItemWithID <KEYTYPE, VALUETYPE> (aParent, aDataID);
+    return new DefaultTreeItemWithID <KEYTYPE, DATATYPE> (aParent, aDataID);
   }
 
   @Nonnull
-  public DefaultTreeItemWithID <KEYTYPE, VALUETYPE> createRoot ()
+  public DefaultTreeItemWithID <KEYTYPE, DATATYPE> createRoot ()
   {
-    return new DefaultTreeItemWithID <KEYTYPE, VALUETYPE> (this);
+    return new DefaultTreeItemWithID <KEYTYPE, DATATYPE> (this);
   }
 }

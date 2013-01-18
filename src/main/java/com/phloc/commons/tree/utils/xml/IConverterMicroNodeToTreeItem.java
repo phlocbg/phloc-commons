@@ -26,10 +26,10 @@ import com.phloc.commons.microdom.IMicroElement;
  * item data value.
  * 
  * @author philip
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        The type of the tree item data
  */
-public interface IConverterMicroNodeToTreeItem <VALUETYPE>
+public interface IConverterMicroNodeToTreeItem <DATATYPE>
 {
-  VALUETYPE getAsDataValue (@Nonnull IMicroElement eDataElement);
+  DATATYPE getAsDataValue (@Nonnull IMicroElement eDataElement);
 }

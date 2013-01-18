@@ -33,20 +33,20 @@ import com.phloc.commons.tree.IBasicTreeItem;
  * @author philip
  * @param <KEYTYPE>
  *        The type of the ID.
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        The type of the value.
  * @param <ITEMTYPE>
  *        The implementation type.
  */
-public interface ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> extends
-                                                                                                                       IBasicTreeItem <VALUETYPE, ITEMTYPE>,
-                                                                                                                       IHasID <KEYTYPE>
+public interface ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>> extends
+                                                                                                                     IBasicTreeItem <DATATYPE, ITEMTYPE>,
+                                                                                                                     IHasID <KEYTYPE>
 {
   /**
    * @return The factory used to create instances of this interface.
    */
   @Nonnull
-  ITreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE> getFactory ();
+  ITreeItemWithIDFactory <KEYTYPE, DATATYPE, ITEMTYPE> getFactory ();
 
   /**
    * @return The data ID of this item. May be <code>null</code> depending on the
@@ -101,7 +101,7 @@ public interface ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItem
    * @return the created tree item
    */
   @Nonnull
-  ITEMTYPE createChildItem (@Nullable final KEYTYPE aDataID, @Nullable final VALUETYPE aData);
+  ITEMTYPE createChildItem (@Nullable final KEYTYPE aDataID, @Nullable final DATATYPE aData);
 
   /**
    * Add a direct child item to this item.
@@ -117,7 +117,7 @@ public interface ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItem
    *         already in use and bAllowOverwrite is <code>false</code>
    */
   @Nullable
-  ITEMTYPE createChildItem (KEYTYPE aDataID, VALUETYPE aData, boolean bAllowOverwrite);
+  ITEMTYPE createChildItem (KEYTYPE aDataID, DATATYPE aData, boolean bAllowOverwrite);
 
   /**
    * Remove the passed node as a direct child node from this node.

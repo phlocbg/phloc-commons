@@ -24,6 +24,7 @@ import javax.annotation.Nullable;
 
 import com.phloc.commons.parent.IChildrenProviderWithID;
 import com.phloc.commons.parent.IChildrenProviderWithUniqueID;
+import com.phloc.commons.state.EChange;
 import com.phloc.commons.tree.withid.ITreeItemWithID;
 import com.phloc.commons.tree.withid.ITreeWithID;
 
@@ -34,16 +35,16 @@ import com.phloc.commons.tree.withid.ITreeWithID;
  * @author philip
  * @param <KEYTYPE>
  *        The type of the key elements for the tree. This is typically String.
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        The type of the elements contained in the tree. This is the generic
  *        type to be stored in the tree.
  * @param <ITEMTYPE>
  *        The type of the tree item that will be stored in this tree.
  */
-public interface ITreeWithGlobalUniqueID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> extends
-                                                                                                                               ITreeWithID <KEYTYPE, VALUETYPE, ITEMTYPE>,
-                                                                                                                               IChildrenProviderWithID <KEYTYPE, ITEMTYPE>,
-                                                                                                                               IChildrenProviderWithUniqueID <KEYTYPE, ITEMTYPE>
+public interface ITreeWithGlobalUniqueID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>> extends
+                                                                                                                             ITreeWithID <KEYTYPE, DATATYPE, ITEMTYPE>,
+                                                                                                                             IChildrenProviderWithID <KEYTYPE, ITEMTYPE>,
+                                                                                                                             IChildrenProviderWithUniqueID <KEYTYPE, ITEMTYPE>
 {
   /**
    * Check if a tree item corresponding to the given ID is present.
@@ -65,10 +66,37 @@ public interface ITreeWithGlobalUniqueID <KEYTYPE, VALUETYPE, ITEMTYPE extends I
   ITEMTYPE getItemWithID (@Nullable KEYTYPE aDataID);
 
   /**
+   * Get the data of the tree item that corresponds to the given ID.
+   * 
+   * @param aDataID
+   *        The ID of the tree item to search.
+   * @return <code>null</code> if no such tree item exists.
+   */
+  @Nullable
+  DATATYPE getItemDataWithID (@Nullable KEYTYPE aDataID);
+
+  /**
    * @return A non-<code>null</code> collection of all items.
    */
   @Nonnull
   Collection <ITEMTYPE> getAllItems ();
+
+  /**
+   * @return A non-<code>null</code> collection of all item datas.
+   */
+  @Nonnull
+  Collection <DATATYPE> getAllItemDatas ();
+
+  /**
+   * Remove the item with the specified ID
+   * 
+   * @param aDataID
+   *        The ID of the item to be removed
+   * @return {@link EChange#CHANGED} if the item was removed,
+   *         {@link EChange#UNCHANGED} otherwise. Never <code>null</code>.
+   */
+  @Nonnull
+  EChange removeItemWithID (@Nullable KEYTYPE aDataID);
 
   /**
    * Check if one item is equal or a child of the other item. This relationship

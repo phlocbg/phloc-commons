@@ -32,15 +32,15 @@ import com.phloc.commons.combine.ICombinator;
  * 
  * @param <KEYTYPE>
  *        The type of the element keys.
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        The type of the elements contained in the tree
  * @param <COLLTYPE>
  *        the collection type consisting of value elements
  * @author philip
  */
 @NotThreadSafe
-public class DefaultFolderTree <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends
-                                                                                             BasicFolderTree <KEYTYPE, VALUETYPE, COLLTYPE, DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>>
+public class DefaultFolderTree <KEYTYPE, DATATYPE, COLLTYPE extends Collection <DATATYPE>> extends
+                                                                                           BasicFolderTree <KEYTYPE, DATATYPE, COLLTYPE, DefaultFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE>>
 {
   /**
    * Constructor that creates a {@link DefaultFolderTreeItemFactory} using the
@@ -51,7 +51,7 @@ public class DefaultFolderTree <KEYTYPE, VALUETYPE, COLLTYPE extends Collection 
    */
   public DefaultFolderTree (@Nullable final ICombinator <KEYTYPE> aKeyCombinator)
   {
-    this (new DefaultFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE> (aKeyCombinator));
+    this (new DefaultFolderTreeItemFactory <KEYTYPE, DATATYPE, COLLTYPE> (aKeyCombinator));
   }
 
   /**
@@ -60,7 +60,7 @@ public class DefaultFolderTree <KEYTYPE, VALUETYPE, COLLTYPE extends Collection 
    * @param aFactory
    *        The item factory to use. May not be <code>null</code>.
    */
-  public DefaultFolderTree (@Nonnull final IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>> aFactory)
+  public DefaultFolderTree (@Nonnull final IFolderTreeItemFactory <KEYTYPE, DATATYPE, COLLTYPE, DefaultFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE>> aFactory)
   {
     super (aFactory);
   }

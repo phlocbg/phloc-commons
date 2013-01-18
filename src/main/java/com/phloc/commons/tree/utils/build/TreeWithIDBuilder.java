@@ -52,24 +52,24 @@ public final class TreeWithIDBuilder
   {}
 
   @Nonnull
-  private static <KEYTYPE, VALUETYPE extends IHasID <KEYTYPE>> DefaultTreeWithID <KEYTYPE, VALUETYPE> _buildTree (@Nonnull final List <VALUETYPE> aOpen,
-                                                                                                                  @Nonnull final IParentProvider <VALUETYPE> aParentResolver)
+  private static <KEYTYPE, DATATYPE extends IHasID <KEYTYPE>> DefaultTreeWithID <KEYTYPE, DATATYPE> _buildTree (@Nonnull final List <DATATYPE> aOpen,
+                                                                                                                @Nonnull final IParentProvider <DATATYPE> aParentResolver)
   {
-    final DefaultTreeWithID <KEYTYPE, VALUETYPE> aTree = new DefaultTreeWithID <KEYTYPE, VALUETYPE> ();
-    final Map <KEYTYPE, DefaultTreeItemWithID <KEYTYPE, VALUETYPE>> aIDMap = new HashMap <KEYTYPE, DefaultTreeItemWithID <KEYTYPE, VALUETYPE>> ();
+    final DefaultTreeWithID <KEYTYPE, DATATYPE> aTree = new DefaultTreeWithID <KEYTYPE, DATATYPE> ();
+    final Map <KEYTYPE, DefaultTreeItemWithID <KEYTYPE, DATATYPE>> aIDMap = new HashMap <KEYTYPE, DefaultTreeItemWithID <KEYTYPE, DATATYPE>> ();
     int nMovedToBackCount = 0;
     while (!aOpen.isEmpty ())
     {
       // get first element
-      final VALUETYPE aCurrent = aOpen.remove (0);
-      final VALUETYPE aParent = aParentResolver.getParent (aCurrent);
+      final DATATYPE aCurrent = aOpen.remove (0);
+      final DATATYPE aParent = aParentResolver.getParent (aCurrent);
 
       final KEYTYPE aCurrentID = aCurrent.getID ();
       if (aParent == null)
       {
         // it is a root item
-        final DefaultTreeItemWithID <KEYTYPE, VALUETYPE> aNewItem = aTree.getRootItem ().createChildItem (aCurrentID,
-                                                                                                          aCurrent);
+        final DefaultTreeItemWithID <KEYTYPE, DATATYPE> aNewItem = aTree.getRootItem ().createChildItem (aCurrentID,
+                                                                                                         aCurrent);
         aIDMap.put (aCurrentID, aNewItem);
         nMovedToBackCount = 0;
       }
@@ -79,8 +79,8 @@ public final class TreeWithIDBuilder
         if (aIDMap.containsKey (aParentID))
         {
           // it's a subordinated ID
-          final DefaultTreeItemWithID <KEYTYPE, VALUETYPE> aParentItem = aIDMap.get (aParentID);
-          final DefaultTreeItemWithID <KEYTYPE, VALUETYPE> aNewItem = aParentItem.createChildItem (aCurrentID, aCurrent);
+          final DefaultTreeItemWithID <KEYTYPE, DATATYPE> aParentItem = aIDMap.get (aParentID);
+          final DefaultTreeItemWithID <KEYTYPE, DATATYPE> aNewItem = aParentItem.createChildItem (aCurrentID, aCurrent);
           aIDMap.put (aCurrentID, aNewItem);
           nMovedToBackCount = 0;
         }
@@ -103,7 +103,7 @@ public final class TreeWithIDBuilder
    * 
    * @param <KEYTYPE>
    *        The tree key type.
-   * @param <VALUETYPE>
+   * @param <DATATYPE>
    *        The tree item value type.
    * @param aAll
    *        A linear list of objects to build the tree from. May not be
@@ -117,8 +117,8 @@ public final class TreeWithIDBuilder
    *         a parent that is not in the list!
    */
   @Nonnull
-  public static <KEYTYPE, VALUETYPE extends IHasID <KEYTYPE>> DefaultTreeWithID <KEYTYPE, VALUETYPE> buildTree (@Nonnull final Collection <? extends VALUETYPE> aAll,
-                                                                                                                @Nonnull final IParentProvider <VALUETYPE> aParentResolver)
+  public static <KEYTYPE, DATATYPE extends IHasID <KEYTYPE>> DefaultTreeWithID <KEYTYPE, DATATYPE> buildTree (@Nonnull final Collection <? extends DATATYPE> aAll,
+                                                                                                              @Nonnull final IParentProvider <DATATYPE> aParentResolver)
   {
     if (aAll == null)
       throw new NullPointerException ("all");
@@ -133,7 +133,7 @@ public final class TreeWithIDBuilder
    * 
    * @param <KEYTYPE>
    *        The tree key type.
-   * @param <VALUETYPE>
+   * @param <DATATYPE>
    *        The tree item value type.
    * @param aAll
    *        A linear list of objects to build the tree from. May not be
@@ -147,8 +147,8 @@ public final class TreeWithIDBuilder
    *         a parent that is not in the list!
    */
   @Nonnull
-  public static <KEYTYPE, VALUETYPE extends IHasID <KEYTYPE>> DefaultTreeWithID <KEYTYPE, VALUETYPE> buildTree (@Nonnull final VALUETYPE [] aAll,
-                                                                                                                @Nonnull final IParentProvider <VALUETYPE> aParentResolver)
+  public static <KEYTYPE, DATATYPE extends IHasID <KEYTYPE>> DefaultTreeWithID <KEYTYPE, DATATYPE> buildTree (@Nonnull final DATATYPE [] aAll,
+                                                                                                              @Nonnull final IParentProvider <DATATYPE> aParentResolver)
   {
     if (aAll == null)
       throw new NullPointerException ("all");
@@ -163,7 +163,7 @@ public final class TreeWithIDBuilder
    * 
    * @param <KEYTYPE>
    *        The tree key type.
-   * @param <VALUETYPE>
+   * @param <DATATYPE>
    *        The tree item value type.
    * @param aAll
    *        A linear list of objects to build the tree from. May not be
@@ -174,45 +174,45 @@ public final class TreeWithIDBuilder
    *         a parent that is not in the list!
    */
   @Nonnull
-  public static <KEYTYPE, VALUETYPE extends IHasParent <VALUETYPE> & IHasID <KEYTYPE>> DefaultTreeWithID <KEYTYPE, VALUETYPE> buildTree (@Nonnull final Collection <? extends VALUETYPE> aAll)
+  public static <KEYTYPE, DATATYPE extends IHasParent <DATATYPE> & IHasID <KEYTYPE>> DefaultTreeWithID <KEYTYPE, DATATYPE> buildTree (@Nonnull final Collection <? extends DATATYPE> aAll)
   {
     if (aAll == null)
       throw new NullPointerException ("all");
 
-    return buildTree (aAll, new ParentProviderHasParent <VALUETYPE> ());
+    return buildTree (aAll, new ParentProviderHasParent <DATATYPE> ());
   }
 
-  private static <KEYTYPE, VALUETYPE extends IHasID <KEYTYPE>> void _buildTreeRecursive (@Nullable final DefaultTreeItemWithID <KEYTYPE, VALUETYPE> aParentItem,
-                                                                                         @Nonnull final IChildrenProvider <VALUETYPE> aChildrenResolver)
+  private static <KEYTYPE, DATATYPE extends IHasID <KEYTYPE>> void _buildTreeRecursive (@Nullable final DefaultTreeItemWithID <KEYTYPE, DATATYPE> aParentItem,
+                                                                                        @Nonnull final IChildrenProvider <DATATYPE> aChildrenResolver)
   {
     if (aParentItem != null)
     {
-      final VALUETYPE aParentObject = aParentItem.getData ();
+      final DATATYPE aParentObject = aParentItem.getData ();
       if (aChildrenResolver.hasChildren (aParentObject))
-        for (final VALUETYPE aChild : aChildrenResolver.getChildren (aParentObject))
+        for (final DATATYPE aChild : aChildrenResolver.getChildren (aParentObject))
         {
-          final DefaultTreeItemWithID <KEYTYPE, VALUETYPE> aItem = aParentItem.createChildItem (aChild.getID (), aChild);
+          final DefaultTreeItemWithID <KEYTYPE, DATATYPE> aItem = aParentItem.createChildItem (aChild.getID (), aChild);
           _buildTreeRecursive (aItem, aChildrenResolver);
         }
     }
   }
 
   @Nonnull
-  public static <KEYTYPE, VALUETYPE extends IHasID <KEYTYPE>> DefaultTreeWithID <KEYTYPE, VALUETYPE> buildTree (@Nonnull final IChildrenProvider <VALUETYPE> aChildrenResolver)
+  public static <KEYTYPE, DATATYPE extends IHasID <KEYTYPE>> DefaultTreeWithID <KEYTYPE, DATATYPE> buildTree (@Nonnull final IChildrenProvider <DATATYPE> aChildrenResolver)
   {
     if (aChildrenResolver == null)
       throw new NullPointerException ("childrenResolver");
 
-    final DefaultTreeWithID <KEYTYPE, VALUETYPE> aTree = new DefaultTreeWithID <KEYTYPE, VALUETYPE> ();
+    final DefaultTreeWithID <KEYTYPE, DATATYPE> aTree = new DefaultTreeWithID <KEYTYPE, DATATYPE> ();
 
     // get all root objects
     if (aChildrenResolver.hasChildren (null))
-      for (final VALUETYPE aRootObject : aChildrenResolver.getChildren (null))
+      for (final DATATYPE aRootObject : aChildrenResolver.getChildren (null))
       {
         // it is a root item
-        final DefaultTreeItemWithID <KEYTYPE, VALUETYPE> aItem = aTree.getRootItem ()
-                                                                      .createChildItem (aRootObject.getID (),
-                                                                                        aRootObject);
+        final DefaultTreeItemWithID <KEYTYPE, DATATYPE> aItem = aTree.getRootItem ()
+                                                                     .createChildItem (aRootObject.getID (),
+                                                                                       aRootObject);
         _buildTreeRecursive (aItem, aChildrenResolver);
       }
     return aTree;

@@ -35,7 +35,7 @@ import com.phloc.commons.tree.withid.BasicTreeItemWithID;
  * @author philip
  * @param <KEYTYPE>
  *        Key type
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        Value type
  * @param <COLLTYPE>
  *        Collection type consisting of value elements
@@ -43,9 +43,9 @@ import com.phloc.commons.tree.withid.BasicTreeItemWithID;
  *        the implementation item type
  */
 @NotThreadSafe
-public class BasicFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>, ITEMTYPE extends BasicFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>> extends
-                                                                                                                                                                              BasicTreeItemWithID <KEYTYPE, COLLTYPE, ITEMTYPE> implements
-                                                                                                                                                                                                                               IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>
+public class BasicFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE extends Collection <DATATYPE>, ITEMTYPE extends BasicFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE, ITEMTYPE>> extends
+                                                                                                                                                                           BasicTreeItemWithID <KEYTYPE, COLLTYPE, ITEMTYPE> implements
+                                                                                                                                                                                                                            IFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE, ITEMTYPE>
 {
   // Combinator to create a global unique ID.
   private final ICombinator <KEYTYPE> m_aKeyCombinator;
@@ -56,7 +56,7 @@ public class BasicFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collectio
    * @param aFactory
    *        The item factory to use.
    */
-  public BasicFolderTreeItem (@Nonnull final IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE> aFactory)
+  public BasicFolderTreeItem (@Nonnull final IFolderTreeItemFactory <KEYTYPE, DATATYPE, COLLTYPE, ITEMTYPE> aFactory)
   {
     super (aFactory);
     m_aKeyCombinator = aFactory.getKeyCombinator ();
@@ -70,7 +70,7 @@ public class BasicFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collectio
    * @param aDataID
    *        The data ID of the root item.
    */
-  public BasicFolderTreeItem (@Nonnull final IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE> aFactory,
+  public BasicFolderTreeItem (@Nonnull final IFolderTreeItemFactory <KEYTYPE, DATATYPE, COLLTYPE, ITEMTYPE> aFactory,
                               @Nullable final KEYTYPE aDataID)
   {
     super (aFactory, aDataID);

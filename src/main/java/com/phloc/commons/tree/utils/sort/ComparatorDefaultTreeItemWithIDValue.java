@@ -28,13 +28,13 @@ import com.phloc.commons.tree.withid.DefaultTreeItemWithID;
  * using an explicit {@link Comparator}.
  * 
  * @author philip
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        tree item value type
  */
-public final class ComparatorDefaultTreeItemWithIDValue <IDTYYPE, VALUETYPE> extends
-                                                                             ComparatorTreeItemValue <VALUETYPE, DefaultTreeItemWithID <IDTYYPE, VALUETYPE>>
+public final class ComparatorDefaultTreeItemWithIDValue <IDTYYPE, DATATYPE> extends
+                                                                            ComparatorTreeItemValue <DATATYPE, DefaultTreeItemWithID <IDTYYPE, DATATYPE>>
 {
-  public ComparatorDefaultTreeItemWithIDValue (@Nonnull final Comparator <? super VALUETYPE> aValueComparator)
+  public ComparatorDefaultTreeItemWithIDValue (@Nonnull final Comparator <? super DATATYPE> aValueComparator)
   {
     super (aValueComparator);
   }

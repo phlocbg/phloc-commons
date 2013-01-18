@@ -25,18 +25,18 @@ import javax.annotation.concurrent.NotThreadSafe;
  * {@link DefaultTreeItem} tree items
  * 
  * @author philip
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        tree item value type
  */
 @NotThreadSafe
-public class DefaultTree <VALUETYPE> extends BasicTree <VALUETYPE, DefaultTreeItem <VALUETYPE>>
+public class DefaultTree <DATATYPE> extends BasicTree <DATATYPE, DefaultTreeItem <DATATYPE>>
 {
   public DefaultTree ()
   {
-    this (new DefaultTreeItemFactory <VALUETYPE> ());
+    this (new DefaultTreeItemFactory <DATATYPE> ());
   }
 
-  public DefaultTree (@Nonnull final ITreeItemFactory <VALUETYPE, DefaultTreeItem <VALUETYPE>> aFactory)
+  public DefaultTree (@Nonnull final ITreeItemFactory <DATATYPE, DefaultTreeItem <DATATYPE>> aFactory)
   {
     super (aFactory);
   }

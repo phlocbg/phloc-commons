@@ -21,13 +21,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 @NotThreadSafe
-public class DefaultTreeItemWithID <KEYTYPE, VALUETYPE> extends
-                                                        BasicTreeItemWithID <KEYTYPE, VALUETYPE, DefaultTreeItemWithID <KEYTYPE, VALUETYPE>>
+public class DefaultTreeItemWithID <KEYTYPE, DATATYPE> extends
+                                                       BasicTreeItemWithID <KEYTYPE, DATATYPE, DefaultTreeItemWithID <KEYTYPE, DATATYPE>>
 {
   /**
    * Constructor for root object
    */
-  public DefaultTreeItemWithID (@Nonnull final ITreeItemWithIDFactory <KEYTYPE, VALUETYPE, DefaultTreeItemWithID <KEYTYPE, VALUETYPE>> aFactory)
+  public DefaultTreeItemWithID (@Nonnull final ITreeItemWithIDFactory <KEYTYPE, DATATYPE, DefaultTreeItemWithID <KEYTYPE, DATATYPE>> aFactory)
   {
     super (aFactory);
   }
@@ -41,7 +41,7 @@ public class DefaultTreeItemWithID <KEYTYPE, VALUETYPE> extends
    * @param aDataID
    *        The ID of the new item. May not be <code>null</code>.
    */
-  public DefaultTreeItemWithID (@Nonnull final DefaultTreeItemWithID <KEYTYPE, VALUETYPE> aParent,
+  public DefaultTreeItemWithID (@Nonnull final DefaultTreeItemWithID <KEYTYPE, DATATYPE> aParent,
                                 @Nonnull final KEYTYPE aDataID)
   {
     super (aParent, aDataID);

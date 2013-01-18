@@ -26,20 +26,20 @@ import javax.annotation.concurrent.NotThreadSafe;
  * 
  * @param <KEYTYPE>
  *        The type of the key elements for the tree.
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        The type of the elements contained in the tree
  * @author philip
  */
 @NotThreadSafe
-public class DefaultTreeWithID <KEYTYPE, VALUETYPE> extends
-                                                    BasicTreeWithID <KEYTYPE, VALUETYPE, DefaultTreeItemWithID <KEYTYPE, VALUETYPE>>
+public class DefaultTreeWithID <KEYTYPE, DATATYPE> extends
+                                                   BasicTreeWithID <KEYTYPE, DATATYPE, DefaultTreeItemWithID <KEYTYPE, DATATYPE>>
 {
   public DefaultTreeWithID ()
   {
-    this (new DefaultTreeItemWithIDFactory <KEYTYPE, VALUETYPE> ());
+    this (new DefaultTreeItemWithIDFactory <KEYTYPE, DATATYPE> ());
   }
 
-  public DefaultTreeWithID (@Nonnull final ITreeItemWithIDFactory <KEYTYPE, VALUETYPE, DefaultTreeItemWithID <KEYTYPE, VALUETYPE>> aFactory)
+  public DefaultTreeWithID (@Nonnull final ITreeItemWithIDFactory <KEYTYPE, DATATYPE, DefaultTreeItemWithID <KEYTYPE, DATATYPE>> aFactory)
   {
     super (aFactory);
   }

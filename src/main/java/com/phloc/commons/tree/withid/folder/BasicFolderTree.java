@@ -30,7 +30,7 @@ import com.phloc.commons.tree.withid.unique.BasicTreeWithGlobalUniqueID;
  * 
  * @param <KEYTYPE>
  *        The type of the element keys.
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        The type of the elements contained in the tree
  * @param <COLLTYPE>
  *        the collection type consisting of value elements
@@ -39,9 +39,9 @@ import com.phloc.commons.tree.withid.unique.BasicTreeWithGlobalUniqueID;
  * @author philip
  */
 @NotThreadSafe
-public class BasicFolderTree <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>, ITEMTYPE extends BasicFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>> extends
-                                                                                                                                                                          BasicTreeWithGlobalUniqueID <KEYTYPE, COLLTYPE, ITEMTYPE> implements
-                                                                                                                                                                                                                                   IFolderTree <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>
+public class BasicFolderTree <KEYTYPE, DATATYPE, COLLTYPE extends Collection <DATATYPE>, ITEMTYPE extends BasicFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE, ITEMTYPE>> extends
+                                                                                                                                                                       BasicTreeWithGlobalUniqueID <KEYTYPE, COLLTYPE, ITEMTYPE> implements
+                                                                                                                                                                                                                                IFolderTree <KEYTYPE, DATATYPE, COLLTYPE, ITEMTYPE>
 {
   /**
    * Constructor
@@ -49,7 +49,7 @@ public class BasicFolderTree <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <V
    * @param aFactory
    *        The item factory to use. May not be <code>null</code>.
    */
-  public BasicFolderTree (@Nonnull final IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE> aFactory)
+  public BasicFolderTree (@Nonnull final IFolderTreeItemFactory <KEYTYPE, DATATYPE, COLLTYPE, ITEMTYPE> aFactory)
   {
     super (aFactory);
   }

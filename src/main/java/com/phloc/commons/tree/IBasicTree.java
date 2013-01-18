@@ -22,18 +22,18 @@ import javax.annotation.Nonnull;
 /**
  * Base interface for a tree.
  * 
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        tree item value type
  * @param <ITEMTYPE>
  *        tree item implementation type
  * @author philip
  */
-public interface IBasicTree <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>>
+public interface IBasicTree <DATATYPE, ITEMTYPE extends IBasicTreeItem <DATATYPE, ITEMTYPE>>
 {
   /**
    * @return The root item of the tree. Never <code>null</code>. The root item
    *         should not be displayed but it is the parent node of all displayed
-   *         root items.
+   *         root items and therefor cannot be removed.
    */
   @Nonnull
   ITEMTYPE getRootItem ();

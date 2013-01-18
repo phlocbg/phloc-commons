@@ -17,8 +17,9 @@
  */
 package com.phloc.commons.tree.withid.unique;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -39,8 +40,8 @@ import com.phloc.commons.tree.withid.ITreeItemWithID;
  * @author philip
  */
 @NotThreadSafe
-public abstract class AbstractTreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> implements
-                                                                                                                                                ITreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE>
+public abstract class AbstractTreeItemWithUniqueIDFactory <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>> implements
+                                                                                                                                              ITreeItemWithUniqueIDFactory <KEYTYPE, DATATYPE, ITEMTYPE>
 {
   private final Map <KEYTYPE, ITEMTYPE> m_aItemStore;
 
@@ -119,10 +120,19 @@ public abstract class AbstractTreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, I
 
   @Nonnull
   @ReturnsMutableCopy
-  public final Collection <ITEMTYPE> getAllItems ()
+  public final List <ITEMTYPE> getAllItems ()
   {
-    // Avoid unintentional modification of internal item store
     return ContainerHelper.newList (m_aItemStore.values ());
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public final List <DATATYPE> getAllItemDatas ()
+  {
+    final List <DATATYPE> ret = new ArrayList <DATATYPE> ();
+    for (final ITEMTYPE aItem : m_aItemStore.values ())
+      ret.add (aItem.getData ());
+    return ret;
   }
 
   @Override

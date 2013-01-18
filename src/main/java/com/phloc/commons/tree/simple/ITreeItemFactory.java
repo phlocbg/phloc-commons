@@ -26,14 +26,14 @@ import com.phloc.commons.factory.IHierarchicalRootFactory;
  * Interface for a simple tree item factory
  * 
  * @author philip
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        item value type
  * @param <ITEMTYPE>
  *        item implementation type
  */
-public interface ITreeItemFactory <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> extends
-                                                                                                IHierarchicalFactory <ITEMTYPE>,
-                                                                                                IHierarchicalRootFactory <ITEMTYPE>
+public interface ITreeItemFactory <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEMTYPE>> extends
+                                                                                              IHierarchicalFactory <ITEMTYPE>,
+                                                                                              IHierarchicalRootFactory <ITEMTYPE>
 {
   /**
    * {@inheritDoc}

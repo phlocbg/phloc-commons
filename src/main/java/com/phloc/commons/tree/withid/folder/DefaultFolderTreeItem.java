@@ -28,13 +28,14 @@ import javax.annotation.concurrent.NotThreadSafe;
  * @author philip
  * @param <KEYTYPE>
  *        Key type
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        Value type
  * @param <COLLTYPE>
  *        Collection type consisting of value elements
  */
 @NotThreadSafe
-public class DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends BasicFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>>
+public class DefaultFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE extends Collection <DATATYPE>> extends
+                                                                                               BasicFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE, DefaultFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE>>
 {
   /**
    * Constructor for root object
@@ -42,7 +43,7 @@ public class DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collect
    * @param aFactory
    *        The item factory to use.
    */
-  public DefaultFolderTreeItem (@Nonnull final IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE>> aFactory)
+  public DefaultFolderTreeItem (@Nonnull final IFolderTreeItemFactory <KEYTYPE, DATATYPE, COLLTYPE, DefaultFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE>> aFactory)
   {
     super (aFactory);
   }
@@ -56,7 +57,7 @@ public class DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE extends Collect
    * @param aDataID
    *        The ID of the new item. May not be <code>null</code>.
    */
-  public DefaultFolderTreeItem (@Nonnull final DefaultFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE> aParent,
+  public DefaultFolderTreeItem (@Nonnull final DefaultFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE> aParent,
                                 @Nonnull final KEYTYPE aDataID)
   {
     super (aParent, aDataID);

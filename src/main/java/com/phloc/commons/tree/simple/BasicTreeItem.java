@@ -42,23 +42,23 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * Basic implementation of the {@link ITreeItem} interface
  * 
  * @author philip
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        tree item value type
  * @param <ITEMTYPE>
  *        tree item implementation type
  */
 @NotThreadSafe
-public class BasicTreeItem <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> implements
-                                                                                         ITreeItem <VALUETYPE, ITEMTYPE>
+public class BasicTreeItem <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEMTYPE>> implements
+                                                                                       ITreeItem <DATATYPE, ITEMTYPE>
 {
   // item factory
-  private final ITreeItemFactory <VALUETYPE, ITEMTYPE> m_aFactory;
+  private final ITreeItemFactory <DATATYPE, ITEMTYPE> m_aFactory;
 
   // parent tree item
   private ITEMTYPE m_aParent;
 
   // the data to be stored
-  private VALUETYPE m_aData;
+  private DATATYPE m_aData;
 
   // child list
   private List <ITEMTYPE> m_aChildren = null;
@@ -66,7 +66,7 @@ public class BasicTreeItem <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, IT
   /**
    * Constructor for root object.
    */
-  public BasicTreeItem (@Nonnull final ITreeItemFactory <VALUETYPE, ITEMTYPE> aFactory)
+  public BasicTreeItem (@Nonnull final ITreeItemFactory <DATATYPE, ITEMTYPE> aFactory)
   {
     if (aFactory == null)
       throw new NullPointerException ("factory");
@@ -97,7 +97,7 @@ public class BasicTreeItem <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, IT
   }
 
   @Nonnull
-  public final ITreeItemFactory <VALUETYPE, ITEMTYPE> getFactory ()
+  public final ITreeItemFactory <DATATYPE, ITEMTYPE> getFactory ()
   {
     return m_aFactory;
   }
@@ -112,18 +112,18 @@ public class BasicTreeItem <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, IT
    * @return <code>true</code> if the ID is valid, <code>false</code> otherwise.
    */
   @OverrideOnDemand
-  protected boolean isValidData (final VALUETYPE aData)
+  protected boolean isValidData (final DATATYPE aData)
   {
     return true;
   }
 
   @Nullable
-  public final VALUETYPE getData ()
+  public final DATATYPE getData ()
   {
     return m_aData;
   }
 
-  public final void setData (@Nullable final VALUETYPE aData)
+  public final void setData (@Nullable final DATATYPE aData)
   {
     if (!isValidData (aData))
       throw new IllegalArgumentException ("The passed data object is invalid!");
@@ -142,9 +142,9 @@ public class BasicTreeItem <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, IT
   }
 
   @Nonnull
-  private ITEMTYPE _asT (@Nonnull final BasicTreeItem <VALUETYPE, ITEMTYPE> aItem)
+  private ITEMTYPE _asT (@Nonnull final BasicTreeItem <DATATYPE, ITEMTYPE> aItem)
   {
-    return GenericReflection.<BasicTreeItem <VALUETYPE, ITEMTYPE>, ITEMTYPE> uncheckedCast (aItem);
+    return GenericReflection.<BasicTreeItem <DATATYPE, ITEMTYPE>, ITEMTYPE> uncheckedCast (aItem);
   }
 
   /**
@@ -156,7 +156,7 @@ public class BasicTreeItem <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, IT
    *         already in use and bAllowOverwrite is false
    */
   @Nonnull
-  public final ITEMTYPE createChildItem (@Nullable final VALUETYPE aData)
+  public final ITEMTYPE createChildItem (@Nullable final DATATYPE aData)
   {
     // create new item
     final ITEMTYPE aItem = m_aFactory.create (_asT (this));
@@ -177,6 +177,17 @@ public class BasicTreeItem <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, IT
   public final List <ITEMTYPE> getChildren ()
   {
     return m_aChildren == null ? null : ContainerHelper.newList (m_aChildren);
+  }
+
+  @Nullable
+  public final List <DATATYPE> getAllChildDatas ()
+  {
+    if (m_aChildren == null)
+      return null;
+    final List <DATATYPE> ret = new ArrayList <DATATYPE> ();
+    for (final ITEMTYPE aChild : m_aChildren)
+      ret.add (aChild.getData ());
+    return ret;
   }
 
   @Nullable
@@ -211,7 +222,7 @@ public class BasicTreeItem <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, IT
     if (aParent == null)
       throw new NullPointerException ("parent");
 
-    ITreeItem <VALUETYPE, ITEMTYPE> aCur = this;
+    ITreeItem <DATATYPE, ITEMTYPE> aCur = this;
     while (aCur != null)
     {
       // Do not use "equals" because it recursively compares all children!

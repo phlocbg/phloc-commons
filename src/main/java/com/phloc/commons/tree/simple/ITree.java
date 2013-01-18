@@ -23,13 +23,13 @@ import com.phloc.commons.tree.IBasicTree;
  * Base interface for a simple tree
  * 
  * @author philip
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        tree item value type
  * @param <ITEMTYPE>
  *        tree item implementation type
  */
-public interface ITree <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> extends
-                                                                                     IBasicTree <VALUETYPE, ITEMTYPE>
+public interface ITree <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEMTYPE>> extends
+                                                                                   IBasicTree <DATATYPE, ITEMTYPE>
 {
   /* empty */
 }

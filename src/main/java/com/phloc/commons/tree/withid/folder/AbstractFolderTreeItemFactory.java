@@ -35,7 +35,7 @@ import com.phloc.commons.tree.withid.unique.AbstractTreeItemWithUniqueIDFactory;
  * @author philip
  * @param <KEYTYPE>
  *        Key type
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        Value type
  * @param <COLLTYPE>
  *        Collection type consisting of value elements
@@ -43,9 +43,9 @@ import com.phloc.commons.tree.withid.unique.AbstractTreeItemWithUniqueIDFactory;
  *        the implementation item type
  */
 @NotThreadSafe
-public abstract class AbstractFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>, ITEMTYPE extends BasicFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>> extends
-                                                                                                                                                                                                 AbstractTreeItemWithUniqueIDFactory <KEYTYPE, COLLTYPE, ITEMTYPE> implements
-                                                                                                                                                                                                                                                                  IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>
+public abstract class AbstractFolderTreeItemFactory <KEYTYPE, DATATYPE, COLLTYPE extends Collection <DATATYPE>, ITEMTYPE extends BasicFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE, ITEMTYPE>> extends
+                                                                                                                                                                                              AbstractTreeItemWithUniqueIDFactory <KEYTYPE, COLLTYPE, ITEMTYPE> implements
+                                                                                                                                                                                                                                                               IFolderTreeItemFactory <KEYTYPE, DATATYPE, COLLTYPE, ITEMTYPE>
 {
   private final ICombinator <KEYTYPE> m_aKeyCombinator;
 

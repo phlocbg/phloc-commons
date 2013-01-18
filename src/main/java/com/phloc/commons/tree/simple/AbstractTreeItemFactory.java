@@ -23,14 +23,14 @@ import javax.annotation.concurrent.NotThreadSafe;
  * Abstract implementation of the {@link ITreeItemFactory} interface
  * 
  * @author philip
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        tree item value type
  * @param <ITEMTYPE>
  *        tree item implementation type
  */
 @NotThreadSafe
-public abstract class AbstractTreeItemFactory <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> implements
-                                                                                                            ITreeItemFactory <VALUETYPE, ITEMTYPE>
+public abstract class AbstractTreeItemFactory <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEMTYPE>> implements
+                                                                                                          ITreeItemFactory <DATATYPE, ITEMTYPE>
 {
   /* empty */
 }

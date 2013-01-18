@@ -22,12 +22,12 @@ package com.phloc.commons.tree.utils.xml;
  * bidirectional converter.
  * 
  * @author philip
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        The type of the tree item data
  */
-public interface IConverterTreeXML <VALUETYPE> extends
-                                               IConverterTreeItemToMicroNode <VALUETYPE>,
-                                               IConverterMicroNodeToTreeItem <VALUETYPE>
+public interface IConverterTreeXML <DATATYPE> extends
+                                              IConverterTreeItemToMicroNode <DATATYPE>,
+                                              IConverterMicroNodeToTreeItem <DATATYPE>
 {
   /* empty */
 }

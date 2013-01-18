@@ -34,13 +34,13 @@ import com.phloc.commons.tree.withid.ITreeItemWithID;
  * Works for {@link ITreeItem} and {@link ITreeItemWithID}.
  * 
  * @author philip
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        tree item value type
  * @param <ITEMTYPE>
  *        tree item implementation type
  */
-public class ComparatorTreeItemValueComparable <VALUETYPE extends Comparable <? super VALUETYPE>, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> extends
-                                                                                                                                                         AbstractPartComparatorComparable <ITEMTYPE, VALUETYPE>
+public class ComparatorTreeItemValueComparable <DATATYPE extends Comparable <? super DATATYPE>, ITEMTYPE extends IBasicTreeItem <DATATYPE, ITEMTYPE>> extends
+                                                                                                                                                      AbstractPartComparatorComparable <ITEMTYPE, DATATYPE>
 {
   /**
    * Comparator with default sort order.
@@ -90,7 +90,7 @@ public class ComparatorTreeItemValueComparable <VALUETYPE extends Comparable <? 
 
   @Override
   @Nullable
-  protected VALUETYPE getPart (@Nonnull final ITEMTYPE aTreeItem)
+  protected DATATYPE getPart (@Nonnull final ITEMTYPE aTreeItem)
   {
     return aTreeItem.getData ();
   }
