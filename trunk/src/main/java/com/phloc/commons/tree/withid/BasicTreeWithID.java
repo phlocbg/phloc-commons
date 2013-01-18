@@ -31,19 +31,19 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author philip
  * @param <KEYTYPE>
  *        tree item key type
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        tree item value type
  * @param <ITEMTYPE>
  *        tree item implementation type
  */
 @NotThreadSafe
-public class BasicTreeWithID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> implements
-                                                                                                                   ITreeWithID <KEYTYPE, VALUETYPE, ITEMTYPE>
+public class BasicTreeWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>> implements
+                                                                                                                 ITreeWithID <KEYTYPE, DATATYPE, ITEMTYPE>
 {
   // Root item.
   private final ITEMTYPE m_aRoot;
 
-  public BasicTreeWithID (@Nonnull final ITreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE> aFactory)
+  public BasicTreeWithID (@Nonnull final ITreeItemWithIDFactory <KEYTYPE, DATATYPE, ITEMTYPE> aFactory)
   {
     if (aFactory == null)
       throw new NullPointerException ("factory");

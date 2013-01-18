@@ -28,19 +28,19 @@ import com.phloc.commons.string.ToStringGenerator;
  * means.
  * 
  * @author philip
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        tree item value type
  * @param <ITEMTYPE>
  *        tree item implementation type
  */
 @NotThreadSafe
-public class BasicTree <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> implements
-                                                                                     ITree <VALUETYPE, ITEMTYPE>
+public class BasicTree <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEMTYPE>> implements
+                                                                                   ITree <DATATYPE, ITEMTYPE>
 {
   // Root item.
   private final ITEMTYPE m_aRoot;
 
-  public BasicTree (@Nonnull final ITreeItemFactory <VALUETYPE, ITEMTYPE> aFactory)
+  public BasicTree (@Nonnull final ITreeItemFactory <DATATYPE, ITEMTYPE> aFactory)
   {
     if (aFactory == null)
       throw new NullPointerException ("factory");

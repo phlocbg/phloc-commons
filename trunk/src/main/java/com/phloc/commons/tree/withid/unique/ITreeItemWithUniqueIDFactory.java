@@ -22,6 +22,7 @@ import java.util.Collection;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.tree.withid.ITreeItemWithID;
 import com.phloc.commons.tree.withid.ITreeItemWithIDFactory;
 
@@ -30,8 +31,8 @@ import com.phloc.commons.tree.withid.ITreeItemWithIDFactory;
  * 
  * @author philip
  */
-public interface ITreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> extends
-                                                                                                                                    ITreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE>
+public interface ITreeItemWithUniqueIDFactory <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>> extends
+                                                                                                                                  ITreeItemWithIDFactory <KEYTYPE, DATATYPE, ITEMTYPE>
 {
   /**
    * Check if an item with the given ID is contained.
@@ -54,9 +55,18 @@ public interface ITreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE exte
   ITEMTYPE getItemOfDataID (@Nullable KEYTYPE aDataID);
 
   /**
-   * @return An unmodifiable collection that contains all items created by this
-   *         factory instance.
+   * @return A collection that contains all items created by this factory
+   *         instance.
    */
   @Nonnull
+  @ReturnsMutableCopy
   Collection <ITEMTYPE> getAllItems ();
+
+  /**
+   * @return A collection that contains all item datas created by this factory
+   *         instance.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  Collection <DATATYPE> getAllItemDatas ();
 }

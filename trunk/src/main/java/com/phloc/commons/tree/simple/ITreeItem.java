@@ -29,19 +29,19 @@ import com.phloc.commons.tree.IBasicTreeItem;
  * Base interface for simple tree items
  * 
  * @author philip
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        tree item value type
  * @param <ITEMTYPE>
  *        tree item implementation type
  */
-public interface ITreeItem <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, ITEMTYPE>> extends
-                                                                                         IBasicTreeItem <VALUETYPE, ITEMTYPE>
+public interface ITreeItem <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEMTYPE>> extends
+                                                                                       IBasicTreeItem <DATATYPE, ITEMTYPE>
 {
   /**
    * @return The factory used to create instances of this interface.
    */
   @Nonnull
-  ITreeItemFactory <VALUETYPE, ITEMTYPE> getFactory ();
+  ITreeItemFactory <DATATYPE, ITEMTYPE> getFactory ();
 
   /**
    * Add an existing child to this tree item. Use only internally!
@@ -62,7 +62,7 @@ public interface ITreeItem <VALUETYPE, ITEMTYPE extends ITreeItem <VALUETYPE, IT
    * @return the created TreeItem object
    */
   @Nonnull
-  ITEMTYPE createChildItem (@Nullable VALUETYPE aData);
+  ITEMTYPE createChildItem (@Nullable DATATYPE aData);
 
   /**
    * Remove the passed node as a child node from this node.

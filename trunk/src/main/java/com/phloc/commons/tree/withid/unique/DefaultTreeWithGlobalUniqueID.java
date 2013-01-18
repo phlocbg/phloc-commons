@@ -30,19 +30,19 @@ import com.phloc.commons.tree.withid.DefaultTreeItemWithID;
  * @author philip
  * @param <KEYTYPE>
  *        The type of the key elements for the tree.
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        The type of the elements contained in the tree
  */
 @NotThreadSafe
-public class DefaultTreeWithGlobalUniqueID <KEYTYPE, VALUETYPE> extends
-                                                                BasicTreeWithGlobalUniqueID <KEYTYPE, VALUETYPE, DefaultTreeItemWithID <KEYTYPE, VALUETYPE>>
+public class DefaultTreeWithGlobalUniqueID <KEYTYPE, DATATYPE> extends
+                                                               BasicTreeWithGlobalUniqueID <KEYTYPE, DATATYPE, DefaultTreeItemWithID <KEYTYPE, DATATYPE>>
 {
   public DefaultTreeWithGlobalUniqueID ()
   {
-    this (new DefaultTreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE> ());
+    this (new DefaultTreeItemWithUniqueIDFactory <KEYTYPE, DATATYPE> ());
   }
 
-  public DefaultTreeWithGlobalUniqueID (@Nonnull final ITreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, DefaultTreeItemWithID <KEYTYPE, VALUETYPE>> aFactory)
+  public DefaultTreeWithGlobalUniqueID (@Nonnull final ITreeItemWithUniqueIDFactory <KEYTYPE, DATATYPE, DefaultTreeItemWithID <KEYTYPE, DATATYPE>> aFactory)
   {
     super (aFactory);
   }

@@ -28,14 +28,14 @@ import com.phloc.commons.annotations.OverrideOnDemand;
  * @author philip
  * @param <KEYTYPE>
  *        tree item key type
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        tree item value type
  * @param <ITEMTYPE>
  *        tree item implementation type
  */
 @NotThreadSafe
-public abstract class AbstractTreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> implements
-                                                                                                                                          ITreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE>
+public abstract class AbstractTreeItemWithIDFactory <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>> implements
+                                                                                                                                        ITreeItemWithIDFactory <KEYTYPE, DATATYPE, ITEMTYPE>
 {
   @OverrideOnDemand
   public void onRemoveItem (@Nonnull final ITEMTYPE aItem)

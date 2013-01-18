@@ -26,10 +26,10 @@ import com.phloc.commons.microdom.IMicroElement;
  * Interface used to convert a single tree item data value to a micro node.
  * 
  * @author philip
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        The type of the tree item data
  */
-public interface IConverterTreeItemToMicroNode <VALUETYPE>
+public interface IConverterTreeItemToMicroNode <DATATYPE>
 {
-  void appendDataValue (@Nonnull IMicroElement eDataElement, @Nullable VALUETYPE aObject);
+  void appendDataValue (@Nonnull IMicroElement eDataElement, @Nullable DATATYPE aObject);
 }

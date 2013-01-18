@@ -27,15 +27,15 @@ import com.phloc.commons.tree.withid.unique.ITreeWithGlobalUniqueID;
  * @author philip
  * @param <KEYTYPE>
  *        Key type
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        Value type
  * @param <COLLTYPE>
  *        Collection type consisting of value elements
  * @param <ITEMTYPE>
  *        the implementation item type
  */
-public interface IFolderTree <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>, ITEMTYPE extends IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>> extends
-                                                                                                                                                                      ITreeWithGlobalUniqueID <KEYTYPE, COLLTYPE, ITEMTYPE>
+public interface IFolderTree <KEYTYPE, DATATYPE, COLLTYPE extends Collection <DATATYPE>, ITEMTYPE extends IFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE, ITEMTYPE>> extends
+                                                                                                                                                                   ITreeWithGlobalUniqueID <KEYTYPE, COLLTYPE, ITEMTYPE>
 {
   /* empty */
 }

@@ -28,12 +28,12 @@ import com.phloc.commons.factory.IHierarchicalRootFactory;
  * @author philip
  * @param <KEYTYPE>
  *        The key type.
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        The value type to be contained in tree items.
  */
-public interface ITreeItemWithIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> extends
-                                                                                                                              IHierarchicalFactoryWithParameter <ITEMTYPE, KEYTYPE>,
-                                                                                                                              IHierarchicalRootFactory <ITEMTYPE>
+public interface ITreeItemWithIDFactory <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>> extends
+                                                                                                                            IHierarchicalFactoryWithParameter <ITEMTYPE, KEYTYPE>,
+                                                                                                                            IHierarchicalRootFactory <ITEMTYPE>
 {
   /**
    * {@inheritDoc}

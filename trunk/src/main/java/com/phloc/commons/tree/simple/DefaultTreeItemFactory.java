@@ -25,24 +25,23 @@ import javax.annotation.concurrent.NotThreadSafe;
  * implementation
  * 
  * @author philip
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        tree item value type
  */
 @NotThreadSafe
-public class DefaultTreeItemFactory <VALUETYPE> extends
-                                                AbstractTreeItemFactory <VALUETYPE, DefaultTreeItem <VALUETYPE>>
+public class DefaultTreeItemFactory <DATATYPE> extends AbstractTreeItemFactory <DATATYPE, DefaultTreeItem <DATATYPE>>
 {
   @Nonnull
-  public DefaultTreeItem <VALUETYPE> createRoot ()
+  public DefaultTreeItem <DATATYPE> createRoot ()
   {
-    return new DefaultTreeItem <VALUETYPE> (this);
+    return new DefaultTreeItem <DATATYPE> (this);
   }
 
   @Nonnull
-  public DefaultTreeItem <VALUETYPE> create (@Nonnull final DefaultTreeItem <VALUETYPE> aParent)
+  public DefaultTreeItem <DATATYPE> create (@Nonnull final DefaultTreeItem <DATATYPE> aParent)
   {
     if (aParent == null)
       throw new NullPointerException ("parent");
-    return new DefaultTreeItem <VALUETYPE> (aParent);
+    return new DefaultTreeItem <DATATYPE> (aParent);
   }
 }

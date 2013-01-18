@@ -26,6 +26,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.hash.HashCodeGenerator;
+import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.tree.withid.BasicTreeWithID;
 import com.phloc.commons.tree.withid.ITreeItemWithID;
@@ -38,17 +39,17 @@ import com.phloc.commons.tree.withid.ITreeItemWithID;
  * @author philip
  * @param <KEYTYPE>
  *        The type of the key elements for the tree.
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        The type of the elements contained in the tree
  */
 @NotThreadSafe
-public class BasicTreeWithGlobalUniqueID <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> extends
-                                                                                                                               BasicTreeWithID <KEYTYPE, VALUETYPE, ITEMTYPE> implements
-                                                                                                                                                                             ITreeWithGlobalUniqueID <KEYTYPE, VALUETYPE, ITEMTYPE>
+public class BasicTreeWithGlobalUniqueID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>> extends
+                                                                                                                             BasicTreeWithID <KEYTYPE, DATATYPE, ITEMTYPE> implements
+                                                                                                                                                                          ITreeWithGlobalUniqueID <KEYTYPE, DATATYPE, ITEMTYPE>
 {
-  private final ITreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE> m_aFactory;
+  private final ITreeItemWithUniqueIDFactory <KEYTYPE, DATATYPE, ITEMTYPE> m_aFactory;
 
-  public BasicTreeWithGlobalUniqueID (@Nonnull final ITreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE> aFactory)
+  public BasicTreeWithGlobalUniqueID (@Nonnull final ITreeItemWithUniqueIDFactory <KEYTYPE, DATATYPE, ITEMTYPE> aFactory)
   {
     super (aFactory);
     m_aFactory = aFactory;
@@ -58,7 +59,7 @@ public class BasicTreeWithGlobalUniqueID <KEYTYPE, VALUETYPE, ITEMTYPE extends I
    * @return The factory used for creation. For internal use only.
    */
   @Nonnull
-  protected final ITreeItemWithUniqueIDFactory <KEYTYPE, VALUETYPE, ITEMTYPE> getFactory ()
+  protected final ITreeItemWithUniqueIDFactory <KEYTYPE, DATATYPE, ITEMTYPE> getFactory ()
   {
     return m_aFactory;
   }
@@ -75,6 +76,13 @@ public class BasicTreeWithGlobalUniqueID <KEYTYPE, VALUETYPE, ITEMTYPE extends I
   }
 
   @Nullable
+  public final DATATYPE getItemDataWithID (@Nullable final KEYTYPE aDataID)
+  {
+    final ITEMTYPE aItem = getItemWithID (aDataID);
+    return aItem == null ? null : aItem.getData ();
+  }
+
+  @Nullable
   public final ITEMTYPE getChildWithID (@Nullable final ITEMTYPE aCurrentItem, @Nullable final KEYTYPE aDataID)
   {
     final ITEMTYPE aItem = aCurrentItem != null ? aCurrentItem : getRootItem ();
@@ -85,6 +93,26 @@ public class BasicTreeWithGlobalUniqueID <KEYTYPE, VALUETYPE, ITEMTYPE extends I
   public final Collection <ITEMTYPE> getAllItems ()
   {
     return m_aFactory.getAllItems ();
+  }
+
+  @Nonnull
+  public final Collection <DATATYPE> getAllItemDatas ()
+  {
+    return m_aFactory.getAllItemDatas ();
+  }
+
+  @Nonnull
+  public final EChange removeItemWithID (@Nullable final KEYTYPE aDataID)
+  {
+    final ITEMTYPE aItem = getItemWithID (aDataID);
+    if (aItem == null)
+      return EChange.UNCHANGED;
+    final ITEMTYPE aParent = aItem.getParent ();
+    if (aParent == null)
+      throw new IllegalArgumentException ("Cannot remove the root item!");
+    if (aParent.removeChild (aDataID).isUnchanged ())
+      throw new IllegalStateException ("Failed to remove child " + aItem + " from parent " + aParent);
+    return EChange.CHANGED;
   }
 
   public final boolean isItemSameOrDescendant (@Nullable final KEYTYPE aParentItemID,

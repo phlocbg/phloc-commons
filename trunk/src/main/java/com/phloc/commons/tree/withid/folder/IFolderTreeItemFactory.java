@@ -30,15 +30,15 @@ import com.phloc.commons.tree.withid.unique.ITreeItemWithUniqueIDFactory;
  * @author philip
  * @param <KEYTYPE>
  *        Key type
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        Value type
  * @param <COLLTYPE>
  *        Collection type consisting of value elements
  * @param <ITEMTYPE>
  *        the implementation item type
  */
-public interface IFolderTreeItemFactory <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>, ITEMTYPE extends IFolderTreeItem <KEYTYPE, VALUETYPE, COLLTYPE, ITEMTYPE>> extends
-                                                                                                                                                                                 ITreeItemWithUniqueIDFactory <KEYTYPE, COLLTYPE, ITEMTYPE>
+public interface IFolderTreeItemFactory <KEYTYPE, DATATYPE, COLLTYPE extends Collection <DATATYPE>, ITEMTYPE extends IFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE, ITEMTYPE>> extends
+                                                                                                                                                                              ITreeItemWithUniqueIDFactory <KEYTYPE, COLLTYPE, ITEMTYPE>
 {
   /**
    * @return The key combinator to be used to create global unique IDs.

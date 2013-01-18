@@ -43,9 +43,9 @@ public final class TreeWalker
   private TreeWalker ()
   {}
 
-  private static <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> void _walkTree (@Nonnull final ITEMTYPE aTreeItem,
-                                                                                                    @Nonnull final IChildrenProvider <ITEMTYPE> aChildrenProvider,
-                                                                                                    @Nonnull final IHierarchyWalkerCallback <? super ITEMTYPE> aCallback)
+  private static <DATATYPE, ITEMTYPE extends IBasicTreeItem <DATATYPE, ITEMTYPE>> void _walkTree (@Nonnull final ITEMTYPE aTreeItem,
+                                                                                                  @Nonnull final IChildrenProvider <ITEMTYPE> aChildrenProvider,
+                                                                                                  @Nonnull final IHierarchyWalkerCallback <? super ITEMTYPE> aCallback)
   {
     aCallback.onItemBeforeChildren (aTreeItem);
     if (aChildrenProvider.hasChildren (aTreeItem))
@@ -59,15 +59,15 @@ public final class TreeWalker
     aCallback.onItemAfterChildren (aTreeItem);
   }
 
-  public static <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> void walkTree (@Nonnull final IBasicTree <VALUETYPE, ITEMTYPE> aTree,
-                                                                                                  @Nonnull final IHierarchyWalkerCallback <? super ITEMTYPE> aCallback)
+  public static <DATATYPE, ITEMTYPE extends IBasicTreeItem <DATATYPE, ITEMTYPE>> void walkTree (@Nonnull final IBasicTree <DATATYPE, ITEMTYPE> aTree,
+                                                                                                @Nonnull final IHierarchyWalkerCallback <? super ITEMTYPE> aCallback)
   {
     walkTree (aTree, new ChildrenProviderHasChildren <ITEMTYPE> (), aCallback);
   }
 
-  public static <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> void walkTree (@Nonnull final IBasicTree <VALUETYPE, ITEMTYPE> aTree,
-                                                                                                  @Nonnull final IChildrenProvider <ITEMTYPE> aChildrenProvider,
-                                                                                                  @Nonnull final IHierarchyWalkerCallback <? super ITEMTYPE> aCallback)
+  public static <DATATYPE, ITEMTYPE extends IBasicTreeItem <DATATYPE, ITEMTYPE>> void walkTree (@Nonnull final IBasicTree <DATATYPE, ITEMTYPE> aTree,
+                                                                                                @Nonnull final IChildrenProvider <ITEMTYPE> aChildrenProvider,
+                                                                                                @Nonnull final IHierarchyWalkerCallback <? super ITEMTYPE> aCallback)
   {
     if (aTree == null)
       throw new NullPointerException ("tree");
@@ -75,15 +75,15 @@ public final class TreeWalker
     walkSubTree (aTree.getRootItem (), aChildrenProvider, aCallback);
   }
 
-  public static <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> void walkSubTree (@Nonnull final ITEMTYPE aTreeItem,
-                                                                                                     @Nonnull final IHierarchyWalkerCallback <? super ITEMTYPE> aCallback)
+  public static <DATATYPE, ITEMTYPE extends IBasicTreeItem <DATATYPE, ITEMTYPE>> void walkSubTree (@Nonnull final ITEMTYPE aTreeItem,
+                                                                                                   @Nonnull final IHierarchyWalkerCallback <? super ITEMTYPE> aCallback)
   {
     walkSubTree (aTreeItem, new ChildrenProviderHasChildren <ITEMTYPE> (), aCallback);
   }
 
-  public static <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> void walkSubTree (@Nonnull final ITEMTYPE aTreeItem,
-                                                                                                     @Nonnull final IChildrenProvider <ITEMTYPE> aChildrenProvider,
-                                                                                                     @Nonnull final IHierarchyWalkerCallback <? super ITEMTYPE> aCallback)
+  public static <DATATYPE, ITEMTYPE extends IBasicTreeItem <DATATYPE, ITEMTYPE>> void walkSubTree (@Nonnull final ITEMTYPE aTreeItem,
+                                                                                                   @Nonnull final IChildrenProvider <ITEMTYPE> aChildrenProvider,
+                                                                                                   @Nonnull final IHierarchyWalkerCallback <? super ITEMTYPE> aCallback)
   {
     if (aTreeItem == null)
       throw new NullPointerException ("treeItem");

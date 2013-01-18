@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.tree;
 
+import java.util.Collection;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -28,20 +30,29 @@ import com.phloc.commons.state.ESuccess;
  * Base interface both for normal tree items and tree items with ID.
  * 
  * @author philip
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        Data type of the items.
  * @param <ITEMTYPE>
  *        tree item type
  */
-public interface IBasicTreeItem <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VALUETYPE, ITEMTYPE>> extends
-                                                                                                   IHasParent <ITEMTYPE>,
-                                                                                                   IHasChildrenSorted <ITEMTYPE>
+public interface IBasicTreeItem <DATATYPE, ITEMTYPE extends IBasicTreeItem <DATATYPE, ITEMTYPE>> extends
+                                                                                                 IHasParent <ITEMTYPE>,
+                                                                                                 IHasChildrenSorted <ITEMTYPE>
 {
   /**
    * @return the data associated with this node. May be <code>null</code>.
    */
   @Nullable
-  VALUETYPE getData ();
+  DATATYPE getData ();
+
+  /**
+   * Get the data values of all contained children.
+   * 
+   * @return <code>null</code> if this item does not have children. Use
+   *         {@link #hasChildren()} to check for the existence.
+   */
+  @Nullable
+  Collection <DATATYPE> getAllChildDatas ();
 
   /**
    * Change the data associated with this node.
@@ -51,7 +62,7 @@ public interface IBasicTreeItem <VALUETYPE, ITEMTYPE extends IBasicTreeItem <VAL
    * @throws IllegalArgumentException
    *         If the data is not valid (depending on any custom validator).
    */
-  void setData (@Nullable VALUETYPE aData);
+  void setData (@Nullable DATATYPE aData);
 
   /**
    * @return <code>true</code> if this is the internal root item without a

@@ -24,11 +24,11 @@ import com.phloc.commons.tree.simple.DefaultTreeItem;
  * comparable value types.
  * 
  * @author philip
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        tree item value type
  */
-public final class ComparatorDefaultTreeItemComparable <VALUETYPE extends Comparable <? super VALUETYPE>> extends
-                                                                                                          ComparatorTreeItemValueComparable <VALUETYPE, DefaultTreeItem <VALUETYPE>>
+public final class ComparatorDefaultTreeItemComparable <DATATYPE extends Comparable <? super DATATYPE>> extends
+                                                                                                        ComparatorTreeItemValueComparable <DATATYPE, DefaultTreeItem <DATATYPE>>
 {
   public ComparatorDefaultTreeItemComparable ()
   {

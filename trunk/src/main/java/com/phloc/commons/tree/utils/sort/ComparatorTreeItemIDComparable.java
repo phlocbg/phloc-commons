@@ -26,13 +26,13 @@ import com.phloc.commons.tree.withid.ITreeItemWithID;
  * @author philip
  * @param <KEYTYPE>
  *        tree item key type
- * @param <VALUETYPE>
+ * @param <DATATYPE>
  *        tree item value type
  * @param <ITEMTYPE>
  *        tree item implementation type
  */
-public class ComparatorTreeItemIDComparable <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> extends
-                                                                                                                                                                       ComparatorHasIDComparable <KEYTYPE, ITEMTYPE>
+public class ComparatorTreeItemIDComparable <KEYTYPE extends Comparable <? super KEYTYPE>, DATATYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>> extends
+                                                                                                                                                                     ComparatorHasIDComparable <KEYTYPE, ITEMTYPE>
 {
   public ComparatorTreeItemIDComparable ()
   {

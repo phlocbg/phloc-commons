@@ -21,21 +21,21 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 @NotThreadSafe
-public class DefaultTreeItemWithIDFactory <KEYTYPE, VALUETYPE> extends
-                                                               AbstractTreeItemWithIDFactory <KEYTYPE, VALUETYPE, DefaultTreeItemWithID <KEYTYPE, VALUETYPE>>
+public class DefaultTreeItemWithIDFactory <KEYTYPE, DATATYPE> extends
+                                                              AbstractTreeItemWithIDFactory <KEYTYPE, DATATYPE, DefaultTreeItemWithID <KEYTYPE, DATATYPE>>
 {
   @Nonnull
-  public DefaultTreeItemWithID <KEYTYPE, VALUETYPE> createRoot ()
+  public DefaultTreeItemWithID <KEYTYPE, DATATYPE> createRoot ()
   {
-    return new DefaultTreeItemWithID <KEYTYPE, VALUETYPE> (this);
+    return new DefaultTreeItemWithID <KEYTYPE, DATATYPE> (this);
   }
 
   @Nonnull
-  public DefaultTreeItemWithID <KEYTYPE, VALUETYPE> create (@Nonnull final DefaultTreeItemWithID <KEYTYPE, VALUETYPE> aParent,
-                                                            @Nonnull final KEYTYPE aDataID)
+  public DefaultTreeItemWithID <KEYTYPE, DATATYPE> create (@Nonnull final DefaultTreeItemWithID <KEYTYPE, DATATYPE> aParent,
+                                                           @Nonnull final KEYTYPE aDataID)
   {
     if (aParent == null)
       throw new NullPointerException ("parent");
-    return new DefaultTreeItemWithID <KEYTYPE, VALUETYPE> (aParent, aDataID);
+    return new DefaultTreeItemWithID <KEYTYPE, DATATYPE> (aParent, aDataID);
   }
 }

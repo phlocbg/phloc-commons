@@ -51,7 +51,7 @@ public final class TreeWithIDSearcher
    * 
    * @param <KEYTYPE>
    *        tree ID type
-   * @param <VALUETYPE>
+   * @param <DATATYPE>
    *        tree data type
    * @param <ITEMTYPE>
    *        tree item type
@@ -63,8 +63,8 @@ public final class TreeWithIDSearcher
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> List <ITEMTYPE> findAllItemsWithIDRecursive (@Nonnull final IBasicTree <VALUETYPE, ITEMTYPE> aTree,
-                                                                                                                                                   @Nullable final KEYTYPE aSearchID)
+  public static <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>> List <ITEMTYPE> findAllItemsWithIDRecursive (@Nonnull final IBasicTree <DATATYPE, ITEMTYPE> aTree,
+                                                                                                                                                 @Nullable final KEYTYPE aSearchID)
   {
     return findAllItemsWithIDRecursive (aTree.getRootItem (), aSearchID);
   }
@@ -74,7 +74,7 @@ public final class TreeWithIDSearcher
    * 
    * @param <KEYTYPE>
    *        tree ID type
-   * @param <VALUETYPE>
+   * @param <DATATYPE>
    *        tree data type
    * @param <ITEMTYPE>
    *        tree item type
@@ -86,8 +86,8 @@ public final class TreeWithIDSearcher
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static <KEYTYPE, VALUETYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, VALUETYPE, ITEMTYPE>> List <ITEMTYPE> findAllItemsWithIDRecursive (@Nonnull final ITEMTYPE aTreeItem,
-                                                                                                                                                   @Nullable final KEYTYPE aSearchID)
+  public static <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>> List <ITEMTYPE> findAllItemsWithIDRecursive (@Nonnull final ITEMTYPE aTreeItem,
+                                                                                                                                                 @Nullable final KEYTYPE aSearchID)
   {
     final List <ITEMTYPE> aRetList = new ArrayList <ITEMTYPE> ();
     TreeWalker.walkSubTree (aTreeItem, new DefaultHierarchyWalkerCallback <ITEMTYPE> ()
