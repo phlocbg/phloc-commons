@@ -22,15 +22,15 @@ import java.util.Comparator;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.phloc.commons.compare.AbstractPartComparatorComparable;
+import com.phloc.commons.compare.AbstractPartComparator;
 import com.phloc.commons.compare.ESortOrder;
 import com.phloc.commons.tree.IBasicTreeItem;
 import com.phloc.commons.tree.simple.ITreeItem;
 import com.phloc.commons.tree.withid.ITreeItemWithID;
 
 /**
- * Comparator for sorting {@link IBasicTreeItem} items by their value using an
- * comparable value types.<br>
+ * Comparator for sorting {@link IBasicTreeItem} items by their data using an
+ * explicit {@link Comparator}.<br>
  * Works for {@link ITreeItem} and {@link ITreeItemWithID}.
  * 
  * @author philip
@@ -38,29 +38,33 @@ import com.phloc.commons.tree.withid.ITreeItemWithID;
  *        tree item value type
  * @param <ITEMTYPE>
  *        tree item implementation type
- * @deprecated Use {@link ComparatorTreeItemDataComparable} instead
  */
-@Deprecated
-public class ComparatorTreeItemValueComparable <DATATYPE extends Comparable <? super DATATYPE>, ITEMTYPE extends IBasicTreeItem <DATATYPE, ITEMTYPE>> extends
-                                                                                                                                                      AbstractPartComparatorComparable <ITEMTYPE, DATATYPE>
+public class ComparatorTreeItemData <DATATYPE, ITEMTYPE extends IBasicTreeItem <DATATYPE, ITEMTYPE>> extends
+                                                                                                     AbstractPartComparator <ITEMTYPE, DATATYPE>
 {
   /**
-   * Comparator with default sort order.
+   * Constructor with default sort order.
+   * 
+   * @param aDataComparator
+   *        Comparator for the data elements. May not be <code>null</code>.
    */
-  public ComparatorTreeItemValueComparable ()
+  public ComparatorTreeItemData (@Nonnull final Comparator <? super DATATYPE> aDataComparator)
   {
-    super ();
+    super (aDataComparator);
   }
 
   /**
    * Constructor with sort order.
    * 
+   * @param aDataComparator
+   *        Comparator for the data elements. May not be <code>null</code>.
    * @param eSortOrder
    *        The sort order to use. May not be <code>null</code>.
    */
-  public ComparatorTreeItemValueComparable (@Nonnull final ESortOrder eSortOrder)
+  public ComparatorTreeItemData (@Nonnull final ESortOrder eSortOrder,
+                                 @Nonnull final Comparator <? super DATATYPE> aDataComparator)
   {
-    super (eSortOrder);
+    super (eSortOrder, aDataComparator);
   }
 
   /**
@@ -69,25 +73,31 @@ public class ComparatorTreeItemValueComparable <DATATYPE extends Comparable <? s
    * @param aNestedComparator
    *        The nested comparator to be invoked, when the main comparison
    *        resulted in 0.
+   * @param aDataComparator
+   *        The comparator for comparing the IDs. May not be <code>null</code>.
    */
-  public ComparatorTreeItemValueComparable (@Nullable final Comparator <? super ITEMTYPE> aNestedComparator)
+  public ComparatorTreeItemData (@Nullable final Comparator <? super ITEMTYPE> aNestedComparator,
+                                 @Nonnull final Comparator <? super DATATYPE> aDataComparator)
   {
-    super (aNestedComparator);
+    super (aNestedComparator, aDataComparator);
   }
 
   /**
-   * Comparator with sort order and a nested comparator.
+   * Constructor with sort order and a nested comparator.
    * 
    * @param eSortOrder
    *        The sort order to use. May not be <code>null</code>.
    * @param aNestedComparator
    *        The nested comparator to be invoked, when the main comparison
    *        resulted in 0.
+   * @param aDataComparator
+   *        The comparator for comparing the IDs. May not be <code>null</code>.
    */
-  public ComparatorTreeItemValueComparable (@Nonnull final ESortOrder eSortOrder,
-                                            @Nullable final Comparator <? super ITEMTYPE> aNestedComparator)
+  public ComparatorTreeItemData (@Nonnull final ESortOrder eSortOrder,
+                                 @Nullable final Comparator <? super ITEMTYPE> aNestedComparator,
+                                 @Nonnull final Comparator <? super DATATYPE> aDataComparator)
   {
-    super (eSortOrder, aNestedComparator);
+    super (eSortOrder, aNestedComparator, aDataComparator);
   }
 
   @Override

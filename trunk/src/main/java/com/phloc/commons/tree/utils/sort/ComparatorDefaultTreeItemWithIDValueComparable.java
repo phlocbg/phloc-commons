@@ -26,7 +26,9 @@ import com.phloc.commons.tree.withid.DefaultTreeItemWithID;
  * @author philip
  * @param <DATATYPE>
  *        tree item value type
+ * @deprecated Use {@link ComparatorDefaultTreeItemWithIDDataComparable} instead
  */
+@Deprecated
 public final class ComparatorDefaultTreeItemWithIDValueComparable <IDTYYPE, DATATYPE extends Comparable <? super DATATYPE>> extends
                                                                                                                             ComparatorTreeItemValueComparable <DATATYPE, DefaultTreeItemWithID <IDTYYPE, DATATYPE>>
 {

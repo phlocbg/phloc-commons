@@ -37,7 +37,9 @@ import com.phloc.commons.tree.withid.ITreeItemWithID;
  *        tree item value type
  * @param <ITEMTYPE>
  *        tree item implementation type
+ * @deprecated Use {@link ComparatorTreeItemData} instead
  */
+@Deprecated
 public class ComparatorTreeItemValue <DATATYPE, ITEMTYPE extends IBasicTreeItem <DATATYPE, ITEMTYPE>> extends
                                                                                                       AbstractPartComparator <ITEMTYPE, DATATYPE>
 {
