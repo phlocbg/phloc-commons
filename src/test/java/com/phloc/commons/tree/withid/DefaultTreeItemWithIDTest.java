@@ -29,8 +29,8 @@ import org.junit.Test;
 
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.mock.PhlocTestUtils;
+import com.phloc.commons.tree.utils.sort.ComparatorDefaultTreeItemWithIDDataComparable;
 import com.phloc.commons.tree.utils.sort.ComparatorTreeItemIDComparable;
-import com.phloc.commons.tree.utils.sort.ComparatorTreeItemValueComparable;
 
 /**
  * Test class for class {@link DefaultTreeItemWithID}.
@@ -152,7 +152,7 @@ public final class DefaultTreeItemWithIDTest
 
     // no items yet....
     assertFalse (ti.hasChildren ());
-    ti.reorderChildrenByItems (new ComparatorTreeItemValueComparable <String, DefaultTreeItemWithID <String, String>> ());
+    ti.reorderChildrenByItems (new ComparatorDefaultTreeItemWithIDDataComparable <String, String> ());
     assertFalse (ti.hasChildren ());
 
     // add 2 items
@@ -168,7 +168,7 @@ public final class DefaultTreeItemWithIDTest
     assertEquals ("Welt1", ti.getChildren ().get (1).getData ());
 
     // reorder
-    ti.reorderChildrenByItems (new ComparatorTreeItemValueComparable <String, DefaultTreeItemWithID <String, String>> ());
+    ti.reorderChildrenByItems (new ComparatorDefaultTreeItemWithIDDataComparable <String, String> ());
 
     // check new order
     assertEquals (2, ti.getChildCount ());
@@ -273,13 +273,7 @@ public final class DefaultTreeItemWithIDTest
     }
     catch (final NullPointerException ex)
     {}
-    try
-    {
-      t.getRootItem ().removeChild (null);
-      fail ();
-    }
-    catch (final NullPointerException ex)
-    {}
+    assertFalse (t.getRootItem ().removeChild (null).isChanged ());
   }
 
   @Test

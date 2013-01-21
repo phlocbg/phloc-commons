@@ -22,32 +22,24 @@ import java.util.Comparator;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.phloc.commons.compare.AbstractPartComparatorComparable;
 import com.phloc.commons.compare.ESortOrder;
-import com.phloc.commons.tree.IBasicTreeItem;
-import com.phloc.commons.tree.simple.ITreeItem;
-import com.phloc.commons.tree.withid.ITreeItemWithID;
+import com.phloc.commons.tree.withid.DefaultTreeItemWithID;
 
 /**
- * Comparator for sorting {@link IBasicTreeItem} items by their value using an
- * comparable value types.<br>
- * Works for {@link ITreeItem} and {@link ITreeItemWithID}.
+ * Comparator for sorting {@link DefaultTreeItemWithID} items by their value
+ * using an comparable value types.
  * 
  * @author philip
  * @param <DATATYPE>
  *        tree item value type
- * @param <ITEMTYPE>
- *        tree item implementation type
- * @deprecated Use {@link ComparatorTreeItemDataComparable} instead
  */
-@Deprecated
-public class ComparatorTreeItemValueComparable <DATATYPE extends Comparable <? super DATATYPE>, ITEMTYPE extends IBasicTreeItem <DATATYPE, ITEMTYPE>> extends
-                                                                                                                                                      AbstractPartComparatorComparable <ITEMTYPE, DATATYPE>
+public final class ComparatorDefaultTreeItemWithIDDataComparable <IDTYYPE, DATATYPE extends Comparable <? super DATATYPE>> extends
+                                                                                                                           ComparatorTreeItemDataComparable <DATATYPE, DefaultTreeItemWithID <IDTYYPE, DATATYPE>>
 {
   /**
    * Comparator with default sort order.
    */
-  public ComparatorTreeItemValueComparable ()
+  public ComparatorDefaultTreeItemWithIDDataComparable ()
   {
     super ();
   }
@@ -58,7 +50,7 @@ public class ComparatorTreeItemValueComparable <DATATYPE extends Comparable <? s
    * @param eSortOrder
    *        The sort order to use. May not be <code>null</code>.
    */
-  public ComparatorTreeItemValueComparable (@Nonnull final ESortOrder eSortOrder)
+  public ComparatorDefaultTreeItemWithIDDataComparable (@Nonnull final ESortOrder eSortOrder)
   {
     super (eSortOrder);
   }
@@ -70,7 +62,7 @@ public class ComparatorTreeItemValueComparable <DATATYPE extends Comparable <? s
    *        The nested comparator to be invoked, when the main comparison
    *        resulted in 0.
    */
-  public ComparatorTreeItemValueComparable (@Nullable final Comparator <? super ITEMTYPE> aNestedComparator)
+  public ComparatorDefaultTreeItemWithIDDataComparable (@Nullable final Comparator <? super DefaultTreeItemWithID <IDTYYPE, DATATYPE>> aNestedComparator)
   {
     super (aNestedComparator);
   }
@@ -84,16 +76,9 @@ public class ComparatorTreeItemValueComparable <DATATYPE extends Comparable <? s
    *        The nested comparator to be invoked, when the main comparison
    *        resulted in 0.
    */
-  public ComparatorTreeItemValueComparable (@Nonnull final ESortOrder eSortOrder,
-                                            @Nullable final Comparator <? super ITEMTYPE> aNestedComparator)
+  public ComparatorDefaultTreeItemWithIDDataComparable (@Nonnull final ESortOrder eSortOrder,
+                                                        @Nullable final Comparator <? super DefaultTreeItemWithID <IDTYYPE, DATATYPE>> aNestedComparator)
   {
     super (eSortOrder, aNestedComparator);
-  }
-
-  @Override
-  @Nullable
-  protected DATATYPE getPart (@Nonnull final ITEMTYPE aTreeItem)
-  {
-    return aTreeItem.getData ();
   }
 }

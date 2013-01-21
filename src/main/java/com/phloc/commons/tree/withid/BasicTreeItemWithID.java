@@ -361,12 +361,12 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
     return EChange.CHANGED;
   }
 
-  private void _removeFromFactory (@Nonnull final ITEMTYPE aItem)
+  private void _recursiveRemoveFromFactory (@Nonnull final ITEMTYPE aItem)
   {
     // Recursively remove this node and all child nodes from the factory!
     if (aItem.hasChildren ())
       for (final ITEMTYPE aChild : aItem.getChildren ())
-        _removeFromFactory (aChild);
+        _recursiveRemoveFromFactory (aChild);
     m_aFactory.onRemoveItem (aItem);
   }
 
@@ -388,7 +388,7 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
       throw new IllegalStateException ("Failed to remove item from list: " + aItem);
 
     // Notify factory
-    _removeFromFactory (aItem);
+    _recursiveRemoveFromFactory (aItem);
     return EChange.CHANGED;
   }
 
@@ -399,7 +399,7 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
       return EChange.UNCHANGED;
 
     // Remember all children
-    final List <ITEMTYPE> aAllChildren = new ArrayList <ITEMTYPE> (m_aChildren);
+    final List <ITEMTYPE> aAllChildren = ContainerHelper.newList (m_aChildren);
 
     // Remove all children
     m_aChildMap.clear ();
@@ -407,7 +407,7 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
 
     // Notify factory after removal
     for (final ITEMTYPE aChild : aAllChildren)
-      _removeFromFactory (aChild);
+      _recursiveRemoveFromFactory (aChild);
     return EChange.CHANGED;
   }
 

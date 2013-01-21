@@ -30,8 +30,7 @@ import com.phloc.commons.microdom.serialize.MicroReader;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 import com.phloc.commons.name.MockHasName;
 import com.phloc.commons.tree.simple.DefaultTree;
-import com.phloc.commons.tree.simple.DefaultTreeItem;
-import com.phloc.commons.tree.utils.sort.ComparatorTreeItemValueComparable;
+import com.phloc.commons.tree.utils.sort.ComparatorDefaultTreeItemComparable;
 import com.phloc.commons.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
 
 /**
@@ -84,7 +83,7 @@ public final class TreeXMLConverterTest extends AbstractPhlocTestCase
     aTree.getRootItem ().createChildItem (new MockHasName ("name1"));
 
     TreeXMLConverter.getTreeAsXML (aTree,
-                                   new ComparatorTreeItemValueComparable <MockHasName, DefaultTreeItem <MockHasName>> (),
+                                   new ComparatorDefaultTreeItemComparable <MockHasName> (),
                                    new MockHasNameConverter ());
   }
 }

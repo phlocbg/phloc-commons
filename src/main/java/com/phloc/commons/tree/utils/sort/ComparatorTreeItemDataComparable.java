@@ -38,16 +38,14 @@ import com.phloc.commons.tree.withid.ITreeItemWithID;
  *        tree item value type
  * @param <ITEMTYPE>
  *        tree item implementation type
- * @deprecated Use {@link ComparatorTreeItemDataComparable} instead
  */
-@Deprecated
-public class ComparatorTreeItemValueComparable <DATATYPE extends Comparable <? super DATATYPE>, ITEMTYPE extends IBasicTreeItem <DATATYPE, ITEMTYPE>> extends
+public class ComparatorTreeItemDataComparable <DATATYPE extends Comparable <? super DATATYPE>, ITEMTYPE extends IBasicTreeItem <DATATYPE, ITEMTYPE>> extends
                                                                                                                                                       AbstractPartComparatorComparable <ITEMTYPE, DATATYPE>
 {
   /**
    * Comparator with default sort order.
    */
-  public ComparatorTreeItemValueComparable ()
+  public ComparatorTreeItemDataComparable ()
   {
     super ();
   }
@@ -58,7 +56,7 @@ public class ComparatorTreeItemValueComparable <DATATYPE extends Comparable <? s
    * @param eSortOrder
    *        The sort order to use. May not be <code>null</code>.
    */
-  public ComparatorTreeItemValueComparable (@Nonnull final ESortOrder eSortOrder)
+  public ComparatorTreeItemDataComparable (@Nonnull final ESortOrder eSortOrder)
   {
     super (eSortOrder);
   }
@@ -70,7 +68,7 @@ public class ComparatorTreeItemValueComparable <DATATYPE extends Comparable <? s
    *        The nested comparator to be invoked, when the main comparison
    *        resulted in 0.
    */
-  public ComparatorTreeItemValueComparable (@Nullable final Comparator <? super ITEMTYPE> aNestedComparator)
+  public ComparatorTreeItemDataComparable (@Nullable final Comparator <? super ITEMTYPE> aNestedComparator)
   {
     super (aNestedComparator);
   }
@@ -84,7 +82,7 @@ public class ComparatorTreeItemValueComparable <DATATYPE extends Comparable <? s
    *        The nested comparator to be invoked, when the main comparison
    *        resulted in 0.
    */
-  public ComparatorTreeItemValueComparable (@Nonnull final ESortOrder eSortOrder,
+  public ComparatorTreeItemDataComparable (@Nonnull final ESortOrder eSortOrder,
                                             @Nullable final Comparator <? super ITEMTYPE> aNestedComparator)
   {
     super (eSortOrder, aNestedComparator);

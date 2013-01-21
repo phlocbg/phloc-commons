@@ -23,18 +23,18 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.compare.ESortOrder;
-import com.phloc.commons.tree.simple.DefaultTreeItem;
+import com.phloc.commons.tree.withid.DefaultTreeItemWithID;
 
 /**
- * Comparator for sorting {@link DefaultTreeItem} items by their value using an
- * explicit {@link Comparator}.
+ * Comparator for sorting {@link DefaultTreeItemWithID} items by their value
+ * using an explicit {@link Comparator}.
  * 
  * @author philip
  * @param <DATATYPE>
  *        tree item value type
  */
-public final class ComparatorDefaultTreeItem <DATATYPE> extends
-                                                        ComparatorTreeItemData <DATATYPE, DefaultTreeItem <DATATYPE>>
+public final class ComparatorDefaultTreeItemWithIDData <IDTYYPE, DATATYPE> extends
+                                                                           ComparatorTreeItemData <DATATYPE, DefaultTreeItemWithID <IDTYYPE, DATATYPE>>
 {
   /**
    * Constructor with default sort order.
@@ -42,7 +42,7 @@ public final class ComparatorDefaultTreeItem <DATATYPE> extends
    * @param aDataComparator
    *        Comparator for the data elements. May not be <code>null</code>.
    */
-  public ComparatorDefaultTreeItem (@Nonnull final Comparator <? super DATATYPE> aDataComparator)
+  public ComparatorDefaultTreeItemWithIDData (@Nonnull final Comparator <? super DATATYPE> aDataComparator)
   {
     super (aDataComparator);
   }
@@ -55,8 +55,8 @@ public final class ComparatorDefaultTreeItem <DATATYPE> extends
    * @param eSortOrder
    *        The sort order to use. May not be <code>null</code>.
    */
-  public ComparatorDefaultTreeItem (@Nonnull final ESortOrder eSortOrder,
-                                    @Nonnull final Comparator <? super DATATYPE> aDataComparator)
+  public ComparatorDefaultTreeItemWithIDData (@Nonnull final ESortOrder eSortOrder,
+                                              @Nonnull final Comparator <? super DATATYPE> aDataComparator)
   {
     super (eSortOrder, aDataComparator);
   }
@@ -70,8 +70,8 @@ public final class ComparatorDefaultTreeItem <DATATYPE> extends
    * @param aDataComparator
    *        The comparator for comparing the IDs. May not be <code>null</code>.
    */
-  public ComparatorDefaultTreeItem (@Nullable final Comparator <? super DefaultTreeItem <DATATYPE>> aNestedComparator,
-                                    @Nonnull final Comparator <? super DATATYPE> aDataComparator)
+  public ComparatorDefaultTreeItemWithIDData (@Nullable final Comparator <? super DefaultTreeItemWithID <IDTYYPE, DATATYPE>> aNestedComparator,
+                                              @Nonnull final Comparator <? super DATATYPE> aDataComparator)
   {
     super (aNestedComparator, aDataComparator);
   }
@@ -87,9 +87,9 @@ public final class ComparatorDefaultTreeItem <DATATYPE> extends
    * @param aDataComparator
    *        The comparator for comparing the IDs. May not be <code>null</code>.
    */
-  public ComparatorDefaultTreeItem (@Nonnull final ESortOrder eSortOrder,
-                                    @Nullable final Comparator <? super DefaultTreeItem <DATATYPE>> aNestedComparator,
-                                    @Nonnull final Comparator <? super DATATYPE> aDataComparator)
+  public ComparatorDefaultTreeItemWithIDData (@Nonnull final ESortOrder eSortOrder,
+                                              @Nullable final Comparator <? super DefaultTreeItemWithID <IDTYYPE, DATATYPE>> aNestedComparator,
+                                              @Nonnull final Comparator <? super DATATYPE> aDataComparator)
   {
     super (eSortOrder, aNestedComparator, aDataComparator);
   }

@@ -79,7 +79,7 @@ public final class TreeSorter
   public static <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEMTYPE>> void sort (@Nonnull final IBasicTree <DATATYPE, ITEMTYPE> aTree,
                                                                                        @Nonnull final Comparator <? super DATATYPE> aValueComparator)
   {
-    final ComparatorTreeItemValue <DATATYPE, ITEMTYPE> aItemComp = new ComparatorTreeItemValue <DATATYPE, ITEMTYPE> (aValueComparator);
+    final ComparatorTreeItemData <DATATYPE, ITEMTYPE> aItemComp = new ComparatorTreeItemData <DATATYPE, ITEMTYPE> (aValueComparator);
     _sort (aTree, aItemComp);
   }
 
@@ -93,7 +93,7 @@ public final class TreeSorter
    */
   public static <DATATYPE extends Comparable <? super DATATYPE>, ITEMTYPE extends ITreeItem <DATATYPE, ITEMTYPE>> void sort (@Nonnull final IBasicTree <DATATYPE, ITEMTYPE> aTree)
   {
-    final ComparatorTreeItemValueComparable <DATATYPE, ITEMTYPE> aItemComp = new ComparatorTreeItemValueComparable <DATATYPE, ITEMTYPE> ();
+    final ComparatorTreeItemDataComparable <DATATYPE, ITEMTYPE> aItemComp = new ComparatorTreeItemDataComparable <DATATYPE, ITEMTYPE> ();
     _sort (aTree, aItemComp);
   }
 }
