@@ -33,21 +33,21 @@ public interface IHierarchyWalkerDynamicCallback <DATATYPE> extends IBaseHierarc
    * Called before eventual children of the current item are iterated.
    * 
    * @param aItem
-   *        The current item. May not be <code>null</code>.
+   *        The current item. May be <code>null</code>.
    * @return A non-<code>null</code> status code that determines how to continue
    *         iteration.
    */
   @Nonnull
-  EHierarchyCallbackReturn onItemBeforeChildren (@Nonnull DATATYPE aItem);
+  EHierarchyCallbackReturn onItemBeforeChildren (DATATYPE aItem);
 
   /**
    * Called after eventual children of the current item were iterated.
    * 
    * @param aItem
-   *        The current item. May not be <code>null</code>.
+   *        The current item. May be <code>null</code>.
    * @return A non-<code>null</code> status code that determines how to continue
    *         iteration.
    */
   @Nonnull
-  EHierarchyCallbackReturn onItemAfterChildren (@Nonnull DATATYPE aItem);
+  EHierarchyCallbackReturn onItemAfterChildren (DATATYPE aItem);
 }

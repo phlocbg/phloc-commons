@@ -44,14 +44,14 @@ public class DefaultHierarchyWalkerDynamicCallback <DATATYPE> extends DefaultHie
 
   @OverrideOnDemand
   @Nonnull
-  public EHierarchyCallbackReturn onItemBeforeChildren (@Nonnull final DATATYPE aItem)
+  public EHierarchyCallbackReturn onItemBeforeChildren (final DATATYPE aItem)
   {
     return EHierarchyCallbackReturn.CONTINUE;
   }
 
   @OverrideOnDemand
   @Nonnull
-  public EHierarchyCallbackReturn onItemAfterChildren (@Nonnull final DATATYPE aItem)
+  public EHierarchyCallbackReturn onItemAfterChildren (final DATATYPE aItem)
   {
     return EHierarchyCallbackReturn.CONTINUE;
   }
