@@ -17,8 +17,6 @@
  */
 package com.phloc.commons.hierarchy;
 
-import javax.annotation.Nonnull;
-import javax.annotation.meta.When;
 
 /**
  * Interface for walking a hierarchy without the possibilities to alter they way
@@ -36,7 +34,7 @@ public interface IHierarchyWalkerCallback <DATATYPE> extends IBaseHierarchyWalke
    * @param aItem
    *        The current tree item. May be <code>null</code>.
    */
-  void onItemBeforeChildren (@Nonnull (when = When.MAYBE) DATATYPE aItem);
+  void onItemBeforeChildren (DATATYPE aItem);
 
   /**
    * Called after eventual children of the current item were iterated.
@@ -44,5 +42,5 @@ public interface IHierarchyWalkerCallback <DATATYPE> extends IBaseHierarchyWalke
    * @param aItem
    *        The current tree item. May be <code>null</code>.
    */
-  void onItemAfterChildren (@Nonnull (when = When.MAYBE) DATATYPE aItem);
+  void onItemAfterChildren (DATATYPE aItem);
 }
