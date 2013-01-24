@@ -20,9 +20,7 @@ package com.phloc.commons.parent;
 import java.util.Collection;
 
 import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.meta.When;
 
 /**
  * This interface can be used to generically resolved children of a certain
@@ -38,28 +36,28 @@ public interface IChildrenProvider <CHILDTYPE>
    * Check if an item has children.
    * 
    * @param aCurrent
-   *        The object to determine the children of. May be <code>null</code>
-   *        depending on the concrete implementation.
+   *        The object to determine the children of. No <code>null</code> or
+   *        non- <code>null</code> constraint possible.
    * @return <code>true</code> if this item has children, <code>false</code>
    *         otherwise.
    */
-  boolean hasChildren (@Nonnull (when = When.MAYBE) CHILDTYPE aCurrent);
+  boolean hasChildren (CHILDTYPE aCurrent);
 
   /**
    * @param aCurrent
-   *        The object to determine the children count of. May be
-   *        <code>null</code> depending on the concrete implementation.
+   *        The object to determine the children count of. No <code>null</code>
+   *        or non- <code>null</code> constraint possible.
    * @return The number of contained direct children. Always &ge; 0.
    */
   @Nonnegative
-  int getChildCount (@Nonnull (when = When.MAYBE) CHILDTYPE aCurrent);
+  int getChildCount (CHILDTYPE aCurrent);
 
   /**
    * Get the children of the passed object.
    * 
    * @param aCurrent
-   *        The object to determine the children of. May be <code>null</code>
-   *        depending on the concrete implementation.
+   *        The object to determine the children of. No <code>null</code> or
+   *        non- <code>null</code> constraint possible.
    * @return The child objects, or <code>null</code> if there are no children.
    *         If <code>null</code> is passed, the resolver is expected to return
    *         any possible top level (root) elements. This method may NOT return
@@ -67,5 +65,5 @@ public interface IChildrenProvider <CHILDTYPE>
    *         the same object returned <code>true</code>.
    */
   @Nullable
-  Collection <? extends CHILDTYPE> getChildren (@Nonnull (when = When.MAYBE) CHILDTYPE aCurrent);
+  Collection <? extends CHILDTYPE> getChildren (CHILDTYPE aCurrent);
 }

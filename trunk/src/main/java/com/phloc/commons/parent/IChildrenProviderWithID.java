@@ -17,9 +17,7 @@
  */
 package com.phloc.commons.parent;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.meta.When;
 
 /**
  * This interface can be used to generically resolved children of a certain
@@ -38,12 +36,13 @@ public interface IChildrenProviderWithID <KEYTYPE, CHILDTYPE> extends IChildrenP
    * object.
    * 
    * @param aCurrent
-   *        The object to determine the children of. May be <code>null</code>
-   *        depending on the concrete implementation.
+   *        The object to determine the children of. No <code>null</code> or
+   *        non- <code>null</code> constraint possible.
    * @param aID
-   *        the ID of the object in question
+   *        the ID of the object in question. No <code>null</code> or non-
+   *        <code>null</code> constraint possible.
    * @return the object with the passed ID or <code>null</code>
    */
   @Nullable
-  CHILDTYPE getChildWithID (@Nonnull (when = When.MAYBE) CHILDTYPE aCurrent, @Nonnull (when = When.MAYBE) KEYTYPE aID);
+  CHILDTYPE getChildWithID (CHILDTYPE aCurrent, KEYTYPE aID);
 }

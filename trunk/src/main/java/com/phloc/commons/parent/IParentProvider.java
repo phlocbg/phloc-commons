@@ -17,9 +17,7 @@
  */
 package com.phloc.commons.parent;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.meta.When;
 
 /**
  * This helper interface is required to build a generic tree. This is required
@@ -36,10 +34,11 @@ public interface IParentProvider <PARENTTYPE>
    * Get the parent of the passed object.
    * 
    * @param aCurrent
-   *        The object to determine the parent of.
+   *        The object to determine the parent of. No <code>null</code> or non-
+   *        <code>null</code> constraint possible.
    * @return The parent object, or <code>null</code> if the object has no
    *         parent.
    */
   @Nullable
-  PARENTTYPE getParent (@Nonnull (when = When.MAYBE) PARENTTYPE aCurrent);
+  PARENTTYPE getParent (PARENTTYPE aCurrent);
 }
