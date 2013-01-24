@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.convert;
 
-import javax.annotation.Nonnull;
 
 /**
  * This is a very simple type conversion interface for compile type conversions.
@@ -34,19 +33,21 @@ public interface IBidirectionalConverter <SRCTYPE, DSTTYPE>
    * Convert from SRC to DST.
    * 
    * @param aSource
-   *        The SRC object
-   * @return The DST object
+   *        The SRC object. No <code>null</code> or non- <code>null</code>
+   *        constraint possible.
+   * @return The DST object. No <code>null</code> or non- <code>null</code>
+   *         constraint possible.
    */
-  @Nonnull
-  DSTTYPE convertToDst (@Nonnull SRCTYPE aSource);
+  DSTTYPE convertToDst (SRCTYPE aSource);
 
   /**
    * Convert from DST to SRC
    * 
    * @param aDest
-   *        The DST object
-   * @return The SRC object
+   *        The DST object. No <code>null</code> or non- <code>null</code>
+   *        constraint possible.
+   * @return The SRC object. No <code>null</code> or non- <code>null</code>
+   *         constraint possible.
    */
-  @Nonnull
-  SRCTYPE convertToSrc (@Nonnull DSTTYPE aDest);
+  SRCTYPE convertToSrc (DSTTYPE aDest);
 }

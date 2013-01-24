@@ -24,7 +24,6 @@ import java.lang.reflect.Method;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
-import javax.annotation.meta.When;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -224,7 +223,7 @@ public final class GenericReflection
    * @throws InstantiationException
    *         Reflection exception
    */
-  @Nonnull (when = When.MAYBE)
+  @Nonnull
   public static <DATATYPE> DATATYPE newInstance (@Nonnull final DATATYPE aObj) throws IllegalAccessException,
                                                                               NoSuchMethodException,
                                                                               InvocationTargetException,
@@ -233,7 +232,7 @@ public final class GenericReflection
     return findConstructor (aObj).newInstance ();
   }
 
-  @Nonnull (when = When.MAYBE)
+  @Nullable
   public static <DATATYPE> DATATYPE newInstance (@Nullable final Class <? extends DATATYPE> aClass)
   {
     if (aClass != null)
@@ -252,7 +251,7 @@ public final class GenericReflection
     return null;
   }
 
-  @Nonnull (when = When.MAYBE)
+  @Nullable
   public static <DATATYPE> DATATYPE newInstance (@Nullable final String sClassName,
                                                  @Nullable final Class <DATATYPE> aDesiredType)
   {
@@ -273,7 +272,7 @@ public final class GenericReflection
     return null;
   }
 
-  @Nonnull (when = When.MAYBE)
+  @Nullable
   public static <DATATYPE> DATATYPE newInstance (@Nullable final String sClassName,
                                                  @Nullable final Class <DATATYPE> aDesiredType,
                                                  @Nullable final ClassLoader aClassLoaderToUse)

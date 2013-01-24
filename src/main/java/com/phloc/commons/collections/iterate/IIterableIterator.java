@@ -19,9 +19,6 @@ package com.phloc.commons.collections.iterate;
 
 import java.util.Iterator;
 
-import javax.annotation.Nonnull;
-import javax.annotation.meta.When;
-
 /**
  * This is a merged interface of {@link Iterator} and {@link Iterable} for
  * simpler usage of iterators in the new Java 1.5 "for" constructs.
@@ -33,8 +30,8 @@ import javax.annotation.meta.When;
 public interface IIterableIterator <ELEMENTTYPE> extends Iterable <ELEMENTTYPE>, Iterator <ELEMENTTYPE>
 {
   /**
-   * {@inheritDoc}
+   * {@inheritDoc} No constraint whether the element can be <code>null</code> or
+   * non-<code>null</code>.
    */
-  @Nonnull (when = When.UNKNOWN)
   ELEMENTTYPE next ();
 }

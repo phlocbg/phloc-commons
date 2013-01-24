@@ -23,7 +23,6 @@ import java.util.Map;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.meta.When;
 
 import com.phloc.commons.state.EChange;
 
@@ -45,28 +44,47 @@ public interface IMultiMap <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VAL
    * Add a single value into the container identified by the passed key.
    * 
    * @param aKey
-   *        The key to use
+   *        The key to use. May not be <code>null</code>.
    * @param aValue
-   *        The value to be added
+   *        The value to be added. May be <code>null</code>.
    * @return {@link EChange}
    */
   @Nonnull
-  EChange putSingle (@Nonnull (when = When.MAYBE) KEYTYPE aKey, @Nullable VALUETYPE aValue);
+  EChange putSingle (@Nonnull KEYTYPE aKey, @Nullable VALUETYPE aValue);
 
   /**
    * Add all values into the container identified by the passed key-value-map.
    * 
    * @param aMap
-   *        The key-value-map to use
+   *        The key-value-map to use. May not be <code>null</code>.
    * @return {@link EChange}
    */
   @Nonnull
   EChange putAllIn (@Nonnull Map <? extends KEYTYPE, ? extends VALUETYPE> aMap);
 
+  /**
+   * Remove a single element from the container identified by the passed key.
+   * 
+   * @param aKey
+   *        The key to use. May not be <code>null</code>.
+   * @param aValue
+   *        The value to be removed. May be <code>null</code>.
+   * @return {@link EChange}
+   */
   @Nonnull
-  EChange removeSingle (@Nonnull (when = When.MAYBE) KEYTYPE aKey, @Nullable VALUETYPE aValue);
+  EChange removeSingle (@Nonnull KEYTYPE aKey, @Nullable VALUETYPE aValue);
 
-  boolean containsSingle (@Nonnull (when = When.MAYBE) KEYTYPE aKey, @Nullable VALUETYPE aValue);
+  /**
+   * Check a single element from the container identified by the passed key is
+   * present.
+   * 
+   * @param aKey
+   *        The key to use. May not be <code>null</code>.
+   * @param aValue
+   *        The value to be checked. May be <code>null</code>.
+   * @return {@link EChange}
+   */
+  boolean containsSingle (@Nonnull KEYTYPE aKey, @Nullable VALUETYPE aValue);
 
   /**
    * @return The total number of contained values. Always &ge; 0.
