@@ -1754,13 +1754,15 @@ public final class StreamUtils
    * @param nLen
    *        The number of bytes to read into the destination buffer to use. May
    *        not be &lt; 0.
+   * @return The number of read bytes
    * @throws IOException
    *         In case reading fails
    */
-  public static void readFully (@Nonnull final InputStream aIS,
-                                @Nonnull final byte [] aBuffer,
-                                @Nonnegative final int nOfs,
-                                @Nonnegative final int nLen) throws IOException
+  @Nonnegative
+  public static int readFully (@Nonnull final InputStream aIS,
+                               @Nonnull final byte [] aBuffer,
+                               @Nonnegative final int nOfs,
+                               @Nonnegative final int nLen) throws IOException
   {
     if (aIS == null)
       throw new NullPointerException ("inputStream");
@@ -1779,5 +1781,6 @@ public final class StreamUtils
                                 " bytes so far.");
       nTotalBytesRead += nBytesRead;
     }
+    return nTotalBytesRead;
   }
 }
