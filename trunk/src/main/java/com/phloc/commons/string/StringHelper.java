@@ -1462,6 +1462,30 @@ public final class StringHelper
   }
 
   /**
+   * Get the first index of sSearch within sText starting at index nFromIndex.
+   * 
+   * @param sText
+   *        The text to search in. May be <code>null</code>.
+   * @param nFromIndex
+   *        The index to start searching in the source string
+   * @param sSearch
+   *        The text to search for. May be <code>null</code>.
+   * @return The first index of sSearch within sText or
+   *         {@value #STRING_NOT_FOUND} if sSearch was not found or if any
+   *         parameter was <code>null</code>.
+   * @see String#indexOf(String,int)
+   */
+  public static int getIndexOf (@Nullable final String sText,
+                                @Nonnegative final int nFromIndex,
+                                @Nullable final String sSearch)
+  {
+    return sText != null && sSearch != null && (sText.length () - nFromIndex) >= sSearch.length ()
+                                                                                                  ? sText.indexOf (sSearch,
+                                                                                                                   nFromIndex)
+                                                                                                  : STRING_NOT_FOUND;
+  }
+
+  /**
    * Get the last index of sSearch within sText.
    * 
    * @param sText
@@ -1477,6 +1501,30 @@ public final class StringHelper
   {
     return sText != null && sSearch != null && sText.length () >= sSearch.length () ? sText.lastIndexOf (sSearch)
                                                                                    : STRING_NOT_FOUND;
+  }
+
+  /**
+   * Get the last index of sSearch within sText starting at index nFromIndex.
+   * 
+   * @param sText
+   *        The text to search in. May be <code>null</code>.
+   * @param nFromIndex
+   *        The index to start searching in the source string
+   * @param sSearch
+   *        The text to search for. May be <code>null</code>.
+   * @return The last index of sSearch within sText or
+   *         {@value #STRING_NOT_FOUND} if sSearch was not found or if any
+   *         parameter was <code>null</code>.
+   * @see String#lastIndexOf(String,int)
+   */
+  public static int getLastIndexOf (@Nullable final String sText,
+                                    @Nonnegative final int nFromIndex,
+                                    @Nullable final String sSearch)
+  {
+    return sText != null && sSearch != null && (sText.length () - nFromIndex) >= sSearch.length ()
+                                                                                                  ? sText.lastIndexOf (sSearch,
+                                                                                                                       nFromIndex)
+                                                                                                  : STRING_NOT_FOUND;
   }
 
   /**
@@ -1497,6 +1545,26 @@ public final class StringHelper
   }
 
   /**
+   * Get the first index of cSearch within sText starting at index nFromIndex.
+   * 
+   * @param sText
+   *        The text to search in. May be <code>null</code>.
+   * @param nFromIndex
+   *        The index to start searching in the source string
+   * @param cSearch
+   *        The character to search for. May be <code>null</code>.
+   * @return The first index of sSearch within sText or
+   *         {@value #STRING_NOT_FOUND} if cSearch was not found or if any
+   *         parameter was <code>null</code>.
+   * @see String#indexOf(int,int)
+   */
+  public static int getIndexOf (@Nullable final String sText, @Nonnegative final int nFromIndex, final char cSearch)
+  {
+    return sText != null && (sText.length () - nFromIndex) >= 1 ? sText.indexOf (cSearch, nFromIndex)
+                                                               : STRING_NOT_FOUND;
+  }
+
+  /**
    * Get the last index of cSearch within sText.
    * 
    * @param sText
@@ -1511,6 +1579,26 @@ public final class StringHelper
   public static int getLastIndexOf (@Nullable final String sText, final char cSearch)
   {
     return sText != null && sText.length () >= 1 ? sText.lastIndexOf (cSearch) : STRING_NOT_FOUND;
+  }
+
+  /**
+   * Get the last index of cSearch within sText starting at index nFromIndex.
+   * 
+   * @param sText
+   *        The text to search in. May be <code>null</code>.
+   * @param nFromIndex
+   *        The index to start searching in the source string
+   * @param cSearch
+   *        The character to search for. May be <code>null</code>.
+   * @return The last index of sSearch within sText or
+   *         {@value #STRING_NOT_FOUND} if cSearch was not found or if any
+   *         parameter was <code>null</code>.
+   * @see String#lastIndexOf(int,int)
+   */
+  public static int getLastIndexOf (@Nullable final String sText, @Nonnegative final int nFromIndex, final char cSearch)
+  {
+    return sText != null && (sText.length () - nFromIndex) >= 1 ? sText.lastIndexOf (cSearch, nFromIndex)
+                                                               : STRING_NOT_FOUND;
   }
 
   /**
@@ -1538,6 +1626,35 @@ public final class StringHelper
   }
 
   /**
+   * Get the first index of sSearch within sText ignoring case starting at index
+   * nFromIndex.
+   * 
+   * @param sText
+   *        The text to search in. May be <code>null</code>.
+   * @param nFromIndex
+   *        The index to start searching in the source string
+   * @param sSearch
+   *        The text to search for. May be <code>null</code>.
+   * @param aSortLocale
+   *        The locale to be used for case unifying.
+   * @return The first index of sSearch within sText or
+   *         {@value #STRING_NOT_FOUND} if sSearch was not found or if any
+   *         parameter was <code>null</code>.
+   * @see String#indexOf(String)
+   */
+  public static int getIndexOfIgnoreCase (@Nullable final String sText,
+                                          @Nonnegative final int nFromIndex,
+                                          @Nullable final String sSearch,
+                                          @Nonnull final Locale aSortLocale)
+  {
+    return sText != null && sSearch != null && (sText.length () - nFromIndex) >= sSearch.length ()
+                                                                                                  ? sText.toLowerCase (aSortLocale)
+                                                                                                         .indexOf (sSearch.toLowerCase (aSortLocale),
+                                                                                                                   nFromIndex)
+                                                                                                  : STRING_NOT_FOUND;
+  }
+
+  /**
    * Get the last index of sSearch within sText ignoring case.
    * 
    * @param sText
@@ -1559,6 +1676,35 @@ public final class StringHelper
                                                                                    ? sText.toLowerCase (aSortLocale)
                                                                                           .lastIndexOf (sSearch.toLowerCase (aSortLocale))
                                                                                    : STRING_NOT_FOUND;
+  }
+
+  /**
+   * Get the last index of sSearch within sText ignoring case starting at index
+   * nFromIndex.
+   * 
+   * @param sText
+   *        The text to search in. May be <code>null</code>.
+   * @param nFromIndex
+   *        The index to start searching in the source string
+   * @param sSearch
+   *        The text to search for. May be <code>null</code>.
+   * @param aSortLocale
+   *        The locale to be used for case unifying.
+   * @return The last index of sSearch within sText or
+   *         {@value #STRING_NOT_FOUND} if sSearch was not found or if any
+   *         parameter was <code>null</code>.
+   * @see String#lastIndexOf(String)
+   */
+  public static int getLastIndexOfIgnoreCase (@Nullable final String sText,
+                                              @Nonnegative final int nFromIndex,
+                                              @Nullable final String sSearch,
+                                              @Nonnull final Locale aSortLocale)
+  {
+    return sText != null && sSearch != null && (sText.length () - nFromIndex) >= sSearch.length ()
+                                                                                                  ? sText.toLowerCase (aSortLocale)
+                                                                                                         .lastIndexOf (sSearch.toLowerCase (aSortLocale),
+                                                                                                                       nFromIndex)
+                                                                                                  : STRING_NOT_FOUND;
   }
 
   /**
@@ -1584,6 +1730,33 @@ public final class StringHelper
   }
 
   /**
+   * Get the first index of cSearch within sText ignoring case starting at index
+   * nFromIndex.
+   * 
+   * @param sText
+   *        The text to search in. May be <code>null</code>.
+   * @param nFromIndex
+   *        The index to start searching in the source string
+   * @param cSearch
+   *        The char to search for. May be <code>null</code>.
+   * @param aSortLocale
+   *        The locale to be used for case unifying.
+   * @return The first index of sSearch within sText or
+   *         {@value #STRING_NOT_FOUND} if sSearch was not found or if any
+   *         parameter was <code>null</code>.
+   * @see String#indexOf(int)
+   */
+  public static int getIndexOfIgnoreCase (@Nullable final String sText,
+                                          @Nonnegative final int nFromIndex,
+                                          final char cSearch,
+                                          @Nonnull final Locale aSortLocale)
+  {
+    return sText != null && (sText.length () - nFromIndex) >= 1 ? sText.toLowerCase (aSortLocale)
+                                                                       .indexOf (Character.toLowerCase (cSearch),
+                                                                                 nFromIndex) : STRING_NOT_FOUND;
+  }
+
+  /**
    * Get the last index of cSearch within sText ignoring case.
    * 
    * @param sText
@@ -1604,6 +1777,33 @@ public final class StringHelper
     return sText != null && sText.length () >= 1 ? sText.toLowerCase (aSortLocale)
                                                         .lastIndexOf (Character.toLowerCase (cSearch))
                                                 : STRING_NOT_FOUND;
+  }
+
+  /**
+   * Get the last index of cSearch within sText ignoring case starting at index
+   * nFromIndex.
+   * 
+   * @param sText
+   *        The text to search in. May be <code>null</code>.
+   * @param nFromIndex
+   *        The index to start searching in the source string
+   * @param cSearch
+   *        The char to search for. May be <code>null</code>.
+   * @param aSortLocale
+   *        The locale to be used for case unifying.
+   * @return The last index of sSearch within sText or
+   *         {@value #STRING_NOT_FOUND} if sSearch was not found or if any
+   *         parameter was <code>null</code>.
+   * @see String#lastIndexOf(int)
+   */
+  public static int getLastIndexOfIgnoreCase (@Nullable final String sText,
+                                              @Nonnegative final int nFromIndex,
+                                              final char cSearch,
+                                              @Nonnull final Locale aSortLocale)
+  {
+    return sText != null && (sText.length () - nFromIndex) >= 1 ? sText.toLowerCase (aSortLocale)
+                                                                       .lastIndexOf (Character.toLowerCase (cSearch),
+                                                                                     nFromIndex) : STRING_NOT_FOUND;
   }
 
   /**
@@ -1732,13 +1932,13 @@ public final class StringHelper
     int ret = 0;
     final int nTextLength = getLength (sText);
     final int nSearchLength = getLength (sSearch);
-    if (nTextLength > 0 && nSearchLength > 0 && nTextLength >= nSearchLength)
+    if (nSearchLength > 0 && nTextLength >= nSearchLength)
     {
       int nLastIndex = 0, nIndex;
       do
       {
         // Start searching from the last result
-        nIndex = getIndexOf (sText.substring (nLastIndex), sSearch);
+        nIndex = getIndexOf (sText, nLastIndex, sSearch);
         if (nIndex != STRING_NOT_FOUND)
         {
           // Match found
@@ -1771,6 +1971,60 @@ public final class StringHelper
   {
     return sText != null && sSearch != null ? getOccurrenceCount (sText.toLowerCase (aSortLocale),
                                                                   sSearch.toLowerCase (aSortLocale)) : 0;
+  }
+
+  /**
+   * Count the number of occurrences of cSearch within sText.
+   * 
+   * @param sText
+   *        The text to search in. May be <code>null</code>.
+   * @param cSearch
+   *        The character to search for.
+   * @return A non-negative number of occurrences.
+   */
+  @Nonnegative
+  public static int getOccurrenceCount (@Nullable final String sText, final char cSearch)
+  {
+    int ret = 0;
+    final int nTextLength = getLength (sText);
+    if (nTextLength >= 1)
+    {
+      int nLastIndex = 0, nIndex;
+      do
+      {
+        // Start searching from the last result
+        nIndex = getIndexOf (sText, nLastIndex, cSearch);
+        if (nIndex != STRING_NOT_FOUND)
+        {
+          // Match found
+          ++ret;
+
+          // Identify the next starting position (relative index + number of
+          // search strings)
+          nLastIndex += nIndex + 1;
+        }
+      } while (nIndex != STRING_NOT_FOUND);
+    }
+    return ret;
+  }
+
+  /**
+   * Count the number of occurrences of cSearch within sText ignoring case.
+   * 
+   * @param sText
+   *        The text to search in. May be <code>null</code>.
+   * @param cSearch
+   *        The character to search for.
+   * @param aSortLocale
+   *        The locale to be used for case unifying.
+   * @return A non-negative number of occurrences.
+   */
+  @Nonnegative
+  public static int getOccurrenceCountIgnoreCase (@Nullable final String sText,
+                                                  final char cSearch,
+                                                  @Nonnull final Locale aSortLocale)
+  {
+    return sText != null ? getOccurrenceCount (sText.toLowerCase (aSortLocale), Character.toLowerCase (cSearch)) : 0;
   }
 
   /**
@@ -3011,5 +3265,43 @@ public final class StringHelper
     for (int nSrc = aChars.length - 1, nDst = 0; nSrc != -1; nSrc--, nDst++)
       ret[nDst] = aChars[nSrc];
     return new String (ret);
+  }
+
+  /**
+   * Optimized remove method that removes a set of characters from an input
+   * string!
+   * 
+   * @param sInputString
+   *        The input string.
+   * @param aRemoveChars
+   *        The characters to remove. May not be <code>null</code>.
+   * @return The version of the string without the passed characters or an empty
+   *         String if the input string was <code>null</code>.
+   */
+  @Nonnull
+  public static String removeMultiple (@Nullable final String sInputString, @Nonnull final char [] aRemoveChars)
+  {
+    if (aRemoveChars == null)
+      throw new NullPointerException ("RemoveChars");
+
+    // Any input text?
+    if (hasNoText (sInputString))
+      return "";
+
+    // Anything to remove?
+    if (aRemoveChars.length == 0)
+      return sInputString;
+
+    // Get char array
+    final StringBuilder aSB = new StringBuilder (sInputString.length ());
+    final char [] aInput = sInputString.toCharArray ();
+    input: for (final char cInput : aInput)
+    {
+      for (final char cRemove : aRemoveChars)
+        if (cInput == cRemove)
+          continue input;
+      aSB.append (cInput);
+    }
+    return aSB.toString ();
   }
 }
