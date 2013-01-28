@@ -1796,4 +1796,15 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     assertEquals ("", StringHelper.getWithoutAnySpaces (""));
     assertEquals ("", StringHelper.getWithoutAnySpaces (null));
   }
+
+  @Test
+  public void testGetReverse ()
+  {
+    assertNull (StringHelper.getReverse (null));
+    assertEquals ("", StringHelper.getReverse (""));
+    assertEquals ("a", StringHelper.getReverse ("a"));
+    assertEquals ("ba", StringHelper.getReverse ("ab"));
+    assertEquals (" ba", StringHelper.getReverse ("ab "));
+    assertEquals ("cba", StringHelper.getReverse ("abc"));
+  }
 }

@@ -2996,4 +2996,20 @@ public final class StringHelper
   {
     return _getFromLast (sStr, sSearch, false);
   }
+
+  @Nullable
+  public static String getReverse (@Nullable final String sStr)
+  {
+    if (sStr == null)
+      return null;
+
+    final char [] aChars = sStr.toCharArray ();
+    if (aChars.length <= 1)
+      return sStr;
+
+    final char [] ret = new char [aChars.length];
+    for (int nSrc = aChars.length - 1, nDst = 0; nSrc != -1; nSrc--, nDst++)
+      ret[nDst] = aChars[nSrc];
+    return new String (ret);
+  }
 }
