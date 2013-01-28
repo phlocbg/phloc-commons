@@ -204,6 +204,20 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
   }
 
   /**
+   * Get the byte at the specified index
+   * 
+   * @param nIndex
+   *        The index to use. Must be &ge; 0 and &lt; count
+   * @return The byte at the specified position
+   */
+  public byte getByteAt (@Nonnegative final int nIndex)
+  {
+    if (nIndex < 0 || nIndex >= m_nCount)
+      throw new IllegalArgumentException ("Illegal index passed!");
+    return m_aBuf[nIndex];
+  }
+
+  /**
    * Returns the current size of the buffer.
    * 
    * @return the value of the <code>count</code> field, which is the number of
@@ -227,6 +241,26 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
   public boolean isEmpty ()
   {
     return m_nCount == 0;
+  }
+
+  public boolean isNotEmpty ()
+  {
+    return m_nCount > 0;
+  }
+
+  public boolean startsWith (@Nonnull final byte [] aBytes)
+  {
+    return startsWith (aBytes, 0, aBytes.length);
+  }
+
+  public boolean startsWith (@Nonnull final byte [] aBytes, @Nonnegative final int nOfs, @Nonnegative final int nLen)
+  {
+    if (m_nCount < nLen)
+      return false;
+    for (int i = 0; i < nLen; ++i)
+      if (m_aBuf[i] != aBytes[nOfs + i])
+        return false;
+    return true;
   }
 
   /**
@@ -262,6 +296,64 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
    * {@link java.nio.charset.CharsetDecoder} class should be used when more
    * control over the decoding process is required.
    * 
+   * @param nLength
+   *        The number of bytes to be converted to a String. Must be &ge; 0.
+   * @param sCharset
+   *        the name of a supported {@linkplain java.nio.charset.Charset
+   *        </code>charset<code>}
+   * @return String decoded from the buffer's contents.
+   */
+  @Nonnull
+  public String getAsString (@Nonnegative final int nLength, @Nonnull final String sCharset)
+  {
+    if (nLength < 0 || nLength > m_nCount)
+      throw new IllegalArgumentException ("Invalid length: " + nLength);
+    return CharsetManager.getAsString (m_aBuf, 0, nLength, sCharset);
+  }
+
+  /**
+   * Converts the buffer's contents into a string by decoding the bytes using
+   * the specified {@link java.nio.charset.Charset charsetName}. The length of
+   * the new <tt>String</tt> is a function of the charset, and hence may not be
+   * equal to the length of the byte array.
+   * <p>
+   * This method always replaces malformed-input and unmappable-character
+   * sequences with this charset's default replacement string. The
+   * {@link java.nio.charset.CharsetDecoder} class should be used when more
+   * control over the decoding process is required.
+   * 
+   * @param nIndex
+   *        The start index to use
+   * @param nLength
+   *        The number of bytes to be converted to a String. Must be &ge; 0.
+   * @param sCharset
+   *        the name of a supported {@linkplain java.nio.charset.Charset
+   *        </code>charset<code>}
+   * @return String decoded from the buffer's contents.
+   */
+  @Nonnull
+  public String getAsString (@Nonnegative final int nIndex,
+                             @Nonnegative final int nLength,
+                             @Nonnull final String sCharset)
+  {
+    if (nIndex < 0)
+      throw new IllegalArgumentException ("Invalid index: " + nIndex);
+    if (nLength < 0 || nLength > m_nCount)
+      throw new IllegalArgumentException ("Invalid length: " + nLength);
+    return CharsetManager.getAsString (m_aBuf, nIndex, nLength, sCharset);
+  }
+
+  /**
+   * Converts the buffer's contents into a string by decoding the bytes using
+   * the specified {@link java.nio.charset.Charset charsetName}. The length of
+   * the new <tt>String</tt> is a function of the charset, and hence may not be
+   * equal to the length of the byte array.
+   * <p>
+   * This method always replaces malformed-input and unmappable-character
+   * sequences with this charset's default replacement string. The
+   * {@link java.nio.charset.CharsetDecoder} class should be used when more
+   * control over the decoding process is required.
+   * 
    * @param aCharset
    *        the charset to be used. May not be <code>null</code>.
    * @return String decoded from the buffer's contents.
@@ -270,6 +362,62 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
   public String getAsString (@Nonnull final Charset aCharset)
   {
     return CharsetManager.getAsString (m_aBuf, 0, m_nCount, aCharset);
+  }
+
+  /**
+   * Converts the buffer's contents into a string by decoding the bytes using
+   * the specified {@link java.nio.charset.Charset charsetName}. The length of
+   * the new <tt>String</tt> is a function of the charset, and hence may not be
+   * equal to the length of the byte array.
+   * <p>
+   * This method always replaces malformed-input and unmappable-character
+   * sequences with this charset's default replacement string. The
+   * {@link java.nio.charset.CharsetDecoder} class should be used when more
+   * control over the decoding process is required.
+   * 
+   * @param nLength
+   *        The number of bytes to be converted to a String. Must be &ge; 0.
+   * @param aCharset
+   *        the charset to be used. May not be <code>null</code>.
+   * @return String decoded from the buffer's contents.
+   */
+  @Nonnull
+  public String getAsString (@Nonnegative final int nLength, @Nonnull final Charset aCharset)
+  {
+    if (nLength < 0 || nLength > m_nCount)
+      throw new IllegalArgumentException ("Invalid length: " + nLength);
+    return CharsetManager.getAsString (m_aBuf, 0, nLength, aCharset);
+  }
+
+  /**
+   * Converts the buffer's contents into a string by decoding the bytes using
+   * the specified {@link java.nio.charset.Charset charsetName}. The length of
+   * the new <tt>String</tt> is a function of the charset, and hence may not be
+   * equal to the length of the byte array.
+   * <p>
+   * This method always replaces malformed-input and unmappable-character
+   * sequences with this charset's default replacement string. The
+   * {@link java.nio.charset.CharsetDecoder} class should be used when more
+   * control over the decoding process is required.
+   * 
+   * @param nIndex
+   *        The start index to use
+   * @param nLength
+   *        The number of bytes to be converted to a String. Must be &ge; 0.
+   * @param aCharset
+   *        the charset to be used. May not be <code>null</code>.
+   * @return String decoded from the buffer's contents.
+   */
+  @Nonnull
+  public String getAsString (@Nonnegative final int nIndex,
+                             @Nonnegative final int nLength,
+                             @Nonnull final Charset aCharset)
+  {
+    if (nIndex < 0)
+      throw new IllegalArgumentException ("Invalid index: " + nIndex);
+    if (nLength < 0 || nLength > m_nCount)
+      throw new IllegalArgumentException ("Invalid length: " + nLength);
+    return CharsetManager.getAsString (m_aBuf, nIndex, nLength, aCharset);
   }
 
   /**
