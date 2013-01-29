@@ -1019,7 +1019,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
-  public void testGetOccurrenceCount ()
+  public void testGetOccurrenceCountString ()
   {
     assertEquals (0, StringHelper.getOccurrenceCount ("Test", null));
     assertEquals (0, StringHelper.getOccurrenceCount (null, "Test"));
@@ -1040,7 +1040,25 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
-  public void testGetOccurrenceCountIgnoreCase ()
+  public void testGetOccurrenceCountChar ()
+  {
+    assertEquals (0, StringHelper.getOccurrenceCount (null, 'x'));
+    assertEquals (0, StringHelper.getOccurrenceCount ("e", 'f'));
+    assertEquals (0, StringHelper.getOccurrenceCount ("e", '\u0000'));
+    assertEquals (0, StringHelper.getOccurrenceCount ("eeee", 'f'));
+    assertEquals (0, StringHelper.getOccurrenceCount ("eeee", '\u0000'));
+
+    assertEquals (1, StringHelper.getOccurrenceCount ("e", 'e'));
+    assertEquals (4, StringHelper.getOccurrenceCount ("eeee", 'e'));
+    assertEquals (1, StringHelper.getOccurrenceCount ("abc", 'a'));
+    assertEquals (2, StringHelper.getOccurrenceCount ("aabc", 'a'));
+    assertEquals (1, StringHelper.getOccurrenceCount ("abc", 'b'));
+    assertEquals (1, StringHelper.getOccurrenceCount ("abc", 'c'));
+    assertEquals (2, StringHelper.getOccurrenceCount ("abcc", 'c'));
+  }
+
+  @Test
+  public void testGetOccurrenceCountIgnoreCaseString ()
   {
     final Locale aLocale = Locale.ENGLISH;
     assertEquals (0, StringHelper.getOccurrenceCountIgnoreCase ("Test", null, aLocale));
@@ -1060,6 +1078,39 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     assertEquals (4, StringHelper.getOccurrenceCountIgnoreCase ("eeee", "E", aLocale));
     assertEquals (2, StringHelper.getOccurrenceCountIgnoreCase ("eeee", "EE", aLocale));
     assertEquals (1, StringHelper.getOccurrenceCountIgnoreCase ("eeee", "EEE", aLocale));
+  }
+
+  @Test
+  public void testGetOccurrenceCountIgnoreCaseChar ()
+  {
+    final Locale aLocale = Locale.ENGLISH;
+    assertEquals (0, StringHelper.getOccurrenceCountIgnoreCase (null, 'x', aLocale));
+    assertEquals (0, StringHelper.getOccurrenceCountIgnoreCase ("e", 'f', aLocale));
+    assertEquals (0, StringHelper.getOccurrenceCountIgnoreCase ("e", '\u0000', aLocale));
+    assertEquals (0, StringHelper.getOccurrenceCountIgnoreCase ("eeee", 'f', aLocale));
+    assertEquals (0, StringHelper.getOccurrenceCountIgnoreCase ("eeee", '\u0000', aLocale));
+
+    assertEquals (1, StringHelper.getOccurrenceCountIgnoreCase ("e", 'e', aLocale));
+    assertEquals (1, StringHelper.getOccurrenceCountIgnoreCase ("E", 'e', aLocale));
+    assertEquals (1, StringHelper.getOccurrenceCountIgnoreCase ("e", 'E', aLocale));
+    assertEquals (4, StringHelper.getOccurrenceCountIgnoreCase ("eeee", 'e', aLocale));
+    assertEquals (4, StringHelper.getOccurrenceCountIgnoreCase ("EEEE", 'e', aLocale));
+    assertEquals (4, StringHelper.getOccurrenceCountIgnoreCase ("eeee", 'E', aLocale));
+    assertEquals (1, StringHelper.getOccurrenceCountIgnoreCase ("abc", 'a', aLocale));
+    assertEquals (1, StringHelper.getOccurrenceCountIgnoreCase ("ABC", 'a', aLocale));
+    assertEquals (1, StringHelper.getOccurrenceCountIgnoreCase ("abc", 'A', aLocale));
+    assertEquals (2, StringHelper.getOccurrenceCountIgnoreCase ("aabc", 'a', aLocale));
+    assertEquals (2, StringHelper.getOccurrenceCountIgnoreCase ("AABC", 'a', aLocale));
+    assertEquals (2, StringHelper.getOccurrenceCountIgnoreCase ("aabc", 'A', aLocale));
+    assertEquals (1, StringHelper.getOccurrenceCountIgnoreCase ("abc", 'b', aLocale));
+    assertEquals (1, StringHelper.getOccurrenceCountIgnoreCase ("ABC", 'b', aLocale));
+    assertEquals (1, StringHelper.getOccurrenceCountIgnoreCase ("abc", 'B', aLocale));
+    assertEquals (1, StringHelper.getOccurrenceCountIgnoreCase ("abc", 'c', aLocale));
+    assertEquals (1, StringHelper.getOccurrenceCountIgnoreCase ("ABC", 'c', aLocale));
+    assertEquals (1, StringHelper.getOccurrenceCountIgnoreCase ("abc", 'C', aLocale));
+    assertEquals (2, StringHelper.getOccurrenceCountIgnoreCase ("abcc", 'c', aLocale));
+    assertEquals (2, StringHelper.getOccurrenceCountIgnoreCase ("ABCC", 'c', aLocale));
+    assertEquals (2, StringHelper.getOccurrenceCountIgnoreCase ("abcc", 'C', aLocale));
   }
 
   @Test
