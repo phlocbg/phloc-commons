@@ -1946,7 +1946,7 @@ public final class StringHelper
 
           // Identify the next starting position (relative index + number of
           // search strings)
-          nLastIndex += nIndex + nSearchLength;
+          nLastIndex = nIndex + nSearchLength;
         }
       } while (nIndex != STRING_NOT_FOUND);
     }
@@ -2001,7 +2001,7 @@ public final class StringHelper
 
           // Identify the next starting position (relative index + number of
           // search strings)
-          nLastIndex += nIndex + 1;
+          nLastIndex = nIndex + 1;
         }
       } while (nIndex != STRING_NOT_FOUND);
     }
