@@ -46,6 +46,12 @@ public interface IBasicTreeItem <DATATYPE, ITEMTYPE extends IBasicTreeItem <DATA
   DATATYPE getData ();
 
   /**
+   * @return the data associated with the parent node. May be <code>null</code>.
+   */
+  @Nullable
+  DATATYPE getParentData ();
+
+  /**
    * Get the data values of all contained children.
    * 
    * @return <code>null</code> if this item does not have children. Use

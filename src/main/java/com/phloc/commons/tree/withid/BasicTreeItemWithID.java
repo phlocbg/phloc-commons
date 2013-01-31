@@ -163,14 +163,22 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
     return GenericReflection.<BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>, ITEMTYPE> uncheckedCast (aItem);
   }
 
-  /**
-   * @return The parent item of this item or <code>null</code> if this is the
-   *         root item.
-   */
   @Nullable
   public final ITEMTYPE getParent ()
   {
     return m_aParent;
+  }
+
+  @Nullable
+  public final KEYTYPE getParentID ()
+  {
+    return m_aParent == null ? null : m_aParent.getID ();
+  }
+
+  @Nullable
+  public final DATATYPE getParentData ()
+  {
+    return m_aParent == null ? null : m_aParent.getData ();
   }
 
   @Nullable

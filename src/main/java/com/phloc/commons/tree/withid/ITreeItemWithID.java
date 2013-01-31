@@ -55,6 +55,12 @@ public interface ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
   KEYTYPE getID ();
 
   /**
+   * @return The data ID of the parent item. May be <code>null</code> if no
+   *         parent is present or depending on the validator.
+   */
+  KEYTYPE getParentID ();
+
+  /**
    * Check if a direct child item with the given ID is present
    * 
    * @param aDataID
