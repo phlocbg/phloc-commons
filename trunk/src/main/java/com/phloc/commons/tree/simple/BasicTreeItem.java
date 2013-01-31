@@ -141,6 +141,12 @@ public class BasicTreeItem <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEM
     return m_aParent;
   }
 
+  @Nullable
+  public final DATATYPE getParentData ()
+  {
+    return m_aParent == null ? null : m_aParent.getData ();
+  }
+
   @Nonnull
   private ITEMTYPE _asT (@Nonnull final BasicTreeItem <DATATYPE, ITEMTYPE> aItem)
   {
