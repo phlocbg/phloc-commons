@@ -26,6 +26,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 
 /**
@@ -336,7 +337,16 @@ public final class MathHelper
     return aValue.compareTo (BigDecimal.ZERO) < 0;
   }
 
+  /**
+   * @deprecated Use {@link #isLowerOrEqualThanZero(BigDecimal)} instead
+   */
+  @Deprecated
   public static boolean isLowerOrEqualZero (@Nonnull final BigDecimal aValue)
+  {
+    return isLowerOrEqualThanZero (aValue);
+  }
+
+  public static boolean isLowerOrEqualThanZero (@Nonnull final BigDecimal aValue)
   {
     return aValue.compareTo (BigDecimal.ZERO) <= 0;
   }
@@ -346,9 +356,38 @@ public final class MathHelper
     return aValue.compareTo (BigDecimal.ZERO) > 0;
   }
 
+  /**
+   * @deprecated Use {@link #isGreaterOrEqualThanZero(BigDecimal)} instead
+   */
+  @Deprecated
   public static boolean isGreaterOrEqualZero (@Nonnull final BigDecimal aValue)
   {
+    return isGreaterOrEqualThanZero (aValue);
+  }
+
+  public static boolean isGreaterOrEqualThanZero (@Nonnull final BigDecimal aValue)
+  {
     return aValue.compareTo (BigDecimal.ZERO) >= 0;
+  }
+
+  public static boolean isLowerThan100 (@Nonnull final BigDecimal aValue)
+  {
+    return aValue.compareTo (CGlobal.BIGDEC_100) < 0;
+  }
+
+  public static boolean isLowerOrEqualThan100 (@Nonnull final BigDecimal aValue)
+  {
+    return aValue.compareTo (CGlobal.BIGDEC_100) <= 0;
+  }
+
+  public static boolean isGreaterThan100 (@Nonnull final BigDecimal aValue)
+  {
+    return aValue.compareTo (CGlobal.BIGDEC_100) > 0;
+  }
+
+  public static boolean isGreaterOrEqualThan100 (@Nonnull final BigDecimal aValue)
+  {
+    return aValue.compareTo (CGlobal.BIGDEC_100) >= 0;
   }
 
   public static boolean isLowerThanZero (@Nonnull final BigInteger aValue)
@@ -356,7 +395,16 @@ public final class MathHelper
     return aValue.compareTo (BigInteger.ZERO) < 0;
   }
 
+  /**
+   * @deprecated Use {@link #isLowerOrEqualThanZero(BigInteger)} instead
+   */
+  @Deprecated
   public static boolean isLowerOrEqualZero (@Nonnull final BigInteger aValue)
+  {
+    return isLowerOrEqualThanZero (aValue);
+  }
+
+  public static boolean isLowerOrEqualThanZero (@Nonnull final BigInteger aValue)
   {
     return aValue.compareTo (BigInteger.ZERO) <= 0;
   }
@@ -366,9 +414,38 @@ public final class MathHelper
     return aValue.compareTo (BigInteger.ZERO) > 0;
   }
 
+  /**
+   * @deprecated Use {@link #isGreaterOrEqualThanZero(BigInteger)} instead
+   */
+  @Deprecated
   public static boolean isGreaterOrEqualZero (@Nonnull final BigInteger aValue)
   {
+    return isGreaterOrEqualThanZero (aValue);
+  }
+
+  public static boolean isGreaterOrEqualThanZero (@Nonnull final BigInteger aValue)
+  {
     return aValue.compareTo (BigInteger.ZERO) >= 0;
+  }
+
+  public static boolean isLowerThan100 (@Nonnull final BigInteger aValue)
+  {
+    return aValue.compareTo (CGlobal.BIGINT_100) < 0;
+  }
+
+  public static boolean isLowerOrEqualThan100 (@Nonnull final BigInteger aValue)
+  {
+    return aValue.compareTo (CGlobal.BIGINT_100) <= 0;
+  }
+
+  public static boolean isGreaterThan100 (@Nonnull final BigInteger aValue)
+  {
+    return aValue.compareTo (CGlobal.BIGINT_100) > 0;
+  }
+
+  public static boolean isGreaterOrEqualThan100 (@Nonnull final BigInteger aValue)
+  {
+    return aValue.compareTo (CGlobal.BIGINT_100) >= 0;
   }
 
   /**
