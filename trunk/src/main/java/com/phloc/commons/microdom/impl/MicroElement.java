@@ -33,7 +33,6 @@ import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.microdom.EMicroNodeType;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.IMicroNode;
-import com.phloc.commons.microdom.IMicroText;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
@@ -471,46 +470,6 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
               }
           }
     return null;
-  }
-
-  @Nullable
-  public String getTextContent ()
-  {
-    if (!hasChildren ())
-      return null;
-
-    final StringBuilder aSB = new StringBuilder ();
-    for (final IMicroNode aChild : directGetChildren ())
-      if (aChild.isText ())
-      {
-        // ignore whitespace-only content
-        if (!((IMicroText) aChild).isElementContentWhitespace ())
-          aSB.append (aChild.getNodeValue ());
-      }
-      else
-        if (aChild.isCDATA ())
-        {
-          aSB.append (aChild.getNodeValue ());
-        }
-        else
-          if (aChild.isContainer () && aChild.hasChildren ())
-          {
-            for (final IMicroNode aContChild : aChild.getChildren ())
-            {
-              if (aContChild.isText ())
-              {
-                // ignore whitespace-only content
-                if (!((IMicroText) aContChild).isElementContentWhitespace ())
-                  aSB.append (aContChild.getNodeValue ());
-              }
-              else
-                if (aContChild.isCDATA ())
-                {
-                  aSB.append (aContChild.getNodeValue ());
-                }
-            }
-          }
-    return aSB.toString ();
   }
 
   @Nullable

@@ -324,15 +324,6 @@ public interface IMicroElement extends IMicroNodeWithChildren
 
   /**
    * Get the concatenated text content of all direct {@link IMicroText} child
-   * nodes of this element.
-   * 
-   * @return <code>null</code> if the element contains no text node as child
-   */
-  @Nullable
-  String getTextContent ();
-
-  /**
-   * Get the concatenated text content of all direct {@link IMicroText} child
    * nodes of this element. The value is converted via the
    * {@link com.phloc.commons.typeconvert.TypeConverter} to the desired
    * destination class.

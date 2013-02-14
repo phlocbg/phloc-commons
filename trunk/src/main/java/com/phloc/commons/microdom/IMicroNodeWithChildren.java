@@ -18,6 +18,7 @@
 package com.phloc.commons.microdom;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * A special marker interface that is implemented by classes, that really
@@ -27,6 +28,15 @@ import javax.annotation.Nonnull;
  */
 public interface IMicroNodeWithChildren extends IMicroNode
 {
+  /**
+   * Get the concatenated text content of all direct {@link IMicroText} child
+   * nodes of this element.
+   * 
+   * @return <code>null</code> if the element contains no text node as child
+   */
+  @Nullable
+  String getTextContent ();
+
   /**
    * {@inheritDoc}
    */

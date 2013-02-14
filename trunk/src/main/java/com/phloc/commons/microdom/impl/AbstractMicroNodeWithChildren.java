@@ -30,8 +30,11 @@ import com.phloc.commons.annotations.ReturnsMutableObject;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.microdom.EMicroEvent;
 import com.phloc.commons.microdom.IMicroNode;
+import com.phloc.commons.microdom.IMicroNodeWithChildren;
+import com.phloc.commons.microdom.IMicroText;
 import com.phloc.commons.microdom.MicroException;
 import com.phloc.commons.state.EChange;
+import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -236,6 +239,36 @@ abstract class AbstractMicroNodeWithChildren extends AbstractMicroNode
     final List <IMicroNode> ret = new ArrayList <IMicroNode> ();
     _fillListPrefix (this, ret);
     return ret;
+  }
+
+  @Nullable
+  public String getTextContent ()
+  {
+    if (!hasChildren ())
+      return null;
+
+    final StringBuilder aSB = new StringBuilder ();
+    for (final IMicroNode aChild : directGetChildren ())
+      if (aChild.isText ())
+      {
+        // ignore whitespace-only content
+        if (!((IMicroText) aChild).isElementContentWhitespace ())
+          aSB.append (aChild.getNodeValue ());
+      }
+      else
+        if (aChild.isCDATA ())
+        {
+          aSB.append (aChild.getNodeValue ());
+        }
+        else
+          if (aChild instanceof IMicroNodeWithChildren)
+          {
+            // Recursive call
+            final String sTextContent = ((IMicroNodeWithChildren) aChild).getTextContent ();
+            if (StringHelper.hasText (sTextContent))
+              aSB.append (sTextContent);
+          }
+    return aSB.toString ();
   }
 
   @OverridingMethodsMustInvokeSuper
