@@ -1,7 +1,11 @@
 #summary Change log of phloc-commons
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
-<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr><td>1/31/13</td><td>add</td><td>api</td><td></td><td>Extended tree item with getParentData and getParentID (where applicable)</td></tr>
+<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr border="1"><td>2/14/13</td><td colspan="4">_Release *3.9.5*_</td></tr>
+<tr><td>2/14/13</td><td>add</td><td>api</td><td>*yes*</td><td>Moved getTextContent() from IMicroElement up to IMicroNodeWithChildren</td></tr>
+<tr><td>2/5/13</td><td>add</td><td>api</td><td></td><td>Extended MathHelper with comparison methods for 100 (e.g. used for percentage)</td></tr>
+<tr><td>2/5/13</td><td>add</td><td>api</td><td></td><td>Extended StringParser.parseBigDecimal with versions that support scale and rounding mode</td></tr>
+<tr><td>1/31/13</td><td>add</td><td>api</td><td></td><td>Extended tree item with getParentData and getParentID (where applicable)</td></tr>
 <tr><td>1/28/13</td><td>add</td><td>api</td><td></td><td>Added new StringHelper methods like getReverse(String) or getIndexOf(String,int,String) etc.</td></tr>
 <tr><td>1/28/13</td><td>add</td><td>api</td><td></td><td>Extended NonBlockingByteArrayOutputStream with some sanity methods like startsWith and getByteAt</td></tr>
 <tr border="1"><td>1/24/13</td><td colspan="4">_Release *3.9.4*_</td></tr>
