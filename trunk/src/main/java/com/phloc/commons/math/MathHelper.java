@@ -475,4 +475,15 @@ public final class MathHelper
         r = 0.0;
     return r;
   }
+
+  /**
+   * Converts the passed signed integer to an unsigned long
+   * 
+   * @param a
+   * @return The unsigned long
+   */
+  public static long getUnsignedInt (final int a)
+  {
+    return a & 0x00000000ffffffffL;
+  }
 }
