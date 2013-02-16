@@ -235,4 +235,10 @@ public final class MathHelperTest
     PhlocAssert.assertEquals (Double.MAX_VALUE, MathHelper.abs (-Double.MAX_VALUE));
     PhlocAssert.assertEquals (Double.MIN_VALUE, MathHelper.abs (Double.MIN_VALUE));
   }
+
+  @Test
+  public void testGetUnsignedInt ()
+  {
+    assertEquals (MathHelper.getUnsignedInt (-740679319), 3554287977L);
+  }
 }

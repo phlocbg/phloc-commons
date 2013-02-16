@@ -20,6 +20,17 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+
+  <entry date="2013-02-16" category="tech" action="add">
+    <change>
+      <text locale="en">Added SPIHelper for easy loading of SPI implementations via ServiceLoader</text>
+    </change>
+  </entry>
+  <entry date="2013-02-16" category="api" action="add">
+    <change>
+      <text locale="en">Added MathHelper.getUnsignedInt() for converting a signed int to an unsigned long</text>
+    </change>
+  </entry>
   <release date="2013-02-14" version="3.9.5" />
   <entry date="2013-02-14" category="api" action="add" incompatible="true">
     <change>
