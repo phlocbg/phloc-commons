@@ -26,7 +26,6 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -292,23 +291,7 @@ public final class URLUtils
       // Maybe empty, if the URL ends with a '?'
       if (StringHelper.hasText (sQueryString))
       {
-        for (final String sKeyValuePair : StringHelper.getExploded (AMPERSAND, sQueryString))
-          if (sKeyValuePair.length () > 0)
-          {
-            final List <String> aParts = StringHelper.getExploded (EQUALS, sKeyValuePair, 2);
-            final String sKey = aParts.get (0);
-            final String sValue = aParts.size () == 2 ? aParts.get (1) : "";
-            if (StringHelper.hasNoText (sKey))
-              throw new IllegalArgumentException ("key may not be empty!");
-            if (sValue == null)
-              throw new NullPointerException ("value may not be null");
-
-            if (aParams == null)
-              aParams = new LinkedHashMap <String, String> ();
-
-            // Now decode the parameters
-            aParams.put (aParameterDecoder.decode (sKey), aParameterDecoder.decode (sValue));
-          }
+        aParams = getQueryStringAsMap (sQueryString, aParameterDecoder);
       }
       sPath = sRemainingHref.substring (0, nQuestionIndex);
     }
@@ -316,6 +299,36 @@ public final class URLUtils
       sPath = sRemainingHref;
 
     return new URLData (sPath, aParams, sAnchor);
+  }
+
+  private static Map <String, String> getQueryStringAsMap (final String sQueryString,
+                                                           @Nonnull final IDecoder <String> aParameterDecoder)
+  {
+    final Map <String, String> aMap = new HashMap <String, String> ();
+    if (StringHelper.hasNoText (sQueryString))
+      return aMap;
+
+    for (final String sKeyValuePair : StringHelper.getExploded (AMPERSAND, sQueryString))
+    {
+      if (sKeyValuePair.length () > 0)
+      {
+        final List <String> aParts = StringHelper.getExploded (EQUALS, sKeyValuePair, 2);
+        final String sKey = aParts.get (0);
+        final String sValue = aParts.size () == 2 ? aParts.get (1) : "";
+        if (StringHelper.hasNoText (sKey))
+          throw new IllegalArgumentException ("key may not be empty!");
+        if (sValue == null)
+          throw new NullPointerException ("value may not be null");
+        // Now decode the parameters
+        aMap.put (aParameterDecoder.decode (sKey), aParameterDecoder.decode (sValue));
+      }
+    }
+    return aMap;
+  }
+
+  public static Map <String, String> getQueryStringAsMap (final String sQueryString)
+  {
+    return getQueryStringAsMap (sQueryString, IdentityDecoder.<String> create ());
   }
 
   @Nonnull
