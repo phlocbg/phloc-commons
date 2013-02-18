@@ -62,7 +62,11 @@ public abstract class AbstractDoubleCollection implements DoubleCollection
   @Nonnegative
   public abstract int size ();
 
-  /** Unsupported in this base implementation. */
+  /** 
+   * Unsupported in this base implementation.
+   *
+   * @return never 
+   */
   public boolean add (final double aElement)
   {
     throw new UnsupportedOperationException ("add(double) is not supported.");

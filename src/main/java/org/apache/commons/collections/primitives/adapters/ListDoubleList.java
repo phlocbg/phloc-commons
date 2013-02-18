@@ -62,6 +62,8 @@ public class ListDoubleList extends AbstractListDoubleList implements Serializab
    * Creates an {@link DoubleList DoubleList} wrapping the specified {@link List
    * List}.
    *
+   * @param aList
+   *        The list to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
   public ListDoubleList (@Nonnull final List <Double> aList)

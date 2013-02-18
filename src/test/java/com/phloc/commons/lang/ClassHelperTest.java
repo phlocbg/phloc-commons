@@ -58,7 +58,7 @@ public final class ClassHelperTest
     {}
   }
 
-  public static abstract class DummyAbstract
+  public abstract static class DummyAbstract
   {}
 
   @Test

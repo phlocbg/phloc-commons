@@ -88,7 +88,7 @@ public final class BenchmarkSynchronizedVsLock extends AbstractBenchmarkTask
     }
   }
 
-  protected static abstract class BaseClass implements Runnable
+  protected abstract static class BaseClass implements Runnable
   {
     private int m_nRuns = 10000;
 

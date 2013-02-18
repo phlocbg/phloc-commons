@@ -93,7 +93,7 @@ abstract class AbstractCharCollectionCollection implements Collection <Character
   }
 
   /**
-   * {@link CharIteratorIterator#wrap wraps} the
+   * @return {@link CharIteratorIterator#wrap wraps} the
    * {@link org.apache.commons.collections.primitives.CharIterator CharIterator}
    * returned by my underlying {@link CharCollection CharCollection}, if any.
    */

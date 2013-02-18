@@ -123,7 +123,7 @@ abstract class BaseProxyBooleanCollection implements BooleanCollection
     return getProxiedCollection ().toArray (a);
   }
 
-  /**
+  /*
    * Important: is equal to the proxied collection!<br>
    * Therefore violates the contract of equals!
    */

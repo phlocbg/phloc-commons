@@ -67,11 +67,13 @@ public final class DoubleCollectionCollection extends AbstractDoubleCollectionCo
    * Creates a {@link Collection Collection} wrapping the specified
    * {@link DoubleCollection DoubleCollection}.
    *
+   * @param aCollection
+   *        The collection to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public DoubleCollectionCollection (@Nonnull final DoubleCollection collection)
+  public DoubleCollectionCollection (@Nonnull final DoubleCollection aCollection)
   {
-    m_aCollection = collection;
+    m_aCollection = aCollection;
   }
 
   @Override

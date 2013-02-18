@@ -66,7 +66,7 @@ public final class UnmodifiableZZZIterator extends ProxyZZZIterator
   }
 
   @Nullable
-  public static final ZZZIterator wrap (@Nullable final ZZZIterator iterator)
+  public static ZZZIterator wrap (@Nullable final ZZZIterator iterator)
   {
     if (null == iterator)
       return null;

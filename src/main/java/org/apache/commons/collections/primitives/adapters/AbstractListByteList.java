@@ -88,7 +88,7 @@ abstract class AbstractListByteList extends AbstractCollectionByteCollection imp
   }
 
   /**
-   * {@link ListIteratorByteListIterator#wrap wraps} the {@link ByteList
+   * @return {@link ListIteratorByteListIterator#wrap wraps} the {@link ByteList
    * ByteList} returned by my underlying {@link ByteListIterator
    * ByteListIterator}, if any.
    */
@@ -99,7 +99,9 @@ abstract class AbstractListByteList extends AbstractCollectionByteCollection imp
   }
 
   /**
-   * {@link ListIteratorByteListIterator#wrap wraps} the {@link ByteList
+   * @param nIndex
+   *        The starting index of the iterator 
+   * @return {@link ListIteratorByteListIterator#wrap wraps} the {@link ByteList
    * ByteList} returned by my underlying {@link ByteListIterator
    * ByteListIterator}, if any.
    */

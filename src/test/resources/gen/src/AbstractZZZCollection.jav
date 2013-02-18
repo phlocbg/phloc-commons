@@ -62,7 +62,11 @@ public abstract class AbstractZZZCollection implements ZZZCollection
   @Nonnegative
   public abstract int size ();
 
-  /** Unsupported in this base implementation. */
+  /** 
+   * Unsupported in this base implementation.
+   *
+   * @return never 
+   */
   public boolean add (final YYY aElement)
   {
     throw new UnsupportedOperationException ("add(YYY) is not supported.");

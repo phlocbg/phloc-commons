@@ -90,7 +90,7 @@ abstract class AbstractIntListList extends AbstractIntCollectionCollection imple
   }
 
   /**
-   * {@link IntListIteratorListIterator#wrap wraps} the
+   * @return {@link IntListIteratorListIterator#wrap wraps} the
    * {@link org.apache.commons.collections.primitives.IntListIterator
    * IntListIterator} returned by my underlying {@link IntList IntList}, if
    * any.
@@ -101,7 +101,9 @@ abstract class AbstractIntListList extends AbstractIntCollectionCollection imple
   }
 
   /**
-   * {@link IntListIteratorListIterator#wrap wraps} the
+   * @param index
+   *        The index where iterator should start
+   * @return {@link IntListIteratorListIterator#wrap wraps} the
    * {@link org.apache.commons.collections.primitives.IntListIterator
    * IntListIterator} returned by my underlying {@link IntList IntList}, if
    * any.

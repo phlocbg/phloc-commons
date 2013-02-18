@@ -54,64 +54,66 @@ import org.apache.commons.collections.primitives.IntListIterator;
  */
 public class IntListIteratorListIterator implements ListIterator <Integer>
 {
-  private final IntListIterator _iterator;
+  private final IntListIterator m_aIterator;
 
   /**
    * Creates an {@link ListIterator ListIterator} wrapping the specified
    * {@link IntListIterator IntListIterator}.
    *
+   * @param aIterator
+   *        The iterator to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public IntListIteratorListIterator (@Nonnull final IntListIterator iterator)
+  public IntListIteratorListIterator (@Nonnull final IntListIterator aIterator)
   {
-    _iterator = iterator;
+    m_aIterator = aIterator;
   }
 
   public int nextIndex ()
   {
-    return _iterator.nextIndex ();
+    return m_aIterator.nextIndex ();
   }
 
   public int previousIndex ()
   {
-    return _iterator.previousIndex ();
+    return m_aIterator.previousIndex ();
   }
 
   public boolean hasNext ()
   {
-    return _iterator.hasNext ();
+    return m_aIterator.hasNext ();
   }
 
   public boolean hasPrevious ()
   {
-    return _iterator.hasPrevious ();
+    return m_aIterator.hasPrevious ();
   }
 
   @Nonnull
   public Integer next ()
   {
-    return Integer.valueOf (_iterator.next ());
+    return Integer.valueOf (m_aIterator.next ());
   }
 
   @Nonnull
   public Integer previous ()
   {
-    return Integer.valueOf (_iterator.previous ());
+    return Integer.valueOf (m_aIterator.previous ());
   }
 
   public void add (@Nonnull final Integer obj)
   {
-    _iterator.add (obj.intValue ());
+    m_aIterator.add (obj.intValue ());
   }
 
   public void set (@Nonnull final Integer obj)
   {
-    _iterator.set (obj.intValue ());
+    m_aIterator.set (obj.intValue ());
   }
 
   public void remove ()
   {
-    _iterator.remove ();
+    m_aIterator.remove ();
   }
 
   /**

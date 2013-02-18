@@ -66,6 +66,8 @@ public final class XMLResourceBundle extends ResourceBundle
 
   /**
    * More efficient version to retrieve the keySet
+   * 
+   * @return all resource names
    */
   @Override
   protected Set <String> handleKeySet ()
@@ -75,6 +77,8 @@ public final class XMLResourceBundle extends ResourceBundle
 
   /**
    * Main internal lookup
+   * 
+   * @return the string matching the passed key
    */
   @Override
   protected String handleGetObject (@Nullable final String sKey)

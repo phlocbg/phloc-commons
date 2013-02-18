@@ -36,6 +36,7 @@ package org.apache.commons.collections.primitives;
 import java.util.EmptyStackException;
 
 import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
 
 /**
  * A primitive short based Stack. The underlying backing store is an
@@ -64,7 +65,7 @@ public class ShortStack
    * @param aElements
    *        the array to add
    */
-  public ShortStack (final short [] aElements)
+  public ShortStack (@Nonnull final short [] aElements)
   {
     for (final short aElement : aElements)
       m_aList.add (aElement);

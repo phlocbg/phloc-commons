@@ -36,6 +36,7 @@ package org.apache.commons.collections.primitives;
 import java.util.EmptyStackException;
 
 import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
 
 /**
  * A primitive double based Stack. The underlying backing store is an
@@ -64,7 +65,7 @@ public class DoubleStack
    * @param aElements
    *        the array to add
    */
-  public DoubleStack (final double [] aElements)
+  public DoubleStack (@Nonnull final double [] aElements)
   {
     for (final double aElement : aElements)
       m_aList.add (aElement);

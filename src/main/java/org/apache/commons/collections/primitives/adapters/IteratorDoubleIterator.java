@@ -54,32 +54,34 @@ import org.apache.commons.collections.primitives.DoubleIterator;
  */
 public class IteratorDoubleIterator implements DoubleIterator
 {
-  private final Iterator <Double> _iterator;
+  private final Iterator <Double> m_aIterator;
 
   /**
    * Creates an {@link DoubleIterator DoubleIterator} wrapping the specified
    * {@link Iterator Iterator}.
    *
+   * @param aIterator
+   *        The iterator to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public IteratorDoubleIterator (@Nonnull final Iterator <Double> iterator)
+  public IteratorDoubleIterator (@Nonnull final Iterator <Double> aIterator)
   {
-    _iterator = iterator;
+    m_aIterator = aIterator;
   }
 
   public boolean hasNext ()
   {
-    return _iterator.hasNext ();
+    return m_aIterator.hasNext ();
   }
 
   public double next ()
   {
-    return _iterator.next ().doubleValue ();
+    return m_aIterator.next ().doubleValue ();
   }
 
   public void remove ()
   {
-    _iterator.remove ();
+    m_aIterator.remove ();
   }
 
   /**

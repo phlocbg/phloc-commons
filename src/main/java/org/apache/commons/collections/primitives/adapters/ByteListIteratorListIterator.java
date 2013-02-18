@@ -54,64 +54,66 @@ import org.apache.commons.collections.primitives.ByteListIterator;
  */
 public class ByteListIteratorListIterator implements ListIterator <Byte>
 {
-  private final ByteListIterator _iterator;
+  private final ByteListIterator m_aIterator;
 
   /**
    * Creates an {@link ListIterator ListIterator} wrapping the specified
    * {@link ByteListIterator ByteListIterator}.
    *
+   * @param aIterator
+   *        The iterator to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public ByteListIteratorListIterator (@Nonnull final ByteListIterator iterator)
+  public ByteListIteratorListIterator (@Nonnull final ByteListIterator aIterator)
   {
-    _iterator = iterator;
+    m_aIterator = aIterator;
   }
 
   public int nextIndex ()
   {
-    return _iterator.nextIndex ();
+    return m_aIterator.nextIndex ();
   }
 
   public int previousIndex ()
   {
-    return _iterator.previousIndex ();
+    return m_aIterator.previousIndex ();
   }
 
   public boolean hasNext ()
   {
-    return _iterator.hasNext ();
+    return m_aIterator.hasNext ();
   }
 
   public boolean hasPrevious ()
   {
-    return _iterator.hasPrevious ();
+    return m_aIterator.hasPrevious ();
   }
 
   @Nonnull
   public Byte next ()
   {
-    return Byte.valueOf (_iterator.next ());
+    return Byte.valueOf (m_aIterator.next ());
   }
 
   @Nonnull
   public Byte previous ()
   {
-    return Byte.valueOf (_iterator.previous ());
+    return Byte.valueOf (m_aIterator.previous ());
   }
 
   public void add (@Nonnull final Byte obj)
   {
-    _iterator.add (obj.byteValue ());
+    m_aIterator.add (obj.byteValue ());
   }
 
   public void set (@Nonnull final Byte obj)
   {
-    _iterator.set (obj.byteValue ());
+    m_aIterator.set (obj.byteValue ());
   }
 
   public void remove ()
   {
-    _iterator.remove ();
+    m_aIterator.remove ();
   }
 
   /**

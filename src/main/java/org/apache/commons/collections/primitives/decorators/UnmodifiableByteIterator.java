@@ -66,7 +66,7 @@ public final class UnmodifiableByteIterator extends ProxyByteIterator
   }
 
   @Nullable
-  public static final ByteIterator wrap (@Nullable final ByteIterator iterator)
+  public static ByteIterator wrap (@Nullable final ByteIterator iterator)
   {
     if (null == iterator)
       return null;

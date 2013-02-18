@@ -134,6 +134,7 @@ public class TestBaseProxyCharCollection extends TestCase
   // inner classes
   // ------------------------------------------------------------------------
 
+  // ESCA-JAVA0020:
   static class InvocationCounter implements CharCollection
   {
     private int _toArrayCharArray;

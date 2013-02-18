@@ -60,11 +60,13 @@ public class IntIteratorIterator implements Iterator <Integer>
    * Creates an {@link Iterator Iterator} wrapping the specified
    * {@link IntIterator IntIterator}.
    *
+   * @param aIterator
+   *        The iterator to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public IntIteratorIterator (@Nonnull final IntIterator iterator)
+  public IntIteratorIterator (@Nonnull final IntIterator aIterator)
   {
-    m_aIterator = iterator;
+    m_aIterator = aIterator;
   }
 
   public boolean hasNext ()

@@ -75,7 +75,7 @@ public final class UnmodifiableLongListIterator extends ProxyLongListIterator
   }
 
   @Nullable
-  public static final LongListIterator wrap (@Nullable final LongListIterator iterator)
+  public static LongListIterator wrap (@Nullable final LongListIterator iterator)
   {
     if (null == iterator)
       return null;

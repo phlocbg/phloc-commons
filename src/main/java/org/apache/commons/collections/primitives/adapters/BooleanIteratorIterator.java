@@ -60,11 +60,13 @@ public class BooleanIteratorIterator implements Iterator <Boolean>
    * Creates an {@link Iterator Iterator} wrapping the specified
    * {@link BooleanIterator BooleanIterator}.
    *
+   * @param aIterator
+   *        The iterator to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public BooleanIteratorIterator (@Nonnull final BooleanIterator iterator)
+  public BooleanIteratorIterator (@Nonnull final BooleanIterator aIterator)
   {
-    m_aIterator = iterator;
+    m_aIterator = aIterator;
   }
 
   public boolean hasNext ()

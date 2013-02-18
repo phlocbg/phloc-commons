@@ -88,7 +88,7 @@ abstract class AbstractCollectionIntCollection implements IntCollection
   }
 
   /**
-   * {@link IteratorIntIterator#wrap wraps} the {@link java.util.Iterator
+   * @return {@link IteratorIntIterator#wrap wraps} the {@link java.util.Iterator
    * Iterator} returned by my underlying {@link Collection Collection}, if any.
    */
   @Nonnull

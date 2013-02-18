@@ -60,11 +60,13 @@ public class CharIteratorIterator implements Iterator <Character>
    * Creates an {@link Iterator Iterator} wrapping the specified
    * {@link CharIterator CharIterator}.
    *
+   * @param aIterator
+   *        The iterator to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public CharIteratorIterator (@Nonnull final CharIterator iterator)
+  public CharIteratorIterator (@Nonnull final CharIterator aIterator)
   {
-    m_aIterator = iterator;
+    m_aIterator = aIterator;
   }
 
   public boolean hasNext ()

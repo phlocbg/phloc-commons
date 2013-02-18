@@ -90,7 +90,7 @@ abstract class AbstractDoubleListList extends AbstractDoubleCollectionCollection
   }
 
   /**
-   * {@link DoubleListIteratorListIterator#wrap wraps} the
+   * @return {@link DoubleListIteratorListIterator#wrap wraps} the
    * {@link org.apache.commons.collections.primitives.DoubleListIterator
    * DoubleListIterator} returned by my underlying {@link DoubleList DoubleList}, if
    * any.
@@ -101,7 +101,9 @@ abstract class AbstractDoubleListList extends AbstractDoubleCollectionCollection
   }
 
   /**
-   * {@link DoubleListIteratorListIterator#wrap wraps} the
+   * @param index
+   *        The index where iterator should start
+   * @return {@link DoubleListIteratorListIterator#wrap wraps} the
    * {@link org.apache.commons.collections.primitives.DoubleListIterator
    * DoubleListIterator} returned by my underlying {@link DoubleList DoubleList}, if
    * any.

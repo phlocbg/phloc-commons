@@ -88,7 +88,7 @@ abstract class AbstractCollectionFloatCollection implements FloatCollection
   }
 
   /**
-   * {@link IteratorFloatIterator#wrap wraps} the {@link java.util.Iterator
+   * @return {@link IteratorFloatIterator#wrap wraps} the {@link java.util.Iterator
    * Iterator} returned by my underlying {@link Collection Collection}, if any.
    */
   @Nonnull

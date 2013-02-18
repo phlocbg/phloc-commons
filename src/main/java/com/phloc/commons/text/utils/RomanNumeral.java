@@ -21,6 +21,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.CGlobal;
 import com.phloc.commons.string.StringHelper;
 
 /**
@@ -33,7 +34,9 @@ import com.phloc.commons.string.StringHelper;
 @Immutable
 public final class RomanNumeral
 {
+  /** Minimum value incl. to be converted to a Roman numeral */
   public static final int MIN_VAL = 1;
+  /** Maximum value incl. to be converted to a Roman numeral */
   public static final int MAX_VAL = 3999;
 
   /*
@@ -64,6 +67,9 @@ public final class RomanNumeral
    * Constructor. Creates the Roman number with the int value specified by the
    * parameter. Throws a IllegalArgumentException if arabic is not in the range
    * 1 to 3999 inclusive.
+   * 
+   * @param nValue
+   *        The value to be converted
    */
   private RomanNumeral (@Nonnegative final int nValue)
   {
@@ -77,6 +83,9 @@ public final class RomanNumeral
    * example, RomanNumeral("xvii") is 17. If the parameter is not a legal Roman
    * numeral, a NumberFormatException is thrown. Both upper and lower case
    * letters are allowed.
+   * 
+   * @param sRoman
+   *        the roman numeral to be converted to an int
    */
   private RomanNumeral (@Nonnull final String sRoman)
   {
@@ -84,7 +93,7 @@ public final class RomanNumeral
       throw new IllegalArgumentException ("An empty string does not define a Roman numeral.");
 
     // Convert to upper case letters.
-    final String sRealRoman = sRoman.toUpperCase (); // NOPMD
+    final String sRealRoman = sRoman.toUpperCase (CGlobal.DEFAULT_LOCALE);
 
     // A position in the string, roman;
     int nIndex = 0;
@@ -139,6 +148,7 @@ public final class RomanNumeral
     m_nValue = nArabic;
   }
 
+  // ESCA-JAVA0076:
   @Nonnegative
   private static int _letterToNumber (final char cLetter)
   {

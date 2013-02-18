@@ -60,11 +60,13 @@ public class FloatIteratorIterator implements Iterator <Float>
    * Creates an {@link Iterator Iterator} wrapping the specified
    * {@link FloatIterator FloatIterator}.
    *
+   * @param aIterator
+   *        The iterator to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public FloatIteratorIterator (@Nonnull final FloatIterator iterator)
+  public FloatIteratorIterator (@Nonnull final FloatIterator aIterator)
   {
-    m_aIterator = iterator;
+    m_aIterator = aIterator;
   }
 
   public boolean hasNext ()

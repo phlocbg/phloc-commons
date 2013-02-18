@@ -22,6 +22,12 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+// ESCA-JAVA0043:
+/**
+ * Dummy class
+ * 
+ * @author philip
+ */
 public final class FuncTestJavaCommons
 {
   class A

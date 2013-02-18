@@ -134,6 +134,7 @@ public class TestBaseProxyByteCollection extends TestCase
   // inner classes
   // ------------------------------------------------------------------------
 
+  // ESCA-JAVA0020:
   static class InvocationCounter implements ByteCollection
   {
     private int _toArrayByteArray;

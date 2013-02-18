@@ -88,7 +88,7 @@ abstract class AbstractCollectionDoubleCollection implements DoubleCollection
   }
 
   /**
-   * {@link IteratorDoubleIterator#wrap wraps} the {@link java.util.Iterator
+   * @return {@link IteratorDoubleIterator#wrap wraps} the {@link java.util.Iterator
    * Iterator} returned by my underlying {@link Collection Collection}, if any.
    */
   @Nonnull

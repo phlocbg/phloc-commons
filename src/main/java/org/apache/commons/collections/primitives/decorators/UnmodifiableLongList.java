@@ -81,7 +81,7 @@ public final class UnmodifiableLongList extends BaseUnmodifiableLongList impleme
   }
 
   @Nullable
-  public static final LongList wrap (@Nullable final LongList list)
+  public static LongList wrap (@Nullable final LongList list)
   {
     if (null == list)
       return null;

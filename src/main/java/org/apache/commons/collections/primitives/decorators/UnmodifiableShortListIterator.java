@@ -75,7 +75,7 @@ public final class UnmodifiableShortListIterator extends ProxyShortListIterator
   }
 
   @Nullable
-  public static final ShortListIterator wrap (@Nullable final ShortListIterator iterator)
+  public static ShortListIterator wrap (@Nullable final ShortListIterator iterator)
   {
     if (null == iterator)
       return null;

@@ -66,6 +66,8 @@ public final class ByteListList extends AbstractByteListList implements Serializ
    * Creates a {@link List List} wrapping the specified {@link ByteList
    * ByteList}.
    *
+   * @param list
+   *        The list to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
   public ByteListList (@Nonnull final ByteList list)

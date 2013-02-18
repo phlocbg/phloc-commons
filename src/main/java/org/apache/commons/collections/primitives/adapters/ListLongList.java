@@ -62,6 +62,8 @@ public class ListLongList extends AbstractListLongList implements Serializable
    * Creates an {@link LongList LongList} wrapping the specified {@link List
    * List}.
    *
+   * @param aList
+   *        The list to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
   public ListLongList (@Nonnull final List <Long> aList)

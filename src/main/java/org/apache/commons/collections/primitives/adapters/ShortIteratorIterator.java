@@ -60,11 +60,13 @@ public class ShortIteratorIterator implements Iterator <Short>
    * Creates an {@link Iterator Iterator} wrapping the specified
    * {@link ShortIterator ShortIterator}.
    *
+   * @param aIterator
+   *        The iterator to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public ShortIteratorIterator (@Nonnull final ShortIterator iterator)
+  public ShortIteratorIterator (@Nonnull final ShortIterator aIterator)
   {
-    m_aIterator = iterator;
+    m_aIterator = aIterator;
   }
 
   public boolean hasNext ()

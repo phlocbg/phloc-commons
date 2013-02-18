@@ -54,32 +54,34 @@ import org.apache.commons.collections.primitives.LongIterator;
  */
 public class IteratorLongIterator implements LongIterator
 {
-  private final Iterator <Long> _iterator;
+  private final Iterator <Long> m_aIterator;
 
   /**
    * Creates an {@link LongIterator LongIterator} wrapping the specified
    * {@link Iterator Iterator}.
    *
+   * @param aIterator
+   *        The iterator to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public IteratorLongIterator (@Nonnull final Iterator <Long> iterator)
+  public IteratorLongIterator (@Nonnull final Iterator <Long> aIterator)
   {
-    _iterator = iterator;
+    m_aIterator = aIterator;
   }
 
   public boolean hasNext ()
   {
-    return _iterator.hasNext ();
+    return m_aIterator.hasNext ();
   }
 
   public long next ()
   {
-    return _iterator.next ().longValue ();
+    return m_aIterator.next ().longValue ();
   }
 
   public void remove ()
   {
-    _iterator.remove ();
+    m_aIterator.remove ();
   }
 
   /**

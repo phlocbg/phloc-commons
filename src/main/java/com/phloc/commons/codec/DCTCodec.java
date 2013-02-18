@@ -28,6 +28,7 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
 
+//ESCA-JAVA0076:
 /**
  * Decoder for Discrete Cosinus Transformation (DCT)
  * 

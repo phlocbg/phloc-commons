@@ -47,9 +47,9 @@ final class NonSerializableCollectionByteCollection extends AbstractCollectionBy
 {
   private final Collection <Byte> m_aCollection;
 
-  public NonSerializableCollectionByteCollection (@Nonnull final Collection <Byte> collection)
+  public NonSerializableCollectionByteCollection (@Nonnull final Collection <Byte> aCollection)
   {
-    m_aCollection = collection;
+    m_aCollection = aCollection;
   }
 
   @Override

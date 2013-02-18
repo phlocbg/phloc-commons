@@ -62,7 +62,11 @@ public abstract class AbstractShortCollection implements ShortCollection
   @Nonnegative
   public abstract int size ();
 
-  /** Unsupported in this base implementation. */
+  /** 
+   * Unsupported in this base implementation.
+   *
+   * @return never 
+   */
   public boolean add (final short aElement)
   {
     throw new UnsupportedOperationException ("add(short) is not supported.");

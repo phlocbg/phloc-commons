@@ -93,7 +93,7 @@ abstract class AbstractIntCollectionCollection implements Collection <Integer>
   }
 
   /**
-   * {@link IntIteratorIterator#wrap wraps} the
+   * @return {@link IntIteratorIterator#wrap wraps} the
    * {@link org.apache.commons.collections.primitives.IntIterator IntIterator}
    * returned by my underlying {@link IntCollection IntCollection}, if any.
    */

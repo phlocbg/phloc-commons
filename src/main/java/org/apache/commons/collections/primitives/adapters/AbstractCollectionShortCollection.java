@@ -88,7 +88,7 @@ abstract class AbstractCollectionShortCollection implements ShortCollection
   }
 
   /**
-   * {@link IteratorShortIterator#wrap wraps} the {@link java.util.Iterator
+   * @return {@link IteratorShortIterator#wrap wraps} the {@link java.util.Iterator
    * Iterator} returned by my underlying {@link Collection Collection}, if any.
    */
   @Nonnull

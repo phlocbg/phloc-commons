@@ -54,32 +54,34 @@ import org.apache.commons.collections.primitives.IntIterator;
  */
 public class IteratorIntIterator implements IntIterator
 {
-  private final Iterator <Integer> _iterator;
+  private final Iterator <Integer> m_aIterator;
 
   /**
    * Creates an {@link IntIterator IntIterator} wrapping the specified
    * {@link Iterator Iterator}.
    *
+   * @param aIterator
+   *        The iterator to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public IteratorIntIterator (@Nonnull final Iterator <Integer> iterator)
+  public IteratorIntIterator (@Nonnull final Iterator <Integer> aIterator)
   {
-    _iterator = iterator;
+    m_aIterator = aIterator;
   }
 
   public boolean hasNext ()
   {
-    return _iterator.hasNext ();
+    return m_aIterator.hasNext ();
   }
 
   public int next ()
   {
-    return _iterator.next ().intValue ();
+    return m_aIterator.next ().intValue ();
   }
 
   public void remove ()
   {
-    _iterator.remove ();
+    m_aIterator.remove ();
   }
 
   /**

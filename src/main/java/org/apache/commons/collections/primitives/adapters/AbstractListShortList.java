@@ -88,7 +88,7 @@ abstract class AbstractListShortList extends AbstractCollectionShortCollection i
   }
 
   /**
-   * {@link ListIteratorShortListIterator#wrap wraps} the {@link ShortList
+   * @return {@link ListIteratorShortListIterator#wrap wraps} the {@link ShortList
    * ShortList} returned by my underlying {@link ShortListIterator
    * ShortListIterator}, if any.
    */
@@ -99,7 +99,9 @@ abstract class AbstractListShortList extends AbstractCollectionShortCollection i
   }
 
   /**
-   * {@link ListIteratorShortListIterator#wrap wraps} the {@link ShortList
+   * @param nIndex
+   *        The starting index of the iterator 
+   * @return {@link ListIteratorShortListIterator#wrap wraps} the {@link ShortList
    * ShortList} returned by my underlying {@link ShortListIterator
    * ShortListIterator}, if any.
    */

@@ -48,8 +48,11 @@ import javax.annotation.concurrent.NotThreadSafe;
 @NotThreadSafe
 public final class ToStringGenerator
 {
+  /** String to be emitted for <code>null</code> values */
   public static final String CONSTANT_NULL = "null";
+  /** String to be emitted for <code>this</code> values */
   public static final String CONSTANT_THIS = "this";
+  /** String to be emited for password values */
   public static final String CONSTANT_PASSWORD = "****";
   private static final int FIRST_FIELD = 1;
   private static final int APPENDED_CLOSING_BRACKET = 2;

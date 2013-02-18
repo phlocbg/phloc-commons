@@ -60,11 +60,13 @@ public class ZZZIteratorIterator implements Iterator <XXX>
    * Creates an {@link Iterator Iterator} wrapping the specified
    * {@link ZZZIterator ZZZIterator}.
    *
+   * @param aIterator
+   *        The iterator to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public ZZZIteratorIterator (@Nonnull final ZZZIterator iterator)
+  public ZZZIteratorIterator (@Nonnull final ZZZIterator aIterator)
   {
-    m_aIterator = iterator;
+    m_aIterator = aIterator;
   }
 
   public boolean hasNext ()

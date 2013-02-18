@@ -188,14 +188,16 @@ public interface ZZZList extends ZZZCollection
   int lastIndexOf (YYY aElement);
 
   /**
-   * Returns a {@link ZZZListIterator bidirectional iterator} over all my
+   * @return a {@link ZZZListIterator bidirectional iterator} over all my
    * elements, in the appropriate sequence.
    */
   @Nonnull
   ZZZListIterator listIterator ();
 
   /**
-   * Returns a {@link ZZZListIterator bidirectional iterator} over all my
+   * @param nIndex
+   *          Starting index to return the iterator from  
+   * @return a {@link ZZZListIterator bidirectional iterator} over all my
    * elements, in the appropriate sequence, starting at the specified position.
    * The specified <i>index</i> indicates the first element that would be
    * returned by an initial call to the {@link ZZZListIterator#next next}

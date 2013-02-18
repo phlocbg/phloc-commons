@@ -53,8 +53,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 @SuppressFBWarnings ("SE_NO_SERIALVERSIONID")
 public class ArrayByteList extends RandomAccessByteList implements Serializable
 {
-  private transient byte [] _data;
-  private int _size;
+  private transient byte [] m_aData;
+  private int m_nSize;
 
   // constructors
   // -------------------------------------------------------------------------
@@ -70,15 +70,17 @@ public class ArrayByteList extends RandomAccessByteList implements Serializable
   /**
    * Construct an empty list with the given initial capacity.
    *
+   * @param nInitialCapacity
+   *          The initial capacity to allocate. Must be &gt; 0.
    * @throws IllegalArgumentException
    *         when <i>initialCapacity</i> is negative
    */
-  public ArrayByteList (final int initialCapacity)
+  public ArrayByteList (final int nInitialCapacity)
   {
-    if (initialCapacity < 0)
-      throw new IllegalArgumentException ("capacity " + initialCapacity);
-    _data = new byte [initialCapacity];
-    _size = 0;
+    if (nInitialCapacity < 0)
+      throw new IllegalArgumentException ("capacity " + nInitialCapacity);
+    m_aData = new byte [nInitialCapacity];
+    m_nSize = 0;
   }
 
   /**
@@ -108,8 +110,8 @@ public class ArrayByteList extends RandomAccessByteList implements Serializable
   public ArrayByteList (@Nonnull final byte [] array)
   {
     this (array.length);
-    System.arraycopy (array, 0, _data, 0, array.length);
-    _size = array.length;
+    System.arraycopy (array, 0, m_aData, 0, array.length);
+    m_nSize = array.length;
   }
 
   // ByteList methods
@@ -119,13 +121,13 @@ public class ArrayByteList extends RandomAccessByteList implements Serializable
   public byte get (final int index)
   {
     _checkRange (index);
-    return _data[index];
+    return m_aData[index];
   }
 
   @Override
   public int size ()
   {
-    return _size;
+    return m_nSize;
   }
 
   /**
@@ -146,13 +148,13 @@ public class ArrayByteList extends RandomAccessByteList implements Serializable
   {
     _checkRange (index);
     incrModCount ();
-    final byte oldval = _data[index];
-    final int numtomove = _size - index - 1;
+    final byte oldval = m_aData[index];
+    final int numtomove = m_nSize - index - 1;
     if (numtomove > 0)
     {
-      System.arraycopy (_data, index + 1, _data, index, numtomove);
+      System.arraycopy (m_aData, index + 1, m_aData, index, numtomove);
     }
-    _size--;
+    m_nSize--;
     return oldval;
   }
 
@@ -175,8 +177,8 @@ public class ArrayByteList extends RandomAccessByteList implements Serializable
   {
     _checkRange (index);
     incrModCount ();
-    final byte oldval = _data[index];
-    _data[index] = element;
+    final byte oldval = m_aData[index];
+    m_aData[index] = element;
     return oldval;
   }
 
@@ -202,18 +204,18 @@ public class ArrayByteList extends RandomAccessByteList implements Serializable
   {
     _checkRangeIncludingEndpoint (index);
     incrModCount ();
-    ensureCapacity (_size + 1);
-    final int numtomove = _size - index;
-    System.arraycopy (_data, index, _data, index + 1, numtomove);
-    _data[index] = element;
-    _size++;
+    ensureCapacity (m_nSize + 1);
+    final int numtomove = m_nSize - index;
+    System.arraycopy (m_aData, index, m_aData, index + 1, numtomove);
+    m_aData[index] = element;
+    m_nSize++;
   }
 
   @Override
   public void clear ()
   {
     incrModCount ();
-    _size = 0;
+    m_nSize = 0;
   }
 
   @Override
@@ -231,18 +233,18 @@ public class ArrayByteList extends RandomAccessByteList implements Serializable
     int index = nIndex;
     _checkRangeIncludingEndpoint (index);
     incrModCount ();
-    ensureCapacity (_size + collection.size ());
-    if (index != _size)
+    ensureCapacity (m_nSize + collection.size ());
+    if (index != m_nSize)
     {
       // Need to move some elements
-      System.arraycopy (_data, index, _data, index + collection.size (), _size - index);
+      System.arraycopy (m_aData, index, m_aData, index + collection.size (), m_nSize - index);
     }
     for (final ByteIterator it = collection.iterator (); it.hasNext ();)
     {
-      _data[index] = it.next ();
+      m_aData[index] = it.next ();
       index++;
     }
-    _size += collection.size ();
+    m_nSize += collection.size ();
     return true;
   }
 
@@ -253,16 +255,19 @@ public class ArrayByteList extends RandomAccessByteList implements Serializable
    * Increases my capacity, if necessary, to ensure that I can hold at least the
    * number of elements specified by the minimum capacity argument without
    * growing.
+   *
+   * @param nMinCap
+   *          The new minimum capacity
    */
-  public void ensureCapacity (final int mincap)
+  public void ensureCapacity (final int nMinCap)
   {
     incrModCount ();
-    if (mincap > _data.length)
+    if (nMinCap > m_aData.length)
     {
-      final int newcap = (_data.length * 3) / 2 + 1;
-      final byte [] olddata = _data;
-      _data = new byte [newcap < mincap ? mincap : newcap];
-      System.arraycopy (olddata, 0, _data, 0, _size);
+      final int newcap = (m_aData.length * 3) / 2 + 1;
+      final byte [] olddata = m_aData;
+      m_aData = new byte [newcap < nMinCap ? nMinCap : newcap];
+      System.arraycopy (olddata, 0, m_aData, 0, m_nSize);
     }
   }
 
@@ -272,11 +277,11 @@ public class ArrayByteList extends RandomAccessByteList implements Serializable
   public void trimToSize ()
   {
     incrModCount ();
-    if (_size < _data.length)
+    if (m_nSize < m_aData.length)
     {
-      final byte [] olddata = _data;
-      _data = new byte [_size];
-      System.arraycopy (olddata, 0, _data, 0, _size);
+      final byte [] olddata = m_aData;
+      m_aData = new byte [m_nSize];
+      System.arraycopy (olddata, 0, m_aData, 0, m_nSize);
     }
   }
 
@@ -286,28 +291,28 @@ public class ArrayByteList extends RandomAccessByteList implements Serializable
   private void writeObject (@Nonnull final ObjectOutputStream out) throws IOException
   {
     out.defaultWriteObject ();
-    out.writeInt (_data.length);
-    for (int i = 0; i < _size; i++)
-      out.writeByte (_data[i]);
+    out.writeInt (m_aData.length);
+    for (int i = 0; i < m_nSize; i++)
+      out.writeByte (m_aData[i]);
   }
 
   private void readObject (@Nonnull final ObjectInputStream in) throws IOException, ClassNotFoundException
   {
     in.defaultReadObject ();
-    _data = new byte [in.readInt ()];
-    for (int i = 0; i < _size; i++)
-      _data[i] = in.readByte ();
+    m_aData = new byte [in.readInt ()];
+    for (int i = 0; i < m_nSize; i++)
+      m_aData[i] = in.readByte ();
   }
 
   private final void _checkRange (final int index)
   {
-    if (index < 0 || index >= _size)
-      throw new IndexOutOfBoundsException ("Should be at least 0 and less than " + _size + ", found " + index);
+    if (index < 0 || index >= m_nSize)
+      throw new IndexOutOfBoundsException ("Should be at least 0 and less than " + m_nSize + ", found " + index);
   }
 
   private final void _checkRangeIncludingEndpoint (final int index)
   {
-    if (index < 0 || index > _size)
-      throw new IndexOutOfBoundsException ("Should be at least 0 and at most " + _size + ", found " + index);
+    if (index < 0 || index > m_nSize)
+      throw new IndexOutOfBoundsException ("Should be at least 0 and at most " + m_nSize + ", found " + index);
   }
 }

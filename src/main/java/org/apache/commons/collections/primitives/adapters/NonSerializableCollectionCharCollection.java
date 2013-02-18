@@ -47,9 +47,9 @@ final class NonSerializableCollectionCharCollection extends AbstractCollectionCh
 {
   private final Collection <Character> m_aCollection;
 
-  public NonSerializableCollectionCharCollection (@Nonnull final Collection <Character> collection)
+  public NonSerializableCollectionCharCollection (@Nonnull final Collection <Character> aCollection)
   {
-    m_aCollection = collection;
+    m_aCollection = aCollection;
   }
 
   @Override

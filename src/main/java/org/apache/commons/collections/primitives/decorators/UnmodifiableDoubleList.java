@@ -81,7 +81,7 @@ public final class UnmodifiableDoubleList extends BaseUnmodifiableDoubleList imp
   }
 
   @Nullable
-  public static final DoubleList wrap (@Nullable final DoubleList list)
+  public static DoubleList wrap (@Nullable final DoubleList list)
   {
     if (null == list)
       return null;

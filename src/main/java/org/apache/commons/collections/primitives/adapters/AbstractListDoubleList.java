@@ -88,7 +88,7 @@ abstract class AbstractListDoubleList extends AbstractCollectionDoubleCollection
   }
 
   /**
-   * {@link ListIteratorDoubleListIterator#wrap wraps} the {@link DoubleList
+   * @return {@link ListIteratorDoubleListIterator#wrap wraps} the {@link DoubleList
    * DoubleList} returned by my underlying {@link DoubleListIterator
    * DoubleListIterator}, if any.
    */
@@ -99,7 +99,9 @@ abstract class AbstractListDoubleList extends AbstractCollectionDoubleCollection
   }
 
   /**
-   * {@link ListIteratorDoubleListIterator#wrap wraps} the {@link DoubleList
+   * @param nIndex
+   *        The starting index of the iterator 
+   * @return {@link ListIteratorDoubleListIterator#wrap wraps} the {@link DoubleList
    * DoubleList} returned by my underlying {@link DoubleListIterator
    * DoubleListIterator}, if any.
    */

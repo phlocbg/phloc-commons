@@ -67,11 +67,13 @@ public final class FloatCollectionCollection extends AbstractFloatCollectionColl
    * Creates a {@link Collection Collection} wrapping the specified
    * {@link FloatCollection FloatCollection}.
    *
+   * @param aCollection
+   *        The collection to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public FloatCollectionCollection (@Nonnull final FloatCollection collection)
+  public FloatCollectionCollection (@Nonnull final FloatCollection aCollection)
   {
-    m_aCollection = collection;
+    m_aCollection = aCollection;
   }
 
   @Override

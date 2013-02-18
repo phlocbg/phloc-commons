@@ -50,10 +50,14 @@ import com.phloc.commons.text.resource.ResourceBundleUtils;
  * @author philip
  */
 @ThreadSafe
-public final class EnumTextResolverWithPropertiesOverrideAndFallback extends AbstractEnumTextResolverWithOverrideAndFallback
+public final class EnumTextResolverWithPropertiesOverrideAndFallback extends
+                                                                    AbstractEnumTextResolverWithOverrideAndFallback
 {
+  /** Default classpath prefix for override resources */
   public static final String PREFIX_OVERRIDE = "properties/override-";
+  /** Default classpath prefix for fallback resources */
   public static final String PREFIX_FALLBACK = "properties/";
+  /** By default the resource bundle cache is used */
   public static final boolean DEFAULT_USE_RESOURCE_BUNDLE_CACHE = true;
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (EnumTextResolverWithPropertiesOverrideAndFallback.class);

@@ -41,6 +41,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author philip
  */
+// ESCA-JAVA0076:
 final class LZWNode
 {
   private final int m_nTableIndex;
@@ -112,6 +113,7 @@ final class LZWNode
   }
 }
 
+// ESCA-JAVA0076:
 abstract class AbstractLZWDictionary
 {
   protected static final Logger s_aLogger = LoggerFactory.getLogger (AbstractLZWDictionary.class);
@@ -243,6 +245,7 @@ final class LZWEncodeDictionary extends AbstractLZWDictionary
   }
 }
 
+// ESCA-JAVA0076:
 /**
  * Encoder and decoder for the LZW algorithm
  * 

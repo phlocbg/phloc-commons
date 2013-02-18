@@ -62,7 +62,11 @@ public abstract class AbstractByteCollection implements ByteCollection
   @Nonnegative
   public abstract int size ();
 
-  /** Unsupported in this base implementation. */
+  /** 
+   * Unsupported in this base implementation.
+   *
+   * @return never 
+   */
   public boolean add (final byte aElement)
   {
     throw new UnsupportedOperationException ("add(byte) is not supported.");

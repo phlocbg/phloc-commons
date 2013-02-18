@@ -38,13 +38,14 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 @Immutable
 public final class StringParser
 {
+  /** The default radix used to convert string values to numeric values */
   public static final int DEFAULT_RADIX = 10;
 
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")
   private static final StringParser s_aInstance = new StringParser ();
 
-  protected StringParser ()
+  private StringParser ()
   {}
 
   /**
@@ -197,6 +198,9 @@ public final class StringParser
    * 
    * @param sStr
    *        The string to be parsed. May be <code>null</code>.
+   * @param aDefault
+   *        The default value to be returned if the value is neither "true" nor
+   *        "false". May be <code>null</code>.
    * @return the <code>Boolean</code> value represented by the string. Never
    *         <code>null</code>.
    */

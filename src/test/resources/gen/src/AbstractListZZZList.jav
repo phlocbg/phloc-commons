@@ -88,7 +88,7 @@ abstract class AbstractListZZZList extends AbstractCollectionZZZCollection imple
   }
 
   /**
-   * {@link ListIteratorZZZListIterator#wrap wraps} the {@link ZZZList
+   * @return {@link ListIteratorZZZListIterator#wrap wraps} the {@link ZZZList
    * ZZZList} returned by my underlying {@link ZZZListIterator
    * ZZZListIterator}, if any.
    */
@@ -99,7 +99,9 @@ abstract class AbstractListZZZList extends AbstractCollectionZZZCollection imple
   }
 
   /**
-   * {@link ListIteratorZZZListIterator#wrap wraps} the {@link ZZZList
+   * @param nIndex
+   *        The starting index of the iterator 
+   * @return {@link ListIteratorZZZListIterator#wrap wraps} the {@link ZZZList
    * ZZZList} returned by my underlying {@link ZZZListIterator
    * ZZZListIterator}, if any.
    */

@@ -51,8 +51,8 @@ public class ArrayUnsignedByteList extends RandomAccessShortList implements Seri
    */
   public static final short MIN_VALUE = 0;
 
-  private transient byte [] _data;
-  private int _size;
+  private transient byte [] m_aData;
+  private int m_nSize;
 
   /**
    * Construct an empty list with the default initial capacity.
@@ -65,17 +65,17 @@ public class ArrayUnsignedByteList extends RandomAccessShortList implements Seri
   /**
    * Construct an empty list with the given initial capacity.
    * 
+   * @param nInitialCapacity
+   *        The initial capacity to allocate. Must be &gt; 0.
    * @throws IllegalArgumentException
    *         when <i>initialCapacity</i> is negative
    */
-  public ArrayUnsignedByteList (final int initialCapacity)
+  public ArrayUnsignedByteList (final int nInitialCapacity)
   {
-    if (initialCapacity < 0)
-    {
-      throw new IllegalArgumentException ("capacity " + initialCapacity);
-    }
-    _data = new byte [initialCapacity];
-    _size = 0;
+    if (nInitialCapacity < 0)
+      throw new IllegalArgumentException ("capacity " + nInitialCapacity);
+    m_aData = new byte [nInitialCapacity];
+    m_nSize = 0;
   }
 
   /**
@@ -107,9 +107,9 @@ public class ArrayUnsignedByteList extends RandomAccessShortList implements Seri
     this (array.length);
     for (int i = 0; i < array.length; i++)
     {
-      _data[i] = _fromShort (array[i]);
+      m_aData[i] = _fromShort (array[i]);
     }
-    _size = array.length;
+    m_nSize = array.length;
   }
 
   // ShortList methods
@@ -130,13 +130,13 @@ public class ArrayUnsignedByteList extends RandomAccessShortList implements Seri
   public short get (final int index)
   {
     _checkRange (index);
-    return _toShort (_data[index]);
+    return _toShort (m_aData[index]);
   }
 
   @Override
   public int size ()
   {
-    return _size;
+    return m_nSize;
   }
 
   /**
@@ -159,13 +159,13 @@ public class ArrayUnsignedByteList extends RandomAccessShortList implements Seri
   {
     _checkRange (index);
     incrModCount ();
-    final short oldval = _toShort (_data[index]);
-    final int numtomove = _size - index - 1;
+    final short oldval = _toShort (m_aData[index]);
+    final int numtomove = m_nSize - index - 1;
     if (numtomove > 0)
     {
-      System.arraycopy (_data, index + 1, _data, index, numtomove);
+      System.arraycopy (m_aData, index + 1, m_aData, index, numtomove);
     }
-    _size--;
+    m_nSize--;
     return oldval;
   }
 
@@ -191,8 +191,8 @@ public class ArrayUnsignedByteList extends RandomAccessShortList implements Seri
     _assertValidUnsignedByte (element);
     _checkRange (index);
     incrModCount ();
-    final short oldval = _toShort (_data[index]);
-    _data[index] = _fromShort (element);
+    final short oldval = _toShort (m_aData[index]);
+    m_aData[index] = _fromShort (element);
     return oldval;
   }
 
@@ -221,18 +221,18 @@ public class ArrayUnsignedByteList extends RandomAccessShortList implements Seri
     _assertValidUnsignedByte (element);
     _checkRangeIncludingEndpoint (index);
     incrModCount ();
-    ensureCapacity (_size + 1);
-    final int numtomove = _size - index;
-    System.arraycopy (_data, index, _data, index + 1, numtomove);
-    _data[index] = _fromShort (element);
-    _size++;
+    ensureCapacity (m_nSize + 1);
+    final int numtomove = m_nSize - index;
+    System.arraycopy (m_aData, index, m_aData, index + 1, numtomove);
+    m_aData[index] = _fromShort (element);
+    m_nSize++;
   }
 
   @Override
   public void clear ()
   {
     incrModCount ();
-    _size = 0;
+    m_nSize = 0;
   }
 
   // capacity methods
@@ -242,16 +242,19 @@ public class ArrayUnsignedByteList extends RandomAccessShortList implements Seri
    * Increases my capacity, if necessary, to ensure that I can hold at least the
    * number of elements specified by the minimum capacity argument without
    * growing.
+   * 
+   * @param nMinCap
+   *        Minimum capacity
    */
-  public void ensureCapacity (final int mincap)
+  public void ensureCapacity (final int nMinCap)
   {
     incrModCount ();
-    if (mincap > _data.length)
+    if (nMinCap > m_aData.length)
     {
-      final int newcap = (_data.length * 3) / 2 + 1;
-      final byte [] olddata = _data;
-      _data = new byte [newcap < mincap ? mincap : newcap];
-      System.arraycopy (olddata, 0, _data, 0, _size);
+      final int newcap = (m_aData.length * 3) / 2 + 1;
+      final byte [] olddata = m_aData;
+      m_aData = new byte [newcap < nMinCap ? nMinCap : newcap];
+      System.arraycopy (olddata, 0, m_aData, 0, m_nSize);
     }
   }
 
@@ -261,28 +264,28 @@ public class ArrayUnsignedByteList extends RandomAccessShortList implements Seri
   public void trimToSize ()
   {
     incrModCount ();
-    if (_size < _data.length)
+    if (m_nSize < m_aData.length)
     {
-      final byte [] olddata = _data;
-      _data = new byte [_size];
-      System.arraycopy (olddata, 0, _data, 0, _size);
+      final byte [] olddata = m_aData;
+      m_aData = new byte [m_nSize];
+      System.arraycopy (olddata, 0, m_aData, 0, m_nSize);
     }
   }
 
   // private methods
   // -------------------------------------------------------------------------
 
-  private final short _toShort (final byte value)
+  private static final short _toShort (final byte value)
   {
     return (short) (value & MAX_VALUE);
   }
 
-  private final byte _fromShort (final short value)
+  private static final byte _fromShort (final short value)
   {
     return (byte) (value & MAX_VALUE);
   }
 
-  private final void _assertValidUnsignedByte (final short value) throws IllegalArgumentException
+  private static final void _assertValidUnsignedByte (final short value) throws IllegalArgumentException
   {
     if (value > MAX_VALUE)
     {
@@ -297,36 +300,36 @@ public class ArrayUnsignedByteList extends RandomAccessShortList implements Seri
   private void writeObject (final ObjectOutputStream out) throws IOException
   {
     out.defaultWriteObject ();
-    out.writeInt (_data.length);
-    for (int i = 0; i < _size; i++)
+    out.writeInt (m_aData.length);
+    for (int i = 0; i < m_nSize; i++)
     {
-      out.writeByte (_data[i]);
+      out.writeByte (m_aData[i]);
     }
   }
 
   private void readObject (final ObjectInputStream in) throws IOException, ClassNotFoundException
   {
     in.defaultReadObject ();
-    _data = new byte [in.readInt ()];
-    for (int i = 0; i < _size; i++)
+    m_aData = new byte [in.readInt ()];
+    for (int i = 0; i < m_nSize; i++)
     {
-      _data[i] = in.readByte ();
+      m_aData[i] = in.readByte ();
     }
   }
 
   private final void _checkRange (final int index)
   {
-    if (index < 0 || index >= _size)
+    if (index < 0 || index >= m_nSize)
     {
-      throw new IndexOutOfBoundsException ("Should be at least 0 and less than " + _size + ", found " + index);
+      throw new IndexOutOfBoundsException ("Should be at least 0 and less than " + m_nSize + ", found " + index);
     }
   }
 
   private final void _checkRangeIncludingEndpoint (final int index)
   {
-    if (index < 0 || index > _size)
+    if (index < 0 || index > m_nSize)
     {
-      throw new IndexOutOfBoundsException ("Should be at least 0 and at most " + _size + ", found " + index);
+      throw new IndexOutOfBoundsException ("Should be at least 0 and at most " + m_nSize + ", found " + index);
     }
   }
 

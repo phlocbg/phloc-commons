@@ -49,6 +49,7 @@ public final class MultiLingualText extends TextProvider implements IMultiLingua
   // Because of the transient field
   private static final long serialVersionUID = 136888667633487L;
 
+  /** Default empty multilingual text - don't modify this object!!! */
   public static final IMultiLingualText EMPTY_MULTILINGUAL_TEXT = new MultiLingualText ();
 
   // A list of callback upon change.

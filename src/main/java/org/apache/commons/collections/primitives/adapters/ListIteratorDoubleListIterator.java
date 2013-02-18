@@ -61,11 +61,13 @@ public class ListIteratorDoubleListIterator implements DoubleListIterator
    * Creates an {@link DoubleListIterator DoubleListIterator} wrapping the specified
    * {@link ListIterator ListIterator}.
    *
+   * @param aIterator
+   *        The iterator to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public ListIteratorDoubleListIterator (@Nonnull final ListIterator <Double> iterator)
+  public ListIteratorDoubleListIterator (@Nonnull final ListIterator <Double> aIterator)
   {
-    m_aIterator = iterator;
+    m_aIterator = aIterator;
   }
 
   public int nextIndex ()

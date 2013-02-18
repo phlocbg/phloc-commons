@@ -95,6 +95,7 @@ public final class EmptySortedSet extends AbstractSet <Object> implements Sorted
     return null;
   }
 
+  // ESCA-JAVA0130:
   // ESCA-JAVA0029:
   // Preserves singleton property
   private Object readResolve ()

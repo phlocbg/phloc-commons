@@ -93,7 +93,7 @@ abstract class AbstractByteCollectionCollection implements Collection <Byte>
   }
 
   /**
-   * {@link ByteIteratorIterator#wrap wraps} the
+   * @return {@link ByteIteratorIterator#wrap wraps} the
    * {@link org.apache.commons.collections.primitives.ByteIterator ByteIterator}
    * returned by my underlying {@link ByteCollection ByteCollection}, if any.
    */

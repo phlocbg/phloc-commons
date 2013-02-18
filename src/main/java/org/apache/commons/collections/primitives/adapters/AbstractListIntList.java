@@ -88,7 +88,7 @@ abstract class AbstractListIntList extends AbstractCollectionIntCollection imple
   }
 
   /**
-   * {@link ListIteratorIntListIterator#wrap wraps} the {@link IntList
+   * @return {@link ListIteratorIntListIterator#wrap wraps} the {@link IntList
    * IntList} returned by my underlying {@link IntListIterator
    * IntListIterator}, if any.
    */
@@ -99,7 +99,9 @@ abstract class AbstractListIntList extends AbstractCollectionIntCollection imple
   }
 
   /**
-   * {@link ListIteratorIntListIterator#wrap wraps} the {@link IntList
+   * @param nIndex
+   *        The starting index of the iterator 
+   * @return {@link ListIteratorIntListIterator#wrap wraps} the {@link IntList
    * IntList} returned by my underlying {@link IntListIterator
    * IntListIterator}, if any.
    */

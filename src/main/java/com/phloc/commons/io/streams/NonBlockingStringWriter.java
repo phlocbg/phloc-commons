@@ -288,7 +288,7 @@ public class NonBlockingStringWriter extends Writer implements IHasStringReprese
   }
 
   /**
-   * Return the buffer's current value as a string.
+   * @return the buffer's current value as a string.
    */
   @Override
   @Deprecated

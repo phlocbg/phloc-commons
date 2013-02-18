@@ -47,9 +47,9 @@ final class NonSerializableCollectionFloatCollection extends AbstractCollectionF
 {
   private final Collection <Float> m_aCollection;
 
-  public NonSerializableCollectionFloatCollection (@Nonnull final Collection <Float> collection)
+  public NonSerializableCollectionFloatCollection (@Nonnull final Collection <Float> aCollection)
   {
-    m_aCollection = collection;
+    m_aCollection = aCollection;
   }
 
   @Override

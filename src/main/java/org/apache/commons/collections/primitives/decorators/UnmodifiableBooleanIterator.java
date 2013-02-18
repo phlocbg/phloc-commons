@@ -66,7 +66,7 @@ public final class UnmodifiableBooleanIterator extends ProxyBooleanIterator
   }
 
   @Nullable
-  public static final BooleanIterator wrap (@Nullable final BooleanIterator iterator)
+  public static BooleanIterator wrap (@Nullable final BooleanIterator iterator)
   {
     if (null == iterator)
       return null;

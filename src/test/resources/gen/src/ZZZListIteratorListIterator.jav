@@ -54,64 +54,66 @@ import org.apache.commons.collections.primitives.ZZZListIterator;
  */
 public class ZZZListIteratorListIterator implements ListIterator <XXX>
 {
-  private final ZZZListIterator _iterator;
+  private final ZZZListIterator m_aIterator;
 
   /**
    * Creates an {@link ListIterator ListIterator} wrapping the specified
    * {@link ZZZListIterator ZZZListIterator}.
    *
+   * @param aIterator
+   *        The iterator to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public ZZZListIteratorListIterator (@Nonnull final ZZZListIterator iterator)
+  public ZZZListIteratorListIterator (@Nonnull final ZZZListIterator aIterator)
   {
-    _iterator = iterator;
+    m_aIterator = aIterator;
   }
 
   public int nextIndex ()
   {
-    return _iterator.nextIndex ();
+    return m_aIterator.nextIndex ();
   }
 
   public int previousIndex ()
   {
-    return _iterator.previousIndex ();
+    return m_aIterator.previousIndex ();
   }
 
   public boolean hasNext ()
   {
-    return _iterator.hasNext ();
+    return m_aIterator.hasNext ();
   }
 
   public boolean hasPrevious ()
   {
-    return _iterator.hasPrevious ();
+    return m_aIterator.hasPrevious ();
   }
 
   @Nonnull
   public XXX next ()
   {
-    return XXX.valueOf (_iterator.next ());
+    return XXX.valueOf (m_aIterator.next ());
   }
 
   @Nonnull
   public XXX previous ()
   {
-    return XXX.valueOf (_iterator.previous ());
+    return XXX.valueOf (m_aIterator.previous ());
   }
 
   public void add (@Nonnull final XXX obj)
   {
-    _iterator.add (obj.YYYValue ());
+    m_aIterator.add (obj.YYYValue ());
   }
 
   public void set (@Nonnull final XXX obj)
   {
-    _iterator.set (obj.YYYValue ());
+    m_aIterator.set (obj.YYYValue ());
   }
 
   public void remove ()
   {
-    _iterator.remove ();
+    m_aIterator.remove ();
   }
 
   /**

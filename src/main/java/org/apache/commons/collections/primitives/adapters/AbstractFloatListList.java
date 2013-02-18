@@ -90,7 +90,7 @@ abstract class AbstractFloatListList extends AbstractFloatCollectionCollection i
   }
 
   /**
-   * {@link FloatListIteratorListIterator#wrap wraps} the
+   * @return {@link FloatListIteratorListIterator#wrap wraps} the
    * {@link org.apache.commons.collections.primitives.FloatListIterator
    * FloatListIterator} returned by my underlying {@link FloatList FloatList}, if
    * any.
@@ -101,7 +101,9 @@ abstract class AbstractFloatListList extends AbstractFloatCollectionCollection i
   }
 
   /**
-   * {@link FloatListIteratorListIterator#wrap wraps} the
+   * @param index
+   *        The index where iterator should start
+   * @return {@link FloatListIteratorListIterator#wrap wraps} the
    * {@link org.apache.commons.collections.primitives.FloatListIterator
    * FloatListIterator} returned by my underlying {@link FloatList FloatList}, if
    * any.

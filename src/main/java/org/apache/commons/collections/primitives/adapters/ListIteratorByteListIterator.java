@@ -61,11 +61,13 @@ public class ListIteratorByteListIterator implements ByteListIterator
    * Creates an {@link ByteListIterator ByteListIterator} wrapping the specified
    * {@link ListIterator ListIterator}.
    *
+   * @param aIterator
+   *        The iterator to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public ListIteratorByteListIterator (@Nonnull final ListIterator <Byte> iterator)
+  public ListIteratorByteListIterator (@Nonnull final ListIterator <Byte> aIterator)
   {
-    m_aIterator = iterator;
+    m_aIterator = aIterator;
   }
 
   public int nextIndex ()

@@ -29,6 +29,7 @@ import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.io.streams.StreamUtils;
 
+//ESCA-JAVA0076:
 /**
  * Encoder and decoder for flate compression
  * 

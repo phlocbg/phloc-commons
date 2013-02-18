@@ -47,9 +47,9 @@ final class NonSerializableCollectionIntCollection extends AbstractCollectionInt
 {
   private final Collection <Integer> m_aCollection;
 
-  public NonSerializableCollectionIntCollection (@Nonnull final Collection <Integer> collection)
+  public NonSerializableCollectionIntCollection (@Nonnull final Collection <Integer> aCollection)
   {
-    m_aCollection = collection;
+    m_aCollection = aCollection;
   }
 
   @Override

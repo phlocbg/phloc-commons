@@ -90,7 +90,7 @@ abstract class AbstractBooleanListList extends AbstractBooleanCollectionCollecti
   }
 
   /**
-   * {@link BooleanListIteratorListIterator#wrap wraps} the
+   * @return {@link BooleanListIteratorListIterator#wrap wraps} the
    * {@link org.apache.commons.collections.primitives.BooleanListIterator
    * BooleanListIterator} returned by my underlying {@link BooleanList BooleanList}, if
    * any.
@@ -101,7 +101,9 @@ abstract class AbstractBooleanListList extends AbstractBooleanCollectionCollecti
   }
 
   /**
-   * {@link BooleanListIteratorListIterator#wrap wraps} the
+   * @param index
+   *        The index where iterator should start
+   * @return {@link BooleanListIteratorListIterator#wrap wraps} the
    * {@link org.apache.commons.collections.primitives.BooleanListIterator
    * BooleanListIterator} returned by my underlying {@link BooleanList BooleanList}, if
    * any.

@@ -47,9 +47,9 @@ final class NonSerializableCollectionLongCollection extends AbstractCollectionLo
 {
   private final Collection <Long> m_aCollection;
 
-  public NonSerializableCollectionLongCollection (@Nonnull final Collection <Long> collection)
+  public NonSerializableCollectionLongCollection (@Nonnull final Collection <Long> aCollection)
   {
-    m_aCollection = collection;
+    m_aCollection = aCollection;
   }
 
   @Override

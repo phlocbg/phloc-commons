@@ -66,6 +66,8 @@ public final class BooleanListList extends AbstractBooleanListList implements Se
    * Creates a {@link List List} wrapping the specified {@link BooleanList
    * BooleanList}.
    *
+   * @param list
+   *        The list to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
   public BooleanListList (@Nonnull final BooleanList list)

@@ -36,6 +36,7 @@ package org.apache.commons.collections.primitives;
 import java.util.ConcurrentModificationException;
 import java.util.NoSuchElementException;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -57,6 +58,7 @@ import com.phloc.commons.hash.HashCodeGenerator;
  */
 public abstract class RandomAccessCharList extends AbstractCharCollection implements CharList
 {
+  private int m_nModCount = 0;
 
   // constructors
   // -------------------------------------------------------------------------
@@ -79,6 +81,7 @@ public abstract class RandomAccessCharList extends AbstractCharCollection implem
   /**
    * Unsupported in this implementation.
    *
+   * @return never
    * @throws UnsupportedOperationException
    *         since this method is not supported
    */
@@ -90,6 +93,7 @@ public abstract class RandomAccessCharList extends AbstractCharCollection implem
   /**
    * Unsupported in this implementation.
    *
+   * @return never
    * @throws UnsupportedOperationException
    *         since this method is not supported
    */
@@ -218,90 +222,88 @@ public abstract class RandomAccessCharList extends AbstractCharCollection implem
   // protected utilities
   // -------------------------------------------------------------------------
 
-  /** Get my count of structural modifications. */
+  /** 
+   * @return my count of structural modifications.
+   */
   protected int getModCount ()
   {
-    return _modCount;
+    return m_nModCount;
   }
 
   /** Increment my count of structural modifications. */
   protected void incrModCount ()
   {
-    _modCount++;
+    m_nModCount++;
   }
-
-  // attributes
-  // -------------------------------------------------------------------------
-
-  private int _modCount = 0;
 
   // inner classes
   // -------------------------------------------------------------------------
 
   private static class ComodChecker
   {
-    private RandomAccessCharList _source = null;
-    private int _expectedModCount = -1;
+    private RandomAccessCharList m_aSource;
+    private int m_nExpectedModCount = -1;
 
-    ComodChecker (final RandomAccessCharList source)
+    ComodChecker (@Nonnull final RandomAccessCharList source)
     {
-      _source = source;
+      m_aSource = source;
       resyncModCount ();
     }
 
+    @Nonnull
     protected RandomAccessCharList getList ()
     {
-      return _source;
+      return m_aSource;
     }
 
     protected void assertNotComodified () throws ConcurrentModificationException
     {
-      if (_expectedModCount != getList ().getModCount ())
+      if (m_nExpectedModCount != getList ().getModCount ())
         throw new ConcurrentModificationException ();
     }
 
     protected void resyncModCount ()
     {
-      _expectedModCount = getList ().getModCount ();
+      m_nExpectedModCount = getList ().getModCount ();
     }
   }
 
   protected static class RandomAccessCharacterListIterator extends ComodChecker implements CharListIterator
   {
-    private int _nextIndex = 0;
-    private int _lastReturnedIndex = -1;
+    private int m_nNextIndex = 0;
+    private int m_nLastReturnedIndex = -1;
 
     RandomAccessCharacterListIterator (final RandomAccessCharList list, final int index)
     {
       super (list);
       if (index < 0 || index > getList ().size ())
         throw new IndexOutOfBoundsException ("Index " + index + " not in [0," + getList ().size () + ")");
-      _nextIndex = index;
+      m_nNextIndex = index;
       resyncModCount ();
     }
 
     public boolean hasNext ()
     {
       assertNotComodified ();
-      return _nextIndex < getList ().size ();
+      return m_nNextIndex < getList ().size ();
     }
 
     public boolean hasPrevious ()
     {
       assertNotComodified ();
-      return _nextIndex > 0;
+      return m_nNextIndex > 0;
     }
 
     public int nextIndex ()
     {
       assertNotComodified ();
-      return _nextIndex;
+      return m_nNextIndex;
     }
 
     public int previousIndex ()
     {
       assertNotComodified ();
-      return _nextIndex - 1;
+      return m_nNextIndex - 1;
     }
 
     public char next ()
@@ -309,9 +311,9 @@ public abstract class RandomAccessCharList extends AbstractCharCollection implem
       assertNotComodified ();
       if (!hasNext ())
         throw new NoSuchElementException ();
-      final char val = getList ().get (_nextIndex);
-      _lastReturnedIndex = _nextIndex;
-      _nextIndex++;
+      final char val = getList ().get (m_nNextIndex);
+      m_nLastReturnedIndex = m_nNextIndex;
+      m_nNextIndex++;
       return val;
     }
 
@@ -320,89 +322,89 @@ public abstract class RandomAccessCharList extends AbstractCharCollection implem
       assertNotComodified ();
       if (!hasPrevious ())
         throw new NoSuchElementException ();
-      final char val = getList ().get (_nextIndex - 1);
-      _lastReturnedIndex = _nextIndex - 1;
-      _nextIndex--;
+      final char val = getList ().get (m_nNextIndex - 1);
+      m_nLastReturnedIndex = m_nNextIndex - 1;
+      m_nNextIndex--;
       return val;
     }
 
     public void add (final char value)
     {
       assertNotComodified ();
-      getList ().add (_nextIndex, value);
-      _nextIndex++;
-      _lastReturnedIndex = -1;
+      getList ().add (m_nNextIndex, value);
+      m_nNextIndex++;
+      m_nLastReturnedIndex = -1;
       resyncModCount ();
     }
 
     public void remove ()
     {
       assertNotComodified ();
-      if (_lastReturnedIndex == -1)
+      if (m_nLastReturnedIndex == -1)
       {
         throw new IllegalStateException ();
       }
-      if (_lastReturnedIndex == _nextIndex)
+      if (m_nLastReturnedIndex == m_nNextIndex)
       {
         // remove() following previous()
-        getList ().removeElementAt (_lastReturnedIndex);
+        getList ().removeElementAt (m_nLastReturnedIndex);
       }
       else
       {
         // remove() following next()
-        getList ().removeElementAt (_lastReturnedIndex);
-        _nextIndex--;
+        getList ().removeElementAt (m_nLastReturnedIndex);
+        m_nNextIndex--;
       }
-      _lastReturnedIndex = -1;
+      m_nLastReturnedIndex = -1;
       resyncModCount ();
     }
 
     public void set (final char value)
     {
       assertNotComodified ();
-      if (-1 == _lastReturnedIndex)
+      if (-1 == m_nLastReturnedIndex)
         throw new IllegalStateException ();
-      getList ().set (_lastReturnedIndex, value);
+      getList ().set (m_nLastReturnedIndex, value);
       resyncModCount ();
     }
   }
 
   protected static class RandomAccessCharacterSubList extends RandomAccessCharList
   {
-    private int _offset = 0;
-    private int _limit = 0;
-    private RandomAccessCharList _list = null;
-    private ComodChecker _comod = null;
+    private int m_nOfs = 0;
+    private int m_nLimit = 0;
+    private RandomAccessCharList m_aList;
+    private ComodChecker m_aComod;
 
-    RandomAccessCharacterSubList (final RandomAccessCharList list, final int fromIndex, final int toIndex)
+    RandomAccessCharacterSubList (@Nonnull final RandomAccessCharList list, @Nonnegative final int fromIndex, @Nonnegative  final int toIndex)
     {
       if (fromIndex < 0 || toIndex > list.size ())
         throw new IndexOutOfBoundsException ();
       if (fromIndex > toIndex)
         throw new IllegalArgumentException ();
-      _list = list;
-      _offset = fromIndex;
-      _limit = toIndex - fromIndex;
-      _comod = new ComodChecker (list);
-      _comod.resyncModCount ();
+      m_aList = list;
+      m_nOfs = fromIndex;
+      m_nLimit = toIndex - fromIndex;
+      m_aComod = new ComodChecker (list);
+      m_aComod.resyncModCount ();
     }
 
     @Override
     public char get (final int index)
     {
       checkRange (index);
-      _comod.assertNotComodified ();
-      return _list.get (toUnderlyingIndex (index));
+      m_aComod.assertNotComodified ();
+      return m_aList.get (toUnderlyingIndex (index));
     }
 
     @Override
     public char removeElementAt (final int index)
     {
       checkRange (index);
-      _comod.assertNotComodified ();
-      final char val = _list.removeElementAt (toUnderlyingIndex (index));
-      _limit--;
-      _comod.resyncModCount ();
+      m_aComod.assertNotComodified ();
+      final char val = m_aList.removeElementAt (toUnderlyingIndex (index));
+      m_nLimit--;
+      m_aComod.resyncModCount ();
       incrModCount ();
       return val;
     }
@@ -411,10 +413,10 @@ public abstract class RandomAccessCharList extends AbstractCharCollection implem
     public char set (final int index, final char element)
     {
       checkRange (index);
-      _comod.assertNotComodified ();
-      final char val = _list.set (toUnderlyingIndex (index), element);
+      m_aComod.assertNotComodified ();
+      final char val = m_aList.set (toUnderlyingIndex (index), element);
       incrModCount ();
-      _comod.resyncModCount ();
+      m_aComod.resyncModCount ();
       return val;
     }
 
@@ -422,18 +424,18 @@ public abstract class RandomAccessCharList extends AbstractCharCollection implem
     public void add (final int index, final char element)
     {
       checkRangeIncludingEndpoint (index);
-      _comod.assertNotComodified ();
-      _list.add (toUnderlyingIndex (index), element);
-      _limit++;
-      _comod.resyncModCount ();
+      m_aComod.assertNotComodified ();
+      m_aList.add (toUnderlyingIndex (index), element);
+      m_nLimit++;
+      m_aComod.resyncModCount ();
       incrModCount ();
     }
 
     @Override
     public int size ()
     {
-      _comod.assertNotComodified ();
-      return _limit;
+      m_aComod.assertNotComodified ();
+      return m_nLimit;
     }
 
     private void checkRange (final int index)
@@ -450,7 +452,7 @@ public abstract class RandomAccessCharList extends AbstractCharCollection implem
 
     private int toUnderlyingIndex (final int index)
     {
-      return (index + _offset);
+      return (index + m_nOfs);
     }
   }
 }

@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.stats.utils;
 
+import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
@@ -33,23 +34,41 @@ import com.phloc.commons.stats.visit.StatisticsWalker;
 @Immutable
 public final class StatisticsExporter
 {
+  /** Element name for XML export */
   public static final String ELEMENT_STATISTICS = "statistics";
+  /** Element name for XML export */
   public static final String ELEMENT_CACHE = "cache";
+  /** Attribute name for XML export */
   public static final String ATTR_HITS = "hits";
+  /** Attribute name for XML export */
   public static final String ATTR_MISSES = "misses";
+  /** Element name for XML export */
   public static final String ELEMENT_TIMER = "timer";
+  /** Element name for XML export */
   public static final String ELEMENT_KEYEDTIMER = "keyedtimer";
+  /** Element name for XML export */
   public static final String ELEMENT_SIZE = "size";
+  /** Element name for XML export */
   public static final String ELEMENT_KEYEDSIZE = "keyedsize";
+  /** Attribute name for XML export */
   public static final String ATTR_MIN = "min";
+  /** Attribute name for XML export */
   public static final String ATTR_AVERAGE = "average";
+  /** Attribute name for XML export */
   public static final String ATTR_MAX = "max";
+  /** Attribute name for XML export */
   public static final String ATTR_SUM = "sum";
+  /** Element name for XML export */
   public static final String ELEMENT_COUNTER = "counter";
+  /** Element name for XML export */
   public static final String ELEMENT_KEYEDCOUNTER = "keyedcounter";
+  /** Element name for XML export */
   public static final String ELEMENT_KEY = "key";
+  /** Attribute name for XML export */
   public static final String ATTR_NAME = "name";
+  /** Attribute name for XML export */
   public static final String ATTR_INVOCATIONCOUNT = "invocationcount";
+  /** Attribute name for XML export */
   public static final String ATTR_COUNT = "count";
 
   @PresentForCodeCoverage
@@ -59,6 +78,7 @@ public final class StatisticsExporter
   private StatisticsExporter ()
   {}
 
+  @Nonnull
   public static IMicroDocument getAsXMLDocument ()
   {
     final IMicroDocument aDoc = new MicroDocument ();

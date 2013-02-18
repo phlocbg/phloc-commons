@@ -53,6 +53,7 @@ final class JavaVersionConstants
  * 
  * @author philip
  */
+// ESCA-JAVA0076:
 public enum EJavaVersion
 {
   UNKNOWN (),

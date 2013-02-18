@@ -54,64 +54,66 @@ import org.apache.commons.collections.primitives.FloatListIterator;
  */
 public class FloatListIteratorListIterator implements ListIterator <Float>
 {
-  private final FloatListIterator _iterator;
+  private final FloatListIterator m_aIterator;
 
   /**
    * Creates an {@link ListIterator ListIterator} wrapping the specified
    * {@link FloatListIterator FloatListIterator}.
    *
+   * @param aIterator
+   *        The iterator to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public FloatListIteratorListIterator (@Nonnull final FloatListIterator iterator)
+  public FloatListIteratorListIterator (@Nonnull final FloatListIterator aIterator)
   {
-    _iterator = iterator;
+    m_aIterator = aIterator;
   }
 
   public int nextIndex ()
   {
-    return _iterator.nextIndex ();
+    return m_aIterator.nextIndex ();
   }
 
   public int previousIndex ()
   {
-    return _iterator.previousIndex ();
+    return m_aIterator.previousIndex ();
   }
 
   public boolean hasNext ()
   {
-    return _iterator.hasNext ();
+    return m_aIterator.hasNext ();
   }
 
   public boolean hasPrevious ()
   {
-    return _iterator.hasPrevious ();
+    return m_aIterator.hasPrevious ();
   }
 
   @Nonnull
   public Float next ()
   {
-    return Float.valueOf (_iterator.next ());
+    return Float.valueOf (m_aIterator.next ());
   }
 
   @Nonnull
   public Float previous ()
   {
-    return Float.valueOf (_iterator.previous ());
+    return Float.valueOf (m_aIterator.previous ());
   }
 
   public void add (@Nonnull final Float obj)
   {
-    _iterator.add (obj.floatValue ());
+    m_aIterator.add (obj.floatValue ());
   }
 
   public void set (@Nonnull final Float obj)
   {
-    _iterator.set (obj.floatValue ());
+    m_aIterator.set (obj.floatValue ());
   }
 
   public void remove ()
   {
-    _iterator.remove ();
+    m_aIterator.remove ();
   }
 
   /**

@@ -26,6 +26,11 @@ import com.phloc.commons.callback.IChangeNotify;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.state.IClearable;
 
+/**
+ * Interface for a writable version of a multilingual text
+ * 
+ * @author philip
+ */
 public interface IMultiLingualText extends IReadonlyMultiLingualText, IClearable
 {
   /**

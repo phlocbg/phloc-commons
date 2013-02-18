@@ -115,7 +115,7 @@ public abstract class BaseUnmodifiableLongListTest extends TestCase
     }
   }
 
-  private void assertIteratorNotModifiable (final LongIterator iter) throws Exception
+  private static void assertIteratorNotModifiable (final LongIterator iter) throws Exception
   {
     assertTrue (iter.hasNext ());
     iter.next ();

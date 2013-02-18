@@ -81,7 +81,7 @@ public final class UnmodifiableFloatList extends BaseUnmodifiableFloatList imple
   }
 
   @Nullable
-  public static final FloatList wrap (@Nullable final FloatList list)
+  public static FloatList wrap (@Nullable final FloatList list)
   {
     if (null == list)
       return null;

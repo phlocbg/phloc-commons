@@ -47,9 +47,9 @@ final class NonSerializableCollectionBooleanCollection extends AbstractCollectio
 {
   private final Collection <Boolean> m_aCollection;
 
-  public NonSerializableCollectionBooleanCollection (@Nonnull final Collection <Boolean> collection)
+  public NonSerializableCollectionBooleanCollection (@Nonnull final Collection <Boolean> aCollection)
   {
-    m_aCollection = collection;
+    m_aCollection = aCollection;
   }
 
   @Override

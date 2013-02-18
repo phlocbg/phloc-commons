@@ -90,7 +90,7 @@ abstract class AbstractZZZListList extends AbstractZZZCollectionCollection imple
   }
 
   /**
-   * {@link ZZZListIteratorListIterator#wrap wraps} the
+   * @return {@link ZZZListIteratorListIterator#wrap wraps} the
    * {@link org.apache.commons.collections.primitives.ZZZListIterator
    * ZZZListIterator} returned by my underlying {@link ZZZList ZZZList}, if
    * any.
@@ -101,7 +101,9 @@ abstract class AbstractZZZListList extends AbstractZZZCollectionCollection imple
   }
 
   /**
-   * {@link ZZZListIteratorListIterator#wrap wraps} the
+   * @param index
+   *        The index where iterator should start
+   * @return {@link ZZZListIteratorListIterator#wrap wraps} the
    * {@link org.apache.commons.collections.primitives.ZZZListIterator
    * ZZZListIterator} returned by my underlying {@link ZZZList ZZZList}, if
    * any.
