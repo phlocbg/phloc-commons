@@ -194,7 +194,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 public final class ServiceLoaderBackport <SPITYPE> implements Iterable <SPITYPE>
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (ServiceLoaderBackport.class);
-  private static final String PREFIX = "META-INF/services/";
+  static final String PREFIX = "META-INF/services/";
 
   // The class or interface representing the service being loaded
   private final Class <SPITYPE> m_aService;
