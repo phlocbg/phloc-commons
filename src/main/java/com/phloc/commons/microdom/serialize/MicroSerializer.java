@@ -139,7 +139,7 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
 
   private void _writeDocumentType (@Nonnull final IXMLIterationHandler aXMLWriter, final IMicroDocumentType aDocType)
   {
-    if (m_aSettings.getSerializeDocType ().emit ())
+    if (m_aSettings.getSerializeDocType ().isEmit ())
       aXMLWriter.onDocumentType (aDocType.getQualifiedName (), aDocType.getPublicID (), aDocType.getSystemID ());
   }
 
@@ -169,7 +169,7 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
 
   private void _writeComment (@Nonnull final IXMLIterationHandler aXMLWriter, @Nonnull final IMicroComment aComment)
   {
-    if (m_aSettings.getSerializeComments ().emit ())
+    if (m_aSettings.getSerializeComments ().isEmit ())
     {
       if (m_aSettings.getIndent ().isIndent () && m_aIndent.length () > 0)
         aXMLWriter.onContentElementWhitespace (m_aIndent);

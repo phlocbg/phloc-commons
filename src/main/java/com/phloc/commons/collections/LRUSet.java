@@ -51,7 +51,7 @@ public class LRUSet <ELEMENTTYPE> extends AbstractSet <ELEMENTTYPE> implements I
   {
     private final LRUSet <ELEMENTTYPE> m_aOwningSet;
 
-    private LRUCacheMap (@Nonnegative final int nMaxSize, @Nonnull final LRUSet <ELEMENTTYPE> aOwningSet)
+    LRUCacheMap (@Nonnegative final int nMaxSize, @Nonnull final LRUSet <ELEMENTTYPE> aOwningSet)
     {
       super (nMaxSize);
       m_aOwningSet = aOwningSet;

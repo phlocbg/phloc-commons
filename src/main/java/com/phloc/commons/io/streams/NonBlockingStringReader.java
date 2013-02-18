@@ -174,6 +174,8 @@ public class NonBlockingStringReader extends Reader
 
   /**
    * Tells whether this stream supports the mark() operation, which it does.
+   * 
+   * @return always <code>true</code>
    */
   @Override
   public boolean markSupported ()

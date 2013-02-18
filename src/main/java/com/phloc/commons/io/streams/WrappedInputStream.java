@@ -25,6 +25,7 @@ import javax.annotation.Nonnull;
 
 import com.phloc.commons.string.ToStringGenerator;
 
+// ESCA-JAVA0143:
 /**
  * A wrapper around another {@link InputStream}. Pass through of all
  * {@link InputStream} methods.

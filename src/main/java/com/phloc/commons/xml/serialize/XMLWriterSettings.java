@@ -36,16 +36,23 @@ import com.phloc.commons.xml.EXMLVersion;
  * Default implementation of the {@link IXMLWriterSettings} interface.<br>
  * Describes the export settings for the MicroWriter. Defaults to indented and
  * aligned XML in the UTF-8 charset.
- *
+ * 
  * @author philip
  */
 @NotThreadSafe
 public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWriterSettings>
 {
   // Must be before the IXMLWriterSettings constants!
+  /** The default charset is UTF-8 */
   public static final String DEFAULT_XML_CHARSET = CCharset.CHARSET_UTF_8;
+  /** The default charset is UTF-8 */
   public static final Charset DEFAULT_XML_CHARSET_OBJ = CCharset.CHARSET_UTF_8_OBJ;
+  /** By default double quotes are used to wrap attribute values */
   public static final boolean DEFAULT_USE_DOUBLE_QUOTES_FOR_ATTRIBUTES = true;
+  /**
+   * By default a leading space is inserted before a self closed element (e.g.
+   * <code>&lt;b /&gt;</code> in contrast to <code>&lt;b/&gt;</code>).
+   */
   public static final boolean DEFAULT_SPACE_ON_SELF_CLOSED_ELEMENT = true;
 
   /** The default settings to use */
@@ -81,7 +88,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
 
   /**
    * Copy constructor.
-   *
+   * 
    * @param aOther
    *        The object to copy the settings from. May not be <code>null</code>.
    */
@@ -103,7 +110,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
 
   /**
    * Set the XML serialization format to use.
-   *
+   * 
    * @param eFormat
    *        The new format. May not be <code>null</code>.
    * @return this
@@ -117,6 +124,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
     return this;
   }
 
+  @Override
   @Nonnull
   public EXMLSerializeFormat getFormat ()
   {
@@ -125,7 +133,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
 
   /**
    * Set the preferred XML version to use.
-   *
+   * 
    * @param eVersion
    *        The XML version. May not be <code>null</code>.
    * @return this
@@ -139,6 +147,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
     return this;
   }
 
+  @Override
   @Nonnull
   public EXMLVersion getXMLVersion ()
   {
@@ -147,7 +156,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
 
   /**
    * Set the way how to handle the doc type.
-   *
+   * 
    * @param eSerializeDocType
    *        Doc type handling. May not be <code>null</code>.
    * @return this
@@ -161,6 +170,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
     return this;
   }
 
+  @Override
   @Nonnull
   public EXMLSerializeDocType getSerializeDocType ()
   {
@@ -169,7 +179,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
 
   /**
    * Set the way how comments should be handled.
-   *
+   * 
    * @param eSerializeComments
    *        The comment handling. May not be <code>null</code>.
    * @return this
@@ -183,6 +193,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
     return this;
   }
 
+  @Override
   @Nonnull
   public EXMLSerializeComments getSerializeComments ()
   {
@@ -191,7 +202,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
 
   /**
    * Set the way how to indent/align
-   *
+   * 
    * @param eIndent
    *        Indent and align definition. May not be <code>null</code>.
    * @return this
@@ -205,6 +216,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
     return this;
   }
 
+  @Override
   @Nonnull
   public EXMLSerializeIndent getIndent ()
   {
@@ -213,7 +225,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
 
   /**
    * Set the way how to handle invalid characters.
-   *
+   * 
    * @param eIncorrectCharacterHandling
    *        The invalid character handling. May not be <code>null</code>.
    * @return this
@@ -227,6 +239,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
     return this;
   }
 
+  @Override
   @Nonnull
   public EXMLIncorrectCharacterHandling getIncorrectCharacterHandling ()
   {
@@ -235,7 +248,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
 
   /**
    * Set the serialization charset.
-   *
+   * 
    * @param aCharset
    *        The charset to be used. May not be <code>null</code>.
    * @return this
@@ -251,7 +264,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
 
   /**
    * Set the serialization charset.
-   *
+   * 
    * @param sCharset
    *        The charset to be used. May not be <code>null</code>.
    * @return this
@@ -262,12 +275,14 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
     return setCharset (CharsetManager.getCharsetFromName (sCharset));
   }
 
+  @Override
   @Nonnull
   public String getCharset ()
   {
     return m_aCharset.name ();
   }
 
+  @Override
   @Nonnull
   public Charset getCharsetObj ()
   {
@@ -276,7 +291,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
 
   /**
    * Set the namespace context to be used.
-   *
+   * 
    * @param aNamespaceContext
    *        The namespace context to be used. May be <code>null</code>.
    * @return this
@@ -288,6 +303,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
     return this;
   }
 
+  @Override
   @Nullable
   public NamespaceContext getNamespaceContext ()
   {
@@ -301,6 +317,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
     return this;
   }
 
+  @Override
   public boolean isUseDoubleQuotesForAttributes ()
   {
     return m_bUseDoubleQuotesForAttributes;
@@ -313,11 +330,13 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
     return this;
   }
 
+  @Override
   public boolean isSpaceOnSelfClosedElement ()
   {
     return m_bSpaceOnSelfClosedElement;
   }
 
+  @Override
   @Nonnull
   public XMLWriterSettings getClone ()
   {

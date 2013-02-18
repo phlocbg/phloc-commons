@@ -24,11 +24,17 @@ import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.string.StringHelper;
 
+/**
+ * Decoder for ASCII Hex encoding
+ * 
+ * @author philip
+ */
 public final class ASCIIHexCodec implements IByteArrayDecoder
 {
   public ASCIIHexCodec ()
   {}
 
+  @Override
   @Nullable
   public byte [] decode (@Nullable final byte [] aEncodedBuffer)
   {

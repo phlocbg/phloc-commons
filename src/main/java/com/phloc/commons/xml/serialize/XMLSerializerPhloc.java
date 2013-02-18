@@ -121,7 +121,7 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
 
   private void _writeDocumentType (@Nonnull final IXMLIterationHandler aEmitter, @Nonnull final DocumentType aDocType)
   {
-    if (m_aSettings.getSerializeDocType ().emit ())
+    if (m_aSettings.getSerializeDocType ().isEmit ())
       aEmitter.onDocumentType (aDocType.getName (), aDocType.getPublicId (), aDocType.getSystemId ());
   }
 
@@ -139,7 +139,7 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
 
   private void _writeComment (@Nonnull final IXMLIterationHandler aEmitter, @Nonnull final Comment aComment)
   {
-    if (m_aSettings.getSerializeComments ().emit ())
+    if (m_aSettings.getSerializeComments ().isEmit ())
       aEmitter.onComment (aComment.getData ());
   }
 

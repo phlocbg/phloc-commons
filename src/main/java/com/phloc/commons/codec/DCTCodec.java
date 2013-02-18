@@ -28,6 +28,11 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
 
+/**
+ * Decoder for Discrete Cosinus Transformation (DCT)
+ * 
+ * @author philip
+ */
 public final class DCTCodec implements IByteArrayDecoder
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (DCTCodec.class);
@@ -35,6 +40,7 @@ public final class DCTCodec implements IByteArrayDecoder
   public DCTCodec ()
   {}
 
+  @Override
   @Nullable
   public byte [] decode (@Nullable final byte [] aEncodedBuffer)
   {

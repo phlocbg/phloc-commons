@@ -170,7 +170,8 @@ public enum EXMLIncorrectCharacterHandling
     {
       if (aSB.length () > 0)
         aSB.append (", ");
-      aSB.append ("0x").append (Integer.toHexString (aChar.charValue ()));
+      final int nChar = aChar.charValue ();
+      aSB.append ("0x").append (Integer.toHexString (nChar));
     }
     return aSB.toString ();
   }

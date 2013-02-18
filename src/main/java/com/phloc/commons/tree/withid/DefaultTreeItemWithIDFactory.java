@@ -20,16 +20,28 @@ package com.phloc.commons.tree.withid;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
+/**
+ * Special implementation of {@link AbstractTreeItemWithIDFactory} using the
+ * item type {@link DefaultTreeItemWithID}.
+ * 
+ * @author philip
+ * @param <KEYTYPE>
+ *        tree item key type
+ * @param <DATATYPE>
+ *        tree item value type
+ */
 @NotThreadSafe
 public class DefaultTreeItemWithIDFactory <KEYTYPE, DATATYPE> extends
                                                               AbstractTreeItemWithIDFactory <KEYTYPE, DATATYPE, DefaultTreeItemWithID <KEYTYPE, DATATYPE>>
 {
+  @Override
   @Nonnull
   public DefaultTreeItemWithID <KEYTYPE, DATATYPE> createRoot ()
   {
     return new DefaultTreeItemWithID <KEYTYPE, DATATYPE> (this);
   }
 
+  @Override
   @Nonnull
   public DefaultTreeItemWithID <KEYTYPE, DATATYPE> create (@Nonnull final DefaultTreeItemWithID <KEYTYPE, DATATYPE> aParent,
                                                            @Nonnull final KEYTYPE aDataID)

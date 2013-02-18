@@ -39,6 +39,7 @@ import com.phloc.commons.lang.GenericReflection;
  */
 public class ConcurrentCollectorMultiple <DATATYPE> extends AbstractConcurrentCollector <DATATYPE>
 {
+  /** The default number of objects to be put in the queue for execution. */
   public static final int DEFAULT_MAX_PERFORM_COUNT = DEFAULT_MAX_QUEUE_SIZE / 2;
   private static final Logger s_aLogger = LoggerFactory.getLogger (ConcurrentCollectorMultiple.class);
 

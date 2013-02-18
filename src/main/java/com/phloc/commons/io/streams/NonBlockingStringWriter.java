@@ -35,7 +35,7 @@ import com.phloc.commons.annotations.ReturnsMutableObject;
  * A non-synchronized copy of the class {@link java.io.StringWriter}.<br>
  * It uses {@link StringBuilder} instead of {@link StringBuffer} and therefore
  * does not need synchronized access!
- *
+ * 
  * @author philip
  * @see java.io.StringWriter
  */
@@ -55,7 +55,7 @@ public class NonBlockingStringWriter extends Writer implements IHasStringReprese
 
   /**
    * Create a new string writer using the specified initial string-buffer size.
-   *
+   * 
    * @param nInitialSize
    *        The number of <tt>char</tt> values that will fit into this buffer
    *        before it is automatically expanded
@@ -73,6 +73,7 @@ public class NonBlockingStringWriter extends Writer implements IHasStringReprese
   /**
    * Write a single character.
    */
+
   @Override
   public void write (final int c)
   {
@@ -81,7 +82,7 @@ public class NonBlockingStringWriter extends Writer implements IHasStringReprese
 
   /**
    * Write a portion of an array of characters.
-   *
+   * 
    * @param aBuf
    *        Array of characters
    * @param nOfs
@@ -89,6 +90,7 @@ public class NonBlockingStringWriter extends Writer implements IHasStringReprese
    * @param nLen
    *        Number of characters to write
    */
+
   @Override
   public void write (@Nonnull final char [] aBuf, @Nonnegative final int nOfs, @Nonnegative final int nLen)
   {
@@ -101,6 +103,7 @@ public class NonBlockingStringWriter extends Writer implements IHasStringReprese
   /**
    * Write a string.
    */
+
   @Override
   public void write (@Nullable final String sStr)
   {
@@ -109,7 +112,7 @@ public class NonBlockingStringWriter extends Writer implements IHasStringReprese
 
   /**
    * Write a portion of a string.
-   *
+   * 
    * @param sStr
    *        String to be written
    * @param nOfs
@@ -117,6 +120,7 @@ public class NonBlockingStringWriter extends Writer implements IHasStringReprese
    * @param nLen
    *        Number of characters to write
    */
+
   @Override
   public void write (@Nonnull final String sStr, final int nOfs, final int nLen)
   {
@@ -128,7 +132,7 @@ public class NonBlockingStringWriter extends Writer implements IHasStringReprese
    * <p>
    * An invocation of this method of the form <tt>out.append(csq)</tt> behaves
    * in exactly the same way as the invocation
-   *
+   * 
    * <pre>
    * out.write (csq.toString ())
    * </pre>
@@ -138,13 +142,14 @@ public class NonBlockingStringWriter extends Writer implements IHasStringReprese
    * instance, invoking the <tt>toString</tt> method of a character buffer will
    * return a subsequence whose content depends upon the buffer's position and
    * limit.
-   *
+   * 
    * @param aCS
    *        The character sequence to append. If <tt>csq</tt> is <tt>null</tt>,
    *        then the four characters <tt>"null"</tt> are appended to this
    *        writer.
    * @return This writer
    */
+
   @Override
   public NonBlockingStringWriter append (final CharSequence aCS)
   {
@@ -161,11 +166,11 @@ public class NonBlockingStringWriter extends Writer implements IHasStringReprese
    * An invocation of this method of the form <tt>out.append(csq, start,
    * end)</tt> when <tt>csq</tt> is not <tt>null</tt>, behaves in exactly the
    * same way as the invocation
-   *
+   * 
    * <pre>
    * out.write (csq.subSequence (start, end).toString ())
    * </pre>
-   *
+   * 
    * @param aCS
    *        The character sequence from which a subsequence will be appended. If
    *        <tt>csq</tt> is <tt>null</tt>, then characters will be appended as
@@ -181,6 +186,7 @@ public class NonBlockingStringWriter extends Writer implements IHasStringReprese
    *         greater than <tt>end</tt>, or <tt>end</tt> is greater than
    *         <tt>csq.length()</tt>
    */
+
   @Override
   public NonBlockingStringWriter append (final CharSequence aCS, final int nStart, final int nEnd)
   {
@@ -194,15 +200,16 @@ public class NonBlockingStringWriter extends Writer implements IHasStringReprese
    * <p>
    * An invocation of this method of the form <tt>out.append(c)</tt> behaves in
    * exactly the same way as the invocation
-   *
+   * 
    * <pre>
    * out.write (c)
    * </pre>
-   *
+   * 
    * @param c
    *        The 16-bit character to append
    * @return This writer
    */
+
   @Override
   public NonBlockingStringWriter append (final char c)
   {
@@ -213,6 +220,7 @@ public class NonBlockingStringWriter extends Writer implements IHasStringReprese
   /**
    * Flush the stream.
    */
+
   @Override
   public void flush ()
   {}
@@ -222,6 +230,7 @@ public class NonBlockingStringWriter extends Writer implements IHasStringReprese
    * can be called after the stream has been closed without generating an
    * <tt>IOException</tt>.
    */
+
   @Override
   public void close ()
   {}
@@ -251,7 +260,7 @@ public class NonBlockingStringWriter extends Writer implements IHasStringReprese
   }
 
   /**
-   * Return the buffer's current value as a string.
+   * @return the buffer's current value as a string.
    */
   @Nonnull
   public String getAsString ()

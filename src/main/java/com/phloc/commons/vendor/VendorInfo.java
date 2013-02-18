@@ -37,20 +37,29 @@ import com.phloc.commons.url.URLProtocolRegistry;
 /**
  * Contains some general vendor specific information. This is mainly for keeping
  * the CI in all applications.
- *
+ * 
  * @author philip
  */
 @NotThreadSafe
 public final class VendorInfo
 {
+  /** Where the vendor is located by default */
   public static final String DEFAULT_VENDOR_LOCATION = "Vienna, Austria, Europe, World, Milky Way, Universe";
+  /** Default vendor name */
   public static final String DEFAULT_VENDOR_NAME = "phloc systems";
+  /** Default vendor URL without http:// prefix */
   public static final String DEFAULT_VENDOR_URL_WITHOUT_PROTOCOL = "www.phloc.com";
+  /** Complete vendor web URL */
   public static final String DEFAULT_VENDOR_URL = "http://" + DEFAULT_VENDOR_URL_WITHOUT_PROTOCOL;
+  /** Boris */
   public static final String VENDOR_PERSON_BORIS = "Boris Gregorcic";
+  /** Philip */
   public static final String VENDOR_PERSON_PHILIP = "Philip Helger";
+  /** Vendor email suffix starting from '@' */
   public static final String DEFAULT_VENDOR_EMAIL_SUFFIX = "@phloc.com";
+  /** Default vendor email */
   public static final String DEFAULT_VENDOR_EMAIL = "office" + DEFAULT_VENDOR_EMAIL_SUFFIX;
+  /** Default inception year */
   public static final int DEFAULT_INCEPTION_YEAR = 2004;
 
   @PresentForCodeCoverage

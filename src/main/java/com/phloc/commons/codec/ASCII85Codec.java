@@ -39,6 +39,7 @@ public final class ASCII85Codec implements IByteArrayDecoder
   public ASCII85Codec ()
   {}
 
+  @Override
   @Nullable
   public byte [] decode (@Nullable final byte [] aEncodedBuffer)
   {
@@ -51,7 +52,7 @@ public final class ASCII85Codec implements IByteArrayDecoder
     try
     {
       int nEncodedCount = 0;
-      final byte aBuffer[] = new byte [5];
+      final byte [] aBuffer = new byte [5];
 
       // Determine start index
       int nIndex = 0;

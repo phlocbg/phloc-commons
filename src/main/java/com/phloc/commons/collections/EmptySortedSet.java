@@ -58,37 +58,44 @@ public final class EmptySortedSet extends AbstractSet <Object> implements Sorted
     return false;
   }
 
+  @Override
   @Nullable
   public Comparator <Object> comparator ()
   {
     return null;
   }
 
+  @Override
   public SortedSet <Object> subSet (final Object fromElement, final Object toElement)
   {
     return this;
   }
 
+  @Override
   public SortedSet <Object> headSet (final Object toElement)
   {
     return this;
   }
 
+  @Override
   public SortedSet <Object> tailSet (final Object fromElement)
   {
     return this;
   }
 
+  @Override
   public Object first ()
   {
     return null;
   }
 
+  @Override
   public Object last ()
   {
     return null;
   }
 
+  // ESCA-JAVA0029:
   // Preserves singleton property
   private Object readResolve ()
   {

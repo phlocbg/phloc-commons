@@ -24,6 +24,12 @@ import javax.annotation.Nullable;
 
 import com.phloc.commons.IHasStringRepresentation;
 
+/**
+ * Interface for a simple URL that works around the issues with the Java default
+ * URL.
+ * 
+ * @author philip
+ */
 public interface ISimpleURL extends IURLData, IHasStringRepresentation
 {
   /**
@@ -45,6 +51,7 @@ public interface ISimpleURL extends IURLData, IHasStringRepresentation
    * @return The final string representation of this URL not encoding the
    *         request parameters.
    */
+  @Override
   @Nonnull
   String getAsString ();
 

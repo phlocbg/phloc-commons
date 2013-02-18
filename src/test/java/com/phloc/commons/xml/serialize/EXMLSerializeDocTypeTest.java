@@ -35,7 +35,7 @@ public final class EXMLSerializeDocTypeTest
   {
     for (final EXMLSerializeDocType e : EXMLSerializeDocType.values ())
       assertSame (e, EXMLSerializeDocType.valueOf (e.name ()));
-    assertTrue (EXMLSerializeDocType.EMIT.emit ());
-    assertFalse (EXMLSerializeDocType.IGNORE.emit ());
+    assertTrue (EXMLSerializeDocType.EMIT.isEmit ());
+    assertFalse (EXMLSerializeDocType.IGNORE.isEmit ());
   }
 }

@@ -77,11 +77,16 @@ public final class CXMLRegEx
   private static final String QNAME = "(?:(?:" + PREFIX + ":)?" + LOCALPATZ + ")";
 
   // doesn't work!!!
+  /** Pattern for attribute values */
   public static final Pattern PATTERN_ATTVALUE = RegExPool.getPattern (ATTVALUE);
 
+  /** Pattern for names */
   public static final Pattern PATTERN_NAME = RegExPool.getPattern (NAME);
+  /** Pattern for NC names */
   public static final Pattern PATTERN_NCNAME = RegExPool.getPattern (NCNAME);
+  /** Pattern for NM tokens */
   public static final Pattern PATTERN_NMTOKEN = RegExPool.getPattern (NMTOKEN);
+  /** Pattern for qualified names */
   public static final Pattern PATTERN_QNAME = RegExPool.getPattern (QNAME);
 
   @PresentForCodeCoverage

@@ -25,6 +25,8 @@ import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.lang.ServiceLoaderBackport;
 import com.phloc.commons.mock.IMockException;
 
+//ESCA-JAVA0265:
+//ESCA-JAVA0267:
 /**
  * This class should be run upon VM initialization. This should be the very
  * first thing to run.
@@ -87,6 +89,7 @@ public final class VirtualMachineInitializer
     s_aSPIs.clear ();
   }
 
+  // ESCA-JAVA0143:
   @CodingStyleguideUnaware ("FindBugs claims that we do need synchronized here!")
   public static synchronized void runInitialization ()// NOPMD
   {

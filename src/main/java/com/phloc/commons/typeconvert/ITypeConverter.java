@@ -30,9 +30,14 @@ import com.phloc.commons.convert.IUnidirectionalConverter;
 public interface ITypeConverter extends IUnidirectionalConverter <Object, Object>
 {
   /**
-   * {@inheritDoc} Here the parameter cannot be <code>null</code> because the
-   * type converter already filters <code>null</code> values!
+   * Convert the passed source object to the destination type.
+   * 
+   * @param aSource
+   *        The source object to be converted. Cannot be <code>null</code>
+   *        because the type converter already filters <code>null</code> values!
+   * @return The converted value. May be <code>null</code>.
    */
+  @Override
   @Nullable
   Object convert (@Nonnull Object aSource);
 }

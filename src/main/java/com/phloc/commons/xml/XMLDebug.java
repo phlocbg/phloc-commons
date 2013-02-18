@@ -18,7 +18,7 @@
 package com.phloc.commons.xml;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,7 +48,7 @@ public final class XMLDebug
 
   static
   {
-    s_aSupportedFeatures = new LinkedHashMap <EXMLDOMFeatureVersion, List <String>> ();
+    s_aSupportedFeatures = new EnumMap <EXMLDOMFeatureVersion, List <String>> (EXMLDOMFeatureVersion.class);
     for (final EXMLDOMFeatureVersion eFeatureVersion : EXMLDOMFeatureVersion.values ())
       s_aSupportedFeatures.put (eFeatureVersion, new ArrayList <String> ());
 

@@ -85,7 +85,12 @@ public class NonBlockingBufferedWriter extends Writer
     m_sLineSeparator = SystemProperties.getLineSeparator ();
   }
 
-  /** Checks to make sure that the stream has not been closed */
+  /**
+   * Checks to make sure that the stream has not been closed
+   * 
+   * @throws IOException
+   *         of the writer is not open
+   */
   private void _ensureOpen () throws IOException
   {
     if (m_aWriter == null)
@@ -96,6 +101,9 @@ public class NonBlockingBufferedWriter extends Writer
    * Flushes the output buffer to the underlying character stream, without
    * flushing the stream itself. This method is non-private only so that it may
    * be invoked by PrintStream.
+   * 
+   * @throws IOException
+   *         of the writer is not open
    */
   void flushBuffer () throws IOException
   {
@@ -125,6 +133,12 @@ public class NonBlockingBufferedWriter extends Writer
   /**
    * Our own little min method, to avoid loading java.lang.Math if we've run out
    * of file descriptors and we're trying to print a stack trace.
+   * 
+   * @param a
+   *        value 1
+   * @param b
+   *        value 2
+   * @return The minimum of a and b
    */
   private static int _min (final int a, final int b)
   {
