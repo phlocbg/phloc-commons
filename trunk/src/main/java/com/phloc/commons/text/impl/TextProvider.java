@@ -52,7 +52,9 @@ import com.phloc.commons.text.ITextProvider;
  */
 public class TextProvider extends AbstractTextProvider implements ISimpleMultiLingualText
 {
+  /** German locale used */
   public static final Locale DE = LocaleCache.getLocale ("de");
+  /** English locale used */
   public static final Locale EN = LocaleCache.getLocale ("en");
   private static final Logger s_aLogger = LoggerFactory.getLogger (TextProvider.class);
   private static final AtomicBoolean s_aConsistencyChecksEnabled = new AtomicBoolean (GlobalDebug.isDebugMode ());

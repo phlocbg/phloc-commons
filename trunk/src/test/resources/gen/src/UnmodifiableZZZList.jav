@@ -81,7 +81,7 @@ public final class UnmodifiableZZZList extends BaseUnmodifiableZZZList implement
   }
 
   @Nullable
-  public static final ZZZList wrap (@Nullable final ZZZList list)
+  public static ZZZList wrap (@Nullable final ZZZList list)
   {
     if (null == list)
       return null;

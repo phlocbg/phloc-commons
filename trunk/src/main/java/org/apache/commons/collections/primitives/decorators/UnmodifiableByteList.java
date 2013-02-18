@@ -81,7 +81,7 @@ public final class UnmodifiableByteList extends BaseUnmodifiableByteList impleme
   }
 
   @Nullable
-  public static final ByteList wrap (@Nullable final ByteList list)
+  public static ByteList wrap (@Nullable final ByteList list)
   {
     if (null == list)
       return null;

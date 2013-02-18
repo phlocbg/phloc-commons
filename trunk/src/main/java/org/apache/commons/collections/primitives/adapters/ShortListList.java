@@ -66,6 +66,8 @@ public final class ShortListList extends AbstractShortListList implements Serial
    * Creates a {@link List List} wrapping the specified {@link ShortList
    * ShortList}.
    *
+   * @param list
+   *        The list to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
   public ShortListList (@Nonnull final ShortList list)

@@ -66,6 +66,8 @@ public final class ZZZListList extends AbstractZZZListList implements Serializab
    * Creates a {@link List List} wrapping the specified {@link ZZZList
    * ZZZList}.
    *
+   * @param list
+   *        The list to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
   public ZZZListList (@Nonnull final ZZZList list)

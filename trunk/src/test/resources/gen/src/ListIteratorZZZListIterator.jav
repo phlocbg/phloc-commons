@@ -61,11 +61,13 @@ public class ListIteratorZZZListIterator implements ZZZListIterator
    * Creates an {@link ZZZListIterator ZZZListIterator} wrapping the specified
    * {@link ListIterator ListIterator}.
    *
+   * @param aIterator
+   *        The iterator to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public ListIteratorZZZListIterator (@Nonnull final ListIterator <XXX> iterator)
+  public ListIteratorZZZListIterator (@Nonnull final ListIterator <XXX> aIterator)
   {
-    m_aIterator = iterator;
+    m_aIterator = aIterator;
   }
 
   public int nextIndex ()

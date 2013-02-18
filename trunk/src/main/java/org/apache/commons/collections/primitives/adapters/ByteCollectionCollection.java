@@ -67,11 +67,13 @@ public final class ByteCollectionCollection extends AbstractByteCollectionCollec
    * Creates a {@link Collection Collection} wrapping the specified
    * {@link ByteCollection ByteCollection}.
    *
+   * @param aCollection
+   *        The collection to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public ByteCollectionCollection (@Nonnull final ByteCollection collection)
+  public ByteCollectionCollection (@Nonnull final ByteCollection aCollection)
   {
-    m_aCollection = collection;
+    m_aCollection = aCollection;
   }
 
   @Override

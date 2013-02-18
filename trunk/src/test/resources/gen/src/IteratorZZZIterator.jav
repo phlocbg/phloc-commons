@@ -54,32 +54,34 @@ import org.apache.commons.collections.primitives.ZZZIterator;
  */
 public class IteratorZZZIterator implements ZZZIterator
 {
-  private final Iterator <XXX> _iterator;
+  private final Iterator <XXX> m_aIterator;
 
   /**
    * Creates an {@link ZZZIterator ZZZIterator} wrapping the specified
    * {@link Iterator Iterator}.
    *
+   * @param aIterator
+   *        The iterator to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public IteratorZZZIterator (@Nonnull final Iterator <XXX> iterator)
+  public IteratorZZZIterator (@Nonnull final Iterator <XXX> aIterator)
   {
-    _iterator = iterator;
+    m_aIterator = aIterator;
   }
 
   public boolean hasNext ()
   {
-    return _iterator.hasNext ();
+    return m_aIterator.hasNext ();
   }
 
   public YYY next ()
   {
-    return _iterator.next ().YYYValue ();
+    return m_aIterator.next ().YYYValue ();
   }
 
   public void remove ()
   {
-    _iterator.remove ();
+    m_aIterator.remove ();
   }
 
   /**

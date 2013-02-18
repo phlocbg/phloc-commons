@@ -93,7 +93,7 @@ abstract class AbstractZZZCollectionCollection implements Collection <XXX>
   }
 
   /**
-   * {@link ZZZIteratorIterator#wrap wraps} the
+   * @return {@link ZZZIteratorIterator#wrap wraps} the
    * {@link org.apache.commons.collections.primitives.ZZZIterator ZZZIterator}
    * returned by my underlying {@link ZZZCollection ZZZCollection}, if any.
    */

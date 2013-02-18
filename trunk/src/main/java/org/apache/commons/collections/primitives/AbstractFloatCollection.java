@@ -62,7 +62,11 @@ public abstract class AbstractFloatCollection implements FloatCollection
   @Nonnegative
   public abstract int size ();
 
-  /** Unsupported in this base implementation. */
+  /** 
+   * Unsupported in this base implementation.
+   *
+   * @return never 
+   */
   public boolean add (final float aElement)
   {
     throw new UnsupportedOperationException ("add(float) is not supported.");

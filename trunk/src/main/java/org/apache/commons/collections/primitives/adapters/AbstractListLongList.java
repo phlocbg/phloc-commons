@@ -88,7 +88,7 @@ abstract class AbstractListLongList extends AbstractCollectionLongCollection imp
   }
 
   /**
-   * {@link ListIteratorLongListIterator#wrap wraps} the {@link LongList
+   * @return {@link ListIteratorLongListIterator#wrap wraps} the {@link LongList
    * LongList} returned by my underlying {@link LongListIterator
    * LongListIterator}, if any.
    */
@@ -99,7 +99,9 @@ abstract class AbstractListLongList extends AbstractCollectionLongCollection imp
   }
 
   /**
-   * {@link ListIteratorLongListIterator#wrap wraps} the {@link LongList
+   * @param nIndex
+   *        The starting index of the iterator 
+   * @return {@link ListIteratorLongListIterator#wrap wraps} the {@link LongList
    * LongList} returned by my underlying {@link LongListIterator
    * LongListIterator}, if any.
    */

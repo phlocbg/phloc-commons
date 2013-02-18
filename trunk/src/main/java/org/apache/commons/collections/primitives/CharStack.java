@@ -36,6 +36,7 @@ package org.apache.commons.collections.primitives;
 import java.util.EmptyStackException;
 
 import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
 
 /**
  * A primitive char based Stack. The underlying backing store is an
@@ -64,7 +65,7 @@ public class CharStack
    * @param aElements
    *        the array to add
    */
-  public CharStack (final char [] aElements)
+  public CharStack (@Nonnull final char [] aElements)
   {
     for (final char aElement : aElements)
       m_aList.add (aElement);

@@ -36,6 +36,7 @@ package org.apache.commons.collections.primitives;
 import java.util.EmptyStackException;
 
 import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
 
 /**
  * A primitive YYY based Stack. The underlying backing store is an
@@ -64,7 +65,7 @@ public class ZZZStack
    * @param aElements
    *        the array to add
    */
-  public ZZZStack (final YYY [] aElements)
+  public ZZZStack (@Nonnull final YYY [] aElements)
   {
     for (final YYY aElement : aElements)
       m_aList.add (aElement);

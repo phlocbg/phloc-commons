@@ -30,6 +30,12 @@ import com.phloc.commons.stats.IStatisticsHandlerSize;
 import com.phloc.commons.stats.IStatisticsHandlerTimer;
 import com.phloc.commons.stats.visit.IStatisticsVisitor;
 
+/**
+ * Special implementation of the {@link IStatisticsVisitor} interface that fills
+ * a micro element with all current values
+ * 
+ * @author philip
+ */
 public final class StatisticsVisitorToXML implements IStatisticsVisitor
 {
   private final IMicroElement m_eRoot;

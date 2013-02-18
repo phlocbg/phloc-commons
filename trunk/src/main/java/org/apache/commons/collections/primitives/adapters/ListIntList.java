@@ -62,6 +62,8 @@ public class ListIntList extends AbstractListIntList implements Serializable
    * Creates an {@link IntList IntList} wrapping the specified {@link List
    * List}.
    *
+   * @param aList
+   *        The list to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
   public ListIntList (@Nonnull final List <Integer> aList)

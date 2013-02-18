@@ -47,9 +47,9 @@ final class NonSerializableCollectionDoubleCollection extends AbstractCollection
 {
   private final Collection <Double> m_aCollection;
 
-  public NonSerializableCollectionDoubleCollection (@Nonnull final Collection <Double> collection)
+  public NonSerializableCollectionDoubleCollection (@Nonnull final Collection <Double> aCollection)
   {
-    m_aCollection = collection;
+    m_aCollection = aCollection;
   }
 
   @Override

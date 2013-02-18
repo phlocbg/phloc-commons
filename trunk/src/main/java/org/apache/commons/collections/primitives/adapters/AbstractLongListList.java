@@ -90,7 +90,7 @@ abstract class AbstractLongListList extends AbstractLongCollectionCollection imp
   }
 
   /**
-   * {@link LongListIteratorListIterator#wrap wraps} the
+   * @return {@link LongListIteratorListIterator#wrap wraps} the
    * {@link org.apache.commons.collections.primitives.LongListIterator
    * LongListIterator} returned by my underlying {@link LongList LongList}, if
    * any.
@@ -101,7 +101,9 @@ abstract class AbstractLongListList extends AbstractLongCollectionCollection imp
   }
 
   /**
-   * {@link LongListIteratorListIterator#wrap wraps} the
+   * @param index
+   *        The index where iterator should start
+   * @return {@link LongListIteratorListIterator#wrap wraps} the
    * {@link org.apache.commons.collections.primitives.LongListIterator
    * LongListIterator} returned by my underlying {@link LongList LongList}, if
    * any.

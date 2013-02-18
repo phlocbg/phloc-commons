@@ -93,7 +93,7 @@ abstract class AbstractShortCollectionCollection implements Collection <Short>
   }
 
   /**
-   * {@link ShortIteratorIterator#wrap wraps} the
+   * @return {@link ShortIteratorIterator#wrap wraps} the
    * {@link org.apache.commons.collections.primitives.ShortIterator ShortIterator}
    * returned by my underlying {@link ShortCollection ShortCollection}, if any.
    */

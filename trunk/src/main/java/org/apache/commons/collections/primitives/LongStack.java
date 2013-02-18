@@ -36,6 +36,7 @@ package org.apache.commons.collections.primitives;
 import java.util.EmptyStackException;
 
 import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
 
 /**
  * A primitive long based Stack. The underlying backing store is an
@@ -64,7 +65,7 @@ public class LongStack
    * @param aElements
    *        the array to add
    */
-  public LongStack (final long [] aElements)
+  public LongStack (@Nonnull final long [] aElements)
   {
     for (final long aElement : aElements)
       m_aList.add (aElement);

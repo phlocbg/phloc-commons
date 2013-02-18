@@ -62,7 +62,11 @@ public abstract class AbstractLongCollection implements LongCollection
   @Nonnegative
   public abstract int size ();
 
-  /** Unsupported in this base implementation. */
+  /** 
+   * Unsupported in this base implementation.
+   *
+   * @return never 
+   */
   public boolean add (final long aElement)
   {
     throw new UnsupportedOperationException ("add(long) is not supported.");

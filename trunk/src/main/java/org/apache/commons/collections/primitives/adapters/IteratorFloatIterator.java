@@ -54,32 +54,34 @@ import org.apache.commons.collections.primitives.FloatIterator;
  */
 public class IteratorFloatIterator implements FloatIterator
 {
-  private final Iterator <Float> _iterator;
+  private final Iterator <Float> m_aIterator;
 
   /**
    * Creates an {@link FloatIterator FloatIterator} wrapping the specified
    * {@link Iterator Iterator}.
    *
+   * @param aIterator
+   *        The iterator to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public IteratorFloatIterator (@Nonnull final Iterator <Float> iterator)
+  public IteratorFloatIterator (@Nonnull final Iterator <Float> aIterator)
   {
-    _iterator = iterator;
+    m_aIterator = aIterator;
   }
 
   public boolean hasNext ()
   {
-    return _iterator.hasNext ();
+    return m_aIterator.hasNext ();
   }
 
   public float next ()
   {
-    return _iterator.next ().floatValue ();
+    return m_aIterator.next ().floatValue ();
   }
 
   public void remove ()
   {
-    _iterator.remove ();
+    m_aIterator.remove ();
   }
 
   /**

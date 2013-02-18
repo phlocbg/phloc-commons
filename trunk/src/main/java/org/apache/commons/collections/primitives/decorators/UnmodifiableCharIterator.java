@@ -66,7 +66,7 @@ public final class UnmodifiableCharIterator extends ProxyCharIterator
   }
 
   @Nullable
-  public static final CharIterator wrap (@Nullable final CharIterator iterator)
+  public static CharIterator wrap (@Nullable final CharIterator iterator)
   {
     if (null == iterator)
       return null;

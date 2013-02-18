@@ -54,32 +54,34 @@ import org.apache.commons.collections.primitives.CharIterator;
  */
 public class IteratorCharIterator implements CharIterator
 {
-  private final Iterator <Character> _iterator;
+  private final Iterator <Character> m_aIterator;
 
   /**
    * Creates an {@link CharIterator CharIterator} wrapping the specified
    * {@link Iterator Iterator}.
    *
+   * @param aIterator
+   *        The iterator to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public IteratorCharIterator (@Nonnull final Iterator <Character> iterator)
+  public IteratorCharIterator (@Nonnull final Iterator <Character> aIterator)
   {
-    _iterator = iterator;
+    m_aIterator = aIterator;
   }
 
   public boolean hasNext ()
   {
-    return _iterator.hasNext ();
+    return m_aIterator.hasNext ();
   }
 
   public char next ()
   {
-    return _iterator.next ().charValue ();
+    return m_aIterator.next ().charValue ();
   }
 
   public void remove ()
   {
-    _iterator.remove ();
+    m_aIterator.remove ();
   }
 
   /**

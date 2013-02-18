@@ -67,142 +67,142 @@ public final class Adapt
   // to object based
   // ---------------------------------------------------------------
 
-  public static final Collection <Byte> toCollection (final ByteCollection c)
+  public static Collection <Byte> toCollection (final ByteCollection c)
   {
     return ByteCollectionCollection.wrap (c);
   }
 
-  public static final Collection <Character> toCollection (final CharCollection c)
+  public static Collection <Character> toCollection (final CharCollection c)
   {
     return CharCollectionCollection.wrap (c);
   }
 
-  public static final Collection <Double> toCollection (final DoubleCollection c)
+  public static Collection <Double> toCollection (final DoubleCollection c)
   {
     return DoubleCollectionCollection.wrap (c);
   }
 
-  public static final Collection <Float> toCollection (final FloatCollection c)
+  public static Collection <Float> toCollection (final FloatCollection c)
   {
     return FloatCollectionCollection.wrap (c);
   }
 
-  public static final Collection <Integer> toCollection (final IntCollection c)
+  public static Collection <Integer> toCollection (final IntCollection c)
   {
     return IntCollectionCollection.wrap (c);
   }
 
-  public static final Collection <Long> toCollection (final LongCollection c)
+  public static Collection <Long> toCollection (final LongCollection c)
   {
     return LongCollectionCollection.wrap (c);
   }
 
-  public static final Collection <Short> toCollection (final ShortCollection c)
+  public static Collection <Short> toCollection (final ShortCollection c)
   {
     return ShortCollectionCollection.wrap (c);
   }
 
-  public static final List <Byte> toList (final ByteList c)
+  public static List <Byte> toList (final ByteList c)
   {
     return ByteListList.wrap (c);
   }
 
-  public static final List <Character> toList (final CharList c)
+  public static List <Character> toList (final CharList c)
   {
     return CharListList.wrap (c);
   }
 
-  public static final List <Double> toList (final DoubleList c)
+  public static List <Double> toList (final DoubleList c)
   {
     return DoubleListList.wrap (c);
   }
 
-  public static final List <Float> toList (final FloatList c)
+  public static List <Float> toList (final FloatList c)
   {
     return FloatListList.wrap (c);
   }
 
-  public static final List <Integer> toList (final IntList c)
+  public static List <Integer> toList (final IntList c)
   {
     return IntListList.wrap (c);
   }
 
-  public static final List <Long> toList (final LongList c)
+  public static List <Long> toList (final LongList c)
   {
     return LongListList.wrap (c);
   }
 
-  public static final List <Short> toList (final ShortList c)
+  public static List <Short> toList (final ShortList c)
   {
     return ShortListList.wrap (c);
   }
 
-  public static final Iterator <Byte> toIterator (final ByteIterator c)
+  public static Iterator <Byte> toIterator (final ByteIterator c)
   {
     return ByteIteratorIterator.wrap (c);
   }
 
-  public static final Iterator <Character> toIterator (final CharIterator c)
+  public static Iterator <Character> toIterator (final CharIterator c)
   {
     return CharIteratorIterator.wrap (c);
   }
 
-  public static final Iterator <Double> toIterator (final DoubleIterator c)
+  public static Iterator <Double> toIterator (final DoubleIterator c)
   {
     return DoubleIteratorIterator.wrap (c);
   }
 
-  public static final Iterator <Float> toIterator (final FloatIterator c)
+  public static Iterator <Float> toIterator (final FloatIterator c)
   {
     return FloatIteratorIterator.wrap (c);
   }
 
-  public static final Iterator <Integer> toIterator (final IntIterator c)
+  public static Iterator <Integer> toIterator (final IntIterator c)
   {
     return IntIteratorIterator.wrap (c);
   }
 
-  public static final Iterator <Long> toIterator (final LongIterator c)
+  public static Iterator <Long> toIterator (final LongIterator c)
   {
     return LongIteratorIterator.wrap (c);
   }
 
-  public static final Iterator <Short> toIterator (final ShortIterator c)
+  public static Iterator <Short> toIterator (final ShortIterator c)
   {
     return ShortIteratorIterator.wrap (c);
   }
 
-  public static final ListIterator <Byte> toListIterator (final ByteListIterator c)
+  public static ListIterator <Byte> toListIterator (final ByteListIterator c)
   {
     return ByteListIteratorListIterator.wrap (c);
   }
 
-  public static final ListIterator <Character> toListIterator (final CharListIterator c)
+  public static ListIterator <Character> toListIterator (final CharListIterator c)
   {
     return CharListIteratorListIterator.wrap (c);
   }
 
-  public static final ListIterator <Double> toListIterator (final DoubleListIterator c)
+  public static ListIterator <Double> toListIterator (final DoubleListIterator c)
   {
     return DoubleListIteratorListIterator.wrap (c);
   }
 
-  public static final ListIterator <Float> toListIterator (final FloatListIterator c)
+  public static ListIterator <Float> toListIterator (final FloatListIterator c)
   {
     return FloatListIteratorListIterator.wrap (c);
   }
 
-  public static final ListIterator <Integer> toListIterator (final IntListIterator c)
+  public static ListIterator <Integer> toListIterator (final IntListIterator c)
   {
     return IntListIteratorListIterator.wrap (c);
   }
 
-  public static final ListIterator <Long> toListIterator (final LongListIterator c)
+  public static ListIterator <Long> toListIterator (final LongListIterator c)
   {
     return LongListIteratorListIterator.wrap (c);
   }
 
-  public static final ListIterator <Short> toListIterator (final ShortListIterator c)
+  public static ListIterator <Short> toListIterator (final ShortListIterator c)
   {
     return ShortListIteratorListIterator.wrap (c);
   }
@@ -210,22 +210,22 @@ public final class Adapt
   // to byte based
   // ---------------------------------------------------------------
 
-  public static final ByteCollection toByteCollection (final Collection <Byte> c)
+  public static ByteCollection toByteCollection (final Collection <Byte> c)
   {
     return CollectionByteCollection.wrap (c);
   }
 
-  public static final ByteList toByteList (final List <Byte> c)
+  public static ByteList toByteList (final List <Byte> c)
   {
     return ListByteList.wrap (c);
   }
 
-  public static final ByteIterator toByteIterator (final Iterator <Byte> c)
+  public static ByteIterator toByteIterator (final Iterator <Byte> c)
   {
     return IteratorByteIterator.wrap (c);
   }
 
-  public static final ByteListIterator toByteListIterator (final ListIterator <Byte> c)
+  public static ByteListIterator toByteListIterator (final ListIterator <Byte> c)
   {
     return ListIteratorByteListIterator.wrap (c);
   }
@@ -233,22 +233,22 @@ public final class Adapt
   // to char based
   // ---------------------------------------------------------------
 
-  public static final CharCollection toCharCollection (final Collection <Character> c)
+  public static CharCollection toCharCollection (final Collection <Character> c)
   {
     return CollectionCharCollection.wrap (c);
   }
 
-  public static final CharList toCharList (final List <Character> c)
+  public static CharList toCharList (final List <Character> c)
   {
     return ListCharList.wrap (c);
   }
 
-  public static final CharIterator toCharIterator (final Iterator <Character> c)
+  public static CharIterator toCharIterator (final Iterator <Character> c)
   {
     return IteratorCharIterator.wrap (c);
   }
 
-  public static final CharListIterator toCharListIterator (final ListIterator <Character> c)
+  public static CharListIterator toCharListIterator (final ListIterator <Character> c)
   {
     return ListIteratorCharListIterator.wrap (c);
   }
@@ -256,22 +256,22 @@ public final class Adapt
   // to double based
   // ---------------------------------------------------------------
 
-  public static final DoubleCollection toDoubleCollection (final Collection <Double> c)
+  public static DoubleCollection toDoubleCollection (final Collection <Double> c)
   {
     return CollectionDoubleCollection.wrap (c);
   }
 
-  public static final DoubleList toDoubleList (final List <Double> c)
+  public static DoubleList toDoubleList (final List <Double> c)
   {
     return ListDoubleList.wrap (c);
   }
 
-  public static final DoubleIterator toDoubleIterator (final Iterator <Double> c)
+  public static DoubleIterator toDoubleIterator (final Iterator <Double> c)
   {
     return IteratorDoubleIterator.wrap (c);
   }
 
-  public static final DoubleListIterator toDoubleListIterator (final ListIterator <Double> c)
+  public static DoubleListIterator toDoubleListIterator (final ListIterator <Double> c)
   {
     return ListIteratorDoubleListIterator.wrap (c);
   }
@@ -279,22 +279,22 @@ public final class Adapt
   // to float based
   // ---------------------------------------------------------------
 
-  public static final FloatCollection toFloatCollection (final Collection <Float> c)
+  public static FloatCollection toFloatCollection (final Collection <Float> c)
   {
     return CollectionFloatCollection.wrap (c);
   }
 
-  public static final FloatList toFloatList (final List <Float> c)
+  public static FloatList toFloatList (final List <Float> c)
   {
     return ListFloatList.wrap (c);
   }
 
-  public static final FloatIterator toFloatIterator (final Iterator <Float> c)
+  public static FloatIterator toFloatIterator (final Iterator <Float> c)
   {
     return IteratorFloatIterator.wrap (c);
   }
 
-  public static final FloatListIterator toFloatListIterator (final ListIterator <Float> c)
+  public static FloatListIterator toFloatListIterator (final ListIterator <Float> c)
   {
     return ListIteratorFloatListIterator.wrap (c);
   }
@@ -302,22 +302,22 @@ public final class Adapt
   // to int based
   // ---------------------------------------------------------------
 
-  public static final IntCollection toIntCollection (final Collection <Integer> c)
+  public static IntCollection toIntCollection (final Collection <Integer> c)
   {
     return CollectionIntCollection.wrap (c);
   }
 
-  public static final IntList toIntList (final List <Integer> c)
+  public static IntList toIntList (final List <Integer> c)
   {
     return ListIntList.wrap (c);
   }
 
-  public static final IntIterator toIntIterator (final Iterator <Integer> c)
+  public static IntIterator toIntIterator (final Iterator <Integer> c)
   {
     return IteratorIntIterator.wrap (c);
   }
 
-  public static final IntListIterator toIntListIterator (final ListIterator <Integer> c)
+  public static IntListIterator toIntListIterator (final ListIterator <Integer> c)
   {
     return ListIteratorIntListIterator.wrap (c);
   }
@@ -325,22 +325,22 @@ public final class Adapt
   // to long based
   // ---------------------------------------------------------------
 
-  public static final LongCollection toLongCollection (final Collection <Long> c)
+  public static LongCollection toLongCollection (final Collection <Long> c)
   {
     return CollectionLongCollection.wrap (c);
   }
 
-  public static final LongList toLongList (final List <Long> c)
+  public static LongList toLongList (final List <Long> c)
   {
     return ListLongList.wrap (c);
   }
 
-  public static final LongIterator toLongIterator (final Iterator <Long> c)
+  public static LongIterator toLongIterator (final Iterator <Long> c)
   {
     return IteratorLongIterator.wrap (c);
   }
 
-  public static final LongListIterator toLongListIterator (final ListIterator <Long> c)
+  public static LongListIterator toLongListIterator (final ListIterator <Long> c)
   {
     return ListIteratorLongListIterator.wrap (c);
   }
@@ -348,22 +348,22 @@ public final class Adapt
   // to short based
   // ---------------------------------------------------------------
 
-  public static final ShortCollection toShortCollection (final Collection <Short> c)
+  public static ShortCollection toShortCollection (final Collection <Short> c)
   {
     return CollectionShortCollection.wrap (c);
   }
 
-  public static final ShortList toShortList (final List <Short> c)
+  public static ShortList toShortList (final List <Short> c)
   {
     return ListShortList.wrap (c);
   }
 
-  public static final ShortIterator toShortIterator (final Iterator <Short> c)
+  public static ShortIterator toShortIterator (final Iterator <Short> c)
   {
     return IteratorShortIterator.wrap (c);
   }
 
-  public static final ShortListIterator toShortListIterator (final ListIterator <Short> c)
+  public static ShortListIterator toShortListIterator (final ListIterator <Short> c)
   {
     return ListIteratorShortListIterator.wrap (c);
   }

@@ -69,10 +69,10 @@ public final class StackTraceHelperTest
     assertEquals ("", StackTraceHelper.getStackAsString ((Throwable) null, false));
 
     // AppServer stacktrace :)
-    final StackTraceElement ste[] = ArrayHelper.newArray (new StackTraceElement ("org.eclipse.jetty.Server",
-                                                                                 "start",
-                                                                                 "Server.java",
-                                                                                 100));
+    final StackTraceElement [] ste = ArrayHelper.newArray (new StackTraceElement ("org.eclipse.jetty.Server",
+                                                                                  "start",
+                                                                                  "Server.java",
+                                                                                  100));
     assertNotNull (StackTraceHelper.getStackAsString (ste));
 
     try

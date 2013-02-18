@@ -61,11 +61,13 @@ public final class CollectionLongCollection extends AbstractCollectionLongCollec
    * Creates an {@link LongCollection LongCollection} wrapping the specified
    * {@link Collection Collection}.
    *
+   * @param aCollection
+   *        The collection to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public CollectionLongCollection (@Nonnull final Collection <Long> collection)
+  public CollectionLongCollection (@Nonnull final Collection <Long> aCollection)
   {
-    m_aCollection = collection;
+    m_aCollection = aCollection;
   }
 
   @Override

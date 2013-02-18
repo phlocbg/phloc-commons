@@ -75,7 +75,7 @@ public final class UnmodifiableFloatListIterator extends ProxyFloatListIterator
   }
 
   @Nullable
-  public static final FloatListIterator wrap (@Nullable final FloatListIterator iterator)
+  public static FloatListIterator wrap (@Nullable final FloatListIterator iterator)
   {
     if (null == iterator)
       return null;

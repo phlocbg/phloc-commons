@@ -54,64 +54,66 @@ import org.apache.commons.collections.primitives.ShortListIterator;
  */
 public class ShortListIteratorListIterator implements ListIterator <Short>
 {
-  private final ShortListIterator _iterator;
+  private final ShortListIterator m_aIterator;
 
   /**
    * Creates an {@link ListIterator ListIterator} wrapping the specified
    * {@link ShortListIterator ShortListIterator}.
    *
+   * @param aIterator
+   *        The iterator to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public ShortListIteratorListIterator (@Nonnull final ShortListIterator iterator)
+  public ShortListIteratorListIterator (@Nonnull final ShortListIterator aIterator)
   {
-    _iterator = iterator;
+    m_aIterator = aIterator;
   }
 
   public int nextIndex ()
   {
-    return _iterator.nextIndex ();
+    return m_aIterator.nextIndex ();
   }
 
   public int previousIndex ()
   {
-    return _iterator.previousIndex ();
+    return m_aIterator.previousIndex ();
   }
 
   public boolean hasNext ()
   {
-    return _iterator.hasNext ();
+    return m_aIterator.hasNext ();
   }
 
   public boolean hasPrevious ()
   {
-    return _iterator.hasPrevious ();
+    return m_aIterator.hasPrevious ();
   }
 
   @Nonnull
   public Short next ()
   {
-    return Short.valueOf (_iterator.next ());
+    return Short.valueOf (m_aIterator.next ());
   }
 
   @Nonnull
   public Short previous ()
   {
-    return Short.valueOf (_iterator.previous ());
+    return Short.valueOf (m_aIterator.previous ());
   }
 
   public void add (@Nonnull final Short obj)
   {
-    _iterator.add (obj.shortValue ());
+    m_aIterator.add (obj.shortValue ());
   }
 
   public void set (@Nonnull final Short obj)
   {
-    _iterator.set (obj.shortValue ());
+    m_aIterator.set (obj.shortValue ());
   }
 
   public void remove ()
   {
-    _iterator.remove ();
+    m_aIterator.remove ();
   }
 
   /**

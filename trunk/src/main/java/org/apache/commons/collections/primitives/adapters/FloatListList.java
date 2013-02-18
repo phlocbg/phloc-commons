@@ -66,6 +66,8 @@ public final class FloatListList extends AbstractFloatListList implements Serial
    * Creates a {@link List List} wrapping the specified {@link FloatList
    * FloatList}.
    *
+   * @param list
+   *        The list to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
   public FloatListList (@Nonnull final FloatList list)

@@ -54,32 +54,34 @@ import org.apache.commons.collections.primitives.ShortIterator;
  */
 public class IteratorShortIterator implements ShortIterator
 {
-  private final Iterator <Short> _iterator;
+  private final Iterator <Short> m_aIterator;
 
   /**
    * Creates an {@link ShortIterator ShortIterator} wrapping the specified
    * {@link Iterator Iterator}.
    *
+   * @param aIterator
+   *        The iterator to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public IteratorShortIterator (@Nonnull final Iterator <Short> iterator)
+  public IteratorShortIterator (@Nonnull final Iterator <Short> aIterator)
   {
-    _iterator = iterator;
+    m_aIterator = aIterator;
   }
 
   public boolean hasNext ()
   {
-    return _iterator.hasNext ();
+    return m_aIterator.hasNext ();
   }
 
   public short next ()
   {
-    return _iterator.next ().shortValue ();
+    return m_aIterator.next ().shortValue ();
   }
 
   public void remove ()
   {
-    _iterator.remove ();
+    m_aIterator.remove ();
   }
 
   /**

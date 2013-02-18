@@ -61,11 +61,13 @@ public class ListIteratorIntListIterator implements IntListIterator
    * Creates an {@link IntListIterator IntListIterator} wrapping the specified
    * {@link ListIterator ListIterator}.
    *
+   * @param aIterator
+   *        The iterator to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public ListIteratorIntListIterator (@Nonnull final ListIterator <Integer> iterator)
+  public ListIteratorIntListIterator (@Nonnull final ListIterator <Integer> aIterator)
   {
-    m_aIterator = iterator;
+    m_aIterator = aIterator;
   }
 
   public int nextIndex ()

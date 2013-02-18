@@ -66,6 +66,8 @@ public final class DoubleListList extends AbstractDoubleListList implements Seri
    * Creates a {@link List List} wrapping the specified {@link DoubleList
    * DoubleList}.
    *
+   * @param list
+   *        The list to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
   public DoubleListList (@Nonnull final DoubleList list)

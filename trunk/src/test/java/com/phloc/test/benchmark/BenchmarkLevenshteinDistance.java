@@ -169,7 +169,7 @@ public final class BenchmarkLevenshteinDistance extends AbstractBenchmarkTask
       m_bSimple = (LV_COST_INSERT == 1 && LV_COST_DELETE == 1 && LV_COST_SUBSTITUTE == 1);
     }
 
-    public final void run ()
+    public void run ()
     {
       final int n = m_aStrings.length;
       for (int i = 0; i < n - 1; ++i)
@@ -184,7 +184,7 @@ public final class BenchmarkLevenshteinDistance extends AbstractBenchmarkTask
     }
   }
 
-  private static abstract class LevDistBase implements Runnable
+  private abstract static class LevDistBase implements Runnable
   {
     private final String [] m_aStrings;
 

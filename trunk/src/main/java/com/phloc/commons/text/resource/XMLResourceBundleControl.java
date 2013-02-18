@@ -28,6 +28,7 @@ import java.util.ResourceBundle;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.io.streams.StreamUtils;
 
@@ -39,14 +40,15 @@ import com.phloc.commons.io.streams.StreamUtils;
 public final class XMLResourceBundleControl extends ResourceBundle.Control
 {
   private static final String FORMAT_XML = "xml";
-  private static final List <String> FORMATS = ContainerHelper.newUnmodifiableList (FORMAT_XML);
+  private static final List <String> FORMATS = ContainerHelper.newList (FORMAT_XML);
 
   @Override
+  @ReturnsMutableCopy
   public List <String> getFormats (@Nonnull final String sBaseName)
   {
     if (sBaseName == null)
       throw new NullPointerException ("baseName");
-    return FORMATS;
+    return ContainerHelper.newList (FORMATS);
   }
 
   @Override

@@ -61,11 +61,13 @@ public final class CollectionBooleanCollection extends AbstractCollectionBoolean
    * Creates an {@link BooleanCollection BooleanCollection} wrapping the specified
    * {@link Collection Collection}.
    *
+   * @param aCollection
+   *        The collection to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public CollectionBooleanCollection (@Nonnull final Collection <Boolean> collection)
+  public CollectionBooleanCollection (@Nonnull final Collection <Boolean> aCollection)
   {
-    m_aCollection = collection;
+    m_aCollection = aCollection;
   }
 
   @Override

@@ -91,6 +91,9 @@ public enum EOperatingSystem implements IHasDisplayName
    * 
    * @param sDisplayName
    *        The human-readable name for the operating system.
+   * @param bUnixBased
+   *        <code>true</code> if this OS is Unix based, <code>false</code> if
+   *        not
    */
   private EOperatingSystem (@Nonnull @Nonempty final String sDisplayName, final boolean bUnixBased)
   {

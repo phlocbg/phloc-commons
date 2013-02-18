@@ -75,7 +75,7 @@ public final class UnmodifiableDoubleListIterator extends ProxyDoubleListIterato
   }
 
   @Nullable
-  public static final DoubleListIterator wrap (@Nullable final DoubleListIterator iterator)
+  public static DoubleListIterator wrap (@Nullable final DoubleListIterator iterator)
   {
     if (null == iterator)
       return null;

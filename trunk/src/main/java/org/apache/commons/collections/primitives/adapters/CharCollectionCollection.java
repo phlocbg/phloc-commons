@@ -67,11 +67,13 @@ public final class CharCollectionCollection extends AbstractCharCollectionCollec
    * Creates a {@link Collection Collection} wrapping the specified
    * {@link CharCollection CharCollection}.
    *
+   * @param aCollection
+   *        The collection to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public CharCollectionCollection (@Nonnull final CharCollection collection)
+  public CharCollectionCollection (@Nonnull final CharCollection aCollection)
   {
-    m_aCollection = collection;
+    m_aCollection = aCollection;
   }
 
   @Override

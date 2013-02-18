@@ -36,6 +36,7 @@ package org.apache.commons.collections.primitives;
 import java.util.EmptyStackException;
 
 import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
 
 /**
  * A primitive float based Stack. The underlying backing store is an
@@ -64,7 +65,7 @@ public class FloatStack
    * @param aElements
    *        the array to add
    */
-  public FloatStack (final float [] aElements)
+  public FloatStack (@Nonnull final float [] aElements)
   {
     for (final float aElement : aElements)
       m_aList.add (aElement);

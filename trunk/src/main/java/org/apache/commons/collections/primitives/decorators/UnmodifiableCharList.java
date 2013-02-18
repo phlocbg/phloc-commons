@@ -81,7 +81,7 @@ public final class UnmodifiableCharList extends BaseUnmodifiableCharList impleme
   }
 
   @Nullable
-  public static final CharList wrap (@Nullable final CharList list)
+  public static CharList wrap (@Nullable final CharList list)
   {
     if (null == list)
       return null;

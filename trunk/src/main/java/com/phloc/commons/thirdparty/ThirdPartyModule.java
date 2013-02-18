@@ -36,6 +36,7 @@ import com.phloc.commons.version.Version;
 @Immutable
 public final class ThirdPartyModule implements IThirdPartyModule
 {
+  /** By default a third-party module is not optional */
   public static final boolean DEFAULT_OPTIONAL = false;
 
   private final String m_sDisplayName;

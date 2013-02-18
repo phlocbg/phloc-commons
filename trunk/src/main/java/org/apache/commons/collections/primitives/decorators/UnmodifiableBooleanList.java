@@ -81,7 +81,7 @@ public final class UnmodifiableBooleanList extends BaseUnmodifiableBooleanList i
   }
 
   @Nullable
-  public static final BooleanList wrap (@Nullable final BooleanList list)
+  public static BooleanList wrap (@Nullable final BooleanList list)
   {
     if (null == list)
       return null;

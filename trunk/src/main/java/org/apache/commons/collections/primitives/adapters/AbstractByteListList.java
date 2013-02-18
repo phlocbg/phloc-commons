@@ -90,7 +90,7 @@ abstract class AbstractByteListList extends AbstractByteCollectionCollection imp
   }
 
   /**
-   * {@link ByteListIteratorListIterator#wrap wraps} the
+   * @return {@link ByteListIteratorListIterator#wrap wraps} the
    * {@link org.apache.commons.collections.primitives.ByteListIterator
    * ByteListIterator} returned by my underlying {@link ByteList ByteList}, if
    * any.
@@ -101,7 +101,9 @@ abstract class AbstractByteListList extends AbstractByteCollectionCollection imp
   }
 
   /**
-   * {@link ByteListIteratorListIterator#wrap wraps} the
+   * @param index
+   *        The index where iterator should start
+   * @return {@link ByteListIteratorListIterator#wrap wraps} the
    * {@link org.apache.commons.collections.primitives.ByteListIterator
    * ByteListIterator} returned by my underlying {@link ByteList ByteList}, if
    * any.

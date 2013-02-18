@@ -88,7 +88,7 @@ abstract class AbstractListFloatList extends AbstractCollectionFloatCollection i
   }
 
   /**
-   * {@link ListIteratorFloatListIterator#wrap wraps} the {@link FloatList
+   * @return {@link ListIteratorFloatListIterator#wrap wraps} the {@link FloatList
    * FloatList} returned by my underlying {@link FloatListIterator
    * FloatListIterator}, if any.
    */
@@ -99,7 +99,9 @@ abstract class AbstractListFloatList extends AbstractCollectionFloatCollection i
   }
 
   /**
-   * {@link ListIteratorFloatListIterator#wrap wraps} the {@link FloatList
+   * @param nIndex
+   *        The starting index of the iterator 
+   * @return {@link ListIteratorFloatListIterator#wrap wraps} the {@link FloatList
    * FloatList} returned by my underlying {@link FloatListIterator
    * FloatListIterator}, if any.
    */

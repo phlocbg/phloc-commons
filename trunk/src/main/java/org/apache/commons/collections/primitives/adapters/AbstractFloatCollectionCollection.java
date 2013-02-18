@@ -93,7 +93,7 @@ abstract class AbstractFloatCollectionCollection implements Collection <Float>
   }
 
   /**
-   * {@link FloatIteratorIterator#wrap wraps} the
+   * @return {@link FloatIteratorIterator#wrap wraps} the
    * {@link org.apache.commons.collections.primitives.FloatIterator FloatIterator}
    * returned by my underlying {@link FloatCollection FloatCollection}, if any.
    */

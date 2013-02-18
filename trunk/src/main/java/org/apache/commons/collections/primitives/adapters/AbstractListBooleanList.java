@@ -88,7 +88,7 @@ abstract class AbstractListBooleanList extends AbstractCollectionBooleanCollecti
   }
 
   /**
-   * {@link ListIteratorBooleanListIterator#wrap wraps} the {@link BooleanList
+   * @return {@link ListIteratorBooleanListIterator#wrap wraps} the {@link BooleanList
    * BooleanList} returned by my underlying {@link BooleanListIterator
    * BooleanListIterator}, if any.
    */
@@ -99,7 +99,9 @@ abstract class AbstractListBooleanList extends AbstractCollectionBooleanCollecti
   }
 
   /**
-   * {@link ListIteratorBooleanListIterator#wrap wraps} the {@link BooleanList
+   * @param nIndex
+   *        The starting index of the iterator 
+   * @return {@link ListIteratorBooleanListIterator#wrap wraps} the {@link BooleanList
    * BooleanList} returned by my underlying {@link BooleanListIterator
    * BooleanListIterator}, if any.
    */

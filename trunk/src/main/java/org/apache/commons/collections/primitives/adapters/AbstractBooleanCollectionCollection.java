@@ -93,7 +93,7 @@ abstract class AbstractBooleanCollectionCollection implements Collection <Boolea
   }
 
   /**
-   * {@link BooleanIteratorIterator#wrap wraps} the
+   * @return {@link BooleanIteratorIterator#wrap wraps} the
    * {@link org.apache.commons.collections.primitives.BooleanIterator BooleanIterator}
    * returned by my underlying {@link BooleanCollection BooleanCollection}, if any.
    */

@@ -60,11 +60,13 @@ public class ByteIteratorIterator implements Iterator <Byte>
    * Creates an {@link Iterator Iterator} wrapping the specified
    * {@link ByteIterator ByteIterator}.
    *
+   * @param aIterator
+   *        The iterator to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public ByteIteratorIterator (@Nonnull final ByteIterator iterator)
+  public ByteIteratorIterator (@Nonnull final ByteIterator aIterator)
   {
-    m_aIterator = iterator;
+    m_aIterator = aIterator;
   }
 
   public boolean hasNext ()

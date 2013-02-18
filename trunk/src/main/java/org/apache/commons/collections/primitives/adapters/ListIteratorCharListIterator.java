@@ -61,11 +61,13 @@ public class ListIteratorCharListIterator implements CharListIterator
    * Creates an {@link CharListIterator CharListIterator} wrapping the specified
    * {@link ListIterator ListIterator}.
    *
+   * @param aIterator
+   *        The iterator to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public ListIteratorCharListIterator (@Nonnull final ListIterator <Character> iterator)
+  public ListIteratorCharListIterator (@Nonnull final ListIterator <Character> aIterator)
   {
-    m_aIterator = iterator;
+    m_aIterator = aIterator;
   }
 
   public int nextIndex ()

@@ -61,11 +61,13 @@ public class ListIteratorShortListIterator implements ShortListIterator
    * Creates an {@link ShortListIterator ShortListIterator} wrapping the specified
    * {@link ListIterator ListIterator}.
    *
+   * @param aIterator
+   *        The iterator to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public ListIteratorShortListIterator (@Nonnull final ListIterator <Short> iterator)
+  public ListIteratorShortListIterator (@Nonnull final ListIterator <Short> aIterator)
   {
-    m_aIterator = iterator;
+    m_aIterator = aIterator;
   }
 
   public int nextIndex ()

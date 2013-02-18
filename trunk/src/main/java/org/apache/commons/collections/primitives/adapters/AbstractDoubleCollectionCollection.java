@@ -93,7 +93,7 @@ abstract class AbstractDoubleCollectionCollection implements Collection <Double>
   }
 
   /**
-   * {@link DoubleIteratorIterator#wrap wraps} the
+   * @return {@link DoubleIteratorIterator#wrap wraps} the
    * {@link org.apache.commons.collections.primitives.DoubleIterator DoubleIterator}
    * returned by my underlying {@link DoubleCollection DoubleCollection}, if any.
    */

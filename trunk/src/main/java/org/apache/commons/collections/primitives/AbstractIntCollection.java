@@ -62,7 +62,11 @@ public abstract class AbstractIntCollection implements IntCollection
   @Nonnegative
   public abstract int size ();
 
-  /** Unsupported in this base implementation. */
+  /** 
+   * Unsupported in this base implementation.
+   *
+   * @return never 
+   */
   public boolean add (final int aElement)
   {
     throw new UnsupportedOperationException ("add(int) is not supported.");

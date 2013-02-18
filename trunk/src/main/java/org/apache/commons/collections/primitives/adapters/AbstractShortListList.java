@@ -90,7 +90,7 @@ abstract class AbstractShortListList extends AbstractShortCollectionCollection i
   }
 
   /**
-   * {@link ShortListIteratorListIterator#wrap wraps} the
+   * @return {@link ShortListIteratorListIterator#wrap wraps} the
    * {@link org.apache.commons.collections.primitives.ShortListIterator
    * ShortListIterator} returned by my underlying {@link ShortList ShortList}, if
    * any.
@@ -101,7 +101,9 @@ abstract class AbstractShortListList extends AbstractShortCollectionCollection i
   }
 
   /**
-   * {@link ShortListIteratorListIterator#wrap wraps} the
+   * @param index
+   *        The index where iterator should start
+   * @return {@link ShortListIteratorListIterator#wrap wraps} the
    * {@link org.apache.commons.collections.primitives.ShortListIterator
    * ShortListIterator} returned by my underlying {@link ShortList ShortList}, if
    * any.

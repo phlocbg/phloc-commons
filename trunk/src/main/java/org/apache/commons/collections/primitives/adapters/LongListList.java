@@ -66,6 +66,8 @@ public final class LongListList extends AbstractLongListList implements Serializ
    * Creates a {@link List List} wrapping the specified {@link LongList
    * LongList}.
    *
+   * @param list
+   *        The list to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
   public LongListList (@Nonnull final LongList list)

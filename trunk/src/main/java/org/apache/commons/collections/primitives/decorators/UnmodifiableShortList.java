@@ -81,7 +81,7 @@ public final class UnmodifiableShortList extends BaseUnmodifiableShortList imple
   }
 
   @Nullable
-  public static final ShortList wrap (@Nullable final ShortList list)
+  public static ShortList wrap (@Nullable final ShortList list)
   {
     if (null == list)
       return null;

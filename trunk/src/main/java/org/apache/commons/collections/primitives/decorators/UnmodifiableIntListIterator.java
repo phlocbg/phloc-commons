@@ -75,7 +75,7 @@ public final class UnmodifiableIntListIterator extends ProxyIntListIterator
   }
 
   @Nullable
-  public static final IntListIterator wrap (@Nullable final IntListIterator iterator)
+  public static IntListIterator wrap (@Nullable final IntListIterator iterator)
   {
     if (null == iterator)
       return null;

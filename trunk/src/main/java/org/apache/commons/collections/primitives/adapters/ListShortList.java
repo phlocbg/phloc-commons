@@ -62,6 +62,8 @@ public class ListShortList extends AbstractListShortList implements Serializable
    * Creates an {@link ShortList ShortList} wrapping the specified {@link List
    * List}.
    *
+   * @param aList
+   *        The list to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
   public ListShortList (@Nonnull final List <Short> aList)

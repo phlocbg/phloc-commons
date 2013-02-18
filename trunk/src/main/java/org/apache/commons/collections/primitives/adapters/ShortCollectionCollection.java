@@ -67,11 +67,13 @@ public final class ShortCollectionCollection extends AbstractShortCollectionColl
    * Creates a {@link Collection Collection} wrapping the specified
    * {@link ShortCollection ShortCollection}.
    *
+   * @param aCollection
+   *        The collection to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public ShortCollectionCollection (@Nonnull final ShortCollection collection)
+  public ShortCollectionCollection (@Nonnull final ShortCollection aCollection)
   {
-    m_aCollection = collection;
+    m_aCollection = aCollection;
   }
 
   @Override

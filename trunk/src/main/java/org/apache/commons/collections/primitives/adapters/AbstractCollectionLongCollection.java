@@ -88,7 +88,7 @@ abstract class AbstractCollectionLongCollection implements LongCollection
   }
 
   /**
-   * {@link IteratorLongIterator#wrap wraps} the {@link java.util.Iterator
+   * @return {@link IteratorLongIterator#wrap wraps} the {@link java.util.Iterator
    * Iterator} returned by my underlying {@link Collection Collection}, if any.
    */
   @Nonnull

@@ -54,32 +54,34 @@ import org.apache.commons.collections.primitives.ByteIterator;
  */
 public class IteratorByteIterator implements ByteIterator
 {
-  private final Iterator <Byte> _iterator;
+  private final Iterator <Byte> m_aIterator;
 
   /**
    * Creates an {@link ByteIterator ByteIterator} wrapping the specified
    * {@link Iterator Iterator}.
    *
+   * @param aIterator
+   *        The iterator to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public IteratorByteIterator (@Nonnull final Iterator <Byte> iterator)
+  public IteratorByteIterator (@Nonnull final Iterator <Byte> aIterator)
   {
-    _iterator = iterator;
+    m_aIterator = aIterator;
   }
 
   public boolean hasNext ()
   {
-    return _iterator.hasNext ();
+    return m_aIterator.hasNext ();
   }
 
   public byte next ()
   {
-    return _iterator.next ().byteValue ();
+    return m_aIterator.next ().byteValue ();
   }
 
   public void remove ()
   {
-    _iterator.remove ();
+    m_aIterator.remove ();
   }
 
   /**

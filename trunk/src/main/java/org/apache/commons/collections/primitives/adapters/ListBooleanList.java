@@ -62,6 +62,8 @@ public class ListBooleanList extends AbstractListBooleanList implements Serializ
    * Creates an {@link BooleanList BooleanList} wrapping the specified {@link List
    * List}.
    *
+   * @param aList
+   *        The list to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
   public ListBooleanList (@Nonnull final List <Boolean> aList)

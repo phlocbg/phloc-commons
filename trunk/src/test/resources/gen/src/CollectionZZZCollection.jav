@@ -61,11 +61,13 @@ public final class CollectionZZZCollection extends AbstractCollectionZZZCollecti
    * Creates an {@link ZZZCollection ZZZCollection} wrapping the specified
    * {@link Collection Collection}.
    *
+   * @param aCollection
+   *        The collection to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public CollectionZZZCollection (@Nonnull final Collection <XXX> collection)
+  public CollectionZZZCollection (@Nonnull final Collection <XXX> aCollection)
   {
-    m_aCollection = collection;
+    m_aCollection = aCollection;
   }
 
   @Override

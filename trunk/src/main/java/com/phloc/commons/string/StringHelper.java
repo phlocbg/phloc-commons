@@ -1074,6 +1074,11 @@ public final class StringHelper
    * @param sElements
    *        The concatenated String to convert. May be <code>null</code> or
    *        empty.
+   * @param nMaxItems
+   *        The maximum number of items to explode. If the passed value is <= 0
+   *        all items are used. If max items is 1, than the result string is
+   *        returned as is. If max items is larger than the number of elements
+   *        found, it has no effect.
    * @return The {@link List} represented by the passed string. Never
    *         <code>null</code>. If the passed input string is <code>null</code>
    *         or "" an empty list is returned.
@@ -1181,6 +1186,11 @@ public final class StringHelper
    * @param sElements
    *        The concatenated String to convert. May be <code>null</code> or
    *        empty.
+   * @param nMaxItems
+   *        The maximum number of items to explode. If the passed value is <= 0
+   *        all items are used. If max items is 1, than the result string is
+   *        returned as is. If max items is larger than the number of elements
+   *        found, it has no effect.
    * @return The {@link List} represented by the passed string. Never
    *         <code>null</code>. If the passed input string is <code>null</code>
    *         or "" an empty list is returned.

@@ -88,7 +88,7 @@ abstract class AbstractCollectionZZZCollection implements ZZZCollection
   }
 
   /**
-   * {@link IteratorZZZIterator#wrap wraps} the {@link java.util.Iterator
+   * @return {@link IteratorZZZIterator#wrap wraps} the {@link java.util.Iterator
    * Iterator} returned by my underlying {@link Collection Collection}, if any.
    */
   @Nonnull

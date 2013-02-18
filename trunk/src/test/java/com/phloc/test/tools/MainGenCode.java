@@ -31,7 +31,12 @@ import com.phloc.commons.io.file.filter.FilenameFilterEndsWith;
 import com.phloc.commons.io.file.iterate.FileSystemIterator;
 import com.phloc.commons.string.StringHelper;
 
-public class MainGenCode
+/**
+ * Generate the primitive collection classes
+ * 
+ * @author philip
+ */
+public final class MainGenCode
 {
   private static final String [][] DIRS = new String [] [] { { "gen/src", "src/main/java/" },
                                                             { "gen/test", "src/test/java/" } };

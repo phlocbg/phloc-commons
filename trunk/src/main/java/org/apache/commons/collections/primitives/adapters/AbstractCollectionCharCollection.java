@@ -88,7 +88,7 @@ abstract class AbstractCollectionCharCollection implements CharCollection
   }
 
   /**
-   * {@link IteratorCharIterator#wrap wraps} the {@link java.util.Iterator
+   * @return {@link IteratorCharIterator#wrap wraps} the {@link java.util.Iterator
    * Iterator} returned by my underlying {@link Collection Collection}, if any.
    */
   @Nonnull

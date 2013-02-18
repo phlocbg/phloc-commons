@@ -66,6 +66,8 @@ public final class CharListList extends AbstractCharListList implements Serializ
    * Creates a {@link List List} wrapping the specified {@link CharList
    * CharList}.
    *
+   * @param list
+   *        The list to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
   public CharListList (@Nonnull final CharList list)

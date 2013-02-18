@@ -22,6 +22,11 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
+/**
+ * Readonly interface for a multilingual text
+ * 
+ * @author philip
+ */
 public interface IReadonlyMultiLingualText extends ISimpleMultiLingualText
 {
   /**

@@ -47,9 +47,9 @@ final class NonSerializableCollectionShortCollection extends AbstractCollectionS
 {
   private final Collection <Short> m_aCollection;
 
-  public NonSerializableCollectionShortCollection (@Nonnull final Collection <Short> collection)
+  public NonSerializableCollectionShortCollection (@Nonnull final Collection <Short> aCollection)
   {
-    m_aCollection = collection;
+    m_aCollection = aCollection;
   }
 
   @Override

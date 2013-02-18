@@ -36,6 +36,7 @@ package org.apache.commons.collections.primitives;
 import java.util.EmptyStackException;
 
 import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
 
 /**
  * A primitive byte based Stack. The underlying backing store is an
@@ -64,7 +65,7 @@ public class ByteStack
    * @param aElements
    *        the array to add
    */
-  public ByteStack (final byte [] aElements)
+  public ByteStack (@Nonnull final byte [] aElements)
   {
     for (final byte aElement : aElements)
       m_aList.add (aElement);

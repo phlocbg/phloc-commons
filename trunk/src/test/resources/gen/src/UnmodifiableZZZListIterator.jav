@@ -75,7 +75,7 @@ public final class UnmodifiableZZZListIterator extends ProxyZZZListIterator
   }
 
   @Nullable
-  public static final ZZZListIterator wrap (@Nullable final ZZZListIterator iterator)
+  public static ZZZListIterator wrap (@Nullable final ZZZListIterator iterator)
   {
     if (null == iterator)
       return null;

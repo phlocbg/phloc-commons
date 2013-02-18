@@ -36,6 +36,7 @@ package org.apache.commons.collections.primitives;
 import java.util.EmptyStackException;
 
 import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
 
 /**
  * A primitive boolean based Stack. The underlying backing store is an
@@ -64,7 +65,7 @@ public class BooleanStack
    * @param aElements
    *        the array to add
    */
-  public BooleanStack (final boolean [] aElements)
+  public BooleanStack (@Nonnull final boolean [] aElements)
   {
     for (final boolean aElement : aElements)
       m_aList.add (aElement);

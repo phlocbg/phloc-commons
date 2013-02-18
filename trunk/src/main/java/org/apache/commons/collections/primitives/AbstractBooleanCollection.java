@@ -62,7 +62,11 @@ public abstract class AbstractBooleanCollection implements BooleanCollection
   @Nonnegative
   public abstract int size ();
 
-  /** Unsupported in this base implementation. */
+  /** 
+   * Unsupported in this base implementation.
+   *
+   * @return never 
+   */
   public boolean add (final boolean aElement)
   {
     throw new UnsupportedOperationException ("add(boolean) is not supported.");

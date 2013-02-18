@@ -134,6 +134,7 @@ public class TestBaseProxyDoubleCollection extends TestCase
   // inner classes
   // ------------------------------------------------------------------------
 
+  // ESCA-JAVA0020:
   static class InvocationCounter implements DoubleCollection
   {
     private int _toArrayDoubleArray;

@@ -60,11 +60,13 @@ public class LongIteratorIterator implements Iterator <Long>
    * Creates an {@link Iterator Iterator} wrapping the specified
    * {@link LongIterator LongIterator}.
    *
+   * @param aIterator
+   *        The iterator to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public LongIteratorIterator (@Nonnull final LongIterator iterator)
+  public LongIteratorIterator (@Nonnull final LongIterator aIterator)
   {
-    m_aIterator = iterator;
+    m_aIterator = aIterator;
   }
 
   public boolean hasNext ()

@@ -93,7 +93,7 @@ abstract class AbstractLongCollectionCollection implements Collection <Long>
   }
 
   /**
-   * {@link LongIteratorIterator#wrap wraps} the
+   * @return {@link LongIteratorIterator#wrap wraps} the
    * {@link org.apache.commons.collections.primitives.LongIterator LongIterator}
    * returned by my underlying {@link LongCollection LongCollection}, if any.
    */

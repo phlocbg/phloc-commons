@@ -81,7 +81,7 @@ public final class UnmodifiableIntList extends BaseUnmodifiableIntList implement
   }
 
   @Nullable
-  public static final IntList wrap (@Nullable final IntList list)
+  public static IntList wrap (@Nullable final IntList list)
   {
     if (null == list)
       return null;

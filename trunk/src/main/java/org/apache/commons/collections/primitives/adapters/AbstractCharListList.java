@@ -90,7 +90,7 @@ abstract class AbstractCharListList extends AbstractCharCollectionCollection imp
   }
 
   /**
-   * {@link CharListIteratorListIterator#wrap wraps} the
+   * @return {@link CharListIteratorListIterator#wrap wraps} the
    * {@link org.apache.commons.collections.primitives.CharListIterator
    * CharListIterator} returned by my underlying {@link CharList CharList}, if
    * any.
@@ -101,7 +101,9 @@ abstract class AbstractCharListList extends AbstractCharCollectionCollection imp
   }
 
   /**
-   * {@link CharListIteratorListIterator#wrap wraps} the
+   * @param index
+   *        The index where iterator should start
+   * @return {@link CharListIteratorListIterator#wrap wraps} the
    * {@link org.apache.commons.collections.primitives.CharListIterator
    * CharListIterator} returned by my underlying {@link CharList CharList}, if
    * any.

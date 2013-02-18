@@ -54,32 +54,34 @@ import org.apache.commons.collections.primitives.BooleanIterator;
  */
 public class IteratorBooleanIterator implements BooleanIterator
 {
-  private final Iterator <Boolean> _iterator;
+  private final Iterator <Boolean> m_aIterator;
 
   /**
    * Creates an {@link BooleanIterator BooleanIterator} wrapping the specified
    * {@link Iterator Iterator}.
    *
+   * @param aIterator
+   *        The iterator to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public IteratorBooleanIterator (@Nonnull final Iterator <Boolean> iterator)
+  public IteratorBooleanIterator (@Nonnull final Iterator <Boolean> aIterator)
   {
-    _iterator = iterator;
+    m_aIterator = aIterator;
   }
 
   public boolean hasNext ()
   {
-    return _iterator.hasNext ();
+    return m_aIterator.hasNext ();
   }
 
   public boolean next ()
   {
-    return _iterator.next ().booleanValue ();
+    return m_aIterator.next ().booleanValue ();
   }
 
   public void remove ()
   {
-    _iterator.remove ();
+    m_aIterator.remove ();
   }
 
   /**

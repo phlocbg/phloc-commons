@@ -60,11 +60,13 @@ public class DoubleIteratorIterator implements Iterator <Double>
    * Creates an {@link Iterator Iterator} wrapping the specified
    * {@link DoubleIterator DoubleIterator}.
    *
+   * @param aIterator
+   *        The iterator to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public DoubleIteratorIterator (@Nonnull final DoubleIterator iterator)
+  public DoubleIteratorIterator (@Nonnull final DoubleIterator aIterator)
   {
-    m_aIterator = iterator;
+    m_aIterator = aIterator;
   }
 
   public boolean hasNext ()

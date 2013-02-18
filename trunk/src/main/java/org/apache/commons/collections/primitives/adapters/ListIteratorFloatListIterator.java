@@ -61,11 +61,13 @@ public class ListIteratorFloatListIterator implements FloatListIterator
    * Creates an {@link FloatListIterator FloatListIterator} wrapping the specified
    * {@link ListIterator ListIterator}.
    *
+   * @param aIterator
+   *        The iterator to be wrapped. May not be <code>null</code>.
    * @see #wrap
    */
-  public ListIteratorFloatListIterator (@Nonnull final ListIterator <Float> iterator)
+  public ListIteratorFloatListIterator (@Nonnull final ListIterator <Float> aIterator)
   {
-    m_aIterator = iterator;
+    m_aIterator = aIterator;
   }
 
   public int nextIndex ()

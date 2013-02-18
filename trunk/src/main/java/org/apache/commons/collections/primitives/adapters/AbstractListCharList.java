@@ -88,7 +88,7 @@ abstract class AbstractListCharList extends AbstractCollectionCharCollection imp
   }
 
   /**
-   * {@link ListIteratorCharListIterator#wrap wraps} the {@link CharList
+   * @return {@link ListIteratorCharListIterator#wrap wraps} the {@link CharList
    * CharList} returned by my underlying {@link CharListIterator
    * CharListIterator}, if any.
    */
@@ -99,7 +99,9 @@ abstract class AbstractListCharList extends AbstractCollectionCharCollection imp
   }
 
   /**
-   * {@link ListIteratorCharListIterator#wrap wraps} the {@link CharList
+   * @param nIndex
+   *        The starting index of the iterator 
+   * @return {@link ListIteratorCharListIterator#wrap wraps} the {@link CharList
    * CharList} returned by my underlying {@link CharListIterator
    * CharListIterator}, if any.
    */

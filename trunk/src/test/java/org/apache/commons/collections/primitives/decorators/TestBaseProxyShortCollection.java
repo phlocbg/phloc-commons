@@ -28,6 +28,7 @@ import org.apache.commons.collections.primitives.ShortIterator;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+// ESCA-JAVA0137:
 /**
  * @version $Revision: 480451 $ $Date: 2006-11-29 08:45:08 +0100 (Mi, 29 Nov
  *          2006) $
@@ -134,6 +135,7 @@ public class TestBaseProxyShortCollection extends TestCase
   // inner classes
   // ------------------------------------------------------------------------
 
+  // ESCA-JAVA0020:
   static class InvocationCounter implements ShortCollection
   {
     private int _toArrayShortArray;
