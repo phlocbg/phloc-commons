@@ -26,7 +26,7 @@ import com.phloc.commons.state.IClearable;
 @IsSPIImplementation
 public final class MockSPIClearableValid implements IClearable
 {
-  public int m_nCallCount = 0;
+  private int m_nCallCount = 0;
 
   @Nonnull
   public EChange clear ()
