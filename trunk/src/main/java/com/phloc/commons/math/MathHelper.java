@@ -337,10 +337,6 @@ public final class MathHelper
     return aValue.compareTo (BigDecimal.ZERO) < 0;
   }
 
-  /**
-   * @deprecated Use {@link #isLowerOrEqualThanZero(BigDecimal)} instead
-   * @return <code>true</code> or <code>false</code>
-   */
   @Deprecated
   public static boolean isLowerOrEqualZero (@Nonnull final BigDecimal aValue)
   {
@@ -357,10 +353,6 @@ public final class MathHelper
     return aValue.compareTo (BigDecimal.ZERO) > 0;
   }
 
-  /**
-   * @deprecated Use {@link #isGreaterOrEqualThanZero(BigDecimal)} instead
-   * @return <code>true</code> or <code>false</code>
-   */
   @Deprecated
   public static boolean isGreaterOrEqualZero (@Nonnull final BigDecimal aValue)
   {
@@ -397,10 +389,6 @@ public final class MathHelper
     return aValue.compareTo (BigInteger.ZERO) < 0;
   }
 
-  /**
-   * @deprecated Use {@link #isLowerOrEqualThanZero(BigInteger)} instead
-   * @return <code>true</code> or <code>false</code>
-   */
   @Deprecated
   public static boolean isLowerOrEqualZero (@Nonnull final BigInteger aValue)
   {
@@ -417,10 +405,6 @@ public final class MathHelper
     return aValue.compareTo (BigInteger.ZERO) > 0;
   }
 
-  /**
-   * @deprecated Use {@link #isGreaterOrEqualThanZero(BigInteger)} instead
-   * @return <code>true</code> or <code>false</code>
-   */
   @Deprecated
   public static boolean isGreaterOrEqualZero (@Nonnull final BigInteger aValue)
   {

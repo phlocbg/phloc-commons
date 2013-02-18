@@ -59,6 +59,7 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
 
   // Use a weak hash map, because the key is a class
   private static final Map <Class <?>, Map <Class <?>, ITypeConverter>> s_aConverter = new WeakHashMap <Class <?>, Map <Class <?>, ITypeConverter>> ();
+  // ESCA-JAVA0261:
   private static final IMultiMapListBased <ITypeConverterRule.ESubType, ITypeConverterRule> s_aRules = new MultiTreeMapArrayListBased <ITypeConverterRule.ESubType, ITypeConverterRule> ();
 
   static
