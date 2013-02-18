@@ -34,7 +34,6 @@ public final class ASCIIHexCodec implements IByteArrayDecoder
   public ASCIIHexCodec ()
   {}
 
-  @Override
   @Nullable
   public byte [] decode (@Nullable final byte [] aEncodedBuffer)
   {

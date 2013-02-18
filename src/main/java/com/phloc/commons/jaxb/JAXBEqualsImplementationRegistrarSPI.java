@@ -36,13 +36,11 @@ import com.phloc.commons.equals.IEqualsImplementationRegistry;
 @IsSPIImplementation
 public final class JAXBEqualsImplementationRegistrarSPI implements IEqualsImplementationRegistrarSPI
 {
-  @Override
   public void registerEqualsImplementations (@Nonnull final IEqualsImplementationRegistry aRegistry)
   {
     // JAXBElement does not implement equals!
     aRegistry.registerEqualsImplementation (JAXBElement.class, new IEqualsImplementation ()
     {
-      @Override
       public boolean areEqual (final Object aObj1, final Object aObj2)
       {
         final JAXBElement <?> aRealObj1 = (JAXBElement <?>) aObj1;

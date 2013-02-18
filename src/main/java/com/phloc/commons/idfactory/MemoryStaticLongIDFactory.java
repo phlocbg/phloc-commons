@@ -41,7 +41,6 @@ public final class MemoryStaticLongIDFactory implements ILongIDFactory
   public MemoryStaticLongIDFactory ()
   {}
 
-  @Override
   @Nonnegative
   public long getNewID ()
   {

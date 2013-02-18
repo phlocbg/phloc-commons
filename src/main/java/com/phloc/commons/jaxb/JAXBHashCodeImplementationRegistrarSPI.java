@@ -35,13 +35,11 @@ import com.phloc.commons.hash.IHashCodeImplementationRegistry;
 @IsSPIImplementation
 public final class JAXBHashCodeImplementationRegistrarSPI implements IHashCodeImplementationRegistrarSPI
 {
-  @Override
   public void registerHashCodeImplementations (@Nonnull final IHashCodeImplementationRegistry aRegistry)
   {
     // JAXBElement does not implement hashCode!
     aRegistry.registerHashCodeImplementation (JAXBElement.class, new IHashCodeImplementation ()
     {
-      @Override
       public int getHashCode (final Object aObj)
       {
         final JAXBElement <?> aRealObj = (JAXBElement <?>) aObj;

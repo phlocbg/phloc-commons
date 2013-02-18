@@ -157,61 +157,51 @@ public final class MutableChar extends Number implements IMutableInteger <Mutabl
     return EChange.CHANGED;
   }
 
-  @Override
   public boolean is0 ()
   {
     return m_cValue == 0;
   }
 
-  @Override
   public boolean isNot0 ()
   {
     return m_cValue != 0;
   }
 
-  @Override
   public boolean isSmaller0 ()
   {
     return m_cValue < 0;
   }
 
-  @Override
   public boolean isSmallerOrEqual0 ()
   {
     return m_cValue <= 0;
   }
 
-  @Override
   public boolean isGreater0 ()
   {
     return m_cValue > 0;
   }
 
-  @Override
   public boolean isGreaterOrEqual0 ()
   {
     return m_cValue >= 0;
   }
 
-  @Override
   public boolean isEven ()
   {
     return (m_cValue % 2) == 0;
   }
 
-  @Override
   public boolean isOdd ()
   {
     return (m_cValue % 2) != 0;
   }
 
-  @Override
   public int compareTo (final MutableChar rhs)
   {
     return m_cValue == rhs.m_cValue ? 0 : m_cValue < rhs.m_cValue ? -1 : +1;
   }
 
-  @Override
   @Nonnull
   public MutableChar getClone ()
   {

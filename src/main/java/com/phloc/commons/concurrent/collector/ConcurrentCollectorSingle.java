@@ -105,7 +105,6 @@ public class ConcurrentCollectorSingle <DATATYPE> extends AbstractConcurrentColl
     }
   }
 
-  @Override
   public final void run ()
   {
     if (m_aPerformer == null)

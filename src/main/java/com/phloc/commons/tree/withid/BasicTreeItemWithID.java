@@ -53,8 +53,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  *        tree item implementation type
  */
 @NotThreadSafe
-public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>> implements
-                                                                                                                     ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>
+public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>> implements ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>
 {
   // item factory
   private final ITreeItemWithIDFactory <KEYTYPE, DATATYPE, ITEMTYPE> m_aFactory;
@@ -124,7 +123,6 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
     m_aDataID = aDataID;
   }
 
-  @Override
   @Nonnull
   public final ITreeItemWithIDFactory <KEYTYPE, DATATYPE, ITEMTYPE> getFactory ()
   {
@@ -161,7 +159,6 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
     return true;
   }
 
-  @Override
   public final boolean isRootItem ()
   {
     return m_aParent == null;
@@ -173,55 +170,47 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
     return GenericReflection.<BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>, ITEMTYPE> uncheckedCast (aItem);
   }
 
-  @Override
   @Nullable
   public final ITEMTYPE getParent ()
   {
     return m_aParent;
   }
 
-  @Override
   @Nullable
   public final KEYTYPE getParentID ()
   {
     return m_aParent == null ? null : m_aParent.getID ();
   }
 
-  @Override
   @Nullable
   public final DATATYPE getParentData ()
   {
     return m_aParent == null ? null : m_aParent.getData ();
   }
 
-  @Override
   @Nullable
   public final KEYTYPE getID ()
   {
     return m_aDataID;
   }
 
-  @Override
   @Nullable
   public final DATATYPE getData ()
   {
     return m_aData;
   }
 
-  @Override
   public final boolean hasChildren ()
   {
     return m_aChildMap != null && !m_aChildMap.isEmpty ();
   }
 
-  @Override
   @Nonnegative
   public final int getChildCount ()
   {
     return m_aChildMap == null ? 0 : m_aChildMap.size ();
   }
 
-  @Override
   @Nullable
   @ReturnsMutableCopy
   public final List <ITEMTYPE> getChildren ()
@@ -229,7 +218,6 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
     return m_aChildren == null ? null : ContainerHelper.newList (m_aChildren);
   }
 
-  @Override
   @Nullable
   public final List <DATATYPE> getAllChildDatas ()
   {
@@ -241,7 +229,6 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
     return ret;
   }
 
-  @Override
   @Nullable
   public final ITEMTYPE getChildAtIndex (@Nonnegative final int nIndex)
   {
@@ -250,21 +237,18 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
     return m_aChildren.get (nIndex);
   }
 
-  @Override
   @Nullable
   public ITEMTYPE getFirstChild ()
   {
     return ContainerHelper.getFirstElement (m_aChildren);
   }
 
-  @Override
   @Nullable
   public ITEMTYPE getLastChild ()
   {
     return ContainerHelper.getLastElement (m_aChildren);
   }
 
-  @Override
   public final void setData (@Nullable final DATATYPE aData)
   {
     if (!isValidData (aData))
@@ -272,14 +256,12 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
     m_aData = aData;
   }
 
-  @Override
   @Nullable
   public final ITEMTYPE createChildItem (@Nullable final KEYTYPE aDataID, @Nullable final DATATYPE aData)
   {
     return createChildItem (aDataID, aData, true);
   }
 
-  @Override
   @Nullable
   public final ITEMTYPE createChildItem (@Nullable final KEYTYPE aDataID,
                                          @Nullable final DATATYPE aData,
@@ -316,20 +298,17 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
     return aItem;
   }
 
-  @Override
   public final boolean containsChildItemWithDataID (@Nullable final KEYTYPE aDataID)
   {
     return m_aChildMap == null ? false : m_aChildMap.containsKey (aDataID);
   }
 
-  @Override
   @Nullable
   public final ITEMTYPE getChildItemOfDataID (@Nullable final KEYTYPE aDataID)
   {
     return m_aChildMap == null ? null : m_aChildMap.get (aDataID);
   }
 
-  @Override
   @SuppressFBWarnings ("IL_INFINITE_LOOP")
   public final boolean isSameOrChildOf (@Nonnull final ITEMTYPE aParent)
   {
@@ -347,7 +326,6 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
     return false;
   }
 
-  @Override
   @Nonnull
   public final ESuccess changeParent (@Nonnull final ITEMTYPE aNewParent)
   {
@@ -372,7 +350,6 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
     return ESuccess.valueOfChange (aNewParent.internalAddChild (getID (), aThis, false));
   }
 
-  @Override
   @Nonnull
   public final EChange internalAddChild (@Nonnull final KEYTYPE aDataID,
                                          @Nonnull final ITEMTYPE aChild,
@@ -408,7 +385,6 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
     m_aFactory.onRemoveItem (aItem);
   }
 
-  @Override
   @Nonnull
   public final EChange removeChild (@Nullable final KEYTYPE aDataID)
   {
@@ -431,7 +407,6 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
     return EChange.CHANGED;
   }
 
-  @Override
   @Nonnull
   public final EChange removeAllChildren ()
   {
@@ -451,7 +426,6 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
     return EChange.CHANGED;
   }
 
-  @Override
   public final void reorderChildrenByItems (@Nonnull final Comparator <? super ITEMTYPE> aComparator)
   {
     if (m_aChildren != null)

@@ -51,7 +51,6 @@ import com.phloc.commons.state.EValidity;
 @IsSPIImplementation
 public final class BasicMicroTypeConverterRegistrar implements IMicroTypeConverterRegistrarSPI
 {
-  @Override
   public void registerMicroTypeConverter (@Nonnull final IMicroTypeConverterRegistry aRegistry)
   {
     // String converter

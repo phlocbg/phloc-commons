@@ -124,7 +124,6 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
     return this;
   }
 
-  @Override
   @Nonnull
   public EXMLSerializeFormat getFormat ()
   {
@@ -147,7 +146,6 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
     return this;
   }
 
-  @Override
   @Nonnull
   public EXMLVersion getXMLVersion ()
   {
@@ -170,7 +168,6 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
     return this;
   }
 
-  @Override
   @Nonnull
   public EXMLSerializeDocType getSerializeDocType ()
   {
@@ -193,7 +190,6 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
     return this;
   }
 
-  @Override
   @Nonnull
   public EXMLSerializeComments getSerializeComments ()
   {
@@ -216,7 +212,6 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
     return this;
   }
 
-  @Override
   @Nonnull
   public EXMLSerializeIndent getIndent ()
   {
@@ -239,7 +234,6 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
     return this;
   }
 
-  @Override
   @Nonnull
   public EXMLIncorrectCharacterHandling getIncorrectCharacterHandling ()
   {
@@ -275,14 +269,12 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
     return setCharset (CharsetManager.getCharsetFromName (sCharset));
   }
 
-  @Override
   @Nonnull
   public String getCharset ()
   {
     return m_aCharset.name ();
   }
 
-  @Override
   @Nonnull
   public Charset getCharsetObj ()
   {
@@ -303,7 +295,6 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
     return this;
   }
 
-  @Override
   @Nullable
   public NamespaceContext getNamespaceContext ()
   {
@@ -317,7 +308,6 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
     return this;
   }
 
-  @Override
   public boolean isUseDoubleQuotesForAttributes ()
   {
     return m_bUseDoubleQuotesForAttributes;
@@ -330,13 +320,11 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
     return this;
   }
 
-  @Override
   public boolean isSpaceOnSelfClosedElement ()
   {
     return m_bSpaceOnSelfClosedElement;
   }
 
-  @Override
   @Nonnull
   public XMLWriterSettings getClone ()
   {

@@ -51,7 +51,6 @@ public interface ISimpleURL extends IURLData, IHasStringRepresentation
    * @return The final string representation of this URL not encoding the
    *         request parameters.
    */
-  @Override
   @Nonnull
   String getAsString ();
 

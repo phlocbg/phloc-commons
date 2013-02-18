@@ -41,7 +41,6 @@ public final class MemoryStaticIntIDFactory implements IIntIDFactory
   public MemoryStaticIntIDFactory ()
   {}
 
-  @Override
   @Nonnegative
   public int getNewID ()
   {

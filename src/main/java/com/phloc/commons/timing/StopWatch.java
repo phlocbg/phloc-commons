@@ -95,7 +95,6 @@ public final class StopWatch implements IStoppable
    *         and is now stopped, and {@link EChange#UNCHANGED} if the stop watch
    *         was already stopped.
    */
-  @Override
   @Nonnull
   public EChange stop ()
   {

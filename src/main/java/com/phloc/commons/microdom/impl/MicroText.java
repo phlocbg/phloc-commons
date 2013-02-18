@@ -70,14 +70,12 @@ public final class MicroText extends AbstractMicroNode implements IMicroText
     m_bEscape = bEscape;
   }
 
-  @Override
   @Nonnull
   public EMicroNodeType getType ()
   {
     return EMicroNodeType.TEXT;
   }
 
-  @Override
   @Nonnull
   @Nonempty
   public String getNodeName ()
@@ -92,38 +90,32 @@ public final class MicroText extends AbstractMicroNode implements IMicroText
     return getData ();
   }
 
-  @Override
   @Nonnull
   public String getData ()
   {
     return m_aData.getData ().toString ();
   }
 
-  @Override
   public void appendData (@Nullable final CharSequence sData)
   {
     m_aData.appendData (sData);
   }
 
-  @Override
   public void prependData (@Nullable final CharSequence sData)
   {
     m_aData.prependData (sData);
   }
 
-  @Override
   public void setData (@Nullable final CharSequence sData)
   {
     m_aData.setData (sData);
   }
 
-  @Override
   public boolean isElementContentWhitespace ()
   {
     return m_bIgnorableWhitespace;
   }
 
-  @Override
   public boolean isEscape ()
   {
     return m_bEscape;
@@ -136,14 +128,12 @@ public final class MicroText extends AbstractMicroNode implements IMicroText
     return this;
   }
 
-  @Override
   @Nonnull
   public IMicroText getClone ()
   {
     return new MicroText (m_aData.getClone (), m_bIgnorableWhitespace, m_bEscape);
   }
 
-  @Override
   public boolean isEqualContent (@Nullable final IMicroNode o)
   {
     if (o == this)

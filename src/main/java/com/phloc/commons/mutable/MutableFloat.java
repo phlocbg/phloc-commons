@@ -123,49 +123,41 @@ public final class MutableFloat extends Number implements IMutableNumeric <Mutab
     return EChange.CHANGED;
   }
 
-  @Override
   public boolean is0 ()
   {
     return EqualsUtils.equals (m_fValue, 0f);
   }
 
-  @Override
   public boolean isNot0 ()
   {
     return !is0 ();
   }
 
-  @Override
   public boolean isSmaller0 ()
   {
     return Double.compare (m_fValue, 0f) < 0;
   }
 
-  @Override
   public boolean isSmallerOrEqual0 ()
   {
     return Double.compare (m_fValue, 0f) <= 0;
   }
 
-  @Override
   public boolean isGreater0 ()
   {
     return Double.compare (m_fValue, 0f) > 0;
   }
 
-  @Override
   public boolean isGreaterOrEqual0 ()
   {
     return Double.compare (m_fValue, 0f) >= 0;
   }
 
-  @Override
   public int compareTo (final MutableFloat rhs)
   {
     return Double.compare (m_fValue, rhs.m_fValue);
   }
 
-  @Override
   @Nonnull
   public MutableFloat getClone ()
   {

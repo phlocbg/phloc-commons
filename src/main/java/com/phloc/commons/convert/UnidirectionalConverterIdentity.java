@@ -30,7 +30,6 @@ import javax.annotation.Nullable;
  */
 public final class UnidirectionalConverterIdentity <DATATYPE> implements IUnidirectionalConverterSameType <DATATYPE>
 {
-  @Override
   @Nullable
   public DATATYPE convert (@Nullable final DATATYPE aInput)
   {

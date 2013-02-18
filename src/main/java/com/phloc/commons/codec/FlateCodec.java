@@ -57,7 +57,6 @@ public final class FlateCodec implements ICodec
     return false;
   }
 
-  @Override
   @Nullable
   public byte [] decode (@Nullable final byte [] aEncodedBuffer)
   {
@@ -81,7 +80,6 @@ public final class FlateCodec implements ICodec
     }
   }
 
-  @Override
   @Nullable
   public byte [] encode (@Nullable final byte [] aBuffer)
   {

@@ -35,6 +35,5 @@ public interface IIterableIterator <ELEMENTTYPE> extends Iterable <ELEMENTTYPE>,
    * @return The next element. No constraint whether the element can be
    *         <code>null</code> or non-<code>null</code>.
    */
-  @Override
   ELEMENTTYPE next ();
 }

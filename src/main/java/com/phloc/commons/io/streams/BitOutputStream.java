@@ -147,7 +147,6 @@ public class BitOutputStream implements Closeable, Flushable
    * @throws IOException
    *         In case writing to the output stream failed
    */
-  @Override
   public void flush () throws IOException
   {
     m_aLock.lock ();
@@ -171,7 +170,6 @@ public class BitOutputStream implements Closeable, Flushable
   /**
    * Flush the data and close the underlying output stream.
    */
-  @Override
   public void close ()
   {
     m_aLock.lock ();

@@ -87,7 +87,6 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
     s_aJMXEnabled.set (bEnabled);
   }
 
-  @Override
   @Nonnull
   @Nonempty
   public final String getName ()
@@ -141,7 +140,6 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
     return m_aCache == null ? null : m_aCache.get (aKey);
   }
 
-  @Override
   @Nullable
   @OverridingMethodsMustInvokeSuper
   public VALUETYPE getFromCache (@Nullable final KEYTYPE aKey)
@@ -154,7 +152,6 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
     return aValue;
   }
 
-  @Override
   @Nonnull
   @OverridingMethodsMustInvokeSuper
   public EChange removeFromCache (@Nullable final KEYTYPE aKey)
@@ -165,7 +162,6 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
     return EChange.CHANGED;
   }
 
-  @Override
   @Nonnull
   @OverridingMethodsMustInvokeSuper
   public EChange clearCache ()
@@ -178,14 +174,12 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
     return EChange.CHANGED;
   }
 
-  @Override
   @Nonnegative
   public int size ()
   {
     return ContainerHelper.getSize (m_aCache);
   }
 
-  @Override
   public boolean isEmpty ()
   {
     return ContainerHelper.isEmpty (m_aCache);

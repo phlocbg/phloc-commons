@@ -41,7 +41,6 @@ public final class DCTCodec implements IByteArrayDecoder
   public DCTCodec ()
   {}
 
-  @Override
   @Nullable
   public byte [] decode (@Nullable final byte [] aEncodedBuffer)
   {

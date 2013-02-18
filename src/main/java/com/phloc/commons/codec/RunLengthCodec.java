@@ -35,7 +35,6 @@ public class RunLengthCodec implements IByteArrayDecoder
   public RunLengthCodec ()
   {}
 
-  @Override
   @Nullable
   public byte [] decode (@Nullable final byte [] aEncodedBuffer)
   {

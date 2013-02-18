@@ -48,8 +48,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  *        tree item implementation type
  */
 @NotThreadSafe
-public class BasicTreeItem <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEMTYPE>> implements
-                                                                                       ITreeItem <DATATYPE, ITEMTYPE>
+public class BasicTreeItem <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEMTYPE>> implements ITreeItem <DATATYPE, ITEMTYPE>
 {
   // item factory
   private final ITreeItemFactory <DATATYPE, ITEMTYPE> m_aFactory;
@@ -100,7 +99,6 @@ public class BasicTreeItem <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEM
     m_aData = null;
   }
 
-  @Override
   @Nonnull
   public final ITreeItemFactory <DATATYPE, ITEMTYPE> getFactory ()
   {
@@ -122,14 +120,12 @@ public class BasicTreeItem <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEM
     return true;
   }
 
-  @Override
   @Nullable
   public final DATATYPE getData ()
   {
     return m_aData;
   }
 
-  @Override
   public final void setData (@Nullable final DATATYPE aData)
   {
     if (!isValidData (aData))
@@ -137,20 +133,17 @@ public class BasicTreeItem <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEM
     m_aData = aData;
   }
 
-  @Override
   public final boolean isRootItem ()
   {
     return m_aParent == null;
   }
 
-  @Override
   @Nullable
   public final ITEMTYPE getParent ()
   {
     return m_aParent;
   }
 
-  @Override
   @Nullable
   public final DATATYPE getParentData ()
   {
@@ -171,7 +164,6 @@ public class BasicTreeItem <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEM
    * @return the created TreeItem object or <code>null</code> if the ID is
    *         already in use and bAllowOverwrite is false
    */
-  @Override
   @Nonnull
   public final ITEMTYPE createChildItem (@Nullable final DATATYPE aData)
   {
@@ -184,13 +176,11 @@ public class BasicTreeItem <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEM
     return aItem;
   }
 
-  @Override
   public final boolean hasChildren ()
   {
     return m_aChildren != null && !m_aChildren.isEmpty ();
   }
 
-  @Override
   @Nullable
   @ReturnsMutableCopy
   public final List <ITEMTYPE> getChildren ()
@@ -198,7 +188,6 @@ public class BasicTreeItem <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEM
     return m_aChildren == null ? null : ContainerHelper.newList (m_aChildren);
   }
 
-  @Override
   @Nullable
   public final List <DATATYPE> getAllChildDatas ()
   {
@@ -210,7 +199,6 @@ public class BasicTreeItem <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEM
     return ret;
   }
 
-  @Override
   @Nullable
   public final ITEMTYPE getChildAtIndex (@Nonnegative final int nIndex)
   {
@@ -219,28 +207,24 @@ public class BasicTreeItem <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEM
     return m_aChildren.get (nIndex);
   }
 
-  @Override
   @Nonnegative
   public final int getChildCount ()
   {
     return m_aChildren != null ? m_aChildren.size () : 0;
   }
 
-  @Override
   @Nullable
   public ITEMTYPE getFirstChild ()
   {
     return ContainerHelper.getFirstElement (m_aChildren);
   }
 
-  @Override
   @Nullable
   public ITEMTYPE getLastChild ()
   {
     return ContainerHelper.getLastElement (m_aChildren);
   }
 
-  @Override
   @SuppressFBWarnings ("IL_INFINITE_LOOP")
   public final boolean isSameOrChildOf (@Nonnull final ITEMTYPE aParent)
   {
@@ -258,7 +242,6 @@ public class BasicTreeItem <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEM
     return false;
   }
 
-  @Override
   @Nonnull
   public final ESuccess changeParent (@Nonnull final ITEMTYPE aNewParent)
   {
@@ -283,7 +266,6 @@ public class BasicTreeItem <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEM
     return ESuccess.valueOfChange (aNewParent.internalAddChild (aThis));
   }
 
-  @Override
   @Nonnull
   public final EChange internalAddChild (@Nonnull final ITEMTYPE aChild)
   {
@@ -297,7 +279,6 @@ public class BasicTreeItem <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEM
     return EChange.valueOf (m_aChildren.add (aChild));
   }
 
-  @Override
   @Nonnull
   public final EChange removeChild (@Nonnull final ITEMTYPE aChild)
   {
@@ -307,7 +288,6 @@ public class BasicTreeItem <DATATYPE, ITEMTYPE extends ITreeItem <DATATYPE, ITEM
     return EChange.valueOf (m_aChildren != null && m_aChildren.remove (aChild));
   }
 
-  @Override
   public final void reorderChildItems (@Nonnull final Comparator <? super ITEMTYPE> aComparator)
   {
     if (m_aChildren != null)

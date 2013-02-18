@@ -31,17 +31,14 @@ import javax.annotation.concurrent.NotThreadSafe;
  *        tree item value type
  */
 @NotThreadSafe
-public class DefaultTreeItemWithIDFactory <KEYTYPE, DATATYPE> extends
-                                                              AbstractTreeItemWithIDFactory <KEYTYPE, DATATYPE, DefaultTreeItemWithID <KEYTYPE, DATATYPE>>
+public class DefaultTreeItemWithIDFactory <KEYTYPE, DATATYPE> extends AbstractTreeItemWithIDFactory <KEYTYPE, DATATYPE, DefaultTreeItemWithID <KEYTYPE, DATATYPE>>
 {
-  @Override
   @Nonnull
   public DefaultTreeItemWithID <KEYTYPE, DATATYPE> createRoot ()
   {
     return new DefaultTreeItemWithID <KEYTYPE, DATATYPE> (this);
   }
 
-  @Override
   @Nonnull
   public DefaultTreeItemWithID <KEYTYPE, DATATYPE> create (@Nonnull final DefaultTreeItemWithID <KEYTYPE, DATATYPE> aParent,
                                                            @Nonnull final KEYTYPE aDataID)

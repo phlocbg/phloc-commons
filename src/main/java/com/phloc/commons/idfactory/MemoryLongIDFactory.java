@@ -53,7 +53,6 @@ public final class MemoryLongIDFactory implements ILongIDFactory
     m_aID = new AtomicLong (nStartID);
   }
 
-  @Override
   @Nonnegative
   public long getNewID ()
   {

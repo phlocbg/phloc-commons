@@ -134,61 +134,51 @@ public final class MutableInt extends Number implements IMutableInteger <Mutable
     return EChange.CHANGED;
   }
 
-  @Override
   public boolean is0 ()
   {
     return m_nValue == 0;
   }
 
-  @Override
   public boolean isNot0 ()
   {
     return m_nValue != 0;
   }
 
-  @Override
   public boolean isSmaller0 ()
   {
     return m_nValue < 0;
   }
 
-  @Override
   public boolean isSmallerOrEqual0 ()
   {
     return m_nValue <= 0;
   }
 
-  @Override
   public boolean isGreater0 ()
   {
     return m_nValue > 0;
   }
 
-  @Override
   public boolean isGreaterOrEqual0 ()
   {
     return m_nValue >= 0;
   }
 
-  @Override
   public boolean isEven ()
   {
     return (m_nValue % 2) == 0;
   }
 
-  @Override
   public boolean isOdd ()
   {
     return (m_nValue % 2) != 0;
   }
 
-  @Override
   public int compareTo (final MutableInt rhs)
   {
     return m_nValue == rhs.m_nValue ? 0 : m_nValue < rhs.m_nValue ? -1 : +1;
   }
 
-  @Override
   @Nonnull
   public MutableInt getClone ()
   {

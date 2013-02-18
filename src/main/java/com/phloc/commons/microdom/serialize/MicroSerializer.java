@@ -276,7 +276,6 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
     }
   }
 
-  @Override
   public void write (@Nonnull final IMicroNode aNode, @Nonnull @WillNotClose final Writer aWriter)
   {
     final IXMLIterationHandler aXMLWriter = new XMLEmitterPhloc (aWriter, m_aSettings);
