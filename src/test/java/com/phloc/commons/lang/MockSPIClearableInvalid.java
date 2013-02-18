@@ -28,7 +28,7 @@ import com.phloc.commons.annotations.IsSPIImplementation;
 @IsSPIImplementation
 public final class MockSPIClearableInvalid
 {
-  public int m_nCallCount = 0;
+  private int m_nCallCount = 0;
 
   public void clear ()
   {

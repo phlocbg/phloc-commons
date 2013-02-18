@@ -48,6 +48,7 @@ public final class ClassHelperTest
 
   protected static final class DummyProtectedVisibility
   {
+    // ESCA-JAVA0009:
     protected DummyProtectedVisibility ()
     {}
   }

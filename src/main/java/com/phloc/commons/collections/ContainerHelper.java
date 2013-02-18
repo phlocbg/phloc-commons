@@ -196,8 +196,7 @@ public final class ContainerHelper
   @ReturnsImmutableObject
   public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> SortedMap <KEYTYPE, VALUETYPE> makeUnmodifiableNotNull (@Nullable final SortedMap <KEYTYPE, ? extends VALUETYPE> aCollection)
   {
-    return Collections.unmodifiableSortedMap (aCollection == null
-                                                                 ? ContainerHelper.<KEYTYPE, VALUETYPE> newSortedMap ()
+    return Collections.unmodifiableSortedMap (aCollection == null ? ContainerHelper.<KEYTYPE, VALUETYPE> newSortedMap ()
                                                                  : aCollection);
   }
 
@@ -1008,7 +1007,8 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsMutableCopy
-  @SuppressFBWarnings (value = { "NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE" }, justification = "When using the constructor with the Comparator it works with null values!")
+  @SuppressFBWarnings (value = { "NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE" },
+                       justification = "When using the constructor with the Comparator it works with null values!")
   public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> TreeSet <ELEMENTTYPE> newSortedSet (@Nullable final ELEMENTTYPE aValue)
   {
     final TreeSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());

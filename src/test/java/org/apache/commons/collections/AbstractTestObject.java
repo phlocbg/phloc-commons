@@ -188,8 +188,7 @@ public abstract class AbstractTestObject extends BulkTest
    * Sanity check method, makes sure that any Serializable class can be
    * serialized and de-serialized in memory, using the handy makeObject() method
    * 
-   * @throws IOException
-   * @throws ClassNotFoundException
+   * @throws Exception
    */
   public void testSimpleSerialization () throws Exception
   {
@@ -357,13 +356,14 @@ public abstract class AbstractTestObject extends BulkTest
 
   // private implementation
   // -----------------------------------------------------------------------
-  private Object readExternalFormFromStream (final InputStream stream) throws IOException, ClassNotFoundException
+  private static Object readExternalFormFromStream (final InputStream stream) throws IOException,
+                                                                             ClassNotFoundException
   {
     final ObjectInputStream oStream = new ObjectInputStream (stream);
     return oStream.readObject ();
   }
 
-  private void writeExternalFormToStream (final Serializable o, final OutputStream stream) throws IOException
+  private static void writeExternalFormToStream (final Serializable o, final OutputStream stream) throws IOException
   {
     final ObjectOutputStream oStream = new ObjectOutputStream (stream);
     oStream.writeObject (o);
