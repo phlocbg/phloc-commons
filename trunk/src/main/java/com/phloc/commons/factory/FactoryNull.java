@@ -24,6 +24,13 @@ import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.lang.GenericReflection;
 import com.phloc.commons.string.ToStringGenerator;
 
+/**
+ * An instance of {@link IFactory} that always returns <code>null</code>.
+ * 
+ * @author philip
+ * @param <DATATYPE>
+ *        Return type of the factory
+ */
 public final class FactoryNull <DATATYPE> implements IFactory <DATATYPE>
 {
   private static final FactoryNull <Object> s_aInstance = new FactoryNull <Object> ();
@@ -31,6 +38,7 @@ public final class FactoryNull <DATATYPE> implements IFactory <DATATYPE>
   private FactoryNull ()
   {}
 
+  @Override
   @Nullable
   public DATATYPE create ()
   {

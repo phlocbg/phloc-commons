@@ -102,6 +102,7 @@ public final class HashCodeCalculator
    */
   public static int append (final int nPrevHashCode, final double x)
   {
+    // ESCA-JAVA0078:
     return append (nPrevHashCode, x == 0.0 ? 0L : Double.doubleToLongBits (x));
   }
 
@@ -116,6 +117,7 @@ public final class HashCodeCalculator
    */
   public static int append (final int nPrevHashCode, final float x)
   {
+    // ESCA-JAVA0078:
     return append (nPrevHashCode, x == 0.0F ? 0 : Float.floatToIntBits (x));
   }
 

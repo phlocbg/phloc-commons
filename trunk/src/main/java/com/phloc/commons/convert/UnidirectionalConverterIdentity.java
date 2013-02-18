@@ -20,8 +20,17 @@ package com.phloc.commons.convert;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+/**
+ * A dummy implementation of {@link IUnidirectionalConverterSameType} that uses
+ * the input object as the output object.
+ * 
+ * @author philip
+ * @param <DATATYPE>
+ *        The data type to be converted
+ */
 public final class UnidirectionalConverterIdentity <DATATYPE> implements IUnidirectionalConverterSameType <DATATYPE>
 {
+  @Override
   @Nullable
   public DATATYPE convert (@Nullable final DATATYPE aInput)
   {

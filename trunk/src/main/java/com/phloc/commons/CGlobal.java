@@ -29,7 +29,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 /**
  * A class declaring system wide constants. Its main use is giving a semantic
  * meaning to constant values.
- *
+ * 
  * @author philip
  */
 @Immutable
@@ -39,6 +39,21 @@ public final class CGlobal
    * Number of bits in a byte.
    */
   public static final int BITS_PER_BYTE = 8;
+
+  /**
+   * Number of bits in a short.
+   */
+  public static final int BITS_PER_SHORT = 2 * BITS_PER_BYTE;
+
+  /**
+   * Number of bits in an int.
+   */
+  public static final int BITS_PER_INT = 4 * BITS_PER_BYTE;
+
+  /**
+   * Number of bits in a long.
+   */
+  public static final int BITS_PER_LONG = 8 * BITS_PER_BYTE;
 
   /**
    * Value if a bit is set.
@@ -113,7 +128,7 @@ public final class CGlobal
   /**
    * Bytes per gigabyte.
    */
-  public static final long BYTES_PER_GIGABYTE = BYTES_PER_MEGABYTE * BYTES_PER_KILOBYTE;
+  public static final long BYTES_PER_GIGABYTE = BYTES_PER_MEGABYTE * BYTES_PER_KILOBYTE_LONG;
 
   /**
    * Bytes per terabyte. Needs to be a long and not an int!
@@ -220,6 +235,9 @@ public final class CGlobal
    */
   public static final String DEFAULT_LANGUAGE = DEFAULT_LOCALE.getLanguage ();
 
+  /**
+   * The language string representing the "all" locale. See {@link #LOCALE_ALL}.
+   */
   public static final String STR_ALL = "all";
 
   /**
@@ -227,6 +245,10 @@ public final class CGlobal
    */
   public static final Locale LOCALE_ALL = new Locale (STR_ALL, "", "");
 
+  /**
+   * The language string representing the "independent" locale. See
+   * {@link #LOCALE_INDEPENDENT}.
+   */
   public static final String STR_INDEPENDENT = "independent";
 
   /**

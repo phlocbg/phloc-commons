@@ -29,6 +29,10 @@ import javax.xml.bind.ValidationEventHandler;
  */
 public class CollectingValidationEventHandlerFactory implements IValidationEventHandlerFactory
 {
+  /**
+   * By default the old event handler is encapsulated into the created
+   * {@link CollectingValidationEventHandler}.
+   */
   public static final boolean DEFAULT_ENCAPSULATE_HANDLER = true;
 
   private final boolean m_bEncapsulateHandler;
@@ -43,6 +47,7 @@ public class CollectingValidationEventHandlerFactory implements IValidationEvent
     m_bEncapsulateHandler = bEncapsulateHandler;
   }
 
+  @Override
   @Nonnull
   public CollectingValidationEventHandler create (@Nullable final ValidationEventHandler aOldEventHandler)
   {

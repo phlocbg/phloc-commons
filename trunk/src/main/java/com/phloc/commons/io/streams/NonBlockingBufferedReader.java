@@ -39,7 +39,7 @@ public class NonBlockingBufferedReader extends Reader
   private static final int DEFAULT_EXPECTED_LINE_LENGTH = 80;
 
   private Reader m_aReader;
-  private char m_aBuf[];
+  private char [] m_aBuf;
   private int m_nChars;
   private int m_nNextCharIndex;
 
@@ -87,6 +87,9 @@ public class NonBlockingBufferedReader extends Reader
 
   /**
    * Checks to make sure that the stream has not been closed
+   * 
+   * @throws IOException
+   *         If the reader is not open
    */
   private void _ensureOpen () throws IOException
   {
@@ -96,6 +99,9 @@ public class NonBlockingBufferedReader extends Reader
 
   /**
    * Fills the input buffer, taking the mark into account if it is valid.
+   * 
+   * @throws IOException
+   *         In case reading fails
    */
   private void _fill () throws IOException
   {
@@ -181,6 +187,16 @@ public class NonBlockingBufferedReader extends Reader
   /**
    * Reads characters into a portion of an array, reading from the underlying
    * stream if necessary.
+   * 
+   * @param aBuf
+   *        The buffer to be filled
+   * @param nOfs
+   *        The offset to start reading
+   * @param nLen
+   *        The number of bytes to read
+   * @return The number of bytes read
+   * @throws IOException
+   *         in case reading fails
    */
   private int _internalRead (final char [] aBuf, final int nOfs, final int nLen) throws IOException
   {
@@ -302,7 +318,7 @@ public class NonBlockingBufferedReader extends Reader
     _ensureOpen ();
     boolean bOmitLF = m_bSkipLF;
 
-    for (;;)
+    while (true)
     {
       if (m_nNextCharIndex >= m_nChars)
         _fill ();
@@ -392,7 +408,7 @@ public class NonBlockingBufferedReader extends Reader
         if (m_aBuf[m_nNextCharIndex] == '\n')
           m_nNextCharIndex++;
       }
-      final long d = m_nChars - m_nNextCharIndex;
+      final int d = m_nChars - m_nNextCharIndex;
       if (nRest <= d)
       {
         m_nNextCharIndex += nRest;
@@ -410,6 +426,7 @@ public class NonBlockingBufferedReader extends Reader
    * is ready if the buffer is not empty, or if the underlying character stream
    * is ready.
    * 
+   * @return <code>true</code> if the reader is ready
    * @exception IOException
    *            If an I/O error occurs
    */
@@ -442,6 +459,8 @@ public class NonBlockingBufferedReader extends Reader
 
   /**
    * Tells whether this stream supports the mark() operation, which it does.
+   * 
+   * @return Always <code>true</code>
    */
   @Override
   public boolean markSupported ()

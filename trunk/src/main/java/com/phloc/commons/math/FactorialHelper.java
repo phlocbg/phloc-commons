@@ -54,7 +54,9 @@ public final class FactorialHelper
                                                              6402373705728000L,
                                                              121645100408832000L,
                                                              2432902008176640000L };
+  /** The minimum value for which pre-computed factorial values are present */
   public static final int PREDEFINED_MIN_INDEX = 0;
+  /** The maximum value for which pre-computed factorial values are present */
   public static final int PREDEFINED_MAX_INDEX = PREDEFINED_FACTORIALS_LONG.length - 1;
 
   @PresentForCodeCoverage
@@ -89,6 +91,9 @@ public final class FactorialHelper
   private static final class FactorialSplit
   {
     private long m_nCurrentN;
+
+    FactorialSplit ()
+    {}
 
     @Nonnull
     private BigInteger _getProduct (final int n)

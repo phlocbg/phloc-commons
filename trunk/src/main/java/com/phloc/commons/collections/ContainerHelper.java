@@ -67,7 +67,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Provides various helper methods to handle collections like {@link List},
  * {@link Set} and {@link Map}.
- *
+ * 
  * @author philip
  */
 @Immutable
@@ -196,14 +196,15 @@ public final class ContainerHelper
   @ReturnsImmutableObject
   public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> SortedMap <KEYTYPE, VALUETYPE> makeUnmodifiableNotNull (@Nullable final SortedMap <KEYTYPE, ? extends VALUETYPE> aCollection)
   {
-    return Collections.unmodifiableSortedMap (aCollection == null ? ContainerHelper.<KEYTYPE, VALUETYPE> newSortedMap ()
+    return Collections.unmodifiableSortedMap (aCollection == null
+                                                                 ? ContainerHelper.<KEYTYPE, VALUETYPE> newSortedMap ()
                                                                  : aCollection);
   }
 
   /**
    * Get all elements that are only contained in the first contained, and not in
    * the second. This method implements <code>aCont1 - aCont2</code>.
-   *
+   * 
    * @param aCont1
    *        The first container. May be <code>null</code> or empty.
    * @param aCont2
@@ -231,7 +232,7 @@ public final class ContainerHelper
   /**
    * Get all elements that are contained in the first AND in the second
    * container.
-   *
+   * 
    * @param aCont1
    *        The first container. May be <code>null</code> or empty.
    * @param aCont2
@@ -440,7 +441,7 @@ public final class ContainerHelper
   /**
    * Retrieve a map that is ordered in the way the parameter arrays are passed
    * in. Note that key and value arrays need to have the same length.
-   *
+   * 
    * @param <KEYTYPE>
    *        The key type.
    * @param <VALUETYPE>
@@ -1007,8 +1008,7 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsMutableCopy
-  @SuppressFBWarnings (value = { "NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE" },
-                       justification = "When using the constructor with the Comparator it works with null values!")
+  @SuppressFBWarnings (value = { "NP_PARAMETER_MUST_BE_NONNULL_BUT_MARKED_AS_NULLABLE" }, justification = "When using the constructor with the Comparator it works with null values!")
   public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> TreeSet <ELEMENTTYPE> newSortedSet (@Nullable final ELEMENTTYPE aValue)
   {
     final TreeSet <ELEMENTTYPE> ret = new TreeSet <ELEMENTTYPE> (new ComparatorComparableNullAware <ELEMENTTYPE> ());
@@ -1607,7 +1607,7 @@ public final class ContainerHelper
   /**
    * Compared to {@link Collections#list(Enumeration)} this method is more
    * flexible in Generics parameter.
-   *
+   * 
    * @param <ELEMENTTYPE>
    *        Type of the elements
    * @param aEnum
@@ -1714,7 +1714,7 @@ public final class ContainerHelper
   /**
    * Compared to {@link Collections#list(Enumeration)} this method is more
    * flexible in Generics parameter.
-   *
+   * 
    * @param <ELEMENTTYPE>
    *        Type of the elements
    * @param aEnum
@@ -2071,7 +2071,7 @@ public final class ContainerHelper
 
   /**
    * Create a new stack with a single element.
-   *
+   * 
    * @param <ELEMENTTYPE>
    *        The type of elements contained in the stack.
    * @param aValue
@@ -2089,7 +2089,7 @@ public final class ContainerHelper
 
   /**
    * Create a new stack from the given array.
-   *
+   * 
    * @param <ELEMENTTYPE>
    *        The type of elements contained in the stack.
    * @param aValues
@@ -2106,7 +2106,7 @@ public final class ContainerHelper
 
   /**
    * Create a new stack from the given collection.
-   *
+   * 
    * @param <ELEMENTTYPE>
    *        The type of elements contained in the stack.
    * @param aValues
@@ -2154,7 +2154,7 @@ public final class ContainerHelper
   /**
    * Compared to {@link Collections#list(Enumeration)} this method is more
    * flexible in Generics parameter.
-   *
+   * 
    * @param <ELEMENTTYPE>
    *        Type of the elements
    * @param aEnum
@@ -2216,7 +2216,7 @@ public final class ContainerHelper
 
   /**
    * Convert the given iterator to a sorted list.
-   *
+   * 
    * @param <ELEMENTTYPE>
    *        The type of elements to iterate. May not be <code>null</code>.
    * @param aIter
@@ -2233,7 +2233,7 @@ public final class ContainerHelper
 
   /**
    * Convert the given iterator to a sorted list.
-   *
+   * 
    * @param <ELEMENTTYPE>
    *        The type of elements to iterate. May not be <code>null</code>.
    * @param aIter
@@ -2253,7 +2253,7 @@ public final class ContainerHelper
 
   /**
    * Convert the given iterator to a sorted list.
-   *
+   * 
    * @param <ELEMENTTYPE>
    *        The type of elements to iterate. May not be <code>null</code>.
    * @param aIter
@@ -2270,7 +2270,7 @@ public final class ContainerHelper
 
   /**
    * Convert the given iterator to a sorted list.
-   *
+   * 
    * @param <ELEMENTTYPE>
    *        The type of elements to iterate.
    * @param aIter
@@ -2290,7 +2290,7 @@ public final class ContainerHelper
 
   /**
    * Convert the given iterable object to a sorted list.
-   *
+   * 
    * @param <ELEMENTTYPE>
    *        The type of element to iterate.
    * @param aCont
@@ -2307,7 +2307,7 @@ public final class ContainerHelper
 
   /**
    * Convert the given iterable object to a sorted list.
-   *
+   * 
    * @param <ELEMENTTYPE>
    *        The type of element to iterate.
    * @param aCont
@@ -2327,7 +2327,7 @@ public final class ContainerHelper
 
   /**
    * Convert the given collection object to a sorted list.
-   *
+   * 
    * @param <ELEMENTTYPE>
    *        The type of element to iterate.
    * @param aCont
@@ -2344,7 +2344,7 @@ public final class ContainerHelper
 
   /**
    * Convert the given collection object to a sorted list.
-   *
+   * 
    * @param <ELEMENTTYPE>
    *        The type of element to iterate.
    * @param aCont
@@ -2364,7 +2364,7 @@ public final class ContainerHelper
 
   /**
    * Convert the given iterable object to a sorted list.
-   *
+   * 
    * @param <ELEMENTTYPE>
    *        The type of element to iterate.
    * @param aCont
@@ -2381,7 +2381,7 @@ public final class ContainerHelper
 
   /**
    * Convert the given iterable object to a sorted list.
-   *
+   * 
    * @param <ELEMENTTYPE>
    *        The type of element to iterate.
    * @param aCont
@@ -2424,7 +2424,7 @@ public final class ContainerHelper
   /**
    * Get a map sorted by aIter's keys. Because no comparator is defined, the key
    * type needs to implement the {@link java.lang.Comparable} interface.
-   *
+   * 
    * @param <KEYTYPE>
    *        map key type
    * @param <VALUETYPE>
@@ -2442,13 +2442,15 @@ public final class ContainerHelper
   /**
    * Get a map sorted by its keys. Because no comparator is defined, the key
    * type needs to implement the {@link java.lang.Comparable} interface.
-   *
+   * 
    * @param <KEYTYPE>
    *        map key type
    * @param <VALUETYPE>
    *        map value type
    * @param aMap
    *        the map to sort
+   * @param eSortOrder
+   *        The sort oder to use for sorting. May not be <code>null</code>.
    * @return the sorted map or the original map, if it was empty
    */
   @Nullable
@@ -2467,7 +2469,7 @@ public final class ContainerHelper
   /**
    * Get a map sorted by its keys. The comparison order is defined by the passed
    * comparator object.
-   *
+   * 
    * @param <KEYTYPE>
    *        map key type
    * @param <VALUETYPE>
@@ -2497,7 +2499,7 @@ public final class ContainerHelper
   /**
    * Get a map sorted by its values. Because no comparator is defined, the value
    * type needs to implement the {@link java.lang.Comparable} interface.
-   *
+   * 
    * @param <KEYTYPE>
    *        map key type
    * @param <VALUETYPE>
@@ -2515,7 +2517,7 @@ public final class ContainerHelper
   /**
    * Get a map sorted by its values. Because no comparator is defined, the value
    * type needs to implement the {@link java.lang.Comparable} interface.
-   *
+   * 
    * @param <KEYTYPE>
    *        map key type
    * @param <VALUETYPE>
@@ -2542,7 +2544,7 @@ public final class ContainerHelper
   /**
    * Get a map sorted by aIter's values. The comparison order is defined by the
    * passed comparator object.
-   *
+   * 
    * @param <KEYTYPE>
    *        map key type
    * @param <VALUETYPE>
@@ -2632,7 +2634,7 @@ public final class ContainerHelper
 
   /**
    * Create an empty iterator.
-   *
+   * 
    * @param <ELEMENTTYPE>
    *        The type the iterator's elements.
    * @return A non-<code>null</code> object.
@@ -2646,7 +2648,7 @@ public final class ContainerHelper
   /**
    * Get a merged iterator of both iterators. The first iterator is iterated
    * first, the second one afterwards.
-   *
+   * 
    * @param <ELEMENTTYPE>
    *        The type of elements to be enumerated.
    * @param aIter1
@@ -2664,7 +2666,7 @@ public final class ContainerHelper
 
   /**
    * Get an {@link Enumeration} object based on a {@link Collection} object.
-   *
+   * 
    * @param <ELEMENTTYPE>
    *        the type of the elements in the container
    * @param aCont
@@ -2679,7 +2681,7 @@ public final class ContainerHelper
 
   /**
    * Get an {@link Enumeration} object based on the passed array.
-   *
+   * 
    * @param <ELEMENTTYPE>
    *        the type of the elements in the container
    * @param aArray
@@ -2694,7 +2696,7 @@ public final class ContainerHelper
 
   /**
    * Get an Enumeration object based on an Iterator object.
-   *
+   * 
    * @param <ELEMENTTYPE>
    *        the type of the elements in the container
    * @param aIter
@@ -2712,7 +2714,7 @@ public final class ContainerHelper
 
   /**
    * Get an Enumeration object based on a Map object.
-   *
+   * 
    * @param <KEYTYPE>
    *        map key type
    * @param <VALUETYPE>
@@ -2732,7 +2734,7 @@ public final class ContainerHelper
   /**
    * Get a merged enumeration of both enumeration. The first enumeration is
    * enumerated first, the second one afterwards.
-   *
+   * 
    * @param <ELEMENTTYPE>
    *        The type of elements to be enumerated.
    * @param aEnum1
@@ -2750,7 +2752,7 @@ public final class ContainerHelper
 
   /**
    * Create an empty enumeration.
-   *
+   * 
    * @param <ELEMENTTYPE>
    *        The type the enumeration's elements.
    * @return A non-<code>null</code> object.
@@ -2776,7 +2778,7 @@ public final class ContainerHelper
   /**
    * Get a map consisting only of a set of specified keys. If an element from
    * the key set is not contained in the original map, the key is ignored.
-   *
+   * 
    * @param <KEY>
    *        Source map key type.
    * @param <VALUE>
@@ -2952,7 +2954,7 @@ public final class ContainerHelper
   /**
    * Retrieve the size of the passed {@link Collection}. This method handles
    * <code>null</code> containers.
-   *
+   * 
    * @param aObj
    *        Object to check. May be <code>null</code>.
    * @return The size of the object or 0 if the passed parameter is
@@ -2967,7 +2969,7 @@ public final class ContainerHelper
   /**
    * Retrieve the size of the passed {@link Map}. This method handles
    * <code>null</code> containers.
-   *
+   * 
    * @param aObj
    *        Object to check. May be <code>null</code>.
    * @return The size of the object or 0 if the passed parameter is
@@ -2981,7 +2983,7 @@ public final class ContainerHelper
 
   /**
    * Retrieve the size of the passed {@link Iterable}.
-   *
+   * 
    * @param aCont
    *        Iterator to check. May be <code>null</code>.
    * @return The number objects or 0 if the passed parameter is
@@ -2995,7 +2997,7 @@ public final class ContainerHelper
 
   /**
    * Retrieve the size of the passed {@link Iterable}.
-   *
+   * 
    * @param aCont
    *        Iterable iterator to check. May be <code>null</code>.
    * @return The number objects or 0 if the passed parameter is
@@ -3009,7 +3011,7 @@ public final class ContainerHelper
 
   /**
    * Retrieve the size of the passed {@link Iterator}.
-   *
+   * 
    * @param aIter
    *        Iterator to check. May be <code>null</code>.
    * @return The number objects or 0 if the passed parameter is
@@ -3030,7 +3032,7 @@ public final class ContainerHelper
 
   /**
    * Retrieve the size of the passed {@link Enumeration}.
-   *
+   * 
    * @param aEnum
    *        Enumeration to check. May be <code>null</code>.
    * @return The number objects or 0 if the passed parameter is
@@ -3191,7 +3193,7 @@ public final class ContainerHelper
   /**
    * Create a map that contains the combination of the other 2 maps. Both maps
    * need to have the same key and value type.
-   *
+   * 
    * @param <KEY>
    *        The map key type.
    * @param <VALUE>
@@ -3384,7 +3386,7 @@ public final class ContainerHelper
 
   /**
    * Gets a sublist excerpt of the passed list.
-   *
+   * 
    * @param <ELEMENTTYPE>
    *        Type of elements in list
    * @param aCont
@@ -3424,7 +3426,7 @@ public final class ContainerHelper
 
   /**
    * Get a map where keys and values are exchanged.
-   *
+   * 
    * @param <KEYTYPE>
    *        Original key type.
    * @param <VALUETYPE>
@@ -3448,7 +3450,7 @@ public final class ContainerHelper
 
   /**
    * Get a map where the lookup (1K..nV) has been reversed to (1V..nK)
-   *
+   * 
    * @param <KEYTYPE>
    *        Original key type
    * @param <VALUETYPE>
@@ -3473,7 +3475,7 @@ public final class ContainerHelper
 
   /**
    * Get a map where the lookup (1K..nV) has been reversed to (1V..nK)
-   *
+   * 
    * @param <KEYTYPE>
    *        Original key type
    * @param <VALUETYPE>
@@ -3498,7 +3500,7 @@ public final class ContainerHelper
 
   /**
    * Safe list element accessor method.
-   *
+   * 
    * @param <ELEMENTTYPE>
    *        The type of elements on the list.
    * @param aList
@@ -3515,7 +3517,7 @@ public final class ContainerHelper
 
   /**
    * Safe list element accessor method.
-   *
+   * 
    * @param <ELEMENTTYPE>
    *        The type of elements on the list.
    * @param aList
@@ -3537,7 +3539,7 @@ public final class ContainerHelper
   /**
    * Check if the passed collection contains at least one <code>null</code>
    * element.
-   *
+   * 
    * @param aCont
    *        The collection to check. May be <code>null</code>.
    * @return <code>true</code> only if the passed collection is neither
@@ -3555,7 +3557,7 @@ public final class ContainerHelper
 
   /**
    * Check if the passed collection contains only <code>null</code> element.
-   *
+   * 
    * @param aCont
    *        The collection to check. May be <code>null</code>.
    * @return <code>true</code> only if the passed collection is neither

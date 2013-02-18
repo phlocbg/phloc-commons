@@ -39,8 +39,10 @@ import com.phloc.commons.string.ToStringGenerator;
 @ThreadSafe
 public class FileLongIDFactory extends AbstractPersistingLongIDFactory
 {
+  /** The charset to use for writing the file */
   @Nonnull
   public static final Charset CHARSET_TO_USE = CCharset.CHARSET_ISO_8859_1_OBJ;
+  /** The default number of values to reserve with a single IO action */
   @Nonnegative
   public static final int DEFAULT_RESERVE_COUNT = 20;
 

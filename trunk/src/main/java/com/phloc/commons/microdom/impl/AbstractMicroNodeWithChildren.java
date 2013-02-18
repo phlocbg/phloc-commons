@@ -36,6 +36,7 @@ import com.phloc.commons.microdom.MicroException;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
+import com.phloc.commons.typeconvert.TypeConverter;
 
 /**
  * Basic implementation class for the micro document object model. It overrides
@@ -43,7 +44,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author philip
  */
-abstract class AbstractMicroNodeWithChildren extends AbstractMicroNode
+abstract class AbstractMicroNodeWithChildren extends AbstractMicroNode implements IMicroNodeWithChildren
 {
   /** The list of child elements. May be <code>null</code>. */
   private List <IMicroNode> m_aChildren;
@@ -56,6 +57,7 @@ abstract class AbstractMicroNodeWithChildren extends AbstractMicroNode
   @ReturnsMutableObject (reason = "efficient access")
   final List <IMicroNode> directGetChildren ()
   {
+    // ESCA-JAVA0259:
     return m_aChildren;
   }
 
@@ -241,6 +243,7 @@ abstract class AbstractMicroNodeWithChildren extends AbstractMicroNode
     return ret;
   }
 
+  @Override
   @Nullable
   public String getTextContent ()
   {
@@ -271,6 +274,22 @@ abstract class AbstractMicroNodeWithChildren extends AbstractMicroNode
     return aSB.toString ();
   }
 
+  @Override
+  @Nullable
+  public <DSTTYPE> DSTTYPE getTextContentWithConversion (@Nonnull final Class <DSTTYPE> aDstClass)
+  {
+    // Get the regular content
+    final String sTextContent = getTextContent ();
+
+    // Avoid having a conversion issue with empty strings!
+    if (StringHelper.hasNoText (sTextContent))
+      return null;
+
+    final DSTTYPE ret = TypeConverter.convertIfNecessary (sTextContent, aDstClass);
+    return ret;
+  }
+
+  @Override
   @OverridingMethodsMustInvokeSuper
   public boolean isEqualContent (@Nullable final IMicroNode o)
   {

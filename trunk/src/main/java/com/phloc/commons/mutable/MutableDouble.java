@@ -20,6 +20,7 @@ package com.phloc.commons.mutable;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.CDefault;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.EChange;
@@ -34,7 +35,8 @@ import com.phloc.commons.string.ToStringGenerator;
 @NotThreadSafe
 public final class MutableDouble extends Number implements IMutableNumeric <MutableDouble>
 {
-  public static final double DEFAULT_VALUE = 0;
+  /** The default value if the default constructor is used. */
+  public static final double DEFAULT_VALUE = CDefault.DEFAULT_DOUBLE;
 
   private double m_dValue;
 
@@ -121,41 +123,49 @@ public final class MutableDouble extends Number implements IMutableNumeric <Muta
     return EChange.CHANGED;
   }
 
+  @Override
   public boolean is0 ()
   {
     return EqualsUtils.equals (m_dValue, 0);
   }
 
+  @Override
   public boolean isNot0 ()
   {
     return !is0 ();
   }
 
+  @Override
   public boolean isSmaller0 ()
   {
     return Double.compare (m_dValue, 0) < 0;
   }
 
+  @Override
   public boolean isSmallerOrEqual0 ()
   {
     return Double.compare (m_dValue, 0) <= 0;
   }
 
+  @Override
   public boolean isGreater0 ()
   {
     return Double.compare (m_dValue, 0) > 0;
   }
 
+  @Override
   public boolean isGreaterOrEqual0 ()
   {
     return Double.compare (m_dValue, 0) >= 0;
   }
 
+  @Override
   public int compareTo (final MutableDouble rhs)
   {
     return Double.compare (m_dValue, rhs.m_dValue);
   }
 
+  @Override
   @Nonnull
   public MutableDouble getClone ()
   {

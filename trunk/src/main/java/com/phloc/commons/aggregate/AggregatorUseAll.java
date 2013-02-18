@@ -29,6 +29,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * Always use the complete list of results.
  * 
  * @author philip
+ * @param <DATATYPE> The data type to aggregate
  */
 @Immutable
 public class AggregatorUseAll <DATATYPE> implements IAggregator <DATATYPE, Collection <DATATYPE>>

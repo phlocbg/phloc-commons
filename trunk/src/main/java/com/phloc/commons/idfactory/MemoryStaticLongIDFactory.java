@@ -34,12 +34,14 @@ import com.phloc.commons.string.ToStringGenerator;
 @ThreadSafe
 public final class MemoryStaticLongIDFactory implements ILongIDFactory
 {
+  /** The default start ID to use. */
   public static final long INITIAL_ID = 10000L;
   private static final AtomicLong s_aID = new AtomicLong (INITIAL_ID);
 
   public MemoryStaticLongIDFactory ()
   {}
 
+  @Override
   @Nonnegative
   public long getNewID ()
   {

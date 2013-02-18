@@ -42,11 +42,17 @@ import com.phloc.commons.string.ToStringGenerator;
 @NotThreadSafe
 public final class SizeHelper
 {
+  /** Suffix for Bytes */
   public static final String B_SUFFIX = "B";
+  /** Suffix for Kilobytes */
   public static final String KB_SUFFIX = "KB";
+  /** Suffix for Megabytes */
   public static final String MB_SUFFIX = "MB";
+  /** Suffix for Gigabytes */
   public static final String GB_SUFFIX = "GB";
+  /** Suffix for Terabytes */
   public static final String TB_SUFFIX = "TB";
+  /** Suffix for Petabytes */
   public static final String PB_SUFFIX = "PB";
 
   private final DecimalFormat m_aDF0;

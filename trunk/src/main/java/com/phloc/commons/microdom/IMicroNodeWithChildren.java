@@ -38,8 +38,24 @@ public interface IMicroNodeWithChildren extends IMicroNode
   String getTextContent ();
 
   /**
+   * Get the concatenated text content of all direct {@link IMicroText} child
+   * nodes of this element. The value is converted via the
+   * {@link com.phloc.commons.typeconvert.TypeConverter} to the desired
+   * destination class.
+   * 
+   * @param <DSTTYPE>
+   *        The destination type to convert the String textContent to.
+   * @param aDstClass
+   *        The destination class to which the text content should be converted.
+   * @return <code>null</code> if the element contains no text node as child
+   */
+  @Nullable
+  <DSTTYPE> DSTTYPE getTextContentWithConversion (@Nonnull Class <DSTTYPE> aDstClass);
+
+  /**
    * {@inheritDoc}
    */
+  @Override
   @Nonnull
   IMicroNodeWithChildren getClone ();
 }

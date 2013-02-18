@@ -41,10 +41,17 @@ import com.phloc.commons.state.ETopBottom;
 import com.phloc.commons.state.ETriState;
 import com.phloc.commons.state.EValidity;
 
+/**
+ * Implementation of {@link IMicroTypeConverterRegistrarSPI} for basic types
+ * like Boolean, Byte, Integer, AtomicInteger etc.
+ * 
+ * @author philip
+ */
 @Immutable
 @IsSPIImplementation
 public final class BasicMicroTypeConverterRegistrar implements IMicroTypeConverterRegistrarSPI
 {
+  @Override
   public void registerMicroTypeConverter (@Nonnull final IMicroTypeConverterRegistry aRegistry)
   {
     // String converter

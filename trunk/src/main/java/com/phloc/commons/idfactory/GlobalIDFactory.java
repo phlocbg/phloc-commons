@@ -41,6 +41,7 @@ import com.phloc.commons.state.EChange;
 @ThreadSafe
 public final class GlobalIDFactory
 {
+  /** The default prefix to use for creating IDs */
   public static final String DEFAULT_PREFIX = "id";
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (GlobalIDFactory.class);

@@ -60,6 +60,9 @@ public final class CCharset
   @Nonnull
   public static final Charset CHARSET_ISO_8859_1_OBJ = CharsetManager.getCharsetFromName (CHARSET_ISO_8859_1);
 
+  /**
+   * The Windows 1252 charset name.
+   */
   @Nonnull
   public static final String CHARSET_WINDOWS_1252 = "windows-1252";
 

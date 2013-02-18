@@ -52,6 +52,12 @@ public class ConcurrentCollectorSingle <DATATYPE> extends AbstractConcurrentColl
   /**
    * Constructor that uses {@link #DEFAULT_MAX_QUEUE_SIZE} elements as the
    * maximum queue length.
+   * 
+   * @param aPerformer
+   *        The callback to be invoked everytime objects are collected. May be
+   *        <code>null</code> but in that case
+   *        {@link #setPerformer(IThrowingRunnableWithParameter)} must be
+   *        invoked!
    */
   public ConcurrentCollectorSingle (@Nullable final IThrowingRunnableWithParameter <DATATYPE> aPerformer)
   {
@@ -64,6 +70,11 @@ public class ConcurrentCollectorSingle <DATATYPE> extends AbstractConcurrentColl
    * @param nMaxQueueSize
    *        The maximum number of items that can be in the queue. Must be &gt;
    *        0.
+   * @param aPerformer
+   *        The callback to be invoked everytime objects are collected. May be
+   *        <code>null</code> but in that case
+   *        {@link #setPerformer(IThrowingRunnableWithParameter)} must be
+   *        invoked!
    */
   public ConcurrentCollectorSingle (@Nonnegative final int nMaxQueueSize,
                                     @Nullable final IThrowingRunnableWithParameter <DATATYPE> aPerformer)
@@ -94,6 +105,7 @@ public class ConcurrentCollectorSingle <DATATYPE> extends AbstractConcurrentColl
     }
   }
 
+  @Override
   public final void run ()
   {
     if (m_aPerformer == null)

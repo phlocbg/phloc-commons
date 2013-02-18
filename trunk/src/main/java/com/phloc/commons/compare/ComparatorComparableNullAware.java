@@ -32,6 +32,7 @@ import javax.annotation.Nullable;
 public class ComparatorComparableNullAware <DATATYPE extends Comparable <? super DATATYPE>> extends
                                                                                             AbstractComparator <DATATYPE>
 {
+  /** Default value wether <code>null</code> values come first or last */
   public static final boolean DEFAULT_NULL_VALUES_COME_FIRST = CompareUtils.DEFAULT_NULL_VALUES_COME_FIRST;
 
   private boolean m_bNullValuesComeFirst = DEFAULT_NULL_VALUES_COME_FIRST;

@@ -110,6 +110,8 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
    * we're manually retrieving the previous and next sibling by their index in
    * the list.
    * 
+   * @param aXMLWriter
+   *        The XML writer to use. May not be <code>null</code>.
    * @param aChildren
    *        The node list to be serialized. May not be <code>null</code>.
    */
@@ -274,6 +276,7 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
     }
   }
 
+  @Override
   public void write (@Nonnull final IMicroNode aNode, @Nonnull @WillNotClose final Writer aWriter)
   {
     final IXMLIterationHandler aXMLWriter = new XMLEmitterPhloc (aWriter, m_aSettings);

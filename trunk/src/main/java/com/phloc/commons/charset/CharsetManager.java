@@ -229,6 +229,12 @@ public final class CharsetManager
     return nCount;
   }
 
+  @Nonnegative
+  public static int getUTF8ByteCount (final char c)
+  {
+    return getUTF8ByteCount ((int) c);
+  }
+
   /**
    * Get the number of bytes necessary to represent the passed character.
    * 

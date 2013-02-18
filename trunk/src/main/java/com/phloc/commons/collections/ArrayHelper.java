@@ -1623,6 +1623,12 @@ public final class ArrayHelper
    * 
    * @param aArray
    *        The array to be copied.
+   * @param nStartIndex
+   *        The index where the copying should start. Must be &gt;= 0!
+   * @param nLength
+   *        The number of elements to be copied into the new array. May not be
+   *        &lt; 0. If the passed number of elements exceeds the number of
+   *        elements in the array, an exception is thrown.
    * @return <code>null</code> if the passed array is <code>null</code> - a non-
    *         <code>null</code> copy otherwise.
    */

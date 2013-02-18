@@ -61,6 +61,8 @@ public final class FilenameHelper
 
   /** The Unix path separator character. */
   public static final char UNIX_SEPARATOR = '/';
+
+  /** The Unix path separator string. */
   public static final String UNIX_SEPARATOR_STR = Character.toString (UNIX_SEPARATOR);
 
   /** The Windows separator character. */
@@ -106,7 +108,7 @@ public final class FilenameHelper
 
   static
   {
-    if (ILLEGAL_FILENAME_CHAR_REPLACEMENT < 0x20 || ILLEGAL_FILENAME_CHAR_REPLACEMENT >= 0x80)
+    if (!isSecureFilenameCharacter (ILLEGAL_FILENAME_CHAR_REPLACEMENT))
       throw new InitializationException ("The illegal filename replacement character must be a valid ASCII character!");
   }
 
@@ -584,6 +586,19 @@ public final class FilenameHelper
   }
 
   /**
+   * Check if the passed character is secure to be used in filenames. Therefore
+   * it must be &ge; 0x20 and &lt; 0x80.
+   * 
+   * @param c
+   *        The character to check
+   * @return <code>true</code> if it is valid, <code>false</code> if not
+   */
+  public static boolean isSecureFilenameCharacter (final char c)
+  {
+    return c >= 0x20 && c < 0x80;
+  }
+
+  /**
    * Replace all non-ASCII characters from the filename (e.g. German Umlauts)
    * with underscores. Before replacing non-ASCII characters the filename is
    * made valid using {@link #getAsSecureValidFilename(String)}.
@@ -606,7 +621,7 @@ public final class FilenameHelper
     // Start replacing all non-ASCII characters with '_'
     final StringBuilder ret = new StringBuilder (sValid.length ());
     for (final char c : sValid.toCharArray ())
-      if (c >= 0x20 && c < 0x80)
+      if (isSecureFilenameCharacter (c))
         ret.append (c);
       else
         ret.append (ILLEGAL_FILENAME_CHAR_REPLACEMENT);

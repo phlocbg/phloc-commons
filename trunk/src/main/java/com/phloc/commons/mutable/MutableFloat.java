@@ -20,6 +20,7 @@ package com.phloc.commons.mutable;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.CDefault;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.EChange;
@@ -34,7 +35,8 @@ import com.phloc.commons.string.ToStringGenerator;
 @NotThreadSafe
 public final class MutableFloat extends Number implements IMutableNumeric <MutableFloat>
 {
-  public static final float DEFAULT_VALUE = 0.0f;
+  /** The default value if the default constructor is used. */
+  public static final float DEFAULT_VALUE = CDefault.DEFAULT_FLOAT;
 
   private float m_fValue;
 
@@ -121,41 +123,49 @@ public final class MutableFloat extends Number implements IMutableNumeric <Mutab
     return EChange.CHANGED;
   }
 
+  @Override
   public boolean is0 ()
   {
     return EqualsUtils.equals (m_fValue, 0f);
   }
 
+  @Override
   public boolean isNot0 ()
   {
     return !is0 ();
   }
 
+  @Override
   public boolean isSmaller0 ()
   {
     return Double.compare (m_fValue, 0f) < 0;
   }
 
+  @Override
   public boolean isSmallerOrEqual0 ()
   {
     return Double.compare (m_fValue, 0f) <= 0;
   }
 
+  @Override
   public boolean isGreater0 ()
   {
     return Double.compare (m_fValue, 0f) > 0;
   }
 
+  @Override
   public boolean isGreaterOrEqual0 ()
   {
     return Double.compare (m_fValue, 0f) >= 0;
   }
 
+  @Override
   public int compareTo (final MutableFloat rhs)
   {
     return Double.compare (m_fValue, rhs.m_fValue);
   }
 
+  @Override
   @Nonnull
   public MutableFloat getClone ()
   {

@@ -26,6 +26,14 @@ import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.lang.GenericReflection;
 import com.phloc.commons.string.ToStringGenerator;
 
+/**
+ * Implementation of {@link IFactory} that always creates a new instance via
+ * reflection
+ * 
+ * @author philip
+ * @param <DATATYPE>
+ *        The return type of the factory
+ */
 public final class FactoryNewInstance <DATATYPE> implements IFactory <DATATYPE>
 {
   private final Class <? extends DATATYPE> m_aClass;
@@ -39,6 +47,7 @@ public final class FactoryNewInstance <DATATYPE> implements IFactory <DATATYPE>
     m_aClass = aClass;
   }
 
+  @Override
   @Nullable
   public DATATYPE create ()
   {

@@ -20,6 +20,7 @@ package com.phloc.commons.mutable;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.CDefault;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
@@ -33,7 +34,8 @@ import com.phloc.commons.string.ToStringGenerator;
 @NotThreadSafe
 public final class MutableChar extends Number implements IMutableInteger <MutableChar>
 {
-  public static final char DEFAULT_VALUE = 0;
+  /** The default value if the default constructor is used. */
+  public static final char DEFAULT_VALUE = CDefault.DEFAULT_CHAR;
 
   private char m_cValue;
 
@@ -155,51 +157,61 @@ public final class MutableChar extends Number implements IMutableInteger <Mutabl
     return EChange.CHANGED;
   }
 
+  @Override
   public boolean is0 ()
   {
     return m_cValue == 0;
   }
 
+  @Override
   public boolean isNot0 ()
   {
     return m_cValue != 0;
   }
 
+  @Override
   public boolean isSmaller0 ()
   {
     return m_cValue < 0;
   }
 
+  @Override
   public boolean isSmallerOrEqual0 ()
   {
     return m_cValue <= 0;
   }
 
+  @Override
   public boolean isGreater0 ()
   {
     return m_cValue > 0;
   }
 
+  @Override
   public boolean isGreaterOrEqual0 ()
   {
     return m_cValue >= 0;
   }
 
+  @Override
   public boolean isEven ()
   {
     return (m_cValue % 2) == 0;
   }
 
+  @Override
   public boolean isOdd ()
   {
     return (m_cValue % 2) != 0;
   }
 
+  @Override
   public int compareTo (final MutableChar rhs)
   {
     return m_cValue == rhs.m_cValue ? 0 : m_cValue < rhs.m_cValue ? -1 : +1;
   }
 
+  @Override
   @Nonnull
   public MutableChar getClone ()
   {

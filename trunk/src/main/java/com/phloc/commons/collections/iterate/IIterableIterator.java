@@ -30,8 +30,11 @@ import java.util.Iterator;
 public interface IIterableIterator <ELEMENTTYPE> extends Iterable <ELEMENTTYPE>, Iterator <ELEMENTTYPE>
 {
   /**
-   * {@inheritDoc} No constraint whether the element can be <code>null</code> or
-   * non-<code>null</code>.
+   * {@inheritDoc}
+   * 
+   * @return The next element. No constraint whether the element can be
+   *         <code>null</code> or non-<code>null</code>.
    */
+  @Override
   ELEMENTTYPE next ();
 }

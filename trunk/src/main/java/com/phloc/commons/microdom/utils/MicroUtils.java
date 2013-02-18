@@ -47,6 +47,11 @@ import com.phloc.commons.microdom.impl.MicroText;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+/**
+ * Some utility methods on micro nodes.
+ * 
+ * @author philip
+ */
 @Immutable
 public final class MicroUtils
 {

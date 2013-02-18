@@ -19,6 +19,11 @@ package com.phloc.commons.equals;
 
 import javax.annotation.Nonnull;
 
+/**
+ * Base interface for a registry that contains equals implementations.
+ * 
+ * @author philip
+ */
 public interface IEqualsImplementationRegistry
 {
   /**

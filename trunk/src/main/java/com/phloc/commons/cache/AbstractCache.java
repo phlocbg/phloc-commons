@@ -38,10 +38,21 @@ import com.phloc.commons.stats.StatisticsManager;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
+/**
+ * Abstract base implementation of {@link ISimpleCache}
+ * 
+ * @author philip
+ * @param <KEYTYPE>
+ *        The cache key type
+ * @param <VALUETYPE>
+ *        The cache value type
+ */
 @NotThreadSafe
 public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache <KEYTYPE, VALUETYPE>
 {
+  /** By default JMS is disabled */
   public static final boolean DEFAULT_JMX_ENABLED = false;
+  /** The prefix to be used for statistics elements */
   public static final String STATISTICS_PREFIX = "cache:";
 
   private static final AtomicBoolean s_aJMXEnabled = new AtomicBoolean (DEFAULT_JMX_ENABLED);
@@ -76,6 +87,7 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
     s_aJMXEnabled.set (bEnabled);
   }
 
+  @Override
   @Nonnull
   @Nonempty
   public final String getName ()
@@ -129,6 +141,7 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
     return m_aCache == null ? null : m_aCache.get (aKey);
   }
 
+  @Override
   @Nullable
   @OverridingMethodsMustInvokeSuper
   public VALUETYPE getFromCache (@Nullable final KEYTYPE aKey)
@@ -141,6 +154,7 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
     return aValue;
   }
 
+  @Override
   @Nonnull
   @OverridingMethodsMustInvokeSuper
   public EChange removeFromCache (@Nullable final KEYTYPE aKey)
@@ -151,6 +165,7 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
     return EChange.CHANGED;
   }
 
+  @Override
   @Nonnull
   @OverridingMethodsMustInvokeSuper
   public EChange clearCache ()
@@ -163,12 +178,14 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
     return EChange.CHANGED;
   }
 
+  @Override
   @Nonnegative
   public int size ()
   {
     return ContainerHelper.getSize (m_aCache);
   }
 
+  @Override
   public boolean isEmpty ()
   {
     return ContainerHelper.isEmpty (m_aCache);

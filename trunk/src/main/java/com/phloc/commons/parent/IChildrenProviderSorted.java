@@ -44,6 +44,7 @@ public interface IChildrenProviderSorted <CHILDTYPE> extends IChildrenProvider <
    *         <code>null</code> if the call to {@link #hasChildren(Object)} with
    *         the same object returned <code>true</code>.
    */
+  @Override
   @Nullable
   List <? extends CHILDTYPE> getChildren (@Nullable CHILDTYPE aCurrent);
 
@@ -55,6 +56,8 @@ public interface IChildrenProviderSorted <CHILDTYPE> extends IChildrenProvider <
    * @param aCurrent
    *        The object to get the child of. May be <code>null</code> depending
    *        on the concrete implementation.
+   * @param nIndex
+   *        The index to retrieve the child at.
    * @return The child at the specified index. May not be &lt; 0.
    * @throws IndexOutOfBoundsException
    *         in case the specified index is invalid.

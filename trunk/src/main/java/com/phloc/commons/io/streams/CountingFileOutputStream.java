@@ -39,6 +39,7 @@ import com.phloc.commons.string.ToStringGenerator;
  */
 public class CountingFileOutputStream extends FileOutputStream
 {
+  /** By default append is enabled */
   public static final EAppend DEFAULT_APPEND = EAppend.DEFAULT;
   private static final IStatisticsHandlerSize s_aWriteSizeHdl = StatisticsManager.getSizeHandler (CountingFileOutputStream.class.getName () +
                                                                                                   "$write.bytes");

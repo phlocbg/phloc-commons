@@ -38,6 +38,11 @@ import com.phloc.commons.lang.ClassHierarchyCache;
 import com.phloc.commons.lang.ServiceLoaderBackport;
 import com.phloc.commons.state.EChange;
 
+/**
+ * The default implementation of {@link IEqualsImplementationRegistry}.
+ * 
+ * @author philip
+ */
 @ThreadSafe
 public final class EqualsImplementationRegistry implements IEqualsImplementationRegistry
 {
@@ -46,6 +51,7 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
     public ArrayEqualsImplementation ()
     {}
 
+    @Override
     public boolean areEqual (final Object aObj1, final Object aObj2)
     {
       final Object [] aArray1 = (Object []) aObj1;
@@ -89,6 +95,7 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
     return s_aInstance;
   }
 
+  @Override
   public void registerEqualsImplementation (@Nonnull final Class <?> aClass, @Nonnull final IEqualsImplementation aImpl)
   {
     if (aClass == null)

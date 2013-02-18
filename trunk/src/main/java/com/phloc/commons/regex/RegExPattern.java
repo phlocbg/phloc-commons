@@ -88,13 +88,13 @@ public final class RegExPattern
     }
   }
 
-  public RegExPattern (@Nonnull @Nonempty @RegEx final String sRegEx)
+  public RegExPattern (@Nonnull @Nonempty @RegEx final String sRegEx) throws IllegalArgumentException
   {
     // Default: no options
     this (sRegEx, 0);
   }
 
-  public RegExPattern (@Nonnull @Nonempty @RegEx final String sRegEx, @Nonnegative final int nOptions)
+  public RegExPattern (@Nonnull @Nonempty @RegEx final String sRegEx, @Nonnegative final int nOptions) throws IllegalArgumentException
   {
     if (StringHelper.hasNoText (sRegEx))
       throw new IllegalArgumentException ("regEx is empty");

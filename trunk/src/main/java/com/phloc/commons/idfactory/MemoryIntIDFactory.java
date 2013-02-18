@@ -33,6 +33,7 @@ import com.phloc.commons.string.ToStringGenerator;
 @ThreadSafe
 public final class MemoryIntIDFactory implements IIntIDFactory
 {
+  /** The default start ID to use. */
   @Nonnegative
   public static final int DEFAULT_START_ID = 10000;
 
@@ -52,6 +53,7 @@ public final class MemoryIntIDFactory implements IIntIDFactory
     m_aID = new AtomicInteger (nStartID);
   }
 
+  @Override
   @Nonnegative
   public int getNewID ()
   {

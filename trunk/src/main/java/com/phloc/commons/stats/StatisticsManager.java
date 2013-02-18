@@ -42,6 +42,7 @@ import com.phloc.commons.string.StringHelper;
 @ThreadSafe
 public final class StatisticsManager
 {
+  /** By default JMX is disabled */
   public static final boolean DEFAULT_JMX_ENABLED = false;
 
   private static final AtomicBoolean s_aJMXEnabled = new AtomicBoolean (DEFAULT_JMX_ENABLED);

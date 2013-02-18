@@ -72,12 +72,14 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
         throw new IllegalArgumentException ("The passed element name '" + m_sTagName + "' is not a valid element name!");
   }
 
+  @Override
   @Nonnull
   public EMicroNodeType getType ()
   {
     return EMicroNodeType.ELEMENT;
   }
 
+  @Override
   @Nonnull
   @Nonempty
   public String getNodeName ()
@@ -85,11 +87,13 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return m_sTagName;
   }
 
+  @Override
   public boolean hasAttributes ()
   {
     return m_aAttrs != null && !m_aAttrs.isEmpty ();
   }
 
+  @Override
   @Nullable
   @ReturnsMutableCopy
   public Map <String, String> getAttributes ()
@@ -97,12 +101,14 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return hasAttributes () ? ContainerHelper.newOrderedMap (m_aAttrs) : null;
   }
 
+  @Override
   @Nullable
   public String getAttribute (@Nullable final String sAttrName)
   {
     return m_aAttrs == null ? null : m_aAttrs.get (sAttrName);
   }
 
+  @Override
   @Nullable
   public <DSTTYPE> DSTTYPE getAttributeWithConversion (@Nullable final String sAttrName,
                                                        @Nonnull final Class <DSTTYPE> aDstClass)
@@ -116,17 +122,20 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return ret;
   }
 
+  @Override
   public boolean hasAttribute (@Nullable final String sAttrName)
   {
     return m_aAttrs != null && m_aAttrs.containsKey (sAttrName);
   }
 
+  @Override
   @Nonnull
   public EChange removeAttribute (@Nullable final String sAttrName)
   {
     return EChange.valueOf (m_aAttrs != null && m_aAttrs.remove (sAttrName) != null);
   }
 
+  @Override
   @Nonnull
   public IMicroElement setAttribute (@Nonnull @Nonempty final String sAttrName, @Nullable final String sAttrValue)
   {
@@ -164,18 +173,21 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return this;
   }
 
+  @Override
   @Nonnull
   public IMicroElement setAttribute (@Nonnull final String sAttrName, final int nAttrValue)
   {
     return setAttribute (sAttrName, Integer.toString (nAttrValue));
   }
 
+  @Override
   @Nonnull
   public IMicroElement setAttribute (@Nonnull final String sAttrName, final long nAttrValue)
   {
     return setAttribute (sAttrName, Long.toString (nAttrValue));
   }
 
+  @Override
   @Nonnull
   public IMicroElement setAttributeWithConversion (@Nonnull final String sAttrName, @Nullable final Object aAttrValue)
   {
@@ -183,6 +195,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return setAttribute (sAttrName, sValue);
   }
 
+  @Override
   @Nonnull
   public EChange removeAllAttributes ()
   {
@@ -192,17 +205,20 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return EChange.CHANGED;
   }
 
+  @Override
   @Nullable
   public String getNamespaceURI ()
   {
     return m_sNamespaceURI;
   }
 
+  @Override
   public boolean hasNamespaceURI (@Nullable final String sNamespaceURI)
   {
     return EqualsUtils.equals (m_sNamespaceURI, sNamespaceURI);
   }
 
+  @Override
   @Nonnull
   public EChange setNamespaceURI (@Nullable final String sNamespaceURI)
   {
@@ -212,18 +228,21 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return EChange.CHANGED;
   }
 
+  @Override
   @Nullable
   public String getLocalName ()
   {
     return m_sNamespaceURI == null ? null : m_sTagName;
   }
 
+  @Override
   @Nonnull
   public String getTagName ()
   {
     return m_sTagName;
   }
 
+  @Override
   @Nonnull
   @ReturnsMutableCopy
   public List <IMicroElement> getChildElements ()
@@ -247,6 +266,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return ret;
   }
 
+  @Override
   @Nonnull
   @ReturnsMutableCopy
   public List <IMicroElement> getChildElements (@Nullable final String sTagName)
@@ -275,6 +295,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return ret;
   }
 
+  @Override
   @Nonnull
   @ReturnsMutableCopy
   public List <IMicroElement> getChildElements (@Nullable final String sNamespaceURI, @Nullable final String sLocalName)
@@ -306,6 +327,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return ret;
   }
 
+  @Override
   @Nonnull
   @ReturnsMutableCopy
   public List <IMicroElement> getAllChildElementsRecursive ()
@@ -333,6 +355,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return ret;
   }
 
+  @Override
   public boolean hasChildElements ()
   {
     if (hasChildren ())
@@ -351,6 +374,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return false;
   }
 
+  @Override
   public boolean hasChildElements (@Nullable final String sTagName)
   {
     if (hasChildren ())
@@ -373,6 +397,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return false;
   }
 
+  @Override
   public boolean hasChildElements (@Nullable final String sNamespaceURI, @Nullable final String sLocalName)
   {
     if (StringHelper.hasNoText (sNamespaceURI))
@@ -401,6 +426,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return false;
   }
 
+  @Override
   @Nullable
   public IMicroElement getFirstChildElement ()
   {
@@ -418,6 +444,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return null;
   }
 
+  @Override
   @Nullable
   public IMicroElement getFirstChildElement (@Nullable final String sTagName)
   {
@@ -443,6 +470,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return null;
   }
 
+  @Override
   @Nullable
   public IMicroElement getFirstChildElement (@Nullable final String sNamespaceURI, @Nullable final String sLocalName)
   {
@@ -472,19 +500,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return null;
   }
 
-  @Nullable
-  public <DSTTYPE> DSTTYPE getTextContentWithConversion (@Nonnull final Class <DSTTYPE> aDstClass)
-  {
-    // Get the regular content
-    final String sTextContent = getTextContent ();
-
-    // Avoid having a conversion issue with empty strings!
-    if (StringHelper.hasNoText (sTextContent))
-      return null;
-    final DSTTYPE ret = TypeConverter.convertIfNecessary (sTextContent, aDstClass);
-    return ret;
-  }
-
+  @Override
   @Nonnull
   public IMicroElement getClone ()
   {

@@ -23,6 +23,13 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
+/**
+ * Implementation if {@link IAggregatorFactory} with a constant instance
+ * @author philip
+ *
+ * @param <SRCTYPE> Aggregator source type
+ * @param <DSTTYPE> Aggregator destination type
+ */
 @NotThreadSafe
 public final class AggregatorFactoryConst <SRCTYPE, DSTTYPE> implements IAggregatorFactory <SRCTYPE, DSTTYPE>
 {

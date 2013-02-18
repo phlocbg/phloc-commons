@@ -29,6 +29,11 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.state.ESuccess;
 
+/**
+ * Some generic JMX utility classes
+ * 
+ * @author philip
+ */
 @Immutable
 public final class JMXUtils
 {

@@ -31,6 +31,7 @@ public enum ESortOrder implements ISortOrderIndicator
   ASCENDING (1),
   DESCENDING (0);
 
+  /** The default sort order is {@link #ASCENDING} */
   public static final ESortOrder DEFAULT = ASCENDING;
 
   private final int m_nValue;
@@ -57,11 +58,13 @@ public enum ESortOrder implements ISortOrderIndicator
     return Integer.toString (m_nValue);
   }
 
+  @Override
   public boolean isAscending ()
   {
     return this == ASCENDING;
   }
 
+  @Override
   public boolean isDescending ()
   {
     return this == DESCENDING;
