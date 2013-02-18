@@ -33,6 +33,7 @@ import com.phloc.commons.string.ToStringGenerator;
 @NotThreadSafe
 public final class StopWatch implements IStoppable
 {
+  /** By default the stop watch is not started automatically */
   public static final boolean DEFAULT_START = false;
 
   private long m_nStartDT;
@@ -94,6 +95,7 @@ public final class StopWatch implements IStoppable
    *         and is now stopped, and {@link EChange#UNCHANGED} if the stop watch
    *         was already stopped.
    */
+  @Override
   @Nonnull
   public EChange stop ()
   {

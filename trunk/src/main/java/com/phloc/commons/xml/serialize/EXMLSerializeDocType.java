@@ -42,6 +42,7 @@ public enum EXMLSerializeDocType implements IHasID <String>
     m_sID = sID;
   }
 
+  @Override
   @Nonnull
   @Nonempty
   public String getID ()
@@ -49,7 +50,20 @@ public enum EXMLSerializeDocType implements IHasID <String>
     return m_sID;
   }
 
+  /**
+   * @return <code>true</code> it emit is enabled
+   * @deprecated Use {@link #isEmit()} instead
+   */
+  @Deprecated
   public boolean emit ()
+  {
+    return isEmit ();
+  }
+
+  /**
+   * @return <code>true</code> it emit is enabled
+   */
+  public boolean isEmit ()
   {
     return this == EMIT;
   }

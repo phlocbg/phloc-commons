@@ -23,6 +23,11 @@ import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.io.streams.StreamUtils;
 
+/**
+ * Decoder for run length encoding
+ * 
+ * @author philip
+ */
 public class RunLengthCodec implements IByteArrayDecoder
 {
   private static final int RUN_LENGTH_EOD = 128;
@@ -30,6 +35,7 @@ public class RunLengthCodec implements IByteArrayDecoder
   public RunLengthCodec ()
   {}
 
+  @Override
   @Nullable
   public byte [] decode (@Nullable final byte [] aEncodedBuffer)
   {

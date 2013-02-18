@@ -37,6 +37,11 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.exceptions.InitializationException;
 import com.phloc.commons.io.IReadableResource;
 
+/**
+ * A global factory for XML transformation objects.
+ * 
+ * @author philip
+ */
 @Immutable
 public final class XMLTransformerFactory
 {

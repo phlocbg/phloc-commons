@@ -25,6 +25,7 @@ import javax.annotation.Nonnull;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+// ESCA-JAVA0143:
 /**
  * A non-synchronized copy of the class {@link java.io.ByteArrayInputStream}.
  * 
@@ -216,6 +217,8 @@ public class NonBlockingByteArrayInputStream extends InputStream implements Seri
    * Tests if this <code>InputStream</code> supports mark/reset. The
    * <code>markSupported</code> method of <code>ByteArrayInputStream</code>
    * always returns <code>true</code>.
+   * 
+   * @return Always true
    */
   @Override
   public boolean markSupported ()

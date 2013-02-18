@@ -47,7 +47,9 @@ import com.phloc.commons.xml.EXMLVersion;
 @Immutable
 public final class XMLWriter
 {
+  /** The default XML version to be used */
   public static final EXMLVersion DEFAULT_XML_VERSION = EXMLVersion.DEFAULT;
+  /** By default no XML namespace map is present */
   public static final NamespaceContext DEFAULT_NAMESPACE_CTX = null;
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (XMLWriter.class);
@@ -70,6 +72,7 @@ public final class XMLWriter
    *        The {@link OutputStream} to write to. May not be <code>null</code>.
    *        The {@link OutputStream} is closed anyway directly after the
    *        operation finishes (on success and on error).
+   * @return {@link ESuccess}
    */
   @Nonnull
   public static ESuccess writeToStream (@Nonnull final Node aNode, @Nonnull @WillClose final OutputStream aOS)
@@ -89,6 +92,7 @@ public final class XMLWriter
    *        operation finishes (on success and on error).
    * @param aSettings
    *        The serialization settings to be used. May not be <code>null</code>.
+   * @return {@link ESuccess}
    */
   @Nonnull
   public static ESuccess writeToStream (@Nonnull final Node aNode,
@@ -134,6 +138,7 @@ public final class XMLWriter
    *        The {@link Writer} to write to. May not be <code>null</code>. The
    *        {@link Writer} is closed anyway directly after the operation
    *        finishes (on success and on error).
+   * @return {@link ESuccess}
    */
   @Nonnull
   public static ESuccess writeToWriter (@Nonnull final Node aNode, @Nonnull @WillClose final Writer aWriter)
@@ -153,6 +158,7 @@ public final class XMLWriter
    *        finishes (on success and on error).
    * @param aSettings
    *        The serialization settings to be used. May not be <code>null</code>.
+   * @return {@link ESuccess}
    */
   @Nonnull
   public static ESuccess writeToWriter (@Nonnull final Node aNode,

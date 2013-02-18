@@ -33,6 +33,7 @@ import com.phloc.commons.collections.ArrayHelper;
  * 
  * @author philip
  */
+// ESCA-JAVA0076:
 public enum EUnicodeBOM implements IHasByteSize
 {
   BOM_UTF_8 (new byte [] { (byte) 0xef, (byte) 0xbb, (byte) 0xbf }),
@@ -80,6 +81,7 @@ public enum EUnicodeBOM implements IHasByteSize
   /**
    * @return The number of bytes defining this BOM
    */
+  @Override
   @Nonnegative
   public long getSizeInBytes ()
   {

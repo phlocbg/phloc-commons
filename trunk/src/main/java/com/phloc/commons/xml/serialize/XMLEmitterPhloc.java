@@ -45,6 +45,7 @@ import com.phloc.commons.xml.XMLHelper;
 @NotThreadSafe
 public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
 {
+  /** By default an exception is thrown for nested comments */
   public static final boolean DEFAULT_THROW_EXCEPTION_ON_NESTED_COMMENTS = true;
   private static final String CDATA_START = "<![CDATA[";
   private static final String CDATA_END = "]]>";
@@ -158,6 +159,17 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
     _append (PI_END)._append (CRLF);
   }
 
+  /**
+   * Get the XML representation of a document type.
+   * 
+   * @param eXMLVersion
+   *        The XML version to use. May not be <code>null</code>.
+   * @param eIncorrectCharHandling
+   *        The incorrect character handling. May not be <code>null</code>.
+   * @param aDocType
+   *        The structure document type. May not be <code>null</code>.
+   * @return The string DOCTYPE representation.
+   */
   @Nonnull
   public static String getDocTypeHTMLRepresentation (@Nonnull final EXMLVersion eXMLVersion,
                                                      @Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharHandling,
@@ -173,6 +185,10 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   /**
    * Get the XML representation of a document type.
    * 
+   * @param eXMLVersion
+   *        The XML version to use. May not be <code>null</code>.
+   * @param eIncorrectCharHandling
+   *        The incorrect character handling. May not be <code>null</code>.
    * @param sQualifiedName
    *        The qualified element name. May not be <code>null</code>.
    * @param sPublicID

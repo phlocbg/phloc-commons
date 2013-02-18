@@ -224,6 +224,7 @@ public final class HTMLdtd
    *        The element's tag name
    * @param sAttrName
    *        The attribute's name
+   * @return <code>true</code> if the passed combination is an URI attribute
    */
   public static boolean isURI (@Nonnull final String sTagName, @Nonnull final String sAttrName)
   {
@@ -240,6 +241,7 @@ public final class HTMLdtd
    *        The element's tag name
    * @param sAttrName
    *        The attribute's name
+   * @return <code>true</code> if the passed combination is a boolean value
    */
   public static boolean isBoolean (@Nonnull final String sTagName, @Nonnull final String sAttrName)
   {

@@ -32,6 +32,10 @@ public class DefaultTreeItem <DATATYPE> extends BasicTreeItem <DATATYPE, Default
 {
   /**
    * Constructor for root object.
+   * 
+   * @param aFactory
+   *        The factory to use for creating tree items. May not be
+   *        <code>null</code>.
    */
   public DefaultTreeItem (@Nonnull final ITreeItemFactory <DATATYPE, DefaultTreeItem <DATATYPE>> aFactory)
   {

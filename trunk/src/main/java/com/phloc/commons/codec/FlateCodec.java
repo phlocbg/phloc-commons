@@ -29,6 +29,11 @@ import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.io.streams.StreamUtils;
 
+/**
+ * Encoder and decoder for flate compression
+ * 
+ * @author philip
+ */
 public final class FlateCodec implements ICodec
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (FlateCodec.class);
@@ -51,6 +56,7 @@ public final class FlateCodec implements ICodec
     return false;
   }
 
+  @Override
   @Nullable
   public byte [] decode (@Nullable final byte [] aEncodedBuffer)
   {
@@ -74,6 +80,7 @@ public final class FlateCodec implements ICodec
     }
   }
 
+  @Override
   @Nullable
   public byte [] encode (@Nullable final byte [] aBuffer)
   {

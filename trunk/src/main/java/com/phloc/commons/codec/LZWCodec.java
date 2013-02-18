@@ -36,6 +36,11 @@ import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.string.ToStringGenerator;
 
+/**
+ * A single LZW node
+ * 
+ * @author philip
+ */
 final class LZWNode
 {
   private final int m_nTableIndex;
@@ -110,8 +115,11 @@ final class LZWNode
 abstract class AbstractLZWDictionary
 {
   protected static final Logger s_aLogger = LoggerFactory.getLogger (AbstractLZWDictionary.class);
+  /** Maximum index */
   public static final int MAX_CODE = 4096;
+  /** Special code to clear the table */
   public static final int CODE_CLEARTABLE = 256;
+  /** Special code for end of file */
   public static final int CODE_EOF = 257;
 
   protected byte [][] m_aTab;
@@ -126,7 +134,7 @@ abstract class AbstractLZWDictionary
     m_aTab = new byte [MAX_CODE] [];
     for (int i = 0; i < 256; ++i)
       m_aTab[i] = new byte [] { (byte) i };
-    m_nFreeCode = 258;
+    m_nFreeCode = CODE_EOF + 1;
     m_nCodeBits = 9;
   }
 
@@ -170,6 +178,8 @@ final class LZWDecodeDictionary extends AbstractLZWDictionary
    * @param aBIS
    *        The stream to read from
    * @return The next code
+   * @throws IOException
+   *         In case EOF is reached
    */
   public int readCode (@Nonnull final BitInputStream aBIS) throws IOException
   {
@@ -233,6 +243,11 @@ final class LZWEncodeDictionary extends AbstractLZWDictionary
   }
 }
 
+/**
+ * Encoder and decoder for the LZW algorithm
+ * 
+ * @author philip
+ */
 public class LZWCodec implements ICodec
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (LZWCodec.class);
@@ -240,6 +255,7 @@ public class LZWCodec implements ICodec
   public LZWCodec ()
   {}
 
+  @Override
   @Nullable
   public byte [] decode (@Nullable final byte [] aEncodedBuffer)
   {
@@ -324,6 +340,7 @@ public class LZWCodec implements ICodec
     }
   }
 
+  @Override
   @Nullable
   public byte [] encode (@Nullable final byte [] aBuffer)
   {
@@ -375,6 +392,7 @@ public class LZWCodec implements ICodec
                             ")");
           aBOS.writeBits (AbstractLZWDictionary.CODE_CLEARTABLE, nCodeLength);
           aDict.reset ();
+          // ESCA-JAVA0119:
           nIndex -= aByteSeq.length;
           aByteSeq = new byte [0];
         }

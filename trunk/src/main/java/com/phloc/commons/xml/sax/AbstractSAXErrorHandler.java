@@ -73,6 +73,8 @@ public abstract class AbstractSAXErrorHandler implements ErrorHandler
    * Utility method to convert a {@link SAXParseException} into a readable
    * string.
    * 
+   * @param eErrorLevel
+   *        The occurred error level. May not be <code>null</code>.
    * @param ex
    *        The exception to convert. May not be <code>null</code>.
    * @return The String representation.
@@ -88,6 +90,7 @@ public abstract class AbstractSAXErrorHandler implements ErrorHandler
 
   protected abstract void internalLog (@Nonnull EErrorLevel eErrorLevel, @Nonnull SAXParseException aException);
 
+  @Override
   public final void warning (final SAXParseException ex) throws SAXException
   {
     internalLog (EErrorLevel.WARN, ex);
@@ -97,6 +100,7 @@ public abstract class AbstractSAXErrorHandler implements ErrorHandler
       m_aWrappedErrorHandler.warning (ex);
   }
 
+  @Override
   public final void error (final SAXParseException ex) throws SAXException
   {
     internalLog (EErrorLevel.ERROR, ex);
@@ -106,6 +110,7 @@ public abstract class AbstractSAXErrorHandler implements ErrorHandler
       m_aWrappedErrorHandler.error (ex);
   }
 
+  @Override
   public final void fatalError (final SAXParseException ex) throws SAXException
   {
     internalLog (EErrorLevel.FATAL_ERROR, ex);

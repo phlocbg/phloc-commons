@@ -35,7 +35,7 @@ public final class EXMLSerializeCommentsTest
   {
     for (final EXMLSerializeComments e : EXMLSerializeComments.values ())
       assertSame (e, EXMLSerializeComments.valueOf (e.name ()));
-    assertTrue (EXMLSerializeComments.EMIT.emit ());
-    assertFalse (EXMLSerializeComments.IGNORE.emit ());
+    assertTrue (EXMLSerializeComments.EMIT.isEmit ());
+    assertFalse (EXMLSerializeComments.IGNORE.isEmit ());
   }
 }

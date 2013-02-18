@@ -32,6 +32,12 @@ import com.phloc.commons.stats.IStatisticsHandlerTimer;
 import com.phloc.commons.stats.StatisticsManager;
 import com.phloc.commons.timing.StopWatch;
 
+/**
+ * A dummy main runner with some basic setup. Structured a bit similar to the
+ * Thread class.
+ * 
+ * @author philip
+ */
 public final class MainRunner
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (MainRunner.class);

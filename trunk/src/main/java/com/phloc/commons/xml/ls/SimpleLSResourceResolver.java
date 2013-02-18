@@ -64,9 +64,10 @@ public class SimpleLSResourceResolver implements LSResourceResolver
    * Do the standard resource resolving of sSystemId relative to sBaseURI
    * 
    * @param sSystemId
-   *        The resource to search
+   *        The resource to search. May not be <code>null</code>.
    * @param sBaseURI
-   *        The base URI from where the search is initiated.
+   *        The base URI from where the search is initiated.May not be
+   *        <code>null</code>.
    * @return The non-<code>null</code> resource. May be non-existing!
    * @throws URISyntaxException
    *         In case the conversion from system ID to URL fails
@@ -74,8 +75,9 @@ public class SimpleLSResourceResolver implements LSResourceResolver
    *         In case the file resolution (to an absolute file) fails.
    */
   @Nonnull
-  public static final IReadableResource doStandardResourceResolving (final String sSystemId, final String sBaseURI) throws URISyntaxException,
-                                                                                                                   IOException
+  public static final IReadableResource doStandardResourceResolving (@Nonnull final String sSystemId,
+                                                                     @Nonnull final String sBaseURI) throws URISyntaxException,
+                                                                                                    IOException
   {
     if (s_aLogger.isDebugEnabled ())
       s_aLogger.debug ("Trying to resolve  resource " + sSystemId + " from base " + sBaseURI);
@@ -154,7 +156,7 @@ public class SimpleLSResourceResolver implements LSResourceResolver
 
   @OverrideOnDemand
   @Nullable
-  protected IReadableResource internalResolveResource (final String sSystemId, final String sBaseURI) throws Exception
+  protected IReadableResource internalResolveResource (@Nonnull final String sSystemId, @Nonnull final String sBaseURI) throws Exception
   {
     return doStandardResourceResolving (sSystemId, sBaseURI);
   }
@@ -171,13 +173,15 @@ public class SimpleLSResourceResolver implements LSResourceResolver
    *        resource
    * @param sBaseURI
    *        The systemId of the including resource.
+   * @return <code>null</code> if the resource could not be resolved.
    */
+  @Override
   @Nullable
   public final LSInput resolveResource (final String sType,
                                         final String sNamespaceURI,
                                         final String sPublicId,
-                                        final String sSystemId,
-                                        final String sBaseURI)
+                                        @Nonnull final String sSystemId,
+                                        @Nonnull final String sBaseURI)
   {
     try
     {

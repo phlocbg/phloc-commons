@@ -71,12 +71,14 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
    * <li>StringBuilder</li>
    * </ul>
    */
+  @Override
   public void registerTypeConverter (@Nonnull final ITypeConverterRegistry aRegistry)
   {
     // to Boolean
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAssignableSourceFixedDestination (Number.class,
                                                                                                         Boolean.class)
     {
+      @Override
       public Boolean convert (@Nonnull final Object aSource)
       {
         return Boolean.valueOf (((Number) aSource).intValue () != 0);
@@ -84,6 +86,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverter (Character.class, Boolean.class, new ITypeConverter ()
     {
+      @Override
       public Boolean convert (@Nonnull final Object aSource)
       {
         return Boolean.valueOf (((Character) aSource).charValue () != 0);
@@ -91,6 +94,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (Boolean.class)
     {
+      @Override
       public Boolean convert (@Nonnull final Object aSource)
       {
         return StringParser.parseBoolObj (aSource, (Boolean) null);
@@ -101,6 +105,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAssignableSourceFixedDestination (Number.class,
                                                                                                         Byte.class)
     {
+      @Override
       public Byte convert (@Nonnull final Object aSource)
       {
         return Byte.valueOf (((Number) aSource).byteValue ());
@@ -108,6 +113,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverter (Boolean.class, Byte.class, new ITypeConverter ()
     {
+      @Override
       public Byte convert (@Nonnull final Object aSource)
       {
         return Byte.valueOf (((Boolean) aSource).booleanValue () ? (byte) 1 : (byte) 0);
@@ -115,6 +121,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverter (Character.class, Byte.class, new ITypeConverter ()
     {
+      @Override
       public Byte convert (@Nonnull final Object aSource)
       {
         return Byte.valueOf ((byte) ((Character) aSource).charValue ());
@@ -122,6 +129,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (Byte.class)
     {
+      @Override
       public Byte convert (@Nonnull final Object aSource)
       {
         return StringParser.parseByteObj (aSource, (Byte) null);
@@ -132,6 +140,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAssignableSourceFixedDestination (Number.class,
                                                                                                         Character.class)
     {
+      @Override
       public Character convert (@Nonnull final Object aSource)
       {
         return Character.valueOf ((char) ((Number) aSource).intValue ());
@@ -139,6 +148,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverter (Boolean.class, Character.class, new ITypeConverter ()
     {
+      @Override
       public Character convert (@Nonnull final Object aSource)
       {
         return Character.valueOf (((Boolean) aSource).booleanValue () ? (char) 1 : (char) 0);
@@ -146,6 +156,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (Character.class)
     {
+      @Override
       public Character convert (@Nonnull final Object aSource)
       {
         final String sSource = aSource.toString ();
@@ -157,6 +168,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAssignableSourceFixedDestination (Number.class,
                                                                                                         Double.class)
     {
+      @Override
       public Double convert (@Nonnull final Object aSource)
       {
         return Double.valueOf (((Number) aSource).doubleValue ());
@@ -164,6 +176,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverter (Boolean.class, Double.class, new ITypeConverter ()
     {
+      @Override
       public Double convert (@Nonnull final Object aSource)
       {
         return Double.valueOf (((Boolean) aSource).booleanValue () ? 1d : 0d);
@@ -171,6 +184,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverter (Character.class, Double.class, new ITypeConverter ()
     {
+      @Override
       public Double convert (@Nonnull final Object aSource)
       {
         return Double.valueOf (((Character) aSource).charValue ());
@@ -178,6 +192,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (Double.class)
     {
+      @Override
       public Double convert (@Nonnull final Object aSource)
       {
         return StringParser.parseDoubleObj (aSource, (Double) null);
@@ -188,6 +203,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAssignableSourceFixedDestination (Number.class,
                                                                                                         Float.class)
     {
+      @Override
       public Float convert (@Nonnull final Object aSource)
       {
         return Float.valueOf (((Number) aSource).floatValue ());
@@ -195,6 +211,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverter (Boolean.class, Float.class, new ITypeConverter ()
     {
+      @Override
       public Float convert (@Nonnull final Object aSource)
       {
         return Float.valueOf (((Boolean) aSource).booleanValue () ? 1f : 0f);
@@ -202,6 +219,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverter (Character.class, Float.class, new ITypeConverter ()
     {
+      @Override
       public Float convert (@Nonnull final Object aSource)
       {
         return Float.valueOf (((Character) aSource).charValue ());
@@ -209,6 +227,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (Float.class)
     {
+      @Override
       public Float convert (@Nonnull final Object aSource)
       {
         return StringParser.parseFloatObj (aSource, (Float) null);
@@ -219,6 +238,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAssignableSourceFixedDestination (Number.class,
                                                                                                         Integer.class)
     {
+      @Override
       public Integer convert (@Nonnull final Object aSource)
       {
         return Integer.valueOf (((Number) aSource).intValue ());
@@ -226,6 +246,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverter (Boolean.class, Integer.class, new ITypeConverter ()
     {
+      @Override
       public Integer convert (@Nonnull final Object aSource)
       {
         return Integer.valueOf (((Boolean) aSource).booleanValue () ? 1 : 0);
@@ -233,6 +254,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverter (Character.class, Integer.class, new ITypeConverter ()
     {
+      @Override
       public Integer convert (@Nonnull final Object aSource)
       {
         return Integer.valueOf (((Character) aSource).charValue ());
@@ -240,6 +262,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (Integer.class)
     {
+      @Override
       public Integer convert (@Nonnull final Object aSource)
       {
         return StringParser.parseIntObj (aSource, (Integer) null);
@@ -250,6 +273,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAssignableSourceFixedDestination (Number.class,
                                                                                                         Long.class)
     {
+      @Override
       public Long convert (@Nonnull final Object aSource)
       {
         return Long.valueOf (((Number) aSource).longValue ());
@@ -257,6 +281,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverter (Boolean.class, Long.class, new ITypeConverter ()
     {
+      @Override
       public Long convert (@Nonnull final Object aSource)
       {
         return Long.valueOf (((Boolean) aSource).booleanValue () ? 1L : 0L);
@@ -264,6 +289,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverter (Character.class, Long.class, new ITypeConverter ()
     {
+      @Override
       public Long convert (@Nonnull final Object aSource)
       {
         return Long.valueOf (((Character) aSource).charValue ());
@@ -271,6 +297,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (Long.class)
     {
+      @Override
       public Long convert (@Nonnull final Object aSource)
       {
         return StringParser.parseLongObj (aSource, (Long) null);
@@ -281,6 +308,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAssignableSourceFixedDestination (Number.class,
                                                                                                         Short.class)
     {
+      @Override
       public final Short convert (@Nonnull final Object aSource)
       {
         return Short.valueOf (((Number) aSource).shortValue ());
@@ -288,6 +316,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverter (Boolean.class, Short.class, new ITypeConverter ()
     {
+      @Override
       public Short convert (@Nonnull final Object aSource)
       {
         return Short.valueOf (((Boolean) aSource).booleanValue () ? (short) 1 : (short) 0);
@@ -295,6 +324,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverter (Character.class, Short.class, new ITypeConverter ()
     {
+      @Override
       public Short convert (@Nonnull final Object aSource)
       {
         return Short.valueOf ((short) ((Character) aSource).charValue ());
@@ -302,6 +332,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (Short.class)
     {
+      @Override
       public Short convert (@Nonnull final Object aSource)
       {
         return StringParser.parseShortObj (aSource, (Short) null);
@@ -311,6 +342,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // to String
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (String.class)
     {
+      @Override
       public String convert (@Nonnull final Object aSource)
       {
         return aSource.toString ();
@@ -320,6 +352,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // to BigDecimal
     aRegistry.registerTypeConverter (BigInteger.class, BigDecimal.class, new ITypeConverter ()
     {
+      @Override
       public BigDecimal convert (@Nonnull final Object aSource)
       {
         return new BigDecimal ((BigInteger) aSource);
@@ -328,6 +361,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAssignableSourceFixedDestination (Number.class,
                                                                                                         BigDecimal.class)
     {
+      @Override
       public BigDecimal convert (@Nonnull final Object aSource)
       {
         return BigDecimal.valueOf (((Number) aSource).doubleValue ());
@@ -335,6 +369,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverter (Boolean.class, BigDecimal.class, new ITypeConverter ()
     {
+      @Override
       public BigDecimal convert (@Nonnull final Object aSource)
       {
         return ((Boolean) aSource).booleanValue () ? BigDecimal.ONE : BigDecimal.ZERO;
@@ -342,6 +377,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverter (Character.class, BigDecimal.class, new ITypeConverter ()
     {
+      @Override
       public BigDecimal convert (@Nonnull final Object aSource)
       {
         return BigDecimal.valueOf (((Character) aSource).charValue ());
@@ -349,6 +385,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (BigDecimal.class)
     {
+      @Override
       public BigDecimal convert (@Nonnull final Object aSource)
       {
         return StringParser.parseBigDecimal (aSource.toString (), (BigDecimal) null);
@@ -358,6 +395,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // to BigInteger
     aRegistry.registerTypeConverter (BigDecimal.class, BigInteger.class, new ITypeConverter ()
     {
+      @Override
       public BigInteger convert (@Nonnull final Object aSource)
       {
         return ((BigDecimal) aSource).toBigInteger ();
@@ -366,6 +404,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAssignableSourceFixedDestination (Number.class,
                                                                                                         BigInteger.class)
     {
+      @Override
       public BigInteger convert (@Nonnull final Object aSource)
       {
         return BigInteger.valueOf (((Number) aSource).longValue ());
@@ -373,6 +412,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverter (Boolean.class, BigInteger.class, new ITypeConverter ()
     {
+      @Override
       public BigInteger convert (@Nonnull final Object aSource)
       {
         return ((Boolean) aSource).booleanValue () ? BigInteger.ONE : BigInteger.ZERO;
@@ -380,6 +420,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverter (Character.class, BigInteger.class, new ITypeConverter ()
     {
+      @Override
       public BigInteger convert (@Nonnull final Object aSource)
       {
         return BigInteger.valueOf (((Character) aSource).charValue ());
@@ -387,6 +428,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (BigInteger.class)
     {
+      @Override
       public BigInteger convert (@Nonnull final Object aSource)
       {
         return StringParser.parseBigInteger (aSource.toString (), (BigInteger) null);
@@ -404,6 +446,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (AtomicBoolean.class)
     {
+      @Override
       public AtomicBoolean convert (@Nonnull final Object aSource)
       {
         return new AtomicBoolean (TypeConverter.convertIfNecessary (aSource, Boolean.class).booleanValue ());
@@ -421,6 +464,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (AtomicInteger.class)
     {
+      @Override
       public AtomicInteger convert (@Nonnull final Object aSource)
       {
         return new AtomicInteger (TypeConverter.convertIfNecessary (aSource, Integer.class).intValue ());
@@ -438,6 +482,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     });
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (AtomicLong.class)
     {
+      @Override
       public AtomicLong convert (@Nonnull final Object aSource)
       {
         return new AtomicLong (TypeConverter.convertIfNecessary (aSource, Long.class).longValue ());
@@ -447,6 +492,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // to StringBuilder
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (StringBuilder.class)
     {
+      @Override
       public StringBuilder convert (@Nonnull final Object aSource)
       {
         if (aSource instanceof CharSequence)
@@ -458,6 +504,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     // to StringBuffer
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (StringBuffer.class)
     {
+      @Override
       public StringBuffer convert (@Nonnull final Object aSource)
       {
         if (aSource instanceof CharSequence)
@@ -470,6 +517,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAssignableSourceFixedDestination (Enum.class,
                                                                                                         String.class)
     {
+      @Override
       @Nonnull
       public String convert (@Nonnull final Object aSource)
       {
@@ -481,6 +529,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleFixedSourceAssignableDestination (String.class,
                                                                                                         Enum.class)
     {
+      @Override
       public Enum <?> convert (@Nonnull final Object aSource)
       {
         // Split class name and enum value name

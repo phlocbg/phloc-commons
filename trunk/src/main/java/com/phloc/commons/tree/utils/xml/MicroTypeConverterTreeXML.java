@@ -80,12 +80,14 @@ public final class MicroTypeConverterTreeXML <DATATYPE> implements IConverterTre
     m_aNativeClass = aNativeClass;
   }
 
+  @Override
   public void appendDataValue (@Nonnull final IMicroElement eDataElement, @Nullable final DATATYPE aObject)
   {
     // Append created element - or null if the passed object is null
     eDataElement.appendChild (MicroTypeConverter.convertToMicroElement (aObject, m_sNamespaceURI, m_sElementName));
   }
 
+  @Override
   @Nullable
   public DATATYPE getAsDataValue (@Nonnull final IMicroElement eDataElement)
   {
@@ -108,6 +110,7 @@ public final class MicroTypeConverterTreeXML <DATATYPE> implements IConverterTre
    * @param aNativeClass
    *        The data type class - required for reading. May be in an interface
    *        as well.
+   * @return Never <code>null</code>.
    */
   @Nonnull
   public static <DATATYPE> MicroTypeConverterTreeXML <DATATYPE> create (@Nonnull @Nonempty final String sElementName,
@@ -126,6 +129,7 @@ public final class MicroTypeConverterTreeXML <DATATYPE> implements IConverterTre
    * @param aNativeClass
    *        The data type class - required for reading. May be in an interface
    *        as well.
+   * @return Never <code>null</code>.
    */
   @Nonnull
   public static <DATATYPE> MicroTypeConverterTreeXML <DATATYPE> create (@Nullable final String sNamespaceURI,

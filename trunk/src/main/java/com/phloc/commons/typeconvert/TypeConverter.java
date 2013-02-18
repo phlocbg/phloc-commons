@@ -346,6 +346,8 @@ public final class TypeConverter
    * 
    * @param <DSTTYPE>
    *        The destination type.
+   * @param aTypeConverterProvider
+   *        The type converter provider. May not be <code>null</code>. .
    * @param aSrcValue
    *        The source value. May be <code>null</code>.
    * @param aDstClass

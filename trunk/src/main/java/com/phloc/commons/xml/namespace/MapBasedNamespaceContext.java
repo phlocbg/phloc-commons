@@ -45,6 +45,9 @@ public class MapBasedNamespaceContext extends AbstractNamespaceContext
   private final Map <String, String> m_aPrefix2NS = new HashMap <String, String> ();
   private final IMultiMapSetBased <String, String> m_aNS2Prefix = new MultiHashMapHashSetBased <String, String> ();
 
+  public MapBasedNamespaceContext ()
+  {}
+
   @Override
   @Nullable
   public String getDefaultNamespaceURI ()

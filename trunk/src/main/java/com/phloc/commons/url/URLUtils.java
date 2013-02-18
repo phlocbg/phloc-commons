@@ -50,14 +50,25 @@ import com.phloc.commons.microdom.reader.XMLMapHandler;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.url.encode.URLParameterEncoder;
 
+/**
+ * URL utilities.
+ * 
+ * @author philip
+ */
 @Immutable
 public final class URLUtils
 {
+  /** Default URL charset is UTF-8 */
   public static final String CHARSET_URL = CCharset.CHARSET_UTF_8;
+  /** Default URL charset is UTF-8 */
   public static final Charset CHARSET_URL_OBJ = CCharset.CHARSET_UTF_8_OBJ;
+  /** Separator before first param: ? */
   public static final char QUESTIONMARK = '?';
+  /** Separator between params: &amp; */
   public static final char AMPERSAND = '&';
+  /** Separator between param name and param value: = */
   public static final char EQUALS = '=';
+  /** Separator between URL path and anchor name: # */
   public static final char HASH = '#';
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (URLUtils.class);
@@ -227,6 +238,8 @@ public final class URLUtils
    * 
    * @param sHref
    *        The URL to be parsed
+   * @param aParameterDecoder
+   *        The parameter decoder to use. May not be <code>null</code>.
    * @return the corresponding {@link IURLData} representation of the passed URL
    */
   @Nonnull
@@ -368,6 +381,7 @@ public final class URLUtils
       else
         aSB.append (QUESTIONMARK);
 
+      // ESCA-JAVA0285:
       // add all values
       for (final Map.Entry <String, String> aEntry : aParams.entrySet ())
       {
