@@ -28,8 +28,9 @@ import com.phloc.commons.GlobalDebug;
  */
 public final class DebugModeTestRule extends ExternalResource
 {
-  /** The default debug flags to use. */
+  /** When this rule is used, global debug is enabled. */
   public static final boolean ENABLE_GLOBAL_DEBUG = true;
+  /** When this rule is used, global trace is disabled. */
   public static final boolean ENABLE_GLOBAL_TRACE = false;
 
   private final boolean m_bDebug;

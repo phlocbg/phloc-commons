@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.mock;
 
+// ESCA-JAVA0046:
 /**
  * This is a marker interface for mock exceptions. It should be used to easily
  * identify mock exceptions from regular exceptions.

@@ -29,6 +29,7 @@ import com.phloc.commons.IHasStringRepresentation;
  */
 public interface IResourceLocation extends IHasStringRepresentation
 {
+  /** Constant for an illegal row or column number */
   int ILLEGAL_NUMBER = CGlobal.ILLEGAL_UINT;
 
   /**

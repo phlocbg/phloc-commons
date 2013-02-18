@@ -75,6 +75,7 @@ public enum EFileIOErrorCode implements ISuccessIndicator
    * @return <code>true</code> if this is {@link #NO_ERROR} , <code>false</code>
    *         otherwise.
    */
+  @Override
   public boolean isSuccess ()
   {
     return this == NO_ERROR;
@@ -84,6 +85,7 @@ public enum EFileIOErrorCode implements ISuccessIndicator
    * @return <code>true</code> if this is any other value than {@link #NO_ERROR}
    *         , <code>false</code> otherwise.
    */
+  @Override
   public boolean isFailure ()
   {
     return this != NO_ERROR;
@@ -93,6 +95,10 @@ public enum EFileIOErrorCode implements ISuccessIndicator
    * Static method to create a {@link FileIOError} for a
    * {@link SecurityException}.
    * 
+   * @param eOperation
+   *        The performed operation. May not be <code>null</code>.
+   * @param ex
+   *        The occurred {@link SecurityException}. Never <code>null</code>.
    * @return The non-<code>null</code> {@link FileIOError}.
    */
   @Nonnull

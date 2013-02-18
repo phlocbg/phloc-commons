@@ -473,8 +473,9 @@ public enum ECountry implements IHasDisplayText, IHasID <String>
   }
 
   /**
-   * Get the country ID (incl. all state information). Always lowercase!
+   * @return the country ID (incl. all state information). Always lowercase!
    */
+  @Override
   @Nonnull
   public String getID ()
   {
@@ -482,8 +483,8 @@ public enum ECountry implements IHasDisplayText, IHasID <String>
   }
 
   /**
-   * Get the ISO country code (the part before the first underscore). Always
-   * lowercase.
+   * @return the ISO country code (the part before the first underscore). Always
+   *         lowercase.
    */
   @Nonnull
   public String getISOCountryCode ()
@@ -491,6 +492,7 @@ public enum ECountry implements IHasDisplayText, IHasID <String>
     return m_sISOCountryCode;
   }
 
+  @Override
   @Nullable
   public String getDisplayText (@Nonnull final Locale aContentLocale)
   {

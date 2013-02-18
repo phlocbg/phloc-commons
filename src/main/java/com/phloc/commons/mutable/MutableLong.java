@@ -20,6 +20,7 @@ package com.phloc.commons.mutable;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.CDefault;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
@@ -33,7 +34,8 @@ import com.phloc.commons.string.ToStringGenerator;
 @NotThreadSafe
 public final class MutableLong extends Number implements IMutableInteger <MutableLong>
 {
-  public static final long DEFAULT_VALUE = 0L;
+  /** The default value if the default constructor is used. */
+  public static final long DEFAULT_VALUE = CDefault.DEFAULT_LONG;
 
   private long m_nValue;
 
@@ -132,51 +134,61 @@ public final class MutableLong extends Number implements IMutableInteger <Mutabl
     return EChange.CHANGED;
   }
 
+  @Override
   public boolean is0 ()
   {
     return m_nValue == 0;
   }
 
+  @Override
   public boolean isNot0 ()
   {
     return m_nValue != 0;
   }
 
+  @Override
   public boolean isSmaller0 ()
   {
     return m_nValue < 0;
   }
 
+  @Override
   public boolean isSmallerOrEqual0 ()
   {
     return m_nValue <= 0;
   }
 
+  @Override
   public boolean isGreater0 ()
   {
     return m_nValue > 0;
   }
 
+  @Override
   public boolean isGreaterOrEqual0 ()
   {
     return m_nValue >= 0;
   }
 
+  @Override
   public boolean isEven ()
   {
     return (m_nValue % 2) == 0;
   }
 
+  @Override
   public boolean isOdd ()
   {
     return (m_nValue % 2) != 0;
   }
 
+  @Override
   public int compareTo (final MutableLong rhs)
   {
     return m_nValue == rhs.m_nValue ? 0 : m_nValue < rhs.m_nValue ? -1 : +1;
   }
 
+  @Override
   @Nonnull
   public MutableLong getClone ()
   {

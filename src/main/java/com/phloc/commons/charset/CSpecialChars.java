@@ -30,23 +30,41 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 @Immutable
 public final class CSpecialChars
 {
+  /** Special character ä */
   public static final char AUML_LC = '\u00E4';
+  /** Special character ä */
   public static final String AUML_LC_STR = Character.toString (AUML_LC);
+  /** Special character Ä */
   public static final char AUML_UC = '\u00C4';
+  /** Special character Ä */
   public static final String AUML_UC_STR = Character.toString (AUML_UC);
+  /** Special character ö */
   public static final char OUML_LC = '\u00F6';
+  /** Special character ö */
   public static final String OUML_LC_STR = Character.toString (OUML_LC);
+  /** Special character Ö */
   public static final char OUML_UC = '\u00D6';
+  /** Special character Ö */
   public static final String OUML_UC_STR = Character.toString (OUML_UC);
+  /** Special character ü */
   public static final char UUML_LC = '\u00FC';
+  /** Special character ü */
   public static final String UUML_LC_STR = Character.toString (UUML_LC);
+  /** Special character Ü */
   public static final char UUML_UC = '\u00DC';
+  /** Special character Ü */
   public static final String UUML_UC_STR = Character.toString (UUML_UC);
+  /** Special character ß */
   public static final char SZLIG = '\u00DF';
+  /** Special character ß */
   public static final String SZLIG_STR = Character.toString (SZLIG);
+  /** Special character € */
   public static final char EURO = '\u20ac';
+  /** Special character € */
   public static final String EURO_STR = Character.toString (EURO);
+  /** Special character © */
   public static final char COPYRIGHT = '\u00a9';
+  /** Special character © */
   public static final String COPYRIGHT_STR = Character.toString (COPYRIGHT);
 
   @PresentForCodeCoverage

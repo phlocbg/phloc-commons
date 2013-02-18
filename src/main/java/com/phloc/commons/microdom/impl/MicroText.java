@@ -33,7 +33,9 @@ import com.phloc.commons.string.ToStringGenerator;
  */
 public final class MicroText extends AbstractMicroNode implements IMicroText
 {
+  /** By default the text is not ignorable whitespaces */
   public static final boolean DEFAULT_IGNORABLE_WHITESPACE = false;
+  /** By default the text should be XML escaped when emitting to a file etc. */
   public static final boolean DEFAULT_ESCAPE = true;
 
   private final MicroDataAware m_aData;
@@ -58,6 +60,8 @@ public final class MicroText extends AbstractMicroNode implements IMicroText
    *        Cloned data
    * @param bIgnorableWhitespace
    *        ignorable whitespace?
+   * @param bEscape
+   *        escape text as XML when writing?
    */
   private MicroText (@Nonnull final MicroDataAware aData, final boolean bIgnorableWhitespace, final boolean bEscape)
   {
@@ -66,12 +70,14 @@ public final class MicroText extends AbstractMicroNode implements IMicroText
     m_bEscape = bEscape;
   }
 
+  @Override
   @Nonnull
   public EMicroNodeType getType ()
   {
     return EMicroNodeType.TEXT;
   }
 
+  @Override
   @Nonnull
   @Nonempty
   public String getNodeName ()
@@ -86,32 +92,38 @@ public final class MicroText extends AbstractMicroNode implements IMicroText
     return getData ();
   }
 
+  @Override
   @Nonnull
   public String getData ()
   {
     return m_aData.getData ().toString ();
   }
 
+  @Override
   public void appendData (@Nullable final CharSequence sData)
   {
     m_aData.appendData (sData);
   }
 
+  @Override
   public void prependData (@Nullable final CharSequence sData)
   {
     m_aData.prependData (sData);
   }
 
+  @Override
   public void setData (@Nullable final CharSequence sData)
   {
     m_aData.setData (sData);
   }
 
+  @Override
   public boolean isElementContentWhitespace ()
   {
     return m_bIgnorableWhitespace;
   }
 
+  @Override
   public boolean isEscape ()
   {
     return m_bEscape;
@@ -124,12 +136,14 @@ public final class MicroText extends AbstractMicroNode implements IMicroText
     return this;
   }
 
+  @Override
   @Nonnull
   public IMicroText getClone ()
   {
     return new MicroText (m_aData.getClone (), m_bIgnorableWhitespace, m_bEscape);
   }
 
+  @Override
   public boolean isEqualContent (@Nullable final IMicroNode o)
   {
     if (o == this)

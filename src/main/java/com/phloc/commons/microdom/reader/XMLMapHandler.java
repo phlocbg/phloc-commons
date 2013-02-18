@@ -62,9 +62,13 @@ import com.phloc.commons.xml.serialize.XMLWriterSettings;
 @Immutable
 public final class XMLMapHandler
 {
+  /** Root element name */
   public static final String ELEMENT_MAPPING = "mapping";
+  /** Element name for a single mapping */
   public static final String ELEMENT_MAP = "map";
+  /** Attribute name for key of a single mapping */
   public static final String ATTR_KEY = "key";
+  /** Attribute name for value of a single mapping */
   public static final String ATTR_VALUE = "value";
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (XMLMapHandler.class);

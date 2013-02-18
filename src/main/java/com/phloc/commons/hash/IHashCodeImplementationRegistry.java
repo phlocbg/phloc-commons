@@ -19,6 +19,11 @@ package com.phloc.commons.hash;
 
 import javax.annotation.Nonnull;
 
+/**
+ * Base interface for a registry that contains hashCode implementations.
+ * 
+ * @author philip
+ */
 public interface IHashCodeImplementationRegistry
 {
   /**

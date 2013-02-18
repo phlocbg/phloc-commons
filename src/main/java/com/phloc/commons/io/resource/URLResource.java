@@ -49,6 +49,7 @@ import com.phloc.commons.string.ToStringGenerator;
 @Immutable
 public final class URLResource implements IReadableResource
 {
+  /** The protocol for file resources */
   public static final String PROTOCOL_FILE = "file";
   private static final Logger s_aLogger = LoggerFactory.getLogger (URLResource.class);
   private final URL m_aURL;
@@ -87,12 +88,14 @@ public final class URLResource implements IReadableResource
     return false;
   }
 
+  @Override
   @Nonnull
   public String getResourceID ()
   {
     return getPath ();
   }
 
+  @Override
   @Nonnull
   public String getPath ()
   {
@@ -123,24 +126,28 @@ public final class URLResource implements IReadableResource
     }
   }
 
+  @Override
   @Nullable
   public InputStream getInputStream ()
   {
     return getInputStream (m_aURL);
   }
 
+  @Override
   @Nullable
   public Reader getReader (@Nonnull final String sCharset)
   {
     return StreamUtils.createReader (getInputStream (), sCharset);
   }
 
+  @Override
   @Nullable
   public Reader getReader (@Nonnull final Charset aCharset)
   {
     return StreamUtils.createReader (getInputStream (), aCharset);
   }
 
+  @Override
   public boolean exists ()
   {
     // 1. as file
@@ -166,6 +173,7 @@ public final class URLResource implements IReadableResource
     }
   }
 
+  @Override
   @Nonnull
   public URL getAsURL ()
   {
@@ -195,6 +203,7 @@ public final class URLResource implements IReadableResource
     return aFile;
   }
 
+  @Override
   @Nonnull
   public File getAsFile ()
   {
@@ -207,6 +216,7 @@ public final class URLResource implements IReadableResource
     return new URLResource (aURL);
   }
 
+  @Override
   @Nonnull
   public URLResource getReadableCloneForPath (@Nonnull final String sPath)
   {

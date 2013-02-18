@@ -35,6 +35,7 @@ import com.phloc.commons.cache.AbstractNotifyingCacheWithMaxSize;
  */
 public final class RegExPool extends AbstractNotifyingCacheWithMaxSize <RegExPattern, Pattern>
 {
+  /** The default number of items to keep in the cache */
   public static final int MAX_CACHE_SIZE = 1000;
   private static final RegExPool s_aInstance = new RegExPool ();
 

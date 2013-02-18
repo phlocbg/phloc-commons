@@ -36,6 +36,7 @@ public enum EMicroNodeType
   PROCESSING_INSTRUCTION (Node.PROCESSING_INSTRUCTION_NODE),
   TEXT (Node.TEXT_NODE);
 
+  /** Represents a non-existing DOM Node Type */
   public static final short ILLEGAL_DOM_NODE_TYPE = 0;
 
   private final short m_nDOMNodeType;

@@ -74,6 +74,9 @@ public class BitOutputStream implements Closeable, Flushable
    * @param aOS
    *        the output stream this class should use. May not be
    *        <code>null</code>.
+   * @param bHighOrderBitFirst
+   *        <code>true</code> if high order bits come first, <code>false</code>
+   *        if it comes last.
    */
   public BitOutputStream (@Nonnull final OutputStream aOS, final boolean bHighOrderBitFirst)
   {
@@ -144,6 +147,7 @@ public class BitOutputStream implements Closeable, Flushable
    * @throws IOException
    *         In case writing to the output stream failed
    */
+  @Override
   public void flush () throws IOException
   {
     m_aLock.lock ();
@@ -167,6 +171,7 @@ public class BitOutputStream implements Closeable, Flushable
   /**
    * Flush the data and close the underlying output stream.
    */
+  @Override
   public void close ()
   {
     m_aLock.lock ();

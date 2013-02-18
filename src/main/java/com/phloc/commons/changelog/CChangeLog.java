@@ -31,7 +31,9 @@ public final class CChangeLog
 {
   /** The namespace used in XML */
   public static final String CHANGELOG_NAMESPACE_10 = "http://www.phloc.com/ns/changelog/1.0";
+  /** The classpath relative path to the changelog XSD file */
   public static final String CHANGELOG_XSD_10 = "schemas/changelog-1.0.xsd";
+  /** The schemaLocation value of the changeLog 1.0 XSD */
   public static final String CHANGELOG_SCHEMALOCATION_10 = CHANGELOG_NAMESPACE_10 + " " + CHANGELOG_XSD_10;
 
   /** The default file name of the changelog XML */

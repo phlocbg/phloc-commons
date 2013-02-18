@@ -17,7 +17,7 @@
  */
 package com.phloc.commons.microdom.impl;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -62,6 +62,7 @@ public abstract class AbstractMicroNode implements IMicroNode
   private AbstractMicroNodeWithChildren m_aParentNode;
   private Map <EMicroEvent, Set <IMicroEventTarget>> m_aEventTargets;
 
+  @Override
   @OverrideOnDemand
   public String getNodeValue ()
   {
@@ -125,6 +126,7 @@ public abstract class AbstractMicroNode implements IMicroNode
     throw new MicroException ("Cannot insert children in class " + getClass ().getName ());
   }
 
+  @Override
   @Nullable
   public final <NODETYPE extends IMicroNode> NODETYPE appendChild (@Nullable final NODETYPE aChildNode)
   {
@@ -133,6 +135,7 @@ public abstract class AbstractMicroNode implements IMicroNode
     return aChildNode;
   }
 
+  @Override
   @Nullable
   public final <NODETYPE extends IMicroNode> NODETYPE insertBefore (@Nullable final NODETYPE aChildNode,
                                                                     @Nonnull final IMicroNode aSuccessor)
@@ -142,6 +145,7 @@ public abstract class AbstractMicroNode implements IMicroNode
     return aChildNode;
   }
 
+  @Override
   @Nullable
   public final <NODETYPE extends IMicroNode> NODETYPE insertAfter (@Nullable final NODETYPE aChildNode,
                                                                    @Nonnull final IMicroNode aPredecessor)
@@ -151,6 +155,7 @@ public abstract class AbstractMicroNode implements IMicroNode
     return aChildNode;
   }
 
+  @Override
   @Nullable
   public final <NODETYPE extends IMicroNode> NODETYPE insertAtIndex (@Nonnegative final int nIndex,
                                                                      @Nullable final NODETYPE aChildNode)
@@ -160,6 +165,7 @@ public abstract class AbstractMicroNode implements IMicroNode
     return aChildNode;
   }
 
+  @Override
   @Nonnull
   public final IMicroText appendText (@Nullable final CharSequence sText)
   {
@@ -168,6 +174,7 @@ public abstract class AbstractMicroNode implements IMicroNode
     return aNode;
   }
 
+  @Override
   @Nonnull
   public final IMicroText appendTextWithConversion (@Nullable final Object aValue)
   {
@@ -176,6 +183,7 @@ public abstract class AbstractMicroNode implements IMicroNode
     return appendText (sValue);
   }
 
+  @Override
   @Nonnull
   public final IMicroText appendIgnorableWhitespaceText (@Nullable final CharSequence sText)
   {
@@ -184,6 +192,7 @@ public abstract class AbstractMicroNode implements IMicroNode
     return aNode;
   }
 
+  @Override
   @Nonnull
   public final IMicroCDATA appendCDATA (@Nullable final CharSequence sText)
   {
@@ -192,6 +201,7 @@ public abstract class AbstractMicroNode implements IMicroNode
     return aNode;
   }
 
+  @Override
   @Nonnull
   public final IMicroComment appendComment (@Nullable final CharSequence sText)
   {
@@ -200,6 +210,7 @@ public abstract class AbstractMicroNode implements IMicroNode
     return aNode;
   }
 
+  @Override
   @Nonnull
   public final IMicroEntityReference appendEntityReference (@Nonnull @Nonempty final String sName)
   {
@@ -208,12 +219,14 @@ public abstract class AbstractMicroNode implements IMicroNode
     return aNode;
   }
 
+  @Override
   @Nonnull
   public final IMicroElement appendElement (@Nonnull @Nonempty final String sTagName)
   {
     return appendElement (null, sTagName);
   }
 
+  @Override
   @Nonnull
   public final IMicroElement appendElement (@Nullable final String sNamespaceURI,
                                             @Nonnull @Nonempty final String sTagName)
@@ -223,6 +236,7 @@ public abstract class AbstractMicroNode implements IMicroNode
     return aNode;
   }
 
+  @Override
   @Nonnull
   public final IMicroProcessingInstruction appendProcessingInstruction (@Nonnull @Nonempty final String sTarget,
                                                                         @Nullable final String sData)
@@ -232,6 +246,7 @@ public abstract class AbstractMicroNode implements IMicroNode
     return aNode;
   }
 
+  @Override
   @Nonnull
   public final IMicroContainer appendContainer ()
   {
@@ -254,6 +269,7 @@ public abstract class AbstractMicroNode implements IMicroNode
     throw new MicroException ("Cannot remove child from this node: " + getClass ().getName ());
   }
 
+  @Override
   @Nonnull
   public final EChange removeChild (@Nonnull final IMicroNode aChild)
   {
@@ -277,6 +293,7 @@ public abstract class AbstractMicroNode implements IMicroNode
     throw new MicroException ("Cannot remove child from this node: " + getClass ().getName ());
   }
 
+  @Override
   @Nonnull
   public final EChange removeChildAtIndex (@Nonnegative final int nIndex)
   {
@@ -296,12 +313,14 @@ public abstract class AbstractMicroNode implements IMicroNode
     throw new MicroException ("Cannot remove all children from this node: " + getClass ().getName ());
   }
 
+  @Override
   @Nonnull
   public final EChange removeAllChildren ()
   {
     return onRemoveAllChildren ();
   }
 
+  @Override
   @Nonnull
   public final EChange replaceChild (@Nonnull final IMicroNode aOldChild, @Nonnull final IMicroNode aNewChild)
   {
@@ -317,12 +336,14 @@ public abstract class AbstractMicroNode implements IMicroNode
     return EChange.CHANGED;
   }
 
+  @Override
   @OverrideOnDemand
   public boolean hasChildren ()
   {
     return false;
   }
 
+  @Override
   @OverrideOnDemand
   @Nullable
   public List <IMicroNode> getChildren ()
@@ -330,6 +351,7 @@ public abstract class AbstractMicroNode implements IMicroNode
     return null;
   }
 
+  @Override
   @OverrideOnDemand
   @Nullable
   public IMicroNode getChildAtIndex (@Nonnegative final int nIndex)
@@ -337,6 +359,7 @@ public abstract class AbstractMicroNode implements IMicroNode
     return null;
   }
 
+  @Override
   @OverrideOnDemand
   @Nonnegative
   public int getChildCount ()
@@ -344,6 +367,7 @@ public abstract class AbstractMicroNode implements IMicroNode
     return 0;
   }
 
+  @Override
   @OverrideOnDemand
   @Nullable
   public IMicroNode getFirstChild ()
@@ -351,6 +375,7 @@ public abstract class AbstractMicroNode implements IMicroNode
     return null;
   }
 
+  @Override
   @OverrideOnDemand
   @Nullable
   public IMicroNode getLastChild ()
@@ -358,6 +383,7 @@ public abstract class AbstractMicroNode implements IMicroNode
     return null;
   }
 
+  @Override
   @OverrideOnDemand
   @Nullable
   public List <IMicroNode> getAllChildrenRecursive ()
@@ -365,6 +391,7 @@ public abstract class AbstractMicroNode implements IMicroNode
     return null;
   }
 
+  @Override
   @Nullable
   public final IMicroNode getPreviousSibling ()
   {
@@ -377,6 +404,7 @@ public abstract class AbstractMicroNode implements IMicroNode
     return ContainerHelper.getSafe (aParentChildren, nIndex - 1);
   }
 
+  @Override
   @Nullable
   public final IMicroNode getNextSibling ()
   {
@@ -389,11 +417,13 @@ public abstract class AbstractMicroNode implements IMicroNode
     return ContainerHelper.getSafe (aParentChildren, nIndex + 1);
   }
 
+  @Override
   public final boolean hasParent ()
   {
     return m_aParentNode != null;
   }
 
+  @Override
   @Nullable
   public final IMicroNode getParent ()
   {
@@ -416,6 +446,7 @@ public abstract class AbstractMicroNode implements IMicroNode
     m_aParentNode = aParentNode;
   }
 
+  @Override
   @Nonnull
   public final IMicroNode detachFromParent ()
   {
@@ -428,6 +459,7 @@ public abstract class AbstractMicroNode implements IMicroNode
     return this;
   }
 
+  @Override
   @Nullable
   public final IMicroElement getParentElementWithName (@Nullable final String sTagName)
   {
@@ -442,6 +474,7 @@ public abstract class AbstractMicroNode implements IMicroNode
     return null;
   }
 
+  @Override
   @Nullable
   public final IMicroElement getParentElementWithName (@Nullable final String sNamespaceURI,
                                                        @Nullable final String sTagName)
@@ -464,46 +497,55 @@ public abstract class AbstractMicroNode implements IMicroNode
    * implementation classes.
    */
 
+  @Override
   public final boolean isDocument ()
   {
     return this instanceof IMicroDocument;
   }
 
+  @Override
   public final boolean isDocumentType ()
   {
     return this instanceof IMicroDocumentType;
   }
 
+  @Override
   public final boolean isText ()
   {
     return this instanceof IMicroText;
   }
 
+  @Override
   public final boolean isCDATA ()
   {
     return this instanceof IMicroCDATA;
   }
 
+  @Override
   public final boolean isComment ()
   {
     return this instanceof IMicroComment;
   }
 
+  @Override
   public final boolean isEntityReference ()
   {
     return this instanceof IMicroEntityReference;
   }
 
+  @Override
   public final boolean isElement ()
   {
     return this instanceof IMicroElement;
   }
 
+  @Override
   public final boolean isProcessingInstruction ()
   {
     return this instanceof IMicroProcessingInstruction;
   }
 
+  @Override
   public final boolean isContainer ()
   {
     return this instanceof IMicroContainer;
@@ -537,6 +579,7 @@ public abstract class AbstractMicroNode implements IMicroNode
     internalTriggerEvent (eEventType, new MicroEvent (eEventType, aSourceNode, aTargetNode));
   }
 
+  @Override
   @Nonnull
   public EChange registerEventTarget (@Nonnull final EMicroEvent eEventType, @Nonnull final IMicroEventTarget aTarget)
   {
@@ -546,7 +589,7 @@ public abstract class AbstractMicroNode implements IMicroNode
       throw new NullPointerException ("eventTarget");
 
     if (m_aEventTargets == null)
-      m_aEventTargets = new HashMap <EMicroEvent, Set <IMicroEventTarget>> ();
+      m_aEventTargets = new EnumMap <EMicroEvent, Set <IMicroEventTarget>> (EMicroEvent.class);
     Set <IMicroEventTarget> aSet = m_aEventTargets.get (eEventType);
     if (aSet == null)
     {
@@ -556,6 +599,7 @@ public abstract class AbstractMicroNode implements IMicroNode
     return EChange.valueOf (aSet.add (aTarget));
   }
 
+  @Override
   @Nonnull
   public EChange unregisterEventTarget (@Nonnull final EMicroEvent eEventType, @Nonnull final IMicroEventTarget aTarget)
   {

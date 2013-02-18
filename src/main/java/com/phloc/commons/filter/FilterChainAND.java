@@ -28,6 +28,14 @@ import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
+/**
+ * An implementation of {@link IFilter} that chains multiple instances of
+ * {@link IFilter} with an <b>AND</b> operator.
+ * 
+ * @author philip
+ * @param <DATATYPE>
+ *        The type to be filtered.
+ */
 @Immutable
 public final class FilterChainAND <DATATYPE> implements IFilter <DATATYPE>
 {
@@ -50,6 +58,7 @@ public final class FilterChainAND <DATATYPE> implements IFilter <DATATYPE>
     return ContainerHelper.newList (m_aFilters);
   }
 
+  @Override
   public boolean matchesFilter (@Nullable final DATATYPE aValue)
   {
     for (final IFilter <? super DATATYPE> aFilter : m_aFilters)

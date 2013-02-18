@@ -20,6 +20,7 @@ package com.phloc.commons.mutable;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.CDefault;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
@@ -33,7 +34,8 @@ import com.phloc.commons.string.ToStringGenerator;
 @NotThreadSafe
 public final class MutableBoolean implements IMutable <MutableBoolean>
 {
-  public static final boolean DEFAULT_VALUE = false;
+  /** The default value if the default constructor is used. */
+  public static final boolean DEFAULT_VALUE = CDefault.DEFAULT_BOOLEAN;
 
   private boolean m_bValue;
 
@@ -72,11 +74,13 @@ public final class MutableBoolean implements IMutable <MutableBoolean>
     return EChange.CHANGED;
   }
 
+  @Override
   public int compareTo (@Nonnull final MutableBoolean rhs)
   {
     return m_bValue == rhs.m_bValue ? 0 : m_bValue ? -1 : +1;
   }
 
+  @Override
   @Nonnull
   public MutableBoolean getClone ()
   {

@@ -50,8 +50,8 @@ public final class BitSetHelper
   @Nonnull
   public static BitSet createBitSet (final byte nValue)
   {
-    final BitSet ret = new BitSet (8);
-    for (int i = 0; i < 8; ++i)
+    final BitSet ret = new BitSet (CGlobal.BITS_PER_BYTE);
+    for (int i = 0; i < CGlobal.BITS_PER_BYTE; ++i)
       ret.set (i, ((nValue >> i) & 1) == 1);
     return ret;
   }
@@ -66,8 +66,8 @@ public final class BitSetHelper
   @Nonnull
   public static BitSet createBitSet (final short nValue)
   {
-    final BitSet ret = new BitSet (16);
-    for (int i = 0; i < 16; ++i)
+    final BitSet ret = new BitSet (CGlobal.BITS_PER_SHORT);
+    for (int i = 0; i < CGlobal.BITS_PER_SHORT; ++i)
       ret.set (i, ((nValue >> i) & 1) == 1);
     return ret;
   }
@@ -82,8 +82,8 @@ public final class BitSetHelper
   @Nonnull
   public static BitSet createBitSet (final int nValue)
   {
-    final BitSet ret = new BitSet (32);
-    for (int i = 0; i < 32; ++i)
+    final BitSet ret = new BitSet (CGlobal.BITS_PER_INT);
+    for (int i = 0; i < CGlobal.BITS_PER_INT; ++i)
       ret.set (i, ((nValue >> i) & 1) == 1);
     return ret;
   }
@@ -98,8 +98,8 @@ public final class BitSetHelper
   @Nonnull
   public static BitSet createBitSet (final long nValue)
   {
-    final BitSet ret = new BitSet (64);
-    for (int i = 0; i < 64; ++i)
+    final BitSet ret = new BitSet (CGlobal.BITS_PER_LONG);
+    for (int i = 0; i < CGlobal.BITS_PER_LONG; ++i)
       ret.set (i, ((nValue >> i) & 1) == 1);
     return ret;
   }
@@ -119,8 +119,8 @@ public final class BitSetHelper
       throw new NullPointerException ("bitSet");
 
     final int nMax = aBS.length ();
-    if (nMax > 32)
-      throw new IllegalArgumentException ("Can extract only up to 32 bits");
+    if (nMax > CGlobal.BITS_PER_INT)
+      throw new IllegalArgumentException ("Can extract only up to " + CGlobal.BITS_PER_INT + " bits");
 
     int ret = 0;
     for (int i = nMax - 1; i >= 0; --i)
@@ -147,8 +147,8 @@ public final class BitSetHelper
       throw new NullPointerException ("bitSet");
 
     final int nMax = aBS.length ();
-    if (nMax > 64)
-      throw new IllegalArgumentException ("Can extract only up to 64 bits");
+    if (nMax > CGlobal.BITS_PER_LONG)
+      throw new IllegalArgumentException ("Can extract only up to " + CGlobal.BITS_PER_LONG + " bits");
 
     long ret = 0;
     for (int i = nMax - 1; i >= 0; --i)

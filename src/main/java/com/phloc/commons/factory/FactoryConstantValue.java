@@ -24,6 +24,13 @@ import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
+/**
+ * Implementation of {@link IFactory} that returns a constant value
+ * 
+ * @author philip
+ * @param <DATATYPE>
+ *        The return type of the factory
+ */
 public final class FactoryConstantValue <DATATYPE> implements IFactory <DATATYPE>
 {
   private final DATATYPE m_aConstantValue;
@@ -33,6 +40,7 @@ public final class FactoryConstantValue <DATATYPE> implements IFactory <DATATYPE
     m_aConstantValue = aConstantValue;
   }
 
+  @Override
   @Nullable
   public DATATYPE create ()
   {

@@ -68,6 +68,9 @@ public class BitInputStream implements Closeable
    * @param aIS
    *        the input stream this class should read the bits from. May not be
    *        <code>null</code>.
+   * @param bHighOrderBitFirst
+   *        <code>true</code> if high order bits come first, <code>false</code>
+   *        if it comes last.
    */
   public BitInputStream (@Nonnull final InputStream aIS, final boolean bHighOrderBitFirst)
   {
@@ -140,6 +143,7 @@ public class BitInputStream implements Closeable
   /**
    * Close the underlying input stream.
    */
+  @Override
   public void close ()
   {
     m_aLock.lock ();

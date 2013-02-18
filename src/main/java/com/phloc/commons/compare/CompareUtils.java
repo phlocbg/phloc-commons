@@ -39,6 +39,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 @Immutable
 public final class CompareUtils
 {
+  /** By default <code>null</code> values fome first */
   public static final boolean DEFAULT_NULL_VALUES_COME_FIRST = true;
 
   @PresentForCodeCoverage

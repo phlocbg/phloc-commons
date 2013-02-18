@@ -62,8 +62,11 @@ import com.phloc.commons.xml.serialize.XMLWriterSettings;
 @Immutable
 public final class XMLListHandler
 {
+  /** Name of the root element */
   public static final String ELEMENT_LIST = "list";
+  /** Element name of a single item */
   public static final String ELEMENT_ITEM = "item";
+  /** Attribute name for the item value */
   public static final String ATTR_VALUE = "value";
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (XMLListHandler.class);

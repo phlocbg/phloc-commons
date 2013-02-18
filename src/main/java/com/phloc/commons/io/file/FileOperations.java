@@ -38,6 +38,7 @@ import com.phloc.commons.io.streams.StreamUtils;
 @Immutable
 public final class FileOperations
 {
+  /** The default value for warning if we're about to delete the root directory. */
   public static final boolean DEFAULT_WARN_ON_DELETE_ROOT = true;
 
   @PresentForCodeCoverage

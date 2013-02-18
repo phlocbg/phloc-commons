@@ -31,6 +31,12 @@ import com.phloc.commons.io.IWritableResource;
 import com.phloc.commons.io.IWritableResourceProvider;
 import com.phloc.commons.string.ToStringGenerator;
 
+/**
+ * A resource provider chain implementation of {@link IWritableResourceProvider}
+ * .
+ * 
+ * @author philip
+ */
 @Immutable
 public class WritableResourceProviderChain extends ReadableResourceProviderChain implements IWritableResourceProvider
 {
@@ -47,6 +53,7 @@ public class WritableResourceProviderChain extends ReadableResourceProviderChain
       throw new IllegalArgumentException ("No writable resource provider passed - use a ReadableResourceProviderChain");
   }
 
+  @Override
   public final boolean supportsWriting (@Nullable final String sName)
   {
     // Check if any provider can handle this resource
@@ -56,6 +63,7 @@ public class WritableResourceProviderChain extends ReadableResourceProviderChain
     return false;
   }
 
+  @Override
   @Nonnull
   @OverrideOnDemand
   public IWritableResource getWritableResource (final String sName)

@@ -24,6 +24,12 @@ import javax.annotation.Nonnull;
 
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 
+/**
+ * Base interface for a message digest generator (using hash algorithms like MD5
+ * or SHA 512)
+ * 
+ * @author philip
+ */
 public interface IMessageDigestGenerator
 {
   /**

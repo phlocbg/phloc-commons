@@ -27,6 +27,11 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
+/**
+ * Represents information about a single deadlocked thread.
+ * 
+ * @author philip
+ */
 @Immutable
 public final class ThreadDeadlockInfo
 {

@@ -34,12 +34,14 @@ import com.phloc.commons.string.ToStringGenerator;
 @ThreadSafe
 public final class MemoryStaticIntIDFactory implements IIntIDFactory
 {
+  /** The default start ID to use. */
   public static final int INITIAL_ID = 10000;
   private static final AtomicInteger s_aID = new AtomicInteger (INITIAL_ID);
 
   public MemoryStaticIntIDFactory ()
   {}
 
+  @Override
   @Nonnegative
   public int getNewID ()
   {

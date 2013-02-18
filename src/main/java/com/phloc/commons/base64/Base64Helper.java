@@ -57,7 +57,7 @@ public final class Base64Helper
     {
       return Base64.decode (sEncoded);
     }
-    catch (final Exception ex)
+    catch (final Throwable t)
     {
       return null;
     }
@@ -77,7 +77,7 @@ public final class Base64Helper
     {
       return Base64.decode (aEncodedBytes);
     }
-    catch (final Exception ex)
+    catch (final Throwable t)
     {
       return null;
     }
@@ -99,7 +99,7 @@ public final class Base64Helper
     {
       return CharsetManager.getAsString (Base64.decode (sEncoded), sCharset);
     }
-    catch (final Exception ex)
+    catch (final Throwable t)
     {
       return null;
     }
@@ -121,7 +121,7 @@ public final class Base64Helper
     {
       return CharsetManager.getAsString (Base64.decode (sEncoded), aCharset);
     }
-    catch (final Exception ex)
+    catch (final Throwable t)
     {
       return null;
     }
@@ -143,7 +143,7 @@ public final class Base64Helper
     {
       return CharsetManager.getAsString (Base64.decode (aEncodedBytes), sCharset);
     }
-    catch (final Exception ex)
+    catch (final Throwable t)
     {
       return null;
     }
@@ -165,7 +165,7 @@ public final class Base64Helper
     {
       return CharsetManager.getAsString (Base64.decode (aEncodedBytes), aCharset);
     }
-    catch (final Exception ex)
+    catch (final Throwable t)
     {
       return null;
     }

@@ -22,6 +22,16 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+/**
+ * An implementation of {@link IUnidirectionalConverter} that converts from a
+ * map key to a map value
+ * 
+ * @author philip
+ * @param <KEYTYPE>
+ *        Map key type
+ * @param <VALUETYPE>
+ *        Map value type
+ */
 public final class UnidirectionalConverterMapGet <KEYTYPE, VALUETYPE> implements
                                                                       IUnidirectionalConverter <KEYTYPE, VALUETYPE>
 {
@@ -34,6 +44,7 @@ public final class UnidirectionalConverterMapGet <KEYTYPE, VALUETYPE> implements
     m_aMap = aMap;
   }
 
+  @Override
   @Nullable
   public VALUETYPE convert (@Nullable final KEYTYPE aKey)
   {

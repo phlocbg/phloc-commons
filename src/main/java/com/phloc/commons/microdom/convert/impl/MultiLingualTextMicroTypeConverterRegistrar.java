@@ -37,15 +37,22 @@ import com.phloc.commons.text.ISimpleMultiLingualText;
 import com.phloc.commons.text.impl.MultiLingualText;
 import com.phloc.commons.text.impl.ReadonlyMultiLingualText;
 
+/**
+ * {@link IMicroTypeConverterRegistrarSPI} implementation for
+ * {@link ReadonlyMultiLingualText} and {@link MultiLingualText}.
+ * 
+ * @author philip
+ */
 @Immutable
 @IsSPIImplementation
 public final class MultiLingualTextMicroTypeConverterRegistrar implements IMicroTypeConverterRegistrarSPI
 {
-  private static final String ELEMENT_TEXT = "text";
-  private static final String ATTR_LOCALE = "locale";
-
-  private static abstract class AbstractMLTConverter implements IMicroTypeConverter
+  private abstract static class AbstractMLTConverter implements IMicroTypeConverter
   {
+    private static final String ELEMENT_TEXT = "text";
+    private static final String ATTR_LOCALE = "locale";
+
+    @Override
     @Nonnull
     public final IMicroElement convertToMicroElement (@Nonnull final Object aSource,
                                                       @Nullable final String sNamespaceURI,
@@ -75,11 +82,13 @@ public final class MultiLingualTextMicroTypeConverterRegistrar implements IMicro
     }
   }
 
+  @Override
   public void registerMicroTypeConverter (@Nonnull final IMicroTypeConverterRegistry aRegistry)
   {
     // Register the read-only version first!
     aRegistry.registerMicroElementTypeConverter (ReadonlyMultiLingualText.class, new AbstractMLTConverter ()
     {
+      @Override
       @Nonnull
       public ReadonlyMultiLingualText convertToNative (@Nonnull final IMicroElement aElement)
       {
@@ -90,6 +99,7 @@ public final class MultiLingualTextMicroTypeConverterRegistrar implements IMicro
     // Register the writable version afterwards!
     aRegistry.registerMicroElementTypeConverter (MultiLingualText.class, new AbstractMLTConverter ()
     {
+      @Override
       @Nonnull
       public MultiLingualText convertToNative (@Nonnull final IMicroElement aElement)
       {

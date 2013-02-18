@@ -36,8 +36,17 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 public final class GlobalDebug
 {
+  /**
+   * By default trace mode is disabled
+   */
   public static final boolean DEFAULT_TRACE_MODE = false;
+  /**
+   * By default debug mode is disabled
+   */
   public static final boolean DEFAULT_DEBUG_MODE = false;
+  /**
+   * By default production mode is disable
+   */
   public static final boolean DEFAULT_PRODUCTION_MODE = false;
   private static final AtomicBoolean s_aTraceMode = new AtomicBoolean (DEFAULT_TRACE_MODE);
   private static final AtomicBoolean s_aDebugMode = new AtomicBoolean (DEFAULT_DEBUG_MODE);

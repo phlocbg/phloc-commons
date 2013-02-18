@@ -42,26 +42,46 @@ public abstract class AbstractPhlocTestCase
   @CodingStyleguideUnaware
   protected final Logger m_aLogger = LoggerFactory.getLogger (getClass ());
 
+  /** -1 */
   public static final Integer I_1 = Integer.valueOf (-1);
+  /** 0 */
   public static final Integer I0 = Integer.valueOf (0);
+  /** 1 */
   public static final Integer I1 = Integer.valueOf (1);
+  /** 2 */
   public static final Integer I2 = Integer.valueOf (2);
+  /** 3 */
   public static final Integer I3 = Integer.valueOf (3);
+  /** 4 */
   public static final Integer I4 = Integer.valueOf (4);
+  /** 5 */
   public static final Integer I5 = Integer.valueOf (5);
+  /** 6 */
   public static final Integer I6 = Integer.valueOf (6);
+  /** 7 */
   public static final Integer I7 = Integer.valueOf (7);
 
+  /** -1 */
   public static final Long L_1 = Long.valueOf (-1);
+  /** 0 */
   public static final Long L0 = Long.valueOf (0);
+  /** 1 */
   public static final Long L1 = Long.valueOf (1);
 
+  /** de */
   public static final Locale L_DE = new Locale ("de");
+  /** de-AT */
   public static final Locale L_DE_AT = new Locale ("de", "AT");
+  /** de-DE */
   public static final Locale L_DE_DE = new Locale ("de", "DE");
+  /** en */
   public static final Locale L_EN = new Locale ("en");
+  /** en-GB */
   public static final Locale L_EN_GB = new Locale ("en", "GB");
+  /** en-US */
   public static final Locale L_EN_US = new Locale ("en", "US");
+  /** fr */
   public static final Locale L_FR = new Locale ("fr");
+  /** fr-FR */
   public static final Locale L_FR_FR = new Locale ("fr", "FR");
 }
