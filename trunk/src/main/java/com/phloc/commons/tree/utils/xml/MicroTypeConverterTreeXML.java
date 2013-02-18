@@ -80,14 +80,12 @@ public final class MicroTypeConverterTreeXML <DATATYPE> implements IConverterTre
     m_aNativeClass = aNativeClass;
   }
 
-  @Override
   public void appendDataValue (@Nonnull final IMicroElement eDataElement, @Nullable final DATATYPE aObject)
   {
     // Append created element - or null if the passed object is null
     eDataElement.appendChild (MicroTypeConverter.convertToMicroElement (aObject, m_sNamespaceURI, m_sElementName));
   }
 
-  @Override
   @Nullable
   public DATATYPE getAsDataValue (@Nonnull final IMicroElement eDataElement)
   {

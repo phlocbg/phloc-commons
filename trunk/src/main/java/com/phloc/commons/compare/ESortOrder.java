@@ -58,13 +58,11 @@ public enum ESortOrder implements ISortOrderIndicator
     return Integer.toString (m_nValue);
   }
 
-  @Override
   public boolean isAscending ()
   {
     return this == ASCENDING;
   }
 
-  @Override
   public boolean isDescending ()
   {
     return this == DESCENDING;

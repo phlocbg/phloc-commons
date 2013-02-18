@@ -243,7 +243,6 @@ abstract class AbstractMicroNodeWithChildren extends AbstractMicroNode implement
     return ret;
   }
 
-  @Override
   @Nullable
   public String getTextContent ()
   {
@@ -274,7 +273,6 @@ abstract class AbstractMicroNodeWithChildren extends AbstractMicroNode implement
     return aSB.toString ();
   }
 
-  @Override
   @Nullable
   public <DSTTYPE> DSTTYPE getTextContentWithConversion (@Nonnull final Class <DSTTYPE> aDstClass)
   {
@@ -289,7 +287,6 @@ abstract class AbstractMicroNodeWithChildren extends AbstractMicroNode implement
     return ret;
   }
 
-  @Override
   @OverridingMethodsMustInvokeSuper
   public boolean isEqualContent (@Nullable final IMicroNode o)
   {

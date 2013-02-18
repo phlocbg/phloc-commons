@@ -42,7 +42,6 @@ public enum EXMLSerializeDocType implements IHasID <String>
     m_sID = sID;
   }
 
-  @Override
   @Nonnull
   @Nonempty
   public String getID ()

@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ServiceLoader;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -30,36 +29,40 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.annotations.ReturnsMutableCopy;
+
 /**
- * {@link ServiceLoader} helper class.
+ * {@link ServiceLoaderBackport} helper class.
  * 
+ * @author boris
  * @author philip
  */
 @Immutable
-public final class SPIHelper
+public final class ServiceLoaderUtils
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (SPIHelper.class);
+  private static final Logger s_aLogger = LoggerFactory.getLogger (ServiceLoaderUtils.class);
 
-  private SPIHelper ()
+  private ServiceLoaderUtils ()
   {}
 
   /**
-   * Uses the {@link ServiceLoader} to load all SPI implementations of the
-   * passed class
+   * Uses the {@link ServiceLoaderBackport} to load all SPI implementations of
+   * the passed class
    * 
    * @param aSPIClass
    *        The SPI interface class
    * @return A collection of all currently available plugins
    */
   @Nonnull
+  @ReturnsMutableCopy
   public static <T> Collection <T> getAllSPIImplementations (@Nonnull final Class <T> aSPIClass)
   {
-    return getAllSPIImplementations (aSPIClass, ClassHelper.getDefaultClassLoader ());
+    return getAllSPIImplementations (aSPIClass, ClassHelper.getDefaultClassLoader (), null);
   }
 
   /**
-   * Uses the {@link ServiceLoader} to load all SPI implementations of the
-   * passed class
+   * Uses the {@link ServiceLoaderBackport} to load all SPI implementations of
+   * the passed class
    * 
    * @param aSPIClass
    *        The SPI interface class
@@ -68,6 +71,7 @@ public final class SPIHelper
    * @return A collection of all currently available plugins
    */
   @Nonnull
+  @ReturnsMutableCopy
   public static <T> Collection <T> getAllSPIImplementations (@Nonnull final Class <T> aSPIClass,
                                                              @Nonnull final ClassLoader aClassLoader)
   {
@@ -75,8 +79,8 @@ public final class SPIHelper
   }
 
   /**
-   * Uses the {@link ServiceLoader} to load all SPI implementations of the
-   * passed class
+   * Uses the {@link ServiceLoaderBackport} to load all SPI implementations of
+   * the passed class
    * 
    * @param aSPIClass
    *        The SPI interface class
@@ -86,6 +90,7 @@ public final class SPIHelper
    * @return A collection of all currently available plugins
    */
   @Nonnull
+  @ReturnsMutableCopy
   public static <T> Collection <T> getAllSPIImplementations (@Nonnull final Class <T> aSPIClass,
                                                              @Nullable final Logger aLogger)
   {
@@ -93,8 +98,8 @@ public final class SPIHelper
   }
 
   /**
-   * Uses the {@link ServiceLoader} to load all SPI implementations of the
-   * passed class
+   * Uses the {@link ServiceLoaderBackport} to load all SPI implementations of
+   * the passed class
    * 
    * @param aSPIClass
    *        The SPI interface class
@@ -103,9 +108,11 @@ public final class SPIHelper
    * @param aLogger
    *        An optional logger to use (As this class cannot create it's own
    *        logger)
-   * @return A collection of all currently available plugins
+   * @return A collection of all currently available plugins. Never
+   *         <code>null</code>.
    */
   @Nonnull
+  @ReturnsMutableCopy
   public static <T> Collection <T> getAllSPIImplementations (@Nonnull final Class <T> aSPIClass,
                                                              @Nonnull final ClassLoader aClassLoader,
                                                              @Nullable final Logger aLogger)
@@ -113,28 +120,34 @@ public final class SPIHelper
     if (aSPIClass == null)
       throw new NullPointerException ("SPIClass");
     if (aClassLoader == null)
-      throw new NullPointerException ("classLoader");
+      throw new NullPointerException ("ClassLoader");
 
+    final Logger aRealLogger = aLogger != null ? aLogger : s_aLogger;
     final ServiceLoaderBackport <T> aServiceLoader = ServiceLoaderBackport.<T> load (aSPIClass, aClassLoader);
-    final List <T> aImplementations = new ArrayList <T> ();
-    final Iterator <T> aIterator = aServiceLoader.iterator ();
+    final List <T> ret = new ArrayList <T> ();
 
     // We use the iterator to be able to catch exceptions thrown
     // when loading SPI implementations (e.g. the SPI implementation class does
     // not exist)
+    final Iterator <T> aIterator = aServiceLoader.iterator ();
     while (aIterator.hasNext ())
     {
       try
       {
-        aImplementations.add (aIterator.next ());
+        ret.add (aIterator.next ());
       }
       catch (final Throwable t)
       {
-        (aLogger != null ? aLogger : s_aLogger).error ("Unable to load SPI implementation of " + aSPIClass, t);
+        aRealLogger.error ("Unable to load an SPI implementation of " + aSPIClass, t);
       }
     }
-    if (aLogger != null)
-      aLogger.debug ("Finished identifying all SPI implementations of " + aSPIClass + " --> returning");
-    return aImplementations;
+
+    if (aRealLogger.isDebugEnabled ())
+      aRealLogger.debug ("Finished identifying all SPI implementations of " +
+                         aSPIClass +
+                         " --> returning " +
+                         ret.size () +
+                         " instances");
+    return ret;
   }
 }

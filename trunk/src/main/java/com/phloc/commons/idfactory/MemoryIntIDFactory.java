@@ -53,7 +53,6 @@ public final class MemoryIntIDFactory implements IIntIDFactory
     m_aID = new AtomicInteger (nStartID);
   }
 
-  @Override
   @Nonnegative
   public int getNewID ()
   {

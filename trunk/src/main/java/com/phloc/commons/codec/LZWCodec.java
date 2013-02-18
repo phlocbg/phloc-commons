@@ -258,7 +258,6 @@ public class LZWCodec implements ICodec
   public LZWCodec ()
   {}
 
-  @Override
   @Nullable
   public byte [] decode (@Nullable final byte [] aEncodedBuffer)
   {
@@ -343,7 +342,6 @@ public class LZWCodec implements ICodec
     }
   }
 
-  @Override
   @Nullable
   public byte [] encode (@Nullable final byte [] aBuffer)
   {

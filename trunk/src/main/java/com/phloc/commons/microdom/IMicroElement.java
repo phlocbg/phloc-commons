@@ -325,7 +325,6 @@ public interface IMicroElement extends IMicroNodeWithChildren
   /**
    * {@inheritDoc}
    */
-  @Override
   @Nonnull
   IMicroElement getClone ();
 }

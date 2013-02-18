@@ -90,7 +90,6 @@ public abstract class AbstractSAXErrorHandler implements ErrorHandler
 
   protected abstract void internalLog (@Nonnull EErrorLevel eErrorLevel, @Nonnull SAXParseException aException);
 
-  @Override
   public final void warning (final SAXParseException ex) throws SAXException
   {
     internalLog (EErrorLevel.WARN, ex);
@@ -100,7 +99,6 @@ public abstract class AbstractSAXErrorHandler implements ErrorHandler
       m_aWrappedErrorHandler.warning (ex);
   }
 
-  @Override
   public final void error (final SAXParseException ex) throws SAXException
   {
     internalLog (EErrorLevel.ERROR, ex);
@@ -110,7 +108,6 @@ public abstract class AbstractSAXErrorHandler implements ErrorHandler
       m_aWrappedErrorHandler.error (ex);
   }
 
-  @Override
   public final void fatalError (final SAXParseException ex) throws SAXException
   {
     internalLog (EErrorLevel.FATAL_ERROR, ex);

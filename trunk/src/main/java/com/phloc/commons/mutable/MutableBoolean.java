@@ -74,13 +74,11 @@ public final class MutableBoolean implements IMutable <MutableBoolean>
     return EChange.CHANGED;
   }
 
-  @Override
   public int compareTo (@Nonnull final MutableBoolean rhs)
   {
     return m_bValue == rhs.m_bValue ? 0 : m_bValue ? -1 : +1;
   }
 
-  @Override
   @Nonnull
   public MutableBoolean getClone ()
   {

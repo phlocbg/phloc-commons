@@ -53,7 +53,6 @@ public class WritableResourceProviderChain extends ReadableResourceProviderChain
       throw new IllegalArgumentException ("No writable resource provider passed - use a ReadableResourceProviderChain");
   }
 
-  @Override
   public final boolean supportsWriting (@Nullable final String sName)
   {
     // Check if any provider can handle this resource
@@ -63,7 +62,6 @@ public class WritableResourceProviderChain extends ReadableResourceProviderChain
     return false;
   }
 
-  @Override
   @Nonnull
   @OverrideOnDemand
   public IWritableResource getWritableResource (final String sName)

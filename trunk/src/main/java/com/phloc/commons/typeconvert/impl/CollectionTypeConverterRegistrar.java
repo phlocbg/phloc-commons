@@ -509,7 +509,6 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
     // To array
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (boolean [].class)
     {
-      @Override
       public boolean [] convert (@Nonnull final Object aSource)
       {
         boolean [] ret;
@@ -547,7 +546,6 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
 
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (byte [].class)
     {
-      @Override
       public byte [] convert (@Nonnull final Object aSource)
       {
         byte [] ret;
@@ -585,7 +583,6 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
 
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (char [].class)
     {
-      @Override
       public char [] convert (@Nonnull final Object aSource)
       {
         char [] ret;
@@ -623,7 +620,6 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
 
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (double [].class)
     {
-      @Override
       public double [] convert (@Nonnull final Object aSource)
       {
         double [] ret;
@@ -661,7 +657,6 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
 
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (float [].class)
     {
-      @Override
       public float [] convert (@Nonnull final Object aSource)
       {
         float [] ret;
@@ -699,7 +694,6 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
 
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (int [].class)
     {
-      @Override
       public int [] convert (@Nonnull final Object aSource)
       {
         int [] ret;
@@ -737,7 +731,6 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
 
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (long [].class)
     {
-      @Override
       public long [] convert (@Nonnull final Object aSource)
       {
         long [] ret;
@@ -775,7 +768,6 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
 
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (short [].class)
     {
-      @Override
       public short [] convert (@Nonnull final Object aSource)
       {
         short [] ret;
@@ -813,7 +805,6 @@ public final class CollectionTypeConverterRegistrar implements ITypeConverterReg
 
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAnySourceFixedDestination (String [].class)
     {
-      @Override
       public String [] convert (@Nonnull final Object aSource)
       {
         String [] ret;

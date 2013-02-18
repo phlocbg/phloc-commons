@@ -47,7 +47,6 @@ public class LoggingValidationEventHandlerFactory implements IValidationEventHan
     m_bEncapsulateHandler = bEncapsulateHandler;
   }
 
-  @Override
   @Nonnull
   public LoggingValidationEventHandler create (@Nullable final ValidationEventHandler aOldEventHandler)
   {

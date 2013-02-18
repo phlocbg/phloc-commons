@@ -32,8 +32,7 @@ import javax.annotation.Nullable;
  * @param <VALUETYPE>
  *        Map value type
  */
-public final class UnidirectionalConverterMapGet <KEYTYPE, VALUETYPE> implements
-                                                                      IUnidirectionalConverter <KEYTYPE, VALUETYPE>
+public final class UnidirectionalConverterMapGet <KEYTYPE, VALUETYPE> implements IUnidirectionalConverter <KEYTYPE, VALUETYPE>
 {
   private final Map <KEYTYPE, VALUETYPE> m_aMap;
 
@@ -44,7 +43,6 @@ public final class UnidirectionalConverterMapGet <KEYTYPE, VALUETYPE> implements
     m_aMap = aMap;
   }
 
-  @Override
   @Nullable
   public VALUETYPE convert (@Nullable final KEYTYPE aKey)
   {

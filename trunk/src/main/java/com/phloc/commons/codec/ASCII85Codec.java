@@ -39,7 +39,6 @@ public final class ASCII85Codec implements IByteArrayDecoder
   public ASCII85Codec ()
   {}
 
-  @Override
   @Nullable
   public byte [] decode (@Nullable final byte [] aEncodedBuffer)
   {

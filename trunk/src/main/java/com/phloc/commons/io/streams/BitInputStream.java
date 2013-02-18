@@ -143,7 +143,6 @@ public class BitInputStream implements Closeable
   /**
    * Close the underlying input stream.
    */
-  @Override
   public void close ()
   {
     m_aLock.lock ();

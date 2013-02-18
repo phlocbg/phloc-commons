@@ -52,7 +52,6 @@ public final class MultiLingualTextMicroTypeConverterRegistrar implements IMicro
     private static final String ELEMENT_TEXT = "text";
     private static final String ATTR_LOCALE = "locale";
 
-    @Override
     @Nonnull
     public final IMicroElement convertToMicroElement (@Nonnull final Object aSource,
                                                       @Nullable final String sNamespaceURI,
@@ -82,13 +81,11 @@ public final class MultiLingualTextMicroTypeConverterRegistrar implements IMicro
     }
   }
 
-  @Override
   public void registerMicroTypeConverter (@Nonnull final IMicroTypeConverterRegistry aRegistry)
   {
     // Register the read-only version first!
     aRegistry.registerMicroElementTypeConverter (ReadonlyMultiLingualText.class, new AbstractMLTConverter ()
     {
-      @Override
       @Nonnull
       public ReadonlyMultiLingualText convertToNative (@Nonnull final IMicroElement aElement)
       {
@@ -99,7 +96,6 @@ public final class MultiLingualTextMicroTypeConverterRegistrar implements IMicro
     // Register the writable version afterwards!
     aRegistry.registerMicroElementTypeConverter (MultiLingualText.class, new AbstractMLTConverter ()
     {
-      @Override
       @Nonnull
       public MultiLingualText convertToNative (@Nonnull final IMicroElement aElement)
       {

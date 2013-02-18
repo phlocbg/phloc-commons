@@ -41,7 +41,6 @@ public enum EXMLSerializeComments implements IHasID <String>
     m_sID = sID;
   }
 
-  @Override
   @Nonnull
   @Nonempty
   public String getID ()

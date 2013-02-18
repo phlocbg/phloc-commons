@@ -37,7 +37,6 @@ public interface ITypeConverter extends IUnidirectionalConverter <Object, Object
    *        because the type converter already filters <code>null</code> values!
    * @return The converted value. May be <code>null</code>.
    */
-  @Override
   @Nullable
   Object convert (@Nonnull Object aSource);
 }

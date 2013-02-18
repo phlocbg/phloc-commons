@@ -47,7 +47,6 @@ public class CollectingValidationEventHandlerFactory implements IValidationEvent
     m_bEncapsulateHandler = bEncapsulateHandler;
   }
 
-  @Override
   @Nonnull
   public CollectingValidationEventHandler create (@Nullable final ValidationEventHandler aOldEventHandler)
   {

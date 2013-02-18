@@ -128,7 +128,6 @@ public class ConcurrentCollectorMultiple <DATATYPE> extends AbstractConcurrentCo
     }
   }
 
-  @Override
   public final void run ()
   {
     if (m_aPerformer == null)

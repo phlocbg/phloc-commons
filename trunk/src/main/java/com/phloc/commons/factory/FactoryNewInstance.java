@@ -47,7 +47,6 @@ public final class FactoryNewInstance <DATATYPE> implements IFactory <DATATYPE>
     m_aClass = aClass;
   }
 
-  @Override
   @Nullable
   public DATATYPE create ()
   {

@@ -75,7 +75,6 @@ public enum EFileIOErrorCode implements ISuccessIndicator
    * @return <code>true</code> if this is {@link #NO_ERROR} , <code>false</code>
    *         otherwise.
    */
-  @Override
   public boolean isSuccess ()
   {
     return this == NO_ERROR;
@@ -85,7 +84,6 @@ public enum EFileIOErrorCode implements ISuccessIndicator
    * @return <code>true</code> if this is any other value than {@link #NO_ERROR}
    *         , <code>false</code> otherwise.
    */
-  @Override
   public boolean isFailure ()
   {
     return this != NO_ERROR;

@@ -27,7 +27,7 @@
   </entry>
   <entry date="2013-02-16" category="tech" action="add">
     <change>
-      <text locale="en">Added SPIHelper for easy loading of SPI implementations via ServiceLoader</text>
+      <text locale="en">Added ServiceLoaderUtils for easy loading of SPI implementations via ServiceLoaderBackport</text>
     </change>
   </entry>
   <entry date="2013-02-16" category="api" action="add">

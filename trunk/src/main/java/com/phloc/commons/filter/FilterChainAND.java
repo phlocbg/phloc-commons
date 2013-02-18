@@ -58,7 +58,6 @@ public final class FilterChainAND <DATATYPE> implements IFilter <DATATYPE>
     return ContainerHelper.newList (m_aFilters);
   }
 
-  @Override
   public boolean matchesFilter (@Nullable final DATATYPE aValue)
   {
     for (final IFilter <? super DATATYPE> aFilter : m_aFilters)

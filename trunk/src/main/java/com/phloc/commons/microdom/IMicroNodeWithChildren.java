@@ -55,7 +55,6 @@ public interface IMicroNodeWithChildren extends IMicroNode
   /**
    * {@inheritDoc}
    */
-  @Override
   @Nonnull
   IMicroNodeWithChildren getClone ();
 }

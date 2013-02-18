@@ -44,7 +44,6 @@ public interface IChildrenProviderSorted <CHILDTYPE> extends IChildrenProvider <
    *         <code>null</code> if the call to {@link #hasChildren(Object)} with
    *         the same object returned <code>true</code>.
    */
-  @Override
   @Nullable
   List <? extends CHILDTYPE> getChildren (@Nullable CHILDTYPE aCurrent);
 

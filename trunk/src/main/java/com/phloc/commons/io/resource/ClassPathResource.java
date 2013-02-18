@@ -150,7 +150,6 @@ public final class ClassPathResource implements IReadableResource
     return m_aClassLoader == null ? null : m_aClassLoader.get ();
   }
 
-  @Override
   @Nonnull
   public String getResourceID ()
   {
@@ -158,7 +157,6 @@ public final class ClassPathResource implements IReadableResource
     return aURL == null ? m_sPath : aURL.toExternalForm ();
   }
 
-  @Override
   @Nonnull
   @Nonempty
   public String getPath ()
@@ -223,7 +221,6 @@ public final class ClassPathResource implements IReadableResource
    * 
    * @return <code>null</code> if no such resource exists.
    */
-  @Override
   @Nullable
   public InputStream getInputStream ()
   {
@@ -246,14 +243,12 @@ public final class ClassPathResource implements IReadableResource
     return _asInputStream (aURL);
   }
 
-  @Override
   @Nullable
   public Reader getReader (@Nonnull final String sCharset)
   {
     return StreamUtils.createReader (getInputStream (), sCharset);
   }
 
-  @Override
   @Nullable
   public Reader getReader (@Nonnull final Charset aCharset)
   {
@@ -277,7 +272,6 @@ public final class ClassPathResource implements IReadableResource
     return StreamUtils.createReader (getInputStreamNoCache (aClassLoader), sCharset);
   }
 
-  @Override
   public boolean exists ()
   {
     // Uses a cached already resolved URL
@@ -354,7 +348,6 @@ public final class ClassPathResource implements IReadableResource
     return aClassLoader.getResource (sRealPath);
   }
 
-  @Override
   @Nullable
   public URL getAsURL ()
   {
@@ -427,7 +420,6 @@ public final class ClassPathResource implements IReadableResource
     return _getAsFile (aURL);
   }
 
-  @Override
   @Nullable
   public File getAsFile ()
   {
@@ -463,7 +455,6 @@ public final class ClassPathResource implements IReadableResource
     return getAsURLNoCache (aClassLoader) != null;
   }
 
-  @Override
   @Nonnull
   public ClassPathResource getReadableCloneForPath (@Nonnull final String sPath)
   {

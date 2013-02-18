@@ -175,7 +175,6 @@ public class SimpleLSResourceResolver implements LSResourceResolver
    *        The systemId of the including resource.
    * @return <code>null</code> if the resource could not be resolved.
    */
-  @Override
   @Nullable
   public final LSInput resolveResource (final String sType,
                                         final String sNamespaceURI,

@@ -38,7 +38,6 @@ public final class FactoryNull <DATATYPE> implements IFactory <DATATYPE>
   private FactoryNull ()
   {}
 
-  @Override
   @Nullable
   public DATATYPE create ()
   {

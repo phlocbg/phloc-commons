@@ -354,7 +354,6 @@ public final class ServiceLoaderBackport <SPITYPE> implements Iterable <SPITYPE>
       m_aLILoader = aLoader;
     }
 
-    @Override
     public boolean hasNext ()
     {
       if (m_sLINextName != null)
@@ -386,7 +385,6 @@ public final class ServiceLoaderBackport <SPITYPE> implements Iterable <SPITYPE>
       return true;
     }
 
-    @Override
     public SPITYPE next ()
     {
       if (!hasNext ())
@@ -411,7 +409,6 @@ public final class ServiceLoaderBackport <SPITYPE> implements Iterable <SPITYPE>
       throw new Error (); // This cannot happen
     }
 
-    @Override
     @UnsupportedOperation
     public void remove ()
     {
@@ -455,14 +452,12 @@ public final class ServiceLoaderBackport <SPITYPE> implements Iterable <SPITYPE>
    * 
    * @return An iterator that lazily loads providers for this loader's service
    */
-  @Override
   public Iterator <SPITYPE> iterator ()
   {
     return new Iterator <SPITYPE> ()
     {
       private final Iterator <Map.Entry <String, SPITYPE>> m_aKnownProviders = m_aProviders.entrySet ().iterator ();
 
-      @Override
       public boolean hasNext ()
       {
         if (m_aKnownProviders.hasNext ())
@@ -470,7 +465,6 @@ public final class ServiceLoaderBackport <SPITYPE> implements Iterable <SPITYPE>
         return m_aLookupIterator.hasNext ();
       }
 
-      @Override
       public SPITYPE next ()
       {
         if (m_aKnownProviders.hasNext ())
@@ -478,7 +472,6 @@ public final class ServiceLoaderBackport <SPITYPE> implements Iterable <SPITYPE>
         return m_aLookupIterator.next ();
       }
 
-      @Override
       @UnsupportedOperation
       public void remove ()
       {

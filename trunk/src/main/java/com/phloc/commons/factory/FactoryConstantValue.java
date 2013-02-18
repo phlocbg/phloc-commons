@@ -40,7 +40,6 @@ public final class FactoryConstantValue <DATATYPE> implements IFactory <DATATYPE
     m_aConstantValue = aConstantValue;
   }
 
-  @Override
   @Nullable
   public DATATYPE create ()
   {

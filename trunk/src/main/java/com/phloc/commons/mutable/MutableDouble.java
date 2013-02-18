@@ -123,49 +123,41 @@ public final class MutableDouble extends Number implements IMutableNumeric <Muta
     return EChange.CHANGED;
   }
 
-  @Override
   public boolean is0 ()
   {
     return EqualsUtils.equals (m_dValue, 0);
   }
 
-  @Override
   public boolean isNot0 ()
   {
     return !is0 ();
   }
 
-  @Override
   public boolean isSmaller0 ()
   {
     return Double.compare (m_dValue, 0) < 0;
   }
 
-  @Override
   public boolean isSmallerOrEqual0 ()
   {
     return Double.compare (m_dValue, 0) <= 0;
   }
 
-  @Override
   public boolean isGreater0 ()
   {
     return Double.compare (m_dValue, 0) > 0;
   }
 
-  @Override
   public boolean isGreaterOrEqual0 ()
   {
     return Double.compare (m_dValue, 0) >= 0;
   }
 
-  @Override
   public int compareTo (final MutableDouble rhs)
   {
     return Double.compare (m_dValue, rhs.m_dValue);
   }
 
-  @Override
   @Nonnull
   public MutableDouble getClone ()
   {
