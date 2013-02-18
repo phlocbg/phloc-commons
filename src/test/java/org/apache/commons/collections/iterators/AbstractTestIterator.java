@@ -140,7 +140,7 @@ public abstract class AbstractTestIterator <T> extends AbstractTestObject
    */
   public void testEmptyIterator ()
   {
-    if (supportsEmptyIterator () == false)
+    if (!supportsEmptyIterator ())
     {
       return;
     }
@@ -168,7 +168,7 @@ public abstract class AbstractTestIterator <T> extends AbstractTestObject
    */
   public void testFullIterator ()
   {
-    if (supportsFullIterator () == false)
+    if (!supportsFullIterator ())
     {
       return;
     }
@@ -214,7 +214,7 @@ public abstract class AbstractTestIterator <T> extends AbstractTestObject
   {
     final Iterator <T> it = makeFullIterator ();
 
-    if (supportsRemove () == false)
+    if (!supportsRemove ())
     {
       // check for UnsupportedOperationException if not supported
       try
