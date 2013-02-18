@@ -116,6 +116,7 @@ import junit.framework.TestSuite;
  * 
  * 
  * 
+ * 
  * </Pre>
  * 
  * In the above examples, <code>TestSet</code> defines two simple test methods
@@ -428,7 +429,7 @@ class BulkTestSuiteMaker
     final String oldPrefix = prefix;
     final TestSuite oldResult = result;
 
-    prefix = prefix + "." + m.getName ();
+    prefix += "." + m.getName ();
     result = new TestSuite ();
     result.setName (m.getName ());
 

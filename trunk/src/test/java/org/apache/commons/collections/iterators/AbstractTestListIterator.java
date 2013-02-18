@@ -128,6 +128,8 @@ public abstract class AbstractTestListIterator <T> extends AbstractTestIterator 
 
   /**
    * The value to be used in the add and set tests. Default is null.
+   * 
+   * @return null
    */
   public T addSetValue ()
   {
@@ -140,7 +142,7 @@ public abstract class AbstractTestListIterator <T> extends AbstractTestIterator 
    */
   public void testEmptyListIteratorIsIndeedEmpty ()
   {
-    if (supportsEmptyIterator () == false)
+    if (!supportsEmptyIterator ())
     {
       return;
     }
@@ -224,7 +226,7 @@ public abstract class AbstractTestListIterator <T> extends AbstractTestIterator 
     ListIterator <T> it = makeFullListIterator ();
 
     final T addValue = addSetValue ();
-    if (supportsAdd () == false)
+    if (!supportsAdd ())
     {
       // check for UnsupportedOperationException if not supported
       try
@@ -265,7 +267,7 @@ public abstract class AbstractTestListIterator <T> extends AbstractTestIterator 
   {
     final ListIterator <T> it = makeFullListIterator ();
 
-    if (supportsSet () == false)
+    if (!supportsSet ())
     {
       // check for UnsupportedOperationException if not supported
       try

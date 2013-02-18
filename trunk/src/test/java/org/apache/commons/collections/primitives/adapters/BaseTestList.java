@@ -118,7 +118,7 @@ public abstract class BaseTestList <T> extends TestCase
    */
   public void testListListIteratorPreviousRemove ()
   {
-    if (isRemoveSupported () == false)
+    if (!isRemoveSupported ())
       return;
     resetFull ();
     final ListIterator <?> it = getList ().listIterator ();
