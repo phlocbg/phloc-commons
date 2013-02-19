@@ -76,7 +76,7 @@ public final class FormattedObjectTest
     assertEquals ("x Any", aFO.getAsString ());
     PhlocTestUtils.testToStringImplementation (aFO);
 
-    aFO = new FormattedObject ("Any", new StringPrefixFormatter ("x ", new BracketFormatter ()));
+    aFO = new FormattedObject ("Any", new StringPrefixFormatter (new BracketFormatter (), "x "));
     assertEquals ("Any", aFO.getValue ());
     assertEquals (StringPrefixFormatter.class, aFO.getFormatter ().getClass ());
     assertEquals ("x [Any]", aFO.getAsString ());
@@ -88,7 +88,7 @@ public final class FormattedObjectTest
     assertEquals ("Any y", aFO.getAsString ());
     PhlocTestUtils.testToStringImplementation (aFO);
 
-    aFO = new FormattedObject ("Any", new StringSuffixFormatter (" y", new BracketFormatter ()));
+    aFO = new FormattedObject ("Any", new StringSuffixFormatter (new BracketFormatter (), " y"));
     assertEquals ("Any", aFO.getValue ());
     assertEquals (StringSuffixFormatter.class, aFO.getFormatter ().getClass ());
     assertEquals ("[Any] y", aFO.getAsString ());
@@ -100,7 +100,7 @@ public final class FormattedObjectTest
     assertEquals ("@@@@@@@Any", aFO.getAsString ());
     PhlocTestUtils.testToStringImplementation (aFO);
 
-    aFO = new FormattedObject ("Any", new MinLengthAddLeadingFormatter (10, '@', new BracketFormatter ()));
+    aFO = new FormattedObject ("Any", new MinLengthAddLeadingFormatter (new BracketFormatter (), 10, '@'));
     assertEquals ("Any", aFO.getValue ());
     assertEquals (MinLengthAddLeadingFormatter.class, aFO.getFormatter ().getClass ());
     assertEquals ("@@@@@[Any]", aFO.getAsString ());
@@ -112,7 +112,7 @@ public final class FormattedObjectTest
     assertEquals ("Any@@@@@@@", aFO.getAsString ());
     PhlocTestUtils.testToStringImplementation (aFO);
 
-    aFO = new FormattedObject ("Any", new MinLengthAddTrailingFormatter (10, '@', new BracketFormatter ()));
+    aFO = new FormattedObject ("Any", new MinLengthAddTrailingFormatter (new BracketFormatter (), 10, '@'));
     assertEquals ("Any", aFO.getValue ());
     assertEquals (MinLengthAddTrailingFormatter.class, aFO.getFormatter ().getClass ());
     assertEquals ("[Any]@@@@@", aFO.getAsString ());

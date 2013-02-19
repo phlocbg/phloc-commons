@@ -23,28 +23,19 @@ import javax.annotation.Nullable;
 import com.phloc.commons.format.IFormatter;
 
 /**
- * A formatter that adds a prefix to a string.
+ * A formatter that skips a suffix from a string.
  * 
  * @author philip
  */
-public class StringPrefixFormatter extends StringPrefixAndSuffixFormatter
+public class StringSkipSuffixFormatter extends StringSkipPrefixAndSuffixFormatter
 {
-  public StringPrefixFormatter (@Nonnull final String sPrefix)
+  public StringSkipSuffixFormatter (@Nonnull final String sSuffix)
   {
-    super (sPrefix, "");
+    super ("", sSuffix);
   }
 
-  /**
-   * @deprecated Use {@link #StringPrefixFormatter(IFormatter,String)} instead
-   */
-  @Deprecated
-  public StringPrefixFormatter (@Nonnull final String sPrefix, @Nullable final IFormatter aNestedFormatter)
+  public StringSkipSuffixFormatter (@Nullable final IFormatter aNestedFormatter, @Nonnull final String sSuffix)
   {
-    this (aNestedFormatter, sPrefix);
-  }
-
-  public StringPrefixFormatter (@Nullable final IFormatter aNestedFormatter, @Nonnull final String sPrefix)
-  {
-    super (aNestedFormatter, sPrefix, "");
+    super (aNestedFormatter, "", sSuffix);
   }
 }

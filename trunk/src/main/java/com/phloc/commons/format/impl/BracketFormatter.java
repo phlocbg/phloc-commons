@@ -35,6 +35,6 @@ public final class BracketFormatter extends StringPrefixAndSuffixFormatter
 
   public BracketFormatter (@Nullable final IFormatter aNestedFormatter)
   {
-    super ("[", "]", aNestedFormatter);
+    super (aNestedFormatter, "[", "]");
   }
 }

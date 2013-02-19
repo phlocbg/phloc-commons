@@ -17,34 +17,27 @@
  */
 package com.phloc.commons.format.impl;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import static org.junit.Assert.assertEquals;
 
-import com.phloc.commons.format.IFormatter;
+import org.junit.Test;
+
+import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
- * A formatter that adds a prefix to a string.
+ * Test class for class {@link StringSkipSuffixFormatter}.
  * 
  * @author philip
  */
-public class StringPrefixFormatter extends StringPrefixAndSuffixFormatter
+public final class StringSkipSuffixFormatterTest
 {
-  public StringPrefixFormatter (@Nonnull final String sPrefix)
+  @Test
+  public void testAll ()
   {
-    super (sPrefix, "");
-  }
-
-  /**
-   * @deprecated Use {@link #StringPrefixFormatter(IFormatter,String)} instead
-   */
-  @Deprecated
-  public StringPrefixFormatter (@Nonnull final String sPrefix, @Nullable final IFormatter aNestedFormatter)
-  {
-    this (aNestedFormatter, sPrefix);
-  }
-
-  public StringPrefixFormatter (@Nullable final IFormatter aNestedFormatter, @Nonnull final String sPrefix)
-  {
-    super (aNestedFormatter, sPrefix, "");
+    final StringSkipSuffixFormatter fp = new StringSkipSuffixFormatter ("o");
+    assertEquals ("abc", fp.getFormattedValue ("abco"));
+    assertEquals ("abc", fp.getFormattedValue ("abc"));
+    assertEquals ("bc", fp.getFormattedValue ("bco"));
+    assertEquals ("bc", fp.getFormattedValue ("bc"));
+    PhlocTestUtils.testToStringImplementation (fp);
   }
 }

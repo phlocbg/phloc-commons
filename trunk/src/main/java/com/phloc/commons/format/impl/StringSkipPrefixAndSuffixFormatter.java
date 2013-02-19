@@ -22,39 +22,27 @@ import javax.annotation.Nullable;
 
 import com.phloc.commons.format.IFormatter;
 import com.phloc.commons.hash.HashCodeGenerator;
+import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * A formatter that adds a prefix and/or a suffix to a string.
+ * A formatter that skip a prefix and/or a suffix to a string.
  * 
  * @author philip
  */
-public class StringPrefixAndSuffixFormatter extends AbstractStringFormatter
+public class StringSkipPrefixAndSuffixFormatter extends AbstractStringFormatter
 {
   private final String m_sPrefix;
   private final String m_sSuffix;
 
-  public StringPrefixAndSuffixFormatter (@Nonnull final String sPrefix, @Nonnull final String sSuffix)
+  public StringSkipPrefixAndSuffixFormatter (@Nonnull final String sPrefix, @Nonnull final String sSuffix)
   {
     this (null, sPrefix, sSuffix);
   }
 
-  /**
-   * @deprecated Use
-   *             {@link #StringPrefixAndSuffixFormatter(IFormatter,String,String)}
-   *             instead
-   */
-  @Deprecated
-  public StringPrefixAndSuffixFormatter (@Nonnull final String sPrefix,
-                                         @Nonnull final String sSuffix,
-                                         @Nullable final IFormatter aNestedFormatter)
-  {
-    this (aNestedFormatter, sPrefix, sSuffix);
-  }
-
-  public StringPrefixAndSuffixFormatter (@Nullable final IFormatter aNestedFormatter,
-                                         @Nonnull final String sPrefix,
-                                         @Nonnull final String sSuffix)
+  public StringSkipPrefixAndSuffixFormatter (@Nullable final IFormatter aNestedFormatter,
+                                             @Nonnull final String sPrefix,
+                                             @Nonnull final String sSuffix)
   {
     super (aNestedFormatter);
     if (sPrefix == null)
@@ -68,7 +56,13 @@ public class StringPrefixAndSuffixFormatter extends AbstractStringFormatter
   @Override
   protected final String getFormattedValueAsString (@Nullable final Object aValue)
   {
-    return m_sPrefix + getValueAsString (aValue) + m_sSuffix;
+    String sValue = getValueAsString (aValue);
+    // strip prefix and suffix
+    if (StringHelper.hasText (m_sPrefix))
+      sValue = StringHelper.trimStart (sValue, m_sPrefix);
+    if (StringHelper.hasText (m_sSuffix))
+      sValue = StringHelper.trimEnd (sValue, m_sSuffix);
+    return sValue;
   }
 
   @Override
@@ -76,9 +70,9 @@ public class StringPrefixAndSuffixFormatter extends AbstractStringFormatter
   {
     if (o == this)
       return true;
-    if (!(o instanceof StringPrefixAndSuffixFormatter))
+    if (!(o instanceof StringSkipPrefixAndSuffixFormatter))
       return false;
-    final StringPrefixAndSuffixFormatter rhs = (StringPrefixAndSuffixFormatter) o;
+    final StringSkipPrefixAndSuffixFormatter rhs = (StringSkipPrefixAndSuffixFormatter) o;
     return m_sPrefix.equals (rhs.m_sPrefix) && m_sSuffix.equals (rhs.m_sSuffix);
   }
 

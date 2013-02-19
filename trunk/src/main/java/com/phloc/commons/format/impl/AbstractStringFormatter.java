@@ -59,6 +59,7 @@ public abstract class AbstractStringFormatter implements IFormatter
     return sValue != null ? sValue : StringHelper.getToString (aValue);
   }
 
+  @Nullable
   protected abstract String getFormattedValueAsString (@Nullable Object aValue);
 
   @Nullable
