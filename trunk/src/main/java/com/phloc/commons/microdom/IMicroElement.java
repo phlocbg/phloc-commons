@@ -203,6 +203,14 @@ public interface IMicroElement extends IMicroNodeWithChildren
   boolean hasNamespaceURI ();
 
   /**
+   * Check if this element has no namespace URI.
+   * 
+   * @return <code>true</code> if this element has no namespace URI,
+   *         <code>false</code> otherwise
+   */
+  boolean hasNoNamespaceURI ();
+
+  /**
    * Check if this element has the specified namespace URI.
    * 
    * @param sNamespaceURI
@@ -269,6 +277,32 @@ public interface IMicroElement extends IMicroNodeWithChildren
   List <IMicroElement> getChildElements (@Nullable String sNamespaceURI, @Nullable String sLocalName);
 
   /**
+   * Get a list of all direct child elements having the specified tag name.
+   * Micro container children are inlined.
+   * 
+   * @param aElementNameProvider
+   *        Element name provider. May not be <code>null</code>.
+   * @return Never be <code>null</code>.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  List <IMicroElement> getChildElements (@Nonnull IHasElementName aElementNameProvider);
+
+  /**
+   * Get a list of all direct child elements having the specified namespace and
+   * the specified tag name. Micro container children are inlined.
+   * 
+   * @param sNamespaceURI
+   *        The namespace URI to check. May be <code>null</code>.
+   * @param aElementNameProvider
+   *        Element name provider. May not be <code>null</code>.
+   * @return Never be <code>null</code>.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  List <IMicroElement> getChildElements (@Nullable String sNamespaceURI, @Nonnull IHasElementName aElementNameProvider);
+
+  /**
    * Recursively get all child elements. Micro container children are inlined.
    * 
    * @return A list containing all recursively contained elements. May not be
@@ -311,6 +345,30 @@ public interface IMicroElement extends IMicroNodeWithChildren
   boolean hasChildElements (@Nullable String sNamespaceURI, @Nullable String sLocalName);
 
   /**
+   * Check if this element has at least one child element with the specified tag
+   * name. Micro container children are also checked.
+   * 
+   * @param aElementNameProvider
+   *        Element name provider. May not be <code>null</code>.
+   * @return <code>true</code> if this element has at least one child element
+   *         with the specified tag name
+   */
+  boolean hasChildElements (@Nonnull IHasElementName aElementNameProvider);
+
+  /**
+   * Check if this element has at least one child element with the specified
+   * namespace URI and tag name. Micro container children are also checked.
+   * 
+   * @param sNamespaceURI
+   *        The namespace URI to check. May be <code>null</code>.
+   * @param aElementNameProvider
+   *        Element name provider. May not be <code>null</code>.
+   * @return <code>true</code> if this element has at least one child element
+   *         with the specified namespace URI and tag name
+   */
+  boolean hasChildElements (@Nullable String sNamespaceURI, @Nonnull IHasElementName aElementNameProvider);
+
+  /**
    * Get the first child element of this element. Micro container children are
    * also checked.
    * 
@@ -343,6 +401,30 @@ public interface IMicroElement extends IMicroNodeWithChildren
    */
   @Nullable
   IMicroElement getFirstChildElement (@Nullable String sNamespaceURI, @Nullable String sLocalName);
+
+  /**
+   * Get the first child element with the given tag name. Micro container
+   * children are also checked.
+   * 
+   * @param aElementNameProvider
+   *        Element name provider. May not be <code>null</code>.
+   * @return <code>null</code> if no such child element is present
+   */
+  @Nullable
+  IMicroElement getFirstChildElement (@Nonnull IHasElementName aElementNameProvider);
+
+  /**
+   * Get the first child element with the given tag name and the given
+   * namespace. Micro container children are also checked.
+   * 
+   * @param sNamespaceURI
+   *        The namespace URL to search.
+   * @param aElementNameProvider
+   *        Element name provider. May not be <code>null</code>.
+   * @return <code>null</code> if no such child element is present
+   */
+  @Nullable
+  IMicroElement getFirstChildElement (@Nullable String sNamespaceURI, @Nonnull IHasElementName aElementNameProvider);
 
   /**
    * {@inheritDoc}

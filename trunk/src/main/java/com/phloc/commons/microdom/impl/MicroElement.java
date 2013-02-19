@@ -252,6 +252,11 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return StringHelper.hasText (m_sNamespaceURI);
   }
 
+  public boolean hasNoNamespaceURI ()
+  {
+    return StringHelper.hasNoText (m_sNamespaceURI);
+  }
+
   public boolean hasNamespaceURI (@Nullable final String sNamespaceURI)
   {
     return EqualsUtils.equals (m_sNamespaceURI, sNamespaceURI);
@@ -353,6 +358,25 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
 
   @Nonnull
   @ReturnsMutableCopy
+  public List <IMicroElement> getChildElements (@Nonnull final IHasElementName aElementNameProvider)
+  {
+    if (aElementNameProvider == null)
+      throw new NullPointerException ("ElementNameProvider");
+    return getChildElements (aElementNameProvider.getElementName ());
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public List <IMicroElement> getChildElements (@Nullable final String sNamespaceURI,
+                                                @Nonnull final IHasElementName aElementNameProvider)
+  {
+    if (aElementNameProvider == null)
+      throw new NullPointerException ("ElementNameProvider");
+    return getChildElements (sNamespaceURI, aElementNameProvider.getElementName ());
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
   public List <IMicroElement> getAllChildElementsRecursive ()
   {
     final List <IMicroElement> ret = new ArrayList <IMicroElement> ();
@@ -446,6 +470,21 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return false;
   }
 
+  public boolean hasChildElements (@Nonnull final IHasElementName aElementNameProvider)
+  {
+    if (aElementNameProvider == null)
+      throw new NullPointerException ("ElementNameProvider");
+    return hasChildElements (aElementNameProvider.getElementName ());
+  }
+
+  public boolean hasChildElements (@Nullable final String sNamespaceURI,
+                                   @Nonnull final IHasElementName aElementNameProvider)
+  {
+    if (aElementNameProvider == null)
+      throw new NullPointerException ("ElementNameProvider");
+    return hasChildElements (sNamespaceURI, aElementNameProvider.getElementName ());
+  }
+
   @Nullable
   public IMicroElement getFirstChildElement ()
   {
@@ -515,6 +554,23 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
               }
           }
     return null;
+  }
+
+  @Nullable
+  public IMicroElement getFirstChildElement (@Nonnull final IHasElementName aElementNameProvider)
+  {
+    if (aElementNameProvider == null)
+      throw new NullPointerException ("ElementNameProvider");
+    return getFirstChildElement (aElementNameProvider.getElementName ());
+  }
+
+  @Nullable
+  public IMicroElement getFirstChildElement (@Nullable final String sNamespaceURI,
+                                             @Nonnull final IHasElementName aElementNameProvider)
+  {
+    if (aElementNameProvider == null)
+      throw new NullPointerException ("ElementNameProvider");
+    return getFirstChildElement (sNamespaceURI, aElementNameProvider.getElementName ());
   }
 
   @Nonnull

@@ -411,12 +411,55 @@ public final class MicroElementTest extends AbstractPhlocTestCase
     aCont.appendElement ("c");
     final IMicroElement d = aCont.appendElement (NSURI, "d");
 
-    assertNotNull (eRoot.getChildElements (null));
-    assertNotNull (eRoot.getChildElements (null, null));
-    assertFalse (eRoot.hasChildElements (null));
-    assertFalse (eRoot.hasChildElements (null, null));
-    assertNull (eRoot.getFirstChildElement (null));
-    assertNull (eRoot.getFirstChildElement (null, null));
+    assertNotNull (eRoot.getChildElements ((String) null));
+    assertNotNull (eRoot.getChildElements (null, (String) null));
+    assertFalse (eRoot.hasChildElements ((String) null));
+    assertFalse (eRoot.hasChildElements (null, (String) null));
+    assertNull (eRoot.getFirstChildElement ((String) null));
+    assertNull (eRoot.getFirstChildElement (null, (String) null));
+
+    try
+    {
+      eRoot.getChildElements ((IHasElementName) null);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+    try
+    {
+      eRoot.getChildElements (null, (IHasElementName) null);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+    try
+    {
+      eRoot.hasChildElements ((IHasElementName) null);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+    try
+    {
+      eRoot.hasChildElements (null, (IHasElementName) null);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+    try
+    {
+      eRoot.getFirstChildElement ((IHasElementName) null);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+    try
+    {
+      eRoot.getFirstChildElement (null, (IHasElementName) null);
+      fail ();
+    }
+    catch (NullPointerException ex)
+    {}
 
     List <IMicroElement> x = eRoot.getChildElements (NSURI, "a");
     assertNotNull (x);
