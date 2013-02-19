@@ -44,6 +44,7 @@ import com.phloc.commons.typeconvert.ITypeConverter;
 import com.phloc.commons.typeconvert.ITypeConverterRegistrarSPI;
 import com.phloc.commons.typeconvert.ITypeConverterRegistry;
 import com.phloc.commons.typeconvert.rule.AbstractTypeConverterRuleAssignableSourceFixedDestination;
+import com.phloc.commons.url.URLUtils;
 
 /**
  * Register the IO specific type converter
@@ -75,14 +76,7 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
     {
       public URL convert (@Nonnull final Object aSource)
       {
-        try
-        {
-          return ((File) aSource).toURI ().toURL ();
-        }
-        catch (final MalformedURLException ex)
-        {
-          return null;
-        }
+        return URLUtils.getAsURL (((File) aSource).toURI ());
       }
     });
     aRegistry.registerTypeConverter (URI.class, File.class, new ITypeConverter ()
@@ -96,14 +90,7 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
     {
       public URL convert (@Nonnull final Object aSource)
       {
-        try
-        {
-          return ((URI) aSource).toURL ();
-        }
-        catch (final MalformedURLException ex)
-        {
-          return null;
-        }
+        return URLUtils.getAsURL ((URI) aSource);
       }
     });
     aRegistry.registerTypeConverter (URL.class, String.class, new ITypeConverter ()
@@ -133,14 +120,7 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
     {
       public URI convert (@Nonnull final Object aSource)
       {
-        try
-        {
-          return ((URL) aSource).toURI ();
-        }
-        catch (final URISyntaxException ex)
-        {
-          return null;
-        }
+        return URLUtils.getAsURI ((URL) aSource);
       }
     });
     aRegistry.registerTypeConverter (String.class, File.class, new ITypeConverter ()
@@ -154,28 +134,14 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
     {
       public URI convert (@Nonnull final Object aSource)
       {
-        try
-        {
-          return new URI ((String) aSource);
-        }
-        catch (final URISyntaxException ex)
-        {
-          return null;
-        }
+        return URLUtils.getAsURI ((String) aSource);
       }
     });
     aRegistry.registerTypeConverter (String.class, URL.class, new ITypeConverter ()
     {
       public URL convert (@Nonnull final Object aSource)
       {
-        try
-        {
-          return new URL ((String) aSource);
-        }
-        catch (final MalformedURLException ex)
-        {
-          return null;
-        }
+        return URLUtils.getAsURL ((String) aSource);
       }
     });
 
@@ -320,7 +286,7 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
       {
         try
         {
-          return new URLResource (((URI) aSource).toURL ());
+          return new URLResource ((URI) aSource);
         }
         catch (final MalformedURLException ex)
         {
