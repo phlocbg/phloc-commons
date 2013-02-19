@@ -39,6 +39,7 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.GlobalDebug;
 import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.encode.IDecoder;
@@ -291,9 +292,8 @@ public final class URLUtils
 
       // Maybe empty, if the URL ends with a '?'
       if (StringHelper.hasText (sQueryString))
-      {
-        aParams = getQueryStringAsMap (sQueryString, aParameterDecoder);
-      }
+        aParams = _getQueryStringAsMap (sQueryString, aParameterDecoder);
+
       sPath = sRemainingHref.substring (0, nQuestionIndex);
     }
     else
@@ -302,34 +302,38 @@ public final class URLUtils
     return new URLData (sPath, aParams, sAnchor);
   }
 
-  private static Map <String, String> getQueryStringAsMap (final String sQueryString,
-                                                           @Nonnull final IDecoder <String> aParameterDecoder)
+  @Nonnull
+  @ReturnsMutableCopy
+  private static Map <String, String> _getQueryStringAsMap (@Nullable final String sQueryString,
+                                                            @Nonnull final IDecoder <String> aParameterDecoder)
   {
     final Map <String, String> aMap = new LinkedHashMap <String, String> ();
-    if (StringHelper.hasNoText (sQueryString))
-      return aMap;
-
-    for (final String sKeyValuePair : StringHelper.getExploded (AMPERSAND, sQueryString))
+    if (StringHelper.hasText (sQueryString))
     {
-      if (sKeyValuePair.length () > 0)
+      for (final String sKeyValuePair : StringHelper.getExploded (AMPERSAND, sQueryString))
       {
-        final List <String> aParts = StringHelper.getExploded (EQUALS, sKeyValuePair, 2);
-        final String sKey = aParts.get (0);
-        final String sValue = aParts.size () == 2 ? aParts.get (1) : "";
-        if (StringHelper.hasNoText (sKey))
-          throw new IllegalArgumentException ("key may not be empty!");
-        if (sValue == null)
-          throw new NullPointerException ("value may not be null");
-        // Now decode the parameters
-        aMap.put (aParameterDecoder.decode (sKey), aParameterDecoder.decode (sValue));
+        if (sKeyValuePair.length () > 0)
+        {
+          final List <String> aParts = StringHelper.getExploded (EQUALS, sKeyValuePair, 2);
+          final String sKey = aParts.get (0);
+          if (StringHelper.hasNoText (sKey))
+            throw new IllegalArgumentException ("parameter name may not be empty!");
+          final String sValue = aParts.size () == 2 ? aParts.get (1) : "";
+          if (sValue == null)
+            throw new NullPointerException ("value may not be null");
+          // Now decode the parameters
+          aMap.put (aParameterDecoder.decode (sKey), aParameterDecoder.decode (sValue));
+        }
       }
     }
     return aMap;
   }
 
-  public static Map <String, String> getQueryStringAsMap (final String sQueryString)
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Map <String, String> getQueryStringAsMap (@Nullable final String sQueryString)
   {
-    return getQueryStringAsMap (sQueryString, IdentityDecoder.<String> create ());
+    return _getQueryStringAsMap (sQueryString, IdentityDecoder.<String> create ());
   }
 
   @Nonnull

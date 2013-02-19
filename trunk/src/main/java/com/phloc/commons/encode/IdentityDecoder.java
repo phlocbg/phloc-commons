@@ -20,6 +20,8 @@ package com.phloc.commons.encode;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.lang.GenericReflection;
+
 /**
  * The most simple decoder, that does not do anything
  * 
@@ -29,6 +31,11 @@ import javax.annotation.Nullable;
  */
 public final class IdentityDecoder <DATATYPE> implements IDecoder <DATATYPE>
 {
+  private static final IdentityDecoder <Object> s_aInstance = new IdentityDecoder <Object> ();
+
+  private IdentityDecoder ()
+  {}
+
   @Nullable
   public DATATYPE decode (@Nullable final DATATYPE aInput)
   {
@@ -43,6 +50,6 @@ public final class IdentityDecoder <DATATYPE> implements IDecoder <DATATYPE>
   @Nonnull
   public static <DATATYPE> IdentityDecoder <DATATYPE> create ()
   {
-    return new IdentityDecoder <DATATYPE> ();
+    return GenericReflection.<IdentityDecoder <Object>, IdentityDecoder <DATATYPE>> uncheckedCast (s_aInstance);
   }
 }
