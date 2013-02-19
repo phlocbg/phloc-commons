@@ -22,6 +22,8 @@ import java.util.Comparator;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.string.ToStringGenerator;
+
 /**
  * A special comparator that reverses another comparator
  * 
@@ -41,6 +43,12 @@ public class ReverseComparator <T> implements Comparator <T>, Serializable
   public int compare (final T aObj1, final T aObj2)
   {
     return -m_aComparator.compare (aObj1, aObj2);
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("comparator", m_aComparator).toString ();
   }
 
   @Nonnull
