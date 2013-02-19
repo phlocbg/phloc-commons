@@ -64,6 +64,13 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
     private String m_sDefaultNamespaceURI;
     private Map <String, String> m_aURL2PrefixMap;
 
+    /**
+     * Extract all attribute starting with "xmlns" and create the appropriate
+     * prefix mapping
+     * 
+     * @param aAttrs
+     *        Attribute map to check. May be <code>null</code>.
+     */
     public NamespaceLevel (@Nullable final Map <String, String> aAttrs)
     {
       // check all attributes
@@ -74,14 +81,18 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
           if (sAttrName.equals (CXML.XML_ATTR_XMLNS))
           {
             // set default namespace (xmlns)
-            addPrefixNamespaceMapping (null, aEntry.getValue ());
+            final String sNamespaceURI = aEntry.getValue ();
+            addPrefixNamespaceMapping (null, sNamespaceURI);
+            s_aLogger.info ("Found default namespace '" + sNamespaceURI + "' from attribute!");
           }
           else
             if (sAttrName.startsWith (CXML.XML_ATTR_XMLNS_WITH_SEP))
             {
               // prefixed namespace (xmlns:...)
-              addPrefixNamespaceMapping (sAttrName.substring (CXML.XML_ATTR_XMLNS_WITH_SEP.length ()),
-                                         aEntry.getValue ());
+              final String sPrefix = sAttrName.substring (CXML.XML_ATTR_XMLNS_WITH_SEP.length ());
+              final String sNamespaceURI = aEntry.getValue ();
+              addPrefixNamespaceMapping (sPrefix, sNamespaceURI);
+              s_aLogger.info ("Found namespace '" + sPrefix + ':' + sNamespaceURI + "' from attribute!");
             }
         }
     }
