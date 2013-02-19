@@ -33,6 +33,7 @@ import org.junit.Test;
 import org.junit.rules.TestRule;
 
 import com.phloc.commons.microdom.EMicroNodeType;
+import com.phloc.commons.microdom.IHasElementName;
 import com.phloc.commons.microdom.IMicroComment;
 import com.phloc.commons.microdom.IMicroContainer;
 import com.phloc.commons.microdom.IMicroElement;
@@ -63,7 +64,21 @@ public final class MicroElementTest extends AbstractPhlocTestCase
   {
     try
     {
-      new MicroElement (null);
+      new MicroElement ((IHasElementName) null);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+    try
+    {
+      new MicroElement (null, (IHasElementName) null);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+    try
+    {
+      new MicroElement ((String) null);
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -506,7 +521,7 @@ public final class MicroElementTest extends AbstractPhlocTestCase
     assertTrue (e.hasAttribute ("myattr"));
 
     // set null value == remove attribute
-    e.setAttribute ("myattr", null);
+    e.setAttribute ("myattr", (String) null);
     assertNull (e.getAttribute ("myattr"));
     assertFalse (e.hasAttribute ("myattr"));
 

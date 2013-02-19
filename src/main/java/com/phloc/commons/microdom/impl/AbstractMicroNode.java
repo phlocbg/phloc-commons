@@ -31,6 +31,7 @@ import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.microdom.EMicroEvent;
+import com.phloc.commons.microdom.IHasElementName;
 import com.phloc.commons.microdom.IMicroCDATA;
 import com.phloc.commons.microdom.IMicroComment;
 import com.phloc.commons.microdom.IMicroContainer;
@@ -221,6 +222,22 @@ public abstract class AbstractMicroNode implements IMicroNode
     final MicroElement aNode = new MicroElement (sNamespaceURI, sTagName);
     onAppendChild (aNode);
     return aNode;
+  }
+
+  @Nonnull
+  public final IMicroElement appendElement (@Nonnull final IHasElementName aElementNameProvider)
+  {
+    return appendElement (null, aElementNameProvider);
+  }
+
+  @Nonnull
+  public final IMicroElement appendElement (@Nullable final String sNamespaceURI,
+                                            @Nonnull final IHasElementName aElementNameProvider)
+  {
+    if (aElementNameProvider == null)
+      throw new NullPointerException ("elementNameProvider");
+
+    return appendElement (sNamespaceURI, aElementNameProvider.getElementName ());
   }
 
   @Nonnull

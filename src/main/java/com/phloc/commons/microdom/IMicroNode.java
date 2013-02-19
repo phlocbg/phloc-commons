@@ -36,11 +36,7 @@ import com.phloc.commons.state.EChange;
  * 
  * @author philip
  */
-public interface IMicroNode extends
-                           ICloneable <IMicroNode>,
-                           IHasChildrenSorted <IMicroNode>,
-                           IHasParent <IMicroNode>,
-                           Serializable
+public interface IMicroNode extends ICloneable <IMicroNode>, IHasChildrenSorted <IMicroNode>, IHasParent <IMicroNode>, Serializable
 {
   /**
    * @return Just an abstract name that depends on the implementing class.
@@ -272,7 +268,8 @@ public interface IMicroNode extends
    * Append an element without namespace to this node.
    * 
    * @param sTagName
-   *        element name to be created
+   *        Element name to be created. May neither be <code>null</code> nor
+   *        empty.
    * @return The created element
    * @throws MicroException
    *         if this node cannot have children
@@ -284,15 +281,42 @@ public interface IMicroNode extends
    * Append an element with namespace to this node.
    * 
    * @param sNamespaceURI
-   *        Namespace URI to use.
+   *        Namespace URI to use. May be <code>null</code>.
    * @param sTagName
-   *        element name to be created
+   *        Element name to be created. May neither be <code>null</code> nor
+   *        empty.
    * @return The created element
    * @throws MicroException
    *         if this node cannot have children
    */
   @Nonnull
   IMicroElement appendElement (@Nullable String sNamespaceURI, @Nonnull @Nonempty String sTagName) throws MicroException;
+
+  /**
+   * Append an element without namespace to this node.
+   * 
+   * @param aElementNameProvider
+   *        Element name provider. May not be <code>null</code>.
+   * @return The created element
+   * @throws MicroException
+   *         if this node cannot have children
+   */
+  @Nonnull
+  IMicroElement appendElement (@Nonnull IHasElementName aElementNameProvider) throws MicroException;
+
+  /**
+   * Append an element with namespace to this node.
+   * 
+   * @param sNamespaceURI
+   *        Namespace URI to use. May be <code>null</code>.
+   * @param aElementNameProvider
+   *        Element name provider. May not be <code>null</code>.
+   * @return The created element
+   * @throws MicroException
+   *         if this node cannot have children
+   */
+  @Nonnull
+  IMicroElement appendElement (@Nullable String sNamespaceURI, @Nonnull IHasElementName aElementNameProvider) throws MicroException;
 
   /**
    * Append a processing instruction to this node.
