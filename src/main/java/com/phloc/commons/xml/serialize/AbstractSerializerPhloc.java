@@ -379,10 +379,17 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
 
   public final void write (@Nonnull final NODETYPE aNode, @Nonnull @WillNotClose final OutputStream aOS)
   {
+    if (aNode == null)
+      throw new NullPointerException ("Node");
+    if (aOS == null)
+      throw new NullPointerException ("OutputStream");
+
     // Create a writer for the the passed output stream
     final NonBlockingBufferedWriter aWriter = new NonBlockingBufferedWriter (StreamUtils.createWriter (aOS,
                                                                                                        m_aSettings.getCharsetObj ()));
     write (aNode, aWriter);
+    StreamUtils.flush (aWriter);
+    // Do not close the writer!
   }
 
   @Override
