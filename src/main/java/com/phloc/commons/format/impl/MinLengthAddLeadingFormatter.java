@@ -38,12 +38,24 @@ public final class MinLengthAddLeadingFormatter extends AbstractStringFormatter
 
   public MinLengthAddLeadingFormatter (@Nonnegative final int nMinLength, final char cFill)
   {
-    this (nMinLength, cFill, null);
+    this (null, nMinLength, cFill);
   }
 
+  /**
+   * @deprecated Use {@link #MinLengthAddLeadingFormatter(IFormatter,int,char)}
+   *             instead
+   */
+  @Deprecated
   public MinLengthAddLeadingFormatter (@Nonnegative final int nMinLength,
                                        final char cFill,
                                        @Nullable final IFormatter aNestedFormatter)
+  {
+    this (aNestedFormatter, nMinLength, cFill);
+  }
+
+  public MinLengthAddLeadingFormatter (@Nullable final IFormatter aNestedFormatter,
+                                       @Nonnegative final int nMinLength,
+                                       final char cFill)
   {
     super (aNestedFormatter);
     if (nMinLength < 1)
