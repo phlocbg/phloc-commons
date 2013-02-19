@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -38,8 +39,8 @@ import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.streams.StreamUtils;
-import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
+import com.phloc.commons.url.URLUtils;
 
 /**
  * Implementation of the {@link IReadableResource} interface for URL objects.
@@ -59,6 +60,11 @@ public final class URLResource implements IReadableResource
     this (new URL (sURL));
   }
 
+  public URLResource (@Nonnull final URI aURI) throws MalformedURLException
+  {
+    this (aURI.toURL ());
+  }
+
   public URLResource (@Nonnull final URL aURL)
   {
     if (aURL == null)
@@ -75,17 +81,7 @@ public final class URLResource implements IReadableResource
    */
   public static boolean isExplicitURLResource (@Nullable final String sName)
   {
-    if (StringHelper.hasText (sName))
-      try
-      {
-        new URL (sName);
-        return true;
-      }
-      catch (final MalformedURLException e)
-      {
-        // fall through
-      }
-    return false;
+    return URLUtils.getAsURL (sName) != null;
   }
 
   @Nonnull

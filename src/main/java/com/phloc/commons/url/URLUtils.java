@@ -311,7 +311,6 @@ public final class URLUtils
     if (StringHelper.hasText (sQueryString))
     {
       for (final String sKeyValuePair : StringHelper.getExploded (AMPERSAND, sQueryString))
-      {
         if (sKeyValuePair.length () > 0)
         {
           final List <String> aParts = StringHelper.getExploded (EQUALS, sKeyValuePair, 2);
@@ -320,11 +319,10 @@ public final class URLUtils
             throw new IllegalArgumentException ("parameter name may not be empty!");
           final String sValue = aParts.size () == 2 ? aParts.get (1) : "";
           if (sValue == null)
-            throw new NullPointerException ("value may not be null");
+            throw new NullPointerException ("parameter value may not be null");
           // Now decode the parameters
           aMap.put (aParameterDecoder.decode (sKey), aParameterDecoder.decode (sValue));
         }
-      }
     }
     return aMap;
   }
@@ -442,12 +440,10 @@ public final class URLUtils
                                      @Nullable final String sAnchor,
                                      @Nullable final String sParameterCharset)
   {
-    IEncoder <String> aParameterEncoder;
-    if (StringHelper.hasNoText (sParameterCharset))
-      aParameterEncoder = IdentityEncoder.create ();
-    else
-      aParameterEncoder = new URLParameterEncoder (CharsetManager.getCharsetFromName (sParameterCharset));
-    return getURLString (sPath, aParams, sAnchor, aParameterEncoder);
+    return getURLString (sPath,
+                         aParams,
+                         sAnchor,
+                         sParameterCharset == null ? null : CharsetManager.getCharsetFromName (sParameterCharset));
   }
 
   /**
@@ -478,6 +474,14 @@ public final class URLUtils
     return getURLString (sPath, aParams, sAnchor, aParameterEncoder);
   }
 
+  /**
+   * Get the passed String as an URL. If the string is empty or not an URL
+   * <code>null</code> is returned.
+   * 
+   * @param sURL
+   *        Source URL. May be <code>null</code>.
+   * @return <code>null</code> if the passed URL is empty or invalid.
+   */
   @Nullable
   public static URL getAsURL (@Nullable final String sURL)
   {
@@ -493,6 +497,15 @@ public final class URLUtils
     return null;
   }
 
+  /**
+   * Get the passed URI as an URL. If the URI is null or cannot be converted to
+   * an URL <code>null</code> is returned.
+   * 
+   * @param aURI
+   *        Source URI. May be <code>null</code>.
+   * @return <code>null</code> if the passed URI is null or cannot be converted
+   *         to an URL.
+   */
   @Nullable
   public static URL getAsURL (@Nullable final URI aURI)
   {
@@ -508,6 +521,14 @@ public final class URLUtils
     return null;
   }
 
+  /**
+   * Get the passed String as an URI. If the string is empty or not an URI
+   * <code>null</code> is returned.
+   * 
+   * @param sURI
+   *        Source URI. May be <code>null</code>.
+   * @return <code>null</code> if the passed URI is empty or invalid.
+   */
   @Nullable
   public static URI getAsURI (@Nullable final String sURI)
   {
@@ -515,6 +536,29 @@ public final class URLUtils
       try
       {
         return new URI (sURI);
+      }
+      catch (final URISyntaxException ex)
+      {
+        // fall-through
+      }
+    return null;
+  }
+
+  /**
+   * Get the passed URL as an URI. If the URL is null or not an URI
+   * <code>null</code> is returned.
+   * 
+   * @param aURL
+   *        Source URL. May be <code>null</code>.
+   * @return <code>null</code> if the passed URL is empty or invalid.
+   */
+  @Nullable
+  public static URI getAsURI (@Nullable final URL aURL)
+  {
+    if (aURL != null)
+      try
+      {
+        return aURL.toURI ();
       }
       catch (final URISyntaxException ex)
       {
