@@ -1489,9 +1489,8 @@ public final class StringHelper
                                 @Nonnegative final int nFromIndex,
                                 @Nullable final String sSearch)
   {
-    return sText != null && sSearch != null && (sText.length () - nFromIndex) >= sSearch.length ()
-                                                                                                  ? sText.indexOf (sSearch,
-                                                                                                                   nFromIndex)
+    return sText != null && sSearch != null && (sText.length () - nFromIndex) >= sSearch.length () ? sText.indexOf (sSearch,
+                                                                                                                    nFromIndex)
                                                                                                   : STRING_NOT_FOUND;
   }
 
@@ -1531,9 +1530,8 @@ public final class StringHelper
                                     @Nonnegative final int nFromIndex,
                                     @Nullable final String sSearch)
   {
-    return sText != null && sSearch != null && (sText.length () - nFromIndex) >= sSearch.length ()
-                                                                                                  ? sText.lastIndexOf (sSearch,
-                                                                                                                       nFromIndex)
+    return sText != null && sSearch != null && (sText.length () - nFromIndex) >= sSearch.length () ? sText.lastIndexOf (sSearch,
+                                                                                                                        nFromIndex)
                                                                                                   : STRING_NOT_FOUND;
   }
 
@@ -1629,9 +1627,8 @@ public final class StringHelper
                                           @Nullable final String sSearch,
                                           @Nonnull final Locale aSortLocale)
   {
-    return sText != null && sSearch != null && sText.length () >= sSearch.length ()
-                                                                                   ? sText.toLowerCase (aSortLocale)
-                                                                                          .indexOf (sSearch.toLowerCase (aSortLocale))
+    return sText != null && sSearch != null && sText.length () >= sSearch.length () ? sText.toLowerCase (aSortLocale)
+                                                                                           .indexOf (sSearch.toLowerCase (aSortLocale))
                                                                                    : STRING_NOT_FOUND;
   }
 
@@ -1657,10 +1654,9 @@ public final class StringHelper
                                           @Nullable final String sSearch,
                                           @Nonnull final Locale aSortLocale)
   {
-    return sText != null && sSearch != null && (sText.length () - nFromIndex) >= sSearch.length ()
-                                                                                                  ? sText.toLowerCase (aSortLocale)
-                                                                                                         .indexOf (sSearch.toLowerCase (aSortLocale),
-                                                                                                                   nFromIndex)
+    return sText != null && sSearch != null && (sText.length () - nFromIndex) >= sSearch.length () ? sText.toLowerCase (aSortLocale)
+                                                                                                          .indexOf (sSearch.toLowerCase (aSortLocale),
+                                                                                                                    nFromIndex)
                                                                                                   : STRING_NOT_FOUND;
   }
 
@@ -1682,9 +1678,8 @@ public final class StringHelper
                                               @Nullable final String sSearch,
                                               @Nonnull final Locale aSortLocale)
   {
-    return sText != null && sSearch != null && sText.length () >= sSearch.length ()
-                                                                                   ? sText.toLowerCase (aSortLocale)
-                                                                                          .lastIndexOf (sSearch.toLowerCase (aSortLocale))
+    return sText != null && sSearch != null && sText.length () >= sSearch.length () ? sText.toLowerCase (aSortLocale)
+                                                                                           .lastIndexOf (sSearch.toLowerCase (aSortLocale))
                                                                                    : STRING_NOT_FOUND;
   }
 
@@ -1710,10 +1705,9 @@ public final class StringHelper
                                               @Nullable final String sSearch,
                                               @Nonnull final Locale aSortLocale)
   {
-    return sText != null && sSearch != null && (sText.length () - nFromIndex) >= sSearch.length ()
-                                                                                                  ? sText.toLowerCase (aSortLocale)
-                                                                                                         .lastIndexOf (sSearch.toLowerCase (aSortLocale),
-                                                                                                                       nFromIndex)
+    return sText != null && sSearch != null && (sText.length () - nFromIndex) >= sSearch.length () ? sText.toLowerCase (aSortLocale)
+                                                                                                          .lastIndexOf (sSearch.toLowerCase (aSortLocale),
+                                                                                                                        nFromIndex)
                                                                                                   : STRING_NOT_FOUND;
   }
 
@@ -2241,6 +2235,12 @@ public final class StringHelper
   }
 
   @Nonnull
+  public static String getCutAfterLength (@Nonnull final String sValue, @Nonnegative final int nMaxLength)
+  {
+    return getCutAfterLength (sValue, nMaxLength, null);
+  }
+
+  @Nonnull
   public static String getCutAfterLength (@Nonnull final String sValue,
                                           @Nonnegative final int nMaxLength,
                                           @Nullable final String sNewSuffix)
@@ -2248,7 +2248,7 @@ public final class StringHelper
     if (sValue == null)
       throw new NullPointerException ("value");
     if (nMaxLength < 0)
-      throw new IllegalArgumentException ("Illegal max length");
+      throw new IllegalArgumentException ("Illegal max length: " + nMaxLength);
 
     if (sValue.length () <= nMaxLength)
       return sValue;
