@@ -20,7 +20,17 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
-  <entry date="2013-02-18" category="tech" action="change" incompatible="true">
+  <entry date="2013-02-19" category="api" action="add">
+    <change>
+      <text locale="en">Added new interface IHasAttributeValue and extended IMicroElement to handle this</text>
+    </change>
+  </entry>
+  <entry date="2013-02-19" category="api" action="add">
+    <change>
+      <text locale="en">Added new interface IHasElementName and extended IMicroNode and MicroElement to handle this</text>
+    </change>
+  </entry>
+  <entry date="2013-02-19" category="tech" action="change" incompatible="true">
     <change>
       <text locale="en">Made IdentityEncoder and IdentityDecoder singleton objects</text>
     </change>

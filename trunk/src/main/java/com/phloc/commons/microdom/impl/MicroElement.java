@@ -25,12 +25,17 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.phloc.commons.GlobalDebug;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.microdom.EMicroNodeType;
+import com.phloc.commons.microdom.IHasAttributeValue;
+import com.phloc.commons.microdom.IHasElementName;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.state.EChange;
@@ -47,9 +52,21 @@ import com.phloc.commons.xml.CXMLRegEx;
  */
 public final class MicroElement extends AbstractMicroNodeWithChildren implements IMicroElement
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (MicroElement.class);
+
   private String m_sNamespaceURI;
   private final String m_sTagName;
   private Map <String, String> m_aAttrs;
+
+  public MicroElement (@Nonnull final IHasElementName aElementNameProvider)
+  {
+    this (null, aElementNameProvider.getElementName ());
+  }
+
+  public MicroElement (@Nullable final String sNamespaceURI, @Nonnull final IHasElementName aElementNameProvider)
+  {
+    this (sNamespaceURI, aElementNameProvider.getElementName ());
+  }
 
   public MicroElement (@Nonnull @Nonempty final String sTagName)
   {
@@ -64,12 +81,25 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
 
     // Store only the local name (cut the prefix) if a namespace is present
     final int nPrefixEnd = sNamespaceURI != null ? sTagName.indexOf (CXML.XML_PREFIX_NAMESPACE_SEP) : -1;
-    m_sTagName = nPrefixEnd == -1 ? sTagName : sTagName.substring (nPrefixEnd + 1);
+    if (nPrefixEnd == -1)
+      m_sTagName = sTagName;
+    else
+    {
+      // Cut the prefix
+      s_aLogger.warn ("Removing micro element namespace prefix '" +
+                      sTagName.substring (0, nPrefixEnd) +
+                      "' from tag name '" +
+                      sTagName +
+                      "'");
+      m_sTagName = sTagName.substring (nPrefixEnd + 1);
+    }
 
     // Only for the dev version
     if (GlobalDebug.isDebugMode ())
       if (!CXMLRegEx.PATTERN_NAME.matcher (m_sTagName).matches ())
-        throw new IllegalArgumentException ("The passed element name '" + m_sTagName + "' is not a valid element name!");
+        throw new IllegalArgumentException ("The micro element tag name '" +
+                                            m_sTagName +
+                                            "' is not a valid element name!");
   }
 
   @Nonnull
@@ -128,7 +158,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
   }
 
   @Nonnull
-  public IMicroElement setAttribute (@Nonnull @Nonempty final String sAttrName, @Nullable final String sAttrValue)
+  public MicroElement setAttribute (@Nonnull @Nonempty final String sAttrName, @Nullable final String sAttrValue)
   {
     if (StringHelper.hasNoText (sAttrName))
       throw new IllegalArgumentException ("No valid attribute name passed");
@@ -165,6 +195,16 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
   }
 
   @Nonnull
+  public MicroElement setAttribute (@Nonnull final String sAttrName,
+                                    @Nonnull final IHasAttributeValue aAttrValueProvider)
+  {
+    if (aAttrValueProvider == null)
+      throw new NullPointerException ("AttrValueProvider");
+
+    return setAttribute (sAttrName, aAttrValueProvider.getAttrValue ());
+  }
+
+  @Nonnull
   public IMicroElement setAttribute (@Nonnull final String sAttrName, final int nAttrValue)
   {
     return setAttribute (sAttrName, Integer.toString (nAttrValue));
@@ -198,11 +238,6 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return m_sNamespaceURI;
   }
 
-  public boolean hasNamespaceURI (@Nullable final String sNamespaceURI)
-  {
-    return EqualsUtils.equals (m_sNamespaceURI, sNamespaceURI);
-  }
-
   @Nonnull
   public EChange setNamespaceURI (@Nullable final String sNamespaceURI)
   {
@@ -210,6 +245,16 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
       return EChange.UNCHANGED;
     m_sNamespaceURI = sNamespaceURI;
     return EChange.CHANGED;
+  }
+
+  public boolean hasNamespaceURI ()
+  {
+    return StringHelper.hasText (m_sNamespaceURI);
+  }
+
+  public boolean hasNamespaceURI (@Nullable final String sNamespaceURI)
+  {
+    return EqualsUtils.equals (m_sNamespaceURI, sNamespaceURI);
   }
 
   @Nullable

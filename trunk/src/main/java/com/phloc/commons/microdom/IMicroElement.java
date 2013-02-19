@@ -101,6 +101,20 @@ public interface IMicroElement extends IMicroNodeWithChildren
   IMicroElement setAttribute (@Nonnull String sAttrName, @Nullable String sAttrValue);
 
   /**
+   * Set an attribute value of this element.
+   * 
+   * @param sAttrName
+   *        Name of the attribute. May neither be <code>null</code> nor empty.
+   * @param aAttrValueProvider
+   *        The attribute value provider. May not be <code>null</code>. If the
+   *        contained attribute value is <code>null</code> the attribute is
+   *        removed (if present)
+   * @return this
+   */
+  @Nonnull
+  IMicroElement setAttribute (@Nonnull String sAttrName, @Nonnull IHasAttributeValue aAttrValueProvider);
+
+  /**
    * Set an attribute value of this element. This is a shortcut for
    * <code>setAttribute(name, Integer.toString (nValue))</code>.
    * 
@@ -181,11 +195,19 @@ public interface IMicroElement extends IMicroNodeWithChildren
   EChange setNamespaceURI (@Nullable String sNamespaceURI);
 
   /**
+   * Check if this element has a specified namespace URI.
+   * 
+   * @return <code>true</code> if this element has a specified namespace URI,
+   *         <code>false</code> otherwise
+   */
+  boolean hasNamespaceURI ();
+
+  /**
    * Check if this element has the specified namespace URI.
    * 
    * @param sNamespaceURI
    *        The namespace URI to check. May not be <code>null</code>.
-   * @return <code>true</code> if this element has the specified namespace,
+   * @return <code>true</code> if this element has the specified namespace URI,
    *         <code>false</code> otherwise
    */
   boolean hasNamespaceURI (@Nullable String sNamespaceURI);
