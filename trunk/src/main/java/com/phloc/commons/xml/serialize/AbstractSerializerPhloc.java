@@ -387,8 +387,8 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
     // Create a writer for the the passed output stream
     final NonBlockingBufferedWriter aWriter = new NonBlockingBufferedWriter (StreamUtils.createWriter (aOS,
                                                                                                        m_aSettings.getCharsetObj ()));
+    // Inside the other write method, the writer must be flushed!
     write (aNode, aWriter);
-    StreamUtils.flush (aWriter);
     // Do not close the writer!
   }
 
