@@ -39,7 +39,7 @@ public final class ECountryTest extends AbstractPhlocTestCase
     {
       assertSame (eCountry, ECountry.valueOf (eCountry.name ()));
       assertSame (eCountry, ECountry.getFromIDOrNull (eCountry.getID ()));
-      if (!eCountry.isCountrySub ())
+      if (!eCountry.isCountrySub () && !eCountry.getISOCountryCode ().equalsIgnoreCase ("GB"))
         assertSame (eCountry, ECountry.getFromISOCodeOrNull (eCountry.getISOCountryCode ()));
       assertNotNull (eCountry.getDisplayText (L_DE));
     }

@@ -372,6 +372,8 @@ public enum ECountry implements IHasDisplayText, IHasID <String>
   TZ (ECountryName.TZ),
   UA (ECountryName.UA),
   UG (ECountryName.UG),
+  // UK is an invalid country code :( - must be GB
+  UK (ECountryName.UK),
   UK_AL (ECountrySubName.UK_AL),
   UK_EN (ECountrySubName.UK_EN),
   UK_GU (ECountrySubName.UK_GU),
@@ -380,7 +382,6 @@ public enum ECountry implements IHasDisplayText, IHasID <String>
   UK_NI (ECountrySubName.UK_NI),
   UK_SC (ECountrySubName.UK_SC),
   UK_WA (ECountrySubName.UK_WA),
-  UK (ECountryName.UK), // Invalid country code :(
   UM (ECountryName.UM),
   US_AK (ECountrySubName.US_AK),
   US_AL (ECountrySubName.US_AL),
@@ -463,8 +464,10 @@ public enum ECountry implements IHasDisplayText, IHasID <String>
 
   private ECountry (@Nonnull final IHasDisplayText eName)
   {
-    m_sID = name ().toLowerCase ();
-    m_sISOCountryCode = StringHelper.getExplodedArray ('_', m_sID)[0];
+    m_sID = name ().toLowerCase (Locale.US);
+    // Work around for illegal country code "UK"
+    final String sISOCountryCode = StringHelper.getExplodedArray ('_', m_sID)[0];
+    m_sISOCountryCode = sISOCountryCode.equals ("uk") ? "gb" : sISOCountryCode;
     m_aName = eName;
     m_bIsCountrySub = m_sID.indexOf ('_') != -1;
     m_aCountry = CountryCache.getCountry (m_sISOCountryCode);
