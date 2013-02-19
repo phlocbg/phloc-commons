@@ -26,6 +26,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -304,7 +305,7 @@ public final class URLUtils
   private static Map <String, String> getQueryStringAsMap (final String sQueryString,
                                                            @Nonnull final IDecoder <String> aParameterDecoder)
   {
-    final Map <String, String> aMap = new HashMap <String, String> ();
+    final Map <String, String> aMap = new LinkedHashMap <String, String> ();
     if (StringHelper.hasNoText (sQueryString))
       return aMap;
 
