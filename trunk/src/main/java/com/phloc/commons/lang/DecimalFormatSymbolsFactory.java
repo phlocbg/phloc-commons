@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.lang;
 
-import java.lang.reflect.InvocationTargetException;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
@@ -25,7 +24,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
-import com.phloc.commons.system.EJavaVersion;
 
 /**
  * A small helper class, that constructs {@link DecimalFormatSymbols} objects in
@@ -48,27 +46,7 @@ public final class DecimalFormatSymbolsFactory
   @Nonnull
   public static DecimalFormatSymbols getInstance (final Locale aLocale)
   {
-    if (EJavaVersion.JDK_16.isSupportedVersion ())
-    {
-      try
-      {
-        return GenericReflection.invokeStaticMethod (DecimalFormatSymbols.class, "getInstance", aLocale);
-      }
-      catch (final NoSuchMethodException ex)
-      {
-        // Failed
-      }
-      catch (final IllegalAccessException e)
-      {
-        // Failed
-      }
-      catch (final InvocationTargetException e)
-      {
-        // Failed
-      }
-    }
-
-    // For all Java < 1.6
-    return new DecimalFormatSymbols (aLocale);
+    // JDK 1.6 only
+    return DecimalFormatSymbols.getInstance (aLocale);
   }
 }

@@ -99,8 +99,7 @@ public final class CCharset
   public static final Charset DEFAULT_CHARSET_OBJ = CharsetManager.getCharsetFromName (DEFAULT_CHARSET);
 
   /**
-   * The charset used by the
-   * {@link com.phloc.commons.lang.ServiceLoaderBackport} to read the service
+   * The charset used by the {@link java.util.ServiceLoader} to read the service
    * files.
    */
   @Nonnull

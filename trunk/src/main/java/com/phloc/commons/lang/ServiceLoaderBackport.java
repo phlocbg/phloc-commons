@@ -31,6 +31,7 @@ import java.util.NoSuchElementException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.annotations.DevelopersNote;
 import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.io.streams.NonBlockingBufferedReader;
@@ -191,6 +192,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * @version 1.10, 06/04/10
  * @since 1.6
  */
+@Deprecated
+@DevelopersNote ("Use the regular ServiceLoader from JDK 1.6")
 public final class ServiceLoaderBackport <SPITYPE> implements Iterable <SPITYPE>
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (ServiceLoaderBackport.class);

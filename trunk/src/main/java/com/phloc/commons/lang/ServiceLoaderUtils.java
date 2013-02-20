@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ServiceLoader;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -32,7 +33,7 @@ import org.slf4j.LoggerFactory;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 
 /**
- * {@link ServiceLoaderBackport} helper class.
+ * {@link ServiceLoader} helper class.
  * 
  * @author boris
  * @author philip
@@ -46,8 +47,8 @@ public final class ServiceLoaderUtils
   {}
 
   /**
-   * Uses the {@link ServiceLoaderBackport} to load all SPI implementations of
-   * the passed class
+   * Uses the {@link ServiceLoader} to load all SPI implementations of the
+   * passed class
    * 
    * @param aSPIClass
    *        The SPI interface class
@@ -61,8 +62,8 @@ public final class ServiceLoaderUtils
   }
 
   /**
-   * Uses the {@link ServiceLoaderBackport} to load all SPI implementations of
-   * the passed class
+   * Uses the {@link ServiceLoader} to load all SPI implementations of the
+   * passed class
    * 
    * @param aSPIClass
    *        The SPI interface class
@@ -79,8 +80,8 @@ public final class ServiceLoaderUtils
   }
 
   /**
-   * Uses the {@link ServiceLoaderBackport} to load all SPI implementations of
-   * the passed class
+   * Uses the {@link ServiceLoader} to load all SPI implementations of the
+   * passed class
    * 
    * @param aSPIClass
    *        The SPI interface class
@@ -98,8 +99,8 @@ public final class ServiceLoaderUtils
   }
 
   /**
-   * Uses the {@link ServiceLoaderBackport} to load all SPI implementations of
-   * the passed class
+   * Uses the {@link ServiceLoader} to load all SPI implementations of the
+   * passed class
    * 
    * @param aSPIClass
    *        The SPI interface class
@@ -123,7 +124,7 @@ public final class ServiceLoaderUtils
       throw new NullPointerException ("ClassLoader");
 
     final Logger aRealLogger = aLogger != null ? aLogger : s_aLogger;
-    final ServiceLoaderBackport <T> aServiceLoader = ServiceLoaderBackport.<T> load (aSPIClass, aClassLoader);
+    final ServiceLoader <T> aServiceLoader = ServiceLoader.<T> load (aSPIClass, aClassLoader);
     final List <T> ret = new ArrayList <T> ();
 
     // We use the iterator to be able to catch exceptions thrown

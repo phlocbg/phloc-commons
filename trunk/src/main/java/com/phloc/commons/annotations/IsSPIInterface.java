@@ -25,10 +25,9 @@ import java.lang.annotation.Target;
 
 /**
  * Marker interface that claims that implementations of this interface are
- * loaded via the {@link com.phloc.commons.lang.ServiceLoaderBackport} (from
- * Java 1.6 on you may use java.util.ServiceLoader). This implies that the
- * package and source file name should never change. SPI interfaces should also
- * have the suffix SPI in their name (e.g. <code>IServiceSPI</code>).
+ * loaded via the {@link java.util.ServiceLoader}. This implies that the package
+ * and source file name should never change. SPI interfaces should also have the
+ * suffix SPI in their name (e.g. <code>IServiceSPI</code>).
  * 
  * @author philip
  */

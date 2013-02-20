@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.text.resource;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -28,8 +27,6 @@ import javax.annotation.PropertyKey;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.lang.ClassHelper;
-import com.phloc.commons.lang.GenericReflection;
-import com.phloc.commons.system.EJavaVersion;
 
 /**
  * Resource bundle utility methods
@@ -147,25 +144,6 @@ public final class ResourceBundleUtils
   public static void clearCache (@Nonnull final ClassLoader aClassLoader)
   {
     // ResourceBundle.clearCache () is only available from Java >= 1.6
-    if (EJavaVersion.JDK_16.isSupportedVersion ())
-    {
-      try
-      {
-        // Use the same classloader as in retrieval!
-        GenericReflection.invokeStaticMethod (ResourceBundle.class, "clearCache", aClassLoader);
-      }
-      catch (final NoSuchMethodException ex)
-      {
-        // Failed
-      }
-      catch (final IllegalAccessException e)
-      {
-        // Failed
-      }
-      catch (final InvocationTargetException e)
-      {
-        // Failed
-      }
-    }
+    ResourceBundle.clearCache (aClassLoader);
   }
 }
