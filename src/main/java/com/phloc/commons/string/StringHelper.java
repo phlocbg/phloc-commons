@@ -111,6 +111,18 @@ public final class StringHelper
   /**
    * Check if the string is <code>null</code> or empty.
    * 
+   * @param sStr
+   *        The string to check. May be <code>null</code>.
+   * @return <code>true</code> if the string is <code>null</code> or empty
+   */
+  public static boolean hasNoText (@Nullable final String sStr)
+  {
+    return sStr == null || sStr.isEmpty ();
+  }
+
+  /**
+   * Check if the string is <code>null</code> or empty.
+   * 
    * @param aCS
    *        The string to check. May be <code>null</code>.
    * @return <code>true</code> if the string is <code>null</code> or empty
@@ -118,6 +130,18 @@ public final class StringHelper
   public static boolean isEmpty (@Nullable final CharSequence aCS)
   {
     return hasNoText (aCS);
+  }
+
+  /**
+   * Check if the string is <code>null</code> or empty.
+   * 
+   * @param sStr
+   *        The string to check. May be <code>null</code>.
+   * @return <code>true</code> if the string is <code>null</code> or empty
+   */
+  public static boolean isEmpty (@Nullable final String sStr)
+  {
+    return hasNoText (sStr);
   }
 
   /**
@@ -130,7 +154,7 @@ public final class StringHelper
    */
   public static boolean hasNoTextAfterTrim (@Nullable final String s)
   {
-    return s == null || s.trim ().length () == 0;
+    return s == null || s.trim ().isEmpty ();
   }
 
   /**
@@ -162,6 +186,19 @@ public final class StringHelper
   /**
    * Check if the string contains any char.
    * 
+   * @param sStr
+   *        The string to check
+   * @return true if the string contains at least one char public static boolean
+   *         hasText (@Nullable final CharSequence s)
+   */
+  public static boolean hasText (@Nullable final String sStr)
+  {
+    return sStr != null && !sStr.isEmpty ();
+  }
+
+  /**
+   * Check if the string contains any char.
+   * 
    * @param aCS
    *        The string to check
    * @return true if the string contains at least one char public static boolean
@@ -170,6 +207,19 @@ public final class StringHelper
   public static boolean isNotEmpty (@Nullable final CharSequence aCS)
   {
     return hasText (aCS);
+  }
+
+  /**
+   * Check if the string contains any char.
+   * 
+   * @param sStr
+   *        The string to check
+   * @return true if the string contains at least one char public static boolean
+   *         hasText (@Nullable final CharSequence s)
+   */
+  public static boolean isNotEmpty (@Nullable final String sStr)
+  {
+    return hasText (sStr);
   }
 
   /**
@@ -182,7 +232,7 @@ public final class StringHelper
    */
   public static boolean hasTextAfterTrim (@Nullable final String s)
   {
-    return s != null && s.trim ().length () > 0;
+    return s != null && !s.trim ().isEmpty ();
   }
 
   /**
@@ -1401,18 +1451,18 @@ public final class StringHelper
 
   public static boolean startsWith (@Nullable final CharSequence aCS, @Nullable final CharSequence aSearch)
   {
-    return aCS != null &&
-           aSearch != null &&
-           aCS.length () >= aSearch.length () &&
-           aCS.subSequence (0, aSearch.length ()).equals (aSearch);
+    if (aCS == null || aSearch == null)
+      return false;
+    final int nSearchLength = aSearch.length ();
+    return aCS.length () >= nSearchLength && aCS.subSequence (0, nSearchLength).equals (aSearch);
   }
 
   public static boolean startsWithIgnoreCase (@Nullable final String sStr, @Nullable final String sSearch)
   {
-    return sStr != null &&
-           sSearch != null &&
-           sStr.length () >= sSearch.length () &&
-           sStr.substring (0, sSearch.length ()).equalsIgnoreCase (sSearch);
+    if (sStr == null || sSearch == null)
+      return false;
+    final int nSearchLength = sSearch.length ();
+    return sStr.length () >= nSearchLength && sStr.substring (0, nSearchLength).equalsIgnoreCase (sSearch);
   }
 
   public static boolean endsWith (@Nullable final CharSequence aCS, final char c)
@@ -1434,10 +1484,11 @@ public final class StringHelper
 
   public static boolean endsWith (@Nullable final CharSequence aCS, @Nullable final CharSequence aSearch)
   {
-    return aCS != null &&
-           aSearch != null &&
-           aCS.length () >= aSearch.length () &&
-           aCS.subSequence (aCS.length () - aSearch.length (), aCS.length ()).equals (aSearch);
+    if (aCS == null || aSearch == null)
+      return false;
+    final int nCSLength = aCS.length ();
+    final int nSearchLength = aSearch.length ();
+    return nCSLength >= nSearchLength && aCS.subSequence (nCSLength - nSearchLength, nCSLength).equals (aSearch);
   }
 
   public static boolean endsWithIgnoreCase (@Nullable final CharSequence aCS, final char c)
@@ -1447,10 +1498,12 @@ public final class StringHelper
 
   public static boolean endsWithIgnoreCase (@Nullable final String sStr, @Nullable final String sSearch)
   {
-    return sStr != null &&
-           sSearch != null &&
-           sStr.length () >= sSearch.length () &&
-           sStr.substring (sStr.length () - sSearch.length (), sStr.length ()).equalsIgnoreCase (sSearch);
+    if (sStr == null || sSearch == null)
+      return false;
+    final int nStrLength = sStr.length ();
+    final int nSearchLength = sSearch.length ();
+    return nStrLength >= nSearchLength &&
+           sStr.substring (nStrLength - nSearchLength, nStrLength).equalsIgnoreCase (sSearch);
   }
 
   /**
