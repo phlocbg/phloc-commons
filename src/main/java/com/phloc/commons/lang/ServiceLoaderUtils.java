@@ -18,7 +18,6 @@
 package com.phloc.commons.lang;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ServiceLoader;
@@ -46,19 +45,10 @@ public final class ServiceLoaderUtils
   private ServiceLoaderUtils ()
   {}
 
-  /**
-   * Uses the {@link ServiceLoader} to load all SPI implementations of the
-   * passed class
-   * 
-   * @param aSPIClass
-   *        The SPI interface class
-   * @return A collection of all currently available plugins
-   */
   @Nonnull
-  @ReturnsMutableCopy
-  public static <T> Collection <T> getAllSPIImplementations (@Nonnull final Class <T> aSPIClass)
+  private static ClassLoader _getDefaultClassLoader ()
   {
-    return getAllSPIImplementations (aSPIClass, ClassHelper.getDefaultClassLoader (), null);
+    return ClassHelper.getDefaultClassLoader ();
   }
 
   /**
@@ -66,15 +56,31 @@ public final class ServiceLoaderUtils
    * passed class
    * 
    * @param aSPIClass
-   *        The SPI interface class
-   * @param aClassLoader
-   *        The class loader to use for the SPI loader
-   * @return A collection of all currently available plugins
+   *        The SPI interface class. May not be <code>null</code>.
+   * @return A list of all currently available plugins
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static <T> Collection <T> getAllSPIImplementations (@Nonnull final Class <T> aSPIClass,
-                                                             @Nonnull final ClassLoader aClassLoader)
+  public static <T> List <T> getAllSPIImplementations (@Nonnull final Class <T> aSPIClass)
+  {
+    return getAllSPIImplementations (aSPIClass, _getDefaultClassLoader (), null);
+  }
+
+  /**
+   * Uses the {@link ServiceLoader} to load all SPI implementations of the
+   * passed class
+   * 
+   * @param aSPIClass
+   *        The SPI interface class. May not be <code>null</code>.
+   * @param aClassLoader
+   *        The class loader to use for the SPI loader. May not be
+   *        <code>null</code>.
+   * @return A list of all currently available plugins
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <T> List <T> getAllSPIImplementations (@Nonnull final Class <T> aSPIClass,
+                                                       @Nonnull final ClassLoader aClassLoader)
   {
     return getAllSPIImplementations (aSPIClass, aClassLoader, null);
   }
@@ -84,18 +90,17 @@ public final class ServiceLoaderUtils
    * passed class
    * 
    * @param aSPIClass
-   *        The SPI interface class
+   *        The SPI interface class. May not be <code>null</code>.
    * @param aLogger
-   *        An optional logger to use (As this class cannot create it's own
-   *        logger)
-   * @return A collection of all currently available plugins
+   *        An optional logger to use. May be <code>null</code>.
+   * @return A list of all currently available plugins
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static <T> Collection <T> getAllSPIImplementations (@Nonnull final Class <T> aSPIClass,
-                                                             @Nullable final Logger aLogger)
+  public static <T> List <T> getAllSPIImplementations (@Nonnull final Class <T> aSPIClass,
+                                                       @Nullable final Logger aLogger)
   {
-    return getAllSPIImplementations (aSPIClass, ClassHelper.getDefaultClassLoader (), aLogger);
+    return getAllSPIImplementations (aSPIClass, _getDefaultClassLoader (), aLogger);
   }
 
   /**
@@ -103,20 +108,20 @@ public final class ServiceLoaderUtils
    * passed class
    * 
    * @param aSPIClass
-   *        The SPI interface class
+   *        The SPI interface class. May not be <code>null</code>.
    * @param aClassLoader
-   *        The class loader to use for the SPI loader
+   *        The class loader to use for the SPI loader. May not be
+   *        <code>null</code>.
    * @param aLogger
-   *        An optional logger to use (As this class cannot create it's own
-   *        logger)
+   *        An optional logger to use. May be <code>null</code>.
    * @return A collection of all currently available plugins. Never
    *         <code>null</code>.
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static <T> Collection <T> getAllSPIImplementations (@Nonnull final Class <T> aSPIClass,
-                                                             @Nonnull final ClassLoader aClassLoader,
-                                                             @Nullable final Logger aLogger)
+  public static <T> List <T> getAllSPIImplementations (@Nonnull final Class <T> aSPIClass,
+                                                       @Nonnull final ClassLoader aClassLoader,
+                                                       @Nullable final Logger aLogger)
   {
     if (aSPIClass == null)
       throw new NullPointerException ("SPIClass");
@@ -150,5 +155,96 @@ public final class ServiceLoaderUtils
                          ret.size () +
                          " instances");
     return ret;
+  }
+
+  /**
+   * Uses the {@link ServiceLoader} to load all SPI implementations of the
+   * passed class and return only the first instance.
+   * 
+   * @param aSPIClass
+   *        The SPI interface class. May not be <code>null</code>.
+   * @return A collection of all currently available plugins. Never
+   *         <code>null</code>.
+   */
+  @Nullable
+  public static <T> T getFirstSPIImplementation (@Nonnull final Class <T> aSPIClass)
+  {
+    return getFirstSPIImplementation (aSPIClass, _getDefaultClassLoader (), null);
+  }
+
+  /**
+   * Uses the {@link ServiceLoader} to load all SPI implementations of the
+   * passed class and return only the first instance.
+   * 
+   * @param aSPIClass
+   *        The SPI interface class. May not be <code>null</code>.
+   * @param aClassLoader
+   *        The class loader to use for the SPI loader. May not be
+   *        <code>null</code>.
+   * @return A collection of all currently available plugins. Never
+   *         <code>null</code>.
+   */
+  @Nullable
+  public static <T> T getFirstSPIImplementation (@Nonnull final Class <T> aSPIClass,
+                                                 @Nonnull final ClassLoader aClassLoader)
+  {
+    return getFirstSPIImplementation (aSPIClass, aClassLoader, null);
+  }
+
+  /**
+   * Uses the {@link ServiceLoader} to load all SPI implementations of the
+   * passed class and return only the first instance.
+   * 
+   * @param aSPIClass
+   *        The SPI interface class. May not be <code>null</code>.
+   * @param aLogger
+   *        An optional logger to use. May be <code>null</code>.
+   * @return A collection of all currently available plugins. Never
+   *         <code>null</code>.
+   */
+  @Nullable
+  public static <T> T getFirstSPIImplementation (@Nonnull final Class <T> aSPIClass, @Nullable final Logger aLogger)
+  {
+    return getFirstSPIImplementation (aSPIClass, _getDefaultClassLoader (), aLogger);
+  }
+
+  /**
+   * Uses the {@link ServiceLoader} to load all SPI implementations of the
+   * passed class and return only the first instance.
+   * 
+   * @param aSPIClass
+   *        The SPI interface class. May not be <code>null</code>.
+   * @param aClassLoader
+   *        The class loader to use for the SPI loader. May not be
+   *        <code>null</code>.
+   * @param aLogger
+   *        An optional logger to use. May be <code>null</code>.
+   * @return A collection of all currently available plugins. Never
+   *         <code>null</code>.
+   */
+  @Nullable
+  public static <T> T getFirstSPIImplementation (@Nonnull final Class <T> aSPIClass,
+                                                 @Nonnull final ClassLoader aClassLoader,
+                                                 @Nullable final Logger aLogger)
+  {
+    final Logger aRealLogger = aLogger != null ? aLogger : s_aLogger;
+    final List <T> aAll = getAllSPIImplementations (aSPIClass, aClassLoader, aRealLogger);
+    if (aAll.isEmpty ())
+    {
+      // No SPI implementation found
+      return null;
+    }
+
+    if (aAll.size () > 1)
+    {
+      // More than one implementation found
+      aRealLogger.warn ("Requested only one SPI implementation of " +
+                        aSPIClass +
+                        " but found " +
+                        aAll.size () +
+                        ": " +
+                        aAll);
+    }
+    return aAll.get (0);
   }
 }

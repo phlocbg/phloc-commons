@@ -2806,43 +2806,91 @@ public final class ContainerHelper
     return ret;
   }
 
+  /**
+   * Get the first element of the passed list.
+   * 
+   * @param aList
+   *        The list. May be <code>null</code>.
+   * @return <code>null</code> if the list is <code>null</code> or empty, the
+   *         first element otherwise.
+   */
   @Nullable
   public static <ELEMENTTYPE> ELEMENTTYPE getFirstElement (@Nullable final List <ELEMENTTYPE> aList)
   {
     return isEmpty (aList) ? null : aList.get (0);
   }
 
+  /**
+   * Get the first element of the passed collection.
+   * 
+   * @param aCollection
+   *        The collection. May be <code>null</code>.
+   * @return <code>null</code> if the collection is <code>null</code> or empty,
+   *         the first element otherwise.
+   */
   @Nullable
-  public static <ELEMENTTYPE> ELEMENTTYPE getFirstElement (@Nullable final Collection <ELEMENTTYPE> aCont)
+  public static <ELEMENTTYPE> ELEMENTTYPE getFirstElement (@Nullable final Collection <ELEMENTTYPE> aCollection)
   {
-    return isEmpty (aCont) ? null : aCont.iterator ().next ();
+    return isEmpty (aCollection) ? null : aCollection.iterator ().next ();
   }
 
+  /**
+   * Get the first element of the passed iterable.
+   * 
+   * @param aIterable
+   *        The iterable. May be <code>null</code>.
+   * @return <code>null</code> if the iterable is <code>null</code> or empty,
+   *         the first element otherwise.
+   */
   @Nullable
-  public static <ELEMENTTYPE> ELEMENTTYPE getFirstElement (@Nullable final Iterable <ELEMENTTYPE> aCont)
+  public static <ELEMENTTYPE> ELEMENTTYPE getFirstElement (@Nullable final Iterable <ELEMENTTYPE> aIterable)
   {
-    if (aCont == null)
+    if (aIterable == null)
       return null;
-    final Iterator <ELEMENTTYPE> it = aCont.iterator ();
+    final Iterator <ELEMENTTYPE> it = aIterable.iterator ();
     return it.hasNext () ? it.next () : null;
   }
 
+  /**
+   * Get the first element of the passed map.
+   * 
+   * @param aMap
+   *        The map. May be <code>null</code>.
+   * @return <code>null</code> if the map is <code>null</code> or empty, the
+   *         first element otherwise.
+   */
   @Nullable
   public static <KEYTYPE, VALUETYPE> Map.Entry <KEYTYPE, VALUETYPE> getFirstElement (@Nullable final Map <KEYTYPE, VALUETYPE> aMap)
   {
-    return isEmpty (aMap) ? null : getFirstElement (aMap.entrySet ());
+    return isEmpty (aMap) ? null : aMap.entrySet ().iterator ().next ();
   }
 
+  /**
+   * Get the first key of the passed map.
+   * 
+   * @param aMap
+   *        The map. May be <code>null</code>.
+   * @return <code>null</code> if the map is <code>null</code> or empty, the
+   *         first key otherwise.
+   */
   @Nullable
   public static <KEYTYPE, VALUETYPE> KEYTYPE getFirstKey (@Nullable final Map <KEYTYPE, VALUETYPE> aMap)
   {
-    return isEmpty (aMap) ? null : getFirstElement (aMap.keySet ());
+    return isEmpty (aMap) ? null : aMap.keySet ().iterator ().next ();
   }
 
+  /**
+   * Get the first value of the passed map.
+   * 
+   * @param aMap
+   *        The map. May be <code>null</code>.
+   * @return <code>null</code> if the map is <code>null</code> or empty, the
+   *         first value otherwise.
+   */
   @Nullable
   public static <KEYTYPE, VALUETYPE> VALUETYPE getFirstValue (@Nullable final Map <KEYTYPE, VALUETYPE> aMap)
   {
-    return isEmpty (aMap) ? null : getFirstElement (aMap.values ());
+    return isEmpty (aMap) ? null : aMap.values ().iterator ().next ();
   }
 
   @Nullable
