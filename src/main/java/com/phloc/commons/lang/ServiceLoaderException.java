@@ -17,11 +17,15 @@
  */
 package com.phloc.commons.lang;
 
+import com.phloc.commons.annotations.DevelopersNote;
+
 /**
  * An exception solely thrown from the {@link ServiceLoaderBackport}
  * 
  * @author philip
  */
+@Deprecated
+@DevelopersNote ("Use the exception from java.util")
 public final class ServiceLoaderException extends RuntimeException
 {
   public ServiceLoaderException (final String sMsg)

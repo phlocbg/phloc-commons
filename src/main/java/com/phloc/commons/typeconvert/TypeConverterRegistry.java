@@ -21,6 +21,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.ServiceLoader;
 import java.util.WeakHashMap;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -39,7 +40,6 @@ import com.phloc.commons.collections.multimap.IMultiMapListBased;
 import com.phloc.commons.collections.multimap.MultiTreeMapArrayListBased;
 import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.lang.ClassHierarchyCache;
-import com.phloc.commons.lang.ServiceLoaderBackport;
 import com.phloc.commons.mutable.Wrapper;
 import com.phloc.commons.state.EContinue;
 
@@ -65,7 +65,7 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
   static
   {
     // Register all custom type converter
-    for (final ITypeConverterRegistrarSPI aSPI : ServiceLoaderBackport.load (ITypeConverterRegistrarSPI.class))
+    for (final ITypeConverterRegistrarSPI aSPI : ServiceLoader.load (ITypeConverterRegistrarSPI.class))
       aSPI.registerTypeConverter (s_aInstance);
     s_aLogger.info (getRegisteredTypeConverterCount () +
                     " type converters and " +

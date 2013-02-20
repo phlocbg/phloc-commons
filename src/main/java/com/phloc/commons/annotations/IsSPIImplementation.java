@@ -25,8 +25,7 @@ import java.lang.annotation.Target;
 
 /**
  * Marker interface that claims that this class implements an SPI interface that
- * is resolved via the {@link com.phloc.commons.lang.ServiceLoaderBackport}
- * (from Java 1.6 on you may use java.util.ServiceLoader). This is mainly for
+ * is resolved via the {@link java.util.ServiceLoader}. This is mainly for
  * checking that this class must be public and requires a public no-argument
  * constructor and that no references from any other Java source file may be
  * present. If this annotation is used, it implies that the semantics of

@@ -21,6 +21,7 @@ import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ServiceLoader;
 import java.util.WeakHashMap;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -35,7 +36,6 @@ import org.slf4j.LoggerFactory;
 import com.phloc.commons.annotations.UseDirectEqualsAndHashCode;
 import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.lang.ClassHierarchyCache;
-import com.phloc.commons.lang.ServiceLoaderBackport;
 import com.phloc.commons.state.EChange;
 
 /**
@@ -84,7 +84,7 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
   private EqualsImplementationRegistry ()
   {
     // Register all implementations via SPI
-    for (final IEqualsImplementationRegistrarSPI aRegistrar : ServiceLoaderBackport.load (IEqualsImplementationRegistrarSPI.class))
+    for (final IEqualsImplementationRegistrarSPI aRegistrar : ServiceLoader.load (IEqualsImplementationRegistrarSPI.class))
       aRegistrar.registerEqualsImplementations (this);
   }
 

@@ -25,6 +25,8 @@ import static org.junit.Assert.fail;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.ServiceConfigurationError;
+import java.util.ServiceLoader;
 
 import org.junit.Test;
 
@@ -35,17 +37,17 @@ import com.phloc.commons.state.IStoppable;
 import com.phloc.commons.type.IHasType;
 
 /**
- * Test class for class {@link ServiceLoaderBackport}.
+ * Test class for class {@link ServiceLoader}.
  * 
  * @author philip
  */
-public final class ServiceLoaderBackportTest
+public final class FuncTestServiceLoader
 {
   @Test
   public void testLoadEmptyService ()
   {
     // No such service file present
-    final ServiceLoaderBackport <MockChildrenProvider> aSL = ServiceLoaderBackport.load (MockChildrenProvider.class);
+    final ServiceLoader <MockChildrenProvider> aSL = ServiceLoader.load (MockChildrenProvider.class);
     final Iterator <MockChildrenProvider> it = aSL.iterator ();
     assertNotNull (it);
     assertFalse (it.hasNext ());
@@ -70,7 +72,7 @@ public final class ServiceLoaderBackportTest
   public void testLoadNonExistingImplementation ()
   {
     // The service file contains a non-existing implementation class
-    final Iterable <IHasType> aSL = ServiceLoaderBackport.load (IHasType.class);
+    final Iterable <IHasType> aSL = ServiceLoader.load (IHasType.class);
     final Iterator <IHasType> it = aSL.iterator ();
     assertNotNull (it);
     assertTrue (it.hasNext ());
@@ -79,7 +81,7 @@ public final class ServiceLoaderBackportTest
       it.next ();
       fail ();
     }
-    catch (final ServiceLoaderException ex)
+    catch (final ServiceConfigurationError ex)
     {}
   }
 
@@ -87,7 +89,7 @@ public final class ServiceLoaderBackportTest
   public void testLoadNonExistingImplementationWithSpecialCL ()
   {
     // The service file contains a non-existing implementation class
-    final Iterable <IHasType> aSL = ServiceLoaderBackport.loadInstalled (IHasType.class);
+    final Iterable <IHasType> aSL = ServiceLoader.loadInstalled (IHasType.class);
     final Iterator <IHasType> it = aSL.iterator ();
     assertNotNull (it);
     assertFalse (it.hasNext ());
@@ -97,7 +99,7 @@ public final class ServiceLoaderBackportTest
   public void testLoadCrappyServiceFile ()
   {
     // The service file contains a non-existing implementation class
-    final ServiceLoaderBackport <IStoppable> aSL = ServiceLoaderBackport.load (IStoppable.class);
+    final ServiceLoader <IStoppable> aSL = ServiceLoader.load (IStoppable.class);
     final Iterator <IStoppable> it = aSL.iterator ();
     assertNotNull (it);
     try
@@ -105,7 +107,7 @@ public final class ServiceLoaderBackportTest
       it.hasNext ();
       fail ();
     }
-    catch (final ServiceLoaderException ex)
+    catch (final ServiceConfigurationError ex)
     {}
   }
 
@@ -114,7 +116,7 @@ public final class ServiceLoaderBackportTest
   {
     // Empty service file present
     IClearable aNext;
-    final ServiceLoaderBackport <IClearable> aSL = ServiceLoaderBackport.load (IClearable.class);
+    final ServiceLoader <IClearable> aSL = ServiceLoader.load (IClearable.class);
     final Iterator <IClearable> it = aSL.iterator ();
     assertNotNull (it);
     assertTrue (it.hasNext ());
@@ -124,7 +126,7 @@ public final class ServiceLoaderBackportTest
       aNext = it.next ();
       fail ();
     }
-    catch (final ServiceLoaderException ex)
+    catch (final ServiceConfigurationError ex)
     {}
     assertTrue (it.hasNext ());
     // now get the valid one
