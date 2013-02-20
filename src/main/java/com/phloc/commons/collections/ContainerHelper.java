@@ -81,33 +81,33 @@ public final class ContainerHelper
   {}
 
   @Nonnull
-  public static <ELEMENTTYPE> List <? extends ELEMENTTYPE> getNotNull (final List <? extends ELEMENTTYPE> aCollection)
+  public static <ELEMENTTYPE> List <? extends ELEMENTTYPE> getNotNull (final List <? extends ELEMENTTYPE> aList)
   {
-    return aCollection == null ? ContainerHelper.<ELEMENTTYPE> newList () : aCollection;
+    return aList == null ? ContainerHelper.<ELEMENTTYPE> newList () : aList;
   }
 
   @Nonnull
-  public static <ELEMENTTYPE> Set <? extends ELEMENTTYPE> getNotNull (final Set <? extends ELEMENTTYPE> aCollection)
+  public static <ELEMENTTYPE> Set <? extends ELEMENTTYPE> getNotNull (final Set <? extends ELEMENTTYPE> aSet)
   {
-    return aCollection == null ? ContainerHelper.<ELEMENTTYPE> newSet () : aCollection;
+    return aSet == null ? ContainerHelper.<ELEMENTTYPE> newSet () : aSet;
   }
 
   @Nonnull
-  public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> SortedSet <? extends ELEMENTTYPE> getNotNull (final SortedSet <? extends ELEMENTTYPE> aCollection)
+  public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> SortedSet <? extends ELEMENTTYPE> getNotNull (final SortedSet <? extends ELEMENTTYPE> aSortedSet)
   {
-    return aCollection == null ? ContainerHelper.<ELEMENTTYPE> newSortedSet () : aCollection;
+    return aSortedSet == null ? ContainerHelper.<ELEMENTTYPE> newSortedSet () : aSortedSet;
   }
 
   @Nonnull
-  public static <KEYTYPE, VALUETYPE> Map <? extends KEYTYPE, ? extends VALUETYPE> getNotNull (final Map <? extends KEYTYPE, ? extends VALUETYPE> aCollection)
+  public static <KEYTYPE, VALUETYPE> Map <? extends KEYTYPE, ? extends VALUETYPE> getNotNull (final Map <? extends KEYTYPE, ? extends VALUETYPE> aMap)
   {
-    return aCollection == null ? ContainerHelper.<KEYTYPE, VALUETYPE> newMap () : aCollection;
+    return aMap == null ? ContainerHelper.<KEYTYPE, VALUETYPE> newMap () : aMap;
   }
 
   @Nonnull
-  public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> SortedMap <? extends KEYTYPE, ? extends VALUETYPE> getNotNull (final SortedMap <? extends KEYTYPE, ? extends VALUETYPE> aCollection)
+  public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> SortedMap <? extends KEYTYPE, ? extends VALUETYPE> getNotNull (final SortedMap <? extends KEYTYPE, ? extends VALUETYPE> aSortedMap)
   {
-    return aCollection == null ? ContainerHelper.<KEYTYPE, VALUETYPE> newSortedMap () : aCollection;
+    return aSortedMap == null ? ContainerHelper.<KEYTYPE, VALUETYPE> newSortedMap () : aSortedMap;
   }
 
   @Nullable
@@ -119,37 +119,37 @@ public final class ContainerHelper
 
   @Nullable
   @ReturnsImmutableObject
-  public static <ELEMENTTYPE> List <ELEMENTTYPE> makeUnmodifiable (@Nullable final List <? extends ELEMENTTYPE> aCollection)
+  public static <ELEMENTTYPE> List <ELEMENTTYPE> makeUnmodifiable (@Nullable final List <? extends ELEMENTTYPE> aList)
   {
-    return aCollection == null ? null : Collections.unmodifiableList (aCollection);
+    return aList == null ? null : Collections.unmodifiableList (aList);
   }
 
   @Nullable
   @ReturnsImmutableObject
-  public static <ELEMENTTYPE> Set <ELEMENTTYPE> makeUnmodifiable (@Nullable final Set <? extends ELEMENTTYPE> aCollection)
+  public static <ELEMENTTYPE> Set <ELEMENTTYPE> makeUnmodifiable (@Nullable final Set <? extends ELEMENTTYPE> aSet)
   {
-    return aCollection == null ? null : Collections.unmodifiableSet (aCollection);
+    return aSet == null ? null : Collections.unmodifiableSet (aSet);
   }
 
   @Nullable
   @ReturnsImmutableObject
-  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> makeUnmodifiable (@Nullable final Map <? extends KEYTYPE, ? extends VALUETYPE> aCollection)
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> makeUnmodifiable (@Nullable final Map <? extends KEYTYPE, ? extends VALUETYPE> aMap)
   {
-    return aCollection == null ? null : Collections.unmodifiableMap (aCollection);
+    return aMap == null ? null : Collections.unmodifiableMap (aMap);
   }
 
   @Nullable
   @ReturnsImmutableObject
-  public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> SortedSet <ELEMENTTYPE> makeUnmodifiable (@Nullable final SortedSet <ELEMENTTYPE> aCollection)
+  public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> SortedSet <ELEMENTTYPE> makeUnmodifiable (@Nullable final SortedSet <ELEMENTTYPE> aSortedSet)
   {
-    return aCollection == null ? null : Collections.unmodifiableSortedSet (aCollection);
+    return aSortedSet == null ? null : Collections.unmodifiableSortedSet (aSortedSet);
   }
 
   @Nullable
   @ReturnsImmutableObject
-  public static <KEYTYPE, VALUETYPE> SortedMap <KEYTYPE, VALUETYPE> makeUnmodifiable (@Nullable final SortedMap <KEYTYPE, ? extends VALUETYPE> aCollection)
+  public static <KEYTYPE, VALUETYPE> SortedMap <KEYTYPE, VALUETYPE> makeUnmodifiable (@Nullable final SortedMap <KEYTYPE, ? extends VALUETYPE> aSortedMap)
   {
-    return aCollection == null ? null : Collections.unmodifiableSortedMap (aCollection);
+    return aSortedMap == null ? null : Collections.unmodifiableSortedMap (aSortedMap);
   }
 
   @Nonnull
@@ -162,51 +162,49 @@ public final class ContainerHelper
 
   @Nonnull
   @ReturnsImmutableObject
-  public static <ELEMENTTYPE> List <ELEMENTTYPE> makeUnmodifiableNotNull (@Nullable final List <? extends ELEMENTTYPE> aCollection)
+  public static <ELEMENTTYPE> List <ELEMENTTYPE> makeUnmodifiableNotNull (@Nullable final List <? extends ELEMENTTYPE> aList)
   {
-    return aCollection == null ? ContainerHelper.<ELEMENTTYPE> newUnmodifiableList ()
-                              : Collections.unmodifiableList (aCollection);
+    return aList == null ? ContainerHelper.<ELEMENTTYPE> newUnmodifiableList () : Collections.unmodifiableList (aList);
   }
 
   @Nonnull
   @ReturnsImmutableObject
-  public static <ELEMENTTYPE> Set <ELEMENTTYPE> makeUnmodifiableNotNull (@Nullable final Set <? extends ELEMENTTYPE> aCollection)
+  public static <ELEMENTTYPE> Set <ELEMENTTYPE> makeUnmodifiableNotNull (@Nullable final Set <? extends ELEMENTTYPE> aSet)
   {
-    return aCollection == null ? ContainerHelper.<ELEMENTTYPE> newUnmodifiableSet ()
-                              : Collections.unmodifiableSet (aCollection);
+    return aSet == null ? ContainerHelper.<ELEMENTTYPE> newUnmodifiableSet () : Collections.unmodifiableSet (aSet);
   }
 
   @Nonnull
   @ReturnsImmutableObject
-  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> makeUnmodifiableNotNull (@Nullable final Map <? extends KEYTYPE, ? extends VALUETYPE> aCollection)
+  public static <KEYTYPE, VALUETYPE> Map <KEYTYPE, VALUETYPE> makeUnmodifiableNotNull (@Nullable final Map <? extends KEYTYPE, ? extends VALUETYPE> aMap)
   {
-    return aCollection == null ? ContainerHelper.<KEYTYPE, VALUETYPE> newUnmodifiableMap ()
-                              : Collections.unmodifiableMap (aCollection);
+    return aMap == null ? ContainerHelper.<KEYTYPE, VALUETYPE> newUnmodifiableMap ()
+                       : Collections.unmodifiableMap (aMap);
   }
 
   @Nonnull
   @ReturnsImmutableObject
-  public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> SortedSet <ELEMENTTYPE> makeUnmodifiableNotNull (@Nullable final SortedSet <ELEMENTTYPE> aCollection)
+  public static <ELEMENTTYPE extends Comparable <? super ELEMENTTYPE>> SortedSet <ELEMENTTYPE> makeUnmodifiableNotNull (@Nullable final SortedSet <ELEMENTTYPE> aSortedSet)
   {
-    return aCollection == null ? ContainerHelper.<ELEMENTTYPE> newUnmodifiableSortedSet ()
-                              : Collections.unmodifiableSortedSet (aCollection);
+    return aSortedSet == null ? ContainerHelper.<ELEMENTTYPE> newUnmodifiableSortedSet ()
+                             : Collections.unmodifiableSortedSet (aSortedSet);
   }
 
   @Nonnull
   @ReturnsImmutableObject
-  public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> SortedMap <KEYTYPE, VALUETYPE> makeUnmodifiableNotNull (@Nullable final SortedMap <KEYTYPE, ? extends VALUETYPE> aCollection)
+  public static <KEYTYPE extends Comparable <? super KEYTYPE>, VALUETYPE> SortedMap <KEYTYPE, VALUETYPE> makeUnmodifiableNotNull (@Nullable final SortedMap <KEYTYPE, ? extends VALUETYPE> aSortedMap)
   {
-    return Collections.unmodifiableSortedMap (aCollection == null ? ContainerHelper.<KEYTYPE, VALUETYPE> newSortedMap ()
-                                                                 : aCollection);
+    return Collections.unmodifiableSortedMap (aSortedMap == null ? ContainerHelper.<KEYTYPE, VALUETYPE> newSortedMap ()
+                                                                : aSortedMap);
   }
 
   /**
    * Get all elements that are only contained in the first contained, and not in
    * the second. This method implements <code>aCont1 - aCont2</code>.
    * 
-   * @param aCont1
+   * @param aCollection1
    *        The first container. May be <code>null</code> or empty.
-   * @param aCont2
+   * @param aCollection2
    *        The second container. May be <code>null</code> or empty.
    * @return The difference and never <code>null</code>. Returns an empty set,
    *         if the first container is empty. Returns a copy of the first
@@ -215,16 +213,16 @@ public final class ContainerHelper
    */
   @Nullable
   @ReturnsMutableCopy
-  public static <ELEMENTTYPE> Set <ELEMENTTYPE> getDifference (@Nullable final Collection <? extends ELEMENTTYPE> aCont1,
-                                                               @Nullable final Collection <? extends ELEMENTTYPE> aCont2)
+  public static <ELEMENTTYPE> Set <ELEMENTTYPE> getDifference (@Nullable final Collection <? extends ELEMENTTYPE> aCollection1,
+                                                               @Nullable final Collection <? extends ELEMENTTYPE> aCollection2)
   {
-    if (isEmpty (aCont1))
+    if (isEmpty (aCollection1))
       return newSet ();
-    if (isEmpty (aCont2))
-      return newSet (aCont1);
+    if (isEmpty (aCollection2))
+      return newSet (aCollection1);
 
-    final Set <ELEMENTTYPE> ret = newSet (aCont1);
-    ret.removeAll (aCont2);
+    final Set <ELEMENTTYPE> ret = newSet (aCollection1);
+    ret.removeAll (aCollection2);
     return ret;
   }
 
@@ -232,9 +230,9 @@ public final class ContainerHelper
    * Get all elements that are contained in the first AND in the second
    * container.
    * 
-   * @param aCont1
+   * @param aCollection1
    *        The first container. May be <code>null</code> or empty.
-   * @param aCont2
+   * @param aCollection2
    *        The second container. May be <code>null</code> or empty.
    * @return An empty set, if either the first or the second container are
    *         empty. Returns a set of elements that are contained in both
@@ -243,16 +241,16 @@ public final class ContainerHelper
    */
   @Nullable
   @ReturnsMutableCopy
-  public static <ELEMENTTYPE> Set <ELEMENTTYPE> getIntersected (@Nullable final Collection <? extends ELEMENTTYPE> aCont1,
-                                                                @Nullable final Collection <? extends ELEMENTTYPE> aCont2)
+  public static <ELEMENTTYPE> Set <ELEMENTTYPE> getIntersected (@Nullable final Collection <? extends ELEMENTTYPE> aCollection1,
+                                                                @Nullable final Collection <? extends ELEMENTTYPE> aCollection2)
   {
-    if (isEmpty (aCont1))
+    if (isEmpty (aCollection1))
       return newSet ();
-    if (isEmpty (aCont2))
+    if (isEmpty (aCollection2))
       return newSet ();
 
-    final Set <ELEMENTTYPE> ret = newSet (aCont1);
-    ret.retainAll (aCont2);
+    final Set <ELEMENTTYPE> ret = newSet (aCollection1);
+    ret.retainAll (aCollection2);
     return ret;
   }
 
@@ -3105,9 +3103,10 @@ public final class ContainerHelper
                                                                       @Nullable final Collection <? extends ELEMENTTYPE> aCont2)
   {
     final int nSize1 = getSize (aCont1);
-    final int nSize2 = getSize (aCont2);
     if (nSize1 == 0)
       return newList (aCont2);
+
+    final int nSize2 = getSize (aCont2);
     if (nSize2 == 0)
       return newList (aCont1);
 
@@ -3123,9 +3122,10 @@ public final class ContainerHelper
                                                                       @Nullable final ELEMENTTYPE... aCont2)
   {
     final int nSize1 = getSize (aCont1);
-    final int nSize2 = ArrayHelper.getSize (aCont2);
     if (nSize1 == 0)
       return newList (aCont2);
+
+    final int nSize2 = ArrayHelper.getSize (aCont2);
     if (nSize2 == 0)
       return newList (aCont1);
 
@@ -3142,9 +3142,10 @@ public final class ContainerHelper
                                                                       @Nullable final Collection <? extends ELEMENTTYPE> aCont2)
   {
     final int nSize1 = ArrayHelper.getSize (aCont1);
-    final int nSize2 = getSize (aCont2);
     if (nSize1 == 0)
       return newList (aCont2);
+
+    final int nSize2 = getSize (aCont2);
     if (nSize2 == 0)
       return newList (aCont1);
 
@@ -3161,9 +3162,10 @@ public final class ContainerHelper
                                                                     @Nullable final Collection <? extends ELEMENTTYPE> aCont2)
   {
     final int nSize1 = getSize (aCont1);
-    final int nSize2 = getSize (aCont2);
     if (nSize1 == 0)
       return newSet (aCont2);
+
+    final int nSize2 = getSize (aCont2);
     if (nSize2 == 0)
       return newSet (aCont1);
 
@@ -3179,9 +3181,10 @@ public final class ContainerHelper
                                                                     @Nullable final ELEMENTTYPE... aCont2)
   {
     final int nSize1 = getSize (aCont1);
-    final int nSize2 = ArrayHelper.getSize (aCont2);
     if (nSize1 == 0)
       return newSet (aCont2);
+
+    final int nSize2 = ArrayHelper.getSize (aCont2);
     if (nSize2 == 0)
       return newSet (aCont1);
 
@@ -3198,9 +3201,10 @@ public final class ContainerHelper
                                                                     @Nullable final Collection <? extends ELEMENTTYPE> aCont2)
   {
     final int nSize1 = ArrayHelper.getSize (aCont1);
-    final int nSize2 = getSize (aCont2);
     if (nSize1 == 0)
       return newSet (aCont2);
+
+    final int nSize2 = getSize (aCont2);
     if (nSize2 == 0)
       return newSet (aCont1);
 
