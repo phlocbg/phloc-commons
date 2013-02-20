@@ -2819,6 +2819,20 @@ public final class ContainerHelper
   }
 
   /**
+   * Get the first element of the passed sorted set.
+   * 
+   * @param aSortedSet
+   *        The sorted set. May be <code>null</code>.
+   * @return <code>null</code> if the list is <code>null</code> or empty, the
+   *         first element otherwise.
+   */
+  @Nullable
+  public static <ELEMENTTYPE> ELEMENTTYPE getFirstElement (@Nullable final SortedSet <ELEMENTTYPE> aSortedSet)
+  {
+    return isEmpty (aSortedSet) ? null : aSortedSet.first ();
+  }
+
+  /**
    * Get the first element of the passed collection.
    * 
    * @param aCollection
@@ -2878,6 +2892,20 @@ public final class ContainerHelper
   }
 
   /**
+   * Get the first key of the passed sorted map.
+   * 
+   * @param aSortedMap
+   *        The sorted map. May be <code>null</code>.
+   * @return <code>null</code> if the map is <code>null</code> or empty, the
+   *         first key otherwise.
+   */
+  @Nullable
+  public static <KEYTYPE, VALUETYPE> KEYTYPE getFirstKey (@Nullable final SortedMap <KEYTYPE, VALUETYPE> aSortedMap)
+  {
+    return isEmpty (aSortedMap) ? null : aSortedMap.firstKey ();
+  }
+
+  /**
    * Get the first value of the passed map.
    * 
    * @param aMap
@@ -2889,6 +2917,21 @@ public final class ContainerHelper
   public static <KEYTYPE, VALUETYPE> VALUETYPE getFirstValue (@Nullable final Map <KEYTYPE, VALUETYPE> aMap)
   {
     return isEmpty (aMap) ? null : aMap.values ().iterator ().next ();
+  }
+
+  /**
+   * Get the first value of the passed map.
+   * 
+   * @param aSortedMap
+   *        The map. May be <code>null</code>.
+   * @return <code>null</code> if the map is <code>null</code> or empty, the
+   *         first value otherwise.
+   */
+  @Nullable
+  public static <KEYTYPE, VALUETYPE> VALUETYPE getFirstValue (@Nullable final SortedMap <KEYTYPE, VALUETYPE> aSortedMap)
+  {
+    final KEYTYPE aKey = getFirstKey (aSortedMap);
+    return aKey == null ? null : aSortedMap.get (aKey);
   }
 
   @Nullable
@@ -2905,29 +2948,64 @@ public final class ContainerHelper
   }
 
   @Nullable
-  public static <ELEMENTTYPE> ELEMENTTYPE getLastElement (@Nullable final Collection <ELEMENTTYPE> aCont)
+  public static <ELEMENTTYPE> ELEMENTTYPE getLastElement (@Nullable final SortedSet <ELEMENTTYPE> aSortedSet)
   {
-    if (isEmpty (aCont))
+    return isEmpty (aSortedSet) ? null : aSortedSet.last ();
+  }
+
+  @Nullable
+  public static <ELEMENTTYPE> ELEMENTTYPE getLastElement (@Nullable final Collection <ELEMENTTYPE> aCollection)
+  {
+    if (isEmpty (aCollection))
       return null;
 
     // Slow but shouldn't matter
     ELEMENTTYPE aLast = null;
-    for (final Iterator <ELEMENTTYPE> it = aCont.iterator (); it.hasNext ();)
+    for (final Iterator <ELEMENTTYPE> it = aCollection.iterator (); it.hasNext ();)
       aLast = it.next ();
     return aLast;
   }
 
   @Nullable
-  public static <ELEMENTTYPE> ELEMENTTYPE getLastElement (@Nullable final Iterable <ELEMENTTYPE> aCont)
+  public static <ELEMENTTYPE> ELEMENTTYPE getLastElement (@Nullable final Iterable <ELEMENTTYPE> aIterable)
   {
-    if (aCont == null)
+    if (aIterable == null)
       return null;
 
     // Slow but shouldn't matter
     ELEMENTTYPE aLast = null;
-    for (final Iterator <ELEMENTTYPE> it = aCont.iterator (); it.hasNext ();)
+    for (final Iterator <ELEMENTTYPE> it = aIterable.iterator (); it.hasNext ();)
       aLast = it.next ();
     return aLast;
+  }
+
+  /**
+   * Get the last key of the passed sorted map.
+   * 
+   * @param aSortedMap
+   *        The sorted map. May be <code>null</code>.
+   * @return <code>null</code> if the map is <code>null</code> or empty, the
+   *         last key otherwise.
+   */
+  @Nullable
+  public static <KEYTYPE, VALUETYPE> KEYTYPE getLastKey (@Nullable final SortedMap <KEYTYPE, VALUETYPE> aSortedMap)
+  {
+    return isEmpty (aSortedMap) ? null : aSortedMap.lastKey ();
+  }
+
+  /**
+   * Get the last value of the passed map.
+   * 
+   * @param aSortedMap
+   *        The map. May be <code>null</code>.
+   * @return <code>null</code> if the map is <code>null</code> or empty, the
+   *         last value otherwise.
+   */
+  @Nullable
+  public static <KEYTYPE, VALUETYPE> VALUETYPE getLastValue (@Nullable final SortedMap <KEYTYPE, VALUETYPE> aSortedMap)
+  {
+    final KEYTYPE aKey = getLastKey (aSortedMap);
+    return aKey == null ? null : aSortedMap.get (aKey);
   }
 
   @Nullable
@@ -3001,76 +3079,76 @@ public final class ContainerHelper
    * Retrieve the size of the passed {@link Collection}. This method handles
    * <code>null</code> containers.
    * 
-   * @param aObj
+   * @param aCollection
    *        Object to check. May be <code>null</code>.
    * @return The size of the object or 0 if the passed parameter is
    *         <code>null</code>.
    */
   @Nonnegative
-  public static int getSize (@Nullable final Collection <?> aObj)
+  public static int getSize (@Nullable final Collection <?> aCollection)
   {
-    return aObj == null ? 0 : aObj.size ();
+    return aCollection == null ? 0 : aCollection.size ();
   }
 
   /**
    * Retrieve the size of the passed {@link Map}. This method handles
    * <code>null</code> containers.
    * 
-   * @param aObj
+   * @param aMap
    *        Object to check. May be <code>null</code>.
    * @return The size of the object or 0 if the passed parameter is
    *         <code>null</code>.
    */
   @Nonnegative
-  public static int getSize (@Nullable final Map <?, ?> aObj)
+  public static int getSize (@Nullable final Map <?, ?> aMap)
   {
-    return aObj == null ? 0 : aObj.size ();
+    return aMap == null ? 0 : aMap.size ();
   }
 
   /**
    * Retrieve the size of the passed {@link Iterable}.
    * 
-   * @param aCont
+   * @param aIterable
    *        Iterator to check. May be <code>null</code>.
    * @return The number objects or 0 if the passed parameter is
    *         <code>null</code>.
    */
   @Nonnegative
-  public static int getSize (@Nullable final Iterable <?> aCont)
+  public static int getSize (@Nullable final Iterable <?> aIterable)
   {
-    return aCont == null ? 0 : getSize (aCont.iterator ());
+    return aIterable == null ? 0 : getSize (aIterable.iterator ());
   }
 
   /**
    * Retrieve the size of the passed {@link Iterable}.
    * 
-   * @param aCont
+   * @param aIterator
    *        Iterable iterator to check. May be <code>null</code>.
    * @return The number objects or 0 if the passed parameter is
    *         <code>null</code>.
    */
   @Nonnegative
-  public static int getSize (@Nullable final IIterableIterator <?> aCont)
+  public static int getSize (@Nullable final IIterableIterator <?> aIterator)
   {
-    return aCont == null ? 0 : getSize (aCont.iterator ());
+    return aIterator == null ? 0 : getSize (aIterator.iterator ());
   }
 
   /**
    * Retrieve the size of the passed {@link Iterator}.
    * 
-   * @param aIter
+   * @param aIterator
    *        Iterator to check. May be <code>null</code>.
    * @return The number objects or 0 if the passed parameter is
    *         <code>null</code>.
    */
   @Nonnegative
-  public static int getSize (@Nullable final Iterator <?> aIter)
+  public static int getSize (@Nullable final Iterator <?> aIterator)
   {
     int ret = 0;
-    if (aIter != null)
-      while (aIter.hasNext ())
+    if (aIterator != null)
+      while (aIterator.hasNext ())
       {
-        aIter.next ();
+        aIterator.next ();
         ++ret;
       }
     return ret;
@@ -3079,19 +3157,19 @@ public final class ContainerHelper
   /**
    * Retrieve the size of the passed {@link Enumeration}.
    * 
-   * @param aEnum
+   * @param aEnumeration
    *        Enumeration to check. May be <code>null</code>.
    * @return The number objects or 0 if the passed parameter is
    *         <code>null</code>.
    */
   @Nonnegative
-  public static int getSize (@Nullable final Enumeration <?> aEnum)
+  public static int getSize (@Nullable final Enumeration <?> aEnumeration)
   {
     int ret = 0;
-    if (aEnum != null)
-      while (aEnum.hasMoreElements ())
+    if (aEnumeration != null)
+      while (aEnumeration.hasMoreElements ())
       {
-        aEnum.nextElement ();
+        aEnumeration.nextElement ();
         ++ret;
       }
     return ret;
@@ -3099,20 +3177,20 @@ public final class ContainerHelper
 
   @Nullable
   @ReturnsMutableCopy
-  public static <ELEMENTTYPE> List <ELEMENTTYPE> getConcatenatedList (@Nullable final Collection <? extends ELEMENTTYPE> aCont1,
-                                                                      @Nullable final Collection <? extends ELEMENTTYPE> aCont2)
+  public static <ELEMENTTYPE> List <ELEMENTTYPE> getConcatenatedList (@Nullable final Collection <? extends ELEMENTTYPE> aCollection1,
+                                                                      @Nullable final Collection <? extends ELEMENTTYPE> aCollection2)
   {
-    final int nSize1 = getSize (aCont1);
+    final int nSize1 = getSize (aCollection1);
     if (nSize1 == 0)
-      return newList (aCont2);
+      return newList (aCollection2);
 
-    final int nSize2 = getSize (aCont2);
+    final int nSize2 = getSize (aCollection2);
     if (nSize2 == 0)
-      return newList (aCont1);
+      return newList (aCollection1);
 
     final List <ELEMENTTYPE> ret = new ArrayList <ELEMENTTYPE> (nSize1 + nSize2);
-    ret.addAll (aCont1);
-    ret.addAll (aCont2);
+    ret.addAll (aCollection1);
+    ret.addAll (aCollection2);
     return ret;
   }
 
