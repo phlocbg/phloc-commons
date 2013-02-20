@@ -20,6 +20,7 @@ package com.phloc.commons.url;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -32,7 +33,6 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
-import com.phloc.commons.lang.ServiceLoaderBackport;
 
 /**
  * A central registry for supported URL protocols. By default, the registry will
@@ -74,7 +74,7 @@ public final class URLProtocolRegistry
         s_aProtocols.put (aProtocol.getProtocol (), aProtocol);
 
       // Load all SPI implementations
-      for (final IURLProtocolRegistrarSPI aRegistrar : ServiceLoaderBackport.load (IURLProtocolRegistrarSPI.class))
+      for (final IURLProtocolRegistrarSPI aRegistrar : ServiceLoader.load (IURLProtocolRegistrarSPI.class))
       {
         s_aLogger.info ("Registering custom URL protocols of " + aRegistrar.getClass ().getCanonicalName () + "...");
         final Set <? extends IURLProtocol> aURLProtocols = aRegistrar.getProtocols ();
