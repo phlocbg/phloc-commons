@@ -163,6 +163,17 @@ public final class LocaleFormatter
     return null;
   }
 
+  public static float parseFloat (@Nullable final String sStr, @Nonnull final Locale aParseLocale, final float fDefault)
+  {
+    return parseFloat (sStr, NumberFormat.getInstance (aParseLocale), fDefault);
+  }
+
+  public static float parseFloat (@Nullable final String sStr, @Nonnull final NumberFormat aNF, final float fDefault)
+  {
+    final Number aNum = parse (sStr, aNF);
+    return aNum == null ? fDefault : aNum.floatValue ();
+  }
+
   public static double parseDouble (@Nullable final String sStr,
                                     @Nonnull final Locale aParseLocale,
                                     final double dDefault)
