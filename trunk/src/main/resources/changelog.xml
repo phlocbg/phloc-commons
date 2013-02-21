@@ -20,6 +20,11 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2013-02-21" category="api" action="add">
+    <change>
+      <text locale="en">Extended CompareUtils with special overloads for byte, char, int, long and short</text>
+    </change>
+  </entry>
   <entry date="2013-02-20" category="tech" action="add">
     <change>
       <text locale="en">Added possibility to put all namespace prefixes provided in a namespace context into the root document of a serialized XML document. This can be enabled via the XMLWriterSettings.</text>
