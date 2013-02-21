@@ -18,6 +18,7 @@
 package com.phloc.commons.xml.namespace;
 
 import java.util.Iterator;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -25,6 +26,8 @@ import javax.annotation.concurrent.Immutable;
 import javax.xml.XMLConstants;
 
 import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
+import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.collections.iterate.SingleElementIterator;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
@@ -58,6 +61,7 @@ public class SingleElementNamespaceContext extends AbstractNamespaceContext
       throw new NullPointerException ("prefix");
     if (StringHelper.hasNoText (sNamespaceURI))
       throw new IllegalArgumentException ("namespaceURI may not be empty");
+
     m_sPrefix = sPrefix;
     m_sNamespaceURI = sNamespaceURI;
   }
@@ -88,6 +92,13 @@ public class SingleElementNamespaceContext extends AbstractNamespaceContext
   protected String getCustomNamespaceURI (@Nullable final String sPrefix)
   {
     return m_sPrefix.equals (sPrefix) ? m_sNamespaceURI : null;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public Map <String, String> getPrefixToNamespaceURIMap ()
+  {
+    return ContainerHelper.newMap (m_sPrefix, m_sNamespaceURI);
   }
 
   @Override

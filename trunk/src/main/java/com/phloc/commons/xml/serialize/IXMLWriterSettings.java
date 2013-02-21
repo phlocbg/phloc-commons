@@ -104,4 +104,15 @@ public interface IXMLWriterSettings
    *         if no space should be emitted.
    */
   boolean isSpaceOnSelfClosedElement ();
+
+  /**
+   * Check if the flag for putting all namespace prefixes specified in the
+   * namespace context should be put in the root document. This setting only has
+   * an effect if a namespace context is defined and if it implements the
+   * {@link com.phloc.commons.xml.namespace.IIterableNamespaceContext}
+   * interface!
+   * 
+   * @return <code>true</code> if it is enabled, <code>false</code> if not.
+   */
+  boolean isPutNamespaceContextPrefixesInRoot ();
 }

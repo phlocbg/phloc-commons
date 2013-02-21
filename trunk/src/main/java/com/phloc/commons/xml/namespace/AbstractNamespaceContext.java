@@ -22,7 +22,6 @@ import java.util.Iterator;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.xml.XMLConstants;
-import javax.xml.namespace.NamespaceContext;
 
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.collections.iterate.SingleElementIterator;
@@ -33,7 +32,7 @@ import com.phloc.commons.collections.iterate.SingleElementIterator;
  * 
  * @author philip
  */
-public abstract class AbstractNamespaceContext implements NamespaceContext
+public abstract class AbstractNamespaceContext implements IIterableNamespaceContext
 {
   @Nullable
   public abstract String getDefaultNamespaceURI ();
@@ -83,11 +82,13 @@ public abstract class AbstractNamespaceContext implements NamespaceContext
   {
     // According to JavaDoc
     if (sPrefix == null)
-      throw new IllegalArgumentException ();
+      throw new IllegalArgumentException ("null prefix is not allowed!");
+
     if (sPrefix.equals (XMLConstants.XML_NS_PREFIX))
       return XMLConstants.XML_NS_URI;
     if (sPrefix.equals (XMLConstants.XMLNS_ATTRIBUTE))
       return XMLConstants.XMLNS_ATTRIBUTE_NS_URI;
+
     if (sPrefix.equals (XMLConstants.DEFAULT_NS_PREFIX))
     {
       final String sDefNSURI = getDefaultNamespaceURI ();

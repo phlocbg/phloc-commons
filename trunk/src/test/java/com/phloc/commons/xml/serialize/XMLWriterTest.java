@@ -298,6 +298,15 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
                   "<xy:child1 xmlns:xy='ns2url'/>" +
                   "<xy:child2 xmlns:xy='ns2url'/>" +
                   "</a:root>", s);
+
+    aSettings.setPutNamespaceContextPrefixesInRoot (true);
+    s = XMLWriter.getNodeAsString (aDoc, aSettings);
+    assertEquals ("<?xml version='1.0' encoding='ISO-8859-1' standalone='yes'?>" +
+                  CRLF +
+                  "<a:root xmlns:a='ns1url' xmlns:xy='ns2url'>" +
+                  "<xy:child1/>" +
+                  "<xy:child2/>" +
+                  "</a:root>", s);
   }
 
   @Test

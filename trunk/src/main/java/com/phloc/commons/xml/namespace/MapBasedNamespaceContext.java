@@ -28,6 +28,8 @@ import javax.annotation.concurrent.Immutable;
 import javax.xml.XMLConstants;
 
 import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
+import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.collections.multimap.IMultiMapSetBased;
 import com.phloc.commons.collections.multimap.MultiHashMapHashSetBased;
 import com.phloc.commons.string.StringHelper;
@@ -98,7 +100,7 @@ public class MapBasedNamespaceContext extends AbstractNamespaceContext
   protected String getCustomPrefix (@Nonnull final String sNamespaceURI)
   {
     final Set <String> aAllPrefixes = m_aNS2Prefix.get (sNamespaceURI);
-    return aAllPrefixes == null || aAllPrefixes.isEmpty () ? null : aAllPrefixes.iterator ().next ();
+    return ContainerHelper.getFirstElement (aAllPrefixes);
   }
 
   @Override
@@ -106,6 +108,13 @@ public class MapBasedNamespaceContext extends AbstractNamespaceContext
   protected String getCustomNamespaceURI (@Nonnull final String sPrefix)
   {
     return m_aPrefix2NS.get (sPrefix);
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public Map <String, String> getPrefixToNamespaceURIMap ()
+  {
+    return ContainerHelper.newMap (m_aPrefix2NS);
   }
 
   @Override
