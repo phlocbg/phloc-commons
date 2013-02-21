@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.CDefault;
+import com.phloc.commons.compare.CompareUtils;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.EChange;
@@ -135,27 +136,27 @@ public final class MutableDouble extends Number implements IMutableNumeric <Muta
 
   public boolean isSmaller0 ()
   {
-    return Double.compare (m_dValue, 0) < 0;
+    return CompareUtils.compare (m_dValue, 0) < 0;
   }
 
   public boolean isSmallerOrEqual0 ()
   {
-    return Double.compare (m_dValue, 0) <= 0;
+    return CompareUtils.compare (m_dValue, 0) <= 0;
   }
 
   public boolean isGreater0 ()
   {
-    return Double.compare (m_dValue, 0) > 0;
+    return CompareUtils.compare (m_dValue, 0) > 0;
   }
 
   public boolean isGreaterOrEqual0 ()
   {
-    return Double.compare (m_dValue, 0) >= 0;
+    return CompareUtils.compare (m_dValue, 0) >= 0;
   }
 
-  public int compareTo (final MutableDouble rhs)
+  public int compareTo (@Nonnull final MutableDouble rhs)
   {
-    return Double.compare (m_dValue, rhs.m_dValue);
+    return CompareUtils.compare (m_dValue, rhs.m_dValue);
   }
 
   @Nonnull

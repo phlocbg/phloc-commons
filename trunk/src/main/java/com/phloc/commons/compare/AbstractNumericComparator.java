@@ -83,6 +83,6 @@ public abstract class AbstractNumericComparator <DATATYPE> extends AbstractCompa
   {
     final double d1 = asDouble (aElement1);
     final double d2 = asDouble (aElement2);
-    return Double.compare (d1, d2);
+    return CompareUtils.compare (d1, d2);
   }
 }

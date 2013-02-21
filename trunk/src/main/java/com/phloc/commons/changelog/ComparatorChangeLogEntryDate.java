@@ -85,7 +85,7 @@ public final class ComparatorChangeLogEntryDate extends AbstractComparator <Chan
   {
     final long n1 = aEntry1.getDate ().getTime ();
     final long n2 = aEntry2.getDate ().getTime ();
-    int i = n1 < n2 ? -1 : n1 == n2 ? 0 : +1;
+    int i = CompareUtils.compare (n1, n2);
     if (i == 0)
     {
       i = CompareUtils.nullSafeCompare (aEntry1.getChangeLog ().getComponent (), aEntry2.getChangeLog ()

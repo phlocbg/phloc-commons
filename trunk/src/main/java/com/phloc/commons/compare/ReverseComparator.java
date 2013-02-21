@@ -42,7 +42,8 @@ public class ReverseComparator <T> implements Comparator <T>, Serializable
 
   public int compare (final T aObj1, final T aObj2)
   {
-    return -m_aComparator.compare (aObj1, aObj2);
+    // Reverse result, by reversing the object order :)
+    return m_aComparator.compare (aObj2, aObj1);
   }
 
   @Override

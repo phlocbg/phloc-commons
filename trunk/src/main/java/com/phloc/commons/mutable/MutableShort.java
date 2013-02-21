@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.CDefault;
+import com.phloc.commons.compare.CompareUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
@@ -198,9 +199,9 @@ public final class MutableShort extends Number implements IMutableInteger <Mutab
     return (m_nValue % 2) != 0;
   }
 
-  public int compareTo (final MutableShort rhs)
+  public int compareTo (@Nonnull final MutableShort rhs)
   {
-    return m_nValue == rhs.m_nValue ? 0 : m_nValue < rhs.m_nValue ? -1 : +1;
+    return CompareUtils.compare (m_nValue, rhs.m_nValue);
   }
 
   @Nonnull

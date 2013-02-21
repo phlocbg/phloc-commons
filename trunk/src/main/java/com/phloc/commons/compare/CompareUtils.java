@@ -50,6 +50,34 @@ public final class CompareUtils
   {}
 
   /**
+   * Special version for boolean, <code>true</code> before <code>false</code>
+   * 
+   * @param b1
+   *        First value
+   * @param b2
+   *        Second value
+   * @return -1, 0 or + 1
+   */
+  public static int compareTrueBeforeFalse (final boolean b1, final boolean b2)
+  {
+    return b1 == b2 ? 0 : b1 ? +1 : -1;
+  }
+
+  /**
+   * Special version for boolean, <code>true</code> before <code>false</code>
+   * 
+   * @param b1
+   *        First value
+   * @param b2
+   *        Second value
+   * @return -1, 0 or + 1
+   */
+  public static int compareFalseBeforeTrue (final boolean b1, final boolean b2)
+  {
+    return b1 == b2 ? 0 : b1 ? -1 : +1;
+  }
+
+  /**
    * Special version for byte
    * 
    * @param n1

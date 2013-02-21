@@ -83,6 +83,6 @@ public abstract class AbstractIntegerComparator <DATATYPE> extends AbstractCompa
   {
     final long n1 = asLong (aElement1);
     final long n2 = asLong (aElement2);
-    return n1 < n2 ? -1 : n1 == n2 ? 0 : +1;
+    return CompareUtils.compare (n1, n2);
   }
 }
