@@ -17,12 +17,11 @@
  */
 package com.phloc.commons.xml.serialize;
 
-import java.io.Writer;
 import java.util.Map;
 import java.util.TreeMap;
 
 import javax.annotation.Nonnull;
-import javax.annotation.WillNotClose;
+import javax.annotation.Nullable;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.CDATASection;
@@ -37,7 +36,6 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.ProcessingInstruction;
 import org.w3c.dom.Text;
 
-import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.xml.CXML;
 import com.phloc.commons.xml.EXMLVersion;
@@ -62,37 +60,53 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
     super (aSettings);
   }
 
-  private void _writeNode (@Nonnull final IXMLIterationHandler aEmitter, @Nonnull final Node aNode)
+  @Override
+  protected void emitNode (@Nonnull final IXMLIterationHandler aXMLWriter,
+                           @Nullable final Node aPrevSibling,
+                           @Nonnull final Node aNode,
+                           @Nullable final Node aNextSibling)
   {
     final short nNodeType = aNode.getNodeType ();
     if (nNodeType == Node.ELEMENT_NODE)
-      _writeElement (aEmitter, (Element) aNode);
+      _writeElement (aXMLWriter, aPrevSibling, (Element) aNode, aNextSibling);
     else
       if (nNodeType == Node.TEXT_NODE)
-        _writeText (aEmitter, (Text) aNode);
+        _writeText (aXMLWriter, (Text) aNode);
       else
         if (nNodeType == Node.CDATA_SECTION_NODE)
-          _writeCDATA (aEmitter, (CDATASection) aNode);
+          _writeCDATA (aXMLWriter, (CDATASection) aNode);
         else
           if (nNodeType == Node.COMMENT_NODE)
-            _writeComment (aEmitter, (Comment) aNode);
+            _writeComment (aXMLWriter, (Comment) aNode);
           else
             if (nNodeType == Node.ENTITY_REFERENCE_NODE)
-              _writeEntityReference (aEmitter, (EntityReference) aNode);
+              _writeEntityReference (aXMLWriter, (EntityReference) aNode);
             else
               if (nNodeType == Node.DOCUMENT_NODE)
-                _writeDocument (aEmitter, (Document) aNode);
+                _writeDocument (aXMLWriter, (Document) aNode);
               else
                 if (nNodeType == Node.DOCUMENT_TYPE_NODE)
-                  _writeDocumentType (aEmitter, (DocumentType) aNode);
+                  _writeDocumentType (aXMLWriter, (DocumentType) aNode);
                 else
                   if (nNodeType == Node.PROCESSING_INSTRUCTION_NODE)
-                    _writeProcessingInstruction (aEmitter, (ProcessingInstruction) aNode);
+                    _writeProcessingInstruction (aXMLWriter, (ProcessingInstruction) aNode);
                   else
                     throw new IllegalArgumentException ("Passed node type " + nNodeType + " is not yet supported");
   }
 
-  private void _writeDocument (@Nonnull final IXMLIterationHandler aEmitter, @Nonnull final Document aDocument)
+  private void _writeNodeList (@Nonnull final IXMLIterationHandler aXMLWriter, @Nonnull final NodeList aChildren)
+  {
+    final int nLastIndex = aChildren.getLength () - 1;
+    for (int nIndex = 0; nIndex <= nLastIndex; ++nIndex)
+    {
+      emitNode (aXMLWriter,
+                nIndex == 0 ? null : aChildren.item (nIndex - 1),
+                aChildren.item (nIndex),
+                nIndex == nLastIndex ? null : aChildren.item (nIndex + 1));
+    }
+  }
+
+  private void _writeDocument (@Nonnull final IXMLIterationHandler aXMLWriter, @Nonnull final Document aDocument)
   {
     if (m_aSettings.getFormat ().isXML ())
     {
@@ -109,52 +123,53 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
         // AbstractMethodError: getXmlVersion and getXmlStandalone
       }
       final EXMLVersion eXMLVersion = EXMLVersion.getFromVersionOrDefault (sXMLVersion, m_aSettings.getXMLVersion ());
-      aEmitter.onDocumentStart (eXMLVersion,
-                                m_aSettings.getCharset (),
-                                bIsDocumentStandalone || aDocument.getDoctype () == null);
+      aXMLWriter.onDocumentStart (eXMLVersion,
+                                  m_aSettings.getCharset (),
+                                  bIsDocumentStandalone || aDocument.getDoctype () == null);
     }
 
-    final NodeList aNL = aDocument.getChildNodes ();
-    for (int i = 0; i < aNL.getLength (); ++i)
-      _writeNode (aEmitter, aNL.item (i));
+    _writeNodeList (aXMLWriter, aDocument.getChildNodes ());
   }
 
-  private void _writeDocumentType (@Nonnull final IXMLIterationHandler aEmitter, @Nonnull final DocumentType aDocType)
+  private void _writeDocumentType (@Nonnull final IXMLIterationHandler aXMLWriter, @Nonnull final DocumentType aDocType)
   {
     if (m_aSettings.getSerializeDocType ().isEmit ())
-      aEmitter.onDocumentType (aDocType.getName (), aDocType.getPublicId (), aDocType.getSystemId ());
+      aXMLWriter.onDocumentType (aDocType.getName (), aDocType.getPublicId (), aDocType.getSystemId ());
   }
 
-  private static void _writeProcessingInstruction (@Nonnull final IXMLIterationHandler aEmitter,
+  private static void _writeProcessingInstruction (@Nonnull final IXMLIterationHandler aXMLWriter,
                                                    @Nonnull final ProcessingInstruction aPI)
   {
-    aEmitter.onProcessingInstruction (aPI.getTarget (), aPI.getData ());
+    aXMLWriter.onProcessingInstruction (aPI.getTarget (), aPI.getData ());
   }
 
-  private static void _writeEntityReference (@Nonnull final IXMLIterationHandler aEmitter,
+  private static void _writeEntityReference (@Nonnull final IXMLIterationHandler aXMLWriter,
                                              @Nonnull final EntityReference aEntRef)
   {
-    aEmitter.onEntityReference (aEntRef.getNodeName ());
+    aXMLWriter.onEntityReference (aEntRef.getNodeName ());
   }
 
-  private void _writeComment (@Nonnull final IXMLIterationHandler aEmitter, @Nonnull final Comment aComment)
+  private void _writeComment (@Nonnull final IXMLIterationHandler aXMLWriter, @Nonnull final Comment aComment)
   {
     if (m_aSettings.getSerializeComments ().isEmit ())
-      aEmitter.onComment (aComment.getData ());
+      aXMLWriter.onComment (aComment.getData ());
   }
 
-  private static void _writeText (@Nonnull final IXMLIterationHandler aEmitter, @Nonnull final Text aText)
+  private static void _writeText (@Nonnull final IXMLIterationHandler aXMLWriter, @Nonnull final Text aText)
   {
     // DOM text is always escaped!
-    aEmitter.onText (aText.getData (), true);
+    aXMLWriter.onText (aText.getData (), true);
   }
 
-  private static void _writeCDATA (@Nonnull final IXMLIterationHandler aEmitter, @Nonnull final Text aText)
+  private static void _writeCDATA (@Nonnull final IXMLIterationHandler aXMLWriter, @Nonnull final Text aText)
   {
-    aEmitter.onCDATA (aText.getData ());
+    aXMLWriter.onCDATA (aText.getData ());
   }
 
-  private void _writeElement (@Nonnull final IXMLIterationHandler aEmitter, @Nonnull final Element aElement)
+  private void _writeElement (@Nonnull final IXMLIterationHandler aXMLWriter,
+                              @Nullable final Node aPrevSibling,
+                              @Nonnull final Element aElement,
+                              @Nullable final Node aNextSibling)
   {
     // use either local name or tag name (depending on namespace prefix)
     final String sTagName = aElement.getLocalName () != null ? aElement.getLocalName () : aElement.getTagName ();
@@ -165,11 +180,8 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
     final boolean bHasChildren = aChildNodeList.getLength () > 0;
 
     final boolean bIsRootElement = aDoc != null && aElement.equals (aDoc.getDocumentElement ());
-    final boolean bIndentPrev = aElement.getPreviousSibling () == null ||
-                                !XMLHelper.isTextNode (aElement.getPreviousSibling ()) ||
-                                bIsRootElement;
-    final boolean bIndentNext = aElement.getNextSibling () == null ||
-                                !XMLHelper.isTextNode (aElement.getNextSibling ());
+    final boolean bIndentPrev = aPrevSibling == null || !XMLHelper.isTextNode (aPrevSibling) || bIsRootElement;
+    final boolean bIndentNext = aNextSibling == null || !XMLHelper.isTextNode (aNextSibling);
     final boolean bHasChildElement = bHasChildren && !XMLHelper.isTextNode (aElement.getFirstChild ());
 
     // get all attributes (sorting is important!)
@@ -213,53 +225,39 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
 
       // indent only if predecessor was an element
       if (m_aSettings.getIndent ().isIndent () && bIndentPrev && m_aIndent.length () > 0)
-        aEmitter.onContentElementWhitespace (m_aIndent);
+        aXMLWriter.onContentElementWhitespace (m_aIndent);
 
-      aEmitter.onElementStart (sNSPrefix, sTagName, aAttrMap, bHasChildren);
+      aXMLWriter.onElementStart (sNSPrefix, sTagName, aAttrMap, bHasChildren);
 
       // write child nodes (if present)
       if (bHasChildren)
       {
         // do we have enclosing elements?
         if (m_aSettings.getIndent ().isAlign () && bHasChildElement)
-          aEmitter.onContentElementWhitespace (NEWLINE);
+          aXMLWriter.onContentElementWhitespace (NEWLINE);
 
         // increment indent
         m_aIndent.append (INDENT);
 
         // recursively process child nodes
-        for (int i = 0; i < aChildNodeList.getLength (); ++i)
-          _writeNode (aEmitter, aChildNodeList.item (i));
+        _writeNodeList (aXMLWriter, aChildNodeList);
 
         // decrement indent
         m_aIndent.delete (m_aIndent.length () - INDENT.length (), m_aIndent.length ());
 
         // add closing tag
         if (m_aSettings.getIndent ().isIndent () && bHasChildElement && m_aIndent.length () > 0)
-          aEmitter.onContentElementWhitespace (m_aIndent);
+          aXMLWriter.onContentElementWhitespace (m_aIndent);
       }
 
-      aEmitter.onElementEnd (sNSPrefix, sTagName, bHasChildren);
+      aXMLWriter.onElementEnd (sNSPrefix, sTagName, bHasChildren);
 
       if (m_aSettings.getIndent ().isAlign () && bIndentNext)
-        aEmitter.onContentElementWhitespace (NEWLINE);
+        aXMLWriter.onContentElementWhitespace (NEWLINE);
     }
     finally
     {
       m_aNSStack.pop ();
     }
-  }
-
-  public void write (@Nonnull final Node aNode, @Nonnull @WillNotClose final Writer aWriter)
-  {
-    final IXMLIterationHandler aXMLWriter = new XMLEmitterPhloc (aWriter, m_aSettings);
-    _writeNode (aXMLWriter, aNode);
-    // Flush is important for Writer!
-    StreamUtils.flush (aWriter);
-  }
-
-  public void write (@Nonnull final Node aNode, @Nonnull final IXMLIterationHandler aXMLEmitter)
-  {
-    _writeNode (aXMLEmitter, aNode);
   }
 }

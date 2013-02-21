@@ -18,6 +18,7 @@
 package com.phloc.commons.xml.serialize;
 
 import java.io.OutputStream;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +40,7 @@ import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.xml.CXML;
+import com.phloc.commons.xml.IXMLIterationHandler;
 import com.phloc.commons.xml.namespace.IIterableNamespaceContext;
 
 /**
@@ -415,6 +417,26 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
           s_aLogger.error ("XMLWriter settings has putNamespaceContextPrefixesInRoot set, but the NamespaceContext does not implement the IIterableNamespaceContext interface!");
       }
     }
+  }
+
+  protected abstract void emitNode (@Nonnull final IXMLIterationHandler aXMLWriter,
+                                    @Nullable final NODETYPE aPrevSibling,
+                                    @Nonnull final NODETYPE aNode,
+                                    @Nullable final NODETYPE aNextSibling);
+
+  public final void write (@Nonnull final NODETYPE aNode, @Nonnull @WillNotClose final Writer aWriter)
+  {
+    final XMLEmitterPhloc aXMLWriter = new XMLEmitterPhloc (aWriter, m_aSettings);
+    // No previous and no next sibling
+    emitNode (aXMLWriter, null, aNode, null);
+    // Flush is important for Writer!
+    StreamUtils.flush (aWriter);
+  }
+
+  public final void write (@Nonnull final NODETYPE aNode, @Nonnull final IXMLIterationHandler aXMLEmitter)
+  {
+    // No previous and no next sibling
+    emitNode (aXMLEmitter, null, aNode, null);
   }
 
   public final void write (@Nonnull final NODETYPE aNode, @Nonnull @WillNotClose final OutputStream aOS)
