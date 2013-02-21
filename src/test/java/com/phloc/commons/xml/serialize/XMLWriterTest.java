@@ -307,6 +307,16 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
                   "<xy:child1/>" +
                   "<xy:child2/>" +
                   "</a:root>", s);
+
+    eRoot.appendChild (aDoc.createElementNS ("ns3url", "zz"));
+    s = XMLWriter.getNodeAsString (aDoc, aSettings);
+    assertEquals ("<?xml version='1.0' encoding='ISO-8859-1' standalone='yes'?>" +
+                  CRLF +
+                  "<a:root xmlns:a='ns1url' xmlns:xy='ns2url'>" +
+                  "<xy:child1/>" +
+                  "<xy:child2/>" +
+                  "<ns0:zz xmlns:ns0='ns3url'/>" +
+                  "</a:root>", s);
   }
 
   @Test
