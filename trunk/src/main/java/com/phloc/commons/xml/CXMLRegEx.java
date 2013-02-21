@@ -82,6 +82,8 @@ public final class CXMLRegEx
 
   /** Pattern for names */
   public static final Pattern PATTERN_NAME = RegExPool.getPattern (NAME);
+  /** Pattern for names that is much quicker but is not 100% correct */
+  public static final Pattern PATTERN_NAME_QUICK = RegExPool.getPattern ("[a-zA-Z_][a-zA-Z0-9]*");
   /** Pattern for NC names */
   public static final Pattern PATTERN_NCNAME = RegExPool.getPattern (NCNAME);
   /** Pattern for NM tokens */

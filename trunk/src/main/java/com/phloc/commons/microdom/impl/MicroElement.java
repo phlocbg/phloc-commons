@@ -94,12 +94,13 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
       m_sTagName = sTagName.substring (nPrefixEnd + 1);
     }
 
-    // Only for the dev version
+    // Only for the debug version, as this slows things down heavily
     if (GlobalDebug.isDebugMode ())
-      if (!CXMLRegEx.PATTERN_NAME.matcher (m_sTagName).matches ())
-        throw new IllegalArgumentException ("The micro element tag name '" +
-                                            m_sTagName +
-                                            "' is not a valid element name!");
+      if (!CXMLRegEx.PATTERN_NAME_QUICK.matcher (m_sTagName).matches ())
+        if (!CXMLRegEx.PATTERN_NAME.matcher (m_sTagName).matches ())
+          throw new IllegalArgumentException ("The micro element tag name '" +
+                                              m_sTagName +
+                                              "' is not a valid element name!");
   }
 
   @Nonnull
@@ -166,10 +167,11 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     // Only for the dev version
     if (GlobalDebug.isDebugMode ())
     {
-      if (!CXMLRegEx.PATTERN_NAME.matcher (sAttrName).matches ())
-        throw new IllegalArgumentException ("The passed attribute name '" +
-                                            sAttrName +
-                                            "' is not a valid attribute name!");
+      if (!CXMLRegEx.PATTERN_NAME_QUICK.matcher (sAttrName).matches ())
+        if (!CXMLRegEx.PATTERN_NAME.matcher (sAttrName).matches ())
+          throw new IllegalArgumentException ("The passed attribute name '" +
+                                              sAttrName +
+                                              "' is not a valid attribute name!");
       if (false)
         if (!CXMLRegEx.PATTERN_ATTVALUE.matcher (sAttrValue).matches ())
           throw new IllegalArgumentException ("The passed attribute value '" +
