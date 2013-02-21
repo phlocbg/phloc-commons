@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.CDefault;
+import com.phloc.commons.compare.CompareUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
@@ -76,7 +77,7 @@ public final class MutableBoolean implements IMutable <MutableBoolean>
 
   public int compareTo (@Nonnull final MutableBoolean rhs)
   {
-    return m_bValue == rhs.m_bValue ? 0 : m_bValue ? -1 : +1;
+    return CompareUtils.compareFalseBeforeTrue (m_bValue, rhs.m_bValue);
   }
 
   @Nonnull
