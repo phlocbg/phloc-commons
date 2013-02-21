@@ -17,16 +17,13 @@
  */
 package com.phloc.commons.microdom.serialize;
 
-import java.io.Writer;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.WillNotClose;
 
-import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.microdom.IMicroCDATA;
 import com.phloc.commons.microdom.IMicroComment;
 import com.phloc.commons.microdom.IMicroContainer;
@@ -42,7 +39,6 @@ import com.phloc.commons.xml.CXML;
 import com.phloc.commons.xml.IXMLIterationHandler;
 import com.phloc.commons.xml.serialize.AbstractSerializerPhloc;
 import com.phloc.commons.xml.serialize.IXMLWriterSettings;
-import com.phloc.commons.xml.serialize.XMLEmitterPhloc;
 import com.phloc.commons.xml.serialize.XMLWriterSettings;
 
 /**
@@ -62,7 +58,8 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
     super (aSettings);
   }
 
-  private void _writeNode (@Nonnull final IXMLIterationHandler aXMLWriter,
+  @Override
+  protected void emitNode (@Nonnull final IXMLIterationHandler aXMLWriter,
                            @Nullable final IMicroNode aPrevSibling,
                            @Nonnull final IMicroNode aNode,
                            @Nullable final IMicroNode aNextSibling)
@@ -121,10 +118,10 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
     final int nLastIndex = aChildren.size () - 1;
     for (int nIndex = 0; nIndex <= nLastIndex; ++nIndex)
     {
-      _writeNode (aXMLWriter,
-                  nIndex == 0 ? null : aChildren.get (nIndex - 1),
-                  aChildren.get (nIndex),
-                  nIndex == nLastIndex ? null : aChildren.get (nIndex + 1));
+      emitNode (aXMLWriter,
+                nIndex == 0 ? null : aChildren.get (nIndex - 1),
+                aChildren.get (nIndex),
+                nIndex == nLastIndex ? null : aChildren.get (nIndex + 1));
     }
   }
 
@@ -144,7 +141,7 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
   }
 
   private static void _writeProcessingInstruction (@Nonnull final IXMLIterationHandler aXMLWriter,
-                                                   final IMicroProcessingInstruction aPI)
+                                                   @Nonnull final IMicroProcessingInstruction aPI)
   {
     aXMLWriter.onProcessingInstruction (aPI.getTarget (), aPI.getData ());
   }
@@ -277,20 +274,5 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
     {
       m_aNSStack.pop ();
     }
-  }
-
-  public void write (@Nonnull final IMicroNode aNode, @Nonnull @WillNotClose final Writer aWriter)
-  {
-    final IXMLIterationHandler aXMLWriter = new XMLEmitterPhloc (aWriter, m_aSettings);
-    // No previous and no next sibling
-    _writeNode (aXMLWriter, null, aNode, null);
-    // Flush is important for Writer!
-    StreamUtils.flush (aWriter);
-  }
-
-  public void write (@Nonnull final IMicroNode aNode, @Nonnull final IXMLIterationHandler aXMLEmitter)
-  {
-    // No previous and no next sibling
-    _writeNode (aXMLEmitter, null, aNode, null);
   }
 }
