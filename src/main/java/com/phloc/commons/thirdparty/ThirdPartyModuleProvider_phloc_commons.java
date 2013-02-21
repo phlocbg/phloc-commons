@@ -34,12 +34,12 @@ public final class ThirdPartyModuleProvider_phloc_commons implements IThirdParty
   private static final IThirdPartyModule FINDBUGS = new ThirdPartyModule ("FindBugs JSR305 and annotations",
                                                                           "Bill Pugh and David Hovemeyer",
                                                                           ELicense.LGPL30,
-                                                                          new Version (2, 0, 0),
+                                                                          new Version (2, 0, 1),
                                                                           "http://findbugs.sourceforge.net/");
   private static final IThirdPartyModule SLF4J = new ThirdPartyModule ("SLF4J API",
                                                                        "QOS.ch",
                                                                        ELicense.MIT,
-                                                                       new Version (1, 6, 2),
+                                                                       new Version (1, 7, 2),
                                                                        "http://www.slf4j.org/");
   private static final IThirdPartyModule BASE64 = new ThirdPartyModule ("Base64",
                                                                         "Robert Harder",
