@@ -270,6 +270,16 @@ public final class MicroWriterTest
                   "<xy:child1 xmlns:xy=\"ns2url\" />" +
                   "<xy:child2 xmlns:xy=\"ns2url\" />" +
                   "</a:root>", s);
+
+    // Put namespace context mappings in root
+    aSettings.setPutNamespaceContextPrefixesInRoot (true);
+    s = MicroWriter.getNodeAsString (aDoc, aSettings);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>" +
+                  CGlobal.LINE_SEPARATOR +
+                  "<a:root xmlns:a=\"ns1url\" xmlns:xy=\"ns2url\">" +
+                  "<xy:child1 />" +
+                  "<xy:child2 />" +
+                  "</a:root>", s);
   }
 
   @Test

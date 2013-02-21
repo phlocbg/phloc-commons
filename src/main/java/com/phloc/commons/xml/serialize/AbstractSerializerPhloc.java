@@ -39,6 +39,7 @@ import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.xml.CXML;
+import com.phloc.commons.xml.namespace.IIterableNamespaceContext;
 
 /**
  * Abstract XML serializer implementation that works with IMicroNode and
@@ -50,8 +51,14 @@ import com.phloc.commons.xml.CXML;
  */
 public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializer <NODETYPE>
 {
+  /**
+   * The prefix to be used for created namespace prefixes :) (e.g. for "ns0" or
+   * "ns1")
+   */
+  public static final String DEFAULT_NAMESPACE_PREFIX_PREFIX = "ns";
   protected static final String NEWLINE = CGlobal.LINE_SEPARATOR;
   protected static final String INDENT = "  ";
+  private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractSerializerPhloc.class);
 
   /**
    * Contains the XML namespace definitions for a single element.
@@ -60,6 +67,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
    */
   protected static final class NamespaceLevel
   {
+    @SuppressWarnings ("hiding")
     private static final Logger s_aLogger = LoggerFactory.getLogger (NamespaceLevel.class);
     private String m_sDefaultNamespaceURI;
     private Map <String, String> m_aURL2PrefixMap;
@@ -208,8 +216,8 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
 
     public void push (@Nullable final Map <String, String> aAttrs)
     {
-      // add at front
       final NamespaceLevel aNSL = new NamespaceLevel (aAttrs);
+      // add at front
       m_aStack.add (0, aNSL);
     }
 
@@ -223,6 +231,12 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
     {
       // remove at front
       m_aStack.remove (0);
+    }
+
+    @Nonnegative
+    public int size ()
+    {
+      return m_aStack.size ();
     }
 
     /**
@@ -340,7 +354,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
       int nCount = 0;
       do
       {
-        final String sNSPrefix = "ns" + nCount;
+        final String sNSPrefix = DEFAULT_NAMESPACE_PREFIX_PREFIX + nCount;
         if (!_containsPrefix (sNSPrefix))
           return sNSPrefix;
         ++nCount;
@@ -375,6 +389,32 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
   public final IXMLWriterSettings getSettings ()
   {
     return m_aSettings;
+  }
+
+  protected final void handlePutNamespaceContextPrefixInRoot (@Nonnull final Map <String, String> aAttrMap)
+  {
+    if (m_aNSStack.size () == 1 && m_aSettings.isPutNamespaceContextPrefixesInRoot ())
+    {
+      // The only place where the namespace context prefixes are added to the
+      // root element
+      final NamespaceContext aNC = m_aSettings.getNamespaceContext ();
+      if (aNC != null)
+      {
+        if (aNC instanceof IIterableNamespaceContext)
+        {
+          for (final Map.Entry <String, String> aEntry : ((IIterableNamespaceContext) aNC).getPrefixToNamespaceURIMap ()
+                                                                                          .entrySet ())
+          {
+            final String sNSPrefix = aEntry.getKey ();
+            final String sNamespaceURI = aEntry.getValue ();
+            aAttrMap.put (CXML.XML_ATTR_XMLNS_WITH_SEP + sNSPrefix, sNamespaceURI);
+            m_aNSStack.addNamespaceMapping (sNSPrefix, sNamespaceURI);
+          }
+        }
+        else
+          s_aLogger.error ("XMLWriter settings has putNamespaceContextPrefixesInRoot set, but the NamespaceContext does not implement the IIterableNamespaceContext interface!");
+      }
+    }
   }
 
   public final void write (@Nonnull final NODETYPE aNode, @Nonnull @WillNotClose final OutputStream aOS)

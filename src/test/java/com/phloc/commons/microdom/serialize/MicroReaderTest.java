@@ -43,6 +43,7 @@ import com.phloc.commons.io.streamprovider.StringInputStreamProvider;
 import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.io.streams.NonBlockingStringReader;
+import com.phloc.commons.io.streams.NonBlockingStringWriter;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.xml.namespace.MapBasedNamespaceContext;
 import com.phloc.commons.xml.sax.InputSourceFactory;
@@ -286,14 +287,28 @@ public final class MicroReaderTest
     final IMicroDocument aDoc = MicroReader.readMicroXML (s);
     assertNotNull (aDoc);
 
-    final NonBlockingByteArrayOutputStream baos = new NonBlockingByteArrayOutputStream ();
-    new MicroSerializer (xs).write (aDoc, baos);
-    final String sXML = baos.getAsString (CCharset.CHARSET_UTF_8);
+    final NonBlockingStringWriter aWriter = new NonBlockingStringWriter ();
+    new MicroSerializer (xs).write (aDoc, aWriter);
+    String sXML = aWriter.getAsString ();
     assertEquals ("<?xml version='1.0' encoding='UTF-8' standalone='yes'?>" +
                   CRLF +
                   "<a1:verrryoot xmlns:a1='uri1'>" +
                   "<a1:root>" +
                   "<a2:child xmlns:a2='uri2'>" +
+                  "<a2:child2>Value text - no entities!</a2:child2>" +
+                  "</a2:child>" +
+                  "</a1:root>" +
+                  "</a1:verrryoot>", sXML);
+
+    xs.setPutNamespaceContextPrefixesInRoot (true);
+    aWriter.reset ();
+    new MicroSerializer (xs).write (aDoc, aWriter);
+    sXML = aWriter.getAsString ();
+    assertEquals ("<?xml version='1.0' encoding='UTF-8' standalone='yes'?>" +
+                  CRLF +
+                  "<a1:verrryoot xmlns:a1='uri1' xmlns:a2='uri2'>" +
+                  "<a1:root>" +
+                  "<a2:child>" +
                   "<a2:child2>Value text - no entities!</a2:child2>" +
                   "</a2:child>" +
                   "</a1:root>" +

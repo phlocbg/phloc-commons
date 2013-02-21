@@ -18,6 +18,8 @@
 package com.phloc.commons.xml.serialize;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.nio.charset.Charset;
@@ -28,6 +30,7 @@ import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.mock.PhlocTestUtils;
 import com.phloc.commons.xml.EXMLIncorrectCharacterHandling;
+import com.phloc.commons.xml.namespace.MapBasedNamespaceContext;
 
 /**
  * Test class for class {@link XMLWriterSettings}.
@@ -45,6 +48,10 @@ public final class XMLWriterSettingsTest
     assertEquals (XMLWriterSettings.DEFAULT_XML_CHARSET, mws.getCharset ());
     assertEquals (EXMLSerializeFormat.XML, mws.getFormat ());
     assertEquals (EXMLSerializeIndent.INDENT_AND_ALIGN, mws.getIndent ());
+    assertEquals (CCharset.CHARSET_UTF_8_OBJ, mws.getCharsetObj ());
+    assertTrue (mws.isSpaceOnSelfClosedElement ());
+    assertTrue (mws.isUseDoubleQuotesForAttributes ());
+    assertFalse (mws.isPutNamespaceContextPrefixesInRoot ());
 
     mws = new XMLWriterSettings ();
     assertEquals (EXMLSerializeDocType.EMIT, mws.getSerializeDocType ());
@@ -52,6 +59,10 @@ public final class XMLWriterSettingsTest
     assertEquals (XMLWriterSettings.DEFAULT_XML_CHARSET, mws.getCharset ());
     assertEquals (EXMLSerializeFormat.XML, mws.getFormat ());
     assertEquals (EXMLSerializeIndent.INDENT_AND_ALIGN, mws.getIndent ());
+    assertEquals (CCharset.CHARSET_UTF_8_OBJ, mws.getCharsetObj ());
+    assertTrue (mws.isSpaceOnSelfClosedElement ());
+    assertTrue (mws.isUseDoubleQuotesForAttributes ());
+    assertFalse (mws.isPutNamespaceContextPrefixesInRoot ());
 
     PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (mws,
                                                                         new XMLWriterSettings ().setFormat (EXMLSerializeFormat.HTML));
@@ -63,50 +74,85 @@ public final class XMLWriterSettingsTest
                                                                         new XMLWriterSettings ().setIndent (EXMLSerializeIndent.NONE));
     PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (mws,
                                                                         new XMLWriterSettings ().setCharset (CCharset.CHARSET_US_ASCII));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (mws,
+                                                                        new XMLWriterSettings ().setNamespaceContext (new MapBasedNamespaceContext ().addMapping ("prefix",
+                                                                                                                                                                  "uri")));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (mws,
+                                                                        new XMLWriterSettings ().setSpaceOnSelfClosedElement (false));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (mws,
+                                                                        new XMLWriterSettings ().setUseDoubleQuotesForAttributes (false));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (mws,
+                                                                        new XMLWriterSettings ().setPutNamespaceContextPrefixesInRoot (true));
 
     // Now try all permutations
-    final XMLWriterSettings mmws = new XMLWriterSettings ();
+    final XMLWriterSettings aXWS = new XMLWriterSettings ();
     for (final EXMLSerializeDocType eDocType : EXMLSerializeDocType.values ())
     {
-      mmws.setSerializeDocType (eDocType);
-      assertEquals (eDocType, mmws.getSerializeDocType ());
+      aXWS.setSerializeDocType (eDocType);
+      assertEquals (eDocType, aXWS.getSerializeDocType ());
       for (final EXMLSerializeComments eComments : EXMLSerializeComments.values ())
       {
-        mmws.setSerializeComments (eComments);
-        assertEquals (eComments, mmws.getSerializeComments ());
+        aXWS.setSerializeComments (eComments);
+        assertEquals (eComments, aXWS.getSerializeComments ());
         for (final EXMLSerializeFormat eFormat : EXMLSerializeFormat.values ())
         {
-          mmws.setFormat (eFormat);
-          assertEquals (eFormat, mmws.getFormat ());
+          aXWS.setFormat (eFormat);
+          assertEquals (eFormat, aXWS.getFormat ());
           for (final EXMLSerializeIndent eIndent : EXMLSerializeIndent.values ())
           {
-            mmws.setIndent (eIndent);
-            assertEquals (eIndent, mmws.getIndent ());
+            aXWS.setIndent (eIndent);
+            assertEquals (eIndent, aXWS.getIndent ());
             for (final EXMLIncorrectCharacterHandling eIncorrectCharHandling : EXMLIncorrectCharacterHandling.values ())
             {
-              mmws.setIncorrectCharacterHandling (eIncorrectCharHandling);
-              assertEquals (eIncorrectCharHandling, mmws.getIncorrectCharacterHandling ());
+              aXWS.setIncorrectCharacterHandling (eIncorrectCharHandling);
+              assertEquals (eIncorrectCharHandling, aXWS.getIncorrectCharacterHandling ());
               for (final Charset aCS : CharsetManager.getAllCharsets ().values ())
               {
-                mmws.setCharset (aCS.name ());
-                assertEquals (aCS.name (), mmws.getCharset ());
-                PhlocTestUtils.testDefaultImplementationWithEqualContentObject (mmws,
-                                                                                new XMLWriterSettings ().setSerializeDocType (eDocType)
-                                                                                                        .setSerializeComments (eComments)
-                                                                                                        .setFormat (eFormat)
-                                                                                                        .setIndent (eIndent)
-                                                                                                        .setIncorrectCharacterHandling (eIncorrectCharHandling)
-                                                                                                        .setCharset (aCS.name ()));
+                aXWS.setCharset (aCS);
+                assertEquals (aCS, aXWS.getCharsetObj ());
+                assertEquals (aCS.name (), aXWS.getCharset ());
+                for (int nUseDoubleQuotesForAttributes = 0; nUseDoubleQuotesForAttributes < 2; ++nUseDoubleQuotesForAttributes)
+                {
+                  final boolean bUseDoubleQuotesForAttributes = nUseDoubleQuotesForAttributes == 0;
+                  aXWS.setUseDoubleQuotesForAttributes (bUseDoubleQuotesForAttributes);
+                  assertTrue (bUseDoubleQuotesForAttributes == aXWS.isUseDoubleQuotesForAttributes ());
+                  for (int nSpaceOnSelfClosedElement = 0; nSpaceOnSelfClosedElement < 2; ++nSpaceOnSelfClosedElement)
+                  {
+                    final boolean bSpaceOnSelfClosedElement = nSpaceOnSelfClosedElement == 0;
+                    aXWS.setSpaceOnSelfClosedElement (bSpaceOnSelfClosedElement);
+                    assertTrue (bSpaceOnSelfClosedElement == aXWS.isSpaceOnSelfClosedElement ());
+                    for (int nPutNamespaceContextPrefixesInRoot = 0; nPutNamespaceContextPrefixesInRoot < 2; ++nPutNamespaceContextPrefixesInRoot)
+                    {
+                      final boolean bPutNamespaceContextPrefixesInRoot = nPutNamespaceContextPrefixesInRoot == 0;
+                      aXWS.setPutNamespaceContextPrefixesInRoot (bPutNamespaceContextPrefixesInRoot);
+                      assertTrue (bPutNamespaceContextPrefixesInRoot == aXWS.isPutNamespaceContextPrefixesInRoot ());
+                      PhlocTestUtils.testDefaultImplementationWithEqualContentObject (aXWS,
+                                                                                      new XMLWriterSettings ().setSerializeDocType (eDocType)
+                                                                                                              .setSerializeComments (eComments)
+                                                                                                              .setFormat (eFormat)
+                                                                                                              .setIndent (eIndent)
+                                                                                                              .setIncorrectCharacterHandling (eIncorrectCharHandling)
+                                                                                                              .setCharset (aCS)
+                                                                                                              .setUseDoubleQuotesForAttributes (bUseDoubleQuotesForAttributes)
+                                                                                                              .setSpaceOnSelfClosedElement (bSpaceOnSelfClosedElement)
+                                                                                                              .setPutNamespaceContextPrefixesInRoot (bPutNamespaceContextPrefixesInRoot));
+                    }
+                    assertTrue (bSpaceOnSelfClosedElement == aXWS.isSpaceOnSelfClosedElement ());
+                  }
+                  assertTrue (bUseDoubleQuotesForAttributes == aXWS.isUseDoubleQuotesForAttributes ());
+                }
+                assertEquals (aCS, aXWS.getCharsetObj ());
+                assertEquals (aCS.name (), aXWS.getCharset ());
               }
-              assertEquals (eIncorrectCharHandling, mmws.getIncorrectCharacterHandling ());
+              assertEquals (eIncorrectCharHandling, aXWS.getIncorrectCharacterHandling ());
             }
-            assertEquals (eIndent, mmws.getIndent ());
+            assertEquals (eIndent, aXWS.getIndent ());
           }
-          assertEquals (eFormat, mmws.getFormat ());
+          assertEquals (eFormat, aXWS.getFormat ());
         }
-        assertEquals (eComments, mmws.getSerializeComments ());
+        assertEquals (eComments, aXWS.getSerializeComments ());
       }
-      assertEquals (eDocType, mmws.getSerializeDocType ());
+      assertEquals (eDocType, aXWS.getSerializeDocType ());
     }
 
     try

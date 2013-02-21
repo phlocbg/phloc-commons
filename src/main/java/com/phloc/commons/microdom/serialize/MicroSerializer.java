@@ -211,6 +211,9 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
       aAttrMap.putAll (aElement.getAttributes ());
 
     m_aNSStack.push (aAttrMap);
+
+    handlePutNamespaceContextPrefixInRoot (aAttrMap);
+
     try
     {
       // resolve Namespace prefix

@@ -182,6 +182,9 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
     }
 
     m_aNSStack.push (aAttrMap);
+
+    handlePutNamespaceContextPrefixInRoot (aAttrMap);
+
     try
     {
       // resolve Namespace prefix
