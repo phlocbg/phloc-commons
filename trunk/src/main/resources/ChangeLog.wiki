@@ -1,7 +1,11 @@
 #summary Change log of phloc-commons
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
-<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr><td>2/20/13</td><td>change</td><td>api</td><td></td><td>Removed some hacks for non Java 1.6 API (like in DecimalFormatSymbolsFactory)</td></tr>
+<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr><td>2/21/13</td><td>add</td><td>api</td><td></td><td>Added LocaleFormatter.parseFloat</td></tr>
+<tr><td>2/21/13</td><td>add</td><td>api</td><td></td><td>Extended CompareUtils with special overloads for byte, char, int, long and short</td></tr>
+<tr><td>2/20/13</td><td>add</td><td>tech</td><td></td><td>Added possibility to put all namespace prefixes provided in a namespace context into the root document of a serialized XML document. This can be enabled via the XMLWriterSettings.</td></tr>
+<tr><td>2/20/13</td><td>add</td><td>api</td><td></td><td>Added new interface IIterableNamespaceContext</td></tr>
+<tr><td>2/20/13</td><td>change</td><td>api</td><td></td><td>Removed some hacks for non Java 1.6 API (like in DecimalFormatSymbolsFactory)</td></tr>
 <tr><td>2/20/13</td><td>change</td><td>api</td><td></td><td>Deprecated ServiceLoaderBackport - use the java.util.ServiceLoader instead</td></tr>
 <tr><td>2/19/13</td><td>add</td><td>api</td><td></td><td>Added new implementation classes StringSkipPrefixAndSuffixFormatter, StringSkipPrefixFormatter and StringSkipSuffixFormatter</td></tr>
 <tr><td>2/19/13</td><td>add</td><td>api</td><td></td><td>Added new implementation class ReverseComparator`<`T`>`</td></tr>
