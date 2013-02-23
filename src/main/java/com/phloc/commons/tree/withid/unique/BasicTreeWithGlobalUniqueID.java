@@ -43,9 +43,7 @@ import com.phloc.commons.tree.withid.ITreeItemWithID;
  *        The type of the elements contained in the tree
  */
 @NotThreadSafe
-public class BasicTreeWithGlobalUniqueID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>> extends
-                                                                                                                             BasicTreeWithID <KEYTYPE, DATATYPE, ITEMTYPE> implements
-                                                                                                                                                                          ITreeWithGlobalUniqueID <KEYTYPE, DATATYPE, ITEMTYPE>
+public class BasicTreeWithGlobalUniqueID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>> extends BasicTreeWithID <KEYTYPE, DATATYPE, ITEMTYPE> implements ITreeWithGlobalUniqueID <KEYTYPE, DATATYPE, ITEMTYPE>
 {
   private final ITreeItemWithUniqueIDFactory <KEYTYPE, DATATYPE, ITEMTYPE> m_aFactory;
 
