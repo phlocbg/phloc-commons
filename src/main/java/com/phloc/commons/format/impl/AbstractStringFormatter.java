@@ -36,6 +36,19 @@ public abstract class AbstractStringFormatter implements IFormatter
 {
   private final IFormatter m_aPrevFormatter;
 
+  /**
+   * Default constructor
+   */
+  public AbstractStringFormatter ()
+  {
+    this (null);
+  }
+
+  /**
+   * @param aPrevFormatter
+   *        Optional previous formatter to be invoked, before this formatter is
+   *        invoked. May be <code>null</code>.
+   */
   public AbstractStringFormatter (@Nullable final IFormatter aPrevFormatter)
   {
     m_aPrevFormatter = aPrevFormatter;
@@ -59,6 +72,15 @@ public abstract class AbstractStringFormatter implements IFormatter
     return sValue != null ? sValue : "";
   }
 
+  /**
+   * Convert the passed value from Object to formatted String. Use
+   * {@link #getValueAsString(Object)} in implementations of this method to do
+   * the base conversion from Object to String.
+   * 
+   * @param aValue
+   *        The source object. May be <code>null</code>.
+   * @return The formatted string value.
+   */
   @Nullable
   protected abstract String getFormattedValueAsString (@Nullable Object aValue);
 
