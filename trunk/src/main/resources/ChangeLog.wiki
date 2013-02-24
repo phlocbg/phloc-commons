@@ -1,7 +1,8 @@
 #summary Change log of phloc-commons
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
-<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr><td>2/21/13</td><td>add</td><td>api</td><td></td><td>Added LocaleFormatter.parseFloat</td></tr>
+<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr border="1"><td>2/24/13</td><td colspan="4">_Release *3.9.6*_</td></tr>
+<tr><td>2/21/13</td><td>add</td><td>api</td><td></td><td>Added LocaleFormatter.parseFloat</td></tr>
 <tr><td>2/21/13</td><td>add</td><td>api</td><td></td><td>Extended CompareUtils with special overloads for byte, char, int, long and short</td></tr>
 <tr><td>2/20/13</td><td>add</td><td>tech</td><td></td><td>Added possibility to put all namespace prefixes provided in a namespace context into the root document of a serialized XML document. This can be enabled via the XMLWriterSettings.</td></tr>
 <tr><td>2/20/13</td><td>add</td><td>api</td><td></td><td>Added new interface IIterableNamespaceContext</td></tr>
@@ -16,7 +17,7 @@
 <tr><td>2/18/13</td><td>change</td><td>api</td><td></td><td>Extracted URLUtils.getQueryStringAsMap()</td></tr>
 <tr><td>2/18/13</td><td>change</td><td>api</td><td>*yes*</td><td>Moved getTextContentWithConversion() from IMicroElement up to IMicroNodeWithChildren</td></tr>
 <tr><td>2/16/13</td><td>add</td><td>tech</td><td></td><td>Added ServiceLoaderUtils for easy loading of SPI implementations via ServiceLoaderBackport</td></tr>
-<tr><td>2/16/13</td><td>add</td><td>api</td><td></td><td>Added MathHelper.getUnsignedInt() for converting a signed int to an unsigned long</td></tr>
+<tr><td>2/16/13</td><td>add</td><td>api</td><td></td><td>Added MathHelper.getUnsignedInt() for converting a signed int to an unsigned representation as long</td></tr>
 <tr border="1"><td>2/14/13</td><td colspan="4">_Release *3.9.5*_</td></tr>
 <tr><td>2/14/13</td><td>change</td><td>api</td><td>*yes*</td><td>Moved getTextContent() from IMicroElement up to IMicroNodeWithChildren</td></tr>
 <tr><td>2/5/13</td><td>add</td><td>api</td><td></td><td>Extended MathHelper with comparison methods for 100 (e.g. used for percentage)</td></tr>
