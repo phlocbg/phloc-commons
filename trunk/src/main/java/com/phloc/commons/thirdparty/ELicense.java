@@ -36,6 +36,7 @@ public enum ELicense implements ILicense
   APACHE2 ("apache2", "Apache License", new Version (2, 0), "http://www.apache.org/licenses/LICENSE-2.0.txt"),
   // Mozilla
   MPL11 ("mpl11", "MOZILLA PUBLIC LICENSE", new Version (1, 1), "http://www.mozilla.org/MPL/MPL-1.1.txt"),
+  MPL20 ("mpl20", "MOZILLA PUBLIC LICENSE VERSION 2.0", new Version (2, 0), "http://www.mozilla.org/MPL/2.0/"),
   // BSD/MIT
   BSD ("bsd", "The BSD License", null, "http://www.opensource.org/licenses/bsd-license.php"),
   MIT ("mit", "MIT License", null, "http://www.opensource.org/licenses/mit-license.php"),
