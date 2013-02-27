@@ -22,6 +22,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -219,6 +220,16 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
   }
 
   @Nullable
+  @ReturnsMutableCopy
+  public final Set <KEYTYPE> getAllChildDataIDs ()
+  {
+    if (m_aChildMap == null)
+      return null;
+    return ContainerHelper.newSet (m_aChildMap.keySet ());
+  }
+
+  @Nullable
+  @ReturnsMutableCopy
   public final List <DATATYPE> getAllChildDatas ()
   {
     if (m_aChildren == null)

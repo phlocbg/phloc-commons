@@ -18,10 +18,12 @@
 package com.phloc.commons.tree.withid;
 
 import java.util.Comparator;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.id.IHasID;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.tree.IBasicTreeItem;
@@ -38,9 +40,7 @@ import com.phloc.commons.tree.IBasicTreeItem;
  * @param <ITEMTYPE>
  *        The implementation type.
  */
-public interface ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>> extends
-                                                                                                                     IBasicTreeItem <DATATYPE, ITEMTYPE>,
-                                                                                                                     IHasID <KEYTYPE>
+public interface ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>> extends IBasicTreeItem <DATATYPE, ITEMTYPE>, IHasID <KEYTYPE>
 {
   /**
    * @return The factory used to create instances of this interface.
@@ -59,6 +59,14 @@ public interface ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
    *         parent is present or depending on the validator.
    */
   KEYTYPE getParentID ();
+
+  /**
+   * @return A set with the data IDs of all children. If this tree item does not
+   *         have children, <code>null</code> if returned.
+   */
+  @Nullable
+  @ReturnsMutableCopy
+  Set <KEYTYPE> getAllChildDataIDs ();
 
   /**
    * Check if a direct child item with the given ID is present
