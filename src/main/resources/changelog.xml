@@ -32,7 +32,7 @@
   </entry>
   <entry date="2013-03-03" category="api" action="add">
     <change>
-      <text locale="en">Add method IMicroElement.getAllAttributeNames()</text>
+      <text locale="en">Added new methods IMicroElement.getAllAttributeNames() and getAllAttributeValues()</text>
     </change>
   </entry>
   <entry date="2013-03-03" category="api" action="change">
