@@ -415,22 +415,22 @@ public final class CodepointUtils
   }
 
   @CheckForSigned
-  public static int get_index (@Nonnull final int [] set, final int value)
+  public static int getIndex (@Nonnull final int [] aCodepointSet, final int nValue)
   {
-    int s = 0, e = set.length;
-    while (e - s > 8)
+    int nStart = 0, nEnd = aCodepointSet.length;
+    while (nEnd - nStart > 8)
     {
-      final int i = (e + s) >> 1;
-      s = set[i] <= value ? i : s;
-      e = set[i] > value ? i : e;
+      final int i = (nEnd + nStart) >>> 1;
+      nStart = aCodepointSet[i] <= nValue ? i : nStart;
+      nEnd = aCodepointSet[i] > nValue ? i : nEnd;
     }
-    while (s < e)
+    while (nStart < nEnd)
     {
-      if (value < set[s])
+      if (nValue < aCodepointSet[nStart])
         break;
-      s++;
+      nStart++;
     }
-    return s == e ? -1 : s - 1;
+    return nStart == nEnd ? -1 : nStart - 1;
   }
 
   /**
@@ -438,22 +438,22 @@ public final class CodepointUtils
    * value is located within the set. This will only work correctly if the
    * values in the int array are monotonically increasing
    */
-  public static boolean invset_contains (@Nonnull final int [] set, final int value)
+  public static boolean inverseSetContains (@Nonnull final int [] aCodepointSet, final int value)
   {
-    int s = 0, e = set.length;
-    while (e - s > 8)
+    int nStart = 0, nEnd = aCodepointSet.length;
+    while (nEnd - nStart > 8)
     {
-      final int i = (e + s) >> 1;
-      s = set[i] <= value ? i : s;
-      e = set[i] > value ? i : e;
+      final int i = (nEnd + nStart) >>> 1;
+      nStart = aCodepointSet[i] <= value ? i : nStart;
+      nEnd = aCodepointSet[i] > value ? i : nEnd;
     }
-    while (s < e)
+    while (nStart < nEnd)
     {
-      if (value < set[s])
+      if (value < aCodepointSet[nStart])
         break;
-      s++;
+      nStart++;
     }
-    return ((s - 1) & 1) == 0;
+    return ((nStart - 1) & 1) == 0;
   }
 
   public static boolean isPctEnc (final int codepoint)
