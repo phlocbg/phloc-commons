@@ -17,6 +17,11 @@
  */
 package com.phloc.commons.lang;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
@@ -205,6 +210,10 @@ public final class EnumHelper
     return getFromIDOrDefault (aClass, nID, null);
   }
 
+  private static final Object [] NOT_CACHABLE = new Object [0];
+  private static final ReadWriteLock s_aRWLockInt = new ReentrantReadWriteLock ();
+  private static final Map <String, Object []> s_aIntCache = new HashMap <String, Object []> ();
+
   /**
    * Get the enum value with the passed ID
    * 
@@ -226,6 +235,66 @@ public final class EnumHelper
     if (aClass == null)
       throw new NullPointerException ("class");
 
+    final String sCacheKey = aClass.getName ();
+    Object [] aCachedData;
+    s_aRWLockInt.readLock ().lock ();
+    try
+    {
+      aCachedData = s_aIntCache.get (sCacheKey);
+    }
+    finally
+    {
+      s_aRWLockInt.readLock ().unlock ();
+    }
+    if (aCachedData == null)
+    {
+      s_aRWLockInt.writeLock ().lock ();
+      try
+      {
+        // Try again in write lock
+        aCachedData = s_aIntCache.get (sCacheKey);
+        if (aCachedData == null)
+        {
+          // Create new cache entry
+          int nMinID = Integer.MAX_VALUE;
+          int nMaxID = Integer.MIN_VALUE;
+          for (final ENUMTYPE aElement : aClass.getEnumConstants ())
+          {
+            final int nElementID = aElement.getID ();
+            if (nElementID < nMinID)
+              nMinID = nElementID;
+            if (nElementID > nMaxID)
+              nMaxID = nElementID;
+          }
+          if (nMinID >= 0 && nMaxID <= 255)
+          {
+            // Cachable!
+            aCachedData = new Object [nMaxID + 1];
+            for (final ENUMTYPE aElement : aClass.getEnumConstants ())
+              aCachedData[aElement.getID ()] = aElement;
+          }
+          else
+          {
+            // Enum not cacheable
+            aCachedData = NOT_CACHABLE;
+          }
+          s_aIntCache.put (sCacheKey, aCachedData);
+        }
+      }
+      finally
+      {
+        s_aRWLockInt.writeLock ().unlock ();
+      }
+    }
+
+    if (aCachedData != NOT_CACHABLE)
+    {
+      if (nID < 0 || nID >= aCachedData.length)
+        return aDefault;
+      return GenericReflection.<Object, ENUMTYPE> uncheckedCast (aCachedData[nID]);
+    }
+
+    // Object is not cachable - traverse as ususal
     for (final ENUMTYPE aElement : aClass.getEnumConstants ())
       if (aElement.getID () == nID)
         return aElement;

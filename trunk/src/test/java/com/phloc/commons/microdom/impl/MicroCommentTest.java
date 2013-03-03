@@ -47,7 +47,7 @@ public final class MicroCommentTest
 
     IMicroComment e = new MicroComment ("xyz");
     assertNotNull (e);
-    assertEquals ("xyz", e.getData ());
+    assertEquals ("xyz", e.getData ().toString ());
     assertFalse (e.hasParent ());
     assertFalse (e.hasChildren ());
     assertNull (e.getChildren ());
