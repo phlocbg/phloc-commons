@@ -30,4 +30,9 @@ public final class MicroException extends LoggedRuntimeException
   {
     super (sMsg);
   }
+
+  public MicroException (final String sMsg, final Throwable t)
+  {
+    super (sMsg, t);
+  }
 }
