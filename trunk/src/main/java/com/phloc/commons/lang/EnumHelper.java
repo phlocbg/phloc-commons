@@ -39,6 +39,10 @@ import com.phloc.commons.name.IHasName;
 @Immutable
 public final class EnumHelper
 {
+  private static final Object [] NOT_CACHABLE = new Object [0];
+  private static final ReadWriteLock s_aRWLockInt = new ReentrantReadWriteLock ();
+  private static final Map <String, Object []> s_aIntCache = new HashMap <String, Object []> ();
+
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")
   private static final EnumHelper s_aInstance = new EnumHelper ();
@@ -210,10 +214,6 @@ public final class EnumHelper
     return getFromIDOrDefault (aClass, nID, null);
   }
 
-  private static final Object [] NOT_CACHABLE = new Object [0];
-  private static final ReadWriteLock s_aRWLockInt = new ReentrantReadWriteLock ();
-  private static final Map <String, Object []> s_aIntCache = new HashMap <String, Object []> ();
-
   /**
    * Get the enum value with the passed ID
    * 
@@ -275,7 +275,7 @@ public final class EnumHelper
           }
           else
           {
-            // Enum not cacheable
+            // Enum not cachable
             aCachedData = NOT_CACHABLE;
           }
           s_aIntCache.put (sCacheKey, aCachedData);
