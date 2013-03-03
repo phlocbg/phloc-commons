@@ -20,6 +20,7 @@ package com.phloc.commons.microdom.impl;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.microdom.EMicroNodeType;
 import com.phloc.commons.microdom.IMicroCDATA;
 import com.phloc.commons.microdom.IMicroNode;
@@ -51,6 +52,7 @@ public final class MicroCDATA extends AbstractMicroNode implements IMicroCDATA
   }
 
   @Nonnull
+  @Nonempty
   public String getNodeName ()
   {
     return "#cdata-section";
@@ -60,13 +62,13 @@ public final class MicroCDATA extends AbstractMicroNode implements IMicroCDATA
   @Nonnull
   public String getNodeValue ()
   {
-    return getData ();
+    return getData ().toString ();
   }
 
   @Nonnull
-  public String getData ()
+  public CharSequence getData ()
   {
-    return m_aData.getData ().toString ();
+    return m_aData.getData ();
   }
 
   public void appendData (@Nullable final CharSequence sData)
