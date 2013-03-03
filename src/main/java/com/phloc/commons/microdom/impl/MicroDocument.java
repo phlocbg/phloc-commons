@@ -90,7 +90,7 @@ public final class MicroDocument extends AbstractMicroNodeWithChildren implement
     if (aDocElement != null && aDocElement.hasAttributes ())
     {
       // find the XML schema namespace prefix
-      for (final Map.Entry <String, String> aEntry : aDocElement.getAttributes ().entrySet ())
+      for (final Map.Entry <String, String> aEntry : aDocElement.getAllAttributes ().entrySet ())
       {
         // Is an XSI namespace prefix present?
         final String sAttrName = aEntry.getKey ();

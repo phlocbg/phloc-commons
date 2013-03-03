@@ -383,15 +383,15 @@ public final class MicroElementTest extends AbstractPhlocTestCase
     assertEquals (eRoot.getTagName (), eClone.getTagName ());
     assertNull (eRoot.getNamespaceURI ());
     assertNull (eClone.getNamespaceURI ());
-    assertNull (eRoot.getAttributes ());
-    assertNull (eClone.getAttributes ());
+    assertNull (eRoot.getAllAttributes ());
+    assertNull (eClone.getAllAttributes ());
 
     eRoot.setAttribute ("attr1", "b");
     eClone = eRoot.getClone ();
     assertEquals (eRoot.getTagName (), eClone.getTagName ());
     assertNull (eRoot.getNamespaceURI ());
     assertNull (eClone.getNamespaceURI ());
-    assertEquals (eRoot.getAttributes (), eClone.getAttributes ());
+    assertEquals (eRoot.getAllAttributes (), eClone.getAllAttributes ());
 
     assertTrue (eRoot.isEqualContent (eRoot.getClone ()));
     eRoot.appendText ("text");

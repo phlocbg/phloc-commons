@@ -20,7 +20,22 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2013-03-03" category="api" action="change">
+    <change>
+      <text locale="en">Extracted interface IMicroAttributeOwner defining all micro attribute methods</text>
+    </change>
+  </entry>
   <entry date="2013-03-03" category="api" action="add">
+    <change>
+      <text locale="en">Add method IMicroElement.getAllAttributeNames()</text>
+    </change>
+  </entry>
+  <entry date="2013-03-03" category="api" action="change">
+    <change>
+      <text locale="en">Renamed method IMicroElement.getAttributes() to getAllAttributes()</text>
+    </change>
+  </entry>
+  <entry date="2013-03-02" category="api" action="add">
     <change>
       <text locale="en">Added some classes for handling real I18N from Apache Abdera</text>
     </change>

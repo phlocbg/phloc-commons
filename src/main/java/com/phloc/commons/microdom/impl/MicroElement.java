@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -121,11 +122,29 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return m_aAttrs != null && !m_aAttrs.isEmpty ();
   }
 
+  /**
+   * @deprecated Use {@link #getAllAttributes()} instead
+   */
+  @Deprecated
   @Nullable
   @ReturnsMutableCopy
   public Map <String, String> getAttributes ()
   {
+    return getAllAttributes ();
+  }
+
+  @Nullable
+  @ReturnsMutableCopy
+  public Map <String, String> getAllAttributes ()
+  {
     return hasAttributes () ? ContainerHelper.newOrderedMap (m_aAttrs) : null;
+  }
+
+  @Nullable
+  @ReturnsMutableCopy
+  public Set <String> getAllAttributeNames ()
+  {
+    return hasAttributes () ? ContainerHelper.newOrderedSet (m_aAttrs.keySet ()) : null;
   }
 
   @Nullable
