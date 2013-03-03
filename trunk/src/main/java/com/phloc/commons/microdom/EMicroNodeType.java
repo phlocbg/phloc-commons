@@ -17,38 +17,52 @@
  */
 package com.phloc.commons.microdom;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nullable;
+
 import org.w3c.dom.Node;
+
+import com.phloc.commons.id.IHasSimpleIntID;
+import com.phloc.commons.lang.EnumHelper;
 
 /**
  * Denotes the type of {@link IMicroNode} objects.
  * 
  * @author philip
  */
-public enum EMicroNodeType
+public enum EMicroNodeType implements IHasSimpleIntID
 {
-  CDATA (Node.CDATA_SECTION_NODE),
-  COMMENT (Node.COMMENT_NODE),
-  CONTAINER,
-  DOCUMENT (Node.DOCUMENT_NODE),
-  DOCUMENT_TYPE (Node.DOCUMENT_TYPE_NODE),
-  ELEMENT (Node.ELEMENT_NODE),
-  ENTITY_REFERENCE (Node.ENTITY_REFERENCE_NODE),
-  PROCESSING_INSTRUCTION (Node.PROCESSING_INSTRUCTION_NODE),
-  TEXT (Node.TEXT_NODE);
+  CDATA (1, Node.CDATA_SECTION_NODE),
+  COMMENT (2, Node.COMMENT_NODE),
+  CONTAINER (3),
+  DOCUMENT (4, Node.DOCUMENT_NODE),
+  DOCUMENT_TYPE (5, Node.DOCUMENT_TYPE_NODE),
+  ELEMENT (6, Node.ELEMENT_NODE),
+  ENTITY_REFERENCE (7, Node.ENTITY_REFERENCE_NODE),
+  PROCESSING_INSTRUCTION (8, Node.PROCESSING_INSTRUCTION_NODE),
+  TEXT (9, Node.TEXT_NODE);
 
   /** Represents a non-existing DOM Node Type */
   public static final short ILLEGAL_DOM_NODE_TYPE = 0;
 
+  private final int m_nID;
   private final short m_nDOMNodeType;
 
-  private EMicroNodeType ()
+  private EMicroNodeType (final int nID)
   {
-    this (ILLEGAL_DOM_NODE_TYPE);
+    this (nID, ILLEGAL_DOM_NODE_TYPE);
   }
 
-  private EMicroNodeType (final short nDOMNodeType)
+  private EMicroNodeType (@Nonnegative final int nID, final short nDOMNodeType)
   {
+    m_nID = nID;
     m_nDOMNodeType = nDOMNodeType;
+  }
+
+  @Nonnegative
+  public int getID ()
+  {
+    return m_nID;
   }
 
   /**
@@ -67,5 +81,11 @@ public enum EMicroNodeType
   public short getDOMNodeType ()
   {
     return m_nDOMNodeType;
+  }
+
+  @Nullable
+  public static EMicroNodeType getFromIDOrNull (final int nID)
+  {
+    return EnumHelper.getFromIDOrNull (EMicroNodeType.class, nID);
   }
 }
