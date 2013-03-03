@@ -24,5 +24,10 @@ package com.phloc.commons.i18n;
  */
 public interface ICodepointFilter
 {
-  boolean accept (int c);
+  /**
+   * @param codepoint
+   *        The codepoint to filter
+   * @return <code>true</code> to accept it, <code>false</code> to decline it
+   */
+  boolean accept (int codepoint);
 }

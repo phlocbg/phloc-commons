@@ -19,6 +19,8 @@ package com.phloc.commons.i18n;
 
 import java.util.Iterator;
 
+import javax.annotation.CheckForSigned;
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -30,88 +32,93 @@ import javax.annotation.Nullable;
 public interface ICodepointIterator extends Iterator <Codepoint>
 {
   /**
-   * True if there are codepoints remaining
+   * @return <code>true</code> if there are codepoints remaining
    */
   boolean hasNext ();
 
   /**
-   * Return the final index position
+   * @return the final index position
    */
+  @CheckForSigned
   int lastPosition ();
 
   /**
-   * Return the next chars. If the codepoint is not supplemental, the char array
-   * will have a single member. If the codepoint is supplemental, the char array
-   * will have two members, representing the high and low surrogate chars
+   * @return the next chars. If the codepoint is not supplemental, the char
+   *         array will have a single member. If the codepoint is supplemental,
+   *         the char array will have two members, representing the high and low
+   *         surrogate chars
    */
   @Nullable
   char [] nextChars ();
 
   /**
-   * Peek the next chars in the iterator. If the codepoint is not supplemental,
-   * the char array will have a single member. If the codepoint is supplemental,
-   * the char array will have two members, representing the high and low
-   * surrogate chars
+   * @return Peek the next chars in the iterator. If the codepoint is not
+   *         supplemental, the char array will have a single member. If the
+   *         codepoint is supplemental, the char array will have two members,
+   *         representing the high and low surrogate chars
    */
   @Nullable
   char [] peekChars ();
 
   /**
-   * Return the next codepoint
+   * @return the next codepoint
    */
   @Nullable
   Codepoint next ();
 
   /**
-   * Peek the next codepoint
+   * @return Peek the next codepoint
    */
   @Nullable
   Codepoint peek ();
 
   /**
-   * Peek the specified codepoint
+   * @return Peek the specified codepoint
    */
   @Nullable
-  Codepoint peek (int index);
+  Codepoint peek (@Nonnegative int index);
 
   /**
    * Set the iterator position
    */
-  void position (int n);
+  void position (@Nonnegative int n);
 
   /**
-   * Get the iterator position
+   * @return the iterator position
    */
+  @Nonnegative
   int position ();
 
   /**
-   * Return the iterator limit
+   * @return the iterator limit
    */
+  @Nonnegative
   int limit ();
 
   /**
-   * Return the remaining iterator size
+   * @return the remaining iterator size
    */
+  @Nonnegative
   int remaining ();
 
   /**
-   * Returns true if the char at the specified index is a high surrogate
+   * @return <code>true</code> if the char at the specified index is a high
+   *         surrogate
    */
-  boolean isHigh (int index);
+  boolean isHigh (@Nonnegative int index);
 
   /**
-   * Returns true if the char at the specified index is a low surrogate
+   * @return <code>true</code> if the char at the specified index is a low
+   *         surrogate
    */
-  boolean isLow (int index);
-
-  void remove ();
+  boolean isLow (@Nonnegative int index);
 
   @Nonnull
   CodepointIteratorRestricted restrict (@Nonnull ICodepointFilter aFilter);
 
   @Nonnull
-  CodepointIteratorRestricted restrict (@Nonnull ICodepointFilter aFilter, boolean scanning);
+  CodepointIteratorRestricted restrict (@Nonnull ICodepointFilter aFilter, boolean bScanning);
 
   @Nonnull
-  CodepointIteratorRestricted restrict (@Nonnull ICodepointFilter aFilter, boolean scanning, boolean invert);
+  CodepointIteratorRestricted restrict (@Nonnull ICodepointFilter aFilter, boolean bScanning, boolean bInvert);
 }

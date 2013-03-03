@@ -29,23 +29,23 @@ public class CodepointIteratorRestricted extends DelegatingCodepointIterator
   private final boolean m_bScanningOnly;
   private final boolean m_bInvert;
 
-  protected CodepointIteratorRestricted (@Nonnull final AbstractCodepointIterator aInternal,
-                                         @Nonnull final ICodepointFilter aFilter)
+  public CodepointIteratorRestricted (@Nonnull final AbstractCodepointIterator aInternal,
+                                      @Nonnull final ICodepointFilter aFilter)
   {
     this (aInternal, aFilter, false);
   }
 
-  protected CodepointIteratorRestricted (@Nonnull final AbstractCodepointIterator aInternal,
-                                         @Nonnull final ICodepointFilter aFilter,
-                                         final boolean bScanningOnly)
+  public CodepointIteratorRestricted (@Nonnull final AbstractCodepointIterator aInternal,
+                                      @Nonnull final ICodepointFilter aFilter,
+                                      final boolean bScanningOnly)
   {
     this (aInternal, aFilter, bScanningOnly, false);
   }
 
-  protected CodepointIteratorRestricted (@Nonnull final AbstractCodepointIterator aInternal,
-                                         @Nonnull final ICodepointFilter aFilter,
-                                         final boolean bScanningOnly,
-                                         final boolean bInvert)
+  public CodepointIteratorRestricted (@Nonnull final AbstractCodepointIterator aInternal,
+                                      @Nonnull final ICodepointFilter aFilter,
+                                      final boolean bScanningOnly,
+                                      final boolean bInvert)
   {
     super (aInternal);
     if (aFilter == null)

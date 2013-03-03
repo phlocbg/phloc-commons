@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.i18n;
 
+import javax.annotation.CheckForSigned;
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -26,6 +28,7 @@ import com.phloc.commons.annotations.UnsupportedOperation;
  * Provides an iterator over Unicode Codepoints
  * 
  * @author Apache Abdera
+ * @author philip
  */
 public abstract class AbstractCodepointIterator implements ICodepointIterator
 {
@@ -51,28 +54,18 @@ public abstract class AbstractCodepointIterator implements ICodepointIterator
    */
   protected abstract char get (int index);
 
-  /**
-   * True if there are codepoints remaining
-   */
   public boolean hasNext ()
   {
     return remaining () > 0;
   }
 
-  /**
-   * Return the final index position
-   */
+  @CheckForSigned
   public int lastPosition ()
   {
-    final int p = position ();
-    return p > -1 ? p >= limit () ? p : p - 1 : -1;
+    final int nPos = position ();
+    return nPos >= 0 ? nPos >= limit () ? nPos : nPos - 1 : -1;
   }
 
-  /**
-   * Return the next chars. If the codepoint is not supplemental, the char array
-   * will have a single member. If the codepoint is supplemental, the char array
-   * will have two members, representing the high and low surrogate chars
-   */
   @Nullable
   public char [] nextChars ()
   {
@@ -102,12 +95,6 @@ public abstract class AbstractCodepointIterator implements ICodepointIterator
     return null;
   }
 
-  /**
-   * Peek the next chars in the iterator. If the codepoint is not supplemental,
-   * the char array will have a single member. If the codepoint is supplemental,
-   * the char array will have two members, representing the high and low
-   * surrogate chars
-   */
   @Nullable
   public char [] peekChars ()
   {
@@ -121,7 +108,7 @@ public abstract class AbstractCodepointIterator implements ICodepointIterator
    * and low surrogate chars
    */
   @Nullable
-  private char [] _peekChars (final int pos)
+  private char [] _peekChars (@Nonnegative final int pos)
   {
     if (pos < 0 || pos >= limit ())
       return null;
@@ -145,27 +132,18 @@ public abstract class AbstractCodepointIterator implements ICodepointIterator
         return new char [] { c1 };
   }
 
-  /**
-   * Return the next codepoint
-   */
   @Nullable
   public Codepoint next ()
   {
     return _toCodepoint (nextChars ());
   }
 
-  /**
-   * Peek the next codepoint
-   */
   @Nullable
   public Codepoint peek ()
   {
     return _toCodepoint (peekChars ());
   }
 
-  /**
-   * Peek the specified codepoint
-   */
   @Nullable
   public Codepoint peek (final int index)
   {
@@ -177,40 +155,29 @@ public abstract class AbstractCodepointIterator implements ICodepointIterator
   {
     if (chars == null || chars.length == 0)
       return null;
-    if (chars.length == 1)
-      return new Codepoint (chars[0]);
-    return new Codepoint (chars[0], chars[1]);
+    return new Codepoint (chars);
   }
 
-  /**
-   * Set the iterator position
-   */
-  public void position (final int n)
+  public void position (@Nonnegative final int n)
   {
     if (n < 0 || n > limit ())
       throw new ArrayIndexOutOfBoundsException (n);
     m_nPosition = n;
   }
 
-  /**
-   * Get the iterator position
-   */
+  @Nonnegative
   public int position ()
   {
     return m_nPosition;
   }
 
-  /**
-   * Return the iterator limit
-   */
+  @Nonnegative
   public int limit ()
   {
     return m_nLimit;
   }
 
-  /**
-   * Return the remaining iterator size
-   */
+  @Nonnegative
   public int remaining ()
   {
     return m_nLimit - position ();
@@ -227,7 +194,7 @@ public abstract class AbstractCodepointIterator implements ICodepointIterator
   /**
    * Returns true if the char at the specified index is a high surrogate
    */
-  public boolean isHigh (final int index)
+  public boolean isHigh (@Nonnegative final int index)
   {
     if (index < 0 || index > limit ())
       throw new ArrayIndexOutOfBoundsException (index);
@@ -237,7 +204,7 @@ public abstract class AbstractCodepointIterator implements ICodepointIterator
   /**
    * Returns true if the char at the specified index is a low surrogate
    */
-  public boolean isLow (final int index)
+  public boolean isLow (@Nonnegative final int index)
   {
     if (index < 0 || index > limit ())
       throw new ArrayIndexOutOfBoundsException (index);
