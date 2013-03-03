@@ -47,7 +47,7 @@ public final class MicroTextTest
 
     IMicroText e = new MicroText ("xyz");
     assertNotNull (e);
-    assertEquals ("xyz", e.getData ());
+    assertEquals ("xyz", e.getData ().toString ());
     assertFalse (e.hasParent ());
     assertFalse (e.hasChildren ());
     assertNull (e.getChildren ());

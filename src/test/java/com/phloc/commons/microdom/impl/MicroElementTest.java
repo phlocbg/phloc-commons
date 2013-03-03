@@ -458,7 +458,7 @@ public final class MicroElementTest extends AbstractPhlocTestCase
       eRoot.getFirstChildElement (null, (IHasElementName) null);
       fail ();
     }
-    catch (NullPointerException ex)
+    catch (final NullPointerException ex)
     {}
 
     List <IMicroElement> x = eRoot.getChildElements (NSURI, "a");
@@ -588,7 +588,7 @@ public final class MicroElementTest extends AbstractPhlocTestCase
     assertNotNull (e.appendIgnorableWhitespaceText ("    "));
     assertNotNull (e.appendEntityReference ("name"));
     assertNotNull (e.appendProcessingInstruction ("target", "data"));
-    assertEquals ("5", e.appendTextWithConversion (Integer.valueOf (5)).getData ());
+    assertEquals ("5", e.appendTextWithConversion (Integer.valueOf (5)).getData ().toString ());
     assertTrue (e.getChildAtIndex (0).isElement ());
     assertEquals (8, e.getAllChildrenRecursive ().size ());
 
