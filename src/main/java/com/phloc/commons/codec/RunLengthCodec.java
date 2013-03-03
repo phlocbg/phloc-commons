@@ -38,6 +38,12 @@ public class RunLengthCodec implements IByteArrayDecoder
   @Nullable
   public byte [] decode (@Nullable final byte [] aEncodedBuffer)
   {
+    return decodeRunLength (aEncodedBuffer);
+  }
+
+  @Nullable
+  public static byte [] decodeRunLength (@Nullable final byte [] aEncodedBuffer)
+  {
     if (aEncodedBuffer == null)
       return null;
 

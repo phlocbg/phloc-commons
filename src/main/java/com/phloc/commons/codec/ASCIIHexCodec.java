@@ -37,6 +37,12 @@ public final class ASCIIHexCodec implements IByteArrayDecoder
   @Nullable
   public byte [] decode (@Nullable final byte [] aEncodedBuffer)
   {
+    return decodeASCIIHex (aEncodedBuffer);
+  }
+
+  @Nullable
+  public static byte [] decodeASCIIHex (@Nullable final byte [] aEncodedBuffer)
+  {
     if (aEncodedBuffer == null)
       return null;
 

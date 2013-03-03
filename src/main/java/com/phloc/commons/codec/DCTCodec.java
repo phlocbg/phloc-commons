@@ -44,6 +44,12 @@ public final class DCTCodec implements IByteArrayDecoder
   @Nullable
   public byte [] decode (@Nullable final byte [] aEncodedBuffer)
   {
+    return decodeDCT (aEncodedBuffer);
+  }
+
+  @Nullable
+  public static byte [] decodeDCT (@Nullable final byte [] aEncodedBuffer)
+  {
     if (aEncodedBuffer == null)
       return null;
 

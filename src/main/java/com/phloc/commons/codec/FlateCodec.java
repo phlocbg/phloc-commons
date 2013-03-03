@@ -60,6 +60,12 @@ public final class FlateCodec implements ICodec
   @Nullable
   public byte [] decode (@Nullable final byte [] aEncodedBuffer)
   {
+    return decodeFlate (aEncodedBuffer);
+  }
+
+  @Nullable
+  public static byte [] decodeFlate (@Nullable final byte [] aEncodedBuffer)
+  {
     if (aEncodedBuffer == null)
       return null;
 
@@ -82,6 +88,12 @@ public final class FlateCodec implements ICodec
 
   @Nullable
   public byte [] encode (@Nullable final byte [] aBuffer)
+  {
+    return encodeFlate (aBuffer);
+  }
+
+  @Nullable
+  public static byte [] encodeFlate (@Nullable final byte [] aBuffer)
   {
     if (aBuffer == null)
       return null;
