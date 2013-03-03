@@ -205,7 +205,7 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
     // get all attributes (sorting is important!)
     final Map <String, String> aAttrMap = new LinkedHashMap <String, String> ();
     if (aElement.hasAttributes ())
-      aAttrMap.putAll (aElement.getAttributes ());
+      aAttrMap.putAll (aElement.getAllAttributes ());
 
     m_aNSStack.push (aAttrMap);
 
