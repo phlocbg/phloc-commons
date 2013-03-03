@@ -62,15 +62,15 @@ public final class MicroCommentTest
     PhlocTestUtils.testToStringImplementation (e);
 
     e.setData ("allo");
-    assertEquals ("allo", e.getData ());
+    assertEquals ("allo", e.getData ().toString ());
     assertFalse (e.hasChildren ());
     assertNull (e.getChildren ());
 
     e.appendData (" Welt");
-    assertEquals ("allo Welt", e.getData ());
+    assertEquals ("allo Welt", e.getData ().toString ());
 
     e.prependData ("H");
-    assertEquals ("Hallo Welt", e.getData ());
+    assertEquals ("Hallo Welt", e.getData ().toString ());
 
     e = new MicroComment (null);
     assertNotNull (e);
