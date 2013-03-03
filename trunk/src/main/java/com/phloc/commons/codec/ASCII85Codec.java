@@ -42,6 +42,12 @@ public final class ASCII85Codec implements IByteArrayDecoder
   @Nullable
   public byte [] decode (@Nullable final byte [] aEncodedBuffer)
   {
+    return decodeASCII85 (aEncodedBuffer);
+  }
+
+  @Nullable
+  public static byte [] decodeASCII85 (@Nullable final byte [] aEncodedBuffer)
+  {
     if (aEncodedBuffer == null)
       return null;
     if (aEncodedBuffer.length < 4)

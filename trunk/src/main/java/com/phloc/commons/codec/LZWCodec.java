@@ -261,6 +261,12 @@ public class LZWCodec implements ICodec
   @Nullable
   public byte [] decode (@Nullable final byte [] aEncodedBuffer)
   {
+    return decodeLZW (aEncodedBuffer);
+  }
+
+  @Nullable
+  public static byte [] decodeLZW (@Nullable final byte [] aEncodedBuffer)
+  {
     if (aEncodedBuffer == null)
       return null;
 
@@ -344,6 +350,12 @@ public class LZWCodec implements ICodec
 
   @Nullable
   public byte [] encode (@Nullable final byte [] aBuffer)
+  {
+    return encodeLZW (aBuffer);
+  }
+
+  @Nullable
+  public static byte [] encodeLZW (@Nullable final byte [] aBuffer)
   {
     if (aBuffer == null)
       return null;
