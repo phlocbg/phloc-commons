@@ -1,7 +1,11 @@
 #summary Change log of phloc-commons
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
-<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr><td>3/3/13</td><td>add</td><td>api</td><td></td><td>Added some classes for handling real I18N from Apache Abdera</td></tr>
+<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr><td>3/3/13</td><td>change</td><td>api</td><td></td><td>EMicroNodeType now implements IHasSimpleIntID</td></tr>
+<tr><td>3/3/13</td><td>change</td><td>api</td><td></td><td>Extracted interface IMicroAttributeOwner defining all micro attribute methods</td></tr>
+<tr><td>3/3/13</td><td>add</td><td>api</td><td></td><td>Add method IMicroElement.getAllAttributeNames()</td></tr>
+<tr><td>3/3/13</td><td>change</td><td>api</td><td></td><td>Renamed method IMicroElement.getAttributes() to getAllAttributes()</td></tr>
+<tr><td>3/2/13</td><td>add</td><td>api</td><td></td><td>Added some classes for handling real I18N from Apache Abdera</td></tr>
 <tr><td>2/27/13</td><td>add</td><td>api</td><td></td><td>Added new method ITreeItemWithID.getAllChildDataIDs ()</td></tr>
 <tr><td>2/25/13</td><td>add</td><td>data</td><td></td><td>Added new predefined license MPL 2.0</td></tr>
 <tr border="1"><td>2/24/13</td><td colspan="4">_Release *3.9.6*_</td></tr>

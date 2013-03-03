@@ -148,6 +148,13 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
   }
 
   @Nullable
+  @ReturnsMutableCopy
+  public List <String> getAllAttributeValues ()
+  {
+    return hasAttributes () ? ContainerHelper.newList (m_aAttrs.keySet ()) : null;
+  }
+
+  @Nullable
   public String getAttribute (@Nullable final String sAttrName)
   {
     return m_aAttrs == null ? null : m_aAttrs.get (sAttrName);

@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.microdom;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
@@ -111,6 +112,16 @@ public interface IMicroAttributeOwner <IMPLTYPE extends IMicroAttributeOwner <IM
   @Nullable
   @ReturnsMutableCopy
   Set <String> getAllAttributeNames ();
+
+  /**
+   * Get a set of all attribute values. Is ensured to be not <code>null</code>
+   * if {@link #hasAttributes()} returns <code>true</code>.
+   * 
+   * @return May be <code>null</code>.
+   */
+  @Nullable
+  @ReturnsMutableCopy
+  Collection <String> getAllAttributeValues ();
 
   /**
    * Set an attribute value of this element.
