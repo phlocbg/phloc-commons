@@ -87,13 +87,13 @@ public final class MicroText extends AbstractMicroNode implements IMicroText
   @Nonnull
   public String getNodeValue ()
   {
-    return getData ();
+    return getData ().toString ();
   }
 
   @Nonnull
-  public String getData ()
+  public CharSequence getData ()
   {
-    return m_aData.getData ().toString ();
+    return m_aData.getData ();
   }
 
   public void appendData (@Nullable final CharSequence sData)

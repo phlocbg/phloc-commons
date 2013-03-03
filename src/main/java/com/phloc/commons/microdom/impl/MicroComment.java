@@ -20,6 +20,7 @@ package com.phloc.commons.microdom.impl;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.microdom.EMicroNodeType;
 import com.phloc.commons.microdom.IMicroComment;
 import com.phloc.commons.microdom.IMicroNode;
@@ -50,20 +51,24 @@ public final class MicroComment extends AbstractMicroNode implements IMicroComme
     return EMicroNodeType.COMMENT;
   }
 
+  @Nonnull
+  @Nonempty
   public String getNodeName ()
   {
     return "#comment";
   }
 
   @Override
+  @Nonnull
   public String getNodeValue ()
   {
-    return getData ();
+    return getData ().toString ();
   }
 
-  public String getData ()
+  @Nonnull
+  public CharSequence getData ()
   {
-    return m_aData.getData ().toString ();
+    return m_aData.getData ();
   }
 
   public void appendData (@Nullable final CharSequence sData)
