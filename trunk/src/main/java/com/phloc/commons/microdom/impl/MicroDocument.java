@@ -100,7 +100,9 @@ public final class MicroDocument extends AbstractMicroNodeWithChildren implement
           final String sXSINamespacePrefix = sAttrName.substring (CXML.XML_ATTR_XMLNS_WITH_SEP.length ());
 
           // The document is standalone if no schemaLocation is present
-          return aDocElement.getAttribute (sXSINamespacePrefix + ":schemaLocation") == null;
+          return aDocElement.getAttribute (sXSINamespacePrefix +
+                                           CXML.XML_PREFIX_NAMESPACE_SEP +
+                                           CXML.XML_ATTR_XSI_SCHEMALOCATION) == null;
         }
       }
     }
