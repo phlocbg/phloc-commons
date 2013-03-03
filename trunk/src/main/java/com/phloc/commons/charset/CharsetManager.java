@@ -184,6 +184,9 @@ public final class CharsetManager
   @Nonnull
   public static String getAsString (@Nonnull final byte [] aBuffer, @Nonnull final Charset aCharset)
   {
+    if (aBuffer == null)
+      throw new NullPointerException ("buffer");
+
     return getAsString (aBuffer, 0, aBuffer.length, aCharset);
   }
 
@@ -193,6 +196,11 @@ public final class CharsetManager
                                     @Nonnegative final int nLength,
                                     @Nonnull final Charset aCharset)
   {
+    if (aBuffer == null)
+      throw new NullPointerException ("buffer");
+    if (aCharset == null)
+      throw new NullPointerException ("charset");
+
     return new String (aBuffer, nOfs, nLength, aCharset);
   }
 

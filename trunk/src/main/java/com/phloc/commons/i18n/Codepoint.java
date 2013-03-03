@@ -19,13 +19,14 @@ package com.phloc.commons.i18n;
 
 import java.io.Serializable;
 import java.nio.charset.Charset;
+import java.util.Arrays;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
-import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.compare.CompareUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
@@ -34,20 +35,12 @@ import com.phloc.commons.hash.HashCodeGenerator;
  * Represents a single Unicode Codepoint
  * 
  * @author Apache Abdera
+ * @author philip
  */
+@NotThreadSafe
 public final class Codepoint implements Serializable, Comparable <Codepoint>
 {
-  public static final Charset DEFAULT_ENCODING = CCharset.CHARSET_UTF_8_OBJ;
-
   private final int m_nValue;
-
-  /**
-   * Create a Codepoint from a byte array using the default encoding (UTF-8)
-   */
-  public Codepoint (@Nonnull final byte [] bytes)
-  {
-    this (bytes, DEFAULT_ENCODING);
-  }
 
   /**
    * Create a Codepoint from a byte array with the specified charset encoding.
@@ -58,21 +51,52 @@ public final class Codepoint implements Serializable, Comparable <Codepoint>
     this (CharsetManager.getAsString (bytes, encoding));
   }
 
+  private static int _getValueFromCharSequence (@Nonnull final CharSequence s)
+  {
+    final int nLength = s.length ();
+    if (nLength == 0)
+      throw new IllegalArgumentException ("Empty CharSequence");
+    if (nLength == 1)
+      return s.charAt (0);
+    if (nLength > 2)
+      throw new IllegalArgumentException ("Too many chars: " + s);
+    return Character.toCodePoint (s.charAt (0), s.charAt (1));
+  }
+
   /**
-   * Create a Codepoint from a CharSequence. Length must equal 1
+   * Create a Codepoint from a CharSequence. Length must equal 1 or 2
    */
   public Codepoint (@Nonnull final CharSequence value)
   {
-    this (_valueFromCharSequence (value));
+    this (_getValueFromCharSequence (value));
   }
 
-  private static int _valueFromCharSequence (@Nonnull final CharSequence s)
+  /**
+   * Create a Codepoint from a String. Length must equal 1 or 2
+   */
+  public Codepoint (@Nonnull final String value)
   {
-    if (s.length () == 1)
-      return s.charAt (0);
-    if (s.length () > 2)
-      throw new IllegalArgumentException ("Too many chars: " + s);
-    return Character.toCodePoint (s.charAt (0), s.charAt (1));
+    this (value.toCharArray ());
+  }
+
+  private static int _getValueFromCharArray (@Nonnull final char [] s)
+  {
+    final int nLength = s.length;
+    if (nLength == 0)
+      throw new IllegalArgumentException ("Empty char[]");
+    if (nLength == 1)
+      return s[0];
+    if (nLength > 2)
+      throw new IllegalArgumentException ("Too many chars: " + Arrays.toString (s));
+    return Character.toCodePoint (s[0], s[1]);
+  }
+
+  /**
+   * Create a Codepoint from a char array. Length must equal 1 or 2
+   */
+  public Codepoint (@Nonnull final char [] value)
+  {
+    this (_getValueFromCharArray (value));
   }
 
   /**
@@ -147,7 +171,7 @@ public final class Codepoint implements Serializable, Comparable <Codepoint>
    */
   public char getHighSurrogate ()
   {
-    return CharUtils.getHighSurrogate (m_nValue);
+    return CodepointUtils.getHighSurrogate (m_nValue);
   }
 
   /**
@@ -155,7 +179,7 @@ public final class Codepoint implements Serializable, Comparable <Codepoint>
    */
   public char getLowSurrogate ()
   {
-    return CharUtils.getLowSurrogate (m_nValue);
+    return CodepointUtils.getLowSurrogate (m_nValue);
   }
 
   /**
@@ -163,36 +187,36 @@ public final class Codepoint implements Serializable, Comparable <Codepoint>
    */
   public boolean isBidi ()
   {
-    return CharUtils.isBidi (m_nValue);
+    return CodepointUtils.isBidi (m_nValue);
   }
 
   public boolean isDigit ()
   {
-    return CharUtils.isDigit (m_nValue);
+    return CodepointUtils.isDigit (m_nValue);
   }
 
   public boolean isAlpha ()
   {
-    return CharUtils.isAlpha (m_nValue);
+    return CodepointUtils.isAlpha (m_nValue);
   }
 
   public boolean isAlphaDigit ()
   {
-    return CharUtils.isAlpha (m_nValue);
+    return CodepointUtils.isAlpha (m_nValue);
   }
 
   @Nonnull
   @Nonempty
   public String getAsString ()
   {
-    return CharUtils.getAsString (m_nValue);
+    return CodepointUtils.getAsString (m_nValue);
   }
 
   @Nonnull
   @ReturnsMutableCopy
   public char [] getAsChars ()
   {
-    return CharUtils.getAsCharArray (m_nValue);
+    return CodepointUtils.getAsCharArray (m_nValue);
   }
 
   /**
@@ -203,12 +227,6 @@ public final class Codepoint implements Serializable, Comparable <Codepoint>
   public int getCharCount ()
   {
     return Character.charCount (m_nValue);
-  }
-
-  @Nonnull
-  public byte [] getAsBytes ()
-  {
-    return getAsBytes (DEFAULT_ENCODING);
   }
 
   @Nonnull

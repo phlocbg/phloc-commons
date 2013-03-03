@@ -24,9 +24,9 @@ public class InvalidCharacterException extends RuntimeException
 {
   private final int m_nInput;
 
-  public InvalidCharacterException (final int input)
+  public InvalidCharacterException (final int nInput)
   {
-    m_nInput = input;
+    m_nInput = nInput;
   }
 
   @Override

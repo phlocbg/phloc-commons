@@ -23,6 +23,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.regex.RegExHelper;
 
 /**
@@ -31,9 +32,12 @@ import com.phloc.commons.regex.RegExHelper;
  * @author Apache Abdera
  */
 @Immutable
-public final class CharUtils
+public final class CodepointUtils
 {
-  private CharUtils ()
+  @PresentForCodeCoverage
+  private static final CodepointUtils s_aInstance = new CodepointUtils ();
+
+  private CodepointUtils ()
   {}
 
   /**
@@ -209,7 +213,7 @@ public final class CharUtils
    * Return the total number of codepoints in the buffer. Each surrogate pair
    * counts as a single codepoint
    */
-  public static int length (final CharSequence c)
+  public static int length (@Nonnull final CharSequence c)
   {
     return length (new CodepointIteratorCharSequence (c));
   }
@@ -218,7 +222,7 @@ public final class CharUtils
    * Return the total number of codepoints in the buffer. Each surrogate pair
    * counts as a single codepoint
    */
-  public static int length (final char [] c)
+  public static int length (@Nonnull final char [] c)
   {
     return length (new CodepointIteratorCharArray (c));
   }
@@ -291,6 +295,7 @@ public final class CharUtils
   /**
    * Removes bidi controls from within a string
    */
+  @Nonnull
   public static String stripBidiInternal (@Nonnull final String s)
   {
     return RegExHelper.stringReplacePattern ("[\u202A\u202B\u202D\u202E\u200E\u200F\u202C]", s, "");
@@ -713,7 +718,7 @@ public final class CharUtils
   /**
    * Verifies a sequence of codepoints using the specified filter
    */
-  public static void verify (final AbstractCodepointIterator ci, @Nonnull final ECharProfile profile)
+  public static void verify (final AbstractCodepointIterator ci, @Nonnull final ECodepointProfile profile)
   {
     verify (ci, profile.getFilter ());
   }
@@ -721,7 +726,7 @@ public final class CharUtils
   /**
    * Verifies a sequence of codepoints using the specified profile
    */
-  public static void verify (@Nullable final char [] s, @Nonnull final ECharProfile profile)
+  public static void verify (@Nullable final char [] s, @Nonnull final ECodepointProfile profile)
   {
     if (s != null)
       verify (new CodepointIteratorCharArray (s), profile);
@@ -730,7 +735,7 @@ public final class CharUtils
   /**
    * Verifies a sequence of codepoints using the specified profile
    */
-  public static void verify (@Nullable final String s, @Nonnull final ECharProfile profile)
+  public static void verify (@Nullable final String s, @Nonnull final ECodepointProfile profile)
   {
     if (s != null)
       verify (new CodepointIteratorCharSequence (s), profile);
@@ -749,7 +754,7 @@ public final class CharUtils
   /**
    * Verifies a sequence of codepoints using the specified profile
    */
-  public static void verifyNot (final ICodepointIterator ci, @Nonnull final ECharProfile profile)
+  public static void verifyNot (final ICodepointIterator ci, @Nonnull final ECodepointProfile profile)
   {
     final CodepointIteratorRestricted rci = ci.restrict (profile.getFilter (), false, true);
     while (rci.hasNext ())
@@ -759,7 +764,7 @@ public final class CharUtils
   /**
    * Verifies a sequence of codepoints using the specified profile
    */
-  public static void verifyNot (final char [] array, @Nonnull final ECharProfile profile)
+  public static void verifyNot (final char [] array, @Nonnull final ECodepointProfile profile)
   {
     verifyNot (new CodepointIteratorCharArray (array), profile);
   }
