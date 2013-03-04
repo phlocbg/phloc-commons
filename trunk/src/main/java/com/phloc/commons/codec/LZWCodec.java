@@ -19,6 +19,7 @@ package com.phloc.commons.codec;
 
 import java.io.EOFException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.ByteOrder;
 
@@ -56,7 +57,7 @@ final class LZWNode
     m_nTableIndex = -1;
   }
 
-  public LZWNode (final int nTableIndex)
+  public LZWNode (@Nonnegative final int nTableIndex)
   {
     if (nTableIndex < 0 || nTableIndex > 4095)
       throw new IllegalArgumentException ("Illegal table index: " + nTableIndex);
@@ -95,7 +96,7 @@ final class LZWNode
    * @return The node that resides at the data path.
    */
   @Nullable
-  public LZWNode getNode (final byte [] aBuffer)
+  public LZWNode getNode (@Nonnull final byte [] aBuffer)
   {
     LZWNode aCurNode = this;
     for (final byte aByte : aBuffer)
@@ -191,7 +192,7 @@ final class LZWDecodeDictionary extends AbstractLZWDictionary
     return aBIS.readBits (m_nCodeBits);
   }
 
-  public byte [] getBytes (final int nCode)
+  public byte [] getBytes (@Nonnegative final int nCode)
   {
     return m_aTab[nCode];
   }
@@ -242,7 +243,7 @@ final class LZWEncodeDictionary extends AbstractLZWDictionary
   }
 
   @Nullable
-  public LZWNode getNode (final byte [] aBytes)
+  public LZWNode getNode (@Nonnull final byte [] aBytes)
   {
     return m_aRoot.getNode (aBytes);
   }
@@ -273,15 +274,27 @@ public class LZWCodec implements ICodec
     if (aEncodedBuffer == null)
       return null;
 
-    final NonBlockingBitInputStream aBIS = new NonBlockingBitInputStream (new NonBlockingByteArrayInputStream (aEncodedBuffer),
-                                                                          ByteOrder.LITTLE_ENDIAN);
+    final NonBlockingByteArrayInputStream aBAIS = new NonBlockingByteArrayInputStream (aEncodedBuffer);
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
+    decodeLZW (aBAIS, aBAOS);
+    StreamUtils.close (aBAOS);
+    StreamUtils.close (aBAIS);
+    return aBAOS.toByteArray ();
+  }
 
-    final LZWDecodeDictionary aDict = new LZWDecodeDictionary ();
-    aDict.reset ();
+  public static void decodeLZW (@Nonnull @WillNotClose final InputStream aEncodedIS,
+                                @Nonnull @WillNotClose final OutputStream aOS)
+  {
+    if (aEncodedIS == null)
+      throw new NullPointerException ("encodedInputStream");
+
+    final NonBlockingBitInputStream aBIS = new NonBlockingBitInputStream (aEncodedIS, ByteOrder.LITTLE_ENDIAN);
 
     try
     {
+      final LZWDecodeDictionary aDict = new LZWDecodeDictionary ();
+      aDict.reset ();
+
       int nCode = aDict.readCode (aBIS);
       while (nCode == AbstractLZWDictionary.CODE_CLEARTABLE)
         nCode = aDict.readCode (aBIS);
@@ -292,7 +305,7 @@ public class LZWCodec implements ICodec
         byte [] aByteSeq = aDict.getBytes (nCode);
         if (aByteSeq == null)
           throw new DecoderException ("Failed to resolve initial code " + nCode);
-        aBAOS.write (aByteSeq);
+        aOS.write (aByteSeq);
         byte [] aPrevByteSeq = aByteSeq;
         while (true)
         {
@@ -301,8 +314,6 @@ public class LZWCodec implements ICodec
             break;
           if (nCode == AbstractLZWDictionary.CODE_CLEARTABLE)
           {
-            if (false)
-              s_aLogger.info ("Found clear table in decoding");
             aDict.reset ();
 
             nCode = aDict.readCode (aBIS);
@@ -311,7 +322,7 @@ public class LZWCodec implements ICodec
 
             // upon clear table, don't add something to the table
             aByteSeq = aDict.getBytes (nCode);
-            aBAOS.write (aByteSeq);
+            aOS.write (aByteSeq);
             aPrevByteSeq = aByteSeq;
           }
           else
@@ -327,15 +338,12 @@ public class LZWCodec implements ICodec
                                             nCode +
                                             " while next free code is " +
                                             nNextFreeCode);
-            aBAOS.write (aByteSeq);
+            aOS.write (aByteSeq);
             aDict.addString (ArrayHelper.getConcatenated (aPrevByteSeq, aByteSeq[0]), false);
             aPrevByteSeq = aByteSeq;
           }
         }
       }
-
-      // decode predictor
-      return aBAOS.toByteArray ();
     }
     catch (final EOFException ex)
     {
@@ -344,11 +352,6 @@ public class LZWCodec implements ICodec
     catch (final IOException ex)
     {
       throw new DecoderException ("Error decoding LZW", ex);
-    }
-    finally
-    {
-      StreamUtils.close (aBIS);
-      StreamUtils.close (aBAOS);
     }
   }
 
@@ -444,7 +447,8 @@ public class LZWCodec implements ICodec
         case 1023:
         case 2047:
           nCodeLength++;
-          s_aLogger.info ("EOF char gets a new code length: " + nCodeLength);
+          if (s_aLogger.isDebugEnabled ())
+            s_aLogger.debug ("EOF char gets a new code length: " + nCodeLength);
           break;
         default:
           break;
