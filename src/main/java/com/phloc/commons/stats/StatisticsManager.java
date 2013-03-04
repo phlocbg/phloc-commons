@@ -93,23 +93,39 @@ public final class StatisticsManager
     if (StringHelper.hasNoText (sName))
       throw new IllegalArgumentException ("name");
 
-    s_aRWLockCache.writeLock ().lock ();
+    StatisticsHandlerCache aHdl;
+    s_aRWLockCache.readLock ().lock ();
     try
     {
-      StatisticsHandlerCache aHdl = s_aHdlCache.get (sName);
-      if (aHdl == null)
-      {
-        aHdl = new StatisticsHandlerCache ();
-        if (isJMXEnabled ())
-          JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
-        s_aHdlCache.put (sName, aHdl);
-      }
-      return aHdl;
+      aHdl = s_aHdlCache.get (sName);
     }
     finally
     {
-      s_aRWLockCache.writeLock ().unlock ();
+      s_aRWLockCache.readLock ().unlock ();
     }
+
+    if (aHdl == null)
+    {
+      s_aRWLockCache.writeLock ().lock ();
+      try
+      {
+        // Try again in write lock
+        aHdl = s_aHdlCache.get (sName);
+        if (aHdl == null)
+        {
+          aHdl = new StatisticsHandlerCache ();
+          if (isJMXEnabled ())
+            JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
+          s_aHdlCache.put (sName, aHdl);
+        }
+      }
+      finally
+      {
+        s_aRWLockCache.writeLock ().unlock ();
+      }
+    }
+
+    return aHdl;
   }
 
   @Nonnull
@@ -142,23 +158,39 @@ public final class StatisticsManager
     if (StringHelper.hasNoText (sName))
       throw new IllegalArgumentException ("name");
 
-    s_aRWLockTimer.writeLock ().lock ();
+    StatisticsHandlerTimer aHdl;
+    s_aRWLockTimer.readLock ().lock ();
     try
     {
-      StatisticsHandlerTimer aHdl = s_aHdlTimer.get (sName);
-      if (aHdl == null)
-      {
-        aHdl = new StatisticsHandlerTimer ();
-        if (isJMXEnabled ())
-          JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
-        s_aHdlTimer.put (sName, aHdl);
-      }
-      return aHdl;
+      aHdl = s_aHdlTimer.get (sName);
     }
     finally
     {
-      s_aRWLockTimer.writeLock ().unlock ();
+      s_aRWLockTimer.readLock ().unlock ();
     }
+
+    if (aHdl == null)
+    {
+      s_aRWLockTimer.writeLock ().lock ();
+      try
+      {
+        // Try again in write lock
+        aHdl = s_aHdlTimer.get (sName);
+        if (aHdl == null)
+        {
+          aHdl = new StatisticsHandlerTimer ();
+          if (isJMXEnabled ())
+            JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
+          s_aHdlTimer.put (sName, aHdl);
+        }
+      }
+      finally
+      {
+        s_aRWLockTimer.writeLock ().unlock ();
+      }
+    }
+
+    return aHdl;
   }
 
   @Nonnull
@@ -191,23 +223,38 @@ public final class StatisticsManager
     if (StringHelper.hasNoText (sName))
       throw new IllegalArgumentException ("name");
 
-    s_aRWLockKeyedTimer.writeLock ().lock ();
+    StatisticsHandlerKeyedTimer aHdl;
+    s_aRWLockKeyedTimer.readLock ().lock ();
     try
     {
-      StatisticsHandlerKeyedTimer aHdl = s_aHdlKeyedTimer.get (sName);
-      if (aHdl == null)
-      {
-        aHdl = new StatisticsHandlerKeyedTimer ();
-        if (isJMXEnabled ())
-          JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
-        s_aHdlKeyedTimer.put (sName, aHdl);
-      }
-      return aHdl;
+      aHdl = s_aHdlKeyedTimer.get (sName);
     }
     finally
     {
-      s_aRWLockKeyedTimer.writeLock ().unlock ();
+      s_aRWLockKeyedTimer.readLock ().unlock ();
     }
+
+    if (aHdl == null)
+    {
+      s_aRWLockKeyedTimer.writeLock ().lock ();
+      try
+      {
+        // Try again in write lock
+        aHdl = s_aHdlKeyedTimer.get (sName);
+        if (aHdl == null)
+        {
+          aHdl = new StatisticsHandlerKeyedTimer ();
+          if (isJMXEnabled ())
+            JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
+          s_aHdlKeyedTimer.put (sName, aHdl);
+        }
+      }
+      finally
+      {
+        s_aRWLockKeyedTimer.writeLock ().unlock ();
+      }
+    }
+    return aHdl;
   }
 
   @Nonnull
@@ -240,23 +287,38 @@ public final class StatisticsManager
     if (StringHelper.hasNoText (sName))
       throw new IllegalArgumentException ("name");
 
-    s_aRWLockSize.writeLock ().lock ();
+    StatisticsHandlerSize aHdl;
+    s_aRWLockSize.readLock ().lock ();
     try
     {
-      StatisticsHandlerSize aHdl = s_aHdlSize.get (sName);
-      if (aHdl == null)
-      {
-        aHdl = new StatisticsHandlerSize ();
-        if (isJMXEnabled ())
-          JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
-        s_aHdlSize.put (sName, aHdl);
-      }
-      return aHdl;
+      aHdl = s_aHdlSize.get (sName);
     }
     finally
     {
-      s_aRWLockSize.writeLock ().unlock ();
+      s_aRWLockSize.readLock ().unlock ();
     }
+
+    if (aHdl == null)
+    {
+      s_aRWLockSize.writeLock ().lock ();
+      try
+      {
+        // Try again in write lock
+        aHdl = s_aHdlSize.get (sName);
+        if (aHdl == null)
+        {
+          aHdl = new StatisticsHandlerSize ();
+          if (isJMXEnabled ())
+            JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
+          s_aHdlSize.put (sName, aHdl);
+        }
+      }
+      finally
+      {
+        s_aRWLockSize.writeLock ().unlock ();
+      }
+    }
+    return aHdl;
   }
 
   @Nonnull
@@ -289,23 +351,38 @@ public final class StatisticsManager
     if (StringHelper.hasNoText (sName))
       throw new IllegalArgumentException ("name");
 
-    s_aRWLockKeyedSize.writeLock ().lock ();
+    StatisticsHandlerKeyedSize aHdl;
+    s_aRWLockKeyedSize.readLock ().lock ();
     try
     {
-      StatisticsHandlerKeyedSize aHdl = s_aHdlKeyedSize.get (sName);
-      if (aHdl == null)
-      {
-        aHdl = new StatisticsHandlerKeyedSize ();
-        if (isJMXEnabled ())
-          JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
-        s_aHdlKeyedSize.put (sName, aHdl);
-      }
-      return aHdl;
+      aHdl = s_aHdlKeyedSize.get (sName);
     }
     finally
     {
-      s_aRWLockKeyedSize.writeLock ().unlock ();
+      s_aRWLockKeyedSize.readLock ().unlock ();
     }
+
+    if (aHdl == null)
+    {
+      s_aRWLockKeyedSize.writeLock ().lock ();
+      try
+      {
+        // Try again in write lock
+        aHdl = s_aHdlKeyedSize.get (sName);
+        if (aHdl == null)
+        {
+          aHdl = new StatisticsHandlerKeyedSize ();
+          if (isJMXEnabled ())
+            JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
+          s_aHdlKeyedSize.put (sName, aHdl);
+        }
+      }
+      finally
+      {
+        s_aRWLockKeyedSize.writeLock ().unlock ();
+      }
+    }
+    return aHdl;
   }
 
   @Nonnull
@@ -338,23 +415,38 @@ public final class StatisticsManager
     if (StringHelper.hasNoText (sName))
       throw new IllegalArgumentException ("name");
 
-    s_aRWLockCounter.writeLock ().lock ();
+    StatisticsHandlerCounter aHdl;
+    s_aRWLockCounter.readLock ().lock ();
     try
     {
-      StatisticsHandlerCounter aHdl = s_aHdlCounter.get (sName);
-      if (aHdl == null)
-      {
-        aHdl = new StatisticsHandlerCounter ();
-        if (isJMXEnabled ())
-          JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
-        s_aHdlCounter.put (sName, aHdl);
-      }
-      return aHdl;
+      aHdl = s_aHdlCounter.get (sName);
     }
     finally
     {
-      s_aRWLockCounter.writeLock ().unlock ();
+      s_aRWLockCounter.readLock ().unlock ();
     }
+
+    if (aHdl == null)
+    {
+      s_aRWLockCounter.writeLock ().lock ();
+      try
+      {
+        // Try again in write lock
+        aHdl = s_aHdlCounter.get (sName);
+        if (aHdl == null)
+        {
+          aHdl = new StatisticsHandlerCounter ();
+          if (isJMXEnabled ())
+            JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
+          s_aHdlCounter.put (sName, aHdl);
+        }
+      }
+      finally
+      {
+        s_aRWLockCounter.writeLock ().unlock ();
+      }
+    }
+    return aHdl;
   }
 
   @Nonnull
@@ -387,23 +479,38 @@ public final class StatisticsManager
     if (StringHelper.hasNoText (sName))
       throw new IllegalArgumentException ("name");
 
-    s_aRWLockKeyedCounter.writeLock ().lock ();
+    StatisticsHandlerKeyedCounter aHdl;
+    s_aRWLockKeyedCounter.readLock ().lock ();
     try
     {
-      StatisticsHandlerKeyedCounter aHdl = s_aHdlKeyedCounter.get (sName);
-      if (aHdl == null)
-      {
-        aHdl = new StatisticsHandlerKeyedCounter ();
-        if (isJMXEnabled ())
-          JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
-        s_aHdlKeyedCounter.put (sName, aHdl);
-      }
-      return aHdl;
+      aHdl = s_aHdlKeyedCounter.get (sName);
     }
     finally
     {
-      s_aRWLockKeyedCounter.writeLock ().unlock ();
+      s_aRWLockKeyedCounter.readLock ().unlock ();
     }
+
+    if (aHdl == null)
+    {
+      s_aRWLockKeyedCounter.writeLock ().lock ();
+      try
+      {
+        // Try again in write lock
+        aHdl = s_aHdlKeyedCounter.get (sName);
+        if (aHdl == null)
+        {
+          aHdl = new StatisticsHandlerKeyedCounter ();
+          if (isJMXEnabled ())
+            JMXUtils.exposeMBeanWithAutoName (aHdl, sName);
+          s_aHdlKeyedCounter.put (sName, aHdl);
+        }
+      }
+      finally
+      {
+        s_aRWLockKeyedCounter.writeLock ().unlock ();
+      }
+    }
+    return aHdl;
   }
 
   @Nonnull
@@ -418,6 +525,79 @@ public final class StatisticsManager
     finally
     {
       s_aRWLockKeyedCounter.readLock ().unlock ();
+    }
+  }
+
+  public static void clearCache ()
+  {
+    s_aRWLockCache.writeLock ().lock ();
+    try
+    {
+      s_aHdlCache.clear ();
+    }
+    finally
+    {
+      s_aRWLockCache.writeLock ().unlock ();
+    }
+
+    s_aRWLockTimer.writeLock ().lock ();
+    try
+    {
+      s_aHdlTimer.clear ();
+    }
+    finally
+    {
+      s_aRWLockTimer.writeLock ().unlock ();
+    }
+
+    s_aRWLockKeyedTimer.writeLock ().lock ();
+    try
+    {
+      s_aHdlKeyedTimer.clear ();
+    }
+    finally
+    {
+      s_aRWLockKeyedTimer.writeLock ().unlock ();
+    }
+
+    s_aRWLockSize.writeLock ().lock ();
+    try
+    {
+      s_aHdlSize.clear ();
+    }
+    finally
+    {
+      s_aRWLockSize.writeLock ().unlock ();
+    }
+
+    s_aRWLockKeyedSize.writeLock ().lock ();
+    try
+    {
+      s_aHdlKeyedSize.clear ();
+    }
+    finally
+    {
+      s_aRWLockKeyedSize.writeLock ().unlock ();
+    }
+
+    s_aRWLockCounter.writeLock ().lock ();
+    try
+    {
+      s_aHdlCounter.clear ();
+    }
+    finally
+    {
+      s_aRWLockCounter.writeLock ().unlock ();
+    }
+
+    s_aRWLockKeyedCounter.writeLock ().lock ();
+    try
+    {
+      s_aHdlKeyedCounter.clear ();
+    }
+    finally
+    {
+      s_aRWLockKeyedCounter.writeLock ().unlock ();
     }
   }
 }

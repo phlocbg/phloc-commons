@@ -23,6 +23,7 @@ import java.nio.channels.FileLock;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.WillNotClose;
@@ -65,8 +66,10 @@ public final class ChannelUtils
    * @param aDest
    *        Destination channel. May not be <code>null</code>. Is not closed
    *        after the operation.
+   * @return The number of bytes written.
    */
-  public static void channelCopy (@Nonnull @WillNotClose final ReadableByteChannel aSrc,
+  @Nonnegative
+  public static long channelCopy (@Nonnull @WillNotClose final ReadableByteChannel aSrc,
                                   @Nonnull @WillNotClose final WritableByteChannel aDest) throws IOException
   {
     if (aSrc == null)
@@ -78,10 +81,12 @@ public final class ChannelUtils
     if (!aDest.isOpen ())
       throw new IllegalArgumentException ("desitnationChannel is not open!");
 
+    long nBytesWritten;
     if (USE_COPY_V1)
-      _channelCopy1 (aSrc, aDest);
+      nBytesWritten = _channelCopy1 (aSrc, aDest);
     else
-      _channelCopy2 (aSrc, aDest);
+      nBytesWritten = _channelCopy2 (aSrc, aDest);
+    return nBytesWritten;
   }
 
   /**
@@ -98,10 +103,13 @@ public final class ChannelUtils
    * @param aDest
    *        Destination channel. May not be <code>null</code>. Is not closed
    *        after the operation.
+   * @return The number of bytes written.
    */
-  private static void _channelCopy1 (@Nonnull @WillNotClose final ReadableByteChannel aSrc,
+  @Nonnegative
+  private static long _channelCopy1 (@Nonnull @WillNotClose final ReadableByteChannel aSrc,
                                      @Nonnull @WillNotClose final WritableByteChannel aDest) throws IOException
   {
+    long nBytesWritten = 0;
     final ByteBuffer aBuffer = ByteBuffer.allocateDirect (16 * 1024);
     while (aSrc.read (aBuffer) != -1)
     {
@@ -109,7 +117,7 @@ public final class ChannelUtils
       aBuffer.flip ();
 
       // Write to the channel; may block
-      aDest.write (aBuffer);
+      nBytesWritten += aDest.write (aBuffer);
 
       // If partial transfer, shift remainder down
       // If buffer is empty, same as doing clear()
@@ -121,13 +129,15 @@ public final class ChannelUtils
 
     // Make sure that the buffer is fully drained
     while (aBuffer.hasRemaining ())
-      aDest.write (aBuffer);
+      nBytesWritten += aDest.write (aBuffer);
+
+    return nBytesWritten;
   }
 
   /**
    * Channel copy method 2. This method performs the same copy, but assures the
-   * temp buffer is empty before reading more data. This never requires data
-   * copying but may result in more systems calls. No post-loop cleanup is
+   * temporary buffer is empty before reading more data. This never requires
+   * data copying but may result in more systems calls. No post-loop cleanup is
    * needed because the buffer will be empty when the loop is exited.<br>
    * Source: Java NIO, page 60
    * 
@@ -137,10 +147,13 @@ public final class ChannelUtils
    * @param aDest
    *        Destination channel. May not be <code>null</code>. Is not closed
    *        after the operation.
+   * @return The number of bytes written.
    */
-  private static void _channelCopy2 (@Nonnull @WillNotClose final ReadableByteChannel aSrc,
+  @Nonnull
+  private static long _channelCopy2 (@Nonnull @WillNotClose final ReadableByteChannel aSrc,
                                      @Nonnull @WillNotClose final WritableByteChannel aDest) throws IOException
   {
+    long nBytesWritten = 0;
     final ByteBuffer aBuffer = ByteBuffer.allocateDirect (16 * 1024);
     while (aSrc.read (aBuffer) != -1)
     {
@@ -149,11 +162,12 @@ public final class ChannelUtils
 
       // Make sure that the buffer was fully drained
       while (aBuffer.hasRemaining ())
-        aDest.write (aBuffer);
+        nBytesWritten += aDest.write (aBuffer);
 
       // Make the buffer empty, ready for filling
       aBuffer.clear ();
     }
+    return nBytesWritten;
   }
 
   @Nonnull

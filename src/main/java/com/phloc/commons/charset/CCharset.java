@@ -36,18 +36,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 public final class CCharset
 {
   /**
-   * The special UTF-8 charset to be used in all applications.
-   */
-  @Nonnull
-  public static final String CHARSET_UTF_8 = "UTF-8";
-
-  /**
-   * The UTF-8 charset object.
-   */
-  @Nonnull
-  public static final Charset CHARSET_UTF_8_OBJ = CharsetManager.getCharsetFromName (CHARSET_UTF_8);
-
-  /**
    * The special ANSI charset to be used in all applications. This is
    * ISO-8859-1.
    */
@@ -61,18 +49,6 @@ public final class CCharset
   public static final Charset CHARSET_ISO_8859_1_OBJ = CharsetManager.getCharsetFromName (CHARSET_ISO_8859_1);
 
   /**
-   * The Windows 1252 charset name.
-   */
-  @Nonnull
-  public static final String CHARSET_WINDOWS_1252 = "windows-1252";
-
-  /**
-   * The Windows 1252 charset object.
-   */
-  @Nonnull
-  public static final Charset CHARSET_WINDOWS_1252_OBJ = CharsetManager.getCharsetFromName (CHARSET_WINDOWS_1252);
-
-  /**
    * The special US ACSII charset to be used in all applications. This is
    * US-ASCII.
    */
@@ -84,6 +60,54 @@ public final class CCharset
    */
   @Nonnull
   public static final Charset CHARSET_US_ASCII_OBJ = CharsetManager.getCharsetFromName (CHARSET_US_ASCII);
+
+  /**
+   * The special UTF-8 charset to be used in all applications.
+   */
+  @Nonnull
+  public static final String CHARSET_UTF_8 = "UTF-8";
+
+  /**
+   * The UTF-8 charset object.
+   */
+  @Nonnull
+  public static final Charset CHARSET_UTF_8_OBJ = CharsetManager.getCharsetFromName (CHARSET_UTF_8);
+
+  /**
+   * The special UTF-16 charset to be used in all applications.
+   */
+  @Nonnull
+  public static final String CHARSET_UTF_16 = "UTF-16";
+
+  /**
+   * The UTF-16 charset object.
+   */
+  @Nonnull
+  public static final Charset CHARSET_UTF_16_OBJ = CharsetManager.getCharsetFromName (CHARSET_UTF_16);
+
+  /**
+   * The special UTF-16BE charset to be used in all applications.
+   */
+  @Nonnull
+  public static final String CHARSET_UTF_16BE = "UTF-16BE";
+
+  /**
+   * The UTF-16BE charset object.
+   */
+  @Nonnull
+  public static final Charset CHARSET_UTF_16BE_OBJ = CharsetManager.getCharsetFromName (CHARSET_UTF_16BE);
+
+  /**
+   * The special UTF-16LE charset to be used in all applications.
+   */
+  @Nonnull
+  public static final String CHARSET_UTF_16LE = "UTF-16LE";
+
+  /**
+   * The UTF-16LE charset object.
+   */
+  @Nonnull
+  public static final Charset CHARSET_UTF_16LE_OBJ = CharsetManager.getCharsetFromName (CHARSET_UTF_16LE);
 
   /**
    * The default charset to be used in all applications. Currently this is
@@ -104,6 +128,18 @@ public final class CCharset
    */
   @Nonnull
   public static final String CHARSET_SERVICE_LOADER = CHARSET_UTF_8;
+
+  /**
+   * The non-standard Windows 1252 charset name.
+   */
+  @Nonnull
+  public static final String CHARSET_WINDOWS_1252 = "windows-1252";
+
+  /**
+   * The non-standard Windows 1252 charset object.
+   */
+  @Nonnull
+  public static final Charset CHARSET_WINDOWS_1252_OBJ = CharsetManager.getCharsetFromName (CHARSET_WINDOWS_1252);
 
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")

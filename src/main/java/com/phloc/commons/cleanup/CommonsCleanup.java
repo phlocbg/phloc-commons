@@ -29,6 +29,7 @@ import com.phloc.commons.locale.LocaleCache;
 import com.phloc.commons.locale.LocaleUtils;
 import com.phloc.commons.locale.country.CountryCache;
 import com.phloc.commons.regex.RegExPool;
+import com.phloc.commons.stats.StatisticsManager;
 import com.phloc.commons.text.resolve.DefaultTextResolver;
 import com.phloc.commons.text.resource.ResourceBundleUtils;
 import com.phloc.commons.xml.schema.XMLSchemaCache;
@@ -64,6 +65,7 @@ public final class CommonsCleanup
     LocaleUtils.clearCache ();
     JAXBContextCache.getInstance ().clearCache ();
     XMLSchemaCache.getInstance ().clearCache ();
+    StatisticsManager.clearCache ();
 
     // Clean this one last as it is used in equals and hashCode implementations!
     ClassHierarchyCache.clearCache ();
