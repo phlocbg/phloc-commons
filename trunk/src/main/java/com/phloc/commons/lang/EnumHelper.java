@@ -482,4 +482,17 @@ public final class EnumHelper
     // locale resolving, so we want to spare some CPU cycles :)
     return aEnum.getClass ().getName () + '.' + aEnum.name ();
   }
+
+  public static void clearCache ()
+  {
+    s_aRWLockInt.writeLock ().lock ();
+    try
+    {
+      s_aIntCache.clear ();
+    }
+    finally
+    {
+      s_aRWLockInt.writeLock ().unlock ();
+    }
+  }
 }
