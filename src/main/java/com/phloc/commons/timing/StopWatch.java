@@ -82,6 +82,7 @@ public final class StopWatch implements IStoppable
   @Nonnull
   public EChange start ()
   {
+    // Already started?
     if (m_nStartDT > 0)
       return EChange.UNCHANGED;
     m_nStartDT = System.nanoTime ();
@@ -98,6 +99,7 @@ public final class StopWatch implements IStoppable
   @Nonnull
   public EChange stop ()
   {
+    // Already stopped?
     if (m_nStartDT == 0)
       return EChange.UNCHANGED;
     m_nDurationNanos += (System.nanoTime () - m_nStartDT);
@@ -125,7 +127,7 @@ public final class StopWatch implements IStoppable
    */
   public boolean isStarted ()
   {
-    return m_nStartDT != 0;
+    return m_nStartDT > 0;
   }
 
   /**
