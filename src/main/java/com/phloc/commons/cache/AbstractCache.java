@@ -185,6 +185,11 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
     return ContainerHelper.isEmpty (m_aCache);
   }
 
+  public boolean isNotEmpty ()
+  {
+    return ContainerHelper.isNotEmpty (m_aCache);
+  }
+
   @Override
   public String toString ()
   {
