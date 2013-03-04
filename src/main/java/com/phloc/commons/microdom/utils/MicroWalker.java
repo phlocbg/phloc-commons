@@ -59,12 +59,32 @@ public final class MicroWalker
     aCallback.onItemAfterChildren (aNode);
   }
 
+  /**
+   * Iterate the passed node and invoke the callback for all child nodes. The
+   * callback is not invoked for the passed node itself!
+   * 
+   * @param aNode
+   *        The node to iterate. May not be <code>null</code>.
+   * @param aCallback
+   *        The callback to call. May not be <code>null</code>.
+   */
   public static void walkNode (@Nonnull final IMicroNode aNode,
                                @Nonnull final IHierarchyWalkerCallback <? super IMicroNode> aCallback)
   {
     walkNode (aNode, new ChildrenProviderHasChildren <IMicroNode> (), aCallback);
   }
 
+  /**
+   * Iterate the passed node and invoke the callback for all child nodes. The
+   * callback is not invoked for the passed node itself!
+   * 
+   * @param aNode
+   *        The node to iterate. May not be <code>null</code>.
+   * @param aChildrenResolver
+   *        The child resolver to use. May not be <code>null</code>.
+   * @param aCallback
+   *        The callback to call. May not be <code>null</code>.
+   */
   public static <T extends IMicroNode> void walkNode (@Nonnull final T aNode,
                                                       @Nonnull final IChildrenProvider <T> aChildrenResolver,
                                                       @Nonnull final IHierarchyWalkerCallback <? super T> aCallback)
