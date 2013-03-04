@@ -42,6 +42,7 @@ public interface IOutputStreamAndWriterProvider extends IOutputStreamProvider
    * @return <code>null</code> if no output stream could be retrieved.
    */
   @Nullable
+  @Deprecated
   Writer getWriter (@Nonnull String sCharset, @Nonnull EAppend eAppend);
 
   /**

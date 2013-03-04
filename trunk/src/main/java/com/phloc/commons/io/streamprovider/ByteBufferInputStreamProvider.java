@@ -58,6 +58,7 @@ public class ByteBufferInputStreamProvider implements IInputStreamAndReaderProvi
   }
 
   @Nonnull
+  @Deprecated
   public final InputStreamReader getReader (@Nonnull final String sCharset)
   {
     return StreamUtils.createReader (getInputStream (), sCharset);

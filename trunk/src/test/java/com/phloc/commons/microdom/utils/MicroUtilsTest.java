@@ -157,7 +157,8 @@ public final class MicroUtilsTest
     final DocumentBuilderFactory aDBF = XMLFactory.createDefaultDocumentBuilderFactory ();
     aDBF.setCoalescing (false);
     aDBF.setIgnoringComments (false);
-    final Document doc = aDBF.newDocumentBuilder ().parse (new StringInputStream (sXML, CCharset.CHARSET_ISO_8859_1));
+    final Document doc = aDBF.newDocumentBuilder ()
+                             .parse (new StringInputStream (sXML, CCharset.CHARSET_ISO_8859_1_OBJ));
     assertNotNull (doc);
     final IMicroNode aNode = MicroUtils.convertToMicroNode (doc);
     assertNotNull (aNode);

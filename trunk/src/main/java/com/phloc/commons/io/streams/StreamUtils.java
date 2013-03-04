@@ -615,6 +615,7 @@ public final class StreamUtils
    *         input stream is <code>null</code>.
    */
   @Nullable
+  @Deprecated
   public static String getAllBytesAsString (@Nullable final IInputStreamProvider aISP,
                                             @Nonnull @Nonempty final String sCharset)
   {
@@ -655,6 +656,7 @@ public final class StreamUtils
    *         <code>null</code>.
    */
   @Nullable
+  @Deprecated
   public static String getAllBytesAsString (@Nullable @WillClose final InputStream aIS,
                                             @Nonnull @Nonempty final String sCharset)
   {
@@ -1595,6 +1597,7 @@ public final class StreamUtils
    * @return {@link ESuccess}
    */
   @Nonnull
+  @Deprecated
   public static ESuccess writeStream (@WillClose @Nonnull final OutputStream aOS,
                                       @Nonnull final String sContent,
                                       @Nonnull final String sCharset)
@@ -1645,6 +1648,7 @@ public final class StreamUtils
   }
 
   @Nullable
+  @Deprecated
   public static InputStreamReader createReader (@Nullable final InputStream aIS, @Nonnull final String sCharset)
   {
     try
@@ -1664,6 +1668,7 @@ public final class StreamUtils
   }
 
   @Nullable
+  @Deprecated
   public static OutputStreamWriter createWriter (@Nullable final OutputStream aOS, @Nonnull final String sCharset)
   {
     try

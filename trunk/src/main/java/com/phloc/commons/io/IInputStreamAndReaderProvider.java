@@ -40,6 +40,7 @@ public interface IInputStreamAndReaderProvider extends IInputStreamProvider
    * @return <code>null</code> if no input stream could be retrieved.
    */
   @Nullable
+  @Deprecated
   Reader getReader (@Nonnull String sCharset);
 
   /**

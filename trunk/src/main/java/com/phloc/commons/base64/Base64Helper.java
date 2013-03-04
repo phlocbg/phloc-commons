@@ -93,6 +93,7 @@ public final class Base64Helper
    * @return <code>null</code> if decoding failed.
    */
   @Nullable
+  @Deprecated
   public static String safeDecodeAsString (@Nonnull final String sEncoded, @Nonnull final String sCharset)
   {
     try
@@ -137,6 +138,7 @@ public final class Base64Helper
    * @return <code>null</code> if decoding failed.
    */
   @Nullable
+  @Deprecated
   public static String safeDecodeAsString (@Nonnull final byte [] aEncodedBytes, @Nonnull final String sCharset)
   {
     try
@@ -179,6 +181,7 @@ public final class Base64Helper
    * @return The encoded byte array.
    */
   @Nullable
+  @Deprecated
   public static String safeEncode (@Nonnull final String s, @Nonnull final String sCharset)
   {
     return Base64.encodeBytes (CharsetManager.getAsBytes (s, sCharset));

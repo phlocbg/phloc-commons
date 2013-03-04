@@ -35,6 +35,7 @@ import com.phloc.commons.charset.CharsetManager;
  */
 public final class Base64HelperTest
 {
+  @SuppressWarnings ("deprecation")
   @Test
   public void testEncodeDecode ()
   {

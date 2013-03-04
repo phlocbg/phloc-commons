@@ -35,6 +35,7 @@ import com.phloc.commons.string.StringHelper;
 public abstract class AbstractMessageDigestGenerator implements IMessageDigestGenerator
 {
   @Nonnull
+  @Deprecated
   public final IMessageDigestGenerator update (@Nonnull final String aValue, @Nonnull @Nonempty final String sCharset)
   {
     if (aValue == null)

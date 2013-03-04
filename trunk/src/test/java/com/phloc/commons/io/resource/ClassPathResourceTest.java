@@ -84,8 +84,8 @@ public final class ClassPathResourceTest
       StreamUtils.close (aIS1);
     }
 
-    aCPISP.getReader (CCharset.CHARSET_ISO_8859_1).close ();
-    assertNull (new ClassPathResource ("/test1 not existing.txt").getReader (CCharset.CHARSET_ISO_8859_1));
+    aCPISP.getReader (CCharset.CHARSET_ISO_8859_1_OBJ).close ();
+    assertNull (new ClassPathResource ("/test1 not existing.txt").getReader (CCharset.CHARSET_ISO_8859_1_OBJ));
     assertFalse (new ClassPathResource ("/test1 not existing.txt").existsNoCacheUsage ());
     assertFalse (new ClassPathResource ("/test1 not existing.txt").canRead ());
     assertNotNull (ClassPathResource.getAsFile ("/test1.txt"));

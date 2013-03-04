@@ -218,7 +218,7 @@ public final class TypeConverterTest extends AbstractPhlocTestCase
                                                   ETopBottom.BOTTOM,
                                                   ETriState.UNDEFINED,
                                                   EValidity.VALID,
-                                                  CharsetManager.getAsBytes ("Jägalä", CCharset.CHARSET_ISO_8859_1),
+                                                  CharsetManager.getAsBytes ("Jägalä", CCharset.CHARSET_ISO_8859_1_OBJ),
                                                   new StringBuffer ("Äh ja - wie is das jetzt?"),
                                                   new StringBuilder ("Thät lüks greyt!") };
     for (final Object aSrcValue : aDefinedObjs)

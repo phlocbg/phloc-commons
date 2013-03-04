@@ -52,14 +52,14 @@ public final class HashingOutputStreamTest
         // First hash
         aHIS1 = new HashingOutputStream (new NonBlockingByteArrayOutputStream (), eMDAlgo);
         StreamUtils.copyInputStreamToOutputStreamAndCloseOS (new StringInputStream (sTestString,
-                                                                                    CCharset.CHARSET_ISO_8859_1),
+                                                                                    CCharset.CHARSET_ISO_8859_1_OBJ),
                                                              new NonBlockingByteArrayOutputStream ());
         final byte [] aDigest1 = aHIS1.getDigest ();
 
         // Second hash
         aHIS2 = new HashingOutputStream (new NonBlockingByteArrayOutputStream (), eMDAlgo);
         StreamUtils.copyInputStreamToOutputStreamAndCloseOS (new StringInputStream (sTestString,
-                                                                                    CCharset.CHARSET_ISO_8859_1),
+                                                                                    CCharset.CHARSET_ISO_8859_1_OBJ),
                                                              new NonBlockingByteArrayOutputStream ());
         final byte [] aDigest2 = aHIS2.getDigest ();
 

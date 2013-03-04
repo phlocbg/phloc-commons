@@ -129,7 +129,7 @@ public final class MicroReaderTest
                   "  </root>" +
                   CRLF +
                   "</verrryoot>" +
-                  CRLF, baos.getAsString (CCharset.CHARSET_UTF_8));
+                  CRLF, baos.getAsString (CCharset.CHARSET_UTF_8_OBJ));
 
     final String sXHTML = "<content>"
                           + "<div class=\"css1\">"
@@ -183,7 +183,7 @@ public final class MicroReaderTest
 
     final NonBlockingByteArrayOutputStream baos = new NonBlockingByteArrayOutputStream ();
     new MicroSerializer (xs).write (aDoc, baos);
-    final String sXML = baos.getAsString (CCharset.CHARSET_UTF_8);
+    final String sXML = baos.getAsString (CCharset.CHARSET_UTF_8_OBJ);
     assertEquals ("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
                   CRLF +
                   "<verrryoot>" +
@@ -217,7 +217,7 @@ public final class MicroReaderTest
 
     final NonBlockingByteArrayOutputStream baos = new NonBlockingByteArrayOutputStream ();
     new MicroSerializer (xs).write (aDoc, baos);
-    final String sXML = baos.getAsString (CCharset.CHARSET_UTF_8);
+    final String sXML = baos.getAsString (CCharset.CHARSET_UTF_8_OBJ);
     assertEquals ("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>" +
                   CRLF +
                   "<verrryoot xmlns=\"uri1\">" +
@@ -253,7 +253,7 @@ public final class MicroReaderTest
 
     final NonBlockingByteArrayOutputStream baos = new NonBlockingByteArrayOutputStream ();
     new MicroSerializer (xs).write (aDoc, baos);
-    final String sXML = baos.getAsString (CCharset.CHARSET_UTF_8);
+    final String sXML = baos.getAsString (CCharset.CHARSET_UTF_8_OBJ);
     assertEquals ("<?xml version='1.0' encoding='UTF-8' standalone='yes'?>" +
                   CRLF +
                   "<verrryoot xmlns='uri1'>" +

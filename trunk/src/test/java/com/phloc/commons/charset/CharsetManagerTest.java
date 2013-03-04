@@ -39,7 +39,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link CharsetManager}.
- *
+ * 
  * @author philip
  */
 public final class CharsetManagerTest
@@ -74,6 +74,7 @@ public final class CharsetManagerTest
     {}
   }
 
+  @SuppressWarnings ("deprecation")
   @Test
   @SuppressFBWarnings ("NP_NONNULL_PARAM_VIOLATION")
   public void testGetAsBytes ()
@@ -121,6 +122,7 @@ public final class CharsetManagerTest
     {}
   }
 
+  @SuppressWarnings ("deprecation")
   @Test
   public void testGetAsStringInOtherCharset ()
   {
@@ -187,6 +189,7 @@ public final class CharsetManagerTest
     {}
   }
 
+  @SuppressWarnings ("deprecation")
   @Test
   public void testGreek () throws Exception
   {
@@ -278,7 +281,7 @@ public final class CharsetManagerTest
       assertTrue (nCounted >= nStringLen);
 
       // Convert and count
-      final byte [] b = CharsetManager.getAsBytes (aSB.toString (), CCharset.CHARSET_UTF_8);
+      final byte [] b = CharsetManager.getAsBytes (aSB.toString (), CCharset.CHARSET_UTF_8_OBJ);
       assertTrue (b.length >= nStringLen);
 
       // Must be equals

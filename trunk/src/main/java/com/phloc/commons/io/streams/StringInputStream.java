@@ -30,6 +30,7 @@ import com.phloc.commons.charset.CharsetManager;
  */
 public class StringInputStream extends NonBlockingByteArrayInputStream
 {
+  @Deprecated
   public StringInputStream (@Nonnull final String sInput, @Nonnull final String sCharset)
   {
     super (CharsetManager.getAsBytes (sInput, sCharset));

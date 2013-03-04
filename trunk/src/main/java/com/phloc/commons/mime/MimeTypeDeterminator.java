@@ -20,6 +20,7 @@ package com.phloc.commons.mime;
 import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -29,7 +30,7 @@ import javax.annotation.concurrent.Immutable;
 import com.phloc.commons.GlobalDebug;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
-import com.phloc.commons.annotations.ReturnsImmutableObject;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.exceptions.InitializationException;
@@ -100,6 +101,7 @@ public final class MimeTypeDeterminator
   }
 
   @Nonnull
+  @Deprecated
   public static IMimeType getMimeTypeFromString (@Nullable final String s, @Nonnull @Nonempty final String sCharsetName)
   {
     return getMimeTypeFromBytes (s == null ? null : CharsetManager.getAsBytes (s, sCharsetName));
@@ -148,13 +150,15 @@ public final class MimeTypeDeterminator
   @Nullable
   public static String getMimeTypeFromFilename (@Nonnull final String sFilename)
   {
-    return getMimeTypeFromExtension (FilenameHelper.getExtension (sFilename));
+    final String sExt = FilenameHelper.getExtension (sFilename);
+    return getMimeTypeFromExtension (sExt);
   }
 
   @Nullable
   public static IMimeType getMimeTypeObjectFromFilename (@Nonnull final String sExtension)
   {
-    return MimeType.parseFromStringWithoutEncoding (getMimeTypeFromFilename (sExtension));
+    final String sMimeType = getMimeTypeFromFilename (sExtension);
+    return MimeType.parseFromStringWithoutEncoding (sMimeType);
   }
 
   @Nullable
@@ -165,7 +169,7 @@ public final class MimeTypeDeterminator
     {
       // Especially on Windows, sometimes file extensions like "JPG" can be
       // found. Therefore also test for the lowercase version of the extension.
-      ret = s_aFileExtMap.get (sExtension.toLowerCase ());
+      ret = s_aFileExtMap.get (sExtension.toLowerCase (Locale.US));
     }
     return ret;
   }
@@ -173,20 +177,21 @@ public final class MimeTypeDeterminator
   @Nullable
   public static IMimeType getMimeTypeObjectFromExtension (@Nonnull final String sExtension)
   {
-    return MimeType.parseFromStringWithoutEncoding (getMimeTypeFromExtension (sExtension));
+    final String sMimeType = getMimeTypeFromExtension (sExtension);
+    return MimeType.parseFromStringWithoutEncoding (sMimeType);
   }
 
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public static Collection <String> getAllKnownMimeTypes ()
   {
-    return ContainerHelper.makeUnmodifiable (s_aFileExtMap.values ());
+    return ContainerHelper.newList (s_aFileExtMap.values ());
   }
 
   @Nonnull
-  @ReturnsImmutableObject
+  @ReturnsMutableCopy
   public static Map <String, String> getAllKnownMimeTypeFilenameMappings ()
   {
-    return ContainerHelper.makeUnmodifiable (s_aFileExtMap);
+    return ContainerHelper.newMap (s_aFileExtMap);
   }
 }

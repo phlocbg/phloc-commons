@@ -34,6 +34,7 @@ import com.phloc.commons.mock.PhlocTestUtils;
  */
 public final class NonBlockingMessageDigestGeneratorTest
 {
+  @SuppressWarnings ("deprecation")
   private void _testRun (final EMessageDigestAlgorithm... aAlgo)
   {
     final IMessageDigestGenerator x = new NonBlockingMessageDigestGenerator (aAlgo);
@@ -72,6 +73,7 @@ public final class NonBlockingMessageDigestGeneratorTest
       _testRun (eMD);
   }
 
+  @SuppressWarnings ("deprecation")
   @Test
   public void testErrorCases ()
   {
@@ -120,6 +122,13 @@ public final class NonBlockingMessageDigestGeneratorTest
     try
     {
       md.update ((String) null, CCharset.CHARSET_ISO_8859_1);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+    try
+    {
+      md.update ((String) null, CCharset.CHARSET_ISO_8859_1_OBJ);
       fail ();
     }
     catch (final NullPointerException ex)

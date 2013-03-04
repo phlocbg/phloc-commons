@@ -112,6 +112,7 @@ public final class CharsetManager
   }
 
   @Nonnull
+  @Deprecated
   public static byte [] getAsBytes (@Nonnull final String sText, @Nonnull @Nonempty final String sCharsetName)
   {
     if (sText == null)
@@ -130,6 +131,7 @@ public final class CharsetManager
   }
 
   @Nullable
+  @Deprecated
   public static String getAsStringInOtherCharset (@Nullable final String sText,
                                                   @Nonnull final String sCurrentCharset,
                                                   @Nonnull final String sNewCharset)
@@ -160,12 +162,14 @@ public final class CharsetManager
   }
 
   @Nonnull
+  @Deprecated
   public static String getAsString (@Nonnull final byte [] aBuffer, @Nonnull final String sCharsetName)
   {
     return getAsString (aBuffer, 0, aBuffer.length, sCharsetName);
   }
 
   @Nonnull
+  @Deprecated
   public static String getAsString (@Nonnull final byte [] aBuffer,
                                     @Nonnegative final int nOfs,
                                     @Nonnegative final int nLength,

@@ -69,7 +69,7 @@ public final class FileSystemResourceTest
     assertTrue (fr.exists ());
     assertTrue (fr.getResourceID ().endsWith ("pom.xml"));
     assertTrue (fr.getPath ().endsWith ("pom.xml"));
-    StreamUtils.close (fr.getReader (CCharset.CHARSET_ISO_8859_1));
+    StreamUtils.close (fr.getReader (CCharset.CHARSET_ISO_8859_1_OBJ));
     final byte [] aBytes = StreamUtils.getAllBytes (fr);
     assertTrue (aBytes.length > 0);
     assertNotNull (fr.getAsURL ());
@@ -83,7 +83,7 @@ public final class FileSystemResourceTest
     fr = new FileSystemResource ("this file does not exist");
     assertFalse (fr.exists ());
     assertNull (fr.getInputStream ());
-    assertNull (fr.getReader (CCharset.CHARSET_ISO_8859_1));
+    assertNull (fr.getReader (CCharset.CHARSET_ISO_8859_1_OBJ));
   }
 
   @Test
@@ -100,10 +100,10 @@ public final class FileSystemResourceTest
       assertNotNull (aOS);
       StreamUtils.close (aOS);
 
-      Writer w = fr.getWriter (CCharset.CHARSET_ISO_8859_1, EAppend.TRUNCATE);
+      Writer w = fr.getWriter (CCharset.CHARSET_ISO_8859_1_OBJ, EAppend.TRUNCATE);
       assertNotNull (w);
       StreamUtils.close (w);
-      w = fr.getWriter (CCharset.CHARSET_ISO_8859_1, EAppend.APPEND);
+      w = fr.getWriter (CCharset.CHARSET_ISO_8859_1_OBJ, EAppend.APPEND);
       assertNotNull (w);
       StreamUtils.close (w);
     }

@@ -184,6 +184,7 @@ public final class StreamUtilsTest
   }
 
   @Test
+  @SuppressFBWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   public void testCopyInputStreamToOutputStreamWithLimit ()
   {
     final byte [] aInput = CharsetManager.getAsBytes ("Hello12Bytes", CCharset.CHARSET_ISO_8859_1_OBJ);
@@ -235,6 +236,7 @@ public final class StreamUtilsTest
     }));
   }
 
+  @SuppressWarnings ("deprecation")
   @Test
   @SuppressFBWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
   public void testGetAllBytes ()
@@ -357,6 +359,7 @@ public final class StreamUtilsTest
     }
   }
 
+  @SuppressWarnings ("deprecation")
   @Test
   public void testGetAllBytesAsString ()
   {
@@ -457,6 +460,7 @@ public final class StreamUtilsTest
     assertNull (StreamUtils.getAllCharacters ((Reader) null));
   }
 
+  @SuppressWarnings ("deprecation")
   @Test
   @SuppressFBWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   public void testWriteStream ()
@@ -546,6 +550,7 @@ public final class StreamUtilsTest
     assertFalse (StreamUtils.writeStream (os2, buf).isSuccess ());
   }
 
+  @SuppressWarnings ("deprecation")
   @Test
   public void testCreateReader ()
   {
@@ -578,6 +583,7 @@ public final class StreamUtilsTest
     {}
   }
 
+  @SuppressWarnings ("deprecation")
   @Test
   public void testCreateWriter ()
   {
