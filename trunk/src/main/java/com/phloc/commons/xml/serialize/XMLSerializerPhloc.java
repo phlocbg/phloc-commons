@@ -184,7 +184,8 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
     final boolean bIndentNext = aNextSibling == null || !XMLHelper.isTextNode (aNextSibling);
     final boolean bHasChildElement = bHasChildren && !XMLHelper.isTextNode (aElement.getFirstChild ());
 
-    // get all attributes (sorting is important!)
+    // get all attributes (sorting is important because the order from
+    // getAttributes is not guaranteed to be consistent!)
     final Map <String, String> aAttrMap = new TreeMap <String, String> ();
     final NamedNodeMap aAttrs = aElement.getAttributes ();
     for (int i = 0; i < aAttrs.getLength (); ++i)

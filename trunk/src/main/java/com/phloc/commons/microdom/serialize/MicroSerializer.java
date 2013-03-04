@@ -202,10 +202,15 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
     final boolean bIndentNext = aNextSibling == null || !_isInlineNode (aNextSibling);
     final boolean bHasChildElement = bHasChildren && !_isInlineNode (aElement.getFirstChild ());
 
-    // get all attributes (sorting is important!)
-    final Map <String, String> aAttrMap = new LinkedHashMap <String, String> ();
+    // get all attributes (order is important!)
+    final Map <String, String> aAttrMap;
     if (aElement.hasAttributes ())
-      aAttrMap.putAll (aElement.getAllAttributes ());
+    {
+      // Delivers an ordered copy!
+      aAttrMap = aElement.getAllAttributes ();
+    }
+    else
+      aAttrMap = new LinkedHashMap <String, String> ();
 
     m_aNSStack.push (aAttrMap);
 
