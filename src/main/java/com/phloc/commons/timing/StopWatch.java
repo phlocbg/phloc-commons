@@ -106,6 +106,20 @@ public final class StopWatch implements IStoppable
   }
 
   /**
+   * Stops, resets and starts the stop watch.
+   * 
+   * @see #stop()
+   * @see #reset()
+   * @see #start()
+   */
+  public void restart ()
+  {
+    stop ();
+    reset ();
+    start ();
+  }
+
+  /**
    * @return <code>true</code> if the stop watch is currently started (running),
    *         <code>false</code> otherwise.
    */
