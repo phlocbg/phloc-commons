@@ -29,6 +29,7 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.id.IHasID;
 import com.phloc.commons.id.IHasSimpleIntID;
@@ -271,7 +272,7 @@ public final class EnumHelper
             if (nElementID > nMaxID)
               nMaxID = nElementID;
           }
-          if (nMinID >= 0 && nMaxID <= 255)
+          if (nMinID >= 0 && nMaxID <= CGlobal.MAX_BYTE_VALUE)
           {
             // Cachable!
             aCachedData = new Object [nMaxID + 1];

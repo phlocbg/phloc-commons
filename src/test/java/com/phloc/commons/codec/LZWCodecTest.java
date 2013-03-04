@@ -39,7 +39,7 @@ public final class LZWCodecTest extends AbstractPhlocTestCase
   public void testDecode ()
   {
     final byte [] aEncoded = new byte [] { (byte) 0x80, 0x0b, 0x60, 0x50, 0x22, 0x0c, 0x0c, (byte) 0x85, 0x01 };
-    final byte [] aDecoded = new LZWCodec ().decode (aEncoded);
+    final byte [] aDecoded = LZWCodec.decodeLZW (aEncoded);
     final byte [] aExpected = new byte [] { 45, 45, 45, 45, 45, 65, 45, 45, 45, 66 };
     assertArrayEquals (aExpected, aDecoded);
   }
@@ -48,7 +48,7 @@ public final class LZWCodecTest extends AbstractPhlocTestCase
   public void testEncode1 ()
   {
     final byte [] aDecoded = new byte [] { 45, 45, 45, 45, 45, 65, 45, 45, 45, 66 };
-    final byte [] aEncoded = new LZWCodec ().encode (aDecoded);
+    final byte [] aEncoded = LZWCodec.encodeLZW (aDecoded);
     final byte [] aExpected = new byte [] { (byte) 0x80, 0x0b, 0x60, 0x50, 0x22, 0x0c, 0x0c, (byte) 0x85, 0x01 };
     assertArrayEquals (aExpected, aEncoded);
   }
@@ -57,7 +57,7 @@ public final class LZWCodecTest extends AbstractPhlocTestCase
   public void testEncode2 ()
   {
     final byte [] aDecoded = CharsetManager.getAsBytes ("LZWLZ78LZ77LZCLZMWLZAP", CCharset.CHARSET_ISO_8859_1_OBJ);
-    final byte [] aEncoded = new LZWCodec ().encode (aDecoded);
+    final byte [] aEncoded = LZWCodec.encodeLZW (aDecoded);
     final byte [] aExpected = new byte [] { (byte) 0x80,
                                            0x13,
                                            0x0b,
@@ -84,12 +84,12 @@ public final class LZWCodecTest extends AbstractPhlocTestCase
 
   private void _testEncodeDecode (final byte [] buf)
   {
-    final byte [] aEncoded = new LZWCodec ().encode (buf);
+    final byte [] aEncoded = LZWCodec.encodeLZW (buf);
     assertNotNull (aEncoded);
     assertTrue (aEncoded.length > 0);
     if (false)
       m_aLogger.info ("Encoded byte#: " + aEncoded.length);
-    final byte [] aDecoded = new LZWCodec ().decode (aEncoded);
+    final byte [] aDecoded = LZWCodec.decodeLZW (aEncoded);
     assertNotNull (aDecoded);
     if (false)
       m_aLogger.info ("Decoded byte#: " + aDecoded.length + "; expected byte#: " + buf.length);
