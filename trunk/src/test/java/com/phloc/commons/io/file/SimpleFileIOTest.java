@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.io.file;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -137,23 +136,5 @@ public final class SimpleFileIOTest
     }
     catch (final NullPointerException ex)
     {}
-  }
-
-  public void testCopyFile ()
-  {
-    final File aSrcFile = ClassPathResource.getAsFile ("test1.txt");
-    assertNotNull (aSrcFile);
-    assertTrue (FileUtils.existsFile (aSrcFile));
-
-    final File aDestFile = new File ("target/junittest/copied.txt");
-    assertTrue (SimpleFileIO.copyFile (aSrcFile, aDestFile).isSuccess ());
-
-    // Compare content
-    final byte [] aSrcData = SimpleFileIO.readFileBytes (aSrcFile);
-    assertNotNull (aSrcData);
-
-    final byte [] aDestData = SimpleFileIO.readFileBytes (aDestFile);
-    assertNotNull (aDestData);
-    assertArrayEquals (aSrcData, aDestData);
   }
 }
