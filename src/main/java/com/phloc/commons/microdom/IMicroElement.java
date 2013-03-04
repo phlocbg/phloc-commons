@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -40,6 +41,12 @@ public interface IMicroElement extends IMicroNodeWithChildren
    *         <code>false</code> otherwise
    */
   boolean hasAttributes ();
+
+  /**
+   * @return The number of assigned attributes. Always &ge; 0.
+   */
+  @Nonnegative
+  int getAttributeCount ();
 
   /**
    * Check if this element has an attribute with the specified name.

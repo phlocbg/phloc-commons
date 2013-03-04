@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -120,6 +121,12 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
   public boolean hasAttributes ()
   {
     return m_aAttrs != null && !m_aAttrs.isEmpty ();
+  }
+
+  @Nonnegative
+  public int getAttributeCount ()
+  {
+    return m_aAttrs == null ? 0 : m_aAttrs.size ();
   }
 
   /**
