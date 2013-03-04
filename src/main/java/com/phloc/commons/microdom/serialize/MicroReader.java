@@ -61,7 +61,7 @@ public final class MicroReader
   public static IMicroDocument readMicroXML (@WillClose @Nullable final InputSource aInputSource,
                                              @Nullable final EntityResolver aSpecialEntityResolver)
   {
-    return readMicroXML (aInputSource, aSpecialEntityResolver, null);
+    return readMicroXML (aInputSource, aSpecialEntityResolver, (ErrorHandler) null);
   }
 
   @Nullable
@@ -98,7 +98,7 @@ public final class MicroReader
   @Nullable
   public static IMicroDocument readMicroXML (@WillClose @Nullable final InputStream aIS)
   {
-    return readMicroXML (aIS, null);
+    return readMicroXML (aIS, (EntityResolver) null);
   }
 
   @Nullable
@@ -113,7 +113,7 @@ public final class MicroReader
   @Nullable
   public static IMicroDocument readMicroXML (@Nullable final File aFile)
   {
-    return readMicroXML (aFile, null);
+    return readMicroXML (aFile, (EntityResolver) null);
   }
 
   @Nullable
@@ -128,7 +128,7 @@ public final class MicroReader
   @Nullable
   public static IMicroDocument readMicroXML (@Nullable final IReadableResource aRes)
   {
-    return readMicroXML (aRes, null);
+    return readMicroXML (aRes, (EntityResolver) null);
   }
 
   @Nullable
@@ -143,7 +143,7 @@ public final class MicroReader
   @Nullable
   public static IMicroDocument readMicroXML (@Nullable final IInputStreamProvider aISP)
   {
-    return readMicroXML (aISP, null);
+    return readMicroXML (aISP, (EntityResolver) null);
   }
 
   @Nullable
@@ -158,7 +158,7 @@ public final class MicroReader
   @Nullable
   public static IMicroDocument readMicroXML (@WillClose @Nullable final Reader aReader)
   {
-    return readMicroXML (aReader, null);
+    return readMicroXML (aReader, (EntityResolver) null);
   }
 
   @Nullable
@@ -173,7 +173,7 @@ public final class MicroReader
   @Nullable
   public static IMicroDocument readMicroXML (@Nullable final String sXML)
   {
-    return readMicroXML (sXML, null);
+    return readMicroXML (sXML, (EntityResolver) null);
   }
 
   @Nullable
@@ -188,7 +188,7 @@ public final class MicroReader
   @Nullable
   public static IMicroDocument readMicroXML (@Nullable final byte [] aXML)
   {
-    return readMicroXML (aXML, null);
+    return readMicroXML (aXML, (EntityResolver) null);
   }
 
   @Nullable

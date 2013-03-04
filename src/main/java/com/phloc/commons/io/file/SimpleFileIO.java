@@ -23,6 +23,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.channels.FileChannel;
+import java.nio.channels.FileLock;
 import java.nio.charset.Charset;
 import java.util.List;
 
@@ -36,6 +37,7 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
+import com.phloc.commons.io.channels.ChannelUtils;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.state.ESuccess;
 import com.phloc.commons.string.StringHelper;
@@ -83,9 +85,17 @@ public final class SimpleFileIO
       {
         final FileChannel aSrcChannel = aFIS.getChannel ();
         final FileChannel aDestChannel = aFOS.getChannel ();
+        FileLock aSrcLock = null;
+        FileLock aDestLock = null;
         try
         {
           final long nBytesToRead = aSrcChannel.size ();
+
+          // Shared read lock and exclusive write lock
+          aSrcLock = aSrcChannel.lock (0, nBytesToRead, true);
+          aDestLock = aDestChannel.lock ();
+
+          // Main copying
           final long nBytesWritten = aSrcChannel.transferTo (0, nBytesToRead, aDestChannel);
           if (nBytesToRead != nBytesWritten)
           {
@@ -103,6 +113,10 @@ public final class SimpleFileIO
         }
         finally
         {
+          // Unlock
+          ChannelUtils.release (aDestLock);
+          ChannelUtils.release (aSrcLock);
+          // Close
           StreamUtils.close (aSrcChannel);
           StreamUtils.close (aDestChannel);
         }

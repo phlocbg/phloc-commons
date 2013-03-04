@@ -19,14 +19,21 @@ package com.phloc.commons.io.channels;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.channels.FileLock;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.WillNotClose;
 import javax.annotation.concurrent.Immutable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.phloc.commons.annotations.PresentForCodeCoverage;
+import com.phloc.commons.mock.IMockException;
+import com.phloc.commons.state.ESuccess;
 
 /**
  * Some very basic NIO channel utility stuff.
@@ -36,6 +43,9 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 @Immutable
 public final class ChannelUtils
 {
+  /** The logger to use. */
+  private static final Logger s_aLogger = LoggerFactory.getLogger (ChannelUtils.class);
+
   // Use version 1 as it seems to be faster
   private static final boolean USE_COPY_V1 = true;
 
@@ -144,5 +154,24 @@ public final class ChannelUtils
       // Make the buffer empty, ready for filling
       aBuffer.clear ();
     }
+  }
+
+  @Nonnull
+  public static ESuccess release (@Nullable final FileLock aFileLock)
+  {
+    if (aFileLock != null)
+    {
+      try
+      {
+        aFileLock.release ();
+        return ESuccess.SUCCESS;
+      }
+      catch (final IOException ex)
+      {
+        s_aLogger.error ("Failed to release object " + aFileLock, ex instanceof IMockException ? null : ex);
+      }
+    }
+
+    return ESuccess.FAILURE;
   }
 }
