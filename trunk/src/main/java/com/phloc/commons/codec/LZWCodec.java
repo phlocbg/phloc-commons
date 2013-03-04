@@ -20,6 +20,7 @@ package com.phloc.commons.codec;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.ByteOrder;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -273,7 +274,7 @@ public class LZWCodec implements ICodec
       return null;
 
     final NonBlockingBitInputStream aBIS = new NonBlockingBitInputStream (new NonBlockingByteArrayInputStream (aEncodedBuffer),
-                                                                          true);
+                                                                          ByteOrder.LITTLE_ENDIAN);
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
 
     final LZWDecodeDictionary aDict = new LZWDecodeDictionary ();
@@ -386,7 +387,7 @@ public class LZWCodec implements ICodec
     if (aBuffer == null)
       return;
 
-    final NonBlockingBitOutputStream aBOS = new NonBlockingBitOutputStream (aOS, true);
+    final NonBlockingBitOutputStream aBOS = new NonBlockingBitOutputStream (aOS, ByteOrder.LITTLE_ENDIAN);
 
     final LZWEncodeDictionary aDict = new LZWEncodeDictionary ();
     aDict.reset ();
