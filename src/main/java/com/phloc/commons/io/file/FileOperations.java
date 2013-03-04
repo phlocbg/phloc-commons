@@ -27,6 +27,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.io.EAppend;
 import com.phloc.commons.io.streams.StreamUtils;
 
@@ -374,7 +375,7 @@ public final class FileOperations
       return EFileIOErrorCode.SOURCE_DOES_NOT_EXIST.getAsIOError (EFileIOOperation.RENAME_FILE, aSourceFile);
 
     // Are source and target different?
-    if (FileUtils.safeEquals (aSourceFile, aTargetFile))
+    if (EqualsUtils.equals (aSourceFile, aTargetFile))
       return EFileIOErrorCode.SOURCE_EQUALS_TARGET.getAsIOError (EFileIOOperation.RENAME_FILE, aSourceFile);
 
     // Does the target file already exist?
@@ -428,7 +429,7 @@ public final class FileOperations
       return EFileIOErrorCode.SOURCE_DOES_NOT_EXIST.getAsIOError (EFileIOOperation.RENAME_DIR, aSourceDir);
 
     // Are source and target different?
-    if (FileUtils.safeEquals (aSourceDir, aTargetDir))
+    if (EqualsUtils.equals (aSourceDir, aTargetDir))
       return EFileIOErrorCode.SOURCE_EQUALS_TARGET.getAsIOError (EFileIOOperation.RENAME_DIR, aSourceDir);
 
     // Does the target directory already exist?
@@ -490,7 +491,7 @@ public final class FileOperations
       return EFileIOErrorCode.SOURCE_DOES_NOT_EXIST.getAsIOError (EFileIOOperation.COPY_FILE, aSourceFile);
 
     // Are source and target different?
-    if (FileUtils.safeEquals (aSourceFile, aTargetFile))
+    if (EqualsUtils.equals (aSourceFile, aTargetFile))
       return EFileIOErrorCode.SOURCE_EQUALS_TARGET.getAsIOError (EFileIOOperation.COPY_FILE, aSourceFile);
 
     // Does the target file already exist?
@@ -512,8 +513,7 @@ public final class FileOperations
     // Used buffered streams for better performs
     final InputStream aIS = new BufferedInputStream (FileUtils.getInputStream (aSourceFile));
     final OutputStream aOS = new BufferedOutputStream (FileUtils.getOutputStream (aTargetFile, EAppend.TRUNCATE));
-    final EFileIOErrorCode eError = StreamUtils.copyInputStreamToOutputStreamAndCloseOS (aIS, aOS).isSuccess ()
-                                                                                                               ? EFileIOErrorCode.NO_ERROR
+    final EFileIOErrorCode eError = StreamUtils.copyInputStreamToOutputStreamAndCloseOS (aIS, aOS).isSuccess () ? EFileIOErrorCode.NO_ERROR
                                                                                                                : EFileIOErrorCode.OPERATION_FAILED;
     return eError.getAsIOError (EFileIOOperation.COPY_FILE, aSourceFile, aTargetFile);
   }
@@ -541,7 +541,7 @@ public final class FileOperations
       return EFileIOErrorCode.SOURCE_DOES_NOT_EXIST.getAsIOError (EFileIOOperation.COPY_DIR_RECURSIVE, aSourceDir);
 
     // Are source and target different?
-    if (FileUtils.safeEquals (aSourceDir, aTargetDir))
+    if (EqualsUtils.equals (aSourceDir, aTargetDir))
       return EFileIOErrorCode.SOURCE_EQUALS_TARGET.getAsIOError (EFileIOOperation.COPY_DIR_RECURSIVE, aSourceDir);
 
     // Is the source a parent of target?

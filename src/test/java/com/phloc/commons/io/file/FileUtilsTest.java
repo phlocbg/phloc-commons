@@ -31,6 +31,7 @@ import java.io.InputStream;
 import org.junit.Test;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.io.EAppend;
 import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.io.streams.StreamUtils;
@@ -174,6 +175,7 @@ public final class FileUtilsTest
     {}
   }
 
+  @SuppressFBWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   @Test
   public void testGetFileSizeDisplay ()
   {
@@ -359,12 +361,12 @@ public final class FileUtilsTest
   @Test
   public void testSafeEquals ()
   {
-    assertTrue (FileUtils.safeEquals (new File ("."), new File (".")));
-    assertTrue (FileUtils.safeEquals (new File ("."), new File ("")));
-    assertTrue (FileUtils.safeEquals (new File ("pom"), new File ("dir/../pom")));
-    assertTrue (FileUtils.safeEquals (new File ("./pom"), new File (".\\dir/../pom")));
-    assertTrue (FileUtils.safeEquals (null, null));
-    assertFalse (FileUtils.safeEquals (new File ("."), null));
-    assertFalse (FileUtils.safeEquals (null, new File (".")));
+    assertTrue (EqualsUtils.equals (new File ("."), new File (".")));
+    assertTrue (EqualsUtils.equals (new File ("."), new File ("")));
+    assertTrue (EqualsUtils.equals (new File ("pom"), new File ("dir/../pom")));
+    assertTrue (EqualsUtils.equals (new File ("./pom"), new File (".\\dir/../pom")));
+    assertTrue (EqualsUtils.equals (null, null));
+    assertFalse (EqualsUtils.equals (new File ("."), null));
+    assertFalse (EqualsUtils.equals (null, new File (".")));
   }
 }
