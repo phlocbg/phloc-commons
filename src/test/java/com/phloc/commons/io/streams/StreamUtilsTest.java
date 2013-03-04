@@ -300,46 +300,46 @@ public final class StreamUtilsTest
   @SuppressFBWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   public void testReadLines ()
   {
-    assertNull (StreamUtils.readStreamLines ((IReadableResource) null, CCharset.CHARSET_ISO_8859_1));
-    assertNull (StreamUtils.readStreamLines (new ClassPathResource ("gibts-ned"), CCharset.CHARSET_ISO_8859_1));
+    assertNull (StreamUtils.readStreamLines ((IReadableResource) null, CCharset.CHARSET_ISO_8859_1_OBJ));
+    assertNull (StreamUtils.readStreamLines (new ClassPathResource ("gibts-ned"), CCharset.CHARSET_ISO_8859_1_OBJ));
     assertNull (StreamUtils.readStreamLines (ClassPathResource.getInputStream ("gibts-ned"),
-                                             CCharset.CHARSET_ISO_8859_1));
+                                             CCharset.CHARSET_ISO_8859_1_OBJ));
 
     final IReadableResource aRes = new ClassPathResource ("streamutils-lines");
 
     // Read all lines
-    List <String> aLines = StreamUtils.readStreamLines (aRes, CCharset.CHARSET_UTF_8);
+    List <String> aLines = StreamUtils.readStreamLines (aRes, CCharset.CHARSET_UTF_8_OBJ);
     assertNotNull (aLines);
     assertEquals (10, aLines.size ());
     for (int i = 0; i < 10; ++i)
       assertEquals (Integer.toString (i + 1), aLines.get (i));
 
     // Read only partial amount of lines
-    aLines = StreamUtils.readStreamLines (aRes, CCharset.CHARSET_UTF_8, 2, 4);
+    aLines = StreamUtils.readStreamLines (aRes, CCharset.CHARSET_UTF_8_OBJ, 2, 4);
     assertNotNull (aLines);
     assertEquals (4, aLines.size ());
     for (int i = 0; i < 4; ++i)
       assertEquals (Integer.toString (i + 3), aLines.get (i));
 
     // Skip more than available
-    aLines = StreamUtils.readStreamLines (aRes, CCharset.CHARSET_UTF_8, Integer.MAX_VALUE, Integer.MAX_VALUE);
+    aLines = StreamUtils.readStreamLines (aRes, CCharset.CHARSET_UTF_8_OBJ, Integer.MAX_VALUE, Integer.MAX_VALUE);
     assertNotNull (aLines);
     assertEquals (0, aLines.size ());
 
     // Try to read more than available
-    aLines = StreamUtils.readStreamLines (aRes, CCharset.CHARSET_UTF_8, 9, Integer.MAX_VALUE);
+    aLines = StreamUtils.readStreamLines (aRes, CCharset.CHARSET_UTF_8_OBJ, 9, Integer.MAX_VALUE);
     assertNotNull (aLines);
     assertEquals (1, aLines.size ());
 
     // Read 0 lines
-    aLines = StreamUtils.readStreamLines (aRes, CCharset.CHARSET_UTF_8, 0, 0);
+    aLines = StreamUtils.readStreamLines (aRes, CCharset.CHARSET_UTF_8_OBJ, 0, 0);
     assertNotNull (aLines);
     assertEquals (0, aLines.size ());
 
     try
     {
       // Lines to skip may not be negative
-      StreamUtils.readStreamLines (aRes, CCharset.CHARSET_UTF_8, -1, 4);
+      StreamUtils.readStreamLines (aRes, CCharset.CHARSET_UTF_8_OBJ, -1, 4);
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -350,7 +350,7 @@ public final class StreamUtilsTest
     try
     {
       // Lines to read may not be negative
-      StreamUtils.readStreamLines (aRes, CCharset.CHARSET_UTF_8, 0, -2);
+      StreamUtils.readStreamLines (aRes, CCharset.CHARSET_UTF_8_OBJ, 0, -2);
       fail ();
     }
     catch (final IllegalArgumentException ex)

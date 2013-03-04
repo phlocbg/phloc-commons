@@ -63,11 +63,11 @@ public final class SimpleFileIOTest
   @Test
   public void testReaFileLines ()
   {
-    assertNull (SimpleFileIO.readFileLines (null, CCharset.CHARSET_ISO_8859_1));
-    assertNull (SimpleFileIO.readFileLines (new File ("ha ha said the clown"), CCharset.CHARSET_ISO_8859_1));
+    assertNull (SimpleFileIO.readFileLines (null, CCharset.CHARSET_ISO_8859_1_OBJ));
+    assertNull (SimpleFileIO.readFileLines (new File ("ha ha said the clown"), CCharset.CHARSET_ISO_8859_1_OBJ));
     final File aFile = ClassPathResource.getAsFile ("streamutils-lines");
     assertTrue (aFile.exists ());
-    final List <String> lines = SimpleFileIO.readFileLines (aFile, CCharset.CHARSET_ISO_8859_1);
+    final List <String> lines = SimpleFileIO.readFileLines (aFile, CCharset.CHARSET_ISO_8859_1_OBJ);
     assertEquals (10, lines.size ());
   }
 

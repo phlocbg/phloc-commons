@@ -63,8 +63,8 @@ public final class MessageDigestGeneratorHelperTest
                          MessageDigestGeneratorHelper.getDigest (eAlgo, aBytes));
       assertArrayEquals (MessageDigestGeneratorHelper.getDigest (eAlgo, aBytes, 5, 10),
                          MessageDigestGeneratorHelper.getDigest (eAlgo, aBytes, 5, 10));
-      assertArrayEquals (MessageDigestGeneratorHelper.getDigest (eAlgo, s, CCharset.CHARSET_UTF_8),
-                         MessageDigestGeneratorHelper.getDigest (eAlgo, s, CCharset.CHARSET_UTF_8));
+      assertArrayEquals (MessageDigestGeneratorHelper.getDigest (eAlgo, s, CCharset.CHARSET_UTF_8_OBJ),
+                         MessageDigestGeneratorHelper.getDigest (eAlgo, s, CCharset.CHARSET_UTF_8_OBJ));
     }
   }
 }

@@ -41,6 +41,7 @@ public class StringInputStreamProvider implements IInputStreamAndReaderProvider,
   private final String m_sData;
   private final Charset m_aCharset;
 
+  @Deprecated
   public StringInputStreamProvider (@Nonnull final char [] aChars, @Nonnull @Nonempty final String sCharset)
   {
     this (new String (aChars), sCharset);
@@ -51,6 +52,7 @@ public class StringInputStreamProvider implements IInputStreamAndReaderProvider,
     this (new String (aChars), aCharset);
   }
 
+  @Deprecated
   public StringInputStreamProvider (@Nonnull final char [] aChars,
                                     @Nonnegative final int nOfs,
                                     @Nonnegative final int nLen,
@@ -67,6 +69,7 @@ public class StringInputStreamProvider implements IInputStreamAndReaderProvider,
     this (new String (aChars, nOfs, nLen), aCharset);
   }
 
+  @Deprecated
   public StringInputStreamProvider (@Nonnull final CharSequence aData, @Nonnull @Nonempty final String sCharset)
   {
     this (aData.toString (), sCharset);
@@ -77,6 +80,7 @@ public class StringInputStreamProvider implements IInputStreamAndReaderProvider,
     this (aData.toString (), aCharset);
   }
 
+  @Deprecated
   public StringInputStreamProvider (@Nonnull final String sData, @Nonnull @Nonempty final String sCharset)
   {
     this (sData, CharsetManager.getCharsetFromName (sCharset));
@@ -111,6 +115,7 @@ public class StringInputStreamProvider implements IInputStreamAndReaderProvider,
   }
 
   @Nonnull
+  @Deprecated
   public final NonBlockingStringReader getReader (@Nonnull final String sCharset)
   {
     return new NonBlockingStringReader (m_sData);

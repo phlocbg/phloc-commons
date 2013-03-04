@@ -65,14 +65,14 @@ public final class XMLListHandlerTest
     assertTrue (XMLListHandler.writeList (aList, new NonBlockingByteArrayOutputStream ()).isSuccess ());
 
     final String sXML = "<root><item/><item value='a' /><item value='a' /></root>";
-    aList = XMLListHandler.readList (new StringInputStreamProvider (sXML, CCharset.CHARSET_ISO_8859_1));
+    aList = XMLListHandler.readList (new StringInputStreamProvider (sXML, CCharset.CHARSET_ISO_8859_1_OBJ));
     assertNotNull (aList);
     assertEquals (2, aList.size ());
     assertEquals ("a", aList.get (0));
     assertEquals ("a", aList.get (1));
 
     final Set <String> aSet = new HashSet <String> ();
-    XMLListHandler.readList (new StringInputStreamProvider (sXML, CCharset.CHARSET_ISO_8859_1), aSet);
+    XMLListHandler.readList (new StringInputStreamProvider (sXML, CCharset.CHARSET_ISO_8859_1_OBJ), aSet);
     assertEquals (1, aSet.size ());
     assertTrue (aSet.contains ("a"));
 
