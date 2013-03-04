@@ -26,6 +26,10 @@ import javax.annotation.Nullable;
 import javax.annotation.PropertyKey;
 import javax.annotation.concurrent.Immutable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.lang.ClassHelper;
 
 /**
@@ -36,6 +40,11 @@ import com.phloc.commons.lang.ClassHelper;
 @Immutable
 public final class ResourceBundleUtils
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (ResourceBundleUtils.class);
+
+  @PresentForCodeCoverage
+  private static final ResourceBundleUtils s_aInstance = new ResourceBundleUtils ();
+
   private ResourceBundleUtils ()
   {}
 
@@ -143,7 +152,8 @@ public final class ResourceBundleUtils
 
   public static void clearCache (@Nonnull final ClassLoader aClassLoader)
   {
-    // ResourceBundle.clearCache () is only available from Java >= 1.6
     ResourceBundle.clearCache (aClassLoader);
+    if (s_aLogger.isDebugEnabled ())
+      s_aLogger.debug ("Cache was cleared: " + ResourceBundle.class.getName ());
   }
 }

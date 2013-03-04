@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.cache.AbstractNotifyingCache;
+import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.system.SystemHelper;
 
@@ -137,5 +138,16 @@ public final class CollatorUtils
 
     // Always create a clone!
     return (Collator) s_aCache.getFromCache (aRealLocale).clone ();
+  }
+
+  /**
+   * Clear all cached collators.
+   * 
+   * @return {@link EChange}
+   */
+  @Nonnull
+  public static EChange clearCache ()
+  {
+    return s_aCache.clearCache ();
   }
 }

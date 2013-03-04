@@ -26,6 +26,7 @@ import javax.annotation.RegEx;
 
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.cache.AbstractNotifyingCacheWithMaxSize;
+import com.phloc.commons.state.EChange;
 
 /**
  * This class provides a pool for cached regular expressions. It caches up to a
@@ -86,5 +87,16 @@ public final class RegExPool extends AbstractNotifyingCacheWithMaxSize <RegExPat
   public static Pattern getPattern (@Nonnull @Nonempty @RegEx final String sRegEx, @Nonnegative final int nOptions)
   {
     return s_aInstance.getFromCache (new RegExPattern (sRegEx, nOptions));
+  }
+
+  /**
+   * Clear all cached patterns.
+   * 
+   * @return {@link EChange}
+   */
+  @Nonnull
+  public static EChange clearPatternCache ()
+  {
+    return s_aInstance.clearCache ();
   }
 }

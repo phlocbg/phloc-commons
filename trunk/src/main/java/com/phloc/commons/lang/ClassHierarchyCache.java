@@ -34,6 +34,7 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.LRUCache;
 import com.phloc.commons.collections.iterate.IIterableIterator;
 import com.phloc.commons.collections.iterate.IterableIterator;
+import com.phloc.commons.state.EChange;
 
 /**
  * A small class hierarchy cache
@@ -123,13 +124,34 @@ public final class ClassHierarchyCache
    * It's important to clear the cache upon application shutdown, because for
    * web applications, keeping a cache of classes may prevent the web
    * application from unloading
+   * 
+   * @return {@link EChange}
+   * @deprecated Use {@link #clearCache()} instead
    */
-  public static void clearClassHierarchyCache ()
+  @Deprecated
+  @Nonnull
+  public static EChange clearClassHierarchyCache ()
+  {
+    return clearCache ();
+  }
+
+  /**
+   * It's important to clear the cache upon application shutdown, because for
+   * web applications, keeping a cache of classes may prevent the web
+   * application from unloading
+   * 
+   * @return {@link EChange}
+   */
+  @Nonnull
+  public static EChange clearCache ()
   {
     s_aRWLock.writeLock ().lock ();
     try
     {
+      if (s_aClassHierarchy.isEmpty ())
+        return EChange.UNCHANGED;
       s_aClassHierarchy.clear ();
+      return EChange.CHANGED;
     }
     finally
     {

@@ -50,8 +50,7 @@ import com.phloc.commons.text.resource.ResourceBundleUtils;
  * @author philip
  */
 @ThreadSafe
-public final class EnumTextResolverWithPropertiesOverrideAndFallback extends
-                                                                    AbstractEnumTextResolverWithOverrideAndFallback
+public final class EnumTextResolverWithPropertiesOverrideAndFallback extends AbstractEnumTextResolverWithOverrideAndFallback
 {
   /** Default classpath prefix for override resources */
   public static final String PREFIX_OVERRIDE = "properties/override-";
@@ -266,7 +265,8 @@ public final class EnumTextResolverWithPropertiesOverrideAndFallback extends
       m_aUsedOverrideBundles.clear ();
       m_aUsedFallbackBundles.clear ();
       m_aResourceBundleCache.clear ();
-      s_aLogger.info ("Cache was cleared: " + getClass ().getName ());
+      if (s_aLogger.isDebugEnabled ())
+        s_aLogger.debug ("Cache was cleared: " + getClass ().getName ());
     }
     finally
     {

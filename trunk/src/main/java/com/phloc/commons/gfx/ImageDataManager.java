@@ -228,7 +228,8 @@ public final class ImageDataManager
 
       s_aImageData.clear ();
       s_aNonExistingResources.clear ();
-      s_aLogger.info ("Cache was cleared: " + ImageDataManager.class.getName ());
+      if (s_aLogger.isDebugEnabled ())
+        s_aLogger.debug ("Cache was cleared: " + ImageDataManager.class.getName ());
       return EChange.CHANGED;
     }
     finally
