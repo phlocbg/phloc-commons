@@ -57,12 +57,7 @@ public final class CountryCache
 
   static
   {
-    for (final Locale aLocale : LocaleCache.getAllLocales ())
-    {
-      final String sCountry = aLocale.getCountry ();
-      if (StringHelper.hasText (sCountry))
-        addCountry (sCountry);
-    }
+    _initialFillCache ();
   }
 
   @PresentForCodeCoverage
@@ -71,6 +66,16 @@ public final class CountryCache
 
   private CountryCache ()
   {}
+
+  private static void _initialFillCache ()
+  {
+    for (final Locale aLocale : LocaleCache.getAllLocales ())
+    {
+      final String sCountry = aLocale.getCountry ();
+      if (StringHelper.hasText (sCountry))
+        addCountry (sCountry);
+    }
+  }
 
   @Nonnull
   private static String _getUnifiedCountry (@Nonnull final String sCountry)
@@ -166,14 +171,32 @@ public final class CountryCache
     if (sCountry == null)
       return false;
 
+    final String sUnifiedCountry = _getUnifiedCountry (sCountry);
     s_aRWLock.readLock ().lock ();
     try
     {
-      return s_aCountries.contains (_getUnifiedCountry (sCountry));
+      return s_aCountries.contains (sUnifiedCountry);
     }
     finally
     {
       s_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  /**
+   * Reset the cache to the initial state.
+   */
+  public static void resetCache ()
+  {
+    s_aRWLock.writeLock ().lock ();
+    try
+    {
+      s_aCountries.clear ();
+      _initialFillCache ();
+    }
+    finally
+    {
+      s_aRWLock.writeLock ().unlock ();
     }
   }
 }

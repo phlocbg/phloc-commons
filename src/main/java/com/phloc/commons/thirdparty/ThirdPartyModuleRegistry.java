@@ -18,7 +18,6 @@
 package com.phloc.commons.thirdparty;
 
 import java.util.LinkedHashSet;
-import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -29,6 +28,7 @@ import javax.annotation.concurrent.ThreadSafe;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.lang.ServiceLoaderUtils;
 import com.phloc.commons.state.EChange;
 
 /**
@@ -45,7 +45,7 @@ public final class ThirdPartyModuleRegistry
   static
   {
     // Load all SPI implementations
-    for (final IThirdPartyModuleProviderSPI aTPM : ServiceLoader.load (IThirdPartyModuleProviderSPI.class))
+    for (final IThirdPartyModuleProviderSPI aTPM : ServiceLoaderUtils.getAllSPIImplementations (IThirdPartyModuleProviderSPI.class))
     {
       final IThirdPartyModule [] aModules = aTPM.getAllThirdPartyModules ();
       if (aModules != null)

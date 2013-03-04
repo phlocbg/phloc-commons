@@ -21,7 +21,6 @@ import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ServiceLoader;
 import java.util.WeakHashMap;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -36,6 +35,7 @@ import org.slf4j.LoggerFactory;
 import com.phloc.commons.annotations.UseDirectEqualsAndHashCode;
 import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.lang.ClassHierarchyCache;
+import com.phloc.commons.lang.ServiceLoaderUtils;
 import com.phloc.commons.state.EChange;
 
 /**
@@ -81,7 +81,7 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
   private HashCodeImplementationRegistry ()
   {
     // Register all implementations via SPI
-    for (final IHashCodeImplementationRegistrarSPI aRegistrar : ServiceLoader.load (IHashCodeImplementationRegistrarSPI.class))
+    for (final IHashCodeImplementationRegistrarSPI aRegistrar : ServiceLoaderUtils.getAllSPIImplementations (IHashCodeImplementationRegistrarSPI.class))
       aRegistrar.registerHashCodeImplementations (this);
   }
 

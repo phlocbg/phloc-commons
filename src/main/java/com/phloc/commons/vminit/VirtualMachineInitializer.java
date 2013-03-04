@@ -18,11 +18,11 @@
 package com.phloc.commons.vminit;
 
 import java.util.List;
-import java.util.ServiceLoader;
 
 import com.phloc.commons.annotations.CodingStyleguideUnaware;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
-import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.cleanup.CommonsCleanup;
+import com.phloc.commons.lang.ServiceLoaderUtils;
 import com.phloc.commons.mock.IMockException;
 
 //ESCA-JAVA0265:
@@ -41,7 +41,7 @@ public final class VirtualMachineInitializer
   static
   {
     // Get all SPI implementations
-    s_aSPIs = ContainerHelper.newList (ServiceLoader.load (IVirtualMachineEventSPI.class));
+    s_aSPIs = ServiceLoaderUtils.getAllSPIImplementations (IVirtualMachineEventSPI.class);
   }
 
   @PresentForCodeCoverage
@@ -83,6 +83,9 @@ public final class VirtualMachineInitializer
         if (!(t instanceof IMockException))
           t.printStackTrace (System.err);
       }
+
+    // Cleanup everything
+    CommonsCleanup.cleanup ();
 
     // Help the GC
     s_aShutdownThread = null;

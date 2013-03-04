@@ -29,6 +29,7 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.GlobalDebug;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 
 /**
@@ -129,6 +130,10 @@ public final class ServiceLoaderUtils
       throw new NullPointerException ("ClassLoader");
 
     final Logger aRealLogger = aLogger != null ? aLogger : s_aLogger;
+
+    if (aRealLogger.isDebugEnabled ())
+      aRealLogger.debug ("Trying to load all SPI implementations of " + aSPIClass);
+
     final ServiceLoader <T> aServiceLoader = ServiceLoader.<T> load (aSPIClass, aClassLoader);
     final List <T> ret = new ArrayList <T> ();
 
@@ -148,12 +153,18 @@ public final class ServiceLoaderUtils
       }
     }
 
-    if (aRealLogger.isDebugEnabled ())
-      aRealLogger.debug ("Finished identifying all SPI implementations of " +
-                         aSPIClass +
-                         " --> returning " +
-                         ret.size () +
-                         " instances");
+    if (aRealLogger.isDebugEnabled () || GlobalDebug.isDebugMode ())
+    {
+      final String sMessage = "Finished loading all SPI implementations of " +
+                              aSPIClass +
+                              " --> returning " +
+                              ret.size () +
+                              " instances";
+      if (aRealLogger.isDebugEnabled ())
+        aRealLogger.debug (sMessage);
+      else
+        aRealLogger.info (sMessage);
+    }
     return ret;
   }
 
