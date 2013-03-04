@@ -17,21 +17,12 @@
  */
 package com.phloc.commons.io.streams;
 
-import java.io.Closeable;
-import java.io.Flushable;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.phloc.commons.CGlobal;
-import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * The BitOutputStream allows writing individual bits to a general Java
@@ -39,34 +30,15 @@ import com.phloc.commons.string.ToStringGenerator;
  * has to be created based on another OutputStream. This class is able to write
  * a single bit to a stream (even though a byte has to be filled until the data
  * is flushed to the underlying output stream). It is also able to write an
- * integer value to the stream using the specified number of bits.
+ * integer value to the stream using the specified number of bits.<br>
+ * For a non-blocking version see {@link NonBlockingBitOutputStream}.
  * 
  * @author Andreas Jakl
  * @author philip
  */
-public class BitOutputStream implements Closeable, Flushable
+public class BitOutputStream extends NonBlockingBitOutputStream
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (BitOutputStream.class);
-
   private final Lock m_aLock = new ReentrantLock ();
-
-  /**
-   * The Java OutputStream that is used to write completed bytes.
-   */
-  private OutputStream m_aOS;
-
-  private final boolean m_bHighOrderBitFirst;
-
-  /**
-   * The temporary buffer containing the individual bits until a byte has been
-   * completed and can be committed to the output stream.
-   */
-  private int m_nBuffer;
-
-  /**
-   * Counts how many bits have been cached up to now.
-   */
-  private int m_nBufferedBitCount;
 
   /**
    * Create a new bit output stream based on an existing Java OutputStream.
@@ -80,11 +52,7 @@ public class BitOutputStream implements Closeable, Flushable
    */
   public BitOutputStream (@Nonnull final OutputStream aOS, final boolean bHighOrderBitFirst)
   {
-    if (aOS == null)
-      throw new NullPointerException ("outputStream");
-    m_aOS = aOS;
-    m_bHighOrderBitFirst = bHighOrderBitFirst;
-    m_nBufferedBitCount = 0;
+    super (aOS, bHighOrderBitFirst);
   }
 
   /**
@@ -96,24 +64,13 @@ public class BitOutputStream implements Closeable, Flushable
    * @throws IOException
    *         In case writing to the output stream failed
    */
+  @Override
   public void writeBit (final int aBit) throws IOException
   {
-    if (m_aOS == null)
-      throw new IllegalStateException ("Already closed");
-    if (aBit != CGlobal.BIT_NOT_SET && aBit != CGlobal.BIT_SET)
-      throw new IllegalArgumentException (aBit + " is not a bit");
-
     m_aLock.lock ();
     try
     {
-      if (aBit == CGlobal.BIT_SET)
-        if (m_bHighOrderBitFirst)
-          m_nBuffer |= (aBit << (7 - m_nBufferedBitCount));
-        else
-          m_nBuffer |= (aBit << m_nBufferedBitCount);
-
-      if (++m_nBufferedBitCount == CGlobal.BITS_PER_BYTE)
-        flush ();
+      super.writeBit (aBit);
     }
     finally
     {
@@ -122,45 +79,18 @@ public class BitOutputStream implements Closeable, Flushable
   }
 
   /**
-   * Write the specified number of bits from the int value to the stream.
-   * Corresponding to the InputStream, the bits are written starting at the
-   * highest bit ( >> aNumberOfBits ), going down to the lowest bit ( >> 0 ).
-   * 
-   * @param aValue
-   *        the int containing the bits that should be written to the stream.
-   * @param nNumBits
-   *        how many bits of the integer should be written to the stream.
-   * @throws IOException
-   *         In case writing to the output stream failed
-   */
-  public void writeBits (final int aValue, @Nonnegative final int nNumBits) throws IOException
-  {
-    if (nNumBits < 1 || nNumBits > 32)
-      throw new IllegalArgumentException ("Illegal number of bits to write: " + nNumBits);
-    for (int i = nNumBits - 1; i >= 0; i--)
-      writeBit ((aValue >> i) & 1);
-  }
-
-  /**
    * Write the current cache to the stream and reset the buffer.
    * 
    * @throws IOException
    *         In case writing to the output stream failed
    */
+  @Override
   public void flush () throws IOException
   {
     m_aLock.lock ();
     try
     {
-      if (m_nBufferedBitCount > 0)
-      {
-        if (m_nBufferedBitCount != CGlobal.BITS_PER_BYTE)
-          if (s_aLogger.isDebugEnabled ())
-            s_aLogger.debug ("Flushing BitOutputStream with only " + m_nBufferedBitCount + " bits");
-        m_aOS.write ((byte) m_nBuffer);
-        m_nBufferedBitCount = 0;
-        m_nBuffer = 0;
-      }
+      super.flush ();
     }
     finally
     {
@@ -171,28 +101,17 @@ public class BitOutputStream implements Closeable, Flushable
   /**
    * Flush the data and close the underlying output stream.
    */
+  @Override
   public void close ()
   {
     m_aLock.lock ();
     try
     {
-      StreamUtils.flush (this);
-      StreamUtils.close (m_aOS);
-      m_aOS = null;
+      super.close ();
     }
     finally
     {
       m_aLock.unlock ();
     }
-  }
-
-  @Override
-  public String toString ()
-  {
-    return new ToStringGenerator (this).append ("OS", m_aOS)
-                                       .append ("highOrderBitFirst", m_bHighOrderBitFirst)
-                                       .append ("buffer", m_nBuffer)
-                                       .append ("bitCount", m_nBufferedBitCount)
-                                       .toString ();
   }
 }

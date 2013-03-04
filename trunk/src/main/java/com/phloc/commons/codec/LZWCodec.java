@@ -29,8 +29,8 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.collections.ArrayHelper;
-import com.phloc.commons.io.streams.BitInputStream;
-import com.phloc.commons.io.streams.BitOutputStream;
+import com.phloc.commons.io.streams.NonBlockingBitInputStream;
+import com.phloc.commons.io.streams.NonBlockingBitOutputStream;
 import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.io.streams.StreamUtils;
@@ -183,7 +183,7 @@ final class LZWDecodeDictionary extends AbstractLZWDictionary
    * @throws IOException
    *         In case EOF is reached
    */
-  public int readCode (@Nonnull final BitInputStream aBIS) throws IOException
+  public int readCode (@Nonnull final NonBlockingBitInputStream aBIS) throws IOException
   {
     return aBIS.readBits (m_nCodeBits);
   }
@@ -270,7 +270,8 @@ public class LZWCodec implements ICodec
     if (aEncodedBuffer == null)
       return null;
 
-    final BitInputStream aBIS = new BitInputStream (new NonBlockingByteArrayInputStream (aEncodedBuffer), true);
+    final NonBlockingBitInputStream aBIS = new NonBlockingBitInputStream (new NonBlockingByteArrayInputStream (aEncodedBuffer),
+                                                                          true);
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
 
     final LZWDecodeDictionary aDict = new LZWDecodeDictionary ();
@@ -361,7 +362,7 @@ public class LZWCodec implements ICodec
       return null;
 
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
-    final BitOutputStream aBOS = new BitOutputStream (aBAOS, true);
+    final NonBlockingBitOutputStream aBOS = new NonBlockingBitOutputStream (aBAOS, true);
 
     final LZWEncodeDictionary aDict = new LZWEncodeDictionary ();
     aDict.reset ();
