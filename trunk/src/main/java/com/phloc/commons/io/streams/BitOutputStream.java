@@ -155,7 +155,8 @@ public class BitOutputStream implements Closeable, Flushable
       if (m_nBufferedBitCount > 0)
       {
         if (m_nBufferedBitCount != CGlobal.BITS_PER_BYTE)
-          s_aLogger.warn ("Flushing BitOutputStream with only " + m_nBufferedBitCount + " bits");
+          if (s_aLogger.isDebugEnabled ())
+            s_aLogger.debug ("Flushing BitOutputStream with only " + m_nBufferedBitCount + " bits");
         m_aOS.write ((byte) m_nBuffer);
         m_nBufferedBitCount = 0;
         m_nBuffer = 0;
