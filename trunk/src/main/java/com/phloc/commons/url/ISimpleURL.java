@@ -70,6 +70,7 @@ public interface ISimpleURL extends IURLData, IHasStringRepresentation
    *         parameter keys and values.
    */
   @Nonnull
+  @Deprecated
   String getAsStringWithEncodedParameters (@Nonnull String sCharset);
 
   /**

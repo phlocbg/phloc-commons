@@ -335,6 +335,7 @@ public final class URLUtils
   }
 
   @Nonnull
+  @Deprecated
   public static String getURLString (@Nonnull final IURLData aURL, @Nullable final String sParameterCharset)
   {
     return getURLString (aURL.getPath (), aURL.getAllParams (), aURL.getAnchor (), sParameterCharset);
@@ -435,6 +436,7 @@ public final class URLUtils
    * @return May be <code>null</code> if all parameters are <code>null</code>.
    */
   @Nullable
+  @Deprecated
   public static String getURLString (@Nullable final String sPath,
                                      @Nullable final Map <String, String> aParams,
                                      @Nullable final String sAnchor,
