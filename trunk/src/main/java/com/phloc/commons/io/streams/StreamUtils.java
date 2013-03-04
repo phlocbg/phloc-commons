@@ -371,9 +371,9 @@ public final class StreamUtils
   }
 
   @Nonnegative
-  private static long _copyInputStreamToOutputStream (@Nonnull final InputStream aIS,
-                                                      @Nonnull final OutputStream aOS,
-                                                      @Nonnull final byte [] aBuffer) throws IOException
+  private static long _copyInputStreamToOutputStream (@Nonnull @WillNotClose final InputStream aIS,
+                                                      @Nonnull @WillNotClose final OutputStream aOS,
+                                                      @Nonnull @WillNotClose final byte [] aBuffer) throws IOException
   {
     long nTotalBytesWritten = 0;
     int nBytesRead;
@@ -386,8 +386,8 @@ public final class StreamUtils
   }
 
   @Nonnegative
-  private static long _copyInputStreamToOutputStreamWithLimit (@Nonnull final InputStream aIS,
-                                                               @Nonnull final OutputStream aOS,
+  private static long _copyInputStreamToOutputStreamWithLimit (@Nonnull @WillNotClose final InputStream aIS,
+                                                               @Nonnull @WillNotClose final OutputStream aOS,
                                                                @Nonnull final byte [] aBuffer,
                                                                @Nonnegative final long nLimit) throws IOException
   {
@@ -483,11 +483,11 @@ public final class StreamUtils
       if (aIS != null && aOS != null)
       {
         // both streams are not null
-        final long nTotalBytesCopied = aLimit == null ? _copyInputStreamToOutputStream (aIS, aOS, aBuffer)
-                                                     : _copyInputStreamToOutputStreamWithLimit (aIS,
-                                                                                                aOS,
-                                                                                                aBuffer,
-                                                                                                aLimit.longValue ());
+        long nTotalBytesCopied;
+        if (aLimit == null)
+          nTotalBytesCopied = _copyInputStreamToOutputStream (aIS, aOS, aBuffer);
+        else
+          nTotalBytesCopied = _copyInputStreamToOutputStreamWithLimit (aIS, aOS, aBuffer, aLimit.longValue ());
 
         // Add to statistics
         s_aByteSizeHdl.addSize (nTotalBytesCopied);
