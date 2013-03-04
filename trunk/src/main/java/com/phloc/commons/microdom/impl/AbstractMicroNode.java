@@ -170,6 +170,16 @@ public abstract class AbstractMicroNode implements IMicroNode
   }
 
   @Nonnull
+  public final IMicroText appendText (@Nonnull final char [] aChars,
+                                      @Nonnegative final int nOfs,
+                                      @Nonnegative final int nLen)
+  {
+    final MicroText aNode = new MicroText (aChars, nOfs, nLen, false);
+    onAppendChild (aNode);
+    return aNode;
+  }
+
+  @Nonnull
   public final IMicroText appendTextWithConversion (@Nullable final Object aValue)
   {
     // Throws IlliegalArgumentException when no conversion is available
@@ -186,6 +196,16 @@ public abstract class AbstractMicroNode implements IMicroNode
   }
 
   @Nonnull
+  public final IMicroText appendIgnorableWhitespaceText (@Nonnull final char [] aChars,
+                                                         @Nonnegative final int nOfs,
+                                                         @Nonnegative final int nLen)
+  {
+    final MicroText aNode = new MicroText (aChars, nOfs, nLen, true);
+    onAppendChild (aNode);
+    return aNode;
+  }
+
+  @Nonnull
   public final IMicroCDATA appendCDATA (@Nullable final CharSequence sText)
   {
     final MicroCDATA aNode = new MicroCDATA (sText);
@@ -194,9 +214,29 @@ public abstract class AbstractMicroNode implements IMicroNode
   }
 
   @Nonnull
+  public final IMicroCDATA appendCDATA (@Nonnull final char [] aChars,
+                                        @Nonnegative final int nOfs,
+                                        @Nonnegative final int nLen)
+  {
+    final MicroCDATA aNode = new MicroCDATA (aChars, nOfs, nLen);
+    onAppendChild (aNode);
+    return aNode;
+  }
+
+  @Nonnull
   public final IMicroComment appendComment (@Nullable final CharSequence sText)
   {
     final MicroComment aNode = new MicroComment (sText);
+    onAppendChild (aNode);
+    return aNode;
+  }
+
+  @Nonnull
+  public final IMicroComment appendComment (@Nonnull final char [] aChars,
+                                            @Nonnegative final int nOfs,
+                                            @Nonnegative final int nLen)
+  {
+    final MicroComment aNode = new MicroComment (aChars, nOfs, nLen);
     onAppendChild (aNode);
     return aNode;
   }

@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.microdom.impl;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -34,42 +35,52 @@ import com.phloc.commons.string.ToStringGenerator;
  */
 final class MicroDataAware implements IMicroDataAware, ICloneable <MicroDataAware>
 {
-  private final StringBuilder m_aData;
+  private final StringBuilder m_aSB;
+
+  public MicroDataAware (@Nonnull final char [] aChars, @Nonnegative final int nOfs, @Nonnegative final int nLen)
+  {
+    m_aSB = new StringBuilder (nLen + 16).append (aChars, nOfs, nLen);
+  }
 
   public MicroDataAware (@Nullable final CharSequence aText)
   {
     if (StringHelper.hasNoText (aText))
-      m_aData = new StringBuilder ();
+      m_aSB = new StringBuilder ();
     else
-      m_aData = new StringBuilder (aText);
+      m_aSB = new StringBuilder (aText);
   }
 
   @Nonnull
   public StringBuilder getData ()
   {
-    return m_aData;
+    return m_aSB;
   }
 
   public void setData (@Nullable final CharSequence aData)
   {
-    m_aData.setLength (0);
-    m_aData.append (aData);
+    m_aSB.setLength (0);
+    m_aSB.append (aData);
   }
 
   public void appendData (@Nullable final CharSequence sData)
   {
-    m_aData.append (sData);
+    m_aSB.append (sData);
+  }
+
+  public void appendData (@Nonnull final char [] aChars, @Nonnegative final int nOfs, @Nonnegative final int nLen)
+  {
+    m_aSB.append (aChars, nOfs, nLen);
   }
 
   public void prependData (@Nullable final CharSequence sData)
   {
-    m_aData.insert (0, sData);
+    m_aSB.insert (0, sData);
   }
 
   @Nonnull
   public MicroDataAware getClone ()
   {
-    return new MicroDataAware (m_aData);
+    return new MicroDataAware (m_aSB);
   }
 
   @Override
@@ -80,18 +91,18 @@ final class MicroDataAware implements IMicroDataAware, ICloneable <MicroDataAwar
     if (!(o instanceof MicroDataAware))
       return false;
     final MicroDataAware rhs = (MicroDataAware) o;
-    return EqualsUtils.equals (m_aData, rhs.m_aData);
+    return EqualsUtils.equals (m_aSB, rhs.m_aSB);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aData).getHashCode ();
+    return new HashCodeGenerator (this).append (m_aSB).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("data", m_aData).toString ();
+    return new ToStringGenerator (this).append ("data", m_aSB).toString ();
   }
 }

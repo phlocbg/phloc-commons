@@ -19,6 +19,7 @@ package com.phloc.commons.microdom;
 
 import java.io.Serializable;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -52,6 +53,18 @@ public interface IMicroDataAware extends Serializable
    *        The characters to be appended.
    */
   void appendData (@Nullable CharSequence sData);
+
+  /**
+   * Append characters to the string.
+   * 
+   * @param aChars
+   *        Base character array. May not be <code>null</code>.
+   * @param nOfs
+   *        Offset to start copying. Must be &ge; 0.
+   * @param nLen
+   *        Number of chars to take. Must be &ge; 0.
+   */
+  void appendData (@Nonnull char [] aChars, @Nonnegative int nOfs, @Nonnegative int nLen);
 
   /**
    * Add characters to the beginning of the current data
