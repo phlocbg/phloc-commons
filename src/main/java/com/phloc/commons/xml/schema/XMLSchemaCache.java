@@ -35,8 +35,14 @@ import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
  */
 public class XMLSchemaCache extends AbstractSchemaCache
 {
-  private static final XMLSchemaCache s_aInstance = new XMLSchemaCache (LoggingSAXErrorHandler.getInstance (),
-                                                                        new SimpleLSResourceResolver ());
+  private static final class SingletonHolder
+  {
+    static final XMLSchemaCache s_aInstance = new XMLSchemaCache (LoggingSAXErrorHandler.getInstance (),
+                                                                  new SimpleLSResourceResolver ());
+  }
+
+  private static boolean s_bDefaultInstantiated = false;
+
   private final SchemaFactory m_aSchemaFactory;
 
   public XMLSchemaCache (@Nullable final ErrorHandler aErrorHandler)
@@ -58,10 +64,16 @@ public class XMLSchemaCache extends AbstractSchemaCache
     m_aSchemaFactory.setResourceResolver (aResourceResolver);
   }
 
+  public static boolean isInstantiated ()
+  {
+    return s_bDefaultInstantiated;
+  }
+
   @Nonnull
   public static XMLSchemaCache getInstance ()
   {
-    return s_aInstance;
+    s_bDefaultInstantiated = true;
+    return SingletonHolder.s_aInstance;
   }
 
   @Override

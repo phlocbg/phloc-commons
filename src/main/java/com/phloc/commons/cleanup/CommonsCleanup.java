@@ -49,6 +49,10 @@ public final class CommonsCleanup
   private CommonsCleanup ()
   {}
 
+  /**
+   * Cleanup all custom caches contained in phloc-commons. Loaded SPI
+   * implementations are not affected by this method!
+   */
   public static void cleanup ()
   {
     // Reset caches
@@ -63,8 +67,10 @@ public final class CommonsCleanup
     RegExPool.clearPatternCache ();
     CollatorUtils.clearCache ();
     LocaleUtils.clearCache ();
-    JAXBContextCache.getInstance ().clearCache ();
-    XMLSchemaCache.getInstance ().clearCache ();
+    if (JAXBContextCache.isInstantiated ())
+      JAXBContextCache.getInstance ().clearCache ();
+    if (XMLSchemaCache.isInstantiated ())
+      XMLSchemaCache.getInstance ().clearCache ();
     StatisticsManager.clearCache ();
 
     // Clean this one last as it is used in equals and hashCode implementations!
