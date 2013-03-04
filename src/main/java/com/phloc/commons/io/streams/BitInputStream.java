@@ -17,50 +17,27 @@
  */
 package com.phloc.commons.io.streams;
 
-import java.io.BufferedInputStream;
-import java.io.Closeable;
-import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
-import com.phloc.commons.CGlobal;
-
 /**
- * The BitInputStream allows reading individual bits from a general Java
+ * The {@link BitInputStream} allows reading individual bits from a general Java
  * InputStream. Like the various Stream-classes from Java, the BitInputStream
  * has to be created based on another Input stream. It provides a function to
  * read the next bit from the stream, as well as to read multiple bits at once
- * and write the resulting data into an integer value.
+ * and write the resulting data into an integer value.<br>
+ * For a non-blocking version see {@link NonBlockingBitInputStream}.
  * 
  * @author Andreas Jakl
  * @author philip
  */
-public class BitInputStream implements Closeable
+public class BitInputStream extends NonBlockingBitInputStream
 {
   private final Lock m_aLock = new ReentrantLock ();
-
-  /**
-   * The Java InputStream this class is working on.
-   */
-  private InputStream m_aIS;
-
-  /**
-   * The buffer containing the currently processed byte of the input stream.
-   */
-  private int m_nBuffer;
-
-  /**
-   * Next bit of the current byte value that the user will get. If it's 8, the
-   * next bit will be read from the next byte of the InputStream.
-   */
-  private int m_nNextBitIndex;
-
-  private final boolean m_bHighOrderBitFirst;
 
   /**
    * Create a new bit input stream based on an existing Java InputStream.
@@ -74,33 +51,7 @@ public class BitInputStream implements Closeable
    */
   public BitInputStream (@Nonnull final InputStream aIS, final boolean bHighOrderBitFirst)
   {
-    if (aIS == null)
-      throw new NullPointerException ("inputStream");
-    m_aIS = new BufferedInputStream (aIS);
-    m_nNextBitIndex = CGlobal.BITS_PER_BYTE;
-    m_bHighOrderBitFirst = bHighOrderBitFirst;
-  }
-
-  /**
-   * Read a specified number of bits and return them combined as an integer
-   * value. The bits are written to the integer starting at the highest bit ( <<
-   * aNumberOfBits ), going down to the lowest bit ( << 0 )
-   * 
-   * @param aNumberOfBits
-   *        defines how many bits to read from the stream.
-   * @return integer value containing the bits read from the stream.
-   * @throws IOException
-   *         In case EOF is reached
-   */
-  public int readBits (@Nonnegative final int aNumberOfBits) throws IOException
-  {
-    if (aNumberOfBits < 1 || aNumberOfBits > 32)
-      throw new IllegalArgumentException ("Illegal number of bits passed!");
-
-    int ret = 0;
-    for (int i = aNumberOfBits - 1; i >= 0; i--)
-      ret |= (readBit () << i);
-    return ret;
+    super (aIS, bHighOrderBitFirst);
   }
 
   /**
@@ -110,29 +61,13 @@ public class BitInputStream implements Closeable
    * @throws IOException
    *         In case EOF is reached
    */
+  @Override
   public int readBit () throws IOException
   {
     m_aLock.lock ();
     try
     {
-      if (m_aIS == null)
-        throw new IOException ("Already closed");
-
-      if (m_nNextBitIndex == CGlobal.BITS_PER_BYTE)
-      {
-        m_nBuffer = m_aIS.read ();
-        if (m_nBuffer == -1)
-          throw new EOFException ();
-
-        m_nNextBitIndex = 0;
-      }
-
-      final int nSelectorBit = m_bHighOrderBitFirst ? (1 << (CGlobal.BITS_PER_BYTE - 1 - m_nNextBitIndex))
-                                                   : (1 << m_nNextBitIndex);
-      final int nBitValue = m_nBuffer & nSelectorBit;
-      m_nNextBitIndex++;
-
-      return nBitValue == 0 ? CGlobal.BIT_NOT_SET : CGlobal.BIT_SET;
+      return super.readBit ();
     }
     finally
     {
@@ -143,13 +78,13 @@ public class BitInputStream implements Closeable
   /**
    * Close the underlying input stream.
    */
+  @Override
   public void close ()
   {
     m_aLock.lock ();
     try
     {
-      StreamUtils.close (m_aIS);
-      m_aIS = null;
+      super.close ();
     }
     finally
     {
