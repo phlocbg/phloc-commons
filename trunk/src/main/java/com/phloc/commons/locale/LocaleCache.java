@@ -52,6 +52,16 @@ public final class LocaleCache
 
   static
   {
+    _initialFillCache ();
+  }
+
+  private static void _initialAdd (@Nonnull final Locale aLocale)
+  {
+    s_aLocales.put (aLocale.toString (), aLocale);
+  }
+
+  private static void _initialFillCache ()
+  {
     // add pseudo locales
     _initialAdd (CGlobal.LOCALE_ALL);
     _initialAdd (CGlobal.LOCALE_INDEPENDENT);
@@ -73,11 +83,6 @@ public final class LocaleCache
 
   private LocaleCache ()
   {}
-
-  private static void _initialAdd (@Nonnull final Locale aLocale)
-  {
-    s_aLocales.put (aLocale.toString (), aLocale);
-  }
 
   /**
    * Get the {@link Locale} object matching the given language.
@@ -164,8 +169,8 @@ public final class LocaleCache
                                   @Nullable final String sVariant)
   {
     // create case insensitive key!
-    final String sRealLanguage = sLanguage == null ? "" : sLanguage.toLowerCase ();// NOPMD
-    final String sRealCountry = sCountry == null ? "" : sCountry.toUpperCase ();// NOPMD
+    final String sRealLanguage = sLanguage == null ? "" : sLanguage.toLowerCase (Locale.US);
+    final String sRealCountry = sCountry == null ? "" : sCountry.toUpperCase (Locale.US);
     final String sRealVariant = sVariant == null ? "" : sVariant;
     final String sLocaleKey = _buildLocaleString (sRealLanguage, sRealCountry, sRealVariant);
     if (sLocaleKey.length () == 0)
@@ -304,8 +309,8 @@ public final class LocaleCache
                                         @Nullable final String sVariant)
   {
     // create case insensitive key!
-    final String sRealLanguage = sLanguage == null ? "" : sLanguage.toLowerCase ();// NOPMD
-    final String sRealCountry = sCountry == null ? "" : sCountry.toUpperCase ();// NOPMD
+    final String sRealLanguage = sLanguage == null ? "" : sLanguage.toLowerCase (Locale.US);
+    final String sRealCountry = sCountry == null ? "" : sCountry.toUpperCase (Locale.US);
     final String sRealVariant = sVariant == null ? "" : sVariant;
     final String sLocaleKey = _buildLocaleString (sRealLanguage, sRealCountry, sRealVariant);
     if (sLocaleKey.length () == 0)
@@ -319,6 +324,23 @@ public final class LocaleCache
     finally
     {
       s_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  /**
+   * Reset the cache to the initial state.
+   */
+  public static void resetCache ()
+  {
+    s_aRWLock.writeLock ().lock ();
+    try
+    {
+      s_aLocales.clear ();
+      _initialFillCache ();
+    }
+    finally
+    {
+      s_aRWLock.writeLock ().unlock ();
     }
   }
 }

@@ -19,7 +19,6 @@ package com.phloc.commons.microdom.convert;
 
 import java.lang.ref.WeakReference;
 import java.util.Map;
-import java.util.ServiceLoader;
 import java.util.WeakHashMap;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -34,6 +33,7 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.lang.ClassHierarchyCache;
+import com.phloc.commons.lang.ServiceLoaderUtils;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.typeconvert.TypeConverterRegistry;
 
@@ -57,7 +57,7 @@ public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegi
   static
   {
     // Register all custom micro type converter
-    for (final IMicroTypeConverterRegistrarSPI aSPI : ServiceLoader.load (IMicroTypeConverterRegistrarSPI.class))
+    for (final IMicroTypeConverterRegistrarSPI aSPI : ServiceLoaderUtils.getAllSPIImplementations (IMicroTypeConverterRegistrarSPI.class))
       aSPI.registerMicroTypeConverter (s_aInstance);
     s_aLogger.info (getRegisteredMicroTypeConverterCount () + " micro type converters registered");
   }

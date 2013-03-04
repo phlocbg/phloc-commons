@@ -25,7 +25,9 @@ import com.phloc.commons.gfx.ImageDataManager;
 import com.phloc.commons.jaxb.JAXBContextCache;
 import com.phloc.commons.lang.ClassHierarchyCache;
 import com.phloc.commons.lang.EnumHelper;
+import com.phloc.commons.locale.LocaleCache;
 import com.phloc.commons.locale.LocaleUtils;
+import com.phloc.commons.locale.country.CountryCache;
 import com.phloc.commons.regex.RegExPool;
 import com.phloc.commons.text.resolve.DefaultTextResolver;
 import com.phloc.commons.text.resource.ResourceBundleUtils;
@@ -48,6 +50,11 @@ public final class CommonsCleanup
 
   public static void cleanup ()
   {
+    // Reset caches
+    LocaleCache.resetCache ();
+    CountryCache.resetCache ();
+
+    // Clear caches
     ImageDataManager.clearCache ();
     DefaultTextResolver.clearCache ();
     EnumHelper.clearCache ();
