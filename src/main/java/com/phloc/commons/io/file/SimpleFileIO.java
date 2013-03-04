@@ -95,14 +95,16 @@ public final class SimpleFileIO
           aSrcLock = aSrcChannel.lock (0, nBytesToRead, true);
           aDestLock = aDestChannel.lock ();
 
-          // Main copying
-          final long nBytesWritten = aSrcChannel.transferTo (0, nBytesToRead, aDestChannel);
+          // Main copying - the loop version is much quicker than then
+          // transferTo with full size!
+          long nBytesWritten = 0;
+          final long nChunkSize = 1 * CGlobal.BYTES_PER_MEGABYTE;
+          while (nBytesWritten < nBytesToRead)
+            nBytesWritten += aSrcChannel.transferTo (nBytesWritten, nChunkSize, aDestChannel);
+
           if (nBytesToRead != nBytesWritten)
           {
-            s_aLogger.error ("Failed to copy file. Meant to read " +
-                             nBytesToRead +
-                             " bytes but wrote only " +
-                             nBytesWritten);
+            s_aLogger.error ("Failed to copy file. Meant to read " + nBytesToRead + " bytes but wrote " + nBytesWritten);
             return ESuccess.FAILURE;
           }
           return ESuccess.SUCCESS;
