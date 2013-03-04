@@ -149,16 +149,17 @@ public abstract class AbstractSimpleURL implements ISimpleURL
   @Nonnull
   public final String getAsString ()
   {
-    return URLUtils.getURLString (this, (String) null);
+    return URLUtils.getURLString (this, (Charset) null);
   }
 
   @Nonnull
   public final String getAsStringWithEncodedParameters ()
   {
-    return getAsStringWithEncodedParameters (URLUtils.CHARSET_URL);
+    return getAsStringWithEncodedParameters (URLUtils.CHARSET_URL_OBJ);
   }
 
   @Nonnull
+  @Deprecated
   public final String getAsStringWithEncodedParameters (@Nonnull final String sParameterCharset)
   {
     if (sParameterCharset == null)
