@@ -101,6 +101,8 @@ public final class MicroWriter
     if (aOS == null)
       return ESuccess.FAILURE;
 
+    // No need to wrap the OS in a BufferedOutputStream as inside, it is later
+    // on wrapped in a BufferedWriter
     return writeToStream (aNode, aOS, aSettings);
   }
 
