@@ -20,6 +20,7 @@ package com.phloc.test.benchmark;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -64,10 +65,10 @@ public final class BenchmarkLevenshteinDistance extends AbstractBenchmarkTask
     findWhetherSynchronizedOrLockAreFaster ();
   }
 
-  private static List <String> _readWordList (final IReadableResource aRes, final String sCharset) throws IOException
+  private static List <String> _readWordList (final IReadableResource aRes, final Charset aCharset) throws IOException
   {
     final List <String> ret = new ArrayList <String> ();
-    final BufferedReader aBR = new BufferedReader (new InputStreamReader (aRes.getInputStream (), sCharset));
+    final BufferedReader aBR = new BufferedReader (new InputStreamReader (aRes.getInputStream (), aCharset));
     String sLine;
     int nIdx = 0;
     while ((sLine = aBR.readLine ()) != null)
@@ -98,7 +99,7 @@ public final class BenchmarkLevenshteinDistance extends AbstractBenchmarkTask
   private static void findWhetherSynchronizedOrLockAreFaster () throws IOException
   {
     final List <String> aStrings = _readWordList (new ClassPathResource ("wordlist/english-words.95"),
-                                                  CCharset.CHARSET_ISO_8859_1);
+                                                  CCharset.CHARSET_ISO_8859_1_OBJ);
     if (true)
     {
       aStrings.remove (0);
