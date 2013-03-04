@@ -193,6 +193,8 @@ public final class CountryCache
     {
       s_aCountries.clear ();
       _initialFillCache ();
+      if (s_aLogger.isDebugEnabled ())
+        s_aLogger.debug ("Cache was reset: " + CountryCache.class.getName ());
     }
     finally
     {

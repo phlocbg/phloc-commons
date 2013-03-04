@@ -29,6 +29,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
@@ -45,6 +48,7 @@ import com.phloc.commons.string.StringHelper;
 @ThreadSafe
 public final class LocaleCache
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (LocaleCache.class);
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
 
   /** maps a string to a locale. */
@@ -337,6 +341,8 @@ public final class LocaleCache
     {
       s_aLocales.clear ();
       _initialFillCache ();
+      if (s_aLogger.isDebugEnabled ())
+        s_aLogger.debug ("Cache was reset: " + LocaleCache.class.getName ());
     }
     finally
     {
