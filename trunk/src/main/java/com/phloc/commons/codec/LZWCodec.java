@@ -19,10 +19,12 @@ package com.phloc.commons.codec;
 
 import java.io.EOFException;
 import java.io.IOException;
+import java.io.OutputStream;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.WillNotClose;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -362,7 +364,29 @@ public class LZWCodec implements ICodec
       return null;
 
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
-    final NonBlockingBitOutputStream aBOS = new NonBlockingBitOutputStream (aBAOS, true);
+    encodeLZW (aBuffer, aBAOS);
+    return aBAOS.toByteArray ();
+  }
+
+  /**
+   * LZW-encode the passed byte array to the passed output stream
+   * 
+   * @param aBuffer
+   *        The buffer to be encoded. May be <code>null</code> in which case
+   *        nothing happens.
+   * @param aOS
+   *        The output stream to encode the content to. The output stream is not
+   *        closed after encoding is done! May not be <code>null</code>.
+   */
+  public static void encodeLZW (@Nullable final byte [] aBuffer, @Nonnull @WillNotClose final OutputStream aOS)
+  {
+    if (aOS == null)
+      throw new NullPointerException ("outputStream");
+
+    if (aBuffer == null)
+      return;
+
+    final NonBlockingBitOutputStream aBOS = new NonBlockingBitOutputStream (aOS, true);
 
     final LZWEncodeDictionary aDict = new LZWEncodeDictionary ();
     aDict.reset ();
@@ -398,12 +422,12 @@ public class LZWCodec implements ICodec
 
         if (aDict.getNextFreeCode () == AbstractLZWDictionary.MAX_CODE - 1)
         {
-          if (false)
-            s_aLogger.info ("Table overflow in encoding -> resetting (codelength=" +
-                            nCodeLength +
-                            ";byteseq#=" +
-                            aByteSeq.length +
-                            ")");
+          if (s_aLogger.isTraceEnabled ())
+            s_aLogger.trace ("Table overflow in encoding -> resetting (codelength=" +
+                             nCodeLength +
+                             ";byteseq#=" +
+                             aByteSeq.length +
+                             ")");
           aBOS.writeBits (AbstractLZWDictionary.CODE_CLEARTABLE, nCodeLength);
           aDict.reset ();
           // ESCA-JAVA0119:
@@ -427,14 +451,14 @@ public class LZWCodec implements ICodec
 
       aBOS.writeBits (AbstractLZWDictionary.CODE_EOF, nCodeLength);
     }
-    catch (final IOException ex)
+    catch (final Throwable t)
     {
-      throw new EncoderException ("Error encoding LZW", ex);
+      throw new EncoderException ("Error encoding LZW", t);
     }
     finally
     {
-      StreamUtils.close (aBOS);
+      // FLush but do not close
+      StreamUtils.flush (aBOS);
     }
-    return aBAOS.toByteArray ();
   }
 }
