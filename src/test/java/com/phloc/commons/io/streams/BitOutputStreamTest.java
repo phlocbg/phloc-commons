@@ -24,6 +24,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
+import java.nio.ByteOrder;
 
 import org.junit.Test;
 
@@ -42,13 +43,13 @@ public final class BitOutputStreamTest
   {
     try
     {
-      new BitOutputStream (null, true);
+      new BitOutputStream (null, ByteOrder.LITTLE_ENDIAN);
       fail ();
     }
     catch (final NullPointerException ex)
     {}
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
-    final BitOutputStream aBOS = new BitOutputStream (aBAOS, true);
+    final BitOutputStream aBOS = new BitOutputStream (aBAOS, ByteOrder.LITTLE_ENDIAN);
     aBOS.writeBit (CGlobal.BIT_SET);
     try
     {
@@ -84,10 +85,11 @@ public final class BitOutputStreamTest
   }
 
   @Test
-  public void testWriteBitHighOrder () throws IOException
+  public void testWriteBitLittleEndian () throws IOException
   {
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
-    final BitOutputStream aBOS = new BitOutputStream (aBAOS, true);
+    final BitOutputStream aBOS = new BitOutputStream (aBAOS, ByteOrder.LITTLE_ENDIAN);
+    assertEquals (ByteOrder.LITTLE_ENDIAN, aBOS.getByteOrder ());
     aBOS.writeBit (1);
     for (int i = 0; i < 7; ++i)
       aBOS.writeBit (0);
@@ -95,14 +97,14 @@ public final class BitOutputStreamTest
     assertTrue (aBAOS.size () > 0);
     final int aByte = aBAOS.toByteArray ()[0] & 0xff;
     assertEquals (128, aByte);
-
   }
 
   @Test
-  public void testWriteBitLowOrder () throws IOException
+  public void testWriteBitBigEndian () throws IOException
   {
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
-    final BitOutputStream aBOS = new BitOutputStream (aBAOS, false);
+    final BitOutputStream aBOS = new BitOutputStream (aBAOS, ByteOrder.BIG_ENDIAN);
+    assertEquals (ByteOrder.BIG_ENDIAN, aBOS.getByteOrder ());
     for (int i = 0; i < 7; ++i)
       aBOS.writeBit (0);
     aBOS.writeBit (1);
@@ -113,7 +115,7 @@ public final class BitOutputStreamTest
   }
 
   @Test
-  public void testWriteManyHighOrder () throws IOException
+  public void testWriteManyLittleEndian () throws IOException
   {
     for (int i = 0; i < 200; i += 3)
     {
@@ -121,7 +123,7 @@ public final class BitOutputStreamTest
       VerySecureRandom.getInstance ().nextBytes (buf);
 
       final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
-      final BitOutputStream aBOS = new BitOutputStream (aBAOS, true);
+      final BitOutputStream aBOS = new BitOutputStream (aBAOS, ByteOrder.LITTLE_ENDIAN);
       for (final byte b : buf)
         aBOS.writeBits (b & 0xff, 8);
 
@@ -129,10 +131,15 @@ public final class BitOutputStreamTest
       // only for high order bit
       assertArrayEquals (buf, written);
 
-      final BitInputStream aBIS = new BitInputStream (new NonBlockingByteArrayInputStream (written), true);
+      final BitInputStream aBIS = new BitInputStream (new NonBlockingByteArrayInputStream (written),
+                                                      ByteOrder.LITTLE_ENDIAN);
       aBAOS.reset ();
-      for (int x = 0; x < written.length; ++x)
-        aBAOS.write (aBIS.readBits (8));
+      for (final byte element : written)
+      {
+        final int nRead = aBIS.readBits (8);
+        assertEquals (element & 0xff, nRead);
+        aBAOS.write (nRead);
+      }
 
       final byte [] read = aBAOS.toByteArray ();
       assertArrayEquals (written, read);
@@ -141,7 +148,7 @@ public final class BitOutputStreamTest
   }
 
   @Test
-  public void testWriteManyLowOrder () throws IOException
+  public void testWriteManyBigEndian () throws IOException
   {
     for (int i = 0; i < 200; i += 3)
     {
@@ -149,17 +156,24 @@ public final class BitOutputStreamTest
       VerySecureRandom.getInstance ().nextBytes (buf);
 
       final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
-      final BitOutputStream aBOS = new BitOutputStream (aBAOS, false);
+      final BitOutputStream aBOS = new BitOutputStream (aBAOS, ByteOrder.BIG_ENDIAN);
       for (final byte b : buf)
         aBOS.writeBits (b & 0xff, 8);
+      aBOS.flush ();
 
       final byte [] written = aBAOS.toByteArray ();
       // not the same as input
 
-      final BitInputStream aBIS = new BitInputStream (new NonBlockingByteArrayInputStream (written), false);
+      final BitInputStream aBIS = new BitInputStream (new NonBlockingByteArrayInputStream (written),
+                                                      ByteOrder.BIG_ENDIAN);
       aBAOS.reset ();
-      for (int x = 0; x < written.length; ++x)
-        aBAOS.write (aBIS.readBits (8));
+      for (final byte element : written)
+      {
+        // The value in little endian
+        final int nRead = aBIS.readBits (8);
+        assertEquals (element & 0xff, (Integer.reverse (nRead) >> 24) & 0xff);
+        aBAOS.write (nRead);
+      }
 
       final byte [] read = aBAOS.toByteArray ();
       assertArrayEquals (buf, read);
@@ -174,9 +188,10 @@ public final class BitOutputStreamTest
       final byte [] buf = new byte [i * 100];
       VerySecureRandom.getInstance ().nextBytes (buf);
 
-      final BitInputStream aBIS = new BitInputStream (new NonBlockingByteArrayInputStream (buf), true);
+      final BitInputStream aBIS = new BitInputStream (new NonBlockingByteArrayInputStream (buf),
+                                                      ByteOrder.LITTLE_ENDIAN);
       final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
-      final BitOutputStream aBOS = new BitOutputStream (aBAOS, true);
+      final BitOutputStream aBOS = new BitOutputStream (aBAOS, ByteOrder.LITTLE_ENDIAN);
 
       int nBitCount = buf.length * 8;
       while (nBitCount > 0)
@@ -195,8 +210,9 @@ public final class BitOutputStreamTest
   public void testWriteManual () throws IOException
   {
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
-    final BitOutputStream aBOS = new BitOutputStream (aBAOS, true);
-    aBOS.writeBits (255, 8);
+    final BitOutputStream aBOS = new BitOutputStream (aBAOS, ByteOrder.LITTLE_ENDIAN);
+    aBOS.writeBits (15, 4);
+    aBOS.writeBits (15, 4);
     aBOS.writeBits (0, 8);
     aBOS.writeBits (255, 8);
     aBOS.close ();

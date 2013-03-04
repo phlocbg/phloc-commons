@@ -22,6 +22,7 @@ import java.io.Closeable;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteOrder;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -66,23 +67,51 @@ public class NonBlockingBitInputStream implements Closeable
    * @param aIS
    *        the input stream this class should read the bits from. May not be
    *        <code>null</code>.
-   * @param bHighOrderBitFirst
-   *        <code>true</code> if high order bits come first, <code>false</code>
-   *        if it comes last.
+   * @param aByteOrder
+   *        The non-<code>null</code> byte order to use.
    */
-  public NonBlockingBitInputStream (@Nonnull final InputStream aIS, final boolean bHighOrderBitFirst)
+  public NonBlockingBitInputStream (@Nonnull final InputStream aIS, @Nonnull final ByteOrder aByteOrder)
   {
     if (aIS == null)
       throw new NullPointerException ("inputStream");
+    if (aByteOrder == null)
+      throw new NullPointerException ("byteOrder");
     m_aIS = new BufferedInputStream (aIS);
-    m_bHighOrderBitFirst = bHighOrderBitFirst;
+    m_bHighOrderBitFirst = aByteOrder.equals (ByteOrder.LITTLE_ENDIAN);
     m_nNextBitIndex = CGlobal.BITS_PER_BYTE;
+  }
+
+  /**
+   * Create a new bit input stream based on an existing Java InputStream.
+   * 
+   * @param aIS
+   *        the input stream this class should read the bits from. May not be
+   *        <code>null</code>.
+   * @param bHighOrderBitFirst
+   *        <code>true</code> if high order bits come first (
+   *        {@link ByteOrder#LITTLE_ENDIAN}), <code>false</code> if it comes
+   *        last ({@link ByteOrder#BIG_ENDIAN}).
+   */
+  @Deprecated
+  public NonBlockingBitInputStream (@Nonnull final InputStream aIS, final boolean bHighOrderBitFirst)
+  {
+    this (aIS, bHighOrderBitFirst ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN);
+  }
+
+  /**
+   * @return The byte order used. Never <code>null</code>.
+   */
+  @Nonnull
+  public ByteOrder getByteOrder ()
+  {
+    return m_bHighOrderBitFirst ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN;
   }
 
   /**
    * Read a specified number of bits and return them combined as an integer
    * value. The bits are written to the integer starting at the highest bit ( <<
-   * aNumberOfBits ), going down to the lowest bit ( << 0 )
+   * aNumberOfBits ), going down to the lowest bit ( << 0 ), so thge returned
+   * ByteOrder is always LITTLE_ENDIAN!
    * 
    * @param aNumberOfBits
    *        defines how many bits to read from the stream.

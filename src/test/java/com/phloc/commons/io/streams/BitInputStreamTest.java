@@ -22,6 +22,7 @@ import static org.junit.Assert.fail;
 
 import java.io.EOFException;
 import java.io.IOException;
+import java.nio.ByteOrder;
 
 import org.junit.Test;
 
@@ -39,13 +40,13 @@ public final class BitInputStreamTest
   {
     try
     {
-      new BitInputStream (null, true);
+      new BitInputStream (null, ByteOrder.LITTLE_ENDIAN);
       fail ();
     }
     catch (final NullPointerException ex)
     {}
     final NonBlockingByteArrayInputStream aBAOS = new NonBlockingByteArrayInputStream (new byte [10]);
-    final BitInputStream aBOS = new BitInputStream (aBAOS, true);
+    final BitInputStream aBOS = new BitInputStream (aBAOS, ByteOrder.LITTLE_ENDIAN);
     for (int i = 0; i < 5 * CGlobal.BITS_PER_BYTE; ++i)
       assertEquals (CGlobal.BIT_NOT_SET, aBOS.readBit ());
     try
@@ -83,20 +84,20 @@ public final class BitInputStreamTest
   }
 
   @Test
-  public void testReadBitHighOrder () throws IOException
+  public void testReadBitLittleEndian () throws IOException
   {
     final NonBlockingByteArrayInputStream aBAIS = new NonBlockingByteArrayInputStream (new byte [] { (byte) 0x80 });
-    final BitInputStream aBIS = new BitInputStream (aBAIS, true);
+    final BitInputStream aBIS = new BitInputStream (aBAIS, ByteOrder.LITTLE_ENDIAN);
     assertEquals (1, aBIS.readBit ());
     for (int i = 0; i < 7; ++i)
       assertEquals (0, aBIS.readBit ());
   }
 
   @Test
-  public void testReadBitLowOrder () throws IOException
+  public void testReadBitBigEndian () throws IOException
   {
     final NonBlockingByteArrayInputStream aBAIS = new NonBlockingByteArrayInputStream (new byte [] { (byte) 0x80 });
-    final BitInputStream aBIS = new BitInputStream (aBAIS, false);
+    final BitInputStream aBIS = new BitInputStream (aBAIS, ByteOrder.BIG_ENDIAN);
     for (int i = 0; i < 7; ++i)
       assertEquals (0, aBIS.readBit ());
     assertEquals (1, aBIS.readBit ());

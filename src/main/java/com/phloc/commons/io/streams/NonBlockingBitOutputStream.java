@@ -21,6 +21,7 @@ import java.io.Closeable;
 import java.io.Flushable;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.ByteOrder;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -72,17 +73,44 @@ public class NonBlockingBitOutputStream implements Closeable, Flushable
    * @param aOS
    *        the output stream this class should use. May not be
    *        <code>null</code>.
-   * @param bHighOrderBitFirst
-   *        <code>true</code> if high order bits come first, <code>false</code>
-   *        if it comes last.
+   * @param aByteOrder
+   *        The non-<code>null</code> byte order to use.
    */
-  public NonBlockingBitOutputStream (@Nonnull final OutputStream aOS, final boolean bHighOrderBitFirst)
+  public NonBlockingBitOutputStream (@Nonnull final OutputStream aOS, @Nonnull final ByteOrder aByteOrder)
   {
     if (aOS == null)
       throw new NullPointerException ("outputStream");
+    if (aByteOrder == null)
+      throw new NullPointerException ("byteOrder");
     m_aOS = aOS;
-    m_bHighOrderBitFirst = bHighOrderBitFirst;
+    m_bHighOrderBitFirst = aByteOrder.equals (ByteOrder.LITTLE_ENDIAN);
     m_nBufferedBitCount = 0;
+  }
+
+  /**
+   * Create a new bit output stream based on an existing Java OutputStream.
+   * 
+   * @param aOS
+   *        the output stream this class should use. May not be
+   *        <code>null</code>.
+   * @param bHighOrderBitFirst
+   *        <code>true</code> if high order bits come first (
+   *        {@link ByteOrder#LITTLE_ENDIAN}), <code>false</code> if it comes
+   *        last ({@link ByteOrder#BIG_ENDIAN}).
+   */
+  @Deprecated
+  public NonBlockingBitOutputStream (@Nonnull final OutputStream aOS, final boolean bHighOrderBitFirst)
+  {
+    this (aOS, bHighOrderBitFirst ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN);
+  }
+
+  /**
+   * @return The byte order used. Never <code>null</code>.
+   */
+  @Nonnull
+  public ByteOrder getByteOrder ()
+  {
+    return m_bHighOrderBitFirst ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN;
   }
 
   /**

@@ -19,6 +19,7 @@ package com.phloc.commons.io.streams;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteOrder;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -45,10 +46,26 @@ public class BitInputStream extends NonBlockingBitInputStream
    * @param aIS
    *        the input stream this class should read the bits from. May not be
    *        <code>null</code>.
-   * @param bHighOrderBitFirst
-   *        <code>true</code> if high order bits come first, <code>false</code>
-   *        if it comes last.
+   * @param aByteOrder
+   *        The non-<code>null</code> byte order to use.
    */
+  public BitInputStream (@Nonnull final InputStream aIS, @Nonnull final ByteOrder aByteOrder)
+  {
+    super (aIS, aByteOrder);
+  }
+
+  /**
+   * Create a new bit input stream based on an existing Java InputStream.
+   * 
+   * @param aIS
+   *        the input stream this class should read the bits from. May not be
+   *        <code>null</code>.
+   * @param bHighOrderBitFirst
+   *        <code>true</code> if high order bits come first (
+   *        {@link ByteOrder#LITTLE_ENDIAN}), <code>false</code> if it comes
+   *        last ({@link ByteOrder#BIG_ENDIAN}).
+   */
+  @Deprecated
   public BitInputStream (@Nonnull final InputStream aIS, final boolean bHighOrderBitFirst)
   {
     super (aIS, bHighOrderBitFirst);
