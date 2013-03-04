@@ -70,6 +70,10 @@ public final class ThreadDeadlockInfo
     return m_aThread;
   }
 
+  /**
+   * @return <code>true</code> if a stacktrace is present, <code>false</code>
+   *         otherwise
+   */
   public boolean hasStackTrace ()
   {
     return m_aStackTrace != null;

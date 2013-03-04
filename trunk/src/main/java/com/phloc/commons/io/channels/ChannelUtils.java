@@ -36,12 +36,43 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 @Immutable
 public final class ChannelUtils
 {
+  // Use version 1 as it seems to be faster
+  private static final boolean USE_COPY_V1 = true;
+
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")
   private static final ChannelUtils s_aInstance = new ChannelUtils ();
 
   private ChannelUtils ()
   {}
+
+  /**
+   * Copy all content from the source channel to the destination channel.
+   * 
+   * @param aSrc
+   *        Source channel. May not be <code>null</code>. Is not closed after
+   *        the operation.
+   * @param aDest
+   *        Destination channel. May not be <code>null</code>. Is not closed
+   *        after the operation.
+   */
+  public static void channelCopy (@Nonnull @WillNotClose final ReadableByteChannel aSrc,
+                                  @Nonnull @WillNotClose final WritableByteChannel aDest) throws IOException
+  {
+    if (aSrc == null)
+      throw new NullPointerException ("sourceChannel");
+    if (!aSrc.isOpen ())
+      throw new IllegalArgumentException ("sourceChannel is not open!");
+    if (aDest == null)
+      throw new NullPointerException ("desitnationChannel");
+    if (!aDest.isOpen ())
+      throw new IllegalArgumentException ("desitnationChannel is not open!");
+
+    if (USE_COPY_V1)
+      _channelCopy1 (aSrc, aDest);
+    else
+      _channelCopy2 (aSrc, aDest);
+  }
 
   /**
    * Channel copy method 1. This method copies data from the src channel and
@@ -58,8 +89,8 @@ public final class ChannelUtils
    *        Destination channel. May not be <code>null</code>. Is not closed
    *        after the operation.
    */
-  public static void channelCopy1 (@Nonnull @WillNotClose final ReadableByteChannel aSrc,
-                                   @Nonnull @WillNotClose final WritableByteChannel aDest) throws IOException
+  private static void _channelCopy1 (@Nonnull @WillNotClose final ReadableByteChannel aSrc,
+                                     @Nonnull @WillNotClose final WritableByteChannel aDest) throws IOException
   {
     final ByteBuffer aBuffer = ByteBuffer.allocateDirect (16 * 1024);
     while (aSrc.read (aBuffer) != -1)
@@ -97,11 +128,10 @@ public final class ChannelUtils
    *        Destination channel. May not be <code>null</code>. Is not closed
    *        after the operation.
    */
-  public static void channelCopy2 (@Nonnull @WillNotClose final ReadableByteChannel aSrc,
-                                   @Nonnull @WillNotClose final WritableByteChannel aDest) throws IOException
+  private static void _channelCopy2 (@Nonnull @WillNotClose final ReadableByteChannel aSrc,
+                                     @Nonnull @WillNotClose final WritableByteChannel aDest) throws IOException
   {
     final ByteBuffer aBuffer = ByteBuffer.allocateDirect (16 * 1024);
-
     while (aSrc.read (aBuffer) != -1)
     {
       // Prepare the buffer to be drained
