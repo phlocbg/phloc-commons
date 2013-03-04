@@ -33,6 +33,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.cache.AbstractNotifyingCache;
 import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.system.SystemHelper;
 
@@ -87,7 +88,7 @@ public final class LocaleUtils
     }
   }
 
-  private static final LocaleListCache s_aLocaleListResolver = new LocaleListCache ();
+  private static final LocaleListCache s_aLocaleListCache = new LocaleListCache ();
 
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")
@@ -183,7 +184,7 @@ public final class LocaleUtils
     if (aLocale == null)
       throw new NullPointerException ("locale");
 
-    return s_aLocaleListResolver.getFromCache (aLocale);
+    return s_aLocaleListCache.getFromCache (aLocale);
   }
 
   /**
@@ -319,5 +320,15 @@ public final class LocaleUtils
   public static boolean isSpecialLocale (@Nullable final Locale aLocale)
   {
     return CGlobal.LOCALE_ALL.equals (aLocale) || CGlobal.LOCALE_INDEPENDENT.equals (aLocale);
+  }
+
+  /**
+   * Clear all stored locale lists
+   * 
+   * @return {@link EChange}.
+   */
+  public static EChange clearCache ()
+  {
+    return s_aLocaleListCache.clearCache ();
   }
 }

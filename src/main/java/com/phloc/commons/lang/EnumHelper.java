@@ -26,10 +26,14 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.id.IHasID;
 import com.phloc.commons.id.IHasSimpleIntID;
 import com.phloc.commons.name.IHasName;
+import com.phloc.commons.state.EChange;
 
 /**
  * Some enum utility methods.
@@ -39,6 +43,7 @@ import com.phloc.commons.name.IHasName;
 @Immutable
 public final class EnumHelper
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (EnumHelper.class);
   private static final Object [] NOT_CACHABLE = new Object [0];
   private static final ReadWriteLock s_aRWLockInt = new ReentrantReadWriteLock ();
   private static final Map <String, Object []> s_aIntCache = new HashMap <String, Object []> ();
@@ -483,12 +488,18 @@ public final class EnumHelper
     return aEnum.getClass ().getName () + '.' + aEnum.name ();
   }
 
-  public static void clearCache ()
+  @Nonnull
+  public static EChange clearCache ()
   {
     s_aRWLockInt.writeLock ().lock ();
     try
     {
+      if (s_aIntCache.isEmpty ())
+        return EChange.UNCHANGED;
       s_aIntCache.clear ();
+      if (s_aLogger.isDebugEnabled ())
+        s_aLogger.debug ("Cache was cleared: " + EnumHelper.class.getName ());
+      return EChange.CHANGED;
     }
     finally
     {

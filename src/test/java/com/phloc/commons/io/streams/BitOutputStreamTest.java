@@ -169,7 +169,7 @@ public final class BitOutputStreamTest
       aBAOS.reset ();
       for (final byte element : written)
       {
-        // The value in little endian
+        // The value in little endian!
         final int nRead = aBIS.readBits (8);
         assertEquals (element & 0xff, (Integer.reverse (nRead) >> 24) & 0xff);
         aBAOS.write (nRead);
