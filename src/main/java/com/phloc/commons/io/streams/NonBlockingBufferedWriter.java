@@ -23,6 +23,7 @@ import java.io.Writer;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.CGlobal;
 import com.phloc.commons.SystemProperties;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -36,7 +37,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 @NotThreadSafe
 public class NonBlockingBufferedWriter extends Writer
 {
-  private static final int DEFAULT_CHAR_BUFFER_SIZE = 8192;
+  private static final int DEFAULT_CHAR_BUFFER_SIZE = 16 * CGlobal.BYTES_PER_KILOBYTE;
 
   private Writer m_aWriter;
   private char [] m_aBuf;
@@ -157,25 +158,25 @@ public class NonBlockingBufferedWriter extends Writer
    * 
    * @param cbuf
    *        A character array
-   * @param off
+   * @param nOfs
    *        Offset from which to start reading characters
-   * @param len
+   * @param nLen
    *        Number of characters to write
    * @exception IOException
    *            If an I/O error occurs
    */
   @Override
   @SuppressFBWarnings ("IL_INFINITE_LOOP")
-  public void write (final char cbuf[], final int off, final int len) throws IOException
+  public void write (final char [] cbuf, final int nOfs, final int nLen) throws IOException
   {
     _ensureOpen ();
-    if ((off < 0) || (off > cbuf.length) || (len < 0) || ((off + len) > cbuf.length) || ((off + len) < 0))
+    if (nOfs < 0 || nOfs > cbuf.length || nLen < 0 || (nOfs + nLen) > cbuf.length)
       throw new IndexOutOfBoundsException ();
 
-    if (len == 0)
+    if (nLen == 0)
       return;
 
-    if (len >= m_nChars)
+    if (nLen >= m_nChars)
     {
       /*
        * If the request length exceeds the size of the output buffer, flush the
@@ -183,12 +184,12 @@ public class NonBlockingBufferedWriter extends Writer
        * will cascade harmlessly.
        */
       flushBuffer ();
-      m_aWriter.write (cbuf, off, len);
+      m_aWriter.write (cbuf, nOfs, nLen);
     }
     else
     {
-      int b = off;
-      final int t = off + len;
+      int b = nOfs;
+      final int t = nOfs + nLen;
       while (b < t)
       {
         final int d = _min (m_nChars - m_nNextChar, t - b);
