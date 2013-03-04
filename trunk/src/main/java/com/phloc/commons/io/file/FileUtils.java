@@ -39,6 +39,7 @@ import com.phloc.commons.SystemProperties;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.io.EAppend;
 import com.phloc.commons.io.misc.SizeHelper;
 import com.phloc.commons.io.streams.CountingFileInputStream;
@@ -524,14 +525,10 @@ public final class FileUtils
    *        Second file. May be <code>null</code>.
    * @return <code>true</code> if both are null or equal.
    */
+  @Deprecated
   public static boolean safeEquals (@Nullable final File f1, @Nullable final File f2)
   {
-    if (f1 == f2)
-      return true;
-    if (f1 == null || f2 == null)
-      return false;
-    return FilenameHelper.getCleanPath (f1.getAbsoluteFile ())
-                         .equals (FilenameHelper.getCleanPath (f2.getAbsoluteFile ()));
+    return EqualsUtils.equals (f1, f2);
   }
 
   @Nonnull

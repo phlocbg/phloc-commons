@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.equals;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.Arrays;
@@ -34,6 +35,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.phloc.commons.annotations.IsSPIImplementation;
+import com.phloc.commons.io.file.FilenameHelper;
 
 /**
  * This class registers the default equals implementations. The implementations
@@ -361,6 +363,19 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
           return false;
         }
         return true;
+      }
+    });
+
+    // Special handling for File
+    aRegistry.registerEqualsImplementation (File.class, new IEqualsImplementation ()
+    {
+
+      public boolean areEqual (@Nonnull final Object aObj1, @Nonnull final Object aObj2)
+      {
+        final File aFile1 = (File) aObj1;
+        final File aFile2 = (File) aObj2;
+        return FilenameHelper.getCleanPath (aFile1.getAbsoluteFile ())
+                             .equals (FilenameHelper.getCleanPath (aFile2.getAbsoluteFile ()));
       }
     });
   }

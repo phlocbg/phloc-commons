@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.hash;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -31,6 +32,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.phloc.commons.annotations.IsSPIImplementation;
+import com.phloc.commons.io.file.FilenameHelper;
 
 /**
  * This class registers the default hash code implementations. The
@@ -260,6 +262,16 @@ public final class DefaultHashCodeImplementationRegistrarSPI implements IHashCod
         while (aRealObj.hasMoreElements ())
           aHC = aHC.append (aRealObj.nextElement ());
         return aHC.getHashCode ();
+      }
+    });
+
+    // Special handling for File
+    aRegistry.registerHashCodeImplementation (File.class, new IHashCodeImplementation ()
+    {
+      public int getHashCode (@Nonnull final Object aObj)
+      {
+        final File aFile = (File) aObj;
+        return FilenameHelper.getCleanPath (aFile.getAbsoluteFile ()).hashCode ();
       }
     });
   }
