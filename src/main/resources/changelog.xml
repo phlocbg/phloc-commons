@@ -22,6 +22,11 @@
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
   <entry date="2013-03-04" category="tech" action="change">
     <change>
+      <text locale="en">Speed improvement in FileOperations.copyFile by using FileChannel instead of streams</text>
+    </change>
+  </entry>
+  <entry date="2013-03-04" category="tech" action="change">
+    <change>
       <text locale="en">Improved locking performance in StatisticsManager by first querying in a readLock</text>
     </change>
   </entry>

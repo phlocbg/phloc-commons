@@ -18,12 +18,7 @@
 package com.phloc.commons.io.file;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.channels.FileChannel;
-import java.nio.channels.FileLock;
 import java.nio.charset.Charset;
 import java.util.List;
 
@@ -32,12 +27,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
-import com.phloc.commons.io.channels.ChannelUtils;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.state.ESuccess;
 import com.phloc.commons.string.StringHelper;
@@ -50,89 +41,12 @@ import com.phloc.commons.string.StringHelper;
 @Immutable
 public final class SimpleFileIO
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (SimpleFileIO.class);
-
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")
   private static final SimpleFileIO s_aInstance = new SimpleFileIO ();
 
   private SimpleFileIO ()
   {}
-
-  /**
-   * Copy the content of the source file to the destination file
-   * 
-   * @param aSrcFile
-   *        Source file. May not be <code>null</code>.
-   * @param aDestFile
-   *        Destination file. May not be <code>null</code>.
-   * @return {@link ESuccess}
-   */
-  @Nonnull
-  public static ESuccess copyFile (@Nonnull final File aSrcFile, @Nonnull final File aDestFile)
-  {
-    final FileInputStream aFIS = FileUtils.getInputStream (aSrcFile);
-    if (aFIS == null)
-      return ESuccess.FAILURE;
-
-    try
-    {
-      final FileOutputStream aFOS = FileUtils.getOutputStream (aDestFile);
-      if (aFOS == null)
-        return ESuccess.FAILURE;
-
-      try
-      {
-        final FileChannel aSrcChannel = aFIS.getChannel ();
-        final FileChannel aDestChannel = aFOS.getChannel ();
-        FileLock aSrcLock = null;
-        FileLock aDestLock = null;
-        try
-        {
-          final long nBytesToRead = aSrcChannel.size ();
-
-          // Shared read lock and exclusive write lock
-          aSrcLock = aSrcChannel.lock (0, nBytesToRead, true);
-          aDestLock = aDestChannel.lock ();
-
-          // Main copying - the loop version is much quicker than then
-          // transferTo with full size!
-          long nBytesWritten = 0;
-          final long nChunkSize = 1 * CGlobal.BYTES_PER_MEGABYTE;
-          while (nBytesWritten < nBytesToRead)
-            nBytesWritten += aSrcChannel.transferTo (nBytesWritten, nChunkSize, aDestChannel);
-
-          if (nBytesToRead != nBytesWritten)
-          {
-            s_aLogger.error ("Failed to copy file. Meant to read " + nBytesToRead + " bytes but wrote " + nBytesWritten);
-            return ESuccess.FAILURE;
-          }
-          return ESuccess.SUCCESS;
-        }
-        catch (final IOException ex)
-        {
-          throw new IllegalStateException ("Failed to copy from " + aSrcFile + " to " + aDestFile, ex);
-        }
-        finally
-        {
-          // Unlock
-          ChannelUtils.release (aDestLock);
-          ChannelUtils.release (aSrcLock);
-          // Close
-          StreamUtils.close (aSrcChannel);
-          StreamUtils.close (aDestChannel);
-        }
-      }
-      finally
-      {
-        StreamUtils.close (aFOS);
-      }
-    }
-    finally
-    {
-      StreamUtils.close (aFIS);
-    }
-  }
 
   /**
    * Get the content of the file as a byte array.
