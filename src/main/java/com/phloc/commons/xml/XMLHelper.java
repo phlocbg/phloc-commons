@@ -837,7 +837,8 @@ public final class XMLHelper
     final char [] aChars = s.toCharArray ();
     if (eIncorrectCharHandling.isTestRequired () && containsInvalidXMLCharacter (aChars))
     {
-      eIncorrectCharHandling.notifyOnInvalidXMLCharacter (s, getAllInvalidXMLCharacters (aChars));
+      final Set <Character> aInvalidCharacters = getAllInvalidXMLCharacters (aChars);
+      eIncorrectCharHandling.notifyOnInvalidXMLCharacter (s, aInvalidCharacters);
       if (eIncorrectCharHandling.isReplaceWithNothing ())
       {
         final int nResLen = StringHelper.getReplaceMultipleResultLength (aChars,
@@ -860,12 +861,16 @@ public final class XMLHelper
                                     @Nullable final String sText,
                                     @Nonnull final Writer aWriter) throws IOException
   {
-    if (eIncorrectCharHandling.isTestRequired () && sText != null)
+    if (StringHelper.hasNoText (sText))
+      return;
+
+    if (eIncorrectCharHandling.isTestRequired ())
     {
       final char [] aChars = sText.toCharArray ();
       if (containsInvalidXMLCharacter (aChars))
       {
-        eIncorrectCharHandling.notifyOnInvalidXMLCharacter (sText, getAllInvalidXMLCharacters (aChars));
+        final Set <Character> aInvalidCharacters = getAllInvalidXMLCharacters (aChars);
+        eIncorrectCharHandling.notifyOnInvalidXMLCharacter (sText, aInvalidCharacters);
         if (eIncorrectCharHandling.isReplaceWithNothing ())
         {
           StringHelper.replaceMultipleTo (sText, MASK_PATTERNS_ALL, MASK_REPLACE_ALL_EMPTY, aWriter);

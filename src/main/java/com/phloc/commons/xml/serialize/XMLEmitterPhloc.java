@@ -62,7 +62,7 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   private final Writer m_aWriter;
   private final IXMLWriterSettings m_aSettings;
   private EXMLVersion m_eXMLVersion = EXMLVersion.DEFAULT;
-  private final char m_cTextBoundary;
+  private final char m_cAttrValueBoundary;
 
   public XMLEmitterPhloc (@Nonnull @WillNotClose final Writer aWriter, @Nonnull final IXMLWriterSettings aSettings)
   {
@@ -72,7 +72,7 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
       throw new NullPointerException ("settings");
     m_aWriter = aWriter;
     m_aSettings = aSettings;
-    m_cTextBoundary = aSettings.isUseDoubleQuotesForAttributes () ? '"' : '\'';
+    m_cAttrValueBoundary = aSettings.isUseDoubleQuotesForAttributes () ? '"' : '\'';
   }
 
   /**
@@ -97,30 +97,30 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   }
 
   @Nonnull
-  private XMLEmitterPhloc _append (@Nonnull final String aValue)
+  private XMLEmitterPhloc _append (@Nonnull final String sValue)
   {
     try
     {
-      m_aWriter.write (aValue);
+      m_aWriter.write (sValue);
       return this;
     }
     catch (final IOException ex)
     {
-      throw new IllegalStateException (ex);
+      throw new IllegalStateException ("Failed to append string '" + sValue + "'", ex);
     }
   }
 
   @Nonnull
-  private XMLEmitterPhloc _append (final char aValue)
+  private XMLEmitterPhloc _append (final char cValue)
   {
     try
     {
-      m_aWriter.write (aValue);
+      m_aWriter.write (cValue);
       return this;
     }
     catch (final IOException ex)
     {
-      throw new IllegalStateException (ex);
+      throw new IllegalStateException ("Failed to append character '" + cValue + "'", ex);
     }
   }
 
@@ -134,14 +134,14 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
     }
     catch (final IOException ex)
     {
-      throw new IllegalStateException (ex);
+      throw new IllegalStateException ("Failed to append masked string '" + sValue + "'", ex);
     }
   }
 
   @Nonnull
   private XMLEmitterPhloc _appendAttrValue (@Nullable final String sValue)
   {
-    return _append (m_cTextBoundary)._appendMasked (sValue)._append (m_cTextBoundary);
+    return _append (m_cAttrValueBoundary)._appendMasked (sValue)._append (m_cAttrValueBoundary);
   }
 
   @Override
