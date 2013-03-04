@@ -62,8 +62,10 @@ public final class CommonsCleanup
     RegExPool.clearPatternCache ();
     CollatorUtils.clearCache ();
     LocaleUtils.clearCache ();
-    ClassHierarchyCache.clearCache ();
     JAXBContextCache.getInstance ().clearCache ();
     XMLSchemaCache.getInstance ().clearCache ();
+
+    // Clean this one last as it is used in equals and hashCode implementations!
+    ClassHierarchyCache.clearCache ();
   }
 }
