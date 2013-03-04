@@ -120,6 +120,7 @@ public final class FileSystemResource implements IReadWriteResource
   }
 
   @Nullable
+  @Deprecated
   public static Reader getReader (@Nonnull final File aFile, @Nonnull @Nonempty final String sCharset)
   {
     if (aFile == null)
@@ -148,6 +149,7 @@ public final class FileSystemResource implements IReadWriteResource
   }
 
   @Nullable
+  @Deprecated
   public Reader getReader (@Nonnull @Nonempty final String sCharset)
   {
     return getReader (m_aFile, sCharset);
@@ -171,6 +173,7 @@ public final class FileSystemResource implements IReadWriteResource
   }
 
   @Nullable
+  @Deprecated
   public static Writer getWriter (@Nonnull final File aFile,
                                   @Nonnull @Nonempty final String sCharset,
                                   @Nonnull final EAppend eAppend)
@@ -207,6 +210,7 @@ public final class FileSystemResource implements IReadWriteResource
   }
 
   @Nullable
+  @Deprecated
   public Writer getWriter (@Nonnull @Nonempty final String sCharset, @Nonnull final EAppend eAppend)
   {
     return getWriter (m_aFile, sCharset, eAppend);

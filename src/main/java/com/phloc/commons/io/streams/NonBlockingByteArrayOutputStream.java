@@ -280,6 +280,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
    * @return String decoded from the buffer's contents.
    */
   @Nonnull
+  @Deprecated
   public String getAsString (@Nonnull final String sCharset)
   {
     return CharsetManager.getAsString (m_aBuf, 0, m_nCount, sCharset);
@@ -304,6 +305,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
    * @return String decoded from the buffer's contents.
    */
   @Nonnull
+  @Deprecated
   public String getAsString (@Nonnegative final int nLength, @Nonnull final String sCharset)
   {
     if (nLength < 0 || nLength > m_nCount)
@@ -332,6 +334,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
    * @return String decoded from the buffer's contents.
    */
   @Nonnull
+  @Deprecated
   public String getAsString (@Nonnegative final int nIndex,
                              @Nonnegative final int nLength,
                              @Nonnull final String sCharset)

@@ -37,7 +37,7 @@ public final class CountingInputStreamTest
   public void testAll () throws IOException
   {
     final String sTestString = "test 123 - This counts!";
-    final CountingInputStream aCIS = new CountingInputStream (new NonBlockingByteArrayInputStream (sTestString.getBytes (CCharset.CHARSET_ISO_8859_1)));
+    final CountingInputStream aCIS = new CountingInputStream (new NonBlockingByteArrayInputStream (sTestString.getBytes (CCharset.CHARSET_ISO_8859_1_OBJ)));
     aCIS.read ();
     StreamUtils.copyInputStreamToOutputStream (aCIS, new NonBlockingByteArrayOutputStream ());
     assertEquals (sTestString.length (), aCIS.getBytesRead ());

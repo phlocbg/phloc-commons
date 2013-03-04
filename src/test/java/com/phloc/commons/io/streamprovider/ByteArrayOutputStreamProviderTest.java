@@ -45,17 +45,16 @@ public final class ByteArrayOutputStreamProviderTest
     final ByteArrayOutputStreamProvider aOSP = new ByteArrayOutputStreamProvider ();
     final OutputStream aOS = aOSP.getOutputStream (EAppend.DEFAULT);
     assertNotNull (aOS);
-    StreamUtils.copyInputStreamToOutputStreamAndCloseOS (new StringInputStream ("Hiho", CCharset.CHARSET_ISO_8859_1),
+    StreamUtils.copyInputStreamToOutputStreamAndCloseOS (new StringInputStream ("Hiho", CCharset.CHARSET_ISO_8859_1_OBJ),
                                                          aOS);
-    assertEquals ("Hiho", aOSP.getAsString (CCharset.CHARSET_ISO_8859_1));
     assertEquals ("Hiho", aOSP.getAsString (CCharset.CHARSET_ISO_8859_1_OBJ));
     assertArrayEquals (CharsetManager.getAsBytes ("Hiho", CCharset.CHARSET_ISO_8859_1_OBJ), aOSP.getBytes ());
     // Close the underlying OS
-    StreamUtils.close (aOSP.getWriter (CCharset.CHARSET_UTF_8, EAppend.DEFAULT));
+    StreamUtils.close (aOSP.getWriter (CCharset.CHARSET_UTF_8_OBJ, EAppend.DEFAULT));
 
     // Reader/Writer
     StreamUtils.copyReaderToWriterAndCloseWriter (new NonBlockingStringReader ("Hiho"),
-                                                  aOSP.getWriter (CCharset.CHARSET_UTF_8, EAppend.DEFAULT));
-    assertEquals ("Hiho", aOSP.getAsString (CCharset.CHARSET_UTF_8));
+                                                  aOSP.getWriter (CCharset.CHARSET_UTF_8_OBJ, EAppend.DEFAULT));
+    assertEquals ("Hiho", aOSP.getAsString (CCharset.CHARSET_UTF_8_OBJ));
   }
 }

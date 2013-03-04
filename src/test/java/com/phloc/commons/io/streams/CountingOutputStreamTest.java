@@ -38,7 +38,7 @@ public final class CountingOutputStreamTest
   {
     final String sTestString = "test 123 - This counts!";
     final CountingOutputStream aCOS = new CountingOutputStream (new NonBlockingByteArrayOutputStream ());
-    StreamUtils.copyInputStreamToOutputStream (new NonBlockingByteArrayInputStream (sTestString.getBytes (CCharset.CHARSET_ISO_8859_1)),
+    StreamUtils.copyInputStreamToOutputStream (new NonBlockingByteArrayInputStream (sTestString.getBytes (CCharset.CHARSET_ISO_8859_1_OBJ)),
                                                aCOS);
     assertEquals (sTestString.length (), aCOS.getBytesWritten ());
     aCOS.write (5);

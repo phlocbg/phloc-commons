@@ -44,21 +44,21 @@ public final class CountingFileOutputStreamTest
     {
       CountingFileOutputStream aCFOS = new CountingFileOutputStream (f);
       assertEquals (0, aCFOS.getBytesWritten ());
-      StreamUtils.copyInputStreamToOutputStream (new StringInputStream ("abc", CCharset.CHARSET_ISO_8859_1), aCFOS);
+      StreamUtils.copyInputStreamToOutputStream (new StringInputStream ("abc", CCharset.CHARSET_ISO_8859_1_OBJ), aCFOS);
       aCFOS.write ('a');
-      aCFOS.write ("axy".getBytes (CCharset.CHARSET_ISO_8859_1));
+      aCFOS.write ("axy".getBytes (CCharset.CHARSET_ISO_8859_1_OBJ));
       assertEquals (7, aCFOS.getBytesWritten ());
       aCFOS.close ();
       aCFOS = new CountingFileOutputStream (f, EAppend.APPEND);
-      aCFOS.write ("axy".getBytes (CCharset.CHARSET_ISO_8859_1));
+      aCFOS.write ("axy".getBytes (CCharset.CHARSET_ISO_8859_1_OBJ));
       assertEquals (3, aCFOS.getBytesWritten ());
       aCFOS.close ();
       aCFOS = new CountingFileOutputStream (f.getAbsolutePath ());
-      aCFOS.write ("axy".getBytes (CCharset.CHARSET_ISO_8859_1));
+      aCFOS.write ("axy".getBytes (CCharset.CHARSET_ISO_8859_1_OBJ));
       assertEquals (3, aCFOS.getBytesWritten ());
       aCFOS.close ();
       aCFOS = new CountingFileOutputStream (f.getAbsolutePath (), EAppend.APPEND);
-      aCFOS.write ("axy".getBytes (CCharset.CHARSET_ISO_8859_1));
+      aCFOS.write ("axy".getBytes (CCharset.CHARSET_ISO_8859_1_OBJ));
       assertEquals (3, aCFOS.getBytesWritten ());
       aCFOS.close ();
       assertNotNull (aCFOS.toString ());

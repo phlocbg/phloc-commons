@@ -87,7 +87,7 @@ public final class URLResourceTest extends AbstractPhlocTestCase
     assertTrue (aBytes.length > 0);
     assertNotNull (ur.getAsURL ());
     assertNotNull (ur.getAsFile ());
-    ur.getReader (CCharset.CHARSET_ISO_8859_1).close ();
+    ur.getReader (CCharset.CHARSET_ISO_8859_1_OBJ).close ();
 
     final URL aNoNExistingURL = new File ("pom2.xml").toURI ().toURL ();
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (ur, new URLResource (aFileURL));
@@ -115,8 +115,8 @@ public final class URLResourceTest extends AbstractPhlocTestCase
 
     assertNotNull (URLResource.getInputStream (aFileURL));
     assertNull (URLResource.getInputStream (aNoNExistingURL));
-    assertNotNull (new URLResource (aFileURL).getReader (CCharset.CHARSET_ISO_8859_1));
-    assertNull (new URLResource (aNoNExistingURL).getReader (CCharset.CHARSET_ISO_8859_1));
+    assertNotNull (new URLResource (aFileURL).getReader (CCharset.CHARSET_ISO_8859_1_OBJ));
+    assertNull (new URLResource (aNoNExistingURL).getReader (CCharset.CHARSET_ISO_8859_1_OBJ));
     try
     {
       URLResource.getInputStream (null);

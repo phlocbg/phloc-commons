@@ -58,16 +58,16 @@ public final class ClassPathHelperTest
     // Use default separator
     NonBlockingByteArrayOutputStream baos = new NonBlockingByteArrayOutputStream ();
     ClassPathHelper.printClassPathEntries (new PrintStream (baos, false, CCharset.CHARSET_ISO_8859_1));
-    assertTrue (baos.getAsString (CCharset.CHARSET_ISO_8859_1).length () > 0);
-    assertTrue (baos.getAsString (CCharset.CHARSET_ISO_8859_1).indexOf ("\n") > 0);
+    assertTrue (baos.getAsString (CCharset.CHARSET_ISO_8859_1_OBJ).length () > 0);
+    assertTrue (baos.getAsString (CCharset.CHARSET_ISO_8859_1_OBJ).indexOf ("\n") > 0);
     StreamUtils.close (baos);
 
     // Use special separator
     baos = new NonBlockingByteArrayOutputStream ();
     ClassPathHelper.printClassPathEntries (new PrintStream (baos, false, CCharset.CHARSET_ISO_8859_1), "$$$");
-    assertTrue (baos.getAsString (CCharset.CHARSET_ISO_8859_1).length () > 0);
-    assertTrue (baos.getAsString (CCharset.CHARSET_ISO_8859_1).indexOf ("$$$") > 0);
-    assertTrue (baos.getAsString (CCharset.CHARSET_UTF_8).indexOf ("$$$") > 0);
+    assertTrue (baos.getAsString (CCharset.CHARSET_ISO_8859_1_OBJ).length () > 0);
+    assertTrue (baos.getAsString (CCharset.CHARSET_ISO_8859_1_OBJ).indexOf ("$$$") > 0);
+    assertTrue (baos.getAsString (CCharset.CHARSET_UTF_8_OBJ).indexOf ("$$$") > 0);
     StreamUtils.close (baos);
   }
 }

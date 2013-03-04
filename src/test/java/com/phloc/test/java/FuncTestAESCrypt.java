@@ -167,7 +167,7 @@ public final class FuncTestAESCrypt
     final AESCrypter aCrypter = new AESCrypter (aMyKey);
 
     // Our cleartext
-    final byte [] cleartext = "This is just än example".getBytes (CCharset.CHARSET_ISO_8859_1);
+    final byte [] cleartext = "This is just än example".getBytes (CCharset.CHARSET_ISO_8859_1_OBJ);
 
     // Encrypt the cleartext
     final byte [] ciphertext = aCrypter.encrypt (cleartext);

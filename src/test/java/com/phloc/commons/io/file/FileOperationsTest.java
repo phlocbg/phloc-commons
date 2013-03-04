@@ -394,10 +394,10 @@ public final class FileOperationsTest
                       EFileIOErrorCode.TARGET_ALREADY_EXISTS);
 
       for (int i = 1; i <= 10; ++i)
-        SimpleFileIO.writeFile (new File (fDir, "file" + i), "Hallo", CCharset.CHARSET_ISO_8859_1);
+        SimpleFileIO.writeFile (new File (fDir, "file" + i), "Hallo", CCharset.CHARSET_ISO_8859_1_OBJ);
       _expectedSuccess (FileOperations.createDir (new File (fDir, "subdir")));
       for (int i = 1; i <= 10; ++i)
-        SimpleFileIO.writeFile (new File (fDir, "subdir/file" + i), "Hallo", CCharset.CHARSET_ISO_8859_1);
+        SimpleFileIO.writeFile (new File (fDir, "subdir/file" + i), "Hallo", CCharset.CHARSET_ISO_8859_1_OBJ);
       assertEquals (11, FileUtils.getDirectoryObjectCount (fDir));
 
       assertFalse (FileUtils.existsDir (fDir2));
@@ -465,11 +465,13 @@ public final class FileOperationsTest
       _expectedSuccess (FileOperations.createDir (aDir));
       for (int i = 0; i < 10; ++i)
       {
-        SimpleFileIO.writeFile (new File (aDir, "test" + i), "Inhalt von file test" + i, CCharset.CHARSET_ISO_8859_1);
+        SimpleFileIO.writeFile (new File (aDir, "test" + i),
+                                "Inhalt von file test" + i,
+                                CCharset.CHARSET_ISO_8859_1_OBJ);
         _expectedSuccess (FileOperations.createDir (new File (aDir, "subdir" + i)));
         SimpleFileIO.writeFile (new File (aDir, "subdir" + i + "/test" + i),
                                 "Inhalt von file subdir/test" + i,
-                                CCharset.CHARSET_ISO_8859_1);
+                                CCharset.CHARSET_ISO_8859_1_OBJ);
       }
       assertEquals (20, FileUtils.getDirectoryObjectCount (aDir));
       // Cannot use regular delete, because the directory is not empty!

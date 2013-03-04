@@ -74,6 +74,7 @@ public final class SimpleFileIO
    *         otherwise.
    */
   @Nullable
+  @Deprecated
   public static String readFileAsString (@Nullable final File aFile, @Nonnull final String sCharset)
   {
     return aFile == null ? null : StreamUtils.getAllBytesAsString (FileUtils.getInputStream (aFile), sCharset);
@@ -186,6 +187,7 @@ public final class SimpleFileIO
   }
 
   @Nonnull
+  @Deprecated
   public static ESuccess writeFile (@Nonnull final File aFile,
                                     @Nonnull final String sContent,
                                     @Nonnull final String sCharset)
@@ -204,6 +206,7 @@ public final class SimpleFileIO
   }
 
   @Nonnull
+  @Deprecated
   public static ESuccess writeFile (@Nonnull final File aFile,
                                     @Nonnull final List <String> aContent,
                                     @Nonnull final String sCharset)

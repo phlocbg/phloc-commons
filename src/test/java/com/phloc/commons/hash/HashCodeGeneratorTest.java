@@ -231,7 +231,7 @@ public final class HashCodeGeneratorTest
           aSB.append ("};");
           SimpleFileIO.writeFile (new File ("HashCode0" + new Date ().getTime () + ".txt"),
                                   aSB.toString (),
-                                  CCharset.CHARSET_ISO_8859_1);
+                                  CCharset.CHARSET_ISO_8859_1_OBJ);
           b.set (true);
           System.out.println ("Found match!");
         }

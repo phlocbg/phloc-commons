@@ -33,6 +33,7 @@ import com.phloc.commons.io.streams.StreamUtils;
  */
 public final class StringInputStreamProviderTest
 {
+  @SuppressWarnings ("deprecation")
   @Test
   public void testSimple ()
   {

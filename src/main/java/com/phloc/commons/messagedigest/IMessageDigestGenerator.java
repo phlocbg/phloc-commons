@@ -73,6 +73,7 @@ public interface IMessageDigestGenerator
    * @return this
    */
   @Nonnull
+  @Deprecated
   IMessageDigestGenerator update (@Nonnull String sValue, @Nonnull String sCharset);
 
   /**

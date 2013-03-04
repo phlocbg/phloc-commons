@@ -52,6 +52,7 @@ public class ByteArrayOutputStreamProvider implements IOutputStreamAndWriterProv
   }
 
   @Nonnull
+  @Deprecated
   public final OutputStreamWriter getWriter (@Nonnull final String sCharset, @Nonnull final EAppend eAppend)
   {
     return StreamUtils.createWriter (getOutputStream (eAppend), sCharset);
@@ -74,6 +75,7 @@ public class ByteArrayOutputStreamProvider implements IOutputStreamAndWriterProv
   }
 
   @Nonnull
+  @Deprecated
   public String getAsString (@Nonnull final String sCharset)
   {
     return m_aOS.getAsString (sCharset);

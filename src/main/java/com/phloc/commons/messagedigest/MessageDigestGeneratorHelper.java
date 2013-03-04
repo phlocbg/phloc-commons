@@ -96,6 +96,7 @@ public final class MessageDigestGeneratorHelper
   }
 
   @Nonnull
+  @Deprecated
   public static byte [] getDigest (@Nonnull final String sContent,
                                    @Nonnull @Nonempty final String sCharset,
                                    @Nonnull @Nonempty final EMessageDigestAlgorithm... aAlgorithms)

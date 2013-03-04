@@ -77,21 +77,21 @@ public final class SimpleFileIOTest
     final File aFile = new File ("umlaut-tests.txt");
     final String s = "defäöüabc";
     assertEquals ("Source encoding of the Java file must be UTF-8!", 9, s.length ());
-    assertNull (SimpleFileIO.readFileAsString (null, CCharset.CHARSET_ISO_8859_1));
-    assertTrue (SimpleFileIO.writeFile (aFile, s, CCharset.CHARSET_UTF_8).isSuccess ());
+    assertNull (SimpleFileIO.readFileAsString (null, CCharset.CHARSET_ISO_8859_1_OBJ));
+    assertTrue (SimpleFileIO.writeFile (aFile, s, CCharset.CHARSET_UTF_8_OBJ).isSuccess ());
     try
     {
-      final String t = SimpleFileIO.readFileAsString (aFile, CCharset.CHARSET_UTF_8);
+      final String t = SimpleFileIO.readFileAsString (aFile, CCharset.CHARSET_UTF_8_OBJ);
       assertEquals (s, t);
     }
     finally
     {
       assertTrue (FileOperations.deleteFile (aFile).isSuccess ());
     }
-    assertTrue (SimpleFileIO.writeFile (aFile, s, CCharset.CHARSET_ISO_8859_1).isSuccess ());
+    assertTrue (SimpleFileIO.writeFile (aFile, s, CCharset.CHARSET_ISO_8859_1_OBJ).isSuccess ());
     try
     {
-      final String t = SimpleFileIO.readFileAsString (aFile, CCharset.CHARSET_ISO_8859_1);
+      final String t = SimpleFileIO.readFileAsString (aFile, CCharset.CHARSET_ISO_8859_1_OBJ);
       assertEquals (s, t);
     }
     finally
@@ -108,7 +108,7 @@ public final class SimpleFileIOTest
     {
       assertTrue (SimpleFileIO.writeFile (aFile, new byte [10]).isSuccess ());
       assertTrue (SimpleFileIO.writeFile (aFile, new byte [10], 0, 5).isSuccess ());
-      assertTrue (SimpleFileIO.writeFile (aFile, "abc", CCharset.CHARSET_ISO_8859_1).isSuccess ());
+      assertTrue (SimpleFileIO.writeFile (aFile, "abc", CCharset.CHARSET_ISO_8859_1_OBJ).isSuccess ());
     }
     finally
     {
@@ -131,7 +131,7 @@ public final class SimpleFileIOTest
     {}
     try
     {
-      SimpleFileIO.writeFile (null, "abc", CCharset.CHARSET_ISO_8859_1);
+      SimpleFileIO.writeFile (null, "abc", CCharset.CHARSET_ISO_8859_1_OBJ);
       fail ();
     }
     catch (final NullPointerException ex)
