@@ -18,7 +18,7 @@
 package com.phloc.commons.io.file;
 
 import java.io.File;
-import java.io.OutputStream;
+import java.io.FileOutputStream;
 import java.nio.charset.Charset;
 import java.util.List;
 
@@ -34,7 +34,9 @@ import com.phloc.commons.state.ESuccess;
 import com.phloc.commons.string.StringHelper;
 
 /**
- * All kind of file handling stuff.
+ * All kind of file handling stuff. For other operations, please see
+ * {@link FileOperations} class or the instance based
+ * {@link FileOperationManager} class.
  * 
  * @author philip
  */
@@ -174,7 +176,7 @@ public final class SimpleFileIO
   @Nonnull
   public static ESuccess writeFile (@Nonnull final File aFile, @Nonnull final byte [] aContent)
   {
-    final OutputStream aFOS = FileUtils.getOutputStream (aFile);
+    final FileOutputStream aFOS = FileUtils.getOutputStream (aFile);
     return aFOS == null ? ESuccess.FAILURE : StreamUtils.writeStream (aFOS, aContent);
   }
 
@@ -184,7 +186,7 @@ public final class SimpleFileIO
                                     @Nonnegative final int nOffset,
                                     @Nonnegative final int nLength)
   {
-    final OutputStream aFOS = FileUtils.getOutputStream (aFile);
+    final FileOutputStream aFOS = FileUtils.getOutputStream (aFile);
     return aFOS == null ? ESuccess.FAILURE : StreamUtils.writeStream (aFOS, aContent, nOffset, nLength);
   }
 
@@ -194,7 +196,7 @@ public final class SimpleFileIO
                                     @Nonnull final String sContent,
                                     @Nonnull final String sCharset)
   {
-    final OutputStream aFOS = FileUtils.getOutputStream (aFile);
+    final FileOutputStream aFOS = FileUtils.getOutputStream (aFile);
     return aFOS == null ? ESuccess.FAILURE : StreamUtils.writeStream (aFOS, sContent, sCharset);
   }
 
@@ -203,7 +205,7 @@ public final class SimpleFileIO
                                     @Nonnull final String sContent,
                                     @Nonnull final Charset aCharset)
   {
-    final OutputStream aFOS = FileUtils.getOutputStream (aFile);
+    final FileOutputStream aFOS = FileUtils.getOutputStream (aFile);
     return aFOS == null ? ESuccess.FAILURE : StreamUtils.writeStream (aFOS, sContent, aCharset);
   }
 
