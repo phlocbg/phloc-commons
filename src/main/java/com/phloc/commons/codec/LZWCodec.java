@@ -31,7 +31,6 @@ import javax.annotation.WillNotClose;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.phloc.commons.CGlobal;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.io.streams.NonBlockingBitInputStream;
 import com.phloc.commons.io.streams.NonBlockingBitOutputStream;
@@ -59,7 +58,7 @@ final class LZWNode
 
   public LZWNode (@Nonnegative final int nTableIndex)
   {
-    if (nTableIndex < 0 || nTableIndex > 4095)
+    if (nTableIndex < 0 || nTableIndex >= AbstractLZWDictionary.MAX_CODE)
       throw new IllegalArgumentException ("Illegal table index: " + nTableIndex);
     m_nTableIndex = nTableIndex;
   }
@@ -72,19 +71,19 @@ final class LZWNode
     return m_nTableIndex;
   }
 
-  public void setNode (@Nonnegative final byte b, @Nonnull final LZWNode aNode)
+  public void setChildNode (@Nonnegative final byte nIndex, @Nonnull final LZWNode aNode)
   {
     if (aNode == null)
       throw new NullPointerException ("node");
     if (m_aChildren == null)
       m_aChildren = new LZWNode [256];
-    m_aChildren[b & 0xff] = aNode;
+    m_aChildren[nIndex & 0xff] = aNode;
   }
 
   @Nullable
-  public LZWNode getChildNode (final byte b)
+  public LZWNode getChildNode (final byte nIndex)
   {
-    return m_aChildren == null ? null : m_aChildren[b & 0xff];
+    return m_aChildren == null ? null : m_aChildren[nIndex & 0xff];
   }
 
   /**
@@ -96,7 +95,7 @@ final class LZWNode
    * @return The node that resides at the data path.
    */
   @Nullable
-  public LZWNode getNode (@Nonnull final byte [] aBuffer)
+  public LZWNode getChildNode (@Nonnull final byte [] aBuffer)
   {
     LZWNode aCurNode = this;
     for (final byte aByte : aBuffer)
@@ -144,7 +143,7 @@ abstract class AbstractLZWDictionary
     m_nCodeBits = 9;
   }
 
-  public final void addString (@Nonnull final byte [] aByteSeq, final boolean bForEncode)
+  public final void addEntry (@Nonnull final byte [] aByteSeq, final boolean bForEncode)
   {
     if (aByteSeq == null)
       throw new NullPointerException ("entry");
@@ -192,6 +191,7 @@ final class LZWDecodeDictionary extends AbstractLZWDictionary
     return aBIS.readBits (m_nCodeBits);
   }
 
+  @Nullable
   public byte [] getBytes (@Nonnegative final int nCode)
   {
     return m_aTab[nCode];
@@ -210,8 +210,8 @@ final class LZWEncodeDictionary extends AbstractLZWDictionary
   public void reset ()
   {
     super.reset ();
-    for (int i = 0; i <= CGlobal.MAX_BYTE_VALUE; ++i)
-      m_aRoot.setNode ((byte) i, new LZWNode (i));
+    for (int i = 0; i < 256; ++i)
+      m_aRoot.setChildNode ((byte) i, new LZWNode (i));
     m_aByteBuf.reset ();
   }
 
@@ -220,7 +220,7 @@ final class LZWEncodeDictionary extends AbstractLZWDictionary
     return m_nCodeBits;
   }
 
-  public void visit (final byte nByteToVisit)
+  public boolean visit (final byte nByteToVisit)
   {
     m_aByteBuf.write (nByteToVisit);
 
@@ -232,20 +232,24 @@ final class LZWEncodeDictionary extends AbstractLZWDictionary
       if (aCurNode == null)
       {
         // We found a new byte-sequence
-        aPrevNode.setNode (aByte, new LZWNode (m_nFreeCode));
-        addString (m_aByteBuf.toByteArray (), true);
+        aPrevNode.setChildNode (aByte, new LZWNode (m_nFreeCode));
+        addEntry (m_aByteBuf.toByteArray (), true);
 
         m_aByteBuf.reset ();
         m_aByteBuf.write (nByteToVisit);
-        break;
+        // Was added to the dictionary
+        return true;
       }
     }
+
+    // Not added to the dictionary
+    return false;
   }
 
   @Nullable
   public LZWNode getNode (@Nonnull final byte [] aBytes)
   {
-    return m_aRoot.getNode (aBytes);
+    return m_aRoot.getChildNode (aBytes);
   }
 }
 
@@ -287,6 +291,8 @@ public class LZWCodec implements ICodec
   {
     if (aEncodedIS == null)
       throw new NullPointerException ("encodedInputStream");
+    if (aOS == null)
+      throw new NullPointerException ("outputStream");
 
     final NonBlockingBitInputStream aBIS = new NonBlockingBitInputStream (aEncodedIS, ByteOrder.LITTLE_ENDIAN);
 
@@ -339,7 +345,7 @@ public class LZWCodec implements ICodec
                                             " while next free code is " +
                                             nNextFreeCode);
             aOS.write (aByteSeq);
-            aDict.addString (ArrayHelper.getConcatenated (aPrevByteSeq, aByteSeq[0]), false);
+            aDict.addEntry (ArrayHelper.getConcatenated (aPrevByteSeq, aByteSeq[0]), false);
             aPrevByteSeq = aByteSeq;
           }
         }
