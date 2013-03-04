@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.microdom.impl;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -41,6 +42,15 @@ public final class MicroText extends AbstractMicroNode implements IMicroText
   private final MicroDataAware m_aData;
   private final boolean m_bIgnorableWhitespace;
   private boolean m_bEscape = DEFAULT_ESCAPE;
+
+  public MicroText (@Nonnull final char [] aChars,
+                    @Nonnegative final int nOfs,
+                    @Nonnegative final int nLen,
+                    final boolean bIgnorableWhitespace)
+  {
+    m_aData = new MicroDataAware (aChars, nOfs, nLen);
+    m_bIgnorableWhitespace = bIgnorableWhitespace;
+  }
 
   public MicroText (@Nullable final CharSequence sText)
   {
@@ -99,6 +109,11 @@ public final class MicroText extends AbstractMicroNode implements IMicroText
   public void appendData (@Nullable final CharSequence sData)
   {
     m_aData.appendData (sData);
+  }
+
+  public void appendData (@Nonnull final char [] aChars, @Nonnegative final int nOfs, @Nonnegative final int nLen)
+  {
+    m_aData.appendData (aChars, nOfs, nLen);
   }
 
   public void prependData (@Nullable final CharSequence sData)

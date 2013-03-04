@@ -19,6 +19,7 @@ package com.phloc.commons.microdom.serialize;
 
 import java.io.IOException;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -35,6 +36,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.ext.LexicalHandler;
 
+import com.phloc.commons.microdom.EMicroNodeType;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroDocumentType;
 import com.phloc.commons.microdom.IMicroElement;
@@ -138,49 +140,61 @@ final class MicroSAXHandler implements EntityResolver, DTDHandler, ContentHandle
     m_aParent = m_aParent.getParent ();
   }
 
-  public void characters (final char [] aChars, final int nStart, final int nLength)
+  public void characters (@Nonnull final char [] aChars, @Nonnegative final int nStart, @Nonnegative final int nLength)
   {
-    final String sText = new String (aChars, nStart, nLength);
-
     if (m_bCDATAMode)
     {
       // CDATA mode
-      m_aParent.appendCDATA (sText);
+      m_aParent.appendCDATA (aChars, nStart, nLength);
     }
     else
     {
       // Regular text node
       final IMicroNode aLastChild = m_aParent.getLastChild ();
-      if (aLastChild instanceof IMicroText && !(((IMicroText) aLastChild).isElementContentWhitespace ()))
+      if (aLastChild != null && aLastChild.getType () == EMicroNodeType.TEXT)
       {
-        // Merge directly following text elements to one!
-        // This happens when compiling on the command line with JDK 1.6.0_04 in
-        // an ReaderXHTMLText in pDAF3!
-        ((IMicroText) aLastChild).appendData (sText);
+        final IMicroText aLastText = (IMicroText) aLastChild;
+        if (!aLastText.isElementContentWhitespace ())
+        {
+          // Merge directly following text nodes to one node!
+          // This may happen when compiling with JDK 1.6.0_04
+          aLastText.appendData (aChars, nStart, nLength);
+        }
+        else
+        {
+          // Add to parent
+          m_aParent.appendText (aChars, nStart, nLength);
+        }
       }
       else
       {
-        m_aParent.appendText (sText);
+        // Add to parent
+        m_aParent.appendText (aChars, nStart, nLength);
       }
     }
   }
 
-  public void ignorableWhitespace (final char [] aChars, final int nStart, final int nLength)
+  public void ignorableWhitespace (@Nonnull final char [] aChars,
+                                   @Nonnegative final int nStart,
+                                   @Nonnegative final int nLength)
   {
     if (m_bSaveIgnorableWhitespaces)
     {
-      final String sText = new String (aChars, nStart, nLength);
-
       final IMicroNode aLastChild = m_aParent.getLastChild ();
-      if (aLastChild instanceof IMicroText && ((IMicroText) aLastChild).isElementContentWhitespace ())
+      if (aLastChild != null && aLastChild.getType () == EMicroNodeType.TEXT)
       {
-        // Merge directly following text elements to one!
-        // This happens when compiling on the command line with JDK 1.6.0_04 in
-        // an ReaderXHTMLText in pDAF3!
-        ((IMicroText) aLastChild).appendData (sText);
+        final IMicroText aLastText = (IMicroText) aLastChild;
+        if (aLastText.isElementContentWhitespace ())
+        {
+          // Merge directly following text nodes to one node!
+          // This may happen when compiling with JDK 1.6.0_04
+          aLastText.appendData (aChars, nStart, nLength);
+        }
+        else
+          m_aParent.appendIgnorableWhitespaceText (aChars, nStart, nLength);
       }
       else
-        m_aParent.appendIgnorableWhitespaceText (sText);
+        m_aParent.appendIgnorableWhitespaceText (aChars, nStart, nLength);
     }
   }
 
@@ -266,7 +280,7 @@ final class MicroSAXHandler implements EntityResolver, DTDHandler, ContentHandle
     m_bCDATAMode = false;
   }
 
-  public void comment (final char [] aChars, final int nStart, final int nLength) throws SAXException
+  public void comment (@Nonnull final char [] aChars, @Nonnegative final int nStart, @Nonnegative final int nLength) throws SAXException
   {
     // Ignore comments in DTD
     if (!m_bDTDMode)
@@ -274,8 +288,7 @@ final class MicroSAXHandler implements EntityResolver, DTDHandler, ContentHandle
       // In case the comment comes before the root element....
       _createParentDocument ();
 
-      final String sComment = new String (aChars, nStart, nLength);
-      m_aParent.appendComment (sComment);
+      m_aParent.appendComment (aChars, nStart, nLength);
     }
   }
 

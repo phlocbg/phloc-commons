@@ -203,6 +203,23 @@ public interface IMicroNode extends ICloneable <IMicroNode>, IHasChildrenSorted 
   IMicroText appendText (@Nullable CharSequence sText) throws MicroException;
 
   /**
+   * Append a text node to this node.
+   * 
+   * @param aChars
+   *        Characters to append. May not be <code>null</code>
+   * @param nOfs
+   *        Offset into the array where to start copying data. May not be &lt,
+   *        0.
+   * @param nLen
+   *        Number of bytes to take from the array. May not be &lt, 0.
+   * @return The created text node.
+   * @throws MicroException
+   *         if this node cannot have children
+   */
+  @Nonnull
+  IMicroText appendText (@Nonnull char [] aChars, @Nonnegative int nOfs, @Nonnegative int nLen) throws MicroException;
+
+  /**
    * Append a text node to this node. If the type of the value is not
    * {@link String}, the {@link com.phloc.commons.typeconvert.TypeConverter} is
    * invoked to convert it to a {@link String} object.
@@ -229,16 +246,50 @@ public interface IMicroNode extends ICloneable <IMicroNode>, IHasChildrenSorted 
   IMicroText appendIgnorableWhitespaceText (@Nullable CharSequence sText) throws MicroException;
 
   /**
+   * Append a text node which is ignorable whitespace content to this node.
+   * 
+   * @param aChars
+   *        Characters to append. May not be <code>null</code>
+   * @param nOfs
+   *        Offset into the array where to start copying data. May not be &lt,
+   *        0.
+   * @param nLen
+   *        Number of bytes to take from the array. May not be &lt, 0.
+   * @return The created text node.
+   * @throws MicroException
+   *         if this node cannot have children
+   */
+  @Nonnull
+  IMicroText appendIgnorableWhitespaceText (@Nonnull char [] aChars, @Nonnegative int nOfs, @Nonnegative int nLen) throws MicroException;
+
+  /**
    * Append a CDATA node to this node.
    * 
    * @param sText
    *        CDATA text
-   * @return The created comment.
+   * @return The created CDATA.
    * @throws MicroException
    *         if this node cannot have children
    */
   @Nonnull
   IMicroCDATA appendCDATA (@Nullable CharSequence sText) throws MicroException;
+
+  /**
+   * Append a CDATA node to this node.
+   * 
+   * @param aChars
+   *        Characters to append. May not be <code>null</code>
+   * @param nOfs
+   *        Offset into the array where to start copying data. May not be &lt,
+   *        0.
+   * @param nLen
+   *        Number of bytes to take from the array. May not be &lt, 0.
+   * @return The created CDATA.
+   * @throws MicroException
+   *         if this node cannot have children
+   */
+  @Nonnull
+  IMicroCDATA appendCDATA (@Nonnull char [] aChars, @Nonnegative int nOfs, @Nonnegative int nLen) throws MicroException;
 
   /**
    * Append a comment node to this node.
@@ -251,6 +302,23 @@ public interface IMicroNode extends ICloneable <IMicroNode>, IHasChildrenSorted 
    */
   @Nonnull
   IMicroComment appendComment (@Nullable CharSequence sText) throws MicroException;
+
+  /**
+   * Append a comment node to this node.
+   * 
+   * @param aChars
+   *        Characters to append. May not be <code>null</code>
+   * @param nOfs
+   *        Offset into the array where to start copying data. May not be &lt,
+   *        0.
+   * @param nLen
+   *        Number of bytes to take from the array. May not be &lt, 0.
+   * @return The created comment.
+   * @throws MicroException
+   *         if this node cannot have children
+   */
+  @Nonnull
+  IMicroComment appendComment (@Nonnull char [] aChars, @Nonnegative int nOfs, @Nonnegative int nLen) throws MicroException;
 
   /**
    * Append an entity reference to this node.
