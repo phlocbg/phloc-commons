@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.microdom.serialize;
 
+import java.io.File;
 import java.io.OutputStream;
 import java.io.Writer;
 
@@ -30,6 +31,7 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
+import com.phloc.commons.io.file.FileUtils;
 import com.phloc.commons.io.streams.NonBlockingStringWriter;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.microdom.IMicroNode;
@@ -57,6 +59,50 @@ public final class MicroWriter
 
   private MicroWriter ()
   {}
+
+  /**
+   * Write a Micro Node to a file using the default settings.
+   * 
+   * @param aNode
+   *        The node to be serialized. May be any kind of node (incl.
+   *        documents). May not be <code>null</code>.
+   * @param aFile
+   *        The file to write to. May not be <code>null</code>.
+   * @return {@link ESuccess}
+   */
+  @Nonnull
+  public static ESuccess writeToFile (@Nonnull final IMicroNode aNode, @Nonnull final File aFile)
+  {
+    return writeToFile (aNode, aFile, XMLWriterSettings.DEFAULT_XML_SETTINGS);
+  }
+
+  /**
+   * Write a Micro Node to a file.
+   * 
+   * @param aNode
+   *        The node to be serialized. May be any kind of node (incl.
+   *        documents). May not be <code>null</code>.
+   * @param aFile
+   *        The file to write to. May not be <code>null</code>.
+   * @param aSettings
+   *        The settings to be used for the creation. May not be
+   *        <code>null</code>.
+   * @return {@link ESuccess}
+   */
+  @Nonnull
+  public static ESuccess writeToFile (@Nonnull final IMicroNode aNode,
+                                      @Nonnull final File aFile,
+                                      @Nonnull final IXMLWriterSettings aSettings)
+  {
+    if (aFile == null)
+      throw new NullPointerException ("file");
+
+    final OutputStream aOS = FileUtils.getOutputStream (aFile);
+    if (aOS == null)
+      return ESuccess.FAILURE;
+
+    return writeToStream (aNode, aOS, aSettings);
+  }
 
   /**
    * Write a Micro Node to an output stream using the default settings.
