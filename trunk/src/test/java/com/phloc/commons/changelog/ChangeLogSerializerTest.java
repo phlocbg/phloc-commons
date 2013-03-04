@@ -45,7 +45,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link ChangeLogSerializer}.
- *
+ * 
  * @author philip
  */
 public final class ChangeLogSerializerTest
@@ -106,12 +106,12 @@ public final class ChangeLogSerializerTest
 
     // 3. read again -> must be equal
     final ChangeLog aCL2 = ChangeLogSerializer.readChangeLog (new MicroDOMInputStreamProvider (aDoc,
-                                                                                               XMLWriterSettings.DEFAULT_XML_CHARSET));
+                                                                                               XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ));
     assertNotNull (aCL2);
 
     // 4. read again with XML Schema
     final Document aW3CDoc = XMLReader.readXMLDOM (new ReadableResourceSAXInputSource (new MicroDOMInputStreamProvider (aDoc,
-                                                                                                                        XMLWriterSettings.DEFAULT_XML_CHARSET),
+                                                                                                                        XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ),
                                                                                        null),
                                                    XMLSchemaCache.getInstance ()
                                                                  .getFromCache (CChangeLog.CHANGELOG_XSD_10));

@@ -73,7 +73,7 @@ public final class XMLWriterSettingsTest
     PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (mws,
                                                                         new XMLWriterSettings ().setIndent (EXMLSerializeIndent.NONE));
     PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (mws,
-                                                                        new XMLWriterSettings ().setCharset (CCharset.CHARSET_US_ASCII));
+                                                                        new XMLWriterSettings ().setCharset (CCharset.CHARSET_US_ASCII_OBJ));
     PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (mws,
                                                                         new XMLWriterSettings ().setNamespaceContext (new MapBasedNamespaceContext ().addMapping ("prefix",
                                                                                                                                                                   "uri")));
@@ -157,10 +157,10 @@ public final class XMLWriterSettingsTest
 
     try
     {
-      new XMLWriterSettings ().setCharset ("");
+      new XMLWriterSettings ().setCharset ((Charset) null);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
     try
     {

@@ -109,6 +109,7 @@ public final class SimpleFileIO
    *         otherwise.
    */
   @Nullable
+  @Deprecated
   public static List <String> readFileLines (@Nullable final File aFile, @Nonnull final String sCharset)
   {
     return aFile == null ? null : StreamUtils.readStreamLines (FileUtils.getInputStream (aFile), sCharset);
@@ -142,6 +143,7 @@ public final class SimpleFileIO
    * @param aTargetList
    *        The target list to be filled. May not be <code>null</code>.
    */
+  @Deprecated
   public static void readFileLines (@Nullable final File aFile,
                                     @Nonnull final String sCharset,
                                     @Nonnull final List <String> aTargetList)

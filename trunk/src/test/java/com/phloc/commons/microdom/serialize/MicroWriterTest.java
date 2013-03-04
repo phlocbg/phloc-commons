@@ -22,8 +22,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.nio.charset.UnsupportedCharsetException;
-
 import org.junit.Test;
 
 import com.phloc.commons.CGlobal;
@@ -71,7 +69,7 @@ public final class MicroWriterTest
     final XMLWriterSettings aSettings = new XMLWriterSettings ().setFormat (EXMLSerializeFormat.HTML);
     for (int nCharSet = 0; nCharSet < 2; ++nCharSet)
     {
-      aSettings.setCharset (nCharSet == 1 ? CCharset.CHARSET_ISO_8859_1 : CCharset.CHARSET_UTF_8);
+      aSettings.setCharset (nCharSet == 1 ? CCharset.CHARSET_ISO_8859_1_OBJ : CCharset.CHARSET_UTF_8_OBJ);
       for (final EXMLSerializeIndent eIndent : EXMLSerializeIndent.values ())
       {
         aSettings.setIndent (eIndent);
@@ -110,7 +108,7 @@ public final class MicroWriterTest
     final XMLWriterSettings aSettings = new XMLWriterSettings ();
     for (int nCharSet = 0; nCharSet < 2; ++nCharSet)
     {
-      aSettings.setCharset (nCharSet == 1 ? CCharset.CHARSET_ISO_8859_1 : CCharset.CHARSET_UTF_8);
+      aSettings.setCharset (nCharSet == 1 ? CCharset.CHARSET_ISO_8859_1_OBJ : CCharset.CHARSET_UTF_8_OBJ);
       for (final EXMLSerializeIndent eIndent : EXMLSerializeIndent.values ())
       {
         aSettings.setIndent (eIndent);
@@ -157,17 +155,6 @@ public final class MicroWriterTest
     }
     catch (final NullPointerException ex)
     {}
-
-    // Illegal charset
-    try
-    {
-      MicroWriter.getNodeAsString (aDoc, new XMLWriterSettings ().setCharset ("sichaNed"));
-      fail ();
-    }
-    catch (final IllegalArgumentException ex)
-    {
-      assertTrue (ex.getCause () instanceof UnsupportedCharsetException);
-    }
   }
 
   @Test
@@ -236,7 +223,7 @@ public final class MicroWriterTest
   public void testWithNamespaceContext ()
   {
     final XMLWriterSettings aSettings = new XMLWriterSettings ().setIndent (EXMLSerializeIndent.NONE)
-                                                                .setCharset (CCharset.CHARSET_ISO_8859_1);
+                                                                .setCharset (CCharset.CHARSET_ISO_8859_1_OBJ);
     final IMicroDocument aDoc = new MicroDocument ();
     final IMicroElement eRoot = aDoc.appendElement ("ns1url", "root");
     eRoot.appendElement ("ns2url", "child1");

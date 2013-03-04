@@ -102,7 +102,7 @@ public final class MicroReaderTest
     aDoc = MicroReader.readMicroXML (new NonBlockingStringReader (s));
     assertNotNull (aDoc);
 
-    aDoc = MicroReader.readMicroXML (new StringInputStreamProvider (s, CCharset.CHARSET_ISO_8859_1));
+    aDoc = MicroReader.readMicroXML (new StringInputStreamProvider (s, CCharset.CHARSET_ISO_8859_1_OBJ));
     assertNotNull (aDoc);
 
     aDoc = MicroReader.readMicroXML (new NonBlockingByteArrayInputStream (CharsetManager.getAsBytes (s,

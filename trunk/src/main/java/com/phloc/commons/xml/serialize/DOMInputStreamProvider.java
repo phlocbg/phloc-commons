@@ -53,6 +53,7 @@ public class DOMInputStreamProvider extends StringInputStreamProvider
    * @param sCharset
    *        The charset to use. May not be <code>null</code>.
    */
+  @Deprecated
   public DOMInputStreamProvider (@Nonnull final Node aNode, @Nonnull @Nonempty final String sCharset)
   {
     super (XMLWriter.getNodeAsString (aNode, new XMLWriterSettings ().setCharset (sCharset)), sCharset);

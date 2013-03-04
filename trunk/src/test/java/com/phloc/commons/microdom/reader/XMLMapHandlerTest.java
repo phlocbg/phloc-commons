@@ -107,13 +107,13 @@ public final class XMLMapHandlerTest
 
     String sXML = "<root><map value='b'/><map key='a'/><map key='c' value='d' /><map key='c' value='e' /></root>";
     final Map <String, String> aMap2 = XMLMapHandler.readMap (new StringInputStreamProvider (sXML,
-                                                                                             CCharset.CHARSET_ISO_8859_1));
+                                                                                             CCharset.CHARSET_ISO_8859_1_OBJ));
     assertNotNull (aMap2);
     assertEquals (1, aMap2.size ());
     assertEquals ("e", aMap2.get ("c"));
 
     sXML = "<?xml version=\"1.0\"?>";
-    assertNull (XMLMapHandler.readMap (new StringInputStreamProvider (sXML, CCharset.CHARSET_ISO_8859_1)));
+    assertNull (XMLMapHandler.readMap (new StringInputStreamProvider (sXML, CCharset.CHARSET_ISO_8859_1_OBJ)));
   }
 
   @Test

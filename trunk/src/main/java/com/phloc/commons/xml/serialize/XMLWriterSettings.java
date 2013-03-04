@@ -273,6 +273,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
    * @return this
    */
   @Nonnull
+  @Deprecated
   public XMLWriterSettings setCharset (@Nonnull final String sCharset)
   {
     return setCharset (CharsetManager.getCharsetFromName (sCharset));

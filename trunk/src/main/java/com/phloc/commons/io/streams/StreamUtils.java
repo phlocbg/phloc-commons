@@ -1050,6 +1050,7 @@ public final class StreamUtils
    */
   @Nullable
   @ReturnsMutableCopy
+  @Deprecated
   public static List <String> readStreamLines (@Nullable final IInputStreamProvider aISP,
                                                @Nonnull @Nonempty final String sCharset)
   {
@@ -1095,6 +1096,7 @@ public final class StreamUtils
    */
   @Nullable
   @ReturnsMutableCopy
+  @Deprecated
   public static List <String> readStreamLines (@Nullable final IInputStreamProvider aISP,
                                                @Nonnull @Nonempty final String sCharset,
                                                @Nonnegative final int nLinesToSkip,
@@ -1150,6 +1152,7 @@ public final class StreamUtils
    */
   @Nullable
   @ReturnsMutableCopy
+  @Deprecated
   public static List <String> readStreamLines (@WillClose @Nullable final InputStream aIS,
                                                @Nonnull @Nonempty final String sCharset)
   {
@@ -1186,6 +1189,7 @@ public final class StreamUtils
    * @param aTargetList
    *        The list to be filled with the lines. May not be <code>null</code>.
    */
+  @Deprecated
   public static void readStreamLines (@WillClose @Nullable final InputStream aIS,
                                       @Nonnull @Nonempty final String sCharset,
                                       @Nonnull final List <String> aTargetList)
@@ -1245,6 +1249,7 @@ public final class StreamUtils
    */
   @Nullable
   @ReturnsMutableCopy
+  @Deprecated
   public static List <String> readStreamLines (@WillClose @Nullable final InputStream aIS,
                                                @Nonnull @Nonempty final String sCharset,
                                                @Nonnegative final int nLinesToSkip,
@@ -1317,6 +1322,7 @@ public final class StreamUtils
    *        The callback that is invoked for all read lines. Each passed line
    *        does NOT contain the line delimiter!
    */
+  @Deprecated
   public static void readStreamLines (@WillClose @Nullable final InputStream aIS,
                                       @Nonnull @Nonempty final String sCharset,
                                       @Nonnull final INonThrowingRunnableWithParameter <String> aLineCallback)
@@ -1474,6 +1480,7 @@ public final class StreamUtils
    *        does NOT contain the line delimiter! Note: it is not invoked for
    *        skipped lines!
    */
+  @Deprecated
   public static void readStreamLines (@WillClose @Nullable final InputStream aIS,
                                       @Nonnull @Nonempty final String sCharset,
                                       @Nonnegative final int nLinesToSkip,

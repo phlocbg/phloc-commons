@@ -54,6 +54,7 @@ public class MicroDOMInputStreamProvider extends StringInputStreamProvider
    * @param sCharset
    *        The charset to use. May not be <code>null</code>.
    */
+  @Deprecated
   public MicroDOMInputStreamProvider (@Nonnull final IMicroNode aNode, @Nonnull @Nonempty final String sCharset)
   {
     super (MicroWriter.getNodeAsString (aNode, new XMLWriterSettings ().setCharset (sCharset)), sCharset);
