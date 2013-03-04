@@ -39,18 +39,31 @@ import com.phloc.commons.cache.AbstractNotifyingCache;
 @ThreadSafe
 public final class JAXBContextCache extends AbstractNotifyingCache <Package, JAXBContext>
 {
-  private static final JAXBContextCache s_aInstance = new JAXBContextCache ();
+  private static final class SingletonHolder
+  {
+    static final JAXBContextCache s_aInstance = new JAXBContextCache ();
+  }
+
   private static final Logger s_aLogger = LoggerFactory.getLogger (JAXBContextCache.class);
 
+  private static boolean s_bDefaultInstantiated = false;
+
   private JAXBContextCache ()
+
   {
     super (JAXBContextCache.class.getName ());
+  }
+
+  public static boolean isInstantiated ()
+  {
+    return s_bDefaultInstantiated;
   }
 
   @Nonnull
   public static JAXBContextCache getInstance ()
   {
-    return s_aInstance;
+    s_bDefaultInstantiated = true;
+    return SingletonHolder.s_aInstance;
   }
 
   @Override
