@@ -1731,6 +1731,7 @@ public final class ContainerHelperTest extends AbstractPhlocTestCase
     assertTrue (aUnmodifiableOrderedSet.contains ("Welt"));
   }
 
+  @SuppressFBWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   @Test
   public void testNewListPrefilled ()
   {

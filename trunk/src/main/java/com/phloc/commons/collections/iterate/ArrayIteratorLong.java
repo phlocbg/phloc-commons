@@ -23,8 +23,6 @@ import java.util.NoSuchElementException;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
-import org.apache.commons.collections.primitives.LongIterator;
-
 import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.equals.EqualsUtils;
@@ -36,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author philip
  */
-public final class ArrayIteratorLong implements LongIterator
+public final class ArrayIteratorLong
 {
   private final long [] m_aArray;
   private int m_nIndex;

@@ -23,8 +23,6 @@ import java.util.NoSuchElementException;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
-import org.apache.commons.collections.primitives.IntIterator;
-
 import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.equals.EqualsUtils;
@@ -36,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author philip
  */
-public final class ArrayIteratorInt implements IntIterator
+public final class ArrayIteratorInt
 {
   private final int [] m_aArray;
   private int m_nIndex;

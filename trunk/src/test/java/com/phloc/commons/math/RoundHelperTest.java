@@ -29,6 +29,8 @@ import org.junit.Test;
 import com.phloc.commons.math.RoundHelper.EDecimalType;
 import com.phloc.commons.mock.PhlocAssert;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Test class for class {@link RoundHelper}.
  * 
@@ -43,6 +45,7 @@ public final class RoundHelperTest
       assertSame (e, EDecimalType.valueOf (e.name ()));
   }
 
+  @SuppressFBWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   @Test
   public void testGetRounded ()
   {
@@ -88,6 +91,7 @@ public final class RoundHelperTest
     PhlocAssert.assertEquals (Double.NEGATIVE_INFINITY, RoundHelper.getRoundedUpFix (Double.NEGATIVE_INFINITY, 0));
   }
 
+  @SuppressFBWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   @Test
   public void testGetFormatted ()
   {

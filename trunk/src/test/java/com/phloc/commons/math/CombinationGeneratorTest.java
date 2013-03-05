@@ -34,7 +34,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link CombinationGenerator}.
- *
+ * 
  * @author philip
  */
 public final class CombinationGeneratorTest
@@ -72,7 +72,7 @@ public final class CombinationGeneratorTest
   }
 
   @Test
-  @SuppressFBWarnings (value = "NP_NONNULL_PARAM_VIOLATION")
+  @SuppressFBWarnings ({ "NP_NONNULL_PARAM_VIOLATION", "TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED" })
   public void testCtor ()
   {
     try
