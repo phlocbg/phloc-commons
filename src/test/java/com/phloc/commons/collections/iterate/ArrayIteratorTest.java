@@ -29,6 +29,8 @@ import org.junit.Test;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.mock.PhlocTestUtils;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Test class for class {@link ArrayIterator}.
  * 
@@ -36,6 +38,7 @@ import com.phloc.commons.mock.PhlocTestUtils;
  */
 public final class ArrayIteratorTest
 {
+  @SuppressFBWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   @Test
   public void testAll ()
   {

@@ -26,6 +26,8 @@ import org.junit.Test;
 
 import com.phloc.commons.CGlobal;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Test class for class {@link StatisticsHandlerSize}.
  * 
@@ -33,6 +35,7 @@ import com.phloc.commons.CGlobal;
  */
 public final class StatisticsHandlerSizeTest
 {
+  @SuppressFBWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
   @Test
   public void testAll ()
   {

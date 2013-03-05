@@ -31,8 +31,11 @@ import org.junit.Test;
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.equals.EqualsUtils;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 public final class FuncTestJavaBigDecimal
 {
+  @SuppressFBWarnings ("RV_RETURN_VALUE_IGNORED")
   @Test
   public void testDivide ()
   {

@@ -23,8 +23,6 @@ import java.util.NoSuchElementException;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
-import org.apache.commons.collections.primitives.BooleanIterator;
-
 import com.phloc.commons.annotations.UnsupportedOperation;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.equals.EqualsUtils;
@@ -36,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author philip
  */
-public final class ArrayIteratorBoolean implements BooleanIterator
+public final class ArrayIteratorBoolean
 {
   private final boolean [] m_aArray;
   private int m_nIndex;
@@ -46,7 +44,9 @@ public final class ArrayIteratorBoolean implements BooleanIterator
     this (aArray, 0, aArray.length);
   }
 
-  public ArrayIteratorBoolean (@Nonnull final boolean [] aArray, @Nonnegative final int nBegin, @Nonnegative final int nEnd)
+  public ArrayIteratorBoolean (@Nonnull final boolean [] aArray,
+                               @Nonnegative final int nBegin,
+                               @Nonnegative final int nEnd)
   {
     if (aArray == null)
       throw new NullPointerException ("array");
