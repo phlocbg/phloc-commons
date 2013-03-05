@@ -34,6 +34,7 @@ import com.phloc.commons.regex.RegExHelper;
 @Immutable
 public final class CodepointUtils
 {
+  @SuppressWarnings ("unused")
   @PresentForCodeCoverage
   private static final CodepointUtils s_aInstance = new CodepointUtils ();
 

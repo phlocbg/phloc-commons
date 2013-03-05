@@ -43,6 +43,7 @@ import com.phloc.commons.xml.schema.XMLSchemaCache;
 @Immutable
 public final class CommonsCleanup
 {
+  @SuppressWarnings ("unused")
   @PresentForCodeCoverage
   private static final CommonsCleanup s_aInstance = new CommonsCleanup ();
 

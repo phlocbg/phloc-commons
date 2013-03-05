@@ -42,6 +42,7 @@ public final class ResourceBundleUtils
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (ResourceBundleUtils.class);
 
+  @SuppressWarnings ("unused")
   @PresentForCodeCoverage
   private static final ResourceBundleUtils s_aInstance = new ResourceBundleUtils ();
 
