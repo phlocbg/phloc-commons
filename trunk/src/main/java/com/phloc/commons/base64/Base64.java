@@ -2481,7 +2481,7 @@ public final class Base64// NOPMD
       int numBytes = 0;
 
       // Open a stream
-      bis = new Base64.InputStream (new java.io.BufferedInputStream (new java.io.FileInputStream (file)), Base64.ENCODE);
+      bis = new Base64.InputStream (new BufferedInputStream (FileUtils.getInputStream (file)), Base64.ENCODE);
 
       // Read until done
       while ((numBytes = bis.read (buffer, length, 4096)) >= 0)
