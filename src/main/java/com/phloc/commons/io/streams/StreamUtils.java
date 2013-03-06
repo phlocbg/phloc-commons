@@ -32,6 +32,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.nio.charset.Charset;
@@ -1805,34 +1807,62 @@ public final class StreamUtils
   public static boolean isBuffered (@Nullable final InputStream aIS)
   {
     return aIS instanceof BufferedInputStream ||
+           aIS instanceof NonBlockingBufferedInputStream ||
            aIS instanceof ByteArrayInputStream ||
            aIS instanceof NonBlockingByteArrayInputStream ||
            aIS instanceof ByteBufferInputStream ||
            (aIS instanceof WrappedInputStream && isBuffered (((WrappedInputStream) aIS).getWrappedInputStream ()));
   }
 
+  @Nullable
+  public static InputStream getBuffered (@Nullable final InputStream aIS)
+  {
+    return aIS == null || isBuffered (aIS) ? aIS : new NonBlockingBufferedInputStream (aIS);
+  }
+
   public static boolean isBuffered (@Nullable final OutputStream aOS)
   {
     return aOS instanceof BufferedOutputStream ||
+           aOS instanceof NonBlockingBufferedOutputStream ||
            aOS instanceof ByteArrayOutputStream ||
            aOS instanceof NonBlockingByteArrayOutputStream ||
            aOS instanceof ByteBufferOutputStream ||
            (aOS instanceof WrappedOutputStream && isBuffered (((WrappedOutputStream) aOS).getWrappedOutputStream ()));
   }
 
+  @Nullable
+  public static OutputStream getBuffered (@Nullable final OutputStream aOS)
+  {
+    return aOS == null || isBuffered (aOS) ? aOS : new NonBlockingBufferedOutputStream (aOS);
+  }
+
   public static boolean isBuffered (@Nullable final Reader aReader)
   {
     return aReader instanceof BufferedReader ||
            aReader instanceof NonBlockingBufferedReader ||
+           aReader instanceof StringReader ||
            aReader instanceof NonBlockingStringReader ||
            (aReader instanceof WrappedReader && isBuffered (((WrappedReader) aReader).getWrappedReader ()));
+  }
+
+  @Nullable
+  public static Reader getBuffered (@Nullable final Reader aReader)
+  {
+    return aReader == null || isBuffered (aReader) ? aReader : new NonBlockingBufferedReader (aReader);
   }
 
   public static boolean isBuffered (@Nullable final Writer aWriter)
   {
     return aWriter instanceof BufferedWriter ||
            aWriter instanceof NonBlockingBufferedWriter ||
+           aWriter instanceof StringWriter ||
            aWriter instanceof NonBlockingStringWriter ||
            (aWriter instanceof WrappedWriter && isBuffered (((WrappedWriter) aWriter).getWrappedWriter ()));
+  }
+
+  @Nullable
+  public static Writer getBuffered (@Nullable final Writer aWriter)
+  {
+    return aWriter == null || isBuffered (aWriter) ? aWriter : new NonBlockingBufferedWriter (aWriter);
   }
 }

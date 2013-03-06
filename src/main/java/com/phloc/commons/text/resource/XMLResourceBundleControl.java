@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.text.resource;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -86,7 +85,7 @@ public final class XMLResourceBundleControl extends ResourceBundle.Control
           {
             try
             {
-              final BufferedInputStream aBufferedIS = new BufferedInputStream (aIS);
+              final InputStream aBufferedIS = StreamUtils.getBuffered (aIS);
               try
               {
                 return new XMLResourceBundle (aBufferedIS);

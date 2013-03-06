@@ -22,6 +22,16 @@
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
   <entry date="2013-03-06" category="api" action="add">
     <change>
+      <text locale="en">Added new methods in StreamUtils for identifying and creating buffered InputStream, OutputStream, Reader and Writer objects</text>
+    </change>
+  </entry>
+  <entry date="2013-03-06" category="api" action="add">
+    <change>
+      <text locale="en">Added new classes NonBlockingBufferedInputStream and NonBlockingBufferedOutputStream</text>
+    </change>
+  </entry>
+  <entry date="2013-03-06" category="api" action="add">
+    <change>
       <text locale="en">Added method to get an input stream on a file via memory mapping.</text>
     </change>
   </entry>

@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.io.streams;
 
-import java.io.BufferedInputStream;
 import java.io.Closeable;
 import java.io.EOFException;
 import java.io.IOException;
@@ -76,7 +75,7 @@ public class NonBlockingBitInputStream implements Closeable
       throw new NullPointerException ("inputStream");
     if (aByteOrder == null)
       throw new NullPointerException ("byteOrder");
-    m_aIS = new BufferedInputStream (aIS);
+    m_aIS = StreamUtils.getBuffered (aIS);
     m_bHighOrderBitFirst = aByteOrder.equals (ByteOrder.LITTLE_ENDIAN);
     m_nNextBitIndex = CGlobal.BITS_PER_BYTE;
   }

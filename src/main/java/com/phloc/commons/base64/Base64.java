@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.base64;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -2430,7 +2429,7 @@ public final class Base64// NOPMD
       buffer = new byte [(int) file.length ()];
 
       // Open a stream
-      bis = new Base64.InputStream (new BufferedInputStream (FileUtils.getInputStream (file)), Base64.DECODE);
+      bis = new Base64.InputStream (StreamUtils.getBuffered (FileUtils.getInputStream (file)), Base64.DECODE);
 
       // Read until done
       while ((numBytes = bis.read (buffer, length, 4096)) >= 0)
@@ -2481,7 +2480,7 @@ public final class Base64// NOPMD
       int numBytes = 0;
 
       // Open a stream
-      bis = new Base64.InputStream (new BufferedInputStream (FileUtils.getInputStream (file)), Base64.ENCODE);
+      bis = new Base64.InputStream (StreamUtils.getBuffered (FileUtils.getInputStream (file)), Base64.ENCODE);
 
       // Read until done
       while ((numBytes = bis.read (buffer, length, 4096)) >= 0)
