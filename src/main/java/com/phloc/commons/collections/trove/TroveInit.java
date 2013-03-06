@@ -30,6 +30,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 @Immutable
 public final class TroveInit
 {
+  @SuppressWarnings ("unused")
   @PresentForCodeCoverage
   private static final TroveInit s_aInstance = new TroveInit ();
 

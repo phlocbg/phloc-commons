@@ -23,9 +23,15 @@ import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 
+/**
+ * Some utility methods for Trove.
+ * 
+ * @author helger
+ */
 @Immutable
 public final class TroveUtils
 {
+  @SuppressWarnings ("unused")
   @PresentForCodeCoverage
   private static final TroveUtils s_aInstance = new TroveUtils ();
 
