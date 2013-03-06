@@ -44,7 +44,7 @@ import com.phloc.commons.typeconvert.TypeConverter;
  * 
  * @author philip
  */
-abstract class AbstractMicroNodeWithChildren extends AbstractMicroNode implements IMicroNodeWithChildren
+public abstract class AbstractMicroNodeWithChildren extends AbstractMicroNode implements IMicroNodeWithChildren
 {
   /** The list of child elements. May be <code>null</code>. */
   private List <IMicroNode> m_aChildren;
@@ -304,8 +304,12 @@ abstract class AbstractMicroNodeWithChildren extends AbstractMicroNode implement
     if (nMax != nMaxRhs)
       return false;
     for (int i = 0; i < nMax; ++i)
-      if (!m_aChildren.get (i).isEqualContent (rhs.m_aChildren.get (i)))
+    {
+      final IMicroNode aChild1 = m_aChildren.get (i);
+      final IMicroNode aChild2 = rhs.m_aChildren.get (i);
+      if (!aChild1.isEqualContent (aChild2))
         return false;
+    }
     return true;
   }
 
