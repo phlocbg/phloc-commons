@@ -44,6 +44,12 @@ public class WrappedInputStream extends InputStream
     m_aWrappedIS = aWrappedIS;
   }
 
+  @Nonnull
+  public InputStream getWrappedInputStream ()
+  {
+    return m_aWrappedIS;
+  }
+
   @Override
   public int read () throws IOException
   {

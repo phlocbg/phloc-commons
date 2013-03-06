@@ -17,6 +17,12 @@
  */
 package com.phloc.commons.io.streams;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.EOFException;
 import java.io.Flushable;
@@ -1794,5 +1800,39 @@ public final class StreamUtils
       nTotalBytesRead += nBytesRead;
     }
     return nTotalBytesRead;
+  }
+
+  public static boolean isBuffered (@Nullable final InputStream aIS)
+  {
+    return aIS instanceof BufferedInputStream ||
+           aIS instanceof ByteArrayInputStream ||
+           aIS instanceof NonBlockingByteArrayInputStream ||
+           aIS instanceof ByteBufferInputStream ||
+           (aIS instanceof WrappedInputStream && isBuffered (((WrappedInputStream) aIS).getWrappedInputStream ()));
+  }
+
+  public static boolean isBuffered (@Nullable final OutputStream aOS)
+  {
+    return aOS instanceof BufferedOutputStream ||
+           aOS instanceof ByteArrayOutputStream ||
+           aOS instanceof NonBlockingByteArrayOutputStream ||
+           aOS instanceof ByteBufferOutputStream ||
+           (aOS instanceof WrappedOutputStream && isBuffered (((WrappedOutputStream) aOS).getWrappedOutputStream ()));
+  }
+
+  public static boolean isBuffered (@Nullable final Reader aReader)
+  {
+    return aReader instanceof BufferedReader ||
+           aReader instanceof NonBlockingBufferedReader ||
+           aReader instanceof NonBlockingStringReader ||
+           (aReader instanceof WrappedReader && isBuffered (((WrappedReader) aReader).getWrappedReader ()));
+  }
+
+  public static boolean isBuffered (@Nullable final Writer aWriter)
+  {
+    return aWriter instanceof BufferedWriter ||
+           aWriter instanceof NonBlockingBufferedWriter ||
+           aWriter instanceof NonBlockingStringWriter ||
+           (aWriter instanceof WrappedWriter && isBuffered (((WrappedWriter) aWriter).getWrappedWriter ()));
   }
 }

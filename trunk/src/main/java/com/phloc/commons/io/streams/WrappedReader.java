@@ -43,6 +43,12 @@ public class WrappedReader extends Reader
     m_aWrappedReader = aWrappedReader;
   }
 
+  @Nonnull
+  public Reader getWrappedReader ()
+  {
+    return m_aWrappedReader;
+  }
+
   @Override
   public int read (@Nonnull final CharBuffer aTarget) throws IOException
   {
