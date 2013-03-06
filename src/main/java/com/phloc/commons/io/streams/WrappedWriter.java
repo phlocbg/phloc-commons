@@ -43,6 +43,12 @@ public class WrappedWriter extends Writer
     m_aWrappedWriter = aWrappedWriter;
   }
 
+  @Nonnull
+  public Writer getWrappedWriter ()
+  {
+    return m_aWrappedWriter;
+  }
+
   @Override
   public void write (final int c) throws IOException
   {

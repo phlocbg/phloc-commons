@@ -343,7 +343,7 @@ public final class FileUtils
       throw new NullPointerException ("file");
 
     final FileInputStream aFIS = _getFileInputStream (aFile);
-    if (aFIS != null)
+    if (false && aFIS != null)
     {
       // Check if using a memory mapped file makes sense (file size > 1MB)
       final FileChannel aChannel = aFIS.getChannel ();
@@ -586,14 +586,10 @@ public final class FileUtils
 
     // Open random access file, as only those files deliver a channel that is
     // readable and writable
-    RandomAccessFile aRAF;
-    try
+    final RandomAccessFile aRAF = getRandomAccessFile (aFile, ERandomAccessFileMode.READ_WRITE);
+    if (aRAF == null)
     {
-      aRAF = new RandomAccessFile (aFile, "rw");
-    }
-    catch (final FileNotFoundException ex)
-    {
-      s_aLogger.error ("Failed to open file " + aFile + " for read+write", ex);
+      s_aLogger.error ("Failed to open random access file " + aFile);
       return null;
     }
 
@@ -606,6 +602,32 @@ public final class FileUtils
     StreamUtils.close (aRAF);
     s_aLogger.warn ("Failed to map file " + aFile + ". Falling though to regular FileOutputStream");
     return _getFileOutputStream (aFile, eAppend);
+  }
+
+  @Nullable
+  public static RandomAccessFile getRandomAccessFile (@Nonnull final String sFilename,
+                                                      @Nonnull final ERandomAccessFileMode eMode)
+  {
+    return getRandomAccessFile (new File (sFilename), eMode);
+  }
+
+  @Nullable
+  public static RandomAccessFile getRandomAccessFile (@Nonnull final File aFile,
+                                                      @Nonnull final ERandomAccessFileMode eMode)
+  {
+    if (aFile == null)
+      throw new NullPointerException ("file");
+    if (eMode == null)
+      throw new NullPointerException ("mode");
+
+    try
+    {
+      return new RandomAccessFile (aFile, eMode.getMode ());
+    }
+    catch (final FileNotFoundException ex)
+    {
+      return null;
+    }
   }
 
   /**

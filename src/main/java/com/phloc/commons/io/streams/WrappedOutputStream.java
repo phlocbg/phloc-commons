@@ -42,6 +42,12 @@ public class WrappedOutputStream extends OutputStream
     m_aWrappedOS = aWrappedOS;
   }
 
+  @Nonnull
+  public OutputStream getWrappedOutputStream ()
+  {
+    return m_aWrappedOS;
+  }
+
   @Override
   public void write (final int n) throws IOException
   {
