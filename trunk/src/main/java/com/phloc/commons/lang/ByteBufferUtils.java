@@ -33,6 +33,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 @Immutable
 public final class ByteBufferUtils
 {
+  @SuppressWarnings ("unused")
   @PresentForCodeCoverage
   private static final ByteBufferUtils s_aInstance = new ByteBufferUtils ();
 
