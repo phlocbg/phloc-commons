@@ -19,6 +19,7 @@ package com.phloc.commons.io.channels;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.channels.Channel;
 import java.nio.channels.FileLock;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
@@ -33,6 +34,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
+import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.mock.IMockException;
 import com.phloc.commons.state.ESuccess;
 
@@ -168,6 +170,14 @@ public final class ChannelUtils
       aBuffer.clear ();
     }
     return nBytesWritten;
+  }
+
+  @Nonnull
+  public static ESuccess close (@Nullable final Channel aChannel)
+  {
+    if (aChannel != null && aChannel.isOpen ())
+      return StreamUtils.close (aChannel);
+    return ESuccess.FAILURE;
   }
 
   @Nonnull

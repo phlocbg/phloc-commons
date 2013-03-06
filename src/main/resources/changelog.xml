@@ -20,6 +20,16 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2013-03-06" category="api" action="add">
+    <change>
+      <text locale="en">Added method to get an input stream on a file via memory mapping.</text>
+    </change>
+  </entry>
+  <entry date="2013-03-06" category="api" action="add">
+    <change>
+      <text locale="en">Added new ByteBuffer related classes: ByteBufferInputStream, ByteBuffersInputStream and ByteBufferOutputStream</text>
+    </change>
+  </entry>
   <entry date="2013-03-05" category="api" action="remove">
     <change>
       <text locale="en">Removed the Apache commons-primitive elements in favour of Trove4J</text>

@@ -24,6 +24,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileChannel.MapMode;
 import java.util.List;
 
 import javax.annotation.Nonnegative;
@@ -42,8 +47,10 @@ import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.io.EAppend;
 import com.phloc.commons.io.misc.SizeHelper;
+import com.phloc.commons.io.streams.ByteBufferInputStream;
 import com.phloc.commons.io.streams.CountingFileInputStream;
 import com.phloc.commons.io.streams.CountingFileOutputStream;
+import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.state.EChange;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -259,17 +266,8 @@ public final class FileUtils
   }
 
   @Nullable
-  public static FileInputStream getInputStream (@Nonnull final String sFilename)
+  private static FileInputStream _getFileInputStream (@Nonnull final File aFile)
   {
-    return getInputStream (new File (sFilename));
-  }
-
-  @Nullable
-  public static FileInputStream getInputStream (@Nonnull final File aFile)
-  {
-    if (aFile == null)
-      throw new NullPointerException ("file");
-
     try
     {
       return new CountingFileInputStream (aFile);
@@ -277,6 +275,117 @@ public final class FileUtils
     catch (final FileNotFoundException ex)
     {
       return null;
+    }
+  }
+
+  @Nullable
+  public static FileChannel getFileReadChannel (@Nonnull final String sFilename)
+  {
+    return getFileReadChannel (new File (sFilename));
+  }
+
+  @Nullable
+  public static FileChannel getFileReadChannel (@Nonnull final File aFile)
+  {
+    if (aFile == null)
+      throw new NullPointerException ("file");
+
+    final FileInputStream aFIS = _getFileInputStream (aFile);
+    return aFIS == null ? null : aFIS.getChannel ();
+  }
+
+  @Nullable
+  private static FileOutputStream _getFileOutputStream (@Nonnull final File aFile, @Nonnull final EAppend eAppend)
+  {
+    try
+    {
+      return new CountingFileOutputStream (aFile, eAppend);
+    }
+    catch (final FileNotFoundException ex)
+    {
+      s_aLogger.warn ("Failed to create output stream for '" +
+                      aFile +
+                      "'; append: " +
+                      eAppend +
+                      ": " +
+                      ex.getClass ().getName () +
+                      " - " +
+                      ex.getMessage ());
+      return null;
+    }
+  }
+
+  @Nullable
+  public static FileChannel getFileWriteChannel (@Nonnull final String sFilename)
+  {
+    return getFileWriteChannel (sFilename, EAppend.DEFAULT);
+  }
+
+  @Nullable
+  public static FileChannel getFileWriteChannel (@Nonnull final String sFilename, @Nonnull final EAppend eAppend)
+  {
+    return getFileWriteChannel (new File (sFilename), eAppend);
+  }
+
+  @Nullable
+  public static FileChannel getFileWriteChannel (@Nonnull final File aFile)
+  {
+    return getFileWriteChannel (aFile, EAppend.DEFAULT);
+  }
+
+  @Nullable
+  public static FileChannel getFileWriteChannel (@Nonnull final File aFile, @Nonnull final EAppend eAppend)
+  {
+    if (aFile == null)
+      throw new NullPointerException ("file");
+    if (eAppend == null)
+      throw new NullPointerException ("append");
+
+    final FileOutputStream aFOS = _getFileOutputStream (aFile, eAppend);
+    return aFOS == null ? null : aFOS.getChannel ();
+  }
+
+  @Nullable
+  public static InputStream getInputStream (@Nonnull final String sFilename)
+  {
+    return getInputStream (new File (sFilename));
+  }
+
+  @Nullable
+  public static InputStream getInputStream (@Nonnull final File aFile)
+  {
+    if (aFile == null)
+      throw new NullPointerException ("file");
+
+    return _getFileInputStream (aFile);
+  }
+
+  /**
+   * Get an input stream to the specified file, using memory mapping. If memory
+   * mapping fails, a regular {@link FileInputStream} is returned.
+   * 
+   * @param aFile
+   *        The file to use. May not be <code>null</code>.
+   * @return The Input stream to use.
+   */
+  @Nullable
+  public static InputStream getMappedInputStream (@Nonnull final File aFile)
+  {
+    final FileChannel aChannel = getFileReadChannel (aFile);
+    if (aChannel == null)
+      return null;
+
+    try
+    {
+      final MappedByteBuffer aBuffer = aChannel.map (MapMode.READ_ONLY, 0, aChannel.size ());
+      return new ByteBufferInputStream (aBuffer);
+    }
+    catch (final IOException ex)
+    {
+      // As the channel was opened, close it
+      StreamUtils.close (aChannel);
+      s_aLogger.warn ("Failed to map file " + aFile + ". Falling though to regular FileInputStream");
+      return _getFileInputStream (aFile);
     }
   }
 
@@ -289,7 +398,7 @@ public final class FileUtils
    * @return <code>null</code> if the file could not be opened
    */
   @Nullable
-  public static FileOutputStream getOutputStream (@Nonnull final String sFilename)
+  public static OutputStream getOutputStream (@Nonnull final String sFilename)
   {
     return getOutputStream (sFilename, EAppend.DEFAULT);
   }
@@ -304,7 +413,7 @@ public final class FileUtils
    * @return <code>null</code> if the file could not be opened
    */
   @Nullable
-  public static FileOutputStream getOutputStream (@Nonnull final String sFilename, @Nonnull final EAppend eAppend)
+  public static OutputStream getOutputStream (@Nonnull final String sFilename, @Nonnull final EAppend eAppend)
   {
     return getOutputStream (new File (sFilename), eAppend);
   }
@@ -366,22 +475,7 @@ public final class FileUtils
     }
 
     // OK, parent is present
-    try
-    {
-      return new CountingFileOutputStream (aFile, eAppend);
-    }
-    catch (final FileNotFoundException ex)
-    {
-      s_aLogger.warn ("Failed to create output stream for '" +
-                      aFile +
-                      "'; append: " +
-                      eAppend +
-                      ": " +
-                      ex.getClass ().getName () +
-                      " - " +
-                      ex.getMessage ());
-      return null;
-    }
+    return _getFileOutputStream (aFile, eAppend);
   }
 
   /**
