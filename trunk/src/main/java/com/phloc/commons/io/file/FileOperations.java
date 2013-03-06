@@ -18,8 +18,6 @@
 package com.phloc.commons.io.file;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
@@ -33,8 +31,8 @@ import org.slf4j.LoggerFactory;
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.equals.EqualsUtils;
+import com.phloc.commons.io.EAppend;
 import com.phloc.commons.io.channels.ChannelUtils;
-import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.state.ESuccess;
 
 /**
@@ -487,20 +485,18 @@ public final class FileOperations
   @Nonnull
   private static ESuccess _copyFile (@Nonnull final File aSrcFile, @Nonnull final File aDestFile)
   {
-    final FileInputStream aFIS = FileUtils.getInputStream (aSrcFile);
-    if (aFIS == null)
+    final FileChannel aSrcChannel = FileUtils.getFileReadChannel (aSrcFile);
+    if (aSrcChannel == null)
       return ESuccess.FAILURE;
 
     try
     {
-      final FileOutputStream aFOS = FileUtils.getOutputStream (aDestFile);
-      if (aFOS == null)
+      final FileChannel aDstChannel = FileUtils.getFileWriteChannel (aDestFile, EAppend.TRUNCATE);
+      if (aDstChannel == null)
         return ESuccess.FAILURE;
 
       try
       {
-        final FileChannel aSrcChannel = aFIS.getChannel ();
-        final FileChannel aDestChannel = aFOS.getChannel ();
         FileLock aSrcLock = null;
         FileLock aDestLock = null;
         try
@@ -509,14 +505,14 @@ public final class FileOperations
 
           // Shared read lock and exclusive write lock
           aSrcLock = aSrcChannel.lock (0, nBytesToRead, true);
-          aDestLock = aDestChannel.lock ();
+          aDestLock = aDstChannel.lock ();
 
           // Main copying - the loop version is much quicker than then
           // transferTo with full size!
           long nBytesWritten = 0;
           final long nChunkSize = 1 * CGlobal.BYTES_PER_MEGABYTE;
           while (nBytesWritten < nBytesToRead)
-            nBytesWritten += aSrcChannel.transferTo (nBytesWritten, nChunkSize, aDestChannel);
+            nBytesWritten += aSrcChannel.transferTo (nBytesWritten, nChunkSize, aDstChannel);
 
           if (nBytesToRead != nBytesWritten)
           {
@@ -534,19 +530,16 @@ public final class FileOperations
           // Unlock
           ChannelUtils.release (aDestLock);
           ChannelUtils.release (aSrcLock);
-          // Close
-          StreamUtils.close (aSrcChannel);
-          StreamUtils.close (aDestChannel);
         }
       }
       finally
       {
-        StreamUtils.close (aFOS);
+        ChannelUtils.close (aDstChannel);
       }
     }
     finally
     {
-      StreamUtils.close (aFIS);
+      ChannelUtils.close (aSrcChannel);
     }
   }
 

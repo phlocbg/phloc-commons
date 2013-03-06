@@ -236,8 +236,9 @@ public class NonBlockingByteArrayInputStream extends InputStream implements Seri
    * <p>
    * Note: The <code>readAheadLimit</code> for this class has no meaning.
    */
+  @SuppressWarnings ("sync-override")
   @Override
-  public synchronized void mark (final int readAheadLimit)
+  public void mark (final int readAheadLimit)
   {
     m_nMark = m_nPos;
   }
@@ -246,8 +247,9 @@ public class NonBlockingByteArrayInputStream extends InputStream implements Seri
    * Resets the buffer to the marked position. The marked position is 0 unless
    * another position was marked or an offset was specified in the constructor.
    */
+  @SuppressWarnings ("sync-override")
   @Override
-  public synchronized void reset ()
+  public void reset ()
   {
     m_nPos = m_nMark;
   }

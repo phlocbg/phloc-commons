@@ -62,6 +62,18 @@ public class DebugInputStream extends WrappedInputStream
     s_aLogger.info ("Skipped " + nBytesSkipped + " byte(s); now at " + nNewPosition);
   }
 
+  @OverrideOnDemand
+  protected void onMark (final int nReadLimit, final long nCurrentPosition)
+  {
+    s_aLogger.info ("Marked at " + nCurrentPosition + " with read-limit of " + nReadLimit);
+  }
+
+  @OverrideOnDemand
+  protected void onReset (final long nCurrentPosition)
+  {
+    s_aLogger.info ("Reset at " + nCurrentPosition);
+  }
+
   @Override
   public final int read () throws IOException
   {
@@ -96,6 +108,20 @@ public class DebugInputStream extends WrappedInputStream
       onSkip (nSkipped, m_nPosition);
     }
     return nSkipped;
+  }
+
+  @Override
+  public final synchronized void mark (@Nonnegative final int nReadlimit)
+  {
+    super.mark (nReadlimit);
+    onMark (nReadlimit, m_nPosition);
+  }
+
+  @Override
+  public final synchronized void reset () throws IOException
+  {
+    super.reset ();
+    onReset (m_nPosition);
   }
 
   @Override
