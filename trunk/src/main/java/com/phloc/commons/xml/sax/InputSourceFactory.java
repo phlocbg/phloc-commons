@@ -31,6 +31,7 @@ import org.xml.sax.InputSource;
 
 import com.phloc.commons.io.IInputStreamProvider;
 import com.phloc.commons.io.IReadableResource;
+import com.phloc.commons.io.file.FileUtils;
 import com.phloc.commons.io.resource.FileSystemResource;
 import com.phloc.commons.io.resource.URLResource;
 import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
@@ -70,6 +71,15 @@ public final class InputSourceFactory
   @Nonnull
   public static InputSource create (@Nonnull final IReadableResource aResource)
   {
+    if (aResource instanceof FileSystemResource)
+    {
+      final File aFile = aResource.getAsFile ();
+      if (aFile != null)
+      {
+        // Potentially use memory mapped files
+        return create (FileUtils.getInputStream (aFile));
+      }
+    }
     return new ReadableResourceSAXInputSource (aResource);
   }
 
