@@ -36,6 +36,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.net.Socket;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -189,6 +190,35 @@ public final class StreamUtils
       }
     }
 
+    return ESuccess.FAILURE;
+  }
+
+  /**
+   * Special close version for {@link Socket} as they are not implementing
+   * {@link Closeable} :(
+   * 
+   * @param aSocket
+   *        The socket to be closed. May be <code>null</code>.
+   * @return {@link ESuccess} if the object was successfully closed.
+   */
+  @Nonnull
+  public static ESuccess close (@Nullable @WillClose final Socket aSocket)
+  {
+    if (aSocket != null && !aSocket.isClosed ())
+    {
+      try
+      {
+        // close object
+        aSocket.close ();
+        return ESuccess.SUCCESS;
+      }
+      catch (final IOException ex)
+      {
+        if (!isKnownEOFException (ex))
+          s_aLogger.error ("Failed to close socket " + aSocket.getClass ().getName (),
+                           ex instanceof IMockException ? null : ex);
+      }
+    }
     return ESuccess.FAILURE;
   }
 
