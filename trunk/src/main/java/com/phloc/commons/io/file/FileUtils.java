@@ -411,7 +411,8 @@ public final class FileUtils
   {
     try
     {
-      final MappedByteBuffer aBuffer = aChannel.map (MapMode.READ_WRITE, 0, Long.MAX_VALUE);
+      // Maximum is Integer.MAX_VALUE even if a long is taken!
+      final MappedByteBuffer aBuffer = aChannel.map (MapMode.READ_WRITE, 0, Integer.MAX_VALUE);
       return new ByteBufferOutputStream (aBuffer, false);
     }
     catch (final IOException ex)
@@ -546,6 +547,24 @@ public final class FileUtils
 
     // OK, parent is present and writable
     return _getFileOutputStream (aFile, eAppend);
+  }
+
+  @Nullable
+  public static OutputStream getMappedOutputStream (@Nonnull final String sFilename)
+  {
+    return getMappedOutputStream (new File (sFilename));
+  }
+
+  @Nullable
+  public static OutputStream getMappedOutputStream (@Nonnull final String sFilename, @Nonnull final EAppend eAppend)
+  {
+    return getMappedOutputStream (new File (sFilename), eAppend);
+  }
+
+  @Nullable
+  public static OutputStream getMappedOutputStream (@Nonnull final File aFile)
+  {
+    return getMappedOutputStream (aFile, EAppend.DEFAULT);
   }
 
   @Nullable
