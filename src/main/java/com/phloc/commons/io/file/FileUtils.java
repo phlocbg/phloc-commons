@@ -26,6 +26,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.RandomAccessFile;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileChannel.MapMode;
@@ -53,6 +54,7 @@ import com.phloc.commons.io.streams.ByteBufferInputStream;
 import com.phloc.commons.io.streams.ByteBufferOutputStream;
 import com.phloc.commons.io.streams.CountingFileInputStream;
 import com.phloc.commons.io.streams.CountingFileOutputStream;
+import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.state.EValidity;
 
@@ -297,11 +299,13 @@ public final class FileUtils
   }
 
   @Nullable
-  private static InputStream _getMappedInputStream (@Nonnull @WillNotClose final FileChannel aChannel)
+  private static InputStream _getMappedInputStream (@Nonnull @WillNotClose final FileChannel aChannel,
+                                                    @Nonnull final File aFile)
   {
     try
     {
       final MappedByteBuffer aBuffer = aChannel.map (MapMode.READ_ONLY, 0, aChannel.size ());
+      s_aLogger.info ("Created memory mapped input stream for " + aFile);
       return new ByteBufferInputStream (aBuffer);
     }
     catch (final IOException ex)
@@ -346,7 +350,7 @@ public final class FileUtils
       if (getFileSize (aChannel) > CGlobal.BYTES_PER_MEGABYTE)
       {
         // Check if mapping is possible
-        final InputStream aIS = _getMappedInputStream (aChannel);
+        final InputStream aIS = _getMappedInputStream (aChannel, aFile);
         if (aIS != null)
           return aIS;
 
@@ -376,7 +380,7 @@ public final class FileUtils
       return null;
 
     // Try to memory map it
-    final InputStream aIS = _getMappedInputStream (aFIS.getChannel ());
+    final InputStream aIS = _getMappedInputStream (aFIS.getChannel (), aFile);
     if (aIS != null)
       return aIS;
 
@@ -407,12 +411,14 @@ public final class FileUtils
   }
 
   @Nullable
-  private static OutputStream _getMappedOutputStream (@Nonnull @WillNotClose final FileChannel aChannel)
+  private static OutputStream _getMappedOutputStream (@Nonnull @WillNotClose final FileChannel aChannel,
+                                                      @Nonnull final File aFile)
   {
     try
     {
       // Maximum is Integer.MAX_VALUE even if a long is taken!
       final MappedByteBuffer aBuffer = aChannel.map (MapMode.READ_WRITE, 0, Integer.MAX_VALUE);
+      s_aLogger.info ("Created memory mapped output stream for " + aFile);
       return new ByteBufferOutputStream (aBuffer, false);
     }
     catch (final IOException ex)
@@ -578,19 +584,28 @@ public final class FileUtils
     if (_checkParentDirectoryExistanceAndAccess (aFile).isInvalid ())
       return null;
 
-    // Open regular
-    final FileOutputStream aFOS = _getFileOutputStream (aFile, eAppend);
-    if (aFOS == null)
+    // Open random access file, as only those files deliver a channel that is
+    // readable and writable
+    RandomAccessFile aRAF;
+    try
+    {
+      aRAF = new RandomAccessFile (aFile, "rw");
+    }
+    catch (final FileNotFoundException ex)
+    {
+      s_aLogger.error ("Failed to open file " + aFile + " for read+write", ex);
       return null;
+    }
 
     // Try to memory map it
-    final OutputStream aOS = _getMappedOutputStream (aFOS.getChannel ());
+    final OutputStream aOS = _getMappedOutputStream (aRAF.getChannel (), aFile);
     if (aOS != null)
       return aOS;
 
     // Memory mapping failed - return the original output stream
+    StreamUtils.close (aRAF);
     s_aLogger.warn ("Failed to map file " + aFile + ". Falling though to regular FileOutputStream");
-    return aFOS;
+    return _getFileOutputStream (aFile, eAppend);
   }
 
   /**
