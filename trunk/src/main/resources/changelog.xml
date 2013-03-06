@@ -27,11 +27,6 @@
   </entry>
   <entry date="2013-03-06" category="api" action="add">
     <change>
-      <text locale="en">Added support for memory mapped files in FileUtils</text>
-    </change>
-  </entry>
-  <entry date="2013-03-06" category="api" action="add">
-    <change>
       <text locale="en">Added new methods in StreamUtils for identifying and creating buffered InputStream, OutputStream, Reader and Writer objects</text>
     </change>
   </entry>
@@ -42,7 +37,7 @@
   </entry>
   <entry date="2013-03-06" category="api" action="add">
     <change>
-      <text locale="en">Added method to get an input stream on a file via memory mapping.</text>
+      <text locale="en">Added support for memory mapped files in FileUtils (read and write)</text>
     </change>
   </entry>
   <entry date="2013-03-06" category="api" action="add">
