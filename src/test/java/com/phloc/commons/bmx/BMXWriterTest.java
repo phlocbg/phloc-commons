@@ -21,16 +21,18 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.util.Random;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.phloc.commons.collections.trove.TroveInit;
-import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.microdom.IMicroDocument;
+import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.IMicroNode;
+import com.phloc.commons.microdom.impl.MicroDocument;
 import com.phloc.commons.microdom.serialize.MicroReader;
 import com.phloc.commons.microdom.serialize.MicroWriter;
+import com.phloc.commons.random.VerySecureRandom;
 import com.phloc.commons.timing.StopWatch;
 
 /**
@@ -65,7 +67,41 @@ public final class BMXWriterTest
     assertTrue (aDoc.isEqualContent (aNode));
   }
 
-  @Ignore
+  private IMicroDocument createLargeDoc ()
+  {
+    final Random aRandom = VerySecureRandom.getInstance ();
+    final IMicroDocument aDoc = new MicroDocument ();
+    final IMicroElement eRoot = aDoc.appendElement ("root");
+    for (int i = 0; i < 100; ++i)
+    {
+      final IMicroElement eChild1 = eRoot.appendElement ("element" + (i / 3));
+      for (int j = 0; j < 100; ++j)
+      {
+        final IMicroElement eChild2 = eChild1.appendElement ("element" + (i / 3));
+        for (int j2 = 0; j2 < 6; ++j2)
+        {
+          final IMicroElement eChild3 = eChild2.appendElement ("element" + (j / 3));
+          for (int k = 0; k < 5; ++k)
+          {
+            final String sElementName = "element" + i + j + k;
+            final IMicroElement eChild4 = eChild3.appendElement (sElementName);
+            if ((k % 2) == 1)
+            {
+              eChild4.setAttribute ("k", k);
+              final char [] aChar = new char [30 + aRandom.nextInt (20)];
+              for (int x = 0; x < aChar.length; ++x)
+                aChar[x] = (char) ('a' + aRandom.nextInt (7));
+              eChild4.appendText (aChar, 0, aChar.length);
+            }
+            else
+              eChild4.setAttribute ("iandj", i + j);
+          }
+        }
+      }
+    }
+    return aDoc;
+  }
+
   @Test
   public void testStandardXML ()
   {
@@ -73,15 +109,8 @@ public final class BMXWriterTest
     final File aFile1 = new File ("target/junittest", "standard.bmx");
     final File aFile2 = new File ("target/junittest", "standard2.bmx");
     final int nMax = 1;
-    IMicroDocument aDoc = null;
-
-    for (int i = 0; i < nMax; ++i)
-    {
-      aSW.restart ();
-      aDoc = MicroReader.readMicroXML (new ClassPathResource ("bmx/standard.xml"));
-      assertNotNull (aDoc);
-      System.out.println ("Reading via SAX took " + aSW.stopAndGetMillis () + "ms");
-    }
+    final IMicroDocument aDoc = createLargeDoc ();
+    System.out.println ("Created test document");
 
     for (int i = 0; i < nMax; ++i)
     {

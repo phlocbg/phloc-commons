@@ -17,19 +17,13 @@
  */
 package com.phloc.commons.bmx;
 
-import java.nio.charset.Charset;
-
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
-import com.phloc.commons.charset.CCharset;
 
 @Immutable
 public final class CBMXIO
 {
-  /** The storage encoding of all strings in this table */
-  public static final Charset ENCODING = CCharset.CHARSET_UTF_8_OBJ;
-
   /** Version number of format v1 - must be 4 bytes, all ASCII! */
   public static final byte [] VERSION1 = new byte [] { 'B', 'M', 'X', '1' };
 

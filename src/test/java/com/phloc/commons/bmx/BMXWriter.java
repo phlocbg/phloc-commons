@@ -274,7 +274,7 @@ public class BMXWriter
     if (aFile == null)
       throw new NullPointerException ("file");
 
-    final OutputStream aFOS = FileUtils.getMappedOutputStream (aFile);
+    final OutputStream aFOS = FileUtils.getOutputStream (aFile);
     if (aFOS == null)
       return ESuccess.FAILURE;
 

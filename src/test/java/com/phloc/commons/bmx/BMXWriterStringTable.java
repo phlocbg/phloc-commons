@@ -32,25 +32,25 @@ import com.phloc.commons.string.ToStringGenerator;
 
 final class BMXWriterStringTable
 {
-  private final DataOutput m_aDOS;
+  private final DataOutput m_aDO;
   private final TObjectIntMap <String> m_aStrings;
   private int m_nLastUsedIndex = CBMXIO.INDEX_NULL_STRING;
   private final boolean m_bReUseStrings;
 
-  public BMXWriterStringTable (@Nonnull final DataOutput aDOS, final boolean bReUseStrings)
+  public BMXWriterStringTable (@Nonnull final DataOutput aDO, final boolean bReUseStrings)
   {
-    m_aDOS = aDOS;
+    m_aDO = aDO;
     m_bReUseStrings = bReUseStrings;
     m_aStrings = bReUseStrings ? new TObjectIntHashMap <String> (1000) : null;
   }
 
   private void _onNewString (@Nonnull final String sString) throws IOException
   {
-    m_aDOS.writeByte (CBMXIO.NODETYPE_STRING);
+    m_aDO.writeByte (CBMXIO.NODETYPE_STRING);
     final char [] aChars = sString.toCharArray ();
-    m_aDOS.writeInt (aChars.length);
+    m_aDO.writeInt (aChars.length);
     for (final char cChar : aChars)
-      m_aDOS.writeChar (cChar);
+      m_aDO.writeChar (cChar);
   }
 
   public int addString (@Nullable final CharSequence aString) throws IOException
