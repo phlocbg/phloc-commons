@@ -20,8 +20,6 @@ package com.phloc.commons.bmx;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 
-import java.nio.CharBuffer;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -38,9 +36,9 @@ final class BMXReaderStringTable
     m_aStringTable = bReUseStrings ? new TIntObjectHashMap <String> (1000) : null;
   }
 
-  public void add (@Nonnull final CharBuffer aCB)
+  public void add (@Nonnull final char [] aCB)
   {
-    add (aCB.toString ());
+    add (new String (aCB));
   }
 
   public void add (@Nonnull final String s)

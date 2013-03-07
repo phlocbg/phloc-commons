@@ -22,13 +22,11 @@ import gnu.trove.map.hash.TObjectIntHashMap;
 
 import java.io.DataOutput;
 import java.io.IOException;
-import java.nio.ByteBuffer;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.phloc.commons.charset.StringEncoder;
 import com.phloc.commons.collections.trove.TroveUtils;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -38,7 +36,6 @@ final class BMXWriterStringTable
   private final TObjectIntMap <String> m_aStrings;
   private int m_nLastUsedIndex = CBMXIO.INDEX_NULL_STRING;
   private final boolean m_bReUseStrings;
-  private final StringEncoder s_aEncoder = new StringEncoder (CBMXIO.ENCODING);
 
   public BMXWriterStringTable (@Nonnull final DataOutput aDOS, final boolean bReUseStrings)
   {
@@ -50,9 +47,10 @@ final class BMXWriterStringTable
   private void _onNewString (@Nonnull final String sString) throws IOException
   {
     m_aDOS.writeByte (CBMXIO.NODETYPE_STRING);
-    final ByteBuffer aBytes = s_aEncoder.getAsNewByteBuffer (sString);
-    m_aDOS.writeInt (aBytes.limit ());
-    m_aDOS.write (aBytes.array (), aBytes.arrayOffset (), aBytes.limit ());
+    final char [] aChars = sString.toCharArray ();
+    m_aDOS.writeInt (aChars.length);
+    for (final char cChar : aChars)
+      m_aDOS.writeChar (cChar);
   }
 
   public int addString (@Nullable final CharSequence aString) throws IOException
