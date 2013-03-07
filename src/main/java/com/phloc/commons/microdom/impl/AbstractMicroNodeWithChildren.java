@@ -29,6 +29,8 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.annotations.ReturnsMutableObject;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.microdom.EMicroEvent;
+import com.phloc.commons.microdom.EMicroNodeType;
+import com.phloc.commons.microdom.IMicroCDATA;
 import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.microdom.IMicroNodeWithChildren;
 import com.phloc.commons.microdom.IMicroText;
@@ -251,16 +253,20 @@ public abstract class AbstractMicroNodeWithChildren extends AbstractMicroNode im
 
     final StringBuilder aSB = new StringBuilder ();
     for (final IMicroNode aChild : directGetChildren ())
-      if (aChild.isText ())
+    {
+      final EMicroNodeType eType = aChild.getType ();
+      if (eType == EMicroNodeType.TEXT)
       {
+        final IMicroText aText = (IMicroText) aChild;
         // ignore whitespace-only content
         if (!((IMicroText) aChild).isElementContentWhitespace ())
-          aSB.append (aChild.getNodeValue ());
+          aSB.append (aText.getData ());
       }
       else
-        if (aChild.isCDATA ())
+        if (eType == EMicroNodeType.CDATA)
         {
-          aSB.append (aChild.getNodeValue ());
+          final IMicroCDATA aCDATA = (IMicroCDATA) aChild;
+          aSB.append (aCDATA.getNodeValue ());
         }
         else
           if (aChild instanceof IMicroNodeWithChildren)
@@ -270,6 +276,7 @@ public abstract class AbstractMicroNodeWithChildren extends AbstractMicroNode im
             if (StringHelper.hasText (sTextContent))
               aSB.append (sTextContent);
           }
+    }
     return aSB.toString ();
   }
 
