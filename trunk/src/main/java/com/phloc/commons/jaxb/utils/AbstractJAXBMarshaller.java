@@ -218,7 +218,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
    *         <code>false</code> otherwise. It's <code>true</code> by default.
    */
   @OverrideOnDemand
-  protected boolean useJAXContextCache ()
+  protected boolean useJAXBContextCache ()
   {
     return true;
   }
@@ -243,7 +243,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   private Unmarshaller _createUnmarshaller () throws JAXBException
   {
     final Package aPackage = m_aType.getPackage ();
-    final JAXBContext aJAXBContext = useJAXContextCache () ? JAXBContextCache.getInstance ().getFromCache (aPackage)
+    final JAXBContext aJAXBContext = useJAXBContextCache () ? JAXBContextCache.getInstance ().getFromCache (aPackage)
                                                           : JAXBContext.newInstance (aPackage.getName ());
 
     // create an Unmarshaller
@@ -356,7 +356,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   private Marshaller _createMarshaller () throws JAXBException
   {
     final Package aPackage = m_aType.getPackage ();
-    final JAXBContext aJAXBContext = useJAXContextCache () ? JAXBContextCache.getInstance ().getFromCache (aPackage)
+    final JAXBContext aJAXBContext = useJAXBContextCache () ? JAXBContextCache.getInstance ().getFromCache (aPackage)
                                                           : JAXBContext.newInstance (aPackage.getName ());
 
     // create an Unmarshaller
