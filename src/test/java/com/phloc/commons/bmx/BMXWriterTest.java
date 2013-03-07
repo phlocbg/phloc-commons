@@ -77,15 +77,15 @@ public final class BMXWriterTest
       final IMicroElement eChild1 = eRoot.appendElement ("element" + (i / 3));
       for (int j = 0; j < 100; ++j)
       {
-        final IMicroElement eChild2 = eChild1.appendElement ("element" + (i / 3));
-        for (int j2 = 0; j2 < 6; ++j2)
+        final IMicroElement eChild2 = eChild1.appendElement ("element" + (j / 3));
+        for (int j2 = 0; j2 < 16; ++j2)
         {
-          final IMicroElement eChild3 = eChild2.appendElement ("element" + (j / 3));
+          final IMicroElement eChild3 = eChild2.appendElement ("element" + (j2 / 2));
           for (int k = 0; k < 5; ++k)
           {
             final String sElementName = "element" + i + j + k;
             final IMicroElement eChild4 = eChild3.appendElement (sElementName);
-            if ((k % 2) == 1)
+            if ((k & 1) == 1)
             {
               eChild4.setAttribute ("k", k);
               final char [] aChar = new char [30 + aRandom.nextInt (20)];
