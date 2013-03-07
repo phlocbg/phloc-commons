@@ -111,7 +111,7 @@ public final class BMXReader
       final NonBlockingStack <IMicroNode> aNodeStack = new NonBlockingStack <IMicroNode> ();
       IMicroNode aLastNode = null;
       final BMXReaderStringTable aST = new BMXReaderStringTable (!aSettings.isSet (EBMXSetting.NO_STRINGTABLE));
-      byte [] aBuf = new byte [1024];
+      final byte [] aBuf = new byte [1024];
       final StringDecoder aDecoder = new StringDecoder (CBMXIO.ENCODING);
 
       int nNodeType;
@@ -175,10 +175,10 @@ public final class BMXReader
           case CBMXIO.NODETYPE_STRING:
           {
             final int nLength = aContentDIS.readInt ();
-            if (nLength > aBuf.length)
-              aBuf = new byte [Math.max (nLength, aBuf.length * 2)];
-            aContentDIS.readFully (aBuf, 0, nLength);
-            aST.add (aDecoder.finish (aBuf, 0, nLength));
+            final char [] aChars = new char [nLength];
+            for (int i = 0; i < nLength; ++i)
+              aChars[i] = aContentDIS.readChar ();
+            aST.add (aChars);
             break;
           }
           case CBMXIO.SPECIAL_CHILDREN_START:
