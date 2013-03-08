@@ -216,11 +216,26 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
    * 
    * @return <code>true</code> if the {@link JAXBContextCache} should be used,
    *         <code>false</code> otherwise. It's <code>true</code> by default.
+   * @deprecated Because it contains a typo!
+   */
+  @Deprecated
+  protected boolean useJAXContextCache ()
+  {
+    return true;
+  }
+
+  /**
+   * Should the {@link JAXBContextCache} be used? Since creating the JAXB
+   * context is quite cost intensive this is recommended.
+   * 
+   * @return <code>true</code> if the {@link JAXBContextCache} should be used,
+   *         <code>false</code> otherwise. It's <code>true</code> by default.
    */
   @OverrideOnDemand
   protected boolean useJAXBContextCache ()
   {
-    return true;
+    // FIXME return true once the deprecated method is gone
+    return useJAXContextCache ();
   }
 
   /**
@@ -244,7 +259,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   {
     final Package aPackage = m_aType.getPackage ();
     final JAXBContext aJAXBContext = useJAXBContextCache () ? JAXBContextCache.getInstance ().getFromCache (aPackage)
-                                                          : JAXBContext.newInstance (aPackage.getName ());
+                                                           : JAXBContext.newInstance (aPackage.getName ());
 
     // create an Unmarshaller
     final Unmarshaller aUnmarshaller = aJAXBContext.createUnmarshaller ();
@@ -357,7 +372,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   {
     final Package aPackage = m_aType.getPackage ();
     final JAXBContext aJAXBContext = useJAXBContextCache () ? JAXBContextCache.getInstance ().getFromCache (aPackage)
-                                                          : JAXBContext.newInstance (aPackage.getName ());
+                                                           : JAXBContext.newInstance (aPackage.getName ());
 
     // create an Unmarshaller
     final Marshaller aMarshaller = aJAXBContext.createMarshaller ();
