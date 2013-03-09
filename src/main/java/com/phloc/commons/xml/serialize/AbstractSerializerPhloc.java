@@ -41,6 +41,7 @@ import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.xml.CXML;
 import com.phloc.commons.xml.IXMLIterationHandler;
+import com.phloc.commons.xml.XMLHelper;
 import com.phloc.commons.xml.namespace.IIterableNamespaceContext;
 
 /**
@@ -413,7 +414,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
           {
             final String sNSPrefix = aEntry.getKey ();
             final String sNamespaceURI = aEntry.getValue ();
-            aAttrMap.put (CXML.XML_ATTR_XMLNS_WITH_SEP + sNSPrefix, sNamespaceURI);
+            aAttrMap.put (XMLHelper.getXMLNSAttrName (sNSPrefix), sNamespaceURI);
             m_aNSStack.addNamespaceMapping (sNSPrefix, sNamespaceURI);
           }
         }

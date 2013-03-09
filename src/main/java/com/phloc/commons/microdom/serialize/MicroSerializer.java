@@ -35,8 +35,8 @@ import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.microdom.IMicroProcessingInstruction;
 import com.phloc.commons.microdom.IMicroText;
 import com.phloc.commons.string.StringHelper;
-import com.phloc.commons.xml.CXML;
 import com.phloc.commons.xml.IXMLIterationHandler;
+import com.phloc.commons.xml.XMLHelper;
 import com.phloc.commons.xml.serialize.AbstractSerializerPhloc;
 import com.phloc.commons.xml.serialize.IXMLWriterSettings;
 import com.phloc.commons.xml.serialize.XMLWriterSettings;
@@ -235,11 +235,8 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
           sNSPrefix = m_aNSStack.createUniquePrefix ();
 
         // Add and remember the attribute
-        if (StringHelper.hasNoText (sNSPrefix))
-          aAttrMap.put (CXML.XML_ATTR_XMLNS, sElementNamespaceURI);
-        else
-          aAttrMap.put (CXML.XML_ATTR_XMLNS_WITH_SEP + sNSPrefix, sElementNamespaceURI);
         m_aNSStack.addNamespaceMapping (sNSPrefix, sElementNamespaceURI);
+        aAttrMap.put (XMLHelper.getXMLNSAttrName (sNSPrefix), sElementNamespaceURI);
       }
 
       // indent only if predecessor was an element
