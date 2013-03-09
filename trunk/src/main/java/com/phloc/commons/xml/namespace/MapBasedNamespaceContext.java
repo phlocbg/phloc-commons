@@ -58,12 +58,26 @@ public class MapBasedNamespaceContext extends AbstractNamespaceContext
   }
 
   /**
+   * Set the default namespace URL
+   * 
+   * @param sNamespaceURI
+   *        The namespace URI to be used as the default. May neither be
+   *        <code>null</code> nor empty.
+   * @return this
+   */
+  @Nonnull
+  public MapBasedNamespaceContext setDefaultNamespaceURI (@Nonnull @Nonempty final String sNamespaceURI)
+  {
+    return addMapping (XMLConstants.DEFAULT_NS_PREFIX, sNamespaceURI);
+  }
+
+  /**
    * Add a new prefix to namespace mapping.
    * 
    * @param sPrefix
    *        The prefix to be used. May not be <code>null</code>. If it equals
    *        {@link XMLConstants#DEFAULT_NS_PREFIX} that the namespace is
-   *        considered to be the default one
+   *        considered to be the default one.
    * @param sNamespaceURI
    *        The namespace URI to be mapped. May neither be <code>null</code> nor
    *        empty.
@@ -74,7 +88,7 @@ public class MapBasedNamespaceContext extends AbstractNamespaceContext
                                               @Nonnull @Nonempty final String sNamespaceURI)
   {
     if (sPrefix == null)
-      throw new IllegalArgumentException ("prefix may not be empty");
+      throw new IllegalArgumentException ("prefix may not be null");
     if (StringHelper.hasNoText (sNamespaceURI))
       throw new IllegalArgumentException ("namespaceURI may not be empty");
     if (m_aPrefix2NS.containsKey (sPrefix))
