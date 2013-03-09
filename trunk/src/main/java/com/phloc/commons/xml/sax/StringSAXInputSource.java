@@ -19,6 +19,7 @@ package com.phloc.commons.xml.sax;
 
 import java.io.Reader;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -36,6 +37,21 @@ import com.phloc.commons.string.ToStringGenerator;
 public class StringSAXInputSource extends InputSource
 {
   private final String m_sText;
+
+  public StringSAXInputSource (@Nonnull final char [] aInput)
+  {
+    this (new String (aInput));
+  }
+
+  public StringSAXInputSource (@Nonnull final char [] aInput, @Nonnegative final int nOfs, @Nonnegative final int nLen)
+  {
+    this (new String (aInput, nOfs, nLen));
+  }
+
+  public StringSAXInputSource (@Nonnull final CharSequence aInput)
+  {
+    this (aInput instanceof String ? (String) aInput : aInput.toString ());
+  }
 
   public StringSAXInputSource (@Nonnull final String sText)
   {

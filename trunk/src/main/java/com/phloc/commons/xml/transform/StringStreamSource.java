@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.xml.transform;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
@@ -34,6 +35,21 @@ import com.phloc.commons.string.ToStringGenerator;
 @NotThreadSafe
 public class StringStreamSource extends StreamSource
 {
+  public StringStreamSource (@Nonnull final char [] aInput)
+  {
+    super (new NonBlockingStringReader (aInput));
+  }
+
+  public StringStreamSource (@Nonnull final char [] aInput, @Nonnegative final int nOfs, @Nonnegative final int nLen)
+  {
+    super (new NonBlockingStringReader (aInput, nOfs, nLen));
+  }
+
+  public StringStreamSource (@Nonnull final CharSequence aInput)
+  {
+    this (aInput instanceof String ? (String) aInput : aInput.toString ());
+  }
+
   public StringStreamSource (@Nonnull final String sInput)
   {
     this (sInput, null);

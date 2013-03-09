@@ -20,7 +20,9 @@ package com.phloc.commons.xml.sax;
 import java.io.File;
 import java.io.InputStream;
 import java.io.Reader;
+import java.net.URI;
 import java.net.URL;
+import java.nio.ByteBuffer;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -29,12 +31,15 @@ import javax.annotation.concurrent.Immutable;
 
 import org.xml.sax.InputSource;
 
+import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.io.IInputStreamProvider;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.file.FileUtils;
 import com.phloc.commons.io.resource.FileSystemResource;
 import com.phloc.commons.io.resource.URLResource;
+import com.phloc.commons.io.streams.ByteBufferInputStream;
 import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
+import com.phloc.commons.url.URLUtils;
 
 /**
  * Factory class to create the correct {@link InputSource} objects for different
@@ -45,6 +50,10 @@ import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
 @Immutable
 public final class InputSourceFactory
 {
+  @SuppressWarnings ("unused")
+  @PresentForCodeCoverage
+  private static final InputSourceFactory s_aInstance = new InputSourceFactory ();
+
   private InputSourceFactory ()
   {}
 
@@ -52,6 +61,12 @@ public final class InputSourceFactory
   public static InputSource create (@Nonnull final File aFile)
   {
     return create (new FileSystemResource (aFile));
+  }
+
+  @Nonnull
+  public static InputSource create (@Nonnull final URI aURI)
+  {
+    return create (URLUtils.getAsURL (aURI));
   }
 
   @Nonnull
@@ -84,6 +99,12 @@ public final class InputSourceFactory
   }
 
   @Nonnull
+  public static InputSource create (@Nonnull final CharSequence aXML)
+  {
+    return new StringSAXInputSource (aXML);
+  }
+
+  @Nonnull
   public static InputSource create (@Nonnull final String sXML)
   {
     return new StringSAXInputSource (sXML);
@@ -92,15 +113,15 @@ public final class InputSourceFactory
   @Nonnull
   public static InputSource create (@Nonnull final char [] aXML)
   {
-    return create (new String (aXML));
+    return new StringSAXInputSource (aXML);
   }
 
   @Nonnull
   public static InputSource create (@Nonnull final char [] aXML,
                                     @Nonnegative final int nOfs,
-                                    @Nonnegative final int nLength)
+                                    @Nonnegative final int nLen)
   {
-    return create (new String (aXML, nOfs, nLength));
+    return new StringSAXInputSource (aXML, nOfs, nLen);
   }
 
   @Nonnull
@@ -112,17 +133,15 @@ public final class InputSourceFactory
   @Nonnull
   public static InputSource create (@Nonnull final byte [] aXML,
                                     @Nonnegative final int nOfs,
-                                    @Nonnegative final int nLength)
+                                    @Nonnegative final int nLen)
   {
-    return create (new NonBlockingByteArrayInputStream (aXML, nOfs, nLength));
+    return create (new NonBlockingByteArrayInputStream (aXML, nOfs, nLen));
   }
 
   @Nonnull
-  public static InputSource create (@Nonnull final CharSequence aXML)
+  public static InputSource create (@Nonnull final ByteBuffer aXML)
   {
-    if (aXML instanceof String)
-      return create ((String) aXML);
-    return create (aXML.toString ());
+    return create (new ByteBufferInputStream (aXML));
   }
 
   @Nonnull

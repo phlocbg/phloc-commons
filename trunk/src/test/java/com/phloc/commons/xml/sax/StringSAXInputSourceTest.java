@@ -41,7 +41,7 @@ public final class StringSAXInputSourceTest
 
     try
     {
-      new StringSAXInputSource (null);
+      new StringSAXInputSource ((char []) null);
       fail ();
     }
     catch (final NullPointerException ex)
