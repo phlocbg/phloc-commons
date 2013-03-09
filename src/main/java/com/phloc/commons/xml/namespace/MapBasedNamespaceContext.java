@@ -24,7 +24,7 @@ import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.NotThreadSafe;
 import javax.xml.XMLConstants;
 
 import com.phloc.commons.annotations.Nonempty;
@@ -40,7 +40,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author philip
  */
-@Immutable
+@NotThreadSafe
 public class MapBasedNamespaceContext extends AbstractNamespaceContext
 {
   private String m_sDefaultNamespaceURI;
