@@ -93,7 +93,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
             // set default namespace (xmlns)
             final String sNamespaceURI = aEntry.getValue ();
             addPrefixNamespaceMapping (null, sNamespaceURI);
-            s_aLogger.info ("Found default namespace '" + sNamespaceURI + "' from attribute!");
+            s_aLogger.info ("Found default namespace '" + sNamespaceURI + "' in attribute!");
           }
           else
             if (sAttrName.startsWith (CXML.XML_ATTR_XMLNS_WITH_SEP))
@@ -102,7 +102,11 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
               final String sPrefix = sAttrName.substring (CXML.XML_ATTR_XMLNS_WITH_SEP.length ());
               final String sNamespaceURI = aEntry.getValue ();
               addPrefixNamespaceMapping (sPrefix, sNamespaceURI);
-              s_aLogger.info ("Found namespace '" + sPrefix + ':' + sNamespaceURI + "' from attribute!");
+              s_aLogger.info ("Found namespace prefix '" +
+                              sPrefix +
+                              "' (with URL '" +
+                              sNamespaceURI +
+                              "') in attribute!");
             }
         }
     }
