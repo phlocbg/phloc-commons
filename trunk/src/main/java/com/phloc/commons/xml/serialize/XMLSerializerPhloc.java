@@ -37,7 +37,6 @@ import org.w3c.dom.ProcessingInstruction;
 import org.w3c.dom.Text;
 
 import com.phloc.commons.string.StringHelper;
-import com.phloc.commons.xml.CXML;
 import com.phloc.commons.xml.EXMLVersion;
 import com.phloc.commons.xml.IXMLIterationHandler;
 import com.phloc.commons.xml.XMLHelper;
@@ -217,10 +216,7 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
           sNSPrefix = m_aNSStack.createUniquePrefix ();
 
         // Add and remember the attribute
-        if (StringHelper.hasNoText (sNSPrefix))
-          aAttrMap.put (CXML.XML_ATTR_XMLNS, sElementNamespaceURI);
-        else
-          aAttrMap.put (CXML.XML_ATTR_XMLNS_WITH_SEP + sNSPrefix, sElementNamespaceURI);
+        aAttrMap.put (XMLHelper.getXMLNSAttrName (sNSPrefix), sElementNamespaceURI);
         m_aNSStack.addNamespaceMapping (sNSPrefix, sElementNamespaceURI);
       }
 

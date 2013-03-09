@@ -29,6 +29,7 @@ import java.math.RoundingMode;
 import java.util.Iterator;
 
 import javax.annotation.Nonnull;
+import javax.xml.XMLConstants;
 
 import org.junit.Test;
 import org.w3c.dom.DOMException;
@@ -523,20 +524,16 @@ public final class XMLHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
-  public void testGetXMLPrefix ()
+  public void testGetXMLNSAttrName ()
   {
-    assertEquals ("xmlns:abc", XMLHelper.getXMLNSPrefix ("abc"));
+    assertEquals ("xmlns:abc", XMLHelper.getXMLNSAttrName ("abc"));
+    assertEquals ("xmlns", XMLHelper.getXMLNSAttrName (""));
+    assertEquals ("xmlns", XMLHelper.getXMLNSAttrName (null));
+    assertEquals ("xmlns", XMLHelper.getXMLNSAttrName (XMLConstants.DEFAULT_NS_PREFIX));
 
     try
     {
-      XMLHelper.getXMLNSPrefix ("");
-      fail ();
-    }
-    catch (final IllegalArgumentException ex)
-    {}
-    try
-    {
-      XMLHelper.getXMLNSPrefix (":def");
+      XMLHelper.getXMLNSAttrName (":def");
       fail ();
     }
     catch (final IllegalArgumentException ex)

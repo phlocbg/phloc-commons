@@ -52,6 +52,7 @@ import com.phloc.commons.string.StringParser;
 import com.phloc.commons.text.impl.MultiLingualText;
 import com.phloc.commons.version.Version;
 import com.phloc.commons.xml.CXML;
+import com.phloc.commons.xml.XMLHelper;
 
 /**
  * This class handles the reading and writing of changelog objects.
@@ -288,7 +289,7 @@ public final class ChangeLogSerializer
     final DateFormat aDF = new SimpleDateFormat (DATE_FORMAT);
     final IMicroDocument ret = new MicroDocument ();
     final IMicroElement eRoot = ret.appendElement (CChangeLog.CHANGELOG_NAMESPACE_10, ELEMENT_CHANGELOG);
-    eRoot.setAttribute (CXML.XML_ATTR_XMLNS_WITH_SEP + CXML.XML_NS_PREFIX_XSI, CXML.XML_NS_XSI);
+    eRoot.setAttribute (XMLHelper.getXMLNSAttrName (CXML.XML_NS_PREFIX_XSI), CXML.XML_NS_XSI);
     eRoot.setAttribute (CXML.XML_NS_PREFIX_XSI + ":schemaLocation", CChangeLog.CHANGELOG_SCHEMALOCATION_10);
     eRoot.setAttribute (ATTR_VERSION, aChangeLog.getVersion ().getAsString ());
     if (StringHelper.hasText (aChangeLog.getComponent ()))

@@ -29,6 +29,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
+import javax.xml.XMLConstants;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.CharacterData;
@@ -42,6 +43,7 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.annotations.DevelopersNote;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.collections.ArrayHelper;
@@ -994,12 +996,42 @@ public final class XMLHelper
     return null;
   }
 
+  /**
+   * Get the full qualified attribute name to use for the given prefix.
+   * 
+   * @param sNSPrefix
+   *        The namespace prefix to build the attribute name from. May be
+   *        <code>null</code> or empty.
+   * @return If the namespace prefix is empty (if it equals
+   *         {@link XMLConstants#DEFAULT_NS_PREFIX} or <code>null</code>) than
+   *         "xmlns" is returned, else "xmlns:<i>prefix</i>" is returned.
+   */
   @Nonnull
-  public static String getXMLNSPrefix (@Nonnull final String sPrefix)
+  public static String getXMLNSAttrName (@Nullable final String sNSPrefix)
   {
-    if (StringHelper.hasNoText (sPrefix) || sPrefix.contains (CXML.XML_PREFIX_NAMESPACE_SEP_STR))
-      throw new IllegalArgumentException ("prefix is invalid: " + sPrefix);
-    return CXML.XML_ATTR_XMLNS_WITH_SEP + sPrefix;
+    if (sNSPrefix != null && sNSPrefix.contains (CXML.XML_PREFIX_NAMESPACE_SEP_STR))
+      throw new IllegalArgumentException ("prefix is invalid: " + sNSPrefix);
+    if (sNSPrefix == null || sNSPrefix.equals (XMLConstants.DEFAULT_NS_PREFIX))
+      return CXML.XML_ATTR_XMLNS;
+    return CXML.XML_ATTR_XMLNS_WITH_SEP + sNSPrefix;
+  }
+
+  /**
+   * Get the full qualified attribute name to use for the given prefix.
+   * 
+   * @param sNSPrefix
+   *        The namespace prefix to build the attribute name from. May neither
+   *        be <code>null</code> nor empty.
+   * @return "xmlns:<i>prefix</i>"
+   */
+  @Nonnull
+  @Deprecated
+  @DevelopersNote ("Use getXMLNSAttrName instead!")
+  public static String getXMLNSPrefix (@Nonnull final String sNSPrefix)
+  {
+    if (StringHelper.hasNoText (sNSPrefix) || sNSPrefix.contains (CXML.XML_PREFIX_NAMESPACE_SEP_STR))
+      throw new IllegalArgumentException ("prefix is invalid: " + sNSPrefix);
+    return getXMLNSAttrName (sNSPrefix);
   }
 
   @Nullable
