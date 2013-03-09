@@ -32,7 +32,6 @@ import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.MicroException;
 import com.phloc.commons.mock.PhlocTestUtils;
-import com.phloc.commons.xml.CXML;
 
 /**
  * Test class for class {@link MicroDocument}.
@@ -50,7 +49,7 @@ public final class MicroDocumentTest
     assertNull (e.getDocumentElement ());
     assertFalse (e.hasParent ());
     assertFalse (e.hasChildren ());
-    assertTrue (e.isStandalone ());
+    assertFalse (e.isStandalone ());
 
     assertTrue (e.isEqualContent (e));
     assertFalse (e.isEqualContent (null));
@@ -122,18 +121,12 @@ public final class MicroDocumentTest
   public void testIsStandalone ()
   {
     final IMicroDocument aDoc = new MicroDocument ();
-    assertTrue (aDoc.isStandalone ());
-    final IMicroElement eRoot = aDoc.appendElement ("root");
-    assertTrue (aDoc.isStandalone ());
-    eRoot.setAttribute ("any", "Value");
-    assertTrue (aDoc.isStandalone ());
-    eRoot.setAttribute ("xml:lang", "de");
-    assertTrue (aDoc.isStandalone ());
-    eRoot.setAttribute ("xmlns:foo", "http://www.phloc.com/foo");
-    assertTrue (aDoc.isStandalone ());
-    eRoot.setAttribute ("xmlns:xsi", CXML.XML_NS_XSI);
-    assertTrue (aDoc.isStandalone ());
-    eRoot.setAttribute ("xsi:schemaLocation", "my URL");
     assertFalse (aDoc.isStandalone ());
+    final IMicroElement eRoot = aDoc.appendElement ("root");
+    assertFalse (aDoc.isStandalone ());
+    eRoot.setAttribute ("any", "Value");
+    assertFalse (aDoc.isStandalone ());
+    aDoc.setStandalone (true);
+    assertTrue (aDoc.isStandalone ());
   }
 }

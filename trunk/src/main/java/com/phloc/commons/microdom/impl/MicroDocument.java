@@ -134,7 +134,7 @@ public final class MicroDocument extends AbstractMicroNodeWithChildren implement
   {
     if (o == this)
       return true;
-    if (!(o instanceof MicroDocument))
+    if (!super.isEqualContent (o))
       return false;
     final MicroDocument rhs = (MicroDocument) o;
     return m_bIsStandalone == rhs.m_bIsStandalone;
