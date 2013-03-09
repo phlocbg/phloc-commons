@@ -28,10 +28,19 @@ import javax.annotation.Nullable;
 public interface IMicroDocument extends IMicroNodeWithChildren
 {
   /**
-   * @return <code>true</code> if the document is standalone (having neither DTD
-   *         nor scheme) or <code>false</code> otherwise
+   * @return <code>true</code> if the document is standalone, <code>false</code>
+   *         if not. The default value is <code>false</code>.
    */
   boolean isStandalone ();
+
+  /**
+   * Change the standalone state of this document.
+   * 
+   * @param bIsStandalone
+   *        The new value. <code>true</code> for standalone, <code>false</code>
+   *        if not.
+   */
+  void setStandalone (final boolean bIsStandalone);
 
   /**
    * @return May be <code>null</code>.
