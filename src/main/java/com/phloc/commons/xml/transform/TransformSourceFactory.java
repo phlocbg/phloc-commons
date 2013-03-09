@@ -20,7 +20,9 @@ package com.phloc.commons.xml.transform;
 import java.io.File;
 import java.io.InputStream;
 import java.io.Reader;
+import java.net.URI;
 import java.net.URL;
+import java.nio.ByteBuffer;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -32,10 +34,13 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.w3c.dom.Node;
 
+import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.io.IInputStreamProvider;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.resource.URLResource;
+import com.phloc.commons.io.streams.ByteBufferInputStream;
 import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
+import com.phloc.commons.url.URLUtils;
 
 /**
  * Factory class to create the correct {@link Source} objects for different
@@ -46,6 +51,10 @@ import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
 @Immutable
 public final class TransformSourceFactory
 {
+  @SuppressWarnings ("unused")
+  @PresentForCodeCoverage
+  private static final TransformSourceFactory s_aInstance = new TransformSourceFactory ();
+
   private TransformSourceFactory ()
   {}
 
@@ -53,6 +62,12 @@ public final class TransformSourceFactory
   public static StreamSource create (@Nonnull final File aFile)
   {
     return new StreamSource (aFile);
+  }
+
+  @Nonnull
+  public static ResourceStreamSource create (@Nonnull final URI aURI)
+  {
+    return create (URLUtils.getAsURL (aURI));
   }
 
   @Nonnull
@@ -76,6 +91,12 @@ public final class TransformSourceFactory
   }
 
   @Nonnull
+  public static StringStreamSource create (@Nonnull final CharSequence aXML)
+  {
+    return new StringStreamSource (aXML);
+  }
+
+  @Nonnull
   public static StringStreamSource create (@Nonnull final String sXML)
   {
     return new StringStreamSource (sXML);
@@ -84,7 +105,7 @@ public final class TransformSourceFactory
   @Nonnull
   public static StringStreamSource create (@Nonnull final char [] aXML)
   {
-    return create (new String (aXML));
+    return new StringStreamSource (aXML);
   }
 
   @Nonnull
@@ -92,7 +113,7 @@ public final class TransformSourceFactory
                                            @Nonnegative final int nOfs,
                                            @Nonnegative final int nLength)
   {
-    return create (new String (aXML, nOfs, nLength));
+    return new StringStreamSource (aXML, nOfs, nLength);
   }
 
   @Nonnull
@@ -110,11 +131,9 @@ public final class TransformSourceFactory
   }
 
   @Nonnull
-  public static StringStreamSource create (@Nonnull final CharSequence aXML)
+  public static StreamSource create (@Nonnull final ByteBuffer aXML)
   {
-    if (aXML instanceof String)
-      return create ((String) aXML);
-    return create (aXML.toString ());
+    return create (new ByteBufferInputStream (aXML));
   }
 
   @Nonnull

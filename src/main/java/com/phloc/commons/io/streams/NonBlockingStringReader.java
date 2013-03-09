@@ -49,9 +49,9 @@ public class NonBlockingStringReader extends Reader
 
   public NonBlockingStringReader (@Nonnull final char [] aChars,
                                   @Nonnegative final int nOfs,
-                                  @Nonnegative final int nLength)
+                                  @Nonnegative final int nLen)
   {
-    this (new String (aChars, nOfs, nLength));
+    this (new String (aChars, nOfs, nLen));
   }
 
   /**
