@@ -100,8 +100,9 @@ public final class StringHelper
    * Check if the string is <code>null</code> or empty.
    * 
    * @param aCS
-   *        The string to check. May be <code>null</code>.
-   * @return <code>true</code> if the string is <code>null</code> or empty
+   *        The character sequence to check. May be <code>null</code>.
+   * @return <code>true</code> if the string is <code>null</code> or empty,
+   *         <code>false</code> otherwise
    */
   public static boolean hasNoText (@Nullable final CharSequence aCS)
   {
@@ -113,7 +114,8 @@ public final class StringHelper
    * 
    * @param sStr
    *        The string to check. May be <code>null</code>.
-   * @return <code>true</code> if the string is <code>null</code> or empty
+   * @return <code>true</code> if the string is <code>null</code> or empty,
+   *         <code>false</code> otherwise
    */
   public static boolean hasNoText (@Nullable final String sStr)
   {
@@ -124,8 +126,9 @@ public final class StringHelper
    * Check if the string is <code>null</code> or empty.
    * 
    * @param aCS
-   *        The string to check. May be <code>null</code>.
-   * @return <code>true</code> if the string is <code>null</code> or empty
+   *        The character sequence to check. May be <code>null</code>.
+   * @return <code>true</code> if the string is <code>null</code> or empty,
+   *         <code>false</code> otherwise
    */
   public static boolean isEmpty (@Nullable final CharSequence aCS)
   {
@@ -137,7 +140,8 @@ public final class StringHelper
    * 
    * @param sStr
    *        The string to check. May be <code>null</code>.
-   * @return <code>true</code> if the string is <code>null</code> or empty
+   * @return <code>true</code> if the string is <code>null</code> or empty,
+   *         <code>false</code> otherwise
    */
   public static boolean isEmpty (@Nullable final String sStr)
   {
@@ -150,7 +154,7 @@ public final class StringHelper
    * @param s
    *        The string to check. May be <code>null</code>.
    * @return <code>true</code> if the string is <code>null</code> or empty or
-   *         consists only of whitespaces.
+   *         consists only of whitespaces, <code>false</code> otherwise
    */
   public static boolean hasNoTextAfterTrim (@Nullable final String s)
   {
@@ -163,7 +167,7 @@ public final class StringHelper
    * @param s
    *        The string to check. May be <code>null</code>.
    * @return <code>true</code> if the string is <code>null</code> or empty or
-   *         consists only of whitespaces.
+   *         consists only of whitespaces, <code>false</code> otherwise
    */
   public static boolean isEmptyAfterTrim (@Nullable final String s)
   {
@@ -174,9 +178,9 @@ public final class StringHelper
    * Check if the string contains any char.
    * 
    * @param aCS
-   *        The string to check
-   * @return true if the string contains at least one char public static boolean
-   *         hasText (@Nullable final CharSequence s)
+   *        The character sequence to check. May be <code>null</code>.
+   * @return <code>true</code> if the string contains at least one,
+   *         <code>false</code> otherwise
    */
   public static boolean hasText (@Nullable final CharSequence aCS)
   {
@@ -187,9 +191,9 @@ public final class StringHelper
    * Check if the string contains any char.
    * 
    * @param sStr
-   *        The string to check
-   * @return true if the string contains at least one char public static boolean
-   *         hasText (@Nullable final CharSequence s)
+   *        The string to check. May be <code>null</code>.
+   * @return <code>true</code> if the string contains at least one char,
+   *         <code>false</code> otherwise
    */
   public static boolean hasText (@Nullable final String sStr)
   {
@@ -200,9 +204,9 @@ public final class StringHelper
    * Check if the string contains any char.
    * 
    * @param aCS
-   *        The string to check
-   * @return true if the string contains at least one char public static boolean
-   *         hasText (@Nullable final CharSequence s)
+   *        The character sequence to check. May be <code>null</code>.
+   * @return <code>true</code> if the string contains at least one char,
+   *         <code>false</code> otherwise
    */
   public static boolean isNotEmpty (@Nullable final CharSequence aCS)
   {
@@ -213,9 +217,9 @@ public final class StringHelper
    * Check if the string contains any char.
    * 
    * @param sStr
-   *        The string to check
-   * @return true if the string contains at least one char public static boolean
-   *         hasText (@Nullable final CharSequence s)
+   *        The string to check. May be <code>null</code>.
+   * @return <code>true</code> if the string contains at least one char,
+   *         <code>false</code> otherwise
    */
   public static boolean isNotEmpty (@Nullable final String sStr)
   {
@@ -228,7 +232,8 @@ public final class StringHelper
    * @param s
    *        The string to check. May be <code>null</code>.
    * @return <code>true</code> if the string is neither <code>null</code> nor
-   *         empty nor consists only of whitespaces.
+   *         empty nor consists only of whitespaces, <code>false</code>
+   *         otherwise
    */
   public static boolean hasTextAfterTrim (@Nullable final String s)
   {
@@ -241,7 +246,8 @@ public final class StringHelper
    * @param s
    *        The string to check. May be <code>null</code>.
    * @return <code>true</code> if the string is neither <code>null</code> nor
-   *         empty nor consists only of whitespaces.
+   *         empty nor consists only of whitespaces, <code>false</code>
+   *         otherwise
    */
   public static boolean isNotEmptyAfterTrim (@Nullable final String s)
   {

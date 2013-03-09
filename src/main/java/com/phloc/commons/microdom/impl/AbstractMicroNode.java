@@ -170,6 +170,12 @@ public abstract class AbstractMicroNode implements IMicroNode
   }
 
   @Nonnull
+  public final IMicroText appendText (@Nonnull final char [] aChars)
+  {
+    return appendText (aChars, 0, aChars.length);
+  }
+
+  @Nonnull
   public final IMicroText appendText (@Nonnull final char [] aChars,
                                       @Nonnegative final int nOfs,
                                       @Nonnegative final int nLen)
@@ -196,6 +202,12 @@ public abstract class AbstractMicroNode implements IMicroNode
   }
 
   @Nonnull
+  public final IMicroText appendIgnorableWhitespaceText (@Nonnull final char [] aChars)
+  {
+    return appendIgnorableWhitespaceText (aChars, 0, aChars.length);
+  }
+
+  @Nonnull
   public final IMicroText appendIgnorableWhitespaceText (@Nonnull final char [] aChars,
                                                          @Nonnegative final int nOfs,
                                                          @Nonnegative final int nLen)
@@ -214,6 +226,12 @@ public abstract class AbstractMicroNode implements IMicroNode
   }
 
   @Nonnull
+  public final IMicroCDATA appendCDATA (@Nonnull final char [] aChars)
+  {
+    return appendCDATA (aChars, 0, aChars.length);
+  }
+
+  @Nonnull
   public final IMicroCDATA appendCDATA (@Nonnull final char [] aChars,
                                         @Nonnegative final int nOfs,
                                         @Nonnegative final int nLen)
@@ -221,6 +239,14 @@ public abstract class AbstractMicroNode implements IMicroNode
     final MicroCDATA aNode = new MicroCDATA (aChars, nOfs, nLen);
     onAppendChild (aNode);
     return aNode;
+  }
+
+  @Nonnull
+  public final IMicroCDATA appendCDATAWithConversion (@Nullable final Object aValue)
+  {
+    // Throws IlliegalArgumentException when no conversion is available
+    final String sValue = TypeConverter.convertIfNecessary (aValue, String.class);
+    return appendCDATA (sValue);
   }
 
   @Nonnull
@@ -232,6 +258,12 @@ public abstract class AbstractMicroNode implements IMicroNode
   }
 
   @Nonnull
+  public final IMicroComment appendComment (@Nonnull final char [] aChars)
+  {
+    return appendComment (aChars, 0, aChars.length);
+  }
+
+  @Nonnull
   public final IMicroComment appendComment (@Nonnull final char [] aChars,
                                             @Nonnegative final int nOfs,
                                             @Nonnegative final int nLen)
@@ -239,6 +271,14 @@ public abstract class AbstractMicroNode implements IMicroNode
     final MicroComment aNode = new MicroComment (aChars, nOfs, nLen);
     onAppendChild (aNode);
     return aNode;
+  }
+
+  @Nonnull
+  public final IMicroComment appendCommentWithConversion (@Nullable final Object aValue)
+  {
+    // Throws IlliegalArgumentException when no conversion is available
+    final String sValue = TypeConverter.convertIfNecessary (aValue, String.class);
+    return appendComment (sValue);
   }
 
   @Nonnull
