@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.microdom.impl;
 
+import java.util.List;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -26,6 +28,7 @@ import com.phloc.commons.microdom.IMicroDocumentType;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.microdom.MicroException;
+import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * Default implementation of the {@link IMicroDocument} interface.
@@ -71,13 +74,17 @@ public final class MicroDocument extends AbstractMicroNodeWithChildren implement
       throw new MicroException ("Cannot add nodes of type " + aChildNode + " to a document");
 
     // Ensure that only one element is appended to the document root
-    if (aChildNode.isElement () && directGetChildren () != null && !directGetChildren ().isEmpty ())
-      for (final IMicroNode aCurChild : directGetChildren ())
-        if (aCurChild.isElement ())
-          throw new MicroException ("A document can only have one document element! Already has " +
-                                    aCurChild +
-                                    " and wants to add " +
-                                    aChildNode);
+    if (aChildNode.isElement ())
+    {
+      final List <IMicroNode> aChildren = directGetChildren ();
+      if (aChildren != null && !aChildren.isEmpty ())
+        for (final IMicroNode aCurChild : aChildren)
+          if (aCurChild.isElement ())
+            throw new MicroException ("A document can only have one document element! Already has " +
+                                      aCurChild +
+                                      " and wants to add " +
+                                      aChildNode);
+    }
     super.onAppendChild (aChildNode);
   }
 
@@ -115,9 +122,27 @@ public final class MicroDocument extends AbstractMicroNodeWithChildren implement
   public IMicroDocument getClone ()
   {
     final MicroDocument ret = new MicroDocument ();
+    ret.setStandalone (m_bIsStandalone);
     if (hasChildren ())
       for (final IMicroNode aChildNode : getChildren ())
         ret.appendChild (aChildNode.getClone ());
     return ret;
+  }
+
+  @Override
+  public boolean isEqualContent (@Nullable final IMicroNode o)
+  {
+    if (o == this)
+      return true;
+    if (!(o instanceof MicroDocument))
+      return false;
+    final MicroDocument rhs = (MicroDocument) o;
+    return m_bIsStandalone == rhs.m_bIsStandalone;
+  }
+
+  @Override
+  public String toString ()
+  {
+    return ToStringGenerator.getDerived (super.toString ()).append ("isStandalone", m_bIsStandalone).toString ();
   }
 }
