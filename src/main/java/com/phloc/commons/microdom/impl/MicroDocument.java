@@ -17,8 +17,6 @@
  */
 package com.phloc.commons.microdom.impl;
 
-import java.util.Map;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -28,7 +26,6 @@ import com.phloc.commons.microdom.IMicroDocumentType;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.microdom.MicroException;
-import com.phloc.commons.xml.CXML;
 
 /**
  * Default implementation of the {@link IMicroDocument} interface.
@@ -37,6 +34,11 @@ import com.phloc.commons.xml.CXML;
  */
 public final class MicroDocument extends AbstractMicroNodeWithChildren implements IMicroDocument
 {
+  /** By default a document is not standalone */
+  public static final boolean DEFAULT_STANDALONE = false;
+
+  private boolean m_bIsStandalone = DEFAULT_STANDALONE;
+
   public MicroDocument ()
   {}
 
@@ -81,33 +83,12 @@ public final class MicroDocument extends AbstractMicroNodeWithChildren implement
 
   public boolean isStandalone ()
   {
-    // Is a DocType for DTD alignment present?
-    if (getDocType () != null)
-      return false;
+    return m_bIsStandalone;
+  }
 
-    // Is an XSI schema location present?
-    final IMicroElement aDocElement = getDocumentElement ();
-    if (aDocElement != null && aDocElement.hasAttributes ())
-    {
-      // find the XML schema namespace prefix
-      for (final Map.Entry <String, String> aEntry : aDocElement.getAllAttributes ().entrySet ())
-      {
-        // Is an XSI namespace prefix present?
-        final String sAttrName = aEntry.getKey ();
-        if (sAttrName.startsWith (CXML.XML_ATTR_XMLNS_WITH_SEP) && aEntry.getValue ().equals (CXML.XML_NS_XSI))
-        {
-          // Skip "xmlns:"
-          final String sXSINamespacePrefix = sAttrName.substring (CXML.XML_ATTR_XMLNS_WITH_SEP.length ());
-
-          // The document is standalone if no schemaLocation is present
-          return aDocElement.getAttribute (sXSINamespacePrefix +
-                                           CXML.XML_PREFIX_NAMESPACE_SEP +
-                                           CXML.XML_ATTR_XSI_SCHEMALOCATION) == null;
-        }
-      }
-    }
-
-    return true;
+  public void setStandalone (final boolean bIsStandalone)
+  {
+    m_bIsStandalone = bIsStandalone;
   }
 
   @Nullable
