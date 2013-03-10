@@ -212,7 +212,7 @@ public class BMXWriter
   }
 
   @Nonnull
-  public ESuccess writeToDataOutput (@Nonnull final IMicroNode aNode, @Nonnull final DataOutputStream aDOS)
+  public ESuccess writeToDataOutput (@Nonnull final IMicroNode aNode, @Nonnull final DataOutput aDOS)
   {
     if (aNode == null)
       throw new NullPointerException ("node");
@@ -235,7 +235,6 @@ public class BMXWriter
 
       // Write EOF marker
       aDOS.writeByte (CBMXIO.NODETYPE_EOF);
-      aDOS.flush ();
       return ESuccess.SUCCESS;
     }
     catch (final IOException ex)
@@ -251,14 +250,14 @@ public class BMXWriter
       throw new NullPointerException ("OS");
 
     // Wrap the passed output stream in a buffered output stream
-    final OutputStream aOSToUse = StreamUtils.getBuffered (aOS);
+    final DataOutputStream aDOS = new DataOutputStream (StreamUtils.getBuffered (aOS));
     try
     {
-      return writeToDataOutput (aNode, new DataOutputStream (aOSToUse));
+      return writeToDataOutput (aNode, aDOS);
     }
     finally
     {
-      StreamUtils.close (aOSToUse);
+      StreamUtils.close (aDOS);
     }
   }
 
@@ -268,6 +267,7 @@ public class BMXWriter
     if (aFile == null)
       throw new NullPointerException ("file");
 
+    // This is much quicker than using RandomAccessFile
     final OutputStream aFOS = FileUtils.getOutputStream (aFile);
     if (aFOS == null)
       return ESuccess.FAILURE;
