@@ -20,7 +20,6 @@ package com.phloc.commons.bmx;
 import gnu.trove.list.TIntList;
 import gnu.trove.list.array.TIntArrayList;
 
-import java.io.BufferedOutputStream;
 import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -252,12 +251,7 @@ public class BMXWriter
       throw new NullPointerException ("OS");
 
     // Wrap the passed output stream in a buffered output stream
-    OutputStream aOSToUse;
-    if (aOS instanceof BufferedOutputStream)
-      aOSToUse = aOS;
-    else
-      aOSToUse = new BufferedOutputStream (aOS);
-
+    final OutputStream aOSToUse = StreamUtils.getBuffered (aOS);
     try
     {
       return writeToDataOutput (aNode, new DataOutputStream (aOSToUse));

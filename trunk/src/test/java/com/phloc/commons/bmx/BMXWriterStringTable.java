@@ -47,10 +47,8 @@ final class BMXWriterStringTable
   private void _onNewString (@Nonnull final String sString) throws IOException
   {
     m_aDO.writeByte (CBMXIO.NODETYPE_STRING);
-    final char [] aChars = sString.toCharArray ();
-    m_aDO.writeInt (aChars.length);
-    for (final char cChar : aChars)
-      m_aDO.writeChar (cChar);
+    m_aDO.writeInt (sString.length ());
+    m_aDO.writeChars (sString);
   }
 
   public int addString (@Nullable final CharSequence aString) throws IOException
@@ -69,11 +67,11 @@ final class BMXWriterStringTable
 
     if (m_bReUseStrings)
     {
-      int nIndex = m_aStrings.get (sString);
+      int nIndex = m_aStrings.putIfAbsent (sString, m_nLastUsedIndex + 1);
       if (TroveUtils.isNotContained (nIndex))
       {
+        // Real increment
         nIndex = ++m_nLastUsedIndex;
-        m_aStrings.put (sString, nIndex);
         _onNewString (sString);
       }
       return nIndex;
