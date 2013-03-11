@@ -20,8 +20,10 @@ package com.phloc.commons.mime;
 import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -49,6 +51,7 @@ public final class MimeTypeDeterminator
 {
   // Maps file extension to MIME type
   private static final Map <String, String> s_aFileExtMap = new HashMap <String, String> ();
+  private static final Set <MimeTypeContent> s_aContents = new HashSet <MimeTypeContent> ();
 
   private static final byte [] MIME_ID_GIF87A = new byte [] { 'G', 'I', 'F', '8', '7', 'a' };
   private static final byte [] MIME_ID_GIF89A = new byte [] { 'G', 'I', 'F', '8', '9', 'a' };
@@ -77,6 +80,16 @@ public final class MimeTypeDeterminator
         if (aEntry.getValue ().contains (" "))
           throw new InitializationException ("MIME type '" + aEntry.getValue () + "' is invalid!");
       }
+
+    s_aContents.add (new MimeTypeContent (MIME_ID_GIF87A, CMimeType.IMAGE_GIF));
+    s_aContents.add (new MimeTypeContent (MIME_ID_GIF89A, CMimeType.IMAGE_GIF));
+    s_aContents.add (new MimeTypeContent (MIME_ID_JPG, CMimeType.IMAGE_JPG));
+    s_aContents.add (new MimeTypeContent (MIME_ID_PNG, CMimeType.IMAGE_PNG));
+    s_aContents.add (new MimeTypeContent (MIME_ID_TIFF_MOTOROLLA, CMimeType.IMAGE_TIFF));
+    s_aContents.add (new MimeTypeContent (MIME_ID_TIFF_INTEL, CMimeType.IMAGE_TIFF));
+    s_aContents.add (new MimeTypeContent (MIME_ID_PSD, CMimeType.IMAGE_PSD));
+    s_aContents.add (new MimeTypeContent (MIME_ID_XML, CMimeType.TEXT_XML));
+    s_aContents.add (new MimeTypeContent (MIME_ID_PDF, CMimeType.APPLICATION_PDF));
   }
 
   @PresentForCodeCoverage
@@ -85,20 +98,6 @@ public final class MimeTypeDeterminator
 
   private MimeTypeDeterminator ()
   {}
-
-  private static boolean _match (@Nonnull final byte [] aBytes, final int nOffset, @Nonnull final byte [] aCmpBytes)
-  {
-    final int nEnd = aCmpBytes.length;
-    for (int i = 0; i < nEnd; ++i)
-      if (aCmpBytes[i] != aBytes[nOffset + i])
-        return false;
-    return true;
-  }
-
-  private static boolean _match (@Nonnull final byte [] b, @Nonnull final byte [] aCmp)
-  {
-    return b.length > aCmp.length && _match (b, 0, aCmp);
-  }
 
   @Nonnull
   @Deprecated
@@ -127,20 +126,9 @@ public final class MimeTypeDeterminator
   {
     if (b != null)
     {
-      if (_match (b, MIME_ID_GIF87A) || _match (b, MIME_ID_GIF89A))
-        return CMimeType.IMAGE_GIF;
-      if (_match (b, MIME_ID_JPG))
-        return CMimeType.IMAGE_JPG;
-      if (_match (b, MIME_ID_PNG))
-        return CMimeType.IMAGE_PNG;
-      if (_match (b, MIME_ID_TIFF_INTEL) || _match (b, MIME_ID_TIFF_MOTOROLLA))
-        return CMimeType.IMAGE_TIFF;
-      if (_match (b, MIME_ID_PSD))
-        return CMimeType.IMAGE_PSD;
-      if (_match (b, MIME_ID_XML))
-        return CMimeType.TEXT_XML;
-      if (_match (b, MIME_ID_PDF))
-        return CMimeType.APPLICATION_PDF;
+      for (final MimeTypeContent aMTC : s_aContents)
+        if (aMTC.matchesBeginning (b))
+          return aMTC.getMimeType ();
     }
 
     // default fallback
