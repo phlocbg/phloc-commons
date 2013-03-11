@@ -21,6 +21,7 @@ import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -40,6 +41,7 @@ import com.phloc.commons.io.file.FilenameHelper;
 import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.microdom.reader.XMLMapHandler;
 import com.phloc.commons.regex.RegExHelper;
+import com.phloc.commons.state.EChange;
 
 /**
  * Contains a basic set of MimeType determination method.
@@ -100,6 +102,21 @@ public final class MimeTypeDeterminator
   {}
 
   @Nonnull
+  public static EChange registerMimeTypeContent (@Nonnull final MimeTypeContent aMimeTypeContent)
+  {
+    if (aMimeTypeContent == null)
+      throw new NullPointerException ("MimeTypeContent");
+
+    return EChange.valueOf (s_aContents.add (aMimeTypeContent));
+  }
+
+  @Nonnull
+  public static EChange unregisterMimeTypeContent (@Nullable final MimeTypeContent aMimeTypeContent)
+  {
+    return EChange.valueOf (s_aContents.remove (aMimeTypeContent));
+  }
+
+  @Nonnull
   @Deprecated
   public static IMimeType getMimeTypeFromString (@Nullable final String s, @Nonnull @Nonempty final String sCharsetName)
   {
@@ -113,8 +130,7 @@ public final class MimeTypeDeterminator
   }
 
   /**
-   * Try to determine the MIME type from the given byte array. The array should
-   * have at least 8 characters to perform all known tests.
+   * Try to determine the MIME type from the given byte array.
    * 
    * @param b
    *        The byte array. to parse.
@@ -124,15 +140,39 @@ public final class MimeTypeDeterminator
   @Nonnull
   public static IMimeType getMimeTypeFromBytes (@Nullable final byte [] b)
   {
+    return getMimeTypeFromBytes (b, CMimeType.APPLICATION_OCTET_STREAM);
+  }
+
+  /**
+   * Try to determine the MIME type from the given byte array.
+   * 
+   * @param b
+   *        The byte array to parse. May be <code>null</code>.
+   * @param aDefault
+   *        The default MIME type to be returned, if no matching MIME type was
+   *        found. May be <code>null</code>.
+   * @returnThe supplied default value, if no matching MIME type was found
+   */
+  @Nullable
+  public static IMimeType getMimeTypeFromBytes (@Nullable final byte [] b, @Nullable final IMimeType aDefault)
+  {
     if (b != null)
-    {
       for (final MimeTypeContent aMTC : s_aContents)
         if (aMTC.matchesBeginning (b))
           return aMTC.getMimeType ();
-    }
 
     // default fallback
-    return CMimeType.APPLICATION_OCTET_STREAM;
+    return aDefault;
+  }
+
+  /**
+   * @return A copy of all registered {@link MimeTypeContent} objects.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public static List <MimeTypeContent> getAllMimeTypeContents ()
+  {
+    return ContainerHelper.newList (s_aContents);
   }
 
   @Nullable

@@ -3,13 +3,17 @@ package com.phloc.commons.mime;
 import java.util.Arrays;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
+@Immutable
+@MustImplementEqualsAndHashcode
 public class MimeTypeContent
 {
   private final byte [] m_aContentBytes;
@@ -50,7 +54,7 @@ public class MimeTypeContent
 
   public boolean matchesBeginning (@Nonnull final byte [] aBytes)
   {
-    return aBytes.length > m_aContentBytes.length && _match (aBytes, 0, m_aContentBytes);
+    return aBytes.length >= m_aContentBytes.length && _match (aBytes, 0, m_aContentBytes);
   }
 
   @Override
