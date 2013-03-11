@@ -23,18 +23,27 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import javax.annotation.Nonnull;
+
 /**
- * Indicate that a class's native implementations of {@link #equals(Object)} and
- * {@link #hashCode()} should be used an no wrapper. This is only important to
- * the classes {@link com.phloc.commons.equals.EqualsImplementationRegistry} and
- * {@link com.phloc.commons.hash.HashCodeImplementationRegistry}.
+ * Just to indicate that a method must be called inside a lock. When using
+ * read-write locks (class ReadWriteLock), please choose the lock type
+ * carefully. When using exclusive locks (class Lock) use the lock type
+ * <code>WRITE</code>.
  * 
  * @author philip
  */
-@Retention (RetentionPolicy.RUNTIME)
-@Target ({ ElementType.TYPE })
+@Retention (RetentionPolicy.CLASS)
+@Target ({ ElementType.METHOD })
 @Documented
-public @interface UseDirectEqualsAndHashCode
+public @interface MustBeLocked
 {
-  String value() default "";
+  public static enum ELockType
+  {
+    READ,
+    WRITE;
+  }
+
+  @Nonnull
+  ELockType value();
 }

@@ -134,80 +134,87 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
   {
     final String sClassName = aClass.getName ();
 
+    Boolean aUseDirectHashCode;
     m_aRWLock.readLock ().lock ();
     try
     {
-      final Boolean aSavedState = m_aDirectHashCode.get (sClassName);
-      if (aSavedState != null)
-        return aSavedState.booleanValue ();
+      aUseDirectHashCode = m_aDirectHashCode.get (sClassName);
     }
     finally
     {
       m_aRWLock.readLock ().unlock ();
     }
 
-    m_aRWLock.writeLock ().lock ();
-    try
+    if (aUseDirectHashCode == null)
     {
-      // Try again in write lock
-      final Boolean aSavedState = m_aDirectHashCode.get (sClassName);
-      if (aSavedState != null)
-        return aSavedState.booleanValue ();
+      m_aRWLock.writeLock ().lock ();
+      try
+      {
+        // Try again in write lock
+        aUseDirectHashCode = m_aDirectHashCode.get (sClassName);
+        if (aUseDirectHashCode == null)
+        {
+          // Determine
+          final boolean bHasAnnotation = aClass.getAnnotation (UseDirectEqualsAndHashCode.class) != null;
+          aUseDirectHashCode = Boolean.valueOf (bHasAnnotation);
+          m_aDirectHashCode.put (sClassName, aUseDirectHashCode);
+        }
+      }
+      finally
+      {
+        m_aRWLock.writeLock ().unlock ();
+      }
+    }
 
-      // Determine
-      final boolean bHasAnnotation = aClass.getAnnotation (UseDirectEqualsAndHashCode.class) != null;
-      m_aDirectHashCode.put (sClassName, Boolean.valueOf (bHasAnnotation));
-      return bHasAnnotation;
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    return aUseDirectHashCode.booleanValue ();
   }
 
   private boolean _implementsHashCodeItself (@Nonnull final Class <?> aClass)
   {
     final String sClassName = aClass.getName ();
 
+    Boolean aImplementsHashCodeItself;
     m_aRWLock.readLock ().lock ();
     try
     {
-      final Boolean aSavedState = m_aImplementsHashCode.get (sClassName);
-      if (aSavedState != null)
-        return aSavedState.booleanValue ();
+      aImplementsHashCodeItself = m_aImplementsHashCode.get (sClassName);
     }
     finally
     {
       m_aRWLock.readLock ().unlock ();
     }
 
-    m_aRWLock.writeLock ().lock ();
-    try
+    if (aImplementsHashCodeItself == null)
     {
-      // Try again in write lock
-      final Boolean aSavedState = m_aImplementsHashCode.get (sClassName);
-      if (aSavedState != null)
-        return aSavedState.booleanValue ();
-
-      // Determine
-      boolean bRet = false;
+      m_aRWLock.writeLock ().lock ();
       try
       {
-        final Method aMethod = aClass.getDeclaredMethod ("hashCode");
-        if (aMethod != null && aMethod.getReturnType ().equals (int.class))
-          bRet = true;
+        // Try again in write lock
+        aImplementsHashCodeItself = m_aImplementsHashCode.get (sClassName);
+        if (aImplementsHashCodeItself == null)
+        {
+          // Determine
+          boolean bRet = false;
+          try
+          {
+            final Method aMethod = aClass.getDeclaredMethod ("hashCode");
+            if (aMethod != null && aMethod.getReturnType ().equals (int.class))
+              bRet = true;
+          }
+          catch (final NoSuchMethodException ex)
+          {
+            // ignore
+          }
+          aImplementsHashCodeItself = Boolean.valueOf (bRet);
+          m_aImplementsHashCode.put (sClassName, aImplementsHashCodeItself);
+        }
       }
-      catch (final NoSuchMethodException ex)
+      finally
       {
-        // ignore
+        m_aRWLock.writeLock ().unlock ();
       }
-      m_aImplementsHashCode.put (sClassName, Boolean.valueOf (bRet));
-      return bRet;
     }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
+    return aImplementsHashCodeItself.booleanValue ();
   }
 
   @Nullable
