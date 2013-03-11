@@ -78,7 +78,7 @@ public final class BMXWriterTest
       for (int j = 0; j < 100; ++j)
       {
         final IMicroElement eChild2 = eChild1.appendElement ("element" + (j / 3));
-        for (int j2 = 0; j2 < 26; ++j2)
+        for (int j2 = 0; j2 < 6; ++j2)
         {
           final IMicroElement eChild3 = eChild2.appendElement ("element" + (j2 / 2));
           for (int k = 0; k < 5; ++k)
