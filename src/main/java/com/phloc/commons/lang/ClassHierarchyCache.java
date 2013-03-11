@@ -30,11 +30,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 import javax.annotation.concurrent.ThreadSafe;
 
+import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.LRUCache;
 import com.phloc.commons.collections.iterate.IIterableIterator;
 import com.phloc.commons.collections.iterate.IterableIterator;
 import com.phloc.commons.state.EChange;
+import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * A small class hierarchy cache
@@ -112,10 +114,20 @@ public final class ClassHierarchyCache
     {
       return IterableIterator.create (m_aList);
     }
+
+    @Override
+    public String toString ()
+    {
+      return new ToStringGenerator (this).append ("list", m_aList).toString ();
+    }
   }
 
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
   private static final Map <String, ClassList> s_aClassHierarchy = new LRUCache <String, ClassList> (1000);
+
+  @PresentForCodeCoverage
+  @SuppressWarnings ("unused")
+  private static final ClassHierarchyCache s_aInstance = new ClassHierarchyCache ();
 
   private ClassHierarchyCache ()
   {}

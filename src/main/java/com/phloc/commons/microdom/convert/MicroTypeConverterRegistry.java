@@ -65,6 +65,15 @@ public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegi
   private MicroTypeConverterRegistry ()
   {}
 
+  /**
+   * @return The singleton instance of this class. Never <code>null</code>.
+   */
+  @Nonnull
+  public static MicroTypeConverterRegistry getInstance ()
+  {
+    return s_aInstance;
+  }
+
   public void registerMicroElementTypeConverter (@Nonnull final Class <?> aClass,
                                                  @Nonnull final IMicroTypeConverter aConverter)
   {
