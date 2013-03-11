@@ -25,12 +25,19 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.ThreadSafe;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.GlobalDebug;
+import com.phloc.commons.annotations.MustBeLocked;
+import com.phloc.commons.annotations.MustBeLocked.ELockType;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
@@ -48,11 +55,16 @@ import com.phloc.commons.state.EChange;
  * 
  * @author philip
  */
-@Immutable
+@ThreadSafe
 public final class MimeTypeDeterminator
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (MimeTypeDeterminator.class);
+  private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
+
   // Maps file extension to MIME type
   private static final Map <String, String> s_aFileExtMap = new HashMap <String, String> ();
+
+  // Contains all byte[] to mime type mappings
   private static final Set <MimeTypeContent> s_aContents = new HashSet <MimeTypeContent> ();
 
   private static final byte [] MIME_ID_GIF87A = new byte [] { 'G', 'I', 'F', '8', '7', 'a' };
@@ -83,6 +95,12 @@ public final class MimeTypeDeterminator
           throw new InitializationException ("MIME type '" + aEntry.getValue () + "' is invalid!");
       }
 
+    _registerDefaultMimeTypeContents ();
+  }
+
+  @MustBeLocked (ELockType.WRITE)
+  private static void _registerDefaultMimeTypeContents ()
+  {
     s_aContents.add (new MimeTypeContent (MIME_ID_GIF87A, CMimeType.IMAGE_GIF));
     s_aContents.add (new MimeTypeContent (MIME_ID_GIF89A, CMimeType.IMAGE_GIF));
     s_aContents.add (new MimeTypeContent (MIME_ID_JPG, CMimeType.IMAGE_JPG));
@@ -107,13 +125,32 @@ public final class MimeTypeDeterminator
     if (aMimeTypeContent == null)
       throw new NullPointerException ("MimeTypeContent");
 
-    return EChange.valueOf (s_aContents.add (aMimeTypeContent));
+    s_aRWLock.writeLock ().lock ();
+    try
+    {
+      return EChange.valueOf (s_aContents.add (aMimeTypeContent));
+    }
+    finally
+    {
+      s_aRWLock.writeLock ().unlock ();
+    }
   }
 
   @Nonnull
   public static EChange unregisterMimeTypeContent (@Nullable final MimeTypeContent aMimeTypeContent)
   {
-    return EChange.valueOf (s_aContents.remove (aMimeTypeContent));
+    if (aMimeTypeContent == null)
+      return EChange.UNCHANGED;
+
+    s_aRWLock.writeLock ().lock ();
+    try
+    {
+      return EChange.valueOf (s_aContents.remove (aMimeTypeContent));
+    }
+    finally
+    {
+      s_aRWLock.writeLock ().unlock ();
+    }
   }
 
   @Nonnull
@@ -126,7 +163,15 @@ public final class MimeTypeDeterminator
   @Nonnull
   public static IMimeType getMimeTypeFromString (@Nullable final String s, @Nonnull final Charset aCharset)
   {
-    return getMimeTypeFromBytes (s == null ? null : CharsetManager.getAsBytes (s, aCharset));
+    return getMimeTypeFromString (s, aCharset, CMimeType.APPLICATION_OCTET_STREAM);
+  }
+
+  @Nullable
+  public static IMimeType getMimeTypeFromString (@Nullable final String s,
+                                                 @Nonnull final Charset aCharset,
+                                                 @Nullable final IMimeType aDefault)
+  {
+    return getMimeTypeFromBytes (s == null ? null : CharsetManager.getAsBytes (s, aCharset), aDefault);
   }
 
   /**
@@ -157,9 +202,19 @@ public final class MimeTypeDeterminator
   public static IMimeType getMimeTypeFromBytes (@Nullable final byte [] b, @Nullable final IMimeType aDefault)
   {
     if (b != null)
-      for (final MimeTypeContent aMTC : s_aContents)
-        if (aMTC.matchesBeginning (b))
-          return aMTC.getMimeType ();
+    {
+      s_aRWLock.readLock ().lock ();
+      try
+      {
+        for (final MimeTypeContent aMTC : s_aContents)
+          if (aMTC.matchesBeginning (b))
+            return aMTC.getMimeType ();
+      }
+      finally
+      {
+        s_aRWLock.readLock ().unlock ();
+      }
+    }
 
     // default fallback
     return aDefault;
@@ -172,7 +227,15 @@ public final class MimeTypeDeterminator
   @ReturnsMutableCopy
   public static List <MimeTypeContent> getAllMimeTypeContents ()
   {
-    return ContainerHelper.newList (s_aContents);
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      return ContainerHelper.newList (s_aContents);
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
   }
 
   @Nullable
@@ -221,5 +284,24 @@ public final class MimeTypeDeterminator
   public static Map <String, String> getAllKnownMimeTypeFilenameMappings ()
   {
     return ContainerHelper.newMap (s_aFileExtMap);
+  }
+
+  /**
+   * Reset the MimeTypeContent cache to the initial state.
+   */
+  public static void resetCache ()
+  {
+    s_aRWLock.writeLock ().lock ();
+    try
+    {
+      s_aContents.clear ();
+      _registerDefaultMimeTypeContents ();
+      if (s_aLogger.isDebugEnabled ())
+        s_aLogger.debug ("Cache was reset: " + MimeTypeDeterminator.class.getName ());
+    }
+    finally
+    {
+      s_aRWLock.writeLock ().unlock ();
+    }
   }
 }
