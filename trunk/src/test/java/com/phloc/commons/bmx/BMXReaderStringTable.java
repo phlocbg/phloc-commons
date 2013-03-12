@@ -17,8 +17,8 @@
  */
 package com.phloc.commons.bmx;
 
-import gnu.trove.map.TIntObjectMap;
-import gnu.trove.map.hash.TIntObjectHashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -26,14 +26,13 @@ import javax.annotation.Nullable;
 final class BMXReaderStringTable
 {
   private final boolean m_bReUseStrings;
-  private final TIntObjectMap <String> m_aStringTable;
+  private final List <String> m_aStringTable;
   private String m_sLastString;
-  private int m_nLastUsedStringTableIndex = 0;
 
   public BMXReaderStringTable (final boolean bReUseStrings)
   {
     m_bReUseStrings = bReUseStrings;
-    m_aStringTable = bReUseStrings ? new TIntObjectHashMap <String> (1000) : null;
+    m_aStringTable = bReUseStrings ? new ArrayList <String> (1000) : null;
   }
 
   public void add (@Nonnull final char [] aCB)
@@ -45,7 +44,7 @@ final class BMXReaderStringTable
   {
     if (m_bReUseStrings)
     {
-      m_aStringTable.put (++m_nLastUsedStringTableIndex, s);
+      m_aStringTable.add (s);
     }
     else
     {
@@ -63,7 +62,8 @@ final class BMXReaderStringTable
 
     if (m_bReUseStrings)
     {
-      final String ret = m_aStringTable.get (nIndex);
+      // 0 == index of null :)
+      final String ret = m_aStringTable.get (nIndex - 1);
       if (ret == null)
         throw new IllegalArgumentException ("Failed to resolve index " + nIndex);
       return ret;
