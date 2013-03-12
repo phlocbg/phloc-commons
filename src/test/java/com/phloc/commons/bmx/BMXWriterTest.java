@@ -23,6 +23,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.util.Random;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.phloc.commons.collections.trove.TroveInit;
@@ -102,6 +103,7 @@ public final class BMXWriterTest
     return aDoc;
   }
 
+  @Ignore
   @Test
   public void testStandardXML ()
   {
