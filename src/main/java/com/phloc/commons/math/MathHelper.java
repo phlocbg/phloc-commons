@@ -28,6 +28,7 @@ import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
+import com.phloc.commons.equals.EqualsUtils;
 
 /**
  * Contains several math help routines.
@@ -332,6 +333,11 @@ public final class MathHelper
     return aValue.abs ();
   }
 
+  public static boolean isEqualToZero (@Nonnull final BigDecimal aValue)
+  {
+    return EqualsUtils.equals (aValue, BigDecimal.ZERO);
+  }
+
   public static boolean isLowerThanZero (@Nonnull final BigDecimal aValue)
   {
     return aValue.compareTo (BigDecimal.ZERO) < 0;
@@ -364,6 +370,11 @@ public final class MathHelper
     return aValue.compareTo (BigDecimal.ZERO) >= 0;
   }
 
+  public static boolean isEqualTo100 (@Nonnull final BigDecimal aValue)
+  {
+    return EqualsUtils.equals (aValue, CGlobal.BIGDEC_100);
+  }
+
   public static boolean isLowerThan100 (@Nonnull final BigDecimal aValue)
   {
     return aValue.compareTo (CGlobal.BIGDEC_100) < 0;
@@ -382,6 +393,11 @@ public final class MathHelper
   public static boolean isGreaterOrEqualThan100 (@Nonnull final BigDecimal aValue)
   {
     return aValue.compareTo (CGlobal.BIGDEC_100) >= 0;
+  }
+
+  public static boolean isEqualToZero (@Nonnull final BigInteger aValue)
+  {
+    return EqualsUtils.equals (aValue, BigInteger.ZERO);
   }
 
   public static boolean isLowerThanZero (@Nonnull final BigInteger aValue)
@@ -414,6 +430,11 @@ public final class MathHelper
   public static boolean isGreaterOrEqualThanZero (@Nonnull final BigInteger aValue)
   {
     return aValue.compareTo (BigInteger.ZERO) >= 0;
+  }
+
+  public static boolean isEqualTo100 (@Nonnull final BigInteger aValue)
+  {
+    return EqualsUtils.equals (aValue, CGlobal.BIGINT_100);
   }
 
   public static boolean isLowerThan100 (@Nonnull final BigInteger aValue)
