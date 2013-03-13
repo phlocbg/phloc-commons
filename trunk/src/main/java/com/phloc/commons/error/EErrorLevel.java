@@ -32,11 +32,7 @@ import com.phloc.commons.state.ISuccessIndicator;
  * 
  * @author philip
  */
-public enum EErrorLevel implements
-                       IHasID <String>,
-                       ISuccessIndicator,
-                       IErrorIndicator,
-                       ISeverityComparable <EErrorLevel>
+public enum EErrorLevel implements IHasID <String>, ISuccessIndicator, IErrorIndicator, ISeverityComparable <EErrorLevel>
 {
   /** Success */
   SUCCESS ("success", 0),
@@ -163,5 +159,24 @@ public enum EErrorLevel implements
   public static EErrorLevel getFromIDOrDefault (@Nullable final String sID, @Nullable final EErrorLevel eDefault)
   {
     return EnumHelper.getFromIDOrDefault (EErrorLevel.class, sID, eDefault);
+  }
+
+  @Nullable
+  public static EErrorLevel getFromIDCaseInsensitiveOrNull (@Nullable final String sID)
+  {
+    return EnumHelper.getFromIDCaseInsensitiveOrNull (EErrorLevel.class, sID);
+  }
+
+  @Nonnull
+  public static EErrorLevel getFromIDCaseInsensitiveOrThrow (@Nullable final String sID)
+  {
+    return EnumHelper.getFromIDCaseInsensitiveOrThrow (EErrorLevel.class, sID);
+  }
+
+  @Nullable
+  public static EErrorLevel getFromIDCaseInsensitiveOrDefault (@Nullable final String sID,
+                                                               @Nullable final EErrorLevel eDefault)
+  {
+    return EnumHelper.getFromIDCaseInsensitiveOrDefault (EErrorLevel.class, sID, eDefault);
   }
 }
