@@ -34,7 +34,7 @@ public enum EJVMVendor
     protected boolean determineIfItIsCurrentJVMVendor ()
     {
       final boolean bIsSunJVM = SUN_VENDOR_NAME.equals (SystemProperties.getJavaVmVendor ());
-      return bIsSunJVM && !_isSunServerJVM ();
+      return bIsSunJVM && !_isSunOrOracleServerJVM ();
     }
   },
 
@@ -44,7 +44,27 @@ public enum EJVMVendor
     protected boolean determineIfItIsCurrentJVMVendor ()
     {
       final boolean bIsSunJVM = SUN_VENDOR_NAME.equals (SystemProperties.getJavaVmVendor ());
-      return bIsSunJVM && _isSunServerJVM ();
+      return bIsSunJVM && _isSunOrOracleServerJVM ();
+    }
+  },
+
+  ORACLE_CLIENT
+  {
+    @Override
+    protected boolean determineIfItIsCurrentJVMVendor ()
+    {
+      final boolean bIsOracleJVM = ORACLE_VENDOR_NAME.equals (SystemProperties.getJavaVmVendor ());
+      return bIsOracleJVM && !_isSunOrOracleServerJVM ();
+    }
+  },
+
+  ORACLE_SERVER
+  {
+    @Override
+    protected boolean determineIfItIsCurrentJVMVendor ()
+    {
+      final boolean bIsOracleJVM = ORACLE_VENDOR_NAME.equals (SystemProperties.getJavaVmVendor ());
+      return bIsOracleJVM && _isSunOrOracleServerJVM ();
     }
   },
 
@@ -59,9 +79,10 @@ public enum EJVMVendor
   };
 
   private static final String SUN_VENDOR_NAME = "Sun Microsystems Inc.";
+  private static final String ORACLE_VENDOR_NAME = "Oracle Corporation";
   private static final String SYSPROP_JAVA_VM_NAME = "java.vm.name";
 
-  private static boolean _isSunServerJVM ()
+  private static boolean _isSunOrOracleServerJVM ()
   {
     final String sVM = SystemProperties.getPropertyValue (SYSPROP_JAVA_VM_NAME);
     // Dev machine, Windows Vista 32-bit:
@@ -93,11 +114,19 @@ public enum EJVMVendor
   }
 
   /**
-   * @return <code>true</code> if this is a Sun/Oracle JVM.
+   * @return <code>true</code> if this is a Sun JVM (usually for Java &le; 1.6).
    */
   public final boolean isSun ()
   {
     return this == SUN_CLIENT || this == SUN_SERVER;
+  }
+
+  /**
+   * @return <code>true</code> if this is an Oracle JVM (for Java &ge; 1.7).
+   */
+  public final boolean isOracle ()
+  {
+    return this == ORACLE_CLIENT || this == ORACLE_SERVER;
   }
 
   /**
