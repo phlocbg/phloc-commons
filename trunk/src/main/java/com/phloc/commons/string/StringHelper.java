@@ -1433,6 +1433,35 @@ public final class StringHelper
     return aSB.toString ();
   }
 
+  /**
+   * Concatenate the strings sFront and sEnd by the "cSep" separator. If either
+   * front or back is <code>null</code> or empty, the separator is not applied.
+   * 
+   * @param sFront
+   *        Front string. May be <code>null</code>.
+   * @param cSep
+   *        Separator character.
+   * @param sEnd
+   *        May be <code>null</code>.
+   * @return The concatenated string.
+   */
+  @Nonnull
+  public static String getConcatenatedOnDemand (@Nullable final String sFront,
+                                                final char cSep,
+                                                @Nullable final String sEnd)
+  {
+    final StringBuilder aSB = new StringBuilder ();
+    if (hasText (sFront))
+    {
+      aSB.append (sFront);
+      if (hasText (sEnd))
+        aSB.append (cSep);
+    }
+    if (hasText (sEnd))
+      aSB.append (sEnd);
+    return aSB.toString ();
+  }
+
   public static boolean startsWith (@Nullable final CharSequence aCS, final char c)
   {
     return hasText (aCS) && aCS.charAt (0) == c;
