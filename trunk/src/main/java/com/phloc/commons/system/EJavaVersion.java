@@ -19,34 +19,10 @@ package com.phloc.commons.system;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.CGlobal;
-import com.phloc.commons.SystemProperties;
-import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.string.StringParser;
-
-/**
- * Helper class that holds the current class version. Must be a separate class
- * to maintain the correct initialization order.
- * 
- * @author philip
- */
-@Immutable
-final class JavaVersionConstants
-{
-  /** The global Java class version as a double value. */
-  public static final double CLASS_VERSION = StringParser.parseDouble (SystemProperties.getJavaClassVersion (),
-                                                                       CGlobal.ILLEGAL_DOUBLE);
-
-  @PresentForCodeCoverage
-  @SuppressWarnings ("unused")
-  private static final JavaVersionConstants s_aInstance = new JavaVersionConstants ();
-
-  private JavaVersionConstants ()
-  {}
-}
 
 /**
  * Enum for representing the current Java JDK version.
@@ -103,7 +79,8 @@ public enum EJavaVersion
   }
 
   /**
-   * @return <code>true</code> if this is the current version
+   * @return <code>true</code> if this is the current version,
+   *         <code>false</code> otherwise
    */
   public boolean isCurrentVersion ()
   {
@@ -121,12 +98,26 @@ public enum EJavaVersion
   }
 
   /**
+   * Check if this java version is newer or equals than the passed version
+   * 
+   * @param eJavaVersion
+   *        the Java version to be checked. May not be <code>null</code>.
+   * @return <code>true</code> if this Java version is supported by the current
+   *         Java Version. It is expected that all versions are backward
+   *         compatible.
+   */
+  public boolean isNewerOrEqualsThan (@Nonnull final EJavaVersion eJavaVersion)
+  {
+    return m_dMinVersionIncl >= eJavaVersion.m_dMinVersionIncl;
+  }
+
+  /**
    * @return The current Java version. If the Java version could not be
    *         determined, {@link #UNKNOWN} is returned and never
    *         <code>null</code>.
    */
   @Nonnull
-  static EJavaVersion getCurrentVersion ()
+  public static EJavaVersion getCurrentVersion ()
   {
     EJavaVersion ret = s_aInstance;
     if (ret == null)

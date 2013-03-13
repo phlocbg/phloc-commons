@@ -69,6 +69,7 @@ import com.phloc.commons.state.ETopBottom;
 import com.phloc.commons.state.ETriState;
 import com.phloc.commons.state.EValidity;
 import com.phloc.commons.string.StringHelper;
+import com.phloc.commons.system.EJavaVersion;
 import com.phloc.commons.text.impl.MultiLingualText;
 import com.phloc.commons.typeconvert.TypeConverterException.EReason;
 
@@ -268,7 +269,15 @@ public final class TypeConverterTest extends AbstractPhlocTestCase
     {
       final String sLocale = TypeConverter.convertIfNecessary (aLocale, String.class);
       final Locale aLocale2 = TypeConverter.convertIfNecessary (sLocale, Locale.class);
-      assertEquals (aLocale, aLocale2);
+      if (EJavaVersion.getCurrentVersion ().isNewerOrEqualsThan (EJavaVersion.JDK_17))
+      {
+        // Difference in Locale.equals!!!
+        assertEquals (aLocale.toString (), aLocale2.toString ());
+      }
+      else
+      {
+        assertEquals (aLocale, aLocale2);
+      }
     }
   }
 
