@@ -18,6 +18,7 @@
 package com.phloc.commons.system;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
@@ -31,15 +32,32 @@ import org.junit.Test;
 public final class EJVMVendorTest
 {
   @Test
-  public void testSun ()
+  public void testBasic ()
   {
     for (final EJVMVendor e : EJVMVendor.values ())
       assertSame (e, EJVMVendor.valueOf (e.name ()));
 
     final EJVMVendor eVendor = EJVMVendor.getCurrentVendor ();
-    assertTrue (eVendor.isSun ());
+    assertNotNull (eVendor);
+  }
+
+  @Test
+  public void testIsSun ()
+  {
     assertTrue (EJVMVendor.SUN_CLIENT.isSun ());
     assertTrue (EJVMVendor.SUN_SERVER.isSun ());
+    assertFalse (EJVMVendor.ORACLE_CLIENT.isSun ());
+    assertFalse (EJVMVendor.ORACLE_SERVER.isSun ());
     assertFalse (EJVMVendor.UNKNOWN.isSun ());
+  }
+
+  @Test
+  public void testIsOracle ()
+  {
+    assertFalse (EJVMVendor.SUN_CLIENT.isOracle ());
+    assertFalse (EJVMVendor.SUN_SERVER.isOracle ());
+    assertTrue (EJVMVendor.ORACLE_CLIENT.isOracle ());
+    assertTrue (EJVMVendor.ORACLE_SERVER.isOracle ());
+    assertFalse (EJVMVendor.UNKNOWN.isOracle ());
   }
 }
