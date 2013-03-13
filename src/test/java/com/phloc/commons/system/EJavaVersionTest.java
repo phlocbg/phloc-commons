@@ -32,7 +32,7 @@ import org.junit.Test;
 public final class EJavaVersionTest
 {
   @Test
-  public void testAll ()
+  public void testBasic ()
   {
     for (final EJavaVersion e : EJavaVersion.values ())
       assertSame (e, EJavaVersion.valueOf (e.name ()));
@@ -64,5 +64,17 @@ public final class EJavaVersionTest
       assertTrue (EJavaVersion.JDK_17.isSupportedVersion ());
     else
       assertFalse (EJavaVersion.JDK_17.isSupportedVersion ());
+  }
+
+  @Test
+  public void testIsNewerOrEqualsThan ()
+  {
+    assertTrue (EJavaVersion.JDK_11.isNewerOrEqualsThan (EJavaVersion.JDK_11));
+    assertFalse (EJavaVersion.JDK_11.isNewerOrEqualsThan (EJavaVersion.JDK_12));
+    assertFalse (EJavaVersion.JDK_11.isNewerOrEqualsThan (EJavaVersion.JDK_17));
+
+    assertTrue (EJavaVersion.JDK_17.isNewerOrEqualsThan (EJavaVersion.JDK_11));
+    assertTrue (EJavaVersion.JDK_17.isNewerOrEqualsThan (EJavaVersion.JDK_16));
+    assertTrue (EJavaVersion.JDK_17.isNewerOrEqualsThan (EJavaVersion.JDK_17));
   }
 }
