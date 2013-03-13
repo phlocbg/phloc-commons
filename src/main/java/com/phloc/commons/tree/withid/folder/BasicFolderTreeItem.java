@@ -43,9 +43,7 @@ import com.phloc.commons.tree.withid.BasicTreeItemWithID;
  *        the implementation item type
  */
 @NotThreadSafe
-public class BasicFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE extends Collection <DATATYPE>, ITEMTYPE extends BasicFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE, ITEMTYPE>> extends
-                                                                                                                                                                           BasicTreeItemWithID <KEYTYPE, COLLTYPE, ITEMTYPE> implements
-                                                                                                                                                                                                                            IFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE, ITEMTYPE>
+public class BasicFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE extends Collection <DATATYPE>, ITEMTYPE extends BasicFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE, ITEMTYPE>> extends BasicTreeItemWithID <KEYTYPE, COLLTYPE, ITEMTYPE> implements IFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE, ITEMTYPE>
 {
   // Combinator to create a global unique ID.
   private final ICombinator <KEYTYPE> m_aKeyCombinator;
@@ -89,7 +87,7 @@ public class BasicFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE extends Collection
   public BasicFolderTreeItem (@Nonnull final ITEMTYPE aParent, @Nonnull final KEYTYPE aDataID)
   {
     super (aParent, aDataID);
-    m_aKeyCombinator = aParent.m_aKeyCombinator;
+    m_aKeyCombinator = ((BasicFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE, ITEMTYPE>) aParent).m_aKeyCombinator;
   }
 
   @Nonnull
