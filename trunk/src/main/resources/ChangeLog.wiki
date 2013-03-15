@@ -1,7 +1,8 @@
 #summary Change log of phloc-commons
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
-<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr border="1"><td>3/13/13</td><td colspan="4">_Release *4.0.0*_</td></tr>
+<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody><tr><td>3/15/13</td><td>add</td><td>api</td><td></td><td>Extended ITriState with method isDefined (as the inverse of isUndefined)</td></tr>
+<tr border="1"><td>3/13/13</td><td colspan="4">_Release *4.0.0*_</td></tr>
 <tr><td>3/13/13</td><td>add</td><td>api</td><td></td><td>Extended EJavaVersion API</td></tr>
 <tr><td>3/13/13</td><td>fix</td><td>test</td><td></td><td>Fixed tests so that they run with JDK 1.7.0`_`17</td></tr>
 <tr><td>3/13/13</td><td>add</td><td>api</td><td></td><td>Extended EJVMVendor with ORACLE`_`CLIENT and ORACLE`_`SERVER for Java 1.7</td></tr>
