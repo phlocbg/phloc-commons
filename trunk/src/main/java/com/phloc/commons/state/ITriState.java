@@ -37,7 +37,14 @@ public interface ITriState
   boolean isFalse ();
 
   /**
-   * @return <code>true</code> if the value is undefined.
+   * @return <code>true</code> if the value is not undefined (if it is either
+   *         <code>true</code> or <code>false</code>)
+   */
+  boolean isDefined ();
+
+  /**
+   * @return <code>true</code> if the value is undefined (if it is neither
+   *         <code>true</code> nor <code>false</code>)
    */
   boolean isUndefined ();
 

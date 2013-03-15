@@ -62,6 +62,11 @@ public enum ETriState implements IHasID <String>, ITriState
     return this == FALSE;
   }
 
+  public boolean isDefined ()
+  {
+    return this != UNDEFINED;
+  }
+
   public boolean isUndefined ()
   {
     return this == UNDEFINED;
