@@ -36,10 +36,10 @@ import com.phloc.commons.string.ToStringGenerator;
  */
 public final class ReverseListIterator <ELEMENTTYPE> implements Iterator <ELEMENTTYPE>
 {
-  private final List <ELEMENTTYPE> m_aList;
+  private final List <? extends ELEMENTTYPE> m_aList;
   private int m_nIndex;
 
-  public ReverseListIterator (@Nonnull final List <ELEMENTTYPE> aList)
+  public ReverseListIterator (@Nonnull final List <? extends ELEMENTTYPE> aList)
   {
     if (aList == null)
       throw new NullPointerException ("list");
@@ -73,5 +73,11 @@ public final class ReverseListIterator <ELEMENTTYPE> implements Iterator <ELEMEN
   public String toString ()
   {
     return new ToStringGenerator (this).append ("list", m_aList).append ("index", m_nIndex).toString ();
+  }
+
+  @Nonnull
+  public static <ELEMENTTYPE> ReverseListIterator <ELEMENTTYPE> create (@Nonnull final List <? extends ELEMENTTYPE> aList)
+  {
+    return new ReverseListIterator <ELEMENTTYPE> (aList);
   }
 }

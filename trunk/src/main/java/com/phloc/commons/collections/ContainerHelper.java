@@ -2618,7 +2618,7 @@ public final class ContainerHelper
   }
 
   @Nonnull
-  public static <ELEMENTTYPE> Iterator <ELEMENTTYPE> getReverseIterator (@Nullable final List <ELEMENTTYPE> aCont)
+  public static <ELEMENTTYPE> Iterator <ELEMENTTYPE> getReverseIterator (@Nullable final List <? extends ELEMENTTYPE> aCont)
   {
     if (isEmpty (aCont))
       return EmptyIterator.<ELEMENTTYPE> getInstance ();
@@ -2627,7 +2627,7 @@ public final class ContainerHelper
      * Performance note: this implementation is much faster than building a
      * temporary list in reverse order and returning a forward iterator!
      */
-    return new ReverseListIterator <ELEMENTTYPE> (aCont);
+    return ReverseListIterator.create (aCont);
   }
 
   /**
