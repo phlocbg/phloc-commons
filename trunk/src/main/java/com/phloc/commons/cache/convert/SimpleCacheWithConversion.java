@@ -18,7 +18,7 @@
 package com.phloc.commons.cache.convert;
 
 import javax.annotation.Nonnull;
-import javax.annotation.concurrent.NotThreadSafe;
+import javax.annotation.concurrent.ThreadSafe;
 
 import com.phloc.commons.cache.AbstractCache;
 import com.phloc.commons.convert.IUnidirectionalConverter;
@@ -33,7 +33,7 @@ import com.phloc.commons.convert.IUnidirectionalConverter;
  * @param <VALUETYPE>
  *        Cache value type
  */
-@NotThreadSafe
+@ThreadSafe
 public class SimpleCacheWithConversion <KEYTYPE, VALUETYPE> extends AbstractCache <KEYTYPE, VALUETYPE>
 {
   public SimpleCacheWithConversion (@Nonnull final String sCacheName)
@@ -58,17 +58,39 @@ public class SimpleCacheWithConversion <KEYTYPE, VALUETYPE> extends AbstractCach
                                        @Nonnull final IUnidirectionalConverter <KEYTYPE, VALUETYPE> aValueRetriever)
   {
     // Already in the cache?
-    VALUETYPE aValue = super.getFromCache (aKey);
+    VALUETYPE aValue = super.getFromCacheNoStats (aKey);
     if (aValue == null)
     {
-      // Get the value to cache
-      aValue = aValueRetriever.convert (aKey);
+      // No old value in the cache
+      m_aRWLock.writeLock ().lock ();
+      try
+      {
+        // Read again, in case the value was set between the two locking
+        // sections
+        // Note: do not increase statistics in this second try
+        aValue = super.getFromCacheNoStatsNotLocked (aKey);
+        if (aValue == null)
+        {
+          // Get the value to cache
+          aValue = aValueRetriever.convert (aKey);
 
-      // We cannot cache null values!
-      if (aValue == null)
-        throw new IllegalStateException ("The converter returned a null object for the key '" + aKey + "'");
-      putInCache (aKey, aValue);
+          // We cannot cache null values!
+          if (aValue == null)
+            throw new IllegalStateException ("The converter returned a null object for the key '" + aKey + "'");
+
+          super.putInCacheNotLocked (aKey, aValue);
+          m_aCacheAccessStats.cacheMiss ();
+        }
+        else
+          m_aCacheAccessStats.cacheHit ();
+      }
+      finally
+      {
+        m_aRWLock.writeLock ().unlock ();
+      }
     }
+    else
+      m_aCacheAccessStats.cacheHit ();
     return aValue;
   }
 }

@@ -21,7 +21,7 @@ import java.util.Map;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
-import javax.annotation.concurrent.NotThreadSafe;
+import javax.annotation.concurrent.ThreadSafe;
 
 import com.phloc.commons.cache.LoggingLRUCache;
 import com.phloc.commons.string.ToStringGenerator;
@@ -36,9 +36,8 @@ import com.phloc.commons.string.ToStringGenerator;
  * @param <VALUETYPE>
  *        Cache value type
  */
-@NotThreadSafe
-public class SimpleCacheWithConversionAndMaxSize <KEYTYPE, VALUETYPE> extends
-                                                                      SimpleCacheWithConversion <KEYTYPE, VALUETYPE>
+@ThreadSafe
+public class SimpleCacheWithConversionAndMaxSize <KEYTYPE, VALUETYPE> extends SimpleCacheWithConversion <KEYTYPE, VALUETYPE>
 {
   private final int m_nMaxSize;
 

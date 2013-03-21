@@ -17,14 +17,9 @@
  */
 package com.phloc.commons.cache;
 
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
-
-import com.phloc.commons.state.EChange;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -41,8 +36,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 @ThreadSafe
 public abstract class AbstractNotifyingCache <KEYTYPE, VALUETYPE> extends AbstractCache <KEYTYPE, VALUETYPE>
 {
-  private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
-
   public AbstractNotifyingCache (@Nonnull final String sCacheName)
   {
     super (sCacheName);
@@ -63,18 +56,8 @@ public abstract class AbstractNotifyingCache <KEYTYPE, VALUETYPE> extends Abstra
   @SuppressFBWarnings ("RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE")
   public final VALUETYPE getFromCache (@Nullable final KEYTYPE aKey)
   {
-    VALUETYPE aValue;
-
     // read existing value
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      aValue = super.getFromCacheNoStats (aKey);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    VALUETYPE aValue = super.getFromCacheNoStats (aKey);
 
     if (aValue == null)
     {
@@ -85,7 +68,7 @@ public abstract class AbstractNotifyingCache <KEYTYPE, VALUETYPE> extends Abstra
         // Read again, in case the value was set between the two locking
         // sections
         // Note: do not increase statistics in this second try
-        aValue = super.getFromCacheNoStats (aKey);
+        aValue = super.getFromCacheNoStatsNotLocked (aKey);
         if (aValue == null)
         {
           // Call the abstract method to create the value to cache
@@ -96,7 +79,7 @@ public abstract class AbstractNotifyingCache <KEYTYPE, VALUETYPE> extends Abstra
             throw new IllegalStateException ("The value to cache was null for key '" + aKey + "'");
 
           // Put the new value into the cache
-          super.putInCache (aKey, aValue);
+          super.putInCacheNotLocked (aKey, aValue);
           m_aCacheAccessStats.cacheMiss ();
         }
         else
@@ -111,35 +94,5 @@ public abstract class AbstractNotifyingCache <KEYTYPE, VALUETYPE> extends Abstra
       m_aCacheAccessStats.cacheHit ();
 
     return aValue;
-  }
-
-  @Override
-  @Nonnull
-  public final EChange removeFromCache (@Nullable final KEYTYPE aKey)
-  {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
-      return super.removeFromCache (aKey);
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
-  }
-
-  @Override
-  @Nonnull
-  public final EChange clearCache ()
-  {
-    m_aRWLock.writeLock ().lock ();
-    try
-    {
-      return super.clearCache ();
-    }
-    finally
-    {
-      m_aRWLock.writeLock ().unlock ();
-    }
   }
 }

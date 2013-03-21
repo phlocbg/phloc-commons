@@ -20,13 +20,17 @@ package com.phloc.commons.cache;
 import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
-import javax.annotation.concurrent.NotThreadSafe;
+import javax.annotation.concurrent.ThreadSafe;
 
+import com.phloc.commons.annotations.MustBeLocked;
+import com.phloc.commons.annotations.MustBeLocked.ELockType;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.collections.ContainerHelper;
@@ -47,7 +51,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @param <VALUETYPE>
  *        The cache value type
  */
-@NotThreadSafe
+@ThreadSafe
 public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache <KEYTYPE, VALUETYPE>
 {
   /** By default JMS is disabled */
@@ -61,6 +65,7 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
   private final IStatisticsHandlerCounter m_aCacheRemoveStats;
   private final IStatisticsHandlerCounter m_aCacheClearStats;
 
+  protected final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
   private final String m_sCacheName;
   private volatile Map <KEYTYPE, VALUETYPE> m_aCache;
 
@@ -114,13 +119,15 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
    * @param aValue
    *        The cache value. May not be <code>null</code>.
    */
-  protected final void putInCache (@Nonnull final KEYTYPE aKey, @Nonnull final VALUETYPE aValue)
+  @MustBeLocked (ELockType.WRITE)
+  protected final void putInCacheNotLocked (@Nonnull final KEYTYPE aKey, @Nonnull final VALUETYPE aValue)
   {
     if (aKey == null)
       throw new NullPointerException ("cacheKey");
     if (aValue == null)
       throw new NullPointerException ("cacheValue");
 
+    // try again in write lock
     if (m_aCache == null)
     {
       // Create a new map to cache the objects
@@ -131,9 +138,34 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
     m_aCache.put (aKey, aValue);
   }
 
-  @Nullable
-  @OverridingMethodsMustInvokeSuper
-  protected final VALUETYPE getFromCacheNoStats (@Nullable final KEYTYPE aKey)
+  /**
+   * Put a new value into the cache.
+   * 
+   * @param aKey
+   *        The cache key. May not be <code>null</code>.
+   * @param aValue
+   *        The cache value. May not be <code>null</code>.
+   */
+  protected final void putInCache (@Nonnull final KEYTYPE aKey, @Nonnull final VALUETYPE aValue)
+  {
+    if (aKey == null)
+      throw new NullPointerException ("cacheKey");
+    if (aValue == null)
+      throw new NullPointerException ("cacheValue");
+
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      putInCacheNotLocked (aKey, aValue);
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
+  }
+
+  @MustBeLocked (ELockType.READ)
+  protected final VALUETYPE getFromCacheNoStatsNotLocked (@Nullable final KEYTYPE aKey)
   {
     // Since null is not allowed as value, we don't need to check with
     // containsKey before get!
@@ -142,13 +174,41 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
 
   @Nullable
   @OverridingMethodsMustInvokeSuper
-  public VALUETYPE getFromCache (@Nullable final KEYTYPE aKey)
+  protected final VALUETYPE getFromCacheNoStats (@Nullable final KEYTYPE aKey)
   {
-    final VALUETYPE aValue = getFromCacheNoStats (aKey);
-    if (aValue == null)
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return getFromCacheNoStatsNotLocked (aKey);
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  private void _updateStats (final boolean bMiss)
+  {
+    if (bMiss)
       m_aCacheAccessStats.cacheMiss ();
     else
       m_aCacheAccessStats.cacheHit ();
+  }
+
+  @Nullable
+  protected final VALUETYPE getFromCacheNotLocked (@Nullable final KEYTYPE aKey)
+  {
+    final VALUETYPE aValue = getFromCacheNoStatsNotLocked (aKey);
+    _updateStats (aValue == null);
+    return aValue;
+  }
+
+  @Nullable
+  @OverridingMethodsMustInvokeSuper
+  public VALUETYPE getFromCache (@Nullable final KEYTYPE aKey)
+  {
+    final VALUETYPE aValue = getFromCacheNoStats (aKey);
+    _updateStats (aValue == null);
     return aValue;
   }
 
@@ -156,8 +216,16 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
   @OverridingMethodsMustInvokeSuper
   public EChange removeFromCache (@Nullable final KEYTYPE aKey)
   {
-    if (m_aCache == null || m_aCache.remove (aKey) == null)
-      return EChange.UNCHANGED;
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      if (m_aCache == null || m_aCache.remove (aKey) == null)
+        return EChange.UNCHANGED;
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
     m_aCacheRemoveStats.increment ();
     return EChange.CHANGED;
   }
@@ -166,28 +234,60 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
   @OverridingMethodsMustInvokeSuper
   public EChange clearCache ()
   {
-    if (isEmpty ())
-      return EChange.UNCHANGED;
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      if (m_aCache == null || m_aCache.isEmpty ())
+        return EChange.UNCHANGED;
 
-    m_aCache.clear ();
-    m_aCacheClearStats.increment ();
-    return EChange.CHANGED;
+      m_aCache.clear ();
+      m_aCacheClearStats.increment ();
+      return EChange.CHANGED;
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
   }
 
   @Nonnegative
   public int size ()
   {
-    return ContainerHelper.getSize (m_aCache);
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return ContainerHelper.getSize (m_aCache);
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
   }
 
   public boolean isEmpty ()
   {
-    return ContainerHelper.isEmpty (m_aCache);
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return ContainerHelper.isEmpty (m_aCache);
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
   }
 
   public boolean isNotEmpty ()
   {
-    return ContainerHelper.isNotEmpty (m_aCache);
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return ContainerHelper.isNotEmpty (m_aCache);
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
   }
 
   @Override
