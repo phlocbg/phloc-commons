@@ -24,6 +24,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.RegEx;
 
+import com.phloc.commons.annotations.IsLocked;
+import com.phloc.commons.annotations.IsLocked.ELockType;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.cache.AbstractNotifyingCacheWithMaxSize;
 import com.phloc.commons.state.EChange;
@@ -47,6 +49,7 @@ public final class RegExPool extends AbstractNotifyingCacheWithMaxSize <RegExPat
 
   @Override
   @Nullable
+  @IsLocked (ELockType.WRITE)
   protected Pattern getValueToCache (@Nullable @RegEx final RegExPattern aRegEx)
   {
     return aRegEx == null ? null : aRegEx.getAsPattern ();

@@ -131,8 +131,7 @@ public final class ChangeLogSerializer
     if (eRoot == null)
       return null;
 
-    final ChangeLog ret = new ChangeLog (new Version (eRoot.getAttribute (ATTR_VERSION)),
-                                         eRoot.getAttribute (ATTR_COMPONENT));
+    final ChangeLog ret = new ChangeLog (eRoot.getAttribute (ATTR_VERSION), eRoot.getAttribute (ATTR_COMPONENT));
     final DateFormat aDF = new SimpleDateFormat (DATE_FORMAT);
 
     // Add all entries
@@ -291,7 +290,7 @@ public final class ChangeLogSerializer
     final IMicroElement eRoot = ret.appendElement (CChangeLog.CHANGELOG_NAMESPACE_10, ELEMENT_CHANGELOG);
     eRoot.setAttribute (XMLHelper.getXMLNSAttrName (CXML.XML_NS_PREFIX_XSI), CXML.XML_NS_XSI);
     eRoot.setAttribute (CXML.XML_NS_PREFIX_XSI + ":schemaLocation", CChangeLog.CHANGELOG_SCHEMALOCATION_10);
-    eRoot.setAttribute (ATTR_VERSION, aChangeLog.getVersion ().getAsString ());
+    eRoot.setAttribute (ATTR_VERSION, aChangeLog.getOriginalVersion ());
     if (StringHelper.hasText (aChangeLog.getComponent ()))
       eRoot.setAttribute (ATTR_COMPONENT, aChangeLog.getComponent ());
 

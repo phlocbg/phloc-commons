@@ -28,6 +28,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.GlobalDebug;
+import com.phloc.commons.annotations.IsLocked;
+import com.phloc.commons.annotations.IsLocked.ELockType;
 import com.phloc.commons.cache.AbstractNotifyingCache;
 
 /**
@@ -68,6 +70,7 @@ public final class JAXBContextCache extends AbstractNotifyingCache <Package, JAX
 
   @Override
   @Nullable
+  @IsLocked (ELockType.WRITE)
   public JAXBContext getValueToCache (@Nullable final Package aPackage)
   {
     if (aPackage == null)

@@ -990,7 +990,9 @@ public final class StringHelper
    * @return The passed collection and never <code>null</code>.
    */
   @Nonnull
-  public static String [] getExplodedArray (final char cSep, @Nullable final String sElements, final int nMaxItems)
+  public static String [] getExplodedArray (final char cSep,
+                                            @Nullable final String sElements,
+                                            @CheckForSigned final int nMaxItems)
   {
     if (nMaxItems == 1)
       return new String [] { sElements };
