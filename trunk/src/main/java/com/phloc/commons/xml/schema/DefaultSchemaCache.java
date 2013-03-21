@@ -18,6 +18,7 @@
 package com.phloc.commons.xml.schema;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -28,6 +29,8 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
+import org.w3c.dom.ls.LSResourceResolver;
+import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 
 import com.phloc.commons.annotations.IsLocked;
@@ -39,7 +42,6 @@ import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
-import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
 import com.phloc.commons.xml.transform.TransformSourceFactory;
 
 /**
@@ -52,14 +54,21 @@ public abstract class DefaultSchemaCache extends AbstractNotifyingCache <List <?
 {
   private final String m_sSchemaTypeName;
   private final SchemaFactory m_aSchemaFactory;
+  private final ErrorHandler m_aErrorHandler;
 
-  public DefaultSchemaCache (@Nonnull final String sSchemaTypeName, @Nonnull final SchemaFactory aSchemaFactory)
+  public DefaultSchemaCache (@Nonnull final String sSchemaTypeName,
+                             @Nonnull final SchemaFactory aSchemaFactory,
+                             @Nullable final ErrorHandler aErrorHandler,
+                             @Nullable final LSResourceResolver aResourceResolver)
   {
     super (DefaultSchemaCache.class.getName () + "$" + sSchemaTypeName);
     if (aSchemaFactory == null)
       throw new NullPointerException ("SchemaFactory");
     m_sSchemaTypeName = sSchemaTypeName;
     m_aSchemaFactory = aSchemaFactory;
+    m_aSchemaFactory.setErrorHandler (aErrorHandler);
+    m_aSchemaFactory.setResourceResolver (aResourceResolver);
+    m_aErrorHandler = aErrorHandler;
   }
 
   @Override
@@ -100,7 +109,7 @@ public abstract class DefaultSchemaCache extends AbstractNotifyingCache <List <?
     if (aResource == null)
       throw new NullPointerException ("resources");
 
-    return getValueToCache (ContainerHelper.newList (aResource));
+    return getFromCache (ContainerHelper.newList (aResource));
   }
 
   @Nonnull
@@ -111,20 +120,65 @@ public abstract class DefaultSchemaCache extends AbstractNotifyingCache <List <?
     if (ArrayHelper.containsAnyNullElement (aResources))
       throw new IllegalArgumentException ("At leaste one resource is null!");
 
-    return getValueToCache (ContainerHelper.newList (aResources));
+    return getFromCache (ContainerHelper.newList (aResources));
   }
 
   @Nonnull
-  public final Schema getSchema (@Nonnull @Nonempty final List <? extends IReadableResource> aResources)
+  public final Schema getSchema (@Nonnull @Nonempty final Collection <? extends IReadableResource> aResources)
   {
     if (ContainerHelper.isEmpty (aResources))
       throw new IllegalArgumentException ("no resources provided!");
     if (ContainerHelper.containsAnyNullElement (aResources))
       throw new IllegalArgumentException ("At leaste one resource is null!");
 
-    return getValueToCache (ContainerHelper.newList (aResources));
+    return getFromCache (ContainerHelper.newList (aResources));
   }
 
+  /**
+   * Utility method to get the validator for a given schema using the error
+   * handler provided in the constructor.
+   * 
+   * @param aSchema
+   *        The schema for which the validator is to be retrieved. May not be
+   *        <code>null</code>.
+   * @return The validator and never <code>null</code>.
+   */
+  @Nonnull
+  public final Validator getValidatorFromSchema (@Nonnull final Schema aSchema)
+  {
+    if (aSchema == null)
+      throw new NullPointerException ("schema");
+
+    final Validator aValidator = aSchema.newValidator ();
+    aValidator.setErrorHandler (m_aErrorHandler);
+    return aValidator;
+  }
+
+  @Nonnull
+  public final Validator getValidator (@Nonnull final IReadableResource aResource)
+  {
+    return getValidatorFromSchema (getSchema (aResource));
+  }
+
+  @Nonnull
+  public final Validator getValidator (@Nonnull @Nonempty final IReadableResource... aResources)
+  {
+    return getValidatorFromSchema (getSchema (aResources));
+  }
+
+  @Nonnull
+  public final Validator getValidator (@Nonnull @Nonempty final Collection <? extends IReadableResource> aResources)
+  {
+    return getValidatorFromSchema (getSchema (aResources));
+  }
+
+  /**
+   * Utility method to remove a single resource from the schema cache.
+   * 
+   * @param aKey
+   *        The resource to remove
+   * @return {@link EChange}.
+   */
   @Nonnull
   public EChange removeFromCache (@Nullable final IReadableResource aKey)
   {
@@ -135,25 +189,5 @@ public abstract class DefaultSchemaCache extends AbstractNotifyingCache <List <?
   public String toString ()
   {
     return ToStringGenerator.getDerived (super.toString ()).append ("schemaTypeName", m_sSchemaTypeName).toString ();
-  }
-
-  /**
-   * Utility method to get the validator for a given schema using the standard
-   * logging error handler.
-   * 
-   * @param aSchema
-   *        The schema for which the validator is to be retrieved. May not be
-   *        <code>null</code>.
-   * @return The validator and never <code>null</code>.
-   */
-  @Nonnull
-  public static final Validator getValidatorFromSchema (@Nonnull final Schema aSchema)
-  {
-    if (aSchema == null)
-      throw new NullPointerException ("schema");
-
-    final Validator aValidator = aSchema.newValidator ();
-    aValidator.setErrorHandler (LoggingSAXErrorHandler.getInstance ());
-    return aValidator;
   }
 }
