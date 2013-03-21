@@ -108,6 +108,15 @@ public class SimpleLSResourceResolver implements LSResourceResolver
       return new ClassPathResource (sPath);
     }
 
+    if (ClassPathResource.isExplicitClassPathResource (sBaseURI))
+    {
+      final String sRealBaseURI = ClassPathResource.getWithoutClassPathPrefix (sBaseURI);
+      File aBaseURI = new File (sRealBaseURI);
+      if (aBaseURI.getParentFile () != null)
+        aBaseURI = aBaseURI.getParentFile ();
+      return new ClassPathResource (FilenameHelper.getCleanConcatenatedUrlPath (aBaseURI.getPath (), sSystemId));
+    }
+
     URL aBaseURL = null;
     try
     {
@@ -124,7 +133,7 @@ public class SimpleLSResourceResolver implements LSResourceResolver
       // Base is not a URL
     }
 
-    // Base is not a URL
+    // Base is potentially a URL
     File aBase;
     if (aBaseURL != null)
       aBase = new File (aBaseURL.toURI ().getSchemeSpecificPart ());
