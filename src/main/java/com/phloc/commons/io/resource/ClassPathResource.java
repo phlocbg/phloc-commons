@@ -112,13 +112,7 @@ public final class ClassPathResource implements IReadableResource
     if (StringHelper.hasNoText (sPath))
       throw new IllegalArgumentException ("No path specified");
 
-    if (StringHelper.startsWith (sPath, CLASSPATH_PREFIX_LONG))
-      m_sPath = sPath.substring (CLASSPATH_PREFIX_LONG.length ());
-    else
-      if (StringHelper.startsWith (sPath, CLASSPATH_PREFIX_SHORT))
-        m_sPath = sPath.substring (CLASSPATH_PREFIX_SHORT.length ());
-      else
-        m_sPath = sPath;
+    m_sPath = getWithoutClassPathPrefix (sPath);
 
     // In case something was cut...
     if (StringHelper.hasNoText (m_sPath))
@@ -126,6 +120,16 @@ public final class ClassPathResource implements IReadableResource
 
     // Ensure the ClassLoader can be garbage collected if necessary
     m_aClassLoader = aClassLoader == null ? null : new WeakReference <ClassLoader> (aClassLoader);
+  }
+
+  @Nullable
+  public static String getWithoutClassPathPrefix (@Nullable final String sPath)
+  {
+    if (StringHelper.startsWith (sPath, CLASSPATH_PREFIX_LONG))
+      return sPath.substring (CLASSPATH_PREFIX_LONG.length ());
+    if (StringHelper.startsWith (sPath, CLASSPATH_PREFIX_SHORT))
+      return sPath.substring (CLASSPATH_PREFIX_SHORT.length ());
+    return sPath;
   }
 
   /**
