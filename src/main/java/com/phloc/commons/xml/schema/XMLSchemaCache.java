@@ -55,20 +55,10 @@ public class XMLSchemaCache extends DefaultSchemaCache
     this (null, aResourceResolver);
   }
 
-  @Nonnull
-  private static final SchemaFactory _createSchemaFactory (@Nullable final ErrorHandler aErrorHandler,
-                                                           @Nullable final LSResourceResolver aResourceResolver)
-  {
-    final SchemaFactory aSchemaFactory = SchemaFactory.newInstance (XMLConstants.W3C_XML_SCHEMA_NS_URI);
-    aSchemaFactory.setErrorHandler (aErrorHandler);
-    aSchemaFactory.setResourceResolver (aResourceResolver);
-    return aSchemaFactory;
-  }
-
   public XMLSchemaCache (@Nullable final ErrorHandler aErrorHandler,
                          @Nullable final LSResourceResolver aResourceResolver)
   {
-    super ("XSD", _createSchemaFactory (aErrorHandler, aResourceResolver));
+    super ("XSD", SchemaFactory.newInstance (XMLConstants.W3C_XML_SCHEMA_NS_URI), aErrorHandler, aResourceResolver);
   }
 
   public static boolean isInstantiated ()

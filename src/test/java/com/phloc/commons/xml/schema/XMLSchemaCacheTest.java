@@ -54,12 +54,12 @@ public final class XMLSchemaCacheTest
     // Valid schema
     Schema aSchema = sc.getSchema (new ClassPathResource ("xml/schema1.xsd"));
     assertNotNull (aSchema);
-    assertNotNull (DefaultSchemaCache.getValidatorFromSchema (aSchema));
+    assertNotNull (sc.getValidatorFromSchema (aSchema));
 
     // Valid schema (with includes)
     aSchema = sc.getSchema (new ClassPathResource ("xml/schema2.xsd"));
     assertNotNull (aSchema);
-    assertNotNull (DefaultSchemaCache.getValidatorFromSchema (aSchema));
+    assertNotNull (sc.getValidatorFromSchema (aSchema));
 
     // clear in the middle
     // Note: cannot expect success, because a WeakHashMap is used!
@@ -69,12 +69,12 @@ public final class XMLSchemaCacheTest
     // Valid schema
     aSchema = sc.getSchema (new ClassPathResource ("xml/schema1.xsd"), new ClassPathResource ("xml/schema1.xsd"));
     assertNotNull (aSchema);
-    assertNotNull (DefaultSchemaCache.getValidatorFromSchema (aSchema));
+    assertNotNull (sc.getValidatorFromSchema (aSchema));
 
     // Valid schema (with includes)
     aSchema = sc.getSchema (new ClassPathResource ("xml/schema1.xsd"), new ClassPathResource ("xml/schema2.xsd"));
     assertNotNull (aSchema);
-    assertNotNull (DefaultSchemaCache.getValidatorFromSchema (aSchema));
+    assertNotNull (sc.getValidatorFromSchema (aSchema));
 
     // remove afterwards
     final IReadableResource aPath = new ClassPathResource ("xml/schema1.xsd");
