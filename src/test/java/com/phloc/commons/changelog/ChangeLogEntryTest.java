@@ -35,7 +35,6 @@ import com.phloc.commons.mock.PhlocTestUtils;
 import com.phloc.commons.text.IMultiLingualText;
 import com.phloc.commons.text.impl.MultiLingualText;
 import com.phloc.commons.text.impl.TextProvider;
-import com.phloc.commons.version.Version;
 
 /**
  * Test class for class {@link ChangeLogEntry}.
@@ -47,7 +46,7 @@ public final class ChangeLogEntryTest extends AbstractPhlocTestCase
   @Test
   public void testAll ()
   {
-    final ChangeLog aChangeLog = new ChangeLog (new Version (1), "mock");
+    final ChangeLog aChangeLog = new ChangeLog ("1.0", "mock");
     final Date aDate = new Date ();
 
     final ChangeLogEntry aEntry = new ChangeLogEntry (aChangeLog,

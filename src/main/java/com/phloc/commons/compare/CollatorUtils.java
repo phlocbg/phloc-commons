@@ -29,6 +29,8 @@ import javax.annotation.concurrent.ThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.annotations.IsLocked;
+import com.phloc.commons.annotations.IsLocked.ELockType;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.cache.AbstractNotifyingCache;
 import com.phloc.commons.state.EChange;
@@ -63,6 +65,7 @@ public final class CollatorUtils
 
     @Override
     @Nonnull
+    @IsLocked (ELockType.WRITE)
     @SuppressFBWarnings ("RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE")
     protected Collator getValueToCache (@Nullable final Locale aLocale)
     {

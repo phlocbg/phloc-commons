@@ -35,7 +35,7 @@ import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
  * @author philip
  */
 @ThreadSafe
-public class XMLSchemaCache extends AbstractSchemaCache
+public class XMLSchemaCache extends DefaultSchemaCache
 {
   private static final class SingletonHolder
   {
@@ -44,8 +44,6 @@ public class XMLSchemaCache extends AbstractSchemaCache
   }
 
   private static boolean s_bDefaultInstantiated = false;
-
-  private final SchemaFactory m_aSchemaFactory;
 
   public XMLSchemaCache (@Nullable final ErrorHandler aErrorHandler)
   {
@@ -57,13 +55,20 @@ public class XMLSchemaCache extends AbstractSchemaCache
     this (null, aResourceResolver);
   }
 
+  @Nonnull
+  private static final SchemaFactory _createSchemaFactory (@Nullable final ErrorHandler aErrorHandler,
+                                                           @Nullable final LSResourceResolver aResourceResolver)
+  {
+    final SchemaFactory aSchemaFactory = SchemaFactory.newInstance (XMLConstants.W3C_XML_SCHEMA_NS_URI);
+    aSchemaFactory.setErrorHandler (aErrorHandler);
+    aSchemaFactory.setResourceResolver (aResourceResolver);
+    return aSchemaFactory;
+  }
+
   public XMLSchemaCache (@Nullable final ErrorHandler aErrorHandler,
                          @Nullable final LSResourceResolver aResourceResolver)
   {
-    super ("XSD");
-    m_aSchemaFactory = SchemaFactory.newInstance (XMLConstants.W3C_XML_SCHEMA_NS_URI);
-    m_aSchemaFactory.setErrorHandler (aErrorHandler);
-    m_aSchemaFactory.setResourceResolver (aResourceResolver);
+    super ("XSD", _createSchemaFactory (aErrorHandler, aResourceResolver));
   }
 
   public static boolean isInstantiated ()
@@ -76,12 +81,5 @@ public class XMLSchemaCache extends AbstractSchemaCache
   {
     s_bDefaultInstantiated = true;
     return SingletonHolder.s_aInstance;
-  }
-
-  @Override
-  @Nonnull
-  protected SchemaFactory internalGetSchemaFactory ()
-  {
-    return m_aSchemaFactory;
   }
 }

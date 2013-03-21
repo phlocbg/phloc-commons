@@ -182,7 +182,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
 
     if (StringParser.isInt (aDotParts[0]))
     {
-      // If it is numeric, use the dot parts anyway (e.g. for "-1")
+      // If it is numeric, use the dot parts anyway (e.g. for "5" or "-1")
       return aDotParts;
     }
 

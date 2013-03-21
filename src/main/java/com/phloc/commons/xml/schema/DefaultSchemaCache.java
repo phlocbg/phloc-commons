@@ -19,9 +19,9 @@ package com.phloc.commons.xml.schema;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 import javax.xml.transform.Source;
 import javax.xml.validation.Schema;
@@ -30,94 +30,68 @@ import javax.xml.validation.Validator;
 
 import org.xml.sax.SAXException;
 
+import com.phloc.commons.annotations.IsLocked;
+import com.phloc.commons.annotations.IsLocked.ELockType;
 import com.phloc.commons.annotations.Nonempty;
-import com.phloc.commons.cache.convert.SimpleCacheWithConversion;
+import com.phloc.commons.cache.AbstractNotifyingCache;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.collections.ContainerHelper;
-import com.phloc.commons.convert.IUnidirectionalConverter;
 import com.phloc.commons.io.IReadableResource;
+import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
 import com.phloc.commons.xml.transform.TransformSourceFactory;
 
 /**
- * Abstract base class for caching JAXP validation scheme elements. This class
- * is deprecated in favour of {@link DefaultSchemaCache}.
+ * Abstract base class for caching JAXP validation scheme elements.
  * 
  * @author philip
  */
-@Deprecated
 @ThreadSafe
-public abstract class AbstractSchemaCache extends SimpleCacheWithConversion <String, Schema>
+public abstract class DefaultSchemaCache extends AbstractNotifyingCache <List <? extends IReadableResource>, Schema>
 {
-  private static final String PREFIX_SYNTHETIC = "synthetic:";
-
   private final String m_sSchemaTypeName;
+  private final SchemaFactory m_aSchemaFactory;
 
-  public AbstractSchemaCache (@Nonnull final String sSchemaTypeName)
+  public DefaultSchemaCache (@Nonnull final String sSchemaTypeName, @Nonnull final SchemaFactory aSchemaFactory)
   {
-    super (AbstractSchemaCache.class.getName () + "$" + sSchemaTypeName);
+    super (DefaultSchemaCache.class.getName () + "$" + sSchemaTypeName);
+    if (aSchemaFactory == null)
+      throw new NullPointerException ("SchemaFactory");
     m_sSchemaTypeName = sSchemaTypeName;
+    m_aSchemaFactory = aSchemaFactory;
   }
 
+  @Override
   @Nonnull
-  protected abstract SchemaFactory internalGetSchemaFactory ();
-
-  @Nonnull
-  private Schema _getSchema (@Nonnull final String sResourceID, @Nonnull final Source [] aSources)
+  @IsLocked (ELockType.WRITE)
+  protected Schema getValueToCache (@Nullable final List <? extends IReadableResource> aKey)
   {
-    return getFromCache (sResourceID, new IUnidirectionalConverter <String, Schema> ()
-    {
-      @Nonnull
-      public Schema convert (final String sMyResourceID)
-      {
-        // Note: sMyResourceID == sResourceID
-        try
-        {
-          final Schema ret = internalGetSchemaFactory ().newSchema (aSources);
-          if (ret == null)
-            throw new IllegalStateException ("Failed to create " +
-                                             m_sSchemaTypeName +
-                                             " schema from " +
-                                             Arrays.toString (aSources));
-          return ret;
-        }
-        catch (final SAXException ex)
-        {
-          throw new IllegalArgumentException ("Failed to parse " +
-                                              m_sSchemaTypeName +
-                                              " from " +
-                                              Arrays.toString (aSources), ex);
-        }
-      }
-    });
-  }
-
-  @Nonnull
-  private Schema _getSchemaFromMultipleSources (@Nonnull @Nonempty final Set <IReadableResource> aRealResources)
-  {
-    if (aRealResources.size () == 1)
-    {
-      // In reality it'sonly one resource...
-      return getSchema (ContainerHelper.getFirstElement (aRealResources));
-    }
+    if (ContainerHelper.isEmpty (aKey))
+      throw new IllegalArgumentException ("No resources provided!");
 
     // Collect all sources
-    final Source [] aSources = new Source [aRealResources.size ()];
+    final Source [] aSources = new Source [aKey.size ()];
+    for (int i = 0; i < aKey.size (); ++i)
+      aSources[i] = TransformSourceFactory.create (aKey.get (i));
 
-    // Create the unique synthetic ID for the passed resources
-    int nIndex = 0;
-    final StringBuilder aResourceID = new StringBuilder (PREFIX_SYNTHETIC);
-    for (final IReadableResource aResource : aRealResources)
+    try
     {
-      if (nIndex > 0)
-        aResourceID.append (';');
-      aResourceID.append (aResource.getResourceID ());
-
-      aSources[nIndex++] = TransformSourceFactory.create (aResource);
+      final Schema ret = m_aSchemaFactory.newSchema (aSources);
+      if (ret == null)
+        throw new IllegalStateException ("Failed to create " +
+                                         m_sSchemaTypeName +
+                                         " schema from " +
+                                         Arrays.toString (aSources));
+      return ret;
     }
-
-    return _getSchema (aResourceID.toString (), aSources);
+    catch (final SAXException ex)
+    {
+      throw new IllegalArgumentException ("Failed to parse " +
+                                          m_sSchemaTypeName +
+                                          " from " +
+                                          Arrays.toString (aSources), ex);
+    }
   }
 
   @Nonnull
@@ -126,7 +100,7 @@ public abstract class AbstractSchemaCache extends SimpleCacheWithConversion <Str
     if (aResource == null)
       throw new NullPointerException ("resources");
 
-    return _getSchema (aResource.getResourceID (), new Source [] { TransformSourceFactory.create (aResource) });
+    return getValueToCache (ContainerHelper.newList (aResource));
   }
 
   @Nonnull
@@ -134,9 +108,10 @@ public abstract class AbstractSchemaCache extends SimpleCacheWithConversion <Str
   {
     if (ArrayHelper.isEmpty (aResources))
       throw new IllegalArgumentException ("no resources provided!");
+    if (ArrayHelper.containsAnyNullElement (aResources))
+      throw new IllegalArgumentException ("At leaste one resource is null!");
 
-    // Remove all duplicates while maintaining the order
-    return _getSchemaFromMultipleSources (ContainerHelper.newOrderedSet (aResources));
+    return getValueToCache (ContainerHelper.newList (aResources));
   }
 
   @Nonnull
@@ -144,9 +119,16 @@ public abstract class AbstractSchemaCache extends SimpleCacheWithConversion <Str
   {
     if (ContainerHelper.isEmpty (aResources))
       throw new IllegalArgumentException ("no resources provided!");
+    if (ContainerHelper.containsAnyNullElement (aResources))
+      throw new IllegalArgumentException ("At leaste one resource is null!");
 
-    // Remove all duplicates while maintaining the order
-    return _getSchemaFromMultipleSources (ContainerHelper.newOrderedSet (aResources));
+    return getValueToCache (ContainerHelper.newList (aResources));
+  }
+
+  @Nonnull
+  public EChange removeFromCache (@Nullable final IReadableResource aKey)
+  {
+    return removeFromCache (ContainerHelper.newList (aKey));
   }
 
   @Override

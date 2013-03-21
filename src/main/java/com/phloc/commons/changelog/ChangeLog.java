@@ -23,6 +23,7 @@ import java.util.List;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
@@ -39,8 +40,10 @@ import com.phloc.commons.version.Version;
  * 
  * @author philip
  */
+@NotThreadSafe
 public final class ChangeLog
 {
+  private final String m_sOriginalVersion;
   private final Version m_aVersion;
   private final String m_sComponent;
   private final List <AbstractChangeLogEntry> m_aEntries = new ArrayList <AbstractChangeLogEntry> ();
@@ -53,14 +56,39 @@ public final class ChangeLog
    * @param sComponent
    *        The name of the component the changelog belongs to.
    */
+  @Deprecated
   public ChangeLog (@Nonnull final Version aVersion, @Nonnull @Nonempty final String sComponent)
   {
-    if (aVersion == null)
-      throw new NullPointerException ("version");
+    this (aVersion.getAsString (), sComponent);
+  }
+
+  /**
+   * Constructor.
+   * 
+   * @param sVersion
+   *        The change log version string.
+   * @param sComponent
+   *        The name of the component the changelog belongs to.
+   */
+  public ChangeLog (@Nonnull @Nonempty final String sVersion, @Nonnull @Nonempty final String sComponent)
+  {
+    if (StringHelper.hasNoText (sVersion))
+      throw new IllegalArgumentException ("version");
     if (StringHelper.hasNoText (sComponent))
       throw new IllegalArgumentException ("component");
-    m_aVersion = aVersion;
+    m_sOriginalVersion = sVersion;
+    m_aVersion = new Version (sVersion);
     m_sComponent = sComponent;
+  }
+
+  /**
+   * @return The original change log version. Never <code>null</code>.
+   */
+  @Nonnull
+  @Nonempty
+  public String getOriginalVersion ()
+  {
+    return m_sOriginalVersion;
   }
 
   /**
@@ -232,7 +260,8 @@ public final class ChangeLog
     if (!(o instanceof ChangeLog))
       return false;
     final ChangeLog rhs = (ChangeLog) o;
-    return m_aVersion.equals (rhs.m_aVersion) &&
+    return m_sOriginalVersion.equals (rhs.m_sOriginalVersion) &&
+           m_aVersion.equals (rhs.m_aVersion) &&
            m_sComponent.equals (rhs.m_sComponent) &&
            m_aEntries.equals (rhs.m_aEntries);
   }
@@ -240,13 +269,18 @@ public final class ChangeLog
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_aVersion).append (m_sComponent).append (m_aEntries).getHashCode ();
+    return new HashCodeGenerator (this).append (m_sOriginalVersion)
+                                       .append (m_aVersion)
+                                       .append (m_sComponent)
+                                       .append (m_aEntries)
+                                       .getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("version", m_aVersion)
+    return new ToStringGenerator (this).append ("originalVersion", m_sOriginalVersion)
+                                       .append ("version", m_aVersion)
                                        .append ("component", m_sComponent)
                                        .append ("entries", m_aEntries)
                                        .toString ();

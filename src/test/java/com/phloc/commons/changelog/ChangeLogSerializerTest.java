@@ -68,7 +68,7 @@ public final class ChangeLogSerializerTest
     // Read with XML Schema
     final Document aW3CDoc = XMLReader.readXMLDOM (new ClassPathResource (CChangeLog.CHANGELOG_XML_FILENAME),
                                                    XMLSchemaCache.getInstance ()
-                                                                 .getFromCache (CChangeLog.CHANGELOG_XSD_10));
+                                                                 .getSchema (new ClassPathResource (CChangeLog.CHANGELOG_XSD_10)));
     assertNotNull (aW3CDoc);
 
     // Read invalid
@@ -114,7 +114,7 @@ public final class ChangeLogSerializerTest
                                                                                                                         XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ),
                                                                                        null),
                                                    XMLSchemaCache.getInstance ()
-                                                                 .getFromCache (CChangeLog.CHANGELOG_XSD_10));
+                                                                 .getSchema (new ClassPathResource (CChangeLog.CHANGELOG_XSD_10)));
     assertNotNull (aW3CDoc);
 
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (aCL, aCL2);

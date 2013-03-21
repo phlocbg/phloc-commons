@@ -29,6 +29,8 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.annotations.IsLocked;
+import com.phloc.commons.annotations.IsLocked.ELockType;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.cache.AbstractNotifyingCache;
@@ -59,6 +61,7 @@ public final class LocaleUtils
 
     @Override
     @Nullable
+    @IsLocked (ELockType.WRITE)
     protected List <Locale> getValueToCache (@Nullable final Locale aBaseLocale)
     {
       if (aBaseLocale == null)

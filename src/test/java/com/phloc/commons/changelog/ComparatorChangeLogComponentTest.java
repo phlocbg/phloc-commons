@@ -25,7 +25,6 @@ import java.util.List;
 import org.junit.Test;
 
 import com.phloc.commons.collections.ContainerHelper;
-import com.phloc.commons.version.Version;
 
 /**
  * Test class for class {@link ComparatorChangeLogComponent}.
@@ -38,8 +37,8 @@ public final class ComparatorChangeLogComponentTest
   public void testAll ()
   {
     final List <ChangeLog> aEntries = ContainerHelper.newList (ChangeLogSerializer.readAllChangeLogs ().values ());
-    aEntries.add (new ChangeLog (new Version (1), "aaa-first"));
-    aEntries.add (new ChangeLog (new Version (1), "zzz-last"));
+    aEntries.add (new ChangeLog ("1.0", "aaa-first"));
+    aEntries.add (new ChangeLog ("1.0", "zzz-last"));
     assertSame (aEntries, ContainerHelper.getSortedInline (aEntries, new ComparatorChangeLogComponent ()));
     assertEquals ("aaa-first", aEntries.get (0).getComponent ());
     assertEquals ("phloc-commons", aEntries.get (1).getComponent ());
