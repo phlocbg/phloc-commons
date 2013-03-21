@@ -19,7 +19,6 @@ package com.phloc.commons.changelog;
 
 import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -259,9 +258,10 @@ public final class ChangeLogSerializer
       // Find all change log XML files in the classpath
       for (final URL aURL : ContainerHelper.newList (aClassLoader.getResources (CChangeLog.CHANGELOG_XML_FILENAME)))
       {
-        final ChangeLog aChangeLog = readChangeLog (new URLResource (aURL), aErrorCallback);
+        final URLResource aRes = new URLResource (aURL);
+        final ChangeLog aChangeLog = readChangeLog (aRes, aErrorCallback);
         if (aChangeLog != null)
-          ret.put (aURL.toURI (), aChangeLog);
+          ret.put (aRes.getAsURI (), aChangeLog);
         else
           s_aLogger.warn ("Failed to read changelog from URL " + aURL.toExternalForm ());
       }
@@ -271,11 +271,6 @@ public final class ChangeLogSerializer
     {
       // Can be thrown by getResources
       throw new IllegalStateException ("Failed to resolved changelogs", ex);
-    }
-    catch (final URISyntaxException ex)
-    {
-      // Can be thrown by toURI
-      throw new IllegalStateException ("Failed to convert URL to URI", ex);
     }
   }
 
