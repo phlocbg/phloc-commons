@@ -19,6 +19,7 @@ package com.phloc.commons.xml.schema;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 import javax.xml.XMLConstants;
 import javax.xml.validation.SchemaFactory;
 
@@ -33,6 +34,7 @@ import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
  * 
  * @author philip
  */
+@NotThreadSafe
 public class XMLSchemaCache extends AbstractSchemaCache
 {
   private static final class SingletonHolder
