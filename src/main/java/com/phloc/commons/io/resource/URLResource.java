@@ -170,6 +170,12 @@ public final class URLResource implements IReadableResource
     return m_aURL;
   }
 
+  @Nullable
+  public URI getAsURI ()
+  {
+    return URLUtils.getAsURI (m_aURL);
+  }
+
   @Nonnull
   public static File getAsFile (@Nonnull final URL aURL)
   {

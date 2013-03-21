@@ -19,8 +19,6 @@ package com.phloc.commons.xml.ls;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 
 import javax.annotation.Nonnull;
@@ -38,6 +36,7 @@ import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.io.resource.FileSystemResource;
 import com.phloc.commons.io.resource.URLResource;
 import com.phloc.commons.string.StringHelper;
+import com.phloc.commons.url.URLUtils;
 
 /**
  * A simple LS resource resolver that can handle URLs, JAR files and file system
@@ -69,40 +68,40 @@ public class SimpleLSResourceResolver implements LSResourceResolver
    *        The base URI from where the search is initiated.May not be
    *        <code>null</code>.
    * @return The non-<code>null</code> resource. May be non-existing!
-   * @throws URISyntaxException
-   *         In case the conversion from system ID to URL fails
    * @throws IOException
    *         In case the file resolution (to an absolute file) fails.
    */
   @Nonnull
   public static final IReadableResource doStandardResourceResolving (@Nonnull final String sSystemId,
-                                                                     @Nonnull final String sBaseURI) throws URISyntaxException,
-                                                                                                    IOException
+                                                                     @Nonnull final String sBaseURI) throws IOException
   {
     if (s_aLogger.isDebugEnabled ())
-      s_aLogger.debug ("Trying to resolve  resource " + sSystemId + " from base " + sBaseURI);
+      s_aLogger.debug ("Trying to resolve resource " + sSystemId + " from base " + sBaseURI);
 
-    if (sSystemId.contains ("://"))
+    final URL aSystemURL = URLUtils.getAsURL (sSystemId);
+
+    // Absolute URL requested?
+    if (aSystemURL != null && !aSystemURL.getProtocol ().equals (URLResource.PROTOCOL_FILE))
     {
       // Destination system ID seems to be an absolute URL!
-      return new URLResource (sSystemId);
+      return new URLResource (aSystemURL);
     }
 
     if (StringHelper.startsWith (sBaseURI, "jar:file:"))
     {
-      // Base URI is inside a jar file
+      // Base URI is inside a jar file? Skip the JAR file
       final int i = sBaseURI.indexOf ('!');
-      String sRelativePath = i < 0 ? sBaseURI : sBaseURI.substring (i + 1);
+      String sBasePath = i < 0 ? sBaseURI : sBaseURI.substring (i + 1);
 
       // Skip any potentially leading path separator
-      if (FilenameHelper.startsWithPathSeparatorChar (sRelativePath))
-        sRelativePath = sRelativePath.substring (1);
+      if (FilenameHelper.startsWithPathSeparatorChar (sBasePath))
+        sBasePath = sBasePath.substring (1);
 
-      // Create relative URL!
-      final File aParent = new File (sRelativePath).getParentFile ();
-      final String sPath = FilenameHelper.getCleanPath (aParent == null ? sSystemId : aParent.getPath () +
-                                                                                      '/' +
-                                                                                      sSystemId);
+      // Create relative path!
+      final File aBaseParent = new File (sBasePath).getParentFile ();
+      final String sPath = FilenameHelper.getCleanPath (aBaseParent == null ? sSystemId : aBaseParent.getPath () +
+                                                                                          '/' +
+                                                                                          sSystemId);
 
       // Build result (must contain forward slashes!)
       return new ClassPathResource (sPath);
@@ -110,33 +109,27 @@ public class SimpleLSResourceResolver implements LSResourceResolver
 
     if (ClassPathResource.isExplicitClassPathResource (sBaseURI))
     {
+      // Skip leading "cp:" or "classpath:"
       final String sRealBaseURI = ClassPathResource.getWithoutClassPathPrefix (sBaseURI);
-      File aBaseURI = new File (sRealBaseURI);
-      if (aBaseURI.getParentFile () != null)
-        aBaseURI = aBaseURI.getParentFile ();
-      return new ClassPathResource (FilenameHelper.getCleanConcatenatedUrlPath (aBaseURI.getPath (), sSystemId));
+      final File aBaseFile = new File (sRealBaseURI).getParentFile ();
+      return new ClassPathResource (FilenameHelper.getCleanConcatenatedUrlPath (aBaseFile == null ? "/"
+                                                                                                 : aBaseFile.getPath (),
+                                                                                sSystemId));
     }
 
-    URL aBaseURL = null;
-    try
+    // Try whether the base is a URI
+    final URL aBaseURL = URLUtils.getAsURL (sBaseURI);
+
+    // Handle "file" protocol separately
+    if (aBaseURL != null && !aBaseURL.getProtocol ().equals (URLResource.PROTOCOL_FILE))
     {
-      // Try whether the base is a URI
-      aBaseURL = new URL (sBaseURI);
-      if (!aBaseURL.getProtocol ().equals (URLResource.PROTOCOL_FILE))
-      {
-        // Handle "file" protocol separately
-        return new URLResource (FilenameHelper.getCleanConcatenatedUrlPath (sBaseURI, sSystemId));
-      }
-    }
-    catch (final MalformedURLException ex)
-    {
-      // Base is not a URL
+      return new URLResource (FilenameHelper.getCleanConcatenatedUrlPath (sBaseURI, sSystemId));
     }
 
     // Base is potentially a URL
     File aBase;
     if (aBaseURL != null)
-      aBase = new File (aBaseURL.toURI ().getSchemeSpecificPart ());
+      aBase = URLResource.getAsFile (aBaseURL);
     else
       aBase = new File (sBaseURI);
 
@@ -148,14 +141,10 @@ public class SimpleLSResourceResolver implements LSResourceResolver
 
     // Get the system ID file
     File aSystemId;
-    try
-    {
-      aSystemId = new File (new URL (sSystemId).toURI ().getSchemeSpecificPart ());
-    }
-    catch (final MalformedURLException ex)
-    {
+    if (aSystemURL != null)
+      aSystemId = URLResource.getAsFile (aSystemURL);
+    else
       aSystemId = new File (sSystemId);
-    }
 
     final File aParent = aBase.getParentFile ();
     final File aRealFile = new File (aParent, aSystemId.getPath ());

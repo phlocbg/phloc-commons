@@ -22,7 +22,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 
 import org.junit.Test;
 
@@ -38,7 +37,7 @@ import com.phloc.commons.io.resource.URLResource;
 public final class SimpleLSResourceResolverTest
 {
   @Test
-  public void testDoStandardResourceResolving () throws URISyntaxException, IOException
+  public void testDoStandardResourceResolving () throws IOException
   {
     IReadableResource aRes;
 
