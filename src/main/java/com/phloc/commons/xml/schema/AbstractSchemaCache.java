@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.NotThreadSafe;
 import javax.xml.transform.Source;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
@@ -44,6 +45,7 @@ import com.phloc.commons.xml.transform.TransformSourceFactory;
  * 
  * @author philip
  */
+@NotThreadSafe
 public abstract class AbstractSchemaCache extends SimpleCacheWithConversion <String, Schema>
 {
   private static final String PREFIX_SYNTHETIC = "synthetic:";
