@@ -187,14 +187,14 @@ public class FileSystemRecursiveIterator implements IIterableIterator <File>
 
   /**
    * Create a new iterator that recursively descends into sub-directories
-   * starting from the given base directory. Additionally a {@link FileFilter}
-   * can be added, that determines, which results to be returned and which not.
-   * The difference between the filter passed here and the filter that can be
-   * specified in the constructor is the following: the {@link IFilter} in the
-   * constructor defines into which sub-directories to descend. The
-   * {@link FilenameFilter} passed to this method only defines which elements
-   * should be returned and which not, independent of the iterated files (like a
-   * "view").
+   * starting from the given base directory. Additionally a
+   * {@link FilenameFilter} can be added, that determines, which results to be
+   * returned and which not. The difference between the filter passed here and
+   * the filter that can be specified in the constructor is the following: the
+   * {@link IFilter} in the constructor defines into which sub-directories to
+   * descend. The {@link FilenameFilter} passed to this method only defines
+   * which elements should be returned and which not, independent of the
+   * iterated files (like a "view").
    * 
    * @param sBaseDir
    *        The base directory to start iterating. May not be <code>null</code>.
@@ -211,14 +211,14 @@ public class FileSystemRecursiveIterator implements IIterableIterator <File>
 
   /**
    * Create a new iterator that recursively descends into sub-directories
-   * starting from the given base directory. Additionally a {@link FileFilter}
-   * can be added, that determines, which results to be returned and which not.
-   * The difference between the filter passed here and the filter that can be
-   * specified in the constructor is the following: the {@link IFilter} in the
-   * constructor defines into which sub-directories to descend. The
-   * {@link FilenameFilter} passed to this method only defines which elements
-   * should be returned and which not, independent of the iterated files (like a
-   * "view").
+   * starting from the given base directory. Additionally a
+   * {@link FilenameFilter} can be added, that determines, which results to be
+   * returned and which not. The difference between the filter passed here and
+   * the filter that can be specified in the constructor is the following: the
+   * {@link IFilter} in the constructor defines into which sub-directories to
+   * descend. The {@link FilenameFilter} passed to this method only defines
+   * which elements should be returned and which not, independent of the
+   * iterated files (like a "view").
    * 
    * @param fBaseDir
    *        The base directory to start iterating. May not be <code>null</code>.
