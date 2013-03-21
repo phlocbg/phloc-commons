@@ -21,6 +21,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
+import com.phloc.commons.annotations.IsLocked;
+import com.phloc.commons.annotations.IsLocked.ELockType;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
@@ -50,6 +53,7 @@ public abstract class AbstractNotifyingCache <KEYTYPE, VALUETYPE> extends Abstra
    * @return The value to be cached. May not be <code>null</code>.
    */
   @Nonnull
+  @IsLocked (ELockType.WRITE)
   protected abstract VALUETYPE getValueToCache (@Nullable KEYTYPE aKey);
 
   @Override

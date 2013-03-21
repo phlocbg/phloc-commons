@@ -92,15 +92,6 @@ public abstract class AbstractSchemaCache extends SimpleCacheWithConversion <Str
   }
 
   @Nonnull
-  public final Schema getSchema (@Nonnull final IReadableResource aResource)
-  {
-    if (aResource == null)
-      throw new NullPointerException ("resources");
-
-    return _getSchema (aResource.getResourceID (), new Source [] { TransformSourceFactory.create (aResource) });
-  }
-
-  @Nonnull
   private Schema _getSchema (@Nonnull @Nonempty final Set <IReadableResource> aRealResources)
   {
     if (aRealResources.size () == 1)
@@ -125,6 +116,15 @@ public abstract class AbstractSchemaCache extends SimpleCacheWithConversion <Str
     }
 
     return _getSchema (aResourceID.toString (), aSources);
+  }
+
+  @Nonnull
+  public final Schema getSchema (@Nonnull final IReadableResource aResource)
+  {
+    if (aResource == null)
+      throw new NullPointerException ("resources");
+
+    return _getSchema (aResource.getResourceID (), new Source [] { TransformSourceFactory.create (aResource) });
   }
 
   @Nonnull
