@@ -37,8 +37,7 @@ import com.phloc.commons.string.ToStringGenerator;
  *        Cache value type
  */
 @NotThreadSafe
-public abstract class AbstractNotifyingCacheWithMaxSize <KEYTYPE, VALUETYPE> extends
-                                                                             AbstractNotifyingCache <KEYTYPE, VALUETYPE>
+public abstract class AbstractNotifyingCacheWithMaxSize <KEYTYPE, VALUETYPE> extends AbstractNotifyingCache <KEYTYPE, VALUETYPE>
 {
   private final int m_nMaxSize;
 
@@ -56,11 +55,13 @@ public abstract class AbstractNotifyingCacheWithMaxSize <KEYTYPE, VALUETYPE> ext
   @Nonnegative
   public final int getMaxSize ()
   {
+    // No need to lock, as it is final
     return m_nMaxSize;
   }
 
   /**
-   * @return A special map to hold the cache objects with a maximum size.
+   * @return A special map to hold the cache objects with a maximum size. Never
+   *         <code>null</code>.
    */
   @Override
   @Nonnull
