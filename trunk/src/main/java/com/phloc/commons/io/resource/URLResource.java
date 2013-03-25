@@ -40,6 +40,7 @@ import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.string.ToStringGenerator;
+import com.phloc.commons.url.ISimpleURL;
 import com.phloc.commons.url.URLUtils;
 
 /**
@@ -54,6 +55,11 @@ public final class URLResource implements IReadableResource
   public static final String PROTOCOL_FILE = "file";
   private static final Logger s_aLogger = LoggerFactory.getLogger (URLResource.class);
   private final URL m_aURL;
+
+  public URLResource (@Nonnull final ISimpleURL aURL) throws MalformedURLException
+  {
+    this (aURL.getAsString ());
+  }
 
   public URLResource (@Nonnull final String sURL) throws MalformedURLException
   {
