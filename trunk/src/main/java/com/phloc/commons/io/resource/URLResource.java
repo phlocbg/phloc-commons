@@ -27,6 +27,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -105,6 +106,13 @@ public final class URLResource implements IReadableResource
   @Nullable
   public static InputStream getInputStream (@Nonnull final URL aURL)
   {
+    return getInputStream (aURL, (Map <String, String>) null);
+  }
+
+  @Nullable
+  public static InputStream getInputStream (@Nonnull final URL aURL,
+                                            @Nullable final Map <String, String> aRequestProperties)
+  {
     if (aURL == null)
       throw new NullPointerException ("URL");
 
@@ -112,6 +120,9 @@ public final class URLResource implements IReadableResource
     {
       final URLConnection aConnection = aURL.openConnection ();
       aConnection.setUseCaches (false);
+      if (aRequestProperties != null)
+        for (final Map.Entry <String, String> aEntry : aRequestProperties.entrySet ())
+          aConnection.setRequestProperty (aEntry.getKey (), aEntry.getValue ());
       return aConnection.getInputStream ();
     }
     catch (final IOException ex)
@@ -130,6 +141,12 @@ public final class URLResource implements IReadableResource
   public InputStream getInputStream ()
   {
     return getInputStream (m_aURL);
+  }
+
+  @Nullable
+  public InputStream getInputStream (@Nullable final Map <String, String> aRequestProperties)
+  {
+    return getInputStream (m_aURL, aRequestProperties);
   }
 
   @Nullable

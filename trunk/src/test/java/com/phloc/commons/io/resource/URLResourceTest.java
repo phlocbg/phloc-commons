@@ -119,7 +119,7 @@ public final class URLResourceTest extends AbstractPhlocTestCase
     assertNull (new URLResource (aNoNExistingURL).getReader (CCharset.CHARSET_ISO_8859_1_OBJ));
     try
     {
-      URLResource.getInputStream (null);
+      URLResource.getInputStream ((URL) null);
       fail ();
     }
     catch (final NullPointerException ex)
