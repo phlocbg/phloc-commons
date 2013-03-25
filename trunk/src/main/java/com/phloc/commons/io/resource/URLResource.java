@@ -123,6 +123,7 @@ public final class URLResource implements IReadableResource
       if (aRequestProperties != null)
         for (final Map.Entry <String, String> aEntry : aRequestProperties.entrySet ())
           aConnection.setRequestProperty (aEntry.getKey (), aEntry.getValue ());
+      // by default follow-redirects is true for HTTPUrlConnections
       return aConnection.getInputStream ();
     }
     catch (final IOException ex)
