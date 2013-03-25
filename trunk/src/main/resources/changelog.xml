@@ -22,6 +22,11 @@
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
   <entry date="2013-03-25" category="api" action="add">
     <change>
+      <text locale="en">Extended URLResource.getInputStream to read the error stream fully in case of an error</text>
+    </change>
+  </entry>
+  <entry date="2013-03-25" category="api" action="add">
+    <change>
       <text locale="en">Extended URLResource.getInputStream to handle an optional Map&lt;String,String> as request properties</text>
     </change>
   </entry>

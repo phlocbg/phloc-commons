@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -40,6 +41,7 @@ import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.streams.StreamUtils;
+import com.phloc.commons.mutable.IWrapper;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.url.ISimpleURL;
 import com.phloc.commons.url.URLUtils;
@@ -106,19 +108,21 @@ public final class URLResource implements IReadableResource
   @Nullable
   public static InputStream getInputStream (@Nonnull final URL aURL)
   {
-    return getInputStream (aURL, (Map <String, String>) null);
+    return getInputStream (aURL, (Map <String, String>) null, (IWrapper <IOException>) null);
   }
 
   @Nullable
   public static InputStream getInputStream (@Nonnull final URL aURL,
-                                            @Nullable final Map <String, String> aRequestProperties)
+                                            @Nullable final Map <String, String> aRequestProperties,
+                                            @Nullable final IWrapper <IOException> aExceptionHolder)
   {
     if (aURL == null)
       throw new NullPointerException ("URL");
 
+    URLConnection aConnection = null;
     try
     {
-      final URLConnection aConnection = aURL.openConnection ();
+      aConnection = aURL.openConnection ();
       aConnection.setUseCaches (false);
       if (aRequestProperties != null)
         for (final Map.Entry <String, String> aEntry : aRequestProperties.entrySet ())
@@ -134,6 +138,39 @@ public final class URLResource implements IReadableResource
                       ex.getClass ().getName () +
                       " - " +
                       ex.getMessage ());
+
+      // Remember the exception
+      if (aExceptionHolder != null)
+        aExceptionHolder.set (ex);
+
+      if (aConnection instanceof HttpURLConnection)
+      {
+        // Read error completely for keep-alive (see
+        // http://docs.oracle.com/javase/6/docs/technotes/guides/net/http-keepalive.html)
+        InputStream aErrorIS = null;
+        try
+        {
+          aErrorIS = ((HttpURLConnection) aConnection).getErrorStream ();
+          final byte [] aBuf = new byte [1024];
+          // read the response body
+          while (aErrorIS.read (aBuf) > 0)
+          {}
+        }
+        catch (final IOException ex2)
+        {
+          // deal with the exception
+          s_aLogger.warn ("Failed to consume error stream for '" +
+                          aURL +
+                          "': " +
+                          ex2.getClass ().getName () +
+                          " - " +
+                          ex2.getMessage ());
+        }
+        finally
+        {
+          StreamUtils.close (aErrorIS);
+        }
+      }
       return null;
     }
   }
@@ -147,7 +184,20 @@ public final class URLResource implements IReadableResource
   @Nullable
   public InputStream getInputStream (@Nullable final Map <String, String> aRequestProperties)
   {
-    return getInputStream (m_aURL, aRequestProperties);
+    return getInputStream (m_aURL, aRequestProperties, (IWrapper <IOException>) null);
+  }
+
+  @Nullable
+  public InputStream getInputStream (@Nullable final IWrapper <IOException> aExceptionHolder)
+  {
+    return getInputStream (m_aURL, (Map <String, String>) null, aExceptionHolder);
+  }
+
+  @Nullable
+  public InputStream getInputStream (@Nullable final Map <String, String> aRequestProperties,
+                                     @Nullable final IWrapper <IOException> aExceptionHolder)
+  {
+    return getInputStream (m_aURL, aRequestProperties, aExceptionHolder);
   }
 
   @Nullable

@@ -29,6 +29,7 @@ import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.WillNotClose;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.DevelopersNote;
@@ -48,7 +49,7 @@ public final class XMLResourceBundle extends ResourceBundle
   private final Map <String, String> m_aValues = new HashMap <String, String> ();
 
   @DevelopersNote ("Don't use it manually - use the static methods of this class!")
-  XMLResourceBundle (@Nonnull final InputStream aIS) throws IOException
+  XMLResourceBundle (@Nonnull @WillNotClose final InputStream aIS) throws IOException
   {
     if (aIS == null)
       throw new NullPointerException ("inputStream");
