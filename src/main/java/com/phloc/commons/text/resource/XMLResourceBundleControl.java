@@ -20,7 +20,6 @@ package com.phloc.commons.text.resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -29,6 +28,7 @@ import javax.annotation.Nonnull;
 
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.io.resource.URLResource;
 import com.phloc.commons.io.streams.StreamUtils;
 
 /**
@@ -74,32 +74,14 @@ public final class XMLResourceBundleControl extends ResourceBundle.Control
       final URL aResourceUrl = aClassLoader.getResource (sResourceName);
       if (aResourceUrl != null)
       {
-        final URLConnection aURLConnection = aResourceUrl.openConnection ();
-        if (aURLConnection != null)
+        final InputStream aIS = StreamUtils.getBuffered (URLResource.getInputStream (aResourceUrl));
+        try
         {
-          if (bReload)
-            aURLConnection.setUseCaches (false);
-
-          final InputStream aIS = aURLConnection.getInputStream ();
-          if (aIS != null)
-          {
-            try
-            {
-              final InputStream aBufferedIS = StreamUtils.getBuffered (aIS);
-              try
-              {
-                return new XMLResourceBundle (aBufferedIS);
-              }
-              finally
-              {
-                StreamUtils.close (aBufferedIS);
-              }
-            }
-            finally
-            {
-              StreamUtils.close (aIS);
-            }
-          }
+          return new XMLResourceBundle (aIS);
+        }
+        finally
+        {
+          StreamUtils.close (aIS);
         }
       }
     }
