@@ -124,24 +124,31 @@ public final class URLResource implements IReadableResource
     {
       aConnection = aURL.openConnection ();
       aConnection.setUseCaches (false);
+
+      // Apply all request properties
       if (aRequestProperties != null)
         for (final Map.Entry <String, String> aEntry : aRequestProperties.entrySet ())
           aConnection.setRequestProperty (aEntry.getKey (), aEntry.getValue ());
+
       // by default follow-redirects is true for HTTPUrlConnections
       return aConnection.getInputStream ();
     }
     catch (final IOException ex)
     {
-      s_aLogger.warn ("Failed to open input stream for '" +
-                      aURL +
-                      "': " +
-                      ex.getClass ().getName () +
-                      " - " +
-                      ex.getMessage ());
-
-      // Remember the exception
       if (aExceptionHolder != null)
+      {
+        // Remember the exception
         aExceptionHolder.set (ex);
+      }
+      else
+      {
+        s_aLogger.warn ("Failed to open input stream for '" +
+                        aURL +
+                        "': " +
+                        ex.getClass ().getName () +
+                        " - " +
+                        ex.getMessage ());
+      }
 
       if (aConnection instanceof HttpURLConnection)
       {
