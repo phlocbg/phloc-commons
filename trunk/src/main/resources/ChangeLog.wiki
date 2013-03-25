@@ -2,6 +2,9 @@
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
 <table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody>
+<tr><td>3/25/13</td><td>add</td><td>api</td><td></td><td>Extended URLResource.getInputStream to handle an optional Map`<`String,String`>` as request properties</td></tr>
+<tr><td>3/25/13</td><td>add</td><td>api</td><td></td><td>Added new class MessageDigestValue for storing digest algorithm and bytes</td></tr>
+<tr><td>3/25/13</td><td>add</td><td>api</td><td></td><td>Added new constructor URLResource(ISimpleURL)</td></tr>
 <tr><td>3/21/13</td><td>add</td><td>api</td><td></td><td>Added new static method URLResource.getAsURI</td></tr>
 <tr><td>3/21/13</td><td>add</td><td>tech</td><td></td><td>Improved SimpleLSResourceResolver to explicitly handle classpath resources</td></tr>
 <tr><td>3/21/13</td><td>add</td><td>api</td><td></td><td>Added new static method ClassPathResource.getWithoutClassPathPrefix</td></tr>
