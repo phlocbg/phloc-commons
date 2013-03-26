@@ -158,10 +158,13 @@ public final class URLResource implements IReadableResource
         try
         {
           aErrorIS = ((HttpURLConnection) aConnection).getErrorStream ();
-          final byte [] aBuf = new byte [1024];
-          // read the response body
-          while (aErrorIS.read (aBuf) > 0)
-          {}
+          if (aErrorIS != null)
+          {
+            final byte [] aBuf = new byte [1024];
+            // read the response body
+            while (aErrorIS.read (aBuf) > 0)
+            {}
+          }
         }
         catch (final IOException ex2)
         {
