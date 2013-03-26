@@ -41,9 +41,7 @@ import com.phloc.commons.state.EChange;
  *        contained collection type
  */
 @NotThreadSafe
-public abstract class AbstractMultiConcurrentHashMap <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends
-                                                                                                                   ConcurrentHashMap <KEYTYPE, COLLTYPE> implements
-                                                                                                                                                        IMultiMap <KEYTYPE, VALUETYPE, COLLTYPE>
+public abstract class AbstractMultiConcurrentHashMap <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends ConcurrentHashMap <KEYTYPE, COLLTYPE> implements IMultiMap <KEYTYPE, VALUETYPE, COLLTYPE>
 {
   public AbstractMultiConcurrentHashMap ()
   {}
@@ -68,7 +66,7 @@ public abstract class AbstractMultiConcurrentHashMap <KEYTYPE, VALUETYPE, COLLTY
   protected abstract COLLTYPE createNewCollection ();
 
   @Nonnull
-  public final EChange putSingle (@Nonnull final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
+  public COLLTYPE getOrCreate (@Nonnull final KEYTYPE aKey)
   {
     COLLTYPE aCont = get (aKey);
     if (aCont == null)
@@ -76,7 +74,13 @@ public abstract class AbstractMultiConcurrentHashMap <KEYTYPE, VALUETYPE, COLLTY
       aCont = createNewCollection ();
       super.put (aKey, aCont);
     }
-    return EChange.valueOf (aCont.add (aValue));
+    return aCont;
+  }
+
+  @Nonnull
+  public final EChange putSingle (@Nonnull final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
+  {
+    return EChange.valueOf (getOrCreate (aKey).add (aValue));
   }
 
   @Nonnull

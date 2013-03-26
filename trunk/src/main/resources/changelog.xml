@@ -26,6 +26,11 @@
       <text locale="en">Extended IMultiMapListBased with putSingle(KEYTYPE,VALUETYPE,int)</text>
     </change>
   </entry>
+  <entry date="2013-03-26" category="api" action="add" incompatible="true">
+    <change>
+      <text locale="en">Extended IMultiMap with getOrCreate(KEYTYPE)</text>
+    </change>
+  </entry>
   <entry date="2013-03-25" category="api" action="add" incompatible="true">
     <change>
       <text locale="en">Added new method IWrapper.isSet()</text>
