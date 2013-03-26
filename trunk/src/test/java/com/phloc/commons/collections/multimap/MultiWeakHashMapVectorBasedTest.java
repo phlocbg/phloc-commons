@@ -38,5 +38,7 @@ public final class MultiWeakHashMapVectorBasedTest extends AbstractMultiMapTestC
     testOne (aMultiMap);
     aMultiMap = new MultiWeakHashMapVectorBased <String, String> (getMapList1 ());
     testOne (aMultiMap);
+    aMultiMap = new MultiWeakHashMapVectorBased <String, String> ();
+    testList (aMultiMap);
   }
 }

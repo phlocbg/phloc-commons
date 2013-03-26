@@ -37,5 +37,7 @@ public final class MultiLinkedHashMapArrayListBasedTest extends AbstractMultiMap
     testOne (aMultiMap);
     aMultiMap = new MultiLinkedHashMapArrayListBased <String, String> (getMapList1 ());
     testOne (aMultiMap);
+    aMultiMap = new MultiLinkedHashMapArrayListBased <String, String> ();
+    testList (aMultiMap);
   }
 }

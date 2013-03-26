@@ -37,5 +37,7 @@ public final class MultiWeakHashMapArrayListBasedTest extends AbstractMultiMapTe
     testOne (aMultiMap);
     aMultiMap = new MultiWeakHashMapArrayListBased <String, String> (getMapList1 ());
     testOne (aMultiMap);
+    aMultiMap = new MultiWeakHashMapArrayListBased <String, String> ();
+    testList (aMultiMap);
   }
 }

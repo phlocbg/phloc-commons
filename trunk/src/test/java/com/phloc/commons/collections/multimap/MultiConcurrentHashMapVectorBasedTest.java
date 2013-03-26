@@ -37,5 +37,7 @@ public final class MultiConcurrentHashMapVectorBasedTest extends AbstractMultiMa
     testOne (aMultiMap);
     aMultiMap = new MultiConcurrentHashMapVectorBased <String, String> (getMapList1 ());
     testOne (aMultiMap);
+    aMultiMap = new MultiConcurrentHashMapVectorBased <String, String> ();
+    testList (aMultiMap);
   }
 }

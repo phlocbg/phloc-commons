@@ -37,5 +37,7 @@ public final class MultiConcurrentHashMapArrayListBasedTest extends AbstractMult
     testOne (aMultiMap);
     aMultiMap = new MultiConcurrentHashMapArrayListBased <String, String> (getMapList1 ());
     testOne (aMultiMap);
+    aMultiMap = new MultiConcurrentHashMapArrayListBased <String, String> ();
+    testList (aMultiMap);
   }
 }

@@ -37,5 +37,7 @@ public final class MultiLinkedHashMapVectorBasedTest extends AbstractMultiMapTes
     testOne (aMultiMap);
     aMultiMap = new MultiLinkedHashMapVectorBased <String, String> (getMapList1 ());
     testOne (aMultiMap);
+    aMultiMap = new MultiLinkedHashMapVectorBased <String, String> ();
+    testList (aMultiMap);
   }
 }
