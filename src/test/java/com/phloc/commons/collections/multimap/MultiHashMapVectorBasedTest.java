@@ -38,5 +38,7 @@ public final class MultiHashMapVectorBasedTest extends AbstractMultiMapTestCase
     testOne (aMultiMap);
     aMultiMap = new MultiHashMapVectorBased <String, String> (getMapList1 ());
     testOne (aMultiMap);
+    aMultiMap = new MultiHashMapVectorBased <String, String> ();
+    testList (aMultiMap);
   }
 }

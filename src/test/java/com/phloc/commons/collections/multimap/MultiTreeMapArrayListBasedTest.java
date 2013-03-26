@@ -37,5 +37,7 @@ public final class MultiTreeMapArrayListBasedTest extends AbstractMultiMapTestCa
     testOne (aMultiMap);
     aMultiMap = new MultiTreeMapArrayListBased <String, String> (getMapList1 ());
     testOne (aMultiMap);
+    aMultiMap = new MultiTreeMapArrayListBased <String, String> ();
+    testList (aMultiMap);
   }
 }

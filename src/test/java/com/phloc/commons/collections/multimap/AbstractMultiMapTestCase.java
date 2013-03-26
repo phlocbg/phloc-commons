@@ -116,4 +116,26 @@ public abstract class AbstractMultiMapTestCase
     assertFalse (aMultiMap.removeSingle ("Alice", "Wien").isChanged ());
     assertEquals (3, aMultiMap.size ());
   }
+
+  protected final void testList (final IMultiMapListBased <String, String> aMultiMap)
+  {
+    assertEquals (0, aMultiMap.size ());
+    aMultiMap.putSingle ("Philip", "Copenhagen");
+    assertEquals (1, aMultiMap.size ());
+    aMultiMap.putSingle ("Philip", "Eisenstadt", 0);
+    assertEquals (1, aMultiMap.size ());
+    aMultiMap.putSingle ("Philip", "Brüssel", 1);
+    assertEquals (1, aMultiMap.size ());
+
+    List <String> aCont = aMultiMap.get ("Philip");
+    assertNotNull (aCont);
+    assertEquals (3, aCont.size ());
+
+    assertEquals ("Eisenstadt", aCont.get (0));
+    assertEquals ("Brüssel", aCont.get (1));
+    assertEquals ("Copenhagen", aCont.get (2));
+
+    aCont = aMultiMap.get ("Anyone");
+    assertNull (aCont);
+  }
 }

@@ -37,5 +37,7 @@ public final class MultiTreeMapVectorBasedTest extends AbstractMultiMapTestCase
     testOne (aMultiMap);
     aMultiMap = new MultiTreeMapVectorBased <String, String> (getMapList1 ());
     testOne (aMultiMap);
+    aMultiMap = new MultiTreeMapVectorBased <String, String> ();
+    testList (aMultiMap);
   }
 }

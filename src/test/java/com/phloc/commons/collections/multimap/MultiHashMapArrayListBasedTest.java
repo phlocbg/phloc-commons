@@ -37,5 +37,7 @@ public final class MultiHashMapArrayListBasedTest extends AbstractMultiMapTestCa
     testOne (aMultiMap);
     aMultiMap = new MultiHashMapArrayListBased <String, String> (getMapList1 ());
     testOne (aMultiMap);
+    aMultiMap = new MultiHashMapArrayListBased <String, String> ();
+    testList (aMultiMap);
   }
 }
