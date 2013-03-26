@@ -21,9 +21,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
+
+import com.phloc.commons.state.EChange;
 
 /**
  * Abstract multi map based on {@link ConcurrentHashMap} and {@link List}
@@ -37,9 +40,7 @@ import javax.annotation.concurrent.ThreadSafe;
  *        value type
  */
 @ThreadSafe
-public abstract class AbstractMultiConcurrentHashMapListBased <KEYTYPE, VALUETYPE> extends
-                                                                                   AbstractMultiConcurrentHashMap <KEYTYPE, VALUETYPE, List <VALUETYPE>> implements
-                                                                                                                                                        IMultiMapListBased <KEYTYPE, VALUETYPE>
+public abstract class AbstractMultiConcurrentHashMapListBased <KEYTYPE, VALUETYPE> extends AbstractMultiConcurrentHashMap <KEYTYPE, VALUETYPE, List <VALUETYPE>> implements IMultiMapListBased <KEYTYPE, VALUETYPE>
 {
   public AbstractMultiConcurrentHashMapListBased ()
   {}
@@ -58,5 +59,20 @@ public abstract class AbstractMultiConcurrentHashMapListBased <KEYTYPE, VALUETYP
   public AbstractMultiConcurrentHashMapListBased (@Nullable final Map <? extends KEYTYPE, ? extends List <VALUETYPE>> aCont)
   {
     super (aCont);
+  }
+
+  @Nonnull
+  public final EChange putSingle (@Nonnull final KEYTYPE aKey,
+                                  @Nullable final VALUETYPE aValue,
+                                  @Nonnegative final int nIndex)
+  {
+    List <VALUETYPE> aCont = get (aKey);
+    if (aCont == null)
+    {
+      aCont = createNewCollection ();
+      super.put (aKey, aCont);
+    }
+    aCont.add (nIndex, aValue);
+    return EChange.UNCHANGED;
   }
 }
