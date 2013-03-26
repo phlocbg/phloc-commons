@@ -21,8 +21,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
+
+import com.phloc.commons.state.EChange;
 
 /**
  * Abstract multi map based on {@link LinkedHashMap} and {@link List} values.<br>
@@ -34,9 +38,7 @@ import javax.annotation.concurrent.NotThreadSafe;
  *        value type
  */
 @NotThreadSafe
-public abstract class AbstractMultiLinkedHashMapListBased <KEYTYPE, VALUETYPE> extends
-                                                                               AbstractMultiLinkedHashMap <KEYTYPE, VALUETYPE, List <VALUETYPE>> implements
-                                                                                                                                                IMultiMapListBased <KEYTYPE, VALUETYPE>
+public abstract class AbstractMultiLinkedHashMapListBased <KEYTYPE, VALUETYPE> extends AbstractMultiLinkedHashMap <KEYTYPE, VALUETYPE, List <VALUETYPE>> implements IMultiMapListBased <KEYTYPE, VALUETYPE>
 {
   public AbstractMultiLinkedHashMapListBased ()
   {}
@@ -55,5 +57,20 @@ public abstract class AbstractMultiLinkedHashMapListBased <KEYTYPE, VALUETYPE> e
   {
     if (aCont != null)
       putAll (aCont);
+  }
+
+  @Nonnull
+  public final EChange putSingle (@Nonnull final KEYTYPE aKey,
+                                  @Nullable final VALUETYPE aValue,
+                                  @Nonnegative final int nIndex)
+  {
+    List <VALUETYPE> aCont = get (aKey);
+    if (aCont == null)
+    {
+      aCont = createNewCollection ();
+      super.put (aKey, aCont);
+    }
+    aCont.add (nIndex, aValue);
+    return EChange.UNCHANGED;
   }
 }
