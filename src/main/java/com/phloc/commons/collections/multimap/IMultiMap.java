@@ -37,9 +37,18 @@ import com.phloc.commons.state.EChange;
  * @param <COLLTYPE>
  *        Container type containing value types
  */
-public interface IMultiMap <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends
-                                                                                         Map <KEYTYPE, COLLTYPE>
+public interface IMultiMap <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends Map <KEYTYPE, COLLTYPE>
 {
+  /**
+   * Get or create the collection of the specified key.
+   * 
+   * @param aKey
+   *        The key to use. May not be <code>null</code>.
+   * @return {@link EChange}
+   */
+  @Nonnull
+  COLLTYPE getOrCreate (@Nonnull KEYTYPE aKey);
+
   /**
    * Add a single value into the container identified by the passed key.
    * 

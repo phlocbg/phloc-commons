@@ -40,9 +40,7 @@ import com.phloc.commons.state.EChange;
  *        contained collection type
  */
 @NotThreadSafe
-public abstract class AbstractMultiHashMap <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends
-                                                                                                         HashMap <KEYTYPE, COLLTYPE> implements
-                                                                                                                                    IMultiMap <KEYTYPE, VALUETYPE, COLLTYPE>
+public abstract class AbstractMultiHashMap <KEYTYPE, VALUETYPE, COLLTYPE extends Collection <VALUETYPE>> extends HashMap <KEYTYPE, COLLTYPE> implements IMultiMap <KEYTYPE, VALUETYPE, COLLTYPE>
 {
   public AbstractMultiHashMap ()
   {}
@@ -67,7 +65,7 @@ public abstract class AbstractMultiHashMap <KEYTYPE, VALUETYPE, COLLTYPE extends
   protected abstract COLLTYPE createNewCollection ();
 
   @Nonnull
-  public final EChange putSingle (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
+  public COLLTYPE getOrCreate (@Nullable final KEYTYPE aKey)
   {
     COLLTYPE aCont = get (aKey);
     if (aCont == null)
@@ -75,7 +73,13 @@ public abstract class AbstractMultiHashMap <KEYTYPE, VALUETYPE, COLLTYPE extends
       aCont = createNewCollection ();
       super.put (aKey, aCont);
     }
-    return EChange.valueOf (aCont.add (aValue));
+    return aCont;
+  }
+
+  @Nonnull
+  public final EChange putSingle (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
+  {
+    return EChange.valueOf (getOrCreate (aKey).add (aValue));
   }
 
   @Nonnull

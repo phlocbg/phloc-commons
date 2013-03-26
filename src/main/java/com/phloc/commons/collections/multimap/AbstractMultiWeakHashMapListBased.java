@@ -60,17 +60,11 @@ public abstract class AbstractMultiWeakHashMapListBased <KEYTYPE, VALUETYPE> ext
   }
 
   @Nonnull
-  public final EChange putSingle (@Nonnull final KEYTYPE aKey,
+  public final EChange putSingle (@Nullable final KEYTYPE aKey,
                                   @Nullable final VALUETYPE aValue,
                                   @Nonnegative final int nIndex)
   {
-    List <VALUETYPE> aCont = get (aKey);
-    if (aCont == null)
-    {
-      aCont = createNewCollection ();
-      super.put (aKey, aCont);
-    }
-    aCont.add (nIndex, aValue);
+    getOrCreate (aKey).add (nIndex, aValue);
     return EChange.UNCHANGED;
   }
 }
