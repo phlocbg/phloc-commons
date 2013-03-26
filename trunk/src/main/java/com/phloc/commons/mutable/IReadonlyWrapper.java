@@ -33,4 +33,10 @@ public interface IReadonlyWrapper <DATATYPE>
    */
   @Nullable
   DATATYPE get ();
+
+  /**
+   * @return <code>true</code> if the contained value is not <code>null</code>,
+   *         <code>false</code> if it is <code>null</code>.
+   */
+  boolean isSet ();
 }
