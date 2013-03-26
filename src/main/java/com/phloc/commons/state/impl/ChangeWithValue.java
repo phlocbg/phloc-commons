@@ -75,6 +75,11 @@ public final class ChangeWithValue <DATATYPE> implements IChangeIndicator, IRead
     return m_aObj;
   }
 
+  public boolean isSet ()
+  {
+    return m_aObj != null;
+  }
+
   /**
    * Get the store value if this is a change. Otherwise the passed unchanged
    * value is returned.
