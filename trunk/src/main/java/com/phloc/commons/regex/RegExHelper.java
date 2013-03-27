@@ -282,12 +282,20 @@ public final class RegExHelper
     if (StringHelper.hasNoText (s))
       return s;
 
-    final String sReplacement = Character.toString (cReplacement);
+    String sReplacement;
+    if (cReplacement == '$' || cReplacement == '\\')
+    {
+      // These 2 chars must be quoted, otherwise an
+      // StringIndexOutOfBoundsException occurs!
+      sReplacement = "\\" + cReplacement;
+    }
+    else
+      sReplacement = Character.toString (cReplacement);
 
     // replace all non-word characters with the replacement character
     // Important: quote the replacement in case it is a backslash or another
     // special regex character
-    final String ret = stringReplacePattern ("\\W", s, Pattern.quote (sReplacement));
+    final String ret = stringReplacePattern ("\\W", s, sReplacement);
     if (!Character.isJavaIdentifierStart (ret.charAt (0)))
       return sReplacement + ret;
     return ret;

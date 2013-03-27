@@ -31,11 +31,13 @@ import java.util.regex.Pattern;
 
 import org.junit.Test;
 
+import com.phloc.commons.string.StringHelper;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for {@link RegExHelper}.
- *
+ * 
  * @author philip
  */
 public final class RegExHelperTest
@@ -352,6 +354,19 @@ public final class RegExHelperTest
     assertEquals ("_0ABC", RegExHelper.getAsIdentifier ("_0ABC"));
     assertEquals ("___", RegExHelper.getAsIdentifier (";;;"));
     assertEquals ("aaa", RegExHelper.getAsIdentifier (";;;", "a"));
+    if (false)
+      assertEquals ("$$$", RegExHelper.getAsIdentifier (";;;", "$"));
+    assertEquals ("aaa", RegExHelper.getAsIdentifier (";;;", 'a'));
+    assertEquals ("$$$", RegExHelper.getAsIdentifier (";;;", '$'));
+    for (char c = Character.MIN_VALUE; c < Character.MAX_VALUE; ++c)
+    {
+      final int nLenExpected = c == '\\' ? 5 : Character.isJavaIdentifierStart (c) ? 3 : 4;
+      assertEquals ((int) c + " <" + c + "> " + nLenExpected,
+                    StringHelper.getRepeated (c, nLenExpected),
+                    RegExHelper.getAsIdentifier (";;;", c));
+    }
+
+    assertEquals ("^^^^", RegExHelper.getAsIdentifier (";;;", '^'));
     assertEquals ("", RegExHelper.getAsIdentifier (";;;", ""));
   }
 
