@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -120,9 +121,14 @@ public final class URLResource implements IReadableResource
       throw new NullPointerException ("URL");
 
     URLConnection aConnection = null;
+    HttpURLConnection aHTTPConnection = null;
     try
     {
       aConnection = aURL.openConnection ();
+      if (aConnection instanceof HttpURLConnection)
+        aHTTPConnection = (HttpURLConnection) aConnection;
+
+      // Disable caching
       aConnection.setUseCaches (false);
 
       // Apply all request properties
@@ -132,6 +138,23 @@ public final class URLResource implements IReadableResource
 
       // by default follow-redirects is true for HTTPUrlConnections
       return aConnection.getInputStream ();
+    }
+    catch (final SocketTimeoutException ex)
+    {
+      if (aExceptionHolder != null)
+      {
+        // Remember the exception
+        aExceptionHolder.set (ex);
+      }
+      else
+      {
+        s_aLogger.warn ("Timeout to open input stream for '" +
+                        aURL +
+                        "': " +
+                        ex.getClass ().getName () +
+                        " - " +
+                        ex.getMessage ());
+      }
     }
     catch (final IOException ex)
     {
@@ -150,14 +173,14 @@ public final class URLResource implements IReadableResource
                         ex.getMessage ());
       }
 
-      if (aConnection instanceof HttpURLConnection)
+      if (aHTTPConnection != null)
       {
         // Read error completely for keep-alive (see
         // http://docs.oracle.com/javase/6/docs/technotes/guides/net/http-keepalive.html)
         InputStream aErrorIS = null;
         try
         {
-          aErrorIS = ((HttpURLConnection) aConnection).getErrorStream ();
+          aErrorIS = aHTTPConnection.getErrorStream ();
           if (aErrorIS != null)
           {
             final byte [] aBuf = new byte [1024];
@@ -181,8 +204,8 @@ public final class URLResource implements IReadableResource
           StreamUtils.close (aErrorIS);
         }
       }
-      return null;
     }
+    return null;
   }
 
   @Nullable
