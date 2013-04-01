@@ -41,6 +41,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.xml.sax.SAXParseException;
 
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.OverrideOnDemand;
@@ -353,7 +354,11 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
       // must behave when attempting to unmarshal invalid XML data. In
       // those cases, the JAXB provider is allowed to terminate the
       // call to unmarshal with an UnmarshalException.
-      s_aLogger.error ("Unmarshal exception reading document", ex);
+      final Throwable aLinked = ex.getLinkedException ();
+      if (aLinked instanceof SAXParseException)
+        s_aLogger.error ("Failed to parse XML document: " + aLinked.getMessage ());
+      else
+        s_aLogger.error ("Unmarshal exception reading document", ex);
     }
     catch (final JAXBException ex)
     {
