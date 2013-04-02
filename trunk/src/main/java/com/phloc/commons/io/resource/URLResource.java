@@ -21,9 +21,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.SocketTimeoutException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -38,6 +36,7 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.callback.INonThrowingRunnableWithParameter;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.io.IReadableResource;
@@ -57,7 +56,12 @@ public final class URLResource implements IReadableResource
 {
   /** The protocol for file resources */
   public static final String PROTOCOL_FILE = "file";
+  public static final int DEFAULT_CONNECT_TIMEOUT = -1;
+  public static final int DEFAULT_READ_TIMEOUT = -1;
+
+  @SuppressWarnings ("unused")
   private static final Logger s_aLogger = LoggerFactory.getLogger (URLResource.class);
+
   private final URL m_aURL;
 
   public URLResource (@Nonnull final ISimpleURL aURL) throws MalformedURLException
@@ -109,124 +113,90 @@ public final class URLResource implements IReadableResource
   @Nullable
   public static InputStream getInputStream (@Nonnull final URL aURL)
   {
-    return getInputStream (aURL, (Map <String, String>) null, (IWrapper <IOException>) null);
-  }
-
-  @Nullable
-  public static InputStream getInputStream (@Nonnull final URL aURL,
-                                            @Nullable final Map <String, String> aRequestProperties,
-                                            @Nullable final IWrapper <IOException> aExceptionHolder)
-  {
-    if (aURL == null)
-      throw new NullPointerException ("URL");
-
-    URLConnection aConnection = null;
-    HttpURLConnection aHTTPConnection = null;
-    try
-    {
-      aConnection = aURL.openConnection ();
-      if (aConnection instanceof HttpURLConnection)
-        aHTTPConnection = (HttpURLConnection) aConnection;
-
-      // Disable caching
-      aConnection.setUseCaches (false);
-
-      // Apply all request properties
-      if (aRequestProperties != null)
-        for (final Map.Entry <String, String> aEntry : aRequestProperties.entrySet ())
-          aConnection.setRequestProperty (aEntry.getKey (), aEntry.getValue ());
-
-      // by default follow-redirects is true for HTTPUrlConnections
-      return aConnection.getInputStream ();
-    }
-    catch (final SocketTimeoutException ex)
-    {
-      if (aExceptionHolder != null)
-      {
-        // Remember the exception
-        aExceptionHolder.set (ex);
-      }
-      else
-      {
-        s_aLogger.warn ("Timeout to open input stream for '" +
-                        aURL +
-                        "': " +
-                        ex.getClass ().getName () +
-                        " - " +
-                        ex.getMessage ());
-      }
-    }
-    catch (final IOException ex)
-    {
-      if (aExceptionHolder != null)
-      {
-        // Remember the exception
-        aExceptionHolder.set (ex);
-      }
-      else
-      {
-        s_aLogger.warn ("Failed to open input stream for '" +
-                        aURL +
-                        "': " +
-                        ex.getClass ().getName () +
-                        " - " +
-                        ex.getMessage ());
-      }
-
-      if (aHTTPConnection != null)
-      {
-        // Read error completely for keep-alive (see
-        // http://docs.oracle.com/javase/6/docs/technotes/guides/net/http-keepalive.html)
-        InputStream aErrorIS = null;
-        try
-        {
-          aErrorIS = aHTTPConnection.getErrorStream ();
-          if (aErrorIS != null)
-          {
-            final byte [] aBuf = new byte [1024];
-            // read the response body
-            while (aErrorIS.read (aBuf) > 0)
-            {}
-          }
-        }
-        catch (final IOException ex2)
-        {
-          // deal with the exception
-          s_aLogger.warn ("Failed to consume error stream for '" +
-                          aURL +
-                          "': " +
-                          ex2.getClass ().getName () +
-                          " - " +
-                          ex2.getMessage ());
-        }
-        finally
-        {
-          StreamUtils.close (aErrorIS);
-        }
-      }
-    }
-    return null;
+    return URLUtils.getInputStream (aURL,
+                                    DEFAULT_CONNECT_TIMEOUT,
+                                    DEFAULT_READ_TIMEOUT,
+                                    null,
+                                    (IWrapper <IOException>) null);
   }
 
   @Nullable
   public InputStream getInputStream ()
   {
-    return getInputStream (m_aURL);
+    return getInputStream (DEFAULT_CONNECT_TIMEOUT, DEFAULT_READ_TIMEOUT);
   }
 
   @Nullable
+  public InputStream getInputStream (final int nConnectTimeoutMS, final int nReadTimeoutMS)
+  {
+    return getInputStream (nConnectTimeoutMS,
+                           nReadTimeoutMS,
+                           (INonThrowingRunnableWithParameter <URLConnection>) null,
+                           (IWrapper <IOException>) null);
+  }
+
+  @Nullable
+  public InputStream getInputStream (@Nullable final IWrapper <IOException> aExceptionHolder)
+  {
+    return getInputStream (DEFAULT_CONNECT_TIMEOUT, DEFAULT_READ_TIMEOUT, aExceptionHolder);
+  }
+
+  @Nullable
+  public InputStream getInputStream (final int nConnectTimeoutMS,
+                                     final int nReadTimeoutMS,
+                                     @Nullable final IWrapper <IOException> aExceptionHolder)
+  {
+    return getInputStream (nConnectTimeoutMS,
+                           nReadTimeoutMS,
+                           (INonThrowingRunnableWithParameter <URLConnection>) null,
+                           aExceptionHolder);
+  }
+
+  @Nullable
+  public InputStream getInputStream (final int nConnectTimeoutMS,
+                                     final int nReadTimeoutMS,
+                                     @Nullable final INonThrowingRunnableWithParameter <URLConnection> aConnectionModifier,
+                                     @Nullable final IWrapper <IOException> aExceptionHolder)
+  {
+    return URLUtils.getInputStream (m_aURL, nConnectTimeoutMS, nReadTimeoutMS, aConnectionModifier, aExceptionHolder);
+  }
+
+  @Nullable
+  @Deprecated
+  public static InputStream getInputStream (@Nonnull final URL aURL,
+                                            @Nullable final Map <String, String> aRequestProperties,
+                                            @Nullable final IWrapper <IOException> aExceptionHolder)
+  {
+    INonThrowingRunnableWithParameter <URLConnection> aConnectionModifier = null;
+    if (aRequestProperties != null)
+    {
+      aConnectionModifier = new INonThrowingRunnableWithParameter <URLConnection> ()
+      {
+        public void run (final URLConnection aConnection)
+        {
+
+          // Apply all request properties
+          for (final Map.Entry <String, String> aEntry : aRequestProperties.entrySet ())
+            aConnection.setRequestProperty (aEntry.getKey (), aEntry.getValue ());
+        }
+      };
+    }
+    return URLUtils.getInputStream (aURL,
+                                    DEFAULT_CONNECT_TIMEOUT,
+                                    DEFAULT_READ_TIMEOUT,
+                                    aConnectionModifier,
+                                    aExceptionHolder);
+  }
+
+  @Nullable
+  @Deprecated
   public InputStream getInputStream (@Nullable final Map <String, String> aRequestProperties)
   {
     return getInputStream (m_aURL, aRequestProperties, (IWrapper <IOException>) null);
   }
 
   @Nullable
-  public InputStream getInputStream (@Nullable final IWrapper <IOException> aExceptionHolder)
-  {
-    return getInputStream (m_aURL, (Map <String, String>) null, aExceptionHolder);
-  }
-
-  @Nullable
+  @Deprecated
   public InputStream getInputStream (@Nullable final Map <String, String> aRequestProperties,
                                      @Nullable final IWrapper <IOException> aExceptionHolder)
   {
