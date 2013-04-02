@@ -17,11 +17,16 @@
  */
 package com.phloc.commons.url;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
@@ -40,6 +45,7 @@ import org.slf4j.LoggerFactory;
 import com.phloc.commons.GlobalDebug;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
+import com.phloc.commons.callback.INonThrowingRunnableWithParameter;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.encode.IDecoder;
@@ -47,7 +53,9 @@ import com.phloc.commons.encode.IEncoder;
 import com.phloc.commons.encode.IdentityDecoder;
 import com.phloc.commons.encode.IdentityEncoder;
 import com.phloc.commons.io.resource.ClassPathResource;
+import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.microdom.reader.XMLMapHandler;
+import com.phloc.commons.mutable.IWrapper;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.url.encode.URLParameterEncoder;
 
@@ -566,6 +574,123 @@ public final class URLUtils
       {
         // fall-through
       }
+    return null;
+  }
+
+  /**
+   * Get an input stream from the specified URL. By default caching is disabled.
+   * 
+   * @param aURL
+   *        The URL to use. May not be <code>null</code>.
+   * @param nConnectTimeoutMS
+   *        Connect timeout milliseconds. 0 == infinite. &lt; 0: ignored.
+   * @param nReadTimeoutMS
+   *        Read timeout milliseconds. 0 == infinite. &lt; 0: ignored.
+   * @param aConnectionModifier
+   *        An optional callback object to modify the URLConnection before it is
+   *        opened.
+   * @param aExceptionHolder
+   *        An optional exception holder for further outside investigation.
+   * @return <code>null</code> if the input stream could not be opened.
+   */
+  @Nullable
+  public static InputStream getInputStream (@Nonnull final URL aURL,
+                                            final int nConnectTimeoutMS,
+                                            final int nReadTimeoutMS,
+                                            @Nullable final INonThrowingRunnableWithParameter <URLConnection> aConnectionModifier,
+                                            @Nullable final IWrapper <IOException> aExceptionHolder)
+  {
+    if (aURL == null)
+      throw new NullPointerException ("URL");
+
+    URLConnection aConnection = null;
+    HttpURLConnection aHTTPConnection = null;
+    try
+    {
+      aConnection = aURL.openConnection ();
+      if (nConnectTimeoutMS >= 0)
+        aConnection.setConnectTimeout (nConnectTimeoutMS);
+      if (nReadTimeoutMS >= 0)
+        aConnection.setReadTimeout (nReadTimeoutMS);
+      if (aConnection instanceof HttpURLConnection)
+        aHTTPConnection = (HttpURLConnection) aConnection;
+
+      // Disable caching
+      aConnection.setUseCaches (false);
+
+      // Apply optional callback
+      if (aConnectionModifier != null)
+        aConnectionModifier.run (aConnection);
+
+      // by default follow-redirects is true for HTTPUrlConnections
+      return aConnection.getInputStream ();
+    }
+    catch (final SocketTimeoutException ex)
+    {
+      if (aExceptionHolder != null)
+      {
+        // Remember the exception
+        aExceptionHolder.set (ex);
+      }
+      else
+      {
+        s_aLogger.warn ("Timeout to open input stream for '" +
+                        aURL +
+                        "': " +
+                        ex.getClass ().getName () +
+                        " - " +
+                        ex.getMessage ());
+      }
+    }
+    catch (final IOException ex)
+    {
+      if (aExceptionHolder != null)
+      {
+        // Remember the exception
+        aExceptionHolder.set (ex);
+      }
+      else
+      {
+        s_aLogger.warn ("Failed to open input stream for '" +
+                        aURL +
+                        "': " +
+                        ex.getClass ().getName () +
+                        " - " +
+                        ex.getMessage ());
+      }
+
+      if (aHTTPConnection != null)
+      {
+        // Read error completely for keep-alive (see
+        // http://docs.oracle.com/javase/6/docs/technotes/guides/net/http-keepalive.html)
+        InputStream aErrorIS = null;
+        try
+        {
+          aErrorIS = aHTTPConnection.getErrorStream ();
+          if (aErrorIS != null)
+          {
+            final byte [] aBuf = new byte [1024];
+            // read the response body
+            while (aErrorIS.read (aBuf) > 0)
+            {}
+          }
+        }
+        catch (final IOException ex2)
+        {
+          // deal with the exception
+          s_aLogger.warn ("Failed to consume error stream for '" +
+                          aURL +
+                          "': " +
+                          ex2.getClass ().getName () +
+                          " - " +
+                          ex2.getMessage ());
+        }
+        finally
+        {
+          StreamUtils.close (aErrorIS);
+        }
+      }
+    }
     return null;
   }
 }
