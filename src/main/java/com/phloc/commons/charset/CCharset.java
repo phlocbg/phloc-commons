@@ -130,6 +130,13 @@ public final class CCharset
   public static final String CHARSET_SERVICE_LOADER = CHARSET_UTF_8;
 
   /**
+   * The charset used by the {@link java.util.ServiceLoader} to read the service
+   * files.
+   */
+  @Nonnull
+  public static final Charset CHARSET_SERVICE_LOADER_OBJ = CHARSET_UTF_8_OBJ;
+
+  /**
    * The non-standard Windows 1252 charset name.
    */
   @Nonnull
