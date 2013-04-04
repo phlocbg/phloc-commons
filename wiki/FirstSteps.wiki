@@ -1,4 +1,4 @@
-#summary First steps using phloc-css
+#summary First steps using phloc-commons
 #labels Featured
 
 = Introduction =
@@ -9,9 +9,9 @@ Prerequisites: *phloc-commpns depends* on [http://www.slf4j.org/ SLF4J].
 
 = Usage with Maven =
 
-To build phloc-css from source, Maven 3.0.4 is required. Any version below does *NOT* work!
+To build phloc-commons from source, Maven 3.0.4 is required. Any version below does *NOT* work!
 
-To use phloc-css put the following to your pom.xml:
+To use phloc-commons put the following to your pom.xml:
 {{{
 ...
   <repositories>
@@ -32,7 +32,7 @@ To use phloc-css put the following to your pom.xml:
     ...
     <dependency>
       <groupId>com.phloc</groupId>
-      <artifactId>phloc-css</artifactId>
+      <artifactId>phloc-commons</artifactId>
       <version>4.0.2</version>
     </dependency>
   </dependencies>
