@@ -8,7 +8,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>phloc-commons</artifactId>
-  <version>4.0.2</version>
+  <version>4.0.3-SNAPSHOT</version>
   <packaging>bundle</packaging>
   <name>phloc-commons</name>
   <description>phloc very basic stuff</description>
@@ -23,9 +23,9 @@
   </licenses>
   
   <scm>
-    <url>http://code.google.com/p/phloc-commons/source/browse/tags/phloc-commons-4.0.2</url>
-    <connection>scm:svn:http://phloc-commons.googlecode.com/svn/tags/phloc-commons-4.0.2</connection>
-    <developerConnection>scm:svn:https://phloc-commons.googlecode.com/svn/tags/phloc-commons-4.0.2</developerConnection>
+    <url>http://code.google.com/p/phloc-commons/source/browse/</url>
+    <connection>scm:svn:http://phloc-commons.googlecode.com/svn/trunk</connection>
+    <developerConnection>scm:svn:https://phloc-commons.googlecode.com/svn/trunk</developerConnection>
   </scm>
 
   <organization>
