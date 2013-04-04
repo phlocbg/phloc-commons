@@ -280,6 +280,43 @@ public final class MicroWriterTest
   }
 
   @Test
+  public void testWithoutEmitNamespaces ()
+  {
+    final XMLWriterSettings aSettings = new XMLWriterSettings ().setIndent (EXMLSerializeIndent.NONE)
+                                                                .setCharset (CCharset.CHARSET_ISO_8859_1_OBJ);
+    final IMicroDocument aDoc = new MicroDocument ();
+    final IMicroElement eRoot = aDoc.appendElement ("ns1url", "root");
+    eRoot.appendElement ("ns2url", "child1");
+    eRoot.appendElement ("ns2url", "child2");
+
+    String s = MicroWriter.getNodeAsString (aDoc, aSettings);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
+                  CGlobal.LINE_SEPARATOR +
+                  "<root xmlns=\"ns1url\">" +
+                  "<ns0:child1 xmlns:ns0=\"ns2url\" />" +
+                  "<ns0:child2 xmlns:ns0=\"ns2url\" />" +
+                  "</root>", s);
+
+    aSettings.setEmitNamespaces (false);
+    s = MicroWriter.getNodeAsString (aDoc, aSettings);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
+                  CGlobal.LINE_SEPARATOR +
+                  "<root>" +
+                  "<child1 />" +
+                  "<child2 />" +
+                  "</root>", s);
+
+    aSettings.setPutNamespaceContextPrefixesInRoot (true);
+    s = MicroWriter.getNodeAsString (aDoc, aSettings);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
+                  CGlobal.LINE_SEPARATOR +
+                  "<root>" +
+                  "<child1 />" +
+                  "<child2 />" +
+                  "</root>", s);
+  }
+
+  @Test
   public void testSpecialCharactersXML10 ()
   {
     final XMLWriterSettings aSettings = new XMLWriterSettings ().setXMLVersion (EXMLVersion.XML_10);

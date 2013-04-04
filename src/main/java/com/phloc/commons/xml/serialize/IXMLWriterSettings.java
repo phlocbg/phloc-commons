@@ -106,6 +106,15 @@ public interface IXMLWriterSettings
   boolean isSpaceOnSelfClosedElement ();
 
   /**
+   * Determine if namespaces should be emitted or not.
+   * 
+   * @return <code>true</code> if namespaces should be emitted,
+   *         <code>false</code> if all created elements should reside in the
+   *         default namespace.
+   */
+  boolean isEmitNamespaces ();
+
+  /**
    * Check if the flag for putting all namespace prefixes specified in the
    * namespace context should be put in the root document. This setting only has
    * an effect if a namespace context is defined and if it implements the

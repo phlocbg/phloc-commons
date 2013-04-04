@@ -320,6 +320,43 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
   }
 
   @Test
+  public void testWithoutEmitNamespaces ()
+  {
+    final Document aDoc = XMLFactory.newDocument ();
+    final Element eRoot = (Element) aDoc.appendChild (aDoc.createElementNS ("ns1url", "root"));
+    eRoot.appendChild (aDoc.createElementNS ("ns2url", "child1"));
+    eRoot.appendChild (aDoc.createElementNS ("ns2url", "child2"));
+
+    final XMLWriterSettings aSettings = new XMLWriterSettings ().setCharset (CCharset.CHARSET_ISO_8859_1_OBJ)
+                                                                .setIndent (EXMLSerializeIndent.NONE);
+    String s = XMLWriter.getNodeAsString (aDoc, aSettings);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>" +
+                  CRLF +
+                  "<root xmlns=\"ns1url\">" +
+                  "<ns0:child1 xmlns:ns0=\"ns2url\" />" +
+                  "<ns0:child2 xmlns:ns0=\"ns2url\" />" +
+                  "</root>", s);
+
+    aSettings.setEmitNamespaces (false);
+    s = XMLWriter.getNodeAsString (aDoc, aSettings);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>" +
+                  CRLF +
+                  "<root>" +
+                  "<child1 />" +
+                  "<child2 />" +
+                  "</root>", s);
+
+    aSettings.setPutNamespaceContextPrefixesInRoot (true);
+    s = XMLWriter.getNodeAsString (aDoc, aSettings);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>" +
+                  CRLF +
+                  "<root>" +
+                  "<child1 />" +
+                  "<child2 />" +
+                  "</root>", s);
+  }
+
+  @Test
   public void testXMLVersionNumber ()
   {
     Document aDoc = XMLFactory.newDocument (EXMLVersion.XML_10);

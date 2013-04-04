@@ -51,6 +51,7 @@ public final class XMLWriterSettingsTest
     assertEquals (CCharset.CHARSET_UTF_8_OBJ, mws.getCharsetObj ());
     assertTrue (mws.isSpaceOnSelfClosedElement ());
     assertTrue (mws.isUseDoubleQuotesForAttributes ());
+    assertTrue (mws.isEmitNamespaces ());
     assertFalse (mws.isPutNamespaceContextPrefixesInRoot ());
 
     mws = new XMLWriterSettings ();
@@ -62,6 +63,7 @@ public final class XMLWriterSettingsTest
     assertEquals (CCharset.CHARSET_UTF_8_OBJ, mws.getCharsetObj ());
     assertTrue (mws.isSpaceOnSelfClosedElement ());
     assertTrue (mws.isUseDoubleQuotesForAttributes ());
+    assertTrue (mws.isEmitNamespaces ());
     assertFalse (mws.isPutNamespaceContextPrefixesInRoot ());
 
     PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (mws,
@@ -81,6 +83,8 @@ public final class XMLWriterSettingsTest
                                                                         new XMLWriterSettings ().setSpaceOnSelfClosedElement (false));
     PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (mws,
                                                                         new XMLWriterSettings ().setUseDoubleQuotesForAttributes (false));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (mws,
+                                                                        new XMLWriterSettings ().setEmitNamespaces (false));
     PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (mws,
                                                                         new XMLWriterSettings ().setPutNamespaceContextPrefixesInRoot (true));
 
@@ -121,21 +125,29 @@ public final class XMLWriterSettingsTest
                     final boolean bSpaceOnSelfClosedElement = nSpaceOnSelfClosedElement == 0;
                     aXWS.setSpaceOnSelfClosedElement (bSpaceOnSelfClosedElement);
                     assertTrue (bSpaceOnSelfClosedElement == aXWS.isSpaceOnSelfClosedElement ());
-                    for (int nPutNamespaceContextPrefixesInRoot = 0; nPutNamespaceContextPrefixesInRoot < 2; ++nPutNamespaceContextPrefixesInRoot)
+                    for (int nEmitNamespaces = 0; nEmitNamespaces < 2; ++nEmitNamespaces)
                     {
-                      final boolean bPutNamespaceContextPrefixesInRoot = nPutNamespaceContextPrefixesInRoot == 0;
-                      aXWS.setPutNamespaceContextPrefixesInRoot (bPutNamespaceContextPrefixesInRoot);
-                      assertTrue (bPutNamespaceContextPrefixesInRoot == aXWS.isPutNamespaceContextPrefixesInRoot ());
-                      PhlocTestUtils.testDefaultImplementationWithEqualContentObject (aXWS,
-                                                                                      new XMLWriterSettings ().setSerializeDocType (eDocType)
-                                                                                                              .setSerializeComments (eComments)
-                                                                                                              .setFormat (eFormat)
-                                                                                                              .setIndent (eIndent)
-                                                                                                              .setIncorrectCharacterHandling (eIncorrectCharHandling)
-                                                                                                              .setCharset (aCS)
-                                                                                                              .setUseDoubleQuotesForAttributes (bUseDoubleQuotesForAttributes)
-                                                                                                              .setSpaceOnSelfClosedElement (bSpaceOnSelfClosedElement)
-                                                                                                              .setPutNamespaceContextPrefixesInRoot (bPutNamespaceContextPrefixesInRoot));
+                      final boolean bEmitNamespaces = nEmitNamespaces == 0;
+                      aXWS.setEmitNamespaces (bEmitNamespaces);
+                      assertTrue (bEmitNamespaces == aXWS.isEmitNamespaces ());
+                      for (int nPutNamespaceContextPrefixesInRoot = 0; nPutNamespaceContextPrefixesInRoot < 2; ++nPutNamespaceContextPrefixesInRoot)
+                      {
+                        final boolean bPutNamespaceContextPrefixesInRoot = nPutNamespaceContextPrefixesInRoot == 0;
+                        aXWS.setPutNamespaceContextPrefixesInRoot (bPutNamespaceContextPrefixesInRoot);
+                        assertTrue (bPutNamespaceContextPrefixesInRoot == aXWS.isPutNamespaceContextPrefixesInRoot ());
+                        PhlocTestUtils.testDefaultImplementationWithEqualContentObject (aXWS,
+                                                                                        new XMLWriterSettings ().setSerializeDocType (eDocType)
+                                                                                                                .setSerializeComments (eComments)
+                                                                                                                .setFormat (eFormat)
+                                                                                                                .setIndent (eIndent)
+                                                                                                                .setIncorrectCharacterHandling (eIncorrectCharHandling)
+                                                                                                                .setCharset (aCS)
+                                                                                                                .setUseDoubleQuotesForAttributes (bUseDoubleQuotesForAttributes)
+                                                                                                                .setSpaceOnSelfClosedElement (bSpaceOnSelfClosedElement)
+                                                                                                                .setEmitNamespaces (bEmitNamespaces)
+                                                                                                                .setPutNamespaceContextPrefixesInRoot (bPutNamespaceContextPrefixesInRoot));
+                      }
+                      assertTrue (bEmitNamespaces == aXWS.isEmitNamespaces ());
                     }
                     assertTrue (bSpaceOnSelfClosedElement == aXWS.isSpaceOnSelfClosedElement ());
                   }

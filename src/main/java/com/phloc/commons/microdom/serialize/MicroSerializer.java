@@ -194,6 +194,7 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
     // use either local name or tag name (depending on namespace prefix)
     final String sTagName = aElement.getLocalName () != null ? aElement.getLocalName () : aElement.getTagName ();
 
+    final boolean bEmitNamespaces = m_aSettings.isEmitNamespaces ();
     final List <IMicroNode> aChildNodeList = aElement.getChildren ();
     final boolean bHasChildren = aElement.hasChildren ();
 
@@ -208,16 +209,14 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
     {
       // Delivers an ordered copy!
       aAttrMap = aElement.getAllAttributes ();
-      m_aNSStack.push (aAttrMap);
     }
     else
     {
-      // No attributes present - avoid the scanning
-      m_aNSStack.push (null);
-
       // We do need attributes afterwards...
       aAttrMap = new LinkedHashMap <String, String> ();
     }
+
+    m_aNSStack.push (bEmitNamespaces ? aAttrMap : null);
 
     handlePutNamespaceContextPrefixInRoot (aAttrMap);
 
@@ -225,25 +224,28 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
     {
       // resolve Namespace prefix
       String sNSPrefix = null;
-      final String sElementNamespaceURI = StringHelper.getNotNull (aElement.getNamespaceURI ());
-      final String sDefaultNamespaceURI = StringHelper.getNotNull (m_aNSStack.getDefaultNamespaceURI ());
-      final boolean bIsDefaultNamespace = sElementNamespaceURI.equals (sDefaultNamespaceURI);
-      if (!bIsDefaultNamespace)
-        sNSPrefix = m_aNSStack.getUsedPrefixOfNamespace (sElementNamespaceURI);
-
-      // Do we need to create a prefix?
-      if (sNSPrefix == null && !bIsDefaultNamespace && (!bIsRootElement || sElementNamespaceURI.length () > 0))
+      if (bEmitNamespaces)
       {
-        // Ensure to use the correct prefix (namespace context)
-        sNSPrefix = m_aNSStack.getMappedPrefix (sElementNamespaceURI);
+        final String sElementNamespaceURI = StringHelper.getNotNull (aElement.getNamespaceURI ());
+        final String sDefaultNamespaceURI = StringHelper.getNotNull (m_aNSStack.getDefaultNamespaceURI ());
+        final boolean bIsDefaultNamespace = sElementNamespaceURI.equals (sDefaultNamespaceURI);
+        if (!bIsDefaultNamespace)
+          sNSPrefix = m_aNSStack.getUsedPrefixOfNamespace (sElementNamespaceURI);
 
-        // Do not create a prefix for the root element
-        if (sNSPrefix == null && !bIsRootElement)
-          sNSPrefix = m_aNSStack.createUniquePrefix ();
+        // Do we need to create a prefix?
+        if (sNSPrefix == null && !bIsDefaultNamespace && (!bIsRootElement || sElementNamespaceURI.length () > 0))
+        {
+          // Ensure to use the correct prefix (namespace context)
+          sNSPrefix = m_aNSStack.getMappedPrefix (sElementNamespaceURI);
 
-        // Add and remember the attribute
-        m_aNSStack.addNamespaceMapping (sNSPrefix, sElementNamespaceURI);
-        aAttrMap.put (XMLHelper.getXMLNSAttrName (sNSPrefix), sElementNamespaceURI);
+          // Do not create a prefix for the root element
+          if (sNSPrefix == null && !bIsRootElement)
+            sNSPrefix = m_aNSStack.createUniquePrefix ();
+
+          // Add and remember the attribute
+          m_aNSStack.addNamespaceMapping (sNSPrefix, sElementNamespaceURI);
+          aAttrMap.put (XMLHelper.getXMLNSAttrName (sNSPrefix), sElementNamespaceURI);
+        }
       }
 
       // indent only if predecessor was an element
