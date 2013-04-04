@@ -200,10 +200,12 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
     try
     {
       // resolve Namespace prefix
+      String sNSPrefix = null;
       final String sElementNamespaceURI = StringHelper.getNotNull (aElement.getNamespaceURI ());
       final String sDefaultNamespaceURI = StringHelper.getNotNull (m_aNSStack.getDefaultNamespaceURI ());
       final boolean bIsDefaultNamespace = sElementNamespaceURI.equals (sDefaultNamespaceURI);
-      String sNSPrefix = bIsDefaultNamespace ? null : m_aNSStack.getUsedPrefixOfNamespace (sElementNamespaceURI);
+      if (!bIsDefaultNamespace)
+        sNSPrefix = m_aNSStack.getUsedPrefixOfNamespace (sElementNamespaceURI);
 
       // Do we need to create a prefix?
       if (sNSPrefix == null && !bIsDefaultNamespace && (!bIsRootElement || sElementNamespaceURI.length () > 0))

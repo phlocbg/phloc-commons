@@ -997,7 +997,9 @@ public final class XMLHelper
   }
 
   /**
-   * Get the full qualified attribute name to use for the given prefix.
+   * Get the full qualified attribute name to use for the given namespace
+   * prefix. The result will e.g. be <code>xmlns</code> or
+   * <code>xmlns:foo</code>.
    * 
    * @param sNSPrefix
    *        The namespace prefix to build the attribute name from. May be
