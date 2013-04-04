@@ -625,23 +625,6 @@ public final class URLUtils
       // by default follow-redirects is true for HTTPUrlConnections
       return aConnection.getInputStream ();
     }
-    catch (final SocketTimeoutException ex)
-    {
-      if (aExceptionHolder != null)
-      {
-        // Remember the exception
-        aExceptionHolder.set (ex);
-      }
-      else
-      {
-        s_aLogger.warn ("Timeout to open input stream for '" +
-                        aURL +
-                        "': " +
-                        ex.getClass ().getName () +
-                        " - " +
-                        ex.getMessage ());
-      }
-    }
     catch (final IOException ex)
     {
       if (aExceptionHolder != null)
@@ -651,12 +634,20 @@ public final class URLUtils
       }
       else
       {
-        s_aLogger.warn ("Failed to open input stream for '" +
-                        aURL +
-                        "': " +
-                        ex.getClass ().getName () +
-                        " - " +
-                        ex.getMessage ());
+        if (ex instanceof SocketTimeoutException)
+          s_aLogger.warn ("Timeout to open input stream for '" +
+                          aURL +
+                          "': " +
+                          ex.getClass ().getName () +
+                          " - " +
+                          ex.getMessage ());
+        else
+          s_aLogger.warn ("Failed to open input stream for '" +
+                          aURL +
+                          "': " +
+                          ex.getClass ().getName () +
+                          " - " +
+                          ex.getMessage ());
       }
 
       if (aHTTPConnection != null)
