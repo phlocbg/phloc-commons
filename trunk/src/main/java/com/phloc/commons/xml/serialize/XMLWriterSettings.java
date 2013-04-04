@@ -51,16 +51,19 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
   /** By default double quotes are used to wrap attribute values */
   public static final boolean DEFAULT_USE_DOUBLE_QUOTES_FOR_ATTRIBUTES = true;
   /**
-   * By default namespace context prefixes are not put inside the root element
-   * (for backwards comaptibility)
-   */
-  public static final boolean DEFAULT_PUT_NAMESPACE_CONTEXT_PREFIXES_IN_ROOT = false;
-
-  /**
    * By default a leading space is inserted before a self closed element (e.g.
    * <code>&lt;b /&gt;</code> in contrast to <code>&lt;b/&gt;</code>).
    */
   public static final boolean DEFAULT_SPACE_ON_SELF_CLOSED_ELEMENT = true;
+  /**
+   * By default namespaces are written.
+   */
+  public static final boolean DEFAULT_EMIT_NAMESPACES = true;
+  /**
+   * By default namespace context prefixes are not put inside the root element
+   * (for backwards compatibility)
+   */
+  public static final boolean DEFAULT_PUT_NAMESPACE_CONTEXT_PREFIXES_IN_ROOT = false;
 
   /** The default settings to use */
   public static final IXMLWriterSettings DEFAULT_XML_SETTINGS = new XMLWriterSettings ();
@@ -75,6 +78,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
   private NamespaceContext m_aNamespaceContext;
   private boolean m_bUseDoubleQuotesForAttributes = DEFAULT_USE_DOUBLE_QUOTES_FOR_ATTRIBUTES;
   private boolean m_bSpaceOnSelfClosedElement = DEFAULT_SPACE_ON_SELF_CLOSED_ELEMENT;
+  private boolean m_bEmitNamespaces = DEFAULT_EMIT_NAMESPACES;
   private boolean m_bPutNamespaceContextPrefixesInRoot = DEFAULT_PUT_NAMESPACE_CONTEXT_PREFIXES_IN_ROOT;
 
   /**
@@ -114,6 +118,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
     setNamespaceContext (aOther.getNamespaceContext ());
     setUseDoubleQuotesForAttributes (aOther.isUseDoubleQuotesForAttributes ());
     setSpaceOnSelfClosedElement (aOther.isSpaceOnSelfClosedElement ());
+    setEmitNamespaces (aOther.isEmitNamespaces ());
     setPutNamespaceContextPrefixesInRoot (aOther.isPutNamespaceContextPrefixesInRoot ());
   }
 
@@ -336,6 +341,18 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
   }
 
   @Nonnull
+  public XMLWriterSettings setEmitNamespaces (final boolean bEmitNamespaces)
+  {
+    m_bEmitNamespaces = bEmitNamespaces;
+    return this;
+  }
+
+  public boolean isEmitNamespaces ()
+  {
+    return m_bEmitNamespaces;
+  }
+
+  @Nonnull
   public XMLWriterSettings setPutNamespaceContextPrefixesInRoot (final boolean bPutNamespaceContextPrefixesInRoot)
   {
     m_bPutNamespaceContextPrefixesInRoot = bPutNamespaceContextPrefixesInRoot;
@@ -372,6 +389,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
            EqualsUtils.equals (m_aNamespaceContext, rhs.m_aNamespaceContext) &&
            m_bUseDoubleQuotesForAttributes == rhs.m_bUseDoubleQuotesForAttributes &&
            m_bSpaceOnSelfClosedElement == rhs.m_bSpaceOnSelfClosedElement &&
+           m_bEmitNamespaces == rhs.m_bEmitNamespaces &&
            m_bPutNamespaceContextPrefixesInRoot == rhs.m_bPutNamespaceContextPrefixesInRoot;
   }
 
@@ -389,6 +407,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
                                        .append (m_aNamespaceContext)
                                        .append (m_bUseDoubleQuotesForAttributes)
                                        .append (m_bSpaceOnSelfClosedElement)
+                                       .append (m_bEmitNamespaces)
                                        .append (m_bPutNamespaceContextPrefixesInRoot)
                                        .getHashCode ();
   }
@@ -406,7 +425,8 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
                                        .append ("namespaceContext", m_aNamespaceContext)
                                        .append ("doubleQuotesForAttrs", m_bUseDoubleQuotesForAttributes)
                                        .append ("spaceOnSelfClosedElement", m_bSpaceOnSelfClosedElement)
-                                       .append ("pPutNamespaceContextPrefixesInRoot",
+                                       .append ("emitNamespaces", m_bEmitNamespaces)
+                                       .append ("putNamespaceContextPrefixesInRoot",
                                                 m_bPutNamespaceContextPrefixesInRoot)
                                        .toString ();
   }

@@ -407,7 +407,9 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
 
   protected final void handlePutNamespaceContextPrefixInRoot (@Nonnull final Map <String, String> aAttrMap)
   {
-    if (m_aNSStack.size () == 1 && m_aSettings.isPutNamespaceContextPrefixesInRoot ())
+    if (m_aNSStack.size () == 1 &&
+        m_aSettings.isPutNamespaceContextPrefixesInRoot () &&
+        m_aSettings.isEmitNamespaces ())
     {
       // The only place where the namespace context prefixes are added to the
       // root element
