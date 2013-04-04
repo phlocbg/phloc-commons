@@ -77,7 +77,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
 
     /**
      * Extract all attribute starting with "xmlns" and create the appropriate
-     * prefix mapping
+     * prefix mapping.
      * 
      * @param aAttrs
      *        Attribute map to check. May be <code>null</code>.
@@ -221,6 +221,13 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
       m_aNamespaceCtx = aNamespaceCtx;
     }
 
+    /**
+     * Start a new namespace level.
+     * 
+     * @param aAttrs
+     *        Existing attributes from which XML namespace prefix mappings
+     *        should be extracted. May be <code>null</code>.
+     */
     public void push (@Nullable final Map <String, String> aAttrs)
     {
       final NamespaceLevel aNSL = new NamespaceLevel (aAttrs);
