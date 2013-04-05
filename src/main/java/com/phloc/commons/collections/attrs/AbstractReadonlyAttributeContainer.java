@@ -128,6 +128,17 @@ public abstract class AbstractReadonlyAttributeContainer implements IReadonlyAtt
     return getAsString (sName, aValue, sDefault);
   }
 
+  public static final int getAsInt (@Nullable final String sParamName, @Nullable final Object aValue, final int nDefault)
+  {
+    if (aValue == null)
+      return nDefault;
+    if (aValue instanceof Number)
+      return ((Number) aValue).intValue ();
+    // Interpret as String
+    final String sValue = getAsString (sParamName, aValue, null);
+    return StringParser.parseInt (sValue, nDefault);
+  }
+
   public final int getAttributeAsInt (@Nullable final String sName)
   {
     return getAttributeAsInt (sName, CGlobal.ILLEGAL_UINT);
@@ -136,12 +147,20 @@ public abstract class AbstractReadonlyAttributeContainer implements IReadonlyAtt
   public final int getAttributeAsInt (@Nullable final String sName, final int nDefault)
   {
     final Object aValue = getAttributeObject (sName);
+    return getAsInt (sName, aValue, nDefault);
+  }
+
+  public static final long getAsLong (@Nullable final String sParamName,
+                                      @Nullable final Object aValue,
+                                      final long nDefault)
+  {
     if (aValue == null)
       return nDefault;
     if (aValue instanceof Number)
-      return ((Number) aValue).intValue ();
+      return ((Number) aValue).longValue ();
     // Interpret as String
-    return StringParser.parseInt (getAsString (sName, aValue, null), nDefault);
+    final String sValue = getAsString (sParamName, aValue, null);
+    return StringParser.parseLong (sValue, nDefault);
   }
 
   public final long getAttributeAsLong (@Nullable final String sName)
@@ -152,12 +171,20 @@ public abstract class AbstractReadonlyAttributeContainer implements IReadonlyAtt
   public final long getAttributeAsLong (@Nullable final String sName, final long nDefault)
   {
     final Object aValue = getAttributeObject (sName);
+    return getAsLong (sName, aValue, nDefault);
+  }
+
+  public static final double getAsDouble (@Nullable final String sParamName,
+                                          @Nullable final Object aValue,
+                                          final double dDefault)
+  {
     if (aValue == null)
-      return nDefault;
+      return dDefault;
     if (aValue instanceof Number)
-      return ((Number) aValue).longValue ();
+      return ((Number) aValue).doubleValue ();
     // Interpret as String
-    return StringParser.parseLong (getAsString (sName, aValue, null), nDefault);
+    final String sValue = getAsString (sParamName, aValue, null);
+    return StringParser.parseDouble (sValue, dDefault);
   }
 
   public final double getAttributeAsDouble (@Nullable final String sName)
@@ -168,12 +195,20 @@ public abstract class AbstractReadonlyAttributeContainer implements IReadonlyAtt
   public final double getAttributeAsDouble (@Nullable final String sName, final double dDefault)
   {
     final Object aValue = getAttributeObject (sName);
+    return getAsDouble (sName, aValue, dDefault);
+  }
+
+  public static final boolean getAsBoolean (@Nullable final String sParamName,
+                                            @Nullable final Object aValue,
+                                            final boolean bDefault)
+  {
     if (aValue == null)
-      return dDefault;
-    if (aValue instanceof Number)
-      return ((Number) aValue).doubleValue ();
+      return bDefault;
+    if (aValue instanceof Boolean)
+      return ((Boolean) aValue).booleanValue ();
     // Interpret as String
-    return StringParser.parseDouble (getAsString (sName, aValue, null), dDefault);
+    final String sValue = getAsString (sParamName, aValue, null);
+    return StringParser.parseBool (sValue, bDefault);
   }
 
   public final boolean getAttributeAsBoolean (@Nullable final String sName)
@@ -184,11 +219,6 @@ public abstract class AbstractReadonlyAttributeContainer implements IReadonlyAtt
   public final boolean getAttributeAsBoolean (@Nullable final String sName, final boolean bDefault)
   {
     final Object aValue = getAttributeObject (sName);
-    if (aValue == null)
-      return bDefault;
-    if (aValue instanceof Boolean)
-      return ((Boolean) aValue).booleanValue ();
-    // Interpret as String
-    return StringParser.parseBool (getAsString (sName, aValue, null), bDefault);
+    return getAsBoolean (sName, aValue, bDefault);
   }
 }
