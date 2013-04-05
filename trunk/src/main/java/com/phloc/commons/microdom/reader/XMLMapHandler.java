@@ -170,7 +170,7 @@ public final class XMLMapHandler
     try
     {
       // and insert all elements
-      for (final IMicroElement eMap : aParentElement.getChildElements (ELEMENT_MAP))
+      for (final IMicroElement eMap : aParentElement.getAllChildElements (ELEMENT_MAP))
       {
         final String sName = eMap.getAttribute (ATTR_KEY);
         if (sName == null)

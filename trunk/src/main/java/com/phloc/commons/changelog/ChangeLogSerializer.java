@@ -134,7 +134,7 @@ public final class ChangeLogSerializer
     final DateFormat aDF = new SimpleDateFormat (DATE_FORMAT);
 
     // Add all entries
-    for (final IMicroElement eElement : eRoot.getChildElements ())
+    for (final IMicroElement eElement : eRoot.getAllChildElements ())
     {
       if (!CChangeLog.CHANGELOG_NAMESPACE_10.equals (eElement.getNamespaceURI ()))
       {
@@ -195,7 +195,7 @@ public final class ChangeLogSerializer
           continue;
         }
         aEntry.setText (aMLT);
-        for (final IMicroElement eIssue : eElement.getChildElements (CChangeLog.CHANGELOG_NAMESPACE_10, ELEMENT_ISSUE))
+        for (final IMicroElement eIssue : eElement.getAllChildElements (CChangeLog.CHANGELOG_NAMESPACE_10, ELEMENT_ISSUE))
           aEntry.addIssue (eIssue.getTextContent ());
       }
       else

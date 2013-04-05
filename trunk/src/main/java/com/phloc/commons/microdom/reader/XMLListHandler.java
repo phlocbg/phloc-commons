@@ -171,7 +171,7 @@ public final class XMLListHandler
     try
     {
       // and insert all elements
-      for (final IMicroElement eItem : aParentElement.getChildElements (ELEMENT_ITEM))
+      for (final IMicroElement eItem : aParentElement.getAllChildElements (ELEMENT_ITEM))
       {
         final String sValue = eItem.getAttribute (ATTR_VALUE);
         if (sValue == null)

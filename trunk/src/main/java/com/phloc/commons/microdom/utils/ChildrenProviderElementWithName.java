@@ -82,8 +82,8 @@ public final class ChildrenProviderElementWithName implements IChildrenProvider 
 
     // Namespace URI defined?
     if (StringHelper.hasText (m_sNamespaceURI))
-      return aCurrent.getChildElements (m_sNamespaceURI, m_sTagName);
+      return aCurrent.getAllChildElements (m_sNamespaceURI, m_sTagName);
 
-    return aCurrent.getChildElements (m_sTagName);
+    return aCurrent.getAllChildElements (m_sTagName);
   }
 }

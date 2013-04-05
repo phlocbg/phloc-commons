@@ -309,9 +309,20 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return m_sTagName;
   }
 
+  /**
+   * @deprecated Use {@link #getAllChildElements()} instead
+   */
+  @Deprecated
   @Nonnull
   @ReturnsMutableCopy
   public List <IMicroElement> getChildElements ()
+  {
+    return getAllChildElements ();
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public List <IMicroElement> getAllChildElements ()
   {
     final List <IMicroElement> ret = new ArrayList <IMicroElement> ();
     if (hasChildren ())
@@ -332,9 +343,20 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return ret;
   }
 
+  /**
+   * @deprecated Use {@link #getAllChildElements(String)} instead
+   */
+  @Deprecated
   @Nonnull
   @ReturnsMutableCopy
   public List <IMicroElement> getChildElements (@Nullable final String sTagName)
+  {
+    return getAllChildElements (sTagName);
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public List <IMicroElement> getAllChildElements (@Nullable final String sTagName)
   {
     final List <IMicroElement> ret = new ArrayList <IMicroElement> ();
     if (hasChildren ())
@@ -360,12 +382,24 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return ret;
   }
 
+  /**
+   * @deprecated Use {@link #getAllChildElements(String,String)} instead
+   */
+  @Deprecated
   @Nonnull
   @ReturnsMutableCopy
   public List <IMicroElement> getChildElements (@Nullable final String sNamespaceURI, @Nullable final String sLocalName)
   {
+    return getAllChildElements (sNamespaceURI, sLocalName);
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public List <IMicroElement> getAllChildElements (@Nullable final String sNamespaceURI,
+                                                   @Nullable final String sLocalName)
+  {
     if (StringHelper.hasNoText (sNamespaceURI))
-      return getChildElements (sLocalName);
+      return getAllChildElements (sLocalName);
 
     final List <IMicroElement> ret = new ArrayList <IMicroElement> ();
     if (hasChildren ())
@@ -391,23 +425,47 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return ret;
   }
 
+  /**
+   * @deprecated Use {@link #getAllChildElements(IHasElementName)} instead
+   */
+  @Deprecated
   @Nonnull
   @ReturnsMutableCopy
   public List <IMicroElement> getChildElements (@Nonnull final IHasElementName aElementNameProvider)
   {
-    if (aElementNameProvider == null)
-      throw new NullPointerException ("ElementNameProvider");
-    return getChildElements (aElementNameProvider.getElementName ());
+    return getAllChildElements (aElementNameProvider);
   }
 
+  @Nonnull
+  @ReturnsMutableCopy
+  public List <IMicroElement> getAllChildElements (@Nonnull final IHasElementName aElementNameProvider)
+  {
+    if (aElementNameProvider == null)
+      throw new NullPointerException ("ElementNameProvider");
+    return getAllChildElements (aElementNameProvider.getElementName ());
+  }
+
+  /**
+   * @deprecated Use {@link #getAllChildElements(String,IHasElementName)}
+   *             instead
+   */
+  @Deprecated
   @Nonnull
   @ReturnsMutableCopy
   public List <IMicroElement> getChildElements (@Nullable final String sNamespaceURI,
                                                 @Nonnull final IHasElementName aElementNameProvider)
   {
+    return getAllChildElements (sNamespaceURI, aElementNameProvider);
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public List <IMicroElement> getAllChildElements (@Nullable final String sNamespaceURI,
+                                                   @Nonnull final IHasElementName aElementNameProvider)
+  {
     if (aElementNameProvider == null)
       throw new NullPointerException ("ElementNameProvider");
-    return getChildElements (sNamespaceURI, aElementNameProvider.getElementName ());
+    return getAllChildElements (sNamespaceURI, aElementNameProvider.getElementName ());
   }
 
   @Nonnull
