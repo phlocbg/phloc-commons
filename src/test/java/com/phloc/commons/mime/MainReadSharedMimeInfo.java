@@ -81,10 +81,10 @@ public final class MainReadSharedMimeInfo
     final IMicroDocument aDoc = MicroReader.readMicroXML (new ClassPathResource ("shared-mime-info/freedesktop.org.xml"));
     if (aDoc == null)
       throw new IllegalStateException ("Failed to read mime type info file!");
-    for (final IMicroElement eMimeType : aDoc.getDocumentElement ().getChildElements (NS, "mime-type"))
+    for (final IMicroElement eMimeType : aDoc.getDocumentElement ().getAllChildElements (NS, "mime-type"))
     {
       final String sMIMEType = eMimeType.getAttribute ("type");
-      for (final IMicroElement eChild : eMimeType.getChildElements ())
+      for (final IMicroElement eChild : eMimeType.getAllChildElements ())
       {
         final String sLocalName = eChild.getLocalName ();
         if (sLocalName.equals ("glob"))

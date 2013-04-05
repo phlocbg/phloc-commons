@@ -106,8 +106,8 @@ public final class MicroElementTest extends AbstractPhlocTestCase
     assertFalse (e.hasChildren ());
     assertFalse (e.hasParent ());
     assertNull (e.getChildren ());
-    assertNotNull (e.getChildElements ());
-    assertTrue (e.getChildElements ().isEmpty ());
+    assertNotNull (e.getAllChildElements ());
+    assertTrue (e.getAllChildElements ().isEmpty ());
     assertSame (EMicroNodeType.ELEMENT, e.getType ());
     PhlocTestUtils.testToStringImplementation (e);
 
@@ -178,8 +178,8 @@ public final class MicroElementTest extends AbstractPhlocTestCase
   public void testGetChildElements ()
   {
     IMicroElement eRoot = new MicroElement ("root");
-    assertNotNull (eRoot.getChildElements ());
-    assertTrue (eRoot.getChildElements ().isEmpty ());
+    assertNotNull (eRoot.getAllChildElements ());
+    assertTrue (eRoot.getAllChildElements ().isEmpty ());
     assertFalse (eRoot.hasChildElements ());
     PhlocTestUtils.testToStringImplementation (eRoot);
 
@@ -190,8 +190,8 @@ public final class MicroElementTest extends AbstractPhlocTestCase
     eRoot.appendElement ("xyz");
     PhlocTestUtils.testToStringImplementation (eRoot);
 
-    assertNotNull (eRoot.getChildElements ());
-    assertEquals (2, eRoot.getChildElements ().size ());
+    assertNotNull (eRoot.getAllChildElements ());
+    assertEquals (2, eRoot.getAllChildElements ().size ());
     assertEquals (e1, eRoot.getFirstChild ());
     assertEquals (e1, eRoot.getFirstChildElement ());
     assertNull (eRoot.getFirstChildElement ("anyothername"));
@@ -200,8 +200,8 @@ public final class MicroElementTest extends AbstractPhlocTestCase
     assertFalse (eRoot.hasChildElements ("level2"));
 
     final IMicroContainer ec = eRoot.appendContainer ();
-    assertEquals (2, eRoot.getChildElements ().size ());
-    assertEquals (1, eRoot.getChildElements ("level1").size ());
+    assertEquals (2, eRoot.getAllChildElements ().size ());
+    assertEquals (1, eRoot.getAllChildElements ("level1").size ());
     final IMicroElement e2a = ec.appendElement ("level2a");
     e2a.appendElement ("e2a1");
     e2a.appendComment ("any");
@@ -210,10 +210,10 @@ public final class MicroElementTest extends AbstractPhlocTestCase
     e2b.appendElement ("e2b1");
     e2b.appendComment ("any");
     e2b.appendElement ("e2b2");
-    assertEquals (4, eRoot.getChildElements ().size ());
-    assertEquals (1, eRoot.getChildElements ("level1").size ());
+    assertEquals (4, eRoot.getAllChildElements ().size ());
+    assertEquals (1, eRoot.getAllChildElements ("level1").size ());
     assertTrue (eRoot.hasChildElements ("level2a"));
-    assertEquals (1, eRoot.getChildElements ("level2a").size ());
+    assertEquals (1, eRoot.getAllChildElements ("level2a").size ());
     assertFalse (eRoot.hasChildElements ("level2c"));
     assertNotNull (eRoot.getFirstChildElement ("level1"));
     assertNotNull (eRoot.getFirstChildElement ("level2a"));
@@ -308,9 +308,9 @@ public final class MicroElementTest extends AbstractPhlocTestCase
     final IMicroElement e11 = e1.appendElement ("e11");
     final IMicroElement e2 = eRoot.appendElement ("level2");
 
-    assertEquals (2, eRoot.getChildElements ().size ());
+    assertEquals (2, eRoot.getAllChildElements ().size ());
     eRoot.removeChild (e1);
-    assertEquals (1, eRoot.getChildElements ().size ());
+    assertEquals (1, eRoot.getAllChildElements ().size ());
     assertEquals (1, eRoot.getAllChildrenRecursive ().size ());
     assertNotNull (e1);
     assertNull (e1.getParent ());
@@ -330,11 +330,11 @@ public final class MicroElementTest extends AbstractPhlocTestCase
     e1.appendElement ("e11");
     final IMicroElement e2 = eRoot.appendElement ("level2");
     e2.appendElement ("e21");
-    assertEquals (2, eRoot.getChildElements ().size ());
+    assertEquals (2, eRoot.getAllChildElements ().size ());
 
     // Remove "level2"
     assertTrue (eRoot.removeChildAtIndex (1).isChanged ());
-    assertEquals (1, eRoot.getChildElements ().size ());
+    assertEquals (1, eRoot.getAllChildElements ().size ());
     assertEquals (2, eRoot.getAllChildrenRecursive ().size ());
     assertSame (e1, eRoot.getChildAtIndex (0));
     assertNotNull (e1.getParent ());
@@ -359,11 +359,11 @@ public final class MicroElementTest extends AbstractPhlocTestCase
     e1.appendElement ("e11");
     final IMicroElement e2 = eRoot.appendElement ("level2");
     e2.appendElement ("e21");
-    assertEquals (2, eRoot.getChildElements ().size ());
+    assertEquals (2, eRoot.getAllChildElements ().size ());
 
     // Remove "all root level elements"
     assertTrue (eRoot.removeAllChildren ().isChanged ());
-    assertEquals (0, eRoot.getChildElements ().size ());
+    assertEquals (0, eRoot.getAllChildElements ().size ());
     assertNull (e1.getParent ());
     assertEquals (1, e1.getChildCount ());
     assertSame (e1, e1.getChildAtIndex (0).getParent ());
@@ -411,8 +411,8 @@ public final class MicroElementTest extends AbstractPhlocTestCase
     aCont.appendElement ("c");
     final IMicroElement d = aCont.appendElement (NSURI, "d");
 
-    assertNotNull (eRoot.getChildElements ((String) null));
-    assertNotNull (eRoot.getChildElements (null, (String) null));
+    assertNotNull (eRoot.getAllChildElements ((String) null));
+    assertNotNull (eRoot.getAllChildElements (null, (String) null));
     assertFalse (eRoot.hasChildElements ((String) null));
     assertFalse (eRoot.hasChildElements (null, (String) null));
     assertNull (eRoot.getFirstChildElement ((String) null));
@@ -420,14 +420,14 @@ public final class MicroElementTest extends AbstractPhlocTestCase
 
     try
     {
-      eRoot.getChildElements ((IHasElementName) null);
+      eRoot.getAllChildElements ((IHasElementName) null);
       fail ();
     }
     catch (final NullPointerException ex)
     {}
     try
     {
-      eRoot.getChildElements (null, (IHasElementName) null);
+      eRoot.getAllChildElements (null, (IHasElementName) null);
       fail ();
     }
     catch (final NullPointerException ex)
@@ -461,25 +461,25 @@ public final class MicroElementTest extends AbstractPhlocTestCase
     catch (final NullPointerException ex)
     {}
 
-    List <IMicroElement> x = eRoot.getChildElements (NSURI, "a");
+    List <IMicroElement> x = eRoot.getAllChildElements (NSURI, "a");
     assertNotNull (x);
     assertEquals (1, x.size ());
     assertEquals ("a", x.get (0).getTagName ());
     assertEquals (a, x.get (0));
 
-    x = eRoot.getChildElements (NSURI2, "b");
+    x = eRoot.getAllChildElements (NSURI2, "b");
     assertNotNull (x);
     assertEquals (1, x.size ());
     assertEquals ("b", x.get (0).getTagName ());
     assertEquals (b, x.get (0));
 
-    x = eRoot.getChildElements (NSURI, "d");
+    x = eRoot.getAllChildElements (NSURI, "d");
     assertNotNull (x);
     assertEquals (1, x.size ());
     assertEquals ("d", x.get (0).getTagName ());
     assertEquals (d, x.get (0));
 
-    x = eRoot.getChildElements (NSURI, "e");
+    x = eRoot.getAllChildElements (NSURI, "e");
     assertNotNull (x);
     assertTrue (x.isEmpty ());
 
