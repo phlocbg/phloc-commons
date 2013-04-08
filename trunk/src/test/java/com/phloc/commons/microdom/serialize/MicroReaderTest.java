@@ -22,16 +22,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 
-import javax.annotation.Nonnull;
 
 import org.junit.Test;
-import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.charset.CCharset;
@@ -46,7 +42,7 @@ import com.phloc.commons.io.streams.NonBlockingStringReader;
 import com.phloc.commons.io.streams.NonBlockingStringWriter;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.xml.namespace.MapBasedNamespaceContext;
-import com.phloc.commons.xml.sax.InputSourceFactory;
+import com.phloc.commons.xml.sax.EmptyEntityResolver;
 import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
 import com.phloc.commons.xml.sax.StringSAXInputSource;
 import com.phloc.commons.xml.serialize.EXMLSerializeIndent;
@@ -60,15 +56,6 @@ import com.phloc.commons.xml.serialize.XMLWriterSettings;
  */
 public final class MicroReaderTest
 {
-  public static final class EmptyEntityResolver implements EntityResolver
-  {
-    @Nonnull
-    public InputSource resolveEntity (final String sPublicId, final String sSystemId) throws SAXException, IOException
-    {
-      return InputSourceFactory.create ("");
-    }
-  }
-
   private static final String CRLF = CGlobal.LINE_SEPARATOR;
 
   @Test
