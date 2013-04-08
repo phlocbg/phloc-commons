@@ -95,8 +95,9 @@ public abstract class AbstractSAXErrorHandler implements ErrorHandler
     internalLog (EErrorLevel.WARN, ex);
 
     // Call parent error handler if available
-    if (m_aWrappedErrorHandler != null)
-      m_aWrappedErrorHandler.warning (ex);
+    final ErrorHandler aWrappedErrorHandler = getWrappedErrorHandler ();
+    if (aWrappedErrorHandler != null)
+      aWrappedErrorHandler.warning (ex);
   }
 
   public final void error (final SAXParseException ex) throws SAXException
@@ -104,8 +105,9 @@ public abstract class AbstractSAXErrorHandler implements ErrorHandler
     internalLog (EErrorLevel.ERROR, ex);
 
     // Call parent error handler if available
-    if (m_aWrappedErrorHandler != null)
-      m_aWrappedErrorHandler.error (ex);
+    final ErrorHandler aWrappedErrorHandler = getWrappedErrorHandler ();
+    if (aWrappedErrorHandler != null)
+      aWrappedErrorHandler.error (ex);
   }
 
   public final void fatalError (final SAXParseException ex) throws SAXException
@@ -113,13 +115,14 @@ public abstract class AbstractSAXErrorHandler implements ErrorHandler
     internalLog (EErrorLevel.FATAL_ERROR, ex);
 
     // Call parent error handler if available
-    if (m_aWrappedErrorHandler != null)
-      m_aWrappedErrorHandler.fatalError (ex);
+    final ErrorHandler aWrappedErrorHandler = getWrappedErrorHandler ();
+    if (aWrappedErrorHandler != null)
+      aWrappedErrorHandler.fatalError (ex);
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).appendIfNotNull ("parentEH", m_aWrappedErrorHandler).toString ();
+    return new ToStringGenerator (this).appendIfNotNull ("wrappedErrorHandler", m_aWrappedErrorHandler).toString ();
   }
 }

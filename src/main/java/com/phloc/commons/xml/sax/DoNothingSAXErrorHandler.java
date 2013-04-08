@@ -52,5 +52,7 @@ public class DoNothingSAXErrorHandler extends AbstractSAXErrorHandler
 
   @Override
   protected void internalLog (@Nonnull final EErrorLevel eErrorLevel, final SAXParseException aException)
-  {}
+  {
+    // do nothing
+  }
 }

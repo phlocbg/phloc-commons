@@ -89,29 +89,32 @@ public abstract class AbstractTransformErrorListener implements ErrorListener
   {
     internalLog (_buildError (ex, EErrorLevel.WARN, EXMLTransformTexts.TRANSFORMATION_WARNING));
 
-    if (m_aWrappedErrorListener != null)
-      m_aWrappedErrorListener.warning (ex);
+    final ErrorListener aWrappedErrorListener = getWrappedErrorListener ();
+    if (aWrappedErrorListener != null)
+      aWrappedErrorListener.warning (ex);
   }
 
   public final void error (@Nonnull final TransformerException ex) throws TransformerException
   {
     internalLog (_buildError (ex, EErrorLevel.ERROR, EXMLTransformTexts.TRANSFORMATION_ERROR));
 
-    if (m_aWrappedErrorListener != null)
-      m_aWrappedErrorListener.error (ex);
+    final ErrorListener aWrappedErrorListener = getWrappedErrorListener ();
+    if (aWrappedErrorListener != null)
+      aWrappedErrorListener.error (ex);
   }
 
   public final void fatalError (@Nonnull final TransformerException ex) throws TransformerException
   {
     internalLog (_buildError (ex, EErrorLevel.FATAL_ERROR, EXMLTransformTexts.TRANSFORMATION_FATAL_ERROR));
 
-    if (m_aWrappedErrorListener != null)
-      m_aWrappedErrorListener.fatalError (ex);
+    final ErrorListener aWrappedErrorListener = getWrappedErrorListener ();
+    if (aWrappedErrorListener != null)
+      aWrappedErrorListener.fatalError (ex);
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).appendIfNotNull ("wrappedListener", m_aWrappedErrorListener).toString ();
+    return new ToStringGenerator (this).appendIfNotNull ("wrappedErrorListener", m_aWrappedErrorListener).toString ();
   }
 }
