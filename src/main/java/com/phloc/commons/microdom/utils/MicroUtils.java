@@ -287,6 +287,26 @@ public final class MicroUtils
 
   /**
    * Helper method to extract the text content of the child element denoted by
+   * the parameter sChildElementName of the passed parent element. After
+   * concatenation, all leading and trailing spaces are removed.
+   * 
+   * @param eParentElement
+   *        The parent element to use. May not be <code>null</code>.
+   * @param sChildElementName
+   *        The name of the child element who's text content is to be extracted.
+   * @return <code>null</code> if the child element does not exist or the child
+   *         element does not contain any text.
+   */
+  @Nullable
+  public static String getChildTextContentTrimmed (@Nonnull final IMicroElement eParentElement,
+                                                   @Nonnull final String sChildElementName)
+  {
+    final IMicroElement eChildElement = eParentElement.getFirstChildElement (sChildElementName);
+    return eChildElement != null ? eChildElement.getTextContentTrimmed () : null;
+  }
+
+  /**
+   * Helper method to extract the text content of the child element denoted by
    * the parameter sChildElementName of the passed parent element. The read text
    * content is converted via the
    * {@link com.phloc.commons.typeconvert.TypeConverter} to the desired
@@ -331,6 +351,29 @@ public final class MicroUtils
   {
     final IMicroElement eChildElement = eParentElement.getFirstChildElement (sNamespaceURI, sChildElementName);
     return eChildElement != null ? eChildElement.getTextContent () : null;
+  }
+
+  /**
+   * Helper method to extract the text content of the child element denoted by
+   * the parameters sNamespaceURI and sChildElementName of the passed parent
+   * element. After concatenation, all leading and trailing spaces are removed.
+   * 
+   * @param eParentElement
+   *        The parent element to use. May not be <code>null</code>.
+   * @param sNamespaceURI
+   *        The expected namespace URI of the element.
+   * @param sChildElementName
+   *        The name of the child element who's text content is to be extracted.
+   * @return <code>null</code> if the child element does not exist or the child
+   *         element does not contain any text.
+   */
+  @Nullable
+  public static String getChildTextContentTrimmed (@Nonnull final IMicroElement eParentElement,
+                                                   @Nonnull final String sNamespaceURI,
+                                                   @Nonnull final String sChildElementName)
+  {
+    final IMicroElement eChildElement = eParentElement.getFirstChildElement (sNamespaceURI, sChildElementName);
+    return eChildElement != null ? eChildElement.getTextContentTrimmed () : null;
   }
 
   /**
