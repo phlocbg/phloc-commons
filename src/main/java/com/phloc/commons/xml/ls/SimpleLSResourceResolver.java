@@ -47,16 +47,16 @@ import com.phloc.commons.url.URLUtils;
 public class SimpleLSResourceResolver implements LSResourceResolver
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (SimpleLSResourceResolver.class);
-  private final LSResourceResolver m_aParentResolver;
+  private final LSResourceResolver m_aWrappedResourceResolver;
 
   public SimpleLSResourceResolver ()
   {
     this (null);
   }
 
-  public SimpleLSResourceResolver (@Nullable final LSResourceResolver aParentResolver)
+  public SimpleLSResourceResolver (@Nullable final LSResourceResolver aWrappedResourceResolver)
   {
-    m_aParentResolver = aParentResolver;
+    m_aWrappedResourceResolver = aWrappedResourceResolver;
   }
 
   /**
@@ -213,10 +213,10 @@ public class SimpleLSResourceResolver implements LSResourceResolver
     }
 
     // Pass to parent (if available)
-    return m_aParentResolver == null ? null : m_aParentResolver.resolveResource (sType,
-                                                                                 sNamespaceURI,
-                                                                                 sPublicId,
-                                                                                 sSystemId,
-                                                                                 sBaseURI);
+    return m_aWrappedResourceResolver == null ? null : m_aWrappedResourceResolver.resolveResource (sType,
+                                                                                                   sNamespaceURI,
+                                                                                                   sPublicId,
+                                                                                                   sSystemId,
+                                                                                                   sBaseURI);
   }
 }
