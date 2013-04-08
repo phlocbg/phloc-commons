@@ -19,6 +19,7 @@ package com.phloc.commons.xml.ls;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
@@ -102,5 +103,22 @@ public final class SimpleLSResourceResolverTest
     aRes = SimpleLSResourceResolver.doStandardResourceResolving ("http://www.example.org/file.txt", "abc/pom.xml");
     assertTrue (aRes instanceof URLResource);
     assertEquals ("http://www.example.org/file.txt", aRes.getPath ());
+
+    // system ID is a fixed URL
+    aRes = SimpleLSResourceResolver.doStandardResourceResolving ("http://www.example.org/file.txt", null);
+    assertTrue (aRes instanceof URLResource);
+    assertEquals ("http://www.example.org/file.txt", aRes.getPath ());
+
+    aRes = SimpleLSResourceResolver.doStandardResourceResolving (null, "pom.xml");
+    assertTrue (aRes instanceof FileSystemResource);
+    assertTrue (aRes.getPath (), aRes.getPath ().endsWith ("pom.xml"));
+
+    try
+    {
+      SimpleLSResourceResolver.doStandardResourceResolving (null, null);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
   }
 }

@@ -63,18 +63,21 @@ public class SimpleLSResourceResolver implements LSResourceResolver
    * Do the standard resource resolving of sSystemId relative to sBaseURI
    * 
    * @param sSystemId
-   *        The resource to search. May not be <code>null</code>.
+   *        The resource to search. May be <code>null</code> if base URI is set.
    * @param sBaseURI
-   *        The base URI from where the search is initiated.May not be
-   *        <code>null</code>.
+   *        The base URI from where the search is initiated. May be
+   *        <code>null</code> if systemId is set.
    * @return The non-<code>null</code> resource. May be non-existing!
    * @throws IOException
    *         In case the file resolution (to an absolute file) fails.
    */
   @Nonnull
-  public static final IReadableResource doStandardResourceResolving (@Nonnull final String sSystemId,
-                                                                     @Nonnull final String sBaseURI) throws IOException
+  public static final IReadableResource doStandardResourceResolving (@Nullable final String sSystemId,
+                                                                     @Nullable final String sBaseURI) throws IOException
   {
+    if (sSystemId == null && sBaseURI == null)
+      throw new IllegalArgumentException ("systemID and baseURI are null!");
+
     if (s_aLogger.isDebugEnabled ())
       s_aLogger.debug ("Trying to resolve resource " + sSystemId + " from base " + sBaseURI);
 
@@ -154,31 +157,48 @@ public class SimpleLSResourceResolver implements LSResourceResolver
 
   @OverrideOnDemand
   @Nullable
-  protected IReadableResource internalResolveResource (@Nonnull final String sSystemId, @Nonnull final String sBaseURI) throws Exception
+  protected IReadableResource internalResolveResource (@Nullable final String sSystemId, @Nullable final String sBaseURI) throws Exception
   {
     return doStandardResourceResolving (sSystemId, sBaseURI);
   }
 
   /**
    * @param sType
-   *        e.g. XSD - some constant - don't ask me
+   *        The type of the resource being resolved. For XML [<a
+   *        href='http://www.w3.org/TR/2004/REC-xml-20040204'>XML 1.0</a>]
+   *        resources (i.e. entities), applications must use the value
+   *        <code>"http://www.w3.org/TR/REC-xml"</code>. For XML Schema [<a
+   *        href='http://www.w3.org/TR/2001/REC-xmlschema-1-20010502/'>XML
+   *        Schema Part 1</a>] , applications must use the value
+   *        <code>"http://www.w3.org/2001/XMLSchema"</code>. Other types of
+   *        resources are outside the scope of this specification and therefore
+   *        should recommend an absolute URI in order to use this method.
    * @param sNamespaceURI
-   *        The destination namespace
+   *        The namespace of the resource being resolved, e.g. the target
+   *        namespace of the XML Schema [<a
+   *        href='http://www.w3.org/TR/2001/REC-xmlschema-1-20010502/'>XML
+   *        Schema Part 1</a>] when resolving XML Schema resources.
    * @param sPublicId
-   *        null
+   *        The public identifier of the external entity being referenced, or
+   *        <code>null</code> if no public identifier was supplied or if the
+   *        resource is not an entity.
    * @param sSystemId
    *        the path of the resource to find - may be relative to the including
-   *        resource
+   *        resource. The system identifier, a URI reference [<a
+   *        href='http://www.ietf.org/rfc/rfc2396.txt'>IETF RFC 2396</a>], of
+   *        the external resource being referenced, or <code>null</code> if no
+   *        system identifier was supplied.
    * @param sBaseURI
-   *        The systemId of the including resource.
+   *        The systemId of the including resource.The absolute base URI of the
+   *        resource being parsed, or <code>null</code> if there is no base URI.
    * @return <code>null</code> if the resource could not be resolved.
    */
   @Nullable
   public final LSInput resolveResource (final String sType,
-                                        final String sNamespaceURI,
-                                        final String sPublicId,
-                                        @Nonnull final String sSystemId,
-                                        @Nonnull final String sBaseURI)
+                                        @Nullable final String sNamespaceURI,
+                                        @Nullable final String sPublicId,
+                                        @Nullable final String sSystemId,
+                                        @Nullable final String sBaseURI)
   {
     try
     {
