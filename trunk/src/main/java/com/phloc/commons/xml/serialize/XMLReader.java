@@ -624,7 +624,20 @@ public final class XMLReader
     }
     catch (final SAXParseException ex)
     {
-      s_aLogger.error ("Error parsing XML at position (" + ex.getLineNumber () + "," + ex.getColumnNumber () + ")", ex);
+      boolean bHandled = false;
+      if (aErrorHdl != null)
+        try
+        {
+          aErrorHdl.fatalError (ex);
+          bHandled = true;
+        }
+        catch (final SAXException ex2)
+        {
+          // fall-through
+        }
+      if (!bHandled)
+        s_aLogger.error ("Error parsing XML at position (" + ex.getLineNumber () + "," + ex.getColumnNumber () + ")",
+                         ex);
     }
     catch (final SAXException ex)
     {
