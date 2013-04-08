@@ -32,16 +32,17 @@ import org.w3c.dom.ls.LSResourceResolver;
 public class LoggingLSResourceResolver implements LSResourceResolver
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (LoggingLSResourceResolver.class);
-  private final LSResourceResolver m_aParentResolver;
+
+  private final LSResourceResolver m_aWrappedResourceResolver;
 
   public LoggingLSResourceResolver ()
   {
     this (null);
   }
 
-  public LoggingLSResourceResolver (@Nullable final LSResourceResolver aParentResolver)
+  public LoggingLSResourceResolver (@Nullable final LSResourceResolver aWrappedResourceResolver)
   {
-    m_aParentResolver = aParentResolver;
+    m_aWrappedResourceResolver = aWrappedResourceResolver;
   }
 
   public LSInput resolveResource (@Nullable final String sType,
@@ -64,10 +65,10 @@ public class LoggingLSResourceResolver implements LSResourceResolver
                       ")");
 
     // Pass to parent (if available)
-    return m_aParentResolver == null ? null : m_aParentResolver.resolveResource (sType,
-                                                                                 sNamespaceURI,
-                                                                                 sPublicId,
-                                                                                 sSystemId,
-                                                                                 sBaseURI);
+    return m_aWrappedResourceResolver == null ? null : m_aWrappedResourceResolver.resolveResource (sType,
+                                                                                                   sNamespaceURI,
+                                                                                                   sPublicId,
+                                                                                                   sSystemId,
+                                                                                                   sBaseURI);
   }
 }

@@ -42,16 +42,16 @@ public class CollectingLSResourceResolver implements LSResourceResolver
 {
   private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
   private final List <LSResourceData> m_aList = new ArrayList <LSResourceData> ();
-  private final LSResourceResolver m_aParentResolver;
+  private final LSResourceResolver m_aWrappedResourceResolver;
 
   public CollectingLSResourceResolver ()
   {
     this (null);
   }
 
-  public CollectingLSResourceResolver (@Nullable final LSResourceResolver aParentResolver)
+  public CollectingLSResourceResolver (@Nullable final LSResourceResolver aWrappedResourceResolver)
   {
-    m_aParentResolver = aParentResolver;
+    m_aWrappedResourceResolver = aWrappedResourceResolver;
   }
 
   @Nonnull
@@ -88,10 +88,10 @@ public class CollectingLSResourceResolver implements LSResourceResolver
     }
 
     // Pass to parent (if available)
-    return m_aParentResolver == null ? null : m_aParentResolver.resolveResource (sType,
-                                                                                 sNamespaceURI,
-                                                                                 sPublicId,
-                                                                                 sSystemId,
-                                                                                 sBaseURI);
+    return m_aWrappedResourceResolver == null ? null : m_aWrappedResourceResolver.resolveResource (sType,
+                                                                                                   sNamespaceURI,
+                                                                                                   sPublicId,
+                                                                                                   sSystemId,
+                                                                                                   sBaseURI);
   }
 }
