@@ -45,6 +45,7 @@ public class LoggingLSResourceResolver implements LSResourceResolver
     m_aWrappedResourceResolver = aWrappedResourceResolver;
   }
 
+  @Nullable
   public LSInput resolveResource (@Nullable final String sType,
                                   @Nullable final String sNamespaceURI,
                                   @Nullable final String sPublicId,
