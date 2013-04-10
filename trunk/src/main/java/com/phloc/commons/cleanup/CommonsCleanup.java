@@ -33,6 +33,7 @@ import com.phloc.commons.regex.RegExPool;
 import com.phloc.commons.stats.StatisticsManager;
 import com.phloc.commons.text.resolve.DefaultTextResolver;
 import com.phloc.commons.text.resource.ResourceBundleUtils;
+import com.phloc.commons.url.URLProtocolRegistry;
 import com.phloc.commons.xml.schema.XMLSchemaCache;
 
 /**
@@ -61,6 +62,7 @@ public final class CommonsCleanup
     LocaleCache.resetCache ();
     CountryCache.resetCache ();
     MimeTypeDeterminator.resetCache ();
+    URLProtocolRegistry.reinitialize ();
 
     // Clear caches
     ImageDataManager.clearCache ();
