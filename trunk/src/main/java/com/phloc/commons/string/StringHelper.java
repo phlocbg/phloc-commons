@@ -602,6 +602,24 @@ public final class StringHelper
 
   /**
    * Get a concatenated String from all elements of the passed container,
+   * without a separator. Even <code>null</code> elements are added.
+   * 
+   * @param aElements
+   *        The container to convert. May be <code>null</code> or empty.
+   * @return The concatenated string.
+   */
+  @Nonnull
+  public static String getImploded (@Nullable final Iterable <?> aElements)
+  {
+    final StringBuilder aSB = new StringBuilder ();
+    if (aElements != null)
+      for (final Object aElement : aElements)
+        aSB.append (aElement);
+    return aSB.toString ();
+  }
+
+  /**
+   * Get a concatenated String from all elements of the passed container,
    * separated by the specified separator string. Even <code>null</code>
    * elements are added.
    * 
@@ -702,6 +720,53 @@ public final class StringHelper
   public static String getImploded (final char cSepOuter, final char cSepInner, @Nullable final Map <?, ?> aElements)
   {
     return getImploded (Character.toString (cSepOuter), Character.toString (cSepInner), aElements);
+  }
+
+  /**
+   * Get a concatenated String from all elements of the passed array, without a
+   * separator.
+   * 
+   * @param aElements
+   *        The container to convert. May be <code>null</code> or empty.
+   * @return The concatenated string.
+   * @param <ELEMENTTYPE>
+   *        The type of elements to be imploded.
+   */
+  @Nonnull
+  public static <ELEMENTTYPE> String getImploded (@Nullable final ELEMENTTYPE... aElements)
+  {
+    if (ArrayHelper.isEmpty (aElements))
+      return "";
+    return getImploded (aElements, 0, aElements.length);
+  }
+
+  /**
+   * Get a concatenated String from all elements of the passed array, without a
+   * separator.
+   * 
+   * @param aElements
+   *        The container to convert. May be <code>null</code> or empty.
+   * @param nOfs
+   *        The offset to start from.
+   * @param nLen
+   *        The number of elements to implode.
+   * @return The concatenated string.
+   * @param <ELEMENTTYPE>
+   *        The type of elements to be imploded.
+   */
+  @Nonnull
+  public static <ELEMENTTYPE> String getImploded (@Nullable final ELEMENTTYPE [] aElements,
+                                                  @Nonnegative final int nOfs,
+                                                  @Nonnegative final int nLen)
+  {
+    if (nOfs < 0 || nLen < 0 || (aElements != null && (nOfs + nLen) > aElements.length))
+      throw new IllegalArgumentException ("ofs:" + nOfs + ";len=" + nLen + ";bufLen=" + ArrayHelper.getSize (aElements));
+
+    final StringBuilder aSB = new StringBuilder ();
+    if (aElements != null)
+      for (int i = nOfs; i < nOfs + nLen; ++i)
+        aSB.append (aElements[i]);
+    return aSB.toString ();
   }
 
   /**

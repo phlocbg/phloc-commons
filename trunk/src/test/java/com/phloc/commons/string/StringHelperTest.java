@@ -382,8 +382,10 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     assertEquals ("", StringHelper.getImploded (".", (List <String>) null));
     assertEquals ("a.b.c", StringHelper.getImploded (".", aList));
     assertEquals ("abc", StringHelper.getImploded ("", aList));
+    assertEquals ("abc", StringHelper.getImploded (aList));
     assertEquals ("a.b.c", StringHelper.getImploded (".", aList.toArray (new String [3])));
     assertEquals ("abc", StringHelper.getImploded ("", aList.toArray (new String [3])));
+    assertEquals ("abc", StringHelper.getImploded (aList.toArray (new String [3])));
 
     try
     {
@@ -400,13 +402,27 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   {
     final String [] aArray = new String [] { "a", "b", "c" };
     assertEquals ("a.b", StringHelper.getImploded (".", aArray, 0, 2));
+    assertEquals ("ab", StringHelper.getImploded (aArray, 0, 2));
     assertEquals ("b.c", StringHelper.getImploded (".", aArray, 1, 2));
+    assertEquals ("bc", StringHelper.getImploded (aArray, 1, 2));
     assertEquals ("", StringHelper.getImploded (".", aArray, 0, 0));
+    assertEquals ("", StringHelper.getImploded (aArray, 0, 0));
     assertEquals ("", StringHelper.getImploded (".", aArray, 2, 0));
+    assertEquals ("", StringHelper.getImploded (aArray, 2, 0));
     assertEquals ("", StringHelper.getImploded (".", null, 2, 0));
+    assertEquals ("", StringHelper.getImploded (null, 2, 0));
 
     try
     {
+      // null separator
+      StringHelper.getImploded (null, aArray);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+    try
+    {
+      // null separator
       StringHelper.getImploded (null, aArray, 2, 2);
       fail ();
     }
@@ -421,7 +437,21 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     {}
     try
     {
+      StringHelper.getImploded (aArray, -1, 2);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+    try
+    {
       StringHelper.getImploded (".", aArray, 0, -1);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+    try
+    {
+      StringHelper.getImploded (aArray, 0, -1);
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -437,6 +467,14 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     try
     {
       // too long
+      StringHelper.getImploded (aArray, 2, 2);
+      fail ();
+    }
+    catch (final IllegalArgumentException ex)
+    {}
+    try
+    {
+      // too long
       StringHelper.getImploded (".", aArray, 0, 4);
       fail ();
     }
@@ -444,10 +482,11 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     {}
     try
     {
-      StringHelper.getImploded (null, aArray);
+      // too long
+      StringHelper.getImploded (aArray, 0, 4);
       fail ();
     }
-    catch (final NullPointerException ex)
+    catch (final IllegalArgumentException ex)
     {}
   }
 
