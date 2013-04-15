@@ -51,6 +51,7 @@ import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.error.IResourceErrorGroup;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.IWritableResource;
+import com.phloc.commons.io.streams.NonBlockingStringWriter;
 import com.phloc.commons.jaxb.JAXBContextCache;
 import com.phloc.commons.jaxb.validation.AbstractValidationEventHandler;
 import com.phloc.commons.jaxb.validation.CollectingLoggingValidationEventHandlerFactory;
@@ -513,5 +514,21 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
       s_aLogger.warn ("JAXB Exception writing object", ex);
     }
     return ESuccess.FAILURE;
+  }
+
+  /**
+   * Utility method to directly convert the passed domain object to an XML
+   * string.
+   * 
+   * @param aObject
+   *        The domain object to be converted. May not be <code>null</code>.
+   * @return <code>null</code> if the passed domain object could not be
+   *         converted because of validation errors.
+   */
+  @Nullable
+  public final String getAsXMLString (@Nonnull final JAXBTYPE aObject)
+  {
+    final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
+    return write (aObject, new StreamResult (aSW)).isSuccess () ? aSW.getAsString () : null;
   }
 }
