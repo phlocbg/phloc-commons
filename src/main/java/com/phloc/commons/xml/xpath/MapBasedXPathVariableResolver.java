@@ -26,6 +26,8 @@ import javax.xml.namespace.QName;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathVariableResolver;
 
+import com.phloc.commons.annotations.ReturnsMutableCopy;
+import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
@@ -40,11 +42,18 @@ import com.phloc.commons.string.ToStringGenerator;
 @NotThreadSafe
 public class MapBasedXPathVariableResolver implements XPathVariableResolver
 {
-  private final Map <String, Object> m_aVars;
+  private final Map <String, ?> m_aVars;
 
-  public MapBasedXPathVariableResolver (@Nullable final Map <String, Object> aVars)
+  public MapBasedXPathVariableResolver (@Nullable final Map <String, ?> aVars)
   {
     m_aVars = aVars;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public Map <String, ?> getAllVariables ()
+  {
+    return ContainerHelper.newMap (m_aVars);
   }
 
   @Nullable
