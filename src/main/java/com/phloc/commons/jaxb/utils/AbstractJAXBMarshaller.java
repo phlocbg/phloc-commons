@@ -53,6 +53,7 @@ import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.IWritableResource;
 import com.phloc.commons.io.streams.NonBlockingStringWriter;
 import com.phloc.commons.jaxb.JAXBContextCache;
+import com.phloc.commons.jaxb.JAXBMarshallerUtils;
 import com.phloc.commons.jaxb.validation.AbstractValidationEventHandler;
 import com.phloc.commons.jaxb.validation.CollectingLoggingValidationEventHandlerFactory;
 import com.phloc.commons.jaxb.validation.CollectingValidationEventHandler;
@@ -73,12 +74,14 @@ import com.phloc.commons.xml.transform.TransformSourceFactory;
 @NotThreadSafe
 public abstract class AbstractJAXBMarshaller <JAXBTYPE>
 {
+  public static final boolean DEFAULT_FORMATTED = false;
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractJAXBMarshaller.class);
 
   private final Class <JAXBTYPE> m_aType;
   private final List <IReadableResource> m_aXSDs = new ArrayList <IReadableResource> ();
   private IValidationEventHandlerFactory m_aVEHFactory = new CollectingLoggingValidationEventHandlerFactory ();
   private ValidationEventHandler m_aLastEventHandler;
+  private boolean m_bWriteFormatted = DEFAULT_FORMATTED;
 
   /**
    * Constructor.
@@ -220,6 +223,27 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   {
     final CollectingValidationEventHandler aHandler = getCollectingValidationEventHandler ();
     return aHandler == null ? EChange.UNCHANGED : aHandler.clearResourceErrors ();
+  }
+
+  /**
+   * CHange the way formatting happens when calling write.
+   * 
+   * @param bWriteFormatted
+   *        <code>true</code> to write formatted output.
+   * @return {@link EChange}
+   */
+  @Nonnull
+  public final EChange setWriteFormatted (final boolean bWriteFormatted)
+  {
+    if (bWriteFormatted == m_bWriteFormatted)
+      return EChange.UNCHANGED;
+    m_bWriteFormatted = bWriteFormatted;
+    return EChange.CHANGED;
+  }
+
+  public final boolean isWriteFormatted ()
+  {
+    return m_bWriteFormatted;
   }
 
   /**
@@ -413,6 +437,8 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
     }
     else
       m_aLastEventHandler = null;
+
+    JAXBMarshallerUtils.setFormattedOutput (aMarshaller, m_bWriteFormatted);
 
     // Set XSD (if any)
     final Schema aValidationSchema = createValidationSchema ();

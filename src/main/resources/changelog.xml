@@ -22,6 +22,16 @@
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
   <entry date="2013-04-15" category="api" action="add">
     <change>
+      <text locale="en">Added possibility to add and remove variables from MapBasedXPathVariableResolver</text>
+    </change>
+  </entry>
+  <entry date="2013-04-15" category="api" action="add">
+    <change>
+      <text locale="en">Added possibility to determine if the AbstractJAXBMarshaller writes the output formatted or not</text>
+    </change>
+  </entry>
+  <entry date="2013-04-15" category="api" action="add">
+    <change>
       <text locale="en">Added method AbstractJAXBMarshaller.getAsXMLString</text>
     </change>
   </entry>

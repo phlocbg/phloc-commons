@@ -30,6 +30,7 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
+import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -42,11 +43,46 @@ import com.phloc.commons.string.ToStringGenerator;
 @NotThreadSafe
 public class MapBasedXPathVariableResolver implements XPathVariableResolver
 {
-  private final Map <String, ?> m_aVars;
+  private final Map <String, Object> m_aVars;
+
+  public MapBasedXPathVariableResolver ()
+  {
+    this (null);
+  }
 
   public MapBasedXPathVariableResolver (@Nullable final Map <String, ?> aVars)
   {
-    m_aVars = aVars;
+    m_aVars = ContainerHelper.newMap (aVars);
+  }
+
+  @Nonnull
+  public EChange addUniqueVariable (@Nonnull final String sName, @Nonnull final Object aValue)
+  {
+    if (sName == null)
+      throw new NullPointerException ("name");
+    if (aValue == null)
+      throw new NullPointerException ("value");
+
+    if (m_aVars.containsKey (sName))
+      return EChange.UNCHANGED;
+    m_aVars.put (sName, aValue);
+    return EChange.CHANGED;
+  }
+
+  @Nonnull
+  public EChange removeVariable (@Nullable final String sName)
+  {
+    return EChange.valueOf (m_aVars.remove (sName) != null);
+  }
+
+  @Nonnull
+  public EChange removeVariables (@Nullable final Iterable <String> aNames)
+  {
+    EChange eChange = EChange.UNCHANGED;
+    if (aNames != null)
+      for (final String sName : aNames)
+        eChange = eChange.or (removeVariable (sName));
+    return eChange;
   }
 
   @Nonnull

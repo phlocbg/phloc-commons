@@ -180,6 +180,23 @@ public final class XPathHelper
   }
 
   /**
+   * Create a new {@link XPath} with the passed variable resolver and namespace
+   * context using the default {@link XPathFactory}.
+   * 
+   * @param aVariableResolver
+   *        Variable resolver to be used. May be <code>null</code>.
+   * @param aNamespaceContext
+   *        Namespace context to be used. May be <code>null</code>.
+   * @return The created non-<code>null</code> {@link XPath} object
+   */
+  @Nonnull
+  public static XPath createNewXPath (@Nullable final XPathVariableResolver aVariableResolver,
+                                      @Nullable final NamespaceContext aNamespaceContext)
+  {
+    return createNewXPath (s_aXPathFactory, aVariableResolver, (XPathFunctionResolver) null, aNamespaceContext);
+  }
+
+  /**
    * Create a new {@link XPath} with the passed variable resolver, function
    * resolver and namespace context using the default {@link XPathFactory}.
    * 
