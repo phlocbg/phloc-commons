@@ -18,6 +18,7 @@
 package com.phloc.commons.jaxb.utils;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -46,7 +47,6 @@ import org.xml.sax.SAXParseException;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
-import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.error.IResourceErrorGroup;
 import com.phloc.commons.io.IReadableResource;
@@ -75,9 +75,28 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractJAXBMarshaller.class);
 
   private final Class <JAXBTYPE> m_aType;
-  private final IReadableResource [] m_aXSDs;
+  private final List <IReadableResource> m_aXSDs = new ArrayList <IReadableResource> ();
   private IValidationEventHandlerFactory m_aVEHFactory = new CollectingLoggingValidationEventHandlerFactory ();
   private ValidationEventHandler m_aLastEventHandler;
+
+  /**
+   * Constructor.
+   * 
+   * @param aType
+   *        The class of the JAXB document implementation type. May not be
+   *        <code>null</code>.
+   * @param aXSD
+   *        The XSD used to validate document. May be <code>null</code>
+   *        indicating that no XSD check is needed.
+   */
+  protected AbstractJAXBMarshaller (@Nonnull final Class <JAXBTYPE> aType, @Nullable final IReadableResource aXSD)
+  {
+    if (aType == null)
+      throw new NullPointerException ("type");
+    m_aType = aType;
+    if (aXSD != null)
+      m_aXSDs.add (aXSD);
+  }
 
   /**
    * Constructor.
@@ -90,12 +109,15 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
    *        empty indicating, that no XSD check is needed.
    */
   protected AbstractJAXBMarshaller (@Nonnull final Class <JAXBTYPE> aType,
-                                    @Nonnull @Nonempty final List <? extends IReadableResource> aXSDs)
+                                    @Nullable final List <? extends IReadableResource> aXSDs)
   {
     if (aType == null)
       throw new NullPointerException ("type");
+    if (ContainerHelper.containsAnyNullElement (aXSDs))
+      throw new IllegalArgumentException ("The XSD list may not contain null elements!");
     m_aType = aType;
-    m_aXSDs = ArrayHelper.newArray (aXSDs, IReadableResource.class);
+    if (aXSDs != null)
+      m_aXSDs.addAll (aXSDs);
   }
 
   /**
@@ -248,7 +270,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   @OverrideOnDemand
   protected Schema createValidationSchema ()
   {
-    return ArrayHelper.isEmpty (m_aXSDs) ? null : XMLSchemaCache.getInstance ().getSchema (m_aXSDs);
+    return m_aXSDs.isEmpty () ? null : XMLSchemaCache.getInstance ().getSchema (m_aXSDs);
   }
 
   /**
