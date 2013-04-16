@@ -66,14 +66,12 @@ public abstract class AbstractTransformErrorListener implements ErrorListener
                                              @Nonnull final IHasDisplayText aErrorMsg)
   {
     final SourceLocator aLocator = ex.getLocator ();
-    final String sResourceID = aLocator == null ? null : StringHelper.getConcatenatedOnDemand (aLocator.getPublicId (),
-                                                                                               "/",
-                                                                                               aLocator.getSystemId ());
-    final IResourceLocation aLocation = new ResourceLocation (sResourceID,
-                                                              aLocator != null ? aLocator.getLineNumber ()
-                                                                              : IResourceLocation.ILLEGAL_NUMBER,
-                                                              aLocator != null ? aLocator.getColumnNumber ()
-                                                                              : IResourceLocation.ILLEGAL_NUMBER);
+    final IResourceLocation aLocation = aLocator != null ? new ResourceLocation (StringHelper.getConcatenatedOnDemand (aLocator.getPublicId (),
+                                                                                                                       "/",
+                                                                                                                       aLocator.getSystemId ()),
+                                                                                 aLocator.getLineNumber (),
+                                                                                 aLocator.getColumnNumber ())
+                                                        : new ResourceLocation (ex.getLocationAsString ());
     return new ResourceError (aLocation, eErrorLevel, aErrorMsg, ex);
   }
 
