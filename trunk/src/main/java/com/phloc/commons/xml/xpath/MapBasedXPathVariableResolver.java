@@ -19,6 +19,7 @@ package com.phloc.commons.xml.xpath;
 
 import java.util.Map;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
@@ -90,6 +91,28 @@ public class MapBasedXPathVariableResolver implements XPathVariableResolver
   public Map <String, ?> getAllVariables ()
   {
     return ContainerHelper.newMap (m_aVars);
+  }
+
+  @Nonnegative
+  public int getVariableCount ()
+  {
+    return m_aVars.size ();
+  }
+
+  @Nonnull
+  public EChange clear ()
+  {
+    if (m_aVars.isEmpty ())
+      return EChange.UNCHANGED;
+    m_aVars.clear ();
+    return EChange.CHANGED;
+  }
+
+  public void setAllVariables (@Nullable final Map <String, ?> aVars)
+  {
+    m_aVars.clear ();
+    if (aVars != null)
+      m_aVars.putAll (aVars);
   }
 
   @Nullable
