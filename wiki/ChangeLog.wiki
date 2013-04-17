@@ -3,6 +3,19 @@
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
 <table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody>
+<tr border="1"><td>4/17/13</td><td colspan="4">_Release *4.0.3*_</td></tr>
+<tr><td>4/16/13</td><td>add</td><td>api</td><td></td><td>Further extended API of MapBasedXPathVariableResolver</td></tr>
+<tr><td>4/15/13</td><td>add</td><td>api</td><td></td><td>Added possibility to add and remove variables from MapBasedXPathVariableResolver</td></tr>
+<tr><td>4/15/13</td><td>add</td><td>api</td><td></td><td>Added possibility to determine if the AbstractJAXBMarshaller writes the output formatted or not</td></tr>
+<tr><td>4/15/13</td><td>add</td><td>api</td><td></td><td>Added method AbstractJAXBMarshaller.getAsXMLString</td></tr>
+<tr><td>4/15/13</td><td>add</td><td>api</td><td></td><td>Extended AbstractJAXBMarshaller to handle a single XML Schema resource</td></tr>
+<tr><td>4/15/13</td><td>change</td><td>api</td><td></td><td>Made API of MapBasedXPathVariableResolver constructor more flexible.</td></tr>
+<tr><td>4/12/13</td><td>add</td><td>api</td><td></td><td>Added new overloads of StringHelper.getImploded without a separator</td></tr>
+<tr><td>4/8/13</td><td>add</td><td>api</td><td></td><td>Added new classes DoNothingSAXErrorHandler and DoNothingTransformErrorListener</td></tr>
+<tr><td>4/8/13</td><td>add</td><td>api</td><td></td><td>Added MicroUtils.getChildTextContentTrimmed()</td></tr>
+<tr><td>4/8/13</td><td>add</td><td>api</td><td></td><td>Added IMicroNodeWithChildren.getTextContentTrimmed()</td></tr>
+<tr><td>4/5/13</td><td>change</td><td>api</td><td></td><td>Changed IMicroElement.getChildElements() to getAllChildElements()</td></tr>
+<tr><td>4/5/13</td><td>add</td><td>api</td><td></td><td>Added some more static methods in AbstractReadonlyAttributeContainer</td></tr>
 <tr border="1"><td>4/4/13</td><td colspan="4">_Release *4.0.2*_</td></tr>
 <tr><td>4/4/13</td><td>add</td><td>api</td><td></td><td>Added XMLWriterSettings option to disable emitting all namespace relevant XML stuff</td></tr>
 <tr><td>4/2/13</td><td>change</td><td>api</td><td></td><td>Moved main URL input stream handling from URLResource to URLUtils</td></tr>
