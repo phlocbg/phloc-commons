@@ -2,7 +2,7 @@
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
 <table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody>
-<tr border="1"><td>4/16/13</td><td colspan="4">_Release *4.0.3*_</td></tr>
+<tr border="1"><td>4/17/13</td><td colspan="4">_Release *4.0.3*_</td></tr>
 <tr><td>4/16/13</td><td>add</td><td>api</td><td></td><td>Further extended API of MapBasedXPathVariableResolver</td></tr>
 <tr><td>4/15/13</td><td>add</td><td>api</td><td></td><td>Added possibility to add and remove variables from MapBasedXPathVariableResolver</td></tr>
 <tr><td>4/15/13</td><td>add</td><td>api</td><td></td><td>Added possibility to determine if the AbstractJAXBMarshaller writes the output formatted or not</td></tr>
