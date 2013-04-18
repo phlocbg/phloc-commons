@@ -30,14 +30,14 @@ import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * A filename filter that checks whether a file has the specified name. The
- * implementation is done via {@link String#equals(Object)} so it is case
- * sensitive.
+ * A filename filter that checks whether a file does not have the specified
+ * name. The implementation is done via {@link String#equals(Object)} so it is
+ * case sensitive.
  * 
  * @author philip
  */
 @ThreadSafe
-public final class FilenameFilterEquals implements FilenameFilter
+public final class FilenameFilterNotEquals implements FilenameFilter
 {
   private final String m_sFilename;
 
@@ -45,7 +45,7 @@ public final class FilenameFilterEquals implements FilenameFilter
    * @param sFilename
    *        The filename to use. May neither be <code>null</code> nor empty.
    */
-  public FilenameFilterEquals (@Nonnull @Nonempty final String sFilename)
+  public FilenameFilterNotEquals (@Nonnull @Nonempty final String sFilename)
   {
     if (StringHelper.hasNoText (sFilename))
       throw new IllegalArgumentException ("filename");
@@ -55,7 +55,7 @@ public final class FilenameFilterEquals implements FilenameFilter
   public boolean accept (@Nullable final File aDir, @Nullable final String sName)
   {
     final String sRealName = FilenameHelper.getSecureFilename (sName);
-    return sRealName != null && sRealName.equals (m_sFilename);
+    return sRealName != null && !sRealName.equals (m_sFilename);
   }
 
   @Override
