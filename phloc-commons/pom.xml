@@ -24,8 +24,8 @@
   
   <scm>
     <url>http://code.google.com/p/phloc-commons/source/browse/</url>
-    <connection>scm:svn:http://phloc-commons.googlecode.com/svn/trunk</connection>
-    <developerConnection>scm:svn:https://phloc-commons.googlecode.com/svn/trunk</developerConnection>
+    <connection>scm:svn:http://phloc-commons.googlecode.com/svn/trunk/phloc-commons</connection>
+    <developerConnection>scm:svn:https://phloc-commons.googlecode.com/svn/trunk/phloc-commons</developerConnection>
   </scm>
 
   <organization>
