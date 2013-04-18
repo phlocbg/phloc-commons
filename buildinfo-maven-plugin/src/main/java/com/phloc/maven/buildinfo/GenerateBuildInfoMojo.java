@@ -58,11 +58,19 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * @author Philip Helger, phloc systems
  * @goal generate-buildinfo
  * @phase generate-resources
- * @description Create build information
+ * @description Create build information at compile time. The information will
+ *              be part of the created JAR/WAR/... file. The resulting file will
+ *              reside in the <code>META-INF</code> directory of the created
+ *              artifact.
  */
 @SuppressFBWarnings (value = { "UWF_UNWRITTEN_FIELD", "NP_UNWRITTEN_FIELD" }, justification = "set via maven property")
 public final class GenerateBuildInfoMojo extends AbstractMojo
 {
+  /** The name of the XML file */
+  private static final String DEFAULT_FILENAME_BUILDINFO_XML = "buildinfo.xml";
+  /** The name of the properties file */
+  private static final String DEFAULT_FILENAME_BUILDINFO_PROPERTIES = "buildinfo.properties";
+
   /**
    * The Maven Project.
    * 
@@ -500,7 +508,7 @@ public final class GenerateBuildInfoMojo extends AbstractMojo
   {
     // Write the XML in the format that it can easily be read by the
     // com.phloc.common.microdom.reader.XMLMappingReader class
-    final File aFile = new File (targetDirectory, "buildinfo.xml");
+    final File aFile = new File (targetDirectory, DEFAULT_FILENAME_BUILDINFO_XML);
     if (XMLMapHandler.writeMap (aProps, new FileSystemResource (aFile)).isFailure ())
       throw new MojoExecutionException ("Failed to write XML file to " + aFile);
     getLog ().debug ("Wrote buildinfo XML file to " + aFile);
@@ -509,7 +517,7 @@ public final class GenerateBuildInfoMojo extends AbstractMojo
   private void _writeBuildinfoProperties (final Map <String, String> aProps) throws MojoExecutionException
   {
     // Write properties file
-    final File aFile = new File (targetDirectory, "buildinfo.properties");
+    final File aFile = new File (targetDirectory, DEFAULT_FILENAME_BUILDINFO_PROPERTIES);
     final Properties p = new Properties ();
     p.putAll (aProps);
     try
