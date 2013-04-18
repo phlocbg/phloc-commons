@@ -65,7 +65,7 @@ public final class GenerateBuildInfoMojo extends AbstractMojo
 {
   /**
    * The Maven Project.
-   *
+   * 
    * @parameter property=project
    * @required
    * @readonly
@@ -81,7 +81,7 @@ public final class GenerateBuildInfoMojo extends AbstractMojo
 
   /**
    * The directory where the buildinfo files will be saved.
-   *
+   * 
    * @required
    * @parameter property=targetDirectory
    *            default-value="${project.build.directory}/buildinfo-maven-plugin"
@@ -89,16 +89,21 @@ public final class GenerateBuildInfoMojo extends AbstractMojo
   private File targetDirectory;
 
   /**
-   * Set the time zone to be used.
-   *
+   * Set the time zone to be used. Use "UTC" for the universal timezone.
+   * Otherwise Strings like "Europe/Vienna" should be used.
+   * 
    * @parameter property="timeZone"
    */
   @SuppressWarnings ("unused")
   private String timeZone;
 
   /**
-   * Should the system properties be emitted as well?
-   *
+   * Should all system properties be emitted into the build info? If this flag
+   * is set, the selectedSystemProperties are cleared, so either this flag or
+   * the selectedSystemProperties should be used.<br>
+   * All contained system properties are prefixed with
+   * <code>systemproperty.</code> in the generated file.
+   * 
    * @parameter property="withAllSystemProperties" default-value="false"
    */
   private boolean withAllSystemProperties = false;
@@ -106,9 +111,11 @@ public final class GenerateBuildInfoMojo extends AbstractMojo
   /**
    * A selected subset of system property names to be emitted. Each element can
    * be a regular expression to match more than one potential system property.
-   * If this set is not empty, the withSystemProperties property does not need
-   * to be enabled.
-   *
+   * If this set is not empty, the withSystemProperties property should not need
+   * to be enabled.<br>
+   * All contained system properties are prefixed with
+   * <code>systemproperty.</code> in the generated file.
+   * 
    * @parameter property="selectedSystemProperties"
    */
   private Set <String> selectedSystemProperties;
@@ -117,14 +124,18 @@ public final class GenerateBuildInfoMojo extends AbstractMojo
    * A selected subset of system property names to be ignored. Each element can
    * be a regular expression to match more than one potential system property.
    * Ignored system properties take precedence over selected system properties.
-   *
+   * 
    * @parameter property="ignoredSystemProperties"
    */
   private Set <String> ignoredSystemProperties;
 
   /**
-   * Should the environment variables be emitted as well?
-   *
+   * Should all environment variables be emitted into the build info? If this
+   * flag is set, the selectedEnvVars are cleared, so either this flag or the
+   * selectedEnvVars should be used.<br>
+   * All contained environment variables are prefixed with <code>envvar.</code>
+   * in the generated file.
+   * 
    * @parameter property="withAllEnvVars" default-value="false"
    */
   private boolean withAllEnvVars = false;
@@ -133,8 +144,10 @@ public final class GenerateBuildInfoMojo extends AbstractMojo
    * A selected subset of environment variables names to be emitted. Each
    * element can be a regular expression to match more than one potential
    * environment variables. If this set is not empty, the withEnvVars property
-   * does not need to be enabled.
-   *
+   * does not need to be enabled.<br>
+   * All contained environment variables are prefixed with <code>envvar.</code>
+   * in the generated file.
+   * 
    * @parameter property="selectedEnvVars"
    */
   private Set <String> selectedEnvVars;
@@ -144,26 +157,37 @@ public final class GenerateBuildInfoMojo extends AbstractMojo
    * element can be a regular expression to match more than one potential
    * environment variables. Ignored environment variables take precedence over
    * selected environment variables.
-   *
+   * 
    * @parameter property="ignoredEnvVars"
    */
   private Set <String> ignoredEnvVars;
 
   /**
-   * Generate build info in the XML type format
-   *
+   * Generate build info in .XML format? It is safe to generate multiple formats
+   * in one run!<br>
+   * The generated file has the following layout:
+   * 
+   * <pre>
+   * &lt;mapping>
+   *   &lt;map key="buildinfo.version" value="2" />
+   *   &lt;map key="project.groupid" value="com.phloc.maven" />
+   *   ...
+   * &lt;/mapping>
+   * </pre>
+   * 
    * @parameter property="formatXML" default-value="true"
    */
   private boolean formatXML = true;
 
   /**
-   * Generate build info in the properties type format
-   *
+   * Generate build info in .properties format? It is safe to generate multiple
+   * formats in one run!
+   * 
    * @parameter property="formatProperties" default-value="false"
    */
   private boolean formatProperties = false;
 
-  public void setTargetDirectory (final File aDir)
+  public void setTargetDirectory (@Nonnull final File aDir)
   {
     targetDirectory = aDir;
     if (!targetDirectory.isAbsolute ())
@@ -189,8 +213,12 @@ public final class GenerateBuildInfoMojo extends AbstractMojo
     withAllSystemProperties = bEnable;
     if (withAllSystemProperties)
     {
-      // No selection if we have all
-      setSelectedSystemProperties (null);
+      // No selection if we have all system properties
+      if (selectedSystemProperties != null && !selectedSystemProperties.isEmpty ())
+      {
+        getLog ().warn ("Clearing all selected system properties, because all system properties are enabled!");
+        setSelectedSystemProperties (null);
+      }
     }
   }
 
@@ -207,8 +235,12 @@ public final class GenerateBuildInfoMojo extends AbstractMojo
     }
     if (!selectedSystemProperties.isEmpty ())
     {
-      // If we have a set of selected, don't use all
-      setWithAllSystemProperties (false);
+      // If we have a set of selected, don't use all system properties
+      if (withAllSystemProperties)
+      {
+        getLog ().warn ("Disabling all system properties, because selected system properties are defined!");
+        setWithAllSystemProperties (false);
+      }
     }
   }
 
@@ -230,8 +262,12 @@ public final class GenerateBuildInfoMojo extends AbstractMojo
     withAllEnvVars = bEnable;
     if (withAllEnvVars)
     {
-      // No selection if we have all
-      setSelectedEnvVars (null);
+      // No selection if we have all environment variables
+      if (selectedEnvVars != null && !selectedEnvVars.isEmpty ())
+      {
+        getLog ().warn ("Clearing all environment variables, because all environment variables are enabled!");
+        setSelectedEnvVars (null);
+      }
     }
   }
 
@@ -249,7 +285,11 @@ public final class GenerateBuildInfoMojo extends AbstractMojo
     if (!selectedEnvVars.isEmpty ())
     {
       // If we have a set of selected, don't use all
-      setWithAllEnvVars (false);
+      if (withAllEnvVars)
+      {
+        getLog ().warn ("Disabling all environment variables, because selected environment variables are defined!");
+        setWithAllEnvVars (false);
+      }
     }
   }
 
@@ -276,7 +316,7 @@ public final class GenerateBuildInfoMojo extends AbstractMojo
     formatProperties = bEnable;
   }
 
-  private static boolean _matches (@Nonnull final String sName, @Nullable final Set <String> aSet)
+  private static boolean _matches (@Nullable final Set <String> aSet, @Nonnull final String sName)
   {
     if (aSet == null)
       return false;
@@ -436,16 +476,22 @@ public final class GenerateBuildInfoMojo extends AbstractMojo
     if (withAllSystemProperties || ContainerHelper.isNotEmpty (selectedSystemProperties))
       for (final Map.Entry <String, String> aEntry : ContainerHelper.getSortedByKey (SystemProperties.getAllProperties ())
                                                                     .entrySet ())
-        if (withAllSystemProperties || _matches (aEntry.getKey (), selectedSystemProperties))
-          if (!_matches (aEntry.getKey (), ignoredSystemProperties))
-            aProps.put ("systemproperty." + aEntry.getKey (), aEntry.getValue ());
+      {
+        final String sName = aEntry.getKey ();
+        if (withAllSystemProperties || _matches (selectedSystemProperties, sName))
+          if (!_matches (ignoredSystemProperties, sName))
+            aProps.put ("systemproperty." + sName, aEntry.getValue ());
+      }
 
     // Emit environment variable?
     if (withAllEnvVars || ContainerHelper.isNotEmpty (selectedEnvVars))
       for (final Map.Entry <String, String> aEntry : ContainerHelper.getSortedByKey (System.getenv ()).entrySet ())
-        if (withAllEnvVars || _matches (aEntry.getKey (), selectedEnvVars))
-          if (!_matches (aEntry.getKey (), ignoredEnvVars))
-            aProps.put ("envvar." + aEntry.getKey (), aEntry.getValue ());
+      {
+        final String sName = aEntry.getKey ();
+        if (withAllEnvVars || _matches (selectedEnvVars, sName))
+          if (!_matches (ignoredEnvVars, sName))
+            aProps.put ("envvar." + sName, aEntry.getValue ());
+      }
 
     return aProps;
   }
