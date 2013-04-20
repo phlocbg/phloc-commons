@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.xml.namespace;
 
+import java.io.Serializable;
 import java.util.Iterator;
 
 import javax.annotation.Nonnull;
@@ -32,7 +33,7 @@ import com.phloc.commons.collections.iterate.SingleElementIterator;
  * 
  * @author philip
  */
-public abstract class AbstractNamespaceContext implements IIterableNamespaceContext
+public abstract class AbstractNamespaceContext implements IIterableNamespaceContext, Serializable
 {
   @Nullable
   public abstract String getDefaultNamespaceURI ();
