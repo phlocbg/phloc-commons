@@ -120,7 +120,7 @@ public final class GenerateDirIndexMojo extends AbstractMojo
                            @Override
                            public void onItemBeforeChildren (@Nonnull final DefaultFolderTreeItem <String, File, List <File>> aItem)
                            {
-                             System.out.println (aItem.getData ());
+                             System.out.println (aItem.getID () + "-" + aItem.getData ());
                            }
                          });
     return aDoc;
