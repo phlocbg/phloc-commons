@@ -58,11 +58,11 @@ public final class GenerateDirIndexMojo extends AbstractMojo
   /**
    * The Maven Project.
    * 
-   * @parameter property=project
+   * @parameter property="project"
    * @required
    * @readonly
    */
-  private MavenProject project;
+  MavenProject project;
 
   /**
    * The directory which should be index. This directory must be specified!
