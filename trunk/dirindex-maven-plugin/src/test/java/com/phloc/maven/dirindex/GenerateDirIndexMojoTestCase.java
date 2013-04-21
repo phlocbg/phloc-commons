@@ -12,15 +12,12 @@ public class GenerateDirIndexMojoTestCase extends AbstractMojoTestCase
    */
   public void testSomething () throws Exception
   {
-    if (false)
-    {
-      final File aPOM = getTestFile ("src/test/resources/poms/phloc-schematron-testfiles.xml");
-      assertNotNull (aPOM);
-      assertTrue (aPOM.exists ());
+    final File aPOM = getTestFile ("src/test/resources/poms/phloc-schematron-testfiles/pom.xml");
+    assertNotNull (aPOM);
+    assertTrue (aPOM.exists ());
 
-      final GenerateDirIndexMojo myMojo = (GenerateDirIndexMojo) lookupMojo ("generate-dirindex", aPOM);
-      assertNotNull (myMojo);
-      myMojo.execute ();
-    }
+    final GenerateDirIndexMojo myMojo = (GenerateDirIndexMojo) lookupMojo ("generate-dirindex", aPOM);
+    assertNotNull (myMojo);
+    myMojo.execute ();
   }
 }
