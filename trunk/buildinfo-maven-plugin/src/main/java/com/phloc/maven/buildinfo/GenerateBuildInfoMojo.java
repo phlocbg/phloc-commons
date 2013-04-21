@@ -535,17 +535,17 @@ public final class GenerateBuildInfoMojo extends AbstractMojo
   {
     StaticLoggerBinder.getSingleton ().setMavenLog (getLog ());
     if (tempDirectory == null)
-      throw new MojoExecutionException ("No buildinfo target directory specified!");
+      throw new MojoExecutionException ("No buildinfo temp directory specified!");
     if (tempDirectory.exists () && !tempDirectory.isDirectory ())
-      throw new MojoExecutionException ("The specified buildinfo target directory " +
+      throw new MojoExecutionException ("The specified buildinfo temp directory " +
                                         tempDirectory +
                                         " is not a directory!");
     if (!tempDirectory.exists ())
     {
       // Ensure that the directory exists
       if (!tempDirectory.mkdirs ())
-        throw new MojoExecutionException ("Failed to create buildinfo target directory " + tempDirectory);
-      getLog ().info ("Created buildinfo target directory " + tempDirectory);
+        throw new MojoExecutionException ("Failed to create buildinfo temp directory " + tempDirectory);
+      getLog ().info ("Created buildinfo temp directory " + tempDirectory);
     }
 
     if (!formatProperties && !formatXML)
