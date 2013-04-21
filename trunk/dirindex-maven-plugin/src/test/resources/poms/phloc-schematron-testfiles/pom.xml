@@ -38,8 +38,8 @@
           <settings implementation="com.phloc.maven.dirindex.SettingsStub"/>
           -->
           
-          <tempDirectory>target/dirindex-maven-plugin</tempDirectory>
-          <sourceDirectory>src/main</sourceDirectory>
+          <tempDirectory>../../../../../target/dirindex-maven-plugin</tempDirectory>
+          <sourceDirectory>../../../../../src/main</sourceDirectory>
         </configuration>
       </plugin>
     </plugins>
