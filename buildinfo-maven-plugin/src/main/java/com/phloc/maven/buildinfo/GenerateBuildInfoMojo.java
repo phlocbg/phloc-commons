@@ -91,7 +91,7 @@ public final class GenerateBuildInfoMojo extends AbstractMojo
    * The directory where the temporary buildinfo files will be saved.
    * 
    * @required
-   * @parameter property=targetDirectory
+   * @parameter property=tempDirectory
    *            default-value="${project.build.directory}/buildinfo-maven-plugin"
    */
   private File tempDirectory;
