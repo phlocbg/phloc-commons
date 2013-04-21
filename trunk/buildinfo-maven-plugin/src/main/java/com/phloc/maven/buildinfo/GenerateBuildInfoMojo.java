@@ -88,13 +88,13 @@ public final class GenerateBuildInfoMojo extends AbstractMojo
   private List <MavenProject> reactorProjects;
 
   /**
-   * The directory where the buildinfo files will be saved.
+   * The directory where the temporary buildinfo files will be saved.
    * 
    * @required
    * @parameter property=targetDirectory
    *            default-value="${project.build.directory}/buildinfo-maven-plugin"
    */
-  private File targetDirectory;
+  private File tempDirectory;
 
   /**
    * Set the time zone to be used. Use "UTC" for the universal timezone.
@@ -195,16 +195,16 @@ public final class GenerateBuildInfoMojo extends AbstractMojo
    */
   private boolean formatProperties = false;
 
-  public void setTargetDirectory (@Nonnull final File aDir)
+  public void setTempDirectory (@Nonnull final File aDir)
   {
-    targetDirectory = aDir;
-    if (!targetDirectory.isAbsolute ())
-      targetDirectory = new File (project.getBasedir (), aDir.getPath ());
-    final FileIOError aResult = FileOperations.createDirRecursiveIfNotExisting (targetDirectory);
+    tempDirectory = aDir;
+    if (!tempDirectory.isAbsolute ())
+      tempDirectory = new File (project.getBasedir (), aDir.getPath ());
+    final FileIOError aResult = FileOperations.createDirRecursiveIfNotExisting (tempDirectory);
     if (aResult.isFailure ())
-      getLog ().error ("Failed to create target directory " + aResult.toString ());
+      getLog ().error ("Failed to create temp directory " + aResult.toString ());
     else
-      getLog ().info ("Successfully created target directory " + aDir.toString ());
+      getLog ().info ("Successfully created temp directory " + aDir.toString ());
   }
 
   @SuppressFBWarnings (value = "URF_UNREAD_FIELD")
@@ -508,7 +508,7 @@ public final class GenerateBuildInfoMojo extends AbstractMojo
   {
     // Write the XML in the format that it can easily be read by the
     // com.phloc.common.microdom.reader.XMLMappingReader class
-    final File aFile = new File (targetDirectory, DEFAULT_FILENAME_BUILDINFO_XML);
+    final File aFile = new File (tempDirectory, DEFAULT_FILENAME_BUILDINFO_XML);
     if (XMLMapHandler.writeMap (aProps, new FileSystemResource (aFile)).isFailure ())
       throw new MojoExecutionException ("Failed to write XML file to " + aFile);
     getLog ().debug ("Wrote buildinfo XML file to " + aFile);
@@ -517,7 +517,7 @@ public final class GenerateBuildInfoMojo extends AbstractMojo
   private void _writeBuildinfoProperties (final Map <String, String> aProps) throws MojoExecutionException
   {
     // Write properties file
-    final File aFile = new File (targetDirectory, DEFAULT_FILENAME_BUILDINFO_PROPERTIES);
+    final File aFile = new File (tempDirectory, DEFAULT_FILENAME_BUILDINFO_PROPERTIES);
     final Properties p = new Properties ();
     p.putAll (aProps);
     try
@@ -534,18 +534,18 @@ public final class GenerateBuildInfoMojo extends AbstractMojo
   public void execute () throws MojoExecutionException
   {
     StaticLoggerBinder.getSingleton ().setMavenLog (getLog ());
-    if (targetDirectory == null)
+    if (tempDirectory == null)
       throw new MojoExecutionException ("No buildinfo target directory specified!");
-    if (targetDirectory.exists () && !targetDirectory.isDirectory ())
+    if (tempDirectory.exists () && !tempDirectory.isDirectory ())
       throw new MojoExecutionException ("The specified buildinfo target directory " +
-                                        targetDirectory +
+                                        tempDirectory +
                                         " is not a directory!");
-    if (!targetDirectory.exists ())
+    if (!tempDirectory.exists ())
     {
       // Ensure that the directory exists
-      if (!targetDirectory.mkdirs ())
-        throw new MojoExecutionException ("Failed to create buildinfo target directory " + targetDirectory);
-      getLog ().info ("Created buildinfo target directory " + targetDirectory);
+      if (!tempDirectory.mkdirs ())
+        throw new MojoExecutionException ("Failed to create buildinfo target directory " + tempDirectory);
+      getLog ().info ("Created buildinfo target directory " + tempDirectory);
     }
 
     if (!formatProperties && !formatXML)
@@ -561,7 +561,7 @@ public final class GenerateBuildInfoMojo extends AbstractMojo
 
     // Add output directory as a resource-directory
     final Resource aResource = new Resource ();
-    aResource.setDirectory (targetDirectory.getAbsolutePath ());
+    aResource.setDirectory (tempDirectory.getAbsolutePath ());
     aResource.addInclude ("**/*");
     aResource.setFiltering (false);
     aResource.setTargetPath ("META-INF");
