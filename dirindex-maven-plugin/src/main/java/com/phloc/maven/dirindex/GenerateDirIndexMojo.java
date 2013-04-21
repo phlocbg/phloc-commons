@@ -28,8 +28,15 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 import org.slf4j.impl.StaticLoggerBinder;
 
+import com.phloc.commons.hierarchy.DefaultHierarchyWalkerCallback;
 import com.phloc.commons.io.file.FileIOError;
 import com.phloc.commons.io.file.FileOperations;
+import com.phloc.commons.io.file.iterate.FileSystemFolderTree;
+import com.phloc.commons.microdom.IMicroDocument;
+import com.phloc.commons.microdom.IMicroElement;
+import com.phloc.commons.microdom.impl.MicroDocument;
+import com.phloc.commons.tree.utils.walk.TreeWalker;
+import com.phloc.commons.tree.withid.folder.DefaultFolderTreeItem;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -47,8 +54,6 @@ public final class GenerateDirIndexMojo extends AbstractMojo
 {
   /** The name of the XML file */
   private static final String DEFAULT_FILENAME_BUILDINFO_XML = "dirindex.xml";
-  /** The name of the properties file */
-  private static final String DEFAULT_FILENAME_BUILDINFO_PROPERTIES = "dirindex.properties";
 
   /**
    * The Maven Project.
@@ -58,13 +63,6 @@ public final class GenerateDirIndexMojo extends AbstractMojo
    * @readonly
    */
   private MavenProject project;
-
-  /**
-   * @parameter property=reactorProjects
-   * @required
-   * @readonly
-   */
-  private List <MavenProject> reactorProjects;
 
   /**
    * The directory which should be index. This directory must be specified!
@@ -104,6 +102,30 @@ public final class GenerateDirIndexMojo extends AbstractMojo
       getLog ().info ("Successfully created temp directory " + aDir.toString ());
   }
 
+  private void _filter (@Nonnull final FileSystemFolderTree aFileTree)
+  {
+    // TODO
+
+  }
+
+  @Nonnull
+  private IMicroDocument _getAsXML (@Nonnull final FileSystemFolderTree aFileTree)
+  {
+    final String sBase = sourceDirectory.getAbsolutePath ();
+    final IMicroDocument aDoc = new MicroDocument ();
+    final IMicroElement eRoot = aDoc.appendElement ("index");
+    TreeWalker.walkTree (aFileTree,
+                         new DefaultHierarchyWalkerCallback <DefaultFolderTreeItem <String, File, List <File>>> ()
+                         {
+                           @Override
+                           public void onItemBeforeChildren (@Nonnull final DefaultFolderTreeItem <String, File, List <File>> aItem)
+                           {
+                             System.out.println (aItem.getData ());
+                           }
+                         });
+    return aDoc;
+  }
+
   public void execute () throws MojoExecutionException
   {
     StaticLoggerBinder.getSingleton ().setMavenLog (getLog ());
@@ -131,6 +153,10 @@ public final class GenerateDirIndexMojo extends AbstractMojo
       throw new MojoExecutionException ("The specified dirindex source directory " +
                                         sourceDirectory +
                                         " does not exist!");
+
+    final FileSystemFolderTree aFileTree = new FileSystemFolderTree (sourceDirectory);
+    _filter (aFileTree);
+    final IMicroDocument aDoc = _getAsXML (aFileTree);
 
     // Add output directory as a resource-directory
     final Resource aResource = new Resource ();
