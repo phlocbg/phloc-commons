@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <groupId>com.phloc</groupId>
     <artifactId>parent-pom</artifactId>
@@ -10,7 +9,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.phloc.maven</groupId>
   <artifactId>dirindex-maven-plugin</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <packaging>maven-plugin</packaging>
   <name>dirindex-maven-plugin</name>
   <description>Maven plugin for emitting build information in a project</description>
@@ -25,9 +24,9 @@
   </licenses>
 
   <scm>
-    <url>http://code.google.com/p/phloc-commons/source/browse/</url>
-    <connection>scm:svn:http://phloc-commons.googlecode.com/svn/trunk/dirindex-maven-plugin</connection>
-    <developerConnection>scm:svn:https://phloc-commons.googlecode.com/svn/trunk/dirindex-maven-plugin</developerConnection>
+    <url>scm:svn:https://phloc-commons.googlecode.com/svn/tags/dirindex-maven-plugin-1.0.0</url>
+    <connection>scm:svn:http://phloc-commons.googlecode.com/svn/tags/dirindex-maven-plugin-1.0.0</connection>
+    <developerConnection>scm:svn:https://phloc-commons.googlecode.com/svn/tags/dirindex-maven-plugin-1.0.0</developerConnection>
   </scm>
 
   <organization>
