@@ -31,7 +31,7 @@ import com.phloc.commons.string.StringHelper;
 /**
  * Utility class for dealing with the Java class path.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class ClassPathHelper

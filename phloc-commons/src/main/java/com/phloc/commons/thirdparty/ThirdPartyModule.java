@@ -31,7 +31,7 @@ import com.phloc.commons.version.Version;
 /**
  * The default implementation of the {@link IThirdPartyModule} interface.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class ThirdPartyModule implements IThirdPartyModule

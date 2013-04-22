@@ -41,7 +41,7 @@ import com.phloc.commons.text.impl.ReadonlyMultiLingualText;
  * {@link IMicroTypeConverterRegistrarSPI} implementation for
  * {@link ReadonlyMultiLingualText} and {@link MultiLingualText}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 @IsSPIImplementation

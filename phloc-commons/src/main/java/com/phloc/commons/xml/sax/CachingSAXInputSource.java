@@ -36,7 +36,7 @@ import com.phloc.commons.io.streams.StreamUtils;
  * {@link InputStream} is closed. This is achieved by copying the content in a
  * {@link NonBlockingByteArrayInputStream}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public class CachingSAXInputSource extends InputSource

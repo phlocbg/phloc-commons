@@ -44,7 +44,7 @@ import com.phloc.commons.xml.transform.TransformSourceFactory;
  * Abstract base class for caching JAXP validation scheme elements. This class
  * is deprecated in favour of {@link DefaultSchemaCache}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Deprecated
 @ThreadSafe

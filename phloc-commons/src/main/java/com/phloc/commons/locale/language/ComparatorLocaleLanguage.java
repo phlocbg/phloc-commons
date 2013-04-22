@@ -28,7 +28,7 @@ import com.phloc.commons.compare.AbstractCollationComparator;
  * {@link java.util.Comparator} to sort {@link Locale} objects by their system
  * language.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ComparatorLocaleLanguage extends AbstractCollationComparator <Locale>
 {

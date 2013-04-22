@@ -28,7 +28,7 @@ import com.phloc.commons.compare.ESortOrder;
 /**
  * Special comparator to sort change logs by their component.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ComparatorChangeLogComponent extends AbstractPartComparatorComparable <ChangeLog, String>
 {

@@ -25,7 +25,7 @@ import javax.annotation.Nonnull;
  * A special input stream that does not close the stream. This is e.g. helpful
  * for reading from streams within a ZIP file.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class NonClosingInputStream extends WrappedInputStream
 {

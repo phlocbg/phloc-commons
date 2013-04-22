@@ -34,7 +34,7 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
  * Base interface for a generic read-only attribute container. It maps strings
  * to any Java object.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IReadonlyAttributeContainer extends Serializable
 {

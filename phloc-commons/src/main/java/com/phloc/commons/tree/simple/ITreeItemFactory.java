@@ -25,7 +25,7 @@ import com.phloc.commons.factory.IHierarchicalRootFactory;
 /**
  * Interface for a simple tree item factory
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        item value type
  * @param <ITEMTYPE>

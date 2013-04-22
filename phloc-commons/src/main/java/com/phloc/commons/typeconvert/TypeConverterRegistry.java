@@ -48,7 +48,7 @@ import com.phloc.commons.state.EContinue;
  * that are required. The {@link TypeConverter} class uses this factory for
  * converting objects.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public final class TypeConverterRegistry implements ITypeConverterRegistry

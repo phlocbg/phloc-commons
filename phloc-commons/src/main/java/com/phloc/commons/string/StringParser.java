@@ -33,7 +33,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
  * This class contains the methods to parse String objects to numeric values.
  * Before v3.7.0 this was contained in class {@link StringHelper}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class StringParser

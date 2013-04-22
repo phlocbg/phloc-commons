@@ -28,7 +28,7 @@ import com.phloc.commons.compare.ESortOrder;
 /**
  * {@link java.util.Comparator} for ordering {@link Thread} objects by their ID.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class ComparatorThreadID extends AbstractIntegerComparator <Thread>

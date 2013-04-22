@@ -32,7 +32,7 @@ import com.phloc.commons.annotations.Nonempty;
 /**
  * Abstract base class for numeric statistic handler
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 abstract class AbstractStatisticsHandlerNumeric implements IStatisticsHandlerNumeric

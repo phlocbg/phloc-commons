@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * This is a wrapper for a exception that can log the passed exception when it
  * is thrown.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class LoggedException extends Exception implements ILoggedException
 {// NOPMD

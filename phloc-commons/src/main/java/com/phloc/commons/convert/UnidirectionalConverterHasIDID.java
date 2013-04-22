@@ -26,7 +26,7 @@ import com.phloc.commons.id.IHasID;
  * A unidirectional converter that extracts the ID from an object implementing
  * {@link IHasID}.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The ID type
  */

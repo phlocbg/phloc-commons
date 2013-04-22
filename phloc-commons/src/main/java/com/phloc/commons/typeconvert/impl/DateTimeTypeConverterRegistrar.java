@@ -33,7 +33,7 @@ import com.phloc.commons.typeconvert.rule.AbstractTypeConverterRuleAssignableSou
 /**
  * Register the date and time specific type converter
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 @IsSPIImplementation

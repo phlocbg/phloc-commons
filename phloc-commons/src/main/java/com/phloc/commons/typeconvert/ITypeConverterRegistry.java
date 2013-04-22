@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 /**
  * Callback interface for registering new type converters.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface ITypeConverterRegistry
 {

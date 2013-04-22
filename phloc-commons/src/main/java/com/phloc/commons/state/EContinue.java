@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 /**
  * Small enum for manager actions to indicate continue or break states.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum EContinue implements IContinueIndicator
 {

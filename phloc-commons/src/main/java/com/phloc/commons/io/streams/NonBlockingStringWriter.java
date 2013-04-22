@@ -36,7 +36,7 @@ import com.phloc.commons.annotations.ReturnsMutableObject;
  * It uses {@link StringBuilder} instead of {@link StringBuffer} and therefore
  * does not need synchronized access!
  * 
- * @author philip
+ * @author Philip Helger
  * @see java.io.StringWriter
  */
 @NotThreadSafe

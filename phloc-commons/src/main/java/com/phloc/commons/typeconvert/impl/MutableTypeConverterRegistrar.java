@@ -40,7 +40,7 @@ import com.phloc.commons.typeconvert.rule.AbstractTypeConverterRuleFixedSourceAn
 /**
  * Register the mutable* specific type converter
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 @IsSPIImplementation

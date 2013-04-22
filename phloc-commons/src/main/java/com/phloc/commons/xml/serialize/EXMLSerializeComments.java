@@ -27,7 +27,7 @@ import com.phloc.commons.lang.EnumHelper;
 /**
  * Determines whether comments should be serialized or not.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum EXMLSerializeComments implements IHasID <String>
 {

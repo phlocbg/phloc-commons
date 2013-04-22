@@ -40,7 +40,7 @@ import com.phloc.commons.filter.IFilter;
 /**
  * This utility class helps applying conversions onto collections.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class ContainerConversionHelper

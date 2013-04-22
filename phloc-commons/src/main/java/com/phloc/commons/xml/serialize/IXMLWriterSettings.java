@@ -29,7 +29,7 @@ import com.phloc.commons.xml.EXMLVersion;
 /**
  * Interface for the settings to be used for serializing XML nodes.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IXMLWriterSettings
 {

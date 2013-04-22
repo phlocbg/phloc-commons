@@ -24,7 +24,7 @@ import com.phloc.commons.SystemProperties;
 /**
  * Determine the current JVM (Java Virtual Machine) vendor.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum EJVMVendor
 {

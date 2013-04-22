@@ -31,7 +31,7 @@ import com.phloc.commons.state.EInterrupt;
 /**
  * Wrapper around an {@link ExecutorService} with additional helper methods.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class ManagedExecutorService

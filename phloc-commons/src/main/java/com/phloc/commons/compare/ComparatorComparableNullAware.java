@@ -27,7 +27,7 @@ import javax.annotation.Nullable;
  * objects. In comparison to {@link ComparatorComparable} this class can handle
  * <code>null</code> values.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class ComparatorComparableNullAware <DATATYPE extends Comparable <? super DATATYPE>> extends
                                                                                             AbstractComparator <DATATYPE>

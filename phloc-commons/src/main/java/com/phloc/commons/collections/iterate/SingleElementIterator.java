@@ -32,7 +32,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Specialized iterator for iterating exactly one element.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <ELEMENTTYPE>
  *        The type of object to iterate.
  */

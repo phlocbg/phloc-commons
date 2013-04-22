@@ -26,7 +26,7 @@ import javax.annotation.Nullable;
  * This interface can be used to generically resolved children of a certain
  * object in a sorted way.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <CHILDTYPE>
  *        The type of the children to retrieve.
  */

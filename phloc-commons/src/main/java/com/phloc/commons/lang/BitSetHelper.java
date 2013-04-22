@@ -28,7 +28,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 /**
  * Helper class to work with bit sets.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class BitSetHelper

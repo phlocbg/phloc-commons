@@ -38,7 +38,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * {@link com.phloc.commons.hash.HashCodeGenerator} which is used to generate
  * hash values for Java objects.
  *
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class NonBlockingMessageDigestGenerator extends AbstractMessageDigestGenerator

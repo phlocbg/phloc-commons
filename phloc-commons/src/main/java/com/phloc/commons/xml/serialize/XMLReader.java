@@ -66,7 +66,7 @@ import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
 /**
  * Helper class to read XML documents via SAX or DOM
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class XMLReader
 {

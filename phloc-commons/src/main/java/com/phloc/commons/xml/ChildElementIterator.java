@@ -34,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Iterate child elements of a single node. Does not iterate recursively.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class ChildElementIterator implements IIterableIterator <Element>
 {

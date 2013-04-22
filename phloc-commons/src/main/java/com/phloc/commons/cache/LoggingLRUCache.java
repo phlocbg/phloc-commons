@@ -35,7 +35,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * A specific {@link LRUCache} that emits a warning once the cache is full.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        Cache key type
  * @param <VALUETYPE>

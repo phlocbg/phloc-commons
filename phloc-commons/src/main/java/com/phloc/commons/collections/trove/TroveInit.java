@@ -25,7 +25,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 /**
  * Trove4J initialization helper.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class TroveInit

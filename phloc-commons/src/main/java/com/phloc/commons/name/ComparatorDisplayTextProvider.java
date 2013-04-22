@@ -29,7 +29,7 @@ import com.phloc.commons.compare.ESortOrder;
  * This is a collation {@link java.util.Comparator} for objects that implement
  * the {@link IDisplayTextProvider} interface.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The type of elements to be compared.
  */

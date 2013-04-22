@@ -34,7 +34,7 @@ import com.phloc.commons.tree.withid.ITreeItemWithID;
 /**
  * A utility class that helps searching items within trees.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class TreeWithIDSearcher

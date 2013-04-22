@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 /**
  * Base interface for the tri state.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface ITriState
 {

@@ -24,7 +24,7 @@ import com.phloc.commons.annotations.Nonempty;
 /**
  * Base interface for objects having an element name
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IHasElementName
 {

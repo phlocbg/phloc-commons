@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
  * A specific implementation of the {@link IExceptionHandler} interface, that
  * swallows all exceptions and does nothing.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class DoNothingExceptionHandler implements IExceptionHandler <Throwable>
 {

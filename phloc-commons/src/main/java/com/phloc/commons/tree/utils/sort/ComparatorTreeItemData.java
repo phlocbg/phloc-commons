@@ -33,7 +33,7 @@ import com.phloc.commons.tree.withid.ITreeItemWithID;
  * explicit {@link Comparator}.<br>
  * Works for {@link ITreeItem} and {@link ITreeItemWithID}.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        tree item value type
  * @param <ITEMTYPE>

@@ -27,7 +27,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * A formatter that adds a prefix and/or a suffix to a string.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class StringPrefixAndSuffixFormatter extends AbstractStringFormatter
 {

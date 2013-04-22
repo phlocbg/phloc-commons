@@ -27,7 +27,7 @@ import com.phloc.commons.lang.EnumHelper;
 /**
  * Determines the output format for XML serialization. XML or HTML?
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum EXMLSerializeFormat implements IHasID <String>
 {

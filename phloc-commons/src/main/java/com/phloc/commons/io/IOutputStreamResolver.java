@@ -26,7 +26,7 @@ import javax.annotation.Nullable;
  * A callback interface to retrieve {@link OutputStream} objects from a given
  * name.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IOutputStreamResolver
 {

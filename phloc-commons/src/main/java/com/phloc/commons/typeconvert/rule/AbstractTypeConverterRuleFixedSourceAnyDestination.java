@@ -26,7 +26,7 @@ import com.phloc.commons.typeconvert.TypeConverter;
  * Abstract type converter than can convert from a base source class to a
  * destination class. Example from Number.class to String.class
  * 
- * @author philip
+ * @author Philip Helger
  */
 public abstract class AbstractTypeConverterRuleFixedSourceAnyDestination extends AbstractTypeConverterRule
 {

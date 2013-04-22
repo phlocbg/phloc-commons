@@ -36,7 +36,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Contains a list of resource errors and some sanity access methods.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public class ResourceErrorGroup implements IResourceErrorGroup, ICloneable <ResourceErrorGroup>, IClearable

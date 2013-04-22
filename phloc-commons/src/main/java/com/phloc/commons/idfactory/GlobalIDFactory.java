@@ -36,7 +36,7 @@ import com.phloc.commons.state.EChange;
  * This class should not be static since it may have an impact if this class is
  * used by different projects which have a separate IntID factory.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public final class GlobalIDFactory

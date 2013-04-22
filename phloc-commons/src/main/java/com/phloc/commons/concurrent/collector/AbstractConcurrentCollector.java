@@ -33,8 +33,8 @@ import com.phloc.commons.state.ESuccess;
 
 /**
  * Abstract concurrent collector.
- * 
- * @author philip
+ *
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The type of the objects in the queue.
  */
@@ -62,7 +62,7 @@ public abstract class AbstractConcurrentCollector <DATATYPE> implements
 
   /**
    * Constructor.
-   * 
+   *
    * @param nMaxQueueSize
    *        The maximum number of items that can be in the queue. Must be &gt;
    *        0.

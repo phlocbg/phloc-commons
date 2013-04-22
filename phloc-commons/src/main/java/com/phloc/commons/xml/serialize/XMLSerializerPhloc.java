@@ -45,7 +45,7 @@ import com.phloc.commons.xml.XMLHelper;
  * org.w3c.dom.Node serializer that correctly handles HTML empty elements
  * (&lt;span>&lt;/span> vs. &lt;span />).
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
 {

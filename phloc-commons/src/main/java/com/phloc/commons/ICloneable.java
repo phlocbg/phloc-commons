@@ -24,7 +24,7 @@ import javax.annotation.Nonnull;
  * {@link java.lang.Cloneable} interface since it contains the desired return
  * type and is accessible solely by the interface.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The type to be returned by the {@link #getClone()} method.
  */

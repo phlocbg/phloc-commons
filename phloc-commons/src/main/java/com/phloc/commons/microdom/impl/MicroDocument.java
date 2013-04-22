@@ -33,7 +33,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Default implementation of the {@link IMicroDocument} interface.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MicroDocument extends AbstractMicroNodeWithChildren implements IMicroDocument
 {

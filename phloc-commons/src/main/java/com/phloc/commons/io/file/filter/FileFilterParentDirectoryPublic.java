@@ -30,7 +30,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * A file filter that matches if the direct parent directory is public, meaning
  * it does not start with "." (hidden directory on Unix systems)
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class FileFilterParentDirectoryPublic extends AbstractFileFilter
 {

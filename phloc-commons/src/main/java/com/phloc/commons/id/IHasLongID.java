@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 /**
  * Base interface for all objects having a long ID.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IHasLongID extends IHasSimpleLongID
 {

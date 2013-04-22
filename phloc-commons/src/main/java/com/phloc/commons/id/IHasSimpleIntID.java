@@ -20,7 +20,7 @@ package com.phloc.commons.id;
 /**
  * Base interface for all objects having an int ID.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IHasSimpleIntID
 {

@@ -24,7 +24,7 @@ import javax.annotation.concurrent.NotThreadSafe;
  * Special implementation of {@link BasicTreeItemWithID} using the item type
  * {@link DefaultTreeItemWithID}.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        tree item key type
  * @param <DATATYPE>

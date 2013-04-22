@@ -25,7 +25,7 @@ import com.phloc.commons.lang.GenericReflection;
 /**
  * The most simple encoder, that does not do anything
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The handled data type
  */

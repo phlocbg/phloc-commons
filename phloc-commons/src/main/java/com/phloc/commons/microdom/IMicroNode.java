@@ -34,7 +34,7 @@ import com.phloc.commons.state.EChange;
  * This is the base interface for all kind of nodes in the micro document object
  * model.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IMicroNode extends ICloneable <IMicroNode>, IHasChildrenSorted <IMicroNode>, IHasParent <IMicroNode>, Serializable
 {

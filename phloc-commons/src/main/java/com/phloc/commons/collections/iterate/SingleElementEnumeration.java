@@ -31,7 +31,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Specialized enumeration for enumerating exactly one element.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <ELEMENTTYPE>
  *        The type of object to enumerate.
  */

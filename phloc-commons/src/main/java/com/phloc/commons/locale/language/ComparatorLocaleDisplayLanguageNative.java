@@ -28,7 +28,7 @@ import com.phloc.commons.compare.AbstractCollationComparator;
  * {@link java.util.Comparator} that sorts {@link Locale} objects by their
  * language display name in its own locale.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ComparatorLocaleDisplayLanguageNative extends AbstractCollationComparator <Locale>
 {

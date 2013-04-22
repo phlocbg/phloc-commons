@@ -29,7 +29,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Always use the last result.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public class AggregatorUseLast <DATATYPE> implements IAggregator <DATATYPE, DATATYPE>

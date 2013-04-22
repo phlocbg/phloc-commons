@@ -30,7 +30,7 @@ import com.phloc.commons.typeconvert.TypeConverter;
  * Base implementation class of the {@link IFormatter} interface that provides
  * the common functionality.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public abstract class AbstractStringFormatter implements IFormatter
 {

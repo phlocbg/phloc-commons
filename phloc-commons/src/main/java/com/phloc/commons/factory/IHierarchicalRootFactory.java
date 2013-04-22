@@ -22,7 +22,7 @@ import com.phloc.commons.annotations.DevelopersNote;
 /**
  * This is a generic interface for creating root objects of a hierarchy.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The type of object to create.
  */

@@ -29,7 +29,7 @@ import javax.annotation.concurrent.Immutable;
  * This resource provider is very slow, as it tries many different resource
  * providers at once.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class DefaultResourceProvider extends WritableResourceProviderChain

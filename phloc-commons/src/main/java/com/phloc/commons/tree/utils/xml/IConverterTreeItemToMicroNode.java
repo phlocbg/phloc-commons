@@ -25,7 +25,7 @@ import com.phloc.commons.microdom.IMicroElement;
 /**
  * Interface used to convert a single tree item data value to a micro node.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The type of the tree item data
  */

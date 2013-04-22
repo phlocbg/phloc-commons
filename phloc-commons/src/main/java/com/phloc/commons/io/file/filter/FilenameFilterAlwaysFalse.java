@@ -29,7 +29,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * A filename filter that declines all files.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public final class FilenameFilterAlwaysFalse implements FilenameFilter

@@ -27,7 +27,7 @@ import com.phloc.commons.version.Version;
 /**
  * Represents a bunch of Open Source licenses regularly used.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum ELicense implements ILicense
 {

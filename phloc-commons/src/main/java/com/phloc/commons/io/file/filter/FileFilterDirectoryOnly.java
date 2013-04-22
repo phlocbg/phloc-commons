@@ -29,7 +29,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * A file filter that accepts only directories.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class FileFilterDirectoryOnly extends AbstractFileFilter

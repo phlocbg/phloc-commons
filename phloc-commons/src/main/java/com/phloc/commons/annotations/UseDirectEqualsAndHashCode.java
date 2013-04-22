@@ -29,7 +29,7 @@ import java.lang.annotation.Target;
  * the classes {@link com.phloc.commons.equals.EqualsImplementationRegistry} and
  * {@link com.phloc.commons.hash.HashCodeImplementationRegistry}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Retention (RetentionPolicy.RUNTIME)
 @Target ({ ElementType.TYPE })

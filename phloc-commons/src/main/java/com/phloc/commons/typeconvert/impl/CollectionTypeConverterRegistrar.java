@@ -46,7 +46,7 @@ import com.phloc.commons.typeconvert.rule.AbstractTypeConverterRuleAnySourceFixe
 /**
  * Register the base type converter
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 @IsSPIImplementation

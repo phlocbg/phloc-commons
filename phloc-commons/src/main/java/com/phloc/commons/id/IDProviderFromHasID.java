@@ -24,7 +24,7 @@ import javax.annotation.concurrent.NotThreadSafe;
  * A simple {@link IIDProvider} implementation for objects implementing the
  * {@link IHasID} interface
  * 
- * @author philip
+ * @author Philip Helger
  * @param <VALUETYPE>
  *        The object type
  * @param <IDTYPE>

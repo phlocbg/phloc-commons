@@ -42,7 +42,7 @@ import com.phloc.commons.io.file.FilenameHelper;
  * in here should be aligned with the implementations in the
  * {@link com.phloc.commons.hash.DefaultHashCodeImplementationRegistrarSPI}
  * 
- * @author philip
+ * @author Philip Helger
  */
 @IsSPIImplementation
 public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImplementationRegistrarSPI

@@ -37,7 +37,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * This implementation of {@link ErrorListener} saves all occurred
  * warnings/errors/fatals in a list for later evaluation.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public class CollectingTransformErrorListener extends AbstractTransformErrorListener implements IHasResourceErrorGroup

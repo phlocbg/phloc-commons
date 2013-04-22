@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
  * because the used interfaces do not provide a base interface implementing a
  * getParent method.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <PARENTTYPE>
  *        The type of object to get a parent from
  */

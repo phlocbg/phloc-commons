@@ -36,7 +36,7 @@ import com.phloc.commons.combine.ICombinator;
  *        The type of the elements contained in the tree
  * @param <COLLTYPE>
  *        the collection type consisting of value elements
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public class DefaultFolderTree <KEYTYPE, DATATYPE, COLLTYPE extends Collection <DATATYPE>> extends

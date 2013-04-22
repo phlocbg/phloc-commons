@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 /**
  * A rule based type converter provider. Implemented as a singleton.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class TypeConverterProviderRuleBased implements ITypeConverterProvider
 {

@@ -25,7 +25,7 @@ import javax.annotation.Nonnull;
 /**
  * Base interface for objects having zero or more locales.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IHasLocales
 {

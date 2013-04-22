@@ -26,7 +26,7 @@ import com.phloc.commons.charset.CharsetManager;
 /**
  * An input stream based on an input String.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class StringInputStream extends NonBlockingByteArrayInputStream
 {

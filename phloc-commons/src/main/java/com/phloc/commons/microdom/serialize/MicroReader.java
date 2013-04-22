@@ -39,7 +39,7 @@ import com.phloc.commons.xml.serialize.XMLReader;
 /**
  * Utility class to read an XML stream into an {@link IMicroDocument}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class MicroReader

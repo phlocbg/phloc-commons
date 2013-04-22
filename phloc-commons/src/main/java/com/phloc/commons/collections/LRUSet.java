@@ -38,7 +38,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * therefore a "Last Recently Used" cache.<br>
  * The underlying data structure is a {@link LRUCache} map.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <ELEMENTTYPE>
  *        Element type
  */

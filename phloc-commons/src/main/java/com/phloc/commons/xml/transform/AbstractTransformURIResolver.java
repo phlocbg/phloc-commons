@@ -27,7 +27,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Abstract base implementation of the {@link URIResolver} interface.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public abstract class AbstractTransformURIResolver implements URIResolver
 {

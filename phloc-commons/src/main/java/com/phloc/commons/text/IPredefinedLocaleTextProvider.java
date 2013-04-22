@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
  * Specialized {@link com.phloc.commons.text.ITextProvider}-like interface that
  * gives support for resolving a text without manually passing in a locale.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IPredefinedLocaleTextProvider
 {

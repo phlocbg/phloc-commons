@@ -22,7 +22,7 @@ import com.phloc.commons.error.EErrorLevel;
 /**
  * Very simple interface for an object that has error/noError indication.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IErrorIndicator
 {

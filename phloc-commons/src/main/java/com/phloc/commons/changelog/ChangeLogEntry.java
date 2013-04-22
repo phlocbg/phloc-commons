@@ -40,7 +40,7 @@ import com.phloc.commons.text.impl.ReadonlyMultiLingualText;
 /**
  * This class represents a single entry in the changelog.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ChangeLogEntry extends AbstractChangeLogEntry
 {

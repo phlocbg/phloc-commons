@@ -25,7 +25,7 @@ import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
 /**
  * Resource provider interface for readable resources.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
 public interface IReadableResourceProvider

@@ -24,7 +24,7 @@ import com.phloc.commons.format.IFormatter;
 /**
  * Format objects by surrounding them with brackets: [...]
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class BracketFormatter extends StringPrefixAndSuffixFormatter
 {

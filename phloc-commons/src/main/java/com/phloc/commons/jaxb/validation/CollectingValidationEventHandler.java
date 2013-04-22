@@ -37,7 +37,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * An implementation of the JAXB {@link ValidationEventHandler} interface. It
  * collects all events that occurred!
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public class CollectingValidationEventHandler extends AbstractValidationEventHandler implements IHasResourceErrorGroup

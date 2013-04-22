@@ -28,7 +28,7 @@ import com.phloc.commons.mock.IMockException;
  * A specific implementation of the {@link IExceptionHandler} interface, that
  * logs all exceptions to a standard logger.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class LoggingExceptionHandler implements IExceptionHandler <Throwable>
 {

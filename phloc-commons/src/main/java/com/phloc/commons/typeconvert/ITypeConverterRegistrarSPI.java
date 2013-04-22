@@ -25,7 +25,7 @@ import com.phloc.commons.annotations.IsSPIInterface;
  * SPI interface to be implemented by other modules wishing to register their
  * own type converters.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @IsSPIInterface
 public interface ITypeConverterRegistrarSPI

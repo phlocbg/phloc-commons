@@ -37,7 +37,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Map implementation that can only keep 0 or 1 element.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        The key type.
  * @param <VALUETYPE>

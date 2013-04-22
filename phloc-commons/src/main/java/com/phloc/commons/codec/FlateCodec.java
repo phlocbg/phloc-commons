@@ -33,7 +33,7 @@ import com.phloc.commons.io.streams.StreamUtils;
 /**
  * Encoder and decoder for flate compression
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class FlateCodec implements ICodec
 {

@@ -24,7 +24,7 @@ import javax.annotation.concurrent.NotThreadSafe;
  * A simple {@link ISimpleIntIDProvider} implementation for objects implementing
  * the {@link IHasSimpleIntID} interface
  * 
- * @author philip
+ * @author Philip Helger
  * @param <VALUETYPE>
  *        The object type
  */

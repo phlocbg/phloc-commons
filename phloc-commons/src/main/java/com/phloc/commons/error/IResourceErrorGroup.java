@@ -26,7 +26,7 @@ import com.phloc.commons.IHasSize;
 /**
  * Contains a list of resource errors and some sanity access methods.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IResourceErrorGroup extends IHasSize, Iterable <IResourceError>, IHasErrorLevels
 {

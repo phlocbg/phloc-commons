@@ -31,7 +31,7 @@ import javax.annotation.Nonnull;
  * lock type. When using exclusive locks (class Lock) use the lock type
  * <code>WRITE</code>.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Retention (RetentionPolicy.CLASS)
 @Target ({ ElementType.METHOD })

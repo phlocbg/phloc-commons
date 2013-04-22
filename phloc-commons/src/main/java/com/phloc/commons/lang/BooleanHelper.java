@@ -25,7 +25,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 /**
  * Misc helper methods for handling booleans.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class BooleanHelper

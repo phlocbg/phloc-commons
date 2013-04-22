@@ -29,7 +29,7 @@ import com.phloc.commons.text.impl.TextFormatter;
  * Exceptions of this type are only thrown from the {@link TypeConverter} class
  * if type conversion fails.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class TypeConverterException extends RuntimeException
 {

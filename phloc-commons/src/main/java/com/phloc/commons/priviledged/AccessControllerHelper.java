@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Simple wrapper around {@link AccessController} to catch exceptions centrally.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class AccessControllerHelper

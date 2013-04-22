@@ -33,7 +33,7 @@ import com.phloc.commons.equals.EqualsUtils;
 /**
  * Contains several math help routines.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class MathHelper

@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
  * Represents an abstract triple (an object with exactly three element) that is
  * readonly.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATA1TYPE>
  *        Type of the first element
  * @param <DATA2TYPE>

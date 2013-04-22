@@ -27,7 +27,7 @@ import com.phloc.commons.name.IHasDisplayName;
 /**
  * Aggregation of a personal name and an email address.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IEmailAddress extends IHasDisplayName, Serializable
 {

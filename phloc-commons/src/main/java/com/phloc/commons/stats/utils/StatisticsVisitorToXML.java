@@ -34,7 +34,7 @@ import com.phloc.commons.stats.visit.IStatisticsVisitor;
  * Special implementation of the {@link IStatisticsVisitor} interface that fills
  * a micro element with all current values
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class StatisticsVisitorToXML implements IStatisticsVisitor
 {

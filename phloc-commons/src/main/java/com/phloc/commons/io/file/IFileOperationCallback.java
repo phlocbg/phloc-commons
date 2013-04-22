@@ -26,7 +26,7 @@ import javax.annotation.Nullable;
 /**
  * Callback interface for {@link FileOperationManager}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IFileOperationCallback extends Serializable
 {

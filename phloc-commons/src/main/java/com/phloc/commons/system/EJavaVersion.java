@@ -27,7 +27,7 @@ import com.phloc.commons.string.StringParser;
 /**
  * Enum for representing the current Java JDK version.
  * 
- * @author philip
+ * @author Philip Helger
  */
 // ESCA-JAVA0076:
 public enum EJavaVersion

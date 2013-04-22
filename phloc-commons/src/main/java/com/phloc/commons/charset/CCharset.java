@@ -29,7 +29,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Charset constants.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 @SuppressFBWarnings ("NP_NONNULL_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR")

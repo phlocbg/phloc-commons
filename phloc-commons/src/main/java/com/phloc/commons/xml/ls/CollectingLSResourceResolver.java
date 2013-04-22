@@ -35,7 +35,7 @@ import com.phloc.commons.collections.ContainerHelper;
 /**
  * A class that collects all requested resources.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public class CollectingLSResourceResolver implements LSResourceResolver

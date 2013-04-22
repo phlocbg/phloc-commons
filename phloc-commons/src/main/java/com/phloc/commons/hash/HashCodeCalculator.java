@@ -25,7 +25,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 /**
  * This class provides the hash code generation for different data types.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class HashCodeCalculator

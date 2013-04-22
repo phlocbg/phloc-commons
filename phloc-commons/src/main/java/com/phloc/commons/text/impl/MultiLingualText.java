@@ -41,7 +41,7 @@ import com.phloc.commons.text.ISimpleMultiLingualText;
  * This class represents a multilingual text. It is internally represented as a
  * map from {@link Locale} to the language dependent name.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class MultiLingualText extends TextProvider implements IMultiLingualText

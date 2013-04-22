@@ -32,7 +32,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Represents an error with an additional error object.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class FileIOError implements ISuccessIndicator, Serializable

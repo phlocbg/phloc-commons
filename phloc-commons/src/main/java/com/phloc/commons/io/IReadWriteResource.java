@@ -22,7 +22,7 @@ import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
 /**
  * Base interface for an abstract resource that is both readable and writable.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
 public interface IReadWriteResource extends IReadableResource, IWritableResource

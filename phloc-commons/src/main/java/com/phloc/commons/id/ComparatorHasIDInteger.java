@@ -28,7 +28,7 @@ import com.phloc.commons.compare.ESortOrder;
  * This is a collation {@link java.util.Comparator} for objects that implement
  * the {@link IHasID} interface with {@link Integer}.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The type of elements to be compared.
  */

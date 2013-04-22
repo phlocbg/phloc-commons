@@ -30,7 +30,7 @@ import com.phloc.commons.lang.EnumHelper;
  * beginning of the line to reflect the tree structure of an XML document more
  * visibly.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum EXMLSerializeIndent implements IHasID <String>
 {

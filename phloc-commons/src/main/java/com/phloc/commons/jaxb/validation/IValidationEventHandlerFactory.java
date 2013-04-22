@@ -25,7 +25,7 @@ import com.phloc.commons.factory.IFactoryWithParameter;
 /**
  * Factory interface for {@link ValidationEventHandler} objects.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IValidationEventHandlerFactory extends
                                                IFactoryWithParameter <ValidationEventHandler, ValidationEventHandler>

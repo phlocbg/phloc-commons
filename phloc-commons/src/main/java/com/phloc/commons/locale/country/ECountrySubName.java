@@ -31,7 +31,7 @@ import com.phloc.commons.text.resolve.DefaultTextResolver;
 /**
  * Country sub-element name enum.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Translatable
 public enum ECountrySubName implements IHasDisplayText

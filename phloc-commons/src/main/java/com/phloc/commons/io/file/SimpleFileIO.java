@@ -38,7 +38,7 @@ import com.phloc.commons.string.StringHelper;
  * {@link FileOperations} class or the instance based
  * {@link FileOperationManager} class.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class SimpleFileIO

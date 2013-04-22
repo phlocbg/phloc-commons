@@ -39,7 +39,7 @@ import com.phloc.commons.xml.dom.EXMLDOMNodeType;
 /**
  * Misc. XML DOM helper method for checking the setup etc.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class XMLDebug
 {

@@ -26,7 +26,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * A filter implementation that inverts the result of another filter.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The data type to filter
  */

@@ -31,7 +31,7 @@ import com.phloc.commons.version.Version;
 /**
  * Represents a custom license.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class CustomLicense implements ILicense

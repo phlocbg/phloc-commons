@@ -28,7 +28,7 @@ import com.phloc.commons.string.StringHelper;
 /**
  * Utility class for calculating the Levenshtein distance of 2 strings.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class LevenshteinDistance

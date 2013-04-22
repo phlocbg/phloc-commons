@@ -31,7 +31,7 @@ import javax.annotation.concurrent.NotThreadSafe;
  * <code>long skip(long n)</code> and as this method is overwritten in here, the
  * lock is never used.
  * 
- * @author philip
+ * @author Philip Helger
  * @see java.io.StringReader
  */
 @NotThreadSafe

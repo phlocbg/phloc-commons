@@ -50,7 +50,7 @@ import com.phloc.commons.math.MathHelper;
  * Generic string transformation and helper methods. If you need to modify a
  * string, start looking in this class.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class StringHelper

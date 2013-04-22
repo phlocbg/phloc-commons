@@ -30,7 +30,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * Represents a fixed {@link Enumeration} implementation that contains no
  * elements.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <ELEMENTTYPE>
  *        The type to be contained in the operation.
  */

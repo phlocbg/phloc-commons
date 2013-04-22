@@ -42,7 +42,7 @@ import com.phloc.commons.url.URLUtils;
  * A simple LS resource resolver that can handle URLs, JAR files and file system
  * resources.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class SimpleLSResourceResolver implements LSResourceResolver
 {

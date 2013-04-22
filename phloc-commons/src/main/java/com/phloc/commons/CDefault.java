@@ -25,7 +25,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
  * A class containing default values for all primitive and primitive wrapper
  * types.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class CDefault

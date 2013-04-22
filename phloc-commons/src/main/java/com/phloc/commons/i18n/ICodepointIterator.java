@@ -27,7 +27,7 @@ import javax.annotation.Nullable;
 /**
  * BAse interface for codepoint iterators
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface ICodepointIterator extends Iterator <Codepoint>
 {

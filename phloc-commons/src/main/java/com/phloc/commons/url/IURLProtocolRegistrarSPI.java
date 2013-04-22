@@ -27,7 +27,7 @@ import com.phloc.commons.annotations.IsSPIInterface;
  * Interface for a registrar providing custom URL protocols
  * 
  * @author Boris Gregorcic
- * @author philip
+ * @author Philip Helger
  */
 @IsSPIInterface
 public interface IURLProtocolRegistrarSPI

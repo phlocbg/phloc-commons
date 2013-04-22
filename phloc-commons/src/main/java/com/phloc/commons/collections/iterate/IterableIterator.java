@@ -29,7 +29,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * This class is used for simpler iteration over an Iterator via the new "for"
  * syntax.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <ELEMENTTYPE>
  *        The type of elements to iterate.
  */

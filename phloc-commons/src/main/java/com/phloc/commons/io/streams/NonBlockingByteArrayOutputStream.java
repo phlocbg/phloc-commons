@@ -36,7 +36,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * A non-synchronized copy of the class {@link java.io.ByteArrayOutputStream}.
  * 
- * @author philip
+ * @author Philip Helger
  * @see java.io.ByteArrayOutputStream
  */
 public class NonBlockingByteArrayOutputStream extends OutputStream implements IHasSize, Serializable

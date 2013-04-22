@@ -30,7 +30,7 @@ import com.phloc.commons.state.ISuccessIndicator;
 /**
  * Represents a generic error level.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum EErrorLevel implements IHasID <String>, ISuccessIndicator, IErrorIndicator, ISeverityComparable <EErrorLevel>
 {

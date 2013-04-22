@@ -30,7 +30,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Default implementation of the {@link IMicroCDATA} interface.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MicroCDATA extends AbstractMicroNode implements IMicroCDATA
 {

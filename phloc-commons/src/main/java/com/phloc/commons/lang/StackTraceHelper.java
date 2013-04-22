@@ -31,7 +31,7 @@ import com.phloc.commons.string.StringHelper;
 /**
  * This class contains utility methods for handling stack traces.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class StackTraceHelper

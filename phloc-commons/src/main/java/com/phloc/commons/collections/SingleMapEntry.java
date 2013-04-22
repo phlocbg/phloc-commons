@@ -33,7 +33,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * to be equal with instances of this class, but this class is not equal to the
  * Map.Entry implementation!
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        The key type.
  * @param <VALUETYPE>

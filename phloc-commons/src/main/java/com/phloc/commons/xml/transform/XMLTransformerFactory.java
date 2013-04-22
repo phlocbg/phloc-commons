@@ -40,7 +40,7 @@ import com.phloc.commons.io.IReadableResource;
 /**
  * A global factory for XML transformation objects.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class XMLTransformerFactory

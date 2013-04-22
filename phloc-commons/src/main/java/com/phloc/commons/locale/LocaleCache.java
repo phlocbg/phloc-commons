@@ -43,7 +43,7 @@ import com.phloc.commons.string.StringHelper;
  * around.<br>
  * This cache is application independent.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public final class LocaleCache

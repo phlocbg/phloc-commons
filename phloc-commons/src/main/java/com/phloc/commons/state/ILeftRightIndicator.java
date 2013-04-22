@@ -20,7 +20,7 @@ package com.phloc.commons.state;
 /**
  * Very simple interface for an object that has left/right indication.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface ILeftRightIndicator
 {

@@ -35,7 +35,7 @@ import com.phloc.commons.string.StringHelper;
  * Utility class to create {@link XPath} and {@link XPathExpression} objects
  * more easily.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class XPathHelper

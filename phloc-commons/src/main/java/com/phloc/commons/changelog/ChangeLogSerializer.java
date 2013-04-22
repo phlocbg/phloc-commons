@@ -56,7 +56,7 @@ import com.phloc.commons.xml.XMLHelper;
 /**
  * This class handles the reading and writing of changelog objects.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class ChangeLogSerializer

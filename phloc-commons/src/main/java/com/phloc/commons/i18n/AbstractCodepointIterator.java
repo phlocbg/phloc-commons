@@ -26,9 +26,9 @@ import com.phloc.commons.annotations.UnsupportedOperation;
 
 /**
  * Provides an iterator over Unicode Codepoints
- * 
+ *
  * @author Apache Abdera
- * @author philip
+ * @author Philip Helger
  */
 public abstract class AbstractCodepointIterator implements ICodepointIterator
 {

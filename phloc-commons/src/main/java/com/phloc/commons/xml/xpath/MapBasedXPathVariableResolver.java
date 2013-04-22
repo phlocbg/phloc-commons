@@ -39,7 +39,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * values used in XPath queries at runtime. The local part of the QName to
  * resolve is used as the key in the map.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public class MapBasedXPathVariableResolver implements XPathVariableResolver

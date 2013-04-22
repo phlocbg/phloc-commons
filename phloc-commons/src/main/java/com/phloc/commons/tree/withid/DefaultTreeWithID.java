@@ -28,7 +28,7 @@ import javax.annotation.concurrent.NotThreadSafe;
  *        The type of the key elements for the tree.
  * @param <DATATYPE>
  *        The type of the elements contained in the tree
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public class DefaultTreeWithID <KEYTYPE, DATATYPE> extends

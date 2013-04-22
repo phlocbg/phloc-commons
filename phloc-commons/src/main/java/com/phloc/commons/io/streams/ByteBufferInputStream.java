@@ -30,7 +30,7 @@ import com.phloc.commons.lang.ByteBufferUtils;
 /**
  * {@link InputStream} wrapped around a single {@link ByteBuffer}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class ByteBufferInputStream extends InputStream

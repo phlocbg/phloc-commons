@@ -30,7 +30,7 @@ import com.phloc.commons.annotations.Nonempty;
 /**
  * Default implementation of {@link IStatisticsHandlerCounter}
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 final class StatisticsHandlerCounter implements IStatisticsHandlerCounter

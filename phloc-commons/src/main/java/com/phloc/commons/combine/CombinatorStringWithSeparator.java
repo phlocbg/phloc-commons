@@ -29,7 +29,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * A simple combinator that concatenates 2 strings using a common separator.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class CombinatorStringWithSeparator implements ICombinator <String>

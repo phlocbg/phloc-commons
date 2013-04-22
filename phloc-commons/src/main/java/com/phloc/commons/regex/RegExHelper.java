@@ -36,7 +36,7 @@ import com.phloc.commons.string.StringHelper;
  * This class offers helper methods that work on cached regular expression
  * pattern as offered by {@link RegExPool}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class RegExHelper

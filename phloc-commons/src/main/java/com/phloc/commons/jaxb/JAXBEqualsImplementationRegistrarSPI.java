@@ -31,7 +31,7 @@ import com.phloc.commons.equals.IEqualsImplementationRegistry;
  * Implementation of {@link IEqualsImplementationRegistrarSPI} for
  * {@link JAXBElement}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @IsSPIImplementation
 public final class JAXBEqualsImplementationRegistrarSPI implements IEqualsImplementationRegistrarSPI

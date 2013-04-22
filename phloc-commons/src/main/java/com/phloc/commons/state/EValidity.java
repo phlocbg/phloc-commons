@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 /**
  * Small enum for checks to indicate valid or invalid.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum EValidity implements IValidityIndicator
 {

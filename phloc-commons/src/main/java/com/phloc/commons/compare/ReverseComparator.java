@@ -27,7 +27,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * A special comparator that reverses another comparator
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class ReverseComparator <T> implements Comparator <T>, Serializable
 {

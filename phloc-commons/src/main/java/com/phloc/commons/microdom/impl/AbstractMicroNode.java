@@ -55,7 +55,7 @@ import com.phloc.commons.typeconvert.TypeConverter;
  * for the parent/child handling, the sub class AbstractMicroNodeWithChildren
  * provides some additional features.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public abstract class AbstractMicroNode implements IMicroNode
 {

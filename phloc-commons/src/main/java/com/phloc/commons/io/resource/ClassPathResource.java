@@ -40,7 +40,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Wraps a class path object as a readable resource.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class ClassPathResource implements IReadableResource

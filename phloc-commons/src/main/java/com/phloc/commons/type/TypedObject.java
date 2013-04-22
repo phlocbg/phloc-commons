@@ -29,7 +29,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * Base implementation of an object that has a type and an ID.<br>
  * This class is immutable if the type of the ID is immutable.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <IDTYPE>
  *        The type of the ID.
  */

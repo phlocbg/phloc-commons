@@ -35,7 +35,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Abstract implementation of a transformation {@link ErrorListener}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public abstract class AbstractTransformErrorListener implements ErrorListener
 {

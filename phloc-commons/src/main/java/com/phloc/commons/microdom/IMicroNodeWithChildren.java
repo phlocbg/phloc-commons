@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
  * A special marker interface that is implemented by classes, that really
  * support having children!
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IMicroNodeWithChildren extends IMicroNode
 {

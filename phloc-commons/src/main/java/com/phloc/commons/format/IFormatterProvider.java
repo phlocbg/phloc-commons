@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
  * If a class implements this interface, it claims that its value can be
  * formatted using an {@link IFormatter} object.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IFormatterProvider
 {

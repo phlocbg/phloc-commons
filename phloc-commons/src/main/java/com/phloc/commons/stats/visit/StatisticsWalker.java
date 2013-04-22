@@ -36,7 +36,7 @@ import com.phloc.commons.stats.StatisticsManager;
 /**
  * Class for iterating all available statistics
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class StatisticsWalker

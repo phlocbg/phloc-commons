@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
  * fuzzy matches. This should be the preferred type converter provider.
  * Implemented as a singleton.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class TypeConverterProviderBestMatch implements ITypeConverterProvider
 {

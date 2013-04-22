@@ -34,7 +34,7 @@ import java.lang.annotation.Target;
  * handling, the {@link javax.annotation.Nonnull} annotation must be present as
  * well.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Retention (RetentionPolicy.CLASS)
 @Target ({ ElementType.FIELD, ElementType.PARAMETER, ElementType.LOCAL_VARIABLE, ElementType.METHOD })

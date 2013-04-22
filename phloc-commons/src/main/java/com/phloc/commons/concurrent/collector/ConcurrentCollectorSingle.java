@@ -30,7 +30,7 @@ import com.phloc.commons.lang.GenericReflection;
 /**
  * Concurrent collector that performs action on each object separately
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The type of the objects in the queue.
  */

@@ -26,7 +26,7 @@ import javax.annotation.concurrent.Immutable;
 /**
  * Utility class implementing some common functionality con multi maps
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class MultiMapHelper

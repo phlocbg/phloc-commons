@@ -38,7 +38,7 @@ import com.phloc.commons.state.ESuccess;
 /**
  * Wraps file operations.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class FileOperations

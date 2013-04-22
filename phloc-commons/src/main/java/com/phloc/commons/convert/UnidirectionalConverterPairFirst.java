@@ -26,7 +26,7 @@ import com.phloc.commons.collections.pair.IReadonlyPair;
  * A unidirectional converter that extracts the first element from an
  * {@link IReadonlyPair}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class UnidirectionalConverterPairFirst <DATA1TYPE, DATA2TYPE> implements
                                                                            IUnidirectionalConverter <IReadonlyPair <DATA1TYPE, DATA2TYPE>, DATA1TYPE>

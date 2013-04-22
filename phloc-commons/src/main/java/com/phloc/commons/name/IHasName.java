@@ -25,7 +25,7 @@ import javax.annotation.Nonnull;
  * have a name that is displayed on the screen, please use the
  * {@link IHasDisplayName} interface.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IHasName
 {

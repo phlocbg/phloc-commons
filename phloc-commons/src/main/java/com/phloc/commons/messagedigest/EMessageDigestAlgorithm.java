@@ -26,7 +26,7 @@ import com.phloc.commons.string.StringHelper;
 /**
  * A selection of common hash algorithms.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum EMessageDigestAlgorithm
 {

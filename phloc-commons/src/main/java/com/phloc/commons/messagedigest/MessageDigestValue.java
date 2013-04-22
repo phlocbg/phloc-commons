@@ -34,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * Represents a single message digest value as the combination of the algorithm
  * and the digest bytes.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class MessageDigestValue

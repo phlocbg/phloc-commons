@@ -34,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * {@link File} based persisting {@link ILongIDFactory} implementation.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public class FileLongIDFactory extends AbstractPersistingLongIDFactory

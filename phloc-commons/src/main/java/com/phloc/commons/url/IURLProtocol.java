@@ -26,7 +26,7 @@ import com.phloc.commons.annotations.Nonempty;
  * Base interface for an URL protocol descriptor. See {@link EURLProtocol} for
  * an implementation.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IURLProtocol
 {

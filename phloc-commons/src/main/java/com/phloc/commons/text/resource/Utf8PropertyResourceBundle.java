@@ -29,7 +29,7 @@ import com.phloc.commons.charset.CharsetManager;
 /**
  * Special property resource bundle that wraps all strings into UTF-8 strings.
  * 
- * @author philip
+ * @author Philip Helger
  */
 final class Utf8PropertyResourceBundle extends ResourceBundle
 {

@@ -21,7 +21,7 @@ package com.phloc.commons.callback;
  * A simple interface that looks like {@link java.lang.Runnable} but follows our
  * naming conventions.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface INonThrowingRunnable extends Runnable, IThrowingRunnable
 {

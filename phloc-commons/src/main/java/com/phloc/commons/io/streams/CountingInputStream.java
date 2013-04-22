@@ -29,7 +29,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * A wrapper around an {@link InputStream} that counts the number of read bytes.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class CountingInputStream extends WrappedInputStream
 {

@@ -25,7 +25,7 @@ import javax.annotation.Nonnull;
 /**
  * Readonly interface for a multilingual text
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IReadonlyMultiLingualText extends ISimpleMultiLingualText
 {

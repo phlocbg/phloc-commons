@@ -27,7 +27,7 @@ import com.phloc.commons.compare.AbstractCollationComparator;
 /**
  * Compare {@link Locale} objects by their String representation.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ComparatorLocale extends AbstractCollationComparator <Locale>
 {

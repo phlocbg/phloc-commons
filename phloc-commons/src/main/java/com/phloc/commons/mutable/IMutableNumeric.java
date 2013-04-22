@@ -20,7 +20,7 @@ package com.phloc.commons.mutable;
 /**
  * Base interface for mutable numeric values
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IMutableNumeric <IMPLTYPE extends IMutableNumeric <IMPLTYPE>> extends IMutable <IMPLTYPE>
 {

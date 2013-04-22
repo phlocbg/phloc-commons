@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 /**
  * Base interface for wrapping an object within another object.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The type of the wrapped object.
  */

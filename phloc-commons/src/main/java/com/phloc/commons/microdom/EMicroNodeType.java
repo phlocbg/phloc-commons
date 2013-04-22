@@ -28,7 +28,7 @@ import com.phloc.commons.lang.EnumHelper;
 /**
  * Denotes the type of {@link IMicroNode} objects.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum EMicroNodeType implements IHasSimpleIntID
 {

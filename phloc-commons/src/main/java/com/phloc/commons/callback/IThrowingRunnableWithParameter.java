@@ -23,7 +23,7 @@ package com.phloc.commons.callback;
  * function. This is similar to {@link IThrowingRunnable} except that a
  * parameter is present.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <PARAMTYPE>
  *        The type of the parameter that is required for executing the callback.
  */

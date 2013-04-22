@@ -26,7 +26,7 @@ import javax.annotation.Nullable;
  * This is another *lol* class: a {@link Comparator} for {@link Comparable}
  * objects.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class ComparatorComparable <DATATYPE extends Comparable <? super DATATYPE>> extends
                                                                                    AbstractComparator <DATATYPE>

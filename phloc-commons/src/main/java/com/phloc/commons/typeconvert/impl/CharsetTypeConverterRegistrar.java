@@ -31,7 +31,7 @@ import com.phloc.commons.typeconvert.ITypeConverterRegistry;
 /**
  * Register the locale specific type converter
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 @IsSPIImplementation

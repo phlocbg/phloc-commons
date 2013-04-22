@@ -35,7 +35,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * The not-thread safe implementation of {@link IFlagContainer}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public class FlagContainer implements IFlagContainer

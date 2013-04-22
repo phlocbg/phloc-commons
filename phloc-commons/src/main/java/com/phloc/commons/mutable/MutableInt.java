@@ -30,7 +30,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * Object wrapper around an int so that it can be passed a final object but is
  * mutable.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class MutableInt extends Number implements IMutableInteger <MutableInt>

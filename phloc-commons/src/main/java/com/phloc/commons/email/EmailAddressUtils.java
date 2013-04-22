@@ -28,7 +28,7 @@ import com.phloc.commons.regex.RegExPool;
 /**
  * Perform simple email address validation based on a regular expression.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class EmailAddressUtils

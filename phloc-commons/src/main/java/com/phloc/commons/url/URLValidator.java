@@ -29,7 +29,7 @@ import com.phloc.commons.string.StringHelper;
 /**
  * Check if a URL is valid.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class URLValidator

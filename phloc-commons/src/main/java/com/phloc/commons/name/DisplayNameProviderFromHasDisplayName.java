@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
  * Default implementation of {@link IDisplayNameProvider} for
  * {@link IHasDisplayName} objects.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class DisplayNameProviderFromHasDisplayName implements IDisplayNameProvider <IHasDisplayName>
 {

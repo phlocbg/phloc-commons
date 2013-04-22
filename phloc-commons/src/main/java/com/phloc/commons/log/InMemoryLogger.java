@@ -39,7 +39,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * Keeps a set of {@link LogMessage} objects in memory, offering an API similar
  * to SLF4J.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public class InMemoryLogger implements Iterable <LogMessage>, IHasSize, IClearable, IHasErrorLevels

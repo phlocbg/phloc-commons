@@ -30,7 +30,7 @@ import com.phloc.commons.compare.ESortOrder;
  * {@link java.util.Comparator} for ordering {@link Thread} objects by their
  * name.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class ComparatorThreadName extends AbstractCollationComparator <Thread>

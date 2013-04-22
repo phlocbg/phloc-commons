@@ -28,7 +28,7 @@ import com.phloc.commons.parent.IChildrenProviderWithID;
  * An {@link IChildrenProviderWithID} with ID that returns the children in
  * {@link #getChildren(Object)} sorted.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        The key type.
  * @param <CHILDTYPE>

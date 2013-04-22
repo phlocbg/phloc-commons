@@ -26,7 +26,7 @@ import javax.annotation.Nullable;
 /**
  * Basic interface for object providing multilingual texts.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface ITextProvider extends Serializable
 {

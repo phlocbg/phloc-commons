@@ -30,7 +30,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Default implementation of the {@link IMicroText} interface.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MicroText extends AbstractMicroNode implements IMicroText
 {

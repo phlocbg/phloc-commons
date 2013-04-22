@@ -28,7 +28,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Always returns <code>null</code>.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class AggregatorAlwaysNull <SRCTYPE, DSTTYPE> implements IAggregator <SRCTYPE, DSTTYPE>

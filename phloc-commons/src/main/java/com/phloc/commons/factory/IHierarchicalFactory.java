@@ -24,7 +24,7 @@ import com.phloc.commons.annotations.DevelopersNote;
  * a parent item. For creating root items, please use the
  * {@link IHierarchicalRootFactory} interface!
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The type of object to create.
  */

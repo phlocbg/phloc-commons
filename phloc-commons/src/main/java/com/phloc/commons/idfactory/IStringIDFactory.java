@@ -22,7 +22,7 @@ import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
 /**
  * Interface for an object creating unique String IDs.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
 public interface IStringIDFactory extends IIDFactory <String>

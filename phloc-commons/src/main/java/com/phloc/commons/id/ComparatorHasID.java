@@ -30,7 +30,7 @@ import com.phloc.commons.compare.ESortOrder;
  * the {@link IHasID} interface with a class that does NOT implements
  * {@link Comparable}.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <IDTYPE>
  *        The type of the ID
  * @param <DATATYPE>

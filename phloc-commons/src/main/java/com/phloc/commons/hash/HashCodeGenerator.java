@@ -48,7 +48,7 @@ import org.w3c.dom.Node;
  * }</pre></code>
  * </p>
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class HashCodeGenerator implements IHashCodeGenerator

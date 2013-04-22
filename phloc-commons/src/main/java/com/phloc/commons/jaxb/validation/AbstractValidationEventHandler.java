@@ -43,7 +43,7 @@ import com.phloc.commons.xml.serialize.XMLWriter;
  * An abstract implementation of the JAXB {@link ValidationEventHandler}
  * interface.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public abstract class AbstractValidationEventHandler implements ValidationEventHandler

@@ -25,7 +25,7 @@ import com.phloc.commons.convert.IUnidirectionalConverter;
 /**
  * Special interface that is used to convert between values of different types.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface ITypeConverter extends IUnidirectionalConverter <Object, Object>
 {

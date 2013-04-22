@@ -30,7 +30,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * A caching class that has the ability to fill itself with the abstract
  * getValueToCache(Object) method.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        Cache key type
  * @param <VALUETYPE>

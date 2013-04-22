@@ -35,7 +35,7 @@ import com.phloc.commons.typeconvert.TypeConverterException.EReason;
  * for conversion in this case.<br>
  * All converters are registered in the {@link MicroTypeConverterRegistry}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public final class MicroTypeConverter

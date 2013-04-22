@@ -30,7 +30,7 @@ import com.phloc.commons.compare.ESortOrder;
  * Special comparator to sort change log entries by their date and in case of
  * equality by the parent change logs component name.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ComparatorChangeLogEntryDate extends AbstractComparator <ChangeLogEntry>
 {

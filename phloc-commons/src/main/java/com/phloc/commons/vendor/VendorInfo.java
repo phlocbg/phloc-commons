@@ -38,7 +38,7 @@ import com.phloc.commons.url.URLProtocolRegistry;
  * Contains some general vendor specific information. This is mainly for keeping
  * the CI in all applications.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class VendorInfo

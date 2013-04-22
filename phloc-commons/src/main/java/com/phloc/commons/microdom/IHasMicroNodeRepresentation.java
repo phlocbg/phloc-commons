@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 /**
  * Interface for object that have a representation as {@link IMicroNode}
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IHasMicroNodeRepresentation
 {

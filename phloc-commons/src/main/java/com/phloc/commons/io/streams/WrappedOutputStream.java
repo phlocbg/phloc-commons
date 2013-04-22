@@ -28,7 +28,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * A wrapper around another {@link OutputStream}. Pass through of all
  * {@link OutputStream} methods.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class WrappedOutputStream extends OutputStream
 {

@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 /**
  * Small enum for manager actions to indicate finished or unfinished states.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum EFinish implements IFinishIndicator
 {

@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
  * Represents the document type of a document. Instances of the class may only
  * be used as a direct child of an {@link IMicroDocument}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IMicroDocumentType extends IMicroNode
 {

@@ -30,7 +30,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * Special {@link StreamSource} implementation that reads from {@link String}
  * objects.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public class StringStreamSource extends StreamSource

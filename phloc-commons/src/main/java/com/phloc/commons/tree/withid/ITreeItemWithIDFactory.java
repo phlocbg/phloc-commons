@@ -25,7 +25,7 @@ import com.phloc.commons.factory.IHierarchicalRootFactory;
 /**
  * A factory interface that creates tree items.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        The key type.
  * @param <DATATYPE>

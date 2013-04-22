@@ -25,7 +25,7 @@ import java.lang.annotation.RetentionPolicy;
  * Just to indicate that an object is only present for code coverage reasons, to
  * create 100% coverage.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Retention (RetentionPolicy.SOURCE)
 @Documented

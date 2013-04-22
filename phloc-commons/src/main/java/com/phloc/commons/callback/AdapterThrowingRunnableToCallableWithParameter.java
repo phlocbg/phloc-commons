@@ -25,7 +25,7 @@ import javax.annotation.concurrent.Immutable;
  * A helper class that converts a {@link IThrowingRunnable} into an
  * {@link IThrowingCallable}.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The callable result type.
  * @param <PARAMTYPE>

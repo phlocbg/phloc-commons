@@ -37,7 +37,7 @@ import com.phloc.commons.log.LogUtils;
 /**
  * java.xml error handler that simply logs data to a logger.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 @CodingStyleguideUnaware ("logger too visible by purpose")

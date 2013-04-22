@@ -34,7 +34,7 @@ import com.phloc.commons.parent.IChildrenProvider;
  * The implementation wraps an existing children provider and uses and external
  * comparator for sorting.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <CHILDTYPE>
  *        The data type of the child objects.
  */

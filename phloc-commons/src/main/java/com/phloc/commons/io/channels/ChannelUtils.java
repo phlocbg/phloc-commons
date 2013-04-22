@@ -41,7 +41,7 @@ import com.phloc.commons.state.ESuccess;
 /**
  * Some very basic NIO channel utility stuff.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class ChannelUtils

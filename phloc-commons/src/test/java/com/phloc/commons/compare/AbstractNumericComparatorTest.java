@@ -34,7 +34,7 @@ import com.phloc.commons.mock.PhlocAssert;
 /**
  * Test class for {@link AbstractNumericComparator}
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class AbstractNumericComparatorTest
 {

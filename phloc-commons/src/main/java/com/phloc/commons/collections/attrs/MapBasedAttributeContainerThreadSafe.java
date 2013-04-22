@@ -37,7 +37,7 @@ import com.phloc.commons.state.EChange;
  * implementation is a thread-safe wrapper around
  * {@link MapBasedAttributeContainer}!
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public class MapBasedAttributeContainerThreadSafe extends MapBasedAttributeContainer

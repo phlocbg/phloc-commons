@@ -29,7 +29,7 @@ import com.phloc.commons.error.EErrorLevel;
 /**
  * java.xml error handler that ignores all errors.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public class DoNothingSAXErrorHandler extends AbstractSAXErrorHandler

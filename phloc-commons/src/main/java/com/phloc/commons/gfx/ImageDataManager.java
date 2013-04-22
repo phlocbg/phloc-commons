@@ -50,7 +50,7 @@ import com.phloc.commons.stats.StatisticsManager;
  * set the HTML attributes width and height for images. It has an internal cache
  * to avoid querying the data every time.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public final class ImageDataManager

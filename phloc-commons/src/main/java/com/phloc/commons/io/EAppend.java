@@ -24,7 +24,7 @@ import com.phloc.commons.IHasBooleanRepresentation;
 /**
  * Small enum for determining the append or truncate state of output streams.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum EAppend implements IHasBooleanRepresentation
 {

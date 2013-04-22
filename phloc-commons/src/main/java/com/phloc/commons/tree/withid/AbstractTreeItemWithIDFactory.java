@@ -25,7 +25,7 @@ import com.phloc.commons.annotations.OverrideOnDemand;
 /**
  * Abstract tree item with ID factory implementation
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        tree item key type
  * @param <DATATYPE>

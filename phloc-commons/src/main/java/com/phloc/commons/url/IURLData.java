@@ -31,7 +31,7 @@ import com.phloc.commons.annotations.ReturnsMutableObject;
  * Base interface representing the basic elements of a URL from a high level
  * perspective.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IURLData extends Serializable
 {

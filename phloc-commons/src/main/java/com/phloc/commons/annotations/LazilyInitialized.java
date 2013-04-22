@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
  * This is an indicator, that a field is lazily initialized. This annotation has
  * mainly documentational purposes.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Retention (RetentionPolicy.CLASS)
 @Target ({ ElementType.FIELD })

@@ -30,7 +30,7 @@ import com.phloc.commons.stats.IStatisticsHandlerTimer;
 /**
  * Callback interface for visiting statistics.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IStatisticsVisitor
 {

@@ -26,7 +26,7 @@ import com.phloc.commons.annotations.Nonempty;
 /**
  * Base interface for all statistic handlers
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IStatisticsHandler extends IHasStringRepresentation
 {

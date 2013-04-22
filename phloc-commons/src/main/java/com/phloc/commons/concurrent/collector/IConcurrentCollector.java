@@ -26,7 +26,7 @@ import com.phloc.commons.state.ESuccess;
  * Base interface for a concurrent queue worker. It asynchronously collects
  * objects to handle (via the {@link #queueObject(Object)} method).
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The type of objects to be queued
  */

@@ -30,7 +30,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * Implementation of {@link IFactory} that always creates a new instance via
  * reflection
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The return type of the factory
  */

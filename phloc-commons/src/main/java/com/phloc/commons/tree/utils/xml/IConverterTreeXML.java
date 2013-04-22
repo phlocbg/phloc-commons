@@ -21,7 +21,7 @@ package com.phloc.commons.tree.utils.xml;
  * This interface collects both unidirectional converters and creates a
  * bidirectional converter.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The type of the tree item data
  */

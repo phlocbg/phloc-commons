@@ -37,7 +37,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * hash map. This implementation may carry <code>null</code> values but that is
  * not recommended.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class MapBasedReadonlyAttributeContainer extends AbstractReadonlyAttributeContainer

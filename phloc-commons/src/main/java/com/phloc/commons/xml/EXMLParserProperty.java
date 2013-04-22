@@ -32,7 +32,7 @@ import com.phloc.commons.name.IHasName;
 /**
  * Contains constants for parser properties.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum EXMLParserProperty implements IHasName
 {

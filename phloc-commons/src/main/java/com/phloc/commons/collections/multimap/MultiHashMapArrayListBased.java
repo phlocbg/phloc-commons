@@ -29,7 +29,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 /**
  * Multi map based on {@link HashMap} and {@link ArrayList} values.<br>
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        key type
  * @param <VALUETYPE>

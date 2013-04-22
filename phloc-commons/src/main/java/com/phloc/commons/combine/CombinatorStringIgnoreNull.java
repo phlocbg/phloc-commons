@@ -27,7 +27,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * A simple combinator that concatenates 2 strings by ignoring <code>null</code>
  * values.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class CombinatorStringIgnoreNull implements ICombinator <String>

@@ -24,7 +24,7 @@ import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
 /**
  * Interface for an object creating unique IDs.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
 public interface IIDFactory <IDTYPE> extends IBaseIDFactory

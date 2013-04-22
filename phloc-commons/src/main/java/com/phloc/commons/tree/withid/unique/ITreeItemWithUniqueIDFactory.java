@@ -29,7 +29,7 @@ import com.phloc.commons.tree.withid.ITreeItemWithIDFactory;
 /**
  * An abstract tree item factory that maintains a unique ID over all items!
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface ITreeItemWithUniqueIDFactory <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>> extends
                                                                                                                                   ITreeItemWithIDFactory <KEYTYPE, DATATYPE, ITEMTYPE>

@@ -23,7 +23,7 @@ import javax.xml.validation.Schema;
 /**
  * A simple interface, indicating that an item has a Schema object.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IHasSchema
 {

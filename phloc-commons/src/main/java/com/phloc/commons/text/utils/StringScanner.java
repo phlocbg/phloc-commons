@@ -26,7 +26,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Simple string scanner.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class StringScanner

@@ -32,7 +32,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * reservation requires IO. If only 1 ID is effectively used, the other
  * <em>n</em>-1 IDs are lost and will never be assigned to any object again.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public abstract class AbstractPersistingLongIDFactory implements ILongIDFactory

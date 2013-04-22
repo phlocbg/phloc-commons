@@ -30,7 +30,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Utility implementation of the {@link ListIterator} for an empty list :)
  * 
- * @author philip
+ * @author Philip Helger
  * @param <ELEMENTTYPE>
  *        The type of the list iterator
  */

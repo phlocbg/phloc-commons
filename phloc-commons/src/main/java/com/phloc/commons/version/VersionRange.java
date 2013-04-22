@@ -33,7 +33,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * This class represents a range of versions. Each range needs at least a lower
  * bound but can as well have an upper bound. See OSGi v4 reference 3.2.5
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class VersionRange implements Comparable <VersionRange>, IHasStringRepresentation, Serializable

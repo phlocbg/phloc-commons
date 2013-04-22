@@ -29,7 +29,7 @@ import java.lang.annotation.Target;
  * and source file name should never change. SPI interfaces should also have the
  * suffix SPI in their name (e.g. <code>IServiceSPI</code>).
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Retention (RetentionPolicy.CLASS)
 @Target ({ ElementType.TYPE })

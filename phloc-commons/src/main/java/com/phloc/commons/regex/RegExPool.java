@@ -34,7 +34,7 @@ import com.phloc.commons.state.EChange;
  * This class provides a pool for cached regular expressions. It caches up to a
  * limited number of compiled {@link Pattern} objects.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class RegExPool extends AbstractNotifyingCacheWithMaxSize <RegExPattern, Pattern>
 {

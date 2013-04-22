@@ -35,7 +35,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * java.xml error handler base class.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public abstract class AbstractSAXErrorHandler implements ErrorHandler
 {

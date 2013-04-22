@@ -30,7 +30,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Non-synchronized version of {@link java.io.BufferedInputStream}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class NonBlockingBufferedInputStream extends FilterInputStream
 {

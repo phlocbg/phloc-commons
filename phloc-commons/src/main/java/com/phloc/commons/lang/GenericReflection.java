@@ -35,7 +35,7 @@ import com.phloc.commons.collections.ArrayHelper;
  * This is a special helper class that provides many utility methods that
  * require the <code>SuppressWarnings("unchecked")</code> annotation.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class GenericReflection

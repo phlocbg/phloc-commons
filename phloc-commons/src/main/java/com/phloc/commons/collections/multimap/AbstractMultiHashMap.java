@@ -31,7 +31,7 @@ import com.phloc.commons.state.EChange;
 /**
  * Abstract multi map based on {@link HashMap}.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        key type
  * @param <VALUETYPE>

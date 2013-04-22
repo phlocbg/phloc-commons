@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 /**
  * A callback interface to retrieve {@link Writer} objects.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IWriterProvider
 {

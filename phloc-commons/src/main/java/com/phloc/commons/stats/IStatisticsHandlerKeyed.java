@@ -28,7 +28,7 @@ import com.phloc.commons.CGlobal;
 /**
  * Base interface for keyed statistic handlers
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IStatisticsHandlerKeyed extends IStatisticsHandler
 {

@@ -47,7 +47,7 @@ import com.phloc.commons.text.resource.ResourceBundleUtils;
  * than German and English. Used only from within the
  * {@link DefaultTextResolver} static class.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public final class EnumTextResolverWithPropertiesOverrideAndFallback extends AbstractEnumTextResolverWithOverrideAndFallback

@@ -57,7 +57,7 @@ import com.phloc.commons.xml.serialize.XMLWriterSettings;
  * &lt;/list>
  * </pre>
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class XMLListHandler

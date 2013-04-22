@@ -37,7 +37,7 @@ import com.phloc.commons.string.StringHelper;
 /**
  * Utility class to create JMX {@link ObjectName} objects.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class ObjectNameUtils

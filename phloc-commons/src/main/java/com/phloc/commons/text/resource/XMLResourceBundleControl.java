@@ -34,7 +34,7 @@ import com.phloc.commons.io.streams.StreamUtils;
 /**
  * Special {@link java.util.ResourceBundle.Control} to handle XML files
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class XMLResourceBundleControl extends ResourceBundle.Control
 {

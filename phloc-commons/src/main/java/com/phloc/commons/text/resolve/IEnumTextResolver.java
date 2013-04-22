@@ -27,7 +27,7 @@ import com.phloc.commons.text.ITextProvider;
 /**
  * Base interface for an enum-based text resolver.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IEnumTextResolver
 {

@@ -25,7 +25,7 @@ import com.phloc.commons.annotations.IsSPIInterface;
  * Implement this SPI interface if your JAR file contains external third party
  * modules.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @IsSPIInterface
 public interface IThirdPartyModuleProviderSPI

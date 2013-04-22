@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
  * 
  * @param <DATATYPE>
  *        data type
- * @author philip
+ * @author Philip Helger
  */
 public interface IEncoder <DATATYPE>
 {

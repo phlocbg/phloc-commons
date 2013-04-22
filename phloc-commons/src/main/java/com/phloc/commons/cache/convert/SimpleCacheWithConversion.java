@@ -27,7 +27,7 @@ import com.phloc.commons.convert.IUnidirectionalConverter;
  * A special cache that can create the value to be cache automatically from the
  * key.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        Cache key type
  * @param <VALUETYPE>

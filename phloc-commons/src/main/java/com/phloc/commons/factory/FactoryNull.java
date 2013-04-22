@@ -27,7 +27,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * An instance of {@link IFactory} that always returns <code>null</code>.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        Return type of the factory
  */

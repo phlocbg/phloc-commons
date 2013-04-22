@@ -35,7 +35,7 @@ import com.phloc.commons.error.IResourceError;
  * simply prints the messages to a logger before the original handler handles
  * them.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public class LoggingValidationEventHandler extends AbstractValidationEventHandler

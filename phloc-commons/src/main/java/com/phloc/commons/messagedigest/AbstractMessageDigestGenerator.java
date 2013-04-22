@@ -29,8 +29,8 @@ import com.phloc.commons.string.StringHelper;
  * Base class for creating a cryptographic hash value. Don't mix it up with the
  * {@link com.phloc.commons.hash.HashCodeGenerator} which is used to generate
  * hash values for Java objects.
- * 
- * @author philip
+ *
+ * @author Philip Helger
  */
 public abstract class AbstractMessageDigestGenerator implements IMessageDigestGenerator
 {

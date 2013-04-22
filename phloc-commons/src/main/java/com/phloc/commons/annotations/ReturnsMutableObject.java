@@ -29,7 +29,7 @@ import java.lang.annotation.Target;
  * the internal object is rturned and is mutable, please use the
  * {@link ReturnsMutableCopy} annotation.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Retention (RetentionPolicy.CLASS)
 @Target ({ ElementType.METHOD })

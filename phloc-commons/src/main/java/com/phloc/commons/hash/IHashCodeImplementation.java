@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
  * Interface to implement for custom hash code implementation. This interface is
  * only used within the {@link HashCodeImplementationRegistry}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IHashCodeImplementation
 {

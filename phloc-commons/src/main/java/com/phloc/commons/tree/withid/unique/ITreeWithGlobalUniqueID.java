@@ -32,7 +32,7 @@ import com.phloc.commons.tree.withid.ITreeWithID;
  * A specialized version of the tree, where each item is required to have a
  * unique ID so that item searching can be performed with little runtime effort.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        The type of the key elements for the tree. This is typically String.
  * @param <DATATYPE>

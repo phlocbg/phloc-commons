@@ -28,7 +28,7 @@ import com.phloc.commons.lang.EnumHelper;
  * Used for creating string representation of XML. Determines whether the
  * Document Type should be emitted or ignored.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum EXMLSerializeDocType implements IHasID <String>
 {

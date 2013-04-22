@@ -32,7 +32,7 @@ import com.phloc.commons.xml.transform.TransformSourceFactory;
 /**
  * A helper class for simple XSD validation.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class XMLSchemaValidationHelper
 {

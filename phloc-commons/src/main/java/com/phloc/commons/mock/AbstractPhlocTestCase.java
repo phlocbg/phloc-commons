@@ -33,7 +33,7 @@ import com.phloc.commons.annotations.CodingStyleguideUnaware;
  * \@BeforeClass methods of super classes will be run before those the current
  * class.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public abstract class AbstractPhlocTestCase

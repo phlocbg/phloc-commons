@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Default implementation of {@link IStatisticsHandlerKeyedSize}
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 final class StatisticsHandlerKeyedSize extends AbstractStatisticsHandlerKeyedNumeric implements

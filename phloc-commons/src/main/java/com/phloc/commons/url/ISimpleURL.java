@@ -28,7 +28,7 @@ import com.phloc.commons.IHasStringRepresentation;
  * Interface for a simple URL that works around the issues with the Java default
  * URL.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface ISimpleURL extends IURLData, IHasStringRepresentation
 {

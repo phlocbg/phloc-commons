@@ -33,8 +33,8 @@ import com.phloc.commons.text.impl.TextFormatter;
 /**
  * Resolves texts either from an override, a text provider or otherwise uses a
  * fallback, based on the given enum constant.
- * 
- * @author philip
+ *
+ * @author Philip Helger
  */
 @ThreadSafe
 public abstract class AbstractEnumTextResolverWithOverrideAndFallback implements IEnumTextResolver
@@ -50,7 +50,7 @@ public abstract class AbstractEnumTextResolverWithOverrideAndFallback implements
 
   /**
    * This method must return the override string for the passed parameters.
-   * 
+   *
    * @param sID
    *        Unique string ID
    * @param aContentLocale
@@ -62,7 +62,7 @@ public abstract class AbstractEnumTextResolverWithOverrideAndFallback implements
 
   /**
    * This method must return the fallback string for the passed parameters.
-   * 
+   *
    * @param sID
    *        Unique string ID
    * @param aContentLocale

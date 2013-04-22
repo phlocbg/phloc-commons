@@ -20,7 +20,7 @@ package com.phloc.commons.codec;
 /**
  * Interface for a single encoder + decoder.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface ICodec extends IByteArrayEncoder, IByteArrayDecoder
 {

@@ -32,7 +32,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * An {@link InputStream} provider based on a {@link ByteBuffer}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class ByteBufferInputStreamProvider implements IInputStreamAndReaderProvider
 {

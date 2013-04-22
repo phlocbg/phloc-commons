@@ -27,7 +27,7 @@ import com.phloc.commons.microdom.IMicroElement;
  * Interface to be implemented to marshal between IMicroElement and a native
  * object.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IMicroTypeConverter
 {

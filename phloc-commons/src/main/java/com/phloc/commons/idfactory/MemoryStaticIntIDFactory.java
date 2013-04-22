@@ -29,7 +29,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * An implementation of {@link IIntIDFactory} using a single static
  * {@link AtomicInteger}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public final class MemoryStaticIntIDFactory implements IIntIDFactory

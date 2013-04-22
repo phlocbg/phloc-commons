@@ -31,8 +31,8 @@ import com.phloc.commons.collections.ContainerHelper;
 
 /**
  * Test class for {@link AbstractCollationComparator}
- * 
- * @author philip
+ *
+ * @author Philip Helger
  */
 public final class AbstractCollationComparatorTest
 {

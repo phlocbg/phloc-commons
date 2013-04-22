@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 /**
  * Callback interface when iterating XML nodes.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IXMLIterationHandler
 {

@@ -26,7 +26,7 @@ import com.phloc.commons.name.IHasName;
  * A unidirectional converter that extracts the name from an object implementing
  * {@link IHasName}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class UnidirectionalConverterHasNameString implements IUnidirectionalConverter <IHasName, String>
 {

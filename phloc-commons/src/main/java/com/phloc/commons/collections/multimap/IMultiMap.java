@@ -29,7 +29,7 @@ import com.phloc.commons.state.EChange;
 /**
  * Base interface for a multi map (one key with several values).
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        Key type
  * @param <VALUETYPE>

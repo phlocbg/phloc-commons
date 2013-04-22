@@ -34,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * An implementation of {@link IFilter} on {@link Element} objects that will
  * only return elements with a certain namespace URI and a certain local name.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class FilterElementWithNamespaceAndLocalName implements IFilter <Element>

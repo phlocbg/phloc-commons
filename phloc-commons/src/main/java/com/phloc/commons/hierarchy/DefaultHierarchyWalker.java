@@ -25,7 +25,7 @@ import com.phloc.commons.annotations.OverrideOnDemand;
 /**
  * The default implementation of the {@link IBaseHierarchyWalker} interface.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class DefaultHierarchyWalker implements IBaseHierarchyWalker
 {

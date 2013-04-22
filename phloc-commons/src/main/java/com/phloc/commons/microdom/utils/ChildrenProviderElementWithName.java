@@ -35,7 +35,7 @@ import com.phloc.commons.string.StringHelper;
  * objects considering only elements with a certain element name (and optionally
  * a namespace URI).
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ChildrenProviderElementWithName implements IChildrenProvider <IMicroElement>
 {

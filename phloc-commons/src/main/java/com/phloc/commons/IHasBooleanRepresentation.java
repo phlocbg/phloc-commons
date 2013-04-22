@@ -20,7 +20,7 @@ package com.phloc.commons;
 /**
  * Base interface for all objects having an explicit boolean representation
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IHasBooleanRepresentation
 {

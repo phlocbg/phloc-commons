@@ -37,7 +37,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * This class is not thread-safe, because the {@link DecimalFormat} class is not
  * thread-safe!
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class SizeHelper

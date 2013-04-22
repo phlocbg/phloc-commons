@@ -22,7 +22,7 @@ import javax.annotation.CheckForSigned;
 /**
  * MBean interface for {@link IStatisticsHandlerCounter}
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface StatisticsHandlerCounterMBean extends IStatisticsHandler
 {

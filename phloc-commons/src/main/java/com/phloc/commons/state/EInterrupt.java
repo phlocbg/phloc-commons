@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 /**
  * Small enum for setter method to identify whether a value has changed or not.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum EInterrupt implements IInterruptIndicator
 {

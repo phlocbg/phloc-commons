@@ -34,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * This is a small helper class implementing {@link Enumeration} for array input
  * data.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <ELEMENTTYPE>
  *        Type of object to iterate.
  */

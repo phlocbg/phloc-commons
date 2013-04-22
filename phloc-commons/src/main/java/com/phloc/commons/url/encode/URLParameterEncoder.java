@@ -28,7 +28,7 @@ import com.phloc.commons.url.URLUtils;
 /**
  * Encoder for URLs
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class URLParameterEncoder implements IEncoder <String>
 {

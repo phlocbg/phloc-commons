@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
  * This is the callback interface implemented by
  * {@link MicroTypeConverterRegistry} for registration via the SPI interface.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IMicroTypeConverterRegistry
 {

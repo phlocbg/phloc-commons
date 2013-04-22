@@ -30,7 +30,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * getValueToCache(Object) method and has an upper limit of elements that can
  * reside in the cache.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        Cache key type
  * @param <VALUETYPE>

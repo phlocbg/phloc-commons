@@ -25,7 +25,7 @@ import org.w3c.dom.Node;
 /**
  * Interface for object that have a representation as {@link Node}
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IHasXMLRepresentation
 {

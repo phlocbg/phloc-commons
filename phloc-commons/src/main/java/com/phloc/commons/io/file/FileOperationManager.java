@@ -29,7 +29,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * Manage file operations, and persist the last errors for later retrieval, as
  * well as offering a callback mechanism for success/error handling.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public class FileOperationManager implements IFileOperationManager

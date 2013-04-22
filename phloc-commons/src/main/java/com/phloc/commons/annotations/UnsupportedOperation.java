@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
  * Indicate methods that are supposed to throw an
  * {@link UnsupportedOperationException}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Retention (RetentionPolicy.SOURCE)
 @Target ({ ElementType.METHOD, ElementType.CONSTRUCTOR })

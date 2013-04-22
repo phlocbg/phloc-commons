@@ -34,7 +34,7 @@ import com.phloc.commons.io.file.filter.FileFilterToIFilterAdapter;
  * Iterate over the content of a single directory. Iteration is <b>not</b>
  * recursive.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class FileSystemIterator extends IterableIterator <File>

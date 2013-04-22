@@ -68,7 +68,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * Provides various helper methods to handle collections like {@link List},
  * {@link Set} and {@link Map}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class ContainerHelper

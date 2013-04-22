@@ -24,7 +24,7 @@ import javax.annotation.Nonnull;
 /**
  * A special output stream that does not close the stream.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class NonClosingOutputStream extends WrappedOutputStream
 {

@@ -29,7 +29,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * A non-synchronized copy of the class {@link java.io.ByteArrayInputStream}.
  * 
- * @author philip
+ * @author Philip Helger
  * @see java.io.ByteArrayInputStream
  */
 public class NonBlockingByteArrayInputStream extends InputStream implements Serializable

@@ -27,7 +27,7 @@ import org.w3c.dom.ls.LSResourceResolver;
 /**
  * A logging only {@link LSResourceResolver} implementation.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class LoggingLSResourceResolver implements LSResourceResolver
 {

@@ -30,7 +30,7 @@ import javax.annotation.concurrent.NotThreadSafe;
  * Multi map based on {@link ConcurrentHashMap} and {@link HashSet} values.<br>
  * Important note: <code>null</code> keys are not allowed here!
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        key type
  * @param <VALUETYPE>

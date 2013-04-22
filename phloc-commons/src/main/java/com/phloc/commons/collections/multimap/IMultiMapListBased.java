@@ -28,7 +28,7 @@ import com.phloc.commons.state.EChange;
 /**
  * Interface for a multi map that uses a {@link List} for the storage.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        Key type
  * @param <VALUETYPE>

@@ -25,7 +25,7 @@ import com.phloc.commons.state.EContinue;
  * A callback interface that is used in several places of the micro type
  * conversion engine.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IMicroTypeConverterCallback
 {

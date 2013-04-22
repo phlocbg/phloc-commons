@@ -41,7 +41,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * A small class hierarchy cache
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public final class ClassHierarchyCache

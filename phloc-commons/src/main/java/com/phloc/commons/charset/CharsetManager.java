@@ -36,7 +36,7 @@ import com.phloc.commons.string.StringHelper;
 /**
  * Whole lotta charset management routines.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class CharsetManager

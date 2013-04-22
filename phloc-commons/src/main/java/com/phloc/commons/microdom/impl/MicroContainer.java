@@ -27,7 +27,7 @@ import com.phloc.commons.microdom.IMicroNode;
 /**
  * Default implementation of the {@link IMicroContainer} interface.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MicroContainer extends AbstractMicroNodeWithChildren implements IMicroContainer
 {

@@ -26,7 +26,7 @@ import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
 /**
  * Base interface for combining any two objects together.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The type of the objects to be combined.
  */

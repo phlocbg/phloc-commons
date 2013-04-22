@@ -28,7 +28,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * independent of the item implementation class. The elements of the tree are
  * not sorted by any means.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        tree item key type
  * @param <DATATYPE>

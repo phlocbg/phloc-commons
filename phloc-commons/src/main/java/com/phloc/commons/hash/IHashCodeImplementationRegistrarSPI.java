@@ -24,7 +24,7 @@ import com.phloc.commons.annotations.IsSPIInterface;
 /**
  * SPI registry interface to implement your custom hashCode implementations.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @IsSPIInterface
 public interface IHashCodeImplementationRegistrarSPI

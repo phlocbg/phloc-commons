@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 /**
  * Default implementation of {@link INameProvider} for {@link IHasName} objects.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class NameProviderFromHasName implements INameProvider <IHasName>
 {

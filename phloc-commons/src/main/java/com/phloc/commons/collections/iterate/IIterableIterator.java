@@ -23,7 +23,7 @@ import java.util.Iterator;
  * This is a merged interface of {@link Iterator} and {@link Iterable} for
  * simpler usage of iterators in the new Java 1.5 "for" constructs.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <ELEMENTTYPE>
  *        The type of object to iterate
  */

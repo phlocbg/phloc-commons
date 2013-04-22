@@ -36,7 +36,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * ID of the stream source is automatically determined from the resource or can
  * be manually passed in.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class ReadableResourceSAXInputSource extends InputSource
 {

@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
  * Interface to implement for checking if two objects are identical. This
  * interface is only used within the {@link EqualsImplementationRegistry}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IEqualsImplementation
 {

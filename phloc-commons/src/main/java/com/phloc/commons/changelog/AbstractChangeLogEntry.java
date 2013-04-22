@@ -27,8 +27,8 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * Base class for all changelog entries
- * 
- * @author philip
+ *
+ * @author Philip Helger
  */
 public abstract class AbstractChangeLogEntry
 {
@@ -36,7 +36,7 @@ public abstract class AbstractChangeLogEntry
 
   /**
    * Constructor.
-   * 
+   *
    * @param aDate
    *        The release date. May not be <code>null</code>.
    */

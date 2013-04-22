@@ -43,7 +43,7 @@ import javax.annotation.concurrent.NotThreadSafe;
  * }</pre></code>
  * </p>
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class ToStringGenerator

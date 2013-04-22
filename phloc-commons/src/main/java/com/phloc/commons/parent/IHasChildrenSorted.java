@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 /**
  * Extends {@link IHasChildren} by indicating that the child items are sorted!
  * 
- * @author philip
+ * @author Philip Helger
  * @param <CHILDTYPE>
  *        The type of the children.
  */

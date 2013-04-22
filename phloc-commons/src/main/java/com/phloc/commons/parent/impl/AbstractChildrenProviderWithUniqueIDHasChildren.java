@@ -25,8 +25,8 @@ import com.phloc.commons.parent.IHasChildren;
  * interface that works with all types that implement {@link IHasChildren}. The
  * {@link #getItemWithID(Object)} method must be implemented by overriding
  * classes.
- * 
- * @author philip
+ *
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        The data type of the keys
  * @param <CHILDTYPE>

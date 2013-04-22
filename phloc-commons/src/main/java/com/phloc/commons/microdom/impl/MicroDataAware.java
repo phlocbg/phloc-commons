@@ -31,7 +31,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Default implementation of the {@link IMicroDataAware} interface.
  * 
- * @author philip
+ * @author Philip Helger
  */
 final class MicroDataAware implements IMicroDataAware, ICloneable <MicroDataAware>
 {

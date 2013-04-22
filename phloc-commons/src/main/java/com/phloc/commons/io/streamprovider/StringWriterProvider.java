@@ -28,7 +28,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * An {@link Writer} provider based on a {@link String}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class StringWriterProvider implements IWriterProvider
 {

@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 /**
  * A callback interface to retrieve {@link Reader} objects.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IReaderProvider
 {

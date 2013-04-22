@@ -24,7 +24,7 @@ import com.phloc.commons.GlobalDebug;
 /**
  * A JUnit test rule that sets global debug and trace flag for a test
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class DebugModeTestRule extends ExternalResource
 {

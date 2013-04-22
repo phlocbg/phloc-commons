@@ -32,7 +32,7 @@ import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
 /**
  * This class is used to cache XML schema objects.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public class XMLSchemaCache extends DefaultSchemaCache

@@ -30,7 +30,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * Object wrapper around a char so that it can be passed a final object but is
  * mutable.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class MutableChar extends Number implements IMutableInteger <MutableChar>

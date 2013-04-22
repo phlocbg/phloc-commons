@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
  * Interface for walking a hierarchy including possibilities to alter they way
  * how the hierarchy is iterated.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The type of object to be iterated.
  */

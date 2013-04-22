@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 /**
  * A simple interface, indicating that an item has direct children.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <CHILDTYPE>
  *        The type of the children.
  */

@@ -49,7 +49,7 @@ import com.phloc.commons.url.URLUtils;
 /**
  * Register the IO specific type converter
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 @IsSPIImplementation

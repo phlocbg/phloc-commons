@@ -42,7 +42,7 @@ import com.phloc.commons.typeconvert.TypeConverterRegistry;
  * The functionality is a special case of the {@link TypeConverterRegistry} as
  * we need a parameter for conversion in this case.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegistry

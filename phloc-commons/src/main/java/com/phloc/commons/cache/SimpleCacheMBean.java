@@ -25,7 +25,7 @@ import com.phloc.commons.state.EChange;
 /**
  * MBean interface for a simple cache
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface SimpleCacheMBean extends IHasSize
 {

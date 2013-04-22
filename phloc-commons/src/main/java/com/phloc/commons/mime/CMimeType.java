@@ -24,7 +24,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 /**
  * Contains a collection of well-known constant MIME types.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class CMimeType

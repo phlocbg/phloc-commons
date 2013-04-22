@@ -50,7 +50,7 @@ import com.phloc.commons.xml.CXML;
 /**
  * The SAX handler used by the {@link MicroReader}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 final class MicroSAXHandler implements EntityResolver, DTDHandler, ContentHandler, ErrorHandler, LexicalHandler
 {

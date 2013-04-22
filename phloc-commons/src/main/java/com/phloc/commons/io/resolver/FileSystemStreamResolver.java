@@ -36,7 +36,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * Implementation of the {@link IInputStreamResolver} and
  * {@link IOutputStreamResolver} interfaces for {@link File} objects.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class FileSystemStreamResolver implements IInputStreamResolver, IOutputStreamResolver

@@ -25,7 +25,7 @@ import com.phloc.commons.IHasStringRepresentation;
 /**
  * Basic interface for special objects having a certain string representation.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IFormattedObject extends IHasStringRepresentation
 {

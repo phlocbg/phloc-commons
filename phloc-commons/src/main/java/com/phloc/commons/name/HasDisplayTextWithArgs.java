@@ -31,7 +31,7 @@ import com.phloc.commons.text.impl.TextFormatter;
  * A special implementation of {@link IHasDisplayText} that encapsulates
  * arguments to be put into the message.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class HasDisplayTextWithArgs implements IHasDisplayText
 {

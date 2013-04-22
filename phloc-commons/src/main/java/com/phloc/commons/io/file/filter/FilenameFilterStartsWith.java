@@ -34,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * implementation is done via {@link String#startsWith(String)} so it is case
  * sensitive.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public final class FilenameFilterStartsWith implements FilenameFilter

@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Default implementation of {@link IStatisticsHandlerKeyedTimer}
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 final class StatisticsHandlerKeyedTimer extends AbstractStatisticsHandlerKeyedNumeric implements

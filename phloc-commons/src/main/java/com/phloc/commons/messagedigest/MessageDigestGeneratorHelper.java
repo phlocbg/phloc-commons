@@ -35,7 +35,7 @@ import com.phloc.commons.string.StringHelper;
 /**
  * Contains helper classes for handling message digests and there results.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class MessageDigestGeneratorHelper

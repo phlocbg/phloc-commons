@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 /**
  * Small enum for left and right
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum ELeftRight implements ILeftRightIndicator
 {

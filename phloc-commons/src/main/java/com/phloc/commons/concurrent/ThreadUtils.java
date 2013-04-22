@@ -30,7 +30,7 @@ import com.phloc.commons.state.ESuccess;
 /**
  * Some thread utility methods.
  *
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class ThreadUtils

@@ -31,7 +31,7 @@ import com.phloc.commons.state.ISuccessIndicator;
  * Interface for an error that can be drilled down to a certain resource (e.g. a
  * document).
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IResourceError extends IHasErrorLevel, IHasDisplayText, ISuccessIndicator, IErrorIndicator
 {

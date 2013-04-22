@@ -37,14 +37,14 @@ import com.phloc.commons.lang.ClassHelper;
  * in here are not strictly obeying to the equals contract, as the
  * implementation classes must not match - only the content is relevant.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ContainerEqualsUtils
 {
   /**
    * This enum differentiates the different meta container types.
    * 
-   * @author philip
+   * @author Philip Helger
    */
   public static enum EContainerType
   {

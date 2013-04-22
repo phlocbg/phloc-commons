@@ -35,7 +35,7 @@ import com.phloc.commons.state.EChange;
  * A dead lock detection timer that checks for dead locks in a certain interval.
  * Uses {@link ThreadDeadlockDetector} internally.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class ThreadDeadlockDetectionTimer

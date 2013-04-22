@@ -29,7 +29,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 /**
  * Get information about the system we're running on.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class SystemHelper

@@ -50,7 +50,7 @@ import com.phloc.commons.xml.CXMLRegEx;
 /**
  * Default implementation of the {@link IMicroElement} interface.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MicroElement extends AbstractMicroNodeWithChildren implements IMicroElement
 {

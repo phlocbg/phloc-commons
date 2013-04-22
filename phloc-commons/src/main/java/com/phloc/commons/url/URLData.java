@@ -35,7 +35,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Default implementation of the {@link IURLData} interface.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class URLData implements IURLData

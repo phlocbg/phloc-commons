@@ -46,7 +46,7 @@ import com.phloc.commons.url.URLUtils;
  * Factory class to create the correct {@link Source} objects for different
  * input types.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class TransformSourceFactory

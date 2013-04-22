@@ -25,7 +25,7 @@ import com.phloc.commons.format.IFormatter;
 /**
  * A formatter that skips a suffix from a string.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class StringSkipSuffixFormatter extends StringSkipPrefixAndSuffixFormatter
 {

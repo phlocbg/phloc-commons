@@ -32,7 +32,7 @@ import com.phloc.commons.tree.withid.BasicTreeItemWithID;
 /**
  * Base implementation of the {@link IFolderTreeItem} interface.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        Key type
  * @param <DATATYPE>

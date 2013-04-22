@@ -27,7 +27,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 /**
  * A secure random generator initialized with another secure random generator.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class VerySecureRandom

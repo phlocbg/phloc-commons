@@ -30,7 +30,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Default implementation of the {@link IMicroComment} interface.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MicroComment extends AbstractMicroNode implements IMicroComment
 {

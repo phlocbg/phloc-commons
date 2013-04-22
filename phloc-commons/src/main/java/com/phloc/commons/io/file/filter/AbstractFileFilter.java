@@ -29,8 +29,8 @@ import com.phloc.commons.filter.IFilter;
  * Abstract base implementation of {@link FileFilter} with some conversion
  * methods. Also implements {@link IFilter} and forwards the calls to the
  * {@link FileFilter} API.
- * 
- * @author philip
+ *
+ * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
 public abstract class AbstractFileFilter implements FileFilter, IFilter <File>

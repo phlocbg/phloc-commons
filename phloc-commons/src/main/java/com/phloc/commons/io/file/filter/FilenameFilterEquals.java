@@ -34,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * implementation is done via {@link String#equals(Object)} so it is case
  * sensitive.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public final class FilenameFilterEquals implements FilenameFilter

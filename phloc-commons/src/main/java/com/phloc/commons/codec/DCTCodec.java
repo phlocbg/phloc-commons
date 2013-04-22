@@ -32,7 +32,7 @@ import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
 /**
  * Decoder for Discrete Cosinus Transformation (DCT)
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class DCTCodec implements IByteArrayDecoder
 {

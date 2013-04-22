@@ -20,7 +20,7 @@ package com.phloc.commons.state;
 /**
  * Simple interface for all objects that can be enabled and disabled.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IEnabledIndicator
 {
