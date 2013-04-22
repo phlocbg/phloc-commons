@@ -27,12 +27,12 @@ import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.apache.maven.plugin.testing.stubs.MavenProjectStub;
 import org.codehaus.plexus.util.ReaderFactory;
 
-public class MyProjectStub extends MavenProjectStub
+public class GenerateDirIndexMojoProjectStub extends MavenProjectStub
 {
   /**
    * Default constructor
    */
-  public MyProjectStub ()
+  public GenerateDirIndexMojoProjectStub ()
   {
     final MavenXpp3Reader pomReader = new MavenXpp3Reader ();
     Model model;
@@ -75,6 +75,6 @@ public class MyProjectStub extends MavenProjectStub
   @Override
   public File getBasedir ()
   {
-    return new File (super.getBasedir () + "/src/test/resources/poms/phloc-schematron-testfiles/");
+    return new File (super.getBasedir () + "/src/test/resources/poms/unittest1/");
   }
 }

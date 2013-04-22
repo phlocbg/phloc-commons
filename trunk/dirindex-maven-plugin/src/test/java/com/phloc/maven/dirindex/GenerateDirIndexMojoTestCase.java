@@ -29,7 +29,7 @@ public class GenerateDirIndexMojoTestCase extends AbstractMojoTestCase
    */
   public void testSomething () throws Exception
   {
-    final File aPOM = getTestFile ("src/test/resources/poms/phloc-schematron-testfiles/pom.xml");
+    final File aPOM = getTestFile ("src/test/resources/poms/unittest1/pom.xml");
     assertNotNull (aPOM);
     assertTrue (aPOM.exists ());
 
