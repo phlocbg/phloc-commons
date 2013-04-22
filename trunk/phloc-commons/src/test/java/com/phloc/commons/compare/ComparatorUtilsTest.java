@@ -27,7 +27,7 @@ import com.phloc.commons.id.MockHasIDString;
 /**
  * Test class for class {@link ComparatorUtils}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ComparatorUtilsTest
 {

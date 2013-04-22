@@ -33,7 +33,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * Specialized version of the {@link ListIterator} interface for a single
  * element.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <ELEMENTTYPE>
  *        The type of the element to be iterated.
  */

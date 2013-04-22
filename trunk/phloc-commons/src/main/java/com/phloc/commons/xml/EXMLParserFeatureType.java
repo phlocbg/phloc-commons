@@ -21,7 +21,7 @@ package com.phloc.commons.xml;
 /**
  * Contains the types of XML parser features.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum EXMLParserFeatureType
 {

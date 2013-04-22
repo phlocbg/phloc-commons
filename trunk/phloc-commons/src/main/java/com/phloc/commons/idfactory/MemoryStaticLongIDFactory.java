@@ -29,7 +29,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * An implementation of {@link ILongIDFactory} using a single static
  * {@link AtomicLong}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public final class MemoryStaticLongIDFactory implements ILongIDFactory

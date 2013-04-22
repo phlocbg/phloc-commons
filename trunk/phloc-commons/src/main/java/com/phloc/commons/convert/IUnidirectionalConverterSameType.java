@@ -22,7 +22,7 @@ package com.phloc.commons.convert;
  * 
  * @param <DATATYPE>
  *        Handled data type
- * @author philip
+ * @author Philip Helger
  */
 public interface IUnidirectionalConverterSameType <DATATYPE> extends IUnidirectionalConverter <DATATYPE, DATATYPE>
 {

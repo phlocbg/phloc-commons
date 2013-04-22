@@ -27,7 +27,7 @@ import com.phloc.commons.string.StringHelper;
 /**
  * Decoder for ASCII Hex encoding
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ASCIIHexCodec implements IByteArrayDecoder
 {

@@ -30,7 +30,7 @@ import com.phloc.commons.io.streamprovider.StringInputStreamProvider;
  * A special input stream provider that takes an existing {@link Node} and
  * converts it to a byte array.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class DOMInputStreamProvider extends StringInputStreamProvider
 {

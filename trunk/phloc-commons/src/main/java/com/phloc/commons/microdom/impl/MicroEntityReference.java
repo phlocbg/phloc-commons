@@ -31,7 +31,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Default implementation of the {@link IMicroEntityReference} interface.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class MicroEntityReference extends AbstractMicroNode implements IMicroEntityReference

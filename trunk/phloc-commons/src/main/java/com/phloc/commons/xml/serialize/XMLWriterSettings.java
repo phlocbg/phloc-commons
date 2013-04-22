@@ -38,7 +38,7 @@ import com.phloc.commons.xml.EXMLVersion;
  * Describes the export settings for the MicroWriter. Defaults to indented and
  * aligned XML in the UTF-8 charset.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWriterSettings>

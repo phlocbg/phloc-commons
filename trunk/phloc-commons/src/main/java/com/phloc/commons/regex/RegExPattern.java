@@ -35,7 +35,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * This class encapsulates a String and a set of options to be used in Pattern
  * compilation
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class RegExPattern

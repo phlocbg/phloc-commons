@@ -22,7 +22,7 @@ import com.phloc.commons.exceptions.LoggedRuntimeException;
 /**
  * Special MicroDOM exception.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MicroException extends LoggedRuntimeException
 {

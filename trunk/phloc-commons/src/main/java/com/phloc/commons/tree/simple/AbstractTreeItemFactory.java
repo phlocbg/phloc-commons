@@ -22,7 +22,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 /**
  * Abstract implementation of the {@link ITreeItemFactory} interface
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        tree item value type
  * @param <ITEMTYPE>

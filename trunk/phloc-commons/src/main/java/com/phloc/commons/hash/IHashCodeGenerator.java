@@ -22,7 +22,7 @@ import com.phloc.commons.IAppendable;
 /**
  * Base interface for hash code generators.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IHashCodeGenerator extends IAppendable <IHashCodeGenerator>
 {

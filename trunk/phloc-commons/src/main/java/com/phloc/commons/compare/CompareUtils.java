@@ -34,7 +34,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * <code>null</code> safe. Also provides secure ways to compare double and float
  * values.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class CompareUtils

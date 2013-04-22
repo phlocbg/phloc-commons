@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Default implementation of {@link IStatisticsHandlerTimer}
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 final class StatisticsHandlerTimer extends AbstractStatisticsHandlerNumeric implements IStatisticsHandlerTimer

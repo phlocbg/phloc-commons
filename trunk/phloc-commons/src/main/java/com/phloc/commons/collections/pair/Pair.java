@@ -31,7 +31,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * want to wrap a single object, look at class
  * {@link com.phloc.commons.mutable.Wrapper}.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATA1TYPE>
  *        First type.
  * @param <DATA2TYPE>

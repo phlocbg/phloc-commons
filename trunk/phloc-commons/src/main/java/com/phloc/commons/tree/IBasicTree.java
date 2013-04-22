@@ -26,7 +26,7 @@ import javax.annotation.Nonnull;
  *        tree item value type
  * @param <ITEMTYPE>
  *        tree item implementation type
- * @author philip
+ * @author Philip Helger
  */
 public interface IBasicTree <DATATYPE, ITEMTYPE extends IBasicTreeItem <DATATYPE, ITEMTYPE>>
 {

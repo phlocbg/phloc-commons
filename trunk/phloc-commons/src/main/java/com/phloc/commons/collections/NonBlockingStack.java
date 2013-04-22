@@ -35,7 +35,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * {@link ArrayList} as the underlying data structure as opposed to
  * {@link java.util.Stack}. This spares us from unnecessary synchronization.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <ELEMENTTYPE>
  *        The type of the elements contained in the stack
  */

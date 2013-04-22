@@ -26,7 +26,7 @@ import com.phloc.commons.state.EChange;
 /**
  * Interface for a very simple Map-like cache.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        Cache key type.
  * @param <VALUETYPE>

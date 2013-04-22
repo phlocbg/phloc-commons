@@ -50,7 +50,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Some utility methods on micro nodes.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class MicroUtils

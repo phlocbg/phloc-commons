@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
  * A simple formatter interface that may be used to format arbitrary objects to
  * a string.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IFormatter
 {

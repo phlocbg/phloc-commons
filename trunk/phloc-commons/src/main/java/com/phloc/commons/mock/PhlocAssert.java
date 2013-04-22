@@ -24,7 +24,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 /**
  * Extensions for the default JUnit assertions.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class PhlocAssert

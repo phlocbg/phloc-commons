@@ -26,7 +26,7 @@ import com.phloc.commons.name.IHasName;
  * Represents the reference to an entity. An example entity is e.g.
  * <code>&euro;</code>.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IMicroEntityReference extends IMicroNode, IHasName
 {

@@ -27,7 +27,7 @@ import javax.annotation.Nullable;
 /**
  * A non-synchronized copy of the class {@link java.io.BufferedReader}.
  * 
- * @author philip
+ * @author Philip Helger
  * @see java.io.BufferedReader
  */
 public class NonBlockingBufferedReader extends Reader

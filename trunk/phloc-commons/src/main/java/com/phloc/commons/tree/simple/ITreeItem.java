@@ -28,7 +28,7 @@ import com.phloc.commons.tree.IBasicTreeItem;
 /**
  * Base interface for simple tree items
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        tree item value type
  * @param <ITEMTYPE>

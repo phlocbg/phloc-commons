@@ -30,7 +30,7 @@ import com.phloc.commons.collections.ContainerHelper;
 /**
  * Define what to do, when an invalid character is to be serialized to XML.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum EXMLIncorrectCharacterHandling
 {

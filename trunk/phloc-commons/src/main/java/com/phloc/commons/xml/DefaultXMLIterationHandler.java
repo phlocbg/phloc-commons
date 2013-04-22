@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 /**
  * Empty implementation of {@link IXMLIterationHandler} that does nothing.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class DefaultXMLIterationHandler implements IXMLIterationHandler
 {

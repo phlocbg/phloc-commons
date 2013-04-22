@@ -26,7 +26,7 @@ import com.phloc.commons.state.ISuccessIndicator;
 /**
  * Represents a set of predefined error codes that can occur in file operations.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum EFileIOErrorCode implements ISuccessIndicator
 {

@@ -34,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * An {@link OutputStream} provider based on a byte array.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class ByteArrayOutputStreamProvider implements IOutputStreamAndWriterProvider
 {

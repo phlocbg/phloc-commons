@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 /**
  * Interface representing an object having a resource error group.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IHasResourceErrorGroup
 {

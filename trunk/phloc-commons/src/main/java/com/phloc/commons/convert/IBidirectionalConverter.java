@@ -25,7 +25,7 @@ package com.phloc.commons.convert;
  *        source type
  * @param <DSTTYPE>
  *        destination type
- * @author philip
+ * @author Philip Helger
  */
 public interface IBidirectionalConverter <SRCTYPE, DSTTYPE>
 {

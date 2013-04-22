@@ -34,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * {@link File} based persisting {@link IIntIDFactory} implementation.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public class FileIntIDFactory extends AbstractPersistingIntIDFactory

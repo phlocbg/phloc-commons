@@ -40,7 +40,7 @@ import com.phloc.commons.xml.XMLHelper;
 /**
  * Converts XML constructs into a string representation.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class XMLEmitterPhloc extends DefaultXMLIterationHandler

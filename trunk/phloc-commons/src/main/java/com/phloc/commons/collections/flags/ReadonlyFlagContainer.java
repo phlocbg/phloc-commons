@@ -34,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * Default implementation of the {@link IReadonlyFlagContainer} based on a hash
  * set.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class ReadonlyFlagContainer implements IReadonlyFlagContainer

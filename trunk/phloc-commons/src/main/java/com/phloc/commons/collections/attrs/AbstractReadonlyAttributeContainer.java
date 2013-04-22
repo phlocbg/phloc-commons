@@ -36,7 +36,7 @@ import com.phloc.commons.typeconvert.TypeConverter;
  * implementation provides a default implementation for all things that can be
  * independently implemented from the underlying data structure.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public abstract class AbstractReadonlyAttributeContainer implements IReadonlyAttributeContainer

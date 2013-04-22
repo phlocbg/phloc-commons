@@ -20,7 +20,7 @@ package com.phloc.commons.mock;
 /**
  * Non-runtime exception for test cases.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class MockException extends Exception implements IMockException
 {

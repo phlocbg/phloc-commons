@@ -27,7 +27,7 @@ import com.phloc.commons.parent.IChildrenProvider;
  * Recursively visit all children provided by a given {@link IChildrenProvider}
  * and call a callback for each visited child.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <CHILDTYPE>
  *        The type of children to walk
  */

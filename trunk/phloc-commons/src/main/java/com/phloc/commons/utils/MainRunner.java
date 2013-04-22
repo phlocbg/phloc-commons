@@ -36,7 +36,7 @@ import com.phloc.commons.timing.StopWatch;
  * A dummy main runner with some basic setup. Structured a bit similar to the
  * Thread class.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MainRunner
 {

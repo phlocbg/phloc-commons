@@ -30,7 +30,7 @@ import com.phloc.commons.charset.CharsetManager;
  * A small helper class for easier usage of the {@link Base64} class without
  * exception catching.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class Base64Helper

@@ -45,7 +45,7 @@ import com.phloc.commons.state.EValidity;
  * Implementation of {@link IMicroTypeConverterRegistrarSPI} for basic types
  * like Boolean, Byte, Integer, AtomicInteger etc.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 @IsSPIImplementation

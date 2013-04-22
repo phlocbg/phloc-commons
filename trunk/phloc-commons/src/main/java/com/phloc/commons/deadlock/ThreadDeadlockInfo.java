@@ -30,7 +30,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Represents information about a single deadlocked thread.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class ThreadDeadlockInfo

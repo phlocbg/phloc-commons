@@ -31,7 +31,7 @@ import com.phloc.commons.string.StringHelper;
  * A special implementation of {@link IConverterTreeXML} that uses the
  * conversion rules stored in the {@link MicroTypeConverterRegistry}.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The data type to be converted
  */

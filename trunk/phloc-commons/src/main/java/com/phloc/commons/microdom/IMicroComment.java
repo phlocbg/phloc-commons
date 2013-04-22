@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 /**
  * Represents a comment node.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IMicroComment extends IMicroNode, IMicroDataAware
 {

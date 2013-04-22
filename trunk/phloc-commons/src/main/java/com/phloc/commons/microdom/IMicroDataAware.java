@@ -27,7 +27,7 @@ import javax.annotation.Nullable;
  * This is a helper interface that allows for setting character data. This is
  * required by text and comment nodes.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IMicroDataAware extends Serializable
 {

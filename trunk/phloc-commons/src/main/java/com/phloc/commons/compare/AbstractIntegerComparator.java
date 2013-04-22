@@ -25,8 +25,8 @@ import javax.annotation.Nullable;
 /**
  * Abstract comparator that handles values that can be represented as long
  * values.
- * 
- * @author philip
+ *
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The data type to be compared. Must somehow have a value that can be
  *        compared as a long value.
@@ -40,7 +40,7 @@ public abstract class AbstractIntegerComparator <DATATYPE> extends AbstractCompa
 
   /**
    * Compare with a special order.
-   * 
+   *
    * @param eSortOrder
    *        The sort order to use. May not be <code>null</code>.
    */
@@ -51,7 +51,7 @@ public abstract class AbstractIntegerComparator <DATATYPE> extends AbstractCompa
 
   /**
    * Comparator with default sort order and a nested comparator.
-   * 
+   *
    * @param aNestedComparator
    *        The nested comparator to be invoked, when the main comparison
    *        resulted in 0.
@@ -63,7 +63,7 @@ public abstract class AbstractIntegerComparator <DATATYPE> extends AbstractCompa
 
   /**
    * Comparator with sort order and a nested comparator.
-   * 
+   *
    * @param eSortOrder
    *        The sort order to use. May not be <code>null</code>.
    * @param aNestedComparator

@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 /**
  * Base interface for all objects having an ID.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <IDTYPE>
  *        The type of the provided ID.
  */

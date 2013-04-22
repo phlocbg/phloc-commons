@@ -27,7 +27,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 /**
  * Utility methods for formatting text using {@link MessageFormat}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class TextFormatter

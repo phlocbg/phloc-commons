@@ -62,7 +62,7 @@ import com.phloc.commons.url.encode.URLParameterEncoder;
 /**
  * URL utilities.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class URLUtils

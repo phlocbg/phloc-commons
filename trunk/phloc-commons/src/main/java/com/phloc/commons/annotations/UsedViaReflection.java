@@ -25,7 +25,7 @@ import java.lang.annotation.RetentionPolicy;
  * Just to indicate that a class is used via reflection and not by direct
  * references.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Retention (RetentionPolicy.CLASS)
 @Documented

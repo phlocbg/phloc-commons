@@ -23,7 +23,7 @@ import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
  * Base marker interface for all ID factories. It's only sense is to group all
  * ID factories with the different types
  * 
- * @author philip
+ * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
 public interface IBaseIDFactory

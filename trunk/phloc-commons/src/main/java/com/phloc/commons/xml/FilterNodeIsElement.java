@@ -32,7 +32,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * An implementation of {@link IFilter} on {@link Node} objects that will only
  * return {@link Element} nodes.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class FilterNodeIsElement implements IFilter <Node>

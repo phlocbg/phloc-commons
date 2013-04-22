@@ -23,7 +23,7 @@ import java.util.concurrent.Callable;
  * This is the same as the {@link Callable} interface but following our naming
  * conventions.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The return type of the call.
  */

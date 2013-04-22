@@ -25,7 +25,7 @@ import javax.xml.bind.ValidationEventHandler;
  * Implementation of {@link IValidationEventHandlerFactory} creating
  * {@link CollectingValidationEventHandler} objects.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class CollectingValidationEventHandlerFactory implements IValidationEventHandlerFactory
 {

@@ -28,7 +28,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * This is a helper class to create an {@link Enumeration} from an existing
  * {@link Iterator}
  * 
- * @author philip
+ * @author Philip Helger
  * @param <ELEMENTTYPE>
  *        Type to be enumerated
  */

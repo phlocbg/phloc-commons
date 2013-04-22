@@ -29,7 +29,7 @@ import com.phloc.commons.version.Version;
 /**
  * This class represents a single release within a changelog.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class ChangeLogRelease extends AbstractChangeLogEntry

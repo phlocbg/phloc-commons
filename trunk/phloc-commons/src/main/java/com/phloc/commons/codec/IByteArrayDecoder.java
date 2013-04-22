@@ -24,7 +24,7 @@ import com.phloc.commons.encode.IDecoder;
 /**
  * Interface for a single decoder.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IByteArrayDecoder extends IDecoder <byte []>
 {

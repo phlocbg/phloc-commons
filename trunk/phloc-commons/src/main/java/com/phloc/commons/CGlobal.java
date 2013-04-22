@@ -30,7 +30,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
  * A class declaring system wide constants. Its main use is giving a semantic
  * meaning to constant values.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class CGlobal

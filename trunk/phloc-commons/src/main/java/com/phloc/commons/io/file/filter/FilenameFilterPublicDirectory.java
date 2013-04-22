@@ -31,7 +31,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * A filter that accepts all public directories (directories who's name does not
  * start with a dot!)
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public final class FilenameFilterPublicDirectory implements FilenameFilter

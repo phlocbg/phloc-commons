@@ -25,7 +25,7 @@ import com.phloc.commons.state.EChange;
 /**
  * Interface for a writable pair.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATA1TYPE>
  *        First type.
  * @param <DATA2TYPE>

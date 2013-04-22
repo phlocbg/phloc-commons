@@ -24,7 +24,7 @@ import javax.annotation.Nonnull;
 /**
  * Base interface for objects having a country locale.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IHasCountry
 {

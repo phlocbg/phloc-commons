@@ -30,7 +30,7 @@ import com.phloc.commons.xml.serialize.XMLWriterSettings;
  * A special input stream provider that takes an existing {@link IMicroNode} and
  * converts it to a byte array.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class MicroDOMInputStreamProvider extends StringInputStreamProvider
 {

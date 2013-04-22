@@ -33,7 +33,7 @@ import com.phloc.commons.string.StringHelper;
 /**
  * Helper class for rounding numeric values in a flexible way.
  *
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class RoundHelper

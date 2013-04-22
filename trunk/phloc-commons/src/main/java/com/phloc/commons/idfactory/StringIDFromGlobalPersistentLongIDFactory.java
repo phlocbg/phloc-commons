@@ -27,7 +27,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * long supplied from {@link GlobalIDFactory#getNewPersistentLongID()} to create
  * unique IDs.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class StringIDFromGlobalPersistentLongIDFactory implements IStringIDFactory
 {

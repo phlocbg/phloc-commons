@@ -72,7 +72,7 @@ import com.phloc.commons.string.StringHelper;
  * stuff is quite <code>null</code> aware, where on writing an output stream may
  * never be null.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class StreamUtils

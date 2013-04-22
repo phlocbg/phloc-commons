@@ -31,7 +31,7 @@ import com.phloc.commons.mock.IMockException;
  * This class should be run upon VM initialization. This should be the very
  * first thing to run.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class VirtualMachineInitializer
 {

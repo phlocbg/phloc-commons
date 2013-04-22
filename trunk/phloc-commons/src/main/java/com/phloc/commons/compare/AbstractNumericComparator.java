@@ -26,7 +26,7 @@ import javax.annotation.Nullable;
  * Abstract comparator that handles values that can be represented as double
  * values.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The data type to be compared. Must somehow have a value that can be
  *        compared as a double value.

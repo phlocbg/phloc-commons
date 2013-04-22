@@ -32,7 +32,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * A wrapper around an {@link InputStream} that debugs read and skip actions.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class DebugInputStream extends WrappedInputStream
 {

@@ -39,7 +39,7 @@ import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
 /**
  * Utility class for creating XML DOM documents.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class XMLFactory
 {

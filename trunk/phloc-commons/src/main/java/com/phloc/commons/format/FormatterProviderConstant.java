@@ -25,7 +25,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * Implementation of the {@link IFormatterProvider} interface always returning a
  * constant value.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class FormatterProviderConstant implements IFormatterProvider
 {

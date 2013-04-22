@@ -29,7 +29,7 @@ import com.phloc.commons.regex.RegExPool;
  * Source:
  * http://cpansearch.perl.org/src/TJMATHER/XML-RegExp-0.03/lib/XML/RegExp.pm
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class CXMLRegEx

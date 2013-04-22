@@ -24,7 +24,7 @@ import com.phloc.commons.annotations.IsSPIInterface;
 /**
  * SPI registry interface to implement your custom equals implementations.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @IsSPIInterface
 public interface IEqualsImplementationRegistrarSPI

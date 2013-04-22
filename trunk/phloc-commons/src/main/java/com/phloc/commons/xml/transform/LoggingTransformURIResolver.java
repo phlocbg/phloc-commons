@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 /**
  * java.xml.transform {@link URIResolver} that logs to a logger.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public class LoggingTransformURIResolver extends AbstractTransformURIResolver

@@ -29,7 +29,7 @@ import com.phloc.commons.collections.ContainerHelper;
 /**
  * Some pair utils
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class PairUtils

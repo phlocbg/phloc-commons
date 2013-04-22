@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
  * This interface is just a hull for a node that has no properties itself but
  * contains children. This is a node representing a list of nodes.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IMicroContainer extends IMicroNodeWithChildren
 {

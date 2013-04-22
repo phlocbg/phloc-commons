@@ -27,7 +27,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * This class encapsulates all data provided for resource resolving.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class LSResourceData

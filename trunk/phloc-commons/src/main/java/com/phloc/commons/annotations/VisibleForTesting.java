@@ -24,7 +24,7 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * Just to indicate that a method has only increased visibility for testing.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Retention (RetentionPolicy.SOURCE)
 @Documented

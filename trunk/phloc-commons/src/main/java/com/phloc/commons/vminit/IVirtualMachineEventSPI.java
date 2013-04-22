@@ -24,7 +24,7 @@ import com.phloc.commons.annotations.IsSPIInterface;
  * manually call {@link VirtualMachineInitializer#runInitialization()} to get
  * this SPI up and running!
  * 
- * @author philip
+ * @author Philip Helger
  */
 @IsSPIInterface
 public interface IVirtualMachineEventSPI

@@ -22,7 +22,7 @@ import javax.annotation.Nonnegative;
 /**
  * Interface representing an object having multiple objects with an error level
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IHasErrorLevels
 {

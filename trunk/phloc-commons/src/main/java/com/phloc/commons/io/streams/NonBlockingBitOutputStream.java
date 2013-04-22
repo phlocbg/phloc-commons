@@ -43,7 +43,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * For a thread-safe version see {@link BitOutputStream}
  * 
  * @author Andreas Jakl
- * @author philip
+ * @author Philip Helger
  */
 public class NonBlockingBitOutputStream implements Closeable, Flushable
 {

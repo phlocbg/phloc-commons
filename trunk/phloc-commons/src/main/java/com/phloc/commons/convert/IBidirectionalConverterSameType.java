@@ -22,7 +22,7 @@ package com.phloc.commons.convert;
  * 
  * @param <DATATYPE>
  *        Handled data type
- * @author philip
+ * @author Philip Helger
  */
 public interface IBidirectionalConverterSameType <DATATYPE> extends IBidirectionalConverter <DATATYPE, DATATYPE>
 {

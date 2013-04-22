@@ -44,7 +44,7 @@ import com.phloc.commons.typeconvert.TypeConverter;
  * Basic implementation class for the micro document object model. It overrides
  * all methods required for correct parent/child handling.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public abstract class AbstractMicroNodeWithChildren extends AbstractMicroNode implements IMicroNodeWithChildren
 {

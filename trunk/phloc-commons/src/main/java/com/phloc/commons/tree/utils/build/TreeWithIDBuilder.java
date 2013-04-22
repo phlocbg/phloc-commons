@@ -39,7 +39,7 @@ import com.phloc.commons.tree.withid.DefaultTreeWithID;
 /**
  * Utility classes for building a tree from flat collections.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class TreeWithIDBuilder

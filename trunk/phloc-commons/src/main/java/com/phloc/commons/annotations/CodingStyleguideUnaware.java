@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
  * This is an indicator, that an object is aware to break the style guide. This
  * may be evaluated in coding style guide checks.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Retention (RetentionPolicy.CLASS)
 @Target ({ ElementType.TYPE,

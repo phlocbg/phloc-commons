@@ -32,7 +32,7 @@ import com.phloc.commons.tree.IBasicTreeItem;
  * A specialized walker that iterates all elements in a tree and calls a
  * callback method.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class TreeWalkerDynamic

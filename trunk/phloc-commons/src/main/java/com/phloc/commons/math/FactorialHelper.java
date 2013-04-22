@@ -28,7 +28,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 /**
  * Smart class for calculating factorials.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class FactorialHelper
@@ -86,7 +86,7 @@ public final class FactorialHelper
    * Split algorithm for factorials.<br>
    * Based on http://www.luschny.de/math/factorial/java/FactorialSplit.java.html
    * 
-   * @author philip
+   * @author Philip Helger
    */
   private static final class FactorialSplit
   {

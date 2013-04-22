@@ -20,7 +20,7 @@ package com.phloc.commons.id;
 /**
  * Base interface for all objects having a long ID.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IHasSimpleLongID
 {

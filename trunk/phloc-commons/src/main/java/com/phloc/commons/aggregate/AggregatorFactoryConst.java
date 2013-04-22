@@ -25,7 +25,7 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * Implementation if {@link IAggregatorFactory} with a constant instance
- * @author philip
+ * @author Philip Helger
  *
  * @param <SRCTYPE> Aggregator source type
  * @param <DSTTYPE> Aggregator destination type

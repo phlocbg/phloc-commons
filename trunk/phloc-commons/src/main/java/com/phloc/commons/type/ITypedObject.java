@@ -22,7 +22,7 @@ import com.phloc.commons.id.IHasID;
 /**
  * Base interface for objects having a type and an ID.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <IDTYPE>
  *        The type of the ID.
  */

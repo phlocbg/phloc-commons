@@ -22,7 +22,7 @@ import java.util.Set;
 /**
  * Interface for a multi map that uses a {@link Set} for the storage.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        Key type
  * @param <VALUETYPE>

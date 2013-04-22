@@ -22,7 +22,7 @@ import java.io.IOException;
 /**
  * IO exception for test cases.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class MockIOException extends IOException implements IMockException
 {

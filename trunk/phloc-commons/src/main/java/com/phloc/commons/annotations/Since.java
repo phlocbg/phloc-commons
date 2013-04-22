@@ -24,7 +24,7 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * A code comment for elements that were added at a specific version
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Retention (RetentionPolicy.CLASS)
 @Documented

@@ -26,7 +26,7 @@ import com.phloc.commons.compare.ESortOrder;
 /**
  * Comparator comparing {@link IReadonlyPair} objects by the first element
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATA1TYPE>
  *        pair first type
  * @param <DATA2TYPE>

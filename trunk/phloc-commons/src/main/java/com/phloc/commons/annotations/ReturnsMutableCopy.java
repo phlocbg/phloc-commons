@@ -29,7 +29,7 @@ import java.lang.annotation.Target;
  * annotation indicates a copy is used, whereas {@link ReturnsMutableObject}
  * means that the internal contained is returned <b>and</b> is mutable!
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Retention (RetentionPolicy.CLASS)
 @Target ({ ElementType.METHOD })

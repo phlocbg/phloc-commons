@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 /**
  * A fuzzy type converter provider. Implemented as a singleton.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class TypeConverterProviderFuzzy implements ITypeConverterProvider
 {

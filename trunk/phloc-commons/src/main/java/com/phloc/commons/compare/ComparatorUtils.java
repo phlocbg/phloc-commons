@@ -28,7 +28,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 /**
  * Helper class to easily create commonly used {@link Comparator} objects.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class ComparatorUtils

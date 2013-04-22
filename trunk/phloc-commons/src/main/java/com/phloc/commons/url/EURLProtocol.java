@@ -27,7 +27,7 @@ import com.phloc.commons.annotations.Nonempty;
  * Should be extended to the list defined at <a
  * href="http://www.iana.org/assignments/uri-schemes.html">the IANA</a>
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum EURLProtocol implements IURLProtocol
 {

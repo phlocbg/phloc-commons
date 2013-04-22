@@ -27,7 +27,7 @@ import com.phloc.commons.lang.EnumHelper;
 /**
  * Represents the possible actions in a change log.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum EChangeLogAction implements IHasID <String>
 {

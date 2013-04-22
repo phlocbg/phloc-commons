@@ -38,7 +38,7 @@ import com.phloc.commons.state.EChange;
 /**
  * This is the main dead lock detector, based on JMX {@link ThreadMXBean}
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class ThreadDeadlockDetector

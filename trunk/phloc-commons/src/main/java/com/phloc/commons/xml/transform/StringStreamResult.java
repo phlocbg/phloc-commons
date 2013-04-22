@@ -30,7 +30,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * Special {@link StreamResult} implementation that writes to {@link String}
  * objects.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public class StringStreamResult extends StreamResult implements IHasStringRepresentation

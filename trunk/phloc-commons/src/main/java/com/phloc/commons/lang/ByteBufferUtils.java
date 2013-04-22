@@ -28,7 +28,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 /**
  * Contains some {@link ByteBuffer} utility methods.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class ByteBufferUtils

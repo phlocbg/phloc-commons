@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 /**
  * Modifying interface of {@link StatisticsHandlerKeyedTimerMBean}
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IStatisticsHandlerKeyedTimer extends StatisticsHandlerKeyedTimerMBean
 {

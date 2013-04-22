@@ -31,7 +31,7 @@ import com.phloc.commons.microdom.IMicroNode;
 /**
  * Class for recursively visiting all elements of a micro node
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class MicroRecursiveIterator implements IIterableIterator <IMicroNode>
 {

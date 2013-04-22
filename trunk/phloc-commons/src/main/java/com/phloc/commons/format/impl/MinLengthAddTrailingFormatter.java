@@ -29,7 +29,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * A string formatter that ensures that a string has a minimum length by filling
  * the remaining chars with a custom character at the end (trailing).
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MinLengthAddTrailingFormatter extends AbstractStringFormatter
 {

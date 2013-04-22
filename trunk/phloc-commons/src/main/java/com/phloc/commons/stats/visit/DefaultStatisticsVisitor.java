@@ -30,7 +30,7 @@ import com.phloc.commons.stats.IStatisticsHandlerTimer;
  * Default implementation of the {@link IStatisticsVisitor} interface that does
  * nothing.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class DefaultStatisticsVisitor implements IStatisticsVisitor
 {

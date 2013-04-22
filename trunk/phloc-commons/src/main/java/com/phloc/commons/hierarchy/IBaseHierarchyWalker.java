@@ -22,7 +22,7 @@ import javax.annotation.Nonnegative;
 /**
  * Base interface for iterating a hierarchy.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IBaseHierarchyWalker
 {

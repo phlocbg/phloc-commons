@@ -42,7 +42,7 @@ import com.phloc.commons.priviledged.PrivilegedActionSystemSetProperty;
 /**
  * This class wraps all the Java system properties like version number etc.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class SystemProperties

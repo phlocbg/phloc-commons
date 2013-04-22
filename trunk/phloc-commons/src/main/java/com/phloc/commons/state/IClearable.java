@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
  * Basic interface for the common action of resetting an objects contents to the
  * initial state.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IClearable
 {

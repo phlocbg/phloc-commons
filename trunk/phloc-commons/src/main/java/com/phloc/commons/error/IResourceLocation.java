@@ -25,7 +25,7 @@ import com.phloc.commons.IHasStringRepresentation;
 /**
  * Interface indication the position of something within a single resource
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IResourceLocation extends IHasStringRepresentation
 {

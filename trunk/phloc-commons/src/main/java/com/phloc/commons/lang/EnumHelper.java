@@ -39,7 +39,7 @@ import com.phloc.commons.state.EChange;
 /**
  * Some enum utility methods.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class EnumHelper

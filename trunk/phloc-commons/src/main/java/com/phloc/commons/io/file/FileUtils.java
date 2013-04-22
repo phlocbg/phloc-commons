@@ -63,7 +63,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Miscellaneous file utility methods.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class FileUtils

@@ -28,7 +28,7 @@ import com.phloc.commons.string.StringHelper;
 /**
  * All available micro DOM events.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum EMicroEvent implements IHasID <String>
 {

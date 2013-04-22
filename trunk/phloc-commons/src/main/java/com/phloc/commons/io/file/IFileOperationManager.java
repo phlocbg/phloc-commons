@@ -27,7 +27,7 @@ import javax.annotation.Nullable;
  * Interface for a manager operating on the file system. Is implemented by
  * {@link FileOperationManager}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IFileOperationManager extends Serializable
 {

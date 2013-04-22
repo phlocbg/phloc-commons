@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 /**
  * This class should be used when an error occurs in the initialization phase.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class InitializationException extends RuntimeException
 {

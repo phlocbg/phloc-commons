@@ -26,7 +26,7 @@ import com.phloc.commons.state.EContinue;
 /**
  * Simple notification interface.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The type of object that is changed
  */

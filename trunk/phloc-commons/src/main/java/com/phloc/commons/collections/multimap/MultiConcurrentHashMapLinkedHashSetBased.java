@@ -31,7 +31,7 @@ import javax.annotation.concurrent.NotThreadSafe;
  * values.<br>
  * Important note: <code>null</code> keys are not allowed here!
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        key type
  * @param <VALUETYPE>

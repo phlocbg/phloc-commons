@@ -29,7 +29,7 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
  * A special namespace context interface that allows the iteration of the
  * contained mappings.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
 public interface IIterableNamespaceContext extends NamespaceContext

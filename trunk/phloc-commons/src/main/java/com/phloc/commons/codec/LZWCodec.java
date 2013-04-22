@@ -42,7 +42,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * A single LZW node
  * 
- * @author philip
+ * @author Philip Helger
  */
 // ESCA-JAVA0076:
 final class LZWNode
@@ -257,7 +257,7 @@ final class LZWEncodeDictionary extends AbstractLZWDictionary
 /**
  * Encoder and decoder for the LZW algorithm
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class LZWCodec implements ICodec
 {

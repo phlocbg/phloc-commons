@@ -29,7 +29,7 @@ import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
 /**
  * Base interface for an abstract readable resource.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
 public interface IResourceBase extends Serializable

@@ -36,7 +36,7 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
  * {@link ServiceLoader} helper class.
  * 
  * @author boris
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class ServiceLoaderUtils

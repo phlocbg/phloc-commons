@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
  * This interface can be used to generically resolved children of a certain
  * object.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        The key type
  * @param <CHILDTYPE>

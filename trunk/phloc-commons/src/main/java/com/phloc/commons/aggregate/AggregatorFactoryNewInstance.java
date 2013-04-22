@@ -29,7 +29,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Factory for new aggregator objects. Holds a hard reference to the class.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <SRCTYPE>
  *        Aggregator in type
  * @param <DSTTYPE>

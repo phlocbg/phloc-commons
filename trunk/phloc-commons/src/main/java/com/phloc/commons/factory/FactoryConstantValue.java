@@ -27,7 +27,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Implementation of {@link IFactory} that returns a constant value
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The return type of the factory
  */

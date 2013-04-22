@@ -38,7 +38,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Represents a namespace context a 1:n (namespace:prefix) mapping.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public class MapBasedNamespaceContext extends AbstractNamespaceContext

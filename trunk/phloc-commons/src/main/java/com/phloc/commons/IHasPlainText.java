@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
  * Base interface for objects having a plain text representation. This is useful
  * for search indexing and searching.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IHasPlainText
 {

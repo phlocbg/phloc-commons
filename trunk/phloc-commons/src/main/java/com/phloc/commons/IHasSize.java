@@ -22,7 +22,7 @@ import javax.annotation.Nonnegative;
 /**
  * Base interface for all objects having a certain size.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IHasSize
 {

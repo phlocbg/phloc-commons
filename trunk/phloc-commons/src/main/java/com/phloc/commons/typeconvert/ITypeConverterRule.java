@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
  * Flexible type converter that can handle multiple source and/or destination
  * classes.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface ITypeConverterRule extends ITypeConverter
 {
@@ -31,7 +31,7 @@ public interface ITypeConverterRule extends ITypeConverter
    * Define the sub types of the rules. The order is the sub type in which they
    * are evaluated.
    * 
-   * @author philip
+   * @author Philip Helger
    */
   enum ESubType
   {

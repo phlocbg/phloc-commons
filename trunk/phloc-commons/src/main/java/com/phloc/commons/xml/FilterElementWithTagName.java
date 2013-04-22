@@ -32,7 +32,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * An implementation of {@link IFilter} on {@link Element} objects that will
  * only return elements with a certain tag name and without a namespace URI.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class FilterElementWithTagName implements IFilter <Element>

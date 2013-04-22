@@ -27,7 +27,7 @@ import com.phloc.commons.tree.withid.unique.ITreeItemWithUniqueIDFactory;
 /**
  * A factory interface that creates tree items.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        Key type
  * @param <DATATYPE>

@@ -28,7 +28,7 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
  * Base interface for a message digest generator (using hash algorithms like MD5
  * or SHA 512)
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IMessageDigestGenerator
 {

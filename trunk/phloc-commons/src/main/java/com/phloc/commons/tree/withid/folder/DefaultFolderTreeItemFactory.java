@@ -28,7 +28,7 @@ import com.phloc.commons.combine.ICombinator;
 /**
  * The default folder tree item factory implementation.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        Key type
  * @param <DATATYPE>

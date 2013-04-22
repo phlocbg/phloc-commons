@@ -25,7 +25,7 @@ import com.phloc.commons.tree.withid.DefaultTreeItemWithID;
 /**
  * A special tree item factory that maintains a unique ID over all items!
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public class DefaultTreeItemWithUniqueIDFactory <KEYTYPE, DATATYPE> extends

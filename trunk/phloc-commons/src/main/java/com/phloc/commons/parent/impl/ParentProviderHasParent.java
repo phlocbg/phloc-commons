@@ -26,7 +26,7 @@ import com.phloc.commons.parent.IParentProvider;
  * A standard implementation of the {@link IParentProvider} interface that works
  * with all types that implement {@link IHasParent}.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <PARENTTYPE>
  *        The data type of the parent object.
  */

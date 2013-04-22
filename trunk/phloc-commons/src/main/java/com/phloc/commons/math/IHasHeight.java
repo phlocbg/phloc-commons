@@ -22,7 +22,7 @@ import javax.annotation.Nonnegative;
 /**
  * Interface for objects having a height.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IHasHeight
 {

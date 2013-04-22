@@ -31,7 +31,7 @@ import com.phloc.commons.collections.ArrayHelper;
  * Defines the most common Byte Order Markers for Unicode encoded text files.<br>
  * Source: http://de.wikipedia.org/wiki/Byte_Order_Mark
  * 
- * @author philip
+ * @author Philip Helger
  */
 // ESCA-JAVA0076:
 public enum EUnicodeBOM implements IHasByteSize

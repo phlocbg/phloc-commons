@@ -23,7 +23,7 @@ import javax.annotation.Nonnegative;
  * Base interface for all components having a size. This may apply to files or
  * in-memory data structures but not to collections (list, set, map, ...).
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IHasByteSize
 {

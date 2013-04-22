@@ -35,7 +35,7 @@ import com.phloc.commons.state.EFinish;
  * characters/string to a byte sequence in a certain charset. This class is not
  * thread-safe!
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class StringEncoder

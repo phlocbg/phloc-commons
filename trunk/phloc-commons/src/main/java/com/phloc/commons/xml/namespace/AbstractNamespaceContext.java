@@ -31,7 +31,7 @@ import com.phloc.commons.collections.iterate.SingleElementIterator;
  * Represents an abstract namespace context that does the predefined mapping as
  * stated in the Javadoc.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public abstract class AbstractNamespaceContext implements IIterableNamespaceContext, Serializable
 {

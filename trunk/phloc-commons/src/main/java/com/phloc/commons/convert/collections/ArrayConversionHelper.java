@@ -30,7 +30,7 @@ import com.phloc.commons.convert.IUnidirectionalConverter;
 /**
  * This utility class provides conversions from array objects.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class ArrayConversionHelper

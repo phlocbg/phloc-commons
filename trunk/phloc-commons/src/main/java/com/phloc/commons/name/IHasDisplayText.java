@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 /**
  * Base interface for objects that have a locale <b>dependent</b> display name.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IHasDisplayText
 {

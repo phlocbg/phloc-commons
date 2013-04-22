@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 /**
  * A special privileged object, that calls <code>System.setProperty</code>
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class PrivilegedActionSystemSetProperty implements PrivilegedAction <String>
 {

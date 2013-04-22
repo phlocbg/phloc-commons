@@ -33,7 +33,7 @@ import com.phloc.commons.collections.ArrayHelper;
 /**
  * Wrapper for an {@link OutputStream} around a {@link ByteBuffer}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class ByteBufferOutputStream extends OutputStream
 {

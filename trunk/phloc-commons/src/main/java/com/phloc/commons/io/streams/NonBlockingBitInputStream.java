@@ -38,7 +38,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * For a thread-safe version see {@link BitInputStream}
  * 
  * @author Andreas Jakl
- * @author philip
+ * @author Philip Helger
  */
 public class NonBlockingBitInputStream implements Closeable
 {

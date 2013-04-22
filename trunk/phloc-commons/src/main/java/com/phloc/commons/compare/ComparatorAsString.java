@@ -30,7 +30,7 @@ import com.phloc.commons.string.StringHelper;
  * A simple collation aware comparator that compares objects by their "toString"
  * representation.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class ComparatorAsString extends AbstractCollationComparator <Object>
 {

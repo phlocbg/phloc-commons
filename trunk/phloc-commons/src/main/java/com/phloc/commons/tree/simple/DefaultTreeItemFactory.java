@@ -24,7 +24,7 @@ import javax.annotation.concurrent.NotThreadSafe;
  * Implementation of the {@link ITreeItemFactory} for {@link DefaultTreeItem}
  * implementation
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        tree item value type
  */

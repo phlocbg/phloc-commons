@@ -27,7 +27,7 @@ import javax.annotation.Nonnull;
 /**
  * A non-synchronized copy of the class {@link java.io.BufferedOutputStream}.
  * 
- * @author philip
+ * @author Philip Helger
  * @see java.io.BufferedOutputStream
  */
 public class NonBlockingBufferedOutputStream extends FilterOutputStream

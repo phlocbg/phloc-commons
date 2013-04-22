@@ -45,7 +45,7 @@ import com.phloc.commons.xml.serialize.XMLWriterSettings;
 /**
  * Utility class for serializing micro document objects.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class MicroWriter

@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
  * A dummy implementation of {@link IUnidirectionalConverterSameType} that uses
  * the input object as the output object.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The data type to be converted
  */

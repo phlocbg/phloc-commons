@@ -24,7 +24,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 /**
  * This class contains constants for the use of changelogs.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class CChangeLog

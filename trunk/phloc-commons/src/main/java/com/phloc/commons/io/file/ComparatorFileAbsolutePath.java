@@ -29,7 +29,7 @@ import com.phloc.commons.compare.AbstractCollationComparator;
 /**
  * Sort files by their absolute path name.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class ComparatorFileAbsolutePath extends AbstractCollationComparator <File>

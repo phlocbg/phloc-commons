@@ -26,7 +26,7 @@ import com.phloc.commons.version.IHasVersion;
 /**
  * Represents a single license.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface ILicense extends IHasID <String>, IHasDisplayName, IHasVersion
 {

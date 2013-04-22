@@ -30,7 +30,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * A wrapper around another {@link InputStream}. Pass through of all
  * {@link InputStream} methods.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class WrappedInputStream extends InputStream
 {

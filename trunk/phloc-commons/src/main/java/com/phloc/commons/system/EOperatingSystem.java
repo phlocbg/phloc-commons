@@ -29,7 +29,7 @@ import com.phloc.commons.name.IHasDisplayName;
 /**
  * This enumeration is used to determine the currently running Operating system.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum EOperatingSystem implements IHasDisplayName
 {

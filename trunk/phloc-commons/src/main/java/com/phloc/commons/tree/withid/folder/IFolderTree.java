@@ -24,7 +24,7 @@ import com.phloc.commons.tree.withid.unique.ITreeWithGlobalUniqueID;
 /**
  * Base interface for a simple tree.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        Key type
  * @param <DATATYPE>

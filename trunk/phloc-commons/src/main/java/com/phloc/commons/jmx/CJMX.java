@@ -24,7 +24,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 /**
  * Constants for JMX usage
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class CJMX

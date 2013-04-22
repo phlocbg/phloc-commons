@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 /**
  * Small enum for manager actions to indicate success or failure.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum ESuccess implements ISuccessIndicator
 {

@@ -31,7 +31,7 @@ import java.lang.annotation.Target;
  * present. If this annotation is used, it implies that the semantics of
  * {@link UsedViaReflection} also apply.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Retention (RetentionPolicy.CLASS)
 @Target ({ ElementType.TYPE })

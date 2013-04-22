@@ -27,7 +27,7 @@ import com.phloc.commons.lang.EnumHelper;
 /**
  * Represents the category of a single change log entry.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum EChangeLogCategory implements IHasID <String>
 {

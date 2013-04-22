@@ -27,7 +27,7 @@ import com.phloc.commons.IHasSize;
  * It only defines the read-access methods, to allow for immutable
  * implementations.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface ISimpleMultiLingualText extends ITextProvider, IHasLocales, IHasSize
 {

@@ -36,7 +36,7 @@ import com.phloc.commons.tree.withid.unique.BasicTreeWithGlobalUniqueID;
  *        the collection type consisting of value elements
  * @param <ITEMTYPE>
  *        the implementation item type
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public class BasicFolderTree <KEYTYPE, DATATYPE, COLLTYPE extends Collection <DATATYPE>, ITEMTYPE extends BasicFolderTreeItem <KEYTYPE, DATATYPE, COLLTYPE, ITEMTYPE>> extends

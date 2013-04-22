@@ -48,7 +48,7 @@ import com.phloc.commons.text.ITextProvider;
 /**
  * An in-memory implementation of the {@link ITextProvider} interface.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class TextProvider extends AbstractTextProvider implements ISimpleMultiLingualText
 {

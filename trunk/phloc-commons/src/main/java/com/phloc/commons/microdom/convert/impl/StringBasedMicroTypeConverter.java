@@ -29,7 +29,7 @@ import com.phloc.commons.typeconvert.TypeConverter;
  * An implementation if {@link IMicroTypeConverter} that uses a regular type
  * converter conversion from and to string for conversion.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class StringBasedMicroTypeConverter implements IMicroTypeConverter
 {

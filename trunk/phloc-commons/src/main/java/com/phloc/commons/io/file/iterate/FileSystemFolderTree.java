@@ -38,7 +38,7 @@ import com.phloc.commons.tree.withid.folder.DefaultFolderTreeItem;
  * Represents a folder tree with the file system contents. This structure is
  * eagerly filled!
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public class FileSystemFolderTree extends DefaultFolderTree <String, File, List <File>>

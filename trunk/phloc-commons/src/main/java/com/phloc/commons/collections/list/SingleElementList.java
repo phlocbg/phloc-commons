@@ -44,7 +44,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * Implementation of the {@link List} interface handling exactly one element and
  * no more!
  * 
- * @author philip
+ * @author Philip Helger
  * @param <ELEMENTTYPE>
  *        The type of the element in the list
  */

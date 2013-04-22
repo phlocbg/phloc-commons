@@ -56,7 +56,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * This class contains multiple XML utility methods.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class XMLHelper

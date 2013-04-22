@@ -31,7 +31,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
  * "new DateFormatSymbols (Locale)". For Java >= 1.6
  * "DateFormatSymbols.getInstance (Locale)" is more suitable!
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class DateFormatSymbolsFactory

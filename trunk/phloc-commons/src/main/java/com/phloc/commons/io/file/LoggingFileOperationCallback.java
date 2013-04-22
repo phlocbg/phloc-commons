@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
 /**
  * A logging implementation of the {@link IFileOperationCallback} interface.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class LoggingFileOperationCallback implements IFileOperationCallback
 {

@@ -34,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * using an interface, implementers are forced to use exactly this
  * implementation class.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public class ObjectType implements Comparable <ObjectType>, Serializable

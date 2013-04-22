@@ -28,7 +28,7 @@ import java.lang.annotation.Target;
  * soft migration is something that migrates data on the fly and is usually
  * required only for one update.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Retention (RetentionPolicy.CLASS)
 @Target ({ ElementType.TYPE, ElementType.METHOD, ElementType.CONSTRUCTOR, ElementType.ANNOTATION_TYPE })

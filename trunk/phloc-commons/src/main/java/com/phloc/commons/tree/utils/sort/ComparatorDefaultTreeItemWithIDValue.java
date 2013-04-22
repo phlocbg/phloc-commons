@@ -27,7 +27,7 @@ import com.phloc.commons.tree.withid.DefaultTreeItemWithID;
  * Comparator for sorting {@link DefaultTreeItemWithID} items by their value
  * using an explicit {@link Comparator}.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        tree item value type
  * @deprecated Use {@link ComparatorDefaultTreeItemWithIDData} instead

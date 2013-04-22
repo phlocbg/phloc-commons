@@ -30,7 +30,7 @@ import com.phloc.commons.hash.IHashCodeImplementationRegistry;
  * Implementation of {@link IHashCodeImplementationRegistrarSPI} for
  * {@link JAXBElement}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @IsSPIImplementation
 public final class JAXBHashCodeImplementationRegistrarSPI implements IHashCodeImplementationRegistrarSPI

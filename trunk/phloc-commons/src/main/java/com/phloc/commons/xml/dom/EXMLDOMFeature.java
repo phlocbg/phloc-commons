@@ -26,7 +26,7 @@ import com.phloc.commons.id.IHasID;
  * Represents different DOM features.<br>
  * See http://www.w3.org/TR/DOM-Level-3-Core/core.html#DOMFeatures
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum EXMLDOMFeature implements IHasID <String>
 {

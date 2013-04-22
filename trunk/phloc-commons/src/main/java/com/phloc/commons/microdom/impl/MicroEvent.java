@@ -29,7 +29,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Default implementation of the {@link IMicroEvent} interface.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class MicroEvent implements IMicroEvent

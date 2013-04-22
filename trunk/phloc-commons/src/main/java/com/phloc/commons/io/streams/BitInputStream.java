@@ -34,7 +34,7 @@ import javax.annotation.Nonnull;
  * For a non-blocking version see {@link NonBlockingBitInputStream}.
  * 
  * @author Andreas Jakl
- * @author philip
+ * @author Philip Helger
  */
 public class BitInputStream extends NonBlockingBitInputStream
 {

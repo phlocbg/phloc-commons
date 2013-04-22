@@ -34,7 +34,7 @@ import com.phloc.commons.state.EChange;
 /**
  * This class manages all registered third party modules
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public final class ThirdPartyModuleRegistry

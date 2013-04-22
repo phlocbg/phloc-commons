@@ -24,7 +24,7 @@ import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
 /**
  * Base interface for an abstract writable resource.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
 public interface IWritableResource extends IOutputStreamAndWriterProvider, IResourceBase

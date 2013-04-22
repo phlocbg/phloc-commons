@@ -29,7 +29,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * A file filter that accepts all elements.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class FileFilterAlwaysTrue extends AbstractFileFilter

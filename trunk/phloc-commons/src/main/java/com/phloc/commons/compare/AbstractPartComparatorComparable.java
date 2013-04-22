@@ -26,7 +26,7 @@ import javax.annotation.Nullable;
  * This class is an {@link AbstractComparator} that extracts a certain data
  * element from the main object to compare.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The data type to be compared
  * @param <PARTTYPE>

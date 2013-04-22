@@ -29,7 +29,7 @@ import com.phloc.commons.string.StringHelper;
  * Special string helper especially for Java internal class name handling etc.
  * CG = Code Generation.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class CGStringHelper

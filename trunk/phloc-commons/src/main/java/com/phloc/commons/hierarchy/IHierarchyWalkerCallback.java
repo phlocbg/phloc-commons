@@ -22,7 +22,7 @@ package com.phloc.commons.hierarchy;
  * Interface for walking a hierarchy without the possibilities to alter they way
  * how the hierarchy is iterated.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The type of object to be iterated.
  */

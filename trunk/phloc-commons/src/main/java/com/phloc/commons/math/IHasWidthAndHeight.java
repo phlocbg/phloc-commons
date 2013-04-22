@@ -20,7 +20,7 @@ package com.phloc.commons.math;
 /**
  * Interface for objects having a width and a height.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IHasWidthAndHeight extends IHasWidth, IHasHeight
 {

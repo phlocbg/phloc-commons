@@ -25,7 +25,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * Abstract type converter than can convert from a base source class to a
  * destination class. Example from Object.class to String.class
  * 
- * @author philip
+ * @author Philip Helger
  */
 public abstract class AbstractTypeConverterRuleAnySourceFixedDestination extends AbstractTypeConverterRule
 {

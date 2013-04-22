@@ -25,7 +25,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
  * These constants only exist to work around the common file encoding problem
  * with Cp1252/UTF-8. This file should only be stored as UTF-8!
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class CSpecialChars

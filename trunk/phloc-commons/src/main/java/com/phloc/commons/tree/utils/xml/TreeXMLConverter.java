@@ -46,7 +46,7 @@ import com.phloc.commons.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
 /**
  * Convert a tree to XML
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class TreeXMLConverter

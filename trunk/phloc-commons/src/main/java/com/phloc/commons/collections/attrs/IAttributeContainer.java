@@ -29,7 +29,7 @@ import com.phloc.commons.state.IClearable;
  * This is the writable extension of the {@link IReadonlyAttributeContainer}.
  * <code>null</code> values are not allowed in this attribute containers.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IAttributeContainer extends IReadonlyAttributeContainer, IClearable
 {

@@ -23,7 +23,7 @@ package com.phloc.commons.callback;
  * Note: It is not possible to extend {@link java.lang.Runnable} directly, as
  * derived interfaces are not allowed to add exception specifications.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IThrowingRunnable
 {

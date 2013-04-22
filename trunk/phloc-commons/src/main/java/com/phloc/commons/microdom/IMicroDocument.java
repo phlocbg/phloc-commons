@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 /**
  * Represents a complete document.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IMicroDocument extends IMicroNodeWithChildren
 {

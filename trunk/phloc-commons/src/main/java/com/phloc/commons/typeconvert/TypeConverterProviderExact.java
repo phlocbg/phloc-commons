@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 /**
  * An exact type converter provider. Implemented as a singleton.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class TypeConverterProviderExact implements ITypeConverterProvider
 {

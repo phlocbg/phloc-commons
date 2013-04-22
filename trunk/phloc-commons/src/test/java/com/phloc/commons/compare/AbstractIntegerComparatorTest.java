@@ -33,8 +33,8 @@ import com.phloc.commons.collections.ContainerHelper;
 
 /**
  * Test class for {@link AbstractIntegerComparator}
- * 
- * @author philip
+ *
+ * @author Philip Helger
  */
 public final class AbstractIntegerComparatorTest
 {

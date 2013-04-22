@@ -44,7 +44,7 @@ import com.phloc.commons.text.ISimpleMultiLingualText;
  * This class represents a thread safe multilingual text. It wraps an existing
  * MultiLingualText and adds a read write lock around it.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public final class MultiLingualTextThreadSafe implements IMultiLingualText

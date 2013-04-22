@@ -32,7 +32,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * A wrapper around an {@link OutputStream} that logs what he is doing.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class DebugOutputStream extends WrappedOutputStream
 {

@@ -28,7 +28,7 @@ import com.phloc.commons.string.StringParser;
  * Helper class that holds the current class version. Must be a separate class
  * to maintain the correct initialization order.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 final class JavaVersionConstants

@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
  * An informational annotation that indicates that something is meant to be
  * translated.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Retention (RetentionPolicy.CLASS)
 @Target (ElementType.TYPE)

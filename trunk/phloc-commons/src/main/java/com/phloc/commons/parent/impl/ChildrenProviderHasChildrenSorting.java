@@ -34,7 +34,7 @@ import com.phloc.commons.parent.IHasChildren;
  * all types that implement {@link IHasChildren}. It automatically sorts the
  * returned children by the specified comparator.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <CHILDTYPE>
  *        The data type of the child objects.
  */

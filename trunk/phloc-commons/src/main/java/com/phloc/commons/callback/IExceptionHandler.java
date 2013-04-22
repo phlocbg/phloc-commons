@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 /**
  * Callback interface to handle thrown exception objects.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <EXTYPE>
  *        The exception type to be handled
  */

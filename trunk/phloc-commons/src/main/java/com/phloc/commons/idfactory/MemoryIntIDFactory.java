@@ -28,7 +28,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * A default implementation for non-negative in-memory IDs.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public final class MemoryIntIDFactory implements IIntIDFactory

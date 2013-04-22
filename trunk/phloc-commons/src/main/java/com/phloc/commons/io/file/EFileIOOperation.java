@@ -22,7 +22,7 @@ import javax.annotation.Nonnegative;
 /**
  * An enumeration that encapsulates all available file IO operation types.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum EFileIOOperation
 {

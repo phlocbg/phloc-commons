@@ -22,7 +22,7 @@ package com.phloc.commons.mock;
  * This is a marker interface for mock exceptions. It should be used to easily
  * identify mock exceptions from regular exceptions.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IMockException
 {

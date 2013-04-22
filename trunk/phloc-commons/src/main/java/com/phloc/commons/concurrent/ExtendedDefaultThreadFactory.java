@@ -30,7 +30,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * Based on a DefaultThreadFactory somewhere in the Sun JDK but with the ability
  * to change the name of the thread slightly :)
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public class ExtendedDefaultThreadFactory implements ThreadFactory

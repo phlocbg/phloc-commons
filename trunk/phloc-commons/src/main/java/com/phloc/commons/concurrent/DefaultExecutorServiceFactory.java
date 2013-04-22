@@ -27,7 +27,7 @@ import javax.annotation.Nonnull;
  * Factory for creating {@link ExecutorService} objects using the
  * {@link Executors#newFixedThreadPool(int)} method.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class DefaultExecutorServiceFactory implements IExecutorServiceFactory
 {

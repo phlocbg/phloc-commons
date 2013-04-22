@@ -32,7 +32,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * This is a non-blocking version of {@link java.io.BufferedWriter}. It is 1:1
  * rip without the synchronized statements.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public class NonBlockingBufferedWriter extends Writer

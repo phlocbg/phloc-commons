@@ -24,7 +24,7 @@ import com.phloc.commons.microdom.impl.MicroEvent;
 /**
  * Interface for MicroDOM event handlers.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IMicroEventTarget
 {

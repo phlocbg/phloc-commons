@@ -42,7 +42,7 @@ import com.phloc.commons.state.EChange;
  * The main registry for the different {@link IHashCodeImplementation}
  * implementations.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public final class HashCodeImplementationRegistry implements IHashCodeImplementationRegistry

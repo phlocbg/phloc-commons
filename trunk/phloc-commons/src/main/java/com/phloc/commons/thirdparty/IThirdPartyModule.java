@@ -27,7 +27,7 @@ import com.phloc.commons.version.Version;
 /**
  * Represents meta information for a single third-party module (aka JAR file).
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IThirdPartyModule extends IHasDisplayName, IHasVersion
 {

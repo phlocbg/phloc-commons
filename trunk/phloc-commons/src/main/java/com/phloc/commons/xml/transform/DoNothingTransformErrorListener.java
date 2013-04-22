@@ -27,7 +27,7 @@ import com.phloc.commons.error.IResourceError;
 /**
  * java.xml.transform error listener that does nothing.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public class DoNothingTransformErrorListener extends AbstractTransformErrorListener

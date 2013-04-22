@@ -34,7 +34,7 @@ import com.phloc.commons.text.impl.ConstantTextProvider;
  * Default implementation of the {@link IResourceError} interface. The
  * implementation is immutable.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public class ResourceError implements IResourceError

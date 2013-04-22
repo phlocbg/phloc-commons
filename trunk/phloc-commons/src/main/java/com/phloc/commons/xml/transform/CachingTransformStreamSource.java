@@ -36,7 +36,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * {@link InputStream} is copied. This is achieved by copying the content in a
  * {@link NonBlockingByteArrayInputStream}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public class CachingTransformStreamSource extends StreamSource

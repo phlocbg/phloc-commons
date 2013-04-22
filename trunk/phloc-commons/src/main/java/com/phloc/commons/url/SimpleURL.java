@@ -31,7 +31,7 @@ import com.phloc.commons.string.StringHelper;
  * Abstraction of the string parts of a URL but much simpler (and faster) than
  * {@link java.net.URL}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class SimpleURL extends AbstractSimpleURL implements ICloneable <SimpleURL>
 {

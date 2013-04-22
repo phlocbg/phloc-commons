@@ -42,7 +42,7 @@ import com.phloc.commons.system.SystemHelper;
 /**
  * Misc locale utility methods.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class LocaleUtils
@@ -50,7 +50,7 @@ public final class LocaleUtils
   /**
    * Small cache for the resolved locales.
    * 
-   * @author philip
+   * @author Philip Helger
    */
   private static final class LocaleListCache extends AbstractNotifyingCache <Locale, List <Locale>>
   {

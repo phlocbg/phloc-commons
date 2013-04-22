@@ -20,7 +20,7 @@ package com.phloc.commons.stats;
 /**
  * MBean interface for {@link IStatisticsHandlerKeyedTimer}
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface StatisticsHandlerKeyedTimerMBean extends IStatisticsHandlerKeyedNumeric
 {

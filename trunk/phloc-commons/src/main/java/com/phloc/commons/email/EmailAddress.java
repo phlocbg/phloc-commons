@@ -31,7 +31,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * and an optional name. The personal name is optional and may be
  * <code>null</code>.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class EmailAddress implements IEmailAddress

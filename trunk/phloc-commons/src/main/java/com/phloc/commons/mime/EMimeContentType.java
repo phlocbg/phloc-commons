@@ -28,7 +28,7 @@ import com.phloc.commons.string.StringHelper;
 /**
  * Determines the most well known MIME content types.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum EMimeContentType implements IHasID <String>
 {

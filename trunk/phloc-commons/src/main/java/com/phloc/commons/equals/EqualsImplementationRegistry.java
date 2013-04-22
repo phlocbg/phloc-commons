@@ -41,7 +41,7 @@ import com.phloc.commons.state.EChange;
 /**
  * The default implementation of {@link IEqualsImplementationRegistry}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public final class EqualsImplementationRegistry implements IEqualsImplementationRegistry

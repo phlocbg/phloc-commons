@@ -27,7 +27,7 @@ import javax.annotation.Nullable;
  * For all strings with an equal length, they are sorted in regular,
  * non-collated order.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class ComparatorStringLongestFirst extends AbstractComparator <String>
 {

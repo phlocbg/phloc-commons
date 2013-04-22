@@ -32,7 +32,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * writing.
  * 
  * @see IMessageDigestGenerator
- * @author philip
+ * @author Philip Helger
  */
 public class HashingOutputStream extends WrappedOutputStream
 {

@@ -33,7 +33,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Represents a single log message.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class LogMessage implements IHasErrorLevel, ISuccessIndicator, IErrorIndicator

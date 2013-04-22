@@ -37,7 +37,7 @@ import com.phloc.commons.string.StringHelper;
 /**
  * Provides a central manager for the internal statistics.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public final class StatisticsManager

@@ -20,7 +20,7 @@ package com.phloc.commons.stats;
 /**
  * MBean interface for {@link IStatisticsHandlerSize}
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface StatisticsHandlerSizeMBean extends IStatisticsHandlerNumeric
 {}

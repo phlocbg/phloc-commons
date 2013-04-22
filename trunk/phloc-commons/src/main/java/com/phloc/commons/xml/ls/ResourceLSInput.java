@@ -33,7 +33,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Simple {@link LSInput} implementation.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class ResourceLSInput implements LSInput
 {

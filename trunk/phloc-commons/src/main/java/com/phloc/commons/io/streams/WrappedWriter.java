@@ -30,7 +30,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * A wrapper around another {@link Writer}. Pass through of all {@link Writer}
  * methods.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class WrappedWriter extends Writer
 {

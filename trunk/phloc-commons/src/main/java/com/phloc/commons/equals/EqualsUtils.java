@@ -28,7 +28,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * A small helper class that provides helper methods for easy
  * <code>equals</code> method generation
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class EqualsUtils

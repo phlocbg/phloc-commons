@@ -32,7 +32,7 @@ import com.phloc.commons.tree.IBasicTreeItem;
  * Represents a basic tree item with an ID. Never use this class directly but
  * provide a sub interface that specifies the generic T parameter.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        The type of the ID.
  * @param <DATATYPE>

@@ -53,7 +53,7 @@ import com.phloc.commons.state.EChange;
 /**
  * Contains a basic set of MimeType determination method.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public final class MimeTypeDeterminator

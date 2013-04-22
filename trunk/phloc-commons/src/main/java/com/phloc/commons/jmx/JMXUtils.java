@@ -32,7 +32,7 @@ import com.phloc.commons.state.ESuccess;
 /**
  * Some generic JMX utility classes
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class JMXUtils

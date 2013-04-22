@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 /**
  * Interface representing an object having an error level.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IHasErrorLevel
 {

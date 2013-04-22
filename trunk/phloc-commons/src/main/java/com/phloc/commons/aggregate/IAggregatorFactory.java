@@ -22,7 +22,7 @@ import com.phloc.commons.factory.IFactory;
 /**
  * Base interface for a factory creating {@link IAggregator} objects.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <SRCTYPE>
  *        Aggregation source type
  * @param <DSTTYPE>

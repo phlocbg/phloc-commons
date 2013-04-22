@@ -26,7 +26,7 @@ import javax.annotation.Nullable;
 /**
  * A special privileged object, that calls "setAccessible(true)" on an object.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class PrivilegedActionAccessibleObjectSetAccessible implements PrivilegedAction <Object>
 {

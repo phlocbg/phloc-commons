@@ -30,7 +30,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * A special cache that can create the value to be cache automatically from the
  * key. It also has an upper limit of elements that can reside inside the cache.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        Cache key type
  * @param <VALUETYPE>

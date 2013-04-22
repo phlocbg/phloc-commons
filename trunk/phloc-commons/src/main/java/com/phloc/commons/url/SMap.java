@@ -33,7 +33,7 @@ import com.phloc.commons.annotations.DevelopersNote;
  * Map&lt;String,String&gt; with more nifty API :)<br>
  * SMap is short for String-Map
  *
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class SMap extends LinkedHashMap <String, String> implements ICloneable <SMap>

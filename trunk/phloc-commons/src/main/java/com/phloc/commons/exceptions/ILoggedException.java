@@ -23,7 +23,7 @@ package com.phloc.commons.exceptions;
  * constructor. The sole purpose of this interface is to avoid double logging of
  * an exception stack trace.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface ILoggedException
 {

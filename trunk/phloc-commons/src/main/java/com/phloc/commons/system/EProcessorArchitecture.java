@@ -27,7 +27,7 @@ import com.phloc.commons.string.StringParser;
  * Enum for representing the current processor architecture. Works only on Sun
  * JVMs using the proprietary system property <code>sun.arch.data.model</code>.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum EProcessorArchitecture
 {

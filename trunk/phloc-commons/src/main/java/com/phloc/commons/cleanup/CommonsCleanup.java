@@ -40,7 +40,7 @@ import com.phloc.commons.xml.schema.XMLSchemaCache;
  * The sole purpose of this class to clear all caches, that reside in this
  * library.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class CommonsCleanup

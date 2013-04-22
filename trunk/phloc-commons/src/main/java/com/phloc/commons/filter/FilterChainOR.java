@@ -32,7 +32,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * An implementation of {@link IFilter} that chains multiple instances of
  * {@link IFilter} with an <b>OR</b> operator.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The type to be filtered.
  */

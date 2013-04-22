@@ -31,7 +31,7 @@ import com.phloc.commons.parent.impl.ChildrenProviderHasChildren;
  * Helper class that walks an {@link IMicroDocument} or {@link IMicroNode} with
  * a callback.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class MicroWalker

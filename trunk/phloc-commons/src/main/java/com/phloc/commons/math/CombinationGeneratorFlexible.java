@@ -37,7 +37,7 @@ import com.phloc.commons.callback.INonThrowingRunnableWithParameter;
  * not all slots are filled.
  * 
  * @author Boris Gregorcic
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        Element type
  */

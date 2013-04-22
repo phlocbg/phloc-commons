@@ -28,7 +28,7 @@ import com.phloc.commons.lang.EnumHelper;
 /**
  * Contains generic type definitions independent from the underlying language.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ShouldBeDeprecated
 public enum EBaseType implements IHasID <String>

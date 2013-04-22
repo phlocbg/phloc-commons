@@ -30,7 +30,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * A wrapper around another {@link Reader}. Pass through of all {@link Reader}
  * methods.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class WrappedReader extends Reader
 {

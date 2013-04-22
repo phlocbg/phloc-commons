@@ -31,8 +31,8 @@ import com.phloc.commons.tree.withid.unique.AbstractTreeItemWithUniqueIDFactory;
 
 /**
  * The default folder tree item factory implementation.
- * 
- * @author philip
+ *
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        Key type
  * @param <DATATYPE>

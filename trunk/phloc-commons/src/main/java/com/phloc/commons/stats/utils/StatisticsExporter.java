@@ -29,7 +29,7 @@ import com.phloc.commons.stats.visit.StatisticsWalker;
 /**
  * Class for exporting statistics.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class StatisticsExporter

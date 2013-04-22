@@ -41,7 +41,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Simple resource provider that only uses files.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class FileSystemResourceProvider implements IWritableResourceProvider

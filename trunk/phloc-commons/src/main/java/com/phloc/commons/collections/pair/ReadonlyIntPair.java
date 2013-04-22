@@ -26,7 +26,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * A readable pair of ints.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class ReadonlyIntPair

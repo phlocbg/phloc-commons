@@ -44,7 +44,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * This class contains default test methods to test the correctness of
  * implementations of standard methods.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class PhlocTestUtils

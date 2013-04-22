@@ -37,7 +37,7 @@ import com.phloc.commons.state.ESuccess;
 /**
  * A simple generic object pool with a fixed size determined in the constructor.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The type of the objects contained in the pool.
  */

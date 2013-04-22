@@ -42,7 +42,7 @@ import com.phloc.commons.collections.ContainerHelper;
 /**
  * Small class helper utility stuff class.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class ClassHelper

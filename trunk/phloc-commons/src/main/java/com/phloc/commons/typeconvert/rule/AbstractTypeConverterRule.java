@@ -25,7 +25,7 @@ import com.phloc.commons.typeconvert.ITypeConverterRule;
 /**
  * Abstract type converter rule implementation
  * 
- * @author philip
+ * @author Philip Helger
  */
 public abstract class AbstractTypeConverterRule implements ITypeConverterRule
 {

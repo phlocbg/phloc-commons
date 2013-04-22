@@ -24,7 +24,7 @@ import com.phloc.commons.annotations.Nonempty;
 /**
  * Represents a set of predefined open modes for RandomAccessFile objects.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum ERandomAccessFileMode
 {

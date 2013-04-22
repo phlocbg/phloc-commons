@@ -26,7 +26,7 @@ import com.phloc.commons.state.EChange;
  * Represents an abstract triple (an object with exactly three element) that is
  * writable.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATA1TYPE>
  *        Type of the first element
  * @param <DATA2TYPE>

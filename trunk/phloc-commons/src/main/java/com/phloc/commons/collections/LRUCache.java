@@ -35,7 +35,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * A special ordered map, that has an upper limit of contained elements. It is
  * therefore a "Last Recently Used" cache.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        Key type
  * @param <VALUETYPE>

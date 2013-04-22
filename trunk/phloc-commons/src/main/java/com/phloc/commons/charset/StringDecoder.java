@@ -32,7 +32,7 @@ import javax.annotation.concurrent.NotThreadSafe;
  * A special string decoder that can be used to convert a byte source to a
  * String in a certain charset. This class is not thread-safe!
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class StringDecoder

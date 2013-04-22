@@ -25,7 +25,7 @@ import com.phloc.commons.format.IFormatter;
 /**
  * A formatter that adds a suffix to a string.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class StringSuffixFormatter extends StringPrefixAndSuffixFormatter
 {

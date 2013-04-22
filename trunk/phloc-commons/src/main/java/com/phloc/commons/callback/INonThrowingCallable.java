@@ -22,7 +22,7 @@ import java.util.concurrent.Callable;
 /**
  * Like the {@link Callable} interface but not throwing an exception!
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The return type of the call.
  */

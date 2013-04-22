@@ -30,7 +30,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * A special directory file filter that uses and external filename filter to
  * determine the validity. This filter only works for directories.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class FileFilterDirectoryFromFilenameFilter extends AbstractFileFilter
 {

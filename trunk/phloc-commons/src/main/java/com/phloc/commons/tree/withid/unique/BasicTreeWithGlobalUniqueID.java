@@ -36,7 +36,7 @@ import com.phloc.commons.tree.withid.ITreeItemWithID;
  * required to have a unique ID so that item searching can be performed quite
  * easily.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        The type of the key elements for the tree.
  * @param <DATATYPE>

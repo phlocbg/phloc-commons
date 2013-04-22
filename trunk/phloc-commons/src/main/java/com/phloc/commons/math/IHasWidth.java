@@ -22,7 +22,7 @@ import javax.annotation.Nonnegative;
 /**
  * Interface for objects having a width.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IHasWidth
 {

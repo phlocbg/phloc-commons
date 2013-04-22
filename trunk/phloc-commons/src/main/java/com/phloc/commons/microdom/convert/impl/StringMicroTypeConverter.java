@@ -30,7 +30,7 @@ import com.phloc.commons.microdom.impl.MicroElement;
  * Default {@link IMicroTypeConverter} implementation for {@link String}
  * objects.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class StringMicroTypeConverter implements IMicroTypeConverter

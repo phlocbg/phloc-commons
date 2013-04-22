@@ -27,7 +27,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * This class represents a single object with an additional formatter.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class FormattedObject implements IFormattedObject
 {

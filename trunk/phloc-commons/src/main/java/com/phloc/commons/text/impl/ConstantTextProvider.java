@@ -37,7 +37,7 @@ import com.phloc.commons.text.ITextProvider;
  * only implemented, so that instances of this class can also be used as valid
  * substitutes for these interfaces.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ConstantTextProvider extends AbstractTextProvider implements IHasDisplayText, IHasDisplayName, IHasName
 {

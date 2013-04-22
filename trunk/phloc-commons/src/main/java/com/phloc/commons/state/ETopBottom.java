@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 /**
  * Small enum for top and bottom
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum ETopBottom implements ITopBottomIndicator
 {

@@ -28,7 +28,7 @@ import com.phloc.commons.state.IClearable;
 /**
  * This is the writable extension of the {@link IReadonlyFlagContainer}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IFlagContainer extends IReadonlyFlagContainer, IClearable
 {

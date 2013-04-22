@@ -33,7 +33,7 @@ import com.phloc.commons.string.StringHelper;
 /**
  * Country enum.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum ECountry implements IHasDisplayText, IHasID <String>
 {

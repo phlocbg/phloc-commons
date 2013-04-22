@@ -28,7 +28,7 @@ import com.phloc.commons.text.ITextProvider;
  * An abstract implementation of the {@link ITextProvider} that has default
  * implementations for the formatting things.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public abstract class AbstractTextProvider implements ITextProvider
 {

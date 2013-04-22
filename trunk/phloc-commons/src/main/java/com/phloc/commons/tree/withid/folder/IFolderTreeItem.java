@@ -27,7 +27,7 @@ import com.phloc.commons.tree.withid.ITreeItemWithID;
  * This interface represents a single folder within a directory tree. Each
  * folder has a list of file items (or leaves).
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        Key type
  * @param <DATATYPE>

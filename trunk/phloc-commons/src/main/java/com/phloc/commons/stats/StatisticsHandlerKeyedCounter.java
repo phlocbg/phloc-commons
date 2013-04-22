@@ -40,7 +40,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Default implementation of {@link IStatisticsHandlerKeyedCounter}
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 final class StatisticsHandlerKeyedCounter implements IStatisticsHandlerKeyedCounter

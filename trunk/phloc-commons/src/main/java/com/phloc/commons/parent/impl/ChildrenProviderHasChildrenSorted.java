@@ -30,7 +30,7 @@ import com.phloc.commons.parent.IHasChildrenSorted;
  * An {@link IChildrenProviderSorted} implementation for object implementing the
  * {@link IHasChildrenSorted} interface.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <CHILDTYPE>
  *        The data type of the child objects.
  */

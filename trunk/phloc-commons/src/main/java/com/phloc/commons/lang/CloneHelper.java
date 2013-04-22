@@ -32,7 +32,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 /**
  * Helper class for cloning objects.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class CloneHelper

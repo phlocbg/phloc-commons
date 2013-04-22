@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 /**
  * Interface for objects having an int ID.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <VALUETYPE>
  *        Object type
  */

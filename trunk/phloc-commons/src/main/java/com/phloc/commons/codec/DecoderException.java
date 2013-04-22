@@ -20,7 +20,7 @@ package com.phloc.commons.codec;
 /**
  * Exception occurred in an decoder
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class DecoderException extends RuntimeException
 {

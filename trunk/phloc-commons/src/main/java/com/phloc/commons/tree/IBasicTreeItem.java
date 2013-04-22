@@ -29,7 +29,7 @@ import com.phloc.commons.state.ESuccess;
 /**
  * Base interface both for normal tree items and tree items with ID.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        Data type of the items.
  * @param <ITEMTYPE>

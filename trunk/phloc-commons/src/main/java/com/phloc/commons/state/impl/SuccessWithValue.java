@@ -31,7 +31,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Wraps a success indicator and an arbitrary value.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The data type that is wrapped together with the success indicator
  */

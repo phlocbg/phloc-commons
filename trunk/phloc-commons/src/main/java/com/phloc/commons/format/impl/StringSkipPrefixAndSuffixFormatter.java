@@ -28,7 +28,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * A formatter that skip a prefix and/or a suffix to a string.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class StringSkipPrefixAndSuffixFormatter extends AbstractStringFormatter
 {

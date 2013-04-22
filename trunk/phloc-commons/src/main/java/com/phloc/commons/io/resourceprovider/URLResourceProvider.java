@@ -32,7 +32,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * The URL resource provider.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class URLResourceProvider implements IReadableResourceProvider

@@ -42,7 +42,7 @@ import com.phloc.commons.system.SystemHelper;
  * All kind of file name handling stuff. This class gives you platform
  * independent file name handling.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class FilenameHelper

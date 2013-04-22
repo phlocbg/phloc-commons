@@ -33,7 +33,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Iterate all children of the start node, but NOT the start node itself.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class RecursiveChildNodeIterator implements IIterableIterator <Node>
 {

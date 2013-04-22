@@ -26,7 +26,7 @@ import com.phloc.commons.state.EChange;
  * Implementation of the {@link SimpleCacheMBean} interface. Is a wrapper around
  * an {@link AbstractCache}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 final class SimpleCache implements SimpleCacheMBean
 {

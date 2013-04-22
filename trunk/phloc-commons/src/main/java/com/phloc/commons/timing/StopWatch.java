@@ -28,7 +28,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Simple stop watch based on {@link System#nanoTime()}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class StopWatch implements IStoppable

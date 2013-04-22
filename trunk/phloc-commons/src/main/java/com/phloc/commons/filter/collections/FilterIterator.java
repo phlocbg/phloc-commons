@@ -33,7 +33,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * A simple filter iterator that takes a base iterator and an additional filter
  * and returns only the items that match the filter.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <ELEMENTTYPE>
  *        The type to iterate
  */

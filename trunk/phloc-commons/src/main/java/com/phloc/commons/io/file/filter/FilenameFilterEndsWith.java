@@ -34,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * implementation is done via {@link String#endsWith(String)} so it is case
  * sensitive.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public final class FilenameFilterEndsWith implements FilenameFilter

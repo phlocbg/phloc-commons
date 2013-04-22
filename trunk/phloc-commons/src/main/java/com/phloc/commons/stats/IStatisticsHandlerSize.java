@@ -22,7 +22,7 @@ import javax.annotation.Nonnegative;
 /**
  * Modifying version of {@link StatisticsHandlerSizeMBean}
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IStatisticsHandlerSize extends StatisticsHandlerSizeMBean
 {

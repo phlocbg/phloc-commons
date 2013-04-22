@@ -26,7 +26,7 @@ import java.lang.annotation.RetentionPolicy;
  * project internal use. Because of dependencies it is not possible to lower the
  * visibility of this object.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Retention (RetentionPolicy.SOURCE)
 @Documented

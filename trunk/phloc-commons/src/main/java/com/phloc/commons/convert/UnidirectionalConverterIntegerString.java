@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
  * A unidirectional converter that converts an {@link Integer} object to a
  * {@link String}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class UnidirectionalConverterIntegerString implements IUnidirectionalConverter <Integer, String>
 {

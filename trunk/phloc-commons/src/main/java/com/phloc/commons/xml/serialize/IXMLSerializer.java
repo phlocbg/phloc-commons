@@ -27,7 +27,7 @@ import javax.annotation.WillNotClose;
  * Base interface for XML like serializers. Works both for IMicroNode and
  * org.w3c.dom.Node objects.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <NODETYPE>
  *        The node type to be serialized.
  */

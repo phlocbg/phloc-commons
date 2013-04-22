@@ -27,7 +27,7 @@ import com.phloc.commons.CGlobal;
 /**
  * Base interface for size and timer handler.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IStatisticsHandlerNumeric extends IStatisticsHandler
 {

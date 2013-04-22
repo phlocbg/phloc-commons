@@ -45,7 +45,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * Basic tree item with ID implementation, independent of the implementation
  * type.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        tree item key type
  * @param <DATATYPE>

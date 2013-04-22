@@ -33,7 +33,7 @@ import com.phloc.commons.tree.utils.walk.TreeWalker;
 /**
  * Sort {@link ITree} instances recursively.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class TreeSorter

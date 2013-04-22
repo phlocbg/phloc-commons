@@ -25,7 +25,7 @@ import com.phloc.commons.state.EChange;
  * This is an interface for objects that support batch processing, to avoid
  * unnecessary IO operations.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IBatchable
 {

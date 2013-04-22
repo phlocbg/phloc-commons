@@ -33,7 +33,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * Represents a single MIME type as the combination of the content type and the
  * sub-type.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class MimeType implements IMimeType

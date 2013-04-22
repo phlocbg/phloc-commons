@@ -26,7 +26,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * A factory that creates String IDs based on a specified {@link ILongIDFactory}
  * . The implementation is as thread-safe as the used {@link ILongIDFactory}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class StringIDFromLongIDFactory implements IStringIDFactory
 {

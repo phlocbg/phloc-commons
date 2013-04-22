@@ -22,7 +22,7 @@ import com.phloc.commons.ICloneable;
 /**
  * Base interface for all mutable objects
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IMutable <IMPLTYPE extends IMutable <IMPLTYPE>> extends Comparable <IMPLTYPE>, ICloneable <IMPLTYPE>
 {

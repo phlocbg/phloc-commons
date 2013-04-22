@@ -20,7 +20,7 @@ package com.phloc.commons.hierarchy;
 /**
  * Return value for hierarchy iteration.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum EHierarchyCallbackReturn
 {

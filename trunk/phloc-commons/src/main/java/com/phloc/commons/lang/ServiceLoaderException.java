@@ -22,7 +22,7 @@ import com.phloc.commons.annotations.DevelopersNote;
 /**
  * An exception solely thrown from the {@link ServiceLoaderBackport}
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Deprecated
 @DevelopersNote ("Use the exception from java.util")

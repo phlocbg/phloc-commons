@@ -31,7 +31,7 @@ import com.phloc.commons.mock.AbstractPhlocTestCase;
 /**
  * Test class for class {@link ComparatorAsString}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ComparatorAsStringTest extends AbstractPhlocTestCase
 {

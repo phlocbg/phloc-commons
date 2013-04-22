@@ -20,7 +20,7 @@ package com.phloc.commons.state;
 /**
  * Very simple interface for an object that has interrupted indication.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IInterruptIndicator
 {

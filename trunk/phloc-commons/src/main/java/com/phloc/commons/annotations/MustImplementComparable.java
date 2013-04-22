@@ -28,7 +28,7 @@ import java.lang.annotation.Target;
  * This is e.g. important if an interface or class is used as the key in a
  * {@link java.util.TreeMap}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Retention (RetentionPolicy.CLASS)
 @Target ({ ElementType.TYPE, ElementType.FIELD })

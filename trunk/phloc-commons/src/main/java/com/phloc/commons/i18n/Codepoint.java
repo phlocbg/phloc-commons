@@ -35,7 +35,7 @@ import com.phloc.commons.hash.HashCodeGenerator;
  * Represents a single Unicode Codepoint
  * 
  * @author Apache Abdera
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class Codepoint implements Serializable, Comparable <Codepoint>

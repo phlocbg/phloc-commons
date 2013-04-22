@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 /**
  * Interface for a handler the provides the name of an object.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The data type to retrieve the name from
  */

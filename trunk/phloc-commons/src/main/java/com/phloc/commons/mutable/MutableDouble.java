@@ -31,7 +31,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * Object wrapper around a double so that it can be passed a final object but is
  * mutable.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class MutableDouble extends Number implements IMutableNumeric <MutableDouble>

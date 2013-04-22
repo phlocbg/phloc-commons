@@ -27,7 +27,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 /**
  * Abstract multi map based on {@link HashMap} and {@link Set} values.<br>
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        key type
  * @param <VALUETYPE>

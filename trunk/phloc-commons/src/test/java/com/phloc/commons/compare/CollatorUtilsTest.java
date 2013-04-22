@@ -37,7 +37,7 @@ import com.phloc.commons.mock.PhlocTestUtils;
 /**
  * Test class for class {@link CollatorUtils}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class CollatorUtilsTest extends AbstractPhlocTestCase
 {

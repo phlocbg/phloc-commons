@@ -29,7 +29,7 @@ import javax.xml.bind.PropertyException;
  * This class contains utility methods for JAXB {@link Marshaller} objects. It
  * allows for setting type-safe properties.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class JAXBMarshallerUtils

@@ -27,7 +27,7 @@ import javax.annotation.Nullable;
 /**
  * A simple collation aware comparator that compares String objects.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class ComparatorString extends AbstractCollationComparator <String>
 {

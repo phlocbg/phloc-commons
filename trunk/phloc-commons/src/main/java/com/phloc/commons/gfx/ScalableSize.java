@@ -32,7 +32,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * This class represents an object having width and height.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class ScalableSize implements IHasWidthAndHeight, Serializable

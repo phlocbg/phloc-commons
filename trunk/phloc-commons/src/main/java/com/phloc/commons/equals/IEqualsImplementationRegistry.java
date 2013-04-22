@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 /**
  * Base interface for a registry that contains equals implementations.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IEqualsImplementationRegistry
 {

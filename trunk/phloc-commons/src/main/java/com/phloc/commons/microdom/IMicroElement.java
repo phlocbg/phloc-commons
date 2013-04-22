@@ -32,7 +32,7 @@ import com.phloc.commons.state.EChange;
 /**
  * Represents a single element (=tag) of a document.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IMicroElement extends IMicroNodeWithChildren
 {

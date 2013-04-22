@@ -28,7 +28,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Pair of {@link TimeUnit} and a value.
  *
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class TimeValue

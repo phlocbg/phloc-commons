@@ -31,7 +31,7 @@ import com.phloc.commons.tree.IBasicTreeItem;
  * Iterate all nodes of a tree, or a tree element using a custom callback
  * mechanism.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class TreeWalker

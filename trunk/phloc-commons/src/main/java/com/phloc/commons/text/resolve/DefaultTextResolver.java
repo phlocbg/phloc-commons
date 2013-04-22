@@ -32,7 +32,7 @@ import com.phloc.commons.text.ITextProvider;
  * Resolves texts either from a text provider or otherwise uses a fallback to a
  * file, based on the given enum constant.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class DefaultTextResolver

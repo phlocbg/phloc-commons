@@ -25,7 +25,7 @@ import com.phloc.commons.string.StringParser;
  * Get a generic data converter that converts a string to an Integer. If the
  * conversion fails, the default value is returned from the converter.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class UnidirectionalConverterStringInteger implements IUnidirectionalConverter <String, Integer>
 {

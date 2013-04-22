@@ -35,7 +35,7 @@ import com.phloc.commons.typeconvert.TypeConverterException.EReason;
  * retrieving a registered converter. If no converter is found, it is checked
  * whether a mapping from a primitive type to an object type exists.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class TypeConverter

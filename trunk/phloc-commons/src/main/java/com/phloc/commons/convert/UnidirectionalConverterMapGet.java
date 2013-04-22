@@ -26,7 +26,7 @@ import javax.annotation.Nullable;
  * An implementation of {@link IUnidirectionalConverter} that converts from a
  * map key to a map value
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        Map key type
  * @param <VALUETYPE>

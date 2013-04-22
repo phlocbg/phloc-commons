@@ -35,7 +35,7 @@ import com.phloc.commons.lang.ClassHelper;
 /**
  * Resource bundle utility methods
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class ResourceBundleUtils

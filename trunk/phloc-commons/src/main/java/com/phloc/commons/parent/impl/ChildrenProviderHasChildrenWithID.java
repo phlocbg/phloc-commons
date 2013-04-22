@@ -30,7 +30,7 @@ import com.phloc.commons.parent.IHasChildren;
  * An implementation of the {@link IChildrenProviderWithID} interface that works
  * with all types that implement {@link IHasChildren} and {@link IHasID}.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <CHILDTYPE>
  *        The data type of the child objects.
  */

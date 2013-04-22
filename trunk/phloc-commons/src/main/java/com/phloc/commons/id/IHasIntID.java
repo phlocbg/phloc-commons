@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 /**
  * Base interface for all objects having an int ID.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IHasIntID extends IHasSimpleIntID
 {

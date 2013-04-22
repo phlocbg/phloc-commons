@@ -25,7 +25,7 @@ import com.phloc.commons.state.ESuccess;
 /**
  * Simple pool interface.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The type of object to be pooled.
  */

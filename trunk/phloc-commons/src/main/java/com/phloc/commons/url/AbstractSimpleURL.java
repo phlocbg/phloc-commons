@@ -37,7 +37,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * Abstraction of the string parts of a URL but much simpler (and faster) than
  * {@link java.net.URL}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public abstract class AbstractSimpleURL implements ISimpleURL
 {

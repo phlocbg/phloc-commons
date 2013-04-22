@@ -34,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * If at least one regular expressions is fulfilled, the file is accepted. The
  * filter is applied on directories and files!
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public final class FilenameFilterMatchAnyRegEx implements FilenameFilter

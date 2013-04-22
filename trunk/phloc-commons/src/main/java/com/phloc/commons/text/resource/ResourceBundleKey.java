@@ -33,7 +33,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * The key of a resource bundle.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class ResourceBundleKey implements Serializable

@@ -35,7 +35,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Represents a namespace context having exactly 1 item.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public class SingleElementNamespaceContext extends AbstractNamespaceContext

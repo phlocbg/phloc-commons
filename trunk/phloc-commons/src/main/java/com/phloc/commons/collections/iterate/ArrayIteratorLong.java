@@ -32,7 +32,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * This is a small helper class for iterating over arrays of long.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ArrayIteratorLong
 {

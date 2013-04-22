@@ -40,7 +40,7 @@ import com.phloc.commons.lang.ServiceLoaderUtils;
  * extended by custom protocols
  * 
  * @author Boris Gregorcic
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class URLProtocolRegistry

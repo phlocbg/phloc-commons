@@ -36,7 +36,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * version (integer), minor version (integer), micro version (integer) and a
  * qualifier (string).
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class Version implements Comparable <Version>, IHasStringRepresentation, Serializable

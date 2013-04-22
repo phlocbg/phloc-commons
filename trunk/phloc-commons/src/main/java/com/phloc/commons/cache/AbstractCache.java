@@ -44,8 +44,8 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * Abstract base implementation of {@link ISimpleCache}
- * 
- * @author philip
+ *
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        The cache key type
  * @param <VALUETYPE>
@@ -101,7 +101,7 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
 
   /**
    * Create a new cache map.
-   * 
+   *
    * @return Never <code>null</code>.
    */
   @Nonnull
@@ -113,7 +113,7 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
 
   /**
    * Put a new value into the cache.
-   * 
+   *
    * @param aKey
    *        The cache key. May not be <code>null</code>.
    * @param aValue
@@ -140,7 +140,7 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
 
   /**
    * Put a new value into the cache.
-   * 
+   *
    * @param aKey
    *        The cache key. May not be <code>null</code>.
    * @param aValue

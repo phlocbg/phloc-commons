@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
  * Find the correct type converter provider from a source class to a destination
  * class.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface ITypeConverterProvider
 {

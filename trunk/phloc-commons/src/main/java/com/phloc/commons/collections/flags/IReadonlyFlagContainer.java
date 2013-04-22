@@ -30,7 +30,7 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
  * Base interface for a generic read-only flag container. It maps strings to any
  * Java object.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IReadonlyFlagContainer extends Serializable
 {

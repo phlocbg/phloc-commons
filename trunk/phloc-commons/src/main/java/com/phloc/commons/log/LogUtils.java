@@ -32,7 +32,7 @@ import com.phloc.commons.error.IHasErrorLevel;
  * Some utility functions to help integrating the {@link EErrorLevel} enum in
  * this package with SLF4J logger.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class LogUtils

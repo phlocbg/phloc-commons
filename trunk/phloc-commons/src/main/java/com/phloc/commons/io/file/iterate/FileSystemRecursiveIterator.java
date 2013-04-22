@@ -47,7 +47,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * Note: the order of iteration is undefined and depends on the order returned
  * by {@link FileUtils#getDirectoryContent(File)}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public class FileSystemRecursiveIterator implements IIterableIterator <File>

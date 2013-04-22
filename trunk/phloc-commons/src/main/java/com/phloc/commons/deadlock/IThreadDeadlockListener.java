@@ -24,7 +24,7 @@ import com.phloc.commons.annotations.Nonempty;
 /**
  * This is called whenever a problem with threads is detected.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IThreadDeadlockListener
 {

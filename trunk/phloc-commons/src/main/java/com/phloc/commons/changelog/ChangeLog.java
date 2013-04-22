@@ -38,7 +38,7 @@ import com.phloc.commons.version.Version;
  * This class represents a single change log with a list of entries and
  * releases.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class ChangeLog

@@ -25,7 +25,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 /**
  * This is a helper class that wraps a list of pair objects.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATA1TYPE>
  *        First type of the pair type.
  * @param <DATA2TYPE>

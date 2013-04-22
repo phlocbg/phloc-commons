@@ -26,7 +26,7 @@ import com.phloc.commons.io.streams.StreamUtils;
 /**
  * Decoder for run length encoding
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class RunLengthCodec implements IByteArrayDecoder
 {

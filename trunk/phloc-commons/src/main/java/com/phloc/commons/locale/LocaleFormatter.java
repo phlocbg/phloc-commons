@@ -33,7 +33,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 /**
  * Helper class to safely print and parse numbers in a formatted way.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class LocaleFormatter

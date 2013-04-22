@@ -25,7 +25,7 @@ import javax.annotation.Nonnull;
 /**
  * Factory for creating {@link ExecutorService} instances.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IExecutorServiceFactory
 {

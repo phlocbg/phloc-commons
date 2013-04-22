@@ -28,7 +28,7 @@ import com.phloc.commons.annotations.Nonempty;
 /**
  * Default implementation of {@link IStatisticsHandlerCache}
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 final class StatisticsHandlerCache implements IStatisticsHandlerCache

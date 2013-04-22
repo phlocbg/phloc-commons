@@ -27,7 +27,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * A simple implementation of the {@link IURLProtocol} interface.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class URLProtocol implements IURLProtocol
 {

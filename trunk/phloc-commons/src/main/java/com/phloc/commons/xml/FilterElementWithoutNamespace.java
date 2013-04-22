@@ -30,7 +30,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * An implementation of {@link IFilter} on {@link Element} objects that will
  * only return elements without a namespace URI.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class FilterElementWithoutNamespace implements IFilter <Element>

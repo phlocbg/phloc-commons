@@ -26,7 +26,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * A simple combinator that simply concatenates 2 strings.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class CombinatorString implements ICombinator <String>

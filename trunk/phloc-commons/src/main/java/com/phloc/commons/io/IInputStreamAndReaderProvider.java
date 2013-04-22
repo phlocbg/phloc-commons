@@ -27,7 +27,7 @@ import javax.annotation.Nullable;
  * A callback interface to retrieve {@link Reader} objects based on
  * InputStreams.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public interface IInputStreamAndReaderProvider extends IInputStreamProvider
 {

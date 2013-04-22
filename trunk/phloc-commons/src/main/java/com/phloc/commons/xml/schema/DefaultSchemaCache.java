@@ -47,7 +47,7 @@ import com.phloc.commons.xml.transform.TransformSourceFactory;
 /**
  * Abstract base class for caching JAXP validation scheme elements.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public abstract class DefaultSchemaCache extends AbstractNotifyingCache <List <? extends IReadableResource>, Schema>

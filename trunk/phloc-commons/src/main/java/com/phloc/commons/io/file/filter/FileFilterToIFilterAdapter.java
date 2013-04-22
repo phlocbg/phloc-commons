@@ -37,7 +37,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * Converts {@link FileFilter} and {@link FilenameFilter} objects to an
  * {@link IFilter} object.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class FileFilterToIFilterAdapter implements IFilter <File>

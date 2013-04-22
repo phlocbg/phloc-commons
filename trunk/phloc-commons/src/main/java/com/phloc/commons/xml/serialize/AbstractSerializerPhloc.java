@@ -48,7 +48,7 @@ import com.phloc.commons.xml.namespace.IIterableNamespaceContext;
  * Abstract XML serializer implementation that works with IMicroNode and
  * org.w3c.dom.Node objects.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <NODETYPE>
  *        The DOM node type to use
  */
@@ -66,7 +66,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
   /**
    * Contains the XML namespace definitions for a single element.
    * 
-   * @author philip
+   * @author Philip Helger
    */
   protected static final class NamespaceLevel
   {
@@ -215,7 +215,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
    * Contains the hierarchy of XML namespaces within a document structure.
    * Important: null namespace URIs are different from empty namespace URIs!
    * 
-   * @author philip
+   * @author Philip Helger
    */
   protected static final class NamespaceStack
   {

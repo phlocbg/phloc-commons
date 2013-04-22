@@ -37,7 +37,7 @@ import com.phloc.commons.tree.withid.ITreeItemWithID;
  * An abstract tree item factory that maintains a unique ID over all items. It
  * does not put the root item in the data store!
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public abstract class AbstractTreeItemWithUniqueIDFactory <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>> implements

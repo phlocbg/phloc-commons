@@ -26,7 +26,7 @@ import java.lang.annotation.Target;
 /**
  * Just to indicate that a method is meant to be overridden in sub classes.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Retention (RetentionPolicy.CLASS)
 @Target ({ ElementType.TYPE, ElementType.METHOD })

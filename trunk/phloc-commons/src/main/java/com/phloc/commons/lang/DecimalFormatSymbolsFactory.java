@@ -31,7 +31,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
  * "new DecimalFormatSymbols (Locale)". For Java >= 1.6
  * "DecimalFormatSymbols.getInstance (Locale)" is more suitable!
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class DecimalFormatSymbolsFactory

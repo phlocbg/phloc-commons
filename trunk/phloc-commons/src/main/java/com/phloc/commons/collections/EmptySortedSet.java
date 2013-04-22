@@ -31,7 +31,7 @@ import com.phloc.commons.lang.GenericReflection;
 /**
  * Default implementation of an empty sorted set.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class EmptySortedSet extends AbstractSet <Object> implements SortedSet <Object>
 {

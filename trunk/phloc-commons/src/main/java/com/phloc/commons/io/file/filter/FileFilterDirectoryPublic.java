@@ -30,7 +30,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * A file filter that matches if the passed file is a directory and is public,
  * meaning it does not start with "." (hidden directory on Unix systems)
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class FileFilterDirectoryPublic extends AbstractFileFilter

@@ -41,7 +41,7 @@ import com.phloc.commons.collections.ContainerHelper;
  * "http://docs.oracle.com/javase/6/docs/api/java/util/ResourceBundle.Control.html"
  * >Resource.Control</a> Javadocs
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class XMLResourceBundle extends ResourceBundle

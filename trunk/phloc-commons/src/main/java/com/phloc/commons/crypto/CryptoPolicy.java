@@ -51,7 +51,7 @@ import com.phloc.commons.charset.CharsetManager;
  * Based on owasp-esapi-java source.<br>
  * http://code.google.com/p/owasp-esapi-java/
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public final class CryptoPolicy

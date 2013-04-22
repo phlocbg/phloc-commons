@@ -23,7 +23,7 @@ import com.phloc.commons.annotations.DevelopersNote;
  * This is a generic interface for creating objects of a certain type that have
  * a parent item.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The type of object to create.
  * @param <PARAMTYPE>

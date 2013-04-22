@@ -49,7 +49,7 @@ import com.phloc.commons.url.URLUtils;
 /**
  * Implementation of the {@link IReadableResource} interface for URL objects.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class URLResource implements IReadableResource

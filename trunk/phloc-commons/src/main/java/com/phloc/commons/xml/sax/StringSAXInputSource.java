@@ -32,7 +32,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * Special {@link InputSource} implementation that reads from a predefined
  * String.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class StringSAXInputSource extends InputSource
 {

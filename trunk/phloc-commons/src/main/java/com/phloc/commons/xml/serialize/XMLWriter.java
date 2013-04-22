@@ -42,7 +42,7 @@ import com.phloc.commons.xml.EXMLVersion;
 /**
  * This is a helper class to serialize DOM nodes to a String.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class XMLWriter

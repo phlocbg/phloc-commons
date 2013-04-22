@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
  * Interface for a handler the provides the locale <b>independent</b> name of an
  * object.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The data type to retrieve the display name from
  */

@@ -33,7 +33,7 @@ import com.phloc.commons.tree.withid.ITreeWithID;
 /**
  * Sort {@link ITreeWithID} instances recursively - either by ID or by value
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class TreeWithIDSorter

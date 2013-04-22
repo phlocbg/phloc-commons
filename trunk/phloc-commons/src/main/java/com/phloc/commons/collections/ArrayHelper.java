@@ -37,7 +37,7 @@ import com.phloc.commons.lang.GenericReflection;
 /**
  * Provides additional helper methods for array handling.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class ArrayHelper

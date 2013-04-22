@@ -29,7 +29,7 @@ import com.phloc.commons.tree.withid.ITreeItemWithID;
 /**
  * Comparator for sorting {@link ITreeItemWithID} items by their comparable ID.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <KEYTYPE>
  *        tree item key type
  * @param <DATATYPE>

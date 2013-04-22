@@ -38,7 +38,7 @@ import com.phloc.commons.string.StringHelper;
 /**
  * Utility class to evaluate XPath expressions more easily
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class XPathExpressionHelper

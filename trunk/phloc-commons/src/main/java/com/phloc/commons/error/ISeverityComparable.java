@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 /**
  * Interface for comparable objects based on their severity.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <THISTYPE>
  *        The implementation type
  */

@@ -27,7 +27,7 @@ import java.lang.annotation.Target;
  * This is a source-only indicator for objects that should be deprecated but are
  * not yet deprecated because it would result in too many warnings.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Retention (RetentionPolicy.CLASS)
 @Target ({ ElementType.TYPE,

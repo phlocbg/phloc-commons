@@ -40,7 +40,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Abstract base class for a keyed numeric statistic handler
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 abstract class AbstractStatisticsHandlerKeyedNumeric implements IStatisticsHandlerKeyedNumeric

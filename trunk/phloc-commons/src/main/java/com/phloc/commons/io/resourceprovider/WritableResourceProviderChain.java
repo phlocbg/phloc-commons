@@ -35,7 +35,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * A resource provider chain implementation of {@link IWritableResourceProvider}
  * .
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public class WritableResourceProviderChain extends ReadableResourceProviderChain implements IWritableResourceProvider

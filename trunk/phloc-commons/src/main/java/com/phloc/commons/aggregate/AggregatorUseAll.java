@@ -28,7 +28,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Always use the complete list of results.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE> The data type to aggregate
  */
 @Immutable

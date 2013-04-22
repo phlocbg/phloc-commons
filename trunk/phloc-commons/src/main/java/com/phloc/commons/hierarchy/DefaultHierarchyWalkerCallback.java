@@ -23,7 +23,7 @@ import com.phloc.commons.annotations.OverrideOnDemand;
  * The default implementation of the {@link IHierarchyWalkerCallback} interface
  * doing nothing.
  * 
- * @author philip
+ * @author Philip Helger
  * @param <DATATYPE>
  *        The type of object in the hierarchy to be iterated
  */

@@ -29,7 +29,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * An {@link Reader} provider based on a {@link String}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class StringReaderProvider implements IReaderProvider
 {

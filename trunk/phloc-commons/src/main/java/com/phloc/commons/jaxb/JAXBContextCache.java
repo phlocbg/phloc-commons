@@ -36,7 +36,7 @@ import com.phloc.commons.cache.AbstractNotifyingCache;
  * Specific cache class for JAXB context elements. This is helpful, as the JAXB
  * context creation is a very time consuming task.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public final class JAXBContextCache extends AbstractNotifyingCache <Package, JAXBContext>

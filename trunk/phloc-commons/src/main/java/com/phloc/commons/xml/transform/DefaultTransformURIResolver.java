@@ -29,7 +29,7 @@ import com.phloc.commons.xml.ls.SimpleLSResourceResolver;
  * Implementation of the {@link URIResolver} interface using
  * {@link SimpleLSResourceResolver} to resolve resources.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class DefaultTransformURIResolver extends AbstractTransformURIResolver
 {

@@ -30,7 +30,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
  * Helper class to handle read-only property resource bundles reading only UTF-8
  * text strings.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class Utf8ResourceBundle

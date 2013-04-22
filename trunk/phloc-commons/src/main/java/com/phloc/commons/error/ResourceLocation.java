@@ -29,7 +29,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * Default implementation of the {@link IResourceLocation} interface. The
  * implementation is immutable.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @Immutable
 public final class ResourceLocation implements IResourceLocation

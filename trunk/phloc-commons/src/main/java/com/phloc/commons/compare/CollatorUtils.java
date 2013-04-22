@@ -42,7 +42,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Helper class to easily create commonly used {@link Collator} objects.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public final class CollatorUtils
@@ -51,7 +51,7 @@ public final class CollatorUtils
    * Local cache from Locale to Collator because Collator.getInstance is
    * synchronized!
    * 
-   * @author philip
+   * @author Philip Helger
    */
   @ThreadSafe
   private static final class CollatorCache extends AbstractNotifyingCache <Locale, Collator>

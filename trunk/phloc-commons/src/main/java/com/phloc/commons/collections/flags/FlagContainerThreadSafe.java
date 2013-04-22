@@ -34,7 +34,7 @@ import com.phloc.commons.state.EChange;
  * Base class for all kind of string-object mapping container. This
  * implementation is a thread-safe wrapper around {@link FlagContainer}!
  * 
- * @author philip
+ * @author Philip Helger
  */
 @ThreadSafe
 public class FlagContainerThreadSafe extends FlagContainer
