@@ -20,5 +20,42 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="buildinfo-maven-plugin">
+  <entry date="2013-04-22" category="data" action="add">
+    <change>
+      <text locale="en">Added new attributes "totaldirs" and "totalfiles" in root element</text>
+    </change>
+  </entry>
+  <entry date="2013-04-22" category="data" action="add">
+    <change>
+      <text locale="en">Added new attribute "basename" for created elements</text>
+    </change>
+  </entry>
+  <entry date="2013-04-22" category="tech" action="update">
+    <change>
+      <text locale="en">Generating all filenames using forward slashes, instead of filesystem dependent ones</text>
+    </change>
+  </entry>
+  <entry date="2013-04-22" category="tech" action="update">
+    <change>
+      <text locale="en">Added a small generation notice on top of the XML filename</text>
+    </change>
+  </entry>
+  <entry date="2013-04-21" category="tech" action="update">
+    <change>
+      <text locale="en">Added an alphabetical sorting of the files per directory</text>
+    </change>
+  </entry>
+  <release date="2013-04-21" version="1.0.1" />
+  <entry date="2013-04-21" category="api" action="add">
+    <change>
+      <text locale="en">Added new plugin parameter: targetDirectory</text>
+    </change>
+  </entry>
+  <entry date="2013-04-21" category="tech" action="update">
+    <change>
+      <text locale="en">Less verbose logging</text>
+    </change>
+  </entry>
+  <release date="2013-04-21" version="1.0.0" />
   <!-- changelog started -->
 </changelog>
