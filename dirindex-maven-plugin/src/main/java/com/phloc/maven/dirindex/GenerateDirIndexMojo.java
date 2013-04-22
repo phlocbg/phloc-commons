@@ -84,6 +84,22 @@ public final class GenerateDirIndexMojo extends AbstractMojo
    */
   private File tempDirectory;
 
+  /**
+   * The directory within the target artifact where the file should reside.
+   * 
+   * @required
+   * @parameter property=targetDirectory default-value="META-INF"
+   */
+  private String targetDirectory;
+
+  /**
+   * The filename within the temp and the target directory to be used.
+   * 
+   * @required
+   * @parameter property=targetFilename default-value="dirindex.xml"
+   */
+  private String targetFilename;
+
   public void setSourceDirectory (@Nonnull final File aDir)
   {
     sourceDirectory = aDir;
@@ -184,7 +200,7 @@ public final class GenerateDirIndexMojo extends AbstractMojo
       // Build the index
       final FileSystemFolderTree aFileTree = new FileSystemFolderTree (sourceDirectory);
       final IMicroDocument aDoc = _getAsXML (aFileTree);
-      final File aTempFile = File.createTempFile ("dirindex", "xml", tempDirectory);
+      final File aTempFile = new File (tempDirectory, targetFilename);
       SimpleFileIO.writeFile (aTempFile, MicroWriter.getXMLString (aDoc), XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ);
 
       // Add output directory as a resource-directory
@@ -192,7 +208,7 @@ public final class GenerateDirIndexMojo extends AbstractMojo
       aResource.setDirectory (tempDirectory.getAbsolutePath ());
       aResource.addInclude (aTempFile.getName ());
       aResource.setFiltering (false);
-      aResource.setTargetPath ("META-INF");
+      aResource.setTargetPath (targetDirectory);
       project.addResource (aResource);
     }
     catch (final IOException ex)

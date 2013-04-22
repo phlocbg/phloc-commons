@@ -27,6 +27,10 @@
         <artifactId>dirindex-maven-plugin</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <configuration>
+          <!-- 
+          Order is important!
+          See http://maven.apache.org/plugin-testing/maven-plugin-testing-harness/examples/complex-mojo-parameters.html
+          -->
           <!-- By default <<<${basedir}/target/local-repo", where basedir refers
                to the basedir of maven-my-plugin. -->
           <!-- 
@@ -38,8 +42,11 @@
           <settings implementation="com.phloc.maven.dirindex.SettingsStub"/>
           -->
           
+          <!-- plugin specific -->
           <tempDirectory>../../../../../target/dirindex-maven-plugin</tempDirectory>
           <sourceDirectory>../../../../../src/main</sourceDirectory>
+          <targetDirectory>dirindex-maven-plugin</targetDirectory>
+          <targetFilename>dirindex-created.xml</targetFilename>
         </configuration>
       </plugin>
     </plugins>
