@@ -20,6 +20,7 @@ package com.phloc.maven.dirindex;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
@@ -29,8 +30,10 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 import org.slf4j.impl.StaticLoggerBinder;
 
+import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.collections.NonBlockingStack;
 import com.phloc.commons.hierarchy.DefaultHierarchyWalkerCallback;
+import com.phloc.commons.io.file.ComparatorFileName;
 import com.phloc.commons.io.file.FileIOError;
 import com.phloc.commons.io.file.FileOperations;
 import com.phloc.commons.io.file.SimpleFileIO;
@@ -146,7 +149,8 @@ public final class GenerateDirIndexMojo extends AbstractMojo
                              eDir.setAttribute ("filecount", aFiles == null ? "0" : Integer.toString (aFiles.size ()));
 
                              if (aFiles != null)
-                               for (final File aFile : aFiles)
+                               for (final File aFile : ContainerHelper.getSorted (aFiles,
+                                                                                  new ComparatorFileName (Locale.US)))
                                {
                                  final IMicroElement eFile = eRoot.appendElement ("file");
                                  eFile.setAttribute ("name", sImplodedDirName + File.separator + aFile.getName ());
