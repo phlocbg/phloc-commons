@@ -26,7 +26,7 @@ import com.phloc.commons.charset.CCharset;
 /**
  * Test class for class {@link URLParameterEncoder}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class URLParameterEncoderTest
 {

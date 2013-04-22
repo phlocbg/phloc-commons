@@ -26,7 +26,7 @@ import org.junit.Test;
 /**
  * Test class for class {@link EInterrupt}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class EInterruptTest
 {

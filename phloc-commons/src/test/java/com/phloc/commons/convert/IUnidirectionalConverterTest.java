@@ -34,7 +34,7 @@ import com.phloc.commons.name.MockHasName;
 /**
  * Test class for implementation classes of {@link IUnidirectionalConverter}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class IUnidirectionalConverterTest
 {

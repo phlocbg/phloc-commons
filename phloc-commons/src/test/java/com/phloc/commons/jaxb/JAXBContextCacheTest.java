@@ -40,7 +40,7 @@ import com.phloc.commons.xml.transform.TransformSourceFactory;
 /**
  * Test class for class {@link JAXBContextCache}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class JAXBContextCacheTest
 {

@@ -42,7 +42,7 @@ import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 /**
  * Test class for {@link XMLMapHandler}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class XMLMapHandlerTest
 {

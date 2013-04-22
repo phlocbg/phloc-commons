@@ -28,7 +28,7 @@ import org.junit.Test;
 /**
  * Test class for class {@link ReadonlyTriple}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ReadonlyTripleTest
 {

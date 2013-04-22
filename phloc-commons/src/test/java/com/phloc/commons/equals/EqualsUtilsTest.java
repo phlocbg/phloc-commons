@@ -33,7 +33,7 @@ import com.phloc.commons.string.StringParser;
 /**
  * Test class for class {@link EqualsUtils}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class EqualsUtilsTest extends AbstractPhlocTestCase
 {

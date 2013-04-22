@@ -41,7 +41,7 @@ import com.phloc.commons.system.SystemHelper;
 /**
  * Test class for class {@link HashCodeGenerator}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class HashCodeGeneratorTest
 {

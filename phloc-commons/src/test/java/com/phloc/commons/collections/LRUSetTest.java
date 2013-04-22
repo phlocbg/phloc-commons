@@ -30,7 +30,7 @@ import com.phloc.commons.mock.PhlocTestUtils;
 /**
  * Test for class {@link LRUSet}
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class LRUSetTest
 {

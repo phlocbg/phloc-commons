@@ -26,7 +26,7 @@ import org.junit.Test;
 /**
  * Test class for class {@link EAppend}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class EAppendTest
 {

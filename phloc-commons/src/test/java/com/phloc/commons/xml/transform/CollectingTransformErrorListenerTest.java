@@ -40,7 +40,7 @@ import com.phloc.commons.xml.XMLFactory;
 /**
  * Test class for class {@link CollectingTransformErrorListener}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class CollectingTransformErrorListenerTest extends AbstractPhlocTestCase
 {

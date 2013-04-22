@@ -33,7 +33,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Test class for class {@link ThirdPartyModule}.
  *
- * @author philip
+ * @author Philip Helger
  */
 public final class ThirdPartyModuleTest
 {

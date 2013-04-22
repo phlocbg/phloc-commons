@@ -35,7 +35,7 @@ import com.phloc.commons.io.streams.StringInputStream;
 /**
  * Test class for class {@link ByteArrayOutputStreamProvider}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ByteArrayOutputStreamProviderTest
 {

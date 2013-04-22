@@ -25,7 +25,7 @@ import org.junit.Test;
 /**
  * Tests for class {@link GlobalDebug}
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class GlobalDebugTest
 {

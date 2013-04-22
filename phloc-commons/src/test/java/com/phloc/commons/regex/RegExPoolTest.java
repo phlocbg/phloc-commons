@@ -34,7 +34,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Test class for {@link RegExPool}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class RegExPoolTest extends AbstractPhlocTestCase
 {

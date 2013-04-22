@@ -35,7 +35,7 @@ import com.phloc.commons.collections.ContainerHelper;
 /**
  * Test class for class {@link AbstractWrappedList}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class AbstractWrappedListTest
 {

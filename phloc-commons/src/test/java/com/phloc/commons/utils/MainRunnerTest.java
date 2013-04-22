@@ -30,7 +30,7 @@ import com.phloc.commons.mock.MockRuntimeException;
 /**
  * Test class for {@link MainRunner}
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MainRunnerTest
 {

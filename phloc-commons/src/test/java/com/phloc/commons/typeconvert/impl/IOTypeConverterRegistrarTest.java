@@ -37,7 +37,7 @@ import com.phloc.commons.typeconvert.TypeConverterException;
 /**
  * Test class for class {@link IOTypeConverterRegistrar}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class IOTypeConverterRegistrarTest
 {

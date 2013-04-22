@@ -35,7 +35,7 @@ import com.phloc.commons.xml.DefaultXMLIterationHandler;
 /**
  * Test class for class {@link MicroSerializer}
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MicroSerializerTest
 {

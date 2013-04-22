@@ -27,7 +27,7 @@ import org.junit.Test;
 /**
  * Test class of class {@link CGStringHelper}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class CGStringHelperTest
 {

@@ -38,7 +38,7 @@ import com.phloc.commons.tree.withid.DefaultTreeWithID;
 /**
  * Test class for class {@link TreeWithIDBuilder}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class TreeWithIDBuilderTest
 {

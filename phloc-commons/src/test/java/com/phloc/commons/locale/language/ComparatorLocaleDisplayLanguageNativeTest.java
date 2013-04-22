@@ -28,7 +28,7 @@ import com.phloc.commons.mock.AbstractPhlocTestCase;
 /**
  * Test class for class {@link ComparatorLocaleDisplayLanguageNative}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ComparatorLocaleDisplayLanguageNativeTest extends AbstractPhlocTestCase
 {

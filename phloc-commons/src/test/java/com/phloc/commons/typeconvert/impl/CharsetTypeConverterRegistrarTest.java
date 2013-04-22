@@ -30,7 +30,7 @@ import com.phloc.commons.typeconvert.TypeConverter;
 /**
  * Test class for class {@link CharsetTypeConverterRegistrar}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class CharsetTypeConverterRegistrarTest
 {

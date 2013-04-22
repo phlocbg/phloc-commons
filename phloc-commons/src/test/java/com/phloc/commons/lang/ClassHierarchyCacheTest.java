@@ -35,7 +35,7 @@ import com.phloc.commons.type.TypedObject;
 /**
  * Test class for class {@link ClassHierarchyCache}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ClassHierarchyCacheTest
 {

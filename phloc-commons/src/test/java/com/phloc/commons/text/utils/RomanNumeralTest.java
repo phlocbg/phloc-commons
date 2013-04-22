@@ -27,7 +27,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Test class for class {@link RomanNumeral}.
  *
- * @author philip
+ * @author Philip Helger
  */
 public final class RomanNumeralTest
 {

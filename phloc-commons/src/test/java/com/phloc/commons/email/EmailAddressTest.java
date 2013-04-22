@@ -28,7 +28,7 @@ import com.phloc.commons.mock.PhlocTestUtils;
 /**
  * Test class for class {@link EmailAddress}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class EmailAddressTest
 {

@@ -24,7 +24,7 @@ import com.phloc.commons.ICloneable;
  * test works!<br>
  * Should invoke the Object.clone() method.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MockICloneable implements ICloneable <MockICloneable>
 {

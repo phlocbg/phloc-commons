@@ -31,7 +31,7 @@ import com.phloc.commons.charset.CharsetManager;
 /**
  * Test class for class {@link Base64Helper}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class Base64HelperTest
 {

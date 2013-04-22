@@ -24,7 +24,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Test class of class {@link InitializationException}.
  *
- * @author philip
+ * @author Philip Helger
  */
 public final class InitializationExceptionTest
 {

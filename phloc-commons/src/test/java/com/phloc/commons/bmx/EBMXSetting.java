@@ -28,7 +28,7 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
 /**
  * Contains all the available Binary Micro XML (BMX) settings.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public enum EBMXSetting
 {

@@ -31,7 +31,7 @@ import com.phloc.commons.mock.PhlocTestUtils;
 /**
  * JUnit test for class {@link VersionRange}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class VersionRangeTest
 {

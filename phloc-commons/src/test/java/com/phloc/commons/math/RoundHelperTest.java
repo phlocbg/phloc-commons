@@ -34,7 +34,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Test class for class {@link RoundHelper}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class RoundHelperTest
 {

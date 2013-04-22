@@ -30,7 +30,7 @@ import com.phloc.commons.CGlobal;
 /**
  * Test class for class {@link StatisticsHandlerKeyedSize}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class StatisticsHandlerKeyedSizeTest
 {

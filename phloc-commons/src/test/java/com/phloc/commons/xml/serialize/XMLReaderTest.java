@@ -47,7 +47,7 @@ import com.phloc.commons.xml.schema.XMLSchemaCache;
 /**
  * Test class for {@link XMLReader}
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class XMLReaderTest
 {

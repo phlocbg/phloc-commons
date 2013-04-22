@@ -48,7 +48,7 @@ import com.phloc.commons.url.SMap;
 /**
  * Test class for class {@link ContainerEqualsUtils}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ContainerEqualsUtilsTest extends AbstractPhlocTestCase
 {

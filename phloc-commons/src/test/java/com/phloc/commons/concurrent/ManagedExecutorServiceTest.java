@@ -30,7 +30,7 @@ import com.phloc.commons.callback.INonThrowingRunnable;
 /**
  * Test class for class {@link ManagedExecutorService}
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ManagedExecutorServiceTest
 {

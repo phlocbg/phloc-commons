@@ -30,7 +30,7 @@ import org.junit.Test;
 /**
  * Test class for class {@link FileFilterDirectoryPublic}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class FileFilterDirectoryPublicTest
 {

@@ -30,7 +30,7 @@ import com.phloc.commons.random.VerySecureRandom;
 /**
  * Test class for class {@link FlateCodec}
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class FlateCodecTest
 {

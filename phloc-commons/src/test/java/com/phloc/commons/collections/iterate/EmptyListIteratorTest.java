@@ -29,7 +29,7 @@ import org.junit.Test;
 /**
  * Test class for class {@link EmptyListIterator}
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class EmptyListIteratorTest
 {

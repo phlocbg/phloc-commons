@@ -26,7 +26,7 @@ import org.junit.Test;
 /**
  * Dummy class
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class FuncTestJavaCommons
 {

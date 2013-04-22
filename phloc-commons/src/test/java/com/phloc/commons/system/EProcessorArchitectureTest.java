@@ -29,7 +29,7 @@ import com.phloc.commons.CGlobal;
 /**
  * Test class for class {@link EProcessorArchitecture}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class EProcessorArchitectureTest
 {

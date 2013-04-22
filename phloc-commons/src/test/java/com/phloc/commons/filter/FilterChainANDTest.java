@@ -28,7 +28,7 @@ import com.phloc.commons.collections.ContainerHelper;
 /**
  * Test class for class {@link FilterChainAND}
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class FilterChainANDTest
 {

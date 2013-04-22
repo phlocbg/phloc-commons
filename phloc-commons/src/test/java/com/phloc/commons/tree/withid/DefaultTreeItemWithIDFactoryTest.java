@@ -25,7 +25,7 @@ import org.junit.Test;
 /**
  * Test class for class {@link DefaultTreeItemWithIDFactory}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class DefaultTreeItemWithIDFactoryTest
 {

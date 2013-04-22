@@ -32,7 +32,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Test class for class {@link FilenameFilterEndsWith}.
  *
- * @author philip
+ * @author Philip Helger
  */
 public final class FilenameFilterEndsWithTest
 {

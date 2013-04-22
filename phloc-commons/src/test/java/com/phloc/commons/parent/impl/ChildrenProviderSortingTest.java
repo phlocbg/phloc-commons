@@ -32,7 +32,7 @@ import com.phloc.commons.parent.MockHasChildren;
 /**
  * Test class for class {@link ChildrenProviderSorting}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ChildrenProviderSortingTest
 {

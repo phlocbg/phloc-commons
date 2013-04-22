@@ -37,7 +37,7 @@ import com.phloc.commons.text.ISimpleMultiLingualText;
 /**
  * Test class for class {@link ReadonlyMultiLingualText}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ReadonlyMultiLingualTextTest extends AbstractPhlocTestCase
 {

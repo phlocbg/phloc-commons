@@ -36,7 +36,7 @@ import com.phloc.commons.tree.withid.folder.DefaultFolderTreeItem;
 /**
  * Test class for class {@link FileSystemFolderTree}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class FileSystemFolderTreeTest
 {

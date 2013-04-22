@@ -33,7 +33,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Test class for class {@link SingleElementNamespaceContext}.
  *
- * @author philip
+ * @author Philip Helger
  */
 public final class SingleElementNamespaceContextTest
 {

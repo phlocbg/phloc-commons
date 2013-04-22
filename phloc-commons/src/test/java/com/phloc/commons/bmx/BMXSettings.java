@@ -34,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Settings for Binary Micro XML (BMX) handling.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @NotThreadSafe
 public final class BMXSettings implements ICloneable <BMXSettings>

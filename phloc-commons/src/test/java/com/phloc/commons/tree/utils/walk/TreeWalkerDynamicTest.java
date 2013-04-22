@@ -37,7 +37,7 @@ import com.phloc.commons.tree.withid.DefaultTreeWithID;
 /**
  * Test class for class {@link TreeWalkerDynamic}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class TreeWalkerDynamicTest
 {

@@ -37,7 +37,7 @@ import com.phloc.commons.string.StringParser;
 /**
  * Test class for class {@link LocaleFormatter}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class LocaleFormatterTest extends AbstractPhlocTestCase
 {

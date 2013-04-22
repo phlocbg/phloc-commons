@@ -37,7 +37,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Test class for class {@link MicroEntityReference}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MicroEntityReferenceTest
 {

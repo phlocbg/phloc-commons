@@ -27,7 +27,7 @@ import com.phloc.commons.mock.AbstractPhlocTestCase;
 /**
  * Test class for class {@link ResourceBundleUtils}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ResourceBundleUtilsTest extends AbstractPhlocTestCase
 {

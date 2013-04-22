@@ -35,7 +35,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Test class for class {@link FilenameHelper}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class FilenameHelperTest
 {

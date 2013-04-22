@@ -27,7 +27,7 @@ import org.junit.Test;
 /**
  * Test class for class {@link AggregatorFactoryNewInstance}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class AggregatorFactoryNewInstanceTest
 {

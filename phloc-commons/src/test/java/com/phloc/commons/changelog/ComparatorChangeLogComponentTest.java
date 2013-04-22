@@ -29,7 +29,7 @@ import com.phloc.commons.collections.ContainerHelper;
 /**
  * Test class for class {@link ComparatorChangeLogComponent}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ComparatorChangeLogComponentTest
 {

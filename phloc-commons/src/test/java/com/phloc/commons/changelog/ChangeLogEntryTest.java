@@ -39,7 +39,7 @@ import com.phloc.commons.text.impl.TextProvider;
 /**
  * Test class for class {@link ChangeLogEntry}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ChangeLogEntryTest extends AbstractPhlocTestCase
 {

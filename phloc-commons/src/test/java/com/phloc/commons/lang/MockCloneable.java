@@ -22,7 +22,7 @@ package com.phloc.commons.lang;
  * test works!<br>
  * Should invoke the {@link #clone()} method.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MockCloneable implements Cloneable
 {

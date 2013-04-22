@@ -36,7 +36,7 @@ import com.phloc.commons.mock.PhlocTestUtils;
 /**
  * Test class for class {@link MapBasedAttributeContainerThreadSafe}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MapBasedAttributeContainerThreadSafeTest
 {

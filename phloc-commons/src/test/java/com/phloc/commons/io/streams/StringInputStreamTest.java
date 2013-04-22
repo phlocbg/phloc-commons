@@ -29,7 +29,7 @@ import com.phloc.commons.charset.CharsetManager;
 /**
  * Test class for class {@link StringInputStream}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class StringInputStreamTest
 {

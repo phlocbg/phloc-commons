@@ -29,7 +29,7 @@ import com.phloc.commons.system.SystemHelper;
 /**
  * Abstract benchmarking class.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public abstract class AbstractBenchmarkTask
 {

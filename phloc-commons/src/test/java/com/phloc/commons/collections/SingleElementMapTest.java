@@ -34,7 +34,7 @@ import com.phloc.commons.mock.AbstractPhlocTestCase;
 /**
  * Test class for class {@link SingleElementMap}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class SingleElementMapTest extends AbstractPhlocTestCase
 {

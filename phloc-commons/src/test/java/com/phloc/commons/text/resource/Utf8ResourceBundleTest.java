@@ -32,7 +32,7 @@ import com.phloc.commons.mock.AbstractPhlocTestCase;
 /**
  * Test class for class {@link Utf8ResourceBundle}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class Utf8ResourceBundleTest extends AbstractPhlocTestCase
 {

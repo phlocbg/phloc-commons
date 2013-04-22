@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Test class for class {@link CryptoPolicy}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class CryptoPolicyTest
 {

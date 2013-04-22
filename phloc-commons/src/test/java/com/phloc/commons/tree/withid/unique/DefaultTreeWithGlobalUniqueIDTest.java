@@ -34,7 +34,7 @@ import com.phloc.commons.tree.withid.DefaultTreeItemWithID;
 /**
  * Test class for class {@link DefaultTreeWithGlobalUniqueID}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class DefaultTreeWithGlobalUniqueIDTest
 {

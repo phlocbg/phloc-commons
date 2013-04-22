@@ -47,7 +47,7 @@ import com.phloc.commons.xml.serialize.XMLWriterSettings;
 /**
  * Test class for class {@link MicroWriter}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MicroWriterTest
 {

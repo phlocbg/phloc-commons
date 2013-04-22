@@ -32,7 +32,7 @@ import com.phloc.commons.mock.AbstractPhlocTestCase;
 /**
  * Test class for class {@link MimeTypeDeterminator}
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MimeTypeDeterminatorTest extends AbstractPhlocTestCase
 {

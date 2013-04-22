@@ -84,7 +84,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Test class for {@link ArrayHelper}
  * 
- * @author philip
+ * @author Philip Helger
  */
 @SuppressFBWarnings ("TQ_NEVER_VALUE_USED_WHERE_ALWAYS_REQUIRED")
 public final class ArrayHelperTest extends AbstractPhlocTestCase

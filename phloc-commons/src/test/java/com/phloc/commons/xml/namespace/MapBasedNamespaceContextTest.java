@@ -32,7 +32,7 @@ import com.phloc.commons.mock.PhlocTestUtils;
 /**
  * Test class for class {@link MapBasedNamespaceContext}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MapBasedNamespaceContextTest
 {

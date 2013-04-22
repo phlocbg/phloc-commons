@@ -51,7 +51,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Test class for class {@link StreamUtils}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @SuppressFBWarnings ("SE_BAD_FIELD_INNER_CLASS")
 public final class StreamUtilsTest

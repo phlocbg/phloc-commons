@@ -51,7 +51,7 @@ import com.phloc.commons.xml.XMLFactory;
 /**
  * Test class for class {@link MicroUtils}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MicroUtilsTest
 {

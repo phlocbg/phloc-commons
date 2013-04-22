@@ -32,7 +32,7 @@ import com.phloc.commons.tree.withid.DefaultTreeWithID;
 /**
  * Test class for class {@link TreeWithIDSorter}
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class TreeWithIDSorterTest
 {

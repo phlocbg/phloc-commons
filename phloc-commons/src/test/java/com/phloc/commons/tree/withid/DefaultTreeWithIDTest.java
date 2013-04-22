@@ -29,7 +29,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Test class for class {@link DefaultTreeWithID}.
  *
- * @author philip
+ * @author Philip Helger
  */
 public final class DefaultTreeWithIDTest
 {

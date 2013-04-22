@@ -76,7 +76,7 @@ import com.phloc.commons.typeconvert.TypeConverterException.EReason;
 /**
  * Test class for class {@link TypeConverter}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class TypeConverterTest extends AbstractPhlocTestCase
 {

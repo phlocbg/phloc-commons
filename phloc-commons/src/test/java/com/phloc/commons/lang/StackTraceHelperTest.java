@@ -30,7 +30,7 @@ import com.phloc.commons.collections.ArrayHelper;
 /**
  * Test class for class {@link StackTraceHelper}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class StackTraceHelperTest
 {

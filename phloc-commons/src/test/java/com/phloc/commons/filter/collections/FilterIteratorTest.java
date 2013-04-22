@@ -39,7 +39,7 @@ import com.phloc.commons.mock.PhlocTestUtils;
 /**
  * Test class for {@link FilterIterator}
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class FilterIteratorTest
 {

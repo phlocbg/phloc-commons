@@ -31,7 +31,7 @@ import com.phloc.commons.random.VerySecureRandom;
 /**
  * Test class for class {@link LZWCodec}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class LZWCodecTest extends AbstractPhlocTestCase
 {

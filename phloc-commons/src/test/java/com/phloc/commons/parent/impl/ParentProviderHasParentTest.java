@@ -27,7 +27,7 @@ import com.phloc.commons.parent.MockHasParent;
 /**
  * Test class for class {@link ParentProviderHasParent}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ParentProviderHasParentTest
 {

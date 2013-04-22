@@ -55,7 +55,7 @@ import com.phloc.commons.regex.RegExHelper;
  * xps: known=application/vnd.ms-xpsdocument; new=application/oxps
  * </pre>
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MainReadSharedMimeInfo
 {

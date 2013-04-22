@@ -48,7 +48,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Test class for {@link XMLWriter}
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class XMLWriterTest extends AbstractPhlocTestCase
 {

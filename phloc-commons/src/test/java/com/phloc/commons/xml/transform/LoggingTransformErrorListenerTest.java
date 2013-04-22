@@ -32,7 +32,7 @@ import com.phloc.commons.mock.PhlocTestUtils;
 /**
  * Test class for class {@link LoggingTransformErrorListener}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class LoggingTransformErrorListenerTest extends AbstractPhlocTestCase
 {

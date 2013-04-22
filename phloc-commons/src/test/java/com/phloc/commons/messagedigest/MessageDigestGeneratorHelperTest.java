@@ -28,7 +28,7 @@ import com.phloc.commons.charset.CharsetManager;
 /**
  * Test class for class {@link MessageDigestGeneratorHelper}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MessageDigestGeneratorHelperTest
 {

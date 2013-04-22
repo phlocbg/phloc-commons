@@ -32,7 +32,7 @@ import com.phloc.commons.collections.ContainerHelper;
 /**
  * Test class for class {@link AggregatorUseFirst}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class AggregatorUseFirstTest
 {

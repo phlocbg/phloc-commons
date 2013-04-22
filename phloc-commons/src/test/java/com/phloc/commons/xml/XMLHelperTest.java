@@ -45,7 +45,7 @@ import com.phloc.commons.xml.xpath.XPathExpressionHelper;
 /**
  * Test class for class {@link XMLHelper}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class XMLHelperTest extends AbstractPhlocTestCase
 {

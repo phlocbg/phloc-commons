@@ -32,7 +32,7 @@ import com.phloc.commons.io.file.FileOperations;
 /**
  * Test class for class {@link GlobalIDFactory}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class GlobalIDFactoryTest
 {

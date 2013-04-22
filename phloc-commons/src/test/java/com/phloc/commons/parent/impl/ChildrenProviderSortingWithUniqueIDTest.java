@@ -33,7 +33,7 @@ import com.phloc.commons.parent.MockHasChildren;
 /**
  * Test class for class {@link ChildrenProviderSortingWithUniqueID}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ChildrenProviderSortingWithUniqueIDTest
 {

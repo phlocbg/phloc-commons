@@ -28,7 +28,7 @@ import com.phloc.commons.state.EContinue;
 /**
  * Test class for class {@link MicroTypeConverterRegistry}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MicroTypeConverterRegistryTest
 {

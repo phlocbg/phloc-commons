@@ -32,7 +32,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Test class for class {@link NonBlockingByteArrayInputStream}.
  *
- * @author philip
+ * @author Philip Helger
  */
 public final class NonBlockingByteArrayInputStreamTest
 {

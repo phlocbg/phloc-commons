@@ -51,7 +51,7 @@ import com.phloc.commons.state.ESuccess;
 /**
  * Binary Micro XML (BMX) Writer
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class BMXWriter
 {

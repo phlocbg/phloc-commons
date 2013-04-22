@@ -34,7 +34,7 @@ import com.phloc.commons.collections.ContainerHelper;
 /**
  * Abstract class for class {@link IMultiMap} implementations.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public abstract class AbstractMultiMapTestCase
 {

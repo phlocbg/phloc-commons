@@ -35,7 +35,7 @@ import com.phloc.commons.xml.namespace.MapBasedNamespaceContext;
 /**
  * Test class for class {@link XMLWriterSettings}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class XMLWriterSettingsTest
 {

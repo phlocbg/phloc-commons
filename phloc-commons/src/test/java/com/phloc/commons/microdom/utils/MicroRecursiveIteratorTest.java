@@ -31,7 +31,7 @@ import com.phloc.commons.microdom.serialize.MicroReader;
 /**
  * Test class for class {@link MicroRecursiveIterator}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MicroRecursiveIteratorTest
 {

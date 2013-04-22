@@ -38,7 +38,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Test class for {@link RegExHelper}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class RegExHelperTest
 {

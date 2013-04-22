@@ -29,7 +29,7 @@ import com.phloc.commons.compare.ESortOrder;
 /**
  * Test class for class {@link ComparatorHasIDString}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ComparatorHasIDStringTest
 {

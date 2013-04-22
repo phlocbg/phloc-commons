@@ -36,7 +36,7 @@ import com.phloc.commons.text.ITextProvider;
 /**
  * Test class for class {@link TextProvider}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class TextProviderTest extends AbstractPhlocTestCase
 {
