@@ -25,7 +25,7 @@ import com.phloc.commons.mock.AbstractPhlocTestCase;
 /**
  * Test base class for combinator testing
  * 
- * @author philip
+ * @author Philip Helger
  */
 public abstract class AbstractCombinationGeneratorTestCase extends AbstractPhlocTestCase
 {

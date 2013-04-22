@@ -36,7 +36,7 @@ import com.phloc.commons.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
 /**
  * Test class for class {@link TreeXMLConverter}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class TreeXMLConverterTest extends AbstractPhlocTestCase
 {

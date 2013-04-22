@@ -22,7 +22,7 @@ import org.junit.Test;
 /**
  * Test class for class {@link MultiHashMapHashSetBased}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MultiHashMapHashSetBasedTest extends AbstractMultiMapTestCase
 {

@@ -26,7 +26,7 @@ import com.phloc.commons.mock.AbstractPhlocTestCase;
 /**
  * Test class for class {@link Utf8PropertyResourceBundle}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class Utf8PropertyResourceBundleTest extends AbstractPhlocTestCase
 {

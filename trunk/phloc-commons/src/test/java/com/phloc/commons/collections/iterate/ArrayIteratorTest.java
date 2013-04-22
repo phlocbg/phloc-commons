@@ -34,7 +34,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Test class for class {@link ArrayIterator}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ArrayIteratorTest
 {

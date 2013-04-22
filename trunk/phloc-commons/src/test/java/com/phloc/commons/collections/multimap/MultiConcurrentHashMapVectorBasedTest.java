@@ -22,7 +22,7 @@ import org.junit.Test;
 /**
  * Test class for class {@link MultiConcurrentHashMapVectorBased}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MultiConcurrentHashMapVectorBasedTest extends AbstractMultiMapTestCase
 {

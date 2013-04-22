@@ -34,7 +34,7 @@ import com.phloc.commons.random.VerySecureRandom;
 /**
  * Test class for class {@link BitOutputStream}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class BitOutputStreamTest
 {

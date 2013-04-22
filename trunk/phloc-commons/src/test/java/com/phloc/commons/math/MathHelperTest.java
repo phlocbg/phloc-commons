@@ -29,7 +29,7 @@ import com.phloc.commons.mock.PhlocAssert;
 /**
  * Test class for class {@link MathHelper}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MathHelperTest
 {

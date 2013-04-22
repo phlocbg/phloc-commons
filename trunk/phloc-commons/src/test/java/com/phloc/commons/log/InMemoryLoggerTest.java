@@ -30,7 +30,7 @@ import com.phloc.commons.error.EErrorLevel;
 /**
  * Test class for class {@link InMemoryLogger}
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class InMemoryLoggerTest
 {

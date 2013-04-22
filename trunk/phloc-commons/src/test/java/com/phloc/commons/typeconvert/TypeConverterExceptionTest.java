@@ -30,7 +30,7 @@ import com.phloc.commons.typeconvert.TypeConverterException.EReason;
 /**
  * Test class for class {@link TypeConverterException}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class TypeConverterExceptionTest
 {

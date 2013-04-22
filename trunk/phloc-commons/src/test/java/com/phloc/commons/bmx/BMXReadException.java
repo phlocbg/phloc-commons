@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 /**
  * Exceptions that can occur when reading BMX files.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class BMXReadException extends RuntimeException
 {

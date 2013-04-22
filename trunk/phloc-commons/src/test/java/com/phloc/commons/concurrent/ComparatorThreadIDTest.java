@@ -27,7 +27,7 @@ import com.phloc.commons.compare.ESortOrder;
 /**
  * Test class for class {@link ComparatorThreadID}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ComparatorThreadIDTest
 {

@@ -29,7 +29,7 @@ import com.phloc.commons.string.StringHelper;
 /**
  * Test class for class {@link EOperatingSystem}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class EOperatingSystemTest
 {

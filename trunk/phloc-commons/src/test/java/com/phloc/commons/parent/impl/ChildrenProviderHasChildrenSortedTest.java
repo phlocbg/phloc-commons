@@ -31,7 +31,7 @@ import com.phloc.commons.parent.MockHasSortedChildren;
 /**
  * Test class for class {@link ChildrenProviderHasChildrenSorted}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ChildrenProviderHasChildrenSortedTest
 {

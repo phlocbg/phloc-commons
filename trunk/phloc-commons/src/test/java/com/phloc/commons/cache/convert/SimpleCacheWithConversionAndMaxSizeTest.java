@@ -31,7 +31,7 @@ import com.phloc.commons.convert.UnidirectionalConverterMapGet;
 /**
  * Test class for class {@link SimpleCacheWithConversionAndMaxSize}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class SimpleCacheWithConversionAndMaxSizeTest
 {

@@ -40,7 +40,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Test class for class {@link CharsetManager}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class CharsetManagerTest
 {

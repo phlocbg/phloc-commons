@@ -32,7 +32,7 @@ import com.phloc.commons.tree.utils.sort.ComparatorDefaultTreeItemComparable;
 /**
  * Test class for class {@link DefaultTree}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class DefaultTreeTest
 {

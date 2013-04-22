@@ -31,7 +31,7 @@ import com.phloc.commons.state.ESuccess;
 /**
  * Test class for class {@link SuccessWithValue}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class SuccessWithValueTest
 {

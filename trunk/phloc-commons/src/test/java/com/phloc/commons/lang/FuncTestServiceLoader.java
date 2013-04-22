@@ -39,7 +39,7 @@ import com.phloc.commons.type.IHasType;
 /**
  * Test class for class {@link ServiceLoader}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class FuncTestServiceLoader
 {

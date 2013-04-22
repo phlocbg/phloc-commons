@@ -37,7 +37,7 @@ import com.phloc.commons.xml.transform.TransformSourceFactory;
 /**
  * Test class for class {@link CollectingValidationEventHandler}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class CollectingValidationEventHandlerTest
 {

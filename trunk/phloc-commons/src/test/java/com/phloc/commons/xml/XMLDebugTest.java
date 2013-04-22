@@ -29,7 +29,7 @@ import com.phloc.commons.xml.dom.EXMLDOMNodeType;
 /**
  * Test class for class {@link XMLDebug}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class XMLDebugTest
 {

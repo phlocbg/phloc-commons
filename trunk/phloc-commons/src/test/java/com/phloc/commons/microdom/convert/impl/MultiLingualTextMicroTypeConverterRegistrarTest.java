@@ -38,7 +38,7 @@ import com.phloc.commons.text.impl.TextProvider;
 /**
  * Test class for class {@link MultiLingualTextMicroTypeConverterRegistrar}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MultiLingualTextMicroTypeConverterRegistrarTest
 {

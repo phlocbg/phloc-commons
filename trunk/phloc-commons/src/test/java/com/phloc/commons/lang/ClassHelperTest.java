@@ -36,7 +36,7 @@ import com.phloc.commons.system.EOperatingSystem;
 /**
  * Test class for class {@link ClassHelper}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ClassHelperTest
 {

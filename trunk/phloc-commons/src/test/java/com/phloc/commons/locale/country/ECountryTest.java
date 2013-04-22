@@ -28,7 +28,7 @@ import com.phloc.commons.mock.AbstractPhlocTestCase;
 /**
  * Test class for class {@link ECountry}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ECountryTest extends AbstractPhlocTestCase
 {

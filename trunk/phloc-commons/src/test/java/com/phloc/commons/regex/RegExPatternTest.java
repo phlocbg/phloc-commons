@@ -26,7 +26,7 @@ import com.phloc.commons.mock.AbstractPhlocTestCase;
 /**
  * Test class for {@link RegExPattern}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class RegExPatternTest extends AbstractPhlocTestCase
 {

@@ -22,7 +22,7 @@ package com.phloc.commons.lang;
  * test works!<br>
  * Should fail because the copy constructor is private
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MockWithPrivateCopyCtor
 {

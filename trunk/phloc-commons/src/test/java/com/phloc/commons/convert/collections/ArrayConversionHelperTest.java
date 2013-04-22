@@ -35,7 +35,7 @@ import com.phloc.commons.mock.AbstractPhlocTestCase;
 /**
  * Test class for {@link ArrayHelper}
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ArrayConversionHelperTest extends AbstractPhlocTestCase
 {

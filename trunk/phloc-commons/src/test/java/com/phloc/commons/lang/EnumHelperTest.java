@@ -31,7 +31,7 @@ import com.phloc.commons.id.IHasSimpleIntID;
 /**
  * Test class for class {@link EnumHelper}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class EnumHelperTest
 {

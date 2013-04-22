@@ -32,7 +32,7 @@ import com.phloc.commons.tree.simple.DefaultTreeItem;
 /**
  * Test class for class {@link TreeSorter}
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class TreeSorterTest
 {

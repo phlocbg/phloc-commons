@@ -35,7 +35,7 @@ import com.phloc.commons.mutable.MutableInt;
 /**
  * Test class for class {@link MicroWalker}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MicroWalkerTest
 {

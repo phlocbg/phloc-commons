@@ -30,7 +30,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Test class for class {@link StringScanner}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class StringScannerTest
 {

@@ -33,7 +33,7 @@ import com.phloc.commons.io.resource.URLResource;
 /**
  * Test class for class {@link SimpleLSResourceResolver}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class SimpleLSResourceResolverTest
 {

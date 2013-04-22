@@ -48,7 +48,7 @@ import com.phloc.commons.state.EValidity;
 /**
  * Test class for class {@link BasicMicroTypeConverterRegistrar}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class BasicMicroTypeConverterRegistrarTest
 {

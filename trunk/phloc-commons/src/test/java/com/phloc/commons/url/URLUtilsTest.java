@@ -28,7 +28,7 @@ import com.phloc.commons.charset.CCharset;
 /**
  * Test class for class {@link URLUtils}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class URLUtilsTest
 {

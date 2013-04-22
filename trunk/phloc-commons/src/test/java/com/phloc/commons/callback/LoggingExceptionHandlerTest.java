@@ -24,7 +24,7 @@ import com.phloc.commons.mock.MockException;
 /**
  * Test class for class {@link LoggingExceptionHandler}
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class LoggingExceptionHandlerTest
 {

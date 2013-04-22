@@ -22,7 +22,7 @@ import org.junit.Test;
 /**
  * Test class for class {@link MockRuntimeException}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MockRuntimeExceptionTest
 {

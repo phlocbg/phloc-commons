@@ -30,7 +30,7 @@ import com.phloc.commons.CGlobal;
 /**
  * Test class for class {@link StatisticsHandlerKeyedTimer}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class StatisticsHandlerKeyedTimerTest
 {

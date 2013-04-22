@@ -27,7 +27,7 @@ import org.junit.Test;
 /**
  * Test class for class {@link EJVMVendor}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class EJVMVendorTest
 {

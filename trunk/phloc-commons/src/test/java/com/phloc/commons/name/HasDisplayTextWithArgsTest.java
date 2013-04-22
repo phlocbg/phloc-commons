@@ -29,7 +29,7 @@ import com.phloc.commons.mock.PhlocTestUtils;
 /**
  * Test class for class {@link HasDisplayTextWithArgs}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class HasDisplayTextWithArgsTest extends AbstractPhlocTestCase
 {

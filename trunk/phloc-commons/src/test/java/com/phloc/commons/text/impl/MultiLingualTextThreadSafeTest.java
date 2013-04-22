@@ -39,7 +39,7 @@ import com.phloc.commons.text.IReadonlyMultiLingualText;
 /**
  * Test class for class {@link MultiLingualTextThreadSafe}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MultiLingualTextThreadSafeTest extends AbstractPhlocTestCase
 {

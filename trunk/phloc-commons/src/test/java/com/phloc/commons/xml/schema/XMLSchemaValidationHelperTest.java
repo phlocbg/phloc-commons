@@ -37,7 +37,7 @@ import com.phloc.commons.xml.serialize.XMLReader;
 /**
  * Test class for class {@link XMLSchemaValidationHelper}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class XMLSchemaValidationHelperTest
 {

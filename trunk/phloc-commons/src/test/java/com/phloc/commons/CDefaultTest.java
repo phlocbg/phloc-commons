@@ -24,7 +24,7 @@ import org.junit.Test;
 /**
  * Test class for class {@link CDefault}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class CDefaultTest
 {

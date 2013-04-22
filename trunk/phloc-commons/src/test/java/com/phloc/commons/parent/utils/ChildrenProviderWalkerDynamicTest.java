@@ -29,7 +29,7 @@ import com.phloc.commons.parent.MockHasChildren;
 /**
  * Test class for class {@link ChildrenProviderWalkerDynamic}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ChildrenProviderWalkerDynamicTest
 {

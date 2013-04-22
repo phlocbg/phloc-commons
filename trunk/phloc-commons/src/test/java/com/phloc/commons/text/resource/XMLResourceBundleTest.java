@@ -37,7 +37,7 @@ import com.phloc.commons.mock.AbstractPhlocTestCase;
 /**
  * Test class for class {@link XMLResourceBundle}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class XMLResourceBundleTest extends AbstractPhlocTestCase
 {

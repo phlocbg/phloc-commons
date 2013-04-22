@@ -43,7 +43,7 @@ import com.phloc.commons.xml.XMLFactory;
  * >Link 1</a></li>
  * </ul>
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class FuncTestReadWriteXML11
 {

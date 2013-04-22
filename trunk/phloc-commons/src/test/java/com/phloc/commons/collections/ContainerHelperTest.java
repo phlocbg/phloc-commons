@@ -120,7 +120,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Test class for class {@link ContainerHelper}
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ContainerHelperTest extends AbstractPhlocTestCase
 {

@@ -33,7 +33,7 @@ import com.phloc.commons.io.streams.StreamUtils;
 /**
  * Test class for {@link ClassPathHelper}
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ClassPathHelperTest
 {

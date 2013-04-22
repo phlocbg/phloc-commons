@@ -29,7 +29,7 @@ import com.phloc.commons.charset.CCharset;
 /**
  * Test class for class {@link CountingOutputStream}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class CountingOutputStreamTest
 {

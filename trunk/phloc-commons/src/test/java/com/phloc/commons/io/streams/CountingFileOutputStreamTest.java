@@ -32,7 +32,7 @@ import com.phloc.commons.io.file.FileOperations;
 /**
  * Test class for class {@link CountingFileOutputStream}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class CountingFileOutputStreamTest
 {

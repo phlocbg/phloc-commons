@@ -33,7 +33,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Test class for class {@link DefaultResourceProvider}.
  *
- * @author philip
+ * @author Philip Helger
  */
 public final class DefaultResourceProviderTest
 {

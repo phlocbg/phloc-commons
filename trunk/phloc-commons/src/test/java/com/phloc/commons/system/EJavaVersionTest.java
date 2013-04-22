@@ -27,7 +27,7 @@ import org.junit.Test;
 /**
  * Test class for class {@link EJavaVersion}.,
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class EJavaVersionTest
 {

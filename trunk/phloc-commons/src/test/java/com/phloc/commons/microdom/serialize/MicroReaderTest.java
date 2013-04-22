@@ -52,7 +52,7 @@ import com.phloc.commons.xml.serialize.XMLWriterSettings;
 /**
  * Test class for class {@link MicroReader}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MicroReaderTest
 {

@@ -28,7 +28,7 @@ import com.phloc.commons.exceptions.LoggedRuntimeException;
 /**
  * Test class for class {@link LogUtils}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class LogUtilsTest
 {

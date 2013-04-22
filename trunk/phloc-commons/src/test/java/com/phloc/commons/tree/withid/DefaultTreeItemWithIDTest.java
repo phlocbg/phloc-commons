@@ -35,7 +35,7 @@ import com.phloc.commons.tree.utils.sort.ComparatorTreeItemIDComparable;
 /**
  * Test class for class {@link DefaultTreeItemWithID}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class DefaultTreeItemWithIDTest
 {

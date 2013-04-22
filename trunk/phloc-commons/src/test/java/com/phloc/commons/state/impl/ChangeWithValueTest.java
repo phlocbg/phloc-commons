@@ -31,7 +31,7 @@ import com.phloc.commons.state.EChange;
 /**
  * Test class for class {@link ChangeWithValue}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ChangeWithValueTest
 {

@@ -27,7 +27,7 @@ import com.phloc.commons.mock.AbstractPhlocTestCase;
 /**
  * Test class for class {@link ELocaleName}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ELocaleNameTest extends AbstractPhlocTestCase
 {

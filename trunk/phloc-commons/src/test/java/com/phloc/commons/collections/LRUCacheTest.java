@@ -25,7 +25,7 @@ import org.junit.Test;
 /**
  * Test for class {@link LRUCache}
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class LRUCacheTest
 {

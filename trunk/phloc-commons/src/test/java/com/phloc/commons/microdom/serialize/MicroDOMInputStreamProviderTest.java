@@ -28,7 +28,7 @@ import com.phloc.commons.xml.serialize.XMLWriterSettings;
 /**
  * Test class for class {@link MicroDOMInputStreamProvider}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MicroDOMInputStreamProviderTest
 {

@@ -24,7 +24,7 @@ import com.phloc.commons.mock.PhlocTestUtils;
 /**
  * Test class for class {@link LoggingLSResourceResolver}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class LoggingLSResourceResolverTest
 {

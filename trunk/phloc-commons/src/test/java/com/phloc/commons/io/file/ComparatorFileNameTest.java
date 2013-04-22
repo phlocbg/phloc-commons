@@ -30,7 +30,7 @@ import com.phloc.commons.mock.AbstractPhlocTestCase;
 /**
  * Test class for class {@link ComparatorFileName}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ComparatorFileNameTest extends AbstractPhlocTestCase
 {

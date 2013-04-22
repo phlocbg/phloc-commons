@@ -38,7 +38,7 @@ import com.phloc.commons.xml.schema.XMLSchemaCache;
 /**
  * Test class for class {@link XMLFactory}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class XMLFactoryTest extends AbstractPhlocTestCase
 {

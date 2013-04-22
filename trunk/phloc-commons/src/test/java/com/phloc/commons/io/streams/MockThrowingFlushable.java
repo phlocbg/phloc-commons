@@ -26,7 +26,7 @@ import com.phloc.commons.mock.MockIOException;
  * Mock implementation of the {@link Flushable} interface just throwing a
  * {@link MockIOException}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public class MockThrowingFlushable implements Flushable
 {

@@ -29,7 +29,7 @@ import com.phloc.commons.concurrent.ThreadUtils;
 /**
  * Test class for class {@link StopWatch}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class StopWatchTest
 {

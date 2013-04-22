@@ -34,7 +34,7 @@ import com.phloc.commons.version.Version;
 /**
  * Test class for class {@link ChangeLogRelease}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ChangeLogReleaseTest
 {

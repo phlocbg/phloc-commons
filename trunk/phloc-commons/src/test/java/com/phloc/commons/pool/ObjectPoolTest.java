@@ -30,7 +30,7 @@ import com.phloc.commons.factory.FactoryConstantValue;
 /**
  * Test class for class {@link ObjectPool}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ObjectPoolTest
 {

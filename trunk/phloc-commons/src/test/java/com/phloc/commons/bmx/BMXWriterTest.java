@@ -41,7 +41,7 @@ import com.phloc.commons.timing.StopWatch;
 /**
  * Test class for class {@link BMXWriter}
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class BMXWriterTest
 {

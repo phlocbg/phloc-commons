@@ -35,7 +35,7 @@ import com.phloc.commons.xml.serialize.XMLWriter;
 /**
  * Test class for {@link XMLWriter} for DOM4J objects.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class FuncTestDOM4J extends AbstractPhlocTestCase
 {

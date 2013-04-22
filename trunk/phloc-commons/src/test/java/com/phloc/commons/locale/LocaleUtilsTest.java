@@ -41,7 +41,7 @@ import com.phloc.commons.system.SystemHelper;
 /**
  * Test class for class {@link LocaleUtils}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class LocaleUtilsTest extends AbstractPhlocTestCase
 {

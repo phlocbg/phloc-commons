@@ -46,7 +46,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Test class for class {@link ChangeLogSerializer}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ChangeLogSerializerTest
 {

@@ -23,7 +23,7 @@ import com.phloc.commons.annotations.IsSPIImplementation;
  * Claims to be an SPI but does not implement the required
  * {@link com.phloc.commons.state.IClearable} interface.
  * 
- * @author philip
+ * @author Philip Helger
  */
 @IsSPIImplementation
 public final class MockSPIClearableInvalid

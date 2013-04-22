@@ -32,7 +32,7 @@ import com.phloc.commons.io.streams.StreamUtils;
 /**
  * Test class for class {@link ByteBufferInputStreamProvider}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class ByteBufferInputStreamProviderTest
 {

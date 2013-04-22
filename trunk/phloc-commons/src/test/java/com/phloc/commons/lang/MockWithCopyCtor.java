@@ -22,7 +22,7 @@ package com.phloc.commons.lang;
  * test works!<br>
  * Should invoke the copy constructor!
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class MockWithCopyCtor
 {

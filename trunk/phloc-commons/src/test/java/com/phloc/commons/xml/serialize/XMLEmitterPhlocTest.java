@@ -34,7 +34,7 @@ import com.phloc.commons.xml.EXMLVersion;
 /**
  * Test class for {@link XMLEmitterPhloc}
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class XMLEmitterPhlocTest extends AbstractPhlocTestCase
 {

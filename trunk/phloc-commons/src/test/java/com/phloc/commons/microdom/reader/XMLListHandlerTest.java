@@ -44,7 +44,7 @@ import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 /**
  * Test class for {@link XMLListHandler}.
  * 
- * @author philip
+ * @author Philip Helger
  */
 public final class XMLListHandlerTest
 {
