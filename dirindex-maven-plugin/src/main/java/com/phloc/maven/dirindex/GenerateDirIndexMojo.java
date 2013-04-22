@@ -36,12 +36,14 @@ import com.phloc.commons.hierarchy.DefaultHierarchyWalkerCallback;
 import com.phloc.commons.io.file.ComparatorFileName;
 import com.phloc.commons.io.file.FileIOError;
 import com.phloc.commons.io.file.FileOperations;
+import com.phloc.commons.io.file.FilenameHelper;
 import com.phloc.commons.io.file.SimpleFileIO;
 import com.phloc.commons.io.file.iterate.FileSystemFolderTree;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.impl.MicroDocument;
 import com.phloc.commons.microdom.serialize.MicroWriter;
+import com.phloc.commons.mutable.MutableInt;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.tree.utils.walk.TreeWalker;
 import com.phloc.commons.tree.withid.folder.DefaultFolderTreeItem;
@@ -131,6 +133,8 @@ public final class GenerateDirIndexMojo extends AbstractMojo
     final IMicroElement eRoot = aDoc.appendElement ("index");
     eRoot.setAttribute ("sourcedirectory", sBase);
     final NonBlockingStack <String> aDirs = new NonBlockingStack <String> ();
+    final MutableInt aTotalDirs = new MutableInt (0);
+    final MutableInt aTotalFiles = new MutableInt (0);
     TreeWalker.walkTree (aFileTree,
                          new DefaultHierarchyWalkerCallback <DefaultFolderTreeItem <String, File, List <File>>> ()
                          {
@@ -143,20 +147,30 @@ public final class GenerateDirIndexMojo extends AbstractMojo
 
                              aDirs.push (sDirName);
 
-                             final String sImplodedDirName = StringHelper.getImploded (File.separator, aDirs);
+                             final String sImplodedDirName = StringHelper.getImploded (FilenameHelper.UNIX_SEPARATOR,
+                                                                                       aDirs);
                              final IMicroElement eDir = eRoot.appendElement ("directory");
                              eDir.setAttribute ("name", sImplodedDirName);
+                             eDir.setAttribute ("basename", sDirName);
                              eDir.setAttribute ("subdircount", Integer.toString (nSubDirCount));
-                             eDir.setAttribute ("filecount", aFiles == null ? "0" : Integer.toString (aFiles.size ()));
+                             eDir.setAttribute ("filecount", aFiles == null ? 0 : aFiles.size ());
+                             aTotalDirs.inc ();
 
                              if (aFiles != null)
+                             {
+                               aTotalFiles.inc (aFiles.size ());
                                for (final File aFile : ContainerHelper.getSorted (aFiles,
                                                                                   new ComparatorFileName (Locale.US)))
                                {
                                  final IMicroElement eFile = eRoot.appendElement ("file");
-                                 eFile.setAttribute ("name", sImplodedDirName + File.separator + aFile.getName ());
-                                 eFile.setAttribute ("filesize", Long.toString (aFile.length ()));
+                                 eFile.setAttribute ("name",
+                                                     sImplodedDirName +
+                                                         FilenameHelper.UNIX_SEPARATOR +
+                                                         aFile.getName ());
+                                 eFile.setAttribute ("basename", aFile.getName ());
+                                 eFile.setAttribute ("filesize", aFile.length ());
                                }
+                             }
                            }
 
                            @Override
@@ -165,6 +179,8 @@ public final class GenerateDirIndexMojo extends AbstractMojo
                              aDirs.pop ();
                            }
                          });
+    eRoot.setAttribute ("totaldirs", aTotalDirs.intValue ());
+    eRoot.setAttribute ("totalfiles", aTotalFiles.intValue ());
     if (false)
       System.out.println (MicroWriter.getXMLString (eRoot));
     return aDoc;
