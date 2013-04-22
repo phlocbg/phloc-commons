@@ -88,7 +88,7 @@ public final class GenerateDirIndexMojo extends AbstractMojo
    * The directory within the target artifact where the file should reside.
    * 
    * @required
-   * @parameter property=targetDirectory default-value="META-INF"
+   * @parameter property=targetDirectory default-value=""
    */
   private String targetDirectory;
 
@@ -117,8 +117,6 @@ public final class GenerateDirIndexMojo extends AbstractMojo
     final FileIOError aResult = FileOperations.createDirRecursiveIfNotExisting (tempDirectory);
     if (aResult.isFailure ())
       getLog ().error ("Failed to create temp directory " + aResult.toString ());
-    else
-      getLog ().info ("Successfully created temp directory " + aDir.toString ());
   }
 
   @Nonnull
@@ -181,8 +179,21 @@ public final class GenerateDirIndexMojo extends AbstractMojo
       // Ensure that the directory exists
       if (!tempDirectory.mkdirs ())
         throw new MojoExecutionException ("Failed to create dirindex temp directory " + tempDirectory);
-      getLog ().info ("Created dirindex temp directory " + tempDirectory);
     }
+
+    File aTempTargetDir;
+    if (StringHelper.hasText (targetDirectory))
+    {
+      aTempTargetDir = new File (tempDirectory, targetDirectory);
+      if (!aTempTargetDir.exists ())
+      {
+        // Ensure that the directory exists
+        if (!aTempTargetDir.mkdirs ())
+          throw new MojoExecutionException ("Failed to create dirindex temp-traget directory " + aTempTargetDir);
+      }
+    }
+    else
+      aTempTargetDir = tempDirectory;
 
     if (sourceDirectory == null)
       throw new MojoExecutionException ("No dirindex source directory specified!");
@@ -200,12 +211,12 @@ public final class GenerateDirIndexMojo extends AbstractMojo
       // Build the index
       final FileSystemFolderTree aFileTree = new FileSystemFolderTree (sourceDirectory);
       final IMicroDocument aDoc = _getAsXML (aFileTree);
-      final File aTempFile = new File (tempDirectory, targetFilename);
+      final File aTempFile = new File (aTempTargetDir, targetFilename);
       SimpleFileIO.writeFile (aTempFile, MicroWriter.getXMLString (aDoc), XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ);
 
       // Add output directory as a resource-directory
       final Resource aResource = new Resource ();
-      aResource.setDirectory (tempDirectory.getAbsolutePath ());
+      aResource.setDirectory (aTempTargetDir.getAbsolutePath ());
       aResource.addInclude (aTempFile.getName ());
       aResource.setFiltering (false);
       aResource.setTargetPath (targetDirectory);

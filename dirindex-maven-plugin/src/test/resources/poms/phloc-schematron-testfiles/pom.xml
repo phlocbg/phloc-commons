@@ -25,7 +25,6 @@
       <plugin>
         <groupId>com.phloc.maven</groupId>
         <artifactId>dirindex-maven-plugin</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
         <configuration>
           <!-- 
           Order is important!
@@ -45,7 +44,7 @@
           <!-- plugin specific -->
           <tempDirectory>../../../../../target/dirindex-maven-plugin</tempDirectory>
           <sourceDirectory>../../../../../src/main</sourceDirectory>
-          <targetDirectory>dirindex-maven-plugin</targetDirectory>
+          <targetDirectory></targetDirectory>
           <targetFilename>dirindex-created.xml</targetFilename>
         </configuration>
       </plugin>
