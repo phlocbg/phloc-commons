@@ -9,11 +9,6 @@
 
   <dependencies>
     <dependency>
-      <groupId>com.phloc</groupId>
-      <artifactId>phloc-commons</artifactId>
-      <version>4.0.3</version>
-    </dependency>
-    <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
       <scope>test</scope>
@@ -35,7 +30,7 @@
           
           <!-- plugin specific -->
           <tempDirectory>../../../../../target/dirindex-maven-plugin</tempDirectory>
-          <sourceDirectory>../../../../../src/main</sourceDirectory>
+          <sourceDirectory>../../../../../src/main/resources</sourceDirectory>
           <recursive>false</recursive>
           <targetDirectory></targetDirectory>
           <targetFilename>dirindex-created.xml</targetFilename>
