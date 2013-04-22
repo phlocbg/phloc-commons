@@ -67,6 +67,18 @@ public final class FileFilterToIFilterAdapter implements IFilter <File>
     return new ToStringGenerator (this).append ("fileFilter", m_aFileFilter).toString ();
   }
 
+  @Nullable
+  public static IFilter <File> create (@Nullable final FileFilter aFileFilter)
+  {
+    return aFileFilter == null ? null : new FileFilterToIFilterAdapter (aFileFilter);
+  }
+
+  @Nullable
+  public static IFilter <File> create (@Nullable final FilenameFilter aFileFilter)
+  {
+    return aFileFilter == null ? null : new FileFilterToIFilterAdapter (aFileFilter);
+  }
+
   @Nonnull
   public static IFilter <File> getANDChained (@Nonnull final FileFilter... aFileFilters)
   {
