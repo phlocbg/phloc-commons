@@ -30,20 +30,13 @@
           Order is important!
           See http://maven.apache.org/plugin-testing/maven-plugin-testing-harness/examples/complex-mojo-parameters.html
           -->
-          <!-- By default <<<${basedir}/target/local-repo", where basedir refers
-               to the basedir of maven-my-plugin. -->
-          <!-- 
-          <localRepository>${localRepository}</localRepository>
-           -->
           <!-- The defined stubs -->
-          <project implementation="com.phloc.maven.dirindex.MyProjectStub"/>
-          <!-- 
-          <settings implementation="com.phloc.maven.dirindex.SettingsStub"/>
-          -->
+          <project implementation="com.phloc.maven.dirindex.GenerateDirIndexMojoProjectStub"/>
           
           <!-- plugin specific -->
           <tempDirectory>../../../../../target/dirindex-maven-plugin</tempDirectory>
           <sourceDirectory>../../../../../src/main</sourceDirectory>
+          <recursive>false</recursive>
           <targetDirectory></targetDirectory>
           <targetFilename>dirindex-created.xml</targetFilename>
         </configuration>

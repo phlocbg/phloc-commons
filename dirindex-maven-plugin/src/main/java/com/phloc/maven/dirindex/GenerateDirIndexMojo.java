@@ -18,6 +18,7 @@
 package com.phloc.maven.dirindex;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -79,6 +80,13 @@ public final class GenerateDirIndexMojo extends AbstractMojo
    * @parameter property=sourceDirectory
    */
   private File sourceDirectory;
+
+  /**
+   * Should all directories be scanned recursively for files?
+   * 
+   * @parameter property="recursive" default-value="true"
+   */
+  private final boolean recursive = true;
 
   /**
    * The directory where the temporary index file will be saved.
@@ -230,7 +238,14 @@ public final class GenerateDirIndexMojo extends AbstractMojo
     try
     {
       // Build the index
-      final FileSystemFolderTree aFileTree = new FileSystemFolderTree (sourceDirectory);
+      final FileFilter aDirFilter = recursive ? null : new FileFilter ()
+      {
+        public boolean accept (final File aFile)
+        {
+          return false;
+        }
+      };
+      final FileSystemFolderTree aFileTree = new FileSystemFolderTree (sourceDirectory, aDirFilter, null);
       final IMicroDocument aDoc = _getAsXML (aFileTree);
       final File aTempFile = new File (aTempTargetDir, targetFilename);
       SimpleFileIO.writeFile (aTempFile, MicroWriter.getXMLString (aDoc), XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ);
