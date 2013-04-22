@@ -18,7 +18,7 @@
 package com.phloc.maven.dirindex;
 
 import java.io.File;
-import java.io.FileFilter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -39,6 +39,7 @@ import com.phloc.commons.io.file.FileIOError;
 import com.phloc.commons.io.file.FileOperations;
 import com.phloc.commons.io.file.FilenameHelper;
 import com.phloc.commons.io.file.SimpleFileIO;
+import com.phloc.commons.io.file.filter.FilenameFilterMatchAnyRegEx;
 import com.phloc.commons.io.file.iterate.FileSystemFolderTree;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroElement;
@@ -80,6 +81,14 @@ public final class GenerateDirIndexMojo extends AbstractMojo
    * @parameter property=sourceDirectory
    */
   private File sourceDirectory;
+
+  /**
+   * An optional regular expression to index only files that match this regular
+   * expression. If it is not specified, all files are used.
+   * 
+   * @parameter property=filenameRegEx
+   */
+  private String filenameRegEx;
 
   /**
    * Should all directories be scanned recursively for files?
@@ -132,6 +141,11 @@ public final class GenerateDirIndexMojo extends AbstractMojo
       getLog ().error ("Failed to create temp directory " + aResult.toString ());
   }
 
+  /*
+   * This setter is required, because otherwise recursive would be final and the
+   * corresponding code would be optimized away, even if Maven can overwrite
+   * final properties!
+   */
   public void setRecursive (final boolean bRecursive)
   {
     recursive = bRecursive;
@@ -243,16 +257,19 @@ public final class GenerateDirIndexMojo extends AbstractMojo
     try
     {
       // Build the index
-      FileFilter aDirFilter = null;
+      FilenameFilter aDirFilter = null;
       if (!recursive)
-        aDirFilter = new FileFilter ()
+        aDirFilter = new FilenameFilter ()
         {
-          public boolean accept (final File aFile)
+          public boolean accept (final File aDir, final String sName)
           {
             return false;
           }
         };
-      final FileSystemFolderTree aFileTree = new FileSystemFolderTree (sourceDirectory, aDirFilter, null);
+      FilenameFilter aFileFilter = null;
+      if (StringHelper.hasText (filenameRegEx))
+        aFileFilter = new FilenameFilterMatchAnyRegEx (filenameRegEx);
+      final FileSystemFolderTree aFileTree = new FileSystemFolderTree (sourceDirectory, aDirFilter, aFileFilter);
       final IMicroDocument aDoc = _getAsXML (aFileTree);
       final File aTempFile = new File (aTempTargetDir, targetFilename);
       SimpleFileIO.writeFile (aTempFile, MicroWriter.getXMLString (aDoc), XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ);

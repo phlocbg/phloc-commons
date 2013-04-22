@@ -30,8 +30,9 @@
           
           <!-- plugin specific -->
           <tempDirectory>../../../../../target/dirindex-maven-plugin</tempDirectory>
-          <sourceDirectory>../../../../../src/main/resources</sourceDirectory>
-          <recursive>false</recursive>
+          <sourceDirectory>../../../../../src/main</sourceDirectory>
+          <recursive>true</recursive>
+          <filenameRegEx>.*\.xml</filenameRegEx>
           <targetDirectory></targetDirectory>
           <targetFilename>dirindex-created.xml</targetFilename>
         </configuration>
