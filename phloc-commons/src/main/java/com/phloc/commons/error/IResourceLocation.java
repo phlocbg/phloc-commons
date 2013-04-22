@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.error;
 
+import java.io.Serializable;
+
 import javax.annotation.Nullable;
 
 import com.phloc.commons.CGlobal;
@@ -27,7 +29,7 @@ import com.phloc.commons.IHasStringRepresentation;
  * 
  * @author Philip Helger
  */
-public interface IResourceLocation extends IHasStringRepresentation
+public interface IResourceLocation extends IHasStringRepresentation, Serializable
 {
   /** Constant for an illegal row or column number */
   int ILLEGAL_NUMBER = CGlobal.ILLEGAL_UINT;
