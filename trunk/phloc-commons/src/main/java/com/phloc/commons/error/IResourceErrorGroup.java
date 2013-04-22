@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.error;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -28,7 +29,7 @@ import com.phloc.commons.IHasSize;
  * 
  * @author Philip Helger
  */
-public interface IResourceErrorGroup extends IHasSize, Iterable <IResourceError>, IHasErrorLevels
+public interface IResourceErrorGroup extends IHasSize, Iterable <IResourceError>, IHasErrorLevels, Serializable
 {
   /**
    * Get a resource error group containing only the failure elements. All error

@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.error;
 
+import java.io.Serializable;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
@@ -33,7 +34,7 @@ import com.phloc.commons.state.ISuccessIndicator;
  * 
  * @author Philip Helger
  */
-public interface IResourceError extends IHasErrorLevel, IHasDisplayText, ISuccessIndicator, IErrorIndicator
+public interface IResourceError extends IHasErrorLevel, IHasDisplayText, ISuccessIndicator, IErrorIndicator, Serializable
 {
   /**
    * @return The non-<code>null</code> location of the error.
