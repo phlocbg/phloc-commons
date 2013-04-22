@@ -39,6 +39,12 @@ public final class FileFilterDirectoryOnly extends AbstractFileFilter
   private FileFilterDirectoryOnly ()
   {}
 
+  @Nonnull
+  public static FileFilterDirectoryOnly getInstance ()
+  {
+    return s_aInstance;
+  }
+
   public boolean accept (@Nullable final File aFile)
   {
     return aFile != null && aFile.isDirectory ();
@@ -64,11 +70,5 @@ public final class FileFilterDirectoryOnly extends AbstractFileFilter
   public String toString ()
   {
     return new ToStringGenerator (this).toString ();
-  }
-
-  @Nonnull
-  public static FileFilterDirectoryOnly getInstance ()
-  {
-    return s_aInstance;
   }
 }

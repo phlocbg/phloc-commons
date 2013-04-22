@@ -19,35 +19,35 @@ package com.phloc.commons.io.file.filter;
 
 import java.io.File;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.hash.HashCodeGenerator;
-import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * A file filter that matches if the passed file is a directory and is public,
- * meaning it does not start with "." (hidden directory on Unix systems)
+ * A file filter that declines all elements.
  * 
  * @author philip
  */
 @NotThreadSafe
-public final class FileFilterDirectoryPublic extends AbstractFileFilter
+public final class FileFilterAlwaysFalse extends AbstractFileFilter
 {
-  private static final FileFilterDirectoryPublic s_aInstance = new FileFilterDirectoryPublic ();
+  private static final FileFilterAlwaysFalse s_aInstance = new FileFilterAlwaysFalse ();
 
-  private FileFilterDirectoryPublic ()
+  private FileFilterAlwaysFalse ()
   {}
 
-  public static FileFilterDirectoryPublic getInstance ()
+  @Nonnull
+  public static FileFilterAlwaysFalse getInstance ()
   {
     return s_aInstance;
   }
 
   public boolean accept (@Nullable final File aFile)
   {
-    return aFile != null && aFile.isDirectory () && !StringHelper.startsWith (aFile.getName (), '.');
+    return false;
   }
 
   @Override
@@ -55,7 +55,7 @@ public final class FileFilterDirectoryPublic extends AbstractFileFilter
   {
     if (o == this)
       return true;
-    if (!(o instanceof FileFilterDirectoryPublic))
+    if (!(o instanceof FileFilterAlwaysFalse))
       return false;
     return true;
   }
