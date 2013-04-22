@@ -71,7 +71,7 @@ public class FileSystemRecursiveIterator implements IIterableIterator <File>
    */
   public FileSystemRecursiveIterator (@Nonnull final String sBaseDir)
   {
-    this (new File (sBaseDir), null);
+    this (new File (sBaseDir), (IFilter <File>) null);
   }
 
   /**
@@ -82,7 +82,35 @@ public class FileSystemRecursiveIterator implements IIterableIterator <File>
    */
   public FileSystemRecursiveIterator (@Nonnull final File aBaseDir)
   {
-    this (aBaseDir, null);
+    this (aBaseDir, (IFilter <File>) null);
+  }
+
+  /**
+   * Constructor for recursively iterating a file system directory.
+   * 
+   * @param sBaseDir
+   *        The base directory to start with. May not be <code>null</code>.
+   * @param aRecursionFilter
+   *        An optional filter that controls, into which sub-directories this
+   *        iterator should descend to. May be <code>null</code>.
+   */
+  public FileSystemRecursiveIterator (@Nonnull final String sBaseDir, @Nullable final FilenameFilter aRecursionFilter)
+  {
+    this (sBaseDir, FileFilterToIFilterAdapter.create (aRecursionFilter));
+  }
+
+  /**
+   * Constructor for recursively iterating a file system directory.
+   * 
+   * @param sBaseDir
+   *        The base directory to start with. May not be <code>null</code>.
+   * @param aRecursionFilter
+   *        An optional filter that controls, into which sub-directories this
+   *        iterator should descend to. May be <code>null</code>.
+   */
+  public FileSystemRecursiveIterator (@Nonnull final String sBaseDir, @Nullable final FileFilter aRecursionFilter)
+  {
+    this (sBaseDir, FileFilterToIFilterAdapter.create (aRecursionFilter));
   }
 
   /**
@@ -97,6 +125,34 @@ public class FileSystemRecursiveIterator implements IIterableIterator <File>
   public FileSystemRecursiveIterator (@Nonnull final String sBaseDir, @Nullable final IFilter <File> aRecursionFilter)
   {
     this (new File (sBaseDir), aRecursionFilter);
+  }
+
+  /**
+   * Constructor for recursively iterating a file system directory.
+   * 
+   * @param aBaseDir
+   *        The base directory to start with. May not be <code>null</code>.
+   * @param aRecursionFilter
+   *        An optional filter that controls, into which sub-directories this
+   *        iterator should descend to. May be <code>null</code>.
+   */
+  public FileSystemRecursiveIterator (@Nonnull final File aBaseDir, @Nullable final FilenameFilter aRecursionFilter)
+  {
+    this (aBaseDir, FileFilterToIFilterAdapter.create (aRecursionFilter));
+  }
+
+  /**
+   * Constructor for recursively iterating a file system directory.
+   * 
+   * @param aBaseDir
+   *        The base directory to start with. May not be <code>null</code>.
+   * @param aRecursionFilter
+   *        An optional filter that controls, into which sub-directories this
+   *        iterator should descend to. May be <code>null</code>.
+   */
+  public FileSystemRecursiveIterator (@Nonnull final File aBaseDir, @Nullable final FileFilter aRecursionFilter)
+  {
+    this (aBaseDir, FileFilterToIFilterAdapter.create (aRecursionFilter));
   }
 
   /**
