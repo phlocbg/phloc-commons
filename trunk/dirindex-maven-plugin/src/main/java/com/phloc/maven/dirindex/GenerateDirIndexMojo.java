@@ -86,7 +86,7 @@ public final class GenerateDirIndexMojo extends AbstractMojo
    * 
    * @parameter property="recursive" default-value="true"
    */
-  private final boolean recursive = true;
+  private boolean recursive = true;
 
   /**
    * The directory where the temporary index file will be saved.
@@ -130,6 +130,11 @@ public final class GenerateDirIndexMojo extends AbstractMojo
     final FileIOError aResult = FileOperations.createDirRecursiveIfNotExisting (tempDirectory);
     if (aResult.isFailure ())
       getLog ().error ("Failed to create temp directory " + aResult.toString ());
+  }
+
+  public void setRecursive (final boolean bRecursive)
+  {
+    recursive = bRecursive;
   }
 
   @Nonnull
@@ -238,13 +243,15 @@ public final class GenerateDirIndexMojo extends AbstractMojo
     try
     {
       // Build the index
-      final FileFilter aDirFilter = recursive ? null : new FileFilter ()
-      {
-        public boolean accept (final File aFile)
+      FileFilter aDirFilter = null;
+      if (!recursive)
+        aDirFilter = new FileFilter ()
         {
-          return false;
-        }
-      };
+          public boolean accept (final File aFile)
+          {
+            return false;
+          }
+        };
       final FileSystemFolderTree aFileTree = new FileSystemFolderTree (sourceDirectory, aDirFilter, null);
       final IMicroDocument aDoc = _getAsXML (aFileTree);
       final File aTempFile = new File (aTempTargetDir, targetFilename);
