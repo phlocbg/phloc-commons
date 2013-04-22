@@ -2,6 +2,7 @@
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
 <table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody>
+<tr><td>4/22/13</td><td>add</td><td>data</td><td></td><td>Added support for Mozilla Public License 1.0 and EUPL 1.2 in ELicense</td></tr>
 <tr><td>4/22/13</td><td>update</td><td>api</td><td></td><td>Made IResourceError, IResourceErrorGroup and IResourceLocation Serializable</td></tr>
 <tr><td>4/22/13</td><td>add</td><td>api</td><td></td><td>Added factory methods to FileFilterToIFilterAdapter</td></tr>
 <tr><td>4/22/13</td><td>add</td><td>api</td><td></td><td>Added constructors to FileSystemRecursiveIterator</td></tr>
