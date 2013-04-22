@@ -40,6 +40,12 @@ public final class FileFilterFileOnly extends AbstractFileFilter
   private FileFilterFileOnly ()
   {}
 
+  @Nonnull
+  public static FileFilterFileOnly getInstance ()
+  {
+    return s_aInstance;
+  }
+
   public boolean accept (@Nullable final File aFile)
   {
     return aFile != null && FileUtils.existsFile (aFile);
@@ -65,11 +71,5 @@ public final class FileFilterFileOnly extends AbstractFileFilter
   public String toString ()
   {
     return new ToStringGenerator (this).toString ();
-  }
-
-  @Nonnull
-  public static FileFilterFileOnly getInstance ()
-  {
-    return s_aInstance;
   }
 }

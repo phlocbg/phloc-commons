@@ -27,8 +27,8 @@ import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * A file filter that matches if the parent directory is public, meaning it does
- * not start with "." (hidden directory on Unix systems)
+ * A file filter that matches if the direct parent directory is public, meaning
+ * it does not start with "." (hidden directory on Unix systems)
  * 
  * @author philip
  */
@@ -38,6 +38,12 @@ public final class FileFilterParentDirectoryPublic extends AbstractFileFilter
 
   private FileFilterParentDirectoryPublic ()
   {}
+
+  @Nonnull
+  public static FileFilterParentDirectoryPublic getInstance ()
+  {
+    return s_aInstance;
+  }
 
   public boolean accept (@Nullable final File aFile)
   {
@@ -65,11 +71,5 @@ public final class FileFilterParentDirectoryPublic extends AbstractFileFilter
   public String toString ()
   {
     return new ToStringGenerator (this).toString ();
-  }
-
-  @Nonnull
-  public static FileFilterParentDirectoryPublic getInstance ()
-  {
-    return s_aInstance;
   }
 }
