@@ -35,7 +35,8 @@ public enum ELicense implements ILicense
   APACHE1 ("apache1", "Apache License", new Version (1, 0), "http://www.apache.org/licenses/LICENSE-1.0.txt"),
   APACHE2 ("apache2", "Apache License", new Version (2, 0), "http://www.apache.org/licenses/LICENSE-2.0.txt"),
   // Mozilla
-  MPL11 ("mpl11", "MOZILLA PUBLIC LICENSE", new Version (1, 1), "http://www.mozilla.org/MPL/MPL-1.1.txt"),
+  MPL10 ("mpl10", "MOZILLA PUBLIC LICENSE", new Version (1, 0), "http://www.mozilla.org/MPL/1.0/"),
+  MPL11 ("mpl11", "MOZILLA PUBLIC LICENSE", new Version (1, 1), "http://www.mozilla.org/MPL/1.1/"),
   MPL20 ("mpl20", "MOZILLA PUBLIC LICENSE VERSION 2.0", new Version (2, 0), "http://www.mozilla.org/MPL/2.0/"),
   // BSD/MIT
   BSD ("bsd", "The BSD License", null, "http://www.opensource.org/licenses/bsd-license.php"),
@@ -50,7 +51,8 @@ public enum ELicense implements ILicense
   // Eclipse Public License
   EPL10 ("epl10", "Eclipse Public License", new Version (1, 0), "http://www.eclipse.org/legal/epl-v10.html"),
   // EUPL
-  EUPL11 ("eupl11", "The European Union Public License", new Version (1, 1), "http://www.osor.eu/eupl"),
+  EUPL11 ("eupl11", "The European Union Public License", new Version (1, 1), "http://joinup.ec.europa.eu/software/page/eupl"),
+  EUPL12 ("eupl12", "The European Union Public License", new Version (1, 1), "http://joinup.ec.europa.eu/software/page/eupl"),
   // Creative commons
   CCBY10 ("ccby10", "Creative Commons Attributation", new Version (1, 0), "http://creativecommons.org/licenses/by/1.0/"),
   CCBY20 ("ccby20", "Creative Commons Attributation", new Version (2, 0), "http://creativecommons.org/licenses/by/2.0/"),
