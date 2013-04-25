@@ -311,7 +311,12 @@ public final class JAXBMarshallerUtils
    */
   public static boolean isSunJAXB2Marshaller (@Nullable final Marshaller aMarshaller)
   {
-    return aMarshaller != null &&
-           aMarshaller.getClass ().getName ().equals ("com.sun.xml.bind.v2.runtime.MarshallerImpl");
+    if (aMarshaller == null)
+      return false;
+    final String sClassName = aMarshaller.getClass ().getName ();
+    // When using jaxb-impl explicitly
+    return sClassName.equals ("com.sun.xml.bind.v2.runtime.MarshallerImpl") ||
+    // When using the JAXB version integrated in the runtime
+           sClassName.equals ("com.sun.xml.internal.bind.v2.runtime.MarshallerImpl");
   }
 }

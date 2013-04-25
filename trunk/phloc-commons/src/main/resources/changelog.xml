@@ -20,6 +20,11 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2013-04-25" category="tech" action="fix">
+    <change>
+      <text locale="en">Fixed determination of Sun JAXB Marshaller implementation contained in JRE in JAXBMarshallerUtils.isSunJAXB2Marshaller()</text>
+    </change>
+  </entry>
   <entry date="2013-04-22" category="data" action="add">
     <change>
       <text locale="en">Added support for Mozilla Public License 1.0 and EUPL 1.2 in ELicense</text>
