@@ -3,6 +3,19 @@
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
 <table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody>
+<tr border="1"><td>4/28/13</td><td colspan="4">_Release *4.0.4*_</td></tr>
+<tr><td>4/28/13</td><td>add</td><td>api</td><td></td><td>Added new class DoNothingTransformURIResolver</td></tr>
+<tr><td>4/28/13</td><td>add</td><td>api</td><td></td><td>Added new classes DoNothingValidationEventHandler and DoNothingValidationEventHandlerFactory</td></tr>
+<tr><td>4/28/13</td><td>add</td><td>api</td><td>*yes*</td><td>Extended IHasErrorLevels class with the following methods: containsNoSuccess(), containsNoFailure() and containsNoError()</td></tr>
+<tr><td>4/25/13</td><td>fix</td><td>tech</td><td></td><td>Fixed determination of Sun JAXB Marshaller implementation contained in JRE in JAXBMarshallerUtils.isSunJAXB2Marshaller()</td></tr>
+<tr><td>4/22/13</td><td>add</td><td>data</td><td></td><td>Added support for Mozilla Public License 1.0 and EUPL 1.2 in ELicense</td></tr>
+<tr><td>4/22/13</td><td>update</td><td>api</td><td></td><td>Made IResourceError, IResourceErrorGroup and IResourceLocation Serializable</td></tr>
+<tr><td>4/22/13</td><td>add</td><td>api</td><td></td><td>Added factory methods to FileFilterToIFilterAdapter</td></tr>
+<tr><td>4/22/13</td><td>add</td><td>api</td><td></td><td>Added constructors to FileSystemRecursiveIterator</td></tr>
+<tr><td>4/22/13</td><td>add</td><td>api</td><td></td><td>Added new classes FilenameFilterAlwaysTrue and FilenameFilterAlwaysFalse</td></tr>
+<tr><td>4/22/13</td><td>add</td><td>api</td><td></td><td>Added new classes FileFilterAlwaysTrue and FileFilterAlwaysFalse</td></tr>
+<tr><td>4/20/13</td><td>add</td><td>api</td><td></td><td>Made class AbstractNamespaceContext implement Serializable</td></tr>
+<tr><td>4/18/13</td><td>add</td><td>api</td><td></td><td>Added new class FilenameFilterNotEquals</td></tr>
 <tr border="1"><td>4/17/13</td><td colspan="4">_Release *4.0.3*_</td></tr>
 <tr><td>4/16/13</td><td>add</td><td>api</td><td></td><td>Further extended API of MapBasedXPathVariableResolver</td></tr>
 <tr><td>4/15/13</td><td>add</td><td>api</td><td></td><td>Added possibility to add and remove variables from MapBasedXPathVariableResolver</td></tr>
