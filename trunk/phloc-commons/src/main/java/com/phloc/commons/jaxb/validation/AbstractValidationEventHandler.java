@@ -107,7 +107,8 @@ public abstract class AbstractValidationEventHandler implements ValidationEventH
   }
 
   @Nullable
-  private static String _getLocationResourceID (@Nullable final ValidationEventLocator aLocator)
+  @OverrideOnDemand
+  protected String getLocationResourceID (@Nullable final ValidationEventLocator aLocator)
   {
     if (aLocator != null)
     {
@@ -154,7 +155,7 @@ public abstract class AbstractValidationEventHandler implements ValidationEventH
 
     // call our callback
     final ValidationEventLocator aLocator = aEvent.getLocator ();
-    final IResourceLocation aLocation = new ResourceLocation (_getLocationResourceID (aLocator),
+    final IResourceLocation aLocation = new ResourceLocation (getLocationResourceID (aLocator),
                                                               aLocator != null ? aLocator.getLineNumber ()
                                                                               : IResourceLocation.ILLEGAL_NUMBER,
                                                               aLocator != null ? aLocator.getColumnNumber ()
@@ -191,6 +192,6 @@ public abstract class AbstractValidationEventHandler implements ValidationEventH
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).append ("origHandler", m_aWrappedHandler).toString ();
+    return new ToStringGenerator (this).append ("wrappedHandler", m_aWrappedHandler).toString ();
   }
 }
