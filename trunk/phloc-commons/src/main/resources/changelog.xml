@@ -27,7 +27,7 @@
   </entry>
   <entry date="2013-04-28" category="api" action="add">
     <change>
-      <text locale="en">Added new class DoNothingValidationEventHandler</text>
+      <text locale="en">Added new classes DoNothingValidationEventHandler and DoNothingValidationEventHandlerFactory</text>
     </change>
   </entry>
   <entry date="2013-04-28" category="api" action="add" incompatible="true">
