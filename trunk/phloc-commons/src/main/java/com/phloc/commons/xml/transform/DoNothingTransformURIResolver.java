@@ -15,37 +15,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.xml.sax;
+package com.phloc.commons.xml.transform;
 
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
-
-import org.xml.sax.SAXParseException;
-
-import com.phloc.commons.error.EErrorLevel;
+import javax.annotation.concurrent.NotThreadSafe;
+import javax.xml.transform.Source;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.URIResolver;
 
 /**
- * java.xml error handler that ignores all errors.
+ * java.xml.transform {@link URIResolver} that does nothing.
  * 
  * @author Philip Helger
  */
-@Immutable
-public class DoNothingSAXErrorHandler extends AbstractSAXErrorHandler
+@NotThreadSafe
+public class DoNothingTransformURIResolver extends AbstractTransformURIResolver
 {
-  private static final DoNothingSAXErrorHandler s_aInstance = new DoNothingSAXErrorHandler ();
-
-  public DoNothingSAXErrorHandler ()
-  {}
-
-  @Nonnull
-  public static DoNothingSAXErrorHandler getInstance ()
+  public DoNothingTransformURIResolver ()
   {
-    return s_aInstance;
+    super ();
   }
 
   @Override
-  protected void internalLog (@Nonnull final EErrorLevel eErrorLevel, final SAXParseException aException)
+  protected Source internalResolve (final String sHref, final String sBase) throws TransformerException
   {
-    // do nothing
+    return null;
   }
 }
