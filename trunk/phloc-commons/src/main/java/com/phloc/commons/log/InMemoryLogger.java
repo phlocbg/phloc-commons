@@ -123,6 +123,14 @@ public class InMemoryLogger implements Iterable <LogMessage>, IHasSize, IClearab
     return false;
   }
 
+  public boolean containsNoSuccess ()
+  {
+    for (final LogMessage aMessage : m_aMessages)
+      if (aMessage.isSuccess ())
+        return false;
+    return true;
+  }
+
   @Nonnegative
   public int getSuccessCount ()
   {
@@ -151,6 +159,14 @@ public class InMemoryLogger implements Iterable <LogMessage>, IHasSize, IClearab
     return false;
   }
 
+  public boolean containsNoFailure ()
+  {
+    for (final LogMessage aMessage : m_aMessages)
+      if (aMessage.isFailure ())
+        return false;
+    return true;
+  }
+
   @Nonnegative
   public int getFailureCount ()
   {
@@ -177,6 +193,14 @@ public class InMemoryLogger implements Iterable <LogMessage>, IHasSize, IClearab
       if (aMessage.isError ())
         return true;
     return false;
+  }
+
+  public boolean containsNoError ()
+  {
+    for (final LogMessage aMessage : m_aMessages)
+      if (aMessage.isError ())
+        return false;
+    return true;
   }
 
   @Nonnegative

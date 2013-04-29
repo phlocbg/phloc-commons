@@ -44,6 +44,14 @@ public interface IHasErrorLevels
   boolean containsAtLeastOneSuccess ();
 
   /**
+   * Check if this group contains no success message.
+   * 
+   * @return <code>true</code> if no success item is present, <code>false</code>
+   *         otherwise.
+   */
+  boolean containsNoSuccess ();
+
+  /**
    * @return The number of contained success messages. Always &ge; 0.
    */
   @Nonnegative
@@ -70,6 +78,15 @@ public interface IHasErrorLevels
   boolean containsAtLeastOneFailure ();
 
   /**
+   * Check if this group contains no failure message. All error levels except
+   * {@link EErrorLevel#SUCCESS} are considered to be a failure!
+   * 
+   * @return <code>true</code> if no failure item is present, <code>false</code>
+   *         otherwise.
+   */
+  boolean containsNoFailure ();
+
+  /**
    * @return The number of contained success messages. Always &ge; 0.
    */
   @Nonnegative
@@ -94,6 +111,15 @@ public interface IHasErrorLevels
    *         present, <code>false</code> otherwise.
    */
   boolean containsAtLeastOneError ();
+
+  /**
+   * Check if this group contains no error or fatal error message. All error
+   * levels &ge; {@link EErrorLevel#ERROR} are considered to be an error!
+   * 
+   * @return <code>true</code> if no error or fatal error item is present,
+   *         <code>false</code> otherwise.
+   */
+  boolean containsNoError ();
 
   /**
    * @return The number of contained success messages. Always &ge; 0.
