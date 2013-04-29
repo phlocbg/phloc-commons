@@ -120,6 +120,14 @@ public class ResourceErrorGroup implements IResourceErrorGroup, ICloneable <Reso
     return false;
   }
 
+  public boolean containsNoSuccess ()
+  {
+    for (final IResourceError aError : m_aErrors)
+      if (aError.isSuccess ())
+        return false;
+    return true;
+  }
+
   @Nonnegative
   public int getSuccessCount ()
   {
@@ -148,6 +156,14 @@ public class ResourceErrorGroup implements IResourceErrorGroup, ICloneable <Reso
     return false;
   }
 
+  public boolean containsNoFailure ()
+  {
+    for (final IResourceError aError : m_aErrors)
+      if (aError.isFailure ())
+        return false;
+    return true;
+  }
+
   @Nonnegative
   public int getFailureCount ()
   {
@@ -174,6 +190,14 @@ public class ResourceErrorGroup implements IResourceErrorGroup, ICloneable <Reso
       if (aError.isError ())
         return true;
     return false;
+  }
+
+  public boolean containsNoError ()
+  {
+    for (final IResourceError aError : m_aErrors)
+      if (aError.isError ())
+        return false;
+    return true;
   }
 
   @Nonnegative

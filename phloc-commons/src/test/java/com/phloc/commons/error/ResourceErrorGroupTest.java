@@ -105,6 +105,9 @@ public final class ResourceErrorGroupTest
     assertFalse (aREG.containsAtLeastOneSuccess ());
     assertFalse (aREG.containsAtLeastOneFailure ());
     assertFalse (aREG.containsAtLeastOneError ());
+    assertTrue (aREG.containsNoSuccess ());
+    assertTrue (aREG.containsNoFailure ());
+    assertTrue (aREG.containsNoError ());
     assertEquals (EErrorLevel.SUCCESS, aREG.getMostSevereErrorLevel ());
     assertNotNull (aREG.getAllFailures ());
     assertEquals (0, aREG.getAllFailures ().size ());
@@ -118,6 +121,9 @@ public final class ResourceErrorGroupTest
     assertFalse (aREG.containsAtLeastOneSuccess ());
     assertTrue (aREG.containsAtLeastOneFailure ());
     assertFalse (aREG.containsAtLeastOneError ());
+    assertTrue (aREG.containsNoSuccess ());
+    assertFalse (aREG.containsNoFailure ());
+    assertTrue (aREG.containsNoError ());
     assertEquals (EErrorLevel.WARN, aREG.getMostSevereErrorLevel ());
     assertNotNull (aREG.getAllFailures ());
     assertEquals (1, aREG.getAllFailures ().size ());
@@ -127,8 +133,13 @@ public final class ResourceErrorGroupTest
     assertEquals (2, aREG.size ());
     assertFalse (aREG.containsOnlySuccess ());
     assertFalse (aREG.containsOnlyFailure ());
+    assertFalse (aREG.containsOnlyError ());
     assertTrue (aREG.containsAtLeastOneSuccess ());
     assertTrue (aREG.containsAtLeastOneFailure ());
+    assertFalse (aREG.containsAtLeastOneError ());
+    assertFalse (aREG.containsNoSuccess ());
+    assertFalse (aREG.containsNoFailure ());
+    assertTrue (aREG.containsNoError ());
     assertEquals (EErrorLevel.WARN, aREG.getMostSevereErrorLevel ());
     assertNotNull (aREG.getAllFailures ());
     assertEquals (1, aREG.getAllFailures ().size ());
@@ -143,6 +154,9 @@ public final class ResourceErrorGroupTest
     assertTrue (aREG.containsAtLeastOneSuccess ());
     assertTrue (aREG.containsAtLeastOneFailure ());
     assertTrue (aREG.containsAtLeastOneError ());
+    assertFalse (aREG.containsNoSuccess ());
+    assertFalse (aREG.containsNoFailure ());
+    assertFalse (aREG.containsNoError ());
     assertEquals (EErrorLevel.ERROR, aREG.getMostSevereErrorLevel ());
     assertNotNull (aREG.getAllFailures ());
     assertEquals (2, aREG.getAllFailures ().size ());
@@ -156,6 +170,9 @@ public final class ResourceErrorGroupTest
     assertTrue (aREG.containsAtLeastOneSuccess ());
     assertFalse (aREG.containsAtLeastOneFailure ());
     assertFalse (aREG.containsAtLeastOneError ());
+    assertFalse (aREG.containsNoSuccess ());
+    assertTrue (aREG.containsNoFailure ());
+    assertTrue (aREG.containsNoError ());
 
     // Error only
     aREG = new ResourceErrorGroup (new ResourceError (loc, EErrorLevel.ERROR, "mock error"));
@@ -165,6 +182,9 @@ public final class ResourceErrorGroupTest
     assertFalse (aREG.containsAtLeastOneSuccess ());
     assertTrue (aREG.containsAtLeastOneFailure ());
     assertTrue (aREG.containsAtLeastOneError ());
+    assertTrue (aREG.containsNoSuccess ());
+    assertFalse (aREG.containsNoFailure ());
+    assertFalse (aREG.containsNoError ());
 
     final ResourceErrorGroup aREG2 = new ResourceErrorGroup ();
     aREG2.addResourceErrorGroup (aREG);
@@ -174,6 +194,9 @@ public final class ResourceErrorGroupTest
     assertFalse (aREG2.containsAtLeastOneSuccess ());
     assertTrue (aREG2.containsAtLeastOneFailure ());
     assertTrue (aREG2.containsAtLeastOneError ());
+    assertTrue (aREG.containsNoSuccess ());
+    assertFalse (aREG.containsNoFailure ());
+    assertFalse (aREG.containsNoError ());
 
     assertEquals (1, ContainerHelper.newList (aREG2).size ());
 

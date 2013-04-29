@@ -30,7 +30,8 @@ import com.phloc.commons.state.ISuccessIndicator;
 
 /**
  * Interface for an error that can be drilled down to a certain resource (e.g. a
- * document).
+ * document). The name is a bit misleading, as an "IResourceError" can also
+ * contain an INFO or a WARNING message!
  * 
  * @author Philip Helger
  */
