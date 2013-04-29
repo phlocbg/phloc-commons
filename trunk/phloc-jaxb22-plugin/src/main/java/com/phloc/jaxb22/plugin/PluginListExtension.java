@@ -20,18 +20,20 @@ package com.phloc.jaxb22.plugin;
 import java.util.List;
 
 import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
 
 import org.xml.sax.ErrorHandler;
 
 import com.phloc.commons.annotations.IsSPIImplementation;
+import com.phloc.commons.annotations.ReturnsMutableObject;
 import com.phloc.commons.collections.ContainerHelper;
+import com.sun.codemodel.JClass;
 import com.sun.codemodel.JDefinedClass;
 import com.sun.codemodel.JExpr;
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JMod;
 import com.sun.codemodel.JOp;
 import com.sun.codemodel.JType;
-import com.sun.codemodel.JTypeVar;
 import com.sun.codemodel.JVar;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.Plugin;
@@ -73,8 +75,11 @@ public class PluginListExtension extends Plugin
         {
           final JType aReturnType = aMethod.type ();
           // Find e.g. List<ItemListType> getItemList()
-          if (aReturnType.name ().equals ("List") && aMethod.params ().isEmpty ())
+          if (aReturnType.name ().startsWith ("List<") && aMethod.params ().isEmpty ())
           {
+            aMethod.annotate (Nonnull.class);
+            aMethod.annotate (ReturnsMutableObject.class).param ("reason", "JAXB implementation style");
+
             {
               final JMethod mHasEntries = jClass.method (JMod.PUBLIC,
                                                          aOutline.getCodeModel ().BOOLEAN,
@@ -86,16 +91,26 @@ public class PluginListExtension extends Plugin
             }
 
             {
+              final JMethod mHasNoEntries = jClass.method (JMod.PUBLIC,
+                                                           aOutline.getCodeModel ().BOOLEAN,
+                                                           "hasNo" + aMethod.name ().substring (3) + "Entries");
+              mHasNoEntries.body ()._return (JExpr.invoke (aMethod).invoke ("isEmpty"));
+              mHasNoEntries.javadoc ()
+                           .addReturn ()
+                           .add ("<code>true</code> if no item is contained, <code>false</code> otherwise.");
+            }
+
+            {
               final JMethod mCount = jClass.method (JMod.PUBLIC, aOutline.getCodeModel ().INT, aMethod.name () +
                                                                                                "Count");
               mCount.annotate (Nonnegative.class);
-              mCount.body ()._return (JExpr.invoke (aMethod).invoke ("sizeEmpty"));
+              mCount.body ()._return (JExpr.invoke (aMethod).invoke ("size"));
               mCount.javadoc ().addReturn ().add ("The number of contained elements. Always &ge; 0.");
             }
 
             {
               final JMethod mAtIndex = jClass.method (JMod.PUBLIC,
-                                                      ((JTypeVar) aReturnType).getTypeParameters ().get (0),
+                                                      ((JClass) aReturnType).getTypeParameters ().get (0),
                                                       "get" + aMethod.name ().substring (3) + "AtIndex");
               final JVar aParam = mAtIndex.param (JMod.FINAL, aOutline.getCodeModel ().INT, "index");
               mAtIndex.body ()._return (JExpr.invoke (aMethod).invoke ("get").arg (aParam));
