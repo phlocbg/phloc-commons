@@ -126,7 +126,7 @@ public class PluginCodeQuality extends Plugin
           aParam.mods ().setFinal (true);
 
           // Modify method
-          aMethod.javadoc ().addReturn ().add ("The created JAXBElement");
+          aMethod.javadoc ().addReturn ().add ("The created JAXBElement and never <code>null</code>.");
 
           if (aParam.type ().name ().equals (sByteArrayTypeName))
           {
@@ -135,6 +135,14 @@ public class PluginCodeQuality extends Plugin
             // See https://java.net/jira/browse/CODEMODEL-13
           }
         }
+        else
+          if (aMethod.name ().startsWith ("create") && aParams.isEmpty ())
+          {
+            // Modify all Object createObject() methods
+            aMethod.javadoc ()
+                   .addReturn ()
+                   .add ("The created " + aMethod.type ().name () + " object and never <code>null</code>.");
+          }
       }
     }
     return true;
