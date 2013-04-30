@@ -28,6 +28,7 @@ import com.phloc.commons.regex.RegExHelper;
 import com.phloc.math.graph.IDirectedGraphNode;
 import com.phloc.math.graph.simple.SimpleDirectedGraph;
 import com.sun.codemodel.JClass;
+import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JDefinedClass;
 import com.sun.tools.xjc.BadCommandLineException;
 import com.sun.tools.xjc.Options;
@@ -77,6 +78,8 @@ public class PluginImplements extends Plugin
   @Override
   public boolean run (final Outline aOutline, final Options aOpts, final ErrorHandler aErrorHandler)
   {
+    final JCodeModel aCodeModel = aOutline.getCodeModel ();
+
     // Build the graph with all classes and there hierarchy
     final SimpleDirectedGraph aSG = new SimpleDirectedGraph ();
     // Create all nodes
@@ -95,7 +98,7 @@ public class PluginImplements extends Plugin
     for (final String sInterface : m_aInterfaces)
     {
       final String sCleanInterfaceName = sInterface.trim ();
-      final JClass aInterface = aOutline.getCodeModel ().ref (sCleanInterfaceName);
+      final JClass aInterface = aCodeModel.ref (sCleanInterfaceName);
 
       // Implement interfaces only in all base classes, because sub-classes have
       // them already!

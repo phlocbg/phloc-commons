@@ -26,6 +26,7 @@ import org.xml.sax.ErrorHandler;
 import com.phloc.commons.annotations.IsSPIImplementation;
 import com.phloc.commons.collections.ContainerHelper;
 import com.sun.codemodel.JClass;
+import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JDefinedClass;
 import com.sun.codemodel.JExpr;
 import com.sun.codemodel.JMethod;
@@ -64,6 +65,8 @@ public class PluginListExtension extends Plugin
   @Override
   public boolean run (final Outline aOutline, final Options aOpts, final ErrorHandler aErrorHandler)
   {
+    final JCodeModel aCodeModel = aOutline.getCodeModel ();
+
     // For all classes
     for (final ClassOutline aClassOutline : aOutline.getClasses ())
     {
@@ -75,9 +78,11 @@ public class PluginListExtension extends Plugin
           // Find e.g. List<ItemListType> getItemList()
           if (aReturnType.name ().startsWith ("List<"))
           {
+            final JType aListElementType = ((JClass) aReturnType).getTypeParameters ().get (0);
+
             {
               final JMethod mHasEntries = jClass.method (JMod.PUBLIC,
-                                                         aOutline.getCodeModel ().BOOLEAN,
+                                                         aCodeModel.BOOLEAN,
                                                          "has" + aMethod.name ().substring (3) + "Entries");
               mHasEntries.body ()._return (JOp.not (JExpr.invoke (aMethod).invoke ("isEmpty")));
               mHasEntries.javadoc ()
@@ -87,7 +92,7 @@ public class PluginListExtension extends Plugin
 
             {
               final JMethod mHasNoEntries = jClass.method (JMod.PUBLIC,
-                                                           aOutline.getCodeModel ().BOOLEAN,
+                                                           aCodeModel.BOOLEAN,
                                                            "hasNo" + aMethod.name ().substring (3) + "Entries");
               mHasNoEntries.body ()._return (JExpr.invoke (aMethod).invoke ("isEmpty"));
               mHasNoEntries.javadoc ()
@@ -96,8 +101,7 @@ public class PluginListExtension extends Plugin
             }
 
             {
-              final JMethod mCount = jClass.method (JMod.PUBLIC, aOutline.getCodeModel ().INT, aMethod.name () +
-                                                                                               "Count");
+              final JMethod mCount = jClass.method (JMod.PUBLIC, aCodeModel.INT, aMethod.name () + "Count");
               mCount.annotate (Nonnegative.class);
               mCount.body ()._return (JExpr.invoke (aMethod).invoke ("size"));
               mCount.javadoc ().addReturn ().add ("The number of contained elements. Always &ge; 0.");
@@ -105,9 +109,9 @@ public class PluginListExtension extends Plugin
 
             {
               final JMethod mAtIndex = jClass.method (JMod.PUBLIC,
-                                                      ((JClass) aReturnType).getTypeParameters ().get (0),
+                                                      aListElementType,
                                                       "get" + aMethod.name ().substring (3) + "AtIndex");
-              final JVar aParam = mAtIndex.param (JMod.FINAL, aOutline.getCodeModel ().INT, "index");
+              final JVar aParam = mAtIndex.param (JMod.FINAL, aCodeModel.INT, "index");
               aParam.annotate (Nonnegative.class);
               mAtIndex.body ()._return (JExpr.invoke (aMethod).invoke ("get").arg (aParam));
               mAtIndex.javadoc ().addParam (aParam).add ("The index to retrieve");
