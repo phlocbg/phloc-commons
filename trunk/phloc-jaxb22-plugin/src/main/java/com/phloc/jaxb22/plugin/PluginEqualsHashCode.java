@@ -124,6 +124,8 @@ public class PluginEqualsHashCode extends Plugin
           }
           jBody._return (JExpr.TRUE);
         }
+
+        mEquals.javadoc ().add ("@author phloc-jaxb22-plugin -" + OPT);
       }
 
       // hashCode
@@ -150,6 +152,8 @@ public class PluginEqualsHashCode extends Plugin
           }
           mHashCode.body ()._return (aInvocation.invoke ("getHashCode"));
         }
+
+        mHashCode.javadoc ().add ("@author phloc-jaxb22-plugin -" + OPT);
       }
     }
     return true;

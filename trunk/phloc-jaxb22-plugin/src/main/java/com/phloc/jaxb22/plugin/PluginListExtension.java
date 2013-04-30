@@ -85,9 +85,11 @@ public class PluginListExtension extends Plugin
                                                          aCodeModel.BOOLEAN,
                                                          "has" + aMethod.name ().substring (3) + "Entries");
               mHasEntries.body ()._return (JOp.not (JExpr.invoke (aMethod).invoke ("isEmpty")));
+
               mHasEntries.javadoc ()
                          .addReturn ()
                          .add ("<code>true</code> if at least one item is contained, <code>false</code> otherwise.");
+              mHasEntries.javadoc ().add ("@author phloc-jaxb22-plugin -" + OPT);
             }
 
             {
@@ -95,16 +97,20 @@ public class PluginListExtension extends Plugin
                                                            aCodeModel.BOOLEAN,
                                                            "hasNo" + aMethod.name ().substring (3) + "Entries");
               mHasNoEntries.body ()._return (JExpr.invoke (aMethod).invoke ("isEmpty"));
+
               mHasNoEntries.javadoc ()
                            .addReturn ()
                            .add ("<code>true</code> if no item is contained, <code>false</code> otherwise.");
+              mHasNoEntries.javadoc ().add ("@author phloc-jaxb22-plugin -" + OPT);
             }
 
             {
               final JMethod mCount = jClass.method (JMod.PUBLIC, aCodeModel.INT, aMethod.name () + "Count");
               mCount.annotate (Nonnegative.class);
               mCount.body ()._return (JExpr.invoke (aMethod).invoke ("size"));
+
               mCount.javadoc ().addReturn ().add ("The number of contained elements. Always &ge; 0.");
+              mCount.javadoc ().add ("@author phloc-jaxb22-plugin -" + OPT);
             }
 
             {
@@ -114,11 +120,13 @@ public class PluginListExtension extends Plugin
               final JVar aParam = mAtIndex.param (JMod.FINAL, aCodeModel.INT, "index");
               aParam.annotate (Nonnegative.class);
               mAtIndex.body ()._return (JExpr.invoke (aMethod).invoke ("get").arg (aParam));
+
               mAtIndex.javadoc ().addParam (aParam).add ("The index to retrieve");
               mAtIndex.javadoc ()
                       .addReturn ()
                       .add ("<code>true</code> if at least one item is contained, <code>false</code> otherwise.");
               mAtIndex.javadoc ().addThrows (ArrayIndexOutOfBoundsException.class).add ("if the index is invalid!");
+              mAtIndex.javadoc ().add ("@author phloc-jaxb22-plugin -" + OPT);
             }
           }
         }
