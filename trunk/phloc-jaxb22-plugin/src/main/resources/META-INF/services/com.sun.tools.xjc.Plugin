@@ -1,3 +1,4 @@
+com.phloc.jaxb22.plugin.PluginAnnotate
 com.phloc.jaxb22.plugin.PluginEqualsHashCode
 com.phloc.jaxb22.plugin.PluginImplements
 com.phloc.jaxb22.plugin.PluginListExtension
