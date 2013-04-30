@@ -84,8 +84,8 @@
   </distributionManagement>
   
   <properties>
-    <jaxb.api.version>2.2.6</jaxb.api.version>
-    <jaxb.impl.version>2.2.6</jaxb.impl.version>
+    <jaxb.api.version>2.1</jaxb.api.version>
+    <jaxb.impl.version>2.1.13</jaxb.impl.version>
   </properties>
 
   <dependencies>
