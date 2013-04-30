@@ -20,12 +20,10 @@ package com.phloc.jaxb22.plugin;
 import java.util.List;
 
 import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
 
 import org.xml.sax.ErrorHandler;
 
 import com.phloc.commons.annotations.IsSPIImplementation;
-import com.phloc.commons.annotations.ReturnsMutableObject;
 import com.phloc.commons.collections.ContainerHelper;
 import com.sun.codemodel.JClass;
 import com.sun.codemodel.JDefinedClass;
@@ -71,15 +69,12 @@ public class PluginListExtension extends Plugin
     {
       final JDefinedClass jClass = aClassOutline.implClass;
       for (final JMethod aMethod : ContainerHelper.newList (jClass.methods ()))
-        if (aMethod.name ().startsWith ("get"))
+        if (aMethod.name ().startsWith ("get") && aMethod.params ().isEmpty ())
         {
           final JType aReturnType = aMethod.type ();
           // Find e.g. List<ItemListType> getItemList()
-          if (aReturnType.name ().startsWith ("List<") && aMethod.params ().isEmpty ())
+          if (aReturnType.name ().startsWith ("List<"))
           {
-            aMethod.annotate (Nonnull.class);
-            aMethod.annotate (ReturnsMutableObject.class).param ("reason", "JAXB implementation style");
-
             {
               final JMethod mHasEntries = jClass.method (JMod.PUBLIC,
                                                          aOutline.getCodeModel ().BOOLEAN,
