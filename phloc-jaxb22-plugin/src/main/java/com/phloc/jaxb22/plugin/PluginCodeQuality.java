@@ -17,7 +17,9 @@
  */
 package com.phloc.jaxb22.plugin;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 
@@ -26,6 +28,7 @@ import org.xml.sax.ErrorHandler;
 import com.phloc.commons.annotations.IsSPIImplementation;
 import com.phloc.commons.collections.ContainerHelper;
 import com.sun.codemodel.JDefinedClass;
+import com.sun.codemodel.JFieldVar;
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JVar;
 import com.sun.tools.xjc.Options;
@@ -64,13 +67,21 @@ public class PluginCodeQuality extends Plugin
     for (final ClassOutline aClassOutline : aOutline.getClasses ())
     {
       final JDefinedClass jClass = aClassOutline.implClass;
+      final Set <String> aFieldNames = new HashSet <String> ();
+      for (final JFieldVar aField : jClass.fields ().values ())
+        aFieldNames.add (aField.name ());
+
       for (final JMethod jMethod : jClass.methods ())
       {
         final List <JVar> aParams = jMethod.params ();
-        if (jMethod.name ().equals ("setValue") && aParams.size () == 1)
+        if (jMethod.name ().startsWith ("set") && aParams.size () == 1)
         {
-          // Change name because it conflicts with field "value"
-          aParams.get (0).name ("valueParam");
+          final JVar aParam = aParams.get (0);
+          if (aFieldNames.contains (aParam.name ()))
+          {
+            // Change name because it conflicts with field "value"
+            aParam.name (aParam.name () + "Param");
+          }
         }
       }
     }
