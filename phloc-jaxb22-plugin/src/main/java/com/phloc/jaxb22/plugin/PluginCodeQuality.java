@@ -33,6 +33,7 @@ import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JVar;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.Plugin;
+import com.sun.tools.xjc.model.CElementInfo;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.Outline;
 
@@ -67,6 +68,7 @@ public class PluginCodeQuality extends Plugin
     for (final ClassOutline aClassOutline : aOutline.getClasses ())
     {
       final JDefinedClass jClass = aClassOutline.implClass;
+
       final Set <String> aFieldNames = new HashSet <String> ();
       for (final JFieldVar aField : jClass.fields ().values ())
         aFieldNames.add (aField.name ());
@@ -81,6 +83,56 @@ public class PluginCodeQuality extends Plugin
           {
             // Change name because it conflicts with field "value"
             aParam.name (aParam.name () + "Param");
+
+            // TODO update javaDoc - currently not possible see
+            // https://java.net/jira/browse/CODEMODEL-15
+          }
+        }
+      }
+    }
+
+    // Get all ObjectFactory classes
+    final Set <JDefinedClass> aObjFactories = new HashSet <JDefinedClass> ();
+    for (final CElementInfo ei : aOutline.getModel ().getAllElements ())
+    {
+      final JDefinedClass aClass = aOutline.getPackageContext (ei._package ())
+                                           .objectFactoryGenerator ()
+                                           .getObjectFactory ();
+      aObjFactories.add (aClass);
+    }
+
+    // Manipulate all ObjectFactory classes
+    final String sByteArrayTypeName = aOutline.getCodeModel ().BYTE.array ().name ();
+    for (final JDefinedClass aObjFactory : aObjFactories)
+    {
+      for (final JFieldVar aFieldVar : aObjFactory.fields ().values ())
+      {
+        // Make all static QNames public
+        if (aFieldVar.type ().name ().equals ("QName"))
+          aFieldVar.mods ().setPublic ();
+      }
+
+      for (final JMethod aMethod : aObjFactory.methods ())
+      {
+        final List <JVar> aParams = aMethod.params ();
+        if (aMethod.name ().startsWith ("create") &&
+            aMethod.type ().name ().startsWith ("JAXBElement<") &&
+            aParams.size () == 1)
+        {
+          // Modify all JAXBElement<T> createT (Object o) methods
+          final JVar aParam = aParams.get (0);
+
+          // Modify parameter
+          aParam.mods ().setFinal (true);
+
+          // Modify method
+          aMethod.javadoc ().addReturn ().add ("The created JAXBElement");
+
+          if (aParam.type ().name ().equals (sByteArrayTypeName))
+          {
+            // Try to remove the contained cast
+            // TODO Unfortunately this does not work with the current code model
+            // See https://java.net/jira/browse/CODEMODEL-13
           }
         }
       }

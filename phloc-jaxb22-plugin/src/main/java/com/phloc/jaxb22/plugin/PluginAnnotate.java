@@ -17,7 +17,9 @@
  */
 package com.phloc.jaxb22.plugin;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -34,6 +36,7 @@ import com.sun.codemodel.JType;
 import com.sun.codemodel.JVar;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.Plugin;
+import com.sun.tools.xjc.model.CElementInfo;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.Outline;
 
@@ -95,6 +98,42 @@ public class PluginAnnotate extends Plugin
           }
       }
     }
+
+    // Get all ObjectFactory classes
+    final Set <JDefinedClass> aObjFactories = new HashSet <JDefinedClass> ();
+    for (final CElementInfo ei : aOutline.getModel ().getAllElements ())
+    {
+      final JDefinedClass aClass = aOutline.getPackageContext (ei._package ())
+                                           .objectFactoryGenerator ()
+                                           .getObjectFactory ();
+      aObjFactories.add (aClass);
+    }
+
+    // Manipulate all ObjectFactory classes
+    for (final JDefinedClass aObjFactory : aObjFactories)
+      for (final JMethod aMethod : aObjFactory.methods ())
+      {
+        final List <JVar> aParams = aMethod.params ();
+        if (aMethod.name ().startsWith ("create") &&
+            aMethod.type ().name ().startsWith ("JAXBElement<") &&
+            aParams.size () == 1)
+        {
+          // Modify all JAXBElement<T> createT (Object o) methods
+
+          // Modify parameter
+          aParams.get (0).annotate (Nullable.class);
+
+          // Modify method
+          aMethod.annotate (Nonnull.class);
+        }
+        else
+          if (aMethod.name ().startsWith ("create") && aParams.isEmpty ())
+          {
+            // Modify all Object createObject() methods
+            aMethod.annotate (Nonnull.class);
+          }
+      }
+
     return true;
   }
 }
