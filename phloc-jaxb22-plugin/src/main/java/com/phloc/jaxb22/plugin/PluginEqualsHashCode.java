@@ -43,6 +43,12 @@ import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.FieldOutline;
 import com.sun.tools.xjc.outline.Outline;
 
+/**
+ * Add default equals and hashCode methods. For equals the {@link EqualsUtils}
+ * class is used and for hashCode the {@link HashCodeGenerator} class is used.
+ * 
+ * @author Philip Helger
+ */
 @IsSPIImplementation
 public class PluginEqualsHashCode extends Plugin
 {
@@ -125,7 +131,7 @@ public class PluginEqualsHashCode extends Plugin
           jBody._return (JExpr.TRUE);
         }
 
-        mEquals.javadoc ().add ("@author phloc-jaxb22-plugin -" + OPT);
+        mEquals.javadoc ().add ("Created by phloc-jaxb22-plugin -" + OPT);
       }
 
       // hashCode
@@ -153,7 +159,7 @@ public class PluginEqualsHashCode extends Plugin
           mHashCode.body ()._return (aInvocation.invoke ("getHashCode"));
         }
 
-        mHashCode.javadoc ().add ("@author phloc-jaxb22-plugin -" + OPT);
+        mHashCode.javadoc ().add ("Created by phloc-jaxb22-plugin -" + OPT);
       }
     }
     return true;

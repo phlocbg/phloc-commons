@@ -37,6 +37,12 @@ import com.sun.tools.xjc.model.CElementInfo;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.Outline;
 
+/**
+ * Improved the code quality by avoiding some compiler warnings, and by making
+ * special constants accessible from the outside.
+ * 
+ * @author Philip Helger
+ */
 @IsSPIImplementation
 public class PluginCodeQuality extends Plugin
 {

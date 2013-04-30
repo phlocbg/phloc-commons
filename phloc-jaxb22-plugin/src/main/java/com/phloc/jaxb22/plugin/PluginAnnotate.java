@@ -40,6 +40,12 @@ import com.sun.tools.xjc.model.CElementInfo;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.Outline;
 
+/**
+ * Create Nonnull/Nullable annotations in all bean generated objects as well as
+ * in the ObjectFactory classes
+ * 
+ * @author Philip Helger
+ */
 @IsSPIImplementation
 public class PluginAnnotate extends Plugin
 {
