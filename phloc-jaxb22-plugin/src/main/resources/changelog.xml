@@ -22,7 +22,12 @@
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-jaxb22-plugin">
   <entry date="2013-04-30" category="api" action="add">
     <change>
-      <text locale="en">Added new option -Xphloc-annotate to generate @Nullable/@Nonnull annotations for all getters and setters</text>
+      <text locale="en">Added new option "-Xphloc-fields-private" to make all generated fields private instead of the default protected</text>
+    </change>
+  </entry>
+  <entry date="2013-04-30" category="api" action="add">
+    <change>
+      <text locale="en">Added new option "-Xphloc-annotate" to generate @Nullable/@Nonnull annotations for all getters and setters</text>
     </change>
   </entry>
   <entry date="2013-04-30" category="tech" action="update">
