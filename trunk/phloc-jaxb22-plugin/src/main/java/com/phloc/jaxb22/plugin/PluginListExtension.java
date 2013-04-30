@@ -113,6 +113,7 @@ public class PluginListExtension extends Plugin
                                                       ((JClass) aReturnType).getTypeParameters ().get (0),
                                                       "get" + aMethod.name ().substring (3) + "AtIndex");
               final JVar aParam = mAtIndex.param (JMod.FINAL, aOutline.getCodeModel ().INT, "index");
+              aParam.annotate (Nonnegative.class);
               mAtIndex.body ()._return (JExpr.invoke (aMethod).invoke ("get").arg (aParam));
               mAtIndex.javadoc ().addParam (aParam).add ("The index to retrieve");
               mAtIndex.javadoc ()
