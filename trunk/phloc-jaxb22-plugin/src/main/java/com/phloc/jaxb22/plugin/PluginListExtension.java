@@ -39,6 +39,13 @@ import com.sun.tools.xjc.Plugin;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.Outline;
 
+/**
+ * Extend all bean List<?> getters with additional method to query the content:
+ * boolean has...Entries(), boolean hasNo...Entries(), int get...Count() and T
+ * get...AtIndex(int)
+ * 
+ * @author Philip Helger
+ */
 @IsSPIImplementation
 public class PluginListExtension extends Plugin
 {
@@ -89,7 +96,7 @@ public class PluginListExtension extends Plugin
               mHasEntries.javadoc ()
                          .addReturn ()
                          .add ("<code>true</code> if at least one item is contained, <code>false</code> otherwise.");
-              mHasEntries.javadoc ().add ("@author phloc-jaxb22-plugin -" + OPT);
+              mHasEntries.javadoc ().add ("Created by phloc-jaxb22-plugin -" + OPT);
             }
 
             {
@@ -101,7 +108,7 @@ public class PluginListExtension extends Plugin
               mHasNoEntries.javadoc ()
                            .addReturn ()
                            .add ("<code>true</code> if no item is contained, <code>false</code> otherwise.");
-              mHasNoEntries.javadoc ().add ("@author phloc-jaxb22-plugin -" + OPT);
+              mHasNoEntries.javadoc ().add ("Created by phloc-jaxb22-plugin -" + OPT);
             }
 
             {
@@ -110,7 +117,7 @@ public class PluginListExtension extends Plugin
               mCount.body ()._return (JExpr.invoke (aMethod).invoke ("size"));
 
               mCount.javadoc ().addReturn ().add ("The number of contained elements. Always &ge; 0.");
-              mCount.javadoc ().add ("@author phloc-jaxb22-plugin -" + OPT);
+              mCount.javadoc ().add ("Created by phloc-jaxb22-plugin -" + OPT);
             }
 
             {
@@ -126,7 +133,7 @@ public class PluginListExtension extends Plugin
                       .addReturn ()
                       .add ("<code>true</code> if at least one item is contained, <code>false</code> otherwise.");
               mAtIndex.javadoc ().addThrows (ArrayIndexOutOfBoundsException.class).add ("if the index is invalid!");
-              mAtIndex.javadoc ().add ("@author phloc-jaxb22-plugin -" + OPT);
+              mAtIndex.javadoc ().add ("Created by phloc-jaxb22-plugin -" + OPT);
             }
           }
         }

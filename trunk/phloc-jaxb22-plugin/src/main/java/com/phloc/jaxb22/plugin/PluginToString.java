@@ -39,6 +39,12 @@ import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.FieldOutline;
 import com.sun.tools.xjc.outline.Outline;
 
+/**
+ * Add default toString method using the {@link ToStringGenerator} from
+ * phloc-commons.
+ * 
+ * @author Philip Helger
+ */
 @IsSPIImplementation
 public class PluginToString extends Plugin
 {
@@ -99,7 +105,7 @@ public class PluginToString extends Plugin
       }
       mToString.body ()._return (aInvocation.invoke ("toString"));
 
-      mToString.javadoc ().add ("@author phloc-jaxb22-plugin -" + OPT);
+      mToString.javadoc ().add ("Created by phloc-jaxb22-plugin -" + OPT);
     }
     return true;
   }

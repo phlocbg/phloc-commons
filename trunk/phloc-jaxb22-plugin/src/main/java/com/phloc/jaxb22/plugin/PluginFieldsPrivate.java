@@ -32,6 +32,11 @@ import com.sun.tools.xjc.Plugin;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.Outline;
 
+/**
+ * Plugin that makes all fields private instead of the default "protected"
+ * 
+ * @author Philip Helger
+ */
 @IsSPIImplementation
 public class PluginFieldsPrivate extends Plugin
 {
