@@ -98,6 +98,8 @@ public class PluginToString extends Plugin
         aInvocation = aInvocation.invoke ("append").arg (JExpr.lit (sFieldName)).arg (JExpr.ref (sFieldName));
       }
       mToString.body ()._return (aInvocation.invoke ("toString"));
+
+      mToString.javadoc ().add ("@author phloc-jaxb22-plugin -" + OPT);
     }
     return true;
   }
