@@ -27,6 +27,7 @@ import org.xml.sax.ErrorHandler;
 import com.phloc.commons.annotations.IsSPIImplementation;
 import com.phloc.commons.annotations.ReturnsMutableObject;
 import com.phloc.commons.collections.ContainerHelper;
+import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JDefinedClass;
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JType;
@@ -60,8 +61,11 @@ public class PluginAnnotate extends Plugin
   }
 
   @Override
-  public boolean run (final Outline aOutline, final Options aOpts, final ErrorHandler aErrorHandler)
+  public boolean run (@Nonnull final Outline aOutline,
+                      @Nonnull final Options aOpts,
+                      @Nonnull final ErrorHandler aErrorHandler)
   {
+    final JCodeModel aCodeModel = aOutline.getCodeModel ();
     // For all classes
     for (final ClassOutline aClassOutline : aOutline.getClasses ())
     {
@@ -83,7 +87,7 @@ public class PluginAnnotate extends Plugin
               aMethod.annotate (Nullable.class);
         }
         else
-          if (aMethod.name ().startsWith ("set") && aParams.size () == 1)
+          if (aMethod.type () == aCodeModel.VOID && aMethod.name ().startsWith ("set") && aParams.size () == 1)
           {
             final JVar aParam = aParams.get (0);
             if (!aParam.type ().isPrimitive ())

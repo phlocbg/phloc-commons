@@ -19,6 +19,8 @@ package com.phloc.jaxb22.plugin;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import org.xml.sax.ErrorHandler;
 
 import com.phloc.commons.annotations.IsSPIImplementation;
@@ -61,7 +63,9 @@ public class PluginToString extends Plugin
   }
 
   @Override
-  public boolean run (final Outline aOutline, final Options aOpts, final ErrorHandler aErrorHandler)
+  public boolean run (@Nonnull final Outline aOutline,
+                      @Nonnull final Options aOpts,
+                      @Nonnull final ErrorHandler aErrorHandler)
   {
     final JCodeModel aCodeModel = aOutline.getCodeModel ();
     final JClass jObject = aCodeModel.ref (Object.class);
