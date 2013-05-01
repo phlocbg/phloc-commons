@@ -19,6 +19,8 @@ package com.phloc.commons.callback;
 
 import javax.annotation.Nullable;
 
+import com.phloc.commons.string.ToStringGenerator;
+
 /**
  * A specific implementation of the {@link IExceptionHandler} interface, that
  * swallows all exceptions and does nothing.
@@ -30,5 +32,11 @@ public final class DoNothingExceptionHandler implements IExceptionHandler <Throw
   public void onException (@Nullable final Throwable t)
   {
     /* ignore */
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).toString ();
   }
 }
