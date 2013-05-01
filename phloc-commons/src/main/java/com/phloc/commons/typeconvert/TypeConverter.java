@@ -108,7 +108,7 @@ public final class TypeConverter
    *         failed, or no converter was found.
    * @see TypeConverterProviderBestMatch
    * @throws TypeConverterException
-   *         if the source value is null
+   *         if the source value is <code>null</code>
    */
   public static boolean convertToBoolean (@Nonnull final Object aSrcValue)
   {
@@ -129,7 +129,7 @@ public final class TypeConverter
    *         failed, or no converter was found.
    * @see TypeConverterProviderBestMatch
    * @throws TypeConverterException
-   *         if the source value is null
+   *         if the source value is <code>null</code>
    */
   public static byte convertToByte (@Nonnull final Object aSrcValue)
   {
@@ -150,7 +150,7 @@ public final class TypeConverter
    *         failed, or no converter was found.
    * @see TypeConverterProviderBestMatch
    * @throws TypeConverterException
-   *         if the source value is null
+   *         if the source value is <code>null</code>
    */
   public static char convertToChar (@Nonnull final Object aSrcValue)
   {
@@ -171,7 +171,7 @@ public final class TypeConverter
    *         failed, or no converter was found.
    * @see TypeConverterProviderBestMatch
    * @throws TypeConverterException
-   *         if the source value is null
+   *         if the source value is <code>null</code>
    */
   public static double convertToDouble (@Nonnull final Object aSrcValue)
   {
@@ -192,7 +192,7 @@ public final class TypeConverter
    *         failed, or no converter was found.
    * @see TypeConverterProviderBestMatch
    * @throws TypeConverterException
-   *         if the source value is null
+   *         if the source value is <code>null</code>
    */
   public static float convertToFloat (@Nonnull final Object aSrcValue)
   {
@@ -213,7 +213,7 @@ public final class TypeConverter
    *         failed, or no converter was found.
    * @see TypeConverterProviderBestMatch
    * @throws TypeConverterException
-   *         if the source value is null
+   *         if the source value is <code>null</code>
    */
   public static int convertToInt (@Nonnull final Object aSrcValue)
   {
@@ -234,7 +234,7 @@ public final class TypeConverter
    *         failed, or no converter was found.
    * @see TypeConverterProviderBestMatch
    * @throws TypeConverterException
-   *         if the source value is null
+   *         if the source value is <code>null</code>
    */
   public static long convertToLong (@Nonnull final Object aSrcValue)
   {
@@ -255,7 +255,7 @@ public final class TypeConverter
    *         failed, or no converter was found.
    * @see TypeConverterProviderBestMatch
    * @throws TypeConverterException
-   *         if the source value is null
+   *         if the source value is <code>null</code>
    */
   public static short convertToShort (@Nonnull final Object aSrcValue)
   {
@@ -279,6 +279,8 @@ public final class TypeConverter
    * @throws IllegalArgumentException
    *         if the conversion process fails because either the conversion
    *         failed, or no converter was found.
+   * @throws TypeConverterException
+   *         If either no converter could be found, or if the conversion failed!
    * @see TypeConverterProviderBestMatch
    */
   @Nullable
