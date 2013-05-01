@@ -129,9 +129,7 @@ public class PluginListExtension extends Plugin
               mAtIndex.body ()._return (JExpr.invoke (aMethod).invoke ("get").arg (aParam));
 
               mAtIndex.javadoc ().addParam (aParam).add ("The index to retrieve");
-              mAtIndex.javadoc ()
-                      .addReturn ()
-                      .add ("<code>true</code> if at least one item is contained, <code>false</code> otherwise.");
+              mAtIndex.javadoc ().addReturn ().add ("The element at the specified index. May be <code>null</code>");
               mAtIndex.javadoc ().addThrows (ArrayIndexOutOfBoundsException.class).add ("if the index is invalid!");
               mAtIndex.javadoc ().add ("Created by phloc-jaxb22-plugin -" + OPT);
             }
