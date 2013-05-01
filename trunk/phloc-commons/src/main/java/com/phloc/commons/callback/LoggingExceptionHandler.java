@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.mock.IMockException;
+import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * A specific implementation of the {@link IExceptionHandler} interface, that
@@ -37,5 +38,11 @@ public class LoggingExceptionHandler implements IExceptionHandler <Throwable>
   public void onException (@Nullable final Throwable t)
   {
     s_aLogger.warn ("Exception occurred", t instanceof IMockException ? null : t);
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).toString ();
   }
 }
