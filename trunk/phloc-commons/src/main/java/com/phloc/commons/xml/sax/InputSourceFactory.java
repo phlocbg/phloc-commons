@@ -144,15 +144,15 @@ public final class InputSourceFactory
     return create (new ByteBufferInputStream (aXML));
   }
 
-  @Nonnull
+  @Nullable
   public static InputSource create (@Nullable final InputStream aIS)
   {
-    return new InputSource (aIS);
+    return aIS == null ? null : new InputSource (aIS);
   }
 
-  @Nonnull
+  @Nullable
   public static InputSource create (@Nullable final Reader aReader)
   {
-    return new InputSource (aReader);
+    return aReader == null ? null : new InputSource (aReader);
   }
 }
