@@ -36,7 +36,7 @@ import com.phloc.commons.string.ToStringGenerator;
  *        The data type that is wrapped together with the change indicator
  */
 @Immutable
-public final class ChangeWithValue <DATATYPE> implements IChangeIndicator, IReadonlyWrapper <DATATYPE>
+public class ChangeWithValue <DATATYPE> implements IChangeIndicator, IReadonlyWrapper <DATATYPE>
 {
   private final EChange m_eChange;
   private final DATATYPE m_aObj;
@@ -139,7 +139,7 @@ public final class ChangeWithValue <DATATYPE> implements IChangeIndicator, IRead
   {
     if (o == this)
       return true;
-    if (!(o instanceof ChangeWithValue <?>))
+    if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final ChangeWithValue <?> rhs = (ChangeWithValue <?>) o;
     return m_eChange.equals (rhs.m_eChange) && EqualsUtils.equals (m_aObj, rhs.m_aObj);
