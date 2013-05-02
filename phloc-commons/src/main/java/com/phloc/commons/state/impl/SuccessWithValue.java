@@ -36,7 +36,7 @@ import com.phloc.commons.string.ToStringGenerator;
  *        The data type that is wrapped together with the success indicator
  */
 @Immutable
-public final class SuccessWithValue <DATATYPE> implements ISuccessIndicator, IReadonlyWrapper <DATATYPE>
+public class SuccessWithValue <DATATYPE> implements ISuccessIndicator, IReadonlyWrapper <DATATYPE>
 {
   private final ESuccess m_eSuccess;
   private final DATATYPE m_aObj;
@@ -139,7 +139,7 @@ public final class SuccessWithValue <DATATYPE> implements ISuccessIndicator, IRe
   {
     if (o == this)
       return true;
-    if (!(o instanceof SuccessWithValue <?>))
+    if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final SuccessWithValue <?> rhs = (SuccessWithValue <?>) o;
     return m_eSuccess.equals (rhs.m_eSuccess) && EqualsUtils.equals (m_aObj, rhs.m_aObj);

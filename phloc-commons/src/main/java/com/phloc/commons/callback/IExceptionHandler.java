@@ -29,7 +29,8 @@ import javax.annotation.Nonnull;
 public interface IExceptionHandler <EXTYPE extends Throwable>
 {
   /**
-   * Called when an exception of the specified type occurred
+   * Called when an exception of the specified type occurred. You may not
+   * re-throw the exception from in here!
    * 
    * @param ex
    *        The exception. Never <code>null</code>.
