@@ -21,6 +21,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.string.ToStringGenerator;
+
 /**
  * A helper class that converts a {@link IThrowingRunnable} into an
  * {@link IThrowingCallable}.
@@ -53,6 +55,12 @@ public final class AdapterThrowingRunnableToCallable <DATATYPE> implements IThro
   {
     m_aRunnable.run ();
     return m_aResult;
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("runnable", m_aRunnable).append ("result", m_aResult).toString ();
   }
 
   /**

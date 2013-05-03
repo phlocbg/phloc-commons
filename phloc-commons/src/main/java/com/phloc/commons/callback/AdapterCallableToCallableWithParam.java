@@ -22,6 +22,8 @@ import java.util.concurrent.Callable;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.string.ToStringGenerator;
+
 /**
  * A helper class that converts a {@link Callable} into an
  * {@link IThrowingCallableWithParameter}.
@@ -48,5 +50,11 @@ public final class AdapterCallableToCallableWithParam <DATATYPE, PARAMTYPE> impl
   public DATATYPE call (@Nonnull final PARAMTYPE aParam) throws Exception
   {
     return m_aCallable.call ();
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("callabale", m_aCallable).toString ();
   }
 }

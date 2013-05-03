@@ -20,6 +20,8 @@ package com.phloc.commons.callback;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.string.ToStringGenerator;
+
 /**
  * A helper class that converts a {@link Runnable} into an
  * {@link IThrowingRunnableWithParameter}.
@@ -43,5 +45,11 @@ public final class AdapterRunnableToRunnableWithParameter <PARAMTYPE> implements
   public void run (final PARAMTYPE aParam) throws Exception
   {
     m_aRunnable.run ();
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("runnable", m_aRunnable).toString ();
   }
 }
