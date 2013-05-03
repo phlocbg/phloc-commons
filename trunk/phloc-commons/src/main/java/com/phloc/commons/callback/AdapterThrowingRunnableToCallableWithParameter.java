@@ -21,6 +21,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.string.ToStringGenerator;
+
 /**
  * A helper class that converts a {@link IThrowingRunnable} into an
  * {@link IThrowingCallable}.
@@ -32,8 +34,7 @@ import javax.annotation.concurrent.Immutable;
  *        The parameter type
  */
 @Immutable
-public final class AdapterThrowingRunnableToCallableWithParameter <DATATYPE, PARAMTYPE> implements
-                                                                                        IThrowingCallableWithParameter <DATATYPE, PARAMTYPE>
+public final class AdapterThrowingRunnableToCallableWithParameter <DATATYPE, PARAMTYPE> implements IThrowingCallableWithParameter <DATATYPE, PARAMTYPE>
 {
   private final IThrowingRunnableWithParameter <PARAMTYPE> m_aRunnable;
   private final DATATYPE m_aResult;
@@ -57,6 +58,12 @@ public final class AdapterThrowingRunnableToCallableWithParameter <DATATYPE, PAR
   {
     m_aRunnable.run (aParam);
     return m_aResult;
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("runnable", m_aRunnable).append ("result", m_aResult).toString ();
   }
 
   /**
