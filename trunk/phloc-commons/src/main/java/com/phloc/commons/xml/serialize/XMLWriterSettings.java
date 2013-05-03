@@ -41,7 +41,7 @@ import com.phloc.commons.xml.EXMLVersion;
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWriterSettings>
+public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWriterSettings>
 {
   // Must be before the IXMLWriterSettings constants!
   /** The default charset is UTF-8 */
@@ -375,7 +375,7 @@ public final class XMLWriterSettings implements IXMLWriterSettings, ICloneable <
   {
     if (o == this)
       return true;
-    if (!(o instanceof XMLWriterSettings))
+    if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final XMLWriterSettings rhs = (XMLWriterSettings) o;
     // namespace context does not necessarily implement equals/hashCode
