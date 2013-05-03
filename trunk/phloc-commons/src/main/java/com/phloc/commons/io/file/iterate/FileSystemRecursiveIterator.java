@@ -36,6 +36,7 @@ import com.phloc.commons.collections.iterate.IIterableIterator;
 import com.phloc.commons.filter.IFilter;
 import com.phloc.commons.filter.collections.FilterIterator;
 import com.phloc.commons.io.file.FileUtils;
+import com.phloc.commons.io.file.filter.AbstractFileFilter;
 import com.phloc.commons.io.file.filter.FileFilterToIFilterAdapter;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
@@ -122,6 +123,21 @@ public class FileSystemRecursiveIterator implements IIterableIterator <File>
    *        An optional filter that controls, into which sub-directories this
    *        iterator should descend to. May be <code>null</code>.
    */
+  public FileSystemRecursiveIterator (@Nonnull final String sBaseDir,
+                                      @Nullable final AbstractFileFilter aRecursionFilter)
+  {
+    this (sBaseDir, (IFilter <File>) aRecursionFilter);
+  }
+
+  /**
+   * Constructor for recursively iterating a file system directory.
+   * 
+   * @param sBaseDir
+   *        The base directory to start with. May not be <code>null</code>.
+   * @param aRecursionFilter
+   *        An optional filter that controls, into which sub-directories this
+   *        iterator should descend to. May be <code>null</code>.
+   */
   public FileSystemRecursiveIterator (@Nonnull final String sBaseDir, @Nullable final IFilter <File> aRecursionFilter)
   {
     this (new File (sBaseDir), aRecursionFilter);
@@ -153,6 +169,20 @@ public class FileSystemRecursiveIterator implements IIterableIterator <File>
   public FileSystemRecursiveIterator (@Nonnull final File aBaseDir, @Nullable final FileFilter aRecursionFilter)
   {
     this (aBaseDir, FileFilterToIFilterAdapter.create (aRecursionFilter));
+  }
+
+  /**
+   * Constructor for recursively iterating a file system directory.
+   * 
+   * @param aBaseDir
+   *        The base directory to start with. May not be <code>null</code>.
+   * @param aRecursionFilter
+   *        An optional filter that controls, into which sub-directories this
+   *        iterator should descend to. May be <code>null</code>.
+   */
+  public FileSystemRecursiveIterator (@Nonnull final File aBaseDir, @Nullable final AbstractFileFilter aRecursionFilter)
+  {
+    this (aBaseDir, (IFilter <File>) aRecursionFilter);
   }
 
   /**
