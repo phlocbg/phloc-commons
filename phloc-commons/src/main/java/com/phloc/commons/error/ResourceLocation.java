@@ -32,7 +32,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @Immutable
-public final class ResourceLocation implements IResourceLocation
+public class ResourceLocation implements IResourceLocation
 {
   private final String m_sResourceID;
   private final int m_nLineNumber;
@@ -114,7 +114,7 @@ public final class ResourceLocation implements IResourceLocation
   {
     if (o == this)
       return true;
-    if (!(o instanceof ResourceLocation))
+    if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final ResourceLocation rhs = (ResourceLocation) o;
     return EqualsUtils.equals (m_sResourceID, rhs.m_sResourceID) &&

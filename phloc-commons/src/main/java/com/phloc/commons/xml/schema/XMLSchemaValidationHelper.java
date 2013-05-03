@@ -18,6 +18,7 @@
 package com.phloc.commons.xml.schema;
 
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.Immutable;
 import javax.xml.transform.Source;
 import javax.xml.validation.Schema;
 import javax.xml.validation.Validator;
@@ -34,6 +35,7 @@ import com.phloc.commons.xml.transform.TransformSourceFactory;
  * 
  * @author Philip Helger
  */
+@Immutable
 public final class XMLSchemaValidationHelper
 {
   @PresentForCodeCoverage

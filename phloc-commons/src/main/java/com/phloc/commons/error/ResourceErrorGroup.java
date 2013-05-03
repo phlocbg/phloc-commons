@@ -286,7 +286,7 @@ public class ResourceErrorGroup implements IResourceErrorGroup, ICloneable <Reso
   {
     if (o == this)
       return true;
-    if (!(o instanceof ResourceErrorGroup))
+    if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final ResourceErrorGroup rhs = (ResourceErrorGroup) o;
     return m_aErrors.equals (rhs.m_aErrors);
