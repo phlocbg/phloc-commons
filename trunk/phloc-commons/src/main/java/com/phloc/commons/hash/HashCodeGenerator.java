@@ -513,6 +513,29 @@ public final class HashCodeGenerator implements IHashCodeGenerator
   }
 
   /**
+   * Never compare {@link HashCodeGenerator} objects :)
+   */
+  @Deprecated
+  @Override
+  public boolean equals (final Object o)
+  {
+    return o == this;
+  }
+
+  /**
+   * Always use {@link #getHashCode()}
+   * 
+   * @return {@link #getHashCode()}
+   * @see #getHashCode()
+   */
+  @Override
+  @Deprecated
+  public int hashCode ()
+  {
+    return getHashCode ();
+  }
+
+  /**
    * Create a {@link HashCodeGenerator} for derived classes where the base class
    * also uses the {@link HashCodeGenerator}. This avoid calculating the hash
    * code of the class name more than once.
