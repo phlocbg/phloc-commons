@@ -34,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
  *        The parameter type
  */
 @Immutable
-public final class AdapterThrowingRunnableToCallableWithParameter <DATATYPE, PARAMTYPE> implements IThrowingCallableWithParameter <DATATYPE, PARAMTYPE>
+public class AdapterThrowingRunnableToCallableWithParameter <DATATYPE, PARAMTYPE> implements IThrowingCallableWithParameter <DATATYPE, PARAMTYPE>
 {
   private final IThrowingRunnableWithParameter <PARAMTYPE> m_aRunnable;
   private final DATATYPE m_aResult;

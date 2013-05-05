@@ -35,7 +35,7 @@ import com.phloc.commons.string.ToStringGenerator;
  *        The parameter type.
  */
 @Immutable
-public final class AdapterCallableToCallableWithParam <DATATYPE, PARAMTYPE> implements IThrowingCallableWithParameter <DATATYPE, PARAMTYPE>
+public class AdapterCallableToCallableWithParam <DATATYPE, PARAMTYPE> implements IThrowingCallableWithParameter <DATATYPE, PARAMTYPE>
 {
   private final Callable <DATATYPE> m_aCallable;
 
