@@ -32,7 +32,7 @@ import com.phloc.commons.string.ToStringGenerator;
  *        The callable result type.
  */
 @Immutable
-public final class AdapterRunnableToCallable <DATATYPE> implements INonThrowingCallable <DATATYPE>
+public class AdapterRunnableToCallable <DATATYPE> implements INonThrowingCallable <DATATYPE>
 {
   private final Runnable m_aRunnable;
   private final DATATYPE m_aResult;

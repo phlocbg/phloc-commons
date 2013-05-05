@@ -24,25 +24,23 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * A helper class that converts a {@link Runnable} into an
- * {@link IThrowingRunnableWithParameter}.
+ * {@link IThrowingRunnable}.
  * 
  * @author Philip Helger
- * @param <PARAMTYPE>
- *        The parameter type.
  */
 @Immutable
-public class AdapterRunnableToRunnableWithParameter <PARAMTYPE> implements IThrowingRunnableWithParameter <PARAMTYPE>
+public class AdapterRunnableToThrowingRunnable implements IThrowingRunnable
 {
   private final Runnable m_aRunnable;
 
-  public AdapterRunnableToRunnableWithParameter (@Nonnull final Runnable aRunnable)
+  public AdapterRunnableToThrowingRunnable (@Nonnull final Runnable aRunnable)
   {
     if (aRunnable == null)
       throw new NullPointerException ("runnable");
     m_aRunnable = aRunnable;
   }
 
-  public void run (final PARAMTYPE aParam) throws Exception
+  public void run () throws Exception
   {
     m_aRunnable.run ();
   }
