@@ -18,8 +18,10 @@
 package com.phloc.jaxb22.plugin;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.Nonnegative;
+import javax.annotation.Nullable;
 
 import org.xml.sax.ErrorHandler;
 
@@ -29,6 +31,7 @@ import com.sun.codemodel.JClass;
 import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JDefinedClass;
 import com.sun.codemodel.JExpr;
+import com.sun.codemodel.JFieldVar;
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JMod;
 import com.sun.codemodel.JOp;
@@ -78,6 +81,24 @@ public class PluginListExtension extends Plugin
     for (final ClassOutline aClassOutline : aOutline.getClasses ())
     {
       final JDefinedClass jClass = aClassOutline.implClass;
+
+      for (final JFieldVar aField : jClass.fields ().values ())
+      {
+        final JType aType = aField.type ();
+        if (aType.name ().startsWith ("List<"))
+        {
+          String sName = aField.name ();
+          if (Character.isLowerCase (sName.charAt (0)))
+            sName = sName.substring (0, 1).toUpperCase (Locale.US) + sName.substring (1);
+          final JMethod aSetter = jClass.method (JMod.PUBLIC, aCodeModel.VOID, "set" + sName);
+          final JVar aParam = aSetter.param (JMod.FINAL, aType, "aList");
+          aParam.annotate (Nullable.class);
+          aSetter.body ().assign (aField, aParam);
+          aSetter.javadoc ().addParam (aParam).add ("The new list member to set. May be <code>null</code>.");
+          aSetter.javadoc ().add ("Created by phloc-jaxb22-plugin -" + OPT);
+        }
+      }
+
       for (final JMethod aMethod : ContainerHelper.newList (jClass.methods ()))
         if (aMethod.name ().startsWith ("get") && aMethod.params ().isEmpty ())
         {
@@ -124,6 +145,7 @@ public class PluginListExtension extends Plugin
               final JMethod mAtIndex = jClass.method (JMod.PUBLIC,
                                                       aListElementType,
                                                       "get" + aMethod.name ().substring (3) + "AtIndex");
+              mAtIndex.annotate (Nullable.class);
               final JVar aParam = mAtIndex.param (JMod.FINAL, aCodeModel.INT, "index");
               aParam.annotate (Nonnegative.class);
               mAtIndex.body ()._return (JExpr.invoke (aMethod).invoke ("get").arg (aParam));
