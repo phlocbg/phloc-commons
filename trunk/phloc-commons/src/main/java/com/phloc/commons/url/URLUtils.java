@@ -52,6 +52,8 @@ import com.phloc.commons.encode.IDecoder;
 import com.phloc.commons.encode.IEncoder;
 import com.phloc.commons.encode.IdentityDecoder;
 import com.phloc.commons.encode.IdentityEncoder;
+import com.phloc.commons.exceptions.InitializationException;
+import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.microdom.reader.XMLMapHandler;
 import com.phloc.commons.mutable.IWrapper;
@@ -82,33 +84,8 @@ public final class URLUtils
   private static final Logger s_aLogger = LoggerFactory.getLogger (URLUtils.class);
   private static final String QUESTIONMARK_STR = Character.toString (QUESTIONMARK);
 
-  private static final char [] CLEANURL_OLD;
-  private static final char [][] CLEANURL_NEW;
-
-  static
-  {
-    // This one is tricky, because ClassPathResource internally uses
-    // URLUtils.getInputStream and this static initialization code of this class
-    // can therefore uses ClasspathResource because it would create a recursive
-    // dependency!
-    final Map <String, String> aCleanURLMap = new HashMap <String, String> ();
-    XMLMapHandler.readMap (URLUtils.class.getResourceAsStream ("/codelists/cleanurl-data.xml"), aCleanURLMap);
-
-    CLEANURL_OLD = new char [aCleanURLMap.size ()];
-    CLEANURL_NEW = new char [aCleanURLMap.size ()] [];
-
-    // Convert to char array
-    int i = 0;
-    for (final Map.Entry <String, String> aEntry : aCleanURLMap.entrySet ())
-    {
-      final String sKey = aEntry.getKey ();
-      if (sKey.length () != 1)
-        throw new IllegalStateException ("Clean URL source character has an invalid length: " + sKey.length ());
-      CLEANURL_OLD[i] = sKey.charAt (0);
-      CLEANURL_NEW[i] = aEntry.getValue ().toCharArray ();
-      ++i;
-    }
-  }
+  private static char [] CLEANURL_OLD;
+  private static char [][] CLEANURL_NEW;
 
   private URLUtils ()
   {}
@@ -225,6 +202,37 @@ public final class URLUtils
     }
   }
 
+  private static void _initCleanURL ()
+  {
+    // This one cannot be in the static initializer of the class, because
+    // ClassPathResource internally uses
+    // URLUtils.getInputStream and this static initialization code of this class
+    // can therefore not use ClasspathResource because it would create a
+    // recursive
+    // dependency!
+    // Ever trickier is the when running multiple threads for reading XML (e.g.
+    // in the unit test) this code would wait forever in the static initializer
+    // because XMLMapHandler internally also acquires an XML reader....
+    final Map <String, String> aCleanURLMap = new HashMap <String, String> ();
+    if (XMLMapHandler.readMap (new ClassPathResource ("codelists/cleanurl-data.xml"), aCleanURLMap).isFailure ())
+      throw new InitializationException ("Failed to init CleanURL data!");
+
+    CLEANURL_OLD = new char [aCleanURLMap.size ()];
+    CLEANURL_NEW = new char [aCleanURLMap.size ()] [];
+
+    // Convert to char array
+    int i = 0;
+    for (final Map.Entry <String, String> aEntry : aCleanURLMap.entrySet ())
+    {
+      final String sKey = aEntry.getKey ();
+      if (sKey.length () != 1)
+        throw new IllegalStateException ("Clean URL source character has an invalid length: " + sKey.length ());
+      CLEANURL_OLD[i] = sKey.charAt (0);
+      CLEANURL_NEW[i] = aEntry.getValue ().toCharArray ();
+      ++i;
+    }
+  }
+
   /**
    * Clean an URL part from nasty Umlauts. This mapping needs extension!
    * 
@@ -236,6 +244,8 @@ public final class URLUtils
   @Nullable
   public static String getCleanURLPartWithoutUmlauts (@Nullable final String sURLPart)
   {
+    if (CLEANURL_OLD == null)
+      _initCleanURL ();
     return new String (StringHelper.replaceMultiple (sURLPart, CLEANURL_OLD, CLEANURL_NEW));
   }
 
