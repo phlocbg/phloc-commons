@@ -24,10 +24,14 @@ import java.io.Reader;
 import java.net.UnknownHostException;
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.WillClose;
+import javax.annotation.concurrent.GuardedBy;
+import javax.annotation.concurrent.ThreadSafe;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.validation.Schema;
 
@@ -68,23 +72,12 @@ import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
  * 
  * @author Philip Helger
  */
+@ThreadSafe
 public final class XMLReader
 {
-  /** The logger to use. */
-  private static final Logger s_aLogger = LoggerFactory.getLogger (XMLReader.class);
-  private static final IStatisticsHandlerTimer s_aSaxTimerHdl = StatisticsManager.getTimerHandler (XMLReader.class.getName () +
-                                                                                                   "$SAX");
-  private static final IStatisticsHandlerCounter s_aSaxErrorCounterHdl = StatisticsManager.getCounterHandler (XMLReader.class.getName () +
-                                                                                                              "$SAXERRORS");
-  private static final IStatisticsHandlerTimer s_aDomTimerHdl = StatisticsManager.getTimerHandler (XMLReader.class.getName () +
-                                                                                                   "$DOM");
-  private static final IStatisticsHandlerTimer s_aDomSchemaTimerHdl = StatisticsManager.getTimerHandler (XMLReader.class.getName () +
-                                                                                                         "$DOMwithSchema");
-  private static final IStatisticsHandlerCounter s_aDomErrorCounterHdl = StatisticsManager.getCounterHandler (XMLReader.class.getName () +
-                                                                                                              "$DOMERRORS");
-
-  private static final IFactory <org.xml.sax.XMLReader> s_aXMLReaderFactry = new IFactory <org.xml.sax.XMLReader> ()
+  static final class SAXReaderFactory implements IFactory <org.xml.sax.XMLReader>
   {
+    @Nonnull
     public org.xml.sax.XMLReader create ()
     {
       try
@@ -98,14 +91,43 @@ public final class XMLReader
         throw new InitializationException ("Failed to instantiate XML reader!", ex);
       }
     }
-  };
+  }
+
+  static final class DOMReaderFactory implements IFactory <DocumentBuilder>
+  {
+    @Nonnull
+    public DocumentBuilder create ()
+    {
+      return XMLFactory.createDocumentBuilder ();
+    }
+  }
+
+  /** The logger to use. */
+  private static final Logger s_aLogger = LoggerFactory.getLogger (XMLReader.class);
+  private static final IStatisticsHandlerTimer s_aSaxTimerHdl = StatisticsManager.getTimerHandler (XMLReader.class.getName () +
+                                                                                                   "$SAX");
+  private static final IStatisticsHandlerCounter s_aSaxErrorCounterHdl = StatisticsManager.getCounterHandler (XMLReader.class.getName () +
+                                                                                                              "$SAXERRORS");
+  private static final IStatisticsHandlerTimer s_aDomTimerHdl = StatisticsManager.getTimerHandler (XMLReader.class.getName () +
+                                                                                                   "$DOM");
+  private static final IStatisticsHandlerTimer s_aDomSchemaTimerHdl = StatisticsManager.getTimerHandler (XMLReader.class.getName () +
+                                                                                                         "$DOMwithSchema");
+  private static final IStatisticsHandlerCounter s_aDomErrorCounterHdl = StatisticsManager.getCounterHandler (XMLReader.class.getName () +
+                                                                                                              "$DOMERRORS");
 
   // In practice no more than 5 readers are required (even 3 would be enough)
-  private static final IObjectPool <org.xml.sax.XMLReader> s_aPool = new ObjectPool <org.xml.sax.XMLReader> (5,
-                                                                                                             s_aXMLReaderFactry);
+  private static final IObjectPool <org.xml.sax.XMLReader> s_aSAXPool = new ObjectPool <org.xml.sax.XMLReader> (5,
+                                                                                                                new SAXReaderFactory ());
+
+  // In practice no more than 5 readers are required (even 3 would be enough)
+  private static final IObjectPool <DocumentBuilder> s_aDOMPool = new ObjectPool <DocumentBuilder> (5,
+                                                                                                    new DOMReaderFactory ());
+
+  private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
 
   // Default SAX parser features
-  private static final Map <EXMLParserFeature, Boolean> s_aDefaultSaxParserFeatures = new EnumMap <EXMLParserFeature, Boolean> (EXMLParserFeature.class)
+  @GuardedBy ("s_aRWLock")
+  private static final Map <EXMLParserFeature, Boolean> s_aSAXDefaultParserFeatures = new EnumMap <EXMLParserFeature, Boolean> (EXMLParserFeature.class)
   {
     {
       put (EXMLParserFeature.NAMESPACES, Boolean.TRUE);
@@ -320,35 +342,57 @@ public final class XMLReader
     try
     {
       final StopWatch aSW = new StopWatch (true);
-      final DocumentBuilder aDocumentBuilder = aSchema == null ? XMLFactory.getDocumentBuilder ()
-                                                              : XMLFactory.createDocumentBuilder (aSchema);
-
-      // Ensure a collecting error handler is present
-      CollectingSAXErrorHandler aCEH;
-      if (aCustomErrorHandler instanceof CollectingSAXErrorHandler)
-        aCEH = (CollectingSAXErrorHandler) aCustomErrorHandler;
-      else
-        aCEH = new CollectingSAXErrorHandler (aCustomErrorHandler != null ? aCustomErrorHandler
-                                                                         : LoggingSAXErrorHandler.getInstance ());
-      aDocumentBuilder.setErrorHandler (aCEH);
-
-      // Set optional entity resolver
-      aDocumentBuilder.setEntityResolver (aEntityResolver);
-
-      // Main parsing
-      doc = aDocumentBuilder.parse (aInputSource);
-
-      // Statistics update
+      DocumentBuilder aDocumentBuilder;
+      boolean bFromPool = false;
       if (aSchema == null)
-        s_aDomTimerHdl.addTime (aSW.stopAndGetMillis ());
+      {
+        // Use one from the pool
+        aDocumentBuilder = s_aDOMPool.borrowObject ();
+        bFromPool = true;
+      }
       else
-        s_aDomSchemaTimerHdl.addTime (aSW.stopAndGetMillis ());
+      {
+        // We need to create a new DocumentBuilder
+        aDocumentBuilder = XMLFactory.createDocumentBuilder (aSchema);
+      }
 
-      // By default, a document is returned, even if does not match the schema
-      // (if errors occurred), so I'm handling this manually by check for
-      // collected errors
-      if (aCEH.getResourceErrors ().containsAtLeastOneError ())
-        return null;
+      try
+      {
+        // Ensure a collecting error handler is present
+        CollectingSAXErrorHandler aCEH;
+        if (aCustomErrorHandler instanceof CollectingSAXErrorHandler)
+          aCEH = (CollectingSAXErrorHandler) aCustomErrorHandler;
+        else
+          aCEH = new CollectingSAXErrorHandler (aCustomErrorHandler != null ? aCustomErrorHandler
+                                                                           : LoggingSAXErrorHandler.getInstance ());
+        aDocumentBuilder.setErrorHandler (aCEH);
+
+        // Set optional entity resolver
+        aDocumentBuilder.setEntityResolver (aEntityResolver);
+
+        // Main parsing
+        doc = aDocumentBuilder.parse (aInputSource);
+
+        // Statistics update
+        if (aSchema == null)
+          s_aDomTimerHdl.addTime (aSW.stopAndGetMillis ());
+        else
+          s_aDomSchemaTimerHdl.addTime (aSW.stopAndGetMillis ());
+
+        // By default, a document is returned, even if does not match the schema
+        // (if errors occurred), so I'm handling this manually by check for
+        // collected errors
+        if (aCEH.getResourceErrors ().containsAtLeastOneError ())
+          return null;
+      }
+      finally
+      {
+        if (bFromPool)
+        {
+          // Return to the pool
+          s_aDOMPool.returnObject (aDocumentBuilder);
+        }
+      }
     }
     catch (final SAXException ex)
     {
@@ -635,12 +679,7 @@ public final class XMLReader
     try
     {
       // use parser from pool
-      final org.xml.sax.XMLReader aParser = s_aPool.borrowObject ();
-      if (aParser == null)
-      {
-        s_aLogger.error ("Failed to get parser from pool!");
-        return ESuccess.FAILURE;
-      }
+      final org.xml.sax.XMLReader aParser = s_aSAXPool.borrowObject ();
 
       try
       {
@@ -653,8 +692,16 @@ public final class XMLReader
         // Set all features
         {
           // 1. all global default features
-          for (final Map.Entry <EXMLParserFeature, Boolean> aEntry : s_aDefaultSaxParserFeatures.entrySet ())
-            aEntry.getKey ().applyTo (aParser, aEntry.getValue ().booleanValue ());
+          s_aRWLock.readLock ().lock ();
+          try
+          {
+            for (final Map.Entry <EXMLParserFeature, Boolean> aEntry : s_aSAXDefaultParserFeatures.entrySet ())
+              aEntry.getKey ().applyTo (aParser, aEntry.getValue ().booleanValue ());
+          }
+          finally
+          {
+            s_aRWLock.readLock ().unlock ();
+          }
 
           // 2. all custom features
           if (aFeatures != null)
@@ -674,7 +721,7 @@ public final class XMLReader
       finally
       {
         // Return parser to pool
-        s_aPool.returnObject (aParser);
+        s_aSAXPool.returnObject (aParser);
       }
     }
     catch (final SAXParseException ex)
@@ -728,7 +775,15 @@ public final class XMLReader
   @Nullable
   public static Boolean getDefaultSaxParserFeatureValue (@Nullable final EXMLParserFeature eFeature)
   {
-    return s_aDefaultSaxParserFeatures.get (eFeature);
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      return s_aSAXDefaultParserFeatures.get (eFeature);
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
   }
 
   /**
@@ -745,9 +800,17 @@ public final class XMLReader
     if (eFeature == null)
       throw new NullPointerException ("feature");
 
-    if (aValue == null)
-      s_aDefaultSaxParserFeatures.remove (eFeature);
-    else
-      s_aDefaultSaxParserFeatures.put (eFeature, aValue);
+    s_aRWLock.writeLock ().lock ();
+    try
+    {
+      if (aValue == null)
+        s_aSAXDefaultParserFeatures.remove (eFeature);
+      else
+        s_aSAXDefaultParserFeatures.put (eFeature, aValue);
+    }
+    finally
+    {
+      s_aRWLock.writeLock ().unlock ();
+    }
   }
 }
