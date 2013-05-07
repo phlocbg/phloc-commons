@@ -25,12 +25,10 @@ import java.text.Collator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Vector;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import org.junit.Test;
 
-import com.phloc.commons.concurrent.ManagedExecutorService;
+import com.phloc.commons.callback.IThrowingRunnable;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 import com.phloc.commons.mock.PhlocTestUtils;
 
@@ -56,17 +54,15 @@ public final class CollatorUtilsTest extends AbstractPhlocTestCase
 
     final List <Collator> res = new Vector <Collator> ();
     final int nMax = 100;
-    final ExecutorService aES = Executors.newFixedThreadPool (10);
-    for (int i = 0; i < nMax; ++i)
-      aES.submit (new Runnable ()
+    PhlocTestUtils.testInParallel (nMax, new IThrowingRunnable ()
+    {
+      public void run () throws Exception
       {
-        public void run ()
-        {
-          res.add (CollatorUtils.getCollatorSpaceBeforeDot (L_EN));
-        }
-      });
-    ManagedExecutorService.shutdownAndWaitUntilAllTasksAreFinished (aES);
-    assertEquals (100, res.size ());
+        res.add (CollatorUtils.getCollatorSpaceBeforeDot (L_EN));
+      }
+    });
+
+    assertEquals (nMax, res.size ());
     for (int i = 1; i < nMax; ++i)
       PhlocTestUtils.testDefaultImplementationWithEqualContentObject (res.get (0), res.get (i));
   }
@@ -75,19 +71,15 @@ public final class CollatorUtilsTest extends AbstractPhlocTestCase
   public void testSort ()
   {
     final int nMax = 10000;
-    final ExecutorService aES = Executors.newFixedThreadPool (10);
-    for (int i = 0; i < nMax; ++i)
+    PhlocTestUtils.testInParallel (nMax, new IThrowingRunnable ()
     {
-      final int nIndex = i;
-      aES.submit (new Runnable ()
+      public void run () throws Exception
       {
-        public void run ()
-        {
-          final Collator c = CollatorUtils.getCollatorSpaceBeforeDot ((nIndex % 2) == 0 ? L_DE : L_EN);
-          assertEquals (-1, CompareUtils.nullSafeCompare ("1.1 a", "1.1.1 a", c));
-        }
-      });
-    }
-    ManagedExecutorService.shutdownAndWaitUntilAllTasksAreFinished (aES);
+        Collator c = CollatorUtils.getCollatorSpaceBeforeDot (L_DE);
+        assertEquals (-1, CompareUtils.nullSafeCompare ("1.1 a", "1.1.1 a", c));
+        c = CollatorUtils.getCollatorSpaceBeforeDot (L_EN);
+        assertEquals (-1, CompareUtils.nullSafeCompare ("1.1 a", "1.1.1 a", c));
+      }
+    });
   }
 }
