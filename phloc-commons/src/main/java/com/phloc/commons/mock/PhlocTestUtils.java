@@ -22,21 +22,31 @@ import static org.junit.Assert.assertNotNull;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.ICloneable;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
+import com.phloc.commons.callback.AdapterRunnableToThrowingRunnable;
+import com.phloc.commons.callback.IThrowingRunnable;
+import com.phloc.commons.concurrent.ManagedExecutorService;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.io.streamprovider.ByteArrayInputStreamProvider;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.lang.GenericReflection;
+import com.phloc.commons.lang.StackTraceHelper;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.convert.MicroTypeConverter;
 import com.phloc.commons.microdom.serialize.MicroWriter;
+import com.phloc.commons.string.StringHelper;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -307,5 +317,63 @@ public final class PhlocTestUtils
 
     // Ensure they are equals
     testDefaultImplementationWithEqualContentObject (aObj, aObj2);
+  }
+
+  /**
+   * Run something in parallel
+   * 
+   * @param nCalls
+   *        The number of invocations of the passed runnable. Must be &ge; 0.
+   * @param aRunnable
+   *        The runnable to execute. May not be <code>null</code>.
+   */
+  public static void testInParallel (@Nonnegative final int nCalls, @Nonnull final Runnable aRunnable)
+  {
+    if (aRunnable == null)
+      throw new NullPointerException ("Runnable");
+    testInParallel (nCalls, new AdapterRunnableToThrowingRunnable (aRunnable));
+  }
+
+  /**
+   * Run something in parallel
+   * 
+   * @param nCalls
+   *        The number of invocations of the passed runnable. Must be &ge; 0.
+   * @param aRunnable
+   *        The runnable to execute. May not be <code>null</code>.
+   */
+  public static void testInParallel (@Nonnegative final int nCalls, @Nonnull final IThrowingRunnable aRunnable)
+  {
+    if (nCalls < 0)
+      throw new IllegalArgumentException ("Too few calls: " + nCalls);
+    if (aRunnable == null)
+      throw new NullPointerException ("Runnable");
+
+    // More than 20s thread would be overkill!
+    final ExecutorService aES = Executors.newFixedThreadPool (20);
+    final List <String> aErrors = new ArrayList <String> ();
+    for (int i = 0; i < nCalls; ++i)
+    {
+      aES.submit (new Runnable ()
+      {
+        public void run ()
+        {
+          try
+          {
+            aRunnable.run ();
+          }
+          catch (final Throwable t)
+          {
+            // Remember thread stack
+            aErrors.add (t.getMessage () + "\n" + StackTraceHelper.getStackAsString (t));
+          }
+        }
+      });
+    }
+    ManagedExecutorService.shutdownAndWaitUntilAllTasksAreFinished (aES);
+
+    // No errors should have occurred
+    if (!aErrors.isEmpty ())
+      throw new IllegalStateException (StringHelper.getImploded (aErrors));
   }
 }

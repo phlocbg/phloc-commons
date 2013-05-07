@@ -35,6 +35,7 @@ import com.phloc.commons.CGlobal;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
+import com.phloc.commons.mock.PhlocTestUtils;
 import com.phloc.commons.xml.DefaultXMLIterationHandler;
 import com.phloc.commons.xml.EXMLVersion;
 import com.phloc.commons.xml.XMLFactory;
@@ -220,6 +221,58 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
 
     assertTrue (XMLWriter.writeToStream (doc, new NonBlockingByteArrayOutputStream ()).isSuccess ());
     new XMLSerializerPhloc ().write (doc, new DefaultXMLIterationHandler ());
+  }
+
+  @Test
+  public void testWriteXMLMultiThreaded ()
+  {
+    final String sSPACER = " ";
+    final String sINDENT = "  ";
+    final String sTAGNAME = "notext";
+
+    PhlocTestUtils.testInParallel (1000, new Runnable ()
+    {
+      public void run ()
+      {
+        // Java 1.6 JAXP handles things differently
+        final String sSerTagName = "<" + sTAGNAME + "></" + sTAGNAME + ">";
+
+        final Document doc = XMLFactory.newDocument ("html", DOCTYPE_XHTML10_QNAME, DOCTYPE_XHTML10_URI);
+        final Element aHead = (Element) doc.getDocumentElement ()
+                                           .appendChild (doc.createElementNS (DOCTYPE_XHTML10_URI, "head"));
+        aHead.appendChild (doc.createTextNode ("Hallo"));
+        final Element aNoText = (Element) doc.getDocumentElement ()
+                                             .appendChild (doc.createElementNS (DOCTYPE_XHTML10_URI, sTAGNAME));
+        aNoText.appendChild (doc.createTextNode (""));
+
+        // test including doc type
+        final String sResult = XMLWriter.getNodeAsString (doc,
+                                                          new XMLWriterSettings ().setFormat (EXMLSerializeFormat.HTML));
+        assertEquals ("<!DOCTYPE html PUBLIC \"" +
+                      DOCTYPE_XHTML10_QNAME +
+                      "\"" +
+                      sSPACER +
+                      "\"" +
+                      DOCTYPE_XHTML10_URI +
+                      "\">" +
+                      CRLF +
+                      "<html xmlns=\"" +
+                      DOCTYPE_XHTML10_URI +
+                      "\">" +
+                      CRLF +
+                      sINDENT +
+                      "<head>Hallo</head>" +
+                      CRLF +
+                      sINDENT +
+                      sSerTagName +
+                      CRLF +
+                      "</html>" +
+                      CRLF, sResult);
+        assertEquals (sResult,
+                      XMLWriter.getNodeAsString (doc, new XMLWriterSettings ().setFormat (EXMLSerializeFormat.HTML)));
+
+      }
+    });
   }
 
   @Test
