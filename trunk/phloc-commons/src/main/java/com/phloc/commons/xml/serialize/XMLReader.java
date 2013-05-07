@@ -462,15 +462,60 @@ public final class XMLReader
    * 
    * @param aIS
    *        The input stream to read from. After parsing - no matter whether
-   *        successful or not - the stream is closed!
-   * @param aEntityResolver
-   *        The entity resolver to use.
-   * @param aDTDHdl
-   *        The DTD handler to use.
+   *        successful or not - the stream is closed! May not be
+   *        <code>null</code>.
    * @param aContentHdl
-   *        The content handler to use.
+   *        The content handler to use. May be <code>null</code>.
+   * @return {@link ESuccess#SUCCESS} if reading succeeded,
+   *         {@link ESuccess#FAILURE} otherwise
+   */
+  @Nonnull
+  public static ESuccess readXMLSAX (@WillClose @Nonnull final InputStream aIS,
+                                     @Nullable final ContentHandler aContentHdl)
+  {
+    if (aIS == null)
+      throw new NullPointerException ("inputStream");
+
+    return readXMLSAX (InputSourceFactory.create (aIS), aContentHdl);
+  }
+
+  /**
+   * Read an XML document via a SAX handler. The stream is closed after reading.
+   * 
+   * @param aIS
+   *        The input stream to read from. After parsing - no matter whether
+   *        successful or not - the stream is closed! May not be
+   *        <code>null</code>.
+   * @param aContentHdl
+   *        The content handler to use. May be <code>null</code>.
+   * @return {@link ESuccess#SUCCESS} if reading succeeded,
+   *         {@link ESuccess#FAILURE} otherwise
+   */
+  @Nonnull
+  public static ESuccess readXMLSAX (@WillClose @Nonnull final InputSource aIS,
+                                     @Nullable final ContentHandler aContentHdl)
+  {
+    if (aIS == null)
+      throw new NullPointerException ("inputStream");
+
+    return readXMLSAX (aIS, null, null, aContentHdl, null, null, null);
+  }
+
+  /**
+   * Read an XML document via a SAX handler. The stream is closed after reading.
+   * 
+   * @param aIS
+   *        The input stream to read from. After parsing - no matter whether
+   *        successful or not - the stream is closed! May not be
+   *        <code>null</code>.
+   * @param aEntityResolver
+   *        The entity resolver to use. May be <code>null</code>.
+   * @param aDTDHdl
+   *        The DTD handler to use. May be <code>null</code>.
+   * @param aContentHdl
+   *        The content handler to use. May be <code>null</code>.
    * @param aErrorHdl
-   *        The error handler to use.
+   *        The error handler to use. May be <code>null</code>.
    * @param aLexicalHdl
    *        The optional lexical SAX handler to use. Makes only sense if DTD
    *        validation is enabled. May be <code>null</code>.
@@ -483,10 +528,10 @@ public final class XMLReader
    */
   @Nonnull
   public static ESuccess readXMLSAX (@WillClose @Nonnull final InputStream aIS,
-                                     final EntityResolver aEntityResolver,
-                                     final DTDHandler aDTDHdl,
-                                     final ContentHandler aContentHdl,
-                                     final ErrorHandler aErrorHdl,
+                                     @Nullable final EntityResolver aEntityResolver,
+                                     @Nullable final DTDHandler aDTDHdl,
+                                     @Nullable final ContentHandler aContentHdl,
+                                     @Nullable final ErrorHandler aErrorHdl,
                                      @Nullable final LexicalHandler aLexicalHdl,
                                      final boolean bDTDValidating,
                                      final boolean bSchemaValidating)
@@ -510,16 +555,16 @@ public final class XMLReader
    * 
    * @param aIS
    *        The input source to read from. Automatically closed upon success or
-   *        error.
+   *        error. May not be <code>null</code>.
    * @param aEntityResolver
-   *        The entity resolver to use.
+   *        The entity resolver to use. May be <code>null</code>.
    * @param aDTDHdl
-   *        The DTD handler to use.
+   *        The DTD handler to use. May be <code>null</code>.
    * @param aContentHdl
-   *        The content handler to use.
+   *        The content handler to use. May be <code>null</code>.
    * @param aErrorHdl
-   *        The optional error handler to use. In case you want to collect
-   *        errors etc.
+   *        The optional error handler to use. In case you want to collect May
+   *        be <code>null</code>. errors etc.
    * @param aLexicalHdl
    *        The optional lexical SAX handler to use. Makes only sense if DTD
    *        validation is enabled. May be <code>null</code>.
@@ -532,15 +577,15 @@ public final class XMLReader
    */
   @Nonnull
   public static ESuccess readXMLSAX (@WillClose @Nonnull final InputSource aIS,
-                                     final EntityResolver aEntityResolver,
-                                     final DTDHandler aDTDHdl,
-                                     final ContentHandler aContentHdl,
-                                     final ErrorHandler aErrorHdl,
+                                     @Nullable final EntityResolver aEntityResolver,
+                                     @Nullable final DTDHandler aDTDHdl,
+                                     @Nullable final ContentHandler aContentHdl,
+                                     @Nullable final ErrorHandler aErrorHdl,
                                      @Nullable final LexicalHandler aLexicalHdl,
                                      final boolean bDTDValidating,
                                      final boolean bSchemaValidating)
   {
-    final Map <EXMLParserFeature, Boolean> aFeatures = new EnumMap <EXMLParserFeature, Boolean> (s_aDefaultSaxParserFeatures);
+    final Map <EXMLParserFeature, Boolean> aFeatures = new EnumMap <EXMLParserFeature, Boolean> (EXMLParserFeature.class);
     aFeatures.put (EXMLParserFeature.VALIDATION, Boolean.valueOf (bDTDValidating));
     aFeatures.put (EXMLParserFeature.SCHEMA, Boolean.valueOf (bSchemaValidating));
     if (false)
@@ -556,13 +601,16 @@ public final class XMLReader
    * 
    * @param aIS
    *        The input source to read from. Automatically closed upon success or
-   *        error.
+   *        error. May not be <code>null</code>.
    * @param aEntityResolver
+   *        Entity resolver. May be <code>null</code>.
    * @param aDTDHdl
+   *        DTD handler. May be <code>null</code>.
    * @param aContentHdl
+   *        Content handler. May be <code>null</code>.
    * @param aErrorHdl
    *        The optional error handler to use. In case you want to collect
-   *        errors etc.
+   *        errors etc. May be <code>null</code>.
    * @param aLexicalHdl
    *        The optional lexical SAX handler to use. Makes only sense if DTD
    *        validation is enabled. May be <code>null</code>.
@@ -574,10 +622,10 @@ public final class XMLReader
    */
   @Nonnull
   public static ESuccess readXMLSAX (@WillClose @Nonnull final InputSource aIS,
-                                     final EntityResolver aEntityResolver,
-                                     final DTDHandler aDTDHdl,
-                                     final ContentHandler aContentHdl,
-                                     final ErrorHandler aErrorHdl,
+                                     @Nullable final EntityResolver aEntityResolver,
+                                     @Nullable final DTDHandler aDTDHdl,
+                                     @Nullable final ContentHandler aContentHdl,
+                                     @Nullable final ErrorHandler aErrorHdl,
                                      @Nullable final LexicalHandler aLexicalHdl,
                                      @Nullable final Map <EXMLParserFeature, Boolean> aFeatures)
   {
@@ -603,9 +651,16 @@ public final class XMLReader
         aParser.setErrorHandler (aErrorHdl);
 
         // Set all features
-        if (aFeatures != null)
-          for (final Map.Entry <EXMLParserFeature, Boolean> aEntry : aFeatures.entrySet ())
+        {
+          // 1. all global default features
+          for (final Map.Entry <EXMLParserFeature, Boolean> aEntry : s_aDefaultSaxParserFeatures.entrySet ())
             aEntry.getKey ().applyTo (aParser, aEntry.getValue ().booleanValue ());
+
+          // 2. all custom features
+          if (aFeatures != null)
+            for (final Map.Entry <EXMLParserFeature, Boolean> aEntry : aFeatures.entrySet ())
+              aEntry.getKey ().applyTo (aParser, aEntry.getValue ().booleanValue ());
+        }
 
         // Set optional properties
         if (aLexicalHdl != null)
@@ -663,12 +718,27 @@ public final class XMLReader
     return ESuccess.FAILURE;
   }
 
+  /**
+   * Check if the specified XML Parser feature is enabled by default or not.
+   * 
+   * @param eFeature
+   *        Feature to check.
+   * @return <code>null</code> if nothing is specified.
+   */
   @Nullable
   public static Boolean getDefaultSaxParserFeatureValue (@Nullable final EXMLParserFeature eFeature)
   {
     return s_aDefaultSaxParserFeatures.get (eFeature);
   }
 
+  /**
+   * Set a default SAX parser feature
+   * 
+   * @param eFeature
+   *        The feature to set.
+   * @param aValue
+   *        Use <code>null</code> to remove a feature.
+   */
   public static void setDefaultSaxParserFeatureValue (@Nonnull final EXMLParserFeature eFeature,
                                                       @Nullable final Boolean aValue)
   {
