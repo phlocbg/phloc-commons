@@ -17,21 +17,29 @@
  */
 package com.phloc.commons.xml.serialize;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.InputStream;
 import java.io.Reader;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.xml.validation.Schema;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import com.phloc.commons.charset.CCharset;
+import com.phloc.commons.concurrent.ManagedExecutorService;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
@@ -51,6 +59,9 @@ import com.phloc.commons.xml.schema.XMLSchemaCache;
  */
 public final class XMLReaderTest
 {
+  @SuppressWarnings ("unused")
+  private static final Logger s_aLogger = LoggerFactory.getLogger (XMLReaderTest.class);
+
   @Test
   public void testReadString ()
   {}
@@ -313,5 +324,78 @@ public final class XMLReaderTest
   {
     assertNotNull (XMLReader.readXMLDOM (new CachingSAXInputSource (new ClassPathResource ("xml/buildinfo.xml"))));
     assertNotNull (XMLReader.readXMLDOM (new ReadableResourceSAXInputSource (new ClassPathResource ("xml/buildinfo.xml"))));
+  }
+
+  @Test
+  public void testMultithreadedSAX_CachingSAXInputSource ()
+  {
+    final int nRuns = 100;
+    final ExecutorService aES = Executors.newCachedThreadPool ();
+    final AtomicInteger aSuccessCount = new AtomicInteger (0);
+    for (int i = 0; i < nRuns; ++i)
+    {
+      aES.submit (new Runnable ()
+      {
+        public void run ()
+        {
+          assertTrue (XMLReader.readXMLSAX (new CachingSAXInputSource (new ClassPathResource ("xml/buildinfo.xml")),
+                                            null).isSuccess ());
+          aSuccessCount.incrementAndGet ();
+        }
+      });
+    }
+    ManagedExecutorService.shutdownAndWaitUntilAllTasksAreFinished (aES);
+    assertEquals ("See the log file for multi thread-issues", nRuns, aSuccessCount.get ());
+  }
+
+  @Test
+  public void testMultithreadedSAX_ReadableResourceSAXInputSource ()
+  {
+    final int nRuns = 100;
+    final ExecutorService aES = Executors.newCachedThreadPool ();
+    final AtomicInteger aSuccessCount = new AtomicInteger (0);
+    for (int i = 0; i < nRuns; ++i)
+    {
+      aES.submit (new Runnable ()
+      {
+        public void run ()
+        {
+          assertTrue (XMLReader.readXMLSAX (new ReadableResourceSAXInputSource (new ClassPathResource ("xml/buildinfo.xml")),
+                                            null)
+                               .isSuccess ());
+          aSuccessCount.incrementAndGet ();
+        }
+      });
+    }
+    ManagedExecutorService.shutdownAndWaitUntilAllTasksAreFinished (aES);
+    assertEquals ("See the log file for multi thread-issues", nRuns, aSuccessCount.get ());
+  }
+
+  @Test
+  public void testMultithreadedDOM ()
+  {
+    final int nRuns = 100;
+    final ExecutorService aES = Executors.newCachedThreadPool ();
+    final AtomicInteger aSuccessCount = new AtomicInteger (0);
+    for (int i = 0; i < nRuns; ++i)
+    {
+      aES.submit (new Runnable ()
+      {
+        public void run ()
+        {
+          try
+          {
+            assertNotNull (XMLReader.readXMLDOM (new ClassPathResource ("xml/buildinfo.xml")));
+            aSuccessCount.incrementAndGet ();
+          }
+          catch (final SAXException ex)
+          {
+            fail (ex.getMessage ());
+          }
+        }
+      });
+    }
+    ManagedExecutorService.shutdownAndWaitUntilAllTasksAreFinished (aES);
+    assertEquals ("See the log file for multi thread-issues", nRuns, aSuccessCount.get ());
   }
 }

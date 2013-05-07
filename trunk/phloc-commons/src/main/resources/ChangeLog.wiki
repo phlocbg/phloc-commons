@@ -2,6 +2,9 @@
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
 <table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody>
+<tr><td>5/7/13</td><td>fix</td><td>tech</td><td></td><td>Made DOM XML reading thread-safe by introducing an ObjectPool for it as well</td></tr>
+<tr><td>5/7/13</td><td>add</td><td>api</td><td></td><td>Added new overloads of XMLReader.readXMLSAX()</td></tr>
+<tr><td>5/7/13</td><td>fix</td><td>tech</td><td></td><td>Fixed artificial dead lock in URLUtils when multi-thread testing XML parsing</td></tr>
 <tr><td>5/5/13</td><td>add</td><td>api</td><td></td><td>Added new class AdapterRunnableToThrowingRunnable</td></tr>
 <tr><td>5/4/13</td><td>change</td><td>api</td><td></td><td>Added new method HashCodeGenerator.hashCode() but marked as deprecated. Correct method to call is getHashCode().</td></tr>
 <tr><td>5/3/13</td><td>change</td><td>api</td><td></td><td>Added new constructors to FileSystemRecursiveIterator to avoid ambiguities when using an AbstractFileFilter</td></tr>

@@ -25,12 +25,12 @@ import java.io.File;
 import org.junit.Test;
 
 import com.phloc.commons.SystemProperties;
-import com.phloc.commons.io.file.FileUtils;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.impl.MicroDocument;
 import com.phloc.commons.microdom.serialize.MicroReader;
 import com.phloc.commons.microdom.serialize.MicroWriter;
+import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.xml.EXMLVersion;
 import com.phloc.commons.xml.XMLFactory;
 
@@ -47,17 +47,16 @@ import com.phloc.commons.xml.XMLFactory;
  */
 public final class FuncTestReadWriteXML11
 {
-  private static final EXMLVersion XMLVERSION = EXMLVersion.XML_11;
+  private static final XMLWriterSettings XWS_11 = new XMLWriterSettings ().setXMLVersion (EXMLVersion.XML_11);
 
-  private static void _generateXmlFile (final String filename, final int total) throws Exception
+  private static void _generateXmlFile (final String sFilename, final int nElementCount) throws Exception
   {
     final IMicroDocument aDoc = new MicroDocument ();
     final IMicroElement eMain = aDoc.appendElement ("main_tag");
-    for (int i = 0; i < total; ++i)
-      eMain.appendElement ("test").appendText (String.format ("%04d", Integer.valueOf (i)));
-    MicroWriter.writeToStream (aDoc,
-                              FileUtils.getOutputStream (new File (filename)),
-                              new XMLWriterSettings ().setXMLVersion (XMLVERSION));
+    for (int i = 0; i < nElementCount; ++i)
+      eMain.appendElement ("test").appendText (StringHelper.getLeadingZero (i, 4));
+
+    assertTrue (MicroWriter.writeToFile (aDoc, new File (sFilename), XWS_11).isSuccess ());
   }
 
   @Test
@@ -65,14 +64,17 @@ public final class FuncTestReadWriteXML11
   {
     final String sFilename1 = "target/xml11test.xml";
     _generateXmlFile (sFilename1, 2500);
-    final IMicroDocument aDoc = MicroReader.readMicroXML (FileUtils.getInputStream (sFilename1));
+
+    // Read again
+    final IMicroDocument aDoc = MicroReader.readMicroXML (new File (sFilename1));
     assertNotNull (aDoc);
 
+    // Write again
     final String sFilename2 = "target/xml11test2.xml";
-    MicroWriter.writeToStream (aDoc,
-                              FileUtils.getOutputStream (new File (sFilename2)),
-                              new XMLWriterSettings ().setXMLVersion (XMLVERSION));
-    final IMicroDocument aDoc2 = MicroReader.readMicroXML (FileUtils.getInputStream (sFilename2));
+    assertTrue (MicroWriter.writeToFile (aDoc, new File (sFilename2), XWS_11).isSuccess ());
+
+    // Read again
+    final IMicroDocument aDoc2 = MicroReader.readMicroXML (new File (sFilename2));
     assertNotNull (aDoc2);
 
     // When using JAXP with Java 1.6.0_22 or 1.6.0_29 (tested only with this
