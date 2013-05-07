@@ -2,6 +2,8 @@
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
 <table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody>
+<tr border="1"><td>5/7/13</td><td colspan="4">_Release *4.0.6*_</td></tr>
+<tr><td>5/7/13</td><td>add</td><td>api</td><td></td><td>Added new test method PhlocTestUtils.testInParallel</td></tr>
 <tr><td>5/7/13</td><td>fix</td><td>tech</td><td></td><td>Made DOM XML reading thread-safe by introducing an ObjectPool for it as well</td></tr>
 <tr><td>5/7/13</td><td>add</td><td>api</td><td></td><td>Added new overloads of XMLReader.readXMLSAX()</td></tr>
 <tr><td>5/7/13</td><td>fix</td><td>tech</td><td></td><td>Fixed artificial dead lock in URLUtils when multi-thread testing XML parsing</td></tr>
