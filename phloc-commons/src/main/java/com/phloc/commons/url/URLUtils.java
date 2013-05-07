@@ -52,7 +52,6 @@ import com.phloc.commons.encode.IDecoder;
 import com.phloc.commons.encode.IEncoder;
 import com.phloc.commons.encode.IdentityDecoder;
 import com.phloc.commons.encode.IdentityEncoder;
-import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.microdom.reader.XMLMapHandler;
 import com.phloc.commons.mutable.IWrapper;
@@ -88,8 +87,12 @@ public final class URLUtils
 
   static
   {
+    // This one is tricky, because ClassPathResource internally uses
+    // URLUtils.getInputStream and this static initialization code of this class
+    // can therefore uses ClasspathResource because it would create a recursive
+    // dependency!
     final Map <String, String> aCleanURLMap = new HashMap <String, String> ();
-    XMLMapHandler.readMap (new ClassPathResource ("codelists/cleanurl-data.xml"), aCleanURLMap);
+    XMLMapHandler.readMap (URLUtils.class.getResourceAsStream ("/codelists/cleanurl-data.xml"), aCleanURLMap);
 
     CLEANURL_OLD = new char [aCleanURLMap.size ()];
     CLEANURL_NEW = new char [aCleanURLMap.size ()] [];
