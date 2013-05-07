@@ -79,7 +79,7 @@ public final class ObjectPool <DATATYPE> implements IObjectPool <DATATYPE>
     if (aFactory == null)
       throw new NullPointerException ("factory");
 
-    m_aAvailable = new Semaphore (nItemCount, true);
+    m_aAvailable = new Semaphore (nItemCount);
     m_aItems = new Object [nItemCount];
     m_aUsed = new boolean [nItemCount];
     Arrays.fill (m_aUsed, 0, nItemCount, false);
