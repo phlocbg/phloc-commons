@@ -31,7 +31,7 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * This class represents an object having width and height.
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -69,7 +69,7 @@ public final class ScalableSize implements IHasWidthAndHeight, Serializable
 
   /**
    * Return the scaled width and height relative to a maximum size.
-   * 
+   *
    * @param nMaxWidth
    *        Maximum width. Must be &gt; 0.
    * @param nMaxHeight
@@ -139,6 +139,7 @@ public final class ScalableSize implements IHasWidthAndHeight, Serializable
   @Override
   public int hashCode ()
   {
+    //noinspection SuspiciousNameCombination
     return new HashCodeGenerator (this).append (m_nWidth).append (m_nHeight).getHashCode ();
   }
 

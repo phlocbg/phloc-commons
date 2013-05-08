@@ -34,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * java.xml error handler base class.
- * 
+ *
  * @author Philip Helger
  */
 public abstract class AbstractSAXErrorHandler implements ErrorHandler
@@ -51,7 +51,7 @@ public abstract class AbstractSAXErrorHandler implements ErrorHandler
 
   /**
    * Constructor that takes a parent error handler to be called.
-   * 
+   *
    * @param aWrappedErrorHandler
    *        The parent error handler. May be <code>null</code>.
    */
@@ -72,7 +72,7 @@ public abstract class AbstractSAXErrorHandler implements ErrorHandler
   /**
    * Utility method to convert a {@link SAXParseException} into a readable
    * string.
-   * 
+   *
    * @param eErrorLevel
    *        The occurred error level. May not be <code>null</code>.
    * @param ex
@@ -80,8 +80,8 @@ public abstract class AbstractSAXErrorHandler implements ErrorHandler
    * @return The String representation.
    */
   @Nonnull
-  protected static final IResourceError getSaxParseError (@Nonnull final EErrorLevel eErrorLevel,
-                                                          @Nonnull final SAXParseException ex)
+  protected static IResourceError getSaxParseError (@Nonnull final EErrorLevel eErrorLevel,
+                                                    @Nonnull final SAXParseException ex)
   {
     final String sResourceID = StringHelper.getConcatenatedOnDemand (ex.getPublicId (), "/", ex.getSystemId ());
     final IResourceLocation aLocation = new ResourceLocation (sResourceID, ex.getLineNumber (), ex.getColumnNumber ());

@@ -29,7 +29,7 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * Implementation of an empty enumerator.
- * 
+ *
  * @author Philip Helger
  * @param <ELEMENTTYPE>
  *        The pseudo element type to iterate
@@ -37,7 +37,7 @@ import com.phloc.commons.string.ToStringGenerator;
 @ThreadSafe
 public final class EmptyIterator <ELEMENTTYPE> implements Iterator <ELEMENTTYPE>
 {
-  private static EmptyIterator <Object> s_aInstance = new EmptyIterator <Object> ();
+  private static final EmptyIterator <Object> s_aInstance = new EmptyIterator <Object> ();
 
   private EmptyIterator ()
   {}

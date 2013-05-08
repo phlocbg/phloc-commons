@@ -196,7 +196,7 @@ import com.phloc.commons.io.streams.StreamUtils;
  * href="http://iharder.net/base64">http://iharder.net/base64</a> periodically
  * to check for updates or to contribute improvements.
  * </p>
- * 
+ *
  * @author Robert Harder
  * @author rob@iharder.net
  * @version 2.3.7
@@ -1335,7 +1335,7 @@ public final class Base64// NOPMD
    * significant bytes in your array is given by <var>numSigBytes</var>. The
    * array <var>threeBytes</var> needs only be as big as <var>numSigBytes</var>.
    * Code can reuse a byte array by passing a four-byte array as <var>b4</var>.
-   * 
+   *
    * @param b4
    *        A reusable byte array to reduce array instantiation
    * @param threeBytes
@@ -1370,7 +1370,7 @@ public final class Base64// NOPMD
    * This is the lowest level of the encoding methods with all possible
    * parameters.
    * </p>
-   * 
+   *
    * @param source
    *        the array to convert
    * @param srcOffset
@@ -1443,7 +1443,7 @@ public final class Base64// NOPMD
    * the <code>encoded</code> ByteBuffer. This is an experimental feature.
    * Currently it does not pass along any options (such as
    * {@link #DO_BREAK_LINES} or {@link #GZIP}.
-   * 
+   *
    * @param raw
    *        input buffer
    * @param encoded
@@ -1469,7 +1469,7 @@ public final class Base64// NOPMD
    * the <code>encoded</code> CharBuffer. This is an experimental feature.
    * Currently it does not pass along any options (such as
    * {@link #DO_BREAK_LINES} or {@link #GZIP}.
-   * 
+   *
    * @param raw
    *        input buffer
    * @param encoded
@@ -1503,7 +1503,7 @@ public final class Base64// NOPMD
    * pretty poor way to handle it.
    * </p>
    * The object is not GZip-compressed before being encoded.
-   * 
+   *
    * @param serializableObject
    *        The object to encode
    * @return The Base64-encoded object
@@ -1530,7 +1530,7 @@ public final class Base64// NOPMD
    * The object is not GZip-compressed before being encoded.
    * <p>
    * Example options:
-   * 
+   *
    * <pre>
    *   GZIP: gzip-compresses object before encoding it.
    *   DO_BREAK_LINES: break lines at 76 characters
@@ -1540,7 +1540,7 @@ public final class Base64// NOPMD
    * <p>
    * Example:
    * <code>encodeObject( myObj, Base64.GZIP | Base64.DO_BREAK_LINES )</code>
-   * 
+   *
    * @param serializableObject
    *        The object to encode
    * @param options
@@ -1596,7 +1596,7 @@ public final class Base64// NOPMD
 
   /**
    * Encodes a byte array into Base64 notation. Does not GZip-compress data.
-   * 
+   *
    * @param source
    *        The data to convert
    * @return The data in Base64-encoded form
@@ -1627,7 +1627,7 @@ public final class Base64// NOPMD
    * Encodes a byte array into Base64 notation.
    * <p>
    * Example options:
-   * 
+   *
    * <pre>
    *   GZIP: gzip-compresses object before encoding it.
    *   DO_BREAK_LINES: break lines at 76 characters
@@ -1644,7 +1644,7 @@ public final class Base64// NOPMD
    * just returned a null value, but in retrospect that's a pretty poor way to
    * handle it.
    * </p>
-   * 
+   *
    * @param source
    *        The data to convert
    * @param options
@@ -1671,7 +1671,7 @@ public final class Base64// NOPMD
    * <b>This is new to v2.3!</b> In earlier versions, it just returned a null
    * value, but in retrospect that's a pretty poor way to handle it.
    * </p>
-   * 
+   *
    * @param source
    *        The data to convert
    * @param off
@@ -1708,7 +1708,7 @@ public final class Base64// NOPMD
    * Encodes a byte array into Base64 notation.
    * <p>
    * Example options:
-   * 
+   *
    * <pre>
    *   GZIP: gzip-compresses object before encoding it.
    *   DO_BREAK_LINES: break lines at 76 characters
@@ -1725,7 +1725,7 @@ public final class Base64// NOPMD
    * just returned a null value, but in retrospect that's a pretty poor way to
    * handle it.
    * </p>
-   * 
+   *
    * @param source
    *        The data to convert
    * @param off
@@ -1758,7 +1758,7 @@ public final class Base64// NOPMD
    * Similar to {@link #encodeBytes(byte[])} but returns a byte array instead of
    * instantiating a String. This is more efficient if you're working with I/O
    * streams and have large data sets to encode.
-   * 
+   *
    * @param source
    *        The data to convert
    * @return The Base64-encoded data as a byte[] (of ASCII characters)
@@ -1786,7 +1786,7 @@ public final class Base64// NOPMD
    * Similar to {@link #encodeBytes(byte[], int, int, int)} but returns a byte
    * array instead of instantiating a String. This is more efficient if you're
    * working with I/O streams and have large data sets to encode.
-   * 
+   *
    * @param source
    *        The data to convert
    * @param off
@@ -1931,7 +1931,7 @@ public final class Base64// NOPMD
    * This is the lowest level of the decoding methods with all possible
    * parameters.
    * </p>
-   * 
+   *
    * @param source
    *        the array to convert
    * @param srcOffset
@@ -2037,7 +2037,7 @@ public final class Base64// NOPMD
    * decoding process. Special case: if len = 0, an empty array is returned.
    * Still, if you need more speed and reduced memory footprint (and aren't
    * gzipping), consider this method.
-   * 
+   *
    * @param source
    *        The Base64 encoded data
    * @return decoded data
@@ -2064,7 +2064,7 @@ public final class Base64// NOPMD
    * decoding process. Special case: if len = 0, an empty array is returned.
    * Still, if you need more speed and reduced memory footprint (and aren't
    * gzipping), consider this method.
-   * 
+   *
    * @param source
    *        The Base64 encoded data
    * @param off
@@ -2113,8 +2113,8 @@ public final class Base64// NOPMD
     final byte [] b4 = new byte [4]; // Four byte buffer from source,
                                      // eliminating white space
     int b4Posn = 0; // Keep track of four byte input buffer
-    int i = 0; // Source array counter
-    byte sbiDecode = 0; // Special value from DECODABET
+    int i; // Source array counter
+    byte sbiDecode; // Special value from DECODABET
 
     for (i = off; i < off + len; i++)
     {
@@ -2155,7 +2155,7 @@ public final class Base64// NOPMD
   /**
    * Decodes data from Base64 notation, automatically detecting gzip-compressed
    * data and decompressing it.
-   * 
+   *
    * @param s
    *        the string to decode
    * @return the decoded data
@@ -2172,7 +2172,7 @@ public final class Base64// NOPMD
   /**
    * Decodes data from Base64 notation, automatically detecting gzip-compressed
    * data and decompressing it.
-   * 
+   *
    * @param s
    *        the string to decode
    * @param options
@@ -2208,7 +2208,7 @@ public final class Base64// NOPMD
         GZIPInputStream gzis = null;
         NonBlockingByteArrayOutputStream baos = null;
         final byte [] buffer = new byte [2048];
-        int length = 0;
+        int length ;
 
         try
         {
@@ -2244,7 +2244,7 @@ public final class Base64// NOPMD
   /**
    * Attempts to decode Base64 data and deserialize a Java Object within.
    * Returns <tt>null</tt> if there was an error.
-   * 
+   *
    * @param encodedObject
    *        The Base64 data to decode
    * @return The decoded and deserialized object
@@ -2265,7 +2265,7 @@ public final class Base64// NOPMD
    * Attempts to decode Base64 data and deserialize a Java Object within.
    * Returns <tt>null</tt> if there was an error. If <tt>loader</tt> is not
    * null, it will be the class loader used when deserializing.
-   * 
+   *
    * @param encodedObject
    *        The Base64 data to decode
    * @param options
@@ -2336,7 +2336,7 @@ public final class Base64// NOPMD
    * <b>This is new to v2.3!</b> In earlier versions, it just returned false,
    * but in retrospect that's a pretty poor way to handle it.
    * </p>
-   * 
+   *
    * @param aDataToEncode
    *        byte array of data to encode in base64 form
    * @param sFilename
@@ -2371,7 +2371,7 @@ public final class Base64// NOPMD
    * <b>This is new to v2.3!</b> In earlier versions, it just returned false,
    * but in retrospect that's a pretty poor way to handle it.
    * </p>
-   * 
+   *
    * @param dataToDecode
    *        Base64-encoded data as a string
    * @param filename
@@ -2401,7 +2401,7 @@ public final class Base64// NOPMD
    * <b>This is new to v2.3!</b> In earlier versions, it just returned false,
    * but in retrospect that's a pretty poor way to handle it.
    * </p>
-   * 
+   *
    * @param filename
    *        Filename for reading encoded data
    * @return decoded byte array
@@ -2420,7 +2420,7 @@ public final class Base64// NOPMD
       final File file = new File (filename);
       byte [] buffer;
       int length = 0;
-      int numBytes = 0;
+      int numBytes;
 
       // Check for size of file
       if (file.length () > Integer.MAX_VALUE)
@@ -2456,7 +2456,7 @@ public final class Base64// NOPMD
    * <b>This is new to v2.3!</b> In earlier versions, it just returned false,
    * but in retrospect that's a pretty poor way to handle it.
    * </p>
-   * 
+   *
    * @param filename
    *        Filename for reading binary data
    * @return base64-encoded string
@@ -2477,7 +2477,7 @@ public final class Base64// NOPMD
       // Need +1 for a few corner cases (v2.3.5)
       final byte [] buffer = new byte [Math.max ((int) (file.length () * 1.4 + 1), 40)];
       int length = 0;
-      int numBytes = 0;
+      int numBytes;
 
       // Open a stream
       bis = new Base64.InputStream (StreamUtils.getBuffered (FileUtils.getInputStream (file)), Base64.ENCODE);
@@ -2501,7 +2501,7 @@ public final class Base64// NOPMD
 
   /**
    * Reads <tt>infile</tt> and encodes it to <tt>outfile</tt>.
-   * 
+   *
    * @param infile
    *        Input file
    * @param outfile
@@ -2528,7 +2528,7 @@ public final class Base64// NOPMD
 
   /**
    * Reads <tt>infile</tt> and decodes it to <tt>outfile</tt>.
-   * 
+   *
    * @param infile
    *        Input file
    * @param outfile
@@ -2558,7 +2558,7 @@ public final class Base64// NOPMD
    * A {@link Base64.InputStream} will read data from another
    * <tt>java.io.InputStream</tt>, given in the constructor, and encode/decode
    * to/from Base64 notation on the fly.
-   * 
+   *
    * @see Base64
    * @since 1.3
    */
@@ -2578,7 +2578,7 @@ public final class Base64// NOPMD
 
     /**
      * Constructs a {@link Base64.InputStream} in DECODE mode.
-     * 
+     *
      * @param pin
      *        the <tt>java.io.InputStream</tt> from which to read data.
      * @since 1.3
@@ -2592,7 +2592,7 @@ public final class Base64// NOPMD
      * Constructs a {@link Base64.InputStream} in either ENCODE or DECODE mode.
      * <p>
      * Valid options:
-     * 
+     *
      * <pre>
      *   ENCODE or DECODE: Encode or Decode as data is read.
      *   DO_BREAK_LINES: break lines at 76 characters
@@ -2600,7 +2600,7 @@ public final class Base64// NOPMD
      * </pre>
      * <p>
      * Example: <code>new Base64.InputStream( in, Base64.DECODE )</code>
-     * 
+     *
      * @param pin
      *        the <tt>java.io.InputStream</tt> from which to read data.
      * @param poptions
@@ -2626,7 +2626,7 @@ public final class Base64// NOPMD
     /**
      * Reads enough of the input stream to convert to/from Base64 and returns
      * the next byte.
-     * 
+     *
      * @return next byte
      * @since 1.3
      */
@@ -2668,11 +2668,11 @@ public final class Base64// NOPMD
         else
         {
           final byte [] b4 = new byte [4];
-          int i = 0;
+          int i;
           for (i = 0; i < 4; i++)
           {
             // Read four "meaningful" bytes:
-            int b = 0;
+            int b;
             do
             {
               b = in.read ();
@@ -2739,7 +2739,7 @@ public final class Base64// NOPMD
      * Calls {@link #read()} repeatedly until the end of stream is reached or
      * <var>len</var> bytes are read. Returns number of bytes read into array or
      * -1 if end of stream is encountered.
-     * 
+     *
      * @param dest
      *        array to hold values
      * @param off
@@ -2779,7 +2779,7 @@ public final class Base64// NOPMD
    * A {@link Base64.OutputStream} will write data to another
    * <tt>java.io.OutputStream</tt>, given in the constructor, and encode/decode
    * to/from Base64 notation on the fly.
-   * 
+   *
    * @see Base64
    * @since 1.3
    */
@@ -2799,7 +2799,7 @@ public final class Base64// NOPMD
 
     /**
      * Constructs a {@link Base64.OutputStream} in ENCODE mode.
-     * 
+     *
      * @param pout
      *        the <tt>java.io.OutputStream</tt> to which data will be written.
      * @since 1.3
@@ -2813,7 +2813,7 @@ public final class Base64// NOPMD
      * Constructs a {@link Base64.OutputStream} in either ENCODE or DECODE mode.
      * <p>
      * Valid options:
-     * 
+     *
      * <pre>
      *   ENCODE or DECODE: Encode or Decode as data is read.
      *   DO_BREAK_LINES: don't break lines at 76 characters
@@ -2821,7 +2821,7 @@ public final class Base64// NOPMD
      * </pre>
      * <p>
      * Example: <code>new Base64.OutputStream( out, Base64.ENCODE )</code>
-     * 
+     *
      * @param pout
      *        the <tt>java.io.OutputStream</tt> to which data will be written.
      * @param poptions
@@ -2851,7 +2851,7 @@ public final class Base64// NOPMD
      * notation. When encoding, bytes are buffered three at a time before the
      * output stream actually gets a write() call. When decoding, bytes are
      * buffered four at a time.
-     * 
+     *
      * @param theByte
      *        the byte to write
      * @since 1.3
@@ -2910,7 +2910,7 @@ public final class Base64// NOPMD
     /**
      * Calls {@link #write(int)} repeatedly until <var>len</var> bytes are
      * written.
-     * 
+     *
      * @param theBytes
      *        array from which to read bytes
      * @param off
@@ -2936,7 +2936,7 @@ public final class Base64// NOPMD
     /**
      * Method added by PHIL. [Thanks, PHIL. -Rob] This pads the buffer without
      * closing the stream.
-     * 
+     *
      * @throws IOException
      *         if there's an error.
      */
@@ -2958,7 +2958,7 @@ public final class Base64// NOPMD
 
     /**
      * Flushes and closes (I think, in the superclass) the stream.
-     * 
+     *
      * @since 1.3
      */
     @Override
@@ -2979,7 +2979,7 @@ public final class Base64// NOPMD
     /**
      * Suspends encoding of the stream. May be helpful if you need to embed a
      * piece of base64-encoded data in a stream.
-     * 
+     *
      * @throws IOException
      *         if there's an error flushing
      * @since 1.5.1
@@ -2993,7 +2993,7 @@ public final class Base64// NOPMD
     /**
      * Resumes encoding of the stream. May be helpful if you need to embed a
      * piece of base64-encoded data in a stream.
-     * 
+     *
      * @since 1.5.1
      */
     public void resumeEncoding ()

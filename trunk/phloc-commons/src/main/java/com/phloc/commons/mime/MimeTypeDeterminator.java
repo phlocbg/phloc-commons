@@ -52,7 +52,7 @@ import com.phloc.commons.state.EChange;
 
 /**
  * Contains a basic set of MimeType determination method.
- * 
+ *
  * @author Philip Helger
  */
 @ThreadSafe
@@ -176,7 +176,7 @@ public final class MimeTypeDeterminator
 
   /**
    * Try to determine the MIME type from the given byte array.
-   * 
+   *
    * @param b
    *        The byte array. to parse.
    * @return {@link CMimeType#APPLICATION_OCTET_STREAM} if no specific MIME type
@@ -190,13 +190,13 @@ public final class MimeTypeDeterminator
 
   /**
    * Try to determine the MIME type from the given byte array.
-   * 
+   *
    * @param b
    *        The byte array to parse. May be <code>null</code>.
    * @param aDefault
    *        The default MIME type to be returned, if no matching MIME type was
    *        found. May be <code>null</code>.
-   * @returnThe supplied default value, if no matching MIME type was found
+   * @return The supplied default value, if no matching MIME type was found
    */
   @Nullable
   public static IMimeType getMimeTypeFromBytes (@Nullable final byte [] b, @Nullable final IMimeType aDefault)

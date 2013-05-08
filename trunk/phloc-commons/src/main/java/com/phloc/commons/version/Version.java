@@ -35,7 +35,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * This class represents a single version object. It supports 4 elements: major
  * version (integer), minor version (integer), micro version (integer) and a
  * qualifier (string).
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -61,7 +61,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
 
   /**
    * Create a new version with major version only.
-   * 
+   *
    * @param nMajor
    *        major version
    * @throws IllegalArgumentException
@@ -74,7 +74,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
 
   /**
    * Create a new version with major and minor version only.
-   * 
+   *
    * @param nMajor
    *        major version
    * @param nMinor
@@ -90,7 +90,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
   /**
    * Create a new version with major, minor and micro version number. The
    * qualifier remains null.
-   * 
+   *
    * @param nMajor
    *        major version
    * @param nMinor
@@ -115,7 +115,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
 
   /**
    * Create a new version with 3 integer values and a qualifier.
-   * 
+   *
    * @param nMajor
    *        major version
    * @param nMinor
@@ -158,7 +158,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
    * minor ::= number<br>
    * micro ::= number<br>
    * qualifier ::= .+
-   * 
+   *
    * @param sVersionString
    *        the version string to be interpreted as a version
    * @throws IllegalArgumentException
@@ -199,7 +199,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
 
   /**
    * Construct a version object from a string.
-   * 
+   *
    * @param sVersionString
    *        the version string to be interpreted as a version
    * @param bOldVersion
@@ -241,7 +241,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
     else
     {
       // Complex parsing
-      Integer aMajor = null;
+      Integer aMajor ;
       Integer aMinor = null;
       Integer aMicro = null;
       String sQualifier = null;
@@ -332,7 +332,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
 
   /**
    * Compares two Version objects.
-   * 
+   *
    * @param rhs
    *        the version to compare to
    * @return &lt; 0 if this is less than rhs; &gt; 0 if this is greater than
@@ -419,7 +419,7 @@ public final class Version implements Comparable <Version>, IHasStringRepresenta
 
   /**
    * Get the string representation of the version number.
-   * 
+   *
    * @param bPrintZeroElements
    *        If <code>true</code> than trailing zeroes are printed, otherwise
    *        printed zeroes are not printed.

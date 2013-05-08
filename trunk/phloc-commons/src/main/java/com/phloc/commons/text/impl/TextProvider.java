@@ -47,7 +47,7 @@ import com.phloc.commons.text.ITextProvider;
 
 /**
  * An in-memory implementation of the {@link ITextProvider} interface.
- * 
+ *
  * @author Philip Helger
  */
 public class TextProvider extends AbstractTextProvider implements ISimpleMultiLingualText
@@ -66,7 +66,7 @@ public class TextProvider extends AbstractTextProvider implements ISimpleMultiLi
 
   /**
    * Enable or disable the internal consistency checks.
-   * 
+   *
    * @param bPerformConsistencyChecks
    *        <code>true</code> to enable them, <code>false</code> to disable
    *        them.
@@ -89,10 +89,10 @@ public class TextProvider extends AbstractTextProvider implements ISimpleMultiLi
   private static void _performConsistencyChecks (@Nonnull final String sValue)
   {
     // String contains masked newline? warning only!
-    if (sValue.indexOf ("\\n") >= 0)
+    if (sValue.contains ("\\n"))
       s_aLogger.warn ("Passed string contains a masked newline - replace with an inline one:\n" + sValue);
 
-    if (sValue.indexOf ("{0}") >= 0)
+    if (sValue.contains ("{0}"))
     {
       // When formatting is used, 2 single quotes are required!
       if (RegExHelper.stringMatchesPattern ("^'[^'].*", sValue))

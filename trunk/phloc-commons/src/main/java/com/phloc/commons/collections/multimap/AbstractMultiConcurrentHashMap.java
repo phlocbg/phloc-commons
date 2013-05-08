@@ -31,7 +31,7 @@ import com.phloc.commons.state.EChange;
 /**
  * Abstract multi map based on {@link ConcurrentHashMap}.<br>
  * Important note: <code>null</code> keys are not allowed here!
- * 
+ *
  * @author Philip Helger
  * @param <KEYTYPE>
  *        key type
@@ -102,7 +102,7 @@ public abstract class AbstractMultiConcurrentHashMap <KEYTYPE, VALUETYPE, COLLTY
   public final boolean containsSingle (@Nonnull final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
   {
     final COLLTYPE aCont = get (aKey);
-    return aCont == null ? false : aCont.contains (aValue);
+    return aCont != null && aCont.contains (aValue);
   }
 
   @Nonnegative

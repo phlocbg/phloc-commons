@@ -55,7 +55,7 @@ import com.phloc.commons.xml.XMLHelper;
 
 /**
  * This class handles the reading and writing of changelog objects.
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -93,7 +93,7 @@ public final class ChangeLogSerializer
   /**
    * Read the change log resource specified by the input stream provider using
    * the default logging callback.
-   * 
+   *
    * @param aISP
    *        The ISP to read from. Maybe <code>null</code> resulting in a
    *        <code>null</code> return.
@@ -107,7 +107,7 @@ public final class ChangeLogSerializer
 
   /**
    * Read the change log resource specified by the input stream provider.
-   * 
+   *
    * @param aISP
    *        The ISP to read from. Maybe <code>null</code> resulting in a
    *        <code>null</code> return.
@@ -154,7 +154,7 @@ public final class ChangeLogSerializer
         final String sCategory = eElement.getAttribute (ATTR_CATEGORY);
         final String sIncompatible = eElement.getAttribute (ATTR_INCOMPATIBLE);
 
-        Date aDate = null;
+        Date aDate;
         try
         {
           aDate = aDF.parse (sDate);
@@ -176,8 +176,7 @@ public final class ChangeLogSerializer
           aErrorCallback.run ("Failed to parse change log category '" + sCategory + "'");
           continue;
         }
-        final boolean bIsIncompatible = StringHelper.hasText (sIncompatible) ? StringParser.parseBool (sIncompatible)
-                                                                            : false;
+        final boolean bIsIncompatible = StringHelper.hasText (sIncompatible) && StringParser.parseBool (sIncompatible);
 
         final ChangeLogEntry aEntry = new ChangeLogEntry (ret, aDate, eAction, eCategory, bIsIncompatible);
         ret.addEntry (aEntry);
@@ -203,7 +202,7 @@ public final class ChangeLogSerializer
         {
           final String sDate = eElement.getAttribute (ATTR_DATE);
           final String sVersion = eElement.getAttribute (ATTR_VERSION);
-          Date aDate = null;
+          Date aDate;
           try
           {
             aDate = aDF.parse (sDate);

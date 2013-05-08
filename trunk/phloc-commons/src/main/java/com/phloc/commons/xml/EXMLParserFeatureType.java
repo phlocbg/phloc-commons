@@ -20,7 +20,7 @@ package com.phloc.commons.xml;
 
 /**
  * Contains the types of XML parser features.
- * 
+ *
  * @author Philip Helger
  */
 public enum EXMLParserFeatureType
@@ -35,5 +35,5 @@ public enum EXMLParserFeatureType
   SAX,
 
   /** XInclude Features */
-  XINCLUDE;
+  XINCLUDE
 }

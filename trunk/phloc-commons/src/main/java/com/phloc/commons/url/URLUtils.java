@@ -62,7 +62,7 @@ import com.phloc.commons.url.encode.URLParameterEncoder;
 
 /**
  * URL utilities.
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -93,7 +93,7 @@ public final class URLUtils
   /**
    * URL-decode the passed value automatically handling charset issues. The used
    * char set is determined by {@link #CHARSET_URL}.
-   * 
+   *
    * @param sValue
    *        The value to be decoded. May not be <code>null</code>.
    * @return The decoded value.
@@ -106,7 +106,7 @@ public final class URLUtils
 
   /**
    * URL-decode the passed value automatically handling charset issues.
-   * 
+   *
    * @param sValue
    *        The value to be decoded. May not be <code>null</code>.
    * @param aCharset
@@ -124,7 +124,7 @@ public final class URLUtils
 
   /**
    * URL-decode the passed value automatically handling charset issues.
-   * 
+   *
    * @param sValue
    *        The value to be decoded. May not be <code>null</code>.
    * @param sCharset
@@ -149,7 +149,7 @@ public final class URLUtils
   /**
    * URL-encode the passed value automatically handling charset issues. The used
    * char set is determined by {@link #CHARSET_URL}.
-   * 
+   *
    * @param sValue
    *        The value to be encoded. May not be <code>null</code>.
    * @return The encoded value.
@@ -162,7 +162,7 @@ public final class URLUtils
 
   /**
    * URL-encode the passed value automatically handling charset issues.
-   * 
+   *
    * @param sValue
    *        The value to be encoded. May not be <code>null</code>.
    * @param aCharset
@@ -180,7 +180,7 @@ public final class URLUtils
 
   /**
    * URL-encode the passed value automatically handling charset issues.
-   * 
+   *
    * @param sValue
    *        The value to be encoded. May not be <code>null</code>.
    * @param sCharset
@@ -235,7 +235,7 @@ public final class URLUtils
 
   /**
    * Clean an URL part from nasty Umlauts. This mapping needs extension!
-   * 
+   *
    * @param sURLPart
    *        The original URL part. May be <code>null</code>.
    * @return The cleaned version or <code>null</code> if the input was
@@ -257,7 +257,7 @@ public final class URLUtils
 
   /**
    * Parses the passed URL into a structured form
-   * 
+   *
    * @param sHref
    *        The URL to be parsed
    * @param aParameterDecoder
@@ -370,7 +370,7 @@ public final class URLUtils
 
   /**
    * Get the final representation of the URL using the specified elements.
-   * 
+   *
    * @param sPath
    *        The main path. May be <code>null</code>.
    * @param aParams
@@ -444,7 +444,7 @@ public final class URLUtils
 
   /**
    * Get the final representation of the URL using the specified elements.
-   * 
+   *
    * @param sPath
    *        The main path. May be <code>null</code>.
    * @param aParams
@@ -471,7 +471,7 @@ public final class URLUtils
 
   /**
    * Get the final representation of the URL using the specified elements.
-   * 
+   *
    * @param sPath
    *        The main path. May be <code>null</code>.
    * @param aParams
@@ -500,7 +500,7 @@ public final class URLUtils
   /**
    * Get the passed String as an URL. If the string is empty or not an URL
    * <code>null</code> is returned.
-   * 
+   *
    * @param sURL
    *        Source URL. May be <code>null</code>.
    * @return <code>null</code> if the passed URL is empty or invalid.
@@ -523,7 +523,7 @@ public final class URLUtils
   /**
    * Get the passed URI as an URL. If the URI is null or cannot be converted to
    * an URL <code>null</code> is returned.
-   * 
+   *
    * @param aURI
    *        Source URI. May be <code>null</code>.
    * @return <code>null</code> if the passed URI is null or cannot be converted
@@ -547,7 +547,7 @@ public final class URLUtils
   /**
    * Get the passed String as an URI. If the string is empty or not an URI
    * <code>null</code> is returned.
-   * 
+   *
    * @param sURI
    *        Source URI. May be <code>null</code>.
    * @return <code>null</code> if the passed URI is empty or invalid.
@@ -570,7 +570,7 @@ public final class URLUtils
   /**
    * Get the passed URL as an URI. If the URL is null or not an URI
    * <code>null</code> is returned.
-   * 
+   *
    * @param aURL
    *        Source URL. May be <code>null</code>.
    * @return <code>null</code> if the passed URL is empty or invalid.
@@ -592,7 +592,7 @@ public final class URLUtils
 
   /**
    * Get an input stream from the specified URL. By default caching is disabled.
-   * 
+   *
    * @param aURL
    *        The URL to use. May not be <code>null</code>.
    * @param nConnectTimeoutMS
@@ -616,7 +616,7 @@ public final class URLUtils
     if (aURL == null)
       throw new NullPointerException ("URL");
 
-    URLConnection aConnection = null;
+    URLConnection aConnection ;
     HttpURLConnection aHTTPConnection = null;
     try
     {
@@ -676,7 +676,9 @@ public final class URLUtils
             final byte [] aBuf = new byte [1024];
             // read the response body
             while (aErrorIS.read (aBuf) > 0)
-            {}
+            {
+              // Read next
+            }
           }
         }
         catch (final IOException ex2)

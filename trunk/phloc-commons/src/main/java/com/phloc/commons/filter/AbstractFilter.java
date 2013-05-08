@@ -61,9 +61,7 @@ public abstract class AbstractFilter <DATATYPE> implements IFilter <DATATYPE>
       return true;
 
     // Check nested filter
-    if (m_aNestedFilter == null)
-      return true;
-    return m_aNestedFilter.matchesFilter (aValue);
+    return m_aNestedFilter == null || m_aNestedFilter.matchesFilter (aValue);
   }
 
   /**

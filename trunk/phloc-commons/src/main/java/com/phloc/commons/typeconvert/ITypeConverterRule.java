@@ -22,7 +22,7 @@ import javax.annotation.Nonnull;
 /**
  * Flexible type converter that can handle multiple source and/or destination
  * classes.
- * 
+ *
  * @author Philip Helger
  */
 public interface ITypeConverterRule extends ITypeConverter
@@ -30,7 +30,7 @@ public interface ITypeConverterRule extends ITypeConverter
   /**
    * Define the sub types of the rules. The order is the sub type in which they
    * are evaluated.
-   * 
+   *
    * @author Philip Helger
    */
   enum ESubType
@@ -42,7 +42,7 @@ public interface ITypeConverterRule extends ITypeConverter
     /** Assignable source type and fixed destination type. */
     ASSIGNABLE_SRC_FIXED_DST,
     /** Any source type and fixed destination type. */
-    ANY_SRC_FIXED_DST;
+    ANY_SRC_FIXED_DST
   }
 
   /**
@@ -56,7 +56,7 @@ public interface ITypeConverterRule extends ITypeConverter
    * the passed destination class. Note: as this method is called for every type
    * conversion for which no exact converters are present, the implementation of
    * this method should be as efficient as possible.
-   * 
+   *
    * @param aSrcClass
    *        Source class to convert from. Never <code>null</code>.
    * @param aDstClass

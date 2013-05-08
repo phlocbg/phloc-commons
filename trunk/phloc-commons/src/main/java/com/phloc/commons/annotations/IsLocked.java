@@ -30,7 +30,7 @@ import javax.annotation.Nonnull;
  * using read-write locks (class ReadWriteLock), please selected the matching
  * lock type. When using exclusive locks (class Lock) use the lock type
  * <code>WRITE</code>.
- * 
+ *
  * @author Philip Helger
  */
 @Retention (RetentionPolicy.CLASS)
@@ -41,7 +41,7 @@ public @interface IsLocked
   public static enum ELockType
   {
     READ,
-    WRITE;
+    WRITE
   }
 
   @Nonnull

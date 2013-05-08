@@ -26,7 +26,7 @@ import com.phloc.commons.string.StringParser;
 /**
  * Enum for representing the current processor architecture. Works only on Sun
  * JVMs using the proprietary system property <code>sun.arch.data.model</code>.
- * 
+ *
  * @author Philip Helger
  */
 public enum EProcessorArchitecture
@@ -81,7 +81,7 @@ public enum EProcessorArchitecture
 
   /**
    * Get the processor architecture based on the passed number of bits.
-   * 
+   *
    * @param nBits
    *        The number of bits to get the processor architecture from.
    * @return {@link #UNKNOWN} if no processor architecture could be determined.
@@ -107,7 +107,8 @@ public enum EProcessorArchitecture
     if (ret == null)
     {
       // Note: double initialization doesn't matter here
-      s_aInstance = ret = forBits (getCurrentArchitectureBits ());
+      ret = forBits (getCurrentArchitectureBits ());
+      s_aInstance = ret;
     }
     return ret;
   }

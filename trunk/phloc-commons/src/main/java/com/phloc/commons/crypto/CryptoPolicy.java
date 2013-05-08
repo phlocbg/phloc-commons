@@ -50,14 +50,14 @@ import com.phloc.commons.charset.CharsetManager;
  * </p>
  * Based on owasp-esapi-java source.<br>
  * http://code.google.com/p/owasp-esapi-java/
- * 
+ *
  * @author Philip Helger
  */
 @ThreadSafe
 public final class CryptoPolicy
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (CryptoPolicy.class);
-  private static AtomicBoolean s_aChecked = new AtomicBoolean (false);
+  private static final AtomicBoolean s_aChecked = new AtomicBoolean (false);
   private static boolean s_bUnlimitedStrength;
 
   @PresentForCodeCoverage
@@ -120,7 +120,7 @@ public final class CryptoPolicy
    * Check to see if unlimited strength crypto is available. There is an
    * implicit assumption that the JCE jurisdiction policy files are not going to
    * be changing while this given JVM is running.
-   * 
+   *
    * @return <code>true</code> if we can provide keys longer than 128 bits,
    *         <code>false</code> otherwise
    */

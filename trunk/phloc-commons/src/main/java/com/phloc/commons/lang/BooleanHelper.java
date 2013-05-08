@@ -24,7 +24,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 
 /**
  * Misc helper methods for handling booleans.
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -39,7 +39,7 @@ public final class BooleanHelper
 
   /**
    * Get the converted boolean value
-   * 
+   *
    * @param b
    *        Input boolean value
    * @return The inverted value
@@ -47,12 +47,13 @@ public final class BooleanHelper
   public static boolean getInverted (final boolean b)
   {
     // This is trillions of clockticks faster than "return !b" !!!!!
+    //noinspection PointlessBooleanExpression
     return b ^ true;
   }
 
   /**
    * Get the primitive value of the passed object value.
-   * 
+   *
    * @param aObj
    *        The Boolean value to be converted
    * @param bDefault

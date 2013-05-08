@@ -41,7 +41,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Helper class to easily create commonly used {@link Collator} objects.
- * 
+ *
  * @author Philip Helger
  */
 @ThreadSafe
@@ -50,7 +50,7 @@ public final class CollatorUtils
   /**
    * Local cache from Locale to Collator because Collator.getInstance is
    * synchronized!
-   * 
+   *
    * @author Philip Helger
    */
   @ThreadSafe
@@ -93,7 +93,7 @@ public final class CollatorUtils
       try
       {
         final String sRules = ((RuleBasedCollator) aCollator).getRules ();
-        if (sRules.indexOf ("<'.'<") < 0)
+        if (!sRules.contains ("<'.'<"))
         {
           // Nothing to replace - use collator as it is
           s_aLogger.warn ("Failed to identify the Collator rule part to be replaced. Locale used: " + aLocale);
@@ -127,7 +127,7 @@ public final class CollatorUtils
    * before dots, because spaces are more important word separators than dots.
    * Another example is the correct sorting of things like "1.1 a" vs.
    * "1.1.1 b". This is the default collator used for sorting by default!
-   * 
+   *
    * @param aLocale
    *        The locale for which the collator is to be retrieved. May be
    *        <code>null</code> to indicate the usage of the default locale.
@@ -145,7 +145,7 @@ public final class CollatorUtils
 
   /**
    * Clear all cached collators.
-   * 
+   *
    * @return {@link EChange}
    */
   @Nonnull
