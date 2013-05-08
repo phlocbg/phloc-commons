@@ -26,6 +26,7 @@ import java.io.IOException;
 import org.junit.Test;
 
 import com.phloc.commons.charset.CCharset;
+import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.io.EAppend;
 import com.phloc.commons.io.file.FileOperations;
 
@@ -46,19 +47,19 @@ public final class CountingFileOutputStreamTest
       assertEquals (0, aCFOS.getBytesWritten ());
       StreamUtils.copyInputStreamToOutputStream (new StringInputStream ("abc", CCharset.CHARSET_ISO_8859_1_OBJ), aCFOS);
       aCFOS.write ('a');
-      aCFOS.write ("axy".getBytes (CCharset.CHARSET_ISO_8859_1_OBJ));
+      aCFOS.write (CharsetManager.getAsBytes ("axy", CCharset.CHARSET_ISO_8859_1_OBJ));
       assertEquals (7, aCFOS.getBytesWritten ());
       aCFOS.close ();
       aCFOS = new CountingFileOutputStream (f, EAppend.APPEND);
-      aCFOS.write ("axy".getBytes (CCharset.CHARSET_ISO_8859_1_OBJ));
+      aCFOS.write (CharsetManager.getAsBytes ("axy", CCharset.CHARSET_ISO_8859_1_OBJ));
       assertEquals (3, aCFOS.getBytesWritten ());
       aCFOS.close ();
       aCFOS = new CountingFileOutputStream (f.getAbsolutePath ());
-      aCFOS.write ("axy".getBytes (CCharset.CHARSET_ISO_8859_1_OBJ));
+      aCFOS.write (CharsetManager.getAsBytes ("axy", CCharset.CHARSET_ISO_8859_1_OBJ));
       assertEquals (3, aCFOS.getBytesWritten ());
       aCFOS.close ();
       aCFOS = new CountingFileOutputStream (f.getAbsolutePath (), EAppend.APPEND);
-      aCFOS.write ("axy".getBytes (CCharset.CHARSET_ISO_8859_1_OBJ));
+      aCFOS.write (CharsetManager.getAsBytes ("axy", CCharset.CHARSET_ISO_8859_1_OBJ));
       assertEquals (3, aCFOS.getBytesWritten ());
       aCFOS.close ();
       assertNotNull (aCFOS.toString ());

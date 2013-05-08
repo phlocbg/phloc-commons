@@ -28,6 +28,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.WillNotClose;
 
 import com.phloc.commons.annotations.ReturnsMutableCopy;
+import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.collections.ArrayHelper;
 
 /**
@@ -259,7 +260,7 @@ public class ByteBufferOutputStream extends OutputStream
   @Nonnull
   public String getAsString (@Nonnull final Charset aCharset)
   {
-    return new String (m_aBuffer.array (), m_aBuffer.arrayOffset (), m_aBuffer.position (), aCharset);
+    return CharsetManager.getAsString (m_aBuffer.array (), m_aBuffer.arrayOffset (), m_aBuffer.position (), aCharset);
   }
 
   private void _growBy (@Nonnegative final int nBytesToGrow)
