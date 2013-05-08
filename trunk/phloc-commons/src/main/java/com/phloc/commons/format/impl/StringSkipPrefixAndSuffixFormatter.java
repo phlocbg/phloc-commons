@@ -58,9 +58,9 @@ public class StringSkipPrefixAndSuffixFormatter extends AbstractStringFormatter
   {
     String sValue = getValueAsString (aValue);
     // strip prefix and suffix
-    if (!m_sPrefix.isEmpty ())
+    if (m_sPrefix.length () > 0)
       sValue = StringHelper.trimStart (sValue, m_sPrefix);
-    if (!m_sSuffix.isEmpty ())
+    if (m_sSuffix.length () > 0)
       sValue = StringHelper.trimEnd (sValue, m_sSuffix);
     return sValue;
   }

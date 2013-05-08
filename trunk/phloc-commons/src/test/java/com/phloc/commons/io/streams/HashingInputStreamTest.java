@@ -26,6 +26,7 @@ import java.util.Random;
 import org.junit.Test;
 
 import com.phloc.commons.charset.CCharset;
+import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.messagedigest.EMessageDigestAlgorithm;
 import com.phloc.commons.mock.PhlocTestUtils;
 
@@ -47,14 +48,16 @@ public final class HashingInputStreamTest
       final String sTestString = "test" + eMDAlgo.getAlgorithm () + "-xxx" + s_aRandom.nextDouble ();
 
       // First hash
-      final HashingInputStream aHIS1 = new HashingInputStream (new NonBlockingByteArrayInputStream (sTestString.getBytes (CCharset.CHARSET_ISO_8859_1_OBJ)),
+      final HashingInputStream aHIS1 = new HashingInputStream (new NonBlockingByteArrayInputStream (CharsetManager.getAsBytes (sTestString,
+                                                                                                                               CCharset.CHARSET_ISO_8859_1_OBJ)),
                                                                eMDAlgo);
       assertTrue (aHIS1.read () != -1);
       StreamUtils.copyInputStreamToOutputStream (aHIS1, new NonBlockingByteArrayOutputStream ());
       final byte [] aDigest1 = aHIS1.getDigest ();
 
       // Second hash
-      final HashingInputStream aHIS2 = new HashingInputStream (new NonBlockingByteArrayInputStream (sTestString.getBytes (CCharset.CHARSET_ISO_8859_1_OBJ)),
+      final HashingInputStream aHIS2 = new HashingInputStream (new NonBlockingByteArrayInputStream (CharsetManager.getAsBytes (sTestString,
+                                                                                                                               CCharset.CHARSET_ISO_8859_1_OBJ)),
                                                                eMDAlgo);
       assertTrue (aHIS2.read () != -1);
       StreamUtils.copyInputStreamToOutputStream (aHIS2, new NonBlockingByteArrayOutputStream ());

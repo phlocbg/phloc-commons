@@ -116,7 +116,7 @@ public final class StringEncoder
       throw new NullPointerException ("destBuffer");
 
     // We need to special case the empty string
-    if (sSource.isEmpty ())
+    if (sSource.length () == 0)
       return EFinish.FINISHED;
 
     // read data in, if needed

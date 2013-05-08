@@ -25,6 +25,7 @@ import java.io.IOException;
 import org.junit.Test;
 
 import com.phloc.commons.charset.CCharset;
+import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
@@ -40,8 +41,8 @@ public final class WrappedOutputStreamTest
     final NonBlockingByteArrayOutputStream baos = new NonBlockingByteArrayOutputStream ();
     final WrappedOutputStream ws = new WrappedOutputStream (baos);
     ws.write ('a');
-    ws.write ("bc".getBytes (CCharset.CHARSET_ISO_8859_1_OBJ));
-    ws.write ("cde".getBytes (CCharset.CHARSET_ISO_8859_1_OBJ), 1, 1);
+    ws.write (CharsetManager.getAsBytes ("bc", CCharset.CHARSET_ISO_8859_1_OBJ));
+    ws.write (CharsetManager.getAsBytes ("cde", CCharset.CHARSET_ISO_8859_1_OBJ), 1, 1);
     ws.flush ();
     ws.close ();
     assertEquals ("abcd", baos.getAsString (CCharset.CHARSET_ISO_8859_1_OBJ));
