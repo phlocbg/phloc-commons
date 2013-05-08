@@ -31,6 +31,7 @@ import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.io.resource.URLResource;
 import com.phloc.commons.io.streams.StreamUtils;
 
+//SKIPJDK5
 /**
  * Special {@link java.util.ResourceBundle.Control} to handle XML files
  * 

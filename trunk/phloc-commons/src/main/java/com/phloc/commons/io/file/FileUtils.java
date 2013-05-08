@@ -160,7 +160,11 @@ public final class FileUtils
   {
     if (aFile == null)
       throw new NullPointerException ("file");
+    // IDJFK5
+    // return true;
+    // ELSE
     return aFile.canExecute ();
+    // ENDIF
   }
 
   /**

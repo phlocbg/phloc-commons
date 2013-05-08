@@ -46,7 +46,10 @@ public final class DecimalFormatSymbolsFactory
   @Nonnull
   public static DecimalFormatSymbols getInstance (final Locale aLocale)
   {
-    // JDK 1.6 only
+    // IFJDK5
+    // return new DecimalFormatSymbols (aLocale);
+    // ELSE
     return DecimalFormatSymbols.getInstance (aLocale);
+    // ENDIF
   }
 }

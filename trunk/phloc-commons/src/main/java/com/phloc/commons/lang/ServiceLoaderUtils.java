@@ -134,7 +134,12 @@ public final class ServiceLoaderUtils
     if (aRealLogger.isDebugEnabled ())
       aRealLogger.debug ("Trying to load all SPI implementations of " + aSPIClass);
 
+    // IFJDK5
+    // final ServiceLoaderBackport <T> aServiceLoader =
+    // ServiceLoaderBackport.<T> load (aSPIClass, aClassLoader);
+    // ELSE
     final ServiceLoader <T> aServiceLoader = ServiceLoader.<T> load (aSPIClass, aClassLoader);
+    // ENDIF
     final List <T> ret = new ArrayList <T> ();
 
     // We use the iterator to be able to catch exceptions thrown
