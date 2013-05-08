@@ -153,8 +153,11 @@ public final class ResourceBundleUtils
 
   public static void clearCache (@Nonnull final ClassLoader aClassLoader)
   {
+    // IFJDK5
+    // ELSE
     ResourceBundle.clearCache (aClassLoader);
     if (s_aLogger.isDebugEnabled ())
       s_aLogger.debug ("Cache was cleared: " + ResourceBundle.class.getName ());
+    // ENDIF
   }
 }

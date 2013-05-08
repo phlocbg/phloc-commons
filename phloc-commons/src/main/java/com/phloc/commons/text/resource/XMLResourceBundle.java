@@ -43,6 +43,7 @@ import com.phloc.commons.collections.ContainerHelper;
  * 
  * @author Philip Helger
  */
+// SKIPJDK5
 @Immutable
 public final class XMLResourceBundle extends ResourceBundle
 {

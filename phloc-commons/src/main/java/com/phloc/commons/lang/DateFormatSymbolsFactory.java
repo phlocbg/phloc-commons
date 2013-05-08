@@ -46,7 +46,10 @@ public final class DateFormatSymbolsFactory
   @Nonnull
   public static DateFormatSymbols getInstance (final Locale aLocale)
   {
-    // JDK 1.6 only
+    // IFJDK5
+    // return new DateFormatSymbols (aLocale);
+    // ELSE
     return DateFormatSymbols.getInstance (aLocale);
+    // ENDIF
   }
 }

@@ -39,6 +39,7 @@ import com.phloc.commons.mock.AbstractPhlocTestCase;
  * 
  * @author Philip Helger
  */
+// SKIPJDK5
 public final class XMLResourceBundleTest extends AbstractPhlocTestCase
 {
   @Test

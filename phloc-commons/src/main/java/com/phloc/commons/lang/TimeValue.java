@@ -27,7 +27,7 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * Pair of {@link TimeUnit} and a value.
- *
+ * 
  * @author Philip Helger
  */
 @Immutable
@@ -80,17 +80,29 @@ public final class TimeValue
 
   public long getAsMinutes ()
   {
+    // IFJDK5
+    // return getAsSeconds () / 60;
+    // ELSE
     return m_eTimeUnit.toMinutes (m_nDuration);
+    // ENDIF
   }
 
   public long getAsHours ()
   {
+    // IFJDK5
+    // return getAsSeconds () / 3600;
+    // ELSE
     return m_eTimeUnit.toHours (m_nDuration);
+    // ENDIF
   }
 
   public long getAsDays ()
   {
+    // IFJDK5
+    // return getAsSeconds () / 86400;
+    // ELSE
     return m_eTimeUnit.toDays (m_nDuration);
+    // ENDIF
   }
 
   @Override
