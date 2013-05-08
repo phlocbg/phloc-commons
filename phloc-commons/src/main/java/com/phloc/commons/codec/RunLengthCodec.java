@@ -25,7 +25,7 @@ import com.phloc.commons.io.streams.StreamUtils;
 
 /**
  * Decoder for run length encoding
- * 
+ *
  * @author Philip Helger
  */
 public class RunLengthCodec implements IByteArrayDecoder
@@ -47,7 +47,7 @@ public class RunLengthCodec implements IByteArrayDecoder
     if (aEncodedBuffer == null)
       return null;
 
-    int nDupAmount = -1;
+    int nDupAmount;
     final byte [] aReadBuffer = new byte [128];
     final NonBlockingByteArrayInputStream aBAIS = new NonBlockingByteArrayInputStream (aEncodedBuffer);
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();

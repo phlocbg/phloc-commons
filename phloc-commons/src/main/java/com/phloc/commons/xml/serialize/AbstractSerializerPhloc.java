@@ -47,7 +47,7 @@ import com.phloc.commons.xml.namespace.IIterableNamespaceContext;
 /**
  * Abstract XML serializer implementation that works with IMicroNode and
  * org.w3c.dom.Node objects.
- * 
+ *
  * @author Philip Helger
  * @param <NODETYPE>
  *        The DOM node type to use
@@ -65,7 +65,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
 
   /**
    * Contains the XML namespace definitions for a single element.
-   * 
+   *
    * @author Philip Helger
    */
   protected static final class NamespaceLevel
@@ -78,7 +78,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
     /**
      * Extract all attribute starting with "xmlns" and create the appropriate
      * prefix mapping.
-     * 
+     *
      * @param aAttrs
      *        Attribute map to check. May be <code>null</code>.
      */
@@ -120,7 +120,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
 
     /**
      * Get the URL matching a given namespace prefix in this level.
-     * 
+     *
      * @param sPrefix
      *        The prefix to be searched. If it is <code>null</code> the default
      *        namespace URL is returned.
@@ -214,7 +214,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
   /**
    * Contains the hierarchy of XML namespaces within a document structure.
    * Important: null namespace URIs are different from empty namespace URIs!
-   * 
+   *
    * @author Philip Helger
    */
   protected static final class NamespaceStack
@@ -229,7 +229,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
 
     /**
      * Start a new namespace level.
-     * 
+     *
      * @param aAttrs
      *        Existing attributes from which XML namespace prefix mappings
      *        should be extracted. May be <code>null</code>.
@@ -280,7 +280,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
 
     /**
      * Resolve the given namespace URI to a prefix.
-     * 
+     *
      * @param sNamespaceURI
      *        The namespace URI to resolve. May not be <code>null</code>. Pass
      *        in an empty string for an empty namespace URI!
@@ -304,34 +304,34 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
       return null;
     }
 
-    private boolean _containsAnyNamespace ()
+    private boolean _containsNoNamespace ()
     {
       for (final NamespaceLevel aNSLevel : m_aStack)
         if (aNSLevel.hasAnyNamespace ())
-          return true;
-      return false;
+          return false;
+      return true;
     }
 
     /**
      * Check if the whole prefix is used somewhere in the stack.
-     * 
+     *
      * @param sPrefix
      *        The prefix to be checked
      * @return <code>true</code> if somewhere in the stack, the specified prefix
      *         is already used
      */
-    private boolean _containsPrefix (@Nonnull final String sPrefix)
+    private boolean _containsNoPrefix (@Nonnull final String sPrefix)
     {
       // find existing prefix (iterate current to root)
       for (final NamespaceLevel aNSLevel : m_aStack)
         if (aNSLevel.getNamespaceURIOfPrefix (sPrefix) != null)
-          return true;
-      return false;
+          return false;
+      return true;
     }
 
     /**
      * Check if the passed namespace URI is mapped in the namespace context.
-     * 
+     *
      * @param sNamespaceURI
      *        The namespace URI to check. May not be <code>null</code>.
      * @return <code>null</code> if no namespace context mapping is present
@@ -356,7 +356,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
 
     /**
      * Create a new unique namespace prefix.
-     * 
+     *
      * @return <code>null</code> or empty if the default namespace is available,
      *         the prefix otherwise.
      */
@@ -364,7 +364,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
     public String createUniquePrefix ()
     {
       // Is the default namespace available?
-      if (!_containsAnyNamespace ())
+      if (_containsNoNamespace ())
       {
         // Use the default namespace
         return null;
@@ -375,7 +375,7 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
       do
       {
         final String sNSPrefix = DEFAULT_NAMESPACE_PREFIX_PREFIX + nCount;
-        if (!_containsPrefix (sNSPrefix))
+        if (_containsNoPrefix (sNSPrefix))
           return sNSPrefix;
         ++nCount;
       } while (true);

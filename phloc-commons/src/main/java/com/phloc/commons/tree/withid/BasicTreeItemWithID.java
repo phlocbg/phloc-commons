@@ -44,7 +44,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 /**
  * Basic tree item with ID implementation, independent of the implementation
  * type.
- * 
+ *
  * @author Philip Helger
  * @param <KEYTYPE>
  *        tree item key type
@@ -74,7 +74,7 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
 
   /**
    * Constructor for root object with a <code>null</code> data ID
-   * 
+   *
    * @param aFactory
    *        The tree item factory to use. May not be <code>null</code>.
    */
@@ -85,7 +85,7 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
 
   /**
    * Constructor for root object
-   * 
+   *
    * @param aFactory
    *        The tree item factory to use. May not be <code>null</code>.
    * @param aDataID
@@ -102,7 +102,7 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
 
   /**
    * Constructor for normal elements
-   * 
+   *
    * @param aParent
    *        Parent item. May never be <code>null</code> since only the root has
    *        no parent.
@@ -134,7 +134,7 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
    * This method is called to validate a data ID object. This method may be
    * overloaded in derived classes. The default implementation accepts all
    * values.
-   * 
+   *
    * @param aDataID
    *        The value to validate.
    * @return <code>true</code> if the ID is valid, <code>false</code> otherwise.
@@ -149,7 +149,7 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
    * This method is called to validate a data object. This method may be
    * overloaded in derived classes. The default implementation accepts all
    * values.
-   * 
+   *
    * @param aData
    *        The value to validate.
    * @return <code>true</code> if the ID is valid, <code>false</code> otherwise.
@@ -311,7 +311,7 @@ public class BasicTreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE extends ITreeItemW
 
   public final boolean containsChildItemWithDataID (@Nullable final KEYTYPE aDataID)
   {
-    return m_aChildMap == null ? false : m_aChildMap.containsKey (aDataID);
+    return m_aChildMap != null && m_aChildMap.containsKey (aDataID);
   }
 
   @Nullable

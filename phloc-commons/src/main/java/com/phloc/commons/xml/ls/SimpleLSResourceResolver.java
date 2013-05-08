@@ -41,7 +41,7 @@ import com.phloc.commons.url.URLUtils;
 /**
  * A simple LS resource resolver that can handle URLs, JAR files and file system
  * resources.
- * 
+ *
  * @author Philip Helger
  */
 public class SimpleLSResourceResolver implements LSResourceResolver
@@ -61,7 +61,7 @@ public class SimpleLSResourceResolver implements LSResourceResolver
 
   /**
    * Do the standard resource resolving of sSystemId relative to sBaseURI
-   * 
+   *
    * @param sSystemId
    *        The resource to search. May be <code>null</code> if base URI is set.
    * @param sBaseURI
@@ -72,8 +72,8 @@ public class SimpleLSResourceResolver implements LSResourceResolver
    *         In case the file resolution (to an absolute file) fails.
    */
   @Nonnull
-  public static final IReadableResource doStandardResourceResolving (@Nullable final String sSystemId,
-                                                                     @Nullable final String sBaseURI) throws IOException
+  public static IReadableResource doStandardResourceResolving (@Nullable final String sSystemId,
+                                                               @Nullable final String sBaseURI) throws IOException
   {
     if (sSystemId == null && sBaseURI == null)
       throw new IllegalArgumentException ("systemID and baseURI are null!");

@@ -40,7 +40,7 @@ import com.phloc.commons.text.impl.ReadonlyMultiLingualText;
 /**
  * {@link IMicroTypeConverterRegistrarSPI} implementation for
  * {@link ReadonlyMultiLingualText} and {@link MultiLingualText}.
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -69,7 +69,7 @@ public final class MultiLingualTextMicroTypeConverterRegistrar implements IMicro
     }
 
     @Nonnull
-    protected static final MultiLingualText convertToMLT (@Nonnull final IMicroElement aElement)
+    protected static MultiLingualText convertToMLT (@Nonnull final IMicroElement aElement)
     {
       final MultiLingualText aMLT = new MultiLingualText ();
       for (final IMicroElement eText : aElement.getAllChildElements (ELEMENT_TEXT))

@@ -35,7 +35,7 @@ import com.phloc.commons.typeconvert.TypeConverter;
  * Abstract base class for all kind of string-object mapping container. This
  * implementation provides a default implementation for all things that can be
  * independently implemented from the underlying data structure.
- * 
+ *
  * @author Philip Helger
  */
 @NotThreadSafe
@@ -80,7 +80,7 @@ public abstract class AbstractReadonlyAttributeContainer implements IReadonlyAtt
 
   /**
    * Get the string representation of the passed value, suitable for parameters.
-   * 
+   *
    * @param sParamName
    *        The name of the parameters. Has just informal character, for
    *        warnings. May be <code>null</code>.
@@ -97,9 +97,9 @@ public abstract class AbstractReadonlyAttributeContainer implements IReadonlyAtt
    *         are discarded.
    */
   @Nullable
-  public static final String getAsString (@Nullable final String sParamName,
-                                          @Nullable final Object aValue,
-                                          @Nullable final String sDefault)
+  public static String getAsString (@Nullable final String sParamName,
+                                    @Nullable final Object aValue,
+                                    @Nullable final String sDefault)
   {
     if (aValue == null)
       return sDefault;
@@ -128,7 +128,7 @@ public abstract class AbstractReadonlyAttributeContainer implements IReadonlyAtt
     return getAsString (sName, aValue, sDefault);
   }
 
-  public static final int getAsInt (@Nullable final String sParamName, @Nullable final Object aValue, final int nDefault)
+  public static int getAsInt (@Nullable final String sParamName, @Nullable final Object aValue, final int nDefault)
   {
     if (aValue == null)
       return nDefault;
@@ -150,7 +150,7 @@ public abstract class AbstractReadonlyAttributeContainer implements IReadonlyAtt
     return getAsInt (sName, aValue, nDefault);
   }
 
-  public static final long getAsLong (@Nullable final String sParamName,
+  public static long getAsLong (@Nullable final String sParamName,
                                       @Nullable final Object aValue,
                                       final long nDefault)
   {
@@ -174,9 +174,9 @@ public abstract class AbstractReadonlyAttributeContainer implements IReadonlyAtt
     return getAsLong (sName, aValue, nDefault);
   }
 
-  public static final double getAsDouble (@Nullable final String sParamName,
-                                          @Nullable final Object aValue,
-                                          final double dDefault)
+  public static double getAsDouble (@Nullable final String sParamName,
+                                    @Nullable final Object aValue,
+                                    final double dDefault)
   {
     if (aValue == null)
       return dDefault;
@@ -198,9 +198,9 @@ public abstract class AbstractReadonlyAttributeContainer implements IReadonlyAtt
     return getAsDouble (sName, aValue, dDefault);
   }
 
-  public static final boolean getAsBoolean (@Nullable final String sParamName,
-                                            @Nullable final Object aValue,
-                                            final boolean bDefault)
+  public static boolean getAsBoolean (@Nullable final String sParamName,
+                                      @Nullable final Object aValue,
+                                      final boolean bDefault)
   {
     if (aValue == null)
       return bDefault;

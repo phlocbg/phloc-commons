@@ -43,7 +43,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Implementation of the {@link List} interface handling exactly one element and
  * no more!
- * 
+ *
  * @author Philip Helger
  * @param <ELEMENTTYPE>
  *        The type of the element in the list
@@ -110,7 +110,7 @@ public class SingleElementList <ELEMENTTYPE> implements List <ELEMENTTYPE>, IHas
 
   public boolean contains (@Nullable final Object aElement)
   {
-    return m_bHasElement ? EqualsUtils.equals (m_aElement, aElement) : false;
+    return m_bHasElement && EqualsUtils.equals (m_aElement, aElement);
   }
 
   public boolean containsAll (@Nonnull final Collection <?> aElements)

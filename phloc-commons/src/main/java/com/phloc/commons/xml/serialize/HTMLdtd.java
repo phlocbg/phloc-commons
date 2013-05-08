@@ -32,7 +32,7 @@ import javax.annotation.Nonnull;
  * Two other methods translate character references from name to value and from
  * value to name. A small entities resource is loaded into memory the first time
  * any of these methods is called for fast and efficient access.
- * 
+ *
  * @version $Revision: 699892 $ $Date: 2008-09-28 17:08:27 -0400 (Sun, 28 Sep
  *          2008) $
  * @author <a href="mailto:arkin@intalio.com">Assaf Arkin</a>
@@ -42,9 +42,9 @@ public final class HTMLdtd
   /**
    * Holds element definitions.
    */
-  private static Map <String, Integer> s_aElemDefs = new HashMap <String, Integer> ();
+  private static final Map <String, Integer> s_aElemDefs = new HashMap <String, Integer> ();
 
-  private static Map <String, String []> s_aBoolAttrs = new HashMap <String, String []> ();
+  private static final Map <String, String []> s_aBoolAttrs = new HashMap <String, String []> ();
 
   /**
    * Only opening tag should be printed.
@@ -113,7 +113,7 @@ public final class HTMLdtd
   /**
    * Returns true if element is declared to be empty. HTML elements are defines
    * as empty in the DTD, not by the document syntax.
-   * 
+   *
    * @param sTagName
    *        The element tag name (upper case)
    * @return True if element is empty
@@ -127,7 +127,7 @@ public final class HTMLdtd
    * Returns true if element is declared to have element content. Whitespaces
    * appearing inside element content will be ignored, other text will simply
    * report an error.
-   * 
+   *
    * @param sTagName
    *        The element tag name (upper case)
    * @return True if element content
@@ -140,7 +140,7 @@ public final class HTMLdtd
   /**
    * Returns true if element's textual contents preserves spaces. This only
    * applies to PRE and TEXTAREA, all other HTML elements do not preserve space.
-   * 
+   *
    * @param sTagName
    *        The element tag name (upper case)
    * @return True if element's text content preserves spaces
@@ -154,7 +154,7 @@ public final class HTMLdtd
    * Returns true if element's closing tag is optional and need not exist. An
    * error will not be reported for such elements if they are not closed. For
    * example, <tt>LI</tt> is most often not closed.
-   * 
+   *
    * @param sTagName
    *        The element tag name (upper case)
    * @return True if closing tag implied
@@ -167,7 +167,7 @@ public final class HTMLdtd
   /**
    * Returns true if element's closing tag is generally not printed. For
    * example, <tt>LI</tt> should not print the closing tag.
-   * 
+   *
    * @param sTagName
    *        The element tag name (upper case)
    * @return True if only opening tag should be printed
@@ -182,7 +182,7 @@ public final class HTMLdtd
    * closing of another open element (<tt>openTag</tt>). For example, every
    * opening <tt>LI</tt> will close the previously open <tt>LI</tt>, and every
    * opening <tt>BODY</tt> will close the previously open <tt>HEAD</tt>.
-   * 
+   *
    * @param sTagName
    *        The newly opened element
    * @param sOpenTagName
@@ -219,7 +219,7 @@ public final class HTMLdtd
   /**
    * Returns true if the specified attribute it a URI and should be escaped
    * appropriately. In HTML URIs are escaped differently than normal attributes.
-   * 
+   *
    * @param sTagName
    *        The element's tag name
    * @param sAttrName
@@ -236,7 +236,7 @@ public final class HTMLdtd
    * Returns true if the specified attribute is a boolean and should be printed
    * without the value. This applies to attributes that are true if they exist,
    * such as selected (OPTION/INPUT).
-   * 
+   *
    * @param sTagName
    *        The element's tag name
    * @param sAttrName

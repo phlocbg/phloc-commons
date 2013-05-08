@@ -35,7 +35,7 @@ import com.phloc.commons.tree.withid.ITreeItemWithID;
  * A managed tree is a specialized version of the tree, where each item is
  * required to have a unique ID so that item searching can be performed quite
  * easily.
- * 
+ *
  * @author Philip Helger
  * @param <KEYTYPE>
  *        The type of the key elements for the tree.
@@ -121,10 +121,8 @@ public class BasicTreeWithGlobalUniqueID <KEYTYPE, DATATYPE, ITEMTYPE extends IT
       return false;
 
     final ITEMTYPE aChild = getItemWithID (aChildItemID);
-    if (aChild == null)
-      return false;
+    return aChild != null && aChild.isSameOrChildOf (aSearchParent);
 
-    return aChild.isSameOrChildOf (aSearchParent);
   }
 
   public boolean hasChildren (@Nullable final ITEMTYPE aItem)

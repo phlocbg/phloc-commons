@@ -223,7 +223,7 @@ public final class Codepoint implements Serializable, Comparable <Codepoint>
    * @return The number of chars necessary to represent this codepoint. Returns
    *         2 if this is a supplementary codepoint, 1 otherwise.
    */
-  @Nonnull
+  @Nonnegative
   public int getCharCount ()
   {
     return Character.charCount (m_nValue);

@@ -28,7 +28,7 @@ import com.phloc.commons.name.IHasDisplayName;
 
 /**
  * This enumeration is used to determine the currently running Operating system.
- * 
+ *
  * @author Philip Helger
  */
 public enum EOperatingSystem implements IHasDisplayName
@@ -88,7 +88,7 @@ public enum EOperatingSystem implements IHasDisplayName
 
   /**
    * Creates a new operating system value with the provided name.
-   * 
+   *
    * @param sDisplayName
    *        The human-readable name for the operating system.
    * @param bUnixBased
@@ -119,7 +119,7 @@ public enum EOperatingSystem implements IHasDisplayName
    * <li>Mac OS X</li>
    * <li>Solaris</li>
    * </ul>
-   * 
+   *
    * @return <code>true</code> if the provided operating system is UNIX-based,
    *         or <code>false</code> if not.
    */
@@ -139,7 +139,7 @@ public enum EOperatingSystem implements IHasDisplayName
   /**
    * Retrieves the operating system for the provided name. The name provided
    * should come from the <code>os.name</code> system property.
-   * 
+   *
    * @param sOSName
    *        The name for which to retrieve the corresponding operating system.
    * @return The operating system for the provided name. If the operating system
@@ -183,7 +183,8 @@ public enum EOperatingSystem implements IHasDisplayName
     {
       // Note: double initialization doesn't matter here
       final String sCurrentOSName = getCurrentOSName ();
-      s_aInstance = ret = forName (sCurrentOSName);
+      ret = forName (sCurrentOSName);
+      s_aInstance = ret;
       if (ret == UNKNOWN)
         LoggerFactory.getLogger (EOperatingSystem.class).error ("Failed to resolve operating system from name '" +
                                                                 sCurrentOSName +

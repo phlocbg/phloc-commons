@@ -24,7 +24,7 @@ import com.phloc.commons.io.streams.StreamUtils;
 
 /**
  * Decoder for ASCII85 encoded values
- * 
+ *
  * @author Philip Helger
  */
 public final class ASCII85Codec implements IByteArrayDecoder
@@ -106,7 +106,7 @@ public final class ASCII85Codec implements IByteArrayDecoder
         }
       }
 
-      int nRest = 0;
+      int nRest;
       switch (nEncodedCount)
       {
         case 1:

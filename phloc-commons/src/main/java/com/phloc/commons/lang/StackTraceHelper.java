@@ -30,7 +30,7 @@ import com.phloc.commons.string.StringHelper;
 
 /**
  * This class contains utility methods for handling stack traces.
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -188,7 +188,7 @@ public final class StackTraceHelper
 
   /**
    * Get the stack trace of a throwable as string.
-   * 
+   *
    * @param t
    *        The throwable to be converted. May be <code>null</code>.
    * @return the stack trace as newline separated string. If the passed
@@ -202,7 +202,7 @@ public final class StackTraceHelper
 
   /**
    * Get the stack trace of a throwable as string.
-   * 
+   *
    * @param t
    *        The throwable to be converted. May be <code>null</code>.
    * @param bOmitCommonStackTraceElements
@@ -232,7 +232,7 @@ public final class StackTraceHelper
   /**
    * Check if the passed stack trace array contains a unit test element. Known
    * unit test frameworks are JUnit and TestNG.
-   * 
+   *
    * @param t
    *        The {@link Throwable} whose stack trace should be scanned for unit
    *        test classes. May be <code>null</code>.
@@ -241,13 +241,13 @@ public final class StackTraceHelper
    */
   public static boolean containsUnitTestElement (@Nullable final Throwable t)
   {
-    return t == null ? false : containsUnitTestElement (t.getStackTrace ());
+    return t != null && containsUnitTestElement (t.getStackTrace ());
   }
 
   /**
    * Check if the passed stack trace array contains a unit test element. Known
    * unit test frameworks are JUnit and TestNG.
-   * 
+   *
    * @param aStackTrace
    *        The stack trace array to be scanned. May be <code>null</code>.
    * @return <code>true</code> if at least one stack trace element is from a

@@ -43,7 +43,7 @@ import com.phloc.commons.xml.transform.TransformSourceFactory;
 /**
  * Abstract base class for caching JAXP validation scheme elements. This class
  * is deprecated in favour of {@link DefaultSchemaCache}.
- * 
+ *
  * @author Philip Helger
  */
 @Deprecated
@@ -158,14 +158,14 @@ public abstract class AbstractSchemaCache extends SimpleCacheWithConversion <Str
   /**
    * Utility method to get the validator for a given schema using the standard
    * logging error handler.
-   * 
+   *
    * @param aSchema
    *        The schema for which the validator is to be retrieved. May not be
    *        <code>null</code>.
    * @return The validator and never <code>null</code>.
    */
   @Nonnull
-  public static final Validator getValidatorFromSchema (@Nonnull final Schema aSchema)
+  public static Validator getValidatorFromSchema (@Nonnull final Schema aSchema)
   {
     if (aSchema == null)
       throw new NullPointerException ("schema");

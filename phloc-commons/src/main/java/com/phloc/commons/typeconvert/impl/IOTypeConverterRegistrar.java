@@ -48,7 +48,7 @@ import com.phloc.commons.url.URLUtils;
 
 /**
  * Register the IO specific type converter
- * 
+ *
  * @author Philip Helger
  */
 @Immutable
@@ -253,7 +253,9 @@ public final class IOTypeConverterRegistrar implements ITypeConverterRegistrarSP
           // When passing a "http://..." URL into the file ctor
         }
         catch (final URISyntaxException e)
-        {}
+        {
+          // Fall through
+        }
         return null;
       }
     });

@@ -30,7 +30,7 @@ import com.phloc.commons.state.EChange;
 
 /**
  * Abstract multi map based on {@link TreeMap}.
- * 
+ *
  * @author Philip Helger
  * @param <KEYTYPE>
  *        key type
@@ -101,7 +101,7 @@ public abstract class AbstractMultiTreeMap <KEYTYPE, VALUETYPE, COLLTYPE extends
   public final boolean containsSingle (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
   {
     final Collection <VALUETYPE> aCont = get (aKey);
-    return aCont == null ? false : aCont.contains (aValue);
+    return aCont != null && aCont.contains (aValue);
   }
 
   @Nonnegative

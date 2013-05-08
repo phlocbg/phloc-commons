@@ -31,7 +31,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * An implementation of {@link IFilter} on {@link Node} objects that will only
  * return {@link Element} nodes.
- * 
+ *
  * @author Philip Helger
  */
 @NotThreadSafe
@@ -53,9 +53,7 @@ public final class FilterNodeIsElement implements IFilter <Node>
   {
     if (aNode.getNodeType () != Node.ELEMENT_NODE)
       return false;
-    if (m_aNestedElementFilter == null)
-      return true;
-    return m_aNestedElementFilter.matchesFilter ((Element) aNode);
+    return m_aNestedElementFilter == null || m_aNestedElementFilter.matchesFilter ((Element) aNode);
   }
 
   @Nullable

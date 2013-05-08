@@ -18,6 +18,7 @@
 package com.phloc.commons.collections.flags;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,7 +35,7 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * The not-thread safe implementation of {@link IFlagContainer}.
- * 
+ *
  * @author Philip Helger
  */
 @NotThreadSafe
@@ -59,8 +60,7 @@ public class FlagContainer implements IFlagContainer
   {
     if (aValues == null)
       throw new NullPointerException ("Values");
-    for (final String sValue : aValues)
-      m_aFlags.add (sValue);
+    Collections.addAll (m_aFlags, aValues);
   }
 
   public FlagContainer (@Nonnull final IReadonlyFlagContainer aCont)

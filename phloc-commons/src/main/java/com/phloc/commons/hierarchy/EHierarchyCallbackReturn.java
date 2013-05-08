@@ -19,7 +19,7 @@ package com.phloc.commons.hierarchy;
 
 /**
  * Return value for hierarchy iteration.
- * 
+ *
  * @author Philip Helger
  */
 public enum EHierarchyCallbackReturn
@@ -44,5 +44,5 @@ public enum EHierarchyCallbackReturn
   /**
    * Stop the iteration completely.
    */
-  STOP_ITERATION;
+  STOP_ITERATION
 }
