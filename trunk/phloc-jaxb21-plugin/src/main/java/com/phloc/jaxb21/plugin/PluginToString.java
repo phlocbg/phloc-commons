@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.jaxb22.plugin;
+package com.phloc.jaxb21.plugin;
 
 import java.util.List;
 
@@ -65,7 +65,7 @@ public class PluginToString extends Plugin
   @Override
   public List <String> getCustomizationURIs ()
   {
-    return ContainerHelper.newUnmodifiableList (CJAXB22.NSURI_PHLOC);
+    return ContainerHelper.newUnmodifiableList (CJAXB21.NSURI_PHLOC);
   }
 
   @Override
@@ -105,7 +105,7 @@ public class PluginToString extends Plugin
       }
       mToString.body ()._return (aInvocation.invoke ("toString"));
 
-      mToString.javadoc ().add ("Created by phloc-jaxb22-plugin -" + OPT);
+      mToString.javadoc ().add ("Created by phloc-jaxb21-plugin -" + OPT);
     }
     return true;
   }
