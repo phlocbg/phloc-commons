@@ -52,7 +52,9 @@ public final class CJAXB21
   {
     try
     {
-      final Field aField = aMethod.getClass ().getField ("params");
+      // Private field
+      final Field aField = aMethod.getClass ().getDeclaredField ("params");
+      aField.setAccessible (true);
       @SuppressWarnings ("unchecked")
       final List <JVar> aParams = (List <JVar>) aField.get (aMethod);
       return ContainerHelper.newList (aParams);
@@ -63,11 +65,13 @@ public final class CJAXB21
     }
   }
 
-  public static void updateMods (final JMods aMods, final int nFlag, final boolean bSet)
+  public static void updateMods (@Nonnull final JMods aMods, final int nFlag, final boolean bSet)
   {
     try
     {
-      final Method aSetFlag = aMods.getClass ().getMethod ("setFlag", int.class, boolean.class);
+      // Private method
+      final Method aSetFlag = aMods.getClass ().getDeclaredMethod ("setFlag", int.class, boolean.class);
+      aSetFlag.setAccessible (true);
       aSetFlag.invoke (aMods, Integer.valueOf (nFlag), Boolean.valueOf (bSet));
     }
     catch (final Exception ex)
