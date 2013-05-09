@@ -1,8 +1,8 @@
-com.phloc.jaxb22.plugin.PluginAnnotate
-com.phloc.jaxb22.plugin.PluginCodeQuality
-com.phloc.jaxb22.plugin.PluginDefaultLocale
-com.phloc.jaxb22.plugin.PluginEqualsHashCode
-com.phloc.jaxb22.plugin.PluginFieldsPrivate
-com.phloc.jaxb22.plugin.PluginImplements
-com.phloc.jaxb22.plugin.PluginListExtension
-com.phloc.jaxb22.plugin.PluginToString
+com.phloc.jaxb21.plugin.PluginAnnotate
+com.phloc.jaxb21.plugin.PluginCodeQuality
+com.phloc.jaxb21.plugin.PluginDefaultLocale
+com.phloc.jaxb21.plugin.PluginEqualsHashCode
+com.phloc.jaxb21.plugin.PluginFieldsPrivate
+com.phloc.jaxb21.plugin.PluginImplements
+com.phloc.jaxb21.plugin.PluginListExtension
+com.phloc.jaxb21.plugin.PluginToString

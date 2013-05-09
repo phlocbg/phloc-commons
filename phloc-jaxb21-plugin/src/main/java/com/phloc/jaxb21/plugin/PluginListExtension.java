@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.jaxb22.plugin;
+package com.phloc.jaxb21.plugin;
 
 import java.util.List;
 import java.util.Locale;
@@ -69,7 +69,7 @@ public class PluginListExtension extends Plugin
   @Override
   public List <String> getCustomizationURIs ()
   {
-    return ContainerHelper.newUnmodifiableList (CJAXB22.NSURI_PHLOC);
+    return ContainerHelper.newUnmodifiableList (CJAXB21.NSURI_PHLOC);
   }
 
   @Override
@@ -95,12 +95,12 @@ public class PluginListExtension extends Plugin
           aParam.annotate (Nullable.class);
           aSetter.body ().assign (aField, aParam);
           aSetter.javadoc ().addParam (aParam).add ("The new list member to set. May be <code>null</code>.");
-          aSetter.javadoc ().add ("Created by phloc-jaxb22-plugin -" + OPT);
+          aSetter.javadoc ().add ("Created by phloc-jaxb21-plugin -" + OPT);
         }
       }
 
       for (final JMethod aMethod : ContainerHelper.newList (jClass.methods ()))
-        if (aMethod.name ().startsWith ("get") && aMethod.params ().isEmpty ())
+        if (aMethod.name ().startsWith ("get"))
         {
           final JType aReturnType = aMethod.type ();
           // Find e.g. List<ItemListType> getItemList()
@@ -117,7 +117,7 @@ public class PluginListExtension extends Plugin
               mHasEntries.javadoc ()
                          .addReturn ()
                          .add ("<code>true</code> if at least one item is contained, <code>false</code> otherwise.");
-              mHasEntries.javadoc ().add ("Created by phloc-jaxb22-plugin -" + OPT);
+              mHasEntries.javadoc ().add ("Created by phloc-jaxb21-plugin -" + OPT);
             }
 
             {
@@ -129,7 +129,7 @@ public class PluginListExtension extends Plugin
               mHasNoEntries.javadoc ()
                            .addReturn ()
                            .add ("<code>true</code> if no item is contained, <code>false</code> otherwise.");
-              mHasNoEntries.javadoc ().add ("Created by phloc-jaxb22-plugin -" + OPT);
+              mHasNoEntries.javadoc ().add ("Created by phloc-jaxb21-plugin -" + OPT);
             }
 
             {
@@ -138,7 +138,7 @@ public class PluginListExtension extends Plugin
               mCount.body ()._return (JExpr.invoke (aMethod).invoke ("size"));
 
               mCount.javadoc ().addReturn ().add ("The number of contained elements. Always &ge; 0.");
-              mCount.javadoc ().add ("Created by phloc-jaxb22-plugin -" + OPT);
+              mCount.javadoc ().add ("Created by phloc-jaxb21-plugin -" + OPT);
             }
 
             {
@@ -153,7 +153,7 @@ public class PluginListExtension extends Plugin
               mAtIndex.javadoc ().addParam (aParam).add ("The index to retrieve");
               mAtIndex.javadoc ().addReturn ().add ("The element at the specified index. May be <code>null</code>");
               mAtIndex.javadoc ().addThrows (ArrayIndexOutOfBoundsException.class).add ("if the index is invalid!");
-              mAtIndex.javadoc ().add ("Created by phloc-jaxb22-plugin -" + OPT);
+              mAtIndex.javadoc ().add ("Created by phloc-jaxb21-plugin -" + OPT);
             }
           }
         }

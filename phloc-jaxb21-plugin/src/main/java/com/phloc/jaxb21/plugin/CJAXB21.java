@@ -15,15 +15,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.jaxb22.plugin;
+package com.phloc.jaxb21.plugin;
 
 import javax.annotation.concurrent.Immutable;
 
 @Immutable
-public final class CJAXB22
+public final class CJAXB21
 {
-  public static final String NSURI_PHLOC = "http://www.phloc.com/ns/jaxb22/plugin";
+  public static final String NSURI_PHLOC = "http://www.phloc.com/ns/jaxb21/plugin";
 
-  private CJAXB22 ()
+  private CJAXB21 ()
   {}
 }

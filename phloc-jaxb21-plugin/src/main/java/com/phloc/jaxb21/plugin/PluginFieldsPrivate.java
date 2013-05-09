@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.jaxb22.plugin;
+package com.phloc.jaxb21.plugin;
 
 import java.util.List;
 
@@ -57,7 +57,7 @@ public class PluginFieldsPrivate extends Plugin
   @Override
   public List <String> getCustomizationURIs ()
   {
-    return ContainerHelper.newUnmodifiableList (CJAXB22.NSURI_PHLOC);
+    return ContainerHelper.newUnmodifiableList (CJAXB21.NSURI_PHLOC);
   }
 
   @Override

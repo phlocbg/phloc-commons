@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.jaxb22.plugin;
+package com.phloc.jaxb21.plugin;
 
 import java.util.List;
 
@@ -69,7 +69,7 @@ public class PluginEqualsHashCode extends Plugin
   @Override
   public List <String> getCustomizationURIs ()
   {
-    return ContainerHelper.newUnmodifiableList (CJAXB22.NSURI_PHLOC);
+    return ContainerHelper.newUnmodifiableList (CJAXB21.NSURI_PHLOC);
   }
 
   @Override
@@ -131,7 +131,7 @@ public class PluginEqualsHashCode extends Plugin
           jBody._return (JExpr.TRUE);
         }
 
-        mEquals.javadoc ().add ("Created by phloc-jaxb22-plugin -" + OPT);
+        mEquals.javadoc ().add ("Created by phloc-jaxb21-plugin -" + OPT);
       }
 
       // hashCode
@@ -159,7 +159,7 @@ public class PluginEqualsHashCode extends Plugin
           mHashCode.body ()._return (aInvocation.invoke ("getHashCode"));
         }
 
-        mHashCode.javadoc ().add ("Created by phloc-jaxb22-plugin -" + OPT);
+        mHashCode.javadoc ().add ("Created by phloc-jaxb21-plugin -" + OPT);
       }
     }
     return true;
