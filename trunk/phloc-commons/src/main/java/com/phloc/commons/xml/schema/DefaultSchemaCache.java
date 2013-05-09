@@ -45,7 +45,9 @@ import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.xml.transform.TransformSourceFactory;
 
 /**
- * Abstract base class for caching JAXP validation scheme elements.
+ * Abstract base class for caching abstract {@link Schema} objects. A
+ * {@link Schema} is immutable and can therefore safely be used in
+ * multi-threaded environments.
  * 
  * @author Philip Helger
  */
@@ -103,6 +105,14 @@ public abstract class DefaultSchemaCache extends AbstractNotifyingCache <List <?
     }
   }
 
+  /**
+   * Get a cached {@link Schema} from a single resource.
+   * 
+   * @param aResource
+   *        The resource to parse into a {@link Schema}. May not be
+   *        <code>null</code>.
+   * @return Either the {@link Schema} from the cache or the newly compiled one.
+   */
   @Nonnull
   public final Schema getSchema (@Nonnull final IReadableResource aResource)
   {
@@ -112,6 +122,15 @@ public abstract class DefaultSchemaCache extends AbstractNotifyingCache <List <?
     return getFromCache (ContainerHelper.newList (aResource));
   }
 
+  /**
+   * Get a cached {@link Schema} that consists of multiple resources.
+   * 
+   * @param aResources
+   *        The resources to parse into a single {@link Schema}. May neither
+   *        <code>null</code> nor empty nor may it contain <code>null</code>
+   *        elements.
+   * @return Either the {@link Schema} from the cache or the newly compiled one.
+   */
   @Nonnull
   public final Schema getSchema (@Nonnull @Nonempty final IReadableResource... aResources)
   {
@@ -123,6 +142,15 @@ public abstract class DefaultSchemaCache extends AbstractNotifyingCache <List <?
     return getFromCache (ContainerHelper.newList (aResources));
   }
 
+  /**
+   * Get a cached {@link Schema} that consists of multiple resources.
+   * 
+   * @param aResources
+   *        The resources to parse into a single {@link Schema}. May neither
+   *        <code>null</code> nor empty nor may it contain <code>null</code>
+   *        elements.
+   * @return Either the {@link Schema} from the cache or the newly compiled one.
+   */
   @Nonnull
   public final Schema getSchema (@Nonnull @Nonempty final Collection <? extends IReadableResource> aResources)
   {
@@ -154,18 +182,50 @@ public abstract class DefaultSchemaCache extends AbstractNotifyingCache <List <?
     return aValidator;
   }
 
+  /**
+   * Get a new validator based on the {@link Schema} that consists of a single
+   * resource.
+   * 
+   * @param aResource
+   *        The resource to parse into a single {@link Schema}. May not be
+   *        <code>null</code>.
+   * @return A new {@link Validator} object. Never <code>null</code>.
+   * @see #getSchema(IReadableResource)
+   */
   @Nonnull
   public final Validator getValidator (@Nonnull final IReadableResource aResource)
   {
     return getValidatorFromSchema (getSchema (aResource));
   }
 
+  /**
+   * Get a new validator based on the {@link Schema} that consists of multiple
+   * resources.
+   * 
+   * @param aResources
+   *        The resources to parse into a single {@link Schema}. May neither
+   *        <code>null</code> nor empty nor may it contain <code>null</code>
+   *        elements.
+   * @return A new {@link Validator} object. Never <code>null</code>.
+   * @see #getSchema(IReadableResource...)
+   */
   @Nonnull
   public final Validator getValidator (@Nonnull @Nonempty final IReadableResource... aResources)
   {
     return getValidatorFromSchema (getSchema (aResources));
   }
 
+  /**
+   * Get a new validator based on the {@link Schema} that consists of multiple
+   * resources.
+   * 
+   * @param aResources
+   *        The resources to parse into a single {@link Schema}. May neither
+   *        <code>null</code> nor empty nor may it contain <code>null</code>
+   *        elements.
+   * @return A new {@link Validator} object. Never <code>null</code>.
+   * @see #getSchema(Collection)
+   */
   @Nonnull
   public final Validator getValidator (@Nonnull @Nonempty final Collection <? extends IReadableResource> aResources)
   {
