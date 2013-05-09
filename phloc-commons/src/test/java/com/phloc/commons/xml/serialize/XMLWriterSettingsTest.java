@@ -39,6 +39,8 @@ import com.phloc.commons.xml.namespace.MapBasedNamespaceContext;
  */
 public final class XMLWriterSettingsTest
 {
+  private static final boolean [] BOOLS = new boolean [] { true, false };
+
   @Test
   public void testDefault ()
   {
@@ -115,24 +117,20 @@ public final class XMLWriterSettingsTest
                 aXWS.setCharset (aCS);
                 assertEquals (aCS, aXWS.getCharsetObj ());
                 assertEquals (aCS.name (), aXWS.getCharset ());
-                for (int nUseDoubleQuotesForAttributes = 0; nUseDoubleQuotesForAttributes < 2; ++nUseDoubleQuotesForAttributes)
+                for (final boolean bUseDoubleQuotesForAttributes : BOOLS)
                 {
-                  final boolean bUseDoubleQuotesForAttributes = nUseDoubleQuotesForAttributes == 0;
                   aXWS.setUseDoubleQuotesForAttributes (bUseDoubleQuotesForAttributes);
                   assertTrue (bUseDoubleQuotesForAttributes == aXWS.isUseDoubleQuotesForAttributes ());
-                  for (int nSpaceOnSelfClosedElement = 0; nSpaceOnSelfClosedElement < 2; ++nSpaceOnSelfClosedElement)
+                  for (final boolean bSpaceOnSelfClosedElement : BOOLS)
                   {
-                    final boolean bSpaceOnSelfClosedElement = nSpaceOnSelfClosedElement == 0;
                     aXWS.setSpaceOnSelfClosedElement (bSpaceOnSelfClosedElement);
                     assertTrue (bSpaceOnSelfClosedElement == aXWS.isSpaceOnSelfClosedElement ());
-                    for (int nEmitNamespaces = 0; nEmitNamespaces < 2; ++nEmitNamespaces)
+                    for (final boolean bEmitNamespaces : BOOLS)
                     {
-                      final boolean bEmitNamespaces = nEmitNamespaces == 0;
                       aXWS.setEmitNamespaces (bEmitNamespaces);
                       assertTrue (bEmitNamespaces == aXWS.isEmitNamespaces ());
-                      for (int nPutNamespaceContextPrefixesInRoot = 0; nPutNamespaceContextPrefixesInRoot < 2; ++nPutNamespaceContextPrefixesInRoot)
+                      for (final boolean bPutNamespaceContextPrefixesInRoot : BOOLS)
                       {
-                        final boolean bPutNamespaceContextPrefixesInRoot = nPutNamespaceContextPrefixesInRoot == 0;
                         aXWS.setPutNamespaceContextPrefixesInRoot (bPutNamespaceContextPrefixesInRoot);
                         assertTrue (bPutNamespaceContextPrefixesInRoot == aXWS.isPutNamespaceContextPrefixesInRoot ());
                         PhlocTestUtils.testDefaultImplementationWithEqualContentObject (aXWS,
