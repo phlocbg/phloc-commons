@@ -248,7 +248,7 @@ public final class ClassHelper
   }
 
   /**
-   * Get the primitive wrapper class of the the passed primitive class.
+   * Get the primitive wrapper class of the passed primitive class.
    * 
    * @param aClass
    *        The primitive class. May be <code>null</code>.
@@ -263,7 +263,7 @@ public final class ClassHelper
   }
 
   /**
-   * Get the primitive class of the the passed primitive wrapper class.
+   * Get the primitive class of the passed primitive wrapper class.
    * 
    * @param aClass
    *        The primitive wrapper class. May be <code>null</code>.
