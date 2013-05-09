@@ -1,8 +1,8 @@
-com.phloc.jaxb21.plugin.PluginAnnotate
-com.phloc.jaxb21.plugin.PluginCodeQuality
-com.phloc.jaxb21.plugin.PluginDefaultLocale
-com.phloc.jaxb21.plugin.PluginEqualsHashCode
-com.phloc.jaxb21.plugin.PluginFieldsPrivate
-com.phloc.jaxb21.plugin.PluginImplements
-com.phloc.jaxb21.plugin.PluginListExtension
-com.phloc.jaxb21.plugin.PluginToString
+com.sun.tools.xjc.addon.phloc.PluginAnnotate
+com.sun.tools.xjc.addon.phloc.PluginCodeQuality
+com.sun.tools.xjc.addon.phloc.PluginDefaultLocale
+com.sun.tools.xjc.addon.phloc.PluginEqualsHashCode
+com.sun.tools.xjc.addon.phloc.PluginFieldsPrivate
+com.sun.tools.xjc.addon.phloc.PluginImplements
+com.sun.tools.xjc.addon.phloc.PluginListExtension
+com.sun.tools.xjc.addon.phloc.PluginToString

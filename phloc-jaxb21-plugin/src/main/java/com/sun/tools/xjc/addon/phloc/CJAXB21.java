@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.jaxb21.plugin;
+package com.sun.tools.xjc.addon.phloc;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -53,6 +53,7 @@ public final class CJAXB21
     try
     {
       final Field aField = aMethod.getClass ().getField ("params");
+      @SuppressWarnings ("unchecked")
       final List <JVar> aParams = (List <JVar>) aField.get (aMethod);
       return ContainerHelper.newList (aParams);
     }
