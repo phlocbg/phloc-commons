@@ -41,8 +41,8 @@ public interface IBeanWrapper
   Object getPropertyValue (@Nonnull String sFieldName);
 
   /**
-   * Get the the property value in the desired class. How the conversion happens
-   * is implementation dependent.
+   * Get the property value in the desired class. How the conversion happens is
+   * implementation dependent.
    * 
    * @param sFieldName
    *        The field name to be retrieved.
