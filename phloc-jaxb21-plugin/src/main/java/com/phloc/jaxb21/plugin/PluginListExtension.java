@@ -100,7 +100,7 @@ public class PluginListExtension extends Plugin
       }
 
       for (final JMethod aMethod : ContainerHelper.newList (jClass.methods ()))
-        if (aMethod.name ().startsWith ("get"))
+        if (aMethod.name ().startsWith ("get") && CJAXB21.getMethodParams (aMethod).isEmpty ())
         {
           final JType aReturnType = aMethod.type ();
           // Find e.g. List<ItemListType> getItemList()

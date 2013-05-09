@@ -81,7 +81,7 @@ public class PluginAnnotate extends Plugin
       final JDefinedClass jClass = aClassOutline.implClass;
       for (final JMethod aMethod : ContainerHelper.newList (jClass.methods ()))
       {
-        final List <JVar> aParams = aMethod.params ();
+        final List <JVar> aParams = CJAXB21.getMethodParams (aMethod);
         if (aMethod.name ().startsWith ("get") && aParams.isEmpty ())
         {
           final JType aReturnType = aMethod.type ();
@@ -119,7 +119,7 @@ public class PluginAnnotate extends Plugin
     for (final JDefinedClass aObjFactory : aObjFactories)
       for (final JMethod aMethod : aObjFactory.methods ())
       {
-        final List <JVar> aParams = aMethod.params ();
+        final List <JVar> aParams = CJAXB21.getMethodParams (aMethod);
         if (aMethod.name ().startsWith ("create") &&
             aMethod.type ().name ().startsWith ("JAXBElement<") &&
             aParams.size () == 1)

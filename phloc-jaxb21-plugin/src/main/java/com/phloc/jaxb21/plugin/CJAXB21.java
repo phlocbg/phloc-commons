@@ -17,7 +17,18 @@
  */
 package com.phloc.jaxb21.plugin;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.List;
+
+import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
+
+import com.phloc.commons.annotations.ReturnsMutableCopy;
+import com.phloc.commons.collections.ContainerHelper;
+import com.sun.codemodel.JMethod;
+import com.sun.codemodel.JMods;
+import com.sun.codemodel.JVar;
 
 @Immutable
 public final class CJAXB21
@@ -26,4 +37,41 @@ public final class CJAXB21
 
   private CJAXB21 ()
   {}
+
+  /**
+   * Hack for JAXB 2.1 as in the codemodel, the params are not yet accessible :(
+   * Therefore reflection is used to access them.
+   * 
+   * @param aMethod
+   *        Method to get the params from
+   * @return A copy of the params
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public static List <JVar> getMethodParams (@Nonnull final JMethod aMethod)
+  {
+    try
+    {
+      final Field aField = aMethod.getClass ().getField ("params");
+      final List <JVar> aParams = (List <JVar>) aField.get (aMethod);
+      return ContainerHelper.newList (aParams);
+    }
+    catch (final Exception ex)
+    {
+      throw new IllegalArgumentException ("Failed to get method params!", ex);
+    }
+  }
+
+  public static void updateMods (final JMods aMods, final int nFlag, final boolean bSet)
+  {
+    try
+    {
+      final Method aSetFlag = aMods.getClass ().getMethod ("setFlag", int.class, boolean.class);
+      aSetFlag.invoke (aMods, Integer.valueOf (nFlag), Boolean.valueOf (bSet));
+    }
+    catch (final Exception ex)
+    {
+      throw new IllegalArgumentException ("Failed to set JMods flags!", ex);
+    }
+  }
 }
