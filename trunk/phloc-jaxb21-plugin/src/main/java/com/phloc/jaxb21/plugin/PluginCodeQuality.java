@@ -30,6 +30,7 @@ import com.phloc.commons.collections.ContainerHelper;
 import com.sun.codemodel.JDefinedClass;
 import com.sun.codemodel.JFieldVar;
 import com.sun.codemodel.JMethod;
+import com.sun.codemodel.JMod;
 import com.sun.codemodel.JVar;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.Plugin;
@@ -81,7 +82,7 @@ public class PluginCodeQuality extends Plugin
 
       for (final JMethod jMethod : jClass.methods ())
       {
-        final List <JVar> aParams = jMethod.params ();
+        final List <JVar> aParams = CJAXB21.getMethodParams (jMethod);
         if (jMethod.name ().startsWith ("set") && aParams.size () == 1)
         {
           final JVar aParam = aParams.get (0);
@@ -115,12 +116,16 @@ public class PluginCodeQuality extends Plugin
       {
         // Make all static QNames public
         if (aFieldVar.type ().name ().equals ("QName"))
-          aFieldVar.mods ().setPublic ();
+        {
+          CJAXB21.updateMods (aFieldVar.mods (), JMod.PUBLIC, true);
+          CJAXB21.updateMods (aFieldVar.mods (), JMod.PROTECTED, false);
+          CJAXB21.updateMods (aFieldVar.mods (), JMod.PRIVATE, false);
+        }
       }
 
       for (final JMethod aMethod : aObjFactory.methods ())
       {
-        final List <JVar> aParams = aMethod.params ();
+        final List <JVar> aParams = CJAXB21.getMethodParams (aMethod);
         if (aMethod.name ().startsWith ("create") &&
             aMethod.type ().name ().startsWith ("JAXBElement<") &&
             aParams.size () == 1)
@@ -129,7 +134,7 @@ public class PluginCodeQuality extends Plugin
           final JVar aParam = aParams.get (0);
 
           // Modify parameter
-          aParam.mods ().setFinal (true);
+          CJAXB21.updateMods (aParam.mods (), JMod.FINAL, true);
 
           // Modify method
           aMethod.javadoc ().addReturn ().add ("The created JAXBElement and never <code>null</code>.");

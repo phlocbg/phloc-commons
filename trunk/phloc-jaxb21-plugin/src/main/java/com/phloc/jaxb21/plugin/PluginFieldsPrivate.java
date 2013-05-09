@@ -27,6 +27,7 @@ import com.phloc.commons.annotations.IsSPIImplementation;
 import com.phloc.commons.collections.ContainerHelper;
 import com.sun.codemodel.JDefinedClass;
 import com.sun.codemodel.JFieldVar;
+import com.sun.codemodel.JMod;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.Plugin;
 import com.sun.tools.xjc.outline.ClassOutline;
@@ -69,7 +70,11 @@ public class PluginFieldsPrivate extends Plugin
     {
       final JDefinedClass jClass = aClassOutline.implClass;
       for (final JFieldVar aFieldVar : jClass.fields ().values ())
-        aFieldVar.mods ().setPrivate ();
+      {
+        CJAXB21.updateMods (aFieldVar.mods (), JMod.PUBLIC, false);
+        CJAXB21.updateMods (aFieldVar.mods (), JMod.PROTECTED, false);
+        CJAXB21.updateMods (aFieldVar.mods (), JMod.PRIVATE, true);
+      }
     }
     return true;
   }
