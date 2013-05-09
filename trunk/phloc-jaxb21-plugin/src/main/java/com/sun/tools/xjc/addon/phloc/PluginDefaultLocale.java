@@ -15,9 +15,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.jaxb21.plugin;
+package com.sun.tools.xjc.addon.phloc;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.Nonnull;
 
@@ -25,23 +26,24 @@ import org.xml.sax.ErrorHandler;
 
 import com.phloc.commons.annotations.IsSPIImplementation;
 import com.phloc.commons.collections.ContainerHelper;
-import com.sun.codemodel.JDefinedClass;
-import com.sun.codemodel.JFieldVar;
-import com.sun.codemodel.JMod;
+import com.phloc.commons.locale.LocaleCache;
+import com.phloc.commons.string.StringHelper;
+import com.sun.tools.xjc.BadCommandLineException;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.Plugin;
-import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.Outline;
 
 /**
- * Plugin that makes all fields private instead of the default "protected"
+ * Plugin implementation, that sets the default locale to "en_US" so that the
+ * comments are generated in the chosen locale instead of the platform default
+ * locale.
  * 
  * @author Philip Helger
  */
 @IsSPIImplementation
-public class PluginFieldsPrivate extends Plugin
+public class PluginDefaultLocale extends Plugin
 {
-  private static final String OPT = "Xphloc-fields-private";
+  private static final String OPT = "Xphloc-default-locale";
 
   @Override
   public String getOptionName ()
@@ -52,7 +54,7 @@ public class PluginFieldsPrivate extends Plugin
   @Override
   public String getUsage ()
   {
-    return "  -" + OPT + "    :  mark all fields as private";
+    return "  -" + OPT + " locale   :  set default locale to the specified parameter. Use e.g. 'en_US'";
   }
 
   @Override
@@ -62,20 +64,25 @@ public class PluginFieldsPrivate extends Plugin
   }
 
   @Override
+  public int parseArgument (final Options opt, final String [] args, final int i) throws BadCommandLineException
+  {
+    if (args[i].equals ("-" + OPT))
+    {
+      final String sLocale = opt.requireArgument ("-" + OPT, args, i + 1);
+      if (StringHelper.hasNoText (sLocale))
+        throw new BadCommandLineException ("No locale name provided. Use e.g. 'en_US'");
+      Locale.setDefault (LocaleCache.getLocale (sLocale));
+      return 2;
+    }
+    return 0;
+  }
+
+  @Override
   public boolean run (@Nonnull final Outline aOutline,
                       @Nonnull final Options aOpts,
                       @Nonnull final ErrorHandler aErrorHandler)
   {
-    for (final ClassOutline aClassOutline : aOutline.getClasses ())
-    {
-      final JDefinedClass jClass = aClassOutline.implClass;
-      for (final JFieldVar aFieldVar : jClass.fields ().values ())
-      {
-        CJAXB21.updateMods (aFieldVar.mods (), JMod.PUBLIC, false);
-        CJAXB21.updateMods (aFieldVar.mods (), JMod.PROTECTED, false);
-        CJAXB21.updateMods (aFieldVar.mods (), JMod.PRIVATE, true);
-      }
-    }
+    // Nothing to do here
     return true;
   }
 }
