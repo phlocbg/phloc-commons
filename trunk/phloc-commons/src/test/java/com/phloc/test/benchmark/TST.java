@@ -87,28 +87,30 @@ public class TST <DATATYPE>
 
   @Nonnull
   private Node <DATATYPE> _put (@Nullable final Node <DATATYPE> aNode,
-                                @Nonnull final char [] s,
+                                @Nonnull final char [] aChars,
                                 @Nullable final DATATYPE aValue,
                                 @Nonnegative final int nIndex)
   {
-    final char c = s[nIndex];
+    final char c = aChars[nIndex];
     Node <DATATYPE> aRealNode;
     if (aNode == null)
     {
       aRealNode = new Node <DATATYPE> (c);
-      if (nIndex == s.length - 1)
+
+      // Last char -> new entry -> new overall entry
+      if (nIndex == aChars.length - 1)
         m_nSize++;
     }
     else
       aRealNode = aNode;
     if (c < aRealNode.m_cChar)
-      aRealNode.m_aLeft = _put (aRealNode.m_aLeft, s, aValue, nIndex);
+      aRealNode.m_aLeft = _put (aRealNode.m_aLeft, aChars, aValue, nIndex);
     else
       if (c > aRealNode.m_cChar)
-        aRealNode.m_aRight = _put (aRealNode.m_aRight, s, aValue, nIndex);
+        aRealNode.m_aRight = _put (aRealNode.m_aRight, aChars, aValue, nIndex);
       else
-        if (nIndex < s.length - 1)
-          aRealNode.m_aMid = _put (aRealNode.m_aMid, s, aValue, nIndex + 1);
+        if (nIndex < aChars.length - 1)
+          aRealNode.m_aMid = _put (aRealNode.m_aMid, aChars, aValue, nIndex + 1);
         else
           aRealNode.m_aValue = aValue;
     return aRealNode;
@@ -170,6 +172,9 @@ public class TST <DATATYPE>
   @Nonnull
   public Collection <String> prefixMatch (@Nonnull @Nonempty final String sPrefix)
   {
+    if (StringHelper.hasNoText (sPrefix))
+      throw new IllegalArgumentException ("prefix must have length >= 1");
+
     final List <String> aList = new ArrayList <String> ();
     final Node <DATATYPE> aNode = _get (m_aRoot, sPrefix, 0);
     if (aNode != null)

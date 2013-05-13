@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TreeMap;
 
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.io.IReadableResource;
@@ -88,24 +89,24 @@ public final class BenchmarkTrie extends AbstractBenchmarkTask
                     _getMaxStringLength (aStrings) +
                     " chars!");
 
-    final StringMapBase aL1a = new StringMapHashMapEmpty (aStringArray);
-    final StringMapBase aL1b = new StringMapHashMapSizeKnown (aStringArray);
-    final StringMapBase aL2b = new StringMapTST (aStringArray);
+    final StringMapBase aL1a = new StringMapHashMap (aStringArray);
+    final StringMapBase aL1b = new StringMapTreeMap (aStringArray);
+    final StringMapBase aL2a = new StringMapTST (aStringArray);
     s_aLogger.info ("Initial check done!");
 
     double dTime;
 
     dTime = benchmarkTask (aL1a);
-    s_aLogger.info ("StringMapHashMapEmpty: " + LocaleFormatter.getFormatted (dTime, Locale.ENGLISH) + " ns");
+    s_aLogger.info ("StringMapHashMap: " + LocaleFormatter.getFormatted (dTime, Locale.ENGLISH) + " ns");
     s_aLogger.info (aL1a.size () + " entries");
 
     dTime = benchmarkTask (aL1b);
-    s_aLogger.info ("StringMapHashMapSizeKnown: " + LocaleFormatter.getFormatted (dTime, Locale.ENGLISH) + " ns");
+    s_aLogger.info ("StringMapTreeMap: " + LocaleFormatter.getFormatted (dTime, Locale.ENGLISH) + " ns");
     s_aLogger.info (aL1b.size () + " entries");
 
-    dTime = benchmarkTask (aL2b);
+    dTime = benchmarkTask (aL2a);
     s_aLogger.info ("StringMapTST: " + LocaleFormatter.getFormatted (dTime, Locale.ENGLISH) + " ns");
-    s_aLogger.info (aL2b.size () + " entries");
+    s_aLogger.info (aL2a.size () + " entries");
   }
 
   private abstract static class StringMapBase implements Runnable
@@ -121,6 +122,8 @@ public final class BenchmarkTrie extends AbstractBenchmarkTask
 
     public abstract void add (String sKey, String sValue);
 
+    public abstract String get (String sKey);
+
     public final void run ()
     {
       if (false)
@@ -131,14 +134,20 @@ public final class BenchmarkTrie extends AbstractBenchmarkTask
         final String s1 = m_aStrings[i];
         add (s1, s1);
       }
+      for (int i = 0; i < n; ++i)
+      {
+        final String s1 = m_aStrings[i];
+        if (!s1.equals (get (s1)))
+          throw new IllegalStateException (s1);
+      }
     }
   }
 
-  private static final class StringMapHashMapEmpty extends StringMapBase
+  private static final class StringMapHashMap extends StringMapBase
   {
     private final Map <String, String> m_aMap;
 
-    public StringMapHashMapEmpty (final String [] aStrings)
+    public StringMapHashMap (final String [] aStrings)
     {
       super (aStrings);
       m_aMap = new HashMap <String, String> ();
@@ -155,16 +164,22 @@ public final class BenchmarkTrie extends AbstractBenchmarkTask
     {
       m_aMap.put (sKey, sValue);
     }
+
+    @Override
+    public String get (final String sKey)
+    {
+      return m_aMap.get (sKey);
+    }
   }
 
-  private static final class StringMapHashMapSizeKnown extends StringMapBase
+  private static final class StringMapTreeMap extends StringMapBase
   {
     private final Map <String, String> m_aMap;
 
-    public StringMapHashMapSizeKnown (final String [] aStrings)
+    public StringMapTreeMap (final String [] aStrings)
     {
       super (aStrings);
-      m_aMap = new HashMap <String, String> (aStrings.length);
+      m_aMap = new TreeMap <String, String> ();
     }
 
     @Override
@@ -177,6 +192,12 @@ public final class BenchmarkTrie extends AbstractBenchmarkTask
     public void add (final String sKey, final String sValue)
     {
       m_aMap.put (sKey, sValue);
+    }
+
+    @Override
+    public String get (final String sKey)
+    {
+      return m_aMap.get (sKey);
     }
   }
 
@@ -200,6 +221,12 @@ public final class BenchmarkTrie extends AbstractBenchmarkTask
     public void add (final String sKey, final String sValue)
     {
       m_aMap.put (sKey, sValue);
+    }
+
+    @Override
+    public String get (final String sKey)
+    {
+      return m_aMap.get (sKey);
     }
   }
 }
