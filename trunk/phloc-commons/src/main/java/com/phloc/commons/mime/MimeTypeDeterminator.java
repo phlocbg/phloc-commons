@@ -18,6 +18,7 @@
 package com.phloc.commons.mime;
 
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -42,6 +43,8 @@ import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.charset.CharsetManager;
+import com.phloc.commons.charset.EUnicodeBOM;
+import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.exceptions.InitializationException;
 import com.phloc.commons.io.file.FilenameHelper;
@@ -52,7 +55,7 @@ import com.phloc.commons.state.EChange;
 
 /**
  * Contains a basic set of MimeType determination method.
- *
+ * 
  * @author Philip Helger
  */
 @ThreadSafe
@@ -74,8 +77,8 @@ public final class MimeTypeDeterminator
   private static final byte [] MIME_ID_TIFF_MOTOROLLA = new byte [] { 'M', 'M' };
   private static final byte [] MIME_ID_TIFF_INTEL = new byte [] { 'I', 'I' };
   private static final byte [] MIME_ID_PSD = new byte [] { '8', 'B', 'P', 'S' };
-  private static final byte [] MIME_ID_XML = new byte [] { '<', '?', 'x', 'm', 'l' };
   private static final byte [] MIME_ID_PDF = new byte [] { '%', 'P', 'D', 'F' };
+  private static final byte [] MIME_ID_XLS = new byte [] { (byte) 0xD0, (byte) 0xcd, 0x11, (byte) 0xe0 };
 
   static
   {
@@ -108,8 +111,37 @@ public final class MimeTypeDeterminator
     s_aContents.add (new MimeTypeContent (MIME_ID_TIFF_MOTOROLLA, CMimeType.IMAGE_TIFF));
     s_aContents.add (new MimeTypeContent (MIME_ID_TIFF_INTEL, CMimeType.IMAGE_TIFF));
     s_aContents.add (new MimeTypeContent (MIME_ID_PSD, CMimeType.IMAGE_PSD));
-    s_aContents.add (new MimeTypeContent (MIME_ID_XML, CMimeType.TEXT_XML));
     s_aContents.add (new MimeTypeContent (MIME_ID_PDF, CMimeType.APPLICATION_PDF));
+    s_aContents.add (new MimeTypeContent (MIME_ID_XLS, CMimeType.APPLICATION_MS_EXCEL));
+
+    // Add all XML mime types: as the combination of all BOMs and all character
+    // encodings as determined by
+    // http://www.w3.org/TR/REC-xml/#sec-guessing
+    final List <byte []> aXMLStuff = new ArrayList <byte []> ();
+    // UCS4
+    aXMLStuff.add (new byte [] { 0x3c, 0x00, 0x00, 0x00, 0x3f, 0x00, 0x00, 0x00 });
+    aXMLStuff.add (new byte [] { 0x00, 0x3c, 0x00, 0x00, 0x00, 0x3f, 0x00, 0x00 });
+    aXMLStuff.add (new byte [] { 0x00, 0x00, 0x3c, 0x00, 0x00, 0x00, 0x3f, 0x00 });
+    aXMLStuff.add (new byte [] { 0x00, 0x00, 0x00, 0x3c, 0x00, 0x00, 0x00, 0x3f });
+    // UTF-16
+    aXMLStuff.add (new byte [] { 0x00, 0x3c, 0x00, 0x3f });
+    aXMLStuff.add (new byte [] { 0x3c, 0x00, 0x3f, 0x00 });
+    // ISO-8859-1/UTF-8/ASCII etc.
+    aXMLStuff.add (new byte [] { 0x3c, 0x3f, 0x78, 0x6d });
+    // EBCDIC
+    aXMLStuff.add (new byte [] { 0x4c, 0x6f, (byte) 0xa7, (byte) 0x94 });
+
+    // Register all types without the BOM
+    for (final byte [] aXML : aXMLStuff)
+      MimeTypeDeterminator.registerMimeTypeContent (new MimeTypeContent (aXML, CMimeType.TEXT_XML));
+
+    // Register all type with the BOM
+    for (final EUnicodeBOM eBOM : EUnicodeBOM.values ())
+      for (final byte [] aXML : aXMLStuff)
+      {
+        final byte [] aData = ArrayHelper.getConcatenated (eBOM.getBytes (), aXML);
+        MimeTypeDeterminator.registerMimeTypeContent (new MimeTypeContent (aData, CMimeType.TEXT_XML));
+      }
   }
 
   @PresentForCodeCoverage
@@ -176,7 +208,7 @@ public final class MimeTypeDeterminator
 
   /**
    * Try to determine the MIME type from the given byte array.
-   *
+   * 
    * @param b
    *        The byte array. to parse.
    * @return {@link CMimeType#APPLICATION_OCTET_STREAM} if no specific MIME type
@@ -190,7 +222,7 @@ public final class MimeTypeDeterminator
 
   /**
    * Try to determine the MIME type from the given byte array.
-   *
+   * 
    * @param b
    *        The byte array to parse. May be <code>null</code>.
    * @param aDefault
