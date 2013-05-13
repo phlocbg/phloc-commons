@@ -39,52 +39,47 @@ public class TST <DATATYPE>
     return m_nSize;
   }
 
-  public boolean contains (@Nonnull final String sKey)
+  public boolean contains (@Nonnull @Nonempty final String sKey)
   {
     return get (sKey) != null;
   }
 
   @Nullable
-  public DATATYPE get (@Nonnull final String sKey)
+  public DATATYPE get (@Nonnull @Nonempty final String sKey)
   {
-    if (sKey == null)
-      throw new NullPointerException ();
-    if (sKey.length () == 0)
+    if (StringHelper.hasNoText (sKey))
       throw new IllegalArgumentException ("key must have length >= 1");
+
     final Node <DATATYPE> x = _get (m_aRoot, sKey, 0);
     return x == null ? null : x.m_aValue;
   }
 
   // return subtrie corresponding to given key
   @Nullable
-  private Node <DATATYPE> _get (@Nullable final Node <DATATYPE> x,
+  private Node <DATATYPE> _get (@Nullable final Node <DATATYPE> aNode,
                                 @Nonnull @Nonempty final String sKey,
                                 @Nonnegative final int nIndex)
   {
-    if (sKey == null)
-      throw new NullPointerException ();
-    if (sKey.length () == 0)
+    if (StringHelper.hasNoText (sKey))
       throw new IllegalArgumentException ("key must have length >= 1");
-    if (x != null)
+
+    if (aNode != null)
     {
       final char c = sKey.charAt (nIndex);
-      if (c < x.m_cChar)
-        return _get (x.m_aLeft, sKey, nIndex);
-      if (c > x.m_cChar)
-        return _get (x.m_aRight, sKey, nIndex);
+      if (c < aNode.m_cChar)
+        return _get (aNode.m_aLeft, sKey, nIndex);
+      if (c > aNode.m_cChar)
+        return _get (aNode.m_aRight, sKey, nIndex);
       if (nIndex < sKey.length () - 1)
-        return _get (x.m_aMid, sKey, nIndex + 1);
+        return _get (aNode.m_aMid, sKey, nIndex + 1);
     }
-    return x;
+    return aNode;
   }
 
-  /**************************************************************
-   * Insert string s into the symbol table.
-   **************************************************************/
-  public void put (@Nonnull final String sKey, @Nullable final DATATYPE val)
+  public void put (@Nonnull @Nonempty final String sKey, @Nullable final DATATYPE val)
   {
-    if (sKey == null)
-      throw new NullPointerException ("key");
+    if (StringHelper.hasNoText (sKey))
+      throw new IllegalArgumentException ("key must have length >= 1");
 
     final char [] aChars = sKey.toCharArray ();
     m_aRoot = _put (m_aRoot, aChars, val, 0);
