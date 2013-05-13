@@ -96,6 +96,10 @@ public final class BenchmarkTrie extends AbstractBenchmarkTask
 
     double dTime;
 
+    dTime = benchmarkTask (aL2a);
+    s_aLogger.info ("StringMapTST: " + LocaleFormatter.getFormatted (dTime, Locale.ENGLISH) + " ns");
+    s_aLogger.info (aL2a.size () + " entries");
+
     dTime = benchmarkTask (aL1a);
     s_aLogger.info ("StringMapHashMap: " + LocaleFormatter.getFormatted (dTime, Locale.ENGLISH) + " ns");
     s_aLogger.info (aL1a.size () + " entries");
@@ -103,10 +107,6 @@ public final class BenchmarkTrie extends AbstractBenchmarkTask
     dTime = benchmarkTask (aL1b);
     s_aLogger.info ("StringMapTreeMap: " + LocaleFormatter.getFormatted (dTime, Locale.ENGLISH) + " ns");
     s_aLogger.info (aL1b.size () + " entries");
-
-    dTime = benchmarkTask (aL2a);
-    s_aLogger.info ("StringMapTST: " + LocaleFormatter.getFormatted (dTime, Locale.ENGLISH) + " ns");
-    s_aLogger.info (aL2a.size () + " entries");
   }
 
   private abstract static class StringMapBase implements Runnable

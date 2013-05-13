@@ -76,44 +76,48 @@ public class TST <DATATYPE>
     return aNode;
   }
 
-  public void put (@Nonnull @Nonempty final String sKey, @Nullable final DATATYPE val)
+  public void put (@Nonnull @Nonempty final String sKey, @Nullable final DATATYPE aValue)
   {
     if (StringHelper.hasNoText (sKey))
       throw new IllegalArgumentException ("key must have length >= 1");
 
     final char [] aChars = sKey.toCharArray ();
-    m_aRoot = _put (m_aRoot, aChars, val, 0);
+    m_aRoot = _put (m_aRoot, aChars, 0, aValue);
   }
 
   @Nonnull
   private Node <DATATYPE> _put (@Nullable final Node <DATATYPE> aNode,
                                 @Nonnull final char [] aChars,
-                                @Nullable final DATATYPE aValue,
-                                @Nonnegative final int nIndex)
+                                @Nonnegative final int nIndex,
+                                @Nullable final DATATYPE aValue)
   {
     final char c = aChars[nIndex];
-    Node <DATATYPE> aRealNode;
     if (aNode == null)
     {
-      aRealNode = new Node <DATATYPE> (c);
+      final Node <DATATYPE> aRealNode = new Node <DATATYPE> (c);
 
       // Last char -> new entry -> new overall entry
       if (nIndex == aChars.length - 1)
+      {
+        aRealNode.m_aValue = aValue;
         m_nSize++;
+      }
+      else
+        aRealNode.m_aMid = _put (aRealNode.m_aMid, aChars, nIndex + 1, aValue);
+      return aRealNode;
     }
+
+    if (c < aNode.m_cChar)
+      aNode.m_aLeft = _put (aNode.m_aLeft, aChars, nIndex, aValue);
     else
-      aRealNode = aNode;
-    if (c < aRealNode.m_cChar)
-      aRealNode.m_aLeft = _put (aRealNode.m_aLeft, aChars, aValue, nIndex);
-    else
-      if (c > aRealNode.m_cChar)
-        aRealNode.m_aRight = _put (aRealNode.m_aRight, aChars, aValue, nIndex);
+      if (c > aNode.m_cChar)
+        aNode.m_aRight = _put (aNode.m_aRight, aChars, nIndex, aValue);
       else
         if (nIndex < aChars.length - 1)
-          aRealNode.m_aMid = _put (aRealNode.m_aMid, aChars, aValue, nIndex + 1);
+          aNode.m_aMid = _put (aNode.m_aMid, aChars, nIndex + 1, aValue);
         else
-          aRealNode.m_aValue = aValue;
-    return aRealNode;
+          aNode.m_aValue = aValue;
+    return aNode;
   }
 
   @Nullable
