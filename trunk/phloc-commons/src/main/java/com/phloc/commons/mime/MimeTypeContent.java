@@ -19,6 +19,7 @@ package com.phloc.commons.mime;
 
 import java.util.Arrays;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
@@ -29,6 +30,11 @@ import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
+/**
+ * Represent a single mapping from content bytes to a MimeType.
+ * 
+ * @author Philip Helger
+ */
 @Immutable
 @MustImplementEqualsAndHashcode
 public class MimeTypeContent
@@ -54,13 +60,21 @@ public class MimeTypeContent
     return ArrayHelper.getCopy (m_aContentBytes);
   }
 
+  @Nonnegative
+  public int getContentByteCount ()
+  {
+    return m_aContentBytes.length;
+  }
+
   @Nonnull
   public IMimeType getMimeType ()
   {
     return m_aMimeType;
   }
 
-  private static boolean _match (@Nonnull final byte [] aBytes, final int nOffset, @Nonnull final byte [] aCmpBytes)
+  private static boolean _match (@Nonnull final byte [] aBytes,
+                                 @Nonnegative final int nOffset,
+                                 @Nonnull final byte [] aCmpBytes)
   {
     final int nEnd = aCmpBytes.length;
     for (int i = 0; i < nEnd; ++i)
