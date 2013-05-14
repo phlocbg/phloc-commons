@@ -58,7 +58,11 @@ public final class BenchmarkTrie extends AbstractBenchmarkTask
     final BufferedReader aBR = new BufferedReader (new InputStreamReader (aRes.getInputStream (), aCharset));
     String sLine;
     while ((sLine = aBR.readLine ()) != null)
+    {
       ret.add (sLine);
+      if (ret.size () > 999)
+        break;
+    }
     StreamUtils.close (aBR);
     return ret;
   }
@@ -138,7 +142,7 @@ public final class BenchmarkTrie extends AbstractBenchmarkTask
       {
         final String s1 = m_aStrings[i];
         if (!s1.equals (get (s1)))
-          throw new IllegalStateException (s1);
+          throw new IllegalStateException ("Not found: " + s1);
       }
     }
   }
