@@ -50,30 +50,78 @@ public class TST <DATATYPE>
     if (StringHelper.hasNoText (sKey))
       throw new IllegalArgumentException ("key must have length >= 1");
 
-    final Node <DATATYPE> x = _get (m_aRoot, sKey, 0);
-    return x == null ? null : x.m_aValue;
+    final char [] aKey = sKey.toCharArray ();
+    Node <DATATYPE> aCurNode = m_aRoot;
+    int nIndex = 0;
+    char c = aKey[nIndex];
+    nIndex++;
+    while (aCurNode != null)
+    {
+      final char cNodeChar = aCurNode.m_cChar;
+      if (c < cNodeChar)
+        aCurNode = aCurNode.m_aLeft;
+      else
+        if (c > cNodeChar)
+          aCurNode = aCurNode.m_aRight;
+        else
+          if (nIndex < aKey.length)
+          {
+            aCurNode = aCurNode.m_aMid;
+            c = aKey[nIndex];
+            nIndex++;
+          }
+          else
+            return aCurNode.m_aValue;
+    }
+    return null;
   }
 
   // return subtrie corresponding to given key
   @Nullable
   private Node <DATATYPE> _get (@Nullable final Node <DATATYPE> aNode,
-                                @Nonnull @Nonempty final String sKey,
+                                @Nonnull @Nonempty final char [] aKey,
                                 @Nonnegative final int nIndex)
   {
-    if (StringHelper.hasNoText (sKey))
-      throw new IllegalArgumentException ("key must have length >= 1");
-
     if (aNode != null)
     {
-      final char c = sKey.charAt (nIndex);
+      final char c = aKey[nIndex];
       if (c < aNode.m_cChar)
-        return _get (aNode.m_aLeft, sKey, nIndex);
+        return _get (aNode.m_aLeft, aKey, nIndex);
       if (c > aNode.m_cChar)
-        return _get (aNode.m_aRight, sKey, nIndex);
-      if (nIndex < sKey.length () - 1)
-        return _get (aNode.m_aMid, sKey, nIndex + 1);
+        return _get (aNode.m_aRight, aKey, nIndex);
+      if (nIndex < aKey.length - 1)
+        return _get (aNode.m_aMid, aKey, nIndex + 1);
     }
     return aNode;
+  }
+
+  @Nullable
+  private Node <DATATYPE> _putRest (final char [] aChars, final int nIndex, final DATATYPE aValue)
+  {
+    if (nIndex >= aChars.length)
+      throw new IllegalArgumentException ();
+
+    Node <DATATYPE> ret = null;
+    Node <DATATYPE> aLastNode = null;
+
+    for (int i = nIndex; i < aChars.length; ++i)
+    {
+      final char c = aChars[i];
+      final Node <DATATYPE> aNode = new Node <DATATYPE> (c);
+      if (aLastNode != null)
+        aLastNode.m_aMid = aNode;
+      if (ret == null)
+        ret = aNode;
+
+      // Last char -> new entry -> new overall entry
+      if (i == aChars.length - 1)
+      {
+        aNode.m_aValue = aValue;
+        m_nSize++;
+      }
+      aLastNode = aNode;
+    }
+    return ret;
   }
 
   public void put (@Nonnull @Nonempty final String sKey, @Nullable final DATATYPE aValue)
@@ -82,42 +130,58 @@ public class TST <DATATYPE>
       throw new IllegalArgumentException ("key must have length >= 1");
 
     final char [] aChars = sKey.toCharArray ();
-    m_aRoot = _put (m_aRoot, aChars, 0, aValue);
-  }
-
-  @Nonnull
-  private Node <DATATYPE> _put (@Nullable final Node <DATATYPE> aNode,
-                                @Nonnull final char [] aChars,
-                                @Nonnegative final int nIndex,
-                                @Nullable final DATATYPE aValue)
-  {
-    final char c = aChars[nIndex];
-    if (aNode == null)
-    {
-      final Node <DATATYPE> aRealNode = new Node <DATATYPE> (c);
-
-      // Last char -> new entry -> new overall entry
-      if (nIndex == aChars.length - 1)
-      {
-        aRealNode.m_aValue = aValue;
-        m_nSize++;
-      }
-      else
-        aRealNode.m_aMid = _put (aRealNode.m_aMid, aChars, nIndex + 1, aValue);
-      return aRealNode;
-    }
-
-    if (c < aNode.m_cChar)
-      aNode.m_aLeft = _put (aNode.m_aLeft, aChars, nIndex, aValue);
+    if (m_aRoot == null)
+      m_aRoot = _putRest (aChars, 0, aValue);
     else
-      if (c > aNode.m_cChar)
-        aNode.m_aRight = _put (aNode.m_aRight, aChars, nIndex, aValue);
-      else
-        if (nIndex < aChars.length - 1)
-          aNode.m_aMid = _put (aNode.m_aMid, aChars, nIndex + 1, aValue);
+    {
+      Node <DATATYPE> aCurNode = m_aRoot;
+      Node <DATATYPE> aNextNode;
+      int nIndex = 0;
+      while (aCurNode != null)
+      {
+        final char c = aChars[nIndex];
+        final char cNodeChar = aCurNode.m_cChar;
+        if (c < cNodeChar)
+        {
+          aNextNode = aCurNode.m_aLeft;
+          if (aNextNode == null)
+          {
+            aCurNode.m_aLeft = _putRest (aChars, nIndex, aValue);
+            break;
+          }
+          aCurNode = aNextNode;
+        }
         else
-          aNode.m_aValue = aValue;
-    return aNode;
+          if (c > cNodeChar)
+          {
+            aNextNode = aCurNode.m_aRight;
+            if (aNextNode == null)
+            {
+              aCurNode.m_aRight = _putRest (aChars, nIndex, aValue);
+              break;
+            }
+            aCurNode = aNextNode;
+          }
+          else
+            if (nIndex < aChars.length - 1)
+            {
+              nIndex++;
+              aNextNode = aCurNode.m_aMid;
+              if (aNextNode == null)
+              {
+                aCurNode.m_aMid = _putRest (aChars, nIndex, aValue);
+                break;
+              }
+              aCurNode = aNextNode;
+            }
+            else
+            {
+              // End of key - update value
+              aCurNode.m_aValue = aValue;
+              break;
+            }
+      }
+    }
   }
 
   @Nullable
@@ -180,7 +244,8 @@ public class TST <DATATYPE>
       throw new IllegalArgumentException ("prefix must have length >= 1");
 
     final List <String> aList = new ArrayList <String> ();
-    final Node <DATATYPE> aNode = _get (m_aRoot, sPrefix, 0);
+    final char [] aPrefix = sPrefix.toCharArray ();
+    final Node <DATATYPE> aNode = _get (m_aRoot, aPrefix, 0);
     if (aNode != null)
     {
       if (aNode.m_aValue != null)
