@@ -47,6 +47,7 @@ import org.xml.sax.SAXParseException;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
+import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.error.IResourceErrorGroup;
 import com.phloc.commons.io.IReadableResource;
@@ -68,7 +69,7 @@ import com.phloc.commons.xml.transform.TransformSourceFactory;
 /**
  * This is the abstract reader and writer base class for JAXB enabled document
  * types.
- *
+ * 
  * @author Philip Helger
  */
 @NotThreadSafe
@@ -85,7 +86,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
 
   /**
    * Constructor.
-   *
+   * 
    * @param aType
    *        The class of the JAXB document implementation type. May not be
    *        <code>null</code>.
@@ -104,7 +105,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
 
   /**
    * Constructor.
-   *
+   * 
    * @param aType
    *        The class of the JAXB document implementation type. May not be
    *        <code>null</code>.
@@ -125,10 +126,32 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   }
 
   /**
+   * Constructor.
+   * 
+   * @param aType
+   *        The class of the JAXB document implementation type. May not be
+   *        <code>null</code>.
+   * @param aXSDs
+   *        The XSDs used to validate document. May be <code>null</code> or
+   *        empty indicating, that no XSD check is needed.
+   */
+  protected AbstractJAXBMarshaller (@Nonnull final Class <JAXBTYPE> aType, @Nullable final IReadableResource... aXSDs)
+  {
+    if (aType == null)
+      throw new NullPointerException ("type");
+    if (ArrayHelper.containsAnyNullElement (aXSDs))
+      throw new IllegalArgumentException ("The XSD list may not contain null elements!");
+    m_aType = aType;
+    if (aXSDs != null)
+      for (final IReadableResource aXSD : aXSDs)
+        m_aXSDs.add (aXSD);
+  }
+
+  /**
    * Set another factory to be used to create {@link ValidationEventHandler}
    * objects. By default a
    * {@link CollectingLoggingValidationEventHandlerFactory} is used.
-   *
+   * 
    * @param aVEHFactory
    *        The new factory to be used. May be <code>null</code>.
    */
@@ -151,7 +174,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   /**
    * Get the last created validation event handler. This may be required when
    * collecting all errors using a {@link CollectingValidationEventHandler}.
-   *
+   * 
    * @return The last created validation event handler. Or <code>null</code> if
    *         none was created so far.
    */
@@ -164,7 +187,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   /**
    * Get the last created collecting validation event handler. This may be
    * required when collecting all errors.
-   *
+   * 
    * @return The last created collecting validation event handler. Or
    *         <code>null</code> if none was created so far.
    */
@@ -199,7 +222,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
    * Get the parsing errors from the last read/write actions. Works only if the
    * last created validation event handler is a
    * {@link CollectingValidationEventHandler} or wraps one.
-   *
+   * 
    * @return All events for evaluation or <code>null</code> in case no
    *         {@link CollectingValidationEventHandler} is present.
    */
@@ -213,7 +236,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   /**
    * Clear the latest parsing errors. Works only if the last created validation
    * event handler is a {@link CollectingValidationEventHandler} or wraps one.
-   *
+   * 
    * @return {@link EChange#CHANGED} if a
    *         {@link CollectingValidationEventHandler} was found, and at least
    *         one element was removed from it.
@@ -227,7 +250,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
 
   /**
    * CHange the way formatting happens when calling write.
-   *
+   * 
    * @param bWriteFormatted
    *        <code>true</code> to write formatted output.
    * @return {@link EChange}
@@ -261,7 +284,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   /**
    * Should the {@link JAXBContextCache} be used? Since creating the JAXB
    * context is quite cost intensive this is recommended.
-   *
+   * 
    * @return <code>true</code> if the {@link JAXBContextCache} should be used,
    *         <code>false</code> otherwise. It's <code>true</code> by default.
    * @deprecated Because it contains a typo!
@@ -275,7 +298,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   /**
    * Should the {@link JAXBContextCache} be used? Since creating the JAXB
    * context is quite cost intensive this is recommended.
-   *
+   * 
    * @return <code>true</code> if the {@link JAXBContextCache} should be used,
    *         <code>false</code> otherwise. It's <code>true</code> by default.
    */
@@ -331,7 +354,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
 
   /**
    * Read a document from the specified file.
-   *
+   * 
    * @param aFile
    *        The file to read. May not be <code>null</code>.
    * @return <code>null</code> in case reading fails.
@@ -347,7 +370,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
 
   /**
    * Read a document from the specified resource.
-   *
+   * 
    * @param aResource
    *        The resource to read. May not be <code>null</code>.
    * @return <code>null</code> in case reading fails.
@@ -363,7 +386,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
 
   /**
    * Read a document from the specified DOM node.
-   *
+   * 
    * @param aNode
    *        The DOM node to read. May not be <code>null</code>.
    * @return <code>null</code> in case reading fails.
@@ -379,7 +402,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
 
   /**
    * Read a document from the specified source.
-   *
+   * 
    * @param aSource
    *        The source to read. May not be <code>null</code>.
    * @return <code>null</code> in case reading fails.
@@ -452,7 +475,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
    * Wrap the passed domain object into a {@link JAXBElement} for marshalling.
    * This can usually be done using the respective's package ObjectFactory
    * implementation.
-   *
+   * 
    * @param aObject
    *        The object to be wrapped.
    * @return The {@link JAXBElement} wrapping the document.
@@ -462,7 +485,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
 
   /**
    * Convert the passed object to a new DOM document
-   *
+   * 
    * @param aObject
    *        The object to be converted. May not be <code>null</code>.
    * @return <code>null</code> if converting the document failed.
@@ -479,7 +502,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
 
   /**
    * Write the passed object to a {@link File}.
-   *
+   * 
    * @param aObject
    *        The object to be written. May not be <code>null</code>.
    * @param aResultFile
@@ -494,7 +517,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
 
   /**
    * Write the passed object to an {@link IWritableResource}.
-   *
+   * 
    * @param aObject
    *        The object to be written. May not be <code>null</code>.
    * @param aResource
@@ -509,7 +532,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
 
   /**
    * Convert the passed object to XML.
-   *
+   * 
    * @param aObject
    *        The object to be converted. May not be <code>null</code>.
    * @param aResult
@@ -545,7 +568,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   /**
    * Utility method to directly convert the passed domain object to an XML
    * string.
-   *
+   * 
    * @param aObject
    *        The domain object to be converted. May not be <code>null</code>.
    * @return <code>null</code> if the passed domain object could not be
