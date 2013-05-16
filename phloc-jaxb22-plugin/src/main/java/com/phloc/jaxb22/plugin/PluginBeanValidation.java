@@ -48,7 +48,7 @@ import com.sun.xml.xsom.impl.parser.DelayedRef;
  */
 public class PluginBeanValidation extends Plugin
 {
-  private static final String PLUGIN_OPTION_NAME = "XBeanValidation";
+  private static final String PLUGIN_OPTION_NAME = "Xphloc-bean-validation";
   private static final String TARGET_NAMESPACE_PARAMETER_NAME = PLUGIN_OPTION_NAME + ":targetNamespace";
   private static final String JSR_349 = PLUGIN_OPTION_NAME + ":JSR_349";
   private static final String GENERATE_NOT_NULL_ANNOTATIONS = PLUGIN_OPTION_NAME + ":generateNotNullAnnotations";
@@ -174,14 +174,14 @@ public class PluginBeanValidation extends Plugin
     {
       if (!_hasAnnotation (aField, Size.class))
       {
-        aField.annotate (Size.class).param ("min", aMinOccurs.longValue ()).param ("max", aMaxOccurs.longValue ());
+        aField.annotate (Size.class).param ("min", aMinOccurs.intValue ()).param ("max", aMaxOccurs.intValue ());
       }
     }
     if (UNBOUNDED.equals (aMaxOccurs) && MathHelper.isGreaterThanZero (aMinOccurs))
     {
       if (!_hasAnnotation (aField, Size.class))
       {
-        aField.annotate (Size.class).param ("min", aMinOccurs.longValue ());
+        aField.annotate (Size.class).param ("min", aMinOccurs.intValue ());
       }
     }
 
@@ -323,20 +323,23 @@ public class PluginBeanValidation extends Plugin
     final String propertyName = property.getName (false);
 
     final XSComponent definition = property.getSchemaComponent ();
-    final RestrictionSimpleTypeImpl particle = (RestrictionSimpleTypeImpl) definition;
-    final XSSimpleType type = particle.asSimpleType ();
-    final JFieldVar var = clase.implClass.fields ().get (propertyName);
+    if (definition instanceof RestrictionSimpleTypeImpl)
+    {
+      final RestrictionSimpleTypeImpl particle = (RestrictionSimpleTypeImpl) definition;
+      final XSSimpleType type = particle.asSimpleType ();
+      final JFieldVar var = clase.implClass.fields ().get (propertyName);
 
-    // if (particle.isRequired()) {
-    // if (!hasAnnotation(var, NotNull.class)) {
-    // if (notNullAnnotations) {
-    // var.annotate(NotNull.class);
-    // }
-    // }
-    // }
+      // if (particle.isRequired()) {
+      // if (!hasAnnotation(var, NotNull.class)) {
+      // if (notNullAnnotations) {
+      // var.annotate(NotNull.class);
+      // }
+      // }
+      // }
 
-    _validAnnotation (type, var);
-    _processType (type, var);
+      _validAnnotation (type, var);
+      _processType (type, var);
+    }
   }
 
   /*
