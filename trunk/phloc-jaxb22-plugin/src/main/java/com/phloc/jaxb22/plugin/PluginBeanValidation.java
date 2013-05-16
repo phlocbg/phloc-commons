@@ -3,7 +3,6 @@ package com.phloc.jaxb22.plugin;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -17,6 +16,7 @@ import javax.validation.constraints.Size;
 
 import org.xml.sax.ErrorHandler;
 
+import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.math.MathHelper;
 import com.phloc.commons.string.StringParser;
 import com.sun.codemodel.JAnnotationUse;
@@ -46,12 +46,12 @@ import com.sun.xml.xsom.impl.parser.DelayedRef;
 /**
  * big thanks to original author: cocorossello
  */
-public class PluginValidation extends Plugin
+public class PluginBeanValidation extends Plugin
 {
-  public static final String PLUGIN_OPTION_NAME = "XJsr303Annotations";
-  public static final String TARGET_NAMESPACE_PARAMETER_NAME = PLUGIN_OPTION_NAME + ":targetNamespace";
-  public static final String JSR_349 = PLUGIN_OPTION_NAME + ":JSR_349";
-  public static final String GENERATE_NOT_NULL_ANNOTATIONS = PLUGIN_OPTION_NAME + ":generateNotNullAnnotations";
+  private static final String PLUGIN_OPTION_NAME = "XBeanValidation";
+  private static final String TARGET_NAMESPACE_PARAMETER_NAME = PLUGIN_OPTION_NAME + ":targetNamespace";
+  private static final String JSR_349 = PLUGIN_OPTION_NAME + ":JSR_349";
+  private static final String GENERATE_NOT_NULL_ANNOTATIONS = PLUGIN_OPTION_NAME + ":generateNotNullAnnotations";
   private static final BigInteger UNBOUNDED = BigInteger.valueOf (XSParticle.UNBOUNDED);
 
   public static final String [] NUMBERS = new String [] { "BigDecimal",
@@ -62,7 +62,6 @@ public class PluginValidation extends Plugin
                                                          "int",
                                                          "long" };
 
-  private final String sNamespace = "http://jaxb.dev.java.net/plugin/code-injector";
   private String sTargetNamespace = "TARGET_NAMESPACE";
   private boolean bJSR349 = false;
   private boolean bNotNullAnnotations = true;
@@ -106,19 +105,17 @@ public class PluginValidation extends Plugin
   @Override
   public List <String> getCustomizationURIs ()
   {
-    return Collections.singletonList (sNamespace);
-  }
-
-  @Override
-  public boolean isCustomizationTagName (final String sNSUri, final String sLocalName)
-  {
-    return sNSUri.equals (sNamespace) && sLocalName.equals ("code");
+    return ContainerHelper.newUnmodifiableList (CJAXB22.NSURI_PHLOC);
   }
 
   @Override
   public String getUsage ()
   {
-    return "  -XJsr303Annotations      :  inject Bean validation annotations (JSR 303); -XJsr303Annotations:targetNamespace=http://www.foo.com/bar  :      additional settings for @Valid annotation";
+    return "  -" +
+           PLUGIN_OPTION_NAME +
+           "      :  inject Bean validation annotations (JSR 303); -" +
+           TARGET_NAMESPACE_PARAMETER_NAME +
+           "=http://www.foo.com/bar  :      additional settings for @Valid annotation";
   }
 
   @Override
@@ -197,7 +194,6 @@ public class PluginValidation extends Plugin
         final XSElementDecl xsElementDecl = ((DelayedRef.Element) aTerm).get ();
         _processElement (aField, (ElementDecl) xsElementDecl);
       }
-
   }
 
   private void _processElement (final JFieldVar aField, final ElementDecl aElement)
