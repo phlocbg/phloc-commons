@@ -1,4 +1,5 @@
 com.phloc.jaxb22.plugin.PluginAnnotate
+com.phloc.jaxb22.plugin.PluginBeanValidation
 com.phloc.jaxb22.plugin.PluginCodeQuality
 com.phloc.jaxb22.plugin.PluginDefaultLocale
 com.phloc.jaxb22.plugin.PluginEqualsHashCode
