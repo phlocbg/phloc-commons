@@ -194,7 +194,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  */
 // IFJDK5
 // ELSE
-@Deprecated
+//@Deprecated
 // ENDIF
 @DevelopersNote ("Required only in JDK5. Use the regular ServiceLoader from JDK 1.6 otherwise.")
 public final class ServiceLoaderBackport <SPITYPE> implements Iterable <SPITYPE>

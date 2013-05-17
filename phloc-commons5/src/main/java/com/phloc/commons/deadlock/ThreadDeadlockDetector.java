@@ -51,10 +51,10 @@ public final class ThreadDeadlockDetector
   {
     long [] aThreadIDs;
     // IFJDK5
-    // aThreadIDs = m_aMBean.findMonitorDeadlockedThreads ();
+     aThreadIDs = m_aMBean.findMonitorDeadlockedThreads ();
     // ELSE
-    aThreadIDs = m_aMBean.isSynchronizerUsageSupported () ? m_aMBean.findDeadlockedThreads ()
-                                                         : m_aMBean.findMonitorDeadlockedThreads ();
+//    aThreadIDs = m_aMBean.isSynchronizerUsageSupported () ? m_aMBean.findDeadlockedThreads ()
+//                                                         : m_aMBean.findMonitorDeadlockedThreads ();
     // ENDIF
     if (ArrayHelper.isNotEmpty (aThreadIDs))
     {

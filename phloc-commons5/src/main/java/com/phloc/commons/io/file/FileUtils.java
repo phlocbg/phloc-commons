@@ -161,9 +161,9 @@ public final class FileUtils
     if (aFile == null)
       throw new NullPointerException ("file");
     // IFJDK5
-    // return true;
+     return true;
     // ELSE
-    return aFile.canExecute ();
+//    return aFile.canExecute ();
     // ENDIF
   }
 

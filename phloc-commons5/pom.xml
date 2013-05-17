@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0">
   <parent>
     <groupId>com.phloc</groupId>
     <artifactId>parent-pom</artifactId>
@@ -7,12 +7,12 @@
     <relativePath>../phloc-parent-pom/pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>phloc-commons</artifactId>
+  <artifactId>phloc-commons5</artifactId>
   <version>4.0.7-SNAPSHOT</version>
   <packaging>bundle</packaging>
-  <name>phloc-commons</name>
+  <name>phloc-commons5</name>
   <description>phloc very basic stuff</description>
-  <url>http://repo.phloc.com/apidocs/phloc-commons/${project.version}</url>
+  <url>http://repo.phloc.com/apidocs/phloc-commons5/${project.version}</url>
   
   <licenses>
     <license>
@@ -24,8 +24,8 @@
   
   <scm>
     <url>http://code.google.com/p/phloc-commons/source/browse/</url>
-    <connection>scm:svn:http://phloc-commons.googlecode.com/svn/trunk/phloc-commons</connection>
-    <developerConnection>scm:svn:https://phloc-commons.googlecode.com/svn/trunk/phloc-commons</developerConnection>
+    <connection>scm:svn:http://phloc-commons.googlecode.com/svn/trunk/phloc-commons5</connection>
+    <developerConnection>scm:svn:https://phloc-commons.googlecode.com/svn/trunk/phloc-commons5</developerConnection>
   </scm>
 
   <organization>
@@ -98,14 +98,16 @@
       <artifactId>jsr305</artifactId>
       <version>2.0.1</version>
     </dependency>
-    <!-- Xerces is required when handling XML 1.1!!! -->
+        <!-- Xerces is required when handling XML 1.1!!! -->
+
     <dependency>
       <groupId>xerces</groupId>
       <artifactId>xercesImpl</artifactId>
       <version>2.11.0</version>
       <optional>true</optional>
     </dependency>
-    <!-- trove4j is the suggested library for handling collections with primitive types -->
+        <!-- trove4j is the suggested library for handling collections with primitive types -->
+
     <dependency>
       <groupId>net.sf.trove4j</groupId>
       <artifactId>trove4j</artifactId>
@@ -172,6 +174,14 @@
           </instructions>
         </configuration>
       </plugin>
-    </plugins>
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
+</plugins>
   </build>
 </project>
