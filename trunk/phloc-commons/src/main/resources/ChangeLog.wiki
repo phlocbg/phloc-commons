@@ -2,6 +2,7 @@
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
 <table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody>
+<tr><td>5/17/13</td><td>add</td><td>feature</td><td></td><td>Added a tool to create JDK5 versions of a project based on some meta comments in the source files.</td></tr>
 <tr><td>5/15/13</td><td>add</td><td>api</td><td></td><td>Added new constructor to AbstractJAXBMarshaller which takes an array of XSD resources</td></tr>
 <tr><td>5/13/13</td><td>add</td><td>tech</td><td></td><td>Added detection of application/vnd.ms-excel content in MimeTypeDeterminator</td></tr>
 <tr><td>5/13/13</td><td>update</td><td>tech</td><td></td><td>Improved detection of text/xml content in MimeTypeDeterminator</td></tr>

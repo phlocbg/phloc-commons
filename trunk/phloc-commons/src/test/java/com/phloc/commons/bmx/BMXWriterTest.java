@@ -54,6 +54,7 @@ public final class BMXWriterTest
   public void testBasic ()
   {
     final IMicroDocument aDoc = MicroReader.readMicroXML (new File ("pom.xml"));
+    assertNotNull (aDoc);
 
     final File aFile1 = new File ("target/junittest", "test.bmx");
     new BMXWriter ().writeToFile (aDoc, aFile1);

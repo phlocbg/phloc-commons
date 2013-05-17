@@ -20,6 +20,11 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2013-05-17" category="feature" action="add">
+    <change>
+      <text locale="en">Added a tool to create JDK5 versions of a project based on some meta comments in the source files.</text>
+    </change>
+  </entry>
   <entry date="2013-05-15" category="api" action="add">
     <change>
       <text locale="en">Added new constructor to AbstractJAXBMarshaller which takes an array of XSD resources</text>
