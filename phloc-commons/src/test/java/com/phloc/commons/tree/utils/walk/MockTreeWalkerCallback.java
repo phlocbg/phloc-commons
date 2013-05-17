@@ -21,8 +21,7 @@ import com.phloc.commons.hierarchy.DefaultHierarchyWalkerCallback;
 import com.phloc.commons.mutable.MutableInt;
 import com.phloc.commons.tree.withid.DefaultTreeItemWithID;
 
-public final class MockTreeWalkerCallback extends
-                                                DefaultHierarchyWalkerCallback <DefaultTreeItemWithID <String, Object>>
+public final class MockTreeWalkerCallback extends DefaultHierarchyWalkerCallback <DefaultTreeItemWithID <String, Object>>
 {
   private final MutableInt m_aMI;
 
