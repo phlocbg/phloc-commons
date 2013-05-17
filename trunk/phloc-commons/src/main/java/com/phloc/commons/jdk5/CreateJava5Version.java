@@ -10,6 +10,7 @@ import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.filter.collections.FilterIterator;
@@ -23,6 +24,7 @@ import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.serialize.MicroReader;
 import com.phloc.commons.microdom.serialize.MicroWriter;
 import com.phloc.commons.state.ETriState;
+import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.xml.namespace.MapBasedNamespaceContext;
 import com.phloc.commons.xml.serialize.XMLWriterSettings;
 
@@ -223,7 +225,9 @@ public final class CreateJava5Version
     {
       if (bModifiedFile)
         s_aLogger.info ("Modified file " + aSrcFile.getName ());
-      SimpleFileIO.writeFile (aDstFile, aLines, CCharset.CHARSET_UTF_8_OBJ);
+
+      final String sContent = StringHelper.getImploded (CGlobal.LINE_SEPARATOR, aLines) + CGlobal.LINE_SEPARATOR;
+      SimpleFileIO.writeFile (aDstFile, sContent, CCharset.CHARSET_UTF_8_OBJ);
     }
   }
 
