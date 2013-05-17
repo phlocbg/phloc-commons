@@ -47,9 +47,9 @@ public final class DateFormatSymbolsFactory
   public static DateFormatSymbols getInstance (final Locale aLocale)
   {
     // IFJDK5
-    // return new DateFormatSymbols (aLocale);
+     return new DateFormatSymbols (aLocale);
     // ELSE
-    return DateFormatSymbols.getInstance (aLocale);
+//    return DateFormatSymbols.getInstance (aLocale);
     // ENDIF
   }
 }

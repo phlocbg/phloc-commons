@@ -47,9 +47,9 @@ public final class DecimalFormatSymbolsFactory
   public static DecimalFormatSymbols getInstance (final Locale aLocale)
   {
     // IFJDK5
-    // return new DecimalFormatSymbols (aLocale);
+     return new DecimalFormatSymbols (aLocale);
     // ELSE
-    return DecimalFormatSymbols.getInstance (aLocale);
+//    return DecimalFormatSymbols.getInstance (aLocale);
     // ENDIF
   }
 }

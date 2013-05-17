@@ -109,9 +109,9 @@ public final class CharsetManager
       throw new IllegalArgumentException ("Cannot encode to " + aCharset);
 
     // IFJDK5
-    // return getAsBytes (sText, aCharset.name ());
+     return getAsBytes (sText, aCharset.name ());
     // ELSE
-    return sText.getBytes (aCharset);
+//    return sText.getBytes (aCharset);
     // ENDIF
   }
 
@@ -210,9 +210,9 @@ public final class CharsetManager
       throw new NullPointerException ("charset");
 
     // IFJDK5
-    // return getAsString (aBuffer, nOfs, nLength, aCharset.name ());
+     return getAsString (aBuffer, nOfs, nLength, aCharset.name ());
     // ELSE
-    return new String (aBuffer, nOfs, nLength, aCharset);
+//    return new String (aBuffer, nOfs, nLength, aCharset);
     // ENDIF
   }
 

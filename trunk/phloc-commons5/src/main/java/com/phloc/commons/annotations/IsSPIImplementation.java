@@ -37,7 +37,7 @@ import java.lang.annotation.Target;
 @Target ({ ElementType.TYPE })
 @Documented
 // IFJDK5
-// @SuppressWarnings ("javadoc")
+ @SuppressWarnings ("javadoc")
 // ELSE
 // ENDIF
 public @interface IsSPIImplementation

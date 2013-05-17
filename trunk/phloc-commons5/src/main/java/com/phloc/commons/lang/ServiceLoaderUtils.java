@@ -20,7 +20,7 @@ package com.phloc.commons.lang;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ServiceLoader;
+// import java.util.ServiceLoader;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -39,7 +39,7 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
  * @author Philip Helger
  */
 // IFJDK5
-// @SuppressWarnings ("javadoc")
+ @SuppressWarnings ("javadoc")
 // ELSE
 // ENDIF
 @Immutable
@@ -139,10 +139,10 @@ public final class ServiceLoaderUtils
       aRealLogger.debug ("Trying to load all SPI implementations of " + aSPIClass);
 
     // IFJDK5
-    // final ServiceLoaderBackport <T> aServiceLoader =
-    // ServiceLoaderBackport.<T> load (aSPIClass, aClassLoader);
+     final ServiceLoaderBackport <T> aServiceLoader =
+     ServiceLoaderBackport.<T> load (aSPIClass, aClassLoader);
     // ELSE
-    final ServiceLoader <T> aServiceLoader = ServiceLoader.<T> load (aSPIClass, aClassLoader);
+//    final ServiceLoader <T> aServiceLoader = ServiceLoader.<T> load (aSPIClass, aClassLoader);
     // ENDIF
     final List <T> ret = new ArrayList <T> ();
 
