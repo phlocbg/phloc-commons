@@ -156,8 +156,8 @@ public final class ResourceBundleUtils
     // IFJDK5
     // ELSE
     ResourceBundle.clearCache (aClassLoader);
-    if (s_aLogger.isDebugEnabled ())
-      s_aLogger.debug ("Cache was cleared: " + ResourceBundle.class.getName ());
     // ENDIF
+    if (s_aLogger.isDebugEnabled ())
+      s_aLogger.debug ("Cache was cleared: " + ResourceBundle.class.getName () + "; classloader=" + aClassLoader);
   }
 }

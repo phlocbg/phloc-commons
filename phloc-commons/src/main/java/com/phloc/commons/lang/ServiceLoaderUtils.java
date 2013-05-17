@@ -38,6 +38,10 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
  * @author boris
  * @author Philip Helger
  */
+// IFJDK5
+// @SuppressWarnings ("javadoc")
+// ELSE
+// ENDIF
 @Immutable
 public final class ServiceLoaderUtils
 {

@@ -41,6 +41,7 @@ import com.phloc.commons.type.IHasType;
  * 
  * @author Philip Helger
  */
+// SKIPJDK5
 public final class FuncTestServiceLoader
 {
   @Test

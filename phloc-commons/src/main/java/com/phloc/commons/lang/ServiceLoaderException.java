@@ -24,8 +24,11 @@ import com.phloc.commons.annotations.DevelopersNote;
  * 
  * @author Philip Helger
  */
+// IFJDK5
+// ELSE
 @Deprecated
-@DevelopersNote ("Use the exception from java.util")
+// ENDIF
+@DevelopersNote ("Required only in JDK5. Use the regular ServiceLoader from JDK 1.6 otherwise.")
 public final class ServiceLoaderException extends RuntimeException
 {
   public ServiceLoaderException (final String sMsg)
