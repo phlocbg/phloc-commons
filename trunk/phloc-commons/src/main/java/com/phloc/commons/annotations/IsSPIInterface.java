@@ -34,6 +34,10 @@ import java.lang.annotation.Target;
 @Retention (RetentionPolicy.CLASS)
 @Target ({ ElementType.TYPE })
 @Documented
+// IFJDK5
+// @SuppressWarnings ("javadoc")
+// ELSE
+// ENDIF
 public @interface IsSPIInterface
 {
   String value() default "";

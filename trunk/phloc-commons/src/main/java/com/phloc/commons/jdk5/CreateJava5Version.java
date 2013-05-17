@@ -87,10 +87,10 @@ public final class CreateJava5Version
     MicroWriter.writeToFile (aDoc, aDstFile, aXWS);
   }
 
-  private static void _updateEclipseProject (final File aSrcFile,
-                                             final File aDstFile,
-                                             final String sSrcComponentName,
-                                             final String sDstComponentName)
+  private static void _updateEclipseProject (@Nonnull final File aSrcFile,
+                                             @Nonnull final File aDstFile,
+                                             @Nonnull final String sSrcComponentName,
+                                             @Nonnull final String sDstComponentName)
   {
     final IMicroDocument aDoc = MicroReader.readMicroXML (aSrcFile);
     final IMicroElement eRoot = aDoc.getDocumentElement ();
@@ -100,6 +100,27 @@ public final class CreateJava5Version
       throw new IllegalStateException ("Illegal name");
     eName.removeAllChildren ();
     eName.appendText (sDstComponentName);
+
+    // Write
+    MicroWriter.writeToFile (aDoc, aDstFile);
+  }
+
+  private static void _updateEclipseClasspath (@Nonnull final File aSrcFile, @Nonnull final File aDstFile)
+  {
+    final IMicroDocument aDoc = MicroReader.readMicroXML (aSrcFile);
+    final IMicroElement eRoot = aDoc.getDocumentElement ();
+
+    for (final IMicroElement eEntry : eRoot.getAllChildElements ("classpathentry"))
+      if ("con".equals (eEntry.getAttribute ("kind")))
+      {
+        final String sPath = eEntry.getAttribute ("path");
+        final int nIndex = sPath.indexOf ("JavaSE-");
+        if (nIndex >= 0)
+        {
+          // Main modification
+          eEntry.setAttribute ("path", sPath.replaceAll ("JavaSE-1\\.[0-9]", "J2SE-1.5"));
+        }
+      }
 
     // Write
     MicroWriter.writeToFile (aDoc, aDstFile);
@@ -128,18 +149,25 @@ public final class CreateJava5Version
         if (sTrimmedLine.startsWith ("IFJDK5"))
         {
           // The following lines are for JDK5
+          if (eJDK5Mode.isDefined ())
+            throw new IllegalStateException ("Cannot enter JDK5 mode!");
           eJDK5Mode = ETriState.TRUE;
         }
         else
           if (sTrimmedLine.startsWith ("ELSE"))
           {
             // Switch from JDK5 to default mode
+            if (!eJDK5Mode.isTrue ())
+              throw new IllegalStateException ("Not in JDK5 mode!");
             eJDK5Mode = ETriState.FALSE;
           }
           else
             if (sTrimmedLine.startsWith ("ENDIF"))
             {
               // We're back to regular mode which is valid for all versions
+              // Note: this is different from "isTrue"!!!
+              if (!eJDK5Mode.isFalse ())
+                throw new IllegalStateException ("Not in default mode!");
               eJDK5Mode = ETriState.UNDEFINED;
             }
             else
@@ -157,11 +185,17 @@ public final class CreateJava5Version
           aLines.set (i, "//" + sLine);
           bModifiedFile = true;
         }
+        else
+        {
+          // All the hacks start here
+          if (sLine.equals ("import java.util.ServiceLoader;"))
+            aLines.set (i, "// " + sLine);
+        }
     }
 
     // The following should never happen!
     if (eJDK5Mode.isDefined ())
-      s_aLogger.error ("JDK5 mode is inconsistent in file " + aSrcFile.getAbsolutePath ());
+      throw new IllegalStateException ("JDK5 comments are inconsistent in file " + aSrcFile.getAbsolutePath ());
 
     if (bSkipFile)
       s_aLogger.info ("Skipping file " + aSrcFile.getName ());
@@ -198,21 +232,18 @@ public final class CreateJava5Version
       final File aDstFile = new File (aDstBaseDir, sSrcRelPath);
 
       if (sSrcName.equals ("pom.xml"))
-      {
         _updatePOM (aSrcFile, aDstFile, sSrcComponentName, sDstComponentName);
-      }
       else
         if (sSrcName.equals (".project"))
-        {
           _updateEclipseProject (aSrcFile, aDstFile, sSrcComponentName, sDstComponentName);
-        }
         else
-          if (sSrcName.endsWith (".java"))
-          {
-            _processJavaFile (aSrcFile, aDstFile);
-          }
+          if (sSrcName.equals (".classpath"))
+            _updateEclipseClasspath (aSrcFile, aDstFile);
           else
-            aFOM.copyFile (aSrcFile, aDstFile);
+            if (sSrcName.endsWith (".java"))
+              _processJavaFile (aSrcFile, aDstFile);
+            else
+              aFOM.copyFile (aSrcFile, aDstFile);
     }
     s_aLogger.info ("Done creating JDK5 version of " + sSrcComponentName);
   }
