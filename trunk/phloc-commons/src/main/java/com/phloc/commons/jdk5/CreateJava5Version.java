@@ -148,6 +148,13 @@ public final class CreateJava5Version
     MicroWriter.writeToFile (aDoc, aDstFile);
   }
 
+  private static void _updateEclipsePrefs (@Nonnull final File aSrcFile, @Nonnull final File aDstFile)
+  {
+    String sContent = SimpleFileIO.readFileAsString (aSrcFile, CCharset.CHARSET_UTF_8_OBJ);
+    sContent = sContent.replace ("=1.6", "=1.5");
+    SimpleFileIO.writeFile (aDstFile, sContent, CCharset.CHARSET_UTF_8_OBJ);
+  }
+
   private static void _processJavaFile (@Nonnull final File aSrcFile, @Nonnull final File aDstFile)
   {
     boolean bSkipFile = false;
@@ -264,15 +271,18 @@ public final class CreateJava5Version
           if (sSrcName.equals (".classpath"))
             _updateEclipseClasspath (aSrcFile, aDstFile);
           else
-            if (sSrcName.endsWith (".java"))
-              _processJavaFile (aSrcFile, aDstFile);
+            if (sSrcName.equals ("org.eclipse.jdt.core.prefs"))
+              _updateEclipsePrefs (aSrcFile, aDstFile);
             else
-              if (sSrcName.equals (sSrcComponentName + ".iml"))
-              {
-                // Skip the file - Idea project file
-              }
+              if (sSrcName.endsWith (".java"))
+                _processJavaFile (aSrcFile, aDstFile);
               else
-                aFOM.copyFile (aSrcFile, aDstFile);
+                if (sSrcName.equals (sSrcComponentName + ".iml"))
+                {
+                  // Skip the file - Idea project file
+                }
+                else
+                  aFOM.copyFile (aSrcFile, aDstFile);
     }
 
     // Add a simple text file as information!
