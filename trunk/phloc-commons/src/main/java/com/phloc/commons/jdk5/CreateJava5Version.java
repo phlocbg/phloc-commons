@@ -243,8 +243,19 @@ public final class CreateJava5Version
             if (sSrcName.endsWith (".java"))
               _processJavaFile (aSrcFile, aDstFile);
             else
-              aFOM.copyFile (aSrcFile, aDstFile);
+              if (sSrcName.equals (sSrcComponentName + ".iml"))
+              {
+                // Skip the file - Idea project file
+              }
+              else
+                aFOM.copyFile (aSrcFile, aDstFile);
     }
+
+    // Add a simple text file as information!
+    SimpleFileIO.writeFile (new File (aDstBaseDir, "readme-created.1st"),
+                            "The content of this project is 100% automatically generated.\n"
+                                + "Do not alter anything in here, as it will be overwritten next time the project is generated!!!",
+                            CCharset.CHARSET_UTF_8_OBJ);
     s_aLogger.info ("Done creating JDK5 version of " + sSrcComponentName);
   }
 }
