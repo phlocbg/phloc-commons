@@ -11,9 +11,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.filter.collections.FilterIterator;
+import com.phloc.commons.hierarchy.DefaultHierarchyWalkerCallback;
 import com.phloc.commons.io.file.FileOperationManager;
 import com.phloc.commons.io.file.SimpleFileIO;
 import com.phloc.commons.io.file.filter.FileFilterToIFilterAdapter;
@@ -21,8 +23,10 @@ import com.phloc.commons.io.file.filter.FilenameFilterMatchNoRegEx;
 import com.phloc.commons.io.file.iterate.FileSystemRecursiveIterator;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroElement;
+import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.microdom.serialize.MicroReader;
 import com.phloc.commons.microdom.serialize.MicroWriter;
+import com.phloc.commons.microdom.utils.MicroWalker;
 import com.phloc.commons.state.ETriState;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.xml.namespace.MapBasedNamespaceContext;
@@ -45,6 +49,13 @@ public final class CreateJava5Version
 
   private CreateJava5Version ()
   {}
+
+  @Nonnull
+  @Nonempty
+  private static String _getNewArtifactName (@Nonnull final String sOldName)
+  {
+    return sOldName + "-jdk5";
+  }
 
   private static void _updatePOM (@Nonnull final File aSrcFile,
                                   @Nonnull final File aDstFile,
@@ -102,11 +113,40 @@ public final class CreateJava5Version
     eConfiguration.appendElement (eRoot.getNamespaceURI (), "source").appendText ("1.5");
     eConfiguration.appendElement (eRoot.getNamespaceURI (), "target").appendText ("1.5");
 
+    // Modify all dependencies
+    MicroWalker.walkNode (eRoot, new DefaultHierarchyWalkerCallback <IMicroNode> ()
+    {
+      @Override
+      public void onItemBeforeChildren (final IMicroNode aItem)
+      {
+        if (aItem.isElement ())
+        {
+          final IMicroElement eItem = (IMicroElement) aItem;
+          if (eItem.getLocalName ().equals ("groupId"))
+          {
+            final String sGroupID = eItem.getTextContent ();
+            if (sGroupID.equals ("com.phloc"))
+            {
+              final IMicroElement eArtifactId = ((IMicroElement) eItem.getParent ()).getFirstChildElement ("artifactId");
+              final String sArtifactId = eArtifactId.getTextContent ();
+              if (!"parent-pom".equals (sArtifactId))
+              {
+                eArtifact.removeAllChildren ();
+                eArtifact.appendText (_getNewArtifactName (sArtifactId));
+              }
+            }
+          }
+        }
+      }
+    });
+
     // Write
     final XMLWriterSettings aXWS = new XMLWriterSettings ().setNamespaceContext (new MapBasedNamespaceContext ().addMapping ("xsi",
                                                                                                                              "http://www.w3.org/2001/XMLSchema-instance"))
                                                            .setPutNamespaceContextPrefixesInRoot (true);
     MicroWriter.writeToFile (aDoc, aDstFile, aXWS);
+
+    s_aLogger.info ("Modified pom.xml");
   }
 
   private static void _updateEclipseProject (@Nonnull final File aSrcFile,
@@ -125,6 +165,8 @@ public final class CreateJava5Version
 
     // Write
     MicroWriter.writeToFile (aDoc, aDstFile);
+
+    s_aLogger.info ("Modified Eclipse project file");
   }
 
   private static void _updateEclipseClasspath (@Nonnull final File aSrcFile, @Nonnull final File aDstFile)
@@ -146,6 +188,8 @@ public final class CreateJava5Version
 
     // Write
     MicroWriter.writeToFile (aDoc, aDstFile);
+
+    s_aLogger.info ("Modified Eclipse classpath file");
   }
 
   private static void _updateEclipsePrefs (@Nonnull final File aSrcFile, @Nonnull final File aDstFile)
@@ -153,6 +197,8 @@ public final class CreateJava5Version
     String sContent = SimpleFileIO.readFileAsString (aSrcFile, CCharset.CHARSET_UTF_8_OBJ);
     sContent = sContent.replace ("=1.6", "=1.5");
     SimpleFileIO.writeFile (aDstFile, sContent, CCharset.CHARSET_UTF_8_OBJ);
+
+    s_aLogger.info ("Modified Eclipse preferences file");
   }
 
   private static void _processJavaFile (@Nonnull final File aSrcFile, @Nonnull final File aDstFile)
@@ -246,13 +292,14 @@ public final class CreateJava5Version
     if (!aSrcBaseDir.isDirectory ())
       throw new IllegalArgumentException ("Illegal base directory provided: " + aSrcBaseDir);
 
+    final String sSrcComponentName = aSrcBaseDir.getName ();
+    final String sDstComponentName = _getNewArtifactName (sSrcComponentName);
+
     final FileOperationManager aFOM = new FileOperationManager ();
-    final File aDstBaseDir = new File (aSrcBaseDir, "../" + aSrcBaseDir.getName () + "5").getCanonicalFile ();
+    final File aDstBaseDir = new File (aSrcBaseDir, "../" + sDstComponentName).getCanonicalFile ();
     s_aLogger.info ("From " + aSrcBaseDir.toString ());
     s_aLogger.info ("To " + aDstBaseDir.toString ());
     final String sSrcBasePath = aSrcBaseDir.getAbsolutePath ();
-    final String sSrcComponentName = aSrcBaseDir.getName ();
-    final String sDstComponentName = aDstBaseDir.getName ();
     final FilenameFilter aFF = new FilenameFilterMatchNoRegEx ("target");
     for (final File aSrcFile : new FilterIterator <File> (new FileSystemRecursiveIterator (aSrcBaseDir, aFF),
                                                           new FileFilterToIFilterAdapter (aFF)))
