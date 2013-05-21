@@ -7,12 +7,12 @@
     <relativePath>../phloc-parent-pom/pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>phloc-commons5</artifactId>
+  <artifactId>parent-pom-jdk5</artifactId>
   <version>4.0.7-SNAPSHOT</version>
   <packaging>bundle</packaging>
-  <name>phloc-commons5</name>
+  <name>phloc-commons-jdk5</name>
   <description>phloc very basic stuff</description>
-  <url>http://repo.phloc.com/apidocs/phloc-commons5/${project.version}</url>
+  <url>http://repo.phloc.com/apidocs/phloc-commons-jdk5/${project.version}</url>
   
   <licenses>
     <license>
@@ -24,8 +24,8 @@
   
   <scm>
     <url>http://code.google.com/p/phloc-commons/source/browse/</url>
-    <connection>scm:svn:http://phloc-commons.googlecode.com/svn/trunk/phloc-commons5</connection>
-    <developerConnection>scm:svn:https://phloc-commons.googlecode.com/svn/trunk/phloc-commons5</developerConnection>
+    <connection>scm:svn:http://phloc-commons.googlecode.com/svn/trunk/phloc-commons-jdk5</connection>
+    <developerConnection>scm:svn:https://phloc-commons.googlecode.com/svn/trunk/phloc-commons-jdk5</developerConnection>
   </scm>
 
   <organization>
