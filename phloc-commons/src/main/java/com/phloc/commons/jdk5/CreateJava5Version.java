@@ -114,7 +114,7 @@ public final class CreateJava5Version
     eConfiguration.appendElement (eRoot.getNamespaceURI (), "target").appendText ("1.5");
 
     // Modify all dependencies
-    MicroWalker.walkNode (eRoot, new DefaultHierarchyWalkerCallback <IMicroNode> ()
+    MicroWalker.walkNode (aDoc, new DefaultHierarchyWalkerCallback <IMicroNode> ()
     {
       @Override
       public void onItemBeforeChildren (final IMicroNode aItem)
@@ -131,8 +131,8 @@ public final class CreateJava5Version
               final String sArtifactId = eArtifactId.getTextContent ();
               if (!"parent-pom".equals (sArtifactId))
               {
-                eArtifact.removeAllChildren ();
-                eArtifact.appendText (_getNewArtifactName (sArtifactId));
+                eArtifactId.removeAllChildren ();
+                eArtifactId.appendText (_getNewArtifactName (sArtifactId));
               }
             }
           }
