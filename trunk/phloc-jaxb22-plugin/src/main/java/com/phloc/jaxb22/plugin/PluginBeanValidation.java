@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-import javax.validation.Valid;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
@@ -53,16 +52,14 @@ public class PluginBeanValidation extends Plugin
   private static final String JSR_349 = PLUGIN_OPTION_NAME + ":JSR_349";
   private static final String GENERATE_NOT_NULL_ANNOTATIONS = PLUGIN_OPTION_NAME + ":generateNotNullAnnotations";
   private static final BigInteger UNBOUNDED = BigInteger.valueOf (XSParticle.UNBOUNDED);
+  private static final String [] NUMBER_TYPES = new String [] { "BigDecimal",
+                                                               "BigInteger",
+                                                               "String",
+                                                               "byte",
+                                                               "short",
+                                                               "int",
+                                                               "long" };
 
-  public static final String [] NUMBERS = new String [] { "BigDecimal",
-                                                         "BigInteger",
-                                                         "String",
-                                                         "byte",
-                                                         "short",
-                                                         "int",
-                                                         "long" };
-
-  private String sTargetNamespace = "TARGET_NAMESPACE";
   private boolean bJSR349 = false;
   private boolean bNotNullAnnotations = true;
 
@@ -78,12 +75,7 @@ public class PluginBeanValidation extends Plugin
   {
     final String sArg = args[i];
     int nConsumed = 0;
-    int nIndex = sArg.indexOf (TARGET_NAMESPACE_PARAMETER_NAME);
-    if (nIndex > 0)
-    {
-      sTargetNamespace = sArg.substring (nIndex + TARGET_NAMESPACE_PARAMETER_NAME.length () + 1);
-      nConsumed++;
-    }
+    int nIndex;
 
     nIndex = sArg.indexOf (JSR_349);
     if (nIndex > 0)
@@ -199,24 +191,12 @@ public class PluginBeanValidation extends Plugin
   private void _processElement (final JFieldVar aField, final ElementDecl aElement)
   {
     final XSType elementType = aElement.getType ();
-    _validAnnotation (elementType, aField);
 
     if (elementType instanceof XSSimpleType)
       _processType ((XSSimpleType) elementType, aField);
     else
       if (elementType.getBaseType () instanceof XSSimpleType)
         _processType ((XSSimpleType) elementType.getBaseType (), aField);
-  }
-
-  private void _validAnnotation (final XSType elementType, final JFieldVar var)
-  {
-    if (elementType.getTargetNamespace ().startsWith (sTargetNamespace) && elementType.isComplexType ())
-    {
-      if (!_hasAnnotation (var, Valid.class))
-      {
-        var.annotate (Valid.class);
-      }
-    }
   }
 
   private void _processType (final XSSimpleType aSimpleType, final JFieldVar aField)
@@ -337,7 +317,6 @@ public class PluginBeanValidation extends Plugin
       // }
       // }
 
-      _validAnnotation (type, var);
       _processType (type, var);
     }
   }
@@ -362,7 +341,6 @@ public class PluginBeanValidation extends Plugin
       }
     }
 
-    _validAnnotation (type, var);
     _processType (type, var);
   }
 
@@ -397,7 +375,7 @@ public class PluginBeanValidation extends Plugin
 
   private static boolean _isNumericType (@Nonnull final JFieldVar field)
   {
-    for (final String type : NUMBERS)
+    for (final String type : NUMBER_TYPES)
       if (type.equalsIgnoreCase (field.type ().name ()))
         return true;
 
