@@ -65,53 +65,67 @@ public final class CreateJava5Version
     final IMicroDocument aDoc = MicroReader.readMicroXML (aSrcFile);
     final IMicroElement eRoot = aDoc.getDocumentElement ();
 
-    final IMicroElement eArtifact = eRoot.getFirstChildElement ("artifactId");
-    if (!sSrcComponentName.equals (eArtifact.getTextContent ()))
-      throw new IllegalStateException ("Illegal artifactId");
-    eArtifact.removeAllChildren ();
-    eArtifact.appendText (sDstComponentName);
-
-    final IMicroElement eName = eRoot.getFirstChildElement ("name");
-    if (!sSrcComponentName.equals (eName.getTextContent ()))
-      throw new IllegalStateException ("Illegal name");
-    eName.removeAllChildren ();
-    eName.appendText (sDstComponentName);
-
-    final IMicroElement eUrl = eRoot.getFirstChildElement ("url");
-    if (eUrl != null)
+    // Global artifact ID
     {
-      final String sOld = eUrl.getTextContent ();
-      eUrl.removeAllChildren ();
-      eUrl.appendText (sOld.replace (sSrcComponentName, sDstComponentName));
+      final IMicroElement eArtifact = eRoot.getFirstChildElement ("artifactId");
+      if (!sSrcComponentName.equals (eArtifact.getTextContent ()))
+        throw new IllegalStateException ("Illegal artifactId");
+      eArtifact.removeAllChildren ();
+      eArtifact.appendText (sDstComponentName);
     }
 
-    final IMicroElement eScm = eRoot.getFirstChildElement ("scm");
-    if (eScm != null)
-      for (final IMicroElement eChild : eScm.getAllChildElements ())
+    // Global artifact name
+    {
+      final IMicroElement eName = eRoot.getFirstChildElement ("name");
+      if (!sSrcComponentName.equals (eName.getTextContent ()))
+        throw new IllegalStateException ("Illegal name");
+      eName.removeAllChildren ();
+      eName.appendText (sDstComponentName);
+    }
+
+    // Global doc URL
+    {
+      final IMicroElement eUrl = eRoot.getFirstChildElement ("url");
+      if (eUrl != null)
       {
-        final String sOld = eChild.getTextContent ();
-        if (sOld.endsWith (sSrcComponentName))
-        {
-          eChild.removeAllChildren ();
-          eChild.appendText (sOld.substring (0, sOld.length () - sSrcComponentName.length ()) + sDstComponentName);
-        }
+        final String sOld = eUrl.getTextContent ();
+        eUrl.removeAllChildren ();
+        eUrl.appendText (sOld.replace (sSrcComponentName, sDstComponentName));
       }
+    }
+
+    // SCM settings
+    {
+      final IMicroElement eScm = eRoot.getFirstChildElement ("scm");
+      if (eScm != null)
+        for (final IMicroElement eChild : eScm.getAllChildElements ())
+        {
+          final String sOld = eChild.getTextContent ();
+          if (sOld.endsWith (sSrcComponentName))
+          {
+            eChild.removeAllChildren ();
+            eChild.appendText (sOld.substring (0, sOld.length () - sSrcComponentName.length ()) + sDstComponentName);
+          }
+        }
+    }
 
     // Set compiler plugin
-    IMicroElement eBuild = eRoot.getFirstChildElement ("build");
-    if (eBuild == null)
-      eBuild = eRoot.appendElement (eRoot.getNamespaceURI (), "build");
+    {
+      IMicroElement eBuild = eRoot.getFirstChildElement ("build");
+      if (eBuild == null)
+        eBuild = eRoot.appendElement (eRoot.getNamespaceURI (), "build");
 
-    IMicroElement ePlugins = eBuild.getFirstChildElement ("plugins");
-    if (ePlugins == null)
-      ePlugins = eBuild.appendElement (eRoot.getNamespaceURI (), "plugins");
+      IMicroElement ePlugins = eBuild.getFirstChildElement ("plugins");
+      if (ePlugins == null)
+        ePlugins = eBuild.appendElement (eRoot.getNamespaceURI (), "plugins");
 
-    final IMicroElement ePlugin = ePlugins.appendElement (eRoot.getNamespaceURI (), "plugin");
-    ePlugin.appendElement (eRoot.getNamespaceURI (), "groupId").appendText ("org.apache.maven.plugins");
-    ePlugin.appendElement (eRoot.getNamespaceURI (), "artifactId").appendText ("maven-compiler-plugin");
-    final IMicroElement eConfiguration = ePlugin.appendElement (eRoot.getNamespaceURI (), "configuration");
-    eConfiguration.appendElement (eRoot.getNamespaceURI (), "source").appendText ("1.5");
-    eConfiguration.appendElement (eRoot.getNamespaceURI (), "target").appendText ("1.5");
+      final IMicroElement ePlugin = ePlugins.appendElement (eRoot.getNamespaceURI (), "plugin");
+      ePlugin.appendElement (eRoot.getNamespaceURI (), "groupId").appendText ("org.apache.maven.plugins");
+      ePlugin.appendElement (eRoot.getNamespaceURI (), "artifactId").appendText ("maven-compiler-plugin");
+      final IMicroElement eConfiguration = ePlugin.appendElement (eRoot.getNamespaceURI (), "configuration");
+      eConfiguration.appendElement (eRoot.getNamespaceURI (), "source").appendText ("1.5");
+      eConfiguration.appendElement (eRoot.getNamespaceURI (), "target").appendText ("1.5");
+    }
 
     // Modify all dependencies
     MicroWalker.walkNode (aDoc, new DefaultHierarchyWalkerCallback <IMicroNode> ()
