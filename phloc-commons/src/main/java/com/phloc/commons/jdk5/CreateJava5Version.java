@@ -17,6 +17,7 @@ import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.filter.collections.FilterIterator;
 import com.phloc.commons.hierarchy.DefaultHierarchyWalkerCallback;
 import com.phloc.commons.io.file.FileOperationManager;
+import com.phloc.commons.io.file.LoggingFileOperationCallback;
 import com.phloc.commons.io.file.SimpleFileIO;
 import com.phloc.commons.io.file.filter.FileFilterToIFilterAdapter;
 import com.phloc.commons.io.file.filter.FilenameFilterMatchNoRegEx;
@@ -309,7 +310,7 @@ public final class CreateJava5Version
     final String sSrcComponentName = aSrcBaseDir.getName ();
     final String sDstComponentName = _getNewArtifactName (sSrcComponentName);
 
-    final FileOperationManager aFOM = new FileOperationManager ();
+    final FileOperationManager aFOM = new FileOperationManager (new LoggingFileOperationCallback ());
     final File aDstBaseDir = new File (aSrcBaseDir, "../" + sDstComponentName).getCanonicalFile ();
     s_aLogger.info ("From " + aSrcBaseDir.toString ());
     s_aLogger.info ("To " + aDstBaseDir.toString ());
@@ -317,34 +318,38 @@ public final class CreateJava5Version
     final FilenameFilter aFF = new FilenameFilterMatchNoRegEx ("target");
     for (final File aSrcFile : new FilterIterator <File> (new FileSystemRecursiveIterator (aSrcBaseDir, aFF),
                                                           new FileFilterToIFilterAdapter (aFF)))
-    {
-      final String sSrcName = aSrcFile.getName ();
-      final String sSrcAbsPath = aSrcFile.getAbsolutePath ();
-      final String sSrcRelPath = sSrcAbsPath.substring (sSrcBasePath.length () + 1);
-      final File aDstFile = new File (aDstBaseDir, sSrcRelPath);
+      if (aSrcFile.isFile ())
+      {
+        final String sSrcName = aSrcFile.getName ();
+        final String sSrcAbsPath = aSrcFile.getAbsolutePath ();
+        final String sSrcRelPath = sSrcAbsPath.substring (sSrcBasePath.length () + 1);
+        final File aDstFile = new File (aDstBaseDir, sSrcRelPath);
 
-      if (sSrcName.equals ("pom.xml"))
-        _updatePOM (aSrcFile, aDstFile, sSrcComponentName, sDstComponentName);
-      else
-        if (sSrcName.equals (".project"))
-          _updateEclipseProject (aSrcFile, aDstFile, sSrcComponentName, sDstComponentName);
+        if (sSrcName.equals ("pom.xml"))
+          _updatePOM (aSrcFile, aDstFile, sSrcComponentName, sDstComponentName);
         else
-          if (sSrcName.equals (".classpath"))
-            _updateEclipseClasspath (aSrcFile, aDstFile);
+          if (sSrcName.equals (".project"))
+            _updateEclipseProject (aSrcFile, aDstFile, sSrcComponentName, sDstComponentName);
           else
-            if (sSrcName.equals ("org.eclipse.jdt.core.prefs"))
-              _updateEclipsePrefs (aSrcFile, aDstFile);
+            if (sSrcName.equals (".classpath"))
+              _updateEclipseClasspath (aSrcFile, aDstFile);
             else
-              if (sSrcName.endsWith (".java"))
-                _processJavaFile (aSrcFile, aDstFile);
+              if (sSrcName.equals ("org.eclipse.jdt.core.prefs"))
+                _updateEclipsePrefs (aSrcFile, aDstFile);
               else
-                if (sSrcName.equals (sSrcComponentName + ".iml"))
-                {
-                  // Skip the file - Idea project file
-                }
+                if (sSrcName.endsWith (".java"))
+                  _processJavaFile (aSrcFile, aDstFile);
                 else
-                  aFOM.copyFile (aSrcFile, aDstFile);
-    }
+                  if (sSrcName.equals (sSrcComponentName + ".iml"))
+                  {
+                    // Skip the file - Idea project file
+                  }
+                  else
+                  {
+                    aFOM.deleteFileIfExisting (aDstFile);
+                    aFOM.copyFile (aSrcFile, aDstFile);
+                  }
+      }
 
     // Add a simple text file as information!
     SimpleFileIO.writeFile (new File (aDstBaseDir, "readme-created.1st"),
