@@ -23,9 +23,9 @@
   </licenses>
        
   <scm>
-    <url>http://code.google.com/p/phloc-types/source/browse/</url>
-    <connection>scm:svn:http://phloc-types.googlecode.com/svn/trunk/phloc-types</connection>
-    <developerConnection>scm:svn:https://phloc-types.googlecode.com/svn/trunk/phloc-types</developerConnection>
+    <url>http://code.google.com/p/phloc-commons/source/browse/</url>
+    <connection>scm:svn:http://phloc-commons.googlecode.com/svn/trunk/phloc-types</connection>
+    <developerConnection>scm:svn:https://phloc-commons.googlecode.com/svn/trunk/phloc-types</developerConnection>
   </scm>
 
   <organization>
@@ -82,7 +82,7 @@
       <url>sftp://www.phloc.com/var/www/html-repo/maven2</url>
     </repository>
   </distributionManagement>
-  
+
   <dependencies>
     <dependency>
       <groupId>com.phloc</groupId>
