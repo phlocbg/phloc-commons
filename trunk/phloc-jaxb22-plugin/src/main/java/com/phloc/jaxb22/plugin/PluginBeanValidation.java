@@ -44,11 +44,12 @@ import com.sun.xml.xsom.impl.parser.DelayedRef;
 
 /**
  * big thanks to original author: cocorossello
+ * 
+ * @author Philip Helger
  */
 public class PluginBeanValidation extends Plugin
 {
   private static final String PLUGIN_OPTION_NAME = "Xphloc-bean-validation";
-  private static final String TARGET_NAMESPACE_PARAMETER_NAME = PLUGIN_OPTION_NAME + ":targetNamespace";
   private static final String JSR_349 = PLUGIN_OPTION_NAME + ":JSR_349";
   private static final String GENERATE_NOT_NULL_ANNOTATIONS = PLUGIN_OPTION_NAME + ":generateNotNullAnnotations";
   private static final BigInteger UNBOUNDED = BigInteger.valueOf (XSParticle.UNBOUNDED);
@@ -105,9 +106,13 @@ public class PluginBeanValidation extends Plugin
   {
     return "  -" +
            PLUGIN_OPTION_NAME +
-           "      :  inject Bean validation annotations (JSR 303); -" +
-           TARGET_NAMESPACE_PARAMETER_NAME +
-           "=http://www.foo.com/bar  :      additional settings for @Valid annotation";
+           "      :  inject Bean validation annotations (JSR 303)\n" +
+           "  -" +
+           JSR_349 +
+           "      :  inject Bean validation annotations (JSR 349)\n" +
+           "  -" +
+           GENERATE_NOT_NULL_ANNOTATIONS +
+           "      :  inject Bean validation annotations (JSR 303) and add @NotNull annotations\n";
   }
 
   @Override
