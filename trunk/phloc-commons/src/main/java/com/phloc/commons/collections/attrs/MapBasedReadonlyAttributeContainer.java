@@ -44,7 +44,7 @@ public final class MapBasedReadonlyAttributeContainer extends AbstractReadonlyAt
 {
   private final Map <String, Object> m_aAttrs;
 
-  public MapBasedReadonlyAttributeContainer (@Nonnull final Map <String, Object> aMap)
+  public MapBasedReadonlyAttributeContainer (@Nonnull final Map <String, ?> aMap)
   {
     if (aMap == null)
       throw new NullPointerException ("map");
