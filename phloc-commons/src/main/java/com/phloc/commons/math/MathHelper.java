@@ -32,7 +32,7 @@ import com.phloc.commons.equals.EqualsUtils;
 
 /**
  * Contains several math help routines.
- *
+ * 
  * @author Philip Helger
  */
 @Immutable
@@ -50,7 +50,7 @@ public final class MathHelper
   /**
    * Divides the passed int dividend through the passed divisor (nDividend /
    * nDivisor)
-   *
+   * 
    * @param nDividend
    *        the dividend
    * @param nDivisor
@@ -67,7 +67,7 @@ public final class MathHelper
 
   /**
    * Get the division result using {@link BigDecimal}.
-   *
+   * 
    * @param nDividend
    *        the dividend
    * @param nDivisor
@@ -235,7 +235,7 @@ public final class MathHelper
    * This is a fix for <code>Math.abs</code> as it would return
    * {@link Integer#MIN_VALUE} for {@link Integer#MIN_VALUE} which is very
    * unexpected. Instead an exception is thrown.
-   *
+   * 
    * @param nValue
    *        Input value
    * @return the absolute value of the argument.
@@ -256,7 +256,7 @@ public final class MathHelper
    * This is a fix for <code>Math.abs</code> as it would return
    * {@link Long#MIN_VALUE} for {@link Long#MIN_VALUE} which is very unexpected.
    * Instead an exception is thrown.
-   *
+   * 
    * @param nValue
    *        Input value
    * @return the absolute value of the argument.
@@ -277,7 +277,7 @@ public final class MathHelper
    * This is a sanity method wrapping <code>Math.abs (float)</code>, so that you
    * don't have to think whether you need to invoke the abs method from this
    * class or the one from Math directly.
-   *
+   * 
    * @param fValue
    *        Input value
    * @return the absolute value of the argument.
@@ -292,7 +292,7 @@ public final class MathHelper
    * This is a sanity method wrapping <code>Math.abs (double)</code>, so that
    * you don't have to think whether you need to invoke the abs method from this
    * class or the one from Math directly.
-   *
+   * 
    * @param dValue
    *        Input value
    * @return the absolute value of the argument.
@@ -307,7 +307,7 @@ public final class MathHelper
    * This is a sanity method wrapping <code>BigDecimal.abs (double)</code>, so
    * that you don't have to think whether you need to invoke the abs method from
    * this class or the one from BigDecimal directly.
-   *
+   * 
    * @param aValue
    *        Input value
    * @return the absolute value of the argument.
@@ -322,7 +322,7 @@ public final class MathHelper
    * This is a sanity method wrapping <code>BigInteger.abs (double)</code>, so
    * that you don't have to think whether you need to invoke the abs method from
    * this class or the one from BigInteger directly.
-   *
+   * 
    * @param aValue
    *        Input value
    * @return the absolute value of the argument.
@@ -368,6 +368,31 @@ public final class MathHelper
   public static boolean isGreaterOrEqualThanZero (@Nonnull final BigDecimal aValue)
   {
     return aValue.compareTo (BigDecimal.ZERO) >= 0;
+  }
+
+  public static boolean isEqualToOne (@Nonnull final BigDecimal aValue)
+  {
+    return EqualsUtils.equals (aValue, BigDecimal.ONE);
+  }
+
+  public static boolean isLowerThanOne (@Nonnull final BigDecimal aValue)
+  {
+    return aValue.compareTo (BigDecimal.ONE) < 0;
+  }
+
+  public static boolean isLowerOrEqualThanOne (@Nonnull final BigDecimal aValue)
+  {
+    return aValue.compareTo (BigDecimal.ONE) <= 0;
+  }
+
+  public static boolean isGreaterThanOne (@Nonnull final BigDecimal aValue)
+  {
+    return aValue.compareTo (BigDecimal.ONE) > 0;
+  }
+
+  public static boolean isGreaterOrEqualThanOne (@Nonnull final BigDecimal aValue)
+  {
+    return aValue.compareTo (BigDecimal.ONE) >= 0;
   }
 
   public static boolean isEqualTo100 (@Nonnull final BigDecimal aValue)
@@ -432,6 +457,31 @@ public final class MathHelper
     return aValue.compareTo (BigInteger.ZERO) >= 0;
   }
 
+  public static boolean isEqualToOne (@Nonnull final BigInteger aValue)
+  {
+    return EqualsUtils.equals (aValue, BigInteger.ONE);
+  }
+
+  public static boolean isLowerThanOne (@Nonnull final BigInteger aValue)
+  {
+    return aValue.compareTo (BigInteger.ONE) < 0;
+  }
+
+  public static boolean isLowerOrEqualThanOne (@Nonnull final BigInteger aValue)
+  {
+    return aValue.compareTo (BigInteger.ONE) <= 0;
+  }
+
+  public static boolean isGreaterThanOne (@Nonnull final BigInteger aValue)
+  {
+    return aValue.compareTo (BigInteger.ONE) > 0;
+  }
+
+  public static boolean isGreaterOrEqualThanOne (@Nonnull final BigInteger aValue)
+  {
+    return aValue.compareTo (BigInteger.ONE) >= 0;
+  }
+
   public static boolean isEqualTo100 (@Nonnull final BigInteger aValue)
   {
     return EqualsUtils.equals (aValue, CGlobal.BIGINT_100);
@@ -466,28 +516,30 @@ public final class MathHelper
    */
   public static double hypot (final double a, final double b)
   {
+    if (a == 0)
+      return b;
+    if (b == 0)
+      return a;
+
     double r;
-    final double dAbsA = MathHelper.abs (a);
-    final double dAbsB = MathHelper.abs (b);
+    final double dAbsA = abs (a);
+    final double dAbsB = abs (b);
     if (dAbsA > dAbsB)
     {
       r = b / a;
       r = dAbsA * Math.sqrt (1 + r * r);
     }
     else
-      if (b != 0)
-      {
-        r = a / b;
-        r = dAbsB * Math.sqrt (1 + r * r);
-      }
-      else
-        r = 0.0;
+    {
+      r = a / b;
+      r = dAbsB * Math.sqrt (1 + r * r);
+    }
     return r;
   }
 
   /**
    * Converts the passed signed integer to an unsigned long
-   *
+   * 
    * @param a
    * @return The unsigned long
    */
