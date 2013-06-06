@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
@@ -20,12 +21,14 @@ import com.phloc.commons.math.MathHelper;
 import com.phloc.commons.string.StringParser;
 import com.sun.codemodel.JAnnotationUse;
 import com.sun.codemodel.JFieldVar;
+import com.sun.codemodel.JType;
 import com.sun.tools.xjc.BadCommandLineException;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.Plugin;
 import com.sun.tools.xjc.model.CAttributePropertyInfo;
 import com.sun.tools.xjc.model.CElementPropertyInfo;
 import com.sun.tools.xjc.model.CPropertyInfo;
+import com.sun.tools.xjc.model.CReferencePropertyInfo;
 import com.sun.tools.xjc.model.CValuePropertyInfo;
 import com.sun.tools.xjc.outline.ClassOutline;
 import com.sun.tools.xjc.outline.Outline;
@@ -62,7 +65,7 @@ public class PluginBeanValidation extends Plugin
                                                                "long" };
 
   private boolean bJSR349 = false;
-  private boolean bNotNullAnnotations = true;
+  private boolean m_bNotNullAnnotations = true;
 
   @Override
   public String getOptionName ()
@@ -88,7 +91,9 @@ public class PluginBeanValidation extends Plugin
     nIndex = sArg.indexOf (GENERATE_NOT_NULL_ANNOTATIONS);
     if (nIndex > 0)
     {
-      bNotNullAnnotations = Boolean.parseBoolean (sArg.substring (nIndex + GENERATE_NOT_NULL_ANNOTATIONS.length () + 1));
+      m_bNotNullAnnotations = Boolean.parseBoolean (sArg.substring (nIndex +
+                                                                    GENERATE_NOT_NULL_ANNOTATIONS.length () +
+                                                                    1));
       nConsumed++;
     }
 
@@ -120,21 +125,26 @@ public class PluginBeanValidation extends Plugin
   {
     try
     {
-      for (final ClassOutline co : aModel.getClasses ())
+      for (final ClassOutline aClassOutline : aModel.getClasses ())
       {
-        final List <CPropertyInfo> properties = co.target.getProperties ();
-        for (final CPropertyInfo property : properties)
+        final List <CPropertyInfo> aPropertyInfos = aClassOutline.target.getProperties ();
+        for (final CPropertyInfo aPropertyInfo : aPropertyInfos)
         {
-          if (property instanceof CElementPropertyInfo)
-            _processElement ((CElementPropertyInfo) property, co);
+          if (aPropertyInfo instanceof CElementPropertyInfo)
+            _processElement ((CElementPropertyInfo) aPropertyInfo, aClassOutline);
           else
-            if (property instanceof CAttributePropertyInfo)
-              _processAttribute ((CAttributePropertyInfo) property, co);
+            if (aPropertyInfo instanceof CAttributePropertyInfo)
+              _processAttribute ((CAttributePropertyInfo) aPropertyInfo, aClassOutline);
             else
-              if (property instanceof CValuePropertyInfo)
-                _processAttribute ((CValuePropertyInfo) property, co);
+              if (aPropertyInfo instanceof CValuePropertyInfo)
+                _processValue ((CValuePropertyInfo) aPropertyInfo, aClassOutline);
               else
-                System.err.println ("Unsupported property: " + property);
+                if (aPropertyInfo instanceof CReferencePropertyInfo)
+                {
+
+                }
+                else
+                  System.err.println ("Unsupported property: " + aPropertyInfo);
         }
       }
 
@@ -150,19 +160,18 @@ public class PluginBeanValidation extends Plugin
   /*
    * XS:Element
    */
-  private void _processElement (final CElementPropertyInfo aElement, final ClassOutline aClassOutline)
+  private void _processElement (@Nonnull final CElementPropertyInfo aElement, @Nonnull final ClassOutline aClassOutline)
   {
-    final XSComponent schemaComponent = aElement.getSchemaComponent ();
-    final ParticleImpl aParticle = (ParticleImpl) schemaComponent;
+    final ParticleImpl aParticle = (ParticleImpl) aElement.getSchemaComponent ();
     final BigInteger aMinOccurs = aParticle.getMinOccurs ();
     final BigInteger aMaxOccurs = aParticle.getMaxOccurs ();
     final JFieldVar aField = aClassOutline.implClass.fields ().get (aElement.getName (false));
 
     // workaround for choices
     final boolean bRequired = aElement.isRequired ();
-    if (MathHelper.isLowerThanZero (aMinOccurs) || aMinOccurs.compareTo (BigInteger.ONE) >= 0 && bRequired)
+    if (MathHelper.isLowerThanZero (aMinOccurs) || (aMinOccurs.compareTo (BigInteger.ONE) >= 0 && bRequired))
     {
-      if (bNotNullAnnotations && !_hasAnnotation (aField, NotNull.class))
+      if (m_bNotNullAnnotations && !_hasAnnotation (aField, NotNull.class))
       {
         aField.annotate (NotNull.class);
       }
@@ -191,20 +200,22 @@ public class PluginBeanValidation extends Plugin
         final XSElementDecl xsElementDecl = ((DelayedRef.Element) aTerm).get ();
         _processElement (aField, (ElementDecl) xsElementDecl);
       }
+      else
+        System.out.println ("Unsupported particle term " + aTerm);
   }
 
-  private void _processElement (final JFieldVar aField, final ElementDecl aElement)
+  private void _processElement (@Nonnull final JFieldVar aField, final ElementDecl aElement)
   {
-    final XSType elementType = aElement.getType ();
+    final XSType aElementType = aElement.getType ();
 
-    if (elementType instanceof XSSimpleType)
-      _processType ((XSSimpleType) elementType, aField);
+    if (aElementType instanceof XSSimpleType)
+      _processType ((XSSimpleType) aElementType, aField);
     else
-      if (elementType.getBaseType () instanceof XSSimpleType)
-        _processType ((XSSimpleType) elementType.getBaseType (), aField);
+      if (aElementType.getBaseType () instanceof XSSimpleType)
+        _processType ((XSSimpleType) aElementType.getBaseType (), aField);
   }
 
-  private void _processType (final XSSimpleType aSimpleType, final JFieldVar aField)
+  private void _processType (final XSSimpleType aSimpleType, @Nonnull final JFieldVar aField)
   {
     if (aField.type ().name ().equals ("String"))
     {
@@ -264,9 +275,7 @@ public class PluginBeanValidation extends Plugin
         final JAnnotationUse aAnnotation = aField.annotate (DecimalMax.class);
         aAnnotation.param ("value", aMaxExclusive.getValue ().value);
         if (bJSR349)
-        {
           aAnnotation.param ("inclusive", false);
-        }
       }
       final XSFacet aMinExclusive = aSimpleType.getFacet ("minExclusive");
       if (aMinExclusive != null && _isValidValue (aMinExclusive) && !_hasAnnotation (aField, DecimalMin.class))
@@ -278,41 +287,41 @@ public class PluginBeanValidation extends Plugin
       }
     }
 
-    if (aSimpleType.getFacet ("totalDigits") != null)
+    final XSFacet aXSTotalDigits = aSimpleType.getFacet ("totalDigits");
+    final XSFacet aXSFractionDigits = aSimpleType.getFacet ("fractionDigits");
+    final Integer aTotalDigits = aXSTotalDigits == null ? null
+                                                       : StringParser.parseIntObj (aXSTotalDigits.getValue ().value);
+    final Integer aFractionDigits = aXSFractionDigits == null
+                                                             ? null
+                                                             : StringParser.parseIntObj (aXSFractionDigits.getValue ().value);
+    if (!_hasAnnotation (aField, Digits.class) && (aTotalDigits != null || aFractionDigits != null))
     {
-      final Integer totalDigits = aSimpleType.getFacet ("totalDigits") == null ? null
-                                                                              : StringParser.parseIntObj (aSimpleType.getFacet ("totalDigits")
-                                                                                                                     .getValue ().value);
-      final Integer fractionDigits = aSimpleType.getFacet ("fractionDigits") == null ? null
-                                                                                    : StringParser.parseIntObj (aSimpleType.getFacet ("fractionDigits")
-                                                                                                                           .getValue ().value);
-      if (!_hasAnnotation (aField, Digits.class) && (totalDigits != null || fractionDigits != null))
+      final JAnnotationUse aAnnotDigits = aField.annotate (Digits.class);
+      if (aTotalDigits != null)
       {
-        final JAnnotationUse annox = aField.annotate (Digits.class);
-        if (totalDigits != null)
-          if (fractionDigits != null)
-            annox.param ("integer", totalDigits.intValue () - fractionDigits.intValue ());
-          else
-            annox.param ("integer", totalDigits.intValue ());
-        if (fractionDigits != null)
-          annox.param ("fraction", fractionDigits.intValue ());
+        if (aFractionDigits != null)
+          aAnnotDigits.param ("integer", aTotalDigits.intValue () - aFractionDigits.intValue ());
+        else
+          aAnnotDigits.param ("integer", aTotalDigits.intValue ());
       }
+      if (aFractionDigits != null)
+        aAnnotDigits.param ("fraction", aFractionDigits.intValue ());
     }
   }
 
   /*
    * attribute from parent declaration
    */
-  private void _processAttribute (final CValuePropertyInfo property, final ClassOutline clase)
+  private void _processValue (@Nonnull final CValuePropertyInfo aProperty, final ClassOutline aClassOutline)
   {
-    final String propertyName = property.getName (false);
+    final String sPropertyName = aProperty.getName (false);
 
-    final XSComponent definition = property.getSchemaComponent ();
-    if (definition instanceof RestrictionSimpleTypeImpl)
+    final XSComponent aDefinition = aProperty.getSchemaComponent ();
+    if (aDefinition instanceof RestrictionSimpleTypeImpl)
     {
-      final RestrictionSimpleTypeImpl particle = (RestrictionSimpleTypeImpl) definition;
-      final XSSimpleType type = particle.asSimpleType ();
-      final JFieldVar var = clase.implClass.fields ().get (propertyName);
+      final RestrictionSimpleTypeImpl aParticle = (RestrictionSimpleTypeImpl) aDefinition;
+      final XSSimpleType aSimpleType = aParticle.asSimpleType ();
+      final JFieldVar aFieldVar = aClassOutline.implClass.fields ().get (sPropertyName);
 
       // if (particle.isRequired()) {
       // if (!hasAnnotation(var, NotNull.class)) {
@@ -322,41 +331,41 @@ public class PluginBeanValidation extends Plugin
       // }
       // }
 
-      _processType (type, var);
+      _processType (aSimpleType, aFieldVar);
     }
   }
 
   /*
    * XS:Attribute
    */
-  private void _processAttribute (final CAttributePropertyInfo property, final ClassOutline clase)
+  private void _processAttribute (final CAttributePropertyInfo aPropertyInfo, final ClassOutline aClassOutline)
   {
-    final String propertyName = property.getName (false);
+    final String sPropertyName = aPropertyInfo.getName (false);
 
-    final XSComponent definition = property.getSchemaComponent ();
-    final AttributeUseImpl particle = (AttributeUseImpl) definition;
-    final XSSimpleType type = particle.getDecl ().getType ();
+    final XSComponent aDefinition = aPropertyInfo.getSchemaComponent ();
+    final AttributeUseImpl aParticle = (AttributeUseImpl) aDefinition;
+    final XSSimpleType type = aParticle.getDecl ().getType ();
 
-    final JFieldVar var = clase.implClass.fields ().get (propertyName);
-    if (particle.isRequired ())
+    final JFieldVar aFieldVar = aClassOutline.implClass.fields ().get (sPropertyName);
+    if (aParticle.isRequired ())
     {
-      if (bNotNullAnnotations && !_hasAnnotation (var, NotNull.class))
+      if (m_bNotNullAnnotations && !_hasAnnotation (aFieldVar, NotNull.class))
       {
-        var.annotate (NotNull.class);
+        aFieldVar.annotate (NotNull.class);
       }
     }
 
-    _processType (type, var);
+    _processType (type, aFieldVar);
   }
 
-  private static boolean _isEqual (final long val, final String sValue)
+  private static boolean _isEqual (final long nVal, @Nullable final String sValue)
   {
-    return Long.toString (val).equals (sValue);
+    return Long.toString (nVal).equals (sValue);
   }
 
-  private static boolean _isValidValue (final XSFacet facet)
+  private static boolean _isValidValue (@Nonnull final XSFacet aFacet)
   {
-    final String value = facet.getValue ().value;
+    final String value = aFacet.getValue ().value;
     // cxf-codegen puts max and min as value when there is not anything defined
     // in wsdl.
     return value != null &&
@@ -365,7 +374,7 @@ public class PluginBeanValidation extends Plugin
              _isEqual (Long.MIN_VALUE, value) || _isEqual (Integer.MIN_VALUE, value));
   }
 
-  private static boolean _hasAnnotation (final JFieldVar aField, final Class <?> aAnnotationClass)
+  private static boolean _hasAnnotation (@Nonnull final JFieldVar aField, @Nonnull final Class <?> aAnnotationClass)
   {
     final Collection <JAnnotationUse> aAnnotations = aField.annotations ();
     if (aAnnotations != null)
@@ -378,15 +387,16 @@ public class PluginBeanValidation extends Plugin
     return false;
   }
 
-  private static boolean _isNumericType (@Nonnull final JFieldVar field)
+  private static boolean _isNumericType (@Nonnull final JFieldVar aFieldVar)
   {
+    final JType aFieldType = aFieldVar.type ();
     for (final String type : NUMBER_TYPES)
-      if (type.equalsIgnoreCase (field.type ().name ()))
+      if (type.equalsIgnoreCase (aFieldType.name ()))
         return true;
 
     try
     {
-      final Class <?> aClass = Class.forName (field.type ().fullName ());
+      final Class <?> aClass = Class.forName (aFieldType.fullName ());
       return aClass != null && Number.class.isAssignableFrom (aClass);
     }
     catch (final Exception e)
