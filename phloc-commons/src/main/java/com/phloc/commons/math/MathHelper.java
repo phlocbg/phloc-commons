@@ -333,11 +333,21 @@ public final class MathHelper
     return aValue.abs ();
   }
 
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is = 0.
+   */
   public static boolean isEqualToZero (@Nonnull final BigDecimal aValue)
   {
     return EqualsUtils.equals (aValue, BigDecimal.ZERO);
   }
 
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &lt; 0.
+   */
   public static boolean isLowerThanZero (@Nonnull final BigDecimal aValue)
   {
     return aValue.compareTo (BigDecimal.ZERO) < 0;
@@ -349,11 +359,21 @@ public final class MathHelper
     return isLowerOrEqualThanZero (aValue);
   }
 
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &le; 0.
+   */
   public static boolean isLowerOrEqualThanZero (@Nonnull final BigDecimal aValue)
   {
     return aValue.compareTo (BigDecimal.ZERO) <= 0;
   }
 
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &gt; 0.
+   */
   public static boolean isGreaterThanZero (@Nonnull final BigDecimal aValue)
   {
     return aValue.compareTo (BigDecimal.ZERO) > 0;
@@ -365,66 +385,131 @@ public final class MathHelper
     return isGreaterOrEqualThanZero (aValue);
   }
 
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &ge; 0.
+   */
   public static boolean isGreaterOrEqualThanZero (@Nonnull final BigDecimal aValue)
   {
     return aValue.compareTo (BigDecimal.ZERO) >= 0;
   }
 
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is = 1.
+   */
   public static boolean isEqualToOne (@Nonnull final BigDecimal aValue)
   {
     return EqualsUtils.equals (aValue, BigDecimal.ONE);
   }
 
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &lt; 1.
+   */
   public static boolean isLowerThanOne (@Nonnull final BigDecimal aValue)
   {
     return aValue.compareTo (BigDecimal.ONE) < 0;
   }
 
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &le; 1.
+   */
   public static boolean isLowerOrEqualThanOne (@Nonnull final BigDecimal aValue)
   {
     return aValue.compareTo (BigDecimal.ONE) <= 0;
   }
 
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &gt; 1.
+   */
   public static boolean isGreaterThanOne (@Nonnull final BigDecimal aValue)
   {
     return aValue.compareTo (BigDecimal.ONE) > 0;
   }
 
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &ge; 1.
+   */
   public static boolean isGreaterOrEqualThanOne (@Nonnull final BigDecimal aValue)
   {
     return aValue.compareTo (BigDecimal.ONE) >= 0;
   }
 
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is = 100.
+   */
   public static boolean isEqualTo100 (@Nonnull final BigDecimal aValue)
   {
     return EqualsUtils.equals (aValue, CGlobal.BIGDEC_100);
   }
 
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &lt; 100.
+   */
   public static boolean isLowerThan100 (@Nonnull final BigDecimal aValue)
   {
     return aValue.compareTo (CGlobal.BIGDEC_100) < 0;
   }
 
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &le; 100.
+   */
   public static boolean isLowerOrEqualThan100 (@Nonnull final BigDecimal aValue)
   {
     return aValue.compareTo (CGlobal.BIGDEC_100) <= 0;
   }
 
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &gt; 100.
+   */
   public static boolean isGreaterThan100 (@Nonnull final BigDecimal aValue)
   {
     return aValue.compareTo (CGlobal.BIGDEC_100) > 0;
   }
 
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &ge; 100.
+   */
   public static boolean isGreaterOrEqualThan100 (@Nonnull final BigDecimal aValue)
   {
     return aValue.compareTo (CGlobal.BIGDEC_100) >= 0;
   }
 
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is = 0.
+   */
   public static boolean isEqualToZero (@Nonnull final BigInteger aValue)
   {
     return EqualsUtils.equals (aValue, BigInteger.ZERO);
   }
 
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &lt; 0.
+   */
   public static boolean isLowerThanZero (@Nonnull final BigInteger aValue)
   {
     return aValue.compareTo (BigInteger.ZERO) < 0;
@@ -436,11 +521,21 @@ public final class MathHelper
     return isLowerOrEqualThanZero (aValue);
   }
 
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &le; 0.
+   */
   public static boolean isLowerOrEqualThanZero (@Nonnull final BigInteger aValue)
   {
     return aValue.compareTo (BigInteger.ZERO) <= 0;
   }
 
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &gt; 0.
+   */
   public static boolean isGreaterThanZero (@Nonnull final BigInteger aValue)
   {
     return aValue.compareTo (BigInteger.ZERO) > 0;
@@ -452,56 +547,111 @@ public final class MathHelper
     return isGreaterOrEqualThanZero (aValue);
   }
 
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &ge; 0.
+   */
   public static boolean isGreaterOrEqualThanZero (@Nonnull final BigInteger aValue)
   {
     return aValue.compareTo (BigInteger.ZERO) >= 0;
   }
 
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is = 1.
+   */
   public static boolean isEqualToOne (@Nonnull final BigInteger aValue)
   {
     return EqualsUtils.equals (aValue, BigInteger.ONE);
   }
 
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &lt; 1.
+   */
   public static boolean isLowerThanOne (@Nonnull final BigInteger aValue)
   {
     return aValue.compareTo (BigInteger.ONE) < 0;
   }
 
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &le; 1.
+   */
   public static boolean isLowerOrEqualThanOne (@Nonnull final BigInteger aValue)
   {
     return aValue.compareTo (BigInteger.ONE) <= 0;
   }
 
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &gt; 1.
+   */
   public static boolean isGreaterThanOne (@Nonnull final BigInteger aValue)
   {
     return aValue.compareTo (BigInteger.ONE) > 0;
   }
 
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &ge; 1.
+   */
   public static boolean isGreaterOrEqualThanOne (@Nonnull final BigInteger aValue)
   {
     return aValue.compareTo (BigInteger.ONE) >= 0;
   }
 
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is = 100.
+   */
   public static boolean isEqualTo100 (@Nonnull final BigInteger aValue)
   {
     return EqualsUtils.equals (aValue, CGlobal.BIGINT_100);
   }
 
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &lt; 100.
+   */
   public static boolean isLowerThan100 (@Nonnull final BigInteger aValue)
   {
     return aValue.compareTo (CGlobal.BIGINT_100) < 0;
   }
 
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &le; 100.
+   */
   public static boolean isLowerOrEqualThan100 (@Nonnull final BigInteger aValue)
   {
     return aValue.compareTo (CGlobal.BIGINT_100) <= 0;
   }
 
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &gt; 100.
+   */
   public static boolean isGreaterThan100 (@Nonnull final BigInteger aValue)
   {
     return aValue.compareTo (CGlobal.BIGINT_100) > 0;
   }
 
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &ge; 100.
+   */
   public static boolean isGreaterOrEqualThan100 (@Nonnull final BigInteger aValue)
   {
     return aValue.compareTo (CGlobal.BIGINT_100) >= 0;
@@ -541,6 +691,7 @@ public final class MathHelper
    * Converts the passed signed integer to an unsigned long
    * 
    * @param a
+   *        Source int
    * @return The unsigned long
    */
   public static long getUnsignedInt (final int a)
