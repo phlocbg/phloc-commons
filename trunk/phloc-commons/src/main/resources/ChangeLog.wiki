@@ -2,6 +2,9 @@
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
 <table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody>
+<tr><td>6/11/13</td><td>add</td><td>api</td><td></td><td>Added protected methods in AbstractJAXBMarshaller to customize the generated Marshaller and Unmarshaller objects</td></tr>
+<tr><td>6/6/13</td><td>add</td><td>api</td><td></td><td>Extended MathHelper API to support easy handling of BigDecimal.ONE and BigInteger.ONE</td></tr>
+<tr><td>6/4/13</td><td>fix</td><td>api</td><td></td><td>Fixed generic types of constructors of MapBased(Readonly)AttributeContainer(ThreadSafe)</td></tr>
 <tr border="1"><td>5/21/13</td><td colspan="4">_Release *4.0.7*_</td></tr>
 <tr><td>5/17/13</td><td>add</td><td>feature</td><td></td><td>Added a tool to create JDK5 versions of a project based on some meta comments in the source files.</td></tr>
 <tr><td>5/15/13</td><td>add</td><td>api</td><td></td><td>Added new constructor to AbstractJAXBMarshaller which takes an array of XSD resources</td></tr>
