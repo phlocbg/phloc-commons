@@ -2786,6 +2786,53 @@ public final class StringHelper
   }
 
   /**
+   * Optimized replace method that replaces a set of characters with another
+   * character. This method was created for efficient unsafe character
+   * replacements!
+   * 
+   * @param sInputString
+   *        The input string.
+   * @param aSearchChars
+   *        The characters to replace.
+   * @param cReplacementChar
+   *        The new char to be used instead of the search chars.
+   * @return The replaced version of the string or an empty char array if the
+   *         input string was <code>null</code>.
+   */
+  @Nonnull
+  public static char [] replaceMultiple (@Nullable final String sInputString,
+                                         @Nonnull final char [] aSearchChars,
+                                         final char cReplacementChar)
+  {
+    if (aSearchChars == null)
+      throw new NullPointerException ("search");
+
+    // Any input text?
+    if (hasNoText (sInputString))
+      return new char [0];
+
+    // Get char array
+    final char [] aInput = sInputString.toCharArray ();
+
+    // Any replacement patterns?
+    if (aSearchChars.length == 0)
+      return aInput;
+
+    // build result
+    final char [] aOutput = new char [aInput.length];
+    int nOutputIndex = 0;
+    for (final char c : aInput)
+    {
+      if (ArrayHelper.contains (aSearchChars, c))
+        aOutput[nOutputIndex] = cReplacementChar;
+      else
+        aOutput[nOutputIndex] = c;
+      nOutputIndex++;
+    }
+    return aOutput;
+  }
+
+  /**
    * Perform all string replacements on the input string as defined by the
    * passed map. All replacements are done using
    * {@link #replaceAll(String,String,CharSequence)} which is ok.
