@@ -167,42 +167,44 @@ public abstract class AbstractPluginBeanValidation extends Plugin
         _processType ((XSSimpleType) aElementType.getBaseType (), aField);
   }
 
+  private boolean _isSizeAnnotationApplicable (@Nonnull final JFieldVar aField)
+  {
+    return aField.type ().name ().equals ("String") || aField.type ().isArray ();
+  }
+
   private void _processType (final XSSimpleType aSimpleType, @Nonnull final JFieldVar aField)
   {
-    if (aField.type ().name ().equals ("String"))
+    if (!_hasAnnotation (aField, Size.class) && _isSizeAnnotationApplicable (aField))
     {
-      if (!_hasAnnotation (aField, Size.class))
-      {
-        final XSFacet fMaxLength = aSimpleType.getFacet ("maxLength");
-        final Integer aMaxLength = fMaxLength == null ? null : StringParser.parseIntObj (fMaxLength.getValue ().value);
-        final XSFacet fMinLength = aSimpleType.getFacet ("minLength");
-        final Integer aMinLength = fMinLength == null ? null : StringParser.parseIntObj (fMinLength.getValue ().value);
-        if (aMaxLength != null && aMinLength != null)
-          aField.annotate (Size.class).param ("max", aMaxLength.intValue ()).param ("min", aMinLength.intValue ());
+      final XSFacet fMaxLength = aSimpleType.getFacet ("maxLength");
+      final Integer aMaxLength = fMaxLength == null ? null : StringParser.parseIntObj (fMaxLength.getValue ().value);
+      final XSFacet fMinLength = aSimpleType.getFacet ("minLength");
+      final Integer aMinLength = fMinLength == null ? null : StringParser.parseIntObj (fMinLength.getValue ().value);
+      if (aMaxLength != null && aMinLength != null)
+        aField.annotate (Size.class).param ("max", aMaxLength.intValue ()).param ("min", aMinLength.intValue ());
+      else
+        if (aMinLength != null)
+          aField.annotate (Size.class).param ("min", aMinLength.intValue ());
         else
-          if (aMinLength != null)
-            aField.annotate (Size.class).param ("min", aMinLength.intValue ());
-          else
-            if (aMaxLength != null)
-              aField.annotate (Size.class).param ("max", aMaxLength.intValue ());
-      }
+          if (aMaxLength != null)
+            aField.annotate (Size.class).param ("max", aMaxLength.intValue ());
+    }
 
-      /**
-       * <annox:annotate annox:class="javax.validation.constraints.Pattern"
-       * message=
-       * "Name can only contain capital letters, numbers and the symbols '-', '_', '/', ' '"
-       * regexp="^[A-Z0-9_\s//-]*" />
-       */
-      if (aSimpleType.getFacet ("pattern") != null)
+    /**
+     * <annox:annotate annox:class="javax.validation.constraints.Pattern"
+     * message=
+     * "Name can only contain capital letters, numbers and the symbols '-', '_', '/', ' '"
+     * regexp="^[A-Z0-9_\s//-]*" />
+     */
+    if (aSimpleType.getFacet ("pattern") != null)
+    {
+      final String sPattern = aSimpleType.getFacet ("pattern").getValue ().value;
+      // cxf-codegen fix
+      if (!"\\c+".equals (sPattern))
       {
-        final String sPattern = aSimpleType.getFacet ("pattern").getValue ().value;
-        // cxf-codegen fix
-        if (!"\\c+".equals (sPattern))
+        if (!_hasAnnotation (aField, Pattern.class))
         {
-          if (!_hasAnnotation (aField, Pattern.class))
-          {
-            aField.annotate (Pattern.class).param ("regexp", sPattern);
-          }
+          aField.annotate (Pattern.class).param ("regexp", sPattern);
         }
       }
     }
@@ -336,8 +338,8 @@ public abstract class AbstractPluginBeanValidation extends Plugin
   private static boolean _isNumericType (@Nonnull final JFieldVar aFieldVar)
   {
     final JType aFieldType = aFieldVar.type ();
-    for (final String type : NUMBER_TYPES)
-      if (type.equalsIgnoreCase (aFieldType.name ()))
+    for (final String sType : NUMBER_TYPES)
+      if (sType.equalsIgnoreCase (aFieldType.name ()))
         return true;
 
     try
