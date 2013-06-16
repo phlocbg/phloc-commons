@@ -1,6 +1,5 @@
 package com.phloc.jaxb22.plugin;
 
-import java.io.IOException;
 import java.math.BigInteger;
 import java.util.Collection;
 import java.util.List;
@@ -22,7 +21,6 @@ import com.phloc.commons.string.StringParser;
 import com.sun.codemodel.JAnnotationUse;
 import com.sun.codemodel.JFieldVar;
 import com.sun.codemodel.JType;
-import com.sun.tools.xjc.BadCommandLineException;
 import com.sun.tools.xjc.Options;
 import com.sun.tools.xjc.Plugin;
 import com.sun.tools.xjc.model.CAttributePropertyInfo;
@@ -50,11 +48,8 @@ import com.sun.xml.xsom.impl.parser.DelayedRef;
  * 
  * @author Philip Helger
  */
-public class PluginBeanValidation extends Plugin
+public abstract class AbstractPluginBeanValidation extends Plugin
 {
-  private static final String PLUGIN_OPTION_NAME = "Xphloc-bean-validation";
-  private static final String JSR_349 = PLUGIN_OPTION_NAME + ":JSR_349";
-  private static final String GENERATE_NOT_NULL_ANNOTATIONS = PLUGIN_OPTION_NAME + ":generateNotNullAnnotations";
   private static final BigInteger UNBOUNDED = BigInteger.valueOf (XSParticle.UNBOUNDED);
   private static final String [] NUMBER_TYPES = new String [] { "BigDecimal",
                                                                "BigInteger",
@@ -65,59 +60,16 @@ public class PluginBeanValidation extends Plugin
                                                                "long" };
 
   private boolean bJSR349 = false;
-  private boolean m_bNotNullAnnotations = true;
 
-  @Override
-  public String getOptionName ()
+  protected AbstractPluginBeanValidation (final boolean bValidation10)
   {
-    return PLUGIN_OPTION_NAME;
-  }
-
-  @Override
-  public int parseArgument (final Options opt, final String [] args, final int i) throws BadCommandLineException,
-                                                                                 IOException
-  {
-    final String sArg = args[i];
-    int nConsumed = 0;
-    int nIndex;
-
-    nIndex = sArg.indexOf (JSR_349);
-    if (nIndex > 0)
-    {
-      bJSR349 = Boolean.parseBoolean (sArg.substring (nIndex + JSR_349.length () + 1));
-      nConsumed++;
-    }
-
-    nIndex = sArg.indexOf (GENERATE_NOT_NULL_ANNOTATIONS);
-    if (nIndex > 0)
-    {
-      m_bNotNullAnnotations = Boolean.parseBoolean (sArg.substring (nIndex +
-                                                                    GENERATE_NOT_NULL_ANNOTATIONS.length () +
-                                                                    1));
-      nConsumed++;
-    }
-
-    return nConsumed;
+    bJSR349 = !bValidation10;
   }
 
   @Override
   public List <String> getCustomizationURIs ()
   {
     return ContainerHelper.newUnmodifiableList (CJAXB22.NSURI_PHLOC);
-  }
-
-  @Override
-  public String getUsage ()
-  {
-    return "  -" +
-           PLUGIN_OPTION_NAME +
-           "      :  inject Bean validation annotations (JSR 303)\n" +
-           "  -" +
-           JSR_349 +
-           "      :  inject Bean validation annotations (JSR 349)\n" +
-           "  -" +
-           GENERATE_NOT_NULL_ANNOTATIONS +
-           "      :  inject Bean validation annotations (JSR 303) and add @NotNull annotations\n";
   }
 
   @Override
@@ -171,7 +123,7 @@ public class PluginBeanValidation extends Plugin
     final boolean bRequired = aElement.isRequired ();
     if (MathHelper.isLowerThanZero (aMinOccurs) || (aMinOccurs.compareTo (BigInteger.ONE) >= 0 && bRequired))
     {
-      if (m_bNotNullAnnotations && !_hasAnnotation (aField, NotNull.class))
+      if (!_hasAnnotation (aField, NotNull.class))
       {
         aField.annotate (NotNull.class);
       }
@@ -291,8 +243,7 @@ public class PluginBeanValidation extends Plugin
     final XSFacet aXSFractionDigits = aSimpleType.getFacet ("fractionDigits");
     final Integer aTotalDigits = aXSTotalDigits == null ? null
                                                        : StringParser.parseIntObj (aXSTotalDigits.getValue ().value);
-    final Integer aFractionDigits = aXSFractionDigits == null
-                                                             ? null
+    final Integer aFractionDigits = aXSFractionDigits == null ? null
                                                              : StringParser.parseIntObj (aXSFractionDigits.getValue ().value);
     if (!_hasAnnotation (aField, Digits.class) && (aTotalDigits != null || aFractionDigits != null))
     {
@@ -347,13 +298,8 @@ public class PluginBeanValidation extends Plugin
     final XSSimpleType type = aParticle.getDecl ().getType ();
 
     final JFieldVar aFieldVar = aClassOutline.implClass.fields ().get (sPropertyName);
-    if (aParticle.isRequired ())
-    {
-      if (m_bNotNullAnnotations && !_hasAnnotation (aFieldVar, NotNull.class))
-      {
-        aFieldVar.annotate (NotNull.class);
-      }
-    }
+    if (aParticle.isRequired () && !_hasAnnotation (aFieldVar, NotNull.class))
+      aFieldVar.annotate (NotNull.class);
 
     _processType (type, aFieldVar);
   }
