@@ -59,11 +59,11 @@ public abstract class AbstractPluginBeanValidation extends Plugin
                                                                "int",
                                                                "long" };
 
-  private boolean bJSR349 = false;
+  private boolean m_bJSR349 = false;
 
   protected AbstractPluginBeanValidation (final boolean bValidation10)
   {
-    bJSR349 = !bValidation10;
+    m_bJSR349 = !bValidation10;
   }
 
   @Override
@@ -228,7 +228,7 @@ public abstract class AbstractPluginBeanValidation extends Plugin
       {
         final JAnnotationUse aAnnotation = aField.annotate (DecimalMax.class);
         aAnnotation.param ("value", aMaxExclusive.getValue ().value);
-        if (bJSR349)
+        if (m_bJSR349)
           aAnnotation.param ("inclusive", false);
       }
       final XSFacet aMinExclusive = aSimpleType.getFacet ("minExclusive");
@@ -236,7 +236,7 @@ public abstract class AbstractPluginBeanValidation extends Plugin
       {
         final JAnnotationUse aAnnotation = aField.annotate (DecimalMin.class);
         aAnnotation.param ("value", aMinExclusive.getValue ().value);
-        if (bJSR349)
+        if (m_bJSR349)
           aAnnotation.param ("inclusive", false);
       }
     }
@@ -247,18 +247,16 @@ public abstract class AbstractPluginBeanValidation extends Plugin
                                                        : StringParser.parseIntObj (aXSTotalDigits.getValue ().value);
     final Integer aFractionDigits = aXSFractionDigits == null ? null
                                                              : StringParser.parseIntObj (aXSFractionDigits.getValue ().value);
-    if (!_hasAnnotation (aField, Digits.class) && (aTotalDigits != null || aFractionDigits != null))
+    if (!_hasAnnotation (aField, Digits.class) && aTotalDigits != null)
     {
       final JAnnotationUse aAnnotDigits = aField.annotate (Digits.class);
-      if (aTotalDigits != null)
+      if (aFractionDigits == null)
+        aAnnotDigits.param ("integer", aTotalDigits.intValue ());
+      else
       {
-        if (aFractionDigits != null)
-          aAnnotDigits.param ("integer", aTotalDigits.intValue () - aFractionDigits.intValue ());
-        else
-          aAnnotDigits.param ("integer", aTotalDigits.intValue ());
-      }
-      if (aFractionDigits != null)
+        aAnnotDigits.param ("integer", aTotalDigits.intValue () - aFractionDigits.intValue ());
         aAnnotDigits.param ("fraction", aFractionDigits.intValue ());
+      }
     }
   }
 
