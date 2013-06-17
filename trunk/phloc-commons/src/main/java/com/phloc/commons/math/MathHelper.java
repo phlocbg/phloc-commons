@@ -448,6 +448,56 @@ public final class MathHelper
   /**
    * @param aValue
    *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is = 10.
+   */
+  public static boolean isEqualToTen (@Nonnull final BigDecimal aValue)
+  {
+    return EqualsUtils.equals (aValue, BigDecimal.TEN);
+  }
+
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &lt; 10.
+   */
+  public static boolean isLowerThanTen (@Nonnull final BigDecimal aValue)
+  {
+    return aValue.compareTo (BigDecimal.TEN) < 0;
+  }
+
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &le; 10.
+   */
+  public static boolean isLowerOrEqualThanTen (@Nonnull final BigDecimal aValue)
+  {
+    return aValue.compareTo (BigDecimal.TEN) <= 0;
+  }
+
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &gt; 10.
+   */
+  public static boolean isGreaterThanTen (@Nonnull final BigDecimal aValue)
+  {
+    return aValue.compareTo (BigDecimal.TEN) > 0;
+  }
+
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &ge; 10.
+   */
+  public static boolean isGreaterOrEqualThanTen (@Nonnull final BigDecimal aValue)
+  {
+    return aValue.compareTo (BigDecimal.TEN) >= 0;
+  }
+
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
    * @return <code>true</code> if the value is = 100.
    */
   public static boolean isEqualTo100 (@Nonnull final BigDecimal aValue)
@@ -605,6 +655,56 @@ public final class MathHelper
   public static boolean isGreaterOrEqualThanOne (@Nonnull final BigInteger aValue)
   {
     return aValue.compareTo (BigInteger.ONE) >= 0;
+  }
+
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is = 10.
+   */
+  public static boolean isEqualToTen (@Nonnull final BigInteger aValue)
+  {
+    return EqualsUtils.equals (aValue, BigInteger.TEN);
+  }
+
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &lt; 10.
+   */
+  public static boolean isLowerThanTen (@Nonnull final BigInteger aValue)
+  {
+    return aValue.compareTo (BigInteger.TEN) < 0;
+  }
+
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &le; 10.
+   */
+  public static boolean isLowerOrEqualThanTen (@Nonnull final BigInteger aValue)
+  {
+    return aValue.compareTo (BigInteger.TEN) <= 0;
+  }
+
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &gt; 10.
+   */
+  public static boolean isGreaterThanTen (@Nonnull final BigInteger aValue)
+  {
+    return aValue.compareTo (BigInteger.TEN) > 0;
+  }
+
+  /**
+   * @param aValue
+   *        Value to compare. May not be <code>null</code>.
+   * @return <code>true</code> if the value is &ge; 10.
+   */
+  public static boolean isGreaterOrEqualThanTen (@Nonnull final BigInteger aValue)
+  {
+    return aValue.compareTo (BigInteger.TEN) >= 0;
   }
 
   /**
