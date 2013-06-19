@@ -229,13 +229,17 @@ public final class JAXBMarshallerUtils
   }
 
   /**
-   * Set the Sun specific namespace prefix mapper. Value must implement
-   * com.sun.xml.bind.marshaller.NamespacePrefixMapper
+   * Set the Sun specific namespace prefix mapper. Value must implement either
+   * com.sun.xml.bind.marshaller.NamespacePrefixMapper or
+   * com.sun.xml.internal.bind.marshaller.NamespacePrefixMapper depending on the
+   * implementation type of Marshaller.
    * 
    * @param aMarshaller
    *        The marshaller to set the property. May not be <code>null</code>.
    * @param aNamespacePrefixMapper
    *        the value to be set
+   * @see #isExternalSunJAXB2Marshaller(Marshaller)
+   * @see #isInternalSunJAXB2Marshaller(Marshaller)
    */
   public static void setSunNamespacePrefixMapper (@Nonnull final Marshaller aMarshaller,
                                                   @Nonnull final Object aNamespacePrefixMapper)
