@@ -31,6 +31,7 @@ import com.phloc.commons.GlobalDebug;
 import com.phloc.commons.annotations.IsLocked;
 import com.phloc.commons.annotations.IsLocked.ELockType;
 import com.phloc.commons.cache.AbstractNotifyingCache;
+import com.phloc.commons.lang.GenericReflection;
 
 /**
  * Specific cache class for JAXB context elements. This is helpful, as the JAXB
@@ -81,7 +82,9 @@ public final class JAXBContextCache extends AbstractNotifyingCache <Package, JAX
 
     try
     {
-      if (aPackage.getAnnotation (XmlSchema.class) == null)
+      // When using "-npa" on JAXB no package-info class is created!
+      if (aPackage.getAnnotation (XmlSchema.class) == null &&
+          GenericReflection.getClassFromNameSafe (aPackage.getName () + ".ObjectFactory") == null)
         s_aLogger.warn ("The package " + aPackage.getName () + " does not seem to be JAXB generated!");
       return JAXBContext.newInstance (aPackage.getName ());
     }
