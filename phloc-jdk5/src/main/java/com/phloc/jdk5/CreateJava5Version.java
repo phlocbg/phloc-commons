@@ -144,11 +144,19 @@ public final class CreateJava5Version
             {
               final IMicroElement eArtifactId = ((IMicroElement) eItem.getParent ()).getFirstChildElement ("artifactId");
               final String sArtifactId = eArtifactId.getTextContent ();
-              if (!"parent-pom".equals (sArtifactId))
+              if ("phloc-jdk5".equals (sArtifactId))
               {
-                eArtifactId.removeAllChildren ();
-                eArtifactId.appendText (_getNewArtifactName (sArtifactId));
+                // Remove this dependency
+                final IMicroElement eDep = (IMicroElement) eItem.getParent ();
+                eDep.getParent ().removeChild (eDep);
               }
+              else
+                if (!"parent-pom".equals (sArtifactId))
+                {
+                  // Change the artifact name
+                  eArtifactId.removeAllChildren ();
+                  eArtifactId.appendText (_getNewArtifactName (sArtifactId));
+                }
             }
           }
         }
