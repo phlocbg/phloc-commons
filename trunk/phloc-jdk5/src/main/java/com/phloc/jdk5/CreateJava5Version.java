@@ -216,6 +216,17 @@ public final class CreateJava5Version
     s_aLogger.info ("Modified Eclipse preferences file");
   }
 
+  private static void _updateEclipseFacets (@Nonnull final File aSrcFile, @Nonnull final File aDstFile)
+  {
+    final IMicroDocument aDoc = MicroReader.readMicroXML (aSrcFile);
+    for (final IMicroElement eInstalled : aDoc.getDocumentElement ().getAllChildElements ("installed"))
+      if ("java".equals (eInstalled.getAttribute ("facet")))
+        eInstalled.setAttribute ("version", "1.5");
+    MicroWriter.writeToFile (aDoc, aDstFile);
+
+    s_aLogger.info ("Modified Eclipse facets file");
+  }
+
   private static void _processJavaFile (@Nonnull final File aSrcFile, @Nonnull final File aDstFile)
   {
     boolean bSkipFile = false;
@@ -337,18 +348,21 @@ public final class CreateJava5Version
               if (sSrcName.equals ("org.eclipse.jdt.core.prefs"))
                 _updateEclipsePrefs (aSrcFile, aDstFile);
               else
-                if (sSrcName.endsWith (".java"))
-                  _processJavaFile (aSrcFile, aDstFile);
+                if (sSrcName.equals ("org.eclipse.wst.common.project.facet.core.xml"))
+                  _updateEclipseFacets (aSrcFile, aDstFile);
                 else
-                  if (sSrcName.equals (sSrcComponentName + ".iml"))
-                  {
-                    // Skip the file - Idea project file
-                  }
+                  if (sSrcName.endsWith (".java"))
+                    _processJavaFile (aSrcFile, aDstFile);
                   else
-                  {
-                    aFOM.deleteFileIfExisting (aDstFile);
-                    aFOM.copyFile (aSrcFile, aDstFile);
-                  }
+                    if (sSrcName.equals (sSrcComponentName + ".iml"))
+                    {
+                      // Skip the file - Idea project file
+                    }
+                    else
+                    {
+                      aFOM.deleteFileIfExisting (aDstFile);
+                      aFOM.copyFile (aSrcFile, aDstFile);
+                    }
       }
 
     // Add a simple text file as information!
