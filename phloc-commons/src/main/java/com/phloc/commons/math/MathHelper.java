@@ -24,6 +24,7 @@ import java.math.RoundingMode;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.CGlobal;
@@ -755,6 +756,46 @@ public final class MathHelper
   public static boolean isGreaterOrEqualThan100 (@Nonnull final BigInteger aValue)
   {
     return aValue.compareTo (CGlobal.BIGINT_100) >= 0;
+  }
+
+  /**
+   * Get the passed String as a BigDecimal without any trailing zeroes.
+   * 
+   * @param sValue
+   *        The String to be used as a BigDecimal to be modified. May be
+   *        <code>null</code>.
+   * @return <code>null</code> if the input value is <code>null</code>.
+   */
+  @Nullable
+  @CheckReturnValue
+  public static BigDecimal getWithoutTrailingZeroes (@Nullable final String sValue)
+  {
+    if (sValue == null)
+      return null;
+
+    return getWithoutTrailingZeroes (new BigDecimal (sValue));
+  }
+
+  /**
+   * Get the passed BigDecimal without any trailing zeroes.
+   * 
+   * @param aValue
+   *        The BigDecimal to be modified. May be <code>null</code>.
+   * @return <code>null</code> if the input value is <code>null</code>.
+   */
+  @Nullable
+  @CheckReturnValue
+  public static BigDecimal getWithoutTrailingZeroes (@Nullable final BigDecimal aValue)
+  {
+    if (aValue == null)
+      return null;
+
+    if (BigDecimal.ZERO.compareTo (aValue) == 0)
+      return BigDecimal.ZERO;
+
+    final BigDecimal ret = aValue.stripTrailingZeros ();
+    // Avoid stuff like "6E2"
+    return ret.scale () >= 0 ? ret : ret.setScale (0);
   }
 
   /**

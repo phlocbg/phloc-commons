@@ -18,9 +18,13 @@
 package com.phloc.commons.changelog;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
+import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 
@@ -36,12 +40,15 @@ public final class ComparatorChangeLogComponentTest
   @Test
   public void testAll ()
   {
-    final List <ChangeLog> aEntries = ContainerHelper.newList (ChangeLogSerializer.readAllChangeLogs ().values ());
+    final Map <URI, ChangeLog> aAllChangeLogs = ChangeLogSerializer.readAllChangeLogs ();
+    assertNotNull (aAllChangeLogs);
+    assertTrue (aAllChangeLogs.size () >= 1);
+    final List <ChangeLog> aEntries = ContainerHelper.newList (aAllChangeLogs.values ());
     aEntries.add (new ChangeLog ("1.0", "aaa-first"));
     aEntries.add (new ChangeLog ("1.0", "zzz-last"));
     assertSame (aEntries, ContainerHelper.getSortedInline (aEntries, new ComparatorChangeLogComponent ()));
     assertEquals ("aaa-first", aEntries.get (0).getComponent ());
     assertEquals ("phloc-commons", aEntries.get (1).getComponent ());
-    assertEquals ("zzz-last", aEntries.get (2).getComponent ());
+    assertEquals ("zzz-last", ContainerHelper.getLastElement (aEntries).getComponent ());
   }
 }

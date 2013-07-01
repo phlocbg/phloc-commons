@@ -18,12 +18,14 @@
 package com.phloc.commons.math;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
 
 import org.junit.Test;
 
+import com.phloc.commons.CGlobal;
 import com.phloc.commons.mock.PhlocAssert;
 
 /**
@@ -240,5 +242,23 @@ public final class MathHelperTest
   public void testGetUnsignedInt ()
   {
     assertEquals (MathHelper.getUnsignedInt (-740679319), 3554287977L);
+  }
+
+  @Test
+  public void testGetWithoutTrailingZeroes ()
+  {
+    assertNull (MathHelper.getWithoutTrailingZeroes ((String) null));
+    assertNull (MathHelper.getWithoutTrailingZeroes ((BigDecimal) null));
+
+    assertEquals (BigDecimal.ZERO, MathHelper.getWithoutTrailingZeroes (BigDecimal.ZERO));
+    assertEquals (BigDecimal.ONE, MathHelper.getWithoutTrailingZeroes (BigDecimal.ONE));
+    assertEquals (BigDecimal.TEN, MathHelper.getWithoutTrailingZeroes (BigDecimal.TEN));
+    assertEquals (BigDecimal.ONE, MathHelper.getWithoutTrailingZeroes ("1.0000"));
+    assertEquals (CGlobal.BIGDEC_100, MathHelper.getWithoutTrailingZeroes ("100.000"));
+    assertEquals (new BigDecimal ("100.01"), MathHelper.getWithoutTrailingZeroes ("100.0100"));
+    assertEquals (new BigDecimal ("600"), MathHelper.getWithoutTrailingZeroes ("6e2"));
+    assertEquals (new BigDecimal ("0.1"), MathHelper.getWithoutTrailingZeroes ("0.1000"));
+    assertEquals (new BigDecimal ("0.001"), MathHelper.getWithoutTrailingZeroes ("0.001000"));
+    assertEquals (BigDecimal.ZERO, MathHelper.getWithoutTrailingZeroes ("0.00000"));
   }
 }

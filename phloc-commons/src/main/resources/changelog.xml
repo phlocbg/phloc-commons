@@ -20,6 +20,11 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2013-06-27" category="api" action="add">
+    <change>
+      <text locale="en">Added MathHelper.getWithoutTrailingZeroes(BigDecimal)</text>
+    </change>
+  </entry>
   <entry date="2013-06-19" category="api" action="add">
     <change>
       <text locale="en">Extended JAXBMarshallerUtils to differentiate between runtime and external Marshaller objects</text>
