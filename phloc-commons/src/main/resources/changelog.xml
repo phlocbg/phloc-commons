@@ -20,6 +20,7 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <release date="2013-07-10" version="4.0.8" />
   <entry date="2013-07-10" category="tech" action="change">
     <change>
       <text locale="en">Using Maven artifact com.google.code.findbugs:annotations instead of com.google.code.findbugs:jsr305 to avoid internalizing the FindBugs annotations.</text>
