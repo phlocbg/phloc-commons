@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0">
   <parent>
     <groupId>com.phloc</groupId>
     <artifactId>parent-pom</artifactId>
@@ -95,7 +95,7 @@
     </dependency>
     <dependency>
       <groupId>com.google.code.findbugs</groupId>
-      <artifactId>jsr305</artifactId>
+      <artifactId>annotations</artifactId>
       <version>2.0.1</version>
     </dependency>
         <!-- Xerces is required when handling XML 1.1!!! -->
@@ -142,6 +142,7 @@
       <version>${jaxb.impl.version}</version>
       <optional>true</optional>
     </dependency>
+    
     
     <dependency>
       <groupId>dom4j</groupId>

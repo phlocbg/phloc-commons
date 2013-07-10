@@ -1599,6 +1599,25 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
+  public void testReplaceMultipleCharArrayToChar ()
+  {
+    assertArrayEquals ("abc".toCharArray (), StringHelper.replaceMultiple ("abc", "def".toCharArray (), ' '));
+    assertArrayEquals ("   ".toCharArray (), StringHelper.replaceMultiple ("abc", "abc".toCharArray (), ' '));
+    assertArrayEquals ("   ".toCharArray (), StringHelper.replaceMultiple ("abc", "abcabc".toCharArray (), ' '));
+    assertArrayEquals ("   ".toCharArray (), StringHelper.replaceMultiple ("abc", "aabbcc".toCharArray (), ' '));
+    assertArrayEquals ("      ".toCharArray (), StringHelper.replaceMultiple ("abcabc", "abc".toCharArray (), ' '));
+    assertArrayEquals ("      ".toCharArray (), StringHelper.replaceMultiple ("aabbcc", "abc".toCharArray (), ' '));
+    assertArrayEquals ("a  ".toCharArray (), StringHelper.replaceMultiple ("abc", "bc".toCharArray (), ' '));
+    assertArrayEquals (" b ".toCharArray (), StringHelper.replaceMultiple ("abc", "ac".toCharArray (), ' '));
+    assertArrayEquals ("  c".toCharArray (), StringHelper.replaceMultiple ("abc", "ab".toCharArray (), ' '));
+    assertArrayEquals ("abc".toCharArray (), StringHelper.replaceMultiple ("abc", "".toCharArray (), ' '));
+    assertArrayEquals ("".toCharArray (), StringHelper.replaceMultiple ("", "abc".toCharArray (), ' '));
+    assertArrayEquals ("".toCharArray (), StringHelper.replaceMultiple ("", "".toCharArray (), ' '));
+    assertArrayEquals ("".toCharArray (), StringHelper.replaceMultiple (null, "abc".toCharArray (), ' '));
+    assertArrayEquals ("".toCharArray (), StringHelper.replaceMultiple (null, "".toCharArray (), ' '));
+  }
+
+  @Test
   public void testToString ()
   {
     assertEquals ("1", StringHelper.getToString (I1));
