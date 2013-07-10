@@ -20,6 +20,52 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <release date="2013-07-10" version="4.0.8" />
+  <entry date="2013-07-10" category="tech" action="change">
+    <change>
+      <text locale="en">Using Maven artifact com.google.code.findbugs:annotations instead of com.google.code.findbugs:jsr305 to avoid internalizing the FindBugs annotations.</text>
+    </change>
+  </entry>
+  <entry date="2013-06-27" category="api" action="add">
+    <change>
+      <text locale="en">Added MathHelper.getWithoutTrailingZeroes(BigDecimal)</text>
+    </change>
+  </entry>
+  <entry date="2013-06-19" category="api" action="add">
+    <change>
+      <text locale="en">Extended JAXBMarshallerUtils to differentiate between runtime and external Marshaller objects</text>
+    </change>
+  </entry>
+  <entry date="2013-06-17" category="api" action="add">
+    <change>
+      <text locale="en">Extended MathHelper API to support easy handling of BigDecimal.TEN and BigInteger.TEN</text>
+    </change>
+  </entry>
+  <entry date="2013-06-16" category="api" action="add">
+    <change>
+      <text locale="en">Added new method CountryCache.getAllCountryLocales()</text>
+    </change>
+  </entry>
+  <entry date="2013-06-13" category="api" action="add">
+    <change>
+      <text locale="en">Added new method StringHelper.replaceMultiple(String,char[],char)</text>
+    </change>
+  </entry>
+  <entry date="2013-06-11" category="api" action="add">
+    <change>
+      <text locale="en">Added protected methods in AbstractJAXBMarshaller to customize the generated Marshaller and Unmarshaller objects</text>
+    </change>
+  </entry>
+  <entry date="2013-06-06" category="api" action="add">
+    <change>
+      <text locale="en">Extended MathHelper API to support easy handling of BigDecimal.ONE and BigInteger.ONE</text>
+    </change>
+  </entry>
+  <entry date="2013-06-04" category="api" action="fix">
+    <change>
+      <text locale="en">Fixed generic types of constructors of MapBased(Readonly)AttributeContainer(ThreadSafe)</text>
+    </change>
+  </entry>
   <release date="2013-05-21" version="4.0.7" />
   <entry date="2013-05-17" category="feature" action="add">
     <change>

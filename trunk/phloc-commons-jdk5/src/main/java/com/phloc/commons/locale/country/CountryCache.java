@@ -42,7 +42,7 @@ import com.phloc.commons.string.StringHelper;
  * This is a global cache for country objects to avoid too many object flowing
  * around.<br>
  * This cache is application independent.
- *
+ * 
  * @author Philip Helger
  */
 @ThreadSafe
@@ -128,7 +128,7 @@ public final class CountryCache
   }
 
   /**
-   * @return a set with all contained countries
+   * @return a set with all contained countries. Never <code>null</code>.
    */
   @Nonnull
   @ReturnsMutableCopy
@@ -146,8 +146,21 @@ public final class CountryCache
   }
 
   /**
+   * @return a set with all contained country locales. Never <code>null</code>.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public static Set <Locale> getAllCountryLocales ()
+  {
+    final Set <Locale> ret = new HashSet <Locale> ();
+    for (final String sCountry : getAllCountries ())
+      ret.add (LocaleCache.getLocale ("", sCountry, ""));
+    return ret;
+  }
+
+  /**
    * Check if the passed country is known.
-   *
+   * 
    * @param aCountry
    *        The country to check. May be <code>null</code>.
    * @return <code>true</code> if the passed country is contained,
@@ -160,7 +173,7 @@ public final class CountryCache
 
   /**
    * Check if the passed country is known.
-   *
+   * 
    * @param sCountry
    *        The country to check. May be <code>null</code>.
    * @return <code>true</code> if the passed country is contained,

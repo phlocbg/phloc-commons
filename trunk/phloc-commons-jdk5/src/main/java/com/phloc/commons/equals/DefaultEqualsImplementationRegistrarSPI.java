@@ -60,6 +60,10 @@ public final class DefaultEqualsImplementationRegistrarSPI implements IEqualsImp
       {
         final BigDecimal aRealObj1 = (BigDecimal) aObj1;
         final BigDecimal aRealObj2 = (BigDecimal) aObj2;
+        // Compare is ~15% quicker than the setScale version
+        if (true)
+          return aRealObj1.compareTo (aRealObj2) == 0;
+
         final int nMaxScale = Math.max (aRealObj1.scale (), aRealObj2.scale ());
         return aRealObj1.setScale (nMaxScale).equals (aRealObj2.setScale (nMaxScale));
       }

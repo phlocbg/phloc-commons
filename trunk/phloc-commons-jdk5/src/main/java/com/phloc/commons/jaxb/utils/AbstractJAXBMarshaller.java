@@ -401,6 +401,18 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   }
 
   /**
+   * Customize the passed unmarshaller before un something.
+   * 
+   * @param aUnmarshaller
+   *        The object to customize. Never <code>null</code>.
+   */
+  @OverrideOnDemand
+  protected void customizeUnmarshaller (@Nonnull final Unmarshaller aUnmarshaller)
+  {
+    // empty
+  }
+
+  /**
    * Read a document from the specified source.
    * 
    * @param aSource
@@ -416,6 +428,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
     try
     {
       final Unmarshaller aUnmarshaller = _createUnmarshaller ();
+      customizeUnmarshaller (aUnmarshaller);
       return aUnmarshaller.unmarshal (aSource, m_aType).getValue ();
     }
     catch (final UnmarshalException ex)
@@ -531,6 +544,18 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   }
 
   /**
+   * Customize the passed marshaller before marshalling something.
+   * 
+   * @param aMarshaller
+   *        The object to customize. Never <code>null</code>.
+   */
+  @OverrideOnDemand
+  protected void customizeMarshaller (@Nonnull final Marshaller aMarshaller)
+  {
+    // empty
+  }
+
+  /**
    * Convert the passed object to XML.
    * 
    * @param aObject
@@ -550,6 +575,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
     try
     {
       final Marshaller aMarshaller = _createMarshaller ();
+      customizeMarshaller (aMarshaller);
       final JAXBElement <JAXBTYPE> aJAXBElement = wrapObject (aObject);
       aMarshaller.marshal (aJAXBElement, aResult);
       return ESuccess.SUCCESS;

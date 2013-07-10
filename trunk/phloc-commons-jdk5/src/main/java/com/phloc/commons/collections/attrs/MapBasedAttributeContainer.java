@@ -54,7 +54,7 @@ public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContain
     m_aAttrs = new HashMap <String, Object> ();
   }
 
-  public MapBasedAttributeContainer (@Nonnull final Map <String, Object> aMap)
+  public MapBasedAttributeContainer (@Nonnull final Map <String, ?> aMap)
   {
     if (aMap == null)
       throw new NullPointerException ("map");

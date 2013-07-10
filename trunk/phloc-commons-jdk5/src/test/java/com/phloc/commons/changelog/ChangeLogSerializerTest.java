@@ -30,7 +30,6 @@ import org.junit.Test;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.serialize.MicroDOMInputStreamProvider;
@@ -89,8 +88,7 @@ public final class ChangeLogSerializerTest
   {
     final Map <URI, ChangeLog> aChangeLogs = ChangeLogSerializer.readAllChangeLogs ();
     assertNotNull (aChangeLogs);
-    assertEquals (1, aChangeLogs.size ());
-    assertEquals ("phloc-commons", ContainerHelper.getFirstValue (aChangeLogs).getComponent ());
+    assertTrue (aChangeLogs.size () >= 1);
   }
 
   @Test

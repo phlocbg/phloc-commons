@@ -49,7 +49,7 @@ public class MapBasedAttributeContainerThreadSafe extends MapBasedAttributeConta
     super ();
   }
 
-  public MapBasedAttributeContainerThreadSafe (@Nonnull final Map <String, Object> aMap)
+  public MapBasedAttributeContainerThreadSafe (@Nonnull final Map <String, ?> aMap)
   {
     super (aMap);
   }

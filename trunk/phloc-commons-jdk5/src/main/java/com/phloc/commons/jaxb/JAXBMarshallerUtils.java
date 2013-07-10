@@ -34,6 +34,9 @@ import javax.xml.bind.PropertyException;
 @Immutable
 public final class JAXBMarshallerUtils
 {
+  private static final String JAXB_EXTERNAL_CLASS_NAME = "com.sun.xml.bind.v2.runtime.MarshallerImpl";
+  private static final String JAXB_INTERNAL_CLASS_NAME = "com.sun.xml.internal.bind.v2.runtime.MarshallerImpl";
+
   // Sun specific property name (ripped from
   // com.sun.xml.bind.v2.runtime.MarshallerImpl)
   private static final String SUN_INDENT_STRING = "com.sun.xml.bind.indentString";
@@ -226,13 +229,17 @@ public final class JAXBMarshallerUtils
   }
 
   /**
-   * Set the Sun specific namespace prefix mapper. Value must implement
-   * com.sun.xml.bind.marshaller.NamespacePrefixMapper
+   * Set the Sun specific namespace prefix mapper. Value must implement either
+   * com.sun.xml.bind.marshaller.NamespacePrefixMapper or
+   * com.sun.xml.internal.bind.marshaller.NamespacePrefixMapper depending on the
+   * implementation type of Marshaller.
    * 
    * @param aMarshaller
    *        The marshaller to set the property. May not be <code>null</code>.
    * @param aNamespacePrefixMapper
    *        the value to be set
+   * @see #isExternalSunJAXB2Marshaller(Marshaller)
+   * @see #isInternalSunJAXB2Marshaller(Marshaller)
    */
   public static void setSunNamespacePrefixMapper (@Nonnull final Marshaller aMarshaller,
                                                   @Nonnull final Object aNamespacePrefixMapper)
@@ -315,8 +322,35 @@ public final class JAXBMarshallerUtils
       return false;
     final String sClassName = aMarshaller.getClass ().getName ();
     // When using jaxb-impl explicitly
-    return sClassName.equals ("com.sun.xml.bind.v2.runtime.MarshallerImpl") ||
+    return sClassName.equals (JAXB_EXTERNAL_CLASS_NAME) ||
     // When using the JAXB version integrated in the runtime
-           sClassName.equals ("com.sun.xml.internal.bind.v2.runtime.MarshallerImpl");
+           sClassName.equals (JAXB_INTERNAL_CLASS_NAME);
+  }
+
+  /**
+   * Check if the passed marshaller is external to the one contained in the
+   * runtime.
+   * 
+   * @param aMarshaller
+   *        The marshaller to check. May be <code>null</code>.
+   * @return <code>true</code> if it is a JAXB marshaller from an external
+   *         package (e.g. by having jaxb-impl in the dependencies)
+   */
+  public static boolean isExternalSunJAXB2Marshaller (@Nullable final Marshaller aMarshaller)
+  {
+    return aMarshaller != null && aMarshaller.getClass ().getName ().equals (JAXB_EXTERNAL_CLASS_NAME);
+  }
+
+  /**
+   * Check if the passed marshaller is an internal one contained in the runtime.
+   * 
+   * @param aMarshaller
+   *        The marshaller to check. May be <code>null</code>.
+   * @return <code>true</code> if it is a JAXB marshaller from the runtime
+   *         library package
+   */
+  public static boolean isInternalSunJAXB2Marshaller (@Nullable final Marshaller aMarshaller)
+  {
+    return aMarshaller != null && aMarshaller.getClass ().getName ().equals (JAXB_INTERNAL_CLASS_NAME);
   }
 }

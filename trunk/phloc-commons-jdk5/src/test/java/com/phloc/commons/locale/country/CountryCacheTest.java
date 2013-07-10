@@ -76,4 +76,19 @@ public final class CountryCacheTest
       assertTrue (StringHelper.hasNoText (aCountry.getVariant ()));
     }
   }
+
+  @Test
+  public void testNoConcurrentModification2 ()
+  {
+    final Set <Locale> aCountries = new HashSet <Locale> ();
+    for (final Locale aCountry : CountryCache.getAllCountryLocales ())
+      aCountries.add (CountryCache.getCountry (aCountry));
+
+    for (final Locale aCountry : aCountries)
+    {
+      assertTrue (StringHelper.hasNoText (aCountry.getLanguage ()));
+      assertTrue (StringHelper.hasText (aCountry.getCountry ()));
+      assertTrue (StringHelper.hasNoText (aCountry.getVariant ()));
+    }
+  }
 }
