@@ -3,6 +3,16 @@
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
 <table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody>
+<tr border="1"><td>7/10/13</td><td colspan="4">_Release *4.0.8*_</td></tr>
+<tr><td>7/10/13</td><td>change</td><td>tech</td><td></td><td>Using Maven artifact com.google.code.findbugs:annotations instead of com.google.code.findbugs:jsr305 to avoid internalizing the FindBugs annotations.</td></tr>
+<tr><td>6/27/13</td><td>add</td><td>api</td><td></td><td>Added MathHelper.getWithoutTrailingZeroes(BigDecimal)</td></tr>
+<tr><td>6/19/13</td><td>add</td><td>api</td><td></td><td>Extended JAXBMarshallerUtils to differentiate between runtime and external Marshaller objects</td></tr>
+<tr><td>6/17/13</td><td>add</td><td>api</td><td></td><td>Extended MathHelper API to support easy handling of BigDecimal.TEN and BigInteger.TEN</td></tr>
+<tr><td>6/16/13</td><td>add</td><td>api</td><td></td><td>Added new method CountryCache.getAllCountryLocales()</td></tr>
+<tr><td>6/13/13</td><td>add</td><td>api</td><td></td><td>Added new method StringHelper.replaceMultiple(String,char[],char)</td></tr>
+<tr><td>6/11/13</td><td>add</td><td>api</td><td></td><td>Added protected methods in AbstractJAXBMarshaller to customize the generated Marshaller and Unmarshaller objects</td></tr>
+<tr><td>6/6/13</td><td>add</td><td>api</td><td></td><td>Extended MathHelper API to support easy handling of BigDecimal.ONE and BigInteger.ONE</td></tr>
+<tr><td>6/4/13</td><td>fix</td><td>api</td><td></td><td>Fixed generic types of constructors of MapBased(Readonly)AttributeContainer(ThreadSafe)</td></tr>
 <tr border="1"><td>5/21/13</td><td colspan="4">_Release *4.0.7*_</td></tr>
 <tr><td>5/17/13</td><td>add</td><td>feature</td><td></td><td>Added a tool to create JDK5 versions of a project based on some meta comments in the source files.</td></tr>
 <tr><td>5/15/13</td><td>add</td><td>api</td><td></td><td>Added new constructor to AbstractJAXBMarshaller which takes an array of XSD resources</td></tr>
@@ -135,7 +145,7 @@
 <tr><td>1/9/13</td><td>add</td><td>api</td><td></td><td>Added new class DateFormatSymbolsFactory working like DecimalFormatSymbolsFactors but for DateFormatSymbols</td></tr>
 <tr><td>1/9/13</td><td>add</td><td>api</td><td></td><td>Added new package com.phloc.commons.collections.flags</td></tr>
 <tr><td>1/7/13</td><td>update</td><td>api</td><td></td><td>Improved `*`AttributeContainer implementations slightly</td></tr>
-<tr><td>12/31/12</td><td>add</td><td>api</td><td></td><td>Added EBaseType from [http://code.google.com/p/phloc-types phloc-types] as the rest of the library is very rarely used</td></tr>
+<tr><td>12/31/12</td><td>add</td><td>api</td><td></td><td>Added EBaseType from [http://code.google.com/p/phloc-commons phloc-types] as the rest of the library is very rarely used</td></tr>
 <tr><td>12/19/12</td><td>add</td><td>api</td><td></td><td>Extended IReadonlyAttributeContainer with two methods getTypedAttribute invoking the TypeConverter</td></tr>
 <tr><td>12/19/12</td><td>add</td><td>api</td><td></td><td>Slightly extended API of NonBlockingStack (top and replaceTopElement were added)</td></tr>
 <tr><td>12/18/12</td><td>add</td><td>api</td><td></td><td>Added possibility to enable or disable consistency checks in TextProvider</td></tr>
@@ -644,7 +654,7 @@ new MicroElement("uri1", "a").appendElement ("uri1", "b")</td></tr>
 <tr><td>9/1/11</td><td>add</td><td>api</td><td></td><td>Added new class CDefault having constant default values for primitive and primitive wrapper types</td></tr>
 <tr><td>9/1/11</td><td>add</td><td>tech</td><td></td><td>Added all default type conversions from and to AtomicBoolean</td></tr>
 <tr><td>9/1/11</td><td>change</td><td>api</td><td></td><td>Removed all @Deprecated methods</td></tr>
-<tr><td>9/1/11</td><td>change</td><td>api</td><td></td><td>Moved everything in package dyntypes and beans to separate project [http://code.google.com/p/phloc-types phloc-types]</td></tr>
+<tr><td>9/1/11</td><td>change</td><td>api</td><td></td><td>Moved everything in package dyntypes and beans to separate project [http://code.google.com/p/phloc-commons phloc-types]</td></tr>
 <tr><td>9/1/11</td><td>add</td><td>api</td><td></td><td>Added a static create method for class FactoryConstantValue</td></tr>
 <tr border="1"><td>8/31/11</td><td colspan="4">_Release *3.0.12*_</td></tr>
 <tr><td>8/31/11</td><td>add</td><td>api</td><td></td><td>Added a static getAsString method to AbstractReadonlyAttributeContainer for converting a parameter Object to a String</td></tr>
