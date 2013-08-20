@@ -23,14 +23,17 @@ import javax.jms.ConnectionFactory;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 
-import com.phloc.commons.annotations.OverrideOnDemand;
-
+/**
+ * A sample implementation of {@link AbstractJMSFactory} that uses ActiveMQ as
+ * the connection factory
+ * 
+ * @author Philip Helger
+ */
 @ThreadSafe
 public final class ActiveMQJMSFactory extends AbstractJMSFactory
 {
   @Override
   @Nonnull
-  @OverrideOnDemand
   protected ConnectionFactory createConnectionFactory ()
   {
     final ActiveMQConnectionFactory aConnectionFactory = new ActiveMQConnectionFactory ("tcp://localhost:61616");
