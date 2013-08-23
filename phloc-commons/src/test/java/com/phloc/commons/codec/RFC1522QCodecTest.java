@@ -24,11 +24,18 @@ import javax.annotation.Nonnull;
  * 
  * @author Philip Helger
  */
-public final class RFC1522QCodecTest extends AbstractCodecTest
+public final class RFC1522QCodecTest extends AbstractStringCodecTest
 {
   @Override
   @Nonnull
   protected ICodec createCodec ()
+  {
+    return new RFC1522QCodec ();
+  }
+
+  @Override
+  @Nonnull
+  protected IStringCodec createStringCodec ()
   {
     return new RFC1522QCodec ();
   }
