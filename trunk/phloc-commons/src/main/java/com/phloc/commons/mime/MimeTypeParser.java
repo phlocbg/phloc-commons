@@ -23,6 +23,8 @@ import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
+import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.string.StringHelper;
 
 /**
@@ -37,8 +39,35 @@ public final class MimeTypeParser
   @SuppressWarnings ("unused")
   private static final MimeTypeParser s_aInstance = new MimeTypeParser ();
 
+  private static final char [] TSPECIAL = new char [] { '(',
+                                                       ')',
+                                                       '<',
+                                                       '>',
+                                                       '@',
+                                                       ',',
+                                                       ';',
+                                                       ':',
+                                                       '\\',
+                                                       '"',
+                                                       '/',
+                                                       '[',
+                                                       ']',
+                                                       '?',
+                                                       '=' };
+
   private MimeTypeParser ()
   {}
+
+  /**
+   * @return A copy of the array with all TSpecial chars. Never
+   *         <code>null</code>.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public static char [] getAllTSpecialChars ()
+  {
+    return ArrayHelper.getCopy (TSPECIAL);
+  }
 
   /**
    * Check if the passed character is a special character according to RFC 2045
@@ -51,21 +80,7 @@ public final class MimeTypeParser
    */
   public static boolean isTSpecialChar (final char c)
   {
-    return c == '(' ||
-           c == ')' ||
-           c == '<' ||
-           c == '>' ||
-           c == '@' ||
-           c == ',' ||
-           c == ';' ||
-           c == ':' ||
-           c == '\\' ||
-           c == '"' ||
-           c == '/' ||
-           c == '[' ||
-           c == ']' ||
-           c == '?' ||
-           c == '=';
+    return ArrayHelper.contains (TSPECIAL, c);
   }
 
   /**
