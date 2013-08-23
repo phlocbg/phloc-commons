@@ -17,9 +17,11 @@
  */
 package com.phloc.commons.mime;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.string.StringHelper;
 
 /**
@@ -102,6 +104,28 @@ public final class MimeTypeParser
     return true;
   }
 
+  private static void _parseAndAddParameters (@Nonnull final MimeType aMimeType,
+                                              @Nonnull @Nonempty final String sParameters)
+  {
+    // Split all parameters
+    final String [] aParams = StringHelper.getExplodedArray (CMimeType.SEPARATOR_PARAMETER, sParameters);
+    for (final String sParameter : aParams)
+    {
+      // Split each parameter into name and value
+      final String [] aParamItems = StringHelper.getExplodedArray (CMimeType.SEPARATOR_PARAMETER_NAME_VALUE,
+                                                                   sParameter,
+                                                                   2);
+      if (aParamItems.length != 2)
+        throw new IllegalArgumentException ("MimeType Parameter without name/value separator found: '" +
+                                            sParameter +
+                                            "'");
+
+      final String sParameterName = aParamItems[0].trim ();
+      final String sParameterValue = aParamItems[1].trim ();
+      aMimeType.addParameter (sParameterName, sParameterValue);
+    }
+  }
+
   /**
    * Try to convert the string representation of a MIME type to an object.
    * 
@@ -132,6 +156,7 @@ public final class MimeTypeParser
           if (nSemicolonIndex >= 0)
           {
             sContentSubType = sRest.substring (0, nSemicolonIndex).trim ();
+            // everything after the first ';' as parameters
             sParameters = sRest.substring (nSemicolonIndex + 1);
           }
           else
@@ -144,6 +169,7 @@ public final class MimeTypeParser
           if (StringHelper.hasText (sParameters))
           {
             // We have parameters to extract
+            _parseAndAddParameters (ret, sParameters);
           }
           return ret;
         }

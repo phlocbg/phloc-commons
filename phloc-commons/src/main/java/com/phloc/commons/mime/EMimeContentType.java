@@ -85,6 +85,14 @@ public enum EMimeContentType implements IHasID <String>
     return new MimeType (this, sContentSubType);
   }
 
+  /**
+   * Check if the passed MIME type has the same content type as this
+   * 
+   * @param sMimeType
+   *        The MIME type string to be checked. May be <code>null</code>.
+   * @return <code>true</code> if the passed MIME type has this content type,
+   *         <code>false</code> otherwise
+   */
   public boolean isTypeOf (@Nullable final String sMimeType)
   {
     return StringHelper.startsWith (sMimeType, m_sText + CMimeType.SEPARATOR_CONTENTTYPE_SUBTYPE);
