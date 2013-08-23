@@ -60,13 +60,14 @@ public abstract class AbstractCodecTest extends AbstractPhlocTestCase
 
     for (int i = 0; i < 256; ++i)
     {
-      // build ascending identity field
       final byte [] aBuf = new byte [i];
+
+      // build ascending identity field
       for (int j = 0; j < i; ++j)
         aBuf[j] = (byte) j;
       testEncodeDecode (aBuf);
 
-      // build constant field
+      // build constant field with all the same byte
       for (int j = 0; j < i; ++j)
         aBuf[j] = (byte) i;
       testEncodeDecode (aBuf);
