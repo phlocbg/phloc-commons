@@ -17,6 +17,9 @@
  */
 package com.phloc.commons.codec;
 
+import java.nio.charset.Charset;
+
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
@@ -24,8 +27,16 @@ import javax.annotation.Nullable;
  * 
  * @author Philip Helger
  */
-public interface IStringCodec
+public interface IStringCodec extends ICodec
 {
+  /**
+   * Gets the default charset name used for string decoding and encoding.
+   * 
+   * @return the default charset. Never <code>null</code>.
+   */
+  @Nonnull
+  Charset getCharset ();
+
   /**
    * Encode the passed string.
    * 

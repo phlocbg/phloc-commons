@@ -76,11 +76,6 @@ public class RFC1522BCodec extends AbstractRFC1522Codec
     return "B";
   }
 
-  /**
-   * Gets the default charset name used for string decoding and encoding.
-   * 
-   * @return the default charset name
-   */
   @Nonnull
   public Charset getCharset ()
   {
