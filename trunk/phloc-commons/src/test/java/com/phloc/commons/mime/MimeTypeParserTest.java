@@ -65,15 +65,24 @@ public final class MimeTypeParserTest extends AbstractPhlocTestCase
     assertNotNull (mt);
     assertSame (EMimeContentType.TEXT, mt.getContentType ());
     assertEquals ("x", mt.getContentSubType ());
+    assertEquals ("text/x", mt.getAsString ());
 
     mt = MimeTypeParser.createFromString ("text/x;");
     assertNotNull (mt);
     assertSame (EMimeContentType.TEXT, mt.getContentType ());
     assertEquals ("x", mt.getContentSubType ());
+    assertEquals ("text/x", mt.getAsString ());
 
     mt = MimeTypeParser.createFromString ("text/x;param1=x;param2=y");
     assertNotNull (mt);
     assertSame (EMimeContentType.TEXT, mt.getContentType ());
     assertEquals ("x", mt.getContentSubType ());
+    assertEquals ("text/x;param1=x;param2=y", mt.getAsString ());
+
+    mt = MimeTypeParser.createFromString (" text / x ; param1 = x ; param2 = y ");
+    assertNotNull (mt);
+    assertSame (EMimeContentType.TEXT, mt.getContentType ());
+    assertEquals ("x", mt.getContentSubType ());
+    assertEquals ("text/x;param1=x;param2=y", mt.getAsString ());
   }
 }
