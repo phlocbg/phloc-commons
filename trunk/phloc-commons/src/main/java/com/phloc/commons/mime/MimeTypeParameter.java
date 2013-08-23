@@ -92,6 +92,19 @@ public class MimeTypeParameter implements Serializable
     return m_bValueRequiresQuoting;
   }
 
+  /**
+   * @param eQuotingAlgorithm
+   *        The quoting algorithm to be used. May not be <code>null</code>.
+   * @return The value of the parameter. Neither <code>null</code> nor empty. If
+   *         necessary, quoting is applied according to the passed algorithm.
+   */
+  @Nonnull
+  @Nonempty
+  public String getValueQuotedIfNecessary (@Nonnull final EMimeQuoting eQuotingAlgorithm)
+  {
+    return m_bValueRequiresQuoting ? eQuotingAlgorithm.getQuotedString (m_sValue) : m_sValue;
+  }
+
   @Override
   public boolean equals (final Object o)
   {
