@@ -40,8 +40,6 @@ import com.phloc.commons.string.StringHelper;
  * @see <a href="http://www.ietf.org/rfc/rfc1522.txt">MIME (Multipurpose
  *      Internet Mail Extensions) Part Two: Message Header Extensions for
  *      Non-ASCII Text</a>
- * @since 1.3
- * @version $Id: RFC1522Codec.java 1379145 2012-08-30 21:02:52Z tn $
  */
 public abstract class AbstractRFC1522Codec extends AbstractCodec implements IStringCodec
 {
@@ -118,26 +116,26 @@ public abstract class AbstractRFC1522Codec extends AbstractCodec implements IStr
     if (!sText.startsWith (PREFIX) || !sText.endsWith (POSTFIX))
       throw new DecoderException ("RFC 1522 violation: malformed encoded content");
 
-    final int terminator = sText.length () - 2;
-    int from = 2;
-    int to = sText.indexOf (SEP, from);
-    if (to == terminator)
+    final int nTerminator = sText.length () - 2;
+    int nFrom = 2;
+    int nTo = sText.indexOf (SEP, nFrom);
+    if (nTo == nTerminator)
       throw new DecoderException ("RFC 1522 violation: charset token not found");
-    final String sCharset = sText.substring (from, to);
+    final String sCharset = sText.substring (nFrom, nTo);
     if (StringHelper.hasNoText (sCharset))
       throw new DecoderException ("RFC 1522 violation: charset not specified");
     final Charset aCharset = CharsetManager.getCharsetFromName (sCharset);
-    from = to + 1;
-    to = sText.indexOf (SEP, from);
-    if (to == terminator)
+    nFrom = nTo + 1;
+    nTo = sText.indexOf (SEP, nFrom);
+    if (nTo == nTerminator)
       throw new DecoderException ("RFC 1522 violation: encoding token not found");
-    final String sEncoding = sText.substring (from, to);
+    final String sEncoding = sText.substring (nFrom, nTo);
     if (!getRFC1522Encoding ().equalsIgnoreCase (sEncoding))
       throw new DecoderException ("This codec cannot decode " + sEncoding + " encoded content");
-    from = to + 1;
-    to = sText.indexOf (SEP, from);
-    byte [] data = CharsetManager.getAsBytes (sText.substring (from, to), CCharset.CHARSET_US_ASCII_OBJ);
-    data = decode (data);
-    return CharsetManager.getAsString (data, aCharset);
+    nFrom = nTo + 1;
+    nTo = sText.indexOf (SEP, nFrom);
+    byte [] aData = CharsetManager.getAsBytes (sText.substring (nFrom, nTo), CCharset.CHARSET_US_ASCII_OBJ);
+    aData = decode (aData);
+    return CharsetManager.getAsString (aData, aCharset);
   }
 }
