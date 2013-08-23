@@ -61,6 +61,17 @@ public class MimeType implements IMimeType, ICloneable <MimeType>
   private List <MimeTypeParameter> m_aParameters;
 
   /**
+   * Kind of a copy constructor
+   * 
+   * @param aOther
+   *        The other object to copy the data from
+   */
+  public MimeType (@Nonnull final IMimeType aOther)
+  {
+    this (aOther.getContentType (), aOther.getContentSubType (), aOther.getAllParameters ());
+  }
+
+  /**
    * Constructor without parameters. To construct the MIME type "text/xml" you
    * need to pass {@link EMimeContentType#TEXT} and the String "xml" to this
    * constructor.
@@ -259,6 +270,16 @@ public class MimeType implements IMimeType, ICloneable <MimeType>
   public MimeTypeParameter getParameterAtIndex (@Nonnegative final int nIndex)
   {
     return ContainerHelper.getSafe (m_aParameters, nIndex);
+  }
+
+  @Nullable
+  public MimeTypeParameter getParameterWithName (@Nullable final String sParamName)
+  {
+    if (StringHelper.hasText (sParamName) && m_aParameters != null)
+      for (final MimeTypeParameter aParam : m_aParameters)
+        if (aParam.getAttribute ().equals (sParamName))
+          return aParam;
+    return null;
   }
 
   @Nonnull
