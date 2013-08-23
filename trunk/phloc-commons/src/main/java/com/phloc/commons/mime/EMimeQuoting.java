@@ -29,7 +29,10 @@ import com.phloc.commons.string.StringHelper;
  */
 public enum EMimeQuoting
 {
-  /** Create a quoted string according to RFC 822 */
+  /**
+   * Create a quoted string according to RFC 822 (surrounding everything in
+   * double-quotes and masking using backslash)
+   */
   QUOTED_STRING
   {
     @Override
@@ -51,7 +54,10 @@ public enum EMimeQuoting
     }
   },
 
-  /** Create a quoted printable String */
+  /**
+   * Create a quoted printable String. Replace all non-printable characters with
+   * =XY where XY is the hex encoding of the char.
+   */
   QUOTED_PRINTABLE
   {
     @Override

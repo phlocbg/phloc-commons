@@ -22,6 +22,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.string.StringHelper;
 
 /**
@@ -32,6 +33,10 @@ import com.phloc.commons.string.StringHelper;
 @Immutable
 public final class MimeTypeParser
 {
+  @PresentForCodeCoverage
+  @SuppressWarnings ("unused")
+  private static final MimeTypeParser s_aInstance = new MimeTypeParser ();
+
   private MimeTypeParser ()
   {}
 
@@ -105,7 +110,8 @@ public final class MimeTypeParser
   }
 
   private static void _parseAndAddParameters (@Nonnull final MimeType aMimeType,
-                                              @Nonnull @Nonempty final String sParameters)
+                                              @Nonnull @Nonempty final String sParameters,
+                                              @Nonnull final EMimeQuoting eQuotingAlgorithm)
   {
     // Split all parameters
     final String [] aParams = StringHelper.getExplodedArray (CMimeType.SEPARATOR_PARAMETER, sParameters);
@@ -127,7 +133,9 @@ public final class MimeTypeParser
   }
 
   /**
-   * Try to convert the string representation of a MIME type to an object.
+   * Try to convert the string representation of a MIME type to an object. The
+   * default quoting algorithm {@link CMimeType#DEFAULT_QUOTING} is used to
+   * unquote strings.
    * 
    * @param sMimeType
    *        The string representation to be converted. May be <code>null</code>.
@@ -137,6 +145,28 @@ public final class MimeTypeParser
   @Nullable
   public static MimeType createFromString (@Nullable final String sMimeType)
   {
+    return createFromString (sMimeType, CMimeType.DEFAULT_QUOTING);
+  }
+
+  /**
+   * Try to convert the string representation of a MIME type to an object. The
+   * default quoting algorithm {@link CMimeType#DEFAULT_QUOTING} is used to
+   * un-quote strings.
+   * 
+   * @param sMimeType
+   *        The string representation to be converted. May be <code>null</code>.
+   * @param eQuotingAlgorithm
+   *        The quoting algorithm to be used to un-quote parameter values. May
+   *        not be <code>null</code>. * @return <code>null</code> if the parsed
+   *        string could not be converted to a MIME type object.
+   */
+  @Nullable
+  public static MimeType createFromString (@Nullable final String sMimeType,
+                                           @Nonnull final EMimeQuoting eQuotingAlgorithm)
+  {
+    if (eQuotingAlgorithm == null)
+      throw new NullPointerException ("quotingAlgorithm");
+
     if (StringHelper.hasText (sMimeType))
     {
       // Find the separator between content type and sub type ("/")
@@ -169,7 +199,7 @@ public final class MimeTypeParser
           if (StringHelper.hasText (sParameters))
           {
             // We have parameters to extract
-            _parseAndAddParameters (ret, sParameters);
+            _parseAndAddParameters (ret, sParameters, eQuotingAlgorithm);
           }
           return ret;
         }

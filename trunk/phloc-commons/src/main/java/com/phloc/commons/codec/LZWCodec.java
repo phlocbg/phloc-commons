@@ -468,7 +468,7 @@ public class LZWCodec implements ICodec
     }
     finally
     {
-      // FLush but do not close
+      // Flush but do not close
       StreamUtils.flush (aBOS);
     }
   }
