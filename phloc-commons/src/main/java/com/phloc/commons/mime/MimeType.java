@@ -21,9 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.phloc.commons.ICloneable;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.StringHelper;
@@ -31,33 +29,44 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * Represents a single MIME type as the combination of the content type and the
- * sub-type.
+ * sub-type and parameters.
  * 
  * @author Philip Helger
  */
 @Immutable
-public final class MimeType implements IMimeType
+public class MimeType implements IMimeType, ICloneable <MimeType>
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (MimeType.class);
-
   /** The content type (text, application etc.) */
   private final EMimeContentType m_eContentType;
 
   /** The sub type top be added to the content type. */
   private final String m_sContentSubType;
 
-  /** The final MIME type including content type and sub type */
-  private final String m_sAsString;
+  /**
+   * The MIME type string including content type and sub type - for performance
+   * reasons only
+   */
+  private final String m_sMainTypeAsString;
 
+  /**
+   * Constructor. To construct the MIME type "text/xml" you need to pass
+   * {@link EMimeContentType#TEXT} and the String "xml" to this construcor.
+   * 
+   * @param eContentType
+   *        MIME content type. May not be <code>null</code>.
+   * @param sContentSubType
+   *        MIME content sub type. May neither be <code>null</code> nor empty.
+   */
   public MimeType (@Nonnull final EMimeContentType eContentType, @Nonnull @Nonempty final String sContentSubType)
   {
     if (eContentType == null)
       throw new NullPointerException ("contentType");
     if (StringHelper.hasNoText (sContentSubType))
       throw new IllegalArgumentException ("contentSubType may not be empty");
+
     m_eContentType = eContentType;
     m_sContentSubType = sContentSubType;
-    m_sAsString = m_eContentType.getText () + CMimeType.CONTENTTYPE_SUBTYPE_SEPARATOR + m_sContentSubType;
+    m_sMainTypeAsString = m_eContentType.getText () + CMimeType.CONTENTTYPE_SUBTYPE_SEPARATOR + m_sContentSubType;
   }
 
   @Nonnull
@@ -77,19 +86,28 @@ public final class MimeType implements IMimeType
   @Nonempty
   public String getAsString ()
   {
-    return m_sAsString;
+    return m_sMainTypeAsString;
   }
 
   @Nonnull
-  public String getAsStringWithEncoding (final String sEncoding)
+  @Nonempty
+  public String getAsStringWithoutParameters ()
   {
-    // Leads to false positives (e.g. with application/atom+xml)
-    if (false)
-      if (m_eContentType != EMimeContentType.TEXT)
-        s_aLogger.warn ("You are using non-text MIME type " + m_sAsString + " with encoding " + sEncoding);
+    return m_sMainTypeAsString;
+  }
 
+  @Nonnull
+  @Deprecated
+  public String getAsStringWithEncoding (@Nonnull final String sEncoding)
+  {
     // Don't store in member because this is not used so often
-    return m_sAsString + CMimeType.CHARSET_PARAM + sEncoding;
+    return m_sMainTypeAsString + CMimeType.CHARSET_PARAM + sEncoding;
+  }
+
+  @Nonnull
+  public MimeType getClone ()
+  {
+    return new MimeType (m_eContentType, m_sContentSubType);
   }
 
   @Override
@@ -118,6 +136,67 @@ public final class MimeType implements IMimeType
   }
 
   /**
+   * Check if the passed character is a special character according to RFC 2045
+   * chapter 5.1
+   * 
+   * @param c
+   *        The character to check
+   * @return <code>true</code> if the character is a special character,
+   *         <code>false</code> otherwise.
+   */
+  public static boolean isTSpecialChar (final char c)
+  {
+    return c == '(' ||
+           c == ')' ||
+           c == '<' ||
+           c == '>' ||
+           c == '@' ||
+           c == ',' ||
+           c == ';' ||
+           c == ':' ||
+           c == '\\' ||
+           c == '"' ||
+           c == '/' ||
+           c == '[' ||
+           c == ']' ||
+           c == '?' ||
+           c == '=';
+  }
+
+  /**
+   * Check if the passed character is a valid token character. According to RFC
+   * 2045 this can be
+   * <em>any (US-ASCII) CHAR except SPACE, CTLs, or tspecials</em>
+   * 
+   * @param c
+   *        The character to check.
+   * @return <code>true</code> if the passed character is a valid token
+   *         character, <code>false</code> otherwise
+   */
+  public static boolean isTokenChar (final char c)
+  {
+    // SPACE: 32
+    // CTLs: 0-31, 127
+    return c > 32 && c < 127 && !isTSpecialChar (c);
+  }
+
+  /**
+   * Try to convert the string representation of a MIME type to an object.
+   * 
+   * @param sMimeType
+   *        The string representation to be converted. May be <code>null</code>.
+   * @return <code>null</code> if the parsed string could not be converted to a
+   *         MIME type object.
+   * @deprecated Use {@link #createFromString(String)} instead
+   */
+  @Deprecated
+  @Nullable
+  public static MimeType parseFromStringWithoutEncoding (@Nullable final String sMimeType)
+  {
+    return createFromString (sMimeType);
+  }
+
+  /**
    * Try to convert the string representation of a MIME type to an object.
    * 
    * @param sMimeType
@@ -126,19 +205,41 @@ public final class MimeType implements IMimeType
    *         MIME type object.
    */
   @Nullable
-  public static IMimeType parseFromStringWithoutEncoding (@Nullable final String sMimeType)
+  public static MimeType createFromString (@Nullable final String sMimeType)
   {
     if (StringHelper.hasText (sMimeType))
     {
+      // Find the separator between content type and sub type ("/")
       final int nSlashIndex = sMimeType.indexOf (CMimeType.CONTENTTYPE_SUBTYPE_SEPARATOR);
-      if (nSlashIndex != -1)
+      if (nSlashIndex >= 0)
       {
+        // Use the main content type
         final String sContentType = sMimeType.substring (0, nSlashIndex);
         final EMimeContentType eContentType = EMimeContentType.getFromIDOrNull (sContentType);
         if (eContentType != null)
         {
-          final String sContentSubType = sMimeType.substring (nSlashIndex + 1);
-          return new MimeType (eContentType, sContentSubType);
+          // Extract the rest (sub type + parameters)
+          final String sRest = sMimeType.substring (nSlashIndex + 1);
+          final int nSemicolonIndex = sRest.indexOf (CMimeType.PARAMETER_SEPARATOR);
+          String sContentSubType;
+          String sParameters;
+          if (nSemicolonIndex >= 0)
+          {
+            sContentSubType = sRest.substring (0, nSemicolonIndex);
+            sParameters = sRest.substring (nSemicolonIndex + 1);
+          }
+          else
+          {
+            sContentSubType = sRest;
+            sParameters = null;
+          }
+
+          final MimeType ret = new MimeType (eContentType, sContentSubType);
+          if (StringHelper.hasText (sParameters))
+          {
+            // We have parameters to extract
+          }
+          return ret;
         }
       }
     }
