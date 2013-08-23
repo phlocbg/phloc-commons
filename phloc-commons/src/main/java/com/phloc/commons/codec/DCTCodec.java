@@ -34,7 +34,7 @@ import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
  * 
  * @author Philip Helger
  */
-public final class DCTCodec implements IByteArrayDecoder
+public class DCTCodec implements IByteArrayDecoder
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (DCTCodec.class);
 

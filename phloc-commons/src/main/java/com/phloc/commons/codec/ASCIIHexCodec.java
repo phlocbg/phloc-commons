@@ -29,7 +29,7 @@ import com.phloc.commons.string.StringHelper;
  * 
  * @author Philip Helger
  */
-public final class ASCIIHexCodec implements IByteArrayDecoder
+public class ASCIIHexCodec implements IByteArrayDecoder
 {
   public ASCIIHexCodec ()
   {}
