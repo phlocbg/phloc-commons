@@ -62,10 +62,6 @@ public class RFC1522BCodec extends AbstractRFC1522Codec
    * 
    * @param aCharset
    *        the default string charset to use.
-   * @see <a
-   *      href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard
-   *      charsets</a>
-   * @since 1.7
    */
   public RFC1522BCodec (@Nonnull final Charset aCharset)
   {

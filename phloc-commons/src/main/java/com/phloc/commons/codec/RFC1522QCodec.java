@@ -120,9 +120,6 @@ public class RFC1522QCodec extends AbstractRFC1522Codec
    * 
    * @param aCharset
    *        the default string charset to use.
-   * @see <a
-   *      href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard
-   *      charsets</a>
    */
   public RFC1522QCodec (@Nonnull final Charset aCharset)
   {

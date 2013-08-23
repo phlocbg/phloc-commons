@@ -17,20 +17,23 @@
  */
 package com.phloc.commons.codec;
 
+import java.nio.charset.Charset;
 import java.util.BitSet;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.charset.CCharset;
+import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.string.StringHelper;
 
 /**
- * Encoder and decoder for Base64
+ * Encoder and decoder for quoted printable stuff
  * 
  * @author Philip Helger
  */
-public class QuotedPrintableCodec extends AbstractCodec
+public class QuotedPrintableCodec extends AbstractCodec implements IStringCodec
 {
   private static final byte ESCAPE_CHAR = '=';
   private static final byte TAB = 9;
@@ -50,8 +53,31 @@ public class QuotedPrintableCodec extends AbstractCodec
         PRINTABLE_CHARS.set (i);
   }
 
+  /**
+   * The default charset used for string decoding and encoding.
+   */
+  private final Charset m_aCharset;
+
+  /**
+   * Default constructor with the UTF-8 charset.
+   */
   public QuotedPrintableCodec ()
-  {}
+  {
+    this (CCharset.CHARSET_UTF_8_OBJ);
+  }
+
+  /**
+   * Constructor which allows for the selection of a default charset
+   * 
+   * @param aCharset
+   *        the default string charset to use.
+   */
+  public QuotedPrintableCodec (@Nonnull final Charset aCharset)
+  {
+    if (aCharset == null)
+      throw new NullPointerException ("Charset");
+    m_aCharset = aCharset;
+  }
 
   /**
    * Encodes byte into its quoted-printable representation.
@@ -135,5 +161,45 @@ public class QuotedPrintableCodec extends AbstractCodec
   public byte [] decode (@Nullable final byte [] aEncodedBuffer)
   {
     return decodeQuotedPrintable (aEncodedBuffer);
+  }
+
+  @Nullable
+  public String encodeText (@Nullable final String sDecoded)
+  {
+    return encodeText (PRINTABLE_CHARS, sDecoded, m_aCharset);
+  }
+
+  @Nullable
+  public String encodeText (@Nonnull final BitSet aBitSet, @Nullable final String sDecoded)
+  {
+    return encodeText (aBitSet, sDecoded, m_aCharset);
+  }
+
+  @Nullable
+  public static String encodeText (@Nonnull final BitSet aBitSet,
+                                   @Nullable final String sDecoded,
+                                   @Nonnull final Charset aCharset)
+  {
+    if (sDecoded == null)
+      return null;
+
+    final byte [] aEncodedData = encodeQuotedPrintable (aBitSet, CharsetManager.getAsBytes (sDecoded, aCharset));
+    return CharsetManager.getAsString (aEncodedData, CCharset.CHARSET_US_ASCII_OBJ);
+  }
+
+  @Nullable
+  public String decodeText (@Nullable final String sEncoded)
+  {
+    return decodeText (sEncoded, m_aCharset);
+  }
+
+  @Nullable
+  public static String decodeText (@Nullable final String sEncoded, @Nonnull final Charset aCharset)
+  {
+    if (sEncoded == null)
+      return null;
+    byte [] aData = CharsetManager.getAsBytes (sEncoded, CCharset.CHARSET_US_ASCII_OBJ);
+    aData = decodeQuotedPrintable (aData);
+    return CharsetManager.getAsString (aData, aCharset);
   }
 }
