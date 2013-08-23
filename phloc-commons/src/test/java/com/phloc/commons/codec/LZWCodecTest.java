@@ -21,11 +21,12 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import javax.annotation.Nonnull;
+
 import org.junit.Test;
 
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.charset.CharsetManager;
-import com.phloc.commons.mock.AbstractPhlocTestCase;
 import com.phloc.commons.random.VerySecureRandom;
 
 /**
@@ -33,8 +34,15 @@ import com.phloc.commons.random.VerySecureRandom;
  * 
  * @author Philip Helger
  */
-public final class LZWCodecTest extends AbstractPhlocTestCase
+public final class LZWCodecTest extends AbstractCodecTest
 {
+  @Override
+  @Nonnull
+  protected ICodec createCodec ()
+  {
+    return new LZWCodec ();
+  }
+
   @Test
   public void testDecode ()
   {
