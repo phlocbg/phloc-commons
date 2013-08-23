@@ -16,6 +16,8 @@ he.org/licenses/LICENSE-2.0
  */
 package com.phloc.commons.mime;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
@@ -30,7 +32,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @Immutable
-public class MimeTypeParameter
+public class MimeTypeParameter implements Serializable
 {
   private final String m_sAttribute;
   private final String m_sValue;
@@ -43,7 +45,8 @@ public class MimeTypeParameter
    *        Parameter name. Must neither be <code>null</code> nor empty and must
    *        match {@link MimeTypeParser#isToken(String)}.
    * @param sValue
-   *        The value to use. M
+   *        The value to use. May neither be <code>null</code> nor empty. Must
+   *        not be a valid MIME token.
    */
   public MimeTypeParameter (@Nonnull @Nonempty final String sAttribute, @Nonnull @Nonempty final String sValue)
   {
