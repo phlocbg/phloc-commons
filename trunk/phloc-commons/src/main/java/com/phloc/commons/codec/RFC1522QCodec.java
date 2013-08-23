@@ -46,11 +46,11 @@ import com.phloc.commons.charset.CCharset;
  * @see <a href="http://www.ietf.org/rfc/rfc1522.txt">MIME (Multipurpose
  *      Internet Mail Extensions) Part Two: Message Header Extensions for
  *      Non-ASCII Text</a>
- * @since 1.3
- * @version $Id: QCodec.java 1380305 2012-09-03 18:37:21Z tn $
  */
 public class RFC1522QCodec extends AbstractRFC1522Codec
 {
+  public static boolean DEFAULT_ENCODE_BLANKS = false;
+
   /**
    * BitSet of printable characters as defined in RFC 1522.
    */
@@ -105,7 +105,7 @@ public class RFC1522QCodec extends AbstractRFC1522Codec
    * The default charset used for string decoding and encoding.
    */
   private final Charset m_aCharset;
-  private boolean m_bEncodeBlanks = false;
+  private boolean m_bEncodeBlanks = DEFAULT_ENCODE_BLANKS;
 
   /**
    * Default constructor with the UTF-8 charset.
@@ -123,10 +123,11 @@ public class RFC1522QCodec extends AbstractRFC1522Codec
    * @see <a
    *      href="http://download.oracle.com/javase/6/docs/api/java/nio/charset/Charset.html">Standard
    *      charsets</a>
-   * @since 1.7
    */
   public RFC1522QCodec (@Nonnull final Charset aCharset)
   {
+    if (aCharset == null)
+      throw new NullPointerException ("Charset");
     m_aCharset = aCharset;
   }
 

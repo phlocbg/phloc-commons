@@ -41,8 +41,6 @@ import com.phloc.commons.charset.CCharset;
  * @see <a href="http://www.ietf.org/rfc/rfc1522.txt">MIME (Multipurpose
  *      Internet Mail Extensions) Part Two: Message Header Extensions for
  *      Non-ASCII Text</a>
- * @since 1.3
- * @version $Id: BCodec.java 1380305 2012-09-03 18:37:21Z tn $
  */
 public class RFC1522BCodec extends AbstractRFC1522Codec
 {
