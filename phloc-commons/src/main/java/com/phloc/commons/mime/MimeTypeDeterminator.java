@@ -347,10 +347,10 @@ public final class MimeTypeDeterminator
    * @return <code>null</code> if no MIME type was found.
    */
   @Nullable
-  public static IMimeType getMimeTypeObjectFromFilename (@Nonnull final String sFilename)
+  public static MimeType getMimeTypeObjectFromFilename (@Nonnull final String sFilename)
   {
     final String sMimeType = getMimeTypeFromFilename (sFilename);
-    return MimeType.createFromString (sMimeType);
+    return MimeTypeParser.createFromString (sMimeType);
   }
 
   /**
@@ -386,10 +386,10 @@ public final class MimeTypeDeterminator
    * @return <code>null</code> if no MIME type was found.
    */
   @Nullable
-  public static IMimeType getMimeTypeObjectFromExtension (@Nullable final String sExtension)
+  public static MimeType getMimeTypeObjectFromExtension (@Nullable final String sExtension)
   {
     final String sMimeType = getMimeTypeFromExtension (sExtension);
-    return MimeType.createFromString (sMimeType);
+    return MimeTypeParser.createFromString (sMimeType);
   }
 
   /**
