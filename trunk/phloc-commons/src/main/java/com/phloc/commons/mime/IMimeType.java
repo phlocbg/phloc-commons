@@ -18,12 +18,16 @@
 package com.phloc.commons.mime;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import com.phloc.commons.IHasStringRepresentation;
 import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
 import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 
 /**
  * Interface for the structured representation of a single MIME type.
@@ -33,6 +37,9 @@ import com.phloc.commons.annotations.Nonempty;
 @MustImplementEqualsAndHashcode
 public interface IMimeType extends IHasStringRepresentation, Serializable
 {
+  /** The default quoting algorithm to be used */
+  EMimeQuoting DEFAULT_QUOTING = EMimeQuoting.QUOTED_STRING;
+
   /**
    * @return The content type. Never <code>null</code>.
    */
@@ -46,12 +53,28 @@ public interface IMimeType extends IHasStringRepresentation, Serializable
   String getContentSubType ();
 
   /**
+   * Get the MIME type including all parameters as a single string. By default
+   * the {@link #DEFAULT_QUOTING} quoting algorithm is used.
+   * 
+   * @return The combined string to be used as text representation:
+   *         <code><em>contentType</em> '/' <em>subType</em> ( ';' <em>parameterName</em> '=' <em>parameterValue</em> )*</code>
+   * @see #getAsString(EMimeQuoting)
+   * @see #getAsStringWithoutParameters()
+   */
+  @Nonnull
+  String getAsString ();
+
+  /**
+   * Get the MIME type including all parameters as a single string. The
+   * specified quoting algorithm is used to quote parameter values (if
+   * necessary).
+   * 
    * @return The combined string to be used as text representation:
    *         <code><em>contentType</em> '/' <em>subType</em> ( ';' <em>parameterName</em> '=' <em>parameterValue</em> )*</code>
    * @see #getAsStringWithoutParameters()
    */
   @Nonnull
-  String getAsString ();
+  String getAsString (@Nonnull EMimeQuoting eQuotingAlgorithm);
 
   /**
    * @return The combined string to be used as text representation but without
@@ -72,4 +95,33 @@ public interface IMimeType extends IHasStringRepresentation, Serializable
   @Nonnull
   @Deprecated
   String getAsStringWithEncoding (@Nonnull @Nonempty String sEncoding);
+
+  /**
+   * @return <code>true</code> if at least one parameter is present,
+   *         <code>false</code> if no parameter is present.
+   */
+  boolean hasAnyParameters ();
+
+  /**
+   * @return The number of parameters. Alway &ge; 0.
+   */
+  @Nonnegative
+  int getParameterCount ();
+
+  /**
+   * @return All present parameters. May not be <code>null</code> but empty.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  List <MimeTypeParameter> getAllParameters ();
+
+  /**
+   * Get the parameter at the specified index.
+   * 
+   * @param nIndex
+   *        The index to use. Should be &ge; 0.
+   * @return <code>null</code> if the provided index is illegal.
+   */
+  @Nullable
+  MimeTypeParameter getParameterAtIndex (@Nonnegative int nIndex);
 }

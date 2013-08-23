@@ -17,13 +17,22 @@
  */
 package com.phloc.commons.mime;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.Immutable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.ICloneable;
 import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
+import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
+import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -33,7 +42,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author Philip Helger
  */
-@Immutable
+@NotThreadSafe
 public class MimeType implements IMimeType, ICloneable <MimeType>
 {
   /** The content type (text, application etc.) */
@@ -48,9 +57,13 @@ public class MimeType implements IMimeType, ICloneable <MimeType>
    */
   private final String m_sMainTypeAsString;
 
+  /** This list of parameters - optional */
+  private List <MimeTypeParameter> m_aParameters;
+
   /**
-   * Constructor. To construct the MIME type "text/xml" you need to pass
-   * {@link EMimeContentType#TEXT} and the String "xml" to this construcor.
+   * Constructor without parameters. To construct the MIME type "text/xml" you
+   * need to pass {@link EMimeContentType#TEXT} and the String "xml" to this
+   * constructor.
    * 
    * @param eContentType
    *        MIME content type. May not be <code>null</code>.
@@ -58,6 +71,25 @@ public class MimeType implements IMimeType, ICloneable <MimeType>
    *        MIME content sub type. May neither be <code>null</code> nor empty.
    */
   public MimeType (@Nonnull final EMimeContentType eContentType, @Nonnull @Nonempty final String sContentSubType)
+  {
+    this (eContentType, sContentSubType, (Collection <? extends MimeTypeParameter>) null);
+  }
+
+  /**
+   * Constructor without parameters. To construct the MIME type "text/xml" you
+   * need to pass {@link EMimeContentType#TEXT} and the String "xml" to this
+   * constructor.
+   * 
+   * @param eContentType
+   *        MIME content type. May not be <code>null</code>.
+   * @param sContentSubType
+   *        MIME content sub type. May neither be <code>null</code> nor empty.
+   * @param aParameters
+   *        MIME type parameters. May be <code>null</code> or empty.
+   */
+  public MimeType (@Nonnull final EMimeContentType eContentType,
+                   @Nonnull @Nonempty final String sContentSubType,
+                   @Nullable final Collection <? extends MimeTypeParameter> aParameters)
   {
     if (eContentType == null)
       throw new NullPointerException ("contentType");
@@ -67,6 +99,7 @@ public class MimeType implements IMimeType, ICloneable <MimeType>
     m_eContentType = eContentType;
     m_sContentSubType = sContentSubType;
     m_sMainTypeAsString = m_eContentType.getText () + CMimeType.SEPARATOR_CONTENTTYPE_SUBTYPE + m_sContentSubType;
+    m_aParameters = ContainerHelper.isEmpty (aParameters) ? null : ContainerHelper.newList (aParameters);
   }
 
   @Nonnull
@@ -86,7 +119,40 @@ public class MimeType implements IMimeType, ICloneable <MimeType>
   @Nonempty
   public String getAsString ()
   {
-    return m_sMainTypeAsString;
+    return getAsString (DEFAULT_QUOTING);
+  }
+
+  @Nonnull
+  @Nonempty
+  public String getAsString (@Nonnull final EMimeQuoting eQuotingAlgorithm)
+  {
+    if (eQuotingAlgorithm == null)
+      throw new NullPointerException ("QuotingAlgorithm");
+
+    if (ContainerHelper.isEmpty (m_aParameters))
+    {
+      // No parameters - return as is
+      return m_sMainTypeAsString;
+    }
+
+    final StringBuilder aSB = new StringBuilder (m_sMainTypeAsString);
+    for (final MimeTypeParameter aParameter : m_aParameters)
+    {
+      aSB.append (CMimeType.SEPARATOR_PARAMETER)
+         .append (aParameter.getAttribute ())
+         .append (CMimeType.SEPARATOR_PARAMETER_NAME_VALUE);
+      if (aParameter.isValueRequiringQuoting ())
+      {
+        // Append the value quoted
+        aSB.append (eQuotingAlgorithm.getQuotedString (aParameter.getValue ()));
+      }
+      else
+      {
+        // No quoting necessary
+        aSB.append (aParameter.getValue ());
+      }
+    }
+    return aSB.toString ();
   }
 
   @Nonnull
@@ -104,10 +170,109 @@ public class MimeType implements IMimeType, ICloneable <MimeType>
     return m_sMainTypeAsString + CMimeType.CHARSET_PARAM + sEncoding;
   }
 
+  /**
+   * Add a parameter.
+   * 
+   * @param sAttribute
+   *        Parameter name. Must neither be <code>null</code> nor empty and must
+   *        match {@link MimeTypeParser#isToken(String)}.
+   * @param sValue
+   *        The value to use. May neither be <code>null</code> nor empty. Must
+   *        not be a valid MIME token.
+   * @return this
+   */
+  @Nonnull
+  public MimeType addParameter (@Nonnull @Nonempty final String sAttribute, @Nonnull @Nonempty final String sValue)
+  {
+    return addParameter (new MimeTypeParameter (sAttribute, sValue));
+  }
+
+  /**
+   * Add a parameter.
+   * 
+   * @param aParameter
+   *        The parameter to be added. May not be <code>null</code>.
+   * @return this
+   */
+  @Nonnull
+  public MimeType addParameter (@Nonnull final MimeTypeParameter aParameter)
+  {
+    if (aParameter == null)
+      throw new NullPointerException ("parameter");
+    if (m_aParameters == null)
+      m_aParameters = new ArrayList <MimeTypeParameter> ();
+    m_aParameters.add (aParameter);
+    return this;
+  }
+
+  /**
+   * Remove the specified parameter from this MIME type.
+   * 
+   * @param aParameter
+   *        The parameter to be removed. May be <code>null</code>.
+   * @return {@link EChange#CHANGED} if removal was successful
+   */
+  @Nonnull
+  public EChange removeParameter (@Nullable final MimeTypeParameter aParameter)
+  {
+    return EChange.valueOf (m_aParameters != null && m_aParameters.remove (aParameter));
+  }
+
+  /**
+   * Remove the parameter at the specified index.
+   * 
+   * @param nIndex
+   *        The index to remove. Should be &ge; 0.
+   * @return {@link EChange#CHANGED} if removal was successful
+   */
+  @Nonnull
+  public EChange removeParameterAtIndex (final int nIndex)
+  {
+    return ContainerHelper.removeElementAtIndex (m_aParameters, nIndex);
+  }
+
+  /**
+   * Remove all existing parameters.
+   * 
+   * @return {@link EChange#CHANGED} if at least one parameter was present
+   */
+  @Nonnull
+  public EChange removeAllParameters ()
+  {
+    if (ContainerHelper.isEmpty (m_aParameters))
+      return EChange.UNCHANGED;
+    m_aParameters.clear ();
+    return EChange.CHANGED;
+  }
+
+  public boolean hasAnyParameters ()
+  {
+    return ContainerHelper.isNotEmpty (m_aParameters);
+  }
+
+  @Nonnegative
+  public int getParameterCount ()
+  {
+    return ContainerHelper.getSize (m_aParameters);
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public List <MimeTypeParameter> getAllParameters ()
+  {
+    return ContainerHelper.newList (m_aParameters);
+  }
+
+  @Nullable
+  public MimeTypeParameter getParameterAtIndex (@Nonnegative final int nIndex)
+  {
+    return ContainerHelper.getSafe (m_aParameters, nIndex);
+  }
+
   @Nonnull
   public MimeType getClone ()
   {
-    return new MimeType (m_eContentType, m_sContentSubType);
+    return new MimeType (m_eContentType, m_sContentSubType, m_aParameters);
   }
 
   @Override
@@ -118,13 +283,18 @@ public class MimeType implements IMimeType, ICloneable <MimeType>
     if (!(o instanceof MimeType))
       return false;
     final MimeType rhs = (MimeType) o;
-    return m_eContentType.equals (rhs.m_eContentType) && m_sContentSubType.equals (rhs.m_sContentSubType);
+    return m_eContentType.equals (rhs.m_eContentType) &&
+           m_sContentSubType.equals (rhs.m_sContentSubType) &&
+           EqualsUtils.equals (m_aParameters, rhs.m_aParameters);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).append (m_eContentType).append (m_sContentSubType).getHashCode ();
+    return new HashCodeGenerator (this).append (m_eContentType)
+                                       .append (m_sContentSubType)
+                                       .append (m_aParameters)
+                                       .getHashCode ();
   }
 
   @Override
@@ -132,6 +302,7 @@ public class MimeType implements IMimeType, ICloneable <MimeType>
   {
     return new ToStringGenerator (this).append ("contentType", m_eContentType)
                                        .append ("subType", m_sContentSubType)
+                                       .appendIfNotNull ("parameters", m_aParameters)
                                        .toString ();
   }
 
