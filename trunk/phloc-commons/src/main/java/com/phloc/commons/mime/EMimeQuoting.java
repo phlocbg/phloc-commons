@@ -17,9 +17,13 @@
  */
 package com.phloc.commons.mime;
 
+import java.util.BitSet;
+
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.charset.CCharset;
+import com.phloc.commons.codec.QuotedPrintableCodec;
 import com.phloc.commons.string.StringHelper;
 
 /**
@@ -65,17 +69,8 @@ public enum EMimeQuoting
     @Nonempty
     public String getQuotedString (@Nonnull @Nonempty final String sUnquotedString)
     {
-      final StringBuilder aSB = new StringBuilder ();
-      final char [] aChars = sUnquotedString.toCharArray ();
-      for (final char c : aChars)
-        if (c >= 33 && c <= 126 && c != '=')
-          aSB.append (c);
-        else
-        {
-          // Mask chars
-          aSB.append ('=').append (StringHelper.getHexStringLeadingZero (c, 2));
-        }
-      return aSB.toString ();
+      // Use a special BitSet
+      return QuotedPrintableCodec.encodeText (BS_QUOTED_PRINTABLE, sUnquotedString, CCharset.CHARSET_UTF_8_OBJ);
     }
   },
 
@@ -99,6 +94,15 @@ public enum EMimeQuoting
       return aSB.toString ();
     }
   };
+
+  private static final BitSet BS_QUOTED_PRINTABLE = new BitSet ();
+
+  static
+  {
+    for (int i = 33; i <= 126; i++)
+      if (i != 61)
+        BS_QUOTED_PRINTABLE.set (i);
+  }
 
   @Nonnull
   @Nonempty

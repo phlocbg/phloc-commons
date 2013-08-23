@@ -81,16 +81,21 @@ public abstract class AbstractRFC1522Codec extends AbstractCodec implements IStr
    *      charsets</a>
    */
   @Nullable
-  public String encodeText (@Nullable final String sText, @Nonnull final Charset aCharset) throws EncoderException
+  protected String encodeText (@Nullable final String sText, @Nonnull final Charset aCharset) throws EncoderException
   {
     if (sText == null)
       return null;
 
+    final byte [] aEncodedData = encode (CharsetManager.getAsBytes (sText, aCharset));
+
     final StringBuilder aSB = new StringBuilder ();
-    aSB.append (PREFIX).append (aCharset.name ()).append (SEP).append (getRFC1522Encoding ()).append (SEP);
-    final byte [] rawData = encode (CharsetManager.getAsBytes (sText, aCharset));
-    aSB.append (CharsetManager.getAsString (rawData, CCharset.CHARSET_US_ASCII_OBJ));
-    aSB.append (POSTFIX);
+    aSB.append (PREFIX)
+       .append (aCharset.name ())
+       .append (SEP)
+       .append (getRFC1522Encoding ())
+       .append (SEP)
+       .append (CharsetManager.getAsString (aEncodedData, CCharset.CHARSET_US_ASCII_OBJ))
+       .append (POSTFIX);
     return aSB.toString ();
   }
 

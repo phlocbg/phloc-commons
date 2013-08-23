@@ -24,11 +24,18 @@ import javax.annotation.Nonnull;
  * 
  * @author Philip Helger
  */
-public final class QuotedPrintableCodecTest extends AbstractCodecTest
+public final class QuotedPrintableCodecTest extends AbstractStringCodecTest
 {
   @Override
   @Nonnull
   protected ICodec createCodec ()
+  {
+    return new QuotedPrintableCodec ();
+  }
+
+  @Override
+  @Nonnull
+  protected IStringCodec createStringCodec ()
   {
     return new QuotedPrintableCodec ();
   }
