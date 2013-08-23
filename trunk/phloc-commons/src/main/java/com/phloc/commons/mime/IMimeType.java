@@ -121,4 +121,15 @@ public interface IMimeType extends IHasStringRepresentation, Serializable
    */
   @Nullable
   MimeTypeParameter getParameterAtIndex (@Nonnegative int nIndex);
+
+  /**
+   * Get the parameter with the specified name. The names are matched case
+   * sensitive!
+   * 
+   * @param sParamName
+   *        The parameter name to search. May be <code>null</code>.
+   * @return <code>null</code> if no such parameter exists.
+   */
+  @Nullable
+  MimeTypeParameter getParameterWithName (@Nullable String sParamName);
 }
