@@ -18,9 +18,11 @@
 package com.phloc.commons.mime;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -34,12 +36,29 @@ import com.phloc.commons.mock.AbstractPhlocTestCase;
 public final class MimeTypeParserTest extends AbstractPhlocTestCase
 {
   @Test
+  public void testIsToken ()
+  {
+    assertFalse (MimeTypeParser.isToken (null));
+    assertFalse (MimeTypeParser.isToken (""));
+    assertFalse (MimeTypeParser.isToken ("  "));
+    assertFalse (MimeTypeParser.isToken (" any"));
+    assertFalse (MimeTypeParser.isToken ("any "));
+    assertFalse (MimeTypeParser.isToken ("charset="));
+
+    assertTrue (MimeTypeParser.isToken ("a"));
+    assertTrue (MimeTypeParser.isToken ("param"));
+    assertTrue (MimeTypeParser.isToken ("param1"));
+    assertTrue (MimeTypeParser.isToken ("charset"));
+  }
+
+  @Test
   public void testCreateFromString ()
   {
     IMimeType mt;
     assertNull (MimeTypeParser.createFromString (null));
     assertNull (MimeTypeParser.createFromString (""));
     assertNull (MimeTypeParser.createFromString ("text"));
+    // Invalid content type
     assertNull (MimeTypeParser.createFromString ("foo/bar"));
 
     mt = MimeTypeParser.createFromString ("text/x");
