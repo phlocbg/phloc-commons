@@ -36,7 +36,7 @@ import com.phloc.commons.io.streams.StreamUtils;
  * 
  * @author Philip Helger
  */
-public class FlateCodec implements ICodec
+public class FlateCodec extends AbstractCodec
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (FlateCodec.class);
 

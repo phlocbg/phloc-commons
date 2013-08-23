@@ -39,24 +39,28 @@ public abstract class AbstractCodecTest extends AbstractPhlocTestCase
   @Nonnull
   protected abstract ICodec createCodec ();
 
-  protected final void testEncodeDecode (@Nonnull final byte [] aBytes)
+  protected final void testEncodeDecode (@Nonnull final byte [] aOriginalBytes)
   {
     final ICodec aCodec = createCodec ();
     assertNotNull (aCodec);
 
-    final byte [] aEncoded = aCodec.encode (aBytes);
-    assertNotNull (aEncoded);
+    // bytes encode + decode
+    {
+      final byte [] aEncoded = aCodec.encode (aOriginalBytes);
+      assertNotNull (aEncoded);
 
-    final byte [] aDecoded = aCodec.decode (aEncoded);
-    assertNotNull (aDecoded);
-    assertArrayEquals (aBytes, aDecoded);
+      final byte [] aDecoded = aCodec.decode (aEncoded);
+      assertNotNull (aDecoded);
+      assertArrayEquals (aOriginalBytes, aDecoded);
+    }
   }
 
   @Test
   public final void testEncodeAndDecodeBasicCases ()
   {
     testEncodeDecode (new byte [0]);
-    testEncodeDecode (CharsetManager.getAsBytes ("Hallo JUnit", CCharset.CHARSET_ISO_8859_1_OBJ));
+    testEncodeDecode (CharsetManager.getAsBytes ("Hallo JÜnit", CCharset.CHARSET_ISO_8859_1_OBJ));
+    testEncodeDecode (CharsetManager.getAsBytes ("Hallo JÜnit", CCharset.CHARSET_UTF_8_OBJ));
 
     for (int i = 0; i < 256; ++i)
     {

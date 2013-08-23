@@ -29,7 +29,7 @@ import com.phloc.commons.string.StringHelper;
  * 
  * @author Philip Helger
  */
-public class QuotedPrintableCodec implements ICodec
+public class QuotedPrintableCodec extends AbstractCodec
 {
   private static final byte ESCAPE_CHAR = '=';
   private static final byte TAB = 9;
