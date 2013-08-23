@@ -136,21 +136,13 @@ public class MimeType implements IMimeType, ICloneable <MimeType>
     }
 
     final StringBuilder aSB = new StringBuilder (m_sMainTypeAsString);
+    // Append all parameters
     for (final MimeTypeParameter aParameter : m_aParameters)
     {
       aSB.append (CMimeType.SEPARATOR_PARAMETER)
          .append (aParameter.getAttribute ())
-         .append (CMimeType.SEPARATOR_PARAMETER_NAME_VALUE);
-      if (aParameter.isValueRequiringQuoting ())
-      {
-        // Append the value quoted
-        aSB.append (eQuotingAlgorithm.getQuotedString (aParameter.getValue ()));
-      }
-      else
-      {
-        // No quoting necessary
-        aSB.append (aParameter.getValue ());
-      }
+         .append (CMimeType.SEPARATOR_PARAMETER_NAME_VALUE)
+         .append (aParameter.getValueQuotedIfNecessary (eQuotingAlgorithm));
     }
     return aSB.toString ();
   }

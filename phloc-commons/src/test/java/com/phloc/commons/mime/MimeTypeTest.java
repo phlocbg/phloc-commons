@@ -27,6 +27,7 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
+import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 import com.phloc.commons.mock.PhlocTestUtils;
 
@@ -51,6 +52,10 @@ public final class MimeTypeTest extends AbstractPhlocTestCase
                                                                                           "junit"));
     PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (mt, new MimeType (EMimeContentType.TEXT,
                                                                                           "testng"));
+    PhlocTestUtils.testGetClone (mt);
+    PhlocTestUtils.testDefaultSerialization (mt);
+
+    mt.addParameter ("charset", CCharset.CHARSET_UTF_8);
     PhlocTestUtils.testGetClone (mt);
     PhlocTestUtils.testDefaultSerialization (mt);
 
