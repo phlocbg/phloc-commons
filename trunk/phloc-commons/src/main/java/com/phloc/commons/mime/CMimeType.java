@@ -143,14 +143,20 @@ public final class CMimeType
   /** Mozilla CSP */
   public static final IMimeType TEXT_CONTENT_SECURITY_POLICY = EMimeContentType.TEXT.buildMimeType ("x-content-security-policy");
 
-  /** The character used to separate content type and sub type. */
+  /** The character used to separate content type and sub type: '/' */
   public static final char CONTENTTYPE_SUBTYPE_SEPARATOR = '/';
 
-  /** For appending a charset e.g. to HTML */
-  public static final String CHARSET_PREFIX = "charset=";
+  /** The separator of between parameters: ';' */
+  public static final char PARAMETER_SEPARATOR = ';';
+
+  /** The separator between parameters names and parameter values: '=' */
+  public static final char PARAMETER_NAME_VALUE_SEPARATOR = '=';
 
   /** For appending a charset e.g. to HTML */
-  public static final String CHARSET_PARAM = "; " + CHARSET_PREFIX;
+  public static final String CHARSET_PREFIX = "charset" + PARAMETER_NAME_VALUE_SEPARATOR;
+
+  /** For appending a charset e.g. to HTML */
+  public static final String CHARSET_PARAM = PARAMETER_SEPARATOR + CHARSET_PREFIX;
 
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")

@@ -31,7 +31,7 @@ import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * Represent a single mapping from content bytes to a MimeType.
+ * Represent a single mapping from content bytes to an {@link IMimeType}.
  * 
  * @author Philip Helger
  */
@@ -42,7 +42,15 @@ public class MimeTypeContent
   private final byte [] m_aContentBytes;
   private final IMimeType m_aMimeType;
 
-  public MimeTypeContent (@Nonnull final byte [] aContentBytes, @Nonnull final IMimeType aMimeType)
+  /**
+   * Constructor
+   * 
+   * @param aContentBytes
+   *        The beginning bytes. May neither be <code>null</code> nor empty.
+   * @param aMimeType
+   *        The corresponding mime type. May not be <code>null</code>.
+   */
+  public MimeTypeContent (@Nonnull @Nonempty final byte [] aContentBytes, @Nonnull final IMimeType aMimeType)
   {
     if (ArrayHelper.isEmpty (aContentBytes))
       throw new IllegalArgumentException ("no ContentBytes provided");
@@ -52,6 +60,10 @@ public class MimeTypeContent
     m_aMimeType = aMimeType;
   }
 
+  /**
+   * @return A copy of the content bytes to use. Neither <code>null</code> nor
+   *         empty.
+   */
   @Nonnull
   @Nonempty
   @ReturnsMutableCopy
@@ -60,18 +72,35 @@ public class MimeTypeContent
     return ArrayHelper.getCopy (m_aContentBytes);
   }
 
+  /**
+   * @return The number of content bytes available. Always &gt; 0.
+   */
   @Nonnegative
   public int getContentByteCount ()
   {
     return m_aContentBytes.length;
   }
 
+  /**
+   * @return The matching mime type. Never <code>null</code>.
+   */
   @Nonnull
   public IMimeType getMimeType ()
   {
     return m_aMimeType;
   }
 
+  /**
+   * Main match method
+   * 
+   * @param aBytes
+   *        The bytes to compare to this type.
+   * @param nOffset
+   *        The offset within aBytes to start searching
+   * @param aCmpBytes
+   *        The compare bytes of this object.
+   * @return <code>true</code> if the bytes match, <code>false</code> otherwise.
+   */
   private static boolean _match (@Nonnull final byte [] aBytes,
                                  @Nonnegative final int nOffset,
                                  @Nonnull final byte [] aCmpBytes)
@@ -83,8 +112,19 @@ public class MimeTypeContent
     return true;
   }
 
+  /**
+   * Check if the passed byte array starts with the bytes of this object.
+   * 
+   * @param aBytes
+   *        The bytes to compare to. May not be <code>null</code>.
+   * @return <code>true</code> if the passed bytes start with the bytes in this
+   *         object.
+   */
   public boolean matchesBeginning (@Nonnull final byte [] aBytes)
   {
+    if (aBytes == null)
+      throw new NullPointerException ("bytes");
+
     return aBytes.length >= m_aContentBytes.length && _match (aBytes, 0, m_aContentBytes);
   }
 

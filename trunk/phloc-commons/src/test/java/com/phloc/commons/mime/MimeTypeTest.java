@@ -43,7 +43,7 @@ public final class MimeTypeTest extends AbstractPhlocTestCase
     assertSame (EMimeContentType.TEXT, mt.getContentType ());
     assertEquals ("junit", mt.getContentSubType ());
     assertEquals ("text/junit", mt.getAsString ());
-    assertEquals ("text/junit; charset=UTF-8", mt.getAsStringWithEncoding (CCharset.CHARSET_UTF_8));
+    assertEquals ("text/junit;charset=UTF-8", mt.getAsStringWithEncoding (CCharset.CHARSET_UTF_8));
 
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (mt, new MimeType (EMimeContentType.TEXT, "junit"));
     PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (mt, new MimeType (EMimeContentType.APPLICATION,
@@ -71,11 +71,22 @@ public final class MimeTypeTest extends AbstractPhlocTestCase
   public void testParseFromStringWithoutEncoding ()
   {
     IMimeType mt;
-    assertNull (MimeType.parseFromStringWithoutEncoding (null));
-    assertNull (MimeType.parseFromStringWithoutEncoding (""));
-    assertNull (MimeType.parseFromStringWithoutEncoding ("text"));
-    assertNull (MimeType.parseFromStringWithoutEncoding ("foo/bar"));
-    mt = MimeType.parseFromStringWithoutEncoding ("text/x");
+    assertNull (MimeType.createFromString (null));
+    assertNull (MimeType.createFromString (""));
+    assertNull (MimeType.createFromString ("text"));
+    assertNull (MimeType.createFromString ("foo/bar"));
+
+    mt = MimeType.createFromString ("text/x");
+    assertNotNull (mt);
+    assertSame (EMimeContentType.TEXT, mt.getContentType ());
+    assertEquals ("x", mt.getContentSubType ());
+
+    mt = MimeType.createFromString ("text/x;");
+    assertNotNull (mt);
+    assertSame (EMimeContentType.TEXT, mt.getContentType ());
+    assertEquals ("x", mt.getContentSubType ());
+
+    mt = MimeType.createFromString ("text/x;param1=x;param2=y");
     assertNotNull (mt);
     assertSame (EMimeContentType.TEXT, mt.getContentType ());
     assertEquals ("x", mt.getContentSubType ());

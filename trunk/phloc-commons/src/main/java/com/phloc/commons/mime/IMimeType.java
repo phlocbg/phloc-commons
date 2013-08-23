@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 
 import com.phloc.commons.IHasStringRepresentation;
 import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
+import com.phloc.commons.annotations.Nonempty;
 
 /**
  * Interface for the structured representation of a single MIME type.
@@ -33,29 +34,42 @@ import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
 public interface IMimeType extends IHasStringRepresentation, Serializable
 {
   /**
-   * @return The content type.
+   * @return The content type. Never <code>null</code>.
    */
   @Nonnull
   EMimeContentType getContentType ();
 
   /**
-   * @return The content sub type.
+   * @return The content sub type. Never <code>null</code>.
    */
   @Nonnull
   String getContentSubType ();
 
   /**
-   * @return The combined string to be used as text representation.
+   * @return The combined string to be used as text representation:
+   *         <code><em>contentType</em> '/' <em>subType</em> ( ';' <em>parameterName</em> '=' <em>parameterValue</em> )*</code>
+   * @see #getAsStringWithoutParameters()
    */
   @Nonnull
   String getAsString ();
 
   /**
-   * @param sEncoding
-   *        The encoding to use.
-   * @return The combined string plus the passed encoding.
-   * @see CMimeType#CHARSET_PREFIX
+   * @return The combined string to be used as text representation but without
+   *         the parameters:
+   *         <code><em>contentType</em> '/' <em>subType</em></code>
+   * @see #getAsString()
    */
   @Nonnull
-  String getAsStringWithEncoding (@Nonnull String sEncoding);
+  String getAsStringWithoutParameters ();
+
+  /**
+   * @param sEncoding
+   *        The encoding to use. May neither be <code>null</code> nor empty.
+   * @return The combined string plus the passed encoding.
+   * @see CMimeType#CHARSET_PREFIX
+   * @see #getAsString()
+   */
+  @Nonnull
+  @Deprecated
+  String getAsStringWithEncoding (@Nonnull @Nonempty String sEncoding);
 }
