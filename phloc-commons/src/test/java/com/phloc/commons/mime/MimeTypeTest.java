@@ -168,11 +168,18 @@ public final class MimeTypeTest extends AbstractPhlocTestCase
   @Test
   public void testSpecialCharsInParams ()
   {
-    final MimeType mt = new MimeType (EMimeContentType.TEXT, "junit");
+    MimeType mt = new MimeType (EMimeContentType.TEXT, "junit");
     mt.addParameter ("param2", "foo;bar");
     assertEquals ("text/junit;param2=\"foo;bar\"", mt.getAsString ());
     assertEquals ("text/junit;param2=\"foo;bar\"", mt.getAsString (EMimeQuoting.QUOTED_STRING));
     assertEquals ("text/junit;param2=foo=3Bbar", mt.getAsString (EMimeQuoting.QUOTED_PRINTABLE));
     assertEquals ("text/junit;param2=foo%3Bbar", mt.getAsString (EMimeQuoting.URL_ESCAPE));
+
+    mt = new MimeType (EMimeContentType.TEXT, "junit");
+    mt.addParameter ("param2", "foo,bar");
+    assertEquals ("text/junit;param2=\"foo,bar\"", mt.getAsString ());
+    assertEquals ("text/junit;param2=\"foo,bar\"", mt.getAsString (EMimeQuoting.QUOTED_STRING));
+    assertEquals ("text/junit;param2=foo=2Cbar", mt.getAsString (EMimeQuoting.QUOTED_PRINTABLE));
+    assertEquals ("text/junit;param2=foo%2Cbar", mt.getAsString (EMimeQuoting.URL_ESCAPE));
   }
 }
