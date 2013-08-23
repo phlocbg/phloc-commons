@@ -52,9 +52,9 @@ public class MimeTypeParameter implements Serializable
   public MimeTypeParameter (@Nonnull @Nonempty final String sAttribute, @Nonnull @Nonempty final String sValue)
   {
     if (!MimeTypeParser.isToken (sAttribute))
-      throw new IllegalArgumentException ("Attribute is not a valid token: " + sAttribute);
+      throw new IllegalArgumentException ("MimeType parameter name is not a valid token: " + sAttribute);
     if (StringHelper.hasNoText (sValue))
-      throw new IllegalArgumentException ("Value may not be empty");
+      throw new IllegalArgumentException ("MimeType parameter value may not be empty");
 
     m_sAttribute = sAttribute;
     m_sValue = sValue;

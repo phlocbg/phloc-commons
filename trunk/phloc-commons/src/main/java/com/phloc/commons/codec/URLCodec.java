@@ -160,7 +160,8 @@ public class URLCodec extends AbstractCodec implements IStringCodec
       return null;
 
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
-    for (int i = 0; i < aEncodedBuffer.length; i++)
+    final int nMax = aEncodedBuffer.length;
+    for (int i = 0; i < nMax; i++)
     {
       final int b = aEncodedBuffer[i];
       if (b == PLUS)
@@ -168,6 +169,8 @@ public class URLCodec extends AbstractCodec implements IStringCodec
       else
         if (b == ESCAPE_CHAR)
         {
+          if (i >= nMax - 2)
+            throw new DecoderException ("Invalid URL encoding. Premature of string after escape char");
           final char cHigh = (char) aEncodedBuffer[++i];
           final char cLow = (char) aEncodedBuffer[++i];
           final int nDecodedValue = StringHelper.getHexByte (cHigh, cLow);

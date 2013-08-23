@@ -114,7 +114,8 @@ public class QuotedPrintableCodec extends AbstractCodec implements IStringCodec
   }
 
   @Nonnull
-  public static byte [] encodeQuotedPrintable (@Nonnull final BitSet aPrintableBitSet, @Nonnull final byte [] aDecodedBuffer)
+  public static byte [] encodeQuotedPrintable (@Nonnull final BitSet aPrintableBitSet,
+                                               @Nonnull final byte [] aDecodedBuffer)
   {
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream (aDecodedBuffer.length * 2);
     for (final byte nByte : aDecodedBuffer)
@@ -144,11 +145,14 @@ public class QuotedPrintableCodec extends AbstractCodec implements IStringCodec
       return null;
 
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
-    for (int i = 0; i < aEncodedBuffer.length; i++)
+    final int nMax = aEncodedBuffer.length;
+    for (int i = 0; i < nMax; i++)
     {
       final int b = aEncodedBuffer[i];
       if (b == ESCAPE_CHAR)
       {
+        if (i >= nMax - 2)
+          throw new DecoderException ("Invalid quoted-printable encoding. Premature of string after escape char");
         final char cHigh = (char) aEncodedBuffer[++i];
         final char cLow = (char) aEncodedBuffer[++i];
         final int nDecodedValue = StringHelper.getHexByte (cHigh, cLow);
@@ -220,7 +224,8 @@ public class QuotedPrintableCodec extends AbstractCodec implements IStringCodec
     if (sDecoded == null)
       return null;
 
-    final byte [] aEncodedData = encodeQuotedPrintable (aPrintableBitSet, CharsetManager.getAsBytes (sDecoded, aCharset));
+    final byte [] aEncodedData = encodeQuotedPrintable (aPrintableBitSet,
+                                                        CharsetManager.getAsBytes (sDecoded, aCharset));
     return CharsetManager.getAsString (aEncodedData, CCharset.CHARSET_US_ASCII_OBJ);
   }
 

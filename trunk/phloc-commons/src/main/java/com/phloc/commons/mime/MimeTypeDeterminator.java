@@ -350,7 +350,7 @@ public final class MimeTypeDeterminator
   public static MimeType getMimeTypeObjectFromFilename (@Nonnull final String sFilename)
   {
     final String sMimeType = getMimeTypeFromFilename (sFilename);
-    return MimeTypeParser.createFromString (sMimeType);
+    return MimeTypeParser.parseMimeType (sMimeType);
   }
 
   /**
@@ -389,7 +389,7 @@ public final class MimeTypeDeterminator
   public static MimeType getMimeTypeObjectFromExtension (@Nullable final String sExtension)
   {
     final String sMimeType = getMimeTypeFromExtension (sExtension);
-    return MimeTypeParser.createFromString (sMimeType);
+    return MimeTypeParser.parseMimeType (sMimeType);
   }
 
   /**

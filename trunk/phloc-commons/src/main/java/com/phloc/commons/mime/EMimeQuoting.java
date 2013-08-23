@@ -23,6 +23,8 @@ import javax.annotation.Nonnull;
 
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.charset.CCharset;
+import com.phloc.commons.codec.DecoderException;
+import com.phloc.commons.codec.EncoderException;
 import com.phloc.commons.codec.QuotedPrintableCodec;
 import com.phloc.commons.codec.URLCodec;
 
@@ -44,17 +46,26 @@ public enum EMimeQuoting
     @Nonempty
     public String getQuotedString (@Nonnull @Nonempty final String sUnquotedString)
     {
-      final StringBuilder aSB = new StringBuilder ("\"");
+      final StringBuilder aSB = new StringBuilder (sUnquotedString.length () * 2);
+      aSB.append (QUOTED_STRING_SEPARATOR_CHAR);
       final char [] aChars = sUnquotedString.toCharArray ();
       for (final char c : aChars)
-        if (c == '"' || c == '\\')
+        if (c == QUOTED_STRING_SEPARATOR_CHAR || c == QUOTED_STRING_MASK_CHAR)
         {
-          // Mask chars
-          aSB.append ('\\').append (c);
+          // Mask char
+          aSB.append (QUOTED_STRING_MASK_CHAR).append (c);
         }
         else
           aSB.append (c);
-      return aSB.append ("\"").toString ();
+      return aSB.append (QUOTED_STRING_SEPARATOR_CHAR).toString ();
+    }
+
+    @Override
+    @Nonnull
+    @Nonempty
+    public String getUnquotedString (@Nonnull @Nonempty final String sQuotedString)
+    {
+      throw new UnsupportedOperationException ("This is handled directly inside the MimeTypeParser!");
     }
   },
 
@@ -70,7 +81,15 @@ public enum EMimeQuoting
     public String getQuotedString (@Nonnull @Nonempty final String sUnquotedString)
     {
       // Use a special BitSet
-      return QuotedPrintableCodec.encodeText (BS_QUOTED_PRINTABLE, sUnquotedString, CCharset.CHARSET_UTF_8_OBJ);
+      return QuotedPrintableCodec.encodeText (PRINTABLE_QUOTED_PRINTABLE, sUnquotedString, CCharset.CHARSET_UTF_8_OBJ);
+    }
+
+    @Override
+    @Nonnull
+    @Nonempty
+    public String getUnquotedString (@Nonnull @Nonempty final String sQuotedString)
+    {
+      return QuotedPrintableCodec.decodeText (sQuotedString, CCharset.CHARSET_UTF_8_OBJ);
     }
   },
 
@@ -82,28 +101,43 @@ public enum EMimeQuoting
     public String getQuotedString (@Nonnull @Nonempty final String sUnquotedString)
     {
       // Use a special BitSet
-      return URLCodec.encodeText (BS_URL_PRINTABLE, sUnquotedString, CCharset.CHARSET_UTF_8_OBJ);
+      return URLCodec.encodeText (PRINTABLE_URL, sUnquotedString, CCharset.CHARSET_UTF_8_OBJ);
+    }
+
+    @Override
+    @Nonnull
+    @Nonempty
+    public String getUnquotedString (@Nonnull @Nonempty final String sQuotedString)
+    {
+      return URLCodec.decodeText (sQuotedString, CCharset.CHARSET_UTF_8_OBJ);
     }
   };
 
-  private static final BitSet BS_QUOTED_PRINTABLE = QuotedPrintableCodec.getDefaultBitSet ();
-  private static final BitSet BS_URL_PRINTABLE = URLCodec.getDefaultBitSet ();
+  public static final char QUOTED_STRING_SEPARATOR_CHAR = '"';
+  public static final char QUOTED_STRING_MASK_CHAR = '\\';
+
+  private static final BitSet PRINTABLE_QUOTED_PRINTABLE = QuotedPrintableCodec.getDefaultBitSet ();
+  private static final BitSet PRINTABLE_URL = URLCodec.getDefaultBitSet ();
 
   static
   {
     // Modify BitSets
-    BS_QUOTED_PRINTABLE.set ('\t', false);
-    BS_QUOTED_PRINTABLE.set (' ', false);
-    BS_URL_PRINTABLE.set (' ', false);
+    PRINTABLE_QUOTED_PRINTABLE.set ('\t', false);
+    PRINTABLE_QUOTED_PRINTABLE.set (' ', false);
+    PRINTABLE_URL.set (' ', false);
 
     for (final char c : MimeTypeParser.getAllTSpecialChars ())
     {
-      BS_QUOTED_PRINTABLE.set (c, false);
-      BS_URL_PRINTABLE.set (c, false);
+      PRINTABLE_QUOTED_PRINTABLE.set (c, false);
+      PRINTABLE_URL.set (c, false);
     }
   }
 
   @Nonnull
   @Nonempty
-  public abstract String getQuotedString (@Nonnull @Nonempty String sUnquotedString);
+  public abstract String getQuotedString (@Nonnull @Nonempty String sUnquotedString) throws EncoderException;
+
+  @Nonnull
+  @Nonempty
+  public abstract String getUnquotedString (@Nonnull @Nonempty String sQuotedString) throws DecoderException;
 }
