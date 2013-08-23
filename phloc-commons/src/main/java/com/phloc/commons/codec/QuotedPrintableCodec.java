@@ -19,6 +19,7 @@ package com.phloc.commons.codec;
 
 import java.util.BitSet;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
@@ -69,24 +70,29 @@ public class QuotedPrintableCodec extends AbstractCodec
     aBAOS.write (hex2);
   }
 
-  @Nullable
-  public byte [] encode (@Nullable final byte [] aDecodedBuffer)
+  public static byte [] encodeQuotedPrintable (@Nonnull final BitSet aBitSet, @Nonnull final byte [] aDecodedBuffer)
   {
-    if (aDecodedBuffer == null)
-      return null;
-
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream (aDecodedBuffer.length * 2);
     for (final byte nByte : aDecodedBuffer)
     {
       int b = nByte;
       if (b < 0)
         b = 256 + b;
-      if (PRINTABLE_CHARS.get (b))
+      if (aBitSet.get (b))
         aBAOS.write (b);
       else
         encodeQuotedPrintable (b, aBAOS);
     }
     return aBAOS.toByteArray ();
+  }
+
+  @Nullable
+  public byte [] encode (@Nullable final byte [] aDecodedBuffer)
+  {
+    if (aDecodedBuffer == null)
+      return null;
+
+    return encodeQuotedPrintable (PRINTABLE_CHARS, aDecodedBuffer);
   }
 
   public int getHexValue (final byte b)
@@ -98,7 +104,7 @@ public class QuotedPrintableCodec extends AbstractCodec
   }
 
   @Nullable
-  public byte [] decode (@Nullable final byte [] aEncodedBuffer)
+  public static byte [] decodeQuotedPrintable (@Nullable final byte [] aEncodedBuffer)
   {
     if (aEncodedBuffer == null)
       return null;
@@ -123,5 +129,11 @@ public class QuotedPrintableCodec extends AbstractCodec
       }
     }
     return aBAOS.toByteArray ();
+  }
+
+  @Nullable
+  public byte [] decode (@Nullable final byte [] aEncodedBuffer)
+  {
+    return decodeQuotedPrintable (aEncodedBuffer);
   }
 }
