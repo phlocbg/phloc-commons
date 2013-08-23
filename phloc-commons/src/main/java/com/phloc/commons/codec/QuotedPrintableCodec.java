@@ -114,13 +114,13 @@ public class QuotedPrintableCodec extends AbstractCodec implements IStringCodec
   }
 
   @Nonnull
-  public static byte [] encodeQuotedPrintable (@Nonnull final BitSet aBitSet, @Nonnull final byte [] aDecodedBuffer)
+  public static byte [] encodeQuotedPrintable (@Nonnull final BitSet aPrintableBitSet, @Nonnull final byte [] aDecodedBuffer)
   {
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream (aDecodedBuffer.length * 2);
     for (final byte nByte : aDecodedBuffer)
     {
       final int b = nByte & 0xff;
-      if (aBitSet.get (b))
+      if (aPrintableBitSet.get (b))
         aBAOS.write (b);
       else
         encodeQuotedPrintable (b, aBAOS);
@@ -202,8 +202,9 @@ public class QuotedPrintableCodec extends AbstractCodec implements IStringCodec
   /**
    * Encode the passed text using a custom BitSet
    * 
-   * @param aBitSet
-   *        The BitSet with all chars to escape. May not be <code>null</code>.
+   * @param aPrintableBitSet
+   *        The BitSet with all chars to <b>NOT</b> escape. May not be
+   *        <code>null</code>.
    * @param sDecoded
    *        The original string to be encoded. May be <code>null</code>.
    * @param aCharset
@@ -212,14 +213,14 @@ public class QuotedPrintableCodec extends AbstractCodec implements IStringCodec
    *         if the original string is <code>null</code>.
    */
   @Nullable
-  public static String encodeText (@Nonnull final BitSet aBitSet,
+  public static String encodeText (@Nonnull final BitSet aPrintableBitSet,
                                    @Nullable final String sDecoded,
                                    @Nonnull final Charset aCharset)
   {
     if (sDecoded == null)
       return null;
 
-    final byte [] aEncodedData = encodeQuotedPrintable (aBitSet, CharsetManager.getAsBytes (sDecoded, aCharset));
+    final byte [] aEncodedData = encodeQuotedPrintable (aPrintableBitSet, CharsetManager.getAsBytes (sDecoded, aCharset));
     return CharsetManager.getAsString (aEncodedData, CCharset.CHARSET_US_ASCII_OBJ);
   }
 

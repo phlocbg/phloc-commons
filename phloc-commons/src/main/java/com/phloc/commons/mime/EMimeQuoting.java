@@ -81,19 +81,26 @@ public enum EMimeQuoting
     @Nonempty
     public String getQuotedString (@Nonnull @Nonempty final String sUnquotedString)
     {
-      return URLCodec.encodeText (BS_URL, sUnquotedString, CCharset.CHARSET_UTF_8_OBJ);
+      // Use a special BitSet
+      return URLCodec.encodeText (BS_URL_PRINTABLE, sUnquotedString, CCharset.CHARSET_UTF_8_OBJ);
     }
   };
 
   private static final BitSet BS_QUOTED_PRINTABLE = QuotedPrintableCodec.getDefaultBitSet ();
-  private static final BitSet BS_URL = URLCodec.getDefaultBitSet ();
+  private static final BitSet BS_URL_PRINTABLE = URLCodec.getDefaultBitSet ();
 
   static
   {
     // Modify BitSets
     BS_QUOTED_PRINTABLE.set ('\t', false);
     BS_QUOTED_PRINTABLE.set (' ', false);
-    BS_URL.set (' ', false);
+    BS_URL_PRINTABLE.set (' ', false);
+
+    for (final char c : MimeTypeParser.getAllTSpecialChars ())
+    {
+      BS_QUOTED_PRINTABLE.set (c, false);
+      BS_URL_PRINTABLE.set (c, false);
+    }
   }
 
   @Nonnull
