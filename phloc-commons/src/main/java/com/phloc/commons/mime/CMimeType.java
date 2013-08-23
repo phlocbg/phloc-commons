@@ -167,6 +167,12 @@ public final class CMimeType
   @Deprecated
   public static final String CHARSET_PARAM = SEPARATOR_PARAMETER + CHARSET_PREFIX;
 
+  /**
+   * The default quoting algorithm to be used:
+   * {@link EMimeQuoting#QUOTED_STRING}
+   */
+  public static final EMimeQuoting DEFAULT_QUOTING = EMimeQuoting.QUOTED_STRING;
+
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")
   private static final CMimeType s_aInstance = new CMimeType ();

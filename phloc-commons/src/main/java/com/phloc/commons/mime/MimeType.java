@@ -119,7 +119,7 @@ public class MimeType implements IMimeType, ICloneable <MimeType>
   @Nonempty
   public String getAsString ()
   {
-    return getAsString (DEFAULT_QUOTING);
+    return getAsString (CMimeType.DEFAULT_QUOTING);
   }
 
   @Nonnull

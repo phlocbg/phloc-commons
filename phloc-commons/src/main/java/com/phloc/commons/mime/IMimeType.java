@@ -37,9 +37,6 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
 @MustImplementEqualsAndHashcode
 public interface IMimeType extends IHasStringRepresentation, Serializable
 {
-  /** The default quoting algorithm to be used */
-  EMimeQuoting DEFAULT_QUOTING = EMimeQuoting.QUOTED_STRING;
-
   /**
    * @return The content type. Never <code>null</code>.
    */
@@ -54,7 +51,7 @@ public interface IMimeType extends IHasStringRepresentation, Serializable
 
   /**
    * Get the MIME type including all parameters as a single string. By default
-   * the {@link #DEFAULT_QUOTING} quoting algorithm is used.
+   * the {@link CMimeType#DEFAULT_QUOTING} quoting algorithm is used.
    * 
    * @return The combined string to be used as text representation:
    *         <code><em>contentType</em> '/' <em>subType</em> ( ';' <em>parameterName</em> '=' <em>parameterValue</em> )*</code>
