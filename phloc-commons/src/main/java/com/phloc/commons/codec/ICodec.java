@@ -17,6 +17,11 @@
  */
 package com.phloc.commons.codec;
 
+import java.nio.charset.Charset;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 /**
  * Interface for a single encoder + decoder.
  * 
@@ -24,5 +29,27 @@ package com.phloc.commons.codec;
  */
 public interface ICodec extends IByteArrayEncoder, IByteArrayDecoder
 {
-  /* empty */
+  /**
+   * Encode the passed string.
+   * 
+   * @param sDecoded
+   *        The string to be encoded. May be <code>null</code>.
+   * @param aCharset
+   *        The charset to be used. May not be <code>null</code>.
+   * @return <code>null</code> if the input string is <code>null</code>.
+   */
+  @Nullable
+  byte [] encode (@Nullable String sDecoded, @Nonnull Charset aCharset);
+
+  /**
+   * Decode the passed string.
+   * 
+   * @param sEncoded
+   *        The string to be decoded. May be <code>null</code>.
+   * @param aCharset
+   *        The charset to be used. May not be <code>null</code>.
+   * @return <code>null</code> if the input string is <code>null</code>.
+   */
+  @Nullable
+  byte [] decode (@Nullable String sEncoded, @Nonnull Charset aCharset);
 }

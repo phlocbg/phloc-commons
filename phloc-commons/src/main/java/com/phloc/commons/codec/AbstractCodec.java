@@ -17,30 +17,38 @@
  */
 package com.phloc.commons.codec;
 
+import java.nio.charset.Charset;
+
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.phloc.commons.base64.Base64;
-import com.phloc.commons.base64.Base64Helper;
+import com.phloc.commons.charset.CharsetManager;
 
 /**
- * Encoder and decoder for Base64
+ * Abstract base class for codec
  * 
  * @author Philip Helger
  */
-public class Base64Codec extends AbstractCodec
+public abstract class AbstractCodec implements ICodec
 {
-  public Base64Codec ()
+  public AbstractCodec ()
   {}
 
   @Nullable
-  public byte [] encode (@Nullable final byte [] aDecodedBuffer)
+  public byte [] encode (@Nullable final String sDecoded, @Nonnull final Charset aCharset)
   {
-    return aDecodedBuffer == null ? null : Base64.encodeBytesToBytes (aDecodedBuffer);
+    if (sDecoded == null)
+      return null;
+
+    return encode (CharsetManager.getAsBytes (sDecoded, aCharset));
   }
 
   @Nullable
-  public byte [] decode (@Nullable final byte [] aEncodedBuffer)
+  public byte [] decode (@Nullable final String sEncoded, @Nonnull final Charset aCharset)
   {
-    return aEncodedBuffer == null ? null : Base64Helper.safeDecode (aEncodedBuffer);
+    if (sEncoded == null)
+      return null;
+
+    return decode (CharsetManager.getAsBytes (sEncoded, aCharset));
   }
 }

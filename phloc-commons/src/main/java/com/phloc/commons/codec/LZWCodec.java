@@ -45,7 +45,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author Philip Helger
  */
-public class LZWCodec implements ICodec
+public class LZWCodec extends AbstractCodec
 {
   /**
    * A single LZW node
