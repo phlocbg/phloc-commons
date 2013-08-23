@@ -17,34 +17,30 @@
  */
 package com.phloc.commons.codec;
 
-import java.io.IOException;
+import javax.annotation.Nullable;
 
 import com.phloc.commons.base64.Base64;
+import com.phloc.commons.base64.Base64Helper;
 
 /**
  * Encoder and decoder for Base64
  * 
  * @author Philip Helger
  */
-public final class Base64Codec implements ICodec
+public class Base64Codec implements ICodec
 {
   public Base64Codec ()
   {}
 
-  public byte [] encode (final byte [] aDecodedBuffer)
+  @Nullable
+  public byte [] encode (@Nullable final byte [] aDecodedBuffer)
   {
-    return Base64.encodeBytesToBytes (aDecodedBuffer);
+    return aDecodedBuffer == null ? null : Base64.encodeBytesToBytes (aDecodedBuffer);
   }
 
-  public byte [] decode (final byte [] aEncodedBuffer)
+  @Nullable
+  public byte [] decode (@Nullable final byte [] aEncodedBuffer)
   {
-    try
-    {
-      return Base64.decode (aEncodedBuffer);
-    }
-    catch (final IOException ex)
-    {
-      throw new DecoderException ("Failed to decode Base64", ex);
-    }
+    return aEncodedBuffer == null ? null : Base64Helper.safeDecode (aEncodedBuffer);
   }
 }
