@@ -305,12 +305,12 @@ public class MimeType implements IMimeType, ICloneable <MimeType>
    *        The string representation to be converted. May be <code>null</code>.
    * @return <code>null</code> if the parsed string could not be converted to a
    *         MIME type object.
-   * @deprecated Use {@link MimeTypeParser#createFromString(String)} instead
+   * @deprecated Use {@link MimeTypeParser#parseMimeType(String)} instead
    */
   @Deprecated
   @Nullable
   public static MimeType parseFromStringWithoutEncoding (@Nullable final String sMimeType)
   {
-    return MimeTypeParser.createFromString (sMimeType);
+    return MimeTypeParser.parseMimeType (sMimeType);
   }
 }

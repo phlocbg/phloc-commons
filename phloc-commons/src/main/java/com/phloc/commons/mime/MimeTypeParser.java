@@ -24,6 +24,7 @@ import javax.annotation.concurrent.Immutable;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
+import com.phloc.commons.codec.DecoderException;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.string.StringHelper;
 
@@ -126,24 +127,144 @@ public final class MimeTypeParser
 
   private static void _parseAndAddParameters (@Nonnull final MimeType aMimeType,
                                               @Nonnull @Nonempty final String sParameters,
-                                              @Nonnull final EMimeQuoting eQuotingAlgorithm)
+                                              @Nonnull final EMimeQuoting eQuotingAlgorithm) throws MimeTypeParserException
   {
-    // Split all parameters
-    final String [] aParams = StringHelper.getExplodedArray (CMimeType.SEPARATOR_PARAMETER, sParameters);
-    for (final String sParameter : aParams)
+    if (eQuotingAlgorithm == EMimeQuoting.QUOTED_STRING)
     {
-      // Split each parameter into name and value
-      final String [] aParamItems = StringHelper.getExplodedArray (CMimeType.SEPARATOR_PARAMETER_NAME_VALUE,
-                                                                   sParameter,
-                                                                   2);
-      if (aParamItems.length != 2)
-        throw new IllegalArgumentException ("MimeType Parameter without name/value separator found: '" +
-                                            sParameter +
-                                            "'");
+      final char SEPARATOR = EMimeQuoting.QUOTED_STRING_SEPARATOR_CHAR;
+      final char MASK = EMimeQuoting.QUOTED_STRING_MASK_CHAR;
+      final char [] aParamChars = sParameters.toCharArray ();
+      final int nMax = aParamChars.length;
+      int nIndex = 0;
+      while (true)
+      {
+        final int nNameStartIndex = nIndex;
+        while (nIndex < nMax && MimeTypeParser.isTokenChar (aParamChars[nIndex]))
+          ++nIndex;
 
-      final String sParameterName = aParamItems[0].trim ();
-      final String sParameterValue = aParamItems[1].trim ();
-      aMimeType.addParameter (sParameterName, sParameterValue);
+        final String sParameterName = sParameters.substring (nNameStartIndex, nIndex);
+
+        // Search separator char
+        while (nIndex < nMax && aParamChars[nIndex] != CMimeType.SEPARATOR_PARAMETER_NAME_VALUE)
+          ++nIndex;
+        if (nIndex == nMax)
+          throw new MimeTypeParserException ("Missing parameter name/value separator");
+        // Skip separator char
+        ++nIndex;
+
+        // Search the start of the value
+        while (nIndex < nMax && aParamChars[nIndex] != SEPARATOR && !isTokenChar (aParamChars[nIndex]))
+          ++nIndex;
+        if (nIndex == nMax)
+          throw new MimeTypeParserException ("Missing parameter value start separator of: " + sParameters);
+        final StringBuilder aSB = new StringBuilder ();
+        if (aParamChars[nIndex] == SEPARATOR)
+        {
+          // Quoted string!
+
+          // Skip opening separator char
+          ++nIndex;
+          for (; nIndex < nMax; ++nIndex)
+          {
+            final char c = aParamChars[nIndex];
+            if (c == SEPARATOR)
+            {
+              // End of quoted string
+              break;
+            }
+            if (c == MASK)
+            {
+              // Unmask char
+              if (nIndex == nMax - 1)
+                throw new MimeTypeParserException ("Illegal masking found at end of: " + sParameters);
+              aSB.append (aParamChars[++nIndex]);
+            }
+            else
+              aSB.append (c);
+          }
+          if (nIndex == nMax)
+            throw new MimeTypeParserException ("Missing closing separator in quoted value");
+          // Skip closing separator
+          ++nIndex;
+        }
+        else
+        {
+          // Token-only parameter value
+          while (nIndex < nMax && MimeTypeParser.isTokenChar (aParamChars[nIndex]))
+          {
+            aSB.append (aParamChars[nIndex]);
+            ++nIndex;
+          }
+        }
+        final String sParameterValue = aSB.toString ();
+        try
+        {
+          aMimeType.addParameter (sParameterName, sParameterValue);
+        }
+        catch (final Exception ex)
+        {
+          throw new MimeTypeParserException (ex.getMessage ());
+        }
+
+        // Search for separator of next parameter
+        while (nIndex < nMax && aParamChars[nIndex] != CMimeType.SEPARATOR_PARAMETER)
+          ++nIndex;
+
+        if (nIndex == nMax)
+        {
+          // End of string
+          break;
+        }
+
+        // Another parameter is present
+        ++nIndex;
+
+        // Skip until next name
+        while (nIndex < nMax && !MimeTypeParser.isTokenChar (aParamChars[nIndex]))
+          ++nIndex;
+
+        if (nIndex == nMax)
+          throw new MimeTypeParserException ("Another parameter was indicated but none was found: " + sParameters);
+      }
+    }
+    else
+    {
+      // Split all parameters the easy way. This works only if the ';' and the
+      // '=' are encoded into other characters and not part of the string
+      // representation
+      final String [] aParams = StringHelper.getExplodedArray (CMimeType.SEPARATOR_PARAMETER, sParameters);
+      for (final String sParameter : aParams)
+      {
+        // Split each parameter into name and value
+        final String [] aParamItems = StringHelper.getExplodedArray (CMimeType.SEPARATOR_PARAMETER_NAME_VALUE,
+                                                                     sParameter,
+                                                                     2);
+        if (aParamItems.length != 2)
+          throw new MimeTypeParserException ("MimeType Parameter without name/value separator found: '" +
+                                             sParameter +
+                                             "'");
+
+        final String sParameterName = aParamItems[0].trim ();
+        String sParameterValue = aParamItems[1].trim ();
+        try
+        {
+          // Manually unescape the string
+          sParameterValue = eQuotingAlgorithm.getUnquotedString (sParameterValue);
+        }
+        catch (final DecoderException ex)
+        {
+          throw new MimeTypeParserException ("Failed to unquote the string '" + sParameterValue + "'", ex);
+        }
+
+        try
+        {
+          aMimeType.addParameter (sParameterName, sParameterValue);
+        }
+        catch (final Exception ex)
+        {
+          throw new MimeTypeParserException (ex.getMessage ());
+        }
+      }
     }
   }
 
@@ -154,13 +275,14 @@ public final class MimeTypeParser
    * 
    * @param sMimeType
    *        The string representation to be converted. May be <code>null</code>.
-   * @return <code>null</code> if the parsed string could not be converted to a
-   *         MIME type object.
+   * @return <code>null</code> if the parsed string is empty.
+   * @throws MimeTypeParserException
+   *         In case of an error
    */
   @Nullable
-  public static MimeType createFromString (@Nullable final String sMimeType)
+  public static MimeType parseMimeType (@Nullable final String sMimeType) throws MimeTypeParserException
   {
-    return createFromString (sMimeType, CMimeType.DEFAULT_QUOTING);
+    return parseMimeType (sMimeType, CMimeType.DEFAULT_QUOTING);
   }
 
   /**
@@ -172,54 +294,111 @@ public final class MimeTypeParser
    *        The string representation to be converted. May be <code>null</code>.
    * @param eQuotingAlgorithm
    *        The quoting algorithm to be used to un-quote parameter values. May
-   *        not be <code>null</code>. * @return <code>null</code> if the parsed
-   *        string could not be converted to a MIME type object.
+   *        not be <code>null</code>.
+   * @return <code>null</code> if the parsed string is empty.
+   * @throws MimeTypeParserException
+   *         In case of an error
    */
   @Nullable
-  public static MimeType createFromString (@Nullable final String sMimeType,
-                                           @Nonnull final EMimeQuoting eQuotingAlgorithm)
+  public static MimeType parseMimeType (@Nullable final String sMimeType, @Nonnull final EMimeQuoting eQuotingAlgorithm) throws MimeTypeParserException
   {
     if (eQuotingAlgorithm == null)
       throw new NullPointerException ("quotingAlgorithm");
 
-    if (StringHelper.hasText (sMimeType))
-    {
-      // Find the separator between content type and sub type ("/")
-      final int nSlashIndex = sMimeType.indexOf (CMimeType.SEPARATOR_CONTENTTYPE_SUBTYPE);
-      if (nSlashIndex >= 0)
-      {
-        // Use the main content type
-        final String sContentType = sMimeType.substring (0, nSlashIndex).trim ();
-        final EMimeContentType eContentType = EMimeContentType.getFromIDOrNull (sContentType);
-        if (eContentType != null)
-        {
-          // Extract the rest (sub type + parameters)
-          final String sRest = sMimeType.substring (nSlashIndex + 1);
-          final int nSemicolonIndex = sRest.indexOf (CMimeType.SEPARATOR_PARAMETER);
-          String sContentSubType;
-          String sParameters;
-          if (nSemicolonIndex >= 0)
-          {
-            sContentSubType = sRest.substring (0, nSemicolonIndex).trim ();
-            // everything after the first ';' as parameters
-            sParameters = sRest.substring (nSemicolonIndex + 1);
-          }
-          else
-          {
-            sContentSubType = sRest;
-            sParameters = null;
-          }
+    if (StringHelper.hasNoText (sMimeType))
+      return null;
 
-          final MimeType ret = new MimeType (eContentType, sContentSubType);
-          if (StringHelper.hasText (sParameters))
-          {
-            // We have parameters to extract
-            _parseAndAddParameters (ret, sParameters, eQuotingAlgorithm);
-          }
-          return ret;
-        }
-      }
+    // Find the separator between content type and sub type ("/")
+    final int nSlashIndex = sMimeType.indexOf (CMimeType.SEPARATOR_CONTENTTYPE_SUBTYPE);
+    if (nSlashIndex < 0)
+      throw new MimeTypeParserException ("MimeType is missing the main '/' separator char");
+
+    // Use the main content type
+    final String sContentType = sMimeType.substring (0, nSlashIndex).trim ();
+    final EMimeContentType eContentType = EMimeContentType.getFromIDOrNull (sContentType);
+    if (eContentType == null)
+      throw new MimeTypeParserException ("MimeType uses an unknown content type '" + sContentType + "'");
+
+    // Extract the rest (sub type + parameters)
+    final String sRest = sMimeType.substring (nSlashIndex + 1);
+    final int nSemicolonIndex = sRest.indexOf (CMimeType.SEPARATOR_PARAMETER);
+    String sContentSubType;
+    String sParameters;
+    if (nSemicolonIndex >= 0)
+    {
+      sContentSubType = sRest.substring (0, nSemicolonIndex).trim ();
+      // everything after the first ';' as parameters
+      sParameters = sRest.substring (nSemicolonIndex + 1).trim ();
     }
-    return null;
+    else
+    {
+      sContentSubType = sRest.trim ();
+      sParameters = null;
+    }
+
+    if (StringHelper.hasNoText (sContentSubType))
+      throw new MimeTypeParserException ("MimeType uses an empty content sub type '" + sMimeType + "'");
+
+    final MimeType ret = new MimeType (eContentType, sContentSubType);
+    if (StringHelper.hasText (sParameters))
+    {
+      // We have parameters to extract
+      _parseAndAddParameters (ret, sParameters, eQuotingAlgorithm);
+    }
+    return ret;
+  }
+
+  /**
+   * Try to convert the string representation of a MIME type to an object. The
+   * default quoting algorithm {@link CMimeType#DEFAULT_QUOTING} is used to
+   * unquote strings. Compared to {@link #parseMimeType(String)} this method
+   * swallows all {@link MimeTypeParserException} and simply returns
+   * <code>null</code>.
+   * 
+   * @param sMimeType
+   *        The string representation to be converted. May be <code>null</code>.
+   * @return <code>null</code> if the parsed string is empty or not a valid mime
+   *         type.
+   */
+  @Nullable
+  public static MimeType safeParseMimeType (@Nullable final String sMimeType)
+  {
+    try
+    {
+      return parseMimeType (sMimeType, CMimeType.DEFAULT_QUOTING);
+    }
+    catch (final MimeTypeParserException ex)
+    {
+      return null;
+    }
+  }
+
+  /**
+   * Try to convert the string representation of a MIME type to an object. The
+   * default quoting algorithm {@link CMimeType#DEFAULT_QUOTING} is used to
+   * un-quote strings. Compared to {@link #parseMimeType(String, EMimeQuoting)}
+   * this method swallows all {@link MimeTypeParserException} and simply returns
+   * <code>null</code>.
+   * 
+   * @param sMimeType
+   *        The string representation to be converted. May be <code>null</code>.
+   * @param eQuotingAlgorithm
+   *        The quoting algorithm to be used to un-quote parameter values. May
+   *        not be <code>null</code>.
+   * @return <code>null</code> if the parsed string is empty or not a valid mime
+   *         type.
+   */
+  @Nullable
+  public static MimeType safeParseMimeType (@Nullable final String sMimeType,
+                                            @Nonnull final EMimeQuoting eQuotingAlgorithm)
+  {
+    try
+    {
+      return parseMimeType (sMimeType, eQuotingAlgorithm);
+    }
+    catch (final MimeTypeParserException ex)
+    {
+      return null;
+    }
   }
 }
