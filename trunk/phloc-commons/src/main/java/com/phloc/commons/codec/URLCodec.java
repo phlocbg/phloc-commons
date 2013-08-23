@@ -30,28 +30,39 @@ import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.string.StringHelper;
 
 /**
- * Encoder and decoder for quoted printable stuff
+ * Encoder and decoder for URL stuff
  * 
  * @author Philip Helger
  */
-public class QuotedPrintableCodec extends AbstractCodec implements IStringCodec
+public class URLCodec extends AbstractCodec implements IStringCodec
 {
-  private static final byte ESCAPE_CHAR = '=';
-  private static final byte TAB = 9;
-  private static final byte SPACE = 32;
+  private static final byte ESCAPE_CHAR = '%';
+
+  private static final byte SPACE = ' ';
+  private static final byte PLUS = '+';
 
   /**
-   * BitSet of printable characters as defined in RFC 1521.
+   * BitSet of www-form-url safe characters.
    */
   private static final BitSet PRINTABLE_CHARS = new BitSet (256);
 
   static
   {
-    PRINTABLE_CHARS.set (TAB);
+    // alpha characters
+    for (int i = 'a'; i <= 'z'; i++)
+      PRINTABLE_CHARS.set (i);
+    for (int i = 'A'; i <= 'Z'; i++)
+      PRINTABLE_CHARS.set (i);
+    // numeric characters
+    for (int i = '0'; i <= '9'; i++)
+      PRINTABLE_CHARS.set (i);
+    // special chars
+    PRINTABLE_CHARS.set ('-');
+    PRINTABLE_CHARS.set ('_');
+    PRINTABLE_CHARS.set ('.');
+    PRINTABLE_CHARS.set ('*');
+    // blank to be replaced with +
     PRINTABLE_CHARS.set (SPACE);
-    for (int i = 33; i <= 126; i++)
-      if (i != ESCAPE_CHAR)
-        PRINTABLE_CHARS.set (i);
   }
 
   /**
@@ -62,7 +73,7 @@ public class QuotedPrintableCodec extends AbstractCodec implements IStringCodec
   /**
    * Default constructor with the UTF-8 charset.
    */
-  public QuotedPrintableCodec ()
+  public URLCodec ()
   {
     this (CCharset.CHARSET_UTF_8_OBJ);
   }
@@ -73,7 +84,7 @@ public class QuotedPrintableCodec extends AbstractCodec implements IStringCodec
    * @param aCharset
    *        the default string charset to use.
    */
-  public QuotedPrintableCodec (@Nonnull final Charset aCharset)
+  public URLCodec (@Nonnull final Charset aCharset)
   {
     if (aCharset == null)
       throw new NullPointerException ("Charset");
@@ -97,14 +108,14 @@ public class QuotedPrintableCodec extends AbstractCodec implements IStringCodec
   }
 
   /**
-   * Encodes byte into its quoted-printable representation.
+   * Encodes byte into its URL representation.
    * 
    * @param b
    *        byte to encode
    * @param aBAOS
    *        the buffer to write to
    */
-  public static final void encodeQuotedPrintable (final int b, @Nonnull final NonBlockingByteArrayOutputStream aBAOS)
+  public static final void encodeURL (final int b, @Nonnull final NonBlockingByteArrayOutputStream aBAOS)
   {
     final char cHigh = Character.toUpperCase (StringHelper.getHexChar ((b >> 4) & 0xF));
     final char cLow = Character.toUpperCase (StringHelper.getHexChar (b & 0xF));
@@ -114,16 +125,21 @@ public class QuotedPrintableCodec extends AbstractCodec implements IStringCodec
   }
 
   @Nonnull
-  public static byte [] encodeQuotedPrintable (@Nonnull final BitSet aBitSet, @Nonnull final byte [] aDecodedBuffer)
+  public static byte [] encodeURL (@Nonnull final BitSet aBitSet, @Nonnull final byte [] aDecodedBuffer)
   {
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream (aDecodedBuffer.length * 2);
     for (final byte nByte : aDecodedBuffer)
     {
       final int b = nByte & 0xff;
       if (aBitSet.get (b))
-        aBAOS.write (b);
+      {
+        if (b == SPACE)
+          aBAOS.write (PLUS);
+        else
+          aBAOS.write (b);
+      }
       else
-        encodeQuotedPrintable (b, aBAOS);
+        encodeURL (b, aBAOS);
     }
     return aBAOS.toByteArray ();
   }
@@ -134,11 +150,11 @@ public class QuotedPrintableCodec extends AbstractCodec implements IStringCodec
     if (aDecodedBuffer == null)
       return null;
 
-    return encodeQuotedPrintable (PRINTABLE_CHARS, aDecodedBuffer);
+    return encodeURL (PRINTABLE_CHARS, aDecodedBuffer);
   }
 
   @Nullable
-  public static byte [] decodeQuotedPrintable (@Nullable final byte [] aEncodedBuffer)
+  public static byte [] decodeURL (@Nullable final byte [] aEncodedBuffer)
   {
     if (aEncodedBuffer == null)
       return null;
@@ -147,20 +163,23 @@ public class QuotedPrintableCodec extends AbstractCodec implements IStringCodec
     for (int i = 0; i < aEncodedBuffer.length; i++)
     {
       final int b = aEncodedBuffer[i];
-      if (b == ESCAPE_CHAR)
-      {
-        final char cHigh = (char) aEncodedBuffer[++i];
-        final char cLow = (char) aEncodedBuffer[++i];
-        final int nDecodedValue = StringHelper.getHexByte (cHigh, cLow);
-        if (nDecodedValue < 0)
-          throw new DecoderException ("Invalid quoted-printable encoding for " + cHigh + cLow);
-
-        aBAOS.write (nDecodedValue);
-      }
+      if (b == PLUS)
+        aBAOS.write (SPACE);
       else
-      {
-        aBAOS.write (b);
-      }
+        if (b == ESCAPE_CHAR)
+        {
+          final char cHigh = (char) aEncodedBuffer[++i];
+          final char cLow = (char) aEncodedBuffer[++i];
+          final int nDecodedValue = StringHelper.getHexByte (cHigh, cLow);
+          if (nDecodedValue < 0)
+            throw new DecoderException ("Invalid URL encoding for " + cHigh + cLow);
+
+          aBAOS.write (nDecodedValue);
+        }
+        else
+        {
+          aBAOS.write (b);
+        }
     }
     return aBAOS.toByteArray ();
   }
@@ -168,7 +187,7 @@ public class QuotedPrintableCodec extends AbstractCodec implements IStringCodec
   @Nullable
   public byte [] decode (@Nullable final byte [] aEncodedBuffer)
   {
-    return decodeQuotedPrintable (aEncodedBuffer);
+    return decodeURL (aEncodedBuffer);
   }
 
   @Nullable
@@ -219,7 +238,7 @@ public class QuotedPrintableCodec extends AbstractCodec implements IStringCodec
     if (sDecoded == null)
       return null;
 
-    final byte [] aEncodedData = encodeQuotedPrintable (aBitSet, CharsetManager.getAsBytes (sDecoded, aCharset));
+    final byte [] aEncodedData = encodeURL (aBitSet, CharsetManager.getAsBytes (sDecoded, aCharset));
     return CharsetManager.getAsString (aEncodedData, CCharset.CHARSET_US_ASCII_OBJ);
   }
 
@@ -235,7 +254,7 @@ public class QuotedPrintableCodec extends AbstractCodec implements IStringCodec
     if (sEncoded == null)
       return null;
     byte [] aData = CharsetManager.getAsBytes (sEncoded, CCharset.CHARSET_US_ASCII_OBJ);
-    aData = decodeQuotedPrintable (aData);
+    aData = decodeURL (aData);
     return CharsetManager.getAsString (aData, aCharset);
   }
 }

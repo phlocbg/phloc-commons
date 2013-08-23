@@ -134,11 +134,6 @@ public class RFC1522QCodec extends AbstractRFC1522Codec
     return "Q";
   }
 
-  /**
-   * Gets the default charset name used for string decoding and encoding.
-   * 
-   * @return the default charset name
-   */
   @Nonnull
   public Charset getCharset ()
   {
