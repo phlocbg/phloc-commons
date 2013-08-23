@@ -79,6 +79,30 @@ public final class MimeTypeParser
   }
 
   /**
+   * Check if the passed string is a valid MIME token by checking that the
+   * length is at least 1 and all chars match the {@link #isTokenChar(char)}
+   * condition.
+   * 
+   * @param sToken
+   *        The token to be checked. May be <code>null</code>.
+   * @return <code>true</code> if the passed string is valid token,
+   *         <code>false</code> otherwise.
+   */
+  public static boolean isToken (@Nullable final String sToken)
+  {
+    // Check length
+    if (StringHelper.hasNoText (sToken))
+      return false;
+
+    // Check that all chars are token chars
+    final char [] aChars = sToken.toCharArray ();
+    for (final char c : aChars)
+      if (!isTokenChar (c))
+        return false;
+    return true;
+  }
+
+  /**
    * Try to convert the string representation of a MIME type to an object.
    * 
    * @param sMimeType
@@ -96,7 +120,7 @@ public final class MimeTypeParser
       if (nSlashIndex >= 0)
       {
         // Use the main content type
-        final String sContentType = sMimeType.substring (0, nSlashIndex);
+        final String sContentType = sMimeType.substring (0, nSlashIndex).trim ();
         final EMimeContentType eContentType = EMimeContentType.getFromIDOrNull (sContentType);
         if (eContentType != null)
         {
@@ -107,7 +131,7 @@ public final class MimeTypeParser
           String sParameters;
           if (nSemicolonIndex >= 0)
           {
-            sContentSubType = sRest.substring (0, nSemicolonIndex);
+            sContentSubType = sRest.substring (0, nSemicolonIndex).trim ();
             sParameters = sRest.substring (nSemicolonIndex + 1);
           }
           else
