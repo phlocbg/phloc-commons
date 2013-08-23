@@ -66,7 +66,7 @@ public class MimeType implements IMimeType, ICloneable <MimeType>
 
     m_eContentType = eContentType;
     m_sContentSubType = sContentSubType;
-    m_sMainTypeAsString = m_eContentType.getText () + CMimeType.CONTENTTYPE_SUBTYPE_SEPARATOR + m_sContentSubType;
+    m_sMainTypeAsString = m_eContentType.getText () + CMimeType.SEPARATOR_CONTENTTYPE_SUBTYPE + m_sContentSubType;
   }
 
   @Nonnull
@@ -136,113 +136,18 @@ public class MimeType implements IMimeType, ICloneable <MimeType>
   }
 
   /**
-   * Check if the passed character is a special character according to RFC 2045
-   * chapter 5.1
-   * 
-   * @param c
-   *        The character to check
-   * @return <code>true</code> if the character is a special character,
-   *         <code>false</code> otherwise.
-   */
-  public static boolean isTSpecialChar (final char c)
-  {
-    return c == '(' ||
-           c == ')' ||
-           c == '<' ||
-           c == '>' ||
-           c == '@' ||
-           c == ',' ||
-           c == ';' ||
-           c == ':' ||
-           c == '\\' ||
-           c == '"' ||
-           c == '/' ||
-           c == '[' ||
-           c == ']' ||
-           c == '?' ||
-           c == '=';
-  }
-
-  /**
-   * Check if the passed character is a valid token character. According to RFC
-   * 2045 this can be
-   * <em>any (US-ASCII) CHAR except SPACE, CTLs, or tspecials</em>
-   * 
-   * @param c
-   *        The character to check.
-   * @return <code>true</code> if the passed character is a valid token
-   *         character, <code>false</code> otherwise
-   */
-  public static boolean isTokenChar (final char c)
-  {
-    // SPACE: 32
-    // CTLs: 0-31, 127
-    return c > 32 && c < 127 && !isTSpecialChar (c);
-  }
-
-  /**
    * Try to convert the string representation of a MIME type to an object.
    * 
    * @param sMimeType
    *        The string representation to be converted. May be <code>null</code>.
    * @return <code>null</code> if the parsed string could not be converted to a
    *         MIME type object.
-   * @deprecated Use {@link #createFromString(String)} instead
+   * @deprecated Use {@link MimeTypeParser#createFromString(String)} instead
    */
   @Deprecated
   @Nullable
   public static MimeType parseFromStringWithoutEncoding (@Nullable final String sMimeType)
   {
-    return createFromString (sMimeType);
-  }
-
-  /**
-   * Try to convert the string representation of a MIME type to an object.
-   * 
-   * @param sMimeType
-   *        The string representation to be converted. May be <code>null</code>.
-   * @return <code>null</code> if the parsed string could not be converted to a
-   *         MIME type object.
-   */
-  @Nullable
-  public static MimeType createFromString (@Nullable final String sMimeType)
-  {
-    if (StringHelper.hasText (sMimeType))
-    {
-      // Find the separator between content type and sub type ("/")
-      final int nSlashIndex = sMimeType.indexOf (CMimeType.CONTENTTYPE_SUBTYPE_SEPARATOR);
-      if (nSlashIndex >= 0)
-      {
-        // Use the main content type
-        final String sContentType = sMimeType.substring (0, nSlashIndex);
-        final EMimeContentType eContentType = EMimeContentType.getFromIDOrNull (sContentType);
-        if (eContentType != null)
-        {
-          // Extract the rest (sub type + parameters)
-          final String sRest = sMimeType.substring (nSlashIndex + 1);
-          final int nSemicolonIndex = sRest.indexOf (CMimeType.PARAMETER_SEPARATOR);
-          String sContentSubType;
-          String sParameters;
-          if (nSemicolonIndex >= 0)
-          {
-            sContentSubType = sRest.substring (0, nSemicolonIndex);
-            sParameters = sRest.substring (nSemicolonIndex + 1);
-          }
-          else
-          {
-            sContentSubType = sRest;
-            sParameters = null;
-          }
-
-          final MimeType ret = new MimeType (eContentType, sContentSubType);
-          if (StringHelper.hasText (sParameters))
-          {
-            // We have parameters to extract
-          }
-          return ret;
-        }
-      }
-    }
-    return null;
+    return MimeTypeParser.createFromString (sMimeType);
   }
 }

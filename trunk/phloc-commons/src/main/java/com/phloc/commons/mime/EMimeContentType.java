@@ -87,7 +87,7 @@ public enum EMimeContentType implements IHasID <String>
 
   public boolean isTypeOf (@Nullable final String sMimeType)
   {
-    return StringHelper.startsWith (sMimeType, m_sText + CMimeType.CONTENTTYPE_SUBTYPE_SEPARATOR);
+    return StringHelper.startsWith (sMimeType, m_sText + CMimeType.SEPARATOR_CONTENTTYPE_SUBTYPE);
   }
 
   @Nullable
