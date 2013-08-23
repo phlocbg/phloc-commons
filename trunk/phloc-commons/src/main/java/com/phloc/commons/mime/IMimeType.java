@@ -24,6 +24,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ICloneable;
 import com.phloc.commons.IHasStringRepresentation;
 import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
 import com.phloc.commons.annotations.Nonempty;
@@ -35,7 +36,7 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
  * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
-public interface IMimeType extends IHasStringRepresentation, Serializable
+public interface IMimeType extends IHasStringRepresentation, ICloneable <IMimeType>, Serializable
 {
   /**
    * @return The content type. Never <code>null</code>.
