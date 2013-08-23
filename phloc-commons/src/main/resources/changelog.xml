@@ -20,32 +20,42 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
-  <entry date="2013-08-22" category="api" action="add">
+  <entry date="2013-08-23" category="api" action="add">
+    <change>
+      <text locale="en">Added new method StringHelper.removeAll(String,char)</text>
+    </change>
+  </entry>
+  <entry date="2013-08-23" category="api" action="add">
+    <change>
+      <text locale="en">Added new classes URLCodec</text>
+    </change>
+  </entry>
+  <entry date="2013-08-23" category="api" action="add">
     <change>
       <text locale="en">Added new classes QuotedPrintableCodec, RFC1522BCodec and RFC1522QCodec from phloc-web</text>
     </change>
   </entry>
-  <entry date="2013-08-22" category="api" action="add">
+  <entry date="2013-08-23" category="api" action="add">
     <change>
       <text locale="en">Added new class Base64Codec that uses Base64 and implements ICodec</text>
     </change>
   </entry>
-  <entry date="2013-08-22" category="api" action="add">
+  <entry date="2013-08-23" category="api" action="add">
     <change>
       <text locale="en">Added new annotation @WorkInProgress</text>
     </change>
   </entry>
-  <entry date="2013-08-22" category="api" action="add">
+  <entry date="2013-08-23" category="api" action="add">
     <change>
       <text locale="en">Added methods ContainerHelper.removeElementAtIndex and ContainerHelper.removeAndReturnElementAtIndex</text>
     </change>
   </entry>
-  <entry date="2013-08-22" category="api" action="add">
+  <entry date="2013-08-23" category="api" action="add">
     <change>
       <text locale="en">Added support for MimeType parameters</text>
     </change>
   </entry>
-  <entry date="2013-08-22" category="api" action="update">
+  <entry date="2013-08-23" category="api" action="update">
     <change>
       <text locale="en">Extended MimeType handling</text>
     </change>

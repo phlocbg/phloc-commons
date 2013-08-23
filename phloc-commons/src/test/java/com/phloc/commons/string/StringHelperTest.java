@@ -1618,6 +1618,20 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
+  public void testRemoveAll ()
+  {
+    assertEquals ("abc", StringHelper.removeAll ("abc", 'd'));
+    assertEquals ("ab", StringHelper.removeAll ("abc", 'c'));
+    assertEquals ("ac", StringHelper.removeAll ("abc", 'b'));
+    assertEquals ("bc", StringHelper.removeAll ("abc", 'a'));
+    assertEquals ("", StringHelper.removeAll ("aaa", 'a'));
+    assertEquals ("", StringHelper.removeAll ("", 'a'));
+    assertEquals ("bb", StringHelper.removeAll ("ababa", 'a'));
+    assertEquals ("abc", StringHelper.removeAll ("abcd", 'd'));
+    assertNull (StringHelper.removeAll (null, 'a'));
+  }
+
+  @Test
   public void testToString ()
   {
     assertEquals ("1", StringHelper.getToString (I1));
