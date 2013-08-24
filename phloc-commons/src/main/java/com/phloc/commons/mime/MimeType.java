@@ -133,19 +133,9 @@ public class MimeType implements IMimeType
   }
 
   @Nonnull
-  @Nonempty
-  public String getAsString (@Nonnull final EMimeQuoting eQuotingAlgorithm)
+  private String _getParametersAsString (@Nonnull final EMimeQuoting eQuotingAlgorithm)
   {
-    if (eQuotingAlgorithm == null)
-      throw new NullPointerException ("QuotingAlgorithm");
-
-    if (ContainerHelper.isEmpty (m_aParameters))
-    {
-      // No parameters - return as is
-      return m_sMainTypeAsString;
-    }
-
-    final StringBuilder aSB = new StringBuilder (m_sMainTypeAsString);
+    final StringBuilder aSB = new StringBuilder ();
     // Append all parameters
     for (final MimeTypeParameter aParameter : m_aParameters)
     {
@@ -159,9 +149,36 @@ public class MimeType implements IMimeType
 
   @Nonnull
   @Nonempty
+  public String getAsString (@Nonnull final EMimeQuoting eQuotingAlgorithm)
+  {
+    if (eQuotingAlgorithm == null)
+      throw new NullPointerException ("QuotingAlgorithm");
+
+    if (ContainerHelper.isEmpty (m_aParameters))
+    {
+      // No parameters - return as is
+      return m_sMainTypeAsString;
+    }
+
+    return m_sMainTypeAsString + _getParametersAsString (eQuotingAlgorithm);
+  }
+
+  @Nonnull
   public String getAsStringWithoutParameters ()
   {
     return m_sMainTypeAsString;
+  }
+
+  @Nonnull
+  public String getParametersAsString (@Nonnull final EMimeQuoting eQuotingAlgorithm)
+  {
+    if (eQuotingAlgorithm == null)
+      throw new NullPointerException ("QuotingAlgorithm");
+
+    if (ContainerHelper.isEmpty (m_aParameters))
+      return "";
+
+    return _getParametersAsString (eQuotingAlgorithm);
   }
 
   @Nonnull
