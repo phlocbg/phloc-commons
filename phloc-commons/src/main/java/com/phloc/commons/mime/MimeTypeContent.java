@@ -17,10 +17,13 @@
  */
 package com.phloc.commons.mime;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Arrays;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.WillNotClose;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
@@ -79,6 +82,19 @@ public class MimeTypeContent
   public int getContentByteCount ()
   {
     return m_aContentBytes.length;
+  }
+
+  /**
+   * Write the content bytes to the specified output stream.
+   * 
+   * @param aOS
+   *        The output stream to write to. May not be <code>null</code>.
+   * @throws IOException
+   *         In case of a write error
+   */
+  public void writeContentBytes (@Nonnull @WillNotClose final OutputStream aOS) throws IOException
+  {
+    aOS.write (m_aContentBytes, 0, m_aContentBytes.length);
   }
 
   /**
