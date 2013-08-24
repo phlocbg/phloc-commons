@@ -2918,16 +2918,20 @@ public final class StringHelper
     if (hasNoText (sInputString))
       return sInputString;
 
-    // Does the old text occur anywhere?
-    final int nIndex = sInputString.indexOf (cRemoveChar, 0);
-    if (nIndex == STRING_NOT_FOUND)
+    // Does the char occur anywhere?
+    final int nFirstIndex = sInputString.indexOf (cRemoveChar, 0);
+    if (nFirstIndex == STRING_NOT_FOUND)
       return sInputString;
 
     // build output buffer
     final char [] aChars = sInputString.toCharArray ();
     final int nMax = aChars.length;
     final StringBuilder aSB = new StringBuilder (nMax);
-    for (int i = 0; i < nMax; ++i)
+    // Copy the first chars where we know it is not contained
+    aSB.append (aChars, 0, nFirstIndex);
+    // Start searching after the first occurrence because we know that this is a
+    // char to be removed
+    for (int i = nFirstIndex; i < nMax; ++i)
     {
       final char c = aChars[i];
       if (c != cRemoveChar)
