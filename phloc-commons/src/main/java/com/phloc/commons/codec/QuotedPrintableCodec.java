@@ -27,6 +27,7 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
+import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.string.StringHelper;
 
 /**
@@ -145,28 +146,35 @@ public class QuotedPrintableCodec extends AbstractCodec implements IStringCodec
       return null;
 
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
-    final int nMax = aEncodedBuffer.length;
-    for (int i = 0; i < nMax; i++)
+    try
     {
-      final int b = aEncodedBuffer[i];
-      if (b == ESCAPE_CHAR)
+      final int nMax = aEncodedBuffer.length;
+      for (int i = 0; i < nMax; i++)
       {
-        if (i >= nMax - 2)
-          throw new DecoderException ("Invalid quoted-printable encoding. Premature of string after escape char");
-        final char cHigh = (char) aEncodedBuffer[++i];
-        final char cLow = (char) aEncodedBuffer[++i];
-        final int nDecodedValue = StringHelper.getHexByte (cHigh, cLow);
-        if (nDecodedValue < 0)
-          throw new DecoderException ("Invalid quoted-printable encoding for " + cHigh + cLow);
+        final int b = aEncodedBuffer[i];
+        if (b == ESCAPE_CHAR)
+        {
+          if (i >= nMax - 2)
+            throw new DecoderException ("Invalid quoted-printable encoding. Premature of string after escape char");
+          final char cHigh = (char) aEncodedBuffer[++i];
+          final char cLow = (char) aEncodedBuffer[++i];
+          final int nDecodedValue = StringHelper.getHexByte (cHigh, cLow);
+          if (nDecodedValue < 0)
+            throw new DecoderException ("Invalid quoted-printable encoding for " + cHigh + cLow);
 
-        aBAOS.write (nDecodedValue);
+          aBAOS.write (nDecodedValue);
+        }
+        else
+        {
+          aBAOS.write (b);
+        }
       }
-      else
-      {
-        aBAOS.write (b);
-      }
+      return aBAOS.toByteArray ();
     }
-    return aBAOS.toByteArray ();
+    finally
+    {
+      StreamUtils.close (aBAOS);
+    }
   }
 
   @Nullable
