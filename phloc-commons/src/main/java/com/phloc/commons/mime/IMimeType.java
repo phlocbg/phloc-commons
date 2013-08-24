@@ -133,4 +133,15 @@ public interface IMimeType extends IHasStringRepresentation, ICloneable <IMimeTy
    */
   @Nullable
   MimeTypeParameter getParameterWithName (@Nullable String sParamName);
+
+  /**
+   * Get the value of the parameter with the specified name. The names are
+   * matched case sensitive!
+   * 
+   * @param sParamName
+   *        The parameter name to search. May be <code>null</code>.
+   * @return <code>null</code> if no such parameter exists.
+   */
+  @Nullable
+  String getParameterValueWithName (@Nullable String sParamName);
 }
