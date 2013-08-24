@@ -281,6 +281,13 @@ public class MimeType implements IMimeType
     return null;
   }
 
+  @Nullable
+  public String getParameterValueWithName (@Nullable final String sParamName)
+  {
+    final MimeTypeParameter aParam = getParameterWithName (sParamName);
+    return aParam == null ? null : aParam.getValue ();
+  }
+
   @Nonnull
   public MimeType getClone ()
   {
