@@ -17,9 +17,12 @@
  */
 package com.phloc.commons.messagedigest;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Arrays;
 
 import javax.annotation.Nonnull;
+import javax.annotation.WillNotClose;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.Nonempty;
@@ -70,6 +73,19 @@ public final class MessageDigestValue
   public byte [] getDigestBytes ()
   {
     return ArrayHelper.getCopy (m_aDigestBytes);
+  }
+
+  /**
+   * Write the digest bytes to the specified output stream.
+   * 
+   * @param aOS
+   *        The output stream to write to. May not be <code>null</code>.
+   * @throws IOException
+   *         In case of a write error
+   */
+  public void writeDigestBytes (@Nonnull @WillNotClose final OutputStream aOS) throws IOException
+  {
+    aOS.write (m_aDigestBytes, 0, m_aDigestBytes.length);
   }
 
   /**
