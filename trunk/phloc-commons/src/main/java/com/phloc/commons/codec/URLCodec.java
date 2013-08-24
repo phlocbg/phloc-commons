@@ -27,6 +27,7 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
+import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.string.StringHelper;
 
 /**
@@ -160,31 +161,38 @@ public class URLCodec extends AbstractCodec implements IStringCodec
       return null;
 
     final NonBlockingByteArrayOutputStream aBAOS = new NonBlockingByteArrayOutputStream ();
-    final int nMax = aEncodedBuffer.length;
-    for (int i = 0; i < nMax; i++)
+    try
     {
-      final int b = aEncodedBuffer[i];
-      if (b == PLUS)
-        aBAOS.write (SPACE);
-      else
-        if (b == ESCAPE_CHAR)
-        {
-          if (i >= nMax - 2)
-            throw new DecoderException ("Invalid URL encoding. Premature of string after escape char");
-          final char cHigh = (char) aEncodedBuffer[++i];
-          final char cLow = (char) aEncodedBuffer[++i];
-          final int nDecodedValue = StringHelper.getHexByte (cHigh, cLow);
-          if (nDecodedValue < 0)
-            throw new DecoderException ("Invalid URL encoding for " + cHigh + cLow);
-
-          aBAOS.write (nDecodedValue);
-        }
+      final int nMax = aEncodedBuffer.length;
+      for (int i = 0; i < nMax; i++)
+      {
+        final int b = aEncodedBuffer[i];
+        if (b == PLUS)
+          aBAOS.write (SPACE);
         else
-        {
-          aBAOS.write (b);
-        }
+          if (b == ESCAPE_CHAR)
+          {
+            if (i >= nMax - 2)
+              throw new DecoderException ("Invalid URL encoding. Premature of string after escape char");
+            final char cHigh = (char) aEncodedBuffer[++i];
+            final char cLow = (char) aEncodedBuffer[++i];
+            final int nDecodedValue = StringHelper.getHexByte (cHigh, cLow);
+            if (nDecodedValue < 0)
+              throw new DecoderException ("Invalid URL encoding for " + cHigh + cLow);
+
+            aBAOS.write (nDecodedValue);
+          }
+          else
+          {
+            aBAOS.write (b);
+          }
+      }
+      return aBAOS.toByteArray ();
     }
-    return aBAOS.toByteArray ();
+    finally
+    {
+      StreamUtils.close (aBAOS);
+    }
   }
 
   @Nullable

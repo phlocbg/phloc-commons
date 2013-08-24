@@ -49,7 +49,7 @@ import com.phloc.commons.charset.CCharset;
  */
 public class RFC1522QCodec extends AbstractRFC1522Codec
 {
-  public static boolean DEFAULT_ENCODE_BLANKS = false;
+  public static final boolean DEFAULT_ENCODE_BLANKS = false;
 
   /**
    * BitSet of printable characters as defined in RFC 1522.
