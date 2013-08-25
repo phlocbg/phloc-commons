@@ -42,6 +42,8 @@ import com.phloc.jms.wrapper.JMSWrapper;
 @ThreadSafe
 public abstract class AbstractJMSFactory implements IJMSFactory
 {
+  public static final boolean DEFAULT_START_CONNECTION = true;
+
   protected static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
   @GuardedBy ("s_aRWLock")
   private static ExceptionListener s_aExceptionListener = new LoggingJMSExceptionListener ();
@@ -160,7 +162,7 @@ public abstract class AbstractJMSFactory implements IJMSFactory
   @Nonnull
   public Connection createConnection () throws JMSException
   {
-    return createConnection (true);
+    return createConnection (DEFAULT_START_CONNECTION);
   }
 
   @Nonnull
@@ -175,6 +177,7 @@ public abstract class AbstractJMSFactory implements IJMSFactory
     return _getOrCreateWrapper ().wrap (ret);
   }
 
+  @OverrideOnDemand
   public void shutdown ()
   {}
 

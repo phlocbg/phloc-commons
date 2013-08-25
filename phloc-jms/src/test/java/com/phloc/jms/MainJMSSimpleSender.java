@@ -30,9 +30,9 @@ import javax.jms.TextMessage;
 import com.phloc.commons.concurrent.ExtendedDefaultThreadFactory;
 import com.phloc.commons.concurrent.ManagedExecutorService;
 import com.phloc.commons.timing.StopWatch;
-import com.phloc.jms.sender.IJMSMessageCreator;
-import com.phloc.jms.sender.IJMSMessageHandler;
-import com.phloc.jms.sender.JMSSimpleHandler;
+import com.phloc.jms.simple.IJMSMessageCreator;
+import com.phloc.jms.simple.IJMSMessageHandler;
+import com.phloc.jms.simple.JMSSimpleHandler;
 
 /**
  * Hello world!

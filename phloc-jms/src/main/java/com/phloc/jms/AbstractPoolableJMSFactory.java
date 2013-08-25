@@ -18,26 +18,42 @@
 package com.phloc.jms;
 
 import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.concurrent.ThreadSafe;
 import javax.jms.ConnectionFactory;
 
-import org.apache.activemq.ActiveMQConnectionFactory;
+import com.phloc.jms.pool.PooledConnectionFactory;
 
 /**
- * A sample implementation of {@link AbstractJMSFactory} that uses ActiveMQ as
- * the connection factory
+ * An enhancement of {@link AbstractJMSFactory} that uses a
+ * {@link PooledConnectionFactory} to pool JMS connections.
  * 
  * @author Philip Helger
  */
 @ThreadSafe
-public final class ActiveMQJMSFactory extends AbstractPoolableJMSFactory
+public abstract class AbstractPoolableJMSFactory extends AbstractJMSFactory
 {
+  @Nonnull
+  protected abstract ConnectionFactory createUnpooledConnectionFactory ();
+
   @Override
   @Nonnull
-  protected ConnectionFactory createUnpooledConnectionFactory ()
+  protected final ConnectionFactory createConnectionFactory ()
   {
-    final ActiveMQConnectionFactory aConnectionFactory = new ActiveMQConnectionFactory ("tcp://localhost:61616");
-    aConnectionFactory.setExceptionListener (new LoggingJMSExceptionListener ());
-    return aConnectionFactory;
+    final ConnectionFactory aConnectionFactory = createUnpooledConnectionFactory ();
+
+    final PooledConnectionFactory ret = new PooledConnectionFactory (aConnectionFactory);
+    // Start the pooling
+    ret.start ();
+    return ret;
+  }
+
+  @Override
+  @OverridingMethodsMustInvokeSuper
+  public void shutdown ()
+  {
+    // Stop the pooling
+    ((PooledConnectionFactory) getConnectionFactory ()).stop ();
+    super.shutdown ();
   }
 }

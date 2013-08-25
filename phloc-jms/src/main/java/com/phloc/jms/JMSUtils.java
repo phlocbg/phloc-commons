@@ -71,12 +71,12 @@ public final class JMSUtils
       try
       {
         // There is no need to close the sessions, producers, and consumers of a
-        // closed connection.
+        // connection to be closed.
         aConnection.close ();
       }
       catch (final JMSException ex)
       {
-        s_aLogger.error ("Failed to close JMS connection", ex);
+        s_aLogger.error ("Failed to close JMS connection " + aConnection, ex);
       }
   }
 }
