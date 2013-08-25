@@ -17,6 +17,7 @@
  */
 package com.phloc.jms;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 import javax.jms.Connection;
@@ -37,6 +38,26 @@ public final class JMSUtils
 
   private JMSUtils ()
   {}
+
+  /**
+   * Build a JMS exception with a causing exception. This is because the
+   * {@link JMSException} class is lacking a respective constructor.
+   * 
+   * @param sMsg
+   *        String message
+   * @param aCause
+   *        Causing exception
+   * @return Never <code>null</code>.
+   */
+  @Nonnull
+  public static JMSException createException (@Nonnull final String sMsg, @Nullable final Throwable aCause)
+  {
+    final JMSException ret = new JMSException (sMsg);
+    if (aCause instanceof Exception)
+      ret.setLinkedException ((Exception) aCause);
+    ret.initCause (aCause);
+    return ret;
+  }
 
   /**
    * Close the passed JMS connection
