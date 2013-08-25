@@ -99,6 +99,8 @@ public class MainJMSFillUpSimple
           System.out.println ("Sent message " + message.getText ());
 
         producer.send (message);
+
+        // No commit for non-transacted sessions
         if (false)
           session.commit ();
       }
@@ -147,6 +149,7 @@ public class MainJMSFillUpSimple
           System.out.println ("Received (SE): " + message);
         }
 
+        // No commit for non-transacted sessions
         if (false)
           session.commit ();
       }

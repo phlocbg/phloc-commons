@@ -58,20 +58,20 @@ public class XATopicConnectionWrapper extends XAConnectionWrapper implements XAT
                                                                                            messageSelector,
                                                                                            sessionPool,
                                                                                            maxMessages);
-    return getWrapper ().wrap (aConnectionConsumer);
+    return getWrapper ().wrapConnectionConsumer (aConnectionConsumer);
   }
 
   @Nonnull
   public XATopicSession createXATopicSession () throws JMSException
   {
     final XATopicSession aSession = getWrapped ().createXATopicSession ();
-    return getWrapper ().wrap (aSession);
+    return getWrapper ().wrapXATopicSession (aSession);
   }
 
   @Nonnull
   public TopicSession createTopicSession (final boolean transacted, final int acknowledgeMode) throws JMSException
   {
     final TopicSession aSession = getWrapped ().createTopicSession (transacted, acknowledgeMode);
-    return getWrapper ().wrap (aSession);
+    return getWrapper ().wrapTopicSession (aSession);
   }
 }

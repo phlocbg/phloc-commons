@@ -51,7 +51,7 @@ public class TopicConnectionWrapper extends ConnectionWrapper implements TopicCo
   public TopicSession createTopicSession (final boolean transacted, final int acknowledgeMode) throws JMSException
   {
     final TopicSession aTopicSession = getWrapped ().createTopicSession (transacted, acknowledgeMode);
-    return getWrapper ().wrap (aTopicSession);
+    return getWrapper ().wrapTopicSession (aTopicSession);
   }
 
   @Nonnull
@@ -64,6 +64,6 @@ public class TopicConnectionWrapper extends ConnectionWrapper implements TopicCo
                                                                                            messageSelector,
                                                                                            sessionPool,
                                                                                            maxMessages);
-    return getWrapper ().wrap (aConnectionConsumer);
+    return getWrapper ().wrapConnectionConsumer (aConnectionConsumer);
   }
 }
