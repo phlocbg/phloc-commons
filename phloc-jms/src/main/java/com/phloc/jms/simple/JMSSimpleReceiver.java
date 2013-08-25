@@ -31,6 +31,11 @@ import com.phloc.commons.string.StringHelper;
 import com.phloc.jms.IJMSFactory;
 import com.phloc.jms.JMSUtils;
 
+/**
+ * A simple receiver for JMS messages
+ * 
+ * @author Philip Helger
+ */
 public class JMSSimpleReceiver
 {
   private final IJMSFactory m_aFactory;

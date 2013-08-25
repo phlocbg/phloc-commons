@@ -32,6 +32,11 @@ import com.phloc.commons.string.StringHelper;
 import com.phloc.jms.IJMSFactory;
 import com.phloc.jms.JMSUtils;
 
+/**
+ * A simple sender for JMS messages.
+ * 
+ * @author Philip Helger
+ */
 public class JMSSimpleSender
 {
   public static final boolean DEFAULT_PERSISTENT = false;
