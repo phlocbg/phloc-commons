@@ -102,7 +102,7 @@ public class PooledConnectionFactory implements ConnectionFactory
         try
         {
           if (s_aLogger.isTraceEnabled ())
-            s_aLogger.trace ("Destroying connection: {}", connection);
+            s_aLogger.trace ("Destroying connection " + connection);
           connection.close ();
         }
         catch (final Exception e)
@@ -123,7 +123,7 @@ public class PooledConnectionFactory implements ConnectionFactory
         connection.setBlockIfSessionPoolIsFull (isBlockIfSessionPoolIsFull ());
 
         if (s_aLogger.isTraceEnabled ())
-          s_aLogger.trace ("Created new connection: {}", connection);
+          s_aLogger.trace ("Created new connection " + connection);
 
         return connection;
       }
@@ -136,7 +136,7 @@ public class PooledConnectionFactory implements ConnectionFactory
         if (connection != null && connection.expiredCheck ())
         {
           if (s_aLogger.isTraceEnabled ())
-            s_aLogger.trace ("Connection has expired: {} and will be destroyed", connection);
+            s_aLogger.trace ("Connection has expired (" + connection + ") and will be destroyed");
           return false;
         }
 
@@ -509,8 +509,10 @@ public class PooledConnectionFactory implements ConnectionFactory
    * 
    * @param connection
    * @return instance of a new ConnectionPool.
+   * @throws JMSException
+   *         In case of a JMS error
    */
-  protected ConnectionPool createConnectionPool (final Connection connection)
+  protected ConnectionPool createConnectionPool (final Connection connection) throws JMSException
   {
     return new ConnectionPool (connection);
   }

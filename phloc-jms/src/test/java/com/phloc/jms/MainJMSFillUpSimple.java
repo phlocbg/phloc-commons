@@ -32,6 +32,7 @@ import javax.jms.Queue;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
+import com.phloc.commons.concurrent.ExtendedDefaultThreadFactory;
 import com.phloc.commons.concurrent.ManagedExecutorService;
 import com.phloc.commons.timing.StopWatch;
 
@@ -48,14 +49,14 @@ public class MainJMSFillUpSimple
 
     final int nMax = 1024 * 2;
     final StopWatch aSW = new StopWatch (true);
-    final ExecutorService aESProduce = Executors.newFixedThreadPool (10);
+    final ExecutorService aESProduce = Executors.newFixedThreadPool (10, new ExtendedDefaultThreadFactory ("producers"));
     for (int i = 0; i < nMax; ++i)
       aESProduce.submit (new MockProducer ());
     final long nMSP = aSW.stopAndGetMillis ();
     System.out.println ("Production of " + nMax + " messages took " + nMSP + "ms");
 
     aSW.restart ();
-    final ExecutorService aESConsume = Executors.newFixedThreadPool (10);
+    final ExecutorService aESConsume = Executors.newFixedThreadPool (10, new ExtendedDefaultThreadFactory ("consumers"));
     for (int i = 0; i < nMax; ++i)
       aESConsume.submit (new MockConsumer ());
     final long nMSC = aSW.stopAndGetMillis ();

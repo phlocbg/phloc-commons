@@ -23,6 +23,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.annotation.Nonnull;
 import javax.jms.Connection;
+import javax.jms.ExceptionListener;
 import javax.jms.JMSException;
 import javax.jms.Session;
 
@@ -57,7 +58,7 @@ public class ConnectionPool
   private final GenericKeyedObjectPool <SessionKey, PooledSession> m_aSessionPool;
   private final List <PooledSession> m_aLoanedSessions = new CopyOnWriteArrayList <PooledSession> ();
 
-  public ConnectionPool (final Connection connection)
+  public ConnectionPool (final Connection connection) throws JMSException
   {
     m_aConnection = connection;
 
@@ -92,6 +93,18 @@ public class ConnectionPool
     // {
     // hasFailed = true;
     // }
+
+    // Instead of ActiveMQ:
+    connection.setExceptionListener (new ExceptionListener ()
+    {
+      public void onException (final JMSException exception)
+      {
+        synchronized (ConnectionPool.this)
+        {
+          ConnectionPool.this.m_bHasFailed = true;
+        }
+      }
+    });
 
     // Create our internal Pool of session instances.
     m_aSessionPool = new GenericKeyedObjectPool <SessionKey, PooledSession> (new KeyedPoolableObjectFactory <SessionKey, PooledSession> ()
