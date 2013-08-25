@@ -33,6 +33,8 @@ import javax.jms.JMSException;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.factory.IFactory;
 import com.phloc.commons.string.ToStringGenerator;
+import com.phloc.jms.exceptionlistener.LoggingJMSExceptionListener;
+import com.phloc.jms.exceptionlistener.MultiJMSExceptionListener;
 import com.phloc.jms.wrapper.JMSWrapper;
 
 /**
@@ -152,7 +154,7 @@ public class JMSFactory implements IJMSFactory
   /**
    * Create the {@link JMSWrapper} - called only once.
    * 
-   * @return Never <code>null</code>.
+   * @return Never<code>null</code>.
    */
   @Nonnull
   @OverrideOnDemand
@@ -200,7 +202,10 @@ public class JMSFactory implements IJMSFactory
   public Connection createConnection (final boolean bStartConnection) throws JMSException
   {
     final Connection ret = getOrCreateConnectionFactory ().createConnection ();
-    ret.setExceptionListener (getDefaultExceptionListener ());
+    // Remember the old exception listener (e.g. from pooled connection factory)
+    // plus the new one
+    ret.setExceptionListener (new MultiJMSExceptionListener (ret.getExceptionListener (),
+                                                             getDefaultExceptionListener ()));
     if (bStartConnection)
       ret.start ();
 

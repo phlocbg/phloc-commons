@@ -42,7 +42,6 @@ public final class ActiveMQJMSFactory extends PoolableJMSFactory
       public ConnectionFactory create ()
       {
         final ActiveMQConnectionFactory aConnectionFactory = new ActiveMQConnectionFactory ("tcp://localhost:61616");
-        aConnectionFactory.setExceptionListener (new LoggingJMSExceptionListener ());
         return aConnectionFactory;
       }
     });
