@@ -41,7 +41,7 @@ import com.phloc.commons.timing.StopWatch;
  */
 public class MainJMSFillUpSimple
 {
-  private static final ActiveMQJMSFactory s_aFactory = new ActiveMQJMSFactory ();
+  private static final MockActiveMQJMSFactory s_aFactory = new MockActiveMQJMSFactory ();
 
   public static void main (final String [] args) throws Exception
   {
