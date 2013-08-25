@@ -22,7 +22,8 @@ import javax.annotation.concurrent.ThreadSafe;
 import javax.jms.ConnectionFactory;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
-import org.apache.activemq.pool.PooledConnectionFactory;
+
+import com.phloc.jms.pool.PooledConnectionFactory;
 
 /**
  * A sample implementation of {@link AbstractJMSFactory} that uses ActiveMQ as
@@ -40,6 +41,6 @@ public final class ActiveMQJMSFactory extends AbstractJMSFactory
     final ActiveMQConnectionFactory aConnectionFactory = new ActiveMQConnectionFactory ("tcp://localhost:61616");
     aConnectionFactory.setExceptionListener (new LoggingJMSExceptionListener ());
     // Use pooled version?
-    return true ? aConnectionFactory : new PooledConnectionFactory (aConnectionFactory);
+    return false ? aConnectionFactory : new PooledConnectionFactory (aConnectionFactory);
   }
 }
