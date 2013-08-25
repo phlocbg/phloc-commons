@@ -32,7 +32,8 @@ import com.phloc.commons.concurrent.ManagedExecutorService;
 import com.phloc.commons.timing.StopWatch;
 import com.phloc.jms.simple.IJMSMessageCreator;
 import com.phloc.jms.simple.IJMSMessageHandler;
-import com.phloc.jms.simple.JMSSimpleHandler;
+import com.phloc.jms.simple.JMSSimpleReceiver;
+import com.phloc.jms.simple.JMSSimpleSender;
 
 /**
  * Hello world!
@@ -74,7 +75,7 @@ public class MainJMSSimpleSender
 
     public void run ()
     {
-      new JMSSimpleHandler (s_aFactory, false).sendNonTransactional ("TEST.FOO", new IJMSMessageCreator ()
+      new JMSSimpleSender (s_aFactory, false).sendNonTransactional ("TEST.FOO", new IJMSMessageCreator ()
       {
         @Nonnull
         public Message createMessage (@Nonnull final Session aSession) throws JMSException
@@ -89,7 +90,7 @@ public class MainJMSSimpleSender
   {
     public void run ()
     {
-      new JMSSimpleHandler (s_aFactory, false).receiveNonTransactional ("TEST.FOO", new IJMSMessageHandler ()
+      new JMSSimpleReceiver (s_aFactory).receiveNonTransactional ("TEST.FOO", new IJMSMessageHandler ()
       {
         public void handleMessage (@Nonnull final Message aMessage) throws JMSException
         {
