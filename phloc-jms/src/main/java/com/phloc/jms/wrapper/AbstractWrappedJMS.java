@@ -37,6 +37,10 @@ public abstract class AbstractWrappedJMS implements IJMSWrapper
     m_aWrapper = aWrapper;
   }
 
+  /**
+   * @return The {@link JMSWrapper} instance to be used. Never <code>null</code>
+   *         .
+   */
   @Nonnull
   protected final JMSWrapper getWrapper ()
   {

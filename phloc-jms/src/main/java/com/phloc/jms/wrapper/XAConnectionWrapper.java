@@ -22,6 +22,11 @@ import javax.jms.JMSException;
 import javax.jms.XAConnection;
 import javax.jms.XASession;
 
+/**
+ * Wrapped class for a JMS {@link XAConnection}.
+ * 
+ * @author Philip Helger
+ */
 public class XAConnectionWrapper extends ConnectionWrapper implements XAConnection
 {
   public XAConnectionWrapper (@Nonnull final JMSWrapper aWrapper, @Nonnull final XAConnection aWrapped)
@@ -29,6 +34,9 @@ public class XAConnectionWrapper extends ConnectionWrapper implements XAConnecti
     super (aWrapper, aWrapped);
   }
 
+  /**
+   * @return The wrapped object. Never <code>null</code>.
+   */
   @Override
   @Nonnull
   protected XAConnection getWrapped ()

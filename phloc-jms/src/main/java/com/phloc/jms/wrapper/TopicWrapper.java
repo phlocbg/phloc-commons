@@ -23,6 +23,11 @@ import javax.jms.Topic;
 
 import com.phloc.commons.string.ToStringGenerator;
 
+/**
+ * Wrapped class for a JMS {@link Topic}.
+ * 
+ * @author Philip Helger
+ */
 public class TopicWrapper extends AbstractWrappedJMS implements Topic
 {
   private final Topic m_aWrapped;
@@ -35,6 +40,9 @@ public class TopicWrapper extends AbstractWrappedJMS implements Topic
     m_aWrapped = aWrapped;
   }
 
+  /**
+   * @return The wrapped object. Never <code>null</code>.
+   */
   @Nonnull
   protected Topic getWrapped ()
   {

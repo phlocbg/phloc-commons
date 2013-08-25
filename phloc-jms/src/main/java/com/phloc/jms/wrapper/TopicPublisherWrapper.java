@@ -23,6 +23,11 @@ import javax.jms.Message;
 import javax.jms.Topic;
 import javax.jms.TopicPublisher;
 
+/**
+ * Wrapped class for a JMS {@link TopicPublisher}.
+ * 
+ * @author Philip Helger
+ */
 public class TopicPublisherWrapper extends MessageProducerWrapper implements TopicPublisher
 {
   public TopicPublisherWrapper (@Nonnull final JMSWrapper aWrapper, @Nonnull final TopicPublisher aWrapped)
@@ -30,6 +35,9 @@ public class TopicPublisherWrapper extends MessageProducerWrapper implements Top
     super (aWrapper, aWrapped);
   }
 
+  /**
+   * @return The wrapped object. Never <code>null</code>.
+   */
   @Override
   @Nonnull
   protected TopicPublisher getWrapped ()

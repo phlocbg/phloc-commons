@@ -25,6 +25,11 @@ import javax.jms.Topic;
 import javax.jms.TopicConnection;
 import javax.jms.TopicSession;
 
+/**
+ * Wrapped class for a JMS {@link TopicConnection}.
+ * 
+ * @author Philip Helger
+ */
 public class TopicConnectionWrapper extends ConnectionWrapper implements TopicConnection
 {
   public TopicConnectionWrapper (@Nonnull final JMSWrapper aWrapper, @Nonnull final TopicConnection aWrapped)
@@ -32,6 +37,9 @@ public class TopicConnectionWrapper extends ConnectionWrapper implements TopicCo
     super (aWrapper, aWrapped);
   }
 
+  /**
+   * @return The wrapped object. Never <code>null</code>.
+   */
   @Override
   @Nonnull
   protected TopicConnection getWrapped ()

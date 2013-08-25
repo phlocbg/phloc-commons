@@ -22,6 +22,11 @@ import javax.jms.JMSException;
 import javax.jms.Queue;
 import javax.jms.QueueReceiver;
 
+/**
+ * Wrapped class for a JMS {@link QueueReceiver}.
+ * 
+ * @author Philip Helger
+ */
 public class QueueReceiverWrapper extends MessageConsumerWrapper implements QueueReceiver
 {
   public QueueReceiverWrapper (@Nonnull final JMSWrapper aWrapper, @Nonnull final QueueReceiver aWrapped)
@@ -29,6 +34,9 @@ public class QueueReceiverWrapper extends MessageConsumerWrapper implements Queu
     super (aWrapper, aWrapped);
   }
 
+  /**
+   * @return The wrapped object. Never <code>null</code>.
+   */
   @Override
   @Nonnull
   protected QueueReceiver getWrapped ()

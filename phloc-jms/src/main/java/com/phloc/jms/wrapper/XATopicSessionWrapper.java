@@ -22,6 +22,11 @@ import javax.jms.JMSException;
 import javax.jms.TopicSession;
 import javax.jms.XATopicSession;
 
+/**
+ * Wrapped class for a JMS {@link XATopicSession}.
+ * 
+ * @author Philip Helger
+ */
 public class XATopicSessionWrapper extends XASessionWrapper implements XATopicSession
 {
   public XATopicSessionWrapper (@Nonnull final JMSWrapper aWrapper, @Nonnull final XATopicSession aWrapped)
@@ -29,6 +34,9 @@ public class XATopicSessionWrapper extends XASessionWrapper implements XATopicSe
     super (aWrapper, aWrapped);
   }
 
+  /**
+   * @return The wrapped object. Never <code>null</code>.
+   */
   @Override
   @Nonnull
   protected XATopicSession getWrapped ()

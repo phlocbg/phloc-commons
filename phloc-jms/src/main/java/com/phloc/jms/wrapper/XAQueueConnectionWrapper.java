@@ -26,6 +26,11 @@ import javax.jms.ServerSessionPool;
 import javax.jms.XAQueueConnection;
 import javax.jms.XAQueueSession;
 
+/**
+ * Wrapped class for a JMS {@link XAQueueConnection}.
+ * 
+ * @author Philip Helger
+ */
 public class XAQueueConnectionWrapper extends XAConnectionWrapper implements XAQueueConnection
 {
   public XAQueueConnectionWrapper (@Nonnull final JMSWrapper aWrapper, @Nonnull final XAQueueConnection aWrapped)
@@ -33,6 +38,9 @@ public class XAQueueConnectionWrapper extends XAConnectionWrapper implements XAQ
     super (aWrapper, aWrapped);
   }
 
+  /**
+   * @return The wrapped object. Never <code>null</code>.
+   */
   @Override
   @Nonnull
   protected XAQueueConnection getWrapped ()

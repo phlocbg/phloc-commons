@@ -22,6 +22,11 @@ import javax.jms.JMSException;
 import javax.jms.QueueSession;
 import javax.jms.XAQueueSession;
 
+/**
+ * Wrapped class for a JMS {@link XAQueueSession}.
+ * 
+ * @author Philip Helger
+ */
 public class XAQueueSessionWrapper extends XASessionWrapper implements XAQueueSession
 {
   public XAQueueSessionWrapper (@Nonnull final JMSWrapper aWrapper, @Nonnull final XAQueueSession aWrapped)
@@ -29,6 +34,9 @@ public class XAQueueSessionWrapper extends XASessionWrapper implements XAQueueSe
     super (aWrapper, aWrapped);
   }
 
+  /**
+   * @return The wrapped object. Never <code>null</code>.
+   */
   @Override
   @Nonnull
   protected XAQueueSession getWrapped ()

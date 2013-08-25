@@ -23,6 +23,11 @@ import javax.annotation.Nonnull;
 import javax.jms.JMSException;
 import javax.jms.ObjectMessage;
 
+/**
+ * Wrapped class for a JMS {@link ObjectMessage}.
+ * 
+ * @author Philip Helger
+ */
 public class ObjectMessageWrapper extends MessageWrapper implements ObjectMessage
 {
   public ObjectMessageWrapper (@Nonnull final JMSWrapper aWrapper, @Nonnull final ObjectMessage aWrapped)
@@ -30,6 +35,9 @@ public class ObjectMessageWrapper extends MessageWrapper implements ObjectMessag
     super (aWrapper, aWrapped);
   }
 
+  /**
+   * @return The wrapped object. Never <code>null</code>.
+   */
   @Override
   @Nonnull
   protected ObjectMessage getWrapped ()

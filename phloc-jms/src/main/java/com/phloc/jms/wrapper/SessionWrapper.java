@@ -41,6 +41,11 @@ import javax.jms.TopicSubscriber;
 
 import com.phloc.commons.string.ToStringGenerator;
 
+/**
+ * Wrapped class for a JMS {@link Session}.
+ * 
+ * @author Philip Helger
+ */
 public abstract class SessionWrapper extends AbstractWrappedJMS implements Session
 {
   private final Session m_aWrapped;
@@ -53,6 +58,9 @@ public abstract class SessionWrapper extends AbstractWrappedJMS implements Sessi
     m_aWrapped = aWrapped;
   }
 
+  /**
+   * @return The wrapped object. Never <code>null</code>.
+   */
   @Nonnull
   protected Session getWrapped ()
   {

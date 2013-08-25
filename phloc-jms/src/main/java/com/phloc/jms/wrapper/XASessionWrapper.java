@@ -23,6 +23,11 @@ import javax.jms.Session;
 import javax.jms.XASession;
 import javax.transaction.xa.XAResource;
 
+/**
+ * Wrapped class for a JMS {@link XASession}.
+ * 
+ * @author Philip Helger
+ */
 public abstract class XASessionWrapper extends SessionWrapper implements XASession
 {
   public XASessionWrapper (@Nonnull final JMSWrapper aWrapper, @Nonnull final XASession aWrapped)
@@ -30,6 +35,9 @@ public abstract class XASessionWrapper extends SessionWrapper implements XASessi
     super (aWrapper, aWrapped);
   }
 
+  /**
+   * @return The wrapped object. Never <code>null</code>.
+   */
   @Override
   @Nonnull
   protected XASession getWrapped ()

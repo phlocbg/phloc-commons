@@ -21,6 +21,11 @@ import javax.annotation.Nonnull;
 import javax.jms.JMSException;
 import javax.jms.TextMessage;
 
+/**
+ * Wrapped class for a JMS {@link TextMessage}.
+ * 
+ * @author Philip Helger
+ */
 public class TextMessageWrapper extends MessageWrapper implements TextMessage
 {
   public TextMessageWrapper (@Nonnull final JMSWrapper aWrapper, @Nonnull final TextMessage aWrapped)
@@ -28,6 +33,9 @@ public class TextMessageWrapper extends MessageWrapper implements TextMessage
     super (aWrapper, aWrapped);
   }
 
+  /**
+   * @return The wrapped object. Never <code>null</code>.
+   */
   @Override
   @Nonnull
   protected TextMessage getWrapped ()

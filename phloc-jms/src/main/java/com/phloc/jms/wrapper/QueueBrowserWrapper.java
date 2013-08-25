@@ -26,6 +26,11 @@ import javax.jms.QueueBrowser;
 
 import com.phloc.commons.string.ToStringGenerator;
 
+/**
+ * Wrapped class for a JMS {@link QueueBrowser}.
+ * 
+ * @author Philip Helger
+ */
 public class QueueBrowserWrapper extends AbstractWrappedJMS implements QueueBrowser
 {
   private final QueueBrowser m_aWrapped;
@@ -38,6 +43,9 @@ public class QueueBrowserWrapper extends AbstractWrappedJMS implements QueueBrow
     m_aWrapped = aWrapped;
   }
 
+  /**
+   * @return The wrapped object. Never <code>null</code>.
+   */
   @Nonnull
   protected QueueBrowser getWrapped ()
   {
