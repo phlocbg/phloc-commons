@@ -60,7 +60,7 @@ public abstract class ConnectionWrapper extends AbstractWrappedJMS implements Co
   public Session createSession (final boolean transacted, final int acknowledgeMode) throws JMSException
   {
     final Session aSession = m_aWrapped.createSession (transacted, acknowledgeMode);
-    return getWrapper ().wrap (aSession);
+    return getWrapper ().wrapSession (aSession);
   }
 
   public String getClientID () throws JMSException
@@ -113,7 +113,7 @@ public abstract class ConnectionWrapper extends AbstractWrappedJMS implements Co
                                                                                         messageSelector,
                                                                                         sessionPool,
                                                                                         maxMessages);
-    return getWrapper ().wrap (aConnectionConsumer);
+    return getWrapper ().wrapConnectionConsumer (aConnectionConsumer);
   }
 
   @Nonnull
@@ -128,7 +128,7 @@ public abstract class ConnectionWrapper extends AbstractWrappedJMS implements Co
                                                                                                messageSelector,
                                                                                                sessionPool,
                                                                                                maxMessages);
-    return getWrapper ().wrap (aConnectionConsumer);
+    return getWrapper ().wrapConnectionConsumer (aConnectionConsumer);
   }
 
   @Override

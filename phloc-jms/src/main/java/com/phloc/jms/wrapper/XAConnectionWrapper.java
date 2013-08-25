@@ -48,6 +48,6 @@ public class XAConnectionWrapper extends ConnectionWrapper implements XAConnecti
   public XASession createXASession () throws JMSException
   {
     final XASession aSession = getWrapped ().createXASession ();
-    return getWrapper ().wrap (aSession);
+    return getWrapper ().wrapXASession (aSession);
   }
 }

@@ -79,18 +79,18 @@ public class JMSWrapper
   public Connection wrap (@Nonnull final Connection aConnection)
   {
     if (aConnection instanceof XAQueueConnection)
-      return wrap ((XAQueueConnection) aConnection);
+      return wrapXAQueueConnection ((XAQueueConnection) aConnection);
     if (aConnection instanceof XATopicConnection)
-      return wrap ((XATopicConnection) aConnection);
+      return wrapXATopicConnection ((XATopicConnection) aConnection);
     if (aConnection instanceof QueueConnection)
-      return wrap ((QueueConnection) aConnection);
+      return wrapQueueConnection ((QueueConnection) aConnection);
     if (aConnection instanceof TopicConnection)
-      return wrap ((TopicConnection) aConnection);
+      return wrapTopicConnection ((TopicConnection) aConnection);
     throw new IllegalStateException ("Unsupported connection: " + aConnection);
   }
 
   @Nonnull
-  public XAQueueConnection wrap (@Nonnull final XAQueueConnection aConnection)
+  public XAQueueConnection wrapXAQueueConnection (@Nonnull final XAQueueConnection aConnection)
   {
     if (isWrapped (aConnection))
       return aConnection;
@@ -98,7 +98,7 @@ public class JMSWrapper
   }
 
   @Nonnull
-  public XATopicConnection wrap (@Nonnull final XATopicConnection aConnection)
+  public XATopicConnection wrapXATopicConnection (@Nonnull final XATopicConnection aConnection)
   {
     if (isWrapped (aConnection))
       return aConnection;
@@ -106,7 +106,7 @@ public class JMSWrapper
   }
 
   @Nonnull
-  public QueueConnection wrap (@Nonnull final QueueConnection aConnection)
+  public QueueConnection wrapQueueConnection (@Nonnull final QueueConnection aConnection)
   {
     if (isWrapped (aConnection))
       return aConnection;
@@ -114,7 +114,7 @@ public class JMSWrapper
   }
 
   @Nonnull
-  public TopicConnection wrap (@Nonnull final TopicConnection aConnection)
+  public TopicConnection wrapTopicConnection (@Nonnull final TopicConnection aConnection)
   {
     if (isWrapped (aConnection))
       return aConnection;
@@ -122,29 +122,29 @@ public class JMSWrapper
   }
 
   @Nonnull
-  public Session wrap (@Nonnull final Session aSession)
+  public Session wrapSession (@Nonnull final Session aSession)
   {
     if (aSession instanceof QueueSession)
-      return wrap ((QueueSession) aSession);
+      return wrapQueueSession ((QueueSession) aSession);
     if (aSession instanceof TopicSession)
-      return wrap ((TopicSession) aSession);
+      return wrapTopicSession ((TopicSession) aSession);
     if (aSession instanceof XASession)
-      return wrap ((XASession) aSession);
+      return wrapXASession ((XASession) aSession);
     throw new IllegalStateException ("Unsupported session: " + aSession);
   }
 
   @Nonnull
-  public XASession wrap (@Nonnull final XASession aSession)
+  public XASession wrapXASession (@Nonnull final XASession aSession)
   {
     if (aSession instanceof XAQueueSession)
-      return wrap ((XAQueueSession) aSession);
+      return wrapXAQueueSession ((XAQueueSession) aSession);
     if (aSession instanceof XATopicSession)
-      return wrap ((XATopicSession) aSession);
+      return wrapXATopicSession ((XATopicSession) aSession);
     throw new IllegalStateException ("Unsupported XA session: " + aSession);
   }
 
   @Nonnull
-  public QueueSession wrap (@Nonnull final QueueSession aSession)
+  public QueueSession wrapQueueSession (@Nonnull final QueueSession aSession)
   {
     if (isWrapped (aSession))
       return aSession;
@@ -152,7 +152,7 @@ public class JMSWrapper
   }
 
   @Nonnull
-  public TopicSession wrap (@Nonnull final TopicSession aSession)
+  public TopicSession wrapTopicSession (@Nonnull final TopicSession aSession)
   {
     if (isWrapped (aSession))
       return aSession;
@@ -160,7 +160,7 @@ public class JMSWrapper
   }
 
   @Nonnull
-  public XAQueueSession wrap (@Nonnull final XAQueueSession aSession)
+  public XAQueueSession wrapXAQueueSession (@Nonnull final XAQueueSession aSession)
   {
     if (isWrapped (aSession))
       return aSession;
@@ -168,7 +168,7 @@ public class JMSWrapper
   }
 
   @Nonnull
-  public XATopicSession wrap (@Nonnull final XATopicSession aSession)
+  public XATopicSession wrapXATopicSession (@Nonnull final XATopicSession aSession)
   {
     if (isWrapped (aSession))
       return aSession;
@@ -176,7 +176,7 @@ public class JMSWrapper
   }
 
   @Nonnull
-  public MessageProducer wrap (@Nonnull final MessageProducer aMessageProducer)
+  public MessageProducer wrapMessageProducer (@Nonnull final MessageProducer aMessageProducer)
   {
     if (isWrapped (aMessageProducer))
       return aMessageProducer;
@@ -184,7 +184,7 @@ public class JMSWrapper
   }
 
   @Nonnull
-  public QueueSender wrap (@Nonnull final QueueSender aQueueSender)
+  public QueueSender wrapQueueSender (@Nonnull final QueueSender aQueueSender)
   {
     if (isWrapped (aQueueSender))
       return aQueueSender;
@@ -192,7 +192,7 @@ public class JMSWrapper
   }
 
   @Nonnull
-  public TopicPublisher wrap (@Nonnull final TopicPublisher aTopicPublisher)
+  public TopicPublisher wrapTopicPublisher (@Nonnull final TopicPublisher aTopicPublisher)
   {
     if (isWrapped (aTopicPublisher))
       return aTopicPublisher;
@@ -200,7 +200,7 @@ public class JMSWrapper
   }
 
   @Nonnull
-  public MessageConsumer wrap (@Nonnull final MessageConsumer aMessageConsumer)
+  public MessageConsumer wrapMessageConsumer (@Nonnull final MessageConsumer aMessageConsumer)
   {
     if (isWrapped (aMessageConsumer))
       return aMessageConsumer;
@@ -208,7 +208,7 @@ public class JMSWrapper
   }
 
   @Nonnull
-  public QueueReceiver wrap (@Nonnull final QueueReceiver aQueueReceiver)
+  public QueueReceiver wrapQueueReceiver (@Nonnull final QueueReceiver aQueueReceiver)
   {
     if (isWrapped (aQueueReceiver))
       return aQueueReceiver;
@@ -216,7 +216,7 @@ public class JMSWrapper
   }
 
   @Nonnull
-  public TopicSubscriber wrap (@Nonnull final TopicSubscriber aTopicSubscriber)
+  public TopicSubscriber wrapTopicSubscriber (@Nonnull final TopicSubscriber aTopicSubscriber)
   {
     if (isWrapped (aTopicSubscriber))
       return aTopicSubscriber;
@@ -224,7 +224,7 @@ public class JMSWrapper
   }
 
   @Nonnull
-  public Queue wrap (@Nonnull final Queue aQueue)
+  public Queue wrapQueue (@Nonnull final Queue aQueue)
   {
     if (isWrapped (aQueue))
       return aQueue;
@@ -232,7 +232,7 @@ public class JMSWrapper
   }
 
   @Nonnull
-  public Topic wrap (@Nonnull final Topic aTopic)
+  public Topic wrapTopic (@Nonnull final Topic aTopic)
   {
     if (isWrapped (aTopic))
       return aTopic;
@@ -240,7 +240,7 @@ public class JMSWrapper
   }
 
   @Nonnull
-  public TemporaryQueue wrap (@Nonnull final TemporaryQueue aTemporaryQueue)
+  public TemporaryQueue wrapTemporaryQueue (@Nonnull final TemporaryQueue aTemporaryQueue)
   {
     if (isWrapped (aTemporaryQueue))
       return aTemporaryQueue;
@@ -248,7 +248,7 @@ public class JMSWrapper
   }
 
   @Nonnull
-  public TemporaryTopic wrap (@Nonnull final TemporaryTopic aTemporaryTopic)
+  public TemporaryTopic wrapTemporaryTopic (@Nonnull final TemporaryTopic aTemporaryTopic)
   {
     if (isWrapped (aTemporaryTopic))
       return aTemporaryTopic;
@@ -256,7 +256,7 @@ public class JMSWrapper
   }
 
   @Nonnull
-  public Message wrap (@Nonnull final Message aMessage)
+  public Message wrapMessage (@Nonnull final Message aMessage)
   {
     if (isWrapped (aMessage))
       return aMessage;
@@ -264,7 +264,7 @@ public class JMSWrapper
   }
 
   @Nonnull
-  public BytesMessage wrap (@Nonnull final BytesMessage aMessage)
+  public BytesMessage wrapBytesMessage (@Nonnull final BytesMessage aMessage)
   {
     if (isWrapped (aMessage))
       return aMessage;
@@ -272,7 +272,7 @@ public class JMSWrapper
   }
 
   @Nonnull
-  public MapMessage wrap (@Nonnull final MapMessage aMessage)
+  public MapMessage wrapMapMessage (@Nonnull final MapMessage aMessage)
   {
     if (isWrapped (aMessage))
       return aMessage;
@@ -280,7 +280,7 @@ public class JMSWrapper
   }
 
   @Nonnull
-  public ObjectMessage wrap (@Nonnull final ObjectMessage aMessage)
+  public ObjectMessage wrapObjectMessage (@Nonnull final ObjectMessage aMessage)
   {
     if (isWrapped (aMessage))
       return aMessage;
@@ -288,7 +288,7 @@ public class JMSWrapper
   }
 
   @Nonnull
-  public StreamMessage wrap (@Nonnull final StreamMessage aMessage)
+  public StreamMessage wrapStreamMessage (@Nonnull final StreamMessage aMessage)
   {
     if (isWrapped (aMessage))
       return aMessage;
@@ -296,7 +296,7 @@ public class JMSWrapper
   }
 
   @Nonnull
-  public TextMessage wrap (@Nonnull final TextMessage aMessage)
+  public TextMessage wrapTextMessage (@Nonnull final TextMessage aMessage)
   {
     if (isWrapped (aMessage))
       return aMessage;
@@ -304,7 +304,7 @@ public class JMSWrapper
   }
 
   @Nonnull
-  public ConnectionConsumer wrap (@Nonnull final ConnectionConsumer aConnectionConsumer)
+  public ConnectionConsumer wrapConnectionConsumer (@Nonnull final ConnectionConsumer aConnectionConsumer)
   {
     if (isWrapped (aConnectionConsumer))
       return aConnectionConsumer;
@@ -312,7 +312,7 @@ public class JMSWrapper
   }
 
   @Nonnull
-  public QueueBrowser wrap (@Nonnull final QueueBrowser aQueueBrowser)
+  public QueueBrowser wrapQueueBrowser (@Nonnull final QueueBrowser aQueueBrowser)
   {
     if (isWrapped (aQueueBrowser))
       return aQueueBrowser;

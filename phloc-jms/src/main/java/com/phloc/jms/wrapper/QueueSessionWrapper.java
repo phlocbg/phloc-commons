@@ -50,20 +50,20 @@ public class QueueSessionWrapper extends SessionWrapper implements QueueSession
   public QueueReceiver createReceiver (final Queue queue) throws JMSException
   {
     final QueueReceiver aReceiver = getWrapped ().createReceiver (queue);
-    return getWrapper ().wrap (aReceiver);
+    return getWrapper ().wrapQueueReceiver (aReceiver);
   }
 
   @Nonnull
   public QueueReceiver createReceiver (final Queue queue, final String messageSelector) throws JMSException
   {
     final QueueReceiver aReceiver = getWrapped ().createReceiver (queue, messageSelector);
-    return getWrapper ().wrap (aReceiver);
+    return getWrapper ().wrapQueueReceiver (aReceiver);
   }
 
   @Nonnull
   public QueueSender createSender (final Queue queue) throws JMSException
   {
     final QueueSender aSender = getWrapped ().createSender (queue);
-    return getWrapper ().wrap (aSender);
+    return getWrapper ().wrapQueueSender (aSender);
   }
 }

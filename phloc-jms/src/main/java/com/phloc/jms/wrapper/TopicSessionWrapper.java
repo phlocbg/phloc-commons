@@ -50,20 +50,20 @@ public class TopicSessionWrapper extends SessionWrapper implements TopicSession
   public TopicSubscriber createSubscriber (final Topic topic) throws JMSException
   {
     final TopicSubscriber aTopicSubscriber = getWrapped ().createSubscriber (topic);
-    return getWrapper ().wrap (aTopicSubscriber);
+    return getWrapper ().wrapTopicSubscriber (aTopicSubscriber);
   }
 
   @Nonnull
   public TopicSubscriber createSubscriber (final Topic topic, final String messageSelector, final boolean noLocal) throws JMSException
   {
     final TopicSubscriber aTopicSubscriber = getWrapped ().createSubscriber (topic, messageSelector, noLocal);
-    return getWrapper ().wrap (aTopicSubscriber);
+    return getWrapper ().wrapTopicSubscriber (aTopicSubscriber);
   }
 
   @Nonnull
   public TopicPublisher createPublisher (final Topic topic) throws JMSException
   {
     final TopicPublisher aTopicPublisher = getWrapped ().createPublisher (topic);
-    return getWrapper ().wrap (aTopicPublisher);
+    return getWrapper ().wrapTopicPublisher (aTopicPublisher);
   }
 }

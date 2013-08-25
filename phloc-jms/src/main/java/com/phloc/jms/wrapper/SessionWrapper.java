@@ -71,56 +71,56 @@ public abstract class SessionWrapper extends AbstractWrappedJMS implements Sessi
   public BytesMessage createBytesMessage () throws JMSException
   {
     final BytesMessage aMessage = m_aWrapped.createBytesMessage ();
-    return getWrapper ().wrap (aMessage);
+    return getWrapper ().wrapBytesMessage (aMessage);
   }
 
   @Nonnull
   public MapMessage createMapMessage () throws JMSException
   {
     final MapMessage aMessage = m_aWrapped.createMapMessage ();
-    return getWrapper ().wrap (aMessage);
+    return getWrapper ().wrapMapMessage (aMessage);
   }
 
   @Nonnull
   public Message createMessage () throws JMSException
   {
     final Message aMessage = m_aWrapped.createMessage ();
-    return getWrapper ().wrap (aMessage);
+    return getWrapper ().wrapMessage (aMessage);
   }
 
   @Nonnull
   public ObjectMessage createObjectMessage () throws JMSException
   {
     final ObjectMessage aMessage = m_aWrapped.createObjectMessage ();
-    return getWrapper ().wrap (aMessage);
+    return getWrapper ().wrapObjectMessage (aMessage);
   }
 
   @Nonnull
   public ObjectMessage createObjectMessage (final Serializable object) throws JMSException
   {
     final ObjectMessage aMessage = m_aWrapped.createObjectMessage (object);
-    return getWrapper ().wrap (aMessage);
+    return getWrapper ().wrapObjectMessage (aMessage);
   }
 
   @Nonnull
   public StreamMessage createStreamMessage () throws JMSException
   {
     final StreamMessage aMessage = m_aWrapped.createStreamMessage ();
-    return getWrapper ().wrap (aMessage);
+    return getWrapper ().wrapStreamMessage (aMessage);
   }
 
   @Nonnull
   public TextMessage createTextMessage () throws JMSException
   {
     final TextMessage aMessage = m_aWrapped.createTextMessage ();
-    return getWrapper ().wrap (aMessage);
+    return getWrapper ().wrapTextMessage (aMessage);
   }
 
   @Nonnull
   public TextMessage createTextMessage (final String text) throws JMSException
   {
     final TextMessage aMessage = m_aWrapped.createTextMessage (text);
-    return getWrapper ().wrap (aMessage);
+    return getWrapper ().wrapTextMessage (aMessage);
   }
 
   public boolean getTransacted () throws JMSException
@@ -172,21 +172,21 @@ public abstract class SessionWrapper extends AbstractWrappedJMS implements Sessi
   public MessageProducer createProducer (final Destination destination) throws JMSException
   {
     final MessageProducer aProducer = m_aWrapped.createProducer (destination);
-    return getWrapper ().wrap (aProducer);
+    return getWrapper ().wrapMessageProducer (aProducer);
   }
 
   @Nonnull
   public MessageConsumer createConsumer (final Destination destination) throws JMSException
   {
     final MessageConsumer aConsumer = m_aWrapped.createConsumer (destination);
-    return getWrapper ().wrap (aConsumer);
+    return getWrapper ().wrapMessageConsumer (aConsumer);
   }
 
   @Nonnull
   public MessageConsumer createConsumer (final Destination destination, final String messageSelector) throws JMSException
   {
     final MessageConsumer aConsumer = m_aWrapped.createConsumer (destination, messageSelector);
-    return getWrapper ().wrap (aConsumer);
+    return getWrapper ().wrapMessageConsumer (aConsumer);
   }
 
   @Nonnull
@@ -195,28 +195,28 @@ public abstract class SessionWrapper extends AbstractWrappedJMS implements Sessi
                                          final boolean NoLocal) throws JMSException
   {
     final MessageConsumer aConsumer = m_aWrapped.createConsumer (destination, messageSelector, NoLocal);
-    return getWrapper ().wrap (aConsumer);
+    return getWrapper ().wrapMessageConsumer (aConsumer);
   }
 
   @Nonnull
   public Queue createQueue (final String queueName) throws JMSException
   {
     final Queue aQueue = m_aWrapped.createQueue (queueName);
-    return getWrapper ().wrap (aQueue);
+    return getWrapper ().wrapQueue (aQueue);
   }
 
   @Nonnull
   public Topic createTopic (final String topicName) throws JMSException
   {
     final Topic aTopic = m_aWrapped.createTopic (topicName);
-    return getWrapper ().wrap (aTopic);
+    return getWrapper ().wrapTopic (aTopic);
   }
 
   @Nonnull
   public TopicSubscriber createDurableSubscriber (final Topic topic, final String name) throws JMSException
   {
     final TopicSubscriber aTopicSubscriber = m_aWrapped.createDurableSubscriber (topic, name);
-    return getWrapper ().wrap (aTopicSubscriber);
+    return getWrapper ().wrapTopicSubscriber (aTopicSubscriber);
   }
 
   @Nonnull
@@ -226,35 +226,35 @@ public abstract class SessionWrapper extends AbstractWrappedJMS implements Sessi
                                                   final boolean noLocal) throws JMSException
   {
     final TopicSubscriber aTopicSubscriber = m_aWrapped.createDurableSubscriber (topic, name, messageSelector, noLocal);
-    return getWrapper ().wrap (aTopicSubscriber);
+    return getWrapper ().wrapTopicSubscriber (aTopicSubscriber);
   }
 
   @Nonnull
   public QueueBrowser createBrowser (final Queue queue) throws JMSException
   {
     final QueueBrowser aQueueBrowser = m_aWrapped.createBrowser (queue);
-    return getWrapper ().wrap (aQueueBrowser);
+    return getWrapper ().wrapQueueBrowser (aQueueBrowser);
   }
 
   @Nonnull
   public QueueBrowser createBrowser (final Queue queue, final String messageSelector) throws JMSException
   {
     final QueueBrowser aQueueBrowser = m_aWrapped.createBrowser (queue, messageSelector);
-    return getWrapper ().wrap (aQueueBrowser);
+    return getWrapper ().wrapQueueBrowser (aQueueBrowser);
   }
 
   @Nonnull
   public TemporaryQueue createTemporaryQueue () throws JMSException
   {
     final TemporaryQueue aQueue = m_aWrapped.createTemporaryQueue ();
-    return getWrapper ().wrap (aQueue);
+    return getWrapper ().wrapTemporaryQueue (aQueue);
   }
 
   @Nonnull
   public TemporaryTopic createTemporaryTopic () throws JMSException
   {
     final TemporaryTopic aTopic = m_aWrapped.createTemporaryTopic ();
-    return getWrapper ().wrap (aTopic);
+    return getWrapper ().wrapTemporaryTopic (aTopic);
   }
 
   public void unsubscribe (final String name) throws JMSException

@@ -58,20 +58,20 @@ public class XAQueueConnectionWrapper extends XAConnectionWrapper implements XAQ
                                                                                            messageSelector,
                                                                                            sessionPool,
                                                                                            maxMessages);
-    return getWrapper ().wrap (aConnectionConsumer);
+    return getWrapper ().wrapConnectionConsumer (aConnectionConsumer);
   }
 
   @Nonnull
   public XAQueueSession createXAQueueSession () throws JMSException
   {
     final XAQueueSession aSession = getWrapped ().createXAQueueSession ();
-    return getWrapper ().wrap (aSession);
+    return getWrapper ().wrapXAQueueSession (aSession);
   }
 
   @Nonnull
   public QueueSession createQueueSession (final boolean transacted, final int acknowledgeMode) throws JMSException
   {
     final QueueSession aSession = getWrapped ().createQueueSession (transacted, acknowledgeMode);
-    return getWrapper ().wrap (aSession);
+    return getWrapper ().wrapQueueSession (aSession);
   }
 }

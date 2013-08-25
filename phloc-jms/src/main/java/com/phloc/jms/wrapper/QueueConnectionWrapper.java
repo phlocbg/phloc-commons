@@ -51,7 +51,7 @@ public class QueueConnectionWrapper extends ConnectionWrapper implements QueueCo
   public QueueSession createQueueSession (final boolean transacted, final int acknowledgeMode) throws JMSException
   {
     final QueueSession aQueueSession = getWrapped ().createQueueSession (transacted, acknowledgeMode);
-    return getWrapper ().wrap (aQueueSession);
+    return getWrapper ().wrapQueueSession (aQueueSession);
   }
 
   @Nonnull
@@ -64,6 +64,6 @@ public class QueueConnectionWrapper extends ConnectionWrapper implements QueueCo
                                                                                            messageSelector,
                                                                                            sessionPool,
                                                                                            maxMessages);
-    return getWrapper ().wrap (aConnectionConsumer);
+    return getWrapper ().wrapConnectionConsumer (aConnectionConsumer);
   }
 }
