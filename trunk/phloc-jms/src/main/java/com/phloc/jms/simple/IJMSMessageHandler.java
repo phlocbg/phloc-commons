@@ -1,4 +1,4 @@
-package com.phloc.jms.sender;
+package com.phloc.jms.simple;
 
 import javax.annotation.Nonnull;
 import javax.jms.JMSException;
