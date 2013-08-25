@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import javax.annotation.Nonnull;
 import javax.jms.Connection;
 import javax.jms.JMSException;
 import javax.jms.Session;
@@ -58,7 +59,7 @@ public class ConnectionPool
 
   public ConnectionPool (final Connection connection)
   {
-    this.m_aConnection = connection;
+    m_aConnection = connection;
 
     // [ActiveMQ]
     // // Add a transport Listener so that we can notice if this connection
@@ -93,7 +94,7 @@ public class ConnectionPool
     // }
 
     // Create our internal Pool of session instances.
-    this.m_aSessionPool = new GenericKeyedObjectPool <SessionKey, PooledSession> (new KeyedPoolableObjectFactory <SessionKey, PooledSession> ()
+    m_aSessionPool = new GenericKeyedObjectPool <SessionKey, PooledSession> (new KeyedPoolableObjectFactory <SessionKey, PooledSession> ()
     {
       @Override
       public void activateObject (final SessionKey key, final PooledSession session) throws Exception
@@ -145,6 +146,7 @@ public class ConnectionPool
     }
   }
 
+  @Nonnull
   public synchronized Connection getConnection ()
   {
     return m_aConnection;
@@ -160,7 +162,7 @@ public class ConnectionPool
     }
     catch (final Exception e)
     {
-      throw JMSUtils.createException ("Failed to create session", e);
+      throw JMSUtils.createException ("Failed to borrow session", e);
     }
     return session;
   }
@@ -205,7 +207,7 @@ public class ConnectionPool
       // have not been closed by the client before closing the connection.
       // These need to be closed so that all session's reflect the fact
       // that the parent Connection is closed.
-      for (final PooledSession session : this.m_aLoanedSessions)
+      for (final PooledSession session : m_aLoanedSessions)
       {
         try
         {
@@ -214,7 +216,7 @@ public class ConnectionPool
         catch (final Exception e)
         {}
       }
-      this.m_aLoanedSessions.clear ();
+      m_aLoanedSessions.clear ();
 
       // [ActiveMQ]
       // We only clean up temporary destinations when all users of this
@@ -276,12 +278,12 @@ public class ConnectionPool
 
   public void setIdleTimeout (final int idleTimeout)
   {
-    this.m_nIdleTimeout = idleTimeout;
+    m_nIdleTimeout = idleTimeout;
   }
 
   public void setExpiryTimeout (final long expiryTimeout)
   {
-    this.m_nExpiryTimeout = expiryTimeout;
+    m_nExpiryTimeout = expiryTimeout;
   }
 
   public long getExpiryTimeout ()
@@ -291,12 +293,12 @@ public class ConnectionPool
 
   public int getMaximumActiveSessionPerConnection ()
   {
-    return this.m_aSessionPool.getMaxActive ();
+    return m_aSessionPool.getMaxActive ();
   }
 
   public void setMaximumActiveSessionPerConnection (final int maximumActiveSessionPerConnection)
   {
-    this.m_aSessionPool.setMaxActive (maximumActiveSessionPerConnection);
+    m_aSessionPool.setMaxActive (maximumActiveSessionPerConnection);
   }
 
   /**
@@ -305,7 +307,7 @@ public class ConnectionPool
    */
   public int getNumSessions ()
   {
-    return this.m_aSessionPool.getNumIdle () + this.m_aSessionPool.getNumActive ();
+    return m_aSessionPool.getNumIdle () + m_aSessionPool.getNumActive ();
   }
 
   /**
@@ -314,7 +316,7 @@ public class ConnectionPool
    */
   public int getNumIdleSessions ()
   {
-    return this.m_aSessionPool.getNumIdle ();
+    return m_aSessionPool.getNumIdle ();
   }
 
   /**
@@ -323,7 +325,7 @@ public class ConnectionPool
    */
   public int getNumActiveSessions ()
   {
-    return this.m_aSessionPool.getNumActive ();
+    return m_aSessionPool.getNumActive ();
   }
 
   /**
@@ -338,13 +340,13 @@ public class ConnectionPool
    */
   public void setBlockIfSessionPoolIsFull (final boolean block)
   {
-    this.m_aSessionPool.setWhenExhaustedAction ((block ? GenericObjectPool.WHEN_EXHAUSTED_BLOCK
-                                                   : GenericObjectPool.WHEN_EXHAUSTED_FAIL));
+    m_aSessionPool.setWhenExhaustedAction ((block ? GenericObjectPool.WHEN_EXHAUSTED_BLOCK
+                                                 : GenericObjectPool.WHEN_EXHAUSTED_FAIL));
   }
 
   public boolean isBlockIfSessionPoolIsFull ()
   {
-    return this.m_aSessionPool.getWhenExhaustedAction () == GenericObjectPool.WHEN_EXHAUSTED_BLOCK;
+    return m_aSessionPool.getWhenExhaustedAction () == GenericObjectPool.WHEN_EXHAUSTED_BLOCK;
   }
 
   @Override

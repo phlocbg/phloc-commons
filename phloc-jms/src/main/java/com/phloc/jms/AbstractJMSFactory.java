@@ -85,20 +85,27 @@ public abstract class AbstractJMSFactory
   @Nonnull
   protected abstract ConnectionFactory createConnectionFactory ();
 
-  @Nonnull
-  private ConnectionFactory _getOrCreateConnectionFactory ()
+  @Nullable
+  protected ConnectionFactory getConnectionFactory ()
   {
-    // First try with read lock
     m_aRWLock.readLock ().lock ();
     try
     {
-      if (m_aConnectionFactory != null)
-        return m_aConnectionFactory;
+      return m_aConnectionFactory;
     }
     finally
     {
       m_aRWLock.readLock ().unlock ();
     }
+  }
+
+  @Nonnull
+  protected ConnectionFactory getOrCreateConnectionFactory ()
+  {
+    // First try with read lock
+    final ConnectionFactory ret = getConnectionFactory ();
+    if (ret != null)
+      return ret;
 
     // Try again with write lock
     m_aRWLock.writeLock ().lock ();
@@ -159,7 +166,7 @@ public abstract class AbstractJMSFactory
   @Nonnull
   public Connection createConnection (final boolean bStartConnection) throws JMSException
   {
-    final Connection ret = _getOrCreateConnectionFactory ().createConnection ();
+    final Connection ret = getOrCreateConnectionFactory ().createConnection ();
     ret.setExceptionListener (getDefaultExceptionListener ());
     if (bStartConnection)
       ret.start ();

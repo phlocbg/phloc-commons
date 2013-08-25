@@ -16,6 +16,8 @@
  */
 package com.phloc.jms.pool;
 
+import javax.annotation.Nullable;
+
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 
@@ -28,18 +30,20 @@ public final class ConnectionKey
   private final String m_sPassword;
   private final int m_nHashCode;
 
-  public ConnectionKey (final String userName, final String password)
+  public ConnectionKey (@Nullable final String sUserName, @Nullable final String sPassword)
   {
-    m_sUserName = userName;
-    m_sPassword = password;
-    m_nHashCode = new HashCodeGenerator (this).append (userName).append (password).getHashCode ();
+    m_sUserName = sUserName;
+    m_sPassword = sPassword;
+    m_nHashCode = new HashCodeGenerator (this).append (sUserName).append (sPassword).getHashCode ();
   }
 
+  @Nullable
   public String getPassword ()
   {
     return m_sPassword;
   }
 
+  @Nullable
   public String getUserName ()
   {
     return m_sUserName;

@@ -21,6 +21,7 @@ import javax.jms.JMSException;
 import javax.jms.Session;
 import javax.transaction.RollbackException;
 import javax.transaction.Status;
+import javax.transaction.Synchronization;
 import javax.transaction.SystemException;
 import javax.transaction.TransactionManager;
 import javax.transaction.xa.XAResource;
@@ -57,7 +58,7 @@ public class XaConnectionPool extends ConnectionPool
       {
         session.setIgnoreClose (true);
         session.setIsXa (true);
-        m_aTransactionManager.getTransaction ().registerSynchronization (new Synchronization (session));
+        m_aTransactionManager.getTransaction ().registerSynchronization (new MySynchronization (session));
         incrementReferenceCount ();
         m_aTransactionManager.getTransaction ().enlistResource (createXaResource (session));
       }
@@ -87,13 +88,13 @@ public class XaConnectionPool extends ConnectionPool
     return session.getXAResource ();
   }
 
-  protected class Synchronization implements javax.transaction.Synchronization
+  protected class MySynchronization implements Synchronization
   {
     private final PooledSession m_aSession;
 
-    private Synchronization (final PooledSession session)
+    private MySynchronization (final PooledSession session)
     {
-      this.m_aSession = session;
+      m_aSession = session;
     }
 
     public void beforeCompletion ()
@@ -108,7 +109,7 @@ public class XaConnectionPool extends ConnectionPool
         m_aSession.close ();
         m_aSession.setIgnoreClose (true);
         m_aSession.setIsXa (false);
-        decrementReferenceCount ();
+        XaConnectionPool.this.decrementReferenceCount ();
       }
       catch (final JMSException e)
       {

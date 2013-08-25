@@ -21,7 +21,7 @@ import javax.annotation.concurrent.Immutable;
 import com.phloc.commons.hash.HashCodeGenerator;
 
 /**
- * A cache key for the session details used to locate PooledSession intances.
+ * A cache key for the session details used to locate PooledSession instances.
  */
 @Immutable
 public final class SessionKey
@@ -30,11 +30,11 @@ public final class SessionKey
   private final int m_nAckMode;
   private final int m_nHashCode;
 
-  public SessionKey (final boolean transacted, final int ackMode)
+  public SessionKey (final boolean bTransacted, final int nAckMode)
   {
-    m_bTransacted = transacted;
-    m_nAckMode = ackMode;
-    m_nHashCode = new HashCodeGenerator (this).append (transacted).append (ackMode).getHashCode ();
+    m_bTransacted = bTransacted;
+    m_nAckMode = nAckMode;
+    m_nHashCode = new HashCodeGenerator (this).append (bTransacted).append (nAckMode).getHashCode ();
   }
 
   public boolean isTransacted ()

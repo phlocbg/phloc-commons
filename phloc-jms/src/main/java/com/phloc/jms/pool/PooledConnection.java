@@ -19,6 +19,7 @@ package com.phloc.jms.pool;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import javax.annotation.Nonnull;
 import javax.jms.Connection;
 import javax.jms.ConnectionConsumer;
 import javax.jms.ConnectionMetaData;
@@ -50,7 +51,7 @@ import org.slf4j.LoggerFactory;
  */
 public class PooledConnection implements TopicConnection, QueueConnection, IPooledSessionEventListener
 {
-  private static final transient Logger LOG = LoggerFactory.getLogger (PooledConnection.class);
+  private static final transient Logger s_aLogger = LoggerFactory.getLogger (PooledConnection.class);
 
   private ConnectionPool m_aPool;
   private volatile boolean m_bStopped;
@@ -67,10 +68,10 @@ public class PooledConnection implements TopicConnection, QueueConnection, IPool
    *        The connection and pool manager backing this proxy connection
    *        object.
    */
-  public PooledConnection (final ConnectionPool pool)
+  public PooledConnection (@Nonnull final ConnectionPool pool)
   {
-    this.m_aPool = pool;
-    this.m_aPool.incrementReferenceCount ();
+    m_aPool = pool;
+    m_aPool.incrementReferenceCount ();
   }
 
   /**
@@ -84,12 +85,12 @@ public class PooledConnection implements TopicConnection, QueueConnection, IPool
   @Override
   public void close () throws JMSException
   {
-    this.cleanupConnectionTemporaryDestinations ();
-    this.cleanupAllLoanedSessions ();
-    if (this.m_aPool != null)
+    cleanupConnectionTemporaryDestinations ();
+    cleanupAllLoanedSessions ();
+    if (m_aPool != null)
     {
-      this.m_aPool.decrementReferenceCount ();
-      this.m_aPool = null;
+      m_aPool.decrementReferenceCount ();
+      m_aPool = null;
     }
   }
 
@@ -108,30 +109,34 @@ public class PooledConnection implements TopicConnection, QueueConnection, IPool
 
   @Override
   public ConnectionConsumer createConnectionConsumer (final Destination destination,
-                                                      final String selector,
-                                                      final ServerSessionPool serverSessionPool,
+                                                      final String messageSelector,
+                                                      final ServerSessionPool sessionPool,
                                                       final int maxMessages) throws JMSException
   {
-    return getConnection ().createConnectionConsumer (destination, selector, serverSessionPool, maxMessages);
+    return getConnection ().createConnectionConsumer (destination, messageSelector, sessionPool, maxMessages);
   }
 
   @Override
   public ConnectionConsumer createConnectionConsumer (final Topic topic,
-                                                      final String s,
-                                                      final ServerSessionPool serverSessionPool,
+                                                      final String messageSelector,
+                                                      final ServerSessionPool sessionPool,
                                                       final int maxMessages) throws JMSException
   {
-    return getConnection ().createConnectionConsumer (topic, s, serverSessionPool, maxMessages);
+    return getConnection ().createConnectionConsumer (topic, messageSelector, sessionPool, maxMessages);
   }
 
   @Override
   public ConnectionConsumer createDurableConnectionConsumer (final Topic topic,
-                                                             final String selector,
-                                                             final String s1,
+                                                             final String subscriptionName,
+                                                             final String messageSelector,
                                                              final ServerSessionPool serverSessionPool,
-                                                             final int i) throws JMSException
+                                                             final int maxMessages) throws JMSException
   {
-    return getConnection ().createDurableConnectionConsumer (topic, selector, s1, serverSessionPool, i);
+    return getConnection ().createDurableConnectionConsumer (topic,
+                                                             subscriptionName,
+                                                             messageSelector,
+                                                             serverSessionPool,
+                                                             maxMessages);
   }
 
   @Override
@@ -230,9 +235,7 @@ public class PooledConnection implements TopicConnection, QueueConnection, IPool
   public void onSessionClosed (final PooledSession session)
   {
     if (session != null)
-    {
-      this.m_aLoanedSessions.remove (session);
-    }
+      m_aLoanedSessions.remove (session);
   }
 
   public Connection getConnection () throws JMSException
@@ -244,12 +247,10 @@ public class PooledConnection implements TopicConnection, QueueConnection, IPool
   protected void assertNotClosed () throws JMSException
   {
     if (m_bStopped || m_aPool == null)
-    {
       throw new JMSException ("Already closed!");
-    }
   }
 
-  protected Session createSession (final SessionKey key) throws JMSException
+  protected Session createSession (@Nonnull final SessionKey key) throws JMSException
   {
     return getConnection ().createSession (key.isTransacted (), key.getAckMode ());
   }
@@ -270,7 +271,6 @@ public class PooledConnection implements TopicConnection, QueueConnection, IPool
    */
   protected void cleanupConnectionTemporaryDestinations ()
   {
-
     for (final TemporaryQueue tempQueue : m_aConnTempQueues)
     {
       try
@@ -279,10 +279,10 @@ public class PooledConnection implements TopicConnection, QueueConnection, IPool
       }
       catch (final JMSException ex)
       {
-        LOG.info ("failed to delete Temporary Queue \"" +
-                  tempQueue.toString () +
-                  "\" on closing pooled connection: " +
-                  ex.getMessage ());
+        s_aLogger.info ("failed to delete Temporary Queue \"" +
+                        tempQueue.toString () +
+                        "\" on closing pooled connection: " +
+                        ex.getMessage ());
       }
     }
     m_aConnTempQueues.clear ();
@@ -295,10 +295,10 @@ public class PooledConnection implements TopicConnection, QueueConnection, IPool
       }
       catch (final JMSException ex)
       {
-        LOG.info ("failed to delete Temporary Topic \"" +
-                  tempTopic.toString () +
-                  "\" on closing pooled connection: " +
-                  ex.getMessage ());
+        s_aLogger.info ("failed to delete Temporary Topic \"" +
+                        tempTopic.toString () +
+                        "\" on closing pooled connection: " +
+                        ex.getMessage ());
       }
     }
     m_aConnTempTopics.clear ();
@@ -312,7 +312,6 @@ public class PooledConnection implements TopicConnection, QueueConnection, IPool
    */
   protected void cleanupAllLoanedSessions ()
   {
-
     for (final PooledSession session : m_aLoanedSessions)
     {
       try
@@ -321,10 +320,10 @@ public class PooledConnection implements TopicConnection, QueueConnection, IPool
       }
       catch (final JMSException ex)
       {
-        LOG.info ("failed to close laoned Session \"" +
-                  session +
-                  "\" on closing pooled connection: " +
-                  ex.getMessage ());
+        s_aLogger.info ("failed to close laoned Session \"" +
+                        session +
+                        "\" on closing pooled connection: " +
+                        ex.getMessage ());
       }
     }
     m_aLoanedSessions.clear ();
@@ -336,7 +335,7 @@ public class PooledConnection implements TopicConnection, QueueConnection, IPool
    */
   public int getNumSessions ()
   {
-    return this.m_aPool.getNumSessions ();
+    return m_aPool.getNumSessions ();
   }
 
   /**
@@ -345,7 +344,7 @@ public class PooledConnection implements TopicConnection, QueueConnection, IPool
    */
   public int getNumActiveSessions ()
   {
-    return this.m_aPool.getNumActiveSessions ();
+    return m_aPool.getNumActiveSessions ();
   }
 
   /**
@@ -354,6 +353,6 @@ public class PooledConnection implements TopicConnection, QueueConnection, IPool
    */
   public int getNumtIdleSessions ()
   {
-    return this.m_aPool.getNumIdleSessions ();
+    return m_aPool.getNumIdleSessions ();
   }
 }
