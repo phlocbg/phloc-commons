@@ -168,4 +168,44 @@ public class JMSSimpleHandler
       JMSUtils.close (aConnection);
     }
   }
+
+  public void receiveTransactional (@Nonnull @Nonempty final String sQueueName,
+                                    @Nonnull final IJMSMessageHandler aMsgHandler)
+  {
+    if (StringHelper.hasNoText (sQueueName))
+      throw new IllegalArgumentException ("queueName");
+    if (aMsgHandler == null)
+      throw new NullPointerException ("msgHandler");
+
+    Connection aConnection = null;
+    try
+    {
+      // Create a Connection
+      aConnection = m_aFactory.createConnection ();
+
+      // Create a Session
+      final Session aSession = aConnection.createSession (true, -1);
+
+      // Create the destination (Topic or Queue)
+      final Destination aDestination = aSession.createQueue (sQueueName);
+
+      // Create a MessageConsumer from the Session to the Topic or Queue
+      final MessageConsumer aConsumer = aSession.createConsumer (aDestination);
+
+      // Wait for a message
+      final Message aMessage = aConsumer.receive ();
+      aMsgHandler.handleMessage (aMessage);
+
+      // commit for transacted sessions
+      aSession.commit ();
+    }
+    catch (final JMSException ex)
+    {
+      onException (ex);
+    }
+    finally
+    {
+      JMSUtils.close (aConnection);
+    }
+  }
 }

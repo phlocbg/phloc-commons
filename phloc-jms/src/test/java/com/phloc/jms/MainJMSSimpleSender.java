@@ -74,7 +74,7 @@ public class MainJMSSimpleSender
 
     public void run ()
     {
-      new JMSSimpleHandler (s_aFactory, false).sendNonTransactional ("TEST.FOO", new IJMSMessageCreator ()
+      new JMSSimpleHandler (s_aFactory, false).sendTransactional ("TEST.FOO", new IJMSMessageCreator ()
       {
         @Nonnull
         public Message createMessage (@Nonnull final Session aSession) throws JMSException
@@ -89,7 +89,7 @@ public class MainJMSSimpleSender
   {
     public void run ()
     {
-      new JMSSimpleHandler (s_aFactory, false).receiveNonTransactional ("TEST.FOO", new IJMSMessageHandler ()
+      new JMSSimpleHandler (s_aFactory, false).receiveTransactional ("TEST.FOO", new IJMSMessageHandler ()
       {
         public void handleMessage (@Nonnull final Message aMessage) throws JMSException
         {
