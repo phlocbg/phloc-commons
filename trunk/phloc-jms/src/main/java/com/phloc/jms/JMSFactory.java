@@ -22,6 +22,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 import javax.jms.Connection;
@@ -30,6 +31,7 @@ import javax.jms.ExceptionListener;
 import javax.jms.JMSException;
 
 import com.phloc.commons.annotations.OverrideOnDemand;
+import com.phloc.commons.factory.IFactory;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.jms.wrapper.JMSWrapper;
 
@@ -40,7 +42,7 @@ import com.phloc.jms.wrapper.JMSWrapper;
  * @author Philip Helger
  */
 @ThreadSafe
-public abstract class AbstractJMSFactory implements IJMSFactory
+public class JMSFactory implements IJMSFactory
 {
   public static final boolean DEFAULT_START_CONNECTION = true;
 
@@ -49,13 +51,18 @@ public abstract class AbstractJMSFactory implements IJMSFactory
   private static ExceptionListener s_aExceptionListener = new LoggingJMSExceptionListener ();
 
   protected final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
+  private final IFactory <ConnectionFactory> m_aFactory;
   @GuardedBy ("m_aRWLock")
   private ConnectionFactory m_aConnectionFactory;
   @GuardedBy ("m_aRWLock")
   private JMSWrapper m_aWrapper;
 
-  public AbstractJMSFactory ()
-  {}
+  public JMSFactory (@Nonnull final IFactory <ConnectionFactory> aFactory)
+  {
+    if (aFactory == null)
+      throw new NullPointerException ("Factory");
+    m_aFactory = aFactory;
+  }
 
   @Nullable
   public static ExceptionListener getDefaultExceptionListener ()
@@ -84,9 +91,23 @@ public abstract class AbstractJMSFactory implements IJMSFactory
     }
   }
 
+  /**
+   * Create a new {@link ConnectionFactory} - called only once.
+   * 
+   * @return Never <code>null</code>.
+   */
   @Nonnull
-  protected abstract ConnectionFactory createConnectionFactory ();
+  @OverridingMethodsMustInvokeSuper
+  protected ConnectionFactory createConnectionFactory ()
+  {
+    return m_aFactory.create ();
+  }
 
+  /**
+   * Get the connection factory if it was already created.
+   * 
+   * @return May be <code>null</code>.
+   */
   @Nullable
   protected ConnectionFactory getConnectionFactory ()
   {
@@ -101,6 +122,11 @@ public abstract class AbstractJMSFactory implements IJMSFactory
     }
   }
 
+  /**
+   * Get or create the connection factory.
+   * 
+   * @return Never <code>null</code>.
+   */
   @Nonnull
   protected ConnectionFactory getOrCreateConnectionFactory ()
   {
@@ -123,6 +149,11 @@ public abstract class AbstractJMSFactory implements IJMSFactory
     }
   }
 
+  /**
+   * Create the {@link JMSWrapper} - called only once.
+   * 
+   * @return Never <code>null</code>.
+   */
   @Nonnull
   @OverrideOnDemand
   protected JMSWrapper createJMSWrapper ()

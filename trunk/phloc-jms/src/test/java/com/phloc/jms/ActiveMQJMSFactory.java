@@ -23,21 +23,28 @@ import javax.jms.ConnectionFactory;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 
+import com.phloc.commons.factory.IFactory;
+
 /**
- * A sample implementation of {@link AbstractJMSFactory} that uses ActiveMQ as
- * the connection factory
+ * A sample implementation of {@link JMSFactory} that uses ActiveMQ as the
+ * connection factory
  * 
  * @author Philip Helger
  */
 @ThreadSafe
-public final class ActiveMQJMSFactory extends AbstractPoolableJMSFactory
+public final class ActiveMQJMSFactory extends PoolableJMSFactory
 {
-  @Override
-  @Nonnull
-  protected ConnectionFactory createUnpooledConnectionFactory ()
+  public ActiveMQJMSFactory ()
   {
-    final ActiveMQConnectionFactory aConnectionFactory = new ActiveMQConnectionFactory ("tcp://localhost:61616");
-    aConnectionFactory.setExceptionListener (new LoggingJMSExceptionListener ());
-    return aConnectionFactory;
+    super (new IFactory <ConnectionFactory> ()
+    {
+      @Nonnull
+      public ConnectionFactory create ()
+      {
+        final ActiveMQConnectionFactory aConnectionFactory = new ActiveMQConnectionFactory ("tcp://localhost:61616");
+        aConnectionFactory.setExceptionListener (new LoggingJMSExceptionListener ());
+        return aConnectionFactory;
+      }
+    });
   }
 }

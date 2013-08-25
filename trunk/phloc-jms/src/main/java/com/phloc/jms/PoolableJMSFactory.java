@@ -22,25 +22,29 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.concurrent.ThreadSafe;
 import javax.jms.ConnectionFactory;
 
+import com.phloc.commons.factory.IFactory;
 import com.phloc.jms.pool.PooledConnectionFactory;
 
 /**
- * An enhancement of {@link AbstractJMSFactory} that uses a
+ * An enhancement of {@link JMSFactory} that uses a
  * {@link PooledConnectionFactory} to pool JMS connections.
  * 
  * @author Philip Helger
  */
 @ThreadSafe
-public abstract class AbstractPoolableJMSFactory extends AbstractJMSFactory
+public class PoolableJMSFactory extends JMSFactory
 {
-  @Nonnull
-  protected abstract ConnectionFactory createUnpooledConnectionFactory ();
-
-  @Override
-  @Nonnull
-  protected final ConnectionFactory createConnectionFactory ()
+  public PoolableJMSFactory (@Nonnull final IFactory <ConnectionFactory> aFactory)
   {
-    final ConnectionFactory aConnectionFactory = createUnpooledConnectionFactory ();
+    super (aFactory);
+  }
+
+  @Nonnull
+  @Override
+  @OverridingMethodsMustInvokeSuper
+  protected ConnectionFactory createConnectionFactory ()
+  {
+    final ConnectionFactory aConnectionFactory = super.createConnectionFactory ();
 
     final PooledConnectionFactory ret = new PooledConnectionFactory (aConnectionFactory);
     // Start the pooling
@@ -52,8 +56,10 @@ public abstract class AbstractPoolableJMSFactory extends AbstractJMSFactory
   @OverridingMethodsMustInvokeSuper
   public void shutdown ()
   {
+    final PooledConnectionFactory aConnectionFactory = (PooledConnectionFactory) getConnectionFactory ();
     // Stop the pooling
-    ((PooledConnectionFactory) getConnectionFactory ()).stop ();
+    if (aConnectionFactory != null)
+      aConnectionFactory.stop ();
     super.shutdown ();
   }
 }
