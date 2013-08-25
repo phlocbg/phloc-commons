@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.jms;
+package com.phloc.jms.exceptionlistener;
 
 import javax.jms.ExceptionListener;
 import javax.jms.JMSException;
@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Philip Helger
  */
-public final class LoggingJMSExceptionListener implements ExceptionListener
+public class LoggingJMSExceptionListener implements ExceptionListener
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (LoggingJMSExceptionListener.class);
 
