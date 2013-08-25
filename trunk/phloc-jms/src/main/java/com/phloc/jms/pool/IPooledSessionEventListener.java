@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.apache.activemq.pool;
+package com.phloc.jms.pool;
 
 import javax.jms.TemporaryQueue;
 import javax.jms.TemporaryTopic;

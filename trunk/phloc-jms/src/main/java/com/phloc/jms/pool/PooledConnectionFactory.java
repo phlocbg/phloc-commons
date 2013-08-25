@@ -14,10 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.activemq.pool;
+package com.phloc.jms.pool;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import javax.annotation.Nonnull;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
@@ -68,7 +69,7 @@ import com.phloc.jms.JMSUtils;
  */
 public class PooledConnectionFactory implements ConnectionFactory
 {
-  private static final transient Logger LOG = LoggerFactory.getLogger (PooledConnectionFactory.class);
+  private static final transient Logger s_aLogger = LoggerFactory.getLogger (PooledConnectionFactory.class);
 
   private final AtomicBoolean m_aStopped = new AtomicBoolean (false);
   private final GenericKeyedObjectPool <ConnectionKey, ConnectionPool> m_aConnectionsPool;
@@ -88,7 +89,7 @@ public class PooledConnectionFactory implements ConnectionFactory
    * @param connectionFactory
    *        The ConnectionFactory to create new Connections for this pool.
    */
-  public PooledConnectionFactory (final ConnectionFactory connectionFactory)
+  public PooledConnectionFactory (@Nonnull final ConnectionFactory connectionFactory)
   {
     m_aConnectionFactory = connectionFactory;
 
@@ -101,15 +102,16 @@ public class PooledConnectionFactory implements ConnectionFactory
       {
         try
         {
-          if (LOG.isTraceEnabled ())
+          if (s_aLogger.isTraceEnabled ())
           {
-            LOG.trace ("Destroying connection: {}", connection);
+            s_aLogger.trace ("Destroying connection: {}", connection);
           }
           connection.close ();
         }
         catch (final Exception e)
         {
-          LOG.warn ("Close connection failed for connection: " + connection + ". This exception will be ignored.", e);
+          s_aLogger.warn ("Close connection failed for connection: " + connection + ". This exception will be ignored.",
+                          e);
         }
       }
 
@@ -123,9 +125,9 @@ public class PooledConnectionFactory implements ConnectionFactory
         connection.setMaximumActiveSessionPerConnection (getMaximumActiveSessionPerConnection ());
         connection.setBlockIfSessionPoolIsFull (isBlockIfSessionPoolIsFull ());
 
-        if (LOG.isTraceEnabled ())
+        if (s_aLogger.isTraceEnabled ())
         {
-          LOG.trace ("Created new connection: {}", connection);
+          s_aLogger.trace ("Created new connection: {}", connection);
         }
 
         return connection;
@@ -138,9 +140,9 @@ public class PooledConnectionFactory implements ConnectionFactory
       {
         if (connection != null && connection.expiredCheck ())
         {
-          if (LOG.isTraceEnabled ())
+          if (s_aLogger.isTraceEnabled ())
           {
-            LOG.trace ("Connection has expired: {} and will be destroyed", connection);
+            s_aLogger.trace ("Connection has expired: {} and will be destroyed", connection);
           }
 
           return false;
@@ -152,18 +154,19 @@ public class PooledConnectionFactory implements ConnectionFactory
 
     // Set max idle (not max active) since our connections always idle in the
     // pool.
-    this.m_aConnectionsPool.setMaxIdle (1);
+    m_aConnectionsPool.setMaxIdle (1);
 
     // We always want our validate method to control when idle objects are
     // evicted.
-    this.m_aConnectionsPool.setTestOnBorrow (true);
-    this.m_aConnectionsPool.setTestWhileIdle (true);
+    m_aConnectionsPool.setTestOnBorrow (true);
+    m_aConnectionsPool.setTestWhileIdle (true);
   }
 
   /**
    * @return the currently configured ConnectionFactory used to create the
    *         pooled Connections.
    */
+  @Nonnull
   public ConnectionFactory getConnectionFactory ()
   {
     return m_aConnectionFactory;
@@ -180,9 +183,9 @@ public class PooledConnectionFactory implements ConnectionFactory
    * @param connectionFactory
    *        The factory to use to create pooled Connections.
    */
-  public void setConnectionFactory (final ConnectionFactory connectionFactory)
+  public void setConnectionFactory (@Nonnull final ConnectionFactory connectionFactory)
   {
-    this.m_aConnectionFactory = connectionFactory;
+    m_aConnectionFactory = connectionFactory;
   }
 
   public Connection createConnection () throws JMSException
@@ -194,7 +197,8 @@ public class PooledConnectionFactory implements ConnectionFactory
   {
     if (m_aStopped.get ())
     {
-      LOG.debug ("PooledConnectionFactory is stopped, skip create new connection.");
+      if (s_aLogger.isDebugEnabled ())
+        s_aLogger.debug ("PooledConnectionFactory is stopped, skip create new connection.");
       return null;
     }
 
@@ -261,7 +265,7 @@ public class PooledConnectionFactory implements ConnectionFactory
 
   public void start ()
   {
-    LOG.debug ("Staring the PooledConnectionFactory: create on start = " + isCreateConnectionOnStartup ());
+    s_aLogger.debug ("Staring the PooledConnectionFactory: create on start = " + isCreateConnectionOnStartup ());
     m_aStopped.set (false);
     if (isCreateConnectionOnStartup ())
     {
@@ -272,15 +276,15 @@ public class PooledConnectionFactory implements ConnectionFactory
       }
       catch (final JMSException e)
       {
-        LOG.warn ("Create pooled connection during start failed. This exception will be ignored.", e);
+        s_aLogger.warn ("Create pooled connection during start failed. This exception will be ignored.", e);
       }
     }
   }
 
   public void stop ()
   {
-    LOG.debug ("Stopping the PooledConnectionFactory, number of connections in cache: " +
-               m_aConnectionsPool.getNumActive ());
+    s_aLogger.debug ("Stopping the PooledConnectionFactory, number of connections in cache: " +
+                     m_aConnectionsPool.getNumActive ());
 
     if (m_aStopped.compareAndSet (false, true))
     {

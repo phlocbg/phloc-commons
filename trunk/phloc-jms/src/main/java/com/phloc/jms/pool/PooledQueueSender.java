@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.activemq.pool;
+package com.phloc.jms.pool;
 
 import javax.jms.Destination;
 import javax.jms.JMSException;
