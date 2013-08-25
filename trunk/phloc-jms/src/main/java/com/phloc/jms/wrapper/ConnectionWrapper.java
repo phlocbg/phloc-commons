@@ -30,6 +30,11 @@ import javax.jms.Topic;
 
 import com.phloc.commons.string.ToStringGenerator;
 
+/**
+ * Wrapped class for a JMS {@link Connection}.
+ * 
+ * @author Philip Helger
+ */
 public abstract class ConnectionWrapper extends AbstractWrappedJMS implements Connection
 {
   private final Connection m_aWrapped;
@@ -42,6 +47,9 @@ public abstract class ConnectionWrapper extends AbstractWrappedJMS implements Co
     m_aWrapped = aWrapped;
   }
 
+  /**
+   * @return The wrapped object. Never <code>null</code>.
+   */
   @Nonnull
   protected Connection getWrapped ()
   {

@@ -21,6 +21,11 @@ import javax.annotation.Nonnull;
 import javax.jms.JMSException;
 import javax.jms.TemporaryTopic;
 
+/**
+ * Wrapped class for a JMS {@link TemporaryTopic}.
+ * 
+ * @author Philip Helger
+ */
 public class TemporaryTopicWrapper extends TopicWrapper implements TemporaryTopic
 {
   public TemporaryTopicWrapper (@Nonnull final JMSWrapper aWrapper, @Nonnull final TemporaryTopic aWrapped)
@@ -28,6 +33,9 @@ public class TemporaryTopicWrapper extends TopicWrapper implements TemporaryTopi
     super (aWrapper, aWrapped);
   }
 
+  /**
+   * @return The wrapped object. Never <code>null</code>.
+   */
   @Override
   @Nonnull
   protected TemporaryTopic getWrapped ()

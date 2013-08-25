@@ -23,6 +23,11 @@ import javax.annotation.Nonnull;
 import javax.jms.JMSException;
 import javax.jms.MapMessage;
 
+/**
+ * Wrapped class for a JMS {@link MapMessage}.
+ * 
+ * @author Philip Helger
+ */
 public class MapMessageWrapper extends MessageWrapper implements MapMessage
 {
   public MapMessageWrapper (@Nonnull final JMSWrapper aWrapper, @Nonnull final MapMessage aWrapped)
@@ -30,6 +35,9 @@ public class MapMessageWrapper extends MessageWrapper implements MapMessage
     super (aWrapper, aWrapped);
   }
 
+  /**
+   * @return The wrapped object. Never <code>null</code>.
+   */
   @Override
   @Nonnull
   protected MapMessage getWrapped ()

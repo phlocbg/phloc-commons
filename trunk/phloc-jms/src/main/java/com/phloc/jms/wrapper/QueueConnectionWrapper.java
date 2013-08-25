@@ -25,6 +25,11 @@ import javax.jms.QueueConnection;
 import javax.jms.QueueSession;
 import javax.jms.ServerSessionPool;
 
+/**
+ * Wrapped class for a JMS {@link QueueConnection}.
+ * 
+ * @author Philip Helger
+ */
 public class QueueConnectionWrapper extends ConnectionWrapper implements QueueConnection
 {
   public QueueConnectionWrapper (@Nonnull final JMSWrapper aWrapper, @Nonnull final QueueConnection aWrapped)
@@ -32,6 +37,9 @@ public class QueueConnectionWrapper extends ConnectionWrapper implements QueueCo
     super (aWrapper, aWrapped);
   }
 
+  /**
+   * @return The wrapped object. Never <code>null</code>.
+   */
   @Override
   @Nonnull
   protected QueueConnection getWrapped ()

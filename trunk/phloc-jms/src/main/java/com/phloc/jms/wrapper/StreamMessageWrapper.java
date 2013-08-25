@@ -21,6 +21,11 @@ import javax.annotation.Nonnull;
 import javax.jms.JMSException;
 import javax.jms.StreamMessage;
 
+/**
+ * Wrapped class for a JMS {@link StreamMessage}.
+ * 
+ * @author Philip Helger
+ */
 public class StreamMessageWrapper extends MessageWrapper implements StreamMessage
 {
   public StreamMessageWrapper (@Nonnull final JMSWrapper aWrapper, @Nonnull final StreamMessage aWrapped)
@@ -28,6 +33,9 @@ public class StreamMessageWrapper extends MessageWrapper implements StreamMessag
     super (aWrapper, aWrapped);
   }
 
+  /**
+   * @return The wrapped object. Never <code>null</code>.
+   */
   @Override
   @Nonnull
   protected StreamMessage getWrapped ()

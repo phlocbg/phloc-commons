@@ -26,6 +26,11 @@ import javax.jms.Message;
 
 import com.phloc.commons.string.ToStringGenerator;
 
+/**
+ * Wrapped class for a JMS {@link Message}.
+ * 
+ * @author Philip Helger
+ */
 public class MessageWrapper extends AbstractWrappedJMS implements Message
 {
   private final Message m_aWrapped;
@@ -38,6 +43,9 @@ public class MessageWrapper extends AbstractWrappedJMS implements Message
     m_aWrapped = aWrapped;
   }
 
+  /**
+   * @return The wrapped object. Never <code>null</code>.
+   */
   @Nonnull
   protected Message getWrapped ()
   {

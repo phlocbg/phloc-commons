@@ -26,6 +26,11 @@ import javax.jms.TopicSession;
 import javax.jms.XATopicConnection;
 import javax.jms.XATopicSession;
 
+/**
+ * Wrapped class for a JMS {@link XATopicConnection}.
+ * 
+ * @author Philip Helger
+ */
 public class XATopicConnectionWrapper extends XAConnectionWrapper implements XATopicConnection
 {
   public XATopicConnectionWrapper (@Nonnull final JMSWrapper aWrapper, @Nonnull final XATopicConnection aWrapped)
@@ -33,6 +38,9 @@ public class XATopicConnectionWrapper extends XAConnectionWrapper implements XAT
     super (aWrapper, aWrapped);
   }
 
+  /**
+   * @return The wrapped object. Never <code>null</code>.
+   */
   @Override
   @Nonnull
   protected XATopicConnection getWrapped ()

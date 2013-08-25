@@ -21,6 +21,11 @@ import javax.annotation.Nonnull;
 import javax.jms.JMSException;
 import javax.jms.TemporaryQueue;
 
+/**
+ * Wrapped class for a JMS {@link TemporaryQueue}.
+ * 
+ * @author Philip Helger
+ */
 public class TemporaryQueueWrapper extends QueueWrapper implements TemporaryQueue
 {
   public TemporaryQueueWrapper (@Nonnull final JMSWrapper aWrapper, @Nonnull final TemporaryQueue aWrapped)
@@ -28,6 +33,9 @@ public class TemporaryQueueWrapper extends QueueWrapper implements TemporaryQueu
     super (aWrapper, aWrapped);
   }
 
+  /**
+   * @return The wrapped object. Never <code>null</code>.
+   */
   @Override
   @Nonnull
   protected TemporaryQueue getWrapped ()

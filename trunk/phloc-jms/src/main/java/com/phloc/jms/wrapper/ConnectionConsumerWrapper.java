@@ -24,6 +24,11 @@ import javax.jms.ServerSessionPool;
 
 import com.phloc.commons.string.ToStringGenerator;
 
+/**
+ * Wrapped class for a JMS {@link ConnectionConsumer}.
+ * 
+ * @author Philip Helger
+ */
 public class ConnectionConsumerWrapper extends AbstractWrappedJMS implements ConnectionConsumer
 {
   private final ConnectionConsumer m_aWrapped;
@@ -36,6 +41,9 @@ public class ConnectionConsumerWrapper extends AbstractWrappedJMS implements Con
     m_aWrapped = aWrapped;
   }
 
+  /**
+   * @return The wrapped object. Never <code>null</code>.
+   */
   @Nonnull
   protected ConnectionConsumer getWrapped ()
   {

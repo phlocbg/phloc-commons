@@ -21,6 +21,11 @@ import javax.annotation.Nonnull;
 import javax.jms.BytesMessage;
 import javax.jms.JMSException;
 
+/**
+ * Wrapped class for a JMS {@link BytesMessage}.
+ * 
+ * @author Philip Helger
+ */
 public class BytesMessageWrapper extends MessageWrapper implements BytesMessage
 {
   public BytesMessageWrapper (@Nonnull final JMSWrapper aWrapper, @Nonnull final BytesMessage aWrapped)
@@ -28,6 +33,9 @@ public class BytesMessageWrapper extends MessageWrapper implements BytesMessage
     super (aWrapper, aWrapped);
   }
 
+  /**
+   * @return The wrapped object. Never <code>null</code>.
+   */
   @Override
   @Nonnull
   protected BytesMessage getWrapped ()

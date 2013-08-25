@@ -23,6 +23,11 @@ import javax.jms.Message;
 import javax.jms.Queue;
 import javax.jms.QueueSender;
 
+/**
+ * Wrapped class for a JMS {@link QueueSender}.
+ * 
+ * @author Philip Helger
+ */
 public class QueueSenderWrapper extends MessageProducerWrapper implements QueueSender
 {
   public QueueSenderWrapper (@Nonnull final JMSWrapper aWrapper, @Nonnull final QueueSender aWrapped)
@@ -30,6 +35,9 @@ public class QueueSenderWrapper extends MessageProducerWrapper implements QueueS
     super (aWrapper, aWrapped);
   }
 
+  /**
+   * @return The wrapped object. Never <code>null</code>.
+   */
   @Override
   @Nonnull
   protected QueueSender getWrapped ()

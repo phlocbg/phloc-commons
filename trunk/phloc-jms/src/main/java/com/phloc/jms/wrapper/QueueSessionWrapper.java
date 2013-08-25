@@ -24,6 +24,11 @@ import javax.jms.QueueReceiver;
 import javax.jms.QueueSender;
 import javax.jms.QueueSession;
 
+/**
+ * Wrapped class for a JMS {@link QueueSession}.
+ * 
+ * @author Philip Helger
+ */
 public class QueueSessionWrapper extends SessionWrapper implements QueueSession
 {
   public QueueSessionWrapper (@Nonnull final JMSWrapper aWrapper, @Nonnull final QueueSession aWrapped)
@@ -31,6 +36,9 @@ public class QueueSessionWrapper extends SessionWrapper implements QueueSession
     super (aWrapper, aWrapped);
   }
 
+  /**
+   * @return The wrapped object. Never <code>null</code>.
+   */
   @Override
   @Nonnull
   protected QueueSession getWrapped ()

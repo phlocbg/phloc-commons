@@ -24,6 +24,11 @@ import javax.jms.TopicPublisher;
 import javax.jms.TopicSession;
 import javax.jms.TopicSubscriber;
 
+/**
+ * Wrapped class for a JMS {@link TopicSession}.
+ * 
+ * @author Philip Helger
+ */
 public class TopicSessionWrapper extends SessionWrapper implements TopicSession
 {
   public TopicSessionWrapper (@Nonnull final JMSWrapper aWrapper, @Nonnull final TopicSession aWrapped)
@@ -31,6 +36,9 @@ public class TopicSessionWrapper extends SessionWrapper implements TopicSession
     super (aWrapper, aWrapped);
   }
 
+  /**
+   * @return The wrapped object. Never <code>null</code>.
+   */
   @Override
   @Nonnull
   protected TopicSession getWrapped ()

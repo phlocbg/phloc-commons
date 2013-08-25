@@ -23,6 +23,11 @@ import javax.jms.Queue;
 
 import com.phloc.commons.string.ToStringGenerator;
 
+/**
+ * Wrapped class for a JMS {@link Queue}.
+ * 
+ * @author Philip Helger
+ */
 public class QueueWrapper extends AbstractWrappedJMS implements Queue
 {
   private final Queue m_aWrapped;
@@ -35,6 +40,9 @@ public class QueueWrapper extends AbstractWrappedJMS implements Queue
     m_aWrapped = aWrapped;
   }
 
+  /**
+   * @return The wrapped object. Never <code>null</code>.
+   */
   @Nonnull
   protected Queue getWrapped ()
   {

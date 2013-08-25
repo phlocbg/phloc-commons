@@ -22,6 +22,11 @@ import javax.jms.JMSException;
 import javax.jms.Topic;
 import javax.jms.TopicSubscriber;
 
+/**
+ * Wrapped class for a JMS {@link TopicSubscriber}.
+ * 
+ * @author Philip Helger
+ */
 public class TopicSubscriberWrapper extends MessageConsumerWrapper implements TopicSubscriber
 {
   public TopicSubscriberWrapper (@Nonnull final JMSWrapper aWrapper, @Nonnull final TopicSubscriber aWrapped)
@@ -29,6 +34,9 @@ public class TopicSubscriberWrapper extends MessageConsumerWrapper implements To
     super (aWrapper, aWrapped);
   }
 
+  /**
+   * @return The wrapped object. Never <code>null</code>.
+   */
   @Override
   @Nonnull
   protected TopicSubscriber getWrapped ()
