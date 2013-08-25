@@ -19,6 +19,7 @@ package com.phloc.jms.pool;
 import java.io.Serializable;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import javax.annotation.Nonnull;
 import javax.jms.BytesMessage;
 import javax.jms.Destination;
 import javax.jms.JMSException;
@@ -53,7 +54,7 @@ import com.phloc.jms.JMSUtils;
 
 public class PooledSession implements TopicSession, QueueSession
 {
-  private static final transient Logger LOG = LoggerFactory.getLogger (PooledSession.class);
+  private static final transient Logger s_aLogger = LoggerFactory.getLogger (PooledSession.class);
 
   private final SessionKey m_aKey;
   private final KeyedObjectPool <SessionKey, PooledSession> m_aSessionPool;
@@ -65,27 +66,25 @@ public class PooledSession implements TopicSession, QueueSession
   private MessageProducer m_aMessageProducer;
   private QueueSender m_aQueueSender;
   private TopicPublisher m_aTopicPublisher;
-  private boolean m_bTransactional = true;
+  private final boolean m_bTransactional;
   private boolean m_bIgnoreClose;
   private boolean m_bIsXA;
 
-  public PooledSession (final SessionKey key,
+  public PooledSession (@Nonnull final SessionKey key,
                         final Session session,
                         final KeyedObjectPool <SessionKey, PooledSession> sessionPool)
   {
-    this.m_aKey = key;
-    this.m_aSession = session;
-    this.m_aSessionPool = sessionPool;
-    this.m_bTransactional = key.isTransacted ();
+    m_aKey = key;
+    m_aSession = session;
+    m_aSessionPool = sessionPool;
+    m_bTransactional = key.isTransacted ();
   }
 
   public void addSessionEventListener (final IPooledSessionEventListener listener)
   {
     // only add if really needed
     if (!m_aSessionEventListeners.contains (listener))
-    {
-      this.m_aSessionEventListeners.add (listener);
-    }
+      m_aSessionEventListeners.add (listener);
   }
 
   protected boolean isIgnoreClose ()
@@ -128,21 +127,21 @@ public class PooledSession implements TopicSession, QueueSession
           catch (final JMSException e)
           {
             invalidate = true;
-            LOG.warn ("Caught exception trying rollback() when putting session back into the pool, will invalidate. " +
-                      e, e);
+            s_aLogger.warn ("Caught exception trying rollback() when putting session back into the pool, will invalidate.",
+                            e);
           }
         }
       }
       catch (final JMSException ex)
       {
         invalidate = true;
-        LOG.warn ("Caught exception trying close() when putting session back into the pool, will invalidate. " + ex, ex);
+        s_aLogger.warn ("Caught exception trying close() when putting session back into the pool, will invalidate.", ex);
       }
       finally
       {
         m_aConsumers.clear ();
         m_aBrowsers.clear ();
-        for (final IPooledSessionEventListener listener : this.m_aSessionEventListeners)
+        for (final IPooledSessionEventListener listener : m_aSessionEventListeners)
         {
           listener.onSessionClosed (this);
         }
@@ -161,7 +160,7 @@ public class PooledSession implements TopicSession, QueueSession
           }
           catch (final JMSException e1)
           {
-            LOG.trace ("Ignoring exception on close as discarding session: " + e1, e1);
+            s_aLogger.trace ("Ignoring exception on close as discarding session.", e1);
           }
           m_aSession = null;
         }
@@ -235,7 +234,7 @@ public class PooledSession implements TopicSession, QueueSession
     result = getInternalSession ().createTemporaryQueue ();
 
     // Notify all of the listeners of the created temporary Queue.
-    for (final IPooledSessionEventListener listener : this.m_aSessionEventListeners)
+    for (final IPooledSessionEventListener listener : m_aSessionEventListeners)
     {
       listener.onTemporaryQueueCreate (result);
     }
@@ -250,7 +249,7 @@ public class PooledSession implements TopicSession, QueueSession
     result = getInternalSession ().createTemporaryTopic ();
 
     // Notify all of the listeners of the created temporary Topic.
-    for (final IPooledSessionEventListener listener : this.m_aSessionEventListeners)
+    for (final IPooledSessionEventListener listener : m_aSessionEventListeners)
     {
       listener.onTemporaryTopicCreate (result);
     }
@@ -419,36 +418,28 @@ public class PooledSession implements TopicSession, QueueSession
   public Session getInternalSession () throws JMSException
   {
     if (m_aSession == null)
-    {
       throw new JMSException ("The session has already been closed");
-    }
     return m_aSession;
   }
 
   public MessageProducer getMessageProducer () throws JMSException
   {
     if (m_aMessageProducer == null)
-    {
       m_aMessageProducer = getInternalSession ().createProducer (null);
-    }
     return m_aMessageProducer;
   }
 
   public QueueSender getQueueSender () throws JMSException
   {
     if (m_aQueueSender == null)
-    {
       m_aQueueSender = ((QueueSession) getInternalSession ()).createSender (null);
-    }
     return m_aQueueSender;
   }
 
   public TopicPublisher getTopicPublisher () throws JMSException
   {
     if (m_aTopicPublisher == null)
-    {
       m_aTopicPublisher = ((TopicSession) getInternalSession ()).createPublisher (null);
-    }
     return m_aTopicPublisher;
   }
 
@@ -483,7 +474,7 @@ public class PooledSession implements TopicSession, QueueSession
 
   public void setIsXa (final boolean isXa)
   {
-    this.m_bIsXA = isXa;
+    m_bIsXA = isXa;
   }
 
   @Override

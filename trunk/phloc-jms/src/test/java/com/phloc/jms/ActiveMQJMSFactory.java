@@ -41,6 +41,20 @@ public final class ActiveMQJMSFactory extends AbstractJMSFactory
     final ActiveMQConnectionFactory aConnectionFactory = new ActiveMQConnectionFactory ("tcp://localhost:61616");
     aConnectionFactory.setExceptionListener (new LoggingJMSExceptionListener ());
     // Use pooled version?
-    return false ? aConnectionFactory : new PooledConnectionFactory (aConnectionFactory);
+    if (false)
+      return aConnectionFactory;
+
+    final PooledConnectionFactory ret = new PooledConnectionFactory (aConnectionFactory);
+    ret.start ();
+    return ret;
+  }
+
+  @Override
+  public void shutdown ()
+  {
+    final ConnectionFactory aCF = getConnectionFactory ();
+    if (aCF instanceof PooledConnectionFactory)
+      ((PooledConnectionFactory) aCF).stop ();
+    super.shutdown ();
   }
 }

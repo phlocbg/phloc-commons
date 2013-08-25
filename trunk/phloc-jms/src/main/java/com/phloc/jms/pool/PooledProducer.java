@@ -37,14 +37,14 @@ public class PooledProducer implements MessageProducer
 
   public PooledProducer (final MessageProducer messageProducer, final Destination destination) throws JMSException
   {
-    this.m_aMessageProducer = messageProducer;
-    this.m_aDestination = destination;
+    m_aMessageProducer = messageProducer;
+    m_aDestination = destination;
 
-    this.m_nDeliveryMode = messageProducer.getDeliveryMode ();
-    this.m_bDisableMessageID = messageProducer.getDisableMessageID ();
-    this.m_bDisableMessageTimestamp = messageProducer.getDisableMessageTimestamp ();
-    this.m_nPriority = messageProducer.getPriority ();
-    this.m_nTimeToLive = messageProducer.getTimeToLive ();
+    m_nDeliveryMode = messageProducer.getDeliveryMode ();
+    m_bDisableMessageID = messageProducer.getDisableMessageID ();
+    m_bDisableMessageTimestamp = messageProducer.getDisableMessageTimestamp ();
+    m_nPriority = messageProducer.getPriority ();
+    m_nTimeToLive = messageProducer.getTimeToLive ();
   }
 
   @Override
@@ -81,7 +81,7 @@ public class PooledProducer implements MessageProducer
     // just in case let only one thread send at once
     synchronized (messageProducer)
     {
-      messageProducer.send (destination != null ? destination : this.m_aDestination,
+      messageProducer.send (destination != null ? destination : m_aDestination,
                             message,
                             deliveryMode,
                             priority,
@@ -104,7 +104,7 @@ public class PooledProducer implements MessageProducer
   @Override
   public void setDeliveryMode (final int deliveryMode)
   {
-    this.m_nDeliveryMode = deliveryMode;
+    m_nDeliveryMode = deliveryMode;
   }
 
   @Override
@@ -116,7 +116,7 @@ public class PooledProducer implements MessageProducer
   @Override
   public void setDisableMessageID (final boolean disableMessageID)
   {
-    this.m_bDisableMessageID = disableMessageID;
+    m_bDisableMessageID = disableMessageID;
   }
 
   @Override
@@ -128,7 +128,7 @@ public class PooledProducer implements MessageProducer
   @Override
   public void setDisableMessageTimestamp (final boolean disableMessageTimestamp)
   {
-    this.m_bDisableMessageTimestamp = disableMessageTimestamp;
+    m_bDisableMessageTimestamp = disableMessageTimestamp;
   }
 
   @Override
@@ -140,7 +140,7 @@ public class PooledProducer implements MessageProducer
   @Override
   public void setPriority (final int priority)
   {
-    this.m_nPriority = priority;
+    m_nPriority = priority;
   }
 
   @Override
@@ -152,7 +152,7 @@ public class PooledProducer implements MessageProducer
   @Override
   public void setTimeToLive (final long timeToLive)
   {
-    this.m_nTimeToLive = timeToLive;
+    m_nTimeToLive = timeToLive;
   }
 
   // Implementation methods

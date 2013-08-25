@@ -25,7 +25,6 @@ import javax.jms.JMSException;
 
 import org.apache.commons.pool.KeyedObjectPool;
 import org.apache.commons.pool.KeyedPoolableObjectFactory;
-import org.apache.commons.pool.ObjectPoolFactory;
 import org.apache.commons.pool.impl.GenericKeyedObjectPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -103,9 +102,7 @@ public class PooledConnectionFactory implements ConnectionFactory
         try
         {
           if (s_aLogger.isTraceEnabled ())
-          {
             s_aLogger.trace ("Destroying connection: {}", connection);
-          }
           connection.close ();
         }
         catch (final Exception e)
@@ -126,9 +123,7 @@ public class PooledConnectionFactory implements ConnectionFactory
         connection.setBlockIfSessionPoolIsFull (isBlockIfSessionPoolIsFull ());
 
         if (s_aLogger.isTraceEnabled ())
-        {
           s_aLogger.trace ("Created new connection: {}", connection);
-        }
 
         return connection;
       }
@@ -141,10 +136,7 @@ public class PooledConnectionFactory implements ConnectionFactory
         if (connection != null && connection.expiredCheck ())
         {
           if (s_aLogger.isTraceEnabled ())
-          {
             s_aLogger.trace ("Connection has expired: {} and will be destroyed", connection);
-          }
-
           return false;
         }
 
@@ -247,15 +239,6 @@ public class PooledConnectionFactory implements ConnectionFactory
     return new PooledConnection (connection);
   }
 
-  /**
-   * @deprecated
-   */
-  @Deprecated
-  public ObjectPoolFactory <?> getPoolFactory ()
-  {
-    return null;
-  }
-
   protected Connection createConnection (final ConnectionKey key) throws JMSException
   {
     if (key.getUserName () == null && key.getPassword () == null)
@@ -265,7 +248,9 @@ public class PooledConnectionFactory implements ConnectionFactory
 
   public void start ()
   {
-    s_aLogger.debug ("Staring the PooledConnectionFactory: create on start = " + isCreateConnectionOnStartup ());
+    if (s_aLogger.isDebugEnabled ())
+      s_aLogger.debug ("Staring the PooledConnectionFactory: create on start = " + isCreateConnectionOnStartup ());
+
     m_aStopped.set (false);
     if (isCreateConnectionOnStartup ())
     {
@@ -283,8 +268,9 @@ public class PooledConnectionFactory implements ConnectionFactory
 
   public void stop ()
   {
-    s_aLogger.debug ("Stopping the PooledConnectionFactory, number of connections in cache: " +
-                     m_aConnectionsPool.getNumActive ());
+    if (s_aLogger.isDebugEnabled ())
+      s_aLogger.debug ("Stopping the PooledConnectionFactory, number of connections in cache: " +
+                       m_aConnectionsPool.getNumActive ());
 
     if (m_aStopped.compareAndSet (false, true))
     {
@@ -307,11 +293,9 @@ public class PooledConnectionFactory implements ConnectionFactory
   public void clear ()
   {
     if (m_aStopped.get ())
-    {
       return;
-    }
 
-    this.m_aConnectionsPool.clear ();
+    m_aConnectionsPool.clear ();
   }
 
   /**
@@ -335,7 +319,7 @@ public class PooledConnectionFactory implements ConnectionFactory
    */
   public void setMaximumActiveSessionPerConnection (final int maximumActiveSessionPerConnection)
   {
-    this.m_nMaximumActiveSessionPerConnection = maximumActiveSessionPerConnection;
+    m_nMaximumActiveSessionPerConnection = maximumActiveSessionPerConnection;
   }
 
   /**
@@ -351,7 +335,7 @@ public class PooledConnectionFactory implements ConnectionFactory
    */
   public void setBlockIfSessionPoolIsFull (final boolean block)
   {
-    this.m_bBlockIfSessionPoolIsFull = block;
+    m_bBlockIfSessionPoolIsFull = block;
   }
 
   /**
@@ -365,7 +349,7 @@ public class PooledConnectionFactory implements ConnectionFactory
    */
   public boolean isBlockIfSessionPoolIsFull ()
   {
-    return this.m_bBlockIfSessionPoolIsFull;
+    return m_bBlockIfSessionPoolIsFull;
   }
 
   /**
@@ -390,7 +374,7 @@ public class PooledConnectionFactory implements ConnectionFactory
    */
   public void setMaxConnections (final int maxConnections)
   {
-    this.m_aConnectionsPool.setMaxIdle (maxConnections);
+    m_aConnectionsPool.setMaxIdle (maxConnections);
   }
 
   /**
@@ -425,7 +409,7 @@ public class PooledConnectionFactory implements ConnectionFactory
    */
   public void setIdleTimeout (final int idleTimeout)
   {
-    this.m_nIdleTimeout = idleTimeout;
+    m_nIdleTimeout = idleTimeout;
   }
 
   /**
@@ -438,7 +422,7 @@ public class PooledConnectionFactory implements ConnectionFactory
    */
   public void setExpiryTimeout (final long expiryTimeout)
   {
-    this.m_nExpiryTimeout = expiryTimeout;
+    m_nExpiryTimeout = expiryTimeout;
   }
 
   /**
@@ -470,7 +454,7 @@ public class PooledConnectionFactory implements ConnectionFactory
    */
   public void setCreateConnectionOnStartup (final boolean createConnectionOnStartup)
   {
-    this.m_bCreateConnectionOnStartup = createConnectionOnStartup;
+    m_bCreateConnectionOnStartup = createConnectionOnStartup;
   }
 
   /**
@@ -481,7 +465,7 @@ public class PooledConnectionFactory implements ConnectionFactory
    */
   KeyedObjectPool <ConnectionKey, ConnectionPool> getConnectionsPool ()
   {
-    return this.m_aConnectionsPool;
+    return m_aConnectionsPool;
   }
 
   /**
@@ -499,7 +483,7 @@ public class PooledConnectionFactory implements ConnectionFactory
    */
   public void setTimeBetweenExpirationCheckMillis (final long timeBetweenExpirationCheckMillis)
   {
-    this.m_aConnectionsPool.setTimeBetweenEvictionRunsMillis (timeBetweenExpirationCheckMillis);
+    m_aConnectionsPool.setTimeBetweenEvictionRunsMillis (timeBetweenExpirationCheckMillis);
   }
 
   /**
@@ -508,7 +492,7 @@ public class PooledConnectionFactory implements ConnectionFactory
    */
   public long setTimeBetweenExpirationCheckMillis ()
   {
-    return this.m_aConnectionsPool.getTimeBetweenEvictionRunsMillis ();
+    return m_aConnectionsPool.getTimeBetweenEvictionRunsMillis ();
   }
 
   /**
@@ -516,7 +500,7 @@ public class PooledConnectionFactory implements ConnectionFactory
    */
   public int getNumConnections ()
   {
-    return this.m_aConnectionsPool.getNumIdle ();
+    return m_aConnectionsPool.getNumIdle ();
   }
 
   /**
