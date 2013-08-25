@@ -21,25 +21,23 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import javax.jms.Connection;
-import javax.jms.DeliveryMode;
-import javax.jms.Destination;
+import javax.annotation.Nonnull;
 import javax.jms.JMSException;
 import javax.jms.Message;
-import javax.jms.MessageConsumer;
-import javax.jms.MessageProducer;
-import javax.jms.Queue;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
 import com.phloc.commons.concurrent.ExtendedDefaultThreadFactory;
 import com.phloc.commons.concurrent.ManagedExecutorService;
 import com.phloc.commons.timing.StopWatch;
+import com.phloc.jms.sender.IJMSMessageCreator;
+import com.phloc.jms.sender.IJMSMessageHandler;
+import com.phloc.jms.sender.JMSSimpleHandler;
 
 /**
  * Hello world!
  */
-public class MainJMSFillUpSimple
+public class MainJMSSimpleSender
 {
   private static final ActiveMQJMSFactory s_aFactory = new ActiveMQJMSFactory ();
 
@@ -56,7 +54,7 @@ public class MainJMSFillUpSimple
     System.out.println ("Production of " + nMax + " messages took " + nMSP + "ms");
 
     aSW.restart ();
-    final ExecutorService aESConsume = Executors.newFixedThreadPool (10, new ExtendedDefaultThreadFactory ("consumers"));
+    final ExecutorService aESConsume = Executors.newFixedThreadPool (30, new ExtendedDefaultThreadFactory ("consumers"));
     for (int i = 0; i < nMax; ++i)
       aESConsume.submit (new MockConsumer ());
     final long nMSC = aSW.stopAndGetMillis ();
@@ -76,38 +74,14 @@ public class MainJMSFillUpSimple
 
     public void run ()
     {
-      Connection connection = null;
-      try
+      new JMSSimpleHandler (s_aFactory, false).sendNonTransactional ("TEST.FOO", new IJMSMessageCreator ()
       {
-        // Create a Connection
-        connection = s_aFactory.createConnection ();
-
-        // Create a Session
-        final Session session = connection.createSession (false, Session.AUTO_ACKNOWLEDGE);
-
-        // Create the destination (Topic or Queue)
-        final Queue destination = session.createQueue ("TEST.FOO");
-
-        // Create a MessageProducer from the Session to the Topic or Queue
-        final MessageProducer producer = session.createProducer (destination);
-        producer.setDeliveryMode (DeliveryMode.NON_PERSISTENT);
-
-        // Create a messages
-        final TextMessage message = session.createTextMessage ("Hello world " + m_aCounter.incrementAndGet ());
-
-        // Tell the producer to send the message
-        producer.send (message);
-
-        // No commit for non-transacted sessions
-      }
-      catch (final JMSException ex)
-      {
-        ex.printStackTrace ();
-      }
-      finally
-      {
-        JMSUtils.close (connection);
-      }
+        @Nonnull
+        public Message createMessage (@Nonnull final Session aSession) throws JMSException
+        {
+          return aSession.createTextMessage ("Hello world " + m_aCounter.incrementAndGet ());
+        }
+      });
     }
   }
 
@@ -115,36 +89,14 @@ public class MainJMSFillUpSimple
   {
     public void run ()
     {
-      Connection connection = null;
-      try
+      new JMSSimpleHandler (s_aFactory, false).receiveNonTransactional ("TEST.FOO", new IJMSMessageHandler ()
       {
-        // Create a Connection
-        connection = s_aFactory.createConnection ();
-
-        // Create a Session
-        final Session session = connection.createSession (false, Session.AUTO_ACKNOWLEDGE);
-
-        // Create the destination (Topic or Queue)
-        final Destination destination = session.createQueue ("TEST.FOO");
-
-        // Create a MessageConsumer from the Session to the Topic or Queue
-        final MessageConsumer consumer = session.createConsumer (destination);
-
-        // Wait for a message
-        final Message message = consumer.receive ();
-        assert message instanceof TextMessage;
-        ((TextMessage) message).getText ();
-
-        // No commit for non-transacted sessions
-      }
-      catch (final JMSException ex)
-      {
-        ex.printStackTrace ();
-      }
-      finally
-      {
-        JMSUtils.close (connection);
-      }
+        public void handleMessage (@Nonnull final Message aMessage) throws JMSException
+        {
+          assert aMessage instanceof TextMessage;
+          ((TextMessage) aMessage).getText ();
+        }
+      });
     }
   }
 }

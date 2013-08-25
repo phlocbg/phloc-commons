@@ -40,7 +40,7 @@ import com.phloc.jms.wrapper.JMSWrapper;
  * @author Philip Helger
  */
 @ThreadSafe
-public abstract class AbstractJMSFactory
+public abstract class AbstractJMSFactory implements IJMSFactory
 {
   protected static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
   @GuardedBy ("s_aRWLock")
