@@ -57,9 +57,11 @@ public class PoolableJMSFactory extends JMSFactory
   public void shutdown ()
   {
     final PooledConnectionFactory aConnectionFactory = (PooledConnectionFactory) getConnectionFactory ();
-    // Stop the pooling
     if (aConnectionFactory != null)
+    {
+      // Stop the pooling
       aConnectionFactory.stop ();
+    }
     super.shutdown ();
   }
 }
