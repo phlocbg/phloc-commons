@@ -18,6 +18,7 @@ package com.phloc.jms.pool;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
+import javax.jms.JMSException;
 import javax.transaction.TransactionManager;
 
 /**
@@ -44,7 +45,7 @@ public class XaPooledConnectionFactory extends PooledConnectionFactory
   }
 
   @Override
-  protected ConnectionPool createConnectionPool (final Connection connection)
+  protected ConnectionPool createConnectionPool (final Connection connection) throws JMSException
   {
     return new XaConnectionPool (connection, getTransactionManager ());
   }

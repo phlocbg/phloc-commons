@@ -39,7 +39,7 @@ public class XaConnectionPool extends ConnectionPool
 {
   private final TransactionManager m_aTransactionManager;
 
-  public XaConnectionPool (final Connection connection, final TransactionManager transactionManager)
+  public XaConnectionPool (final Connection connection, final TransactionManager transactionManager) throws JMSException
   {
     super (connection);
     m_aTransactionManager = transactionManager;
