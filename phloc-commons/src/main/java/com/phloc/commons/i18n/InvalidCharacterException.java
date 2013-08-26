@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.i18n;
 
+import com.phloc.commons.string.StringHelper;
+
 /**
  * @author Apache Abdera
  */
@@ -32,6 +34,6 @@ public class InvalidCharacterException extends RuntimeException
   @Override
   public String getMessage ()
   {
-    return "Invalid Character 0x" + Integer.toHexString (m_nInput) + "(" + (char) m_nInput + ")";
+    return "Invalid Character 0x" + StringHelper.getHexStringLeadingZero (m_nInput, 2) + "(" + (char) m_nInput + ")";
   }
 }
