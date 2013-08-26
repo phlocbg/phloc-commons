@@ -2,6 +2,16 @@
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
 <table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody>
+<tr><td>8/26/13</td><td>add</td><td>api</td><td></td><td>Added new method MimeType.removeParameterWithName</td></tr>
+<tr><td>8/26/13</td><td>add</td><td>api</td><td></td><td>Added new class TransformResultFactory</td></tr>
+<tr><td>8/23/13</td><td>add</td><td>api</td><td></td><td>Added new method StringHelper.removeAll(String,char)</td></tr>
+<tr><td>8/23/13</td><td>add</td><td>api</td><td></td><td>Added new classes URLCodec</td></tr>
+<tr><td>8/23/13</td><td>add</td><td>api</td><td></td><td>Added new classes QuotedPrintableCodec, RFC1522BCodec and RFC1522QCodec from [http://code.google.com/p/phloc-webbasics phloc-web]</td></tr>
+<tr><td>8/23/13</td><td>add</td><td>api</td><td></td><td>Added new class Base64Codec that uses Base64 and implements ICodec</td></tr>
+<tr><td>8/23/13</td><td>add</td><td>api</td><td></td><td>Added new annotation @WorkInProgress</td></tr>
+<tr><td>8/23/13</td><td>add</td><td>api</td><td></td><td>Added methods ContainerHelper.removeElementAtIndex and ContainerHelper.removeAndReturnElementAtIndex</td></tr>
+<tr><td>8/23/13</td><td>add</td><td>api</td><td></td><td>Added support for MimeType parameters</td></tr>
+<tr><td>8/23/13</td><td>update</td><td>api</td><td></td><td>Extended MimeType handling</td></tr>
 <tr border="1"><td>7/10/13</td><td colspan="4">_Release *4.0.8*_</td></tr>
 <tr><td>7/10/13</td><td>change</td><td>tech</td><td></td><td>Using Maven artifact com.google.code.findbugs:annotations instead of com.google.code.findbugs:jsr305 to avoid internalizing the FindBugs annotations.</td></tr>
 <tr><td>6/27/13</td><td>add</td><td>api</td><td></td><td>Added MathHelper.getWithoutTrailingZeroes(BigDecimal)</td></tr>

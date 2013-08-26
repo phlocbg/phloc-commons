@@ -34,7 +34,6 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.ValidationEventHandler;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
-import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.validation.Schema;
 
@@ -63,7 +62,7 @@ import com.phloc.commons.state.EChange;
 import com.phloc.commons.state.ESuccess;
 import com.phloc.commons.xml.XMLFactory;
 import com.phloc.commons.xml.schema.XMLSchemaCache;
-import com.phloc.commons.xml.transform.ResourceStreamResult;
+import com.phloc.commons.xml.transform.TransformResultFactory;
 import com.phloc.commons.xml.transform.TransformSourceFactory;
 
 /**
@@ -510,7 +509,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
       throw new NullPointerException ("object");
 
     final Document aDoc = XMLFactory.newDocument ();
-    return write (aObject, new DOMResult (aDoc)).isSuccess () ? aDoc : null;
+    return write (aObject, TransformResultFactory.create (aDoc)).isSuccess () ? aDoc : null;
   }
 
   /**
@@ -525,7 +524,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   @Nonnull
   public final ESuccess write (@Nonnull final JAXBTYPE aObject, @Nonnull final File aResultFile)
   {
-    return write (aObject, new StreamResult (aResultFile));
+    return write (aObject, TransformResultFactory.create (aResultFile));
   }
 
   /**
@@ -540,7 +539,7 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
   @Nonnull
   public final ESuccess write (@Nonnull final JAXBTYPE aObject, @Nonnull final IWritableResource aResource)
   {
-    return write (aObject, new ResourceStreamResult (aResource));
+    return write (aObject, TransformResultFactory.create (aResource));
   }
 
   /**

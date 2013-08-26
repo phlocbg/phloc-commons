@@ -20,16 +20,23 @@ package com.phloc.commons.codec;
 import javax.annotation.Nonnull;
 
 /**
- * Test class for class {@link FlateCodec}
+ * Test class for class {@link RFC1522BCodec}
  * 
  * @author Philip Helger
  */
-public final class FlateCodecTest extends AbstractCodecTest
+public final class RFC1522BCodecTest extends AbstractStringCodecTest
 {
   @Override
   @Nonnull
   protected ICodec createCodec ()
   {
-    return new FlateCodec ();
+    return new RFC1522BCodec ();
+  }
+
+  @Override
+  @Nonnull
+  protected IStringCodec createStringCodec ()
+  {
+    return new RFC1522BCodec ();
   }
 }

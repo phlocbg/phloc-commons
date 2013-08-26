@@ -2518,11 +2518,9 @@ public final class StringHelper
    *        The input string where the text should be replace. If this parameter
    *        is <code>null</code> or empty, no replacement is done.
    * @param cSearchChar
-   *        The character to be replaced. May neither be <code>null</code> nor
-   *        empty.
+   *        The character to be replaced.
    * @param cReplacementChar
-   *        The character with the replacement. May not be <code>null</code> but
-   *        may be empty.
+   *        The character with the replacement.
    * @return The input string as is, if the input string is empty or if the
    *         search pattern and the replacement are equal or if the string to be
    *         replaced is not contained.
@@ -2899,6 +2897,47 @@ public final class StringHelper
     for (int nIndex = 0; nIndex < nSearchTextLength; ++nIndex)
       sOutput = replaceAll (sOutput, aSearchTexts[nIndex], aReplacementTexts[nIndex]);
     return sOutput;
+  }
+
+  /**
+   * Remove all occurrences of the passed character from the specified input
+   * string
+   * 
+   * @param sInputString
+   *        The input string where the character should be removed. If this
+   *        parameter is <code>null</code> or empty, no removing is done.
+   * @param cRemoveChar
+   *        The character to be removed.
+   * @return The input string as is, if the input string is empty or if the
+   *         remove char is not contained.
+   */
+  @Nullable
+  public static String removeAll (@Nullable final String sInputString, final char cRemoveChar)
+  {
+    // Is input string empty?
+    if (hasNoText (sInputString))
+      return sInputString;
+
+    // Does the char occur anywhere?
+    final int nFirstIndex = sInputString.indexOf (cRemoveChar, 0);
+    if (nFirstIndex == STRING_NOT_FOUND)
+      return sInputString;
+
+    // build output buffer
+    final char [] aChars = sInputString.toCharArray ();
+    final int nMax = aChars.length;
+    final StringBuilder aSB = new StringBuilder (nMax);
+    // Copy the first chars where we know it is not contained
+    aSB.append (aChars, 0, nFirstIndex);
+    // Start searching after the first occurrence because we know that this is a
+    // char to be removed
+    for (int i = nFirstIndex; i < nMax; ++i)
+    {
+      final char c = aChars[i];
+      if (c != cRemoveChar)
+        aSB.append (c);
+    }
+    return aSB.toString ();
   }
 
   /**

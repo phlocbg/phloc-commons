@@ -17,19 +17,38 @@
  */
 package com.phloc.commons.codec;
 
+import java.nio.charset.Charset;
+
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.phloc.commons.charset.CharsetManager;
 
 /**
- * Test class for class {@link FlateCodec}
+ * Abstract base class for codec
  * 
  * @author Philip Helger
  */
-public final class FlateCodecTest extends AbstractCodecTest
+public abstract class AbstractCodec implements ICodec
 {
-  @Override
-  @Nonnull
-  protected ICodec createCodec ()
+  public AbstractCodec ()
+  {}
+
+  @Nullable
+  public byte [] encode (@Nullable final String sDecoded, @Nonnull final Charset aCharset)
   {
-    return new FlateCodec ();
+    if (sDecoded == null)
+      return null;
+
+    return encode (CharsetManager.getAsBytes (sDecoded, aCharset));
+  }
+
+  @Nullable
+  public byte [] decode (@Nullable final String sEncoded, @Nonnull final Charset aCharset)
+  {
+    if (sEncoded == null)
+      return null;
+
+    return decode (CharsetManager.getAsBytes (sEncoded, aCharset));
   }
 }

@@ -52,6 +52,7 @@ import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.microdom.reader.XMLMapHandler;
 import com.phloc.commons.regex.RegExHelper;
 import com.phloc.commons.state.EChange;
+import com.phloc.commons.string.StringHelper;
 
 /**
  * Contains a basic set of MimeType determination method.
@@ -61,6 +62,8 @@ import com.phloc.commons.state.EChange;
 @ThreadSafe
 public final class MimeTypeDeterminator
 {
+  public static final IMimeType DEFAULT_MIME_TYPE = CMimeType.APPLICATION_OCTET_STREAM;
+
   private static final Logger s_aLogger = LoggerFactory.getLogger (MimeTypeDeterminator.class);
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
 
@@ -68,7 +71,7 @@ public final class MimeTypeDeterminator
   private static final Map <String, String> s_aFileExtMap = new HashMap <String, String> ();
 
   // Contains all byte[] to mime type mappings
-  private static final Set <MimeTypeContent> s_aContents = new HashSet <MimeTypeContent> ();
+  private static final Set <MimeTypeContent> s_aMimeTypeContents = new HashSet <MimeTypeContent> ();
 
   private static final byte [] MIME_ID_GIF87A = new byte [] { 'G', 'I', 'F', '8', '7', 'a' };
   private static final byte [] MIME_ID_GIF89A = new byte [] { 'G', 'I', 'F', '8', '9', 'a' };
@@ -104,15 +107,15 @@ public final class MimeTypeDeterminator
   @MustBeLocked (ELockType.WRITE)
   private static void _registerDefaultMimeTypeContents ()
   {
-    s_aContents.add (new MimeTypeContent (MIME_ID_GIF87A, CMimeType.IMAGE_GIF));
-    s_aContents.add (new MimeTypeContent (MIME_ID_GIF89A, CMimeType.IMAGE_GIF));
-    s_aContents.add (new MimeTypeContent (MIME_ID_JPG, CMimeType.IMAGE_JPG));
-    s_aContents.add (new MimeTypeContent (MIME_ID_PNG, CMimeType.IMAGE_PNG));
-    s_aContents.add (new MimeTypeContent (MIME_ID_TIFF_MOTOROLLA, CMimeType.IMAGE_TIFF));
-    s_aContents.add (new MimeTypeContent (MIME_ID_TIFF_INTEL, CMimeType.IMAGE_TIFF));
-    s_aContents.add (new MimeTypeContent (MIME_ID_PSD, CMimeType.IMAGE_PSD));
-    s_aContents.add (new MimeTypeContent (MIME_ID_PDF, CMimeType.APPLICATION_PDF));
-    s_aContents.add (new MimeTypeContent (MIME_ID_XLS, CMimeType.APPLICATION_MS_EXCEL));
+    s_aMimeTypeContents.add (new MimeTypeContent (MIME_ID_GIF87A, CMimeType.IMAGE_GIF));
+    s_aMimeTypeContents.add (new MimeTypeContent (MIME_ID_GIF89A, CMimeType.IMAGE_GIF));
+    s_aMimeTypeContents.add (new MimeTypeContent (MIME_ID_JPG, CMimeType.IMAGE_JPG));
+    s_aMimeTypeContents.add (new MimeTypeContent (MIME_ID_PNG, CMimeType.IMAGE_PNG));
+    s_aMimeTypeContents.add (new MimeTypeContent (MIME_ID_TIFF_MOTOROLLA, CMimeType.IMAGE_TIFF));
+    s_aMimeTypeContents.add (new MimeTypeContent (MIME_ID_TIFF_INTEL, CMimeType.IMAGE_TIFF));
+    s_aMimeTypeContents.add (new MimeTypeContent (MIME_ID_PSD, CMimeType.IMAGE_PSD));
+    s_aMimeTypeContents.add (new MimeTypeContent (MIME_ID_PDF, CMimeType.APPLICATION_PDF));
+    s_aMimeTypeContents.add (new MimeTypeContent (MIME_ID_XLS, CMimeType.APPLICATION_MS_EXCEL));
 
     // Add all XML mime types: as the combination of all BOMs and all character
     // encodings as determined by
@@ -151,6 +154,13 @@ public final class MimeTypeDeterminator
   private MimeTypeDeterminator ()
   {}
 
+  /**
+   * Register a new MIME content type.
+   * 
+   * @param aMimeTypeContent
+   *        The content type to register. May not be <code>null</code>.
+   * @return {@link EChange#CHANGED} if the object was successfully registered.
+   */
   @Nonnull
   public static EChange registerMimeTypeContent (@Nonnull final MimeTypeContent aMimeTypeContent)
   {
@@ -160,7 +170,7 @@ public final class MimeTypeDeterminator
     s_aRWLock.writeLock ().lock ();
     try
     {
-      return EChange.valueOf (s_aContents.add (aMimeTypeContent));
+      return EChange.valueOf (s_aMimeTypeContents.add (aMimeTypeContent));
     }
     finally
     {
@@ -168,6 +178,14 @@ public final class MimeTypeDeterminator
     }
   }
 
+  /**
+   * Unregister an existing MIME content type.
+   * 
+   * @param aMimeTypeContent
+   *        The content type to unregister. May not be <code>null</code>.
+   * @return {@link EChange#CHANGED} if the object was successfully
+   *         unregistered.
+   */
   @Nonnull
   public static EChange unregisterMimeTypeContent (@Nullable final MimeTypeContent aMimeTypeContent)
   {
@@ -177,7 +195,7 @@ public final class MimeTypeDeterminator
     s_aRWLock.writeLock ().lock ();
     try
     {
-      return EChange.valueOf (s_aContents.remove (aMimeTypeContent));
+      return EChange.valueOf (s_aMimeTypeContents.remove (aMimeTypeContent));
     }
     finally
     {
@@ -185,6 +203,16 @@ public final class MimeTypeDeterminator
     }
   }
 
+  /**
+   * Try to find the MIME type that matches the passed content string.
+   * 
+   * @param s
+   *        The content string to check. May be <code>null</code>.
+   * @param sCharsetName
+   *        The charset used to convert the string to a byte array. May neither
+   *        be <code>null</code> nor empty.
+   * @return <code>null</code> if no matching MIME type was found.
+   */
   @Nonnull
   @Deprecated
   public static IMimeType getMimeTypeFromString (@Nullable final String s, @Nonnull @Nonempty final String sCharsetName)
@@ -192,12 +220,37 @@ public final class MimeTypeDeterminator
     return getMimeTypeFromBytes (s == null ? null : CharsetManager.getAsBytes (s, sCharsetName));
   }
 
+  /**
+   * Try to find the MIME type that matches the passed content string.
+   * 
+   * @param s
+   *        The content string to check. May be <code>null</code>.
+   * @param aCharset
+   *        The charset used to convert the string to a byte array. May not be
+   *        <code>null</code>.
+   * @return {@link #DEFAULT_MIME_TYPE} if no matching MIME type was found.
+   *         Never <code>null</code>.
+   */
   @Nonnull
   public static IMimeType getMimeTypeFromString (@Nullable final String s, @Nonnull final Charset aCharset)
   {
-    return getMimeTypeFromString (s, aCharset, CMimeType.APPLICATION_OCTET_STREAM);
+    return getMimeTypeFromString (s, aCharset, DEFAULT_MIME_TYPE);
   }
 
+  /**
+   * Try to find the MIME type that matches the passed content string.
+   * 
+   * @param s
+   *        The content string to check. May be <code>null</code>.
+   * @param aCharset
+   *        The charset used to convert the string to a byte array. May not be
+   *        <code>null</code>.
+   * @param aDefault
+   *        The default MIME type to be returned, if no MIME type could be
+   *        found. May be <code>null</code>.
+   * @return <code>aDefault</code> if no matching MIME type was found. May be
+   *         <code>null</code>.
+   */
   @Nullable
   public static IMimeType getMimeTypeFromString (@Nullable final String s,
                                                  @Nonnull final Charset aCharset,
@@ -210,35 +263,36 @@ public final class MimeTypeDeterminator
    * Try to determine the MIME type from the given byte array.
    * 
    * @param b
-   *        The byte array. to parse.
-   * @return {@link CMimeType#APPLICATION_OCTET_STREAM} if no specific MIME type
-   *         was found
+   *        The byte array to parse. May be <code>null</code> or empty.
+   * @return {@link #DEFAULT_MIME_TYPE} if no specific MIME type was found.
+   *         Never <code>null</code>.
    */
   @Nonnull
   public static IMimeType getMimeTypeFromBytes (@Nullable final byte [] b)
   {
-    return getMimeTypeFromBytes (b, CMimeType.APPLICATION_OCTET_STREAM);
+    return getMimeTypeFromBytes (b, DEFAULT_MIME_TYPE);
   }
 
   /**
    * Try to determine the MIME type from the given byte array.
    * 
    * @param b
-   *        The byte array to parse. May be <code>null</code>.
+   *        The byte array to parse. May be <code>null</code> or empty.
    * @param aDefault
    *        The default MIME type to be returned, if no matching MIME type was
    *        found. May be <code>null</code>.
-   * @return The supplied default value, if no matching MIME type was found
+   * @return The supplied default value, if no matching MIME type was found. May
+   *         be <code>null</code>.
    */
   @Nullable
   public static IMimeType getMimeTypeFromBytes (@Nullable final byte [] b, @Nullable final IMimeType aDefault)
   {
-    if (b != null)
+    if (b != null && b.length > 0)
     {
       s_aRWLock.readLock ().lock ();
       try
       {
-        for (final MimeTypeContent aMTC : s_aContents)
+        for (final MimeTypeContent aMTC : s_aMimeTypeContents)
           if (aMTC.matchesBeginning (b))
             return aMTC.getMimeType ();
       }
@@ -253,7 +307,8 @@ public final class MimeTypeDeterminator
   }
 
   /**
-   * @return A copy of all registered {@link MimeTypeContent} objects.
+   * @return A copy of all registered {@link MimeTypeContent} objects. Never
+   *         <code>null</code> but maybe empty.
    */
   @Nonnull
   @ReturnsMutableCopy
@@ -262,7 +317,7 @@ public final class MimeTypeDeterminator
     s_aRWLock.readLock ().lock ();
     try
     {
-      return ContainerHelper.newList (s_aContents);
+      return ContainerHelper.newList (s_aMimeTypeContents);
     }
     finally
     {
@@ -270,23 +325,48 @@ public final class MimeTypeDeterminator
     }
   }
 
+  /**
+   * Get the MIME type from the extension of the passed filename.
+   * 
+   * @param sFilename
+   *        The filename to check. May be <code>null</code>.
+   * @return <code>null</code> if no MIME type was found.
+   */
   @Nullable
-  public static String getMimeTypeFromFilename (@Nonnull final String sFilename)
+  public static String getMimeTypeFromFilename (@Nullable final String sFilename)
   {
     final String sExt = FilenameHelper.getExtension (sFilename);
     return getMimeTypeFromExtension (sExt);
   }
 
+  /**
+   * Get the MIME type object from the extension of the passed filename.
+   * 
+   * @param sFilename
+   *        The filename to check. May be <code>null</code>.
+   * @return <code>null</code> if no MIME type was found.
+   */
   @Nullable
-  public static IMimeType getMimeTypeObjectFromFilename (@Nonnull final String sExtension)
+  public static MimeType getMimeTypeObjectFromFilename (@Nonnull final String sFilename)
   {
-    final String sMimeType = getMimeTypeFromFilename (sExtension);
-    return MimeType.parseFromStringWithoutEncoding (sMimeType);
+    final String sMimeType = getMimeTypeFromFilename (sFilename);
+    return MimeTypeParser.parseMimeType (sMimeType);
   }
 
+  /**
+   * Get the MIME type from the passed filename extension.
+   * 
+   * @param sExtension
+   *        The extension to check. Must be without the leading dot, so "doc" is
+   *        valid but ".doc" is not. May be <code>null</code>.
+   * @return <code>null</code> if no MIME type was found.
+   */
   @Nullable
-  public static String getMimeTypeFromExtension (@Nonnull final String sExtension)
+  public static String getMimeTypeFromExtension (@Nullable final String sExtension)
   {
+    if (StringHelper.hasNoText (sExtension))
+      return null;
+
     String ret = s_aFileExtMap.get (sExtension);
     if (ret == null)
     {
@@ -297,13 +377,24 @@ public final class MimeTypeDeterminator
     return ret;
   }
 
+  /**
+   * Get the MIME type object from the passed filename extension.
+   * 
+   * @param sExtension
+   *        The extension to check. Must be without the leading dot, so "doc" is
+   *        valid but ".doc" is not. May be <code>null</code>.
+   * @return <code>null</code> if no MIME type was found.
+   */
   @Nullable
-  public static IMimeType getMimeTypeObjectFromExtension (@Nonnull final String sExtension)
+  public static MimeType getMimeTypeObjectFromExtension (@Nullable final String sExtension)
   {
     final String sMimeType = getMimeTypeFromExtension (sExtension);
-    return MimeType.parseFromStringWithoutEncoding (sMimeType);
+    return MimeTypeParser.parseMimeType (sMimeType);
   }
 
+  /**
+   * @return A non-<code>null</code> list of all known MIME types as string.
+   */
   @Nonnull
   @ReturnsMutableCopy
   public static Collection <String> getAllKnownMimeTypes ()
@@ -311,6 +402,10 @@ public final class MimeTypeDeterminator
     return ContainerHelper.newList (s_aFileExtMap.values ());
   }
 
+  /**
+   * @return A non-<code>null</code> map from filename extension to MIME type.
+   *         Never <code>null</code>.
+   */
   @Nonnull
   @ReturnsMutableCopy
   public static Map <String, String> getAllKnownMimeTypeFilenameMappings ()
@@ -320,13 +415,16 @@ public final class MimeTypeDeterminator
 
   /**
    * Reset the MimeTypeContent cache to the initial state.
+   * 
+   * @see #registerMimeTypeContent(MimeTypeContent)
+   * @see #unregisterMimeTypeContent(MimeTypeContent)
    */
   public static void resetCache ()
   {
     s_aRWLock.writeLock ().lock ();
     try
     {
-      s_aContents.clear ();
+      s_aMimeTypeContents.clear ();
       _registerDefaultMimeTypeContents ();
       if (s_aLogger.isDebugEnabled ())
         s_aLogger.debug ("Cache was reset: " + MimeTypeDeterminator.class.getName ());

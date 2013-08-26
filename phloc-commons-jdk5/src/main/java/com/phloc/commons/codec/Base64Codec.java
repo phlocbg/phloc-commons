@@ -17,19 +17,30 @@
  */
 package com.phloc.commons.codec;
 
-import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.phloc.commons.base64.Base64;
+import com.phloc.commons.base64.Base64Helper;
 
 /**
- * Test class for class {@link FlateCodec}
+ * Encoder and decoder for Base64
  * 
  * @author Philip Helger
  */
-public final class FlateCodecTest extends AbstractCodecTest
+public class Base64Codec extends AbstractCodec
 {
-  @Override
-  @Nonnull
-  protected ICodec createCodec ()
+  public Base64Codec ()
+  {}
+
+  @Nullable
+  public byte [] encode (@Nullable final byte [] aDecodedBuffer)
   {
-    return new FlateCodec ();
+    return aDecodedBuffer == null ? null : Base64.encodeBytesToBytes (aDecodedBuffer);
+  }
+
+  @Nullable
+  public byte [] decode (@Nullable final byte [] aEncodedBuffer)
+  {
+    return aEncodedBuffer == null ? null : Base64Helper.safeDecode (aEncodedBuffer);
   }
 }
