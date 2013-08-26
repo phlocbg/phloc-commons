@@ -28,6 +28,7 @@ import javax.jms.Session;
 
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.OverrideOnDemand;
+import com.phloc.commons.state.ESuccess;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.jms.IJMSFactory;
 import com.phloc.jms.JMSUtils;
@@ -63,8 +64,9 @@ public class JMSSimpleSender
     ex.printStackTrace ();
   }
 
-  public void sendNonTransactional (@Nonnull @Nonempty final String sQueueName,
-                                    @Nonnull final IJMSMessageCreator aMsgCreator)
+  @Nonnull
+  public ESuccess sendNonTransactional (@Nonnull @Nonempty final String sQueueName,
+                                        @Nonnull final IJMSMessageCreator aMsgCreator)
   {
     if (StringHelper.hasNoText (sQueueName))
       throw new IllegalArgumentException ("queueName");
@@ -96,10 +98,12 @@ public class JMSSimpleSender
       aProducer.send (aMessage);
 
       // No commit for non-transacted sessions
+      return ESuccess.SUCCESS;
     }
     catch (final JMSException ex)
     {
       onException (ex);
+      return ESuccess.FAILURE;
     }
     finally
     {
@@ -107,8 +111,9 @@ public class JMSSimpleSender
     }
   }
 
-  public void sendTransactional (@Nonnull @Nonempty final String sQueueName,
-                                 @Nonnull final IJMSMessageCreator aMsgCreator)
+  @Nonnull
+  public ESuccess sendTransactional (@Nonnull @Nonempty final String sQueueName,
+                                     @Nonnull final IJMSMessageCreator aMsgCreator)
   {
     if (StringHelper.hasNoText (sQueueName))
       throw new IllegalArgumentException ("queueName");
@@ -141,10 +146,12 @@ public class JMSSimpleSender
 
       // commit for transacted sessions
       aSession.commit ();
+      return ESuccess.SUCCESS;
     }
     catch (final JMSException ex)
     {
       onException (ex);
+      return ESuccess.FAILURE;
     }
     finally
     {
