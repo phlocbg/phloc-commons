@@ -25,7 +25,6 @@ import javax.annotation.Nonnull;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
-import javax.jms.TextMessage;
 
 import com.phloc.commons.concurrent.ExtendedDefaultThreadFactory;
 import com.phloc.commons.concurrent.ManagedExecutorService;
@@ -80,7 +79,7 @@ public class MainJMSSimpleSender
         @Nonnull
         public Message createMessage (@Nonnull final Session aSession) throws JMSException
         {
-          return aSession.createTextMessage ("Hello world " + m_aCounter.incrementAndGet ());
+          return JMSMessageUtils.createMessageForObject (aSession, "Hello world " + m_aCounter.incrementAndGet ());
         }
       });
     }
@@ -94,8 +93,9 @@ public class MainJMSSimpleSender
       {
         public void handleMessage (@Nonnull final Message aMessage) throws JMSException
         {
-          assert aMessage instanceof TextMessage;
-          ((TextMessage) aMessage).getText ();
+          final Object aContent = JMSMessageUtils.getObjectOfMessage (aMessage);
+          if (!(aContent instanceof String))
+            throw new IllegalStateException ();
         }
       });
     }
