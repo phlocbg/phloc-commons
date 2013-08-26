@@ -21,7 +21,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 import javax.jms.Connection;
+import javax.jms.ConnectionConsumer;
 import javax.jms.JMSException;
+import javax.jms.MessageConsumer;
+import javax.jms.MessageProducer;
+import javax.jms.QueueBrowser;
+import javax.jms.Session;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,7 +65,7 @@ public final class JMSUtils
   }
 
   /**
-   * Close the passed JMS connection
+   * Close the passed JMS {@link Connection}
    * 
    * @param aConnection
    *        The connection to be closed. May be <code>null</code>.
@@ -76,7 +81,102 @@ public final class JMSUtils
       }
       catch (final JMSException ex)
       {
-        s_aLogger.error ("Failed to close JMS connection " + aConnection, ex);
+        s_aLogger.error ("Failed to close JMS Connection " + aConnection, ex);
+      }
+  }
+
+  /**
+   * Close the passed JMS {@link ConnectionConsumer}
+   * 
+   * @param aConnectionConsumer
+   *        The connection to be closed. May be <code>null</code>.
+   */
+  public static void close (@Nullable final ConnectionConsumer aConnectionConsumer)
+  {
+    if (aConnectionConsumer != null)
+      try
+      {
+        aConnectionConsumer.close ();
+      }
+      catch (final JMSException ex)
+      {
+        s_aLogger.error ("Failed to close JMS ConnectionConsumer " + aConnectionConsumer, ex);
+      }
+  }
+
+  /**
+   * Close the passed JMS {@link MessageConsumer}
+   * 
+   * @param aMessageConsumer
+   *        The connection to be closed. May be <code>null</code>.
+   */
+  public static void close (@Nullable final MessageConsumer aMessageConsumer)
+  {
+    if (aMessageConsumer != null)
+      try
+      {
+        aMessageConsumer.close ();
+      }
+      catch (final JMSException ex)
+      {
+        s_aLogger.error ("Failed to close JMS MessageConsumer " + aMessageConsumer, ex);
+      }
+  }
+
+  /**
+   * Close the passed JMS {@link MessageProducer}
+   * 
+   * @param aMessageProducer
+   *        The connection to be closed. May be <code>null</code>.
+   */
+  public static void close (@Nullable final MessageProducer aMessageProducer)
+  {
+    if (aMessageProducer != null)
+      try
+      {
+        aMessageProducer.close ();
+      }
+      catch (final JMSException ex)
+      {
+        s_aLogger.error ("Failed to close JMS MessageProducer " + aMessageProducer, ex);
+      }
+  }
+
+  /**
+   * Close the passed JMS {@link QueueBrowser}
+   * 
+   * @param aQueueBrowser
+   *        The connection to be closed. May be <code>null</code>.
+   */
+  public static void close (@Nullable final QueueBrowser aQueueBrowser)
+  {
+    if (aQueueBrowser != null)
+      try
+      {
+        aQueueBrowser.close ();
+      }
+      catch (final JMSException ex)
+      {
+        s_aLogger.error ("Failed to close JMS QueueBrowser " + aQueueBrowser, ex);
+      }
+  }
+
+  /**
+   * Close the passed JMS {@link Session}
+   * 
+   * @param aSession
+   *        The connection to be closed. May be <code>null</code>.
+   */
+  public static void close (@Nullable final Session aSession)
+  {
+    if (aSession != null)
+      try
+      {
+        aSession.close ();
+      }
+      catch (final JMSException ex)
+      {
+        s_aLogger.error ("Failed to close JMS Session " + aSession, ex);
       }
   }
 }
