@@ -255,26 +255,45 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   @Test
   public void testHexStringByte ()
   {
+    assertEquals ("ff", StringHelper.getHexString ((byte) -1));
     assertEquals ("0", StringHelper.getHexString ((byte) 0));
     assertEquals ("9", StringHelper.getHexString ((byte) 9));
     assertEquals ("a", StringHelper.getHexString ((byte) 10));
+    assertEquals ("10", StringHelper.getHexString ((byte) 16));
     assertEquals ("ff", StringHelper.getHexString ((byte) 255));
   }
 
   @Test
   public void testHexStringLeadingZeroByte ()
   {
+    assertEquals ("00ff", StringHelper.getHexStringLeadingZero ((byte) -1, 4));
     assertEquals ("0000", StringHelper.getHexStringLeadingZero ((byte) 0, 4));
     assertEquals ("0009", StringHelper.getHexStringLeadingZero ((byte) 9, 4));
     assertEquals ("000a", StringHelper.getHexStringLeadingZero ((byte) 10, 4));
+    assertEquals ("0010", StringHelper.getHexStringLeadingZero ((byte) 16, 4));
     assertEquals ("00ff", StringHelper.getHexStringLeadingZero ((byte) 255, 4));
+  }
+
+  @Test
+  public void testHexStringLeadingZero2Byte ()
+  {
+    assertEquals ("ff", StringHelper.getHexStringLeadingZero2 ((byte) -1));
+    assertEquals ("00", StringHelper.getHexStringLeadingZero2 ((byte) 0));
+    assertEquals ("09", StringHelper.getHexStringLeadingZero2 ((byte) 9));
+    assertEquals ("0a", StringHelper.getHexStringLeadingZero2 ((byte) 10));
+    assertEquals ("10", StringHelper.getHexStringLeadingZero2 ((byte) 16));
+    assertEquals ("ff", StringHelper.getHexStringLeadingZero2 ((byte) 255));
   }
 
   @Test
   public void testHexStringInt ()
   {
+    assertEquals ("-10", StringHelper.getHexString (-16));
+    assertEquals ("-1", StringHelper.getHexString (-1));
+    assertEquals ("0", StringHelper.getHexString (0));
     assertEquals ("9", StringHelper.getHexString (9));
     assertEquals ("a", StringHelper.getHexString (10));
+    assertEquals ("10", StringHelper.getHexString (16));
     assertEquals ("ff", StringHelper.getHexString (255));
     assertEquals ("ffff", StringHelper.getHexString (65535));
   }
@@ -282,8 +301,12 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   @Test
   public void testHexStringLeadingZeroInt ()
   {
+    assertEquals ("-10", StringHelper.getHexStringLeadingZero (-16, 2));
+    assertEquals ("-1", StringHelper.getHexStringLeadingZero (-1, 2));
+    assertEquals ("00", StringHelper.getHexStringLeadingZero (0, 2));
     assertEquals ("09", StringHelper.getHexStringLeadingZero (9, 2));
     assertEquals ("00a", StringHelper.getHexStringLeadingZero (10, 3));
+    assertEquals ("010", StringHelper.getHexStringLeadingZero (16, 3));
     assertEquals ("00ff", StringHelper.getHexStringLeadingZero (255, 4));
     assertEquals ("ffff", StringHelper.getHexStringLeadingZero (65535, 4));
     assertEquals ("ffff", StringHelper.getHexStringLeadingZero (65535, 0));
@@ -292,8 +315,12 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   @Test
   public void testHexStringLong ()
   {
+    assertEquals ("-10", StringHelper.getHexString (-16L));
+    assertEquals ("-1", StringHelper.getHexString (-1L));
+    assertEquals ("0", StringHelper.getHexString (0L));
     assertEquals ("9", StringHelper.getHexString (9L));
     assertEquals ("a", StringHelper.getHexString (10L));
+    assertEquals ("10", StringHelper.getHexString (16L));
     assertEquals ("ff", StringHelper.getHexString (255L));
     assertEquals ("ffff", StringHelper.getHexString (65535L));
     assertEquals ("ffff0000", StringHelper.getHexString (65536L * 65535L));
@@ -302,6 +329,9 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   @Test
   public void testHexStringLeadingZeroLong ()
   {
+    assertEquals ("-10", StringHelper.getHexStringLeadingZero (-16L, 2));
+    assertEquals ("-01", StringHelper.getHexStringLeadingZero (-1L, 3));
+    assertEquals ("000", StringHelper.getHexStringLeadingZero (0L, 3));
     assertEquals ("09", StringHelper.getHexStringLeadingZero (9L, 2));
     assertEquals ("00a", StringHelper.getHexStringLeadingZero (10L, 3));
     assertEquals ("00ff", StringHelper.getHexStringLeadingZero (255L, 4));
@@ -313,18 +343,23 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   @Test
   public void testHexStringShort ()
   {
+    assertEquals ("fffe", StringHelper.getHexString ((short) -2));
+    assertEquals ("ffff", StringHelper.getHexString ((short) -1));
     assertEquals ("0", StringHelper.getHexString ((short) 0));
     assertEquals ("9", StringHelper.getHexString ((short) 9));
     assertEquals ("a", StringHelper.getHexString ((short) 10));
+    assertEquals ("10", StringHelper.getHexString ((short) 16));
     assertEquals ("ff", StringHelper.getHexString ((short) 255));
   }
 
   @Test
   public void testHexStringLeadingZeroShort ()
   {
+    assertEquals ("0ffff", StringHelper.getHexStringLeadingZero ((short) -1, 5));
     assertEquals ("0000", StringHelper.getHexStringLeadingZero ((short) 0, 4));
     assertEquals ("0009", StringHelper.getHexStringLeadingZero ((short) 9, 4));
     assertEquals ("000a", StringHelper.getHexStringLeadingZero ((short) 10, 4));
+    assertEquals ("0010", StringHelper.getHexStringLeadingZero ((short) 16, 4));
     assertEquals ("00ff", StringHelper.getHexStringLeadingZero ((short) 255, 4));
   }
 

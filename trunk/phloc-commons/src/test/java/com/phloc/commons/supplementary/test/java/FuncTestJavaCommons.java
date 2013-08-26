@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.supplementary.test.java;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -90,5 +91,14 @@ public final class FuncTestJavaCommons
     assertFalse (Boolean.parseBoolean ("0"));
     assertFalse (Boolean.parseBoolean ("FALSE"));
     assertFalse (Boolean.parseBoolean ("false"));
+  }
+
+  @Test
+  public void testHexString ()
+  {
+    assertEquals ("1", Integer.toHexString (1));
+    assertEquals ("a", Integer.toHexString (10));
+    assertEquals ("f", Integer.toHexString (15));
+    assertEquals ("10", Integer.toHexString (16));
   }
 }

@@ -463,6 +463,7 @@ public final class StringHelper
   @Nonnull
   public static String getHexString (final byte nValue)
   {
+    // Bytes are always handled unsigned
     return Integer.toString (nValue & 0xff, CGlobal.HEX_RADIX);
   }
 
@@ -470,6 +471,13 @@ public final class StringHelper
   public static String getHexStringLeadingZero (final byte nValue, final int nDigits)
   {
     return getLeadingZero (getHexString (nValue), nDigits);
+  }
+
+  @Nonnull
+  public static String getHexStringLeadingZero2 (final byte nValue)
+  {
+    final String ret = getHexString (nValue);
+    return ret.length () >= 2 ? ret : '0' + ret;
   }
 
   @Nonnull
@@ -481,6 +489,8 @@ public final class StringHelper
   @Nonnull
   public static String getHexStringLeadingZero (final int nValue, final int nDigits)
   {
+    if (nValue < 0)
+      return "-" + getLeadingZero (getHexString (-nValue), nDigits - 1);
     return getLeadingZero (getHexString (nValue), nDigits);
   }
 
@@ -493,6 +503,8 @@ public final class StringHelper
   @Nonnull
   public static String getHexStringLeadingZero (final long nValue, final int nDigits)
   {
+    if (nValue < 0)
+      return "-" + getLeadingZero (getHexString (-nValue), nDigits - 1);
     return getLeadingZero (getHexString (nValue), nDigits);
   }
 
@@ -505,6 +517,7 @@ public final class StringHelper
   @Nonnull
   public static String getHexStringLeadingZero (final short nValue, final int nDigits)
   {
+    // Short are always handled unsigned
     return getLeadingZero (getHexString (nValue), nDigits);
   }
 
