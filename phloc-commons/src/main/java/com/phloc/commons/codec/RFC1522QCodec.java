@@ -163,7 +163,6 @@ public class RFC1522QCodec extends AbstractRFC1522Codec
     m_bEncodeBlanks = bEncodeBlanks;
   }
 
-  @Override
   @Nonnull
   public byte [] encode (@Nonnull final byte [] bytes)
   {
@@ -175,7 +174,6 @@ public class RFC1522QCodec extends AbstractRFC1522Codec
     return data;
   }
 
-  @Override
   @Nonnull
   public byte [] decode (@Nonnull final byte [] bytes) throws DecoderException
   {
