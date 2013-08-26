@@ -18,11 +18,17 @@
 package com.phloc.commons.mime;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
+import com.phloc.commons.ICloneable;
 import com.phloc.commons.IHasStringRepresentation;
 import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
+import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 
 /**
  * Interface for the structured representation of a single MIME type.
@@ -30,32 +36,129 @@ import com.phloc.commons.annotations.MustImplementEqualsAndHashcode;
  * @author Philip Helger
  */
 @MustImplementEqualsAndHashcode
-public interface IMimeType extends IHasStringRepresentation, Serializable
+public interface IMimeType extends IHasStringRepresentation, ICloneable <IMimeType>, Serializable
 {
   /**
-   * @return The content type.
+   * @return The content type. Never <code>null</code>.
    */
   @Nonnull
   EMimeContentType getContentType ();
 
   /**
-   * @return The content sub type.
+   * @return The content sub type. Never <code>null</code>.
    */
   @Nonnull
   String getContentSubType ();
 
   /**
-   * @return The combined string to be used as text representation.
+   * Get the MIME type including all parameters as a single string. By default
+   * the {@link CMimeType#DEFAULT_QUOTING} quoting algorithm is used.
+   * 
+   * @return The combined string to be used as text representation:
+   *         <code><em>contentType</em> '/' <em>subType</em> ( ';' <em>parameterName</em> '=' <em>parameterValue</em> )*</code>
+   * @see #getAsString(EMimeQuoting)
+   * @see #getAsStringWithoutParameters()
    */
   @Nonnull
   String getAsString ();
 
   /**
-   * @param sEncoding
-   *        The encoding to use.
-   * @return The combined string plus the passed encoding.
-   * @see CMimeType#CHARSET_PREFIX
+   * Get the MIME type including all parameters as a single string. The
+   * specified quoting algorithm is used to quote parameter values (if
+   * necessary).
+   * 
+   * @return The combined string to be used as text representation:
+   *         <code><em>contentType</em> '/' <em>subType</em> ( ';' <em>parameterName</em> '=' <em>parameterValue</em> )*</code>
+   * @see #getAsStringWithoutParameters()
+   * @see #getParametersAsString(EMimeQuoting)
    */
   @Nonnull
-  String getAsStringWithEncoding (@Nonnull String sEncoding);
+  @Nonempty
+  String getAsString (@Nonnull EMimeQuoting eQuotingAlgorithm);
+
+  /**
+   * @return The combined string to be used as text representation but without
+   *         the parameters:
+   *         <code><em>contentType</em> '/' <em>subType</em></code>
+   * @see #getAsString()
+   */
+  @Nonnull
+  @Nonempty
+  String getAsStringWithoutParameters ();
+
+  /**
+   * Get all MIME type parameters as a single string but without the leading
+   * content and sub type. The specified quoting algorithm is used to quote
+   * parameter values.
+   * 
+   * @return The combined string to be used as text representation:
+   *         <code>(';' <em>parameterName</em> '=' <em>parameterValue</em> )*</code>
+   *         . If no parameters are present, an empty String is returned!
+   * @see #getAsString(EMimeQuoting)
+   * @see #getAsStringWithoutParameters()
+   */
+  @Nonnull
+  String getParametersAsString (@Nonnull EMimeQuoting eQuotingAlgorithm);
+
+  /**
+   * @param sEncoding
+   *        The encoding to use. May neither be <code>null</code> nor empty.
+   * @return The combined string plus the passed encoding.
+   * @see CMimeType#CHARSET_PREFIX
+   * @see #getAsString()
+   */
+  @Nonnull
+  @Deprecated
+  String getAsStringWithEncoding (@Nonnull @Nonempty String sEncoding);
+
+  /**
+   * @return <code>true</code> if at least one parameter is present,
+   *         <code>false</code> if no parameter is present.
+   */
+  boolean hasAnyParameters ();
+
+  /**
+   * @return The number of parameters. Alway &ge; 0.
+   */
+  @Nonnegative
+  int getParameterCount ();
+
+  /**
+   * @return All present parameters. May not be <code>null</code> but empty.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  List <MimeTypeParameter> getAllParameters ();
+
+  /**
+   * Get the parameter at the specified index.
+   * 
+   * @param nIndex
+   *        The index to use. Should be &ge; 0.
+   * @return <code>null</code> if the provided index is illegal.
+   */
+  @Nullable
+  MimeTypeParameter getParameterAtIndex (@Nonnegative int nIndex);
+
+  /**
+   * Get the parameter with the specified name. The names are matched case
+   * sensitive!
+   * 
+   * @param sParamName
+   *        The parameter name to search. May be <code>null</code>.
+   * @return <code>null</code> if no such parameter exists.
+   */
+  @Nullable
+  MimeTypeParameter getParameterWithName (@Nullable String sParamName);
+
+  /**
+   * Get the value of the parameter with the specified name. The names are
+   * matched case sensitive!
+   * 
+   * @param sParamName
+   *        The parameter name to search. May be <code>null</code>.
+   * @return <code>null</code> if no such parameter exists.
+   */
+  @Nullable
+  String getParameterValueWithName (@Nullable String sParamName);
 }

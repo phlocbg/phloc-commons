@@ -141,7 +141,8 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
   /**
    * Writes the complete contents of this byte array output stream to the
    * specified output stream argument, as if by calling the output stream's
-   * write method using <code>out.write(buf, 0, count)</code>.
+   * write method using <code>out.write(buf, 0, count)</code>. The content of
+   * this stream is not altered by calling this method.
    * 
    * @param aOS
    *        the output stream to which to write the data. May not be
@@ -158,7 +159,8 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
    * Writes the complete contents of this byte array output stream to the
    * specified output stream argument, as if by calling the output stream's
    * write method using <code>out.write(buf, 0, count)</code> and afterwards
-   * closes the passed output stream.
+   * closes the passed output stream. The content of this stream is not altered
+   * by calling this method.
    * 
    * @param aOS
    *        the output stream to which to write the data. May not be

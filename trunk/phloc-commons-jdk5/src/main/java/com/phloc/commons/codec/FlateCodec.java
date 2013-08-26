@@ -20,6 +20,7 @@ package com.phloc.commons.codec;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.slf4j.Logger;
@@ -35,14 +36,14 @@ import com.phloc.commons.io.streams.StreamUtils;
  * 
  * @author Philip Helger
  */
-public final class FlateCodec implements ICodec
+public class FlateCodec extends AbstractCodec
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (FlateCodec.class);
 
   public FlateCodec ()
   {}
 
-  private static boolean _isZlibHead (final byte [] buf)
+  protected static boolean isZlibHead (@Nonnull final byte [] buf)
   {
     if (buf.length >= 2)
     {
@@ -69,7 +70,7 @@ public final class FlateCodec implements ICodec
     if (aEncodedBuffer == null)
       return null;
 
-    if (!_isZlibHead (aEncodedBuffer))
+    if (!isZlibHead (aEncodedBuffer))
       s_aLogger.warn ("ZLib header not found");
 
     final InflaterInputStream aDecodeIS = new InflaterInputStream (new NonBlockingByteArrayInputStream (aEncodedBuffer));

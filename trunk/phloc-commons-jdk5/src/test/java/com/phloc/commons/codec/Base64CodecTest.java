@@ -20,16 +20,16 @@ package com.phloc.commons.codec;
 import javax.annotation.Nonnull;
 
 /**
- * Test class for class {@link FlateCodec}
+ * Test class for class {@link Base64Codec}
  * 
  * @author Philip Helger
  */
-public final class FlateCodecTest extends AbstractCodecTest
+public final class Base64CodecTest extends AbstractCodecTest
 {
   @Override
   @Nonnull
   protected ICodec createCodec ()
   {
-    return new FlateCodec ();
+    return new Base64Codec ();
   }
 }

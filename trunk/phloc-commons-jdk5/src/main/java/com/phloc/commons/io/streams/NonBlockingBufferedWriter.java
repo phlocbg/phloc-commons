@@ -132,21 +132,6 @@ public class NonBlockingBufferedWriter extends Writer
   }
 
   /**
-   * Our own little min method, to avoid loading java.lang.Math if we've run out
-   * of file descriptors and we're trying to print a stack trace.
-   * 
-   * @param a
-   *        value 1
-   * @param b
-   *        value 2
-   * @return The minimum of a and b
-   */
-  private static int _min (final int a, final int b)
-  {
-    return a < b ? a : b;
-  }
-
-  /**
    * Writes a portion of an array of characters.
    * <p>
    * Ordinarily this method stores characters from the given array into this
@@ -192,7 +177,7 @@ public class NonBlockingBufferedWriter extends Writer
       final int t = nOfs + nLen;
       while (b < t)
       {
-        final int d = _min (m_nChars - m_nNextChar, t - b);
+        final int d = Math.min (m_nChars - m_nNextChar, t - b);
         System.arraycopy (cbuf, b, m_aBuf, m_nNextChar, d);
         b += d;
         m_nNextChar += d;
@@ -229,7 +214,7 @@ public class NonBlockingBufferedWriter extends Writer
     final int t = off + len;
     while (b < t)
     {
-      final int d = _min (m_nChars - m_nNextChar, t - b);
+      final int d = Math.min (m_nChars - m_nNextChar, t - b);
       s.getChars (b, b + d, m_aBuf, m_nNextChar);
       b += d;
       m_nNextChar += d;

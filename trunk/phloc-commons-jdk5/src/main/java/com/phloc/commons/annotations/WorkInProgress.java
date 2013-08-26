@@ -15,21 +15,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.codec;
+package com.phloc.commons.annotations;
 
-import javax.annotation.Nonnull;
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
- * Test class for class {@link FlateCodec}
+ * This annotation defines that an element is "work in progress" and should not
+ * yet be used in production.
  * 
  * @author Philip Helger
  */
-public final class FlateCodecTest extends AbstractCodecTest
+@Retention (RetentionPolicy.CLASS)
+@Documented
+public @interface WorkInProgress
 {
-  @Override
-  @Nonnull
-  protected ICodec createCodec ()
-  {
-    return new FlateCodec ();
-  }
+  String value() default "";
 }

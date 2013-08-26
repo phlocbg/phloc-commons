@@ -50,6 +50,9 @@ public enum EMimeContentType implements IHasID <String>
     m_sText = sText;
   }
 
+  /**
+   * @return The text representation of this MIME content type.
+   */
   @Nonnull
   @Nonempty
   public String getID ()
@@ -57,6 +60,9 @@ public enum EMimeContentType implements IHasID <String>
     return m_sText;
   }
 
+  /**
+   * @return The same as {@link #getID()}
+   */
   @Nonnull
   @Nonempty
   public String getText ()
@@ -64,20 +70,38 @@ public enum EMimeContentType implements IHasID <String>
     return m_sText;
   }
 
+  /**
+   * Build a new {@link MimeType} based on this MIME content type and the
+   * provided sub type.
+   * 
+   * @param sContentSubType
+   *        The content sub type to append. May neither be <code>null</code> nor
+   *        empty.
+   * @return Never <code>null</code>.
+   */
   @Nonnull
-  public IMimeType buildMimeType (@Nonnull final String sContentSubType)
+  public MimeType buildMimeType (@Nonnull @Nonempty final String sContentSubType)
   {
     return new MimeType (this, sContentSubType);
   }
 
+  /**
+   * Check if the passed MIME type has the same content type as this
+   * 
+   * @param sMimeType
+   *        The MIME type string to be checked. May be <code>null</code>.
+   * @return <code>true</code> if the passed MIME type has this content type,
+   *         <code>false</code> otherwise
+   */
   public boolean isTypeOf (@Nullable final String sMimeType)
   {
-    return StringHelper.startsWith (sMimeType, m_sText + CMimeType.CONTENTTYPE_SUBTYPE_SEPARATOR);
+    return StringHelper.startsWith (sMimeType, m_sText + CMimeType.SEPARATOR_CONTENTTYPE_SUBTYPE);
   }
 
   @Nullable
   public static EMimeContentType getFromIDOrNull (@Nullable final String sID)
   {
-    return EnumHelper.getFromIDOrNull (EMimeContentType.class, sID);
+    // As MIME types are not case sensitive, this method may not be either :)
+    return EnumHelper.getFromIDCaseInsensitiveOrNull (EMimeContentType.class, sID);
   }
 }

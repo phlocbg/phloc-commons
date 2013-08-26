@@ -24,10 +24,10 @@ import com.phloc.commons.io.streams.StreamUtils;
 
 /**
  * Decoder for ASCII85 encoded values
- *
+ * 
  * @author Philip Helger
  */
-public final class ASCII85Codec implements IByteArrayDecoder
+public class ASCII85Codec implements IByteArrayDecoder
 {
   private static final int BIT1 = 8;
   private static final int BIT2 = 16;
