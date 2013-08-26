@@ -56,10 +56,13 @@ import com.phloc.commons.xml.serialize.XMLWriterSettings;
  * 
  * @author Philip Helger
  */
-// SKIPJDK5
 public final class CreateJava5Version
 {
+  private static final String ARTIFACT_SUFFIX_JDK15 = "-jdk5";
+  private static final String DIRNAME_TARGET = "target";
+  private static final String JDK15_README_CREATED_1ST = "readme-created.1st";
   private static final Logger s_aLogger = LoggerFactory.getLogger (CreateJava5Version.class);
+  private static final FileOperationManager s_aFOM = new FileOperationManager (new LoggingFileOperationCallback ());
 
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")
@@ -70,9 +73,9 @@ public final class CreateJava5Version
 
   @Nonnull
   @Nonempty
-  private static String _getNewArtifactName (@Nonnull final String sOldName)
+  private static String _getArtifactName15 (@Nonnull final String sName16)
   {
-    return sOldName + "-jdk5";
+    return sName16 + ARTIFACT_SUFFIX_JDK15;
   }
 
   private static void _updatePOM (@Nonnull final File aSrcFile,
@@ -142,7 +145,7 @@ public final class CreateJava5Version
       ePlugin.appendElement (eRoot.getNamespaceURI (), "artifactId").appendText ("maven-compiler-plugin");
       final IMicroElement eConfiguration = ePlugin.appendElement (eRoot.getNamespaceURI (), "configuration");
       eConfiguration.appendElement (eRoot.getNamespaceURI (), "source").appendText ("1.5");
-      eConfiguration.appendElement (eRoot.getNamespaceURI (), "target").appendText ("1.5");
+      eConfiguration.appendElement (eRoot.getNamespaceURI (), DIRNAME_TARGET).appendText ("1.5");
     }
 
     // Modify all dependencies
@@ -172,7 +175,7 @@ public final class CreateJava5Version
                 {
                   // Change the artifact name
                   eArtifactId.removeAllChildren ();
-                  eArtifactId.appendText (_getNewArtifactName (sArtifactId));
+                  eArtifactId.appendText (_getArtifactName15 (sArtifactId));
                 }
             }
           }
@@ -335,66 +338,103 @@ public final class CreateJava5Version
     }
   }
 
-  public static void createJDK5Version (@Nonnull final File aSrcBaseDirParam) throws IOException
+  private static void _checkFor15Deletions (@Nonnull final File aBaseDir15, @Nonnull final File aBaseDir16)
   {
-    if (aSrcBaseDirParam == null)
-      throw new NullPointerException ("Null directory");
-    final File aSrcBaseDir = aSrcBaseDirParam.getAbsoluteFile ();
-    if (!aSrcBaseDir.isDirectory ())
-      throw new IllegalArgumentException ("Illegal base directory provided: " + aSrcBaseDir);
+    final String sBasePath15 = aBaseDir15.getAbsolutePath ();
+    final FilenameFilter aFF = new FilenameFilterMatchNoRegEx (DIRNAME_TARGET);
+    for (final File aFile15 : new FilterIterator <File> (new FileSystemRecursiveIterator (aBaseDir15, aFF),
+                                                         new FileFilterToIFilterAdapter (aFF)))
+    {
+      final String sName15 = aFile15.getName ();
+      final String sAbsPath15 = aFile15.getAbsolutePath ();
+      final String sRelPath = sAbsPath15.substring (sBasePath15.length () + 1);
+      final File aFile16 = new File (aBaseDir16, sRelPath);
 
-    final String sSrcComponentName = aSrcBaseDir.getName ();
-    final String sDstComponentName = _getNewArtifactName (sSrcComponentName);
-
-    final FileOperationManager aFOM = new FileOperationManager (new LoggingFileOperationCallback ());
-    final File aDstBaseDir = new File (aSrcBaseDir, "../" + sDstComponentName).getCanonicalFile ();
-    s_aLogger.info ("From " + aSrcBaseDir.toString ());
-    s_aLogger.info ("To " + aDstBaseDir.toString ());
-    final String sSrcBasePath = aSrcBaseDir.getAbsolutePath ();
-    final FilenameFilter aFF = new FilenameFilterMatchNoRegEx ("target");
-    for (final File aSrcFile : new FilterIterator <File> (new FileSystemRecursiveIterator (aSrcBaseDir, aFF),
-                                                          new FileFilterToIFilterAdapter (aFF)))
-      if (aSrcFile.isFile ())
+      if (aFile15.isFile ())
       {
-        final String sSrcName = aSrcFile.getName ();
-        final String sSrcAbsPath = aSrcFile.getAbsolutePath ();
-        final String sSrcRelPath = sSrcAbsPath.substring (sSrcBasePath.length () + 1);
-        final File aDstFile = new File (aDstBaseDir, sSrcRelPath);
+        // Ignore special files
+        if (sName15.equals (JDK15_README_CREATED_1ST) || sName15.endsWith (ARTIFACT_SUFFIX_JDK15 + ".iml"))
+          continue;
 
-        if (sSrcName.equals ("pom.xml"))
-          _updatePOM (aSrcFile, aDstFile, sSrcComponentName, sDstComponentName);
+        if (!aFile16.exists ())
+        {
+          s_aLogger.info (" DELETE FILE " + sAbsPath15);
+          s_aFOM.deleteFile (aFile15);
+        }
+      }
+      else
+        if (aFile15.isDirectory ())
+        {
+          if (!aFile16.exists ())
+          {
+            s_aLogger.info (" DELETE DIRECTORY " + sAbsPath15);
+            s_aFOM.deleteDirRecursive (aFile15);
+          }
+        }
+    }
+  }
+
+  public static void createJDK5Version (@Nonnull final File aSrcBaseDir16) throws IOException
+  {
+    if (aSrcBaseDir16 == null)
+      throw new NullPointerException ("Null directory");
+    final File aBaseDir16 = aSrcBaseDir16.getAbsoluteFile ();
+    if (!aBaseDir16.isDirectory ())
+      throw new IllegalArgumentException ("Illegal base directory provided: " + aBaseDir16);
+
+    final String sComponentName16 = aBaseDir16.getName ();
+    final String sComponentName15 = _getArtifactName15 (sComponentName16);
+
+    final File aBaseDir15 = new File (aBaseDir16, "../" + sComponentName15).getCanonicalFile ();
+    s_aLogger.info ("From " + aBaseDir16.toString ());
+    s_aLogger.info ("To " + aBaseDir15.toString ());
+    final String sBasePath16 = aBaseDir16.getAbsolutePath ();
+    final FilenameFilter aFF = new FilenameFilterMatchNoRegEx (DIRNAME_TARGET);
+    for (final File aFile16 : new FilterIterator <File> (new FileSystemRecursiveIterator (aBaseDir16, aFF),
+                                                         new FileFilterToIFilterAdapter (aFF)))
+      if (aFile16.isFile ())
+      {
+        final String sName16 = aFile16.getName ();
+        final String sAbsPath16 = aFile16.getAbsolutePath ();
+        final String sRelPath = sAbsPath16.substring (sBasePath16.length () + 1);
+        final File aFile15 = new File (aBaseDir15, sRelPath);
+
+        if (sName16.equals ("pom.xml"))
+          _updatePOM (aFile16, aFile15, sComponentName16, sComponentName15);
         else
-          if (sSrcName.equals (".project"))
-            _updateEclipseProject (aSrcFile, aDstFile, sSrcComponentName, sDstComponentName);
+          if (sName16.equals (".project"))
+            _updateEclipseProject (aFile16, aFile15, sComponentName16, sComponentName15);
           else
-            if (sSrcName.equals (".classpath"))
-              _updateEclipseClasspath (aSrcFile, aDstFile);
+            if (sName16.equals (".classpath"))
+              _updateEclipseClasspath (aFile16, aFile15);
             else
-              if (sSrcName.equals ("org.eclipse.jdt.core.prefs"))
-                _updateEclipsePrefs (aSrcFile, aDstFile);
+              if (sName16.equals ("org.eclipse.jdt.core.prefs"))
+                _updateEclipsePrefs (aFile16, aFile15);
               else
-                if (sSrcName.equals ("org.eclipse.wst.common.project.facet.core.xml"))
-                  _updateEclipseFacets (aSrcFile, aDstFile);
+                if (sName16.equals ("org.eclipse.wst.common.project.facet.core.xml"))
+                  _updateEclipseFacets (aFile16, aFile15);
                 else
-                  if (sSrcName.endsWith (".java"))
-                    _processJavaFile (aSrcFile, aDstFile);
+                  if (sName16.endsWith (".java"))
+                    _processJavaFile (aFile16, aFile15);
                   else
-                    if (sSrcName.equals (sSrcComponentName + ".iml"))
+                    if (sName16.equals (sComponentName16 + ".iml"))
                     {
                       // Skip the file - Idea project file
                     }
                     else
                     {
-                      aFOM.deleteFileIfExisting (aDstFile);
-                      aFOM.copyFile (aSrcFile, aDstFile);
+                      s_aFOM.deleteFileIfExisting (aFile15);
+                      s_aFOM.copyFile (aFile16, aFile15);
                     }
       }
 
     // Add a simple text file as information!
-    SimpleFileIO.writeFile (new File (aDstBaseDir, "readme-created.1st"),
+    SimpleFileIO.writeFile (new File (aBaseDir15, JDK15_README_CREATED_1ST),
                             "The content of this project is 100% automatically generated.\n"
                                 + "Do not alter anything in here, as it will be overwritten next time the project is generated!!!",
                             CCharset.CHARSET_UTF_8_OBJ);
-    s_aLogger.info ("Done creating JDK5 version of " + sSrcComponentName);
+    s_aLogger.info ("Done creating JDK5 version of " + sComponentName16);
+
+    _checkFor15Deletions (aBaseDir15, aBaseDir16);
   }
 }
