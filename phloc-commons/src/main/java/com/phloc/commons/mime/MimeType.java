@@ -264,6 +264,33 @@ public class MimeType implements IMimeType
     return EChange.CHANGED;
   }
 
+  /**
+   * Remove the parameter with the specified name.
+   * 
+   * @param sParamName
+   *        The name of the parameter to remove. May be <code>null</code>.
+   * @return {@link EChange#CHANGED} if the parameter was removed,
+   *         {@link EChange#UNCHANGED} otherwise.
+   */
+  @Nonnull
+  public EChange removeParameterWithName (@Nullable final String sParamName)
+  {
+    if (StringHelper.hasText (sParamName) && m_aParameters != null)
+    {
+      final int nMax = m_aParameters.size ();
+      for (int i = 0; i < nMax; ++i)
+      {
+        final MimeTypeParameter aParam = m_aParameters.get (i);
+        if (aParam.getAttribute ().equals (sParamName))
+        {
+          m_aParameters.remove (i);
+          return EChange.CHANGED;
+        }
+      }
+    }
+    return EChange.UNCHANGED;
+  }
+
   public boolean hasAnyParameters ()
   {
     return ContainerHelper.isNotEmpty (m_aParameters);
