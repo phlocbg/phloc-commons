@@ -35,6 +35,7 @@ import com.phloc.commons.id.IHasID;
 import com.phloc.commons.id.IHasSimpleIntID;
 import com.phloc.commons.name.IHasName;
 import com.phloc.commons.state.EChange;
+import com.phloc.commons.string.StringHelper;
 
 /**
  * Some enum utility methods.
@@ -371,7 +372,7 @@ public final class EnumHelper
     if (aClass == null)
       throw new NullPointerException ("class");
 
-    if (sName != null)
+    if (StringHelper.hasText (sName))
       for (final ENUMTYPE aElement : aClass.getEnumConstants ())
         if (aElement.getName ().equals (sName))
           return aElement;
@@ -442,7 +443,7 @@ public final class EnumHelper
     if (aClass == null)
       throw new NullPointerException ("class");
 
-    if (sName != null)
+    if (StringHelper.hasText (sName))
       for (final ENUMTYPE aElement : aClass.getEnumConstants ())
         if (aElement.getName ().equalsIgnoreCase (sName))
           return aElement;
