@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.EnumSet;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -794,6 +795,38 @@ public final class ContainerHelper
       while (aEnum.hasMoreElements ())
         ret.add (aEnum.nextElement ());
     return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE extends Enum <ELEMENTTYPE>> EnumSet <ELEMENTTYPE> newEnumSet (@Nonnull final Class <ELEMENTTYPE> aEnumClass,
+                                                                                           @Nullable final ELEMENTTYPE... aValues)
+  {
+    final EnumSet <ELEMENTTYPE> ret = EnumSet.noneOf (aEnumClass);
+    if (aValues != null)
+      for (final ELEMENTTYPE aValue : aValues)
+        ret.add (aValue);
+    return ret;
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE extends Enum <ELEMENTTYPE>> EnumSet <ELEMENTTYPE> newEnumSet (@Nonnull final Class <ELEMENTTYPE> aEnumClass,
+                                                                                           @Nullable final Collection <ELEMENTTYPE> aValues)
+  {
+    if (isEmpty (aValues))
+      return EnumSet.noneOf (aEnumClass);
+    return EnumSet.copyOf (aValues);
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static <ELEMENTTYPE extends Enum <ELEMENTTYPE>> EnumSet <ELEMENTTYPE> newEnumSet (@Nonnull final Class <ELEMENTTYPE> aEnumClass,
+                                                                                           @Nullable final EnumSet <ELEMENTTYPE> aValues)
+  {
+    if (aValues == null)
+      return EnumSet.noneOf (aEnumClass);
+    return EnumSet.copyOf (aValues);
   }
 
   @Nonnull
