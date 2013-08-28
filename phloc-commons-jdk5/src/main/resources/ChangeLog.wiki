@@ -2,6 +2,9 @@
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
 <table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody>
+<tr border="1"><td>8/28/13</td><td colspan="4">_Release *4.0.9*_</td></tr>
+<tr><td>8/27/13</td><td>add</td><td>api</td><td></td><td>Added new methods ContainerHelper.newEnumSet</td></tr>
+<tr><td>8/26/13</td><td>fix</td><td>api</td><td></td><td>Fixed handling of StringHelper.getHexStringLeadingZero() for negative values</td></tr>
 <tr><td>8/26/13</td><td>add</td><td>api</td><td></td><td>Added new method MimeType.removeParameterWithName</td></tr>
 <tr><td>8/26/13</td><td>add</td><td>api</td><td></td><td>Added new class TransformResultFactory</td></tr>
 <tr><td>8/23/13</td><td>add</td><td>api</td><td></td><td>Added new method StringHelper.removeAll(String,char)</td></tr>

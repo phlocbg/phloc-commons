@@ -26,6 +26,7 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.string.StringHelper;
 
 /**
  * Define what to do, when an invalid character is to be serialized to XML.
@@ -171,7 +172,7 @@ public enum EXMLIncorrectCharacterHandling
       if (aSB.length () > 0)
         aSB.append (", ");
       final int nChar = aChar.charValue ();
-      aSB.append ("0x").append (Integer.toHexString (nChar));
+      aSB.append ("0x").append (StringHelper.getHexStringLeadingZero (nChar, 2));
     }
     return aSB.toString ();
   }

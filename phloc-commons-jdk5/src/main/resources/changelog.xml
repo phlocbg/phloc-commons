@@ -20,6 +20,17 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <release date="2013-08-28" version="4.0.9" />
+  <entry date="2013-08-27" category="api" action="add">
+    <change>
+      <text locale="en">Added new methods ContainerHelper.newEnumSet</text>
+    </change>
+  </entry>
+  <entry date="2013-08-26" category="api" action="fix">
+    <change>
+      <text locale="en">Fixed handling of StringHelper.getHexStringLeadingZero() for negative values</text>
+    </change>
+  </entry>
   <entry date="2013-08-26" category="api" action="add">
     <change>
       <text locale="en">Added new method MimeType.removeParameterWithName</text>
