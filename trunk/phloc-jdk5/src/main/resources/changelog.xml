@@ -20,6 +20,12 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-jdk5">
+  <release date="2013-08-29" version="1.0.2" />
+  <entry date="2013-08-29" category="tech" action="add">
+    <change>
+      <text locale="en">Added javax.xml.bind:jaxb-api:2.1 dependency to all artifacts for JDK 1.5 compatibility</text>
+    </change>
+  </entry>
   <release date="2013-08-26" version="1.0.1" />
   <entry date="2013-08-26" category="tech" action="add">
     <change>
