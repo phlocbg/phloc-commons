@@ -149,39 +149,50 @@ public final class CreateJava5Version
     }
 
     // Modify all dependencies
-    MicroWalker.walkNode (aDoc, new DefaultHierarchyWalkerCallback <IMicroNode> ()
     {
-      @Override
-      public void onItemBeforeChildren (final IMicroNode aItem)
+      MicroWalker.walkNode (aDoc, new DefaultHierarchyWalkerCallback <IMicroNode> ()
       {
-        if (aItem.isElement ())
+        @Override
+        public void onItemBeforeChildren (final IMicroNode aItem)
         {
-          final IMicroElement eItem = (IMicroElement) aItem;
-          if (eItem.getLocalName ().equals ("groupId"))
+          if (aItem.isElement ())
           {
-            final String sGroupID = eItem.getTextContent ();
-            if (sGroupID.equals ("com.phloc"))
+            final IMicroElement eItem = (IMicroElement) aItem;
+            if (eItem.getLocalName ().equals ("groupId"))
             {
-              final IMicroElement eArtifactId = ((IMicroElement) eItem.getParent ()).getFirstChildElement ("artifactId");
-              final String sArtifactId = eArtifactId.getTextContent ();
-              if ("phloc-jdk5".equals (sArtifactId))
+              final String sGroupID = eItem.getTextContent ();
+              // Handle all "com.phloc" group artifacts
+              if (sGroupID.equals ("com.phloc"))
               {
-                // Remove this dependency
-                final IMicroElement eDep = (IMicroElement) eItem.getParent ();
-                eDep.getParent ().removeChild (eDep);
-              }
-              else
-                if (!"parent-pom".equals (sArtifactId))
+                final IMicroElement eArtifactId = ((IMicroElement) eItem.getParent ()).getFirstChildElement ("artifactId");
+                final String sArtifactId = eArtifactId.getTextContent ();
+                if ("phloc-jdk5".equals (sArtifactId))
                 {
-                  // Change the artifact name
-                  eArtifactId.removeAllChildren ();
-                  eArtifactId.appendText (_getArtifactName15 (sArtifactId));
+                  // Remove this dependency
+                  final IMicroElement eDep = (IMicroElement) eItem.getParent ();
+                  eDep.getParent ().removeChild (eDep);
                 }
+                else
+                  if (!"parent-pom".equals (sArtifactId))
+                  {
+                    // Change the artifact name
+                    eArtifactId.removeAllChildren ();
+                    eArtifactId.appendText (_getArtifactName15 (sArtifactId));
+                  }
+              }
             }
           }
         }
-      }
-    });
+      });
+
+      // Add JAXB-API dependency as it is in the runtime in 1.6 but not for 1.5
+      final IMicroElement eDependencies = eRoot.getFirstChildElement ("dependencies");
+      eDependencies.appendComment ("Explicitly required for Java 1.5!");
+      final IMicroElement eDep = eDependencies.appendElement (eRoot.getNamespaceURI (), "dependency");
+      eDep.appendElement (eRoot.getNamespaceURI (), "groupId").appendText ("javax.xml.bind");
+      eDep.appendElement (eRoot.getNamespaceURI (), "artifactId").appendText ("jaxb-api");
+      eDep.appendElement (eRoot.getNamespaceURI (), "version").appendText ("2.1");
+    }
 
     // Write
     final XMLWriterSettings aXWS = new XMLWriterSettings ().setNamespaceContext (new MapBasedNamespaceContext ().addMapping ("xsi",
