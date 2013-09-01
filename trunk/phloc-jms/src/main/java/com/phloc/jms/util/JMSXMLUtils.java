@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.jms;
+package com.phloc.jms.util;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
@@ -26,13 +26,13 @@ import javax.jms.Session;
 
 import org.w3c.dom.Node;
 
-import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.microdom.serialize.MicroWriter;
 import com.phloc.commons.xml.serialize.EXMLSerializeIndent;
 import com.phloc.commons.xml.serialize.IXMLWriterSettings;
 import com.phloc.commons.xml.serialize.XMLWriter;
 import com.phloc.commons.xml.serialize.XMLWriterSettings;
+import com.phloc.jms.stream.BytesMessageOutputStream;
 
 /**
  * Utility class to easily serialize the messages of this
@@ -62,12 +62,10 @@ public final class JMSXMLUtils
   @Nonnull
   public static Message createMessageForXML (@Nonnull final Session aSession, @Nonnull final Node aNode) throws JMSException
   {
-    // Convert XML to string
-    final String sXML = XMLWriter.getNodeAsString (aNode, XWS);
-
-    // File the message content
+    // Create the message
     final BytesMessage aMsg = aSession.createBytesMessage ();
-    aMsg.writeBytes (CharsetManager.getAsBytes (sXML, XWS.getCharsetObj ()));
+    // Serialize XML to BytesMessage
+    XMLWriter.writeToStream (aNode, new BytesMessageOutputStream (aMsg), XWS);
     return aMsg;
   }
 
@@ -85,12 +83,10 @@ public final class JMSXMLUtils
   @Nonnull
   public static Message createMessageForXML (@Nonnull final Session aSession, @Nonnull final IMicroNode aNode) throws JMSException
   {
-    // Convert XML to string
-    final String sXML = MicroWriter.getNodeAsString (aNode, XWS);
-
-    // File the message content
+    // Create the message
     final BytesMessage aMsg = aSession.createBytesMessage ();
-    aMsg.writeBytes (CharsetManager.getAsBytes (sXML, XWS.getCharsetObj ()));
+    // Serialize XML to BytesMessage
+    MicroWriter.writeToStream (aNode, new BytesMessageOutputStream (aMsg), XWS);
     return aMsg;
   }
 }
