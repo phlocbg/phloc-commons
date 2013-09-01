@@ -32,7 +32,7 @@ import com.phloc.commons.factory.IFactory;
  * @author Philip Helger
  */
 @ThreadSafe
-public final class MockActiveMQJMSFactory extends PoolableJMSFactory
+public final class MockActiveMQJMSFactory extends JMSFactory
 {
   public MockActiveMQJMSFactory ()
   {

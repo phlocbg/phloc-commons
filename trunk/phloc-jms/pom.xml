@@ -95,20 +95,6 @@
     </dependency>
      -->
     
-    <!-- For pooling: -->
-    <dependency>
-      <groupId>commons-pool</groupId>
-      <artifactId>commons-pool</artifactId>
-      <version>1.6</version>
-      <optional>true</optional>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.geronimo.specs</groupId>
-      <artifactId>geronimo-jta_1.0.1B_spec</artifactId>
-      <version>1.1.1</version>
-      <optional>true</optional>
-    </dependency>
-    
     <!-- For testing: -->
     <dependency>
       <groupId>org.apache.activemq</groupId>
