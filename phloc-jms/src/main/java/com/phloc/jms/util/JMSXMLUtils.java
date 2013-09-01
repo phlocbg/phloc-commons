@@ -22,7 +22,6 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 import javax.jms.BytesMessage;
 import javax.jms.JMSException;
-import javax.jms.Message;
 import javax.jms.Session;
 
 import org.w3c.dom.Document;
@@ -67,7 +66,7 @@ public final class JMSXMLUtils
    *         In case some JMS stuff goes wrong
    */
   @Nonnull
-  public static Message createMessageForXML (@Nonnull final Session aSession, @Nonnull final Node aNode) throws JMSException
+  public static BytesMessage createMessageForXML (@Nonnull final Session aSession, @Nonnull final Node aNode) throws JMSException
   {
     // Create the message
     final BytesMessage aMsg = aSession.createBytesMessage ();
@@ -88,7 +87,7 @@ public final class JMSXMLUtils
    *         In case some JMS stuff goes wrong
    */
   @Nonnull
-  public static Message createMessageForXML (@Nonnull final Session aSession, @Nonnull final IMicroNode aNode) throws JMSException
+  public static BytesMessage createMessageForXML (@Nonnull final Session aSession, @Nonnull final IMicroNode aNode) throws JMSException
   {
     // Create the message
     final BytesMessage aMsg = aSession.createBytesMessage ();
