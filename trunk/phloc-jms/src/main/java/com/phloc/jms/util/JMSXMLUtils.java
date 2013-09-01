@@ -18,20 +18,27 @@
 package com.phloc.jms.util;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 import javax.jms.BytesMessage;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
 
+import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroNode;
+import com.phloc.commons.microdom.serialize.MicroReader;
 import com.phloc.commons.microdom.serialize.MicroWriter;
 import com.phloc.commons.xml.serialize.EXMLSerializeIndent;
 import com.phloc.commons.xml.serialize.IXMLWriterSettings;
+import com.phloc.commons.xml.serialize.XMLReader;
 import com.phloc.commons.xml.serialize.XMLWriter;
 import com.phloc.commons.xml.serialize.XMLWriterSettings;
+import com.phloc.jms.stream.BytesMessageInputStream;
 import com.phloc.jms.stream.BytesMessageOutputStream;
 
 /**
@@ -88,5 +95,39 @@ public final class JMSXMLUtils
     // Serialize XML to BytesMessage
     MicroWriter.writeToStream (aNode, new BytesMessageOutputStream (aMsg), XWS);
     return aMsg;
+  }
+
+  /**
+   * Read the {@link BytesMessage} and convert it to an XML {@link Document}.
+   * 
+   * @param aMsg
+   *        The message to read from. May not be <code>null</code>.
+   * @return <code>null</code> if converting the message to an XML failed.
+   */
+  @Nullable
+  public static Document createXMLFromMessage (@Nonnull final BytesMessage aMsg)
+  {
+    try
+    {
+      return XMLReader.readXMLDOM (new BytesMessageInputStream (aMsg));
+    }
+    catch (final SAXException ex)
+    {
+      return null;
+    }
+  }
+
+  /**
+   * Read the {@link BytesMessage} and convert it to an XML
+   * {@link IMicroDocument}.
+   * 
+   * @param aMsg
+   *        The message to read from. May not be <code>null</code>.
+   * @return <code>null</code> if converting the message to an XML failed.
+   */
+  @Nullable
+  public static IMicroDocument createMicroXMLFromMessage (@Nonnull final BytesMessage aMsg)
+  {
+    return MicroReader.readMicroXML (new BytesMessageInputStream (aMsg));
   }
 }
