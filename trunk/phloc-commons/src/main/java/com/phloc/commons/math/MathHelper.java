@@ -879,6 +879,29 @@ public final class MathHelper
   }
 
   /**
+   * Get x% from base with rounding etc.
+   * 
+   * @param aBase
+   *        Base value. May not be <code>null</code>.
+   * @param aPercentage
+   *        Percentage value (0-100). May not be <code>null</code>.
+   * @param nScale
+   *        Maximum scale to achieve.
+   * @param eRoundingMode
+   *        Rounding mode to used. May not be <code>null</code>.
+   * @return x% from base (<code>=aBase * perc / 100</code>). Never
+   *         <code>null</code>.
+   */
+  @Nonnull
+  public static BigDecimal getPercentValue (@Nonnull final BigDecimal aBase,
+                                            @Nonnull final BigDecimal aPercentage,
+                                            @Nonnegative final int nScale,
+                                            @Nonnull final RoundingMode eRoundingMode)
+  {
+    return aBase.multiply (aPercentage).divide (CGlobal.BIGDEC_100, nScale, eRoundingMode);
+  }
+
+  /**
    * @param a
    *        a
    * @param b
