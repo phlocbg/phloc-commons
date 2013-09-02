@@ -39,7 +39,7 @@ public final class ThirdPartyModuleProvider_phloc_commons implements IThirdParty
   private static final IThirdPartyModule SLF4J = new ThirdPartyModule ("SLF4J API",
                                                                        "QOS.ch",
                                                                        ELicense.MIT,
-                                                                       new Version (1, 7, 2),
+                                                                       new Version (1, 7, 5),
                                                                        "http://www.slf4j.org/");
   private static final IThirdPartyModule BASE64 = new ThirdPartyModule ("Base64",
                                                                         "Robert Harder",
