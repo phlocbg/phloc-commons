@@ -20,6 +20,21 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2013-09-02" category="tech" action="add">
+    <change>
+      <text locale="en">Added the possibility to specify a custom IExceptionListener that will be called for SAX and DOM parsing</text>
+    </change>
+  </entry>
+  <entry date="2013-09-02" category="api" action="add">
+    <change>
+      <text locale="en">Made LoggingExceptionHandler more flexible</text>
+    </change>
+  </entry>
+  <entry date="2013-09-02" category="api" action="add">
+    <change>
+      <text locale="en">Added method StringParser.parseBoolean(String, boolean bDefault)</text>
+    </change>
+  </entry>
   <entry date="2013-09-02" category="api" action="add">
     <change>
       <text locale="en">Added methods in MathHelper</text>
