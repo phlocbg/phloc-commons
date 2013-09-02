@@ -9,10 +9,12 @@ import javax.annotation.Nullable;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
+import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.callback.LoggingExceptionHandler;
 import com.phloc.commons.error.EErrorLevel;
+import com.phloc.commons.xml.sax.AbstractSAXErrorHandler;
 
 /**
  * A special version of the {@link LoggingExceptionHandler} that handles the
@@ -39,7 +41,7 @@ public class XMLLoggingExceptionHandler extends LoggingExceptionHandler
     if (t instanceof SAXParseException)
     {
       final SAXParseException ex = (SAXParseException) t;
-      return "Error parsing XML document at position (" + ex.getLineNumber () + "," + ex.getColumnNumber () + ")";
+      return AbstractSAXErrorHandler.getSaxParseError (EErrorLevel.ERROR, ex).getAsString (CGlobal.DEFAULT_LOCALE);
     }
     if (t instanceof SAXException)
     {
