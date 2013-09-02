@@ -777,7 +777,16 @@ public final class MathHelper
   }
 
   /**
-   * Get the passed BigDecimal without any trailing zeroes.
+   * Get the passed BigDecimal without any trailing zeroes. Examples:
+   * <ul>
+   * <li>new BigDecimal ("0.00000000") --&gt; 0</li>
+   * <li>new BigDecimal ("10") --&gt; 10</li>
+   * <li>new BigDecimal ("10.00000000") --&gt; 10</li>
+   * <li>new BigDecimal ("10.1") --&gt; 10.1</li>
+   * <li>new BigDecimal ("10.10000000") --&gt; 10.1</li>
+   * <li>new BigDecimal ("10.345") --&gt; 10.345</li>
+   * <li>new BigDecimal ("10.3450000000") --&gt; 10.345</li>
+   * </ul>
    * 
    * @param aValue
    *        The BigDecimal to be modified. May be <code>null</code>.
@@ -790,12 +799,83 @@ public final class MathHelper
     if (aValue == null)
       return null;
 
+    // stripTrailingZeros does not work for "0"!
     if (BigDecimal.ZERO.compareTo (aValue) == 0)
       return BigDecimal.ZERO;
 
     final BigDecimal ret = aValue.stripTrailingZeros ();
     // Avoid stuff like "6E2"
     return ret.scale () >= 0 ? ret : ret.setScale (0);
+  }
+
+  /**
+   * Get the number of effective fraction digits by the specified BigDecimal.
+   * Examples:
+   * <ul>
+   * <li>new BigDecimal ("10") --&gt; 0</li>
+   * <li>new BigDecimal ("10.00000000") --&gt; 0</li>
+   * <li>new BigDecimal ("10.1") --&gt; 1</li>
+   * <li>new BigDecimal ("10.10000000") --&gt; 1</li>
+   * <li>new BigDecimal ("10.345") --&gt; 3</li>
+   * <li>new BigDecimal ("10.3450000000") --&gt; 3</li>
+   * </ul>
+   * 
+   * @param aBD
+   *        The BigDecimal to check. May not be <code>null</code>.
+   * @return The minimum number of fraction digits. Always &ge; 0.
+   */
+  @Nonnegative
+  public static int getFractionDigits (@Nonnull final BigDecimal aBD)
+  {
+    return getWithoutTrailingZeroes (aBD).scale ();
+  }
+
+  /**
+   * Add x% to base
+   * 
+   * @param aBase
+   *        Base value. May not be <code>null</code>.
+   * @param aPercentage
+   *        Percentage value (0-100). May not be <code>null</code>.
+   * @return base + x% (<code>=aBase * (100 + perc) / 100</code>). Never
+   *         <code>null</code>.
+   */
+  @Nonnull
+  public static BigDecimal addPercent (@Nonnull final BigDecimal aBase, @Nonnull final BigDecimal aPercentage)
+  {
+    return aBase.multiply (CGlobal.BIGDEC_100.add (aPercentage)).divide (CGlobal.BIGDEC_100);
+  }
+
+  /**
+   * Subtract x% from base
+   * 
+   * @param aBase
+   *        Base value. May not be <code>null</code>.
+   * @param aPercentage
+   *        Percentage value (0-100). May not be <code>null</code>.
+   * @return base - x% (<code>=aBase * (100 - perc) / 100</code>). Never
+   *         <code>null</code>.
+   */
+  @Nonnull
+  public static BigDecimal subtractPercent (@Nonnull final BigDecimal aBase, @Nonnull final BigDecimal aPercentage)
+  {
+    return aBase.multiply (CGlobal.BIGDEC_100.subtract (aPercentage)).divide (CGlobal.BIGDEC_100);
+  }
+
+  /**
+   * Get x% from base
+   * 
+   * @param aBase
+   *        Base value. May not be <code>null</code>.
+   * @param aPercentage
+   *        Percentage value (0-100). May not be <code>null</code>.
+   * @return x% from base (<code>=aBase * perc / 100</code>). Never
+   *         <code>null</code>.
+   */
+  @Nonnull
+  public static BigDecimal getPercentValue (@Nonnull final BigDecimal aBase, @Nonnull final BigDecimal aPercentage)
+  {
+    return aBase.multiply (aPercentage).divide (CGlobal.BIGDEC_100);
   }
 
   /**
