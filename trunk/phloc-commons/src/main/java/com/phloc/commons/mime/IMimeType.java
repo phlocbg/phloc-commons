@@ -141,6 +141,16 @@ public interface IMimeType extends IHasStringRepresentation, ICloneable <IMimeTy
   MimeTypeParameter getParameterAtIndex (@Nonnegative int nIndex);
 
   /**
+   * Check if a parameter with the specified name is present. The names are
+   * matched case sensitive!
+   * 
+   * @param sParamName
+   *        The parameter name to search. May be <code>null</code>.
+   * @return <code>true</code> if such a parameter exists.
+   */
+  boolean hasParameterWithName (@Nullable String sParamName);
+
+  /**
    * Get the parameter with the specified name. The names are matched case
    * sensitive!
    * 
@@ -161,4 +171,12 @@ public interface IMimeType extends IHasStringRepresentation, ICloneable <IMimeTy
    */
   @Nullable
   String getParameterValueWithName (@Nullable String sParamName);
+
+  /**
+   * @return A copy of this MIME type but only the content type and the sub
+   *         type. This method must even deliver a copy if no parameter are
+   *         present! May not return <code>null</code>.
+   */
+  @Nonnull
+  IMimeType getCopyWithoutParameters ();
 }
