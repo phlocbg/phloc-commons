@@ -82,14 +82,14 @@ public class RFC1522BCodec extends AbstractRFC1522Codec
     return m_aCharset;
   }
 
-  @Nonnull
-  public byte [] encode (@Nonnull final byte [] aDecodedBuffer)
+  @Nullable
+  public byte [] encode (@Nullable final byte [] aDecodedBuffer)
   {
     return aDecodedBuffer == null ? null : Base64.encodeBytesToBytes (aDecodedBuffer);
   }
 
-  @Nonnull
-  public byte [] decode (@Nonnull final byte [] aEncodedBuffer)
+  @Nullable
+  public byte [] decode (@Nullable final byte [] aEncodedBuffer)
   {
     return aEncodedBuffer == null ? null : Base64Helper.safeDecode (aEncodedBuffer);
   }

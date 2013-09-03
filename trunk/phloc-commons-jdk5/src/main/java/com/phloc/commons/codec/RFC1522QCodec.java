@@ -163,10 +163,13 @@ public class RFC1522QCodec extends AbstractRFC1522Codec
     m_bEncodeBlanks = bEncodeBlanks;
   }
 
-  @Nonnull
-  public byte [] encode (@Nonnull final byte [] bytes)
+  @Nullable
+  public byte [] encode (@Nullable final byte [] aBuffer)
   {
-    final byte [] data = QuotedPrintableCodec.encodeQuotedPrintable (PRINTABLE_CHARS, bytes);
+    if (aBuffer == null)
+      return null;
+
+    final byte [] data = QuotedPrintableCodec.encodeQuotedPrintable (PRINTABLE_CHARS, aBuffer);
     if (m_bEncodeBlanks)
       for (int i = 0; i < data.length; i++)
         if (data[i] == BLANK)
@@ -174,11 +177,14 @@ public class RFC1522QCodec extends AbstractRFC1522Codec
     return data;
   }
 
-  @Nonnull
-  public byte [] decode (@Nonnull final byte [] bytes) throws DecoderException
+  @Nullable
+  public byte [] decode (@Nullable final byte [] aBuffer) throws DecoderException
   {
+    if (aBuffer == null)
+      return null;
+
     boolean bHasUnderscores = false;
-    for (final byte b : bytes)
+    for (final byte b : aBuffer)
       if (b == UNDERSCORE)
       {
         bHasUnderscores = true;
@@ -187,10 +193,10 @@ public class RFC1522QCodec extends AbstractRFC1522Codec
 
     if (bHasUnderscores)
     {
-      final byte [] tmp = new byte [bytes.length];
-      for (int i = 0; i < bytes.length; i++)
+      final byte [] tmp = new byte [aBuffer.length];
+      for (int i = 0; i < aBuffer.length; i++)
       {
-        final byte b = bytes[i];
+        final byte b = aBuffer[i];
         if (b != UNDERSCORE)
           tmp[i] = b;
         else
@@ -198,7 +204,7 @@ public class RFC1522QCodec extends AbstractRFC1522Codec
       }
       return QuotedPrintableCodec.decodeQuotedPrintable (tmp);
     }
-    return QuotedPrintableCodec.decodeQuotedPrintable (bytes);
+    return QuotedPrintableCodec.decodeQuotedPrintable (aBuffer);
   }
 
   /**

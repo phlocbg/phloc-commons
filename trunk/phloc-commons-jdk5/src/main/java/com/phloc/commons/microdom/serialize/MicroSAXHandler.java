@@ -36,6 +36,9 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.ext.LexicalHandler;
 
+import com.phloc.commons.CGlobal;
+import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.error.EErrorLevel;
 import com.phloc.commons.microdom.EMicroNodeType;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroDocumentType;
@@ -46,6 +49,7 @@ import com.phloc.commons.microdom.impl.MicroDocument;
 import com.phloc.commons.microdom.impl.MicroDocumentType;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.xml.CXML;
+import com.phloc.commons.xml.sax.AbstractSAXErrorHandler;
 
 /**
  * The SAX handler used by the {@link MicroReader}.
@@ -242,24 +246,26 @@ final class MicroSAXHandler implements EntityResolver, DTDHandler, ContentHandle
   public void endPrefixMapping (final String sPrefix) throws SAXException
   {}
 
-  private static String _getMsg (final SAXParseException ex)
+  @Nonnull
+  @Nonempty
+  private static String _getMsg (@Nonnull final EErrorLevel eErrorLevel, @Nonnull final SAXParseException ex)
   {
-    return "[SAX] [" + ex.getLineNumber () + ":" + ex.getColumnNumber () + "] " + ex.getMessage ();
+    return AbstractSAXErrorHandler.getSaxParseError (eErrorLevel, ex).getAsString (CGlobal.DEFAULT_LOCALE);
   }
 
   public void warning (final SAXParseException ex)
   {
-    s_aLogger.warn (_getMsg (ex));
+    s_aLogger.warn (_getMsg (EErrorLevel.WARN, ex));
   }
 
   public void error (final SAXParseException ex)
   {
-    s_aLogger.error (_getMsg (ex));
+    s_aLogger.error (_getMsg (EErrorLevel.ERROR, ex));
   }
 
   public void fatalError (final SAXParseException ex)
   {
-    s_aLogger.error (_getMsg (ex));
+    s_aLogger.error (_getMsg (EErrorLevel.FATAL_ERROR, ex));
   }
 
   public void startEntity (final String sName) throws SAXException

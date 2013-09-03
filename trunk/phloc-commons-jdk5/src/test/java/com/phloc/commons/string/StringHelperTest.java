@@ -1951,6 +1951,7 @@ public final class StringHelperTest extends AbstractPhlocTestCase
     assertEquals ("12345", StringHelper.getWithoutAnySpaces ("12345"));
     // test unicode space
     assertEquals ("7650", StringHelper.getWithoutAnySpaces ("7 650"));
+    assertEquals ("", StringHelper.getWithoutAnySpaces ("      \t\r\n  \t\t\t"));
     assertEquals ("", StringHelper.getWithoutAnySpaces (""));
     assertEquals ("", StringHelper.getWithoutAnySpaces (null));
   }

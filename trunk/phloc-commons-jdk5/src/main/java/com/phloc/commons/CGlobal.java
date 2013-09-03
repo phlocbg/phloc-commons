@@ -226,12 +226,13 @@ public final class CGlobal
   public static final String LOCALE_SEPARATOR_STR = Character.toString (LOCALE_SEPARATOR);
 
   /**
-   * The very hardcoded default locale that cannot be changed.
+   * The very hardcoded default locale that cannot be changed. Equals
+   * {@link Locale#US}.
    */
   public static final Locale DEFAULT_LOCALE = Locale.US;
 
   /**
-   * The default language in case no other language is specified.
+   * The default language in case no other language is specified. Equals "en".
    */
   public static final String DEFAULT_LANGUAGE = DEFAULT_LOCALE.getLanguage ();
 
@@ -257,11 +258,12 @@ public final class CGlobal
   public static final Locale LOCALE_INDEPENDENT = new Locale (STR_INDEPENDENT, "", "");
 
   /**
-   * The number for formatting numbers in a machine readable way.
+   * The number for formatting numbers in a machine readable way. This is
+   * {@link Locale#ENGLISH} which has no country part!
    */
   public static final Locale LOCALE_FIXED_NUMBER_FORMAT = Locale.ENGLISH;
 
-  /** This year */
+  /** The year when the application was started. */
   public static final int CURRENT_YEAR = Calendar.getInstance ().get (Calendar.YEAR);
 
   @PresentForCodeCoverage

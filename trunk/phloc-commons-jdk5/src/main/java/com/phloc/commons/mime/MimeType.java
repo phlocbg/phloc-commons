@@ -315,6 +315,11 @@ public class MimeType implements IMimeType
     return ContainerHelper.getSafe (m_aParameters, nIndex);
   }
 
+  public boolean hasParameterWithName (@Nullable final String sParamName)
+  {
+    return getParameterWithName (sParamName) != null;
+  }
+
   @Nullable
   public MimeTypeParameter getParameterWithName (@Nullable final String sParamName)
   {
@@ -336,6 +341,12 @@ public class MimeType implements IMimeType
   public MimeType getClone ()
   {
     return new MimeType (m_eContentType, m_sContentSubType, m_aParameters);
+  }
+
+  @Nonnull
+  public MimeType getCopyWithoutParameters ()
+  {
+    return new MimeType (m_eContentType, m_sContentSubType);
   }
 
   @Override
