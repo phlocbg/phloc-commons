@@ -41,8 +41,9 @@ public final class EJavaVersionTest
     assertFalse (EJavaVersion.JDK_12.isCurrentVersion ());
     assertFalse (EJavaVersion.JDK_13.isCurrentVersion ());
     assertFalse (EJavaVersion.JDK_14.isCurrentVersion ());
-    assertFalse (EJavaVersion.JDK_15.isCurrentVersion ());
-    assertTrue (EJavaVersion.JDK_16.isCurrentVersion () || EJavaVersion.JDK_17.isCurrentVersion ());
+    assertTrue (EJavaVersion.JDK_15.isCurrentVersion () ||
+                EJavaVersion.JDK_16.isCurrentVersion () ||
+                EJavaVersion.JDK_17.isCurrentVersion ());
     final EJavaVersion eJV = EJavaVersion.getCurrentVersion ();
     assertTrue (eJV == EJavaVersion.JDK_16 || eJV == EJavaVersion.JDK_17);
 
