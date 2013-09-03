@@ -113,10 +113,10 @@ public class ResourceError implements IResourceError
   @OverrideOnDemand
   public String getAsString (@Nonnull final Locale aDisplayLocale)
   {
-    String ret = "[" + m_eErrorLevel.getID () + "]";
+    String ret = "[" + m_eErrorLevel.getID () + "] ";
     final String sLocation = m_aLocation.getAsString ();
     if (StringHelper.hasText (sLocation))
-      ret += ' ' + sLocation + ": ";
+      ret += sLocation + ": ";
     ret += getDisplayText (aDisplayLocale);
     if (m_aLinkedException != null)
       ret += " (" + m_aLinkedException.getMessage () + ")";

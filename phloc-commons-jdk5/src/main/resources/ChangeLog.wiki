@@ -2,6 +2,13 @@
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
 <table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody>
+<tr border="1"><td>9/3/13</td><td colspan="4">_Release *4.0.10*_</td></tr>
+<tr><td>9/3/13</td><td>add</td><td>api</td><td></td><td>Added the possibility to override exception handling in AbstractJAXBMarshaller</td></tr>
+<tr><td>9/3/13</td><td>add</td><td>api</td><td></td><td>Extended IMimeType API slightly.</td></tr>
+<tr><td>9/2/13</td><td>add</td><td>tech</td><td></td><td>Added the possibility to specify a custom IExceptionListener that will be called for SAX and DOM parsing</td></tr>
+<tr><td>9/2/13</td><td>add</td><td>api</td><td></td><td>Made LoggingExceptionHandler more flexible</td></tr>
+<tr><td>9/2/13</td><td>add</td><td>api</td><td></td><td>Added method StringParser.parseBoolean(String, boolean bDefault)</td></tr>
+<tr><td>9/2/13</td><td>add</td><td>api</td><td></td><td>Added methods in MathHelper</td></tr>
 <tr border="1"><td>8/28/13</td><td colspan="4">_Release *4.0.9*_</td></tr>
 <tr><td>8/27/13</td><td>add</td><td>api</td><td></td><td>Added new methods ContainerHelper.newEnumSet</td></tr>
 <tr><td>8/26/13</td><td>fix</td><td>api</td><td></td><td>Fixed handling of StringHelper.getHexStringLeadingZero() for negative values</td></tr>

@@ -118,6 +118,37 @@ public final class StringParser
   }
 
   /**
+   * Parse the given {@link String} as boolean value. All values that are equal
+   * to "true" (ignoring case) will result in <code>true</code> return values.
+   * All values that are equal to "false" (ignoring case) will result in
+   * <code>false</code> return values. All other values will return the default.
+   * 
+   * @param sStr
+   *        The string to be interpreted. May be <code>null</code>.
+   * @param bDefault
+   *        The default value to be returned if the passed string is neither
+   *        "true" nor "false".
+   * @return <code>true</code> or <code>false</code> :)
+   */
+  public static boolean parseBool (@Nullable final String sStr, final boolean bDefault)
+  {
+    // Do we need to start thinking at all?
+    if (sStr != null && sStr.length () > 0)
+    {
+      // Is it true?
+      if (sStr.equalsIgnoreCase ("true"))
+        return true;
+
+      // Is it false?
+      if (sStr.equalsIgnoreCase ("false"))
+        return false;
+    }
+
+    // Neither true nor false
+    return bDefault;
+  }
+
+  /**
    * Try to interpret the passed object as boolean. This works only if the
    * passed object is either a {@link String} or a {@link Boolean}.
    * 

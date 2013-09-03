@@ -17,8 +17,8 @@
  */
 package com.phloc.commons.xml.namespace;
 
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -44,7 +44,7 @@ import com.phloc.commons.string.ToStringGenerator;
 public class MapBasedNamespaceContext extends AbstractNamespaceContext
 {
   private String m_sDefaultNamespaceURI;
-  private final Map <String, String> m_aPrefix2NS = new HashMap <String, String> ();
+  private final Map <String, String> m_aPrefix2NS = new LinkedHashMap <String, String> ();
   private final IMultiMapSetBased <String, String> m_aNS2Prefix = new MultiHashMapHashSetBased <String, String> ();
 
   public MapBasedNamespaceContext ()
@@ -128,7 +128,7 @@ public class MapBasedNamespaceContext extends AbstractNamespaceContext
   @ReturnsMutableCopy
   public Map <String, String> getPrefixToNamespaceURIMap ()
   {
-    return ContainerHelper.newMap (m_aPrefix2NS);
+    return ContainerHelper.newOrderedMap (m_aPrefix2NS);
   }
 
   @Override

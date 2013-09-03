@@ -411,6 +411,25 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
     // empty
   }
 
+  @OverrideOnDemand
+  protected void handleReadException (@Nonnull final JAXBException ex)
+  {
+    if (ex instanceof UnmarshalException)
+    {
+      // The JAXB specification does not mandate how the JAXB provider
+      // must behave when attempting to unmarshal invalid XML data. In
+      // those cases, the JAXB provider is allowed to terminate the
+      // call to unmarshal with an UnmarshalException.
+      final Throwable aLinked = ((UnmarshalException) ex).getLinkedException ();
+      if (aLinked instanceof SAXParseException)
+        s_aLogger.error ("Failed to parse XML document: " + aLinked.getMessage ());
+      else
+        s_aLogger.error ("Unmarshal exception reading document", ex);
+    }
+    else
+      s_aLogger.warn ("JAXB Exception reading document", ex);
+  }
+
   /**
    * Read a document from the specified source.
    * 
@@ -430,21 +449,9 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
       customizeUnmarshaller (aUnmarshaller);
       return aUnmarshaller.unmarshal (aSource, m_aType).getValue ();
     }
-    catch (final UnmarshalException ex)
-    {
-      // The JAXB specification does not mandate how the JAXB provider
-      // must behave when attempting to unmarshal invalid XML data. In
-      // those cases, the JAXB provider is allowed to terminate the
-      // call to unmarshal with an UnmarshalException.
-      final Throwable aLinked = ex.getLinkedException ();
-      if (aLinked instanceof SAXParseException)
-        s_aLogger.error ("Failed to parse XML document: " + aLinked.getMessage ());
-      else
-        s_aLogger.error ("Unmarshal exception reading document", ex);
-    }
     catch (final JAXBException ex)
     {
-      s_aLogger.warn ("JAXB Exception reading document", ex);
+      handleReadException (ex);
     }
     return null;
   }
@@ -554,6 +561,15 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
     // empty
   }
 
+  @OverrideOnDemand
+  protected void handleWriteException (@Nonnull final JAXBException ex)
+  {
+    if (ex instanceof MarshalException)
+      s_aLogger.error ("Marshal exception writing object", ex);
+    else
+      s_aLogger.warn ("JAXB Exception writing object", ex);
+  }
+
   /**
    * Convert the passed object to XML.
    * 
@@ -575,17 +591,14 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
     {
       final Marshaller aMarshaller = _createMarshaller ();
       customizeMarshaller (aMarshaller);
+
       final JAXBElement <JAXBTYPE> aJAXBElement = wrapObject (aObject);
       aMarshaller.marshal (aJAXBElement, aResult);
       return ESuccess.SUCCESS;
     }
-    catch (final MarshalException ex)
-    {
-      s_aLogger.error ("Marshal exception writing object", ex);
-    }
     catch (final JAXBException ex)
     {
-      s_aLogger.warn ("JAXB Exception writing object", ex);
+      handleWriteException (ex);
     }
     return ESuccess.FAILURE;
   }

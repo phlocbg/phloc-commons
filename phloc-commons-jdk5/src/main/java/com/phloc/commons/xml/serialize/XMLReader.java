@@ -18,10 +18,8 @@
 package com.phloc.commons.xml.serialize;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
-import java.net.UnknownHostException;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -35,8 +33,6 @@ import javax.annotation.concurrent.ThreadSafe;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.validation.Schema;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.DTDHandler;
@@ -49,6 +45,8 @@ import org.xml.sax.ext.LexicalHandler;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
+import com.phloc.commons.callback.IExceptionHandler;
+import com.phloc.commons.callback.LoggingExceptionHandler;
 import com.phloc.commons.exceptions.InitializationException;
 import com.phloc.commons.factory.IFactory;
 import com.phloc.commons.io.IReadableResource;
@@ -102,8 +100,6 @@ public final class XMLReader
     }
   }
 
-  /** The logger to use. */
-  private static final Logger s_aLogger = LoggerFactory.getLogger (XMLReader.class);
   private static final IStatisticsHandlerTimer s_aSaxTimerHdl = StatisticsManager.getTimerHandler (XMLReader.class.getName () +
                                                                                                    "$SAX");
   private static final IStatisticsHandlerCounter s_aSaxErrorCounterHdl = StatisticsManager.getCounterHandler (XMLReader.class.getName () +
@@ -135,6 +131,10 @@ public final class XMLReader
       put (EXMLParserFeature.AUGMENT_PSVI, Boolean.FALSE);
     }
   };
+
+  // Default SAX exception handler
+  @GuardedBy ("s_aRWLock")
+  private static IExceptionHandler <Throwable> s_aSAXExceptionHandler = new XMLLoggingExceptionHandler ();
 
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")
@@ -396,13 +396,13 @@ public final class XMLReader
     }
     catch (final SAXException ex)
     {
-      s_aLogger.error ("Invalid XML document", ex);
+      getDefaultSAXExceptionHandler ().onException (ex);
       s_aDomErrorCounterHdl.increment ();
       throw ex;
     }
-    catch (final IOException ex)
+    catch (final Exception ex)
     {
-      s_aLogger.error ("Error reading XML document", ex);
+      getDefaultSAXExceptionHandler ().onException (ex);
       s_aDomErrorCounterHdl.increment ();
     }
     finally
@@ -737,22 +737,13 @@ public final class XMLReader
         {
           // fall-through
         }
+
       if (!bHandled)
-        s_aLogger.error ("Error parsing XML at position (" + ex.getLineNumber () + "," + ex.getColumnNumber () + ")",
-                         ex);
+        getDefaultSAXExceptionHandler ().onException (ex);
     }
-    catch (final SAXException ex)
+    catch (final Exception ex)
     {
-      s_aLogger.error ("Error parsing XML", ex);
-    }
-    catch (final UnknownHostException ex)
-    {
-      // Caught if entity resolver failed
-      s_aLogger.error ("Failed to resolve entity host: " + ex.getMessage ());
-    }
-    catch (final IOException ex)
-    {
-      s_aLogger.error ("Error reading XML from input", ex);
+      getDefaultSAXExceptionHandler ().onException (ex);
     }
     finally
     {
@@ -807,6 +798,47 @@ public final class XMLReader
         s_aSAXDefaultParserFeatures.remove (eFeature);
       else
         s_aSAXDefaultParserFeatures.put (eFeature, aValue);
+    }
+    finally
+    {
+      s_aRWLock.writeLock ().unlock ();
+    }
+  }
+
+  /**
+   * @return The default exception handler. By default it is an implementation
+   *         of {@link LoggingExceptionHandler}. Never <code>null</code>.
+   */
+  @Nonnull
+  public static IExceptionHandler <Throwable> getDefaultSAXExceptionHandler ()
+  {
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      return s_aSAXExceptionHandler;
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  /**
+   * Set a new global exception handler.
+   * 
+   * @param aExceptionHandler
+   *        The new handler to be set. May not be <code>null</code>.
+   */
+  @Nonnull
+  public static void setDefaultSAXExceptionHandler (@Nonnull final IExceptionHandler <Throwable> aExceptionHandler)
+  {
+    if (aExceptionHandler == null)
+      throw new NullPointerException ("ExceptionHandler");
+
+    s_aRWLock.writeLock ().lock ();
+    try
+    {
+      s_aSAXExceptionHandler = aExceptionHandler;
     }
     finally
     {

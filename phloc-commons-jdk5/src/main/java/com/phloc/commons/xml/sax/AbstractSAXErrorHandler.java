@@ -34,7 +34,7 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * java.xml error handler base class.
- *
+ * 
  * @author Philip Helger
  */
 public abstract class AbstractSAXErrorHandler implements ErrorHandler
@@ -51,7 +51,7 @@ public abstract class AbstractSAXErrorHandler implements ErrorHandler
 
   /**
    * Constructor that takes a parent error handler to be called.
-   *
+   * 
    * @param aWrappedErrorHandler
    *        The parent error handler. May be <code>null</code>.
    */
@@ -70,22 +70,22 @@ public abstract class AbstractSAXErrorHandler implements ErrorHandler
   }
 
   /**
-   * Utility method to convert a {@link SAXParseException} into a readable
-   * string.
-   *
+   * Utility method to convert a {@link SAXParseException} into an
+   * {@link IResourceError}.
+   * 
    * @param eErrorLevel
    *        The occurred error level. May not be <code>null</code>.
    * @param ex
    *        The exception to convert. May not be <code>null</code>.
-   * @return The String representation.
+   * @return The {@link IResourceError} representation. Never <code>null</code>.
    */
   @Nonnull
-  protected static IResourceError getSaxParseError (@Nonnull final EErrorLevel eErrorLevel,
-                                                    @Nonnull final SAXParseException ex)
+  public static IResourceError getSaxParseError (@Nonnull final EErrorLevel eErrorLevel,
+                                                 @Nonnull final SAXParseException ex)
   {
     final String sResourceID = StringHelper.getConcatenatedOnDemand (ex.getPublicId (), "/", ex.getSystemId ());
     final IResourceLocation aLocation = new ResourceLocation (sResourceID, ex.getLineNumber (), ex.getColumnNumber ());
-    return new ResourceError (aLocation, eErrorLevel, ex.getMessage ());
+    return new ResourceError (aLocation, eErrorLevel, "[SAX] " + ex.getMessage ());
   }
 
   protected abstract void internalLog (@Nonnull EErrorLevel eErrorLevel, @Nonnull SAXParseException aException);

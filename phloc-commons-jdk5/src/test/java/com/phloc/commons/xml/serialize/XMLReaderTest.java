@@ -27,6 +27,8 @@ import java.io.Reader;
 
 import javax.xml.validation.Schema;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +36,7 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
+import com.phloc.commons.callback.DoNothingExceptionHandler;
 import com.phloc.commons.callback.IThrowingRunnable;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.io.IReadableResource;
@@ -59,9 +62,17 @@ public final class XMLReaderTest
   @SuppressWarnings ("unused")
   private static final Logger s_aLogger = LoggerFactory.getLogger (XMLReaderTest.class);
 
-  @Test
-  public void testReadString ()
-  {}
+  @BeforeClass
+  public static void bc ()
+  {
+    XMLReader.setDefaultSAXExceptionHandler (new DoNothingExceptionHandler ());
+  }
+
+  @AfterClass
+  public static void ac ()
+  {
+    XMLReader.setDefaultSAXExceptionHandler (new XMLLoggingExceptionHandler ());
+  }
 
   /**
    * Test method readXMLDOM
