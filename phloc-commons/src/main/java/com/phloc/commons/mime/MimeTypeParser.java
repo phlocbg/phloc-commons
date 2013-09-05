@@ -305,22 +305,37 @@ public final class MimeTypeParser
     if (eQuotingAlgorithm == null)
       throw new NullPointerException ("quotingAlgorithm");
 
-    if (StringHelper.hasNoText (sMimeType))
+    // Trim
+    final String sRealMimeType = StringHelper.trim (sMimeType);
+
+    // No content -> no mime type
+    if (StringHelper.hasNoText (sRealMimeType))
       return null;
 
+    // Special case use sometimes from within browsers
+    if (sRealMimeType.equals ("*"))
+    {
+      // Interpret as "*/*"
+      return new MimeType (EMimeContentType._STAR, "*");
+    }
+
     // Find the separator between content type and sub type ("/")
-    final int nSlashIndex = sMimeType.indexOf (CMimeType.SEPARATOR_CONTENTTYPE_SUBTYPE);
+    final int nSlashIndex = sRealMimeType.indexOf (CMimeType.SEPARATOR_CONTENTTYPE_SUBTYPE);
     if (nSlashIndex < 0)
-      throw new MimeTypeParserException ("MimeType is missing the main '/' separator char");
+      throw new MimeTypeParserException ("MimeType '" + sRealMimeType + "' is missing the main '/' separator char");
 
     // Use the main content type
-    final String sContentType = sMimeType.substring (0, nSlashIndex).trim ();
+    final String sContentType = sRealMimeType.substring (0, nSlashIndex).trim ();
     final EMimeContentType eContentType = EMimeContentType.getFromIDOrNull (sContentType);
     if (eContentType == null)
-      throw new MimeTypeParserException ("MimeType uses an unknown content type '" + sContentType + "'");
+      throw new MimeTypeParserException ("MimeType '" +
+                                         sRealMimeType +
+                                         "' uses an unknown content type '" +
+                                         sContentType +
+                                         "'");
 
     // Extract the rest (sub type + parameters)
-    final String sRest = sMimeType.substring (nSlashIndex + 1);
+    final String sRest = sRealMimeType.substring (nSlashIndex + 1);
     final int nSemicolonIndex = sRest.indexOf (CMimeType.SEPARATOR_PARAMETER);
     String sContentSubType;
     String sParameters;
@@ -337,7 +352,11 @@ public final class MimeTypeParser
     }
 
     if (StringHelper.hasNoText (sContentSubType))
-      throw new MimeTypeParserException ("MimeType uses an empty content sub type '" + sMimeType + "'");
+      throw new MimeTypeParserException ("MimeType '" +
+                                         sRealMimeType +
+                                         "' uses an empty content sub type '" +
+                                         sRealMimeType +
+                                         "'");
 
     final MimeType ret = new MimeType (eContentType, sContentSubType);
     if (StringHelper.hasText (sParameters))
