@@ -122,7 +122,9 @@ public interface IHasErrorLevels
   boolean containsNoError ();
 
   /**
-   * @return The number of contained success messages. Always &ge; 0.
+   * @return The number of contained error messages. Always &ge; 0. All error
+   *         levels &ge; {@link EErrorLevel#ERROR} are considered to be an
+   *         error!
    */
   @Nonnegative
   int getErrorCount ();
