@@ -30,7 +30,8 @@ import com.phloc.commons.collections.iterate.IIterableIterator;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * Iterate child elements of a single node. Does not iterate recursively.
+ * Iterate child elements of a single node. Does not iterate recursively. Does
+ * not return the source node.
  * 
  * @author Philip Helger
  */
