@@ -47,6 +47,12 @@ public class JMSSimpleReceiver
     m_aFactory = aFactory;
   }
 
+  @Nonnull
+  protected final IJMSFactory getJMSFactory ()
+  {
+    return m_aFactory;
+  }
+
   @OverrideOnDemand
   protected void onException (@Nonnull final JMSException ex)
   {

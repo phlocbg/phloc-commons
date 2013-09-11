@@ -58,6 +58,17 @@ public class JMSSimpleSender
     m_bPersistent = bPersistent;
   }
 
+  @Nonnull
+  protected final IJMSFactory getJMSFactory ()
+  {
+    return m_aFactory;
+  }
+
+  public final boolean isPersistent ()
+  {
+    return m_bPersistent;
+  }
+
   @OverrideOnDemand
   protected void onException (@Nonnull final JMSException ex)
   {
