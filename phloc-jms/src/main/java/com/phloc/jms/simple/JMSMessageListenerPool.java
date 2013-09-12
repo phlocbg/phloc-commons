@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 import javax.jms.Connection;
 import javax.jms.Destination;
 import javax.jms.JMSException;
+import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageListener;
 import javax.jms.Session;
@@ -64,6 +65,59 @@ public class JMSMessageListenerPool implements Closeable
     catch (final JMSException ex)
     {
       throw new IllegalStateException ("Failed to register listener for queue '" + sQueueName + "'", ex);
+    }
+  }
+
+  @Nonnull
+  public Destination registerMessageListenerForCorrelationID (@Nonnull @Nonempty final String sQueueName,
+                                                              @Nonnull @Nonempty final String sCorrelationID,
+                                                              @Nonnull final MessageListener aListener)
+  {
+    if (StringHelper.hasNoText (sQueueName))
+      throw new IllegalArgumentException ("queueName");
+    if (StringHelper.hasNoText (sCorrelationID))
+      throw new IllegalArgumentException ("correlationID");
+    if (aListener == null)
+      throw new NullPointerException ("listener");
+
+    try
+    {
+      // Create the destination queue
+      final Destination aDestination = m_aSession.createQueue (sQueueName);
+
+      // Create a MessageConsumer from the Session to the Queue
+      final MessageConsumer aConsumer = m_aSession.createConsumer (aDestination, "JMSCorrelationID = '" +
+                                                                                 sCorrelationID +
+                                                                                 "'");
+      aConsumer.setMessageListener (new MessageListener ()
+      {
+        public void onMessage (final Message aMessage)
+        {
+          try
+          {
+            aListener.onMessage (aMessage);
+          }
+          finally
+          {
+            // Close this specific consumer
+            JMSUtils.close (aConsumer);
+          }
+        }
+      });
+      s_aLogger.info ("Successfully registered listener for queue '" +
+                      sQueueName +
+                      "' and correlation ID '" +
+                      sCorrelationID +
+                      "'");
+      return aDestination;
+    }
+    catch (final JMSException ex)
+    {
+      throw new IllegalStateException ("Failed to register listener for queue '" +
+                                       sQueueName +
+                                       "' and correlation ID '" +
+                                       sCorrelationID +
+                                       "'", ex);
     }
   }
 }
