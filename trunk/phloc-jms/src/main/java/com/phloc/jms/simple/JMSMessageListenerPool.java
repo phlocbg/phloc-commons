@@ -44,8 +44,9 @@ public class JMSMessageListenerPool implements Closeable
     s_aLogger.info ("Closed MessageListener pool");
   }
 
-  public void registerMessageListener (@Nonnull @Nonempty final String sQueueName,
-                                       @Nonnull final MessageListener aListener)
+  @Nonnull
+  public Destination registerMessageListener (@Nonnull @Nonempty final String sQueueName,
+                                              @Nonnull final MessageListener aListener)
   {
     if (StringHelper.hasNoText (sQueueName))
       throw new IllegalArgumentException ("queueName");
@@ -61,6 +62,8 @@ public class JMSMessageListenerPool implements Closeable
       final MessageConsumer aConsumer = m_aSession.createConsumer (aDestination);
       aConsumer.setMessageListener (aListener);
       s_aLogger.info ("Successfully registered listener for queue '" + sQueueName + "'");
+
+      return aDestination;
     }
     catch (final JMSException ex)
     {
@@ -68,10 +71,23 @@ public class JMSMessageListenerPool implements Closeable
     }
   }
 
+  /**
+   * @param sQueueName
+   *        Queue name to listen
+   * @param sCorrelationID
+   *        JMS correlation ID to match
+   * @param aListener
+   *        The main listener
+   * @param bOnce
+   *        <code>true</code> if this is a one-time action in which case the
+   *        created destination can be closed after the first retrieval.
+   * @return The destination used
+   */
   @Nonnull
   public Destination registerMessageListenerForCorrelationID (@Nonnull @Nonempty final String sQueueName,
                                                               @Nonnull @Nonempty final String sCorrelationID,
-                                                              @Nonnull final MessageListener aListener)
+                                                              @Nonnull final MessageListener aListener,
+                                                              final boolean bOnce)
   {
     if (StringHelper.hasNoText (sQueueName))
       throw new IllegalArgumentException ("queueName");
@@ -89,21 +105,30 @@ public class JMSMessageListenerPool implements Closeable
       final MessageConsumer aConsumer = m_aSession.createConsumer (aDestination, "JMSCorrelationID = '" +
                                                                                  sCorrelationID +
                                                                                  "'");
-      aConsumer.setMessageListener (new MessageListener ()
+      if (bOnce)
       {
-        public void onMessage (final Message aMessage)
+        aConsumer.setMessageListener (new MessageListener ()
         {
-          try
+          public void onMessage (final Message aMessage)
           {
-            aListener.onMessage (aMessage);
+            try
+            {
+              aListener.onMessage (aMessage);
+            }
+            finally
+            {
+              // Close this specific consumer
+              JMSUtils.close (aConsumer);
+            }
           }
-          finally
-          {
-            // Close this specific consumer
-            JMSUtils.close (aConsumer);
-          }
-        }
-      });
+        });
+      }
+      else
+      {
+        // Use listener as is
+        aConsumer.setMessageListener (aListener);
+      }
+
       s_aLogger.info ("Successfully registered listener for queue '" +
                       sQueueName +
                       "' and correlation ID '" +
