@@ -44,9 +44,16 @@ public class JMSMessageListenerPool implements Closeable
     s_aLogger.info ("Closed MessageListener pool");
   }
 
+  /**
+   * @param sQueueName
+   *        Queue name to listen
+   * @param aListener
+   *        The main listener
+   * @return The destination and the message consumer used
+   */
   @Nonnull
-  public Destination registerMessageListener (@Nonnull @Nonempty final String sQueueName,
-                                              @Nonnull final MessageListener aListener)
+  public JMSDestinationAndConsumer registerMessageListener (@Nonnull @Nonempty final String sQueueName,
+                                                            @Nonnull final MessageListener aListener)
   {
     if (StringHelper.hasNoText (sQueueName))
       throw new IllegalArgumentException ("queueName");
@@ -63,7 +70,7 @@ public class JMSMessageListenerPool implements Closeable
       aConsumer.setMessageListener (aListener);
       s_aLogger.info ("Successfully registered listener for queue '" + sQueueName + "'");
 
-      return aDestination;
+      return new JMSDestinationAndConsumer (aDestination, aConsumer);
     }
     catch (final JMSException ex)
     {
@@ -81,13 +88,13 @@ public class JMSMessageListenerPool implements Closeable
    * @param bOnce
    *        <code>true</code> if this is a one-time action in which case the
    *        created destination can be closed after the first retrieval.
-   * @return The destination used
+   * @return The destination and the message consumer used
    */
   @Nonnull
-  public Destination registerMessageListenerForCorrelationID (@Nonnull @Nonempty final String sQueueName,
-                                                              @Nonnull @Nonempty final String sCorrelationID,
-                                                              @Nonnull final MessageListener aListener,
-                                                              final boolean bOnce)
+  public JMSDestinationAndConsumer registerMessageListenerForCorrelationID (@Nonnull @Nonempty final String sQueueName,
+                                                                            @Nonnull @Nonempty final String sCorrelationID,
+                                                                            @Nonnull final MessageListener aListener,
+                                                                            final boolean bOnce)
   {
     if (StringHelper.hasNoText (sQueueName))
       throw new IllegalArgumentException ("queueName");
@@ -134,7 +141,7 @@ public class JMSMessageListenerPool implements Closeable
                       "' and correlation ID '" +
                       sCorrelationID +
                       "'");
-      return aDestination;
+      return new JMSDestinationAndConsumer (aDestination, aConsumer);
     }
     catch (final JMSException ex)
     {
