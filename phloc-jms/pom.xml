@@ -8,7 +8,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>phloc-jms</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <packaging>bundle</packaging>
   <name>phloc-jms</name>
   <description>Simple JMS utility library</description>
@@ -23,9 +23,9 @@
   </licenses>
        
   <scm>
-    <url>http://code.google.com/p/phloc-commons/source/browse/</url>
-    <connection>scm:svn:http://phloc-commons.googlecode.com/svn/trunk/phloc-jms</connection>
-    <developerConnection>scm:svn:https://phloc-commons.googlecode.com/svn/trunk/phloc-jms</developerConnection>
+    <url>http://code.google.com/p/phloc-commons/source/browse/tags/phloc-jms-1.0.0</url>
+    <connection>scm:svn:http://phloc-commons.googlecode.com/svn/tags/phloc-jms-1.0.0</connection>
+    <developerConnection>scm:svn:https://phloc-commons.googlecode.com/svn/tags/phloc-jms-1.0.0</developerConnection>
   </scm>
 
   <organization>
