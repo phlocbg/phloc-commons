@@ -10,7 +10,7 @@
   <artifactId>phloc-jms-pool</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>bundle</packaging>
-  <name>phloc-jms</name>
+  <name>phloc-jms-pool</name>
   <description>Simple JMS utility library</description>
   <url>http://repo.phloc.com/apidocs/phloc-jms-pool/${project.version}</url>
   
@@ -85,7 +85,7 @@
     <dependency>
       <groupId>com.phloc</groupId>
       <artifactId>phloc-jms</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
+      <version>1.0.0</version>
     </dependency>
     
     <!-- For pooling: -->
