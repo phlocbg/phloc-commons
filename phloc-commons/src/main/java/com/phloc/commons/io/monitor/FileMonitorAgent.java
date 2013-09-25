@@ -1,3 +1,20 @@
+/**
+ * Copyright (C) 2006-2013 phloc systems
+ * http://www.phloc.com
+ * office[at]phloc[dot]com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.phloc.commons.io.monitor;
 
 import java.io.File;
@@ -6,6 +23,7 @@ import java.util.Set;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.CGlobal;
 import com.phloc.commons.collections.NonBlockingStack;
 
 /**
@@ -16,14 +34,14 @@ import com.phloc.commons.collections.NonBlockingStack;
  */
 final class FileMonitorAgent
 {
-  private final DefaultFileMonitor m_aMonitor;
+  private final FileMonitor m_aMonitor;
   private final File m_aFile;
 
   private boolean m_bExists;
   private long m_nTimestamp;
   private final Set <String> m_aChildren = new HashSet <String> ();
 
-  FileMonitorAgent (@Nonnull final DefaultFileMonitor aMonitor, @Nonnull final File aFile)
+  FileMonitorAgent (@Nonnull final FileMonitor aMonitor, @Nonnull final File aFile)
   {
     m_aMonitor = aMonitor;
     m_aFile = aFile;
@@ -34,11 +52,14 @@ final class FileMonitorAgent
       resetChildrenList ();
     }
     else
-      m_nTimestamp = -1;
+    {
+      m_nTimestamp = CGlobal.ILLEGAL_ULONG;
+    }
   }
 
   void resetChildrenList ()
   {
+    m_aChildren.clear ();
     final File [] aChildren = m_aFile.listFiles ();
     if (aChildren != null)
       for (final File aChild : aChildren)
@@ -83,7 +104,6 @@ final class FileMonitorAgent
       {
         final String sKey = aNewChild.getAbsolutePath ();
         aNewChildren.add (sKey);
-        // If the child's not there
         if (!m_aChildren.contains (sKey))
           aCreatedChildren.push (aNewChild);
       }
@@ -106,7 +126,7 @@ final class FileMonitorAgent
       {
         // The file was deleted
         m_bExists = bExistsNow;
-        m_nTimestamp = -1;
+        m_nTimestamp = CGlobal.ILLEGAL_ULONG;
 
         // Mark it as deleted
         m_aMonitor.onFileDeleted (m_aFile);
@@ -114,7 +134,6 @@ final class FileMonitorAgent
       else
       {
         // File previously existed and still exists
-
         // Check the timestamp to see if it has been modified
         final long nNewTimestamp = m_aFile.lastModified ();
         if (m_nTimestamp != nNewTimestamp)
@@ -126,6 +145,7 @@ final class FileMonitorAgent
     }
     else
     {
+      // File previously did not exist
       if (bExistsNow)
       {
         // File was created

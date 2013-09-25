@@ -1,15 +1,39 @@
+/**
+ * Copyright (C) 2006-2013 phloc systems
+ * http://www.phloc.com
+ * office[at]phloc[dot]com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.phloc.commons.io.monitor;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.phloc.commons.collections.NonBlockingStack;
+import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.concurrent.ThreadUtils;
+import com.phloc.commons.state.EChange;
+import com.phloc.commons.timing.StopWatch;
 
 /**
  * A polling file monitor implementation.<br />
@@ -63,11 +87,14 @@ import com.phloc.commons.collections.NonBlockingStack;
  *         team</a>
  * @author Philip Helger
  */
-public class DefaultFileMonitor implements Runnable
+public class FileMonitor implements Runnable
 {
-  private static final Logger s_aLogger = LoggerFactory.getLogger (DefaultFileMonitor.class);
-  private static final long DEFAULT_DELAY = 1000;
-  private static final int DEFAULT_MAX_FILES = 1000;
+  public static final long DEFAULT_DELAY = 1000;
+  public static final int DEFAULT_MAX_FILES = 1000;
+
+  private static final Logger s_aLogger = LoggerFactory.getLogger (FileMonitor.class);
+
+  private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
 
   /**
    * Map from FileName to File being monitored.
@@ -82,12 +109,12 @@ public class DefaultFileMonitor implements Runnable
   /**
    * File objects to be removed from the monitor map.
    */
-  private final NonBlockingStack <File> m_aDeleteStack = new NonBlockingStack <File> ();
+  private final Stack <File> m_aDeleteStack = new Stack <File> ();
 
   /**
    * File objects to be added to the monitor map.
    */
-  private final NonBlockingStack <File> m_aAddStack = new NonBlockingStack <File> ();
+  private final Stack <File> m_aAddStack = new Stack <File> ();
 
   /**
    * A flag used to determine if the monitor thread should be running. used for
@@ -116,7 +143,7 @@ public class DefaultFileMonitor implements Runnable
    */
   private final IFileListener m_aListener;
 
-  public DefaultFileMonitor (@Nonnull final IFileListener aListener)
+  public FileMonitor (@Nonnull final IFileListener aListener)
   {
     if (aListener == null)
       throw new NullPointerException ("Listener");
@@ -206,28 +233,49 @@ public class DefaultFileMonitor implements Runnable
    * 
    * @param aFile
    *        The File to add.
+   * @param bRecursive
+   *        Scan recursively?
+   * @return {@link EChange}
    */
-  private void _internalAddFile (@Nonnull final File aFile)
+  private EChange _internalAddFile (@Nonnull final File aFile, final boolean bRecursive)
   {
-    synchronized (m_aMonitorMap)
+    final String sKey = aFile.getAbsolutePath ();
+    m_aRWLock.readLock ().lock ();
+    try
     {
-      final String sKey = aFile.getAbsolutePath ();
-      if (!m_aMonitorMap.containsKey (sKey))
-      {
-        m_aMonitorMap.put (sKey, new FileMonitorAgent (this, aFile));
-        if (m_bRecursive)
-        {
-          // Traverse the children
-          final File [] aChildren = aFile.listFiles ();
-          if (aChildren != null)
-            for (final File aChild : aChildren)
-            {
-              // Add depth first
-              addFile (aChild);
-            }
-        }
-      }
+      // Check if already contained
+      if (m_aMonitorMap.containsKey (sKey))
+        return EChange.UNCHANGED;
     }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      // Try again in write lock
+      if (m_aMonitorMap.containsKey (sKey))
+        return EChange.UNCHANGED;
+
+      m_aMonitorMap.put (sKey, new FileMonitorAgent (this, aFile));
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
+
+    if (bRecursive)
+    {
+      // Traverse the children depth first
+      final File [] aChildren = aFile.listFiles ();
+      if (aChildren != null)
+        for (final File aChild : aChildren)
+          _internalAddFile (aChild, true);
+    }
+
+    return EChange.CHANGED;
   }
 
   /**
@@ -235,16 +283,37 @@ public class DefaultFileMonitor implements Runnable
    * 
    * @param aFile
    *        The File to monitor.
+   * @return {@link EChange}
    */
-  public void addFile (@Nonnull final File aFile)
+  @Nonnull
+  public EChange addFile (@Nonnull final File aFile)
   {
-    _internalAddFile (aFile);
+    // Not recursive, because the direct children are added anyway
+    if (_internalAddFile (aFile, false).isUnchanged ())
+      return EChange.UNCHANGED;
 
-    // Traverse the children
+    // Traverse the direct children anyway
     final File [] aChildren = aFile.listFiles ();
     if (aChildren != null)
       for (final File aChild : aChildren)
-        _internalAddFile (aChild);
+        _internalAddFile (aChild, m_bRecursive);
+
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      s_aLogger.info ("Added " +
+                      (m_bRecursive ? "recursive " : "") +
+                      "monitoring for file changes in " +
+                      aFile.getAbsolutePath () +
+                      " - monitoring " +
+                      m_aMonitorMap.size () +
+                      " files and directories in total");
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+    return EChange.CHANGED;
   }
 
   /**
@@ -252,26 +321,61 @@ public class DefaultFileMonitor implements Runnable
    * 
    * @param aFile
    *        The File to remove from monitoring.
+   * @return {@link EChange}
    */
-  public void removeFile (@Nonnull final File aFile)
+  @Nonnull
+  public EChange removeFile (@Nonnull final File aFile)
   {
-    synchronized (m_aMonitorMap)
+    final String sKey = aFile.getAbsolutePath ();
+    m_aRWLock.writeLock ().lock ();
+    try
     {
-      final String sKey = aFile.getAbsolutePath ();
-      if (m_aMonitorMap.get (sKey) != null)
+      if (m_aMonitorMap.remove (sKey) == null)
       {
-        m_aMonitorMap.remove (sKey);
-
-        final File aParent = aFile.getParentFile ();
-        if (aParent != null)
-        {
-          // Not the root
-          final FileMonitorAgent aParentAgent = m_aMonitorMap.get (aParent.getAbsolutePath ());
-          if (aParentAgent != null)
-            aParentAgent.resetChildrenList ();
-        }
+        // File not monitored
+        return EChange.UNCHANGED;
       }
     }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
+
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      s_aLogger.info ("Removed " +
+                      (m_bRecursive ? "recursive " : "") +
+                      "monitoring for file changes in " +
+                      aFile.getAbsolutePath () +
+                      " - monitoring " +
+                      m_aMonitorMap.size () +
+                      " files and directories in total");
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+
+    final File aParent = aFile.getParentFile ();
+    if (aParent != null)
+    {
+      // Not the root
+      final String sParentKey = aParent.getAbsolutePath ();
+      FileMonitorAgent aParentAgent;
+      m_aRWLock.readLock ().lock ();
+      try
+      {
+        aParentAgent = m_aMonitorMap.get (sParentKey);
+      }
+      finally
+      {
+        m_aRWLock.readLock ().unlock ();
+      }
+      if (aParentAgent != null)
+        aParentAgent.resetChildrenList ();
+    }
+    return EChange.CHANGED;
   }
 
   /**
@@ -282,12 +386,9 @@ public class DefaultFileMonitor implements Runnable
    */
   void onFileCreated (@Nonnull final File aFile)
   {
-    // Don't fire if it's a folder because new file children
-    // and deleted files in a folder have their own event triggered.
-    // Fire create event
     try
     {
-      m_aListener.fileCreated (new FileChangeEvent (aFile));
+      m_aListener.onFileCreated (new FileChangeEvent (aFile));
     }
     catch (final Exception ex)
     {
@@ -305,10 +406,9 @@ public class DefaultFileMonitor implements Runnable
    */
   void onFileDeleted (@Nonnull final File aFile)
   {
-    // Fire delete event
     try
     {
-      m_aListener.fileDeleted (new FileChangeEvent (aFile));
+      m_aListener.onFileDeleted (new FileChangeEvent (aFile));
     }
     catch (final Exception ex)
     {
@@ -326,11 +426,9 @@ public class DefaultFileMonitor implements Runnable
    */
   void onFileChanged (@Nonnull final File aFile)
   {
-    // Don't fire if it's a folder because new file children
-    // and deleted files in a folder have their own event triggered.
     try
     {
-      m_aListener.fileChanged (new FileChangeEvent (aFile));
+      m_aListener.onFileChanged (new FileChangeEvent (aFile));
     }
     catch (final Exception ex)
     {
@@ -352,6 +450,11 @@ public class DefaultFileMonitor implements Runnable
     m_aMonitorThread.start ();
   }
 
+  public boolean isRunning ()
+  {
+    return m_aMonitorThread != null && m_aMonitorThread.isAlive () && m_bShouldRun;
+  }
+
   /**
    * Stops monitoring the files that have been added.
    */
@@ -371,54 +474,42 @@ public class DefaultFileMonitor implements Runnable
       while (!m_aDeleteStack.isEmpty ())
         removeFile (m_aDeleteStack.pop ());
 
-      // For each entry in the map
-      String [] aFileKeys;
-      synchronized (m_aMonitorMap)
-      {
-        aFileKeys = m_aMonitorMap.keySet ().toArray (new String [0]);
-      }
-      for (int nFileNameIndex = 0; nFileNameIndex < aFileKeys.length; nFileNameIndex++)
-      {
-        final String sKey = aFileKeys[nFileNameIndex];
-        FileMonitorAgent aMonitorAgent;
-        synchronized (m_aMonitorMap)
-        {
-          aMonitorAgent = m_aMonitorMap.get (sKey);
-        }
-        if (aMonitorAgent != null)
-          aMonitorAgent.checkForModifications ();
+      final StopWatch aSW = new StopWatch (true);
 
-        if (getChecksPerRun () > 0)
-        {
-          if ((nFileNameIndex % getChecksPerRun ()) == 0)
-          {
-            try
-            {
-              Thread.sleep (getDelay ());
-            }
-            catch (final InterruptedException e)
-            {
-              // Woke up.
-            }
-          }
-        }
+      // Create a copy to avoid concurrent modification
+      final Collection <FileMonitorAgent> aMonitors;
+      m_aRWLock.readLock ().lock ();
+      try
+      {
+        aMonitors = ContainerHelper.newList (m_aMonitorMap.values ());
+      }
+      finally
+      {
+        m_aRWLock.readLock ().unlock ();
+      }
+
+      int nFileNameIndex = 0;
+      for (final FileMonitorAgent aMonitor : aMonitors)
+      {
+        aMonitor.checkForModifications ();
+
+        final int nChecksPerRun = getChecksPerRun ();
+        if (nChecksPerRun > 0 && (nFileNameIndex % nChecksPerRun) == 0)
+          ThreadUtils.sleep (getDelay ());
 
         if (m_aMonitorThread.isInterrupted () || !m_bShouldRun)
           continue mainloop;
+
+        ++nFileNameIndex;
       }
+      if (s_aLogger.isDebugEnabled ())
+        s_aLogger.debug ("Checking for file modifications took " + aSW.stopAndGetMillis () + " ms");
 
       // Add listener for all added files
       while (!m_aAddStack.isEmpty ())
         addFile (m_aAddStack.pop ());
 
-      try
-      {
-        Thread.sleep (getDelay ());
-      }
-      catch (final InterruptedException e)
-      {
-        continue;
-      }
+      ThreadUtils.sleep (getDelay ());
     }
 
     m_bShouldRun = true;
