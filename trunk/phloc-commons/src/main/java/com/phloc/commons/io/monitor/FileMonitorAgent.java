@@ -25,6 +25,7 @@ import javax.annotation.Nonnull;
 
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.collections.NonBlockingStack;
+import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * File monitor agent.
@@ -156,5 +157,15 @@ final class FileMonitorAgent
     }
 
     _checkForNewChildren ();
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("file", m_aFile)
+                                       .append ("exists", m_bExists)
+                                       .append ("timestamp", m_nTimestamp)
+                                       .append ("children", m_aChildren)
+                                       .toString ();
   }
 }

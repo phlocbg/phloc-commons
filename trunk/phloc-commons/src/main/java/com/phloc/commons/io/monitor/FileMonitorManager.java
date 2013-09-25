@@ -129,6 +129,16 @@ public class FileMonitorManager implements Runnable
   public FileMonitor createFileMonitor (@Nonnull final IFileListener aListener)
   {
     final FileMonitor aMonitor = new FileMonitor (aListener);
+    addFileMonitor (aMonitor);
+    return aMonitor;
+  }
+
+  @Nonnull
+  public void addFileMonitor (@Nonnull final FileMonitor aMonitor)
+  {
+    if (aMonitor == null)
+      throw new NullPointerException ("Monitor");
+
     m_aRWLock.writeLock ().lock ();
     try
     {
@@ -138,7 +148,6 @@ public class FileMonitorManager implements Runnable
     {
       m_aRWLock.writeLock ().unlock ();
     }
-    return aMonitor;
   }
 
   @Nonnull
@@ -171,7 +180,12 @@ public class FileMonitorManager implements Runnable
   }
 
   /**
-   * Starts monitoring the files that have been added.
+   * Starts monitoring the files
+   * 
+   * @throws IllegalStateException
+   *         if the monitoring is already running
+   * @see #isRunning()
+   * @see #stop()
    */
   public void start ()
   {
@@ -186,7 +200,7 @@ public class FileMonitorManager implements Runnable
   }
 
   /**
-   * Stops monitoring the files that have been added.
+   * Stops monitoring the files.
    */
   public void stop ()
   {

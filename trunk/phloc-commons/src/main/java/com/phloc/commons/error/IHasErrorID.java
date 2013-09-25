@@ -15,31 +15,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.io.monitor;
+package com.phloc.commons.error;
 
-import javax.annotation.Nonnull;
-
-import com.phloc.commons.string.ToStringGenerator;
+import javax.annotation.Nullable;
 
 /**
- * Default empty implementation of {@link IFileListener}
+ * Interface for objects having an error ID
  * 
  * @author Philip Helger
  */
-public class DefaultFileListener implements IFileListener
+public interface IHasErrorID
 {
-  public void onFileCreated (@Nonnull final FileChangeEvent aEvent)
-  {}
+  /**
+   * @return The error ID. May be <code>null</code>.
+   */
+  @Nullable
+  String getErrorID ();
 
-  public void onFileDeleted (@Nonnull final FileChangeEvent aEvent)
-  {}
-
-  public void onFileChanged (@Nonnull final FileChangeEvent aEvent)
-  {}
-
-  @Override
-  public String toString ()
-  {
-    return new ToStringGenerator (this).toString ();
-  }
+  /**
+   * @return <code>true</code> if an error ID is present, <code>false</code>
+   *         otherwise
+   */
+  boolean hasErrorID ();
 }
