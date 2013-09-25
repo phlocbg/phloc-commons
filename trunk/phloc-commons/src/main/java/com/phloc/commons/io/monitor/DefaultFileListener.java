@@ -17,47 +17,21 @@
  */
 package com.phloc.commons.io.monitor;
 
-import java.io.File;
-
 import javax.annotation.Nonnull;
 
-import com.phloc.commons.string.ToStringGenerator;
-
 /**
- * An event fired when a file is changed.
+ * Default empty implementation of {@link IFileListener}
  * 
- * @author <a href="http://commons.apache.org/vfs/team-list.html">Commons VFS
- *         team</a>
  * @author Philip Helger
  */
-public class FileChangeEvent
+public class DefaultFileListener implements IFileListener
 {
-  /**
-   * The file object
-   */
-  private final File m_aFile;
+  public void onFileCreated (@Nonnull final FileChangeEvent aEvent) throws Exception
+  {}
 
-  public FileChangeEvent (@Nonnull final File aFile)
-  {
-    if (aFile == null)
-      throw new NullPointerException ("file");
-    m_aFile = aFile;
-  }
+  public void onFileDeleted (@Nonnull final FileChangeEvent aEvent) throws Exception
+  {}
 
-  /**
-   * Returns the file that changed.
-   * 
-   * @return The file that was changed. Never <code>null</code>.
-   */
-  @Nonnull
-  public File getFile ()
-  {
-    return m_aFile;
-  }
-
-  @Override
-  public String toString ()
-  {
-    return new ToStringGenerator (this).append ("file", m_aFile).toString ();
-  }
+  public void onFileChanged (@Nonnull final FileChangeEvent v) throws Exception
+  {}
 }
