@@ -50,15 +50,6 @@ public interface IResourceErrorGroup extends IHasSize, Iterable <IResourceError>
   IResourceErrorGroup getAllErrors ();
 
   /**
-   * Get the most severe error level within this group.
-   * 
-   * @return {@link EErrorLevel#SUCCESS} if no resource error is contained, the
-   *         most severe error level otherwise.
-   */
-  @Nonnull
-  EErrorLevel getMostSevereErrorLevel ();
-
-  /**
    * Get a list of all contained resource errors.
    * 
    * @return A non-<code>null</code> list of all contained error objects

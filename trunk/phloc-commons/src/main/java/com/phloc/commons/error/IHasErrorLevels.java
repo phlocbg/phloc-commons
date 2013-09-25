@@ -18,6 +18,7 @@
 package com.phloc.commons.error;
 
 import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
 
 /**
  * Interface representing an object having multiple objects with an error level
@@ -87,7 +88,7 @@ public interface IHasErrorLevels
   boolean containsNoFailure ();
 
   /**
-   * @return The number of contained success messages. Always &ge; 0.
+   * @return The number of contained failure messages. Always &ge; 0.
    */
   @Nonnegative
   int getFailureCount ();
@@ -128,4 +129,13 @@ public interface IHasErrorLevels
    */
   @Nonnegative
   int getErrorCount ();
+
+  /**
+   * Get the most severe error level within this group.
+   * 
+   * @return {@link EErrorLevel#SUCCESS} if no resource error is contained, the
+   *         most severe contained error level otherwise.
+   */
+  @Nonnull
+  EErrorLevel getMostSevereErrorLevel ();
 }

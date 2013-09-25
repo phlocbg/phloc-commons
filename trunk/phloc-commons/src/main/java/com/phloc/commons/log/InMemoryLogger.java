@@ -27,6 +27,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.IHasSize;
+import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.error.EErrorLevel;
@@ -46,6 +47,38 @@ public class InMemoryLogger implements Iterable <LogMessage>, IHasSize, IClearab
 {
   private final List <LogMessage> m_aMessages = new ArrayList <LogMessage> ();
 
+  /**
+   * Override this method to create a different LogMessage object or to filter
+   * certain log messages.
+   * 
+   * @param eErrorLevel
+   *        Error level. Never <code>null</code>.
+   * @param aMsg
+   *        The message object. Never <code>null</code>.
+   * @param t
+   *        An optional exception. May be <code>null</code>.
+   * @return The returned value. May be <code>null</code> in which case the
+   *         message will not be logged.
+   */
+  @Nullable
+  @OverrideOnDemand
+  protected LogMessage createLogMessage (@Nonnull final EErrorLevel eErrorLevel,
+                                         @Nonnull final Object aMsg,
+                                         @Nullable final Throwable t)
+  {
+    return new LogMessage (eErrorLevel, aMsg, t);
+  }
+
+  /**
+   * Callback method that is invoked after a message was added.
+   * 
+   * @param aLogMessage
+   *        The added log message. Never <code>null</code>.
+   */
+  @OverrideOnDemand
+  protected void onAddLogMessage (@Nonnull final LogMessage aLogMessage)
+  {}
+
   public void log (@Nonnull final EErrorLevel eErrorLevel, @Nonnull final Object aMsg)
   {
     log (eErrorLevel, aMsg, null);
@@ -53,7 +86,12 @@ public class InMemoryLogger implements Iterable <LogMessage>, IHasSize, IClearab
 
   public void log (@Nonnull final EErrorLevel eErrorLevel, @Nonnull final Object aMsg, @Nullable final Throwable t)
   {
-    m_aMessages.add (new LogMessage (eErrorLevel, aMsg, t));
+    final LogMessage aLogMessage = createLogMessage (eErrorLevel, aMsg, t);
+    if (aLogMessage != null)
+    {
+      m_aMessages.add (aLogMessage);
+      onAddLogMessage (aLogMessage);
+    }
   }
 
   public void error (@Nonnull final Object aMsg)
@@ -211,6 +249,23 @@ public class InMemoryLogger implements Iterable <LogMessage>, IHasSize, IClearab
       if (aMessage.isError ())
         ret++;
     return ret;
+  }
+
+  @Nonnull
+  public EErrorLevel getMostSevereErrorLevel ()
+  {
+    EErrorLevel eRet = EErrorLevel.SUCCESS;
+    for (final LogMessage aMessage : m_aMessages)
+    {
+      final EErrorLevel eCur = aMessage.getErrorLevel ();
+      if (eCur.isMoreSevereThan (eRet))
+      {
+        eRet = eCur;
+        if (eRet == EErrorLevel.HIGHEST)
+          break;
+      }
+    }
+    return eRet;
   }
 
   @Nonnull
