@@ -30,81 +30,27 @@ import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
-import com.phloc.commons.concurrent.ThreadUtils;
 import com.phloc.commons.state.EChange;
-import com.phloc.commons.timing.StopWatch;
 
 /**
- * A polling file monitor implementation.<br />
- * <br />
- * The DefaultFileMonitor is a Thread based polling file system monitor with a 1
- * second delay.<br />
- * <br />
- * <b>Design:</b>
- * <p>
- * There is a Map of monitors known as FileMonitorAgents. With the thread
- * running, each FileMonitorAgent object is asked to "check" on the file it is
- * responsible for. To do this check, the cache is cleared.
- * </p>
- * <ul>
- * <li>If the file existed before the refresh and it no longer exists, a delete
- * event is fired.</li>
- * <li>If the file existed before the refresh and it still exists, check the
- * last modified timestamp to see if that has changed.</li>
- * <li>If it has, fire a change event.</li>
- * </ul>
- * <p>
- * With each file delete, the FileMonitorAgent of the parent is asked to
- * re-build its list of children, so that they can be accurately checked when
- * there are new children.<br/>
- * New files are detected during each "check" as each file does a check for new
- * children. If new children are found, create events are fired recursively if
- * recursive descent is enabled.
- * </p>
- * <p>
- * For performance reasons, added a delay that increases as the number of files
- * monitored increases. The default is a delay of 1 second for every 1000 files
- * processed.
- * </p>
- * <br />
- * <b>Example usage:</b><br />
+ * A polling file monitor implementation. Use
+ * {@link FileMonitorManager#createFileMonitor(IFileListener)} to use this class
+ * effectively.
  * 
- * <pre>
- * FileSystemManager fsManager = VFS.getManager();
- * File listendir = fsManager.resolveFile("/home/username/monitored/");
- * <p/>
- * DefaultFileMonitor fm = new DefaultFileMonitor(new CustomFileListener());
- * fm.setRecursive(true);
- * fm.addFile(listendir);
- * fm.start();
- * </pre>
- * 
- * <i>(where CustomFileListener is a class that implements the FileListener
- * interface.)</i>
- * 
- * @author <a href="http://commons.apache.org/vfs/team-list.html">Commons VFS
- *         team</a>
  * @author Philip Helger
  */
-public class FileMonitor implements Runnable
+public class FileMonitor
 {
-  public static final long DEFAULT_DELAY = 1000;
-  public static final int DEFAULT_MAX_FILES = 1000;
-
   private static final Logger s_aLogger = LoggerFactory.getLogger (FileMonitor.class);
 
   private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
 
   /**
-   * Map from FileName to File being monitored.
+   * Map from filename to File being monitored.
    */
   private final Map <String, FileMonitorAgent> m_aMonitorMap = new HashMap <String, FileMonitorAgent> ();
-
-  /**
-   * The low priority thread used for checking the files being monitored.
-   */
-  private Thread m_aMonitorThread;
 
   /**
    * File objects to be removed from the monitor map.
@@ -117,26 +63,10 @@ public class FileMonitor implements Runnable
   private final Stack <File> m_aAddStack = new Stack <File> ();
 
   /**
-   * A flag used to determine if the monitor thread should be running. used for
-   * inter-thread communication
-   */
-  private volatile boolean m_bShouldRun = true;
-
-  /**
    * A flag used to determine if adding files to be monitored should be
    * recursive.
    */
   private boolean m_bRecursive;
-
-  /**
-   * Set the delay between checks
-   */
-  private long m_nDelay = DEFAULT_DELAY;
-
-  /**
-   * Set the number of files to check until a delay will be inserted
-   */
-  private int m_nChecksPerRun = DEFAULT_MAX_FILES;
 
   /**
    * A listener object that if set, is notified on file creation and deletion.
@@ -173,55 +103,6 @@ public class FileMonitor implements Runnable
   public FileMonitor setRecursive (final boolean bRecursive)
   {
     m_bRecursive = bRecursive;
-    return this;
-  }
-
-  /**
-   * Get the delay between runs.
-   * 
-   * @return The delay period.
-   */
-  public long getDelay ()
-  {
-    return m_nDelay;
-  }
-
-  /**
-   * Set the delay between runs.
-   * 
-   * @param nDelay
-   *        The delay period.
-   * @return this
-   */
-  @Nonnull
-  public FileMonitor setDelay (final long nDelay)
-  {
-    m_nDelay = nDelay > 0 ? nDelay : DEFAULT_DELAY;
-    return this;
-  }
-
-  /**
-   * get the number of files to check per run.
-   * 
-   * @return The number of files to check per iteration.
-   */
-  public int getChecksPerRun ()
-  {
-    return m_nChecksPerRun;
-  }
-
-  /**
-   * set the number of files to check per run. a additional delay will be added
-   * if there are more files to check
-   * 
-   * @param nChecksPerRun
-   *        a value less than 1 will disable this feature
-   * @return this
-   */
-  @Nonnull
-  public FileMonitor setChecksPerRun (final int nChecksPerRun)
-  {
-    m_nChecksPerRun = nChecksPerRun;
     return this;
   }
 
@@ -284,7 +165,7 @@ public class FileMonitor implements Runnable
    * @return {@link EChange}
    */
   @Nonnull
-  public EChange addFile (@Nonnull final File aFile)
+  public EChange addMonitoredFile (@Nonnull final File aFile)
   {
     // Not recursive, because the direct children are added anyway
     if (_recursiveAddFile (aFile, false).isUnchanged ())
@@ -322,7 +203,7 @@ public class FileMonitor implements Runnable
    * @return {@link EChange}
    */
   @Nonnull
-  public EChange removeFile (@Nonnull final File aFile)
+  public EChange removeMonitoredFile (@Nonnull final File aFile)
   {
     final String sKey = aFile.getAbsolutePath ();
     m_aRWLock.writeLock ().lock ();
@@ -409,7 +290,7 @@ public class FileMonitor implements Runnable
       m_aListener.onFileDeleted (new FileChangeEvent (aFile));
     }
     catch (final Throwable t)
-      {
+    {
       s_aLogger.error ("Failed to invoke onFileDeleted listener", t);
     }
 
@@ -429,87 +310,37 @@ public class FileMonitor implements Runnable
       m_aListener.onFileChanged (new FileChangeEvent (aFile));
     }
     catch (final Throwable t)
-      {
+    {
       s_aLogger.error ("Failed to invoke onFileChanged listener", t);
     }
   }
 
-  /**
-   * Starts monitoring the files that have been added.
-   */
-  public void start ()
+  @Nonnull
+  @ReturnsMutableCopy
+  Collection <FileMonitorAgent> getAllAgents ()
   {
-    if (m_aMonitorThread == null)
+    m_aRWLock.readLock ().lock ();
+    try
     {
-      m_aMonitorThread = new Thread (this, "DefaultFileMonitor");
-      m_aMonitorThread.setDaemon (true);
-      m_aMonitorThread.setPriority (Thread.MIN_PRIORITY);
+      return ContainerHelper.newList (m_aMonitorMap.values ());
     }
-    m_aMonitorThread.start ();
-  }
-
-  public boolean isRunning ()
-  {
-    return m_aMonitorThread != null && m_aMonitorThread.isAlive () && m_bShouldRun;
-  }
-
-  /**
-   * Stops monitoring the files that have been added.
-   */
-  public void stop ()
-  {
-    m_bShouldRun = false;
-  }
-
-  /**
-   * Asks the agent for each file being monitored to check its file for changes.
-   */
-  public void run ()
-  {
-    mainloop: while (!m_aMonitorThread.isInterrupted () && m_bShouldRun)
+    finally
     {
-      // Remove listener for all deleted files
-      while (!m_aDeleteStack.isEmpty ())
-        removeFile (m_aDeleteStack.pop ());
-
-      final StopWatch aSW = new StopWatch (true);
-
-      // Create a copy to avoid concurrent modification
-      final Collection <FileMonitorAgent> aMonitors;
-      m_aRWLock.readLock ().lock ();
-      try
-      {
-        aMonitors = ContainerHelper.newList (m_aMonitorMap.values ());
-      }
-      finally
-      {
-        m_aRWLock.readLock ().unlock ();
-      }
-
-      int nFileNameIndex = 0;
-      for (final FileMonitorAgent aMonitor : aMonitors)
-      {
-        aMonitor.checkForModifications ();
-
-        final int nChecksPerRun = getChecksPerRun ();
-        if (nChecksPerRun > 0 && (nFileNameIndex % nChecksPerRun) == 0)
-          ThreadUtils.sleep (getDelay ());
-
-        if (m_aMonitorThread.isInterrupted () || !m_bShouldRun)
-          continue mainloop;
-
-        ++nFileNameIndex;
-      }
-      if (s_aLogger.isDebugEnabled ())
-        s_aLogger.debug ("Checking for file modifications took " + aSW.stopAndGetMillis () + " ms");
-
-      // Add listener for all added files
-      while (!m_aAddStack.isEmpty ())
-        addFile (m_aAddStack.pop ());
-
-      ThreadUtils.sleep (getDelay ());
+      m_aRWLock.readLock ().unlock ();
     }
+  }
 
-    m_bShouldRun = true;
+  void applyPendingRemovals ()
+  {
+    // Remove listener for all deleted files
+    while (!m_aDeleteStack.isEmpty ())
+      removeMonitoredFile (m_aDeleteStack.pop ());
+  }
+
+  void applyPendingAdds ()
+  {
+    // Add listener for all added files
+    while (!m_aAddStack.isEmpty ())
+      addMonitoredFile (m_aAddStack.pop ());
   }
 }
