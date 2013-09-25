@@ -32,7 +32,8 @@ import com.phloc.commons.filter.collections.FilterIterator;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * Iterate child elements of a single node. Does not iterate recursively.
+ * Iterate child elements of a single node. Does not iterate recursively. Does
+ * not return the start node.
  * 
  * @author Philip Helger
  */

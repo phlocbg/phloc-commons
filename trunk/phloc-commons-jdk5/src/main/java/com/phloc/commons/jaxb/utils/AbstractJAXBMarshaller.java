@@ -18,6 +18,7 @@
 package com.phloc.commons.jaxb.utils;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -286,27 +287,12 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
    * 
    * @return <code>true</code> if the {@link JAXBContextCache} should be used,
    *         <code>false</code> otherwise. It's <code>true</code> by default.
-   * @deprecated Because it contains a typo!
-   */
-  @Deprecated
-  protected boolean useJAXContextCache ()
-  {
-    return true;
-  }
-
-  /**
-   * Should the {@link JAXBContextCache} be used? Since creating the JAXB
-   * context is quite cost intensive this is recommended.
-   * 
-   * @return <code>true</code> if the {@link JAXBContextCache} should be used,
-   *         <code>false</code> otherwise. It's <code>true</code> by default.
    */
   @SuppressWarnings ("deprecation")
   @OverrideOnDemand
   protected boolean useJAXBContextCache ()
   {
-    // FIXME return true once the deprecated method is gone
-    return useJAXContextCache ();
+    return true;
   }
 
   /**
@@ -381,6 +367,22 @@ public abstract class AbstractJAXBMarshaller <JAXBTYPE>
       throw new NullPointerException ("resource");
 
     return read (TransformSourceFactory.create (aResource));
+  }
+
+  /**
+   * Read a document from the specified input stream.
+   * 
+   * @param aIS
+   *        The input stream to read. May not be <code>null</code>.
+   * @return <code>null</code> in case reading fails.
+   */
+  @Nullable
+  public final JAXBTYPE read (@Nonnull final InputStream aIS)
+  {
+    if (aIS == null)
+      throw new NullPointerException ("inputStream");
+
+    return read (TransformSourceFactory.create (aIS));
   }
 
   /**

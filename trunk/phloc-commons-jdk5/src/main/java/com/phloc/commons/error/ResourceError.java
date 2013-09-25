@@ -123,24 +123,49 @@ public class ResourceError implements IResourceError
     return ret;
   }
 
-  public final boolean isSuccess ()
+  public boolean isSuccess ()
   {
     return m_eErrorLevel.isSuccess ();
   }
 
-  public final boolean isFailure ()
+  public boolean isFailure ()
   {
     return m_eErrorLevel.isFailure ();
   }
 
-  public final boolean isError ()
+  public boolean isError ()
   {
     return m_eErrorLevel.isError ();
   }
 
-  public final boolean isNoError ()
+  public boolean isNoError ()
   {
     return m_eErrorLevel.isNoError ();
+  }
+
+  public boolean isEqualSevereThan (@Nonnull final IResourceError aOther)
+  {
+    return m_eErrorLevel.isEqualSevereThan (aOther.getErrorLevel ());
+  }
+
+  public boolean isLessSevereThan (@Nonnull final IResourceError aOther)
+  {
+    return m_eErrorLevel.isLessSevereThan (aOther.getErrorLevel ());
+  }
+
+  public boolean isLessOrEqualSevereThan (@Nonnull final IResourceError aOther)
+  {
+    return m_eErrorLevel.isLessOrEqualSevereThan (aOther.getErrorLevel ());
+  }
+
+  public boolean isMoreSevereThan (@Nonnull final IResourceError aOther)
+  {
+    return m_eErrorLevel.isMoreSevereThan (aOther.getErrorLevel ());
+  }
+
+  public boolean isMoreOrEqualSevereThan (@Nonnull final IResourceError aOther)
+  {
+    return m_eErrorLevel.isMoreOrEqualSevereThan (aOther.getErrorLevel ());
   }
 
   @Override
