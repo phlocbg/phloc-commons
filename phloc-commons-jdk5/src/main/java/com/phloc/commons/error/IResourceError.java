@@ -35,7 +35,7 @@ import com.phloc.commons.state.ISuccessIndicator;
  * 
  * @author Philip Helger
  */
-public interface IResourceError extends IHasErrorLevel, IHasDisplayText, ISuccessIndicator, IErrorIndicator, Serializable
+public interface IResourceError extends IHasErrorLevel, IHasDisplayText, ISuccessIndicator, IErrorIndicator, Serializable, ISeverityComparable <IResourceError>
 {
   /**
    * @return The non-<code>null</code> location of the error.

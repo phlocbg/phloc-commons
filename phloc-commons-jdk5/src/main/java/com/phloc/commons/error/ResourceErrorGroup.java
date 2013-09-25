@@ -237,8 +237,15 @@ public class ResourceErrorGroup implements IResourceErrorGroup, ICloneable <Reso
   {
     EErrorLevel eRet = EErrorLevel.SUCCESS;
     for (final IResourceError aError : m_aErrors)
-      if (eRet == null || aError.getErrorLevel ().isMoreSevereThan (eRet))
-        eRet = aError.getErrorLevel ();
+    {
+      final EErrorLevel eCur = aError.getErrorLevel ();
+      if (eCur.isMoreSevereThan (eRet))
+      {
+        eRet = eCur;
+        if (eRet == EErrorLevel.HIGHEST)
+          break;
+      }
+    }
     return eRet;
   }
 
