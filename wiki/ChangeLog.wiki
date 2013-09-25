@@ -3,6 +3,16 @@
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
 <table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody>
+<tr border="1"><td>9/25/13</td><td colspan="4">_Release *4.0.11*_</td></tr>
+<tr><td>9/25/13</td><td>change</td><td>api</td><td></td><td>Made class LogMessage non-final</td></tr>
+<tr><td>9/25/13</td><td>add</td><td>api</td><td></td><td>Made InMemoryLogger more flexible to allow for custom LogMessage object creation as well as for a callback after a message was added</td></tr>
+<tr><td>9/25/13</td><td>add</td><td>api</td><td></td><td>Moved method getMostSevereErrorLevel from IResourceErrorGroup up to IHasErrorLevels</td></tr>
+<tr><td>9/25/13</td><td>change</td><td>api</td><td>*yes*</td><td>Interface IResourceErrorGroup now implements ISeverityComparable</td></tr>
+<tr><td>9/25/13</td><td>change</td><td>api</td><td></td><td>Class LogMessage now implements ISeverityComparable</td></tr>
+<tr><td>9/25/13</td><td>add</td><td>api</td><td></td><td>Added interface IHasErrorID from [http://code.google.com/p/phloc-masterdata phloc-validation]</td></tr>
+<tr><td>9/25/13</td><td>add</td><td>api</td><td></td><td>Added classes FileMonitor and FileMonitorManager to check for file system modifications.</td></tr>
+<tr><td>9/23/13</td><td>add</td><td>api</td><td></td><td>Added method AbstractJAXBMarshaller.read(InputStream)</td></tr>
+<tr><td>9/5/13</td><td>add</td><td>tech</td><td></td><td>Added specific support for parsing the MIME type '`*`' and improved the exception messages</td></tr>
 <tr border="1"><td>9/3/13</td><td colspan="4">_Release *4.0.10*_</td></tr>
 <tr><td>9/3/13</td><td>add</td><td>api</td><td></td><td>Added the possibility to override exception handling in AbstractJAXBMarshaller</td></tr>
 <tr><td>9/3/13</td><td>add</td><td>api</td><td></td><td>Extended IMimeType API slightly.</td></tr>
