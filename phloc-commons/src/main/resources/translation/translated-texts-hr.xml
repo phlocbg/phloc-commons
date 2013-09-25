@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 
     Copyright (C) 2006-2013 phloc systems
@@ -18,7 +18,7 @@
     limitations under the License.
 
 -->
-<translationitems count="248">
+<translationitems count="247">
   <item id="com.phloc.commons.locale.ELocaleName.ID_LANGUAGE_ALL">
     <hr>Svi jezici</hr>
   </item>
@@ -435,9 +435,6 @@
   </item>
   <item id="com.phloc.commons.locale.country.ECountryName.MD">
     <hr>Moldavija</hr>
-  </item>
-  <item id="com.phloc.commons.locale.country.ECountryName.MD_CH">
-    <hr>Chisinau (Kišinev)</hr>
   </item>
   <item id="com.phloc.commons.locale.country.ECountryName.ME">
     <hr>Crna Gora</hr>
