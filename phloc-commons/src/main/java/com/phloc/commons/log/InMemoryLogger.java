@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.log;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -43,7 +44,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @NotThreadSafe
-public class InMemoryLogger implements Iterable <LogMessage>, IHasSize, IClearable, IHasErrorLevels
+public class InMemoryLogger implements Iterable <LogMessage>, IHasSize, IClearable, IHasErrorLevels, Serializable
 {
   private final List <LogMessage> m_aMessages = new ArrayList <LogMessage> ();
 
@@ -63,7 +64,7 @@ public class InMemoryLogger implements Iterable <LogMessage>, IHasSize, IClearab
   @Nullable
   @OverrideOnDemand
   protected LogMessage createLogMessage (@Nonnull final EErrorLevel eErrorLevel,
-                                         @Nonnull final Object aMsg,
+                                         @Nonnull final Serializable aMsg,
                                          @Nullable final Throwable t)
   {
     return new LogMessage (eErrorLevel, aMsg, t);
@@ -79,12 +80,12 @@ public class InMemoryLogger implements Iterable <LogMessage>, IHasSize, IClearab
   protected void onAddLogMessage (@Nonnull final LogMessage aLogMessage)
   {}
 
-  public void log (@Nonnull final EErrorLevel eErrorLevel, @Nonnull final Object aMsg)
+  public void log (@Nonnull final EErrorLevel eErrorLevel, @Nonnull final Serializable aMsg)
   {
     log (eErrorLevel, aMsg, null);
   }
 
-  public void log (@Nonnull final EErrorLevel eErrorLevel, @Nonnull final Object aMsg, @Nullable final Throwable t)
+  public void log (@Nonnull final EErrorLevel eErrorLevel, @Nonnull final Serializable aMsg, @Nullable final Throwable t)
   {
     final LogMessage aLogMessage = createLogMessage (eErrorLevel, aMsg, t);
     if (aLogMessage != null)
@@ -94,27 +95,27 @@ public class InMemoryLogger implements Iterable <LogMessage>, IHasSize, IClearab
     }
   }
 
-  public void error (@Nonnull final Object aMsg)
+  public void error (@Nonnull final Serializable aMsg)
   {
     error (aMsg, null);
   }
 
-  public void error (@Nonnull final Object aMsg, @Nullable final Throwable t)
+  public void error (@Nonnull final Serializable aMsg, @Nullable final Throwable t)
   {
     log (EErrorLevel.ERROR, aMsg, t);
   }
 
-  public void warn (@Nonnull final Object aMsg)
+  public void warn (@Nonnull final Serializable aMsg)
   {
     warn (aMsg, null);
   }
 
-  public void warn (@Nonnull final Object aMsg, @Nullable final Throwable t)
+  public void warn (@Nonnull final Serializable aMsg, @Nullable final Throwable t)
   {
     log (EErrorLevel.WARN, aMsg, t);
   }
 
-  public void info (@Nonnull final Object aMsg)
+  public void info (@Nonnull final Serializable aMsg)
   {
     log (EErrorLevel.INFO, aMsg, null);
   }
