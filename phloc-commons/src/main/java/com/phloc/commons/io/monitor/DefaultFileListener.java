@@ -26,12 +26,12 @@ import javax.annotation.Nonnull;
  */
 public class DefaultFileListener implements IFileListener
 {
-  public void onFileCreated (@Nonnull final FileChangeEvent aEvent) throws Exception
+  public void onFileCreated (@Nonnull final FileChangeEvent aEvent)
   {}
 
-  public void onFileDeleted (@Nonnull final FileChangeEvent aEvent) throws Exception
+  public void onFileDeleted (@Nonnull final FileChangeEvent aEvent)
   {}
 
-  public void onFileChanged (@Nonnull final FileChangeEvent v) throws Exception
+  public void onFileChanged (@Nonnull final FileChangeEvent aEvent)
   {}
 }

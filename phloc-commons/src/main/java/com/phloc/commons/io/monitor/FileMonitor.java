@@ -167,10 +167,13 @@ public class FileMonitor implements Runnable
    * 
    * @param bRecursive
    *        true if monitoring should be enabled for children.
+   * @return this
    */
-  public void setRecursive (final boolean bRecursive)
+  @Nonnull
+  public FileMonitor setRecursive (final boolean bRecursive)
   {
     m_bRecursive = bRecursive;
+    return this;
   }
 
   /**
@@ -188,10 +191,13 @@ public class FileMonitor implements Runnable
    * 
    * @param nDelay
    *        The delay period.
+   * @return this
    */
-  public void setDelay (final long nDelay)
+  @Nonnull
+  public FileMonitor setDelay (final long nDelay)
   {
     m_nDelay = nDelay > 0 ? nDelay : DEFAULT_DELAY;
+    return this;
   }
 
   /**
@@ -210,22 +216,13 @@ public class FileMonitor implements Runnable
    * 
    * @param nChecksPerRun
    *        a value less than 1 will disable this feature
-   */
-  public void setChecksPerRun (final int nChecksPerRun)
-  {
-    m_nChecksPerRun = nChecksPerRun;
-  }
-
-  /**
-   * Access method to get the current {@link IFileListener} object notified when
-   * there are changes with the files added.
-   * 
-   * @return The listener.
+   * @return this
    */
   @Nonnull
-  protected final IFileListener getFileListener ()
+  public FileMonitor setChecksPerRun (final int nChecksPerRun)
   {
-    return m_aListener;
+    m_nChecksPerRun = nChecksPerRun;
+    return this;
   }
 
   /**
@@ -237,7 +234,8 @@ public class FileMonitor implements Runnable
    *        Scan recursively?
    * @return {@link EChange}
    */
-  private EChange _internalAddFile (@Nonnull final File aFile, final boolean bRecursive)
+  @Nonnull
+  private EChange _recursiveAddFile (@Nonnull final File aFile, final boolean bRecursive)
   {
     final String sKey = aFile.getAbsolutePath ();
     m_aRWLock.readLock ().lock ();
@@ -272,7 +270,7 @@ public class FileMonitor implements Runnable
       final File [] aChildren = aFile.listFiles ();
       if (aChildren != null)
         for (final File aChild : aChildren)
-          _internalAddFile (aChild, true);
+          _recursiveAddFile (aChild, true);
     }
 
     return EChange.CHANGED;
@@ -289,14 +287,14 @@ public class FileMonitor implements Runnable
   public EChange addFile (@Nonnull final File aFile)
   {
     // Not recursive, because the direct children are added anyway
-    if (_internalAddFile (aFile, false).isUnchanged ())
+    if (_recursiveAddFile (aFile, false).isUnchanged ())
       return EChange.UNCHANGED;
 
     // Traverse the direct children anyway
     final File [] aChildren = aFile.listFiles ();
     if (aChildren != null)
       for (final File aChild : aChildren)
-        _internalAddFile (aChild, m_bRecursive);
+        _recursiveAddFile (aChild, m_bRecursive);
 
     m_aRWLock.readLock ().lock ();
     try
@@ -390,9 +388,9 @@ public class FileMonitor implements Runnable
     {
       m_aListener.onFileCreated (new FileChangeEvent (aFile));
     }
-    catch (final Exception ex)
+    catch (final Throwable t)
     {
-      s_aLogger.error ("Failed to invoke listener", ex);
+      s_aLogger.error ("Failed to invoke onFileCreated listener", t);
     }
 
     m_aAddStack.push (aFile);
@@ -410,9 +408,9 @@ public class FileMonitor implements Runnable
     {
       m_aListener.onFileDeleted (new FileChangeEvent (aFile));
     }
-    catch (final Exception ex)
-    {
-      s_aLogger.error ("Failed to invoke listener", ex);
+    catch (final Throwable t)
+      {
+      s_aLogger.error ("Failed to invoke onFileDeleted listener", t);
     }
 
     m_aDeleteStack.push (aFile);
@@ -430,9 +428,9 @@ public class FileMonitor implements Runnable
     {
       m_aListener.onFileChanged (new FileChangeEvent (aFile));
     }
-    catch (final Exception ex)
-    {
-      s_aLogger.error ("Failed to invoke listener", ex);
+    catch (final Throwable t)
+      {
+      s_aLogger.error ("Failed to invoke onFileChanged listener", t);
     }
   }
 

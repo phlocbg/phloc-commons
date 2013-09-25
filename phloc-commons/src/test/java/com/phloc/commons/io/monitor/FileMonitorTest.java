@@ -31,19 +31,19 @@ public class FileMonitorTest
     final IFileListener aListener = new DefaultFileListener ()
     {
       @Override
-      public void onFileDeleted (final FileChangeEvent event) throws Exception
+      public void onFileDeleted (final FileChangeEvent event)
       {
         System.out.println ("File deleted: " + event.getFile ().getAbsolutePath ());
       }
 
       @Override
-      public void onFileCreated (final FileChangeEvent event) throws Exception
+      public void onFileCreated (final FileChangeEvent event)
       {
         System.out.println ("File created: " + event.getFile ().getAbsolutePath ());
       }
 
       @Override
-      public void onFileChanged (final FileChangeEvent event) throws Exception
+      public void onFileChanged (final FileChangeEvent event)
       {
         System.out.println ("File changed: " + event.getFile ().getAbsolutePath ());
       }
