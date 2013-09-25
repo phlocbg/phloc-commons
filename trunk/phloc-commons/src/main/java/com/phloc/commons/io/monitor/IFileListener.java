@@ -33,28 +33,22 @@ public interface IFileListener
    * 
    * @param aEvent
    *        The FileChangeEvent. Never <code>null</code>.
-   * @throws Exception
-   *         if an error occurs.
    */
-  void onFileCreated (@Nonnull FileChangeEvent aEvent) throws Exception;
+  void onFileCreated (@Nonnull FileChangeEvent aEvent);
 
   /**
    * Called when a file is deleted.
    * 
    * @param aEvent
    *        The FileChangeEvent. Never <code>null</code>.
-   * @throws Exception
-   *         if an error occurs.
    */
-  void onFileDeleted (@Nonnull FileChangeEvent aEvent) throws Exception;
+  void onFileDeleted (@Nonnull FileChangeEvent aEvent);
 
   /**
    * Called when a file is changed.
    * 
    * @param aEvent
    *        The FileChangeEvent. Never <code>null</code>.
-   * @throws Exception
-   *         if an error occurs.
    */
-  void onFileChanged (@Nonnull FileChangeEvent aEvent) throws Exception;
+  void onFileChanged (@Nonnull FileChangeEvent aEvent);
 }
