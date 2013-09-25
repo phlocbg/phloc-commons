@@ -26,6 +26,7 @@ import javax.annotation.concurrent.Immutable;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.error.EErrorLevel;
 import com.phloc.commons.error.IHasErrorLevel;
+import com.phloc.commons.error.ISeverityComparable;
 import com.phloc.commons.state.IErrorIndicator;
 import com.phloc.commons.state.ISuccessIndicator;
 import com.phloc.commons.string.ToStringGenerator;
@@ -36,7 +37,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @Immutable
-public final class LogMessage implements IHasErrorLevel, ISuccessIndicator, IErrorIndicator
+public final class LogMessage implements IHasErrorLevel, ISuccessIndicator, IErrorIndicator, ISeverityComparable <LogMessage>
 {
   private final Date m_aIssueDT;
   private final EErrorLevel m_eErrorLevel;
@@ -100,6 +101,31 @@ public final class LogMessage implements IHasErrorLevel, ISuccessIndicator, IErr
   public boolean isNoError ()
   {
     return m_eErrorLevel.isNoError ();
+  }
+
+  public boolean isEqualSevereThan (@Nonnull final LogMessage aOther)
+  {
+    return m_eErrorLevel.isEqualSevereThan (aOther.m_eErrorLevel);
+  }
+
+  public boolean isLessSevereThan (@Nonnull final LogMessage aOther)
+  {
+    return m_eErrorLevel.isLessSevereThan (aOther.m_eErrorLevel);
+  }
+
+  public boolean isLessOrEqualSevereThan (@Nonnull final LogMessage aOther)
+  {
+    return m_eErrorLevel.isLessOrEqualSevereThan (aOther.m_eErrorLevel);
+  }
+
+  public boolean isMoreSevereThan (@Nonnull final LogMessage aOther)
+  {
+    return m_eErrorLevel.isMoreSevereThan (aOther.m_eErrorLevel);
+  }
+
+  public boolean isMoreOrEqualSevereThan (@Nonnull final LogMessage aOther)
+  {
+    return m_eErrorLevel.isMoreOrEqualSevereThan (aOther.m_eErrorLevel);
   }
 
   @Override

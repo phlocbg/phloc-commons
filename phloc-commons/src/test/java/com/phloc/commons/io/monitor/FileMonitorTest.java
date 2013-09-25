@@ -62,7 +62,7 @@ public class FileMonitorTest
     aMgr.createFileMonitor (aChangeListener).setRecursive (bRecursive).addMonitoredFile (aMonitorFile);
     aMgr.start ();
     assertTrue (aMgr.isRunning ());
-    ThreadUtils.sleepSeconds (15);
+    ThreadUtils.sleepSeconds (5);
     aMgr.stop ();
   }
 }

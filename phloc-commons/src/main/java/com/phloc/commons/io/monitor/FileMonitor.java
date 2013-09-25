@@ -25,6 +25,7 @@ import java.util.Stack;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
 import org.slf4j.Logger;
@@ -33,6 +34,7 @@ import org.slf4j.LoggerFactory;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.state.EChange;
+import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * A polling file monitor implementation. Use
@@ -157,6 +159,20 @@ public class FileMonitor
     return EChange.CHANGED;
   }
 
+  @Nonnegative
+  int getMonitoredFileCount ()
+  {
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return m_aMonitorMap.size ();
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+  }
+
   /**
    * Adds a file to be monitored.
    * 
@@ -177,21 +193,13 @@ public class FileMonitor
       for (final File aChild : aChildren)
         _recursiveAddFile (aChild, m_bRecursive);
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      s_aLogger.info ("Added " +
-                      (m_bRecursive ? "recursive " : "") +
-                      "monitoring for file changes in " +
-                      aFile.getAbsolutePath () +
-                      " - monitoring " +
-                      m_aMonitorMap.size () +
-                      " files and directories in total");
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
+    s_aLogger.info ("Added " +
+                    (m_bRecursive ? "recursive " : "") +
+                    "monitoring for file changes in " +
+                    aFile.getAbsolutePath () +
+                    " - monitoring " +
+                    getMonitoredFileCount () +
+                    " files and directories in total");
     return EChange.CHANGED;
   }
 
@@ -220,22 +228,6 @@ public class FileMonitor
       m_aRWLock.writeLock ().unlock ();
     }
 
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      s_aLogger.info ("Removed " +
-                      (m_bRecursive ? "recursive " : "") +
-                      "monitoring for file changes in " +
-                      aFile.getAbsolutePath () +
-                      " - monitoring " +
-                      m_aMonitorMap.size () +
-                      " files and directories in total");
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
-
     final File aParent = aFile.getParentFile ();
     if (aParent != null)
     {
@@ -254,14 +246,22 @@ public class FileMonitor
       if (aParentAgent != null)
         aParentAgent.resetChildrenList ();
     }
+
+    s_aLogger.info ("Removed " +
+                    (m_bRecursive ? "recursive " : "") +
+                    "monitoring for file changes in " +
+                    aFile.getAbsolutePath () +
+                    " - monitoring " +
+                    getMonitoredFileCount () +
+                    " files and directories in total");
     return EChange.CHANGED;
   }
 
   /**
-   * Queues a file for addition to be monitored.
+   * Called upon file creation by {@link FileMonitorAgent}.
    * 
    * @param aFile
-   *        The File to add.
+   *        The File to add. Never <code>null</code>.
    */
   void onFileCreated (@Nonnull final File aFile)
   {
@@ -278,10 +278,11 @@ public class FileMonitor
   }
 
   /**
-   * Queues a file for removal from being monitored.
+   * Called upon file deletion by {@link FileMonitorAgent}.
    * 
    * @param aFile
-   *        The File to be removed from being monitored.
+   *        The File to be removed from being monitored. Never <code>null</code>
+   *        .
    */
   void onFileDeleted (@Nonnull final File aFile)
   {
@@ -298,10 +299,10 @@ public class FileMonitor
   }
 
   /**
-   * Call on modification
+   * Called on modification by {@link FileMonitorAgent}.
    * 
    * @param aFile
-   *        The File that was changed
+   *        The File that was modified. Never <code>null</code>.
    */
   void onFileChanged (@Nonnull final File aFile)
   {
@@ -342,5 +343,11 @@ public class FileMonitor
     // Add listener for all added files
     while (!m_aAddStack.isEmpty ())
       addMonitoredFile (m_aAddStack.pop ());
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("listener", m_aListener).append ("recursive", m_bRecursive).toString ();
   }
 }

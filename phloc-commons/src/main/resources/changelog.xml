@@ -20,9 +20,19 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2013-09-25" category="api" action="change">
+    <change>
+      <text locale="en">Class LogMessage now implements ISeverityComparable</text>
+    </change>
+  </entry>
   <entry date="2013-09-25" category="api" action="add">
     <change>
-      <text locale="en">Added method class FileMonitor to check for file system modifications.</text>
+      <text locale="en">Added interface IHasErrorID from phloc-validation</text>
+    </change>
+  </entry>
+  <entry date="2013-09-25" category="api" action="add">
+    <change>
+      <text locale="en">Added classes FileMonitor and FileMonitorManager to check for file system modifications.</text>
     </change>
   </entry>
   <entry date="2013-09-23" category="api" action="add">
