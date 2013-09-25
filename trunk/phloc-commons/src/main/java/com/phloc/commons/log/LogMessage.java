@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.log;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.annotation.Nonnull;
@@ -37,14 +38,16 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @Immutable
-public class LogMessage implements IHasErrorLevel, ISuccessIndicator, IErrorIndicator, ISeverityComparable <LogMessage>
+public class LogMessage implements IHasErrorLevel, ISuccessIndicator, IErrorIndicator, ISeverityComparable <LogMessage>, Serializable
 {
   private final Date m_aIssueDT;
   private final EErrorLevel m_eErrorLevel;
-  private final Object m_aMsg;
+  private final Serializable m_aMsg;
   private final Throwable m_aThrowable;
 
-  public LogMessage (@Nonnull final EErrorLevel eLevel, @Nonnull final Object aMsg, @Nullable final Throwable aThrowable)
+  public LogMessage (@Nonnull final EErrorLevel eLevel,
+                     @Nonnull final Serializable aMsg,
+                     @Nullable final Throwable aThrowable)
   {
     if (eLevel == null)
       throw new NullPointerException ("level");
@@ -72,7 +75,7 @@ public class LogMessage implements IHasErrorLevel, ISuccessIndicator, IErrorIndi
   }
 
   @Nonnull
-  public Object getMessage ()
+  public Serializable getMessage ()
   {
     return m_aMsg;
   }
