@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.io.monitor;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 
 import org.junit.Test;
@@ -28,31 +30,39 @@ public class FileMonitorTest
   @Test
   public void testBasic ()
   {
-    final IFileListener aListener = new DefaultFileListener ()
+    final IFileListener aDeleteListener = new DefaultFileListener ()
     {
       @Override
       public void onFileDeleted (final FileChangeEvent event)
       {
         System.out.println ("File deleted: " + event.getFile ().getAbsolutePath ());
       }
-
+    };
+    final IFileListener aCreateListener = new DefaultFileListener ()
+    {
       @Override
       public void onFileCreated (final FileChangeEvent event)
       {
         System.out.println ("File created: " + event.getFile ().getAbsolutePath ());
       }
-
+    };
+    final IFileListener aChangeListener = new DefaultFileListener ()
+    {
       @Override
       public void onFileChanged (final FileChangeEvent event)
       {
         System.out.println ("File changed: " + event.getFile ().getAbsolutePath ());
       }
     };
-    final FileMonitor aMon = new FileMonitor (aListener);
-    aMon.setRecursive (true);
-    aMon.addFile (new File ("."));
-    aMon.start ();
-    ThreadUtils.sleepSeconds (5);
-    aMon.stop ();
+    final FileMonitorManager aMgr = new FileMonitorManager ();
+    final boolean bRecursive = true;
+    final File aMonitorFile = new File ("src/main");
+    aMgr.createFileMonitor (aDeleteListener).setRecursive (bRecursive).addMonitoredFile (aMonitorFile);
+    aMgr.createFileMonitor (aCreateListener).setRecursive (bRecursive).addMonitoredFile (aMonitorFile);
+    aMgr.createFileMonitor (aChangeListener).setRecursive (bRecursive).addMonitoredFile (aMonitorFile);
+    aMgr.start ();
+    assertTrue (aMgr.isRunning ());
+    ThreadUtils.sleepSeconds (15);
+    aMgr.stop ();
   }
 }
