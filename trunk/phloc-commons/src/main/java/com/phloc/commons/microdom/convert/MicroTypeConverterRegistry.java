@@ -41,7 +41,7 @@ import com.phloc.commons.typeconvert.TypeConverterRegistry;
  * A utility class for converting objects from and to {@link IMicroElement}.<br>
  * The functionality is a special case of the {@link TypeConverterRegistry} as
  * we need a parameter for conversion in this case.
- *
+ * 
  * @author Philip Helger
  */
 @ThreadSafe
@@ -84,7 +84,7 @@ public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegi
    * Register type converters from and to XML (IMicroElement). This method is
    * private to avoid later modification of the available type converters,
    * because this may lead to unexpected results.
-   *
+   * 
    * @param aClass
    *        The class to be registered.
    * @param aConverter
@@ -103,7 +103,7 @@ public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegi
     {
       // The main class should not already be registered
       if (s_aMap.containsKey (aClass))
-        throw new IllegalArgumentException ("A microtype convert for class " + aClass + " is already registered!");
+        throw new IllegalArgumentException ("A micro type converter for class " + aClass + " is already registered!");
 
       // Automatically register the class, and all parent classes/interfaces
       for (final WeakReference <Class <?>> aCurWRSrcClass : ClassHierarchyCache.getClassHierarchyIterator (aClass))
@@ -179,7 +179,7 @@ public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegi
   /**
    * Iterate all registered micro type converters. For informational purposes
    * only.
-   *
+   * 
    * @param aCallback
    *        The callback invoked for all iterations.
    */

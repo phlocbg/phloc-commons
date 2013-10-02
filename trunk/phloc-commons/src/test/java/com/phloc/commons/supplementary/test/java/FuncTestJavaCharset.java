@@ -34,4 +34,10 @@ public final class FuncTestJavaCharset
     for (final Map.Entry <String, Charset> aEntry : Charset.availableCharsets ().entrySet ())
       s_aLogger.info (aEntry.getKey () + " " + aEntry.getValue ().aliases ());
   }
+
+  @Test
+  public void testAllCharsetNamess ()
+  {
+    s_aLogger.info (Charset.availableCharsets ().keySet ().toString ());
+  }
 }

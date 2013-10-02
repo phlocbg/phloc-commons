@@ -29,6 +29,16 @@ import com.phloc.commons.state.EContinue;
  */
 public interface IMicroTypeConverterCallback
 {
+  /**
+   * Invoked for each converter.
+   * 
+   * @param aClass
+   *        The class for which the converter was registered.
+   * @param aConverter
+   *        The main converter object. Never <code>null</code>.
+   * @return {@link EContinue#CONTINUE} to continue iteration,
+   *         {@link EContinue#BREAK} to stop iteration.
+   */
   @Nonnull
   EContinue call (@Nonnull Class <?> aClass, @Nonnull IMicroTypeConverter aConverter);
 }
