@@ -18,6 +18,7 @@
 package com.phloc.commons.collections.multimap;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -30,7 +31,7 @@ import com.phloc.commons.state.EChange;
 
 /**
  * Abstract multi map based on {@link TreeMap}.
- *
+ * 
  * @author Philip Helger
  * @param <KEYTYPE>
  *        key type
@@ -44,6 +45,11 @@ public abstract class AbstractMultiTreeMap <KEYTYPE, VALUETYPE, COLLTYPE extends
 {
   public AbstractMultiTreeMap ()
   {}
+
+  public AbstractMultiTreeMap (@Nullable final Comparator <? super KEYTYPE> aComparator)
+  {
+    super (aComparator);
+  }
 
   public AbstractMultiTreeMap (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
   {
