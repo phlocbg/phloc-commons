@@ -62,4 +62,11 @@ public interface IThirdPartyModule extends IHasDisplayName, IHasVersion
    *         <code>false</code> if it is required.
    */
   boolean isOptional ();
+
+  /**
+   * @return A copy of this module but without being optional. If this module is
+   *         not optional, <code>this</code> is returned.
+   */
+  @Nonnull
+  IThirdPartyModule getAsNonOptionalCopy ();
 }
