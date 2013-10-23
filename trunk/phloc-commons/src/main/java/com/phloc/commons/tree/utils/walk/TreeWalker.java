@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
+import com.phloc.commons.hierarchy.DefaultHierarchyWalkerCallback;
 import com.phloc.commons.hierarchy.IHierarchyWalkerCallback;
 import com.phloc.commons.parent.IChildrenProvider;
 import com.phloc.commons.parent.impl.ChildrenProviderHasChildren;
@@ -75,6 +76,22 @@ public final class TreeWalker
     walkSubTree (aTree.getRootItem (), aChildrenProvider, aCallback);
   }
 
+  public static <DATATYPE, ITEMTYPE extends IBasicTreeItem <DATATYPE, ITEMTYPE>> void walkTreeData (@Nonnull final IBasicTree <DATATYPE, ITEMTYPE> aTree,
+                                                                                                    @Nonnull final IHierarchyWalkerCallback <? super DATATYPE> aDataCallback)
+  {
+    walkTreeData (aTree, new ChildrenProviderHasChildren <ITEMTYPE> (), aDataCallback);
+  }
+
+  public static <DATATYPE, ITEMTYPE extends IBasicTreeItem <DATATYPE, ITEMTYPE>> void walkTreeData (@Nonnull final IBasicTree <DATATYPE, ITEMTYPE> aTree,
+                                                                                                    @Nonnull final IChildrenProvider <ITEMTYPE> aChildrenProvider,
+                                                                                                    @Nonnull final IHierarchyWalkerCallback <? super DATATYPE> aDataCallback)
+  {
+    if (aTree == null)
+      throw new NullPointerException ("tree");
+
+    walkSubTreeData (aTree.getRootItem (), aChildrenProvider, aDataCallback);
+  }
+
   public static <DATATYPE, ITEMTYPE extends IBasicTreeItem <DATATYPE, ITEMTYPE>> void walkSubTree (@Nonnull final ITEMTYPE aTreeItem,
                                                                                                    @Nonnull final IHierarchyWalkerCallback <? super ITEMTYPE> aCallback)
   {
@@ -103,5 +120,61 @@ public final class TreeWalker
     {
       aCallback.end ();
     }
+  }
+
+  public static <DATATYPE, ITEMTYPE extends IBasicTreeItem <DATATYPE, ITEMTYPE>> void walkSubTreeData (@Nonnull final ITEMTYPE aTreeItem,
+                                                                                                       @Nonnull final IHierarchyWalkerCallback <? super DATATYPE> aDataCallback)
+  {
+    walkSubTreeData (aTreeItem, new ChildrenProviderHasChildren <ITEMTYPE> (), aDataCallback);
+  }
+
+  public static <DATATYPE, ITEMTYPE extends IBasicTreeItem <DATATYPE, ITEMTYPE>> void walkSubTreeData (@Nonnull final ITEMTYPE aTreeItem,
+                                                                                                       @Nonnull final IChildrenProvider <ITEMTYPE> aChildrenProvider,
+                                                                                                       @Nonnull final IHierarchyWalkerCallback <? super DATATYPE> aDataCallback)
+  {
+    if (aDataCallback == null)
+      throw new NullPointerException ("callbackData");
+
+    // Wrap callback
+    walkSubTree (aTreeItem, aChildrenProvider, new DefaultHierarchyWalkerCallback <ITEMTYPE> ()
+    {
+      @Override
+      public void begin ()
+      {
+        aDataCallback.begin ();
+      }
+
+      @Override
+      public void onLevelDown ()
+      {
+        super.onLevelDown ();
+        aDataCallback.onLevelDown ();
+      }
+
+      @Override
+      public void onLevelUp ()
+      {
+        super.onLevelUp ();
+        aDataCallback.onLevelUp ();
+      }
+
+      @Override
+      public void end ()
+      {
+        aDataCallback.end ();
+      }
+
+      @Override
+      public void onItemBeforeChildren (@Nonnull final ITEMTYPE aItem)
+      {
+        aDataCallback.onItemBeforeChildren (aItem.getData ());
+      }
+
+      @Override
+      public void onItemAfterChildren (@Nonnull final ITEMTYPE aItem)
+      {
+        aDataCallback.onItemAfterChildren (aItem.getData ());
+      }
+    });
   }
 }

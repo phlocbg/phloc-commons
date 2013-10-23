@@ -2,6 +2,8 @@
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
 <table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody>
+<tr><td>10/22/13</td><td>add</td><td>api</td><td></td><td>Added new method IThirdPartyModule.getAsNonOptionalCopy ()</td></tr>
+<tr><td>10/17/13</td><td>add</td><td>api</td><td></td><td>Added interface IURIToURLConverter from [http://code.google.com/p/phloc-webbasics phloc-webbasics]</td></tr>
 <tr><td>10/12/13</td><td>add</td><td>api</td><td></td><td>Added method StringHelper.trimStartAndEnd</td></tr>
 <tr><td>10/12/13</td><td>add</td><td>api</td><td></td><td>AbstractMultiTreeMap and all derived classes got a constructor with a Comparator</td></tr>
 <tr><td>10/7/13</td><td>add</td><td>api</td><td></td><td>Added LocaleFormatter.getFormatted(BigInteger) and getFormatted(BigDecimal)</td></tr>
