@@ -31,7 +31,8 @@ import com.phloc.commons.tree.IBasicTreeItem;
 
 /**
  * A specialized walker that iterates all elements in a tree and calls a
- * callback method.
+ * callback method. Compared to {@link TreeWalker} the callbacks used in this
+ * class allow to stop iteration or to skip all siblings.
  * 
  * @author Philip Helger
  */
