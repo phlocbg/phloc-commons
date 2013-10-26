@@ -84,8 +84,8 @@ public final class URLUtils
   private static final Logger s_aLogger = LoggerFactory.getLogger (URLUtils.class);
   private static final String QUESTIONMARK_STR = Character.toString (QUESTIONMARK);
 
-  private static char [] CLEANURL_OLD;
-  private static char [][] CLEANURL_NEW;
+  private static char [] s_aCleanURLOld;
+  private static char [][] s_aCleanURLNew;
 
   private URLUtils ()
   {}
@@ -217,8 +217,8 @@ public final class URLUtils
     if (XMLMapHandler.readMap (new ClassPathResource ("codelists/cleanurl-data.xml"), aCleanURLMap).isFailure ())
       throw new InitializationException ("Failed to init CleanURL data!");
 
-    CLEANURL_OLD = new char [aCleanURLMap.size ()];
-    CLEANURL_NEW = new char [aCleanURLMap.size ()] [];
+    s_aCleanURLOld = new char [aCleanURLMap.size ()];
+    s_aCleanURLNew = new char [aCleanURLMap.size ()] [];
 
     // Convert to char array
     int i = 0;
@@ -227,8 +227,8 @@ public final class URLUtils
       final String sKey = aEntry.getKey ();
       if (sKey.length () != 1)
         throw new IllegalStateException ("Clean URL source character has an invalid length: " + sKey.length ());
-      CLEANURL_OLD[i] = sKey.charAt (0);
-      CLEANURL_NEW[i] = aEntry.getValue ().toCharArray ();
+      s_aCleanURLOld[i] = sKey.charAt (0);
+      s_aCleanURLNew[i] = aEntry.getValue ().toCharArray ();
       ++i;
     }
   }
@@ -244,9 +244,9 @@ public final class URLUtils
   @Nullable
   public static String getCleanURLPartWithoutUmlauts (@Nullable final String sURLPart)
   {
-    if (CLEANURL_OLD == null)
+    if (s_aCleanURLOld == null)
       _initCleanURL ();
-    return new String (StringHelper.replaceMultiple (sURLPart, CLEANURL_OLD, CLEANURL_NEW));
+    return new String (StringHelper.replaceMultiple (sURLPart, s_aCleanURLOld, s_aCleanURLNew));
   }
 
   @Nonnull

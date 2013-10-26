@@ -133,7 +133,6 @@ public class FileMonitorManager implements Runnable
     return aMonitor;
   }
 
-  @Nonnull
   public void addFileMonitor (@Nonnull final FileMonitor aMonitor)
   {
     if (aMonitor == null)
