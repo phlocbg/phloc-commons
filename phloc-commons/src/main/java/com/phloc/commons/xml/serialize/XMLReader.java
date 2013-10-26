@@ -829,7 +829,6 @@ public final class XMLReader
    * @param aExceptionHandler
    *        The new handler to be set. May not be <code>null</code>.
    */
-  @Nonnull
   public static void setDefaultSAXExceptionHandler (@Nonnull final IExceptionHandler <Throwable> aExceptionHandler)
   {
     if (aExceptionHandler == null)

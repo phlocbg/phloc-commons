@@ -317,32 +317,32 @@ public class PooledSession implements TopicSession, QueueSession
 
   public QueueBrowser createBrowser (final Queue queue) throws JMSException
   {
-    return addQueueBrowser (getInternalSession ().createBrowser (queue));
+    return _addQueueBrowser (getInternalSession ().createBrowser (queue));
   }
 
   public QueueBrowser createBrowser (final Queue queue, final String selector) throws JMSException
   {
-    return addQueueBrowser (getInternalSession ().createBrowser (queue, selector));
+    return _addQueueBrowser (getInternalSession ().createBrowser (queue, selector));
   }
 
   public MessageConsumer createConsumer (final Destination destination) throws JMSException
   {
-    return addConsumer (getInternalSession ().createConsumer (destination));
+    return _addConsumer (getInternalSession ().createConsumer (destination));
   }
 
   public MessageConsumer createConsumer (final Destination destination, final String selector) throws JMSException
   {
-    return addConsumer (getInternalSession ().createConsumer (destination, selector));
+    return _addConsumer (getInternalSession ().createConsumer (destination, selector));
   }
 
   public MessageConsumer createConsumer (final Destination destination, final String selector, final boolean noLocal) throws JMSException
   {
-    return addConsumer (getInternalSession ().createConsumer (destination, selector, noLocal));
+    return _addConsumer (getInternalSession ().createConsumer (destination, selector, noLocal));
   }
 
   public TopicSubscriber createDurableSubscriber (final Topic topic, final String selector) throws JMSException
   {
-    return addTopicSubscriber (getInternalSession ().createDurableSubscriber (topic, selector));
+    return _addTopicSubscriber (getInternalSession ().createDurableSubscriber (topic, selector));
   }
 
   public TopicSubscriber createDurableSubscriber (final Topic topic,
@@ -350,7 +350,7 @@ public class PooledSession implements TopicSession, QueueSession
                                                   final String selector,
                                                   final boolean noLocal) throws JMSException
   {
-    return addTopicSubscriber (getInternalSession ().createDurableSubscriber (topic, name, selector, noLocal));
+    return _addTopicSubscriber (getInternalSession ().createDurableSubscriber (topic, name, selector, noLocal));
   }
 
   public MessageListener getMessageListener () throws JMSException
@@ -365,22 +365,22 @@ public class PooledSession implements TopicSession, QueueSession
 
   public TopicSubscriber createSubscriber (final Topic topic) throws JMSException
   {
-    return addTopicSubscriber (((TopicSession) getInternalSession ()).createSubscriber (topic));
+    return _addTopicSubscriber (((TopicSession) getInternalSession ()).createSubscriber (topic));
   }
 
   public TopicSubscriber createSubscriber (final Topic topic, final String selector, final boolean local) throws JMSException
   {
-    return addTopicSubscriber (((TopicSession) getInternalSession ()).createSubscriber (topic, selector, local));
+    return _addTopicSubscriber (((TopicSession) getInternalSession ()).createSubscriber (topic, selector, local));
   }
 
   public QueueReceiver createReceiver (final Queue queue) throws JMSException
   {
-    return addQueueReceiver (((QueueSession) getInternalSession ()).createReceiver (queue));
+    return _addQueueReceiver (((QueueSession) getInternalSession ()).createReceiver (queue));
   }
 
   public QueueReceiver createReceiver (final Queue queue, final String selector) throws JMSException
   {
-    return addQueueReceiver (((QueueSession) getInternalSession ()).createReceiver (queue, selector));
+    return _addQueueReceiver (((QueueSession) getInternalSession ()).createReceiver (queue, selector));
   }
 
   // Producer related methods
@@ -444,13 +444,13 @@ public class PooledSession implements TopicSession, QueueSession
     return m_aTopicPublisher;
   }
 
-  private QueueBrowser addQueueBrowser (final QueueBrowser browser)
+  private QueueBrowser _addQueueBrowser (final QueueBrowser browser)
   {
     m_aBrowsers.add (browser);
     return browser;
   }
 
-  private MessageConsumer addConsumer (final MessageConsumer consumer)
+  private MessageConsumer _addConsumer (final MessageConsumer consumer)
   {
     m_aConsumers.add (consumer);
     // must wrap in PooledMessageConsumer to ensure the onConsumerClose method
@@ -461,13 +461,13 @@ public class PooledSession implements TopicSession, QueueSession
     return new PooledMessageConsumer (this, consumer);
   }
 
-  private TopicSubscriber addTopicSubscriber (final TopicSubscriber subscriber)
+  private TopicSubscriber _addTopicSubscriber (final TopicSubscriber subscriber)
   {
     m_aConsumers.add (subscriber);
     return subscriber;
   }
 
-  private QueueReceiver addQueueReceiver (final QueueReceiver receiver)
+  private QueueReceiver _addQueueReceiver (final QueueReceiver receiver)
   {
     m_aConsumers.add (receiver);
     return receiver;
