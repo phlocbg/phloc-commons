@@ -428,4 +428,26 @@ public final class MicroUtils
         ret.appendChild (aChildNode.getClone ());
     return ret;
   }
+
+  /**
+   * Create a micro container with all children of the passed node. If the
+   * passed node has no children, an empty object is returned. The resulting
+   * container contains the original child nodes so that they no longer belong
+   * to the original object. THis implies that the original object is modified!
+   * 
+   * @param aParent
+   *        The parent node to get the children from. May not be
+   *        <code>null</code>.
+   * @return The micro container and never <code>null</code> but maybe empty.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public static IMicroContainer getAllOriginalChildrenAsContainer (@Nonnull final IMicroNode aParent)
+  {
+    final IMicroContainer ret = new MicroContainer ();
+    if (aParent.hasChildren ())
+      for (final IMicroNode aChildNode : aParent.getChildren ())
+        ret.appendChild (aChildNode.detachFromParent ());
+    return ret;
+  }
 }
