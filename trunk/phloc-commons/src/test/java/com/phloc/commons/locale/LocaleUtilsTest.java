@@ -185,4 +185,53 @@ public final class LocaleUtilsTest extends AbstractPhlocTestCase
     assertFalse (LocaleUtils.isSpecialLocale (null));
     assertFalse (LocaleUtils.isSpecialLocale (LocaleCache.getLocale ("de")));
   }
+
+  @Test
+  public void testIsSpecialLocaleCode ()
+  {
+    assertTrue (LocaleUtils.isSpecialLocaleCode (CGlobal.LOCALE_ALL.toString ()));
+    assertTrue (LocaleUtils.isSpecialLocaleCode (CGlobal.LOCALE_INDEPENDENT.toString ()));
+    assertFalse (LocaleUtils.isSpecialLocaleCode (null));
+    assertFalse (LocaleUtils.isSpecialLocaleCode ("de"));
+  }
+
+  @Test
+  public void testGetValidLanguageCode ()
+  {
+    assertNull (LocaleUtils.getValidLanguageCode (null));
+    assertNull (LocaleUtils.getValidLanguageCode (""));
+    assertNull (LocaleUtils.getValidLanguageCode ("1"));
+    assertNull (LocaleUtils.getValidLanguageCode ("a"));
+    assertNull (LocaleUtils.getValidLanguageCode (" "));
+    assertNull (LocaleUtils.getValidLanguageCode ("_"));
+    assertNull (LocaleUtils.getValidLanguageCode ("_de"));
+    assertNull (LocaleUtils.getValidLanguageCode ("d.e"));
+    assertNull (LocaleUtils.getValidLanguageCode ("d e"));
+    assertNull (LocaleUtils.getValidLanguageCode ("abcdefghi"));
+    assertEquals ("de", LocaleUtils.getValidLanguageCode ("De"));
+    assertEquals ("abc", LocaleUtils.getValidLanguageCode ("ABC"));
+    assertEquals ("en", LocaleUtils.getValidLanguageCode ("en"));
+    assertEquals ("abcdefgh", LocaleUtils.getValidLanguageCode ("abcDefgh"));
+  }
+
+  @Test
+  public void testGetValidCountryCode ()
+  {
+    assertNull (LocaleUtils.getValidCountryCode (null));
+    assertNull (LocaleUtils.getValidCountryCode (""));
+    assertNull (LocaleUtils.getValidCountryCode ("1"));
+    assertNull (LocaleUtils.getValidCountryCode ("12"));
+    assertNull (LocaleUtils.getValidCountryCode ("a"));
+    assertNull (LocaleUtils.getValidCountryCode (" "));
+    assertNull (LocaleUtils.getValidCountryCode ("_"));
+    assertNull (LocaleUtils.getValidCountryCode ("_de"));
+    assertNull (LocaleUtils.getValidCountryCode ("d.e"));
+    assertNull (LocaleUtils.getValidCountryCode ("d e"));
+    assertNull (LocaleUtils.getValidCountryCode ("abc"));
+    assertNull (LocaleUtils.getValidCountryCode ("1234"));
+    assertEquals ("DE", LocaleUtils.getValidCountryCode ("De"));
+    assertEquals ("123", LocaleUtils.getValidCountryCode ("123"));
+    assertEquals ("EN", LocaleUtils.getValidCountryCode ("en"));
+  }
+
 }

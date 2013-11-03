@@ -35,6 +35,8 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.cache.AbstractNotifyingCache;
 import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.equals.EqualsUtils;
+import com.phloc.commons.regex.RegExHelper;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.system.SystemHelper;
@@ -323,6 +325,41 @@ public final class LocaleUtils
   public static boolean isSpecialLocale (@Nullable final Locale aLocale)
   {
     return CGlobal.LOCALE_ALL.equals (aLocale) || CGlobal.LOCALE_INDEPENDENT.equals (aLocale);
+  }
+
+  /**
+   * Check if the passed locale is one of the special locales "all" or
+   * "independent"
+   * 
+   * @param sLocale
+   *        The locale to check. May be <code>null</code>.
+   * @return if the passed locale is not <code>null</code> and a special locale.
+   * @see CGlobal#LOCALE_ALL
+   * @see CGlobal#LOCALE_INDEPENDENT
+   */
+  public static boolean isSpecialLocaleCode (@Nullable final String sLocale)
+  {
+    return EqualsUtils.nullSafeEqualsIgnoreCase (CGlobal.LOCALE_ALL.toString (), sLocale) ||
+           EqualsUtils.nullSafeEqualsIgnoreCase (CGlobal.LOCALE_INDEPENDENT.toString (), sLocale);
+  }
+
+  public static String getValidLanguageCode (final String sCode)
+  {
+    if (StringHelper.hasText (sCode) &&
+        (RegExHelper.stringMatchesPattern ("[a-zA-Z]{2,8}", sCode) || isSpecialLocaleCode (sCode)))
+    {
+      return sCode.toLowerCase (Locale.US);
+    }
+    return null;
+  }
+
+  public static String getValidCountryCode (final String sCode)
+  {
+    if (StringHelper.hasText (sCode) && RegExHelper.stringMatchesPattern ("[a-zA-Z]{2}|[0-9]{3}", sCode))
+    {
+      return sCode.toUpperCase (Locale.US);
+    }
+    return null;
   }
 
   /**

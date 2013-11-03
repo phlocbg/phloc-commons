@@ -172,14 +172,12 @@ public final class LocaleCache
                                   @Nullable final String sCountry,
                                   @Nullable final String sVariant)
   {
-    // create case insensitive key!
-    final String sRealLanguage = sLanguage == null ? "" : sLanguage.toLowerCase (Locale.US);
-    final String sRealCountry = sCountry == null ? "" : sCountry.toUpperCase (Locale.US);
-    final String sRealVariant = sVariant == null ? "" : sVariant;
+    final String sRealLanguage = StringHelper.getNotNull (LocaleUtils.getValidLanguageCode (sLanguage));
+    final String sRealCountry = StringHelper.getNotNull (LocaleUtils.getValidCountryCode (sCountry));
+    final String sRealVariant = StringHelper.getNotNull (sVariant);
     final String sLocaleKey = _buildLocaleString (sRealLanguage, sRealCountry, sRealVariant);
     if (sLocaleKey.length () == 0)
       return null;
-
     // try to resolve locale
     Locale aLocale;
     s_aRWLock.readLock ().lock ();
@@ -296,6 +294,16 @@ public final class LocaleCache
     return containsLocale (sLanguage, sCountry, "");
   }
 
+  private static String createLocaleKey (@Nullable final String sLanguage,
+                                         @Nullable final String sCountry,
+                                         @Nullable final String sVariant)
+  {
+    final String sRealLanguage = StringHelper.getNotNull (LocaleUtils.getValidLanguageCode (sLanguage));
+    final String sRealCountry = StringHelper.getNotNull (LocaleUtils.getValidCountryCode (sCountry));
+    final String sRealVariant = StringHelper.getNotNull (sVariant);
+    return _buildLocaleString (sRealLanguage, sRealCountry, sRealVariant);
+  }
+
   /**
    * Check if the passed language is in the cache.
    * 
@@ -312,14 +320,9 @@ public final class LocaleCache
                                         @Nullable final String sCountry,
                                         @Nullable final String sVariant)
   {
-    // create case insensitive key!
-    final String sRealLanguage = sLanguage == null ? "" : sLanguage.toLowerCase (Locale.US);
-    final String sRealCountry = sCountry == null ? "" : sCountry.toUpperCase (Locale.US);
-    final String sRealVariant = sVariant == null ? "" : sVariant;
-    final String sLocaleKey = _buildLocaleString (sRealLanguage, sRealCountry, sRealVariant);
+    final String sLocaleKey = createLocaleKey (sLanguage, sCountry, sVariant);
     if (sLocaleKey.length () == 0)
       return false;
-
     s_aRWLock.readLock ().lock ();
     try
     {
