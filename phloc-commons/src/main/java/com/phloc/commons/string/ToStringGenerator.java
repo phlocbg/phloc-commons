@@ -18,6 +18,8 @@
 package com.phloc.commons.string;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -361,6 +363,72 @@ public final class ToStringGenerator
   public ToStringGenerator appendIfNotNull (@Nonnull final String sField, @Nullable final Object [] aValue)
   {
     return aValue == null ? this : append (sField, aValue);
+  }
+
+  @Nonnull
+  public ToStringGenerator appendIfNotEmpy (@Nonnull final String sField, @Nullable final boolean [] aValue)
+  {
+    return aValue == null || aValue.length == 0 ? this : append (sField, aValue);
+  }
+
+  @Nonnull
+  public ToStringGenerator appendIfNotEmpy (@Nonnull final String sField, @Nullable final byte [] aValue)
+  {
+    return aValue == null || aValue.length == 0 ? this : append (sField, aValue);
+  }
+
+  @Nonnull
+  public ToStringGenerator appendIfNotEmpy (@Nonnull final String sField, @Nullable final char [] aValue)
+  {
+    return aValue == null || aValue.length == 0 ? this : append (sField, aValue);
+  }
+
+  @Nonnull
+  public ToStringGenerator appendIfNotEmpy (@Nonnull final String sField, @Nullable final double [] aValue)
+  {
+    return aValue == null || aValue.length == 0 ? this : append (sField, aValue);
+  }
+
+  @Nonnull
+  public ToStringGenerator appendIfNotEmpy (@Nonnull final String sField, @Nullable final float [] aValue)
+  {
+    return aValue == null || aValue.length == 0 ? this : append (sField, aValue);
+  }
+
+  @Nonnull
+  public ToStringGenerator appendIfNotEmpy (@Nonnull final String sField, @Nullable final int [] aValue)
+  {
+    return aValue == null || aValue.length == 0 ? this : append (sField, aValue);
+  }
+
+  @Nonnull
+  public ToStringGenerator appendIfNotEmpy (@Nonnull final String sField, @Nullable final long [] aValue)
+  {
+    return aValue == null || aValue.length == 0 ? this : append (sField, aValue);
+  }
+
+  @Nonnull
+  public ToStringGenerator appendIfNotEmpy (@Nonnull final String sField, @Nullable final short [] aValue)
+  {
+    return aValue == null || aValue.length == 0 ? this : append (sField, aValue);
+  }
+
+  @Nonnull
+  public ToStringGenerator appendIfNotEmpy (@Nonnull final String sField, @Nullable final Object [] aValue)
+  {
+    return aValue == null || aValue.length == 0 ? this : append (sField, aValue);
+  }
+
+  @Nonnull
+  public ToStringGenerator appendIfNotEmpy (@Nonnull final String sField, @Nullable final Collection <?> aValue)
+  {
+    return aValue == null || aValue.isEmpty () ? this : append (sField, aValue);
+  }
+
+  @Nonnull
+  public ToStringGenerator appendIfNotEmpy (@Nonnull final String sField, @Nullable final Map <?, ?> aValue)
+  {
+    return aValue == null || aValue.isEmpty () ? this : append (sField, aValue);
   }
 
   @Override
