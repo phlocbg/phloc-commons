@@ -3,6 +3,20 @@
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
 <table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody>
+<tr border="1"><td>11/4/13</td><td colspan="4">_Release *4.0.12*_</td></tr>
+<tr><td>11/4/13</td><td>add</td><td>api</td><td></td><td>Added new methods ToStringGenerator.appendIfNotEmpty ()</td></tr>
+<tr><td>11/4/13</td><td>add</td><td>api</td><td></td><td>Added new method IThirdPartyModule.getAsOptionalCopy ()</td></tr>
+<tr><td>11/3/13</td><td>update</td><td>tech</td><td></td><td>Extended validation for LocaleCache and CountryCache to no longer store invalid elements</td></tr>
+<tr><td>10/31/13</td><td>add</td><td>api</td><td></td><td>Added new method MicroUtils.getAllOriginalChildrenAsContainer()</td></tr>
+<tr><td>10/30/13</td><td>add</td><td>api</td><td></td><td>Added new method MicroUtils.getAllChildrenAsContainer()</td></tr>
+<tr><td>10/23/13</td><td>add</td><td>api</td><td></td><td>Extended TreeWalker and TreeWalkerDynamic with methods that take a callback that only contains the data and not the whole tree item</td></tr>
+<tr><td>10/22/13</td><td>add</td><td>api</td><td></td><td>Added new method IThirdPartyModule.getAsNonOptionalCopy ()</td></tr>
+<tr><td>10/17/13</td><td>add</td><td>api</td><td></td><td>Added interface IURIToURLConverter from [http://code.google.com/p/phloc-webbasics phloc-webbasics]</td></tr>
+<tr><td>10/12/13</td><td>add</td><td>api</td><td></td><td>Added method StringHelper.trimStartAndEnd</td></tr>
+<tr><td>10/12/13</td><td>add</td><td>api</td><td></td><td>AbstractMultiTreeMap and all derived classes got a constructor with a Comparator</td></tr>
+<tr><td>10/7/13</td><td>add</td><td>api</td><td></td><td>Added LocaleFormatter.getFormatted(BigInteger) and getFormatted(BigDecimal)</td></tr>
+<tr><td>9/25/13</td><td>change</td><td>api</td><td></td><td>LogMessage and InMemoryLogger now implement Serializable</td></tr>
+<tr><td>9/25/13</td><td>change</td><td>api</td><td>*yes*</td><td>LogMessage and InMemoryLogger only take serializable objects</td></tr>
 <tr border="1"><td>9/25/13</td><td colspan="4">_Release *4.0.11*_</td></tr>
 <tr><td>9/25/13</td><td>change</td><td>api</td><td></td><td>Made class LogMessage non-final</td></tr>
 <tr><td>9/25/13</td><td>add</td><td>api</td><td></td><td>Made InMemoryLogger more flexible to allow for custom LogMessage object creation as well as for a callback after a message was added</td></tr>
