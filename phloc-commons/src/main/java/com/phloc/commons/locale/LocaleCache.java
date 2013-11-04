@@ -251,7 +251,7 @@ public final class LocaleCache
     {
       final String sLanguage = aLocale.getLanguage ();
       if (StringHelper.hasText (sLanguage))
-        ret.add (LocaleCache.getLocale (sLanguage, null, null));
+        ret.add (getLocale (sLanguage, null, null));
     }
     return ret;
   }
@@ -294,9 +294,10 @@ public final class LocaleCache
     return containsLocale (sLanguage, sCountry, "");
   }
 
-  private static String createLocaleKey (@Nullable final String sLanguage,
-                                         @Nullable final String sCountry,
-                                         @Nullable final String sVariant)
+  @Nonnull
+  private static String _createLocaleKey (@Nullable final String sLanguage,
+                                          @Nullable final String sCountry,
+                                          @Nullable final String sVariant)
   {
     final String sRealLanguage = StringHelper.getNotNull (LocaleUtils.getValidLanguageCode (sLanguage));
     final String sRealCountry = StringHelper.getNotNull (LocaleUtils.getValidCountryCode (sCountry));
@@ -320,7 +321,7 @@ public final class LocaleCache
                                         @Nullable final String sCountry,
                                         @Nullable final String sVariant)
   {
-    final String sLocaleKey = createLocaleKey (sLanguage, sCountry, sVariant);
+    final String sLocaleKey = _createLocaleKey (sLanguage, sCountry, sVariant);
     if (sLocaleKey.length () == 0)
       return false;
     s_aRWLock.readLock ().lock ();
