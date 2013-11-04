@@ -2,6 +2,8 @@
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
 <table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody>
+<tr><td>11/3/13</td><td>update</td><td>tech</td><td></td><td>Extended validation for LocaleCache and CountryCache to no longer store invalid elements</td></tr>
+<tr><td>10/31/13</td><td>add</td><td>api</td><td></td><td>Added new method MicroUtils.getAllOriginalChildrenAsContainer()</td></tr>
 <tr><td>10/30/13</td><td>add</td><td>api</td><td></td><td>Added new method MicroUtils.getAllChildrenAsContainer()</td></tr>
 <tr><td>10/23/13</td><td>add</td><td>api</td><td></td><td>Extended TreeWalker and TreeWalkerDynamic with methods that take a callback that only contains the data and not the whole tree item</td></tr>
 <tr><td>10/22/13</td><td>add</td><td>api</td><td></td><td>Added new method IThirdPartyModule.getAsNonOptionalCopy ()</td></tr>
