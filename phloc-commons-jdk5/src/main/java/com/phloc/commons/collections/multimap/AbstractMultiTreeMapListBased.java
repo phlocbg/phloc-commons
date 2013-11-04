@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.collections.multimap;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -42,6 +43,11 @@ public abstract class AbstractMultiTreeMapListBased <KEYTYPE, VALUETYPE> extends
 {
   public AbstractMultiTreeMapListBased ()
   {}
+
+  public AbstractMultiTreeMapListBased (@Nullable final Comparator <? super KEYTYPE> aComparator)
+  {
+    super (aComparator);
+  }
 
   public AbstractMultiTreeMapListBased (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
   {

@@ -35,6 +35,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.locale.LocaleCache;
+import com.phloc.commons.locale.LocaleUtils;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.StringHelper;
 
@@ -78,25 +79,20 @@ public final class CountryCache
   }
 
   @Nonnull
-  private static String _getUnifiedCountry (@Nonnull final String sCountry)
-  {
-    // We can US locale, because the ISO 3166 codes don't contain non-ASCII
-    // chars
-    return sCountry.toUpperCase (Locale.US);
-  }
-
-  @Nonnull
   static EChange addCountry (@Nonnull final String sCountry)
   {
     if (sCountry == null)
       throw new NullPointerException ("country");
-    if (!sCountry.equals (_getUnifiedCountry (sCountry)))
-      throw new IllegalArgumentException ("illegal casing of '" + sCountry + "'");
+    final String sValidCountry = LocaleUtils.getValidCountryCode (sCountry);
+    if (sValidCountry == null)
+      throw new IllegalArgumentException ("illegal country code '" + sCountry + "'");
+    if (!sCountry.equals (sValidCountry))
+      throw new IllegalArgumentException ("invalid casing of '" + sCountry + "'");
 
     s_aRWLock.writeLock ().lock ();
     try
     {
-      return EChange.valueOf (s_aCountries.add (sCountry));
+      return EChange.valueOf (s_aCountries.add (sValidCountry));
     }
     finally
     {
@@ -121,10 +117,10 @@ public final class CountryCache
     if (sCountry.indexOf (CGlobal.LOCALE_SEPARATOR) >= 0)
       return getCountry (LocaleCache.getLocale (sCountry));
 
-    final String sRealCountry = _getUnifiedCountry (sCountry);
-    if (!containsCountry (sRealCountry))
-      s_aLogger.warn ("Trying to retrieve unsupported country " + sRealCountry);
-    return LocaleCache.getLocale ("", sRealCountry, "");
+    final String sValidCountry = LocaleUtils.getValidCountryCode (sCountry);
+    if (!containsCountry (sValidCountry))
+      s_aLogger.warn ("Trying to retrieve unsupported country " + sCountry);
+    return LocaleCache.getLocale ("", sValidCountry, "");
   }
 
   /**
@@ -184,11 +180,13 @@ public final class CountryCache
     if (sCountry == null)
       return false;
 
-    final String sUnifiedCountry = _getUnifiedCountry (sCountry);
+    final String sValidCountry = LocaleUtils.getValidCountryCode (sCountry);
+    if (sValidCountry == null)
+      return false;
     s_aRWLock.readLock ().lock ();
     try
     {
-      return s_aCountries.contains (sUnifiedCountry);
+      return s_aCountries.contains (sValidCountry);
     }
     finally
     {

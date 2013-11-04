@@ -46,6 +46,16 @@ public final class ThirdPartyModule implements IThirdPartyModule
   private final String m_sWebSiteURL;
   private final boolean m_bOptional;
 
+  public ThirdPartyModule (@Nonnull final IThirdPartyModule aOther, final boolean bOptional)
+  {
+    this (aOther.getDisplayName (),
+          aOther.getCopyrightOwner (),
+          aOther.getLicense (),
+          aOther.getVersion (),
+          aOther.getWebSiteURL (),
+          bOptional);
+  }
+
   public ThirdPartyModule (@Nonnull @Nonempty final String sDisplayName,
                            @Nonnull @Nonempty final String sCopyrightOwner,
                            @Nonnull final ILicense aLicense)
@@ -125,6 +135,22 @@ public final class ThirdPartyModule implements IThirdPartyModule
   public boolean isOptional ()
   {
     return m_bOptional;
+  }
+
+  @Nonnull
+  public ThirdPartyModule getAsOptionalCopy ()
+  {
+    if (m_bOptional)
+      return this;
+    return new ThirdPartyModule (this, true);
+  }
+
+  @Nonnull
+  public ThirdPartyModule getAsNonOptionalCopy ()
+  {
+    if (!m_bOptional)
+      return this;
+    return new ThirdPartyModule (this, false);
   }
 
   @Override

@@ -40,17 +40,35 @@ import com.phloc.commons.string.StringHelper;
  */
 public final class CountryCacheTest
 {
+  private static final Locale LOCALE = new Locale ("de", "AT", "");
+
+  @Test
+  public void testGetCountryOfLocale ()
+  {
+    assertNull (CountryCache.getCountry ((Locale) null));
+    assertEquals (CountryCache.getCountry (LOCALE.getCountry ()), CountryCache.getCountry (LOCALE));
+  }
+
   @Test
   public void testGetCountry ()
   {
     assertNull (CountryCache.getCountry (""));
     assertNull (CountryCache.getCountry ((String) null));
     assertNull (CountryCache.getCountry ((Locale) null));
+    assertNull (CountryCache.getCountry ("A"));
+    assertNotNull (CountryCache.getCountry ("AT"));
+    assertNotNull (CountryCache.getCountry ("at"));
+    assertNull (CountryCache.getCountry ("AAA"));
+    assertNull (CountryCache.getCountry ("1"));
+    assertNull (CountryCache.getCountry ("12"));
+    assertNotNull (CountryCache.getCountry ("123"));
+    assertNull (CountryCache.getCountry ("1234"));
+
     assertNotNull (CountryCache.getCountry ("AT"));
     assertNotNull (CountryCache.getCountry ("at"));
     assertNotNull (CountryCache.getCountry ("pl"));
     // Returns a valid locale, but emits a warning:
-    assertNotNull (CountryCache.getCountry ("xxx"));
+
     assertEquals (CountryCache.getCountry ("ch"), CountryCache.getCountry (new Locale ("de", "ch")));
     assertEquals (LocaleCache.getLocale ("", "AT", ""), CountryCache.getCountry ("_AT"));
     assertEquals (LocaleCache.getLocale ("", "AT", ""), CountryCache.getCountry ("de_AT"));
@@ -60,6 +78,78 @@ public final class CountryCacheTest
     assertFalse (CountryCache.containsCountry ((String) null));
     assertFalse (CountryCache.containsCountry (CGlobal.LOCALE_ALL));
     assertFalse (CountryCache.containsCountry ((Locale) null));
+  }
+
+  @Test (expected = NullPointerException.class)
+  public void testAddCountryNull ()
+  {
+    CountryCache.addCountry (null);
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void testAddCountryEmpty ()
+  {
+    CountryCache.addCountry ("");
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void testAddCountryIllegal ()
+  {
+    CountryCache.addCountry ("EN AAAA");
+  }
+
+  @Test (expected = IllegalArgumentException.class)
+  public void testAddCountryInvalidCasing ()
+  {
+    CountryCache.addCountry ("en");
+  }
+
+  @Test
+  public void testAddCountry ()
+  {
+    assertTrue (CountryCache.addCountry ("YX").isChanged ());
+  }
+
+  @Test
+  public void testContainsCountryByLocale ()
+  {
+    assertFalse (CountryCache.containsCountry ((Locale) null));
+    assertTrue (CountryCache.containsCountry (LOCALE.getCountry ()) == CountryCache.containsCountry (LOCALE));
+  }
+
+  @Test
+  public void testResetCache ()
+  {
+    // is always cleaned along with locale cache!
+    LocaleCache.resetCache ();
+    CountryCache.resetCache ();
+    final int nCount = CountryCache.getAllCountries ().size ();
+    CountryCache.addCountry ("123");
+    assertTrue (CountryCache.containsCountry ("123"));
+    assertEquals (nCount + 1, CountryCache.getAllCountries ().size ());
+    // is always cleaned along with locale cache!
+    LocaleCache.resetCache ();
+    CountryCache.resetCache ();
+    assertEquals (nCount, CountryCache.getAllCountries ().size ());
+  }
+
+  @Test
+  public void testContainsCountryByString ()
+  {
+    assertFalse (CountryCache.containsCountry ((String) null));
+    assertFalse (CountryCache.containsCountry (""));
+    assertFalse (CountryCache.containsCountry ("a"));
+    assertFalse (CountryCache.containsCountry ("A"));
+    assertFalse (CountryCache.containsCountry ("aaa"));
+    assertFalse (CountryCache.containsCountry ("AAA"));
+    assertFalse (CountryCache.containsCountry ("1"));
+    assertFalse (CountryCache.containsCountry ("12"));
+    assertFalse (CountryCache.containsCountry ("1234"));
+    assertTrue (CountryCache.containsCountry ("GB"));
+    assertTrue (CountryCache.containsCountry ("gb"));
+    assertFalse (CountryCache.containsCountry ("123"));
+    CountryCache.addCountry ("123");
+    assertTrue (CountryCache.containsCountry ("123"));
   }
 
   @Test

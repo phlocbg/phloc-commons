@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.collections.multimap;
 
+import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -36,11 +37,15 @@ import javax.annotation.concurrent.NotThreadSafe;
  *        value type
  */
 @NotThreadSafe
-public class MultiTreeMapLinkedHashSetBased <KEYTYPE, VALUETYPE> extends
-                                                                 AbstractMultiTreeMapSetBased <KEYTYPE, VALUETYPE>
+public class MultiTreeMapLinkedHashSetBased <KEYTYPE, VALUETYPE> extends AbstractMultiTreeMapSetBased <KEYTYPE, VALUETYPE>
 {
   public MultiTreeMapLinkedHashSetBased ()
   {}
+
+  public MultiTreeMapLinkedHashSetBased (@Nullable final Comparator <? super KEYTYPE> aComparator)
+  {
+    super (aComparator);
+  }
 
   public MultiTreeMapLinkedHashSetBased (@Nullable final KEYTYPE aKey, @Nullable final VALUETYPE aValue)
   {

@@ -35,6 +35,7 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.cache.AbstractNotifyingCache;
 import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.regex.RegExHelper;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.system.SystemHelper;
@@ -91,6 +92,8 @@ public final class LocaleUtils
     }
   }
 
+  private static final String LOCALE_ALL_STR = CGlobal.LOCALE_ALL.toString ();
+  private static final String LOCALE_INDEPENDENT_STR = CGlobal.LOCALE_INDEPENDENT.toString ();
   private static final LocaleListCache s_aLocaleListCache = new LocaleListCache ();
 
   @PresentForCodeCoverage
@@ -326,10 +329,47 @@ public final class LocaleUtils
   }
 
   /**
+   * Check if the passed locale is one of the special locales "all" or
+   * "independent"
+   * 
+   * @param sLocale
+   *        The locale to check. May be <code>null</code>.
+   * @return if the passed locale is not <code>null</code> and a special locale.
+   * @see CGlobal#LOCALE_ALL
+   * @see CGlobal#LOCALE_INDEPENDENT
+   */
+  public static boolean isSpecialLocaleCode (@Nullable final String sLocale)
+  {
+    return LOCALE_ALL_STR.equalsIgnoreCase (sLocale) || LOCALE_INDEPENDENT_STR.equalsIgnoreCase (sLocale);
+  }
+
+  @Nullable
+  public static String getValidLanguageCode (@Nullable final String sCode)
+  {
+    if (StringHelper.hasText (sCode) &&
+        (RegExHelper.stringMatchesPattern ("[a-zA-Z]{2,8}", sCode) || isSpecialLocaleCode (sCode)))
+    {
+      return sCode.toLowerCase (Locale.US);
+    }
+    return null;
+  }
+
+  @Nullable
+  public static String getValidCountryCode (@Nullable final String sCode)
+  {
+    if (StringHelper.hasText (sCode) && RegExHelper.stringMatchesPattern ("[a-zA-Z]{2}|[0-9]{3}", sCode))
+    {
+      return sCode.toUpperCase (Locale.US);
+    }
+    return null;
+  }
+
+  /**
    * Clear all stored locale lists
    * 
    * @return {@link EChange}.
    */
+  @Nonnull
   public static EChange clearCache ()
   {
     return s_aLocaleListCache.clearCache ();

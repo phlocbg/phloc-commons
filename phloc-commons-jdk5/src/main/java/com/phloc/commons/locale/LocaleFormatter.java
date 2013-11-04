@@ -18,6 +18,7 @@
 package com.phloc.commons.locale;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -94,6 +95,40 @@ public final class LocaleFormatter
   public static String getFormatted (final long nValue, @Nonnull final Locale aDisplayLocale)
   {
     return NumberFormat.getIntegerInstance (aDisplayLocale).format (nValue);
+  }
+
+  /**
+   * Format the passed int value according to the rules specified by the given
+   * locale. All calls to {@link BigInteger#toString()} that are displayed to
+   * the user should instead use this method.
+   * 
+   * @param aValue
+   *        The value to be formatted. May not be <code>null</code>.
+   * @param aDisplayLocale
+   *        The locale to be used. May not be <code>null</code>.
+   * @return The formatted string.
+   */
+  @Nonnull
+  public static String getFormatted (@Nonnull final BigInteger aValue, @Nonnull final Locale aDisplayLocale)
+  {
+    return NumberFormat.getIntegerInstance (aDisplayLocale).format (aValue);
+  }
+
+  /**
+   * Format the passed int value according to the rules specified by the given
+   * locale. All calls to {@link BigDecimal#toString()} that are displayed to
+   * the user should instead use this method.
+   * 
+   * @param aValue
+   *        The value to be formatted. MAy not be <code>null</code>.
+   * @param aDisplayLocale
+   *        The locale to be used. May not be <code>null</code>.
+   * @return The formatted string.
+   */
+  @Nonnull
+  public static String getFormatted (@Nonnull final BigDecimal aValue, @Nonnull final Locale aDisplayLocale)
+  {
+    return NumberFormat.getIntegerInstance (aDisplayLocale).format (aValue);
   }
 
   /**

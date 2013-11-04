@@ -2239,6 +2239,9 @@ public final class StringHelper
    *        The string to be trimmed of the beginning
    * @return The trimmed string, or the original input string, if the lead was
    *         not found
+   * @see #trimEnd(String, String)
+   * @see #trimStartAndEnd(String, String)
+   * @see #trimStartAndEnd(String, String, String)
    */
   @Nullable
   @CheckReturnValue
@@ -2257,12 +2260,63 @@ public final class StringHelper
    *        The string to be trimmed of the end
    * @return The trimmed string, or the original input string, if the tail was
    *         not found
+   * @see #trimStart(String, String)
+   * @see #trimStartAndEnd(String, String)
+   * @see #trimStartAndEnd(String, String, String)
    */
   @Nullable
   @CheckReturnValue
   public static String trimEnd (@Nullable final String sSrc, @Nullable final String sTail)
   {
     return endsWith (sSrc, sTail) ? sSrc.substring (0, sSrc.length () - sTail.length ()) : sSrc;
+  }
+
+  /**
+   * Trim the passed lead and tail from the source value. If the source value
+   * does not start with the passed trimmed value, nothing happens.
+   * 
+   * @param sSrc
+   *        The input source string
+   * @param sValueToTrim
+   *        The string to be trimmed of the beginning and the end
+   * @return The trimmed string, or the original input string, if the value to
+   *         trim was not found
+   * @see #trimStart(String, String)
+   * @see #trimEnd(String, String)
+   * @see #trimStartAndEnd(String, String, String)
+   */
+  @Nullable
+  @CheckReturnValue
+  public static String trimStartAndEnd (@Nullable final String sSrc, @Nullable final String sValueToTrim)
+  {
+    return trimStartAndEnd (sSrc, sValueToTrim, sValueToTrim);
+  }
+
+  /**
+   * Trim the passed lead and tail from the source value. If the source value
+   * does not start with the passed lead and does not end with the passed tail,
+   * nothing happens.
+   * 
+   * @param sSrc
+   *        The input source string
+   * @param sLead
+   *        The string to be trimmed of the beginning
+   * @param sTail
+   *        The string to be trimmed of the end
+   * @return The trimmed string, or the original input string, if the lead and
+   *         the tail were not found
+   * @see #trimStart(String, String)
+   * @see #trimEnd(String, String)
+   * @see #trimStartAndEnd(String, String)
+   */
+  @Nullable
+  @CheckReturnValue
+  public static String trimStartAndEnd (@Nullable final String sSrc,
+                                        @Nullable final String sLead,
+                                        @Nullable final String sTail)
+  {
+    final String sInbetween = trimStart (sSrc, sLead);
+    return trimEnd (sInbetween, sTail);
   }
 
   /**
