@@ -138,6 +138,14 @@ public final class ThirdPartyModule implements IThirdPartyModule
   }
 
   @Nonnull
+  public ThirdPartyModule getAsOptionalCopy ()
+  {
+    if (m_bOptional)
+      return this;
+    return new ThirdPartyModule (this, true);
+  }
+
+  @Nonnull
   public ThirdPartyModule getAsNonOptionalCopy ()
   {
     if (!m_bOptional)
