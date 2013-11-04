@@ -83,7 +83,8 @@ public final class MicroTypeConverterTreeXML <DATATYPE> implements IConverterTre
   public void appendDataValue (@Nonnull final IMicroElement eDataElement, @Nullable final DATATYPE aObject)
   {
     // Append created element - or null if the passed object is null
-    eDataElement.appendChild (MicroTypeConverter.convertToMicroElement (aObject, m_sNamespaceURI, m_sElementName));
+    final IMicroElement eElement = MicroTypeConverter.convertToMicroElement (aObject, m_sNamespaceURI, m_sElementName);
+    eDataElement.appendChild (eElement);
   }
 
   @Nullable

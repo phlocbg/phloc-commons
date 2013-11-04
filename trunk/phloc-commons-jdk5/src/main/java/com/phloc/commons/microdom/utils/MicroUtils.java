@@ -32,12 +32,15 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.ProcessingInstruction;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ArrayHelper;
+import com.phloc.commons.microdom.IMicroContainer;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.microdom.impl.MicroCDATA;
 import com.phloc.commons.microdom.impl.MicroComment;
+import com.phloc.commons.microdom.impl.MicroContainer;
 import com.phloc.commons.microdom.impl.MicroDocument;
 import com.phloc.commons.microdom.impl.MicroDocumentType;
 import com.phloc.commons.microdom.impl.MicroElement;
@@ -402,5 +405,49 @@ public final class MicroUtils
   {
     final IMicroElement eChildElement = eParentElement.getFirstChildElement (sNamespaceURI, sChildElementName);
     return eChildElement != null ? eChildElement.getTextContentWithConversion (aDstClass) : null;
+  }
+
+  /**
+   * Create a micro container with all children of the passed node. If the
+   * passed node has no children, an empty object is returned. The resulting
+   * container contains a clone of each child node so that the original objects
+   * is not modified.
+   * 
+   * @param aParent
+   *        The parent node to get the children from. May not be
+   *        <code>null</code>.
+   * @return The micro container and never <code>null</code> but maybe empty.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public static IMicroContainer getAllChildrenAsContainer (@Nonnull final IMicroNode aParent)
+  {
+    final IMicroContainer ret = new MicroContainer ();
+    if (aParent.hasChildren ())
+      for (final IMicroNode aChildNode : aParent.getChildren ())
+        ret.appendChild (aChildNode.getClone ());
+    return ret;
+  }
+
+  /**
+   * Create a micro container with all children of the passed node. If the
+   * passed node has no children, an empty object is returned. The resulting
+   * container contains the original child nodes so that they no longer belong
+   * to the original object. THis implies that the original object is modified!
+   * 
+   * @param aParent
+   *        The parent node to get the children from. May not be
+   *        <code>null</code>.
+   * @return The micro container and never <code>null</code> but maybe empty.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  public static IMicroContainer getAllOriginalChildrenAsContainer (@Nonnull final IMicroNode aParent)
+  {
+    final IMicroContainer ret = new MicroContainer ();
+    if (aParent.hasChildren ())
+      for (final IMicroNode aChildNode : aParent.getChildren ())
+        ret.appendChild (aChildNode.detachFromParent ());
+    return ret;
   }
 }

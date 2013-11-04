@@ -62,6 +62,13 @@ public final class LocaleCacheTest extends AbstractPhlocTestCase
   }
 
   @Test
+  public void testGetInvalid ()
+  {
+    assertNull (LocaleCache.getLocale ("gb result: chosen nickname \"stevenwhitecotton063\"; success;"));
+    assertNull (LocaleCache.getLocale ("aa bb"));
+  }
+
+  @Test
   public void testGetAllLocales ()
   {
     assertNotNull (LocaleCache.getAllLocales ());
@@ -98,10 +105,12 @@ public final class LocaleCacheTest extends AbstractPhlocTestCase
   public void testContainsLocale ()
   {
     assertFalse (LocaleCache.containsLocale (null));
+    assertFalse (LocaleCache.containsLocale (null));
     assertTrue (LocaleCache.containsLocale ("de"));
     assertTrue (LocaleCache.containsLocale ("de_at"));
     assertFalse (LocaleCache.containsLocale ("de_at_var"));
     assertFalse (LocaleCache.containsLocale ("de_xx"));
+    assertFalse (LocaleCache.containsLocale ("deh"));
 
     assertTrue (LocaleCache.containsLocale ("de", "at"));
     assertFalse (LocaleCache.containsLocale ("de", "xx"));
@@ -111,5 +120,16 @@ public final class LocaleCacheTest extends AbstractPhlocTestCase
     assertTrue (LocaleCache.containsLocale ("de", "at", null));
     assertFalse (LocaleCache.containsLocale ("de", "xx", null));
     assertFalse (LocaleCache.containsLocale ("de", "at", "var"));
+  }
+
+  @Test
+  public void testResetCache ()
+  {
+    LocaleCache.resetCache ();
+    final int nCount = LocaleCache.getAllLanguages ().size ();
+    LocaleCache.getLocale ("xy");
+    assertEquals (nCount + 1, LocaleCache.getAllLanguages ().size ());
+    LocaleCache.resetCache ();
+    assertEquals (nCount, LocaleCache.getAllLanguages ().size ());
   }
 }

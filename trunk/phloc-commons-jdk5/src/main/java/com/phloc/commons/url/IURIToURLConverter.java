@@ -15,30 +15,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.microdom.convert;
+package com.phloc.commons.url;
 
 import javax.annotation.Nonnull;
 
-import com.phloc.commons.state.EContinue;
+import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.url.ISimpleURL;
 
 /**
- * A callback interface that is used in several places of the micro type
- * conversion engine.
+ * A generic converted from String URI to {@link ISimpleURL}.
  * 
  * @author Philip Helger
  */
-public interface IMicroTypeConverterCallback
+public interface IURIToURLConverter
 {
   /**
-   * Invoked for each converter.
+   * Convert the passed URI to a URL.
    * 
-   * @param aClass
-   *        The class for which the converter was registered.
-   * @param aConverter
-   *        The main converter object. Never <code>null</code>.
-   * @return {@link EContinue#CONTINUE} to continue iteration,
-   *         {@link EContinue#BREAK} to stop iteration.
+   * @param sURI
+   *        The URI to be converted.
+   * @return The created URL.
    */
   @Nonnull
-  EContinue call (@Nonnull Class <?> aClass, @Nonnull IMicroTypeConverter aConverter);
+  ISimpleURL getAsURL (@Nonnull @Nonempty String sURI);
 }
