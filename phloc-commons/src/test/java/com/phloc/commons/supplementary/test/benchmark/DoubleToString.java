@@ -810,22 +810,22 @@ public class DoubleToString
   public void appendFormatted (final StringBuilder s,
                                final double pd,
                                final int numFractDigits,
-                               final char decimalPoint,
-                               final char thousandsSeparator,
-                               final int numDigitsSeparated,
-                               final char negativePrefix,
-                               final char negativeSuffix)
+                               final char cDecimalPoint,
+                               final char cThousandsSeparator,
+                               final int nNumDigitsSeparated,
+                               final char cNegativePrefix,
+                               final char cNegativeSuffix)
   {
     double d = pd;
     // First check for the special cases, +/-infinity, Not-a-number and -0.0
     if (d == Double.NEGATIVE_INFINITY)
     {
       // d == -Infinity
-      if (negativePrefix != NO_PREFIX_OR_SUFFIX)
-        s.append (negativePrefix);
+      if (cNegativePrefix != NO_PREFIX_OR_SUFFIX)
+        s.append (cNegativePrefix);
       s.append (INFINITY);
-      if (negativeSuffix != NO_PREFIX_OR_SUFFIX)
-        s.append (negativeSuffix);
+      if (cNegativeSuffix != NO_PREFIX_OR_SUFFIX)
+        s.append (cNegativeSuffix);
     }
     else
       if (d == Double.POSITIVE_INFINITY)
@@ -841,15 +841,15 @@ public class DoubleToString
             if ((Double.doubleToLongBits (d) & DoubleSignMask) != 0)
             {
               // d == -0.0
-              if (negativePrefix != NO_PREFIX_OR_SUFFIX)
-                s.append (negativePrefix);
-              s.append ('0').append (decimalPoint).append (ZEROS[numFractDigits]);
-              if (negativeSuffix != NO_PREFIX_OR_SUFFIX)
-                s.append (negativeSuffix);
+              if (cNegativePrefix != NO_PREFIX_OR_SUFFIX)
+                s.append (cNegativePrefix);
+              s.append ('0').append (cDecimalPoint).append (ZEROS[numFractDigits]);
+              if (cNegativeSuffix != NO_PREFIX_OR_SUFFIX)
+                s.append (cNegativeSuffix);
             }
             else
               // d == 0.0
-              s.append ('0').append (decimalPoint).append (ZEROS[numFractDigits]);
+              s.append ('0').append (cDecimalPoint).append (ZEROS[numFractDigits]);
           }
           else
           {
@@ -861,10 +861,10 @@ public class DoubleToString
             {
               // Even if the number is negative, we only need to set the
               // negative flag if there is a printable negativeSuffix
-              if (negativeSuffix != NO_PREFIX_OR_SUFFIX)
+              if (cNegativeSuffix != NO_PREFIX_OR_SUFFIX)
                 negative = true;
-              if (negativePrefix != NO_PREFIX_OR_SUFFIX)
-                s.append (negativePrefix);
+              if (cNegativePrefix != NO_PREFIX_OR_SUFFIX)
+                s.append (cNegativePrefix);
               d = -d;
             }
 
@@ -876,9 +876,9 @@ public class DoubleToString
             // only print 0.0..., which makes this real quick
             if ((magnitude + numFractDigits) < 0)
             {
-              _appendNearlyZeroNumber (s, d, magnitude, numFractDigits, decimalPoint);
+              _appendNearlyZeroNumber (s, d, magnitude, numFractDigits, cDecimalPoint);
               if (negative)
-                s.append (negativeSuffix);
+                s.append (cNegativeSuffix);
               return;
             }
 
@@ -925,15 +925,15 @@ public class DoubleToString
                             l_tenthPower,
                             magnitude,
                             numFractDigits,
-                            decimalPoint,
-                            thousandsSeparator,
-                            numDigitsSeparated,
-                            negativePrefix,
-                            negativeSuffix);
+                            cDecimalPoint,
+                            cThousandsSeparator,
+                            nNumDigitsSeparated,
+                            cNegativePrefix,
+                            cNegativeSuffix);
 
             // Finally, append the negativeSuffix if necessary
             if (negative)
-              s.append (negativeSuffix);
+              s.append (cNegativeSuffix);
           }
   }
 
