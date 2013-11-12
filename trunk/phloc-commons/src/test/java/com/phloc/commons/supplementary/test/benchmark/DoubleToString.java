@@ -4,6 +4,12 @@ import java.text.DecimalFormat;
 import java.text.FieldPosition;
 import java.util.Arrays;
 
+/**
+ * Based on
+ * http://www.onjava.com/pub/a/onjava/2000/12/15/formatting_doubles.html
+ * 
+ * @author Philip Helger
+ */
 public class DoubleToString
 {
   private static final char NO_PREFIX_OR_SUFFIX = '\uFFFF';
