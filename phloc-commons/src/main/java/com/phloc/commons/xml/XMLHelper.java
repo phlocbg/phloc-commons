@@ -55,7 +55,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * This class contains multiple XML utility methods.
- *
+ * 
  * @author Philip Helger
  */
 @Immutable
@@ -71,7 +71,7 @@ public final class XMLHelper
                                                                     // are OK
                                                                     11,
                                                                     12,
-                                                                    // 13 is OK
+                                                                    13,
                                                                     14,
                                                                     15,
                                                                     16,
@@ -90,6 +90,39 @@ public final class XMLHelper
                                                                     29,
                                                                     30,
                                                                     31,
+                                                                    127,
+                                                                    128,
+                                                                    129,
+                                                                    130,
+                                                                    131,
+                                                                    132,
+                                                                    133,
+                                                                    134,
+                                                                    135,
+                                                                    136,
+                                                                    137,
+                                                                    138,
+                                                                    139,
+                                                                    140,
+                                                                    141,
+                                                                    142,
+                                                                    143,
+                                                                    144,
+                                                                    145,
+                                                                    146,
+                                                                    147,
+                                                                    148,
+                                                                    149,
+                                                                    150,
+                                                                    151,
+                                                                    152,
+                                                                    153,
+                                                                    154,
+                                                                    155,
+                                                                    156,
+                                                                    157,
+                                                                    158,
+                                                                    159,
                                                                     '\u2028' };
   private static final char [] MASK_PATTERNS_ALL = ArrayHelper.getConcatenated (MASK_PATTERNS_XML10,
                                                                                 MASK_PATTERNS_CONTROL);
@@ -138,6 +171,40 @@ public final class XMLHelper
                                                                               "".toCharArray (),
                                                                               "".toCharArray (),
                                                                               "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
+                                                                              "".toCharArray (),
                                                                               "\n".toCharArray () };
 
   private static final char [][] MASK_REPLACE_ALL_EMPTY = ArrayHelper.getConcatenated (MASK_REPLACE_XML10,
@@ -157,6 +224,7 @@ public final class XMLHelper
                                                                               "&#8;".toCharArray (),
                                                                               "&#11;".toCharArray (),
                                                                               "&#12;".toCharArray (),
+                                                                              "&#13;".toCharArray (),
                                                                               "&#14;".toCharArray (),
                                                                               "&#15;".toCharArray (),
                                                                               "&#16;".toCharArray (),
@@ -175,6 +243,39 @@ public final class XMLHelper
                                                                               "&#29;".toCharArray (),
                                                                               "&#30;".toCharArray (),
                                                                               "&#31;".toCharArray (),
+                                                                              "&#127;".toCharArray (),
+                                                                              "&#128;".toCharArray (),
+                                                                              "&#129;".toCharArray (),
+                                                                              "&#130;".toCharArray (),
+                                                                              "&#131;".toCharArray (),
+                                                                              "&#132;".toCharArray (),
+                                                                              "&#133;".toCharArray (),
+                                                                              "&#134;".toCharArray (),
+                                                                              "&#135;".toCharArray (),
+                                                                              "&#136;".toCharArray (),
+                                                                              "&#137;".toCharArray (),
+                                                                              "&#138;".toCharArray (),
+                                                                              "&#139;".toCharArray (),
+                                                                              "&#140;".toCharArray (),
+                                                                              "&#141;".toCharArray (),
+                                                                              "&#142;".toCharArray (),
+                                                                              "&#143;".toCharArray (),
+                                                                              "&#144;".toCharArray (),
+                                                                              "&#145;".toCharArray (),
+                                                                              "&#146;".toCharArray (),
+                                                                              "&#147;".toCharArray (),
+                                                                              "&#148;".toCharArray (),
+                                                                              "&#149;".toCharArray (),
+                                                                              "&#150;".toCharArray (),
+                                                                              "&#151;".toCharArray (),
+                                                                              "&#152;".toCharArray (),
+                                                                              "&#153;".toCharArray (),
+                                                                              "&#154;".toCharArray (),
+                                                                              "&#155;".toCharArray (),
+                                                                              "&#156;".toCharArray (),
+                                                                              "&#157;".toCharArray (),
+                                                                              "&#158;".toCharArray (),
+                                                                              "&#159;".toCharArray (),
                                                                               "&#2028;".toCharArray () };
 
   private static final char [][] MASK_REPLACE_ALL_XML11 = ArrayHelper.getConcatenated (MASK_REPLACE_XML10,
@@ -197,7 +298,7 @@ public final class XMLHelper
                                                                       false,
                                                                       true,
                                                                       true,
-                                                                      false,
+                                                                      true,
                                                                       true,
                                                                       true,
                                                                       // 16
@@ -503,7 +604,7 @@ public final class XMLHelper
 
   /**
    * Get the first direct child element of the passed element.
-   *
+   * 
    * @param aStartNode
    *        The element to start searching.
    * @return <code>null</code> if the passed element does not have any direct
@@ -525,7 +626,7 @@ public final class XMLHelper
 
   /**
    * Check if the passed node has at least one direct child element or not.
-   *
+   * 
    * @param aStartNode
    *        The parent element to be searched. May not be <code>null</code>.
    * @return <code>true</code> if the passed node has at least one child
@@ -539,7 +640,7 @@ public final class XMLHelper
   /**
    * Search all child nodes of the given for the first element that has the
    * specified tag name.
-   *
+   * 
    * @param aStartNode
    *        The parent element to be searched. May not be <code>null</code>.
    * @param sName
@@ -567,7 +668,7 @@ public final class XMLHelper
   /**
    * Get the owner document of the passed node. If the node itself is a
    * document, only a cast is performed.
-   *
+   * 
    * @param aNode
    *        The node to get the document from. May be <code>null</code>.
    * @return <code>null</code> if the passed node was <code>null</code>.
@@ -676,7 +777,7 @@ public final class XMLHelper
 
   /**
    * Get an iterator over all child elements that have no namespace.
-   *
+   * 
    * @param aStartNode
    *        the parent element
    * @return a non-null Iterator
@@ -690,7 +791,7 @@ public final class XMLHelper
   /**
    * Get an iterator over all child elements that have no namespace and the
    * desired tag name.
-   *
+   * 
    * @param aStartNode
    *        the parent element
    * @param sTagName
@@ -736,7 +837,7 @@ public final class XMLHelper
   /**
    * Shortcut for {@link #getPathToNode(Node, String)} using "/" as the
    * separator.
-   *
+   * 
    * @param aNode
    *        The node to check.
    * @return A non-<code>null</code> path.
@@ -749,7 +850,7 @@ public final class XMLHelper
 
   /**
    * Get the path from root node to the passed node.
-   *
+   * 
    * @param aNode
    *        The node to start. May not be <code>null</code>.
    * @param sSep
@@ -795,7 +896,7 @@ public final class XMLHelper
 
   /**
    * Remove all child nodes of the given node.
-   *
+   * 
    * @param aElement
    *        The element whose children are to be removed.
    */
@@ -891,7 +992,7 @@ public final class XMLHelper
    * Check if the passed node is a text node. This includes all nodes derived
    * from {@link CharacterData} which are not {@link Comment} nodes as well as
    * {@link EntityReference} nodes.
-   *
+   * 
    * @param aNode
    *        The node to be checked.
    * @return <code>true</code> if the passed node is a text node,
@@ -904,7 +1005,7 @@ public final class XMLHelper
 
   /**
    * Get the content of the first Text child element of the passed element.
-   *
+   * 
    * @param aStartNode
    *        the element to scan for a TextNode child
    * @return <code>null</code> if the element contains no text node as child
@@ -936,7 +1037,7 @@ public final class XMLHelper
    * The latest version of XercesJ 2.9 returns an empty string for non existing
    * attributes. To differentiate between empty attributes and non-existing
    * attributes, this method returns null for non existing attributes.
-   *
+   * 
    * @param aElement
    *        the source element to get the attribute from
    * @param sAttrName
@@ -955,7 +1056,7 @@ public final class XMLHelper
    * attributes. To differentiate between empty attributes and non-existing
    * attributes, this method returns a default value for non existing
    * attributes.
-   *
+   * 
    * @param aElement
    *        the source element to get the attribute from. May not be
    *        <code>null</code>.
@@ -1000,7 +1101,7 @@ public final class XMLHelper
    * Get the full qualified attribute name to use for the given namespace
    * prefix. The result will e.g. be <code>xmlns</code> or
    * <code>xmlns:foo</code>.
-   *
+   * 
    * @param sNSPrefix
    *        The namespace prefix to build the attribute name from. May be
    *        <code>null</code> or empty.
@@ -1020,7 +1121,7 @@ public final class XMLHelper
 
   /**
    * Get the full qualified attribute name to use for the given prefix.
-   *
+   * 
    * @param sNSPrefix
    *        The namespace prefix to build the attribute name from. May neither
    *        be <code>null</code> nor empty.
@@ -1051,7 +1152,7 @@ public final class XMLHelper
    * and XML 1.1.<br>
    * Note: makes no difference between the runtime JAXP solution and the
    * explicit Xerces version
-   *
+   * 
    * @param c
    *        The character to be checked.
    * @return <code>true</code> if the character is valid in XML,
