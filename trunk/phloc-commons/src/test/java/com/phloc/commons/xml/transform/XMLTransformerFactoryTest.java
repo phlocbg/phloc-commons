@@ -27,11 +27,23 @@ import javax.xml.transform.Source;
 import javax.xml.transform.Templates;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.junit.Test;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.resource.ClassPathResource;
+import com.phloc.commons.io.streams.NonBlockingStringWriter;
+import com.phloc.commons.xml.EXMLIncorrectCharacterHandling;
+import com.phloc.commons.xml.EXMLVersion;
+import com.phloc.commons.xml.XMLFactory;
+import com.phloc.commons.xml.serialize.XMLReader;
+import com.phloc.commons.xml.serialize.XMLWriter;
+import com.phloc.commons.xml.serialize.XMLWriterSettings;
 
 /**
  * Test class for class {@link XMLTransformerFactory}.
@@ -167,5 +179,35 @@ public final class XMLTransformerFactoryTest
     }
     catch (final NullPointerException ex)
     {}
+  }
+
+  @Test
+  public void testSpecialChars () throws Exception
+  {
+    final Document aDoc = XMLFactory.newDocument (EXMLVersion.XML_11);
+    final Node aRoot = aDoc.appendChild (aDoc.createElement ("root"));
+    final char [] aChars = new char [256];
+    for (int i = 0; i < 256; ++i)
+      if (i == 0 || (i >= 127 && i <= 159))
+      {
+        // Not in attrs
+        aChars[i] = '.';
+      }
+      else
+        aChars[i] = (char) i;
+    final String sAll = new String (aChars);
+    if (true)
+      ((Element) aRoot).setAttribute ("test", sAll);
+    aRoot.appendChild (aDoc.createTextNode (sAll));
+    final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
+    XMLTransformerFactory.newTransformer ().transform (new DOMSource (aDoc), new StreamResult (aSW));
+    final String sTransform = aSW.getAsString ();
+    final String sXML = XMLWriter.getNodeAsString (aDoc,
+                                                   new XMLWriterSettings ().setIncorrectCharacterHandling (EXMLIncorrectCharacterHandling.WRITE_TO_FILE_NO_LOG));
+    System.out.println (sTransform);
+    System.out.println ();
+    System.out.println (sXML);
+    XMLReader.readXMLDOM (sTransform);
+    XMLReader.readXMLDOM (sXML);
   }
 }
