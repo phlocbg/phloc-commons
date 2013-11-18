@@ -975,9 +975,24 @@ public final class FilenameHelper
     if (sFilePath == null)
       throw new NullPointerException ("filePath");
 
+    final File aSubFile = new File (sFilePath);
+    String sRelativeSubPath = sFilePath;
+    // if sub path is absolute, must contain parent path!
+    if (aSubFile.isAbsolute ())
+    {
+      if (!aParentDirectory.isAbsolute ())
+      {
+        s_aLogger.error ("Cannot express absolute child file relative to a relative parent file!");
+        return null;
+      }
+      sRelativeSubPath = getRelativeToParentDirectory (aSubFile, aParentDirectory);
+    }
+    if (sRelativeSubPath == null)
+      return null;
+
     // Merge the files together as usual, and clean all "." and ".." up
     final String sCleanParentPath = getCleanPath (aParentDirectory);
-    final String sEstimatedPath = getCleanPath (new File (sCleanParentPath, sFilePath));
+    final String sEstimatedPath = getCleanPath (new File (sCleanParentPath, sRelativeSubPath));
     if (!sEstimatedPath.startsWith (sCleanParentPath))
     {
       // Seems like there is a path traversal at the beginning of the passed
