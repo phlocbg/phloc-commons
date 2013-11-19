@@ -945,8 +945,8 @@ public class DoubleToString
                               final char decimalPoint,
                               final char thousandsSeparator,
                               final int numDigitsSeparated,
-                              final char negativePrefix,
-                              final char negativeSuffix)
+                              @SuppressWarnings ("unused") final char cNegativePrefix,
+                              @SuppressWarnings ("unused") final char cNegativeSuffix)
   {
     long l = pl;
     long l_mag = pl_mag;

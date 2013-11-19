@@ -72,7 +72,7 @@ public class MainFindInvalidXMLChars
 
   public static void main (final String [] args) throws Exception
   {
-    final EXMLVersion eVersion = EXMLVersion.XML_11;
+    final EXMLVersion eVersion = EXMLVersion.XML_10;
     final int nMax = Character.MAX_VALUE + 1;
     final List <Integer> aForbiddenE1 = new ArrayList <Integer> ();
     for (int i = 0; i < nMax; ++i)
