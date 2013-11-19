@@ -427,7 +427,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
   public void testNumericReferencesXML10 () throws SAXException, TransformerException
   {
     for (int i = Character.MIN_VALUE; i <= Character.MAX_VALUE; ++i)
-      if (!XMLHelper.isInvalidValueChar ((char) i))
+      if (!XMLHelper.isInvalidTextChar (EXMLVersion.XML_10, (char) i))
       {
         final String sText = "abc" + (char) i + "def";
         final Document aDoc = XMLFactory.newDocument (EXMLVersion.XML_10);
@@ -452,7 +452,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
   public void testNumericReferencesXML11 () throws SAXException, TransformerException
   {
     for (int i = Character.MIN_VALUE; i <= Character.MAX_VALUE; ++i)
-      if (!XMLHelper.isInvalidValueChar ((char) i))
+      if (!XMLHelper.isInvalidTextChar (EXMLVersion.XML_11, (char) i))
       {
         final String sText = "abc" + (char) i + "def";
         final Document aDoc = XMLFactory.newDocument (EXMLVersion.XML_11);

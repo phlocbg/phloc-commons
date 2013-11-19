@@ -6,13 +6,13 @@ import java.util.List;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.phloc.commons.io.streams.NonBlockingStringWriter;
 import com.phloc.commons.xml.EXMLVersion;
 import com.phloc.commons.xml.XMLFactory;
+import com.phloc.commons.xml.serialize.XMLReader;
 import com.phloc.commons.xml.transform.XMLTransformerFactory;
 
 public class MainFindInvalidXMLChars
@@ -83,8 +83,9 @@ public class MainFindInvalidXMLChars
         aDoc.appendChild (aDoc.createElement (Character.toString ((char) i)));
         final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
         XMLTransformerFactory.newTransformer ().transform (new DOMSource (aDoc), new StreamResult (aSW));
+        XMLReader.readXMLDOM (aSW.getAsString ());
       }
-      catch (final DOMException ex)
+      catch (final Exception ex)
       {
         aForbiddenE1.add (Integer.valueOf (i));
       }
@@ -98,8 +99,9 @@ public class MainFindInvalidXMLChars
         aDoc.appendChild (aDoc.createElement ("a" + Character.toString ((char) i)));
         final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
         XMLTransformerFactory.newTransformer ().transform (new DOMSource (aDoc), new StreamResult (aSW));
+        XMLReader.readXMLDOM (aSW.getAsString ());
       }
-      catch (final DOMException ex)
+      catch (final Exception ex)
       {
         aForbiddenE2.add (Integer.valueOf (i));
       }
@@ -114,8 +116,9 @@ public class MainFindInvalidXMLChars
         aElement.setAttribute (Character.toString ((char) i), "xyz");
         final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
         XMLTransformerFactory.newTransformer ().transform (new DOMSource (aDoc), new StreamResult (aSW));
+        XMLReader.readXMLDOM (aSW.getAsString ());
       }
-      catch (final DOMException ex)
+      catch (final Exception ex)
       {
         aForbiddenAN1.add (Integer.valueOf (i));
       }
@@ -130,6 +133,7 @@ public class MainFindInvalidXMLChars
         aElement.setAttribute ("a" + Character.toString ((char) i), "xyz");
         final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
         XMLTransformerFactory.newTransformer ().transform (new DOMSource (aDoc), new StreamResult (aSW));
+        XMLReader.readXMLDOM (aSW.getAsString ());
       }
       catch (final Exception ex)
       {
@@ -146,6 +150,7 @@ public class MainFindInvalidXMLChars
         aElement.setAttribute ("a", Character.toString ((char) i));
         final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
         XMLTransformerFactory.newTransformer ().transform (new DOMSource (aDoc), new StreamResult (aSW));
+        XMLReader.readXMLDOM (aSW.getAsString ());
       }
       catch (final Exception ex)
       {
@@ -162,6 +167,7 @@ public class MainFindInvalidXMLChars
         aElement.appendChild (aDoc.createTextNode (Character.toString ((char) i)));
         final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
         XMLTransformerFactory.newTransformer ().transform (new DOMSource (aDoc), new StreamResult (aSW));
+        XMLReader.readXMLDOM (aSW.getAsString ());
       }
       catch (final Exception ex)
       {
@@ -178,6 +184,7 @@ public class MainFindInvalidXMLChars
         aElement.appendChild (aDoc.createCDATASection (Character.toString ((char) i)));
         final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
         XMLTransformerFactory.newTransformer ().transform (new DOMSource (aDoc), new StreamResult (aSW));
+        XMLReader.readXMLDOM (aSW.getAsString ());
       }
       catch (final Exception ex)
       {
