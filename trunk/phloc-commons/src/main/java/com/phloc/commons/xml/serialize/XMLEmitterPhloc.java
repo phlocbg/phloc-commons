@@ -33,9 +33,10 @@ import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.xml.CXML;
 import com.phloc.commons.xml.DefaultXMLIterationHandler;
+import com.phloc.commons.xml.EXMLCharMode;
 import com.phloc.commons.xml.EXMLIncorrectCharacterHandling;
 import com.phloc.commons.xml.EXMLVersion;
-import com.phloc.commons.xml.XMLHelper;
+import com.phloc.commons.xml.XMLMaskHelper;
 
 /**
  * Converts XML constructs into a string representation.
@@ -125,11 +126,15 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   }
 
   @Nonnull
-  private XMLEmitterPhloc _appendMasked (@Nullable final String sValue)
+  private XMLEmitterPhloc _appendMasked (@Nonnull final EXMLCharMode eXMLCharMode, @Nullable final String sValue)
   {
     try
     {
-      XMLHelper.maskXMLTextTo (m_eXMLVersion, m_aSettings.getIncorrectCharacterHandling (), sValue, m_aWriter);
+      XMLMaskHelper.maskXMLTextTo (m_eXMLVersion,
+                                   eXMLCharMode,
+                                   m_aSettings.getIncorrectCharacterHandling (),
+                                   sValue,
+                                   m_aWriter);
       return this;
     }
     catch (final IOException ex)
@@ -141,7 +146,8 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   @Nonnull
   private XMLEmitterPhloc _appendAttrValue (@Nullable final String sValue)
   {
-    return _append (m_cAttrValueBoundary)._appendMasked (sValue)._append (m_cAttrValueBoundary);
+    return _append (m_cAttrValueBoundary)._appendMasked (EXMLCharMode.ATTRIBUTE_VALUE, sValue)
+                                         ._append (m_cAttrValueBoundary);
   }
 
   @Override
@@ -212,9 +218,15 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
     {
       // Public and system ID present
       aSB.append (" PUBLIC \"")
-         .append (XMLHelper.getMaskedXMLText (eXMLVersion, eIncorrectCharHandling, sPublicID))
+         .append (XMLMaskHelper.getMaskedXMLText (eXMLVersion,
+                                                  EXMLCharMode.ATTRIBUTE_VALUE,
+                                                  eIncorrectCharHandling,
+                                                  sPublicID))
          .append ("\" \"")
-         .append (XMLHelper.getMaskedXMLText (eXMLVersion, eIncorrectCharHandling, sSystemID))
+         .append (XMLMaskHelper.getMaskedXMLText (eXMLVersion,
+                                                  EXMLCharMode.ATTRIBUTE_VALUE,
+                                                  eIncorrectCharHandling,
+                                                  sSystemID))
          .append ('"');
     }
     else
@@ -222,7 +234,10 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
       {
         // Only system ID present
         aSB.append (" SYSTEM \"")
-           .append (XMLHelper.getMaskedXMLText (eXMLVersion, eIncorrectCharHandling, sSystemID))
+           .append (XMLMaskHelper.getMaskedXMLText (eXMLVersion,
+                                                    EXMLCharMode.ATTRIBUTE_VALUE,
+                                                    eIncorrectCharHandling,
+                                                    sSystemID))
            .append ('"');
       }
     return aSB.append ('>').append (CRLF).toString ();
@@ -283,7 +298,7 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   public void onText (@Nullable final String sText, final boolean bEscape)
   {
     if (bEscape)
-      _appendMasked (sText);
+      _appendMasked (EXMLCharMode.TEXT, sText);
     else
       _append (sText);
   }
@@ -293,17 +308,26 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   {
     if (StringHelper.hasText (sText))
     {
-      // Split CDATA sections if they contain the illegal "]]>" marker
-      final List <String> aParts = StringHelper.getExploded (CDATA_END, sText);
-      final int nParts = aParts.size ();
-      for (int i = 0; i < nParts; ++i)
+      if (sText.indexOf (CDATA_END) >= 0)
       {
-        _append (CDATA_START)._append (aParts.get (i))._append (CDATA_END);
-        if (i < (nParts - 1))
+        // Split CDATA sections if they contain the illegal "]]>" marker
+        final List <String> aParts = StringHelper.getExploded (CDATA_END, sText);
+        final int nParts = aParts.size ();
+        for (int i = 0; i < nParts; ++i)
         {
-          // Add the CDATA separator as a text element :)
-          _appendMasked (CDATA_END);
+          _append (CDATA_START);
+          if (i > 0)
+            _appendMasked (EXMLCharMode.CDATA, ">");
+          _appendMasked (EXMLCharMode.CDATA, aParts.get (i));
+          if (i < nParts - 1)
+            _appendMasked (EXMLCharMode.CDATA, "]]");
+          _append (CDATA_END);
         }
+      }
+      else
+      {
+        // No special handling required
+        _appendMasked (EXMLCharMode.CDATA, sText);
       }
     }
   }

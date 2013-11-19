@@ -205,18 +205,17 @@ public final class MicroWriterTest
     // Containing the forbidden CDATA end marker
     IMicroElement e = new MicroElement ("a");
     e.appendCDATA ("a]]>b");
-    assertEquals ("<a><![CDATA[a]]>]]&gt;<![CDATA[b]]></a>", MicroWriter.getNodeAsString (e, aSettings));
+    assertEquals ("<a><![CDATA[a]]>]]><![CDATA[b]]></a>", MicroWriter.getNodeAsString (e, aSettings));
 
     // Containing more than one forbidden CDATA end marker
     e = new MicroElement ("a");
     e.appendCDATA ("a]]>b]]>c");
-    assertEquals ("<a><![CDATA[a]]>]]&gt;<![CDATA[b]]>]]&gt;<![CDATA[c]]></a>",
-                  MicroWriter.getNodeAsString (e, aSettings));
+    assertEquals ("<a><![CDATA[a]]>]]><![CDATA[b]]>]]><![CDATA[c]]></a>", MicroWriter.getNodeAsString (e, aSettings));
 
     // Containing a complete CDATA section
     e = new MicroElement ("a");
     e.appendCDATA ("a<![CDATA[x]]>b");
-    assertEquals ("<a><![CDATA[a<![CDATA[x]]>]]&gt;<![CDATA[b]]></a>", MicroWriter.getNodeAsString (e, aSettings));
+    assertEquals ("<a><![CDATA[a<![CDATA[x]]>]]><![CDATA[b]]></a>", MicroWriter.getNodeAsString (e, aSettings));
   }
 
   @Test
