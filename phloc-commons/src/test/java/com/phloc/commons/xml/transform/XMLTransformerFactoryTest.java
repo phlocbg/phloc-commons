@@ -33,7 +33,6 @@ import javax.xml.transform.stream.StreamResult;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.resource.ClassPathResource;
@@ -42,6 +41,7 @@ import com.phloc.commons.xml.EXMLIncorrectCharacterHandling;
 import com.phloc.commons.xml.EXMLVersion;
 import com.phloc.commons.xml.XMLCharHelper;
 import com.phloc.commons.xml.XMLFactory;
+import com.phloc.commons.xml.serialize.EXMLSerializeIndent;
 import com.phloc.commons.xml.serialize.XMLReader;
 import com.phloc.commons.xml.serialize.XMLWriter;
 import com.phloc.commons.xml.serialize.XMLWriterSettings;
@@ -186,8 +186,6 @@ public final class XMLTransformerFactoryTest
   public void testSpecialChars () throws Exception
   {
     final EXMLVersion eXMLVersion = EXMLVersion.XML_10;
-    final Document aDoc = XMLFactory.newDocument (eXMLVersion);
-    final Node aRoot = aDoc.appendChild (aDoc.createElement ("root"));
     final StringBuilder aAttrVal = new StringBuilder ();
     final StringBuilder aText = new StringBuilder ();
     for (char i = 0; i < 256; ++i)
@@ -197,13 +195,26 @@ public final class XMLTransformerFactoryTest
       if (!XMLCharHelper.isInvalidXMLTextChar (eXMLVersion, i))
         aText.append (i);
     }
-    ((Element) aRoot).setAttribute ("test", aAttrVal.toString ());
-    aRoot.appendChild (aDoc.createTextNode (aText.toString ()));
+
+    final Document aDoc = XMLFactory.newDocument (eXMLVersion);
+    final Element eRoot = (Element) aDoc.appendChild (aDoc.createElement ("root"));
+    eRoot.setAttribute ("test", aAttrVal.toString ());
+
+    final Element e1 = (Element) eRoot.appendChild (aDoc.createElement ("a"));
+    e1.appendChild (aDoc.createTextNode (aText.toString ()));
+
+    final Element e2 = (Element) eRoot.appendChild (aDoc.createElement ("b"));
+    e2.appendChild (aDoc.createCDATASection ("aaaaaaaaaaa]]>bbbbbbbbbbb]]>ccccccccc"));
+
+    final Element e3 = (Element) eRoot.appendChild (aDoc.createElement ("c"));
+    e3.appendChild (aDoc.createCDATASection ("]]>"));
+
     final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
     XMLTransformerFactory.newTransformer ().transform (new DOMSource (aDoc), new StreamResult (aSW));
     final String sTransform = aSW.getAsString ();
     final String sXML = XMLWriter.getNodeAsString (aDoc,
-                                                   new XMLWriterSettings ().setIncorrectCharacterHandling (EXMLIncorrectCharacterHandling.WRITE_TO_FILE_NO_LOG));
+                                                   new XMLWriterSettings ().setIncorrectCharacterHandling (EXMLIncorrectCharacterHandling.WRITE_TO_FILE_NO_LOG)
+                                                                           .setIndent (EXMLSerializeIndent.NONE));
     System.out.println (sTransform);
     System.out.println ();
     System.out.println (sXML);
