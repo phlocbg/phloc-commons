@@ -19,8 +19,12 @@ public class MainFindInvalidXMLChars
 {
   private static String _getFormatted (final List <Integer> x)
   {
-    final StringBuilder ret = new StringBuilder ();
+    if (x.isEmpty ())
+      return "false";
     final int nRadix = 16;
+    if (x.size () == 1)
+      return "c == 0x" + Integer.toString (x.get (0).intValue (), nRadix);
+    final StringBuilder ret = new StringBuilder ();
     int nIndex = 0;
     int nFirst = -1;
     int nLast = -1;
@@ -68,11 +72,12 @@ public class MainFindInvalidXMLChars
 
   public static void main (final String [] args) throws Exception
   {
+    final EXMLVersion eVersion = EXMLVersion.XML_11;
     final int nMax = Character.MAX_VALUE + 1;
     final List <Integer> aForbiddenE1 = new ArrayList <Integer> ();
     for (int i = 0; i < nMax; ++i)
     {
-      final Document aDoc = XMLFactory.newDocument (EXMLVersion.XML_10);
+      final Document aDoc = XMLFactory.newDocument (eVersion);
       try
       {
         aDoc.appendChild (aDoc.createElement (Character.toString ((char) i)));
@@ -87,7 +92,7 @@ public class MainFindInvalidXMLChars
     final List <Integer> aForbiddenE2 = new ArrayList <Integer> ();
     for (int i = 0; i < nMax; ++i)
     {
-      final Document aDoc = XMLFactory.newDocument (EXMLVersion.XML_10);
+      final Document aDoc = XMLFactory.newDocument (eVersion);
       try
       {
         aDoc.appendChild (aDoc.createElement ("a" + Character.toString ((char) i)));
@@ -102,7 +107,7 @@ public class MainFindInvalidXMLChars
     final List <Integer> aForbiddenAN1 = new ArrayList <Integer> ();
     for (int i = 0; i < nMax; ++i)
     {
-      final Document aDoc = XMLFactory.newDocument (EXMLVersion.XML_10);
+      final Document aDoc = XMLFactory.newDocument (eVersion);
       try
       {
         final Element aElement = (Element) aDoc.appendChild (aDoc.createElement ("abc"));
@@ -118,7 +123,7 @@ public class MainFindInvalidXMLChars
     final List <Integer> aForbiddenAN2 = new ArrayList <Integer> ();
     for (int i = 0; i < nMax; ++i)
     {
-      final Document aDoc = XMLFactory.newDocument (EXMLVersion.XML_10);
+      final Document aDoc = XMLFactory.newDocument (eVersion);
       try
       {
         final Element aElement = (Element) aDoc.appendChild (aDoc.createElement ("abc"));
@@ -134,7 +139,7 @@ public class MainFindInvalidXMLChars
     final List <Integer> aForbiddenAV = new ArrayList <Integer> ();
     for (int i = 0; i < nMax; ++i)
     {
-      final Document aDoc = XMLFactory.newDocument (EXMLVersion.XML_10);
+      final Document aDoc = XMLFactory.newDocument (eVersion);
       try
       {
         final Element aElement = (Element) aDoc.appendChild (aDoc.createElement ("abc"));
@@ -150,7 +155,7 @@ public class MainFindInvalidXMLChars
     final List <Integer> aForbiddenTV = new ArrayList <Integer> ();
     for (int i = 0; i < nMax; ++i)
     {
-      final Document aDoc = XMLFactory.newDocument (EXMLVersion.XML_10);
+      final Document aDoc = XMLFactory.newDocument (eVersion);
       try
       {
         final Element aElement = (Element) aDoc.appendChild (aDoc.createElement ("abc"));
@@ -166,7 +171,7 @@ public class MainFindInvalidXMLChars
     final List <Integer> aForbiddenCV = new ArrayList <Integer> ();
     for (int i = 0; i < nMax; ++i)
     {
-      final Document aDoc = XMLFactory.newDocument (EXMLVersion.XML_10);
+      final Document aDoc = XMLFactory.newDocument (eVersion);
       try
       {
         final Element aElement = (Element) aDoc.appendChild (aDoc.createElement ("abc"));
