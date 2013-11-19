@@ -426,11 +426,11 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
   @Test
   public void testNumericReferencesXML10 () throws SAXException, TransformerException
   {
-    for (char i = Character.MIN_VALUE; i < Character.MAX_VALUE; ++i)
-      if (!XMLHelper.isInvalidXMLCharacter (i))
+    for (int i = Character.MIN_VALUE; i <= Character.MAX_VALUE; ++i)
+      if (!XMLHelper.isInvalidValueChar ((char) i))
       {
-        final String sText = "abc" + i + "def";
-        final Document aDoc = XMLFactory.newDocument (EXMLVersion.XML_11);
+        final String sText = "abc" + (char) i + "def";
+        final Document aDoc = XMLFactory.newDocument (EXMLVersion.XML_10);
         final Element eRoot = (Element) aDoc.appendChild (aDoc.createElement ("root"));
         eRoot.appendChild (aDoc.createTextNode (sText));
 
@@ -451,10 +451,10 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
   @Test
   public void testNumericReferencesXML11 () throws SAXException, TransformerException
   {
-    for (char i = Character.MIN_VALUE; i < Character.MAX_VALUE; ++i)
-      if (!XMLHelper.isInvalidXMLCharacter (i))
+    for (int i = Character.MIN_VALUE; i <= Character.MAX_VALUE; ++i)
+      if (!XMLHelper.isInvalidValueChar ((char) i))
       {
-        final String sText = "abc" + i + "def";
+        final String sText = "abc" + (char) i + "def";
         final Document aDoc = XMLFactory.newDocument (EXMLVersion.XML_11);
         final Element eRoot = (Element) aDoc.appendChild (aDoc.createElement ("root"));
         eRoot.appendChild (aDoc.createTextNode (sText));

@@ -1097,11 +1097,11 @@ public final class XMLHelper
                                     (c >= 0x9fa6 && c <= 0xabff) ||
                                     (c >= 0xd7a4 && c <= 0xffff));
       XML_INVALID_VALUE_CHAR.set (c,
-                                  (c == 0) ||
+                                  c == 0 ||
                                       Character.isHighSurrogate ((char) c) ||
                                       Character.isLowSurrogate ((char) c) ||
-                                      (c == 0xfffe) ||
-                                      (c == 0xffff));
+                                      c == 0xfffe ||
+                                      c == 0xffff);
     }
   }
 
