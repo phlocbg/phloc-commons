@@ -250,4 +250,20 @@ public final class ClassPathResourceTest
     PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (aCPISP1a, aCPISP2);
     PhlocTestUtils.testDefaultSerialization (aCPISP1a);
   }
+
+  @Test
+  public void testFolder ()
+  {
+    // Must be a folder from a resource that is only available as a JAR file
+
+    // With a trailing slash it is recognized as a folder
+    ClassPathResource aCP = new ClassPathResource ("META-INF/maven/com.phloc/phloc-jdk5/");
+    assertTrue (aCP.exists ());
+    assertNull (aCP.getInputStream ());
+
+    // Without a trailing slash it is not recognized as a folder
+    aCP = new ClassPathResource ("META-INF/maven/com.phloc/phloc-jdk5");
+    assertTrue (aCP.exists ());
+    assertNull (aCP.getInputStream ());
+  }
 }
