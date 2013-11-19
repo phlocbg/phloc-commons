@@ -813,8 +813,7 @@ public final class XMLHelper
                                                 (c >= 0x312d && c <= 0x4dff) ||
                                                 (c >= 0x9fa6 && c <= 0xabff) ||
                                                 (c >= 0xd7a4 && c <= 0xffff));
-      XML_INVALID_NAME_START_CHAR_XML11.set (c, (c >= 0x0 && c <= 0x39) ||
-                                                (c >= 0x3b && c <= 0x40) ||
+      XML_INVALID_NAME_START_CHAR_XML11.set (c, (c >= 0x0 && c <= 0x40) ||
                                                 (c >= 0x5b && c <= 0x5e) ||
                                                 (c == 0x60) ||
                                                 (c >= 0x7b && c <= 0xbf) ||
@@ -1119,7 +1118,7 @@ public final class XMLHelper
                                           (c >= 0xd7a4 && c <= 0xffff));
       XML_INVALID_NAME_CHAR_XML11.set (c, (c >= 0x0 && c <= 0x2c) ||
                                           (c == 0x2f) ||
-                                          (c >= 0x3b && c <= 0x40) ||
+                                          (c >= 0x3a && c <= 0x40) ||
                                           (c >= 0x5b && c <= 0x5e) ||
                                           (c == 0x60) ||
                                           (c >= 0x7b && c <= 0xb6) ||
@@ -1140,11 +1139,9 @@ public final class XMLHelper
                                                  Character.isHighSurrogate ((char) c) ||
                                                  Character.isLowSurrogate ((char) c) ||
                                                  (c >= 0xfffe && c <= 0xffff));
-      XML_INVALID_TEXT_VALUE_CHAR_XML11.set (c,
-                                             (c == 0x0) ||
-                                                 Character.isHighSurrogate ((char) c) ||
-                                                 Character.isLowSurrogate ((char) c) ||
-                                                 (c >= 0xfffe && c <= 0xffff));
+      XML_INVALID_TEXT_VALUE_CHAR_XML11.set (c, (c == 0x0) ||
+                                                (c >= 0xd800 && c <= 0xdfff) ||
+                                                (c >= 0xfffe && c <= 0xffff));
       XML_INVALID_ATTRCDATA_VALUE_CHAR_XML10.set (c,
                                                   (c == 0x0) ||
                                                       Character.isHighSurrogate ((char) c) ||
@@ -1153,8 +1150,7 @@ public final class XMLHelper
       XML_INVALID_ATTRCDATA_VALUE_CHAR_XML11.set (c, (c == 0x0) ||
                                                      (c >= 0x7f && c <= 0x84) ||
                                                      (c >= 0x86 && c <= 0x9f) ||
-                                                     Character.isHighSurrogate ((char) c) ||
-                                                     Character.isLowSurrogate ((char) c) ||
+                                                     (c >= 0xd800 && c <= 0xdfff) ||
                                                      (c >= 0xfffe && c <= 0xffff));
     }
   }
