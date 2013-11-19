@@ -558,7 +558,8 @@ public final class XMLHelper
                                                                       false,
                                                                       false };
 
-  private static final BitSet XML_INVALID_NAME_START_CHAR = new BitSet (0x10000);
+  private static final BitSet XML_INVALID_NAME_START_CHAR_XML10 = new BitSet (0x10000);
+  private static final BitSet XML_INVALID_NAME_START_CHAR_XML11 = new BitSet (0x10000);
   private static final BitSet XML_INVALID_NAME_CHAR = new BitSet (0x10000);
   private static final BitSet XML_INVALID_VALUE_CHAR = new BitSet (0x10000);
 
@@ -601,213 +602,229 @@ public final class XMLHelper
 
     for (int c = Character.MIN_VALUE; c <= Character.MAX_VALUE; ++c)
     {
-      XML_INVALID_NAME_START_CHAR.set (c, (c >= 0x0 && c <= 0x39) ||
-                                          (c >= 0x3b && c <= 0x40) ||
-                                          (c >= 0x5b && c <= 0x5e) ||
-                                          (c == 0x60) ||
-                                          (c >= 0x7b && c <= 0xbf) ||
-                                          (c == 0xd7) ||
-                                          (c == 0xf7) ||
-                                          (c >= 0x132 && c <= 0x133) ||
-                                          (c >= 0x13f && c <= 0x140) ||
-                                          (c == 0x149) ||
-                                          (c == 0x17f) ||
-                                          (c >= 0x1c4 && c <= 0x1cc) ||
-                                          (c >= 0x1f1 && c <= 0x1f3) ||
-                                          (c >= 0x1f6 && c <= 0x1f9) ||
-                                          (c >= 0x218 && c <= 0x24f) ||
-                                          (c >= 0x2a9 && c <= 0x2ba) ||
-                                          (c >= 0x2c2 && c <= 0x385) ||
-                                          (c == 0x387) ||
-                                          (c == 0x38b) ||
-                                          (c == 0x38d) ||
-                                          (c == 0x3a2) ||
-                                          (c == 0x3cf) ||
-                                          (c >= 0x3d7 && c <= 0x3d9) ||
-                                          (c == 0x3db) ||
-                                          (c == 0x3dd) ||
-                                          (c == 0x3df) ||
-                                          (c == 0x3e1) ||
-                                          (c >= 0x3f4 && c <= 0x400) ||
-                                          (c == 0x40d) ||
-                                          (c == 0x450) ||
-                                          (c == 0x45d) ||
-                                          (c >= 0x482 && c <= 0x48f) ||
-                                          (c >= 0x4c5 && c <= 0x4c6) ||
-                                          (c >= 0x4c9 && c <= 0x4ca) ||
-                                          (c >= 0x4cd && c <= 0x4cf) ||
-                                          (c >= 0x4ec && c <= 0x4ed) ||
-                                          (c >= 0x4f6 && c <= 0x4f7) ||
-                                          (c >= 0x4fa && c <= 0x530) ||
-                                          (c >= 0x557 && c <= 0x558) ||
-                                          (c >= 0x55a && c <= 0x560) ||
-                                          (c >= 0x587 && c <= 0x5cf) ||
-                                          (c >= 0x5eb && c <= 0x5ef) ||
-                                          (c >= 0x5f3 && c <= 0x620) ||
-                                          (c >= 0x63b && c <= 0x640) ||
-                                          (c >= 0x64b && c <= 0x670) ||
-                                          (c >= 0x6b8 && c <= 0x6b9) ||
-                                          (c == 0x6bf) ||
-                                          (c == 0x6cf) ||
-                                          (c == 0x6d4) ||
-                                          (c >= 0x6d6 && c <= 0x6e4) ||
-                                          (c >= 0x6e7 && c <= 0x904) ||
-                                          (c >= 0x93a && c <= 0x93c) ||
-                                          (c >= 0x93e && c <= 0x957) ||
-                                          (c >= 0x962 && c <= 0x984) ||
-                                          (c >= 0x98d && c <= 0x98e) ||
-                                          (c >= 0x991 && c <= 0x992) ||
-                                          (c == 0x9a9) ||
-                                          (c == 0x9b1) ||
-                                          (c >= 0x9b3 && c <= 0x9b5) ||
-                                          (c >= 0x9ba && c <= 0x9db) ||
-                                          (c == 0x9de) ||
-                                          (c >= 0x9e2 && c <= 0x9ef) ||
-                                          (c >= 0x9f2 && c <= 0xa04) ||
-                                          (c >= 0xa0b && c <= 0xa0e) ||
-                                          (c >= 0xa11 && c <= 0xa12) ||
-                                          (c == 0xa29) ||
-                                          (c == 0xa31) ||
-                                          (c == 0xa34) ||
-                                          (c == 0xa37) ||
-                                          (c >= 0xa3a && c <= 0xa58) ||
-                                          (c == 0xa5d) ||
-                                          (c >= 0xa5f && c <= 0xa71) ||
-                                          (c >= 0xa75 && c <= 0xa84) ||
-                                          (c == 0xa8c) ||
-                                          (c == 0xa8e) ||
-                                          (c == 0xa92) ||
-                                          (c == 0xaa9) ||
-                                          (c == 0xab1) ||
-                                          (c == 0xab4) ||
-                                          (c >= 0xaba && c <= 0xabc) ||
-                                          (c >= 0xabe && c <= 0xadf) ||
-                                          (c >= 0xae1 && c <= 0xb04) ||
-                                          (c >= 0xb0d && c <= 0xb0e) ||
-                                          (c >= 0xb11 && c <= 0xb12) ||
-                                          (c == 0xb29) ||
-                                          (c == 0xb31) ||
-                                          (c >= 0xb34 && c <= 0xb35) ||
-                                          (c >= 0xb3a && c <= 0xb3c) ||
-                                          (c >= 0xb3e && c <= 0xb5b) ||
-                                          (c == 0xb5e) ||
-                                          (c >= 0xb62 && c <= 0xb84) ||
-                                          (c >= 0xb8b && c <= 0xb8d) ||
-                                          (c == 0xb91) ||
-                                          (c >= 0xb96 && c <= 0xb98) ||
-                                          (c == 0xb9b) ||
-                                          (c == 0xb9d) ||
-                                          (c >= 0xba0 && c <= 0xba2) ||
-                                          (c >= 0xba5 && c <= 0xba7) ||
-                                          (c >= 0xbab && c <= 0xbad) ||
-                                          (c == 0xbb6) ||
-                                          (c >= 0xbba && c <= 0xc04) ||
-                                          (c == 0xc0d) ||
-                                          (c == 0xc11) ||
-                                          (c == 0xc29) ||
-                                          (c == 0xc34) ||
-                                          (c >= 0xc3a && c <= 0xc5f) ||
-                                          (c >= 0xc62 && c <= 0xc84) ||
-                                          (c == 0xc8d) ||
-                                          (c == 0xc91) ||
-                                          (c == 0xca9) ||
-                                          (c == 0xcb4) ||
-                                          (c >= 0xcba && c <= 0xcdd) ||
-                                          (c == 0xcdf) ||
-                                          (c >= 0xce2 && c <= 0xd04) ||
-                                          (c == 0xd0d) ||
-                                          (c == 0xd11) ||
-                                          (c == 0xd29) ||
-                                          (c >= 0xd3a && c <= 0xd5f) ||
-                                          (c >= 0xd62 && c <= 0xe00) ||
-                                          (c == 0xe2f) ||
-                                          (c == 0xe31) ||
-                                          (c >= 0xe34 && c <= 0xe3f) ||
-                                          (c >= 0xe46 && c <= 0xe80) ||
-                                          (c == 0xe83) ||
-                                          (c >= 0xe85 && c <= 0xe86) ||
-                                          (c == 0xe89) ||
-                                          (c >= 0xe8b && c <= 0xe8c) ||
-                                          (c >= 0xe8e && c <= 0xe93) ||
-                                          (c == 0xe98) ||
-                                          (c == 0xea0) ||
-                                          (c == 0xea4) ||
-                                          (c == 0xea6) ||
-                                          (c >= 0xea8 && c <= 0xea9) ||
-                                          (c == 0xeac) ||
-                                          (c == 0xeaf) ||
-                                          (c == 0xeb1) ||
-                                          (c >= 0xeb4 && c <= 0xebc) ||
-                                          (c >= 0xebe && c <= 0xebf) ||
-                                          (c >= 0xec5 && c <= 0xf3f) ||
-                                          (c == 0xf48) ||
-                                          (c >= 0xf6a && c <= 0x109f) ||
-                                          (c >= 0x10c6 && c <= 0x10cf) ||
-                                          (c >= 0x10f7 && c <= 0x10ff) ||
-                                          (c == 0x1101) ||
-                                          (c == 0x1104) ||
-                                          (c == 0x1108) ||
-                                          (c == 0x110a) ||
-                                          (c == 0x110d) ||
-                                          (c >= 0x1113 && c <= 0x113b) ||
-                                          (c == 0x113d) ||
-                                          (c == 0x113f) ||
-                                          (c >= 0x1141 && c <= 0x114b) ||
-                                          (c == 0x114d) ||
-                                          (c == 0x114f) ||
-                                          (c >= 0x1151 && c <= 0x1153) ||
-                                          (c >= 0x1156 && c <= 0x1158) ||
-                                          (c >= 0x115a && c <= 0x115e) ||
-                                          (c == 0x1162) ||
-                                          (c == 0x1164) ||
-                                          (c == 0x1166) ||
-                                          (c == 0x1168) ||
-                                          (c >= 0x116a && c <= 0x116c) ||
-                                          (c >= 0x116f && c <= 0x1171) ||
-                                          (c == 0x1174) ||
-                                          (c >= 0x1176 && c <= 0x119d) ||
-                                          (c >= 0x119f && c <= 0x11a7) ||
-                                          (c >= 0x11a9 && c <= 0x11aa) ||
-                                          (c >= 0x11ac && c <= 0x11ad) ||
-                                          (c >= 0x11b0 && c <= 0x11b6) ||
-                                          (c == 0x11b9) ||
-                                          (c == 0x11bb) ||
-                                          (c >= 0x11c3 && c <= 0x11ea) ||
-                                          (c >= 0x11ec && c <= 0x11ef) ||
-                                          (c >= 0x11f1 && c <= 0x11f8) ||
-                                          (c >= 0x11fa && c <= 0x1dff) ||
-                                          (c >= 0x1e9c && c <= 0x1e9f) ||
-                                          (c >= 0x1efa && c <= 0x1eff) ||
-                                          (c >= 0x1f16 && c <= 0x1f17) ||
-                                          (c >= 0x1f1e && c <= 0x1f1f) ||
-                                          (c >= 0x1f46 && c <= 0x1f47) ||
-                                          (c >= 0x1f4e && c <= 0x1f4f) ||
-                                          (c == 0x1f58) ||
-                                          (c == 0x1f5a) ||
-                                          (c == 0x1f5c) ||
-                                          (c == 0x1f5e) ||
-                                          (c >= 0x1f7e && c <= 0x1f7f) ||
-                                          (c == 0x1fb5) ||
-                                          (c == 0x1fbd) ||
-                                          (c >= 0x1fbf && c <= 0x1fc1) ||
-                                          (c == 0x1fc5) ||
-                                          (c >= 0x1fcd && c <= 0x1fcf) ||
-                                          (c >= 0x1fd4 && c <= 0x1fd5) ||
-                                          (c >= 0x1fdc && c <= 0x1fdf) ||
-                                          (c >= 0x1fed && c <= 0x1ff1) ||
-                                          (c == 0x1ff5) ||
-                                          (c >= 0x1ffd && c <= 0x2125) ||
-                                          (c >= 0x2127 && c <= 0x2129) ||
-                                          (c >= 0x212c && c <= 0x212d) ||
-                                          (c >= 0x212f && c <= 0x217f) ||
-                                          (c >= 0x2183 && c <= 0x3006) ||
-                                          (c >= 0x3008 && c <= 0x3020) ||
-                                          (c >= 0x302a && c <= 0x3040) ||
-                                          (c >= 0x3095 && c <= 0x30a0) ||
-                                          (c >= 0x30fb && c <= 0x3104) ||
-                                          (c >= 0x312d && c <= 0x4dff) ||
-                                          (c >= 0x9fa6 && c <= 0xabff) ||
-                                          (c >= 0xd7a4 && c <= 0xffff));
+      XML_INVALID_NAME_START_CHAR_XML10.set (c, (c >= 0x0 && c <= 0x39) ||
+                                                (c >= 0x3b && c <= 0x40) ||
+                                                (c >= 0x5b && c <= 0x5e) ||
+                                                (c == 0x60) ||
+                                                (c >= 0x7b && c <= 0xbf) ||
+                                                (c == 0xd7) ||
+                                                (c == 0xf7) ||
+                                                (c >= 0x132 && c <= 0x133) ||
+                                                (c >= 0x13f && c <= 0x140) ||
+                                                (c == 0x149) ||
+                                                (c == 0x17f) ||
+                                                (c >= 0x1c4 && c <= 0x1cc) ||
+                                                (c >= 0x1f1 && c <= 0x1f3) ||
+                                                (c >= 0x1f6 && c <= 0x1f9) ||
+                                                (c >= 0x218 && c <= 0x24f) ||
+                                                (c >= 0x2a9 && c <= 0x2ba) ||
+                                                (c >= 0x2c2 && c <= 0x385) ||
+                                                (c == 0x387) ||
+                                                (c == 0x38b) ||
+                                                (c == 0x38d) ||
+                                                (c == 0x3a2) ||
+                                                (c == 0x3cf) ||
+                                                (c >= 0x3d7 && c <= 0x3d9) ||
+                                                (c == 0x3db) ||
+                                                (c == 0x3dd) ||
+                                                (c == 0x3df) ||
+                                                (c == 0x3e1) ||
+                                                (c >= 0x3f4 && c <= 0x400) ||
+                                                (c == 0x40d) ||
+                                                (c == 0x450) ||
+                                                (c == 0x45d) ||
+                                                (c >= 0x482 && c <= 0x48f) ||
+                                                (c >= 0x4c5 && c <= 0x4c6) ||
+                                                (c >= 0x4c9 && c <= 0x4ca) ||
+                                                (c >= 0x4cd && c <= 0x4cf) ||
+                                                (c >= 0x4ec && c <= 0x4ed) ||
+                                                (c >= 0x4f6 && c <= 0x4f7) ||
+                                                (c >= 0x4fa && c <= 0x530) ||
+                                                (c >= 0x557 && c <= 0x558) ||
+                                                (c >= 0x55a && c <= 0x560) ||
+                                                (c >= 0x587 && c <= 0x5cf) ||
+                                                (c >= 0x5eb && c <= 0x5ef) ||
+                                                (c >= 0x5f3 && c <= 0x620) ||
+                                                (c >= 0x63b && c <= 0x640) ||
+                                                (c >= 0x64b && c <= 0x670) ||
+                                                (c >= 0x6b8 && c <= 0x6b9) ||
+                                                (c == 0x6bf) ||
+                                                (c == 0x6cf) ||
+                                                (c == 0x6d4) ||
+                                                (c >= 0x6d6 && c <= 0x6e4) ||
+                                                (c >= 0x6e7 && c <= 0x904) ||
+                                                (c >= 0x93a && c <= 0x93c) ||
+                                                (c >= 0x93e && c <= 0x957) ||
+                                                (c >= 0x962 && c <= 0x984) ||
+                                                (c >= 0x98d && c <= 0x98e) ||
+                                                (c >= 0x991 && c <= 0x992) ||
+                                                (c == 0x9a9) ||
+                                                (c == 0x9b1) ||
+                                                (c >= 0x9b3 && c <= 0x9b5) ||
+                                                (c >= 0x9ba && c <= 0x9db) ||
+                                                (c == 0x9de) ||
+                                                (c >= 0x9e2 && c <= 0x9ef) ||
+                                                (c >= 0x9f2 && c <= 0xa04) ||
+                                                (c >= 0xa0b && c <= 0xa0e) ||
+                                                (c >= 0xa11 && c <= 0xa12) ||
+                                                (c == 0xa29) ||
+                                                (c == 0xa31) ||
+                                                (c == 0xa34) ||
+                                                (c == 0xa37) ||
+                                                (c >= 0xa3a && c <= 0xa58) ||
+                                                (c == 0xa5d) ||
+                                                (c >= 0xa5f && c <= 0xa71) ||
+                                                (c >= 0xa75 && c <= 0xa84) ||
+                                                (c == 0xa8c) ||
+                                                (c == 0xa8e) ||
+                                                (c == 0xa92) ||
+                                                (c == 0xaa9) ||
+                                                (c == 0xab1) ||
+                                                (c == 0xab4) ||
+                                                (c >= 0xaba && c <= 0xabc) ||
+                                                (c >= 0xabe && c <= 0xadf) ||
+                                                (c >= 0xae1 && c <= 0xb04) ||
+                                                (c >= 0xb0d && c <= 0xb0e) ||
+                                                (c >= 0xb11 && c <= 0xb12) ||
+                                                (c == 0xb29) ||
+                                                (c == 0xb31) ||
+                                                (c >= 0xb34 && c <= 0xb35) ||
+                                                (c >= 0xb3a && c <= 0xb3c) ||
+                                                (c >= 0xb3e && c <= 0xb5b) ||
+                                                (c == 0xb5e) ||
+                                                (c >= 0xb62 && c <= 0xb84) ||
+                                                (c >= 0xb8b && c <= 0xb8d) ||
+                                                (c == 0xb91) ||
+                                                (c >= 0xb96 && c <= 0xb98) ||
+                                                (c == 0xb9b) ||
+                                                (c == 0xb9d) ||
+                                                (c >= 0xba0 && c <= 0xba2) ||
+                                                (c >= 0xba5 && c <= 0xba7) ||
+                                                (c >= 0xbab && c <= 0xbad) ||
+                                                (c == 0xbb6) ||
+                                                (c >= 0xbba && c <= 0xc04) ||
+                                                (c == 0xc0d) ||
+                                                (c == 0xc11) ||
+                                                (c == 0xc29) ||
+                                                (c == 0xc34) ||
+                                                (c >= 0xc3a && c <= 0xc5f) ||
+                                                (c >= 0xc62 && c <= 0xc84) ||
+                                                (c == 0xc8d) ||
+                                                (c == 0xc91) ||
+                                                (c == 0xca9) ||
+                                                (c == 0xcb4) ||
+                                                (c >= 0xcba && c <= 0xcdd) ||
+                                                (c == 0xcdf) ||
+                                                (c >= 0xce2 && c <= 0xd04) ||
+                                                (c == 0xd0d) ||
+                                                (c == 0xd11) ||
+                                                (c == 0xd29) ||
+                                                (c >= 0xd3a && c <= 0xd5f) ||
+                                                (c >= 0xd62 && c <= 0xe00) ||
+                                                (c == 0xe2f) ||
+                                                (c == 0xe31) ||
+                                                (c >= 0xe34 && c <= 0xe3f) ||
+                                                (c >= 0xe46 && c <= 0xe80) ||
+                                                (c == 0xe83) ||
+                                                (c >= 0xe85 && c <= 0xe86) ||
+                                                (c == 0xe89) ||
+                                                (c >= 0xe8b && c <= 0xe8c) ||
+                                                (c >= 0xe8e && c <= 0xe93) ||
+                                                (c == 0xe98) ||
+                                                (c == 0xea0) ||
+                                                (c == 0xea4) ||
+                                                (c == 0xea6) ||
+                                                (c >= 0xea8 && c <= 0xea9) ||
+                                                (c == 0xeac) ||
+                                                (c == 0xeaf) ||
+                                                (c == 0xeb1) ||
+                                                (c >= 0xeb4 && c <= 0xebc) ||
+                                                (c >= 0xebe && c <= 0xebf) ||
+                                                (c >= 0xec5 && c <= 0xf3f) ||
+                                                (c == 0xf48) ||
+                                                (c >= 0xf6a && c <= 0x109f) ||
+                                                (c >= 0x10c6 && c <= 0x10cf) ||
+                                                (c >= 0x10f7 && c <= 0x10ff) ||
+                                                (c == 0x1101) ||
+                                                (c == 0x1104) ||
+                                                (c == 0x1108) ||
+                                                (c == 0x110a) ||
+                                                (c == 0x110d) ||
+                                                (c >= 0x1113 && c <= 0x113b) ||
+                                                (c == 0x113d) ||
+                                                (c == 0x113f) ||
+                                                (c >= 0x1141 && c <= 0x114b) ||
+                                                (c == 0x114d) ||
+                                                (c == 0x114f) ||
+                                                (c >= 0x1151 && c <= 0x1153) ||
+                                                (c >= 0x1156 && c <= 0x1158) ||
+                                                (c >= 0x115a && c <= 0x115e) ||
+                                                (c == 0x1162) ||
+                                                (c == 0x1164) ||
+                                                (c == 0x1166) ||
+                                                (c == 0x1168) ||
+                                                (c >= 0x116a && c <= 0x116c) ||
+                                                (c >= 0x116f && c <= 0x1171) ||
+                                                (c == 0x1174) ||
+                                                (c >= 0x1176 && c <= 0x119d) ||
+                                                (c >= 0x119f && c <= 0x11a7) ||
+                                                (c >= 0x11a9 && c <= 0x11aa) ||
+                                                (c >= 0x11ac && c <= 0x11ad) ||
+                                                (c >= 0x11b0 && c <= 0x11b6) ||
+                                                (c == 0x11b9) ||
+                                                (c == 0x11bb) ||
+                                                (c >= 0x11c3 && c <= 0x11ea) ||
+                                                (c >= 0x11ec && c <= 0x11ef) ||
+                                                (c >= 0x11f1 && c <= 0x11f8) ||
+                                                (c >= 0x11fa && c <= 0x1dff) ||
+                                                (c >= 0x1e9c && c <= 0x1e9f) ||
+                                                (c >= 0x1efa && c <= 0x1eff) ||
+                                                (c >= 0x1f16 && c <= 0x1f17) ||
+                                                (c >= 0x1f1e && c <= 0x1f1f) ||
+                                                (c >= 0x1f46 && c <= 0x1f47) ||
+                                                (c >= 0x1f4e && c <= 0x1f4f) ||
+                                                (c == 0x1f58) ||
+                                                (c == 0x1f5a) ||
+                                                (c == 0x1f5c) ||
+                                                (c == 0x1f5e) ||
+                                                (c >= 0x1f7e && c <= 0x1f7f) ||
+                                                (c == 0x1fb5) ||
+                                                (c == 0x1fbd) ||
+                                                (c >= 0x1fbf && c <= 0x1fc1) ||
+                                                (c == 0x1fc5) ||
+                                                (c >= 0x1fcd && c <= 0x1fcf) ||
+                                                (c >= 0x1fd4 && c <= 0x1fd5) ||
+                                                (c >= 0x1fdc && c <= 0x1fdf) ||
+                                                (c >= 0x1fed && c <= 0x1ff1) ||
+                                                (c == 0x1ff5) ||
+                                                (c >= 0x1ffd && c <= 0x2125) ||
+                                                (c >= 0x2127 && c <= 0x2129) ||
+                                                (c >= 0x212c && c <= 0x212d) ||
+                                                (c >= 0x212f && c <= 0x217f) ||
+                                                (c >= 0x2183 && c <= 0x3006) ||
+                                                (c >= 0x3008 && c <= 0x3020) ||
+                                                (c >= 0x302a && c <= 0x3040) ||
+                                                (c >= 0x3095 && c <= 0x30a0) ||
+                                                (c >= 0x30fb && c <= 0x3104) ||
+                                                (c >= 0x312d && c <= 0x4dff) ||
+                                                (c >= 0x9fa6 && c <= 0xabff) ||
+                                                (c >= 0xd7a4 && c <= 0xffff));
+      XML_INVALID_NAME_START_CHAR_XML11.set (c, (c >= 0x0 && c <= 0x39) ||
+                                                (c >= 0x3b && c <= 0x40) ||
+                                                (c >= 0x5b && c <= 0x5e) ||
+                                                (c == 0x60) ||
+                                                (c >= 0x7b && c <= 0xbf) ||
+                                                (c == 0xd7) ||
+                                                (c == 0xf7) ||
+                                                (c >= 0x300 && c <= 0x36f) ||
+                                                (c == 0x37e) ||
+                                                (c >= 0x2000 && c <= 0x200b) ||
+                                                (c >= 0x200e && c <= 0x206f) ||
+                                                (c >= 0x2190 && c <= 0x2bff) ||
+                                                (c >= 0x2ff0 && c <= 0x3000) ||
+                                                (c >= 0xd800 && c <= 0xf8ff) ||
+                                                (c >= 0xfdd0 && c <= 0xfdef) ||
+                                                (c >= 0xfffe && c <= 0xffff));
       XML_INVALID_NAME_CHAR.set (c, (c >= 0x0 && c <= 0x2c) ||
                                     (c == 0x2f) ||
                                     (c >= 0x3b && c <= 0x40) ||
@@ -1747,7 +1764,7 @@ public final class XMLHelper
    */
   public static boolean isInvalidNameStartChar (final int c)
   {
-    return XML_INVALID_NAME_START_CHAR.get (c);
+    return XML_INVALID_NAME_START_CHAR_XML10.get (c);
   }
 
   /**
