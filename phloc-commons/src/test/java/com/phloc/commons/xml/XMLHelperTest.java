@@ -26,6 +26,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.math.RoundingMode;
+import java.util.Arrays;
 import java.util.Iterator;
 
 import javax.annotation.Nonnull;
@@ -556,5 +557,14 @@ public final class XMLHelperTest extends AbstractPhlocTestCase
     assertEquals ("myuri", XMLHelper.getNamespaceURI (doc.createElementNS ("myuri", "any")));
     assertNull (XMLHelper.getNamespaceURI (doc.createAttribute ("attr")));
     assertEquals ("myuri", XMLHelper.getNamespaceURI (doc.createAttributeNS ("myuri", "attr")));
+  }
+
+  @Test
+  public void testA ()
+  {
+    final boolean [] b = new boolean [256];
+    for (int i = 0; i < 256; ++i)
+      b[i] = XMLHelper.isInvalidNameStartChar ((char) i);
+    System.out.println (Arrays.toString (b));
   }
 }
