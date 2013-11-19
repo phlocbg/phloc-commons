@@ -75,7 +75,7 @@ public enum EXMLIncorrectCharacterHandling
    * This is the second fastest option but will most probably result in
    * unreadable XML files as no replacement takes place!
    */
-  WRITE_TO_FILE_LOG_WARNING (false, false)
+  WRITE_TO_FILE_LOG_WARNING (true, false)
   {
     @Override
     public void notifyOnInvalidXMLCharacter (@Nonnull @Nonempty final String sText,
@@ -92,7 +92,7 @@ public enum EXMLIncorrectCharacterHandling
    * Do not write the invalid character to XML and do not log anything. This
    * means silently fixing the problem as the replacement is written.
    */
-  DO_NOT_WRITE_NO_LOG (true, true)
+  DO_NOT_WRITE_NO_LOG (false, true)
   {
     @Override
     public void notifyOnInvalidXMLCharacter (@Nonnull @Nonempty final String sText,
@@ -125,21 +125,22 @@ public enum EXMLIncorrectCharacterHandling
   public static final EXMLIncorrectCharacterHandling DEFAULT = EXMLIncorrectCharacterHandling.WRITE_TO_FILE_NO_LOG;
   private static final Logger s_aLogger = LoggerFactory.getLogger (EXMLIncorrectCharacterHandling.class);
 
-  private final boolean m_bIsTestRequired;
+  private final boolean m_bIsNotifyRequired;
   private final boolean m_bReplaceWithNothing;
 
   /**
    * Constructor
    * 
-   * @param bIsTestRequired
-   *        Is a special test required?
+   * @param bIsNotifyRequired
+   *        Should {@link #notifyOnInvalidXMLCharacter(String, Set)} be invoked
+   *        for this type?
    * @param bReplaceWithNothing
    *        Should the invalid character be replaced with nothing? May only be
    *        <code>true</code> if bIsTestRequired is <code>true</code>
    */
-  private EXMLIncorrectCharacterHandling (final boolean bIsTestRequired, final boolean bReplaceWithNothing)
+  private EXMLIncorrectCharacterHandling (final boolean bIsNotifyRequired, final boolean bReplaceWithNothing)
   {
-    m_bIsTestRequired = bIsTestRequired;
+    m_bIsNotifyRequired = bIsNotifyRequired;
     m_bReplaceWithNothing = bReplaceWithNothing;
   }
 
@@ -149,7 +150,16 @@ public enum EXMLIncorrectCharacterHandling
    */
   public boolean isTestRequired ()
   {
-    return m_bIsTestRequired;
+    return m_bIsNotifyRequired || m_bReplaceWithNothing;
+  }
+
+  /**
+   * @return <code>true</code> {@link #notifyOnInvalidXMLCharacter(String, Set)}
+   *         should be invoked for this type?
+   */
+  public boolean isNotifyRequired ()
+  {
+    return m_bIsNotifyRequired;
   }
 
   /**

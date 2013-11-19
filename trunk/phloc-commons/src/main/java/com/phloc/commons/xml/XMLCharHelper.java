@@ -880,4 +880,60 @@ public final class XMLCharHelper
         aRes.add (Character.valueOf (c));
     return aRes;
   }
+
+  public static boolean containsInvalidXMLChar (@Nonnull final EXMLVersion eXMLVersion,
+                                                @Nonnull final EXMLCharMode eXMLCharMode,
+                                                @Nullable final String s)
+  {
+    return s != null && containsInvalidXMLChar (eXMLVersion, eXMLCharMode, s.toCharArray ());
+  }
+
+  public static boolean containsInvalidXMLChar (@Nonnull final EXMLVersion eXMLVersion,
+                                                @Nonnull final EXMLCharMode eXMLCharMode,
+                                                @Nullable final char [] aChars)
+  {
+    switch (eXMLCharMode)
+    {
+      case ELEMENT_NAME:
+      case ATTRIBUTE_NAME:
+        return containsInvalidXMLNameChar (eXMLVersion, aChars);
+      case ATTRIBUTE_VALUE:
+        return containsInvalidXMLAttributeValueChar (eXMLVersion, aChars);
+      case TEXT:
+        return containsInvalidXMLTextChar (eXMLVersion, aChars);
+      case CDATA:
+        return containsInvalidXMLCDATAChar (eXMLVersion, aChars);
+      default:
+        throw new IllegalArgumentException ("Unsupported XML character mode " + eXMLCharMode + "!");
+    }
+  }
+
+  @Nullable
+  public static Set <Character> getAllInvalidXMLChars (@Nonnull final EXMLVersion eXMLVersion,
+                                                       @Nonnull final EXMLCharMode eXMLCharMode,
+                                                       @Nullable final String s)
+  {
+    return s == null ? null : getAllInvalidXMLChars (eXMLVersion, eXMLCharMode, s.toCharArray ());
+  }
+
+  @Nullable
+  public static Set <Character> getAllInvalidXMLChars (@Nonnull final EXMLVersion eXMLVersion,
+                                                       @Nonnull final EXMLCharMode eXMLCharMode,
+                                                       @Nullable final char [] aChars)
+  {
+    switch (eXMLCharMode)
+    {
+      case ELEMENT_NAME:
+      case ATTRIBUTE_NAME:
+        return getAllInvalidXMLNameChars (eXMLVersion, aChars);
+      case ATTRIBUTE_VALUE:
+        return getAllInvalidXMLAttributeValueChars (eXMLVersion, aChars);
+      case TEXT:
+        return getAllInvalidXMLTextChars (eXMLVersion, aChars);
+      case CDATA:
+        return getAllInvalidXMLCDATAChars (eXMLVersion, aChars);
+      default:
+        throw new IllegalArgumentException ("Unsupported XML character mode " + eXMLCharMode + "!");
+    }
+  }
 }

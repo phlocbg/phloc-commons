@@ -28,11 +28,11 @@ import org.w3c.dom.Element;
 
 import com.phloc.commons.io.streams.NonBlockingStringWriter;
 import com.phloc.commons.xml.EXMLVersion;
+import com.phloc.commons.xml.XMLCharHelper;
 import com.phloc.commons.xml.XMLFactory;
-import com.phloc.commons.xml.serialize.XMLReader;
 import com.phloc.commons.xml.transform.XMLTransformerFactory;
 
-public class MainFindInvalidXMLChars
+public class MainFindMaskedXMLChars
 {
   private static String _getFormatted (final List <Integer> x)
   {
@@ -87,133 +87,126 @@ public class MainFindInvalidXMLChars
     return ret.toString ();
   }
 
+  /**
+   * XML 1.0:
+   * 
+   * <pre>
+   * Masked Element Name Start:       false
+   * Masked Element Name InBetween:   false
+   * Masked Attribute Name Start:     false
+   * Masked Attribute Name InBetween: false
+   * Masked Attribute Value: (c >= 0x9 && c <= 0xa)
+   * Masked Text Value:      (c == 0xd) || (c >= 0x7f && c <= 0x9f)
+   * Masked CDATA Value:     false
+   * </pre>
+   * 
+   * XML 1.1:
+   * 
+   * <pre>
+   * Masked Element Name Start:       false
+   * Masked Element Name InBetween:   false
+   * Masked Attribute Name Start:     false
+   * Masked Attribute Name InBetween: false
+   * Masked Attribute Value: (c >= 0x1 && c <= 0x1f)
+   * Masked Text Value:      (c >= 0x1 && c <= 0x8) || (c >= 0xb && c <= 0x1f) || (c >= 0x7f && c <= 0x9f)
+   * Masked CDATA Value:     (c >= 0x1 && c <= 0x8) || (c >= 0xb && c <= 0xc) || (c >= 0xe && c <= 0x1f)
+   * </pre>
+   * 
+   * @param args
+   * @throws Exception
+   */
   public static void main (final String [] args) throws Exception
   {
-    final EXMLVersion eXMLVersion = EXMLVersion.XML_10;
+    final EXMLVersion eXMLVersion = EXMLVersion.XML_11;
     final int nMax = Character.MAX_VALUE + 1;
-    final List <Integer> aForbiddenE1 = new ArrayList <Integer> ();
+    final List <Integer> aMaskedE1 = new ArrayList <Integer> ();
     for (int i = 0; i < nMax; ++i)
-    {
-      final Document aDoc = XMLFactory.newDocument (eXMLVersion);
-      try
+      if (!XMLCharHelper.isInvalidXMLNameStartChar (eXMLVersion, (char) i))
       {
+        final Document aDoc = XMLFactory.newDocument (eXMLVersion);
         aDoc.appendChild (aDoc.createElement (Character.toString ((char) i)));
         final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
         XMLTransformerFactory.newTransformer ().transform (new DOMSource (aDoc), new StreamResult (aSW));
-        XMLReader.readXMLDOM (aSW.getAsString ());
+        if (aSW.getAsString ().indexOf ((char) i) == -1)
+          aMaskedE1.add (Integer.valueOf (i));
       }
-      catch (final Exception ex)
-      {
-        aForbiddenE1.add (Integer.valueOf (i));
-      }
-    }
-    final List <Integer> aForbiddenE2 = new ArrayList <Integer> ();
+    final List <Integer> aMaskedE2 = new ArrayList <Integer> ();
     for (int i = 0; i < nMax; ++i)
-    {
-      final Document aDoc = XMLFactory.newDocument (eXMLVersion);
-      try
+      if (!XMLCharHelper.isInvalidXMLNameChar (eXMLVersion, (char) i))
       {
+        final Document aDoc = XMLFactory.newDocument (eXMLVersion);
         aDoc.appendChild (aDoc.createElement ("a" + Character.toString ((char) i)));
         final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
         XMLTransformerFactory.newTransformer ().transform (new DOMSource (aDoc), new StreamResult (aSW));
-        XMLReader.readXMLDOM (aSW.getAsString ());
+        if (aSW.getAsString ().indexOf ((char) i) == -1)
+          aMaskedE2.add (Integer.valueOf (i));
       }
-      catch (final Exception ex)
-      {
-        aForbiddenE2.add (Integer.valueOf (i));
-      }
-    }
-    final List <Integer> aForbiddenAN1 = new ArrayList <Integer> ();
+    final List <Integer> aMaskedAN1 = new ArrayList <Integer> ();
     for (int i = 0; i < nMax; ++i)
-    {
-      final Document aDoc = XMLFactory.newDocument (eXMLVersion);
-      try
+      if (!XMLCharHelper.isInvalidXMLNameStartChar (eXMLVersion, (char) i))
       {
+        final Document aDoc = XMLFactory.newDocument (eXMLVersion);
         final Element aElement = (Element) aDoc.appendChild (aDoc.createElement ("abc"));
         aElement.setAttribute (Character.toString ((char) i), "xyz");
         final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
         XMLTransformerFactory.newTransformer ().transform (new DOMSource (aDoc), new StreamResult (aSW));
-        XMLReader.readXMLDOM (aSW.getAsString ());
+        if (aSW.getAsString ().indexOf ((char) i) == -1)
+          aMaskedAN1.add (Integer.valueOf (i));
       }
-      catch (final Exception ex)
-      {
-        aForbiddenAN1.add (Integer.valueOf (i));
-      }
-    }
-    final List <Integer> aForbiddenAN2 = new ArrayList <Integer> ();
+    final List <Integer> aMaskedAN2 = new ArrayList <Integer> ();
     for (int i = 0; i < nMax; ++i)
-    {
-      final Document aDoc = XMLFactory.newDocument (eXMLVersion);
-      try
+      if (!XMLCharHelper.isInvalidXMLNameChar (eXMLVersion, (char) i))
       {
+        final Document aDoc = XMLFactory.newDocument (eXMLVersion);
         final Element aElement = (Element) aDoc.appendChild (aDoc.createElement ("abc"));
         aElement.setAttribute ("a" + Character.toString ((char) i), "xyz");
         final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
         XMLTransformerFactory.newTransformer ().transform (new DOMSource (aDoc), new StreamResult (aSW));
-        XMLReader.readXMLDOM (aSW.getAsString ());
+        if (aSW.getAsString ().indexOf ((char) i) == -1)
+          aMaskedAN2.add (Integer.valueOf (i));
       }
-      catch (final Exception ex)
-      {
-        aForbiddenAN2.add (Integer.valueOf (i));
-      }
-    }
-    final List <Integer> aForbiddenAV = new ArrayList <Integer> ();
+    final List <Integer> aMaskedAV = new ArrayList <Integer> ();
     for (int i = 0; i < nMax; ++i)
-    {
-      final Document aDoc = XMLFactory.newDocument (eXMLVersion);
-      try
+      if (!XMLCharHelper.isInvalidXMLAttributeValueChar (eXMLVersion, (char) i))
       {
+        final Document aDoc = XMLFactory.newDocument (eXMLVersion);
         final Element aElement = (Element) aDoc.appendChild (aDoc.createElement ("abc"));
         aElement.setAttribute ("a", Character.toString ((char) i));
         final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
         XMLTransformerFactory.newTransformer ().transform (new DOMSource (aDoc), new StreamResult (aSW));
-        XMLReader.readXMLDOM (aSW.getAsString ());
+        if (aSW.getAsString ().indexOf ((char) i) == -1)
+          aMaskedAV.add (Integer.valueOf (i));
       }
-      catch (final Exception ex)
-      {
-        aForbiddenAV.add (Integer.valueOf (i));
-      }
-    }
-    final List <Integer> aForbiddenTV = new ArrayList <Integer> ();
+    final List <Integer> aMaskedTV = new ArrayList <Integer> ();
     for (int i = 0; i < nMax; ++i)
-    {
-      final Document aDoc = XMLFactory.newDocument (eXMLVersion);
-      try
+      if (!XMLCharHelper.isInvalidXMLTextChar (eXMLVersion, (char) i))
       {
+        final Document aDoc = XMLFactory.newDocument (eXMLVersion);
         final Element aElement = (Element) aDoc.appendChild (aDoc.createElement ("abc"));
         aElement.appendChild (aDoc.createTextNode (Character.toString ((char) i)));
         final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
         XMLTransformerFactory.newTransformer ().transform (new DOMSource (aDoc), new StreamResult (aSW));
-        XMLReader.readXMLDOM (aSW.getAsString ());
+        if (aSW.getAsString ().indexOf ((char) i) == -1)
+          aMaskedTV.add (Integer.valueOf (i));
       }
-      catch (final Exception ex)
-      {
-        aForbiddenTV.add (Integer.valueOf (i));
-      }
-    }
-    final List <Integer> aForbiddenCV = new ArrayList <Integer> ();
+    final List <Integer> aMaskedCV = new ArrayList <Integer> ();
     for (int i = 0; i < nMax; ++i)
-    {
-      final Document aDoc = XMLFactory.newDocument (eXMLVersion);
-      try
+      if (!XMLCharHelper.isInvalidXMLCDATAChar (eXMLVersion, (char) i))
       {
+        final Document aDoc = XMLFactory.newDocument (eXMLVersion);
         final Element aElement = (Element) aDoc.appendChild (aDoc.createElement ("abc"));
         aElement.appendChild (aDoc.createCDATASection (Character.toString ((char) i)));
         final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
         XMLTransformerFactory.newTransformer ().transform (new DOMSource (aDoc), new StreamResult (aSW));
-        XMLReader.readXMLDOM (aSW.getAsString ());
+        if (aSW.getAsString ().indexOf ((char) i) == -1)
+          aMaskedCV.add (Integer.valueOf (i));
       }
-      catch (final Exception ex)
-      {
-        aForbiddenCV.add (Integer.valueOf (i));
-      }
-    }
-    System.out.println ("Forbidden Element Name Start:       " + _getFormatted (aForbiddenE1));
-    System.out.println ("Forbidden Element Name InBetween:   " + _getFormatted (aForbiddenE2));
-    System.out.println ("Forbidden Attribute Name Start:     " + _getFormatted (aForbiddenAN1));
-    System.out.println ("Forbidden Attribute Name InBetween: " + _getFormatted (aForbiddenAN2));
-    System.out.println ("Forbidden Attribute Value: " + _getFormatted (aForbiddenAV));
-    System.out.println ("Forbidden Text Value:      " + _getFormatted (aForbiddenTV));
-    System.out.println ("Forbidden CDATA Value:     " + _getFormatted (aForbiddenCV));
+    System.out.println ("Masked Element Name Start:       " + _getFormatted (aMaskedE1));
+    System.out.println ("Masked Element Name InBetween:   " + _getFormatted (aMaskedE2));
+    System.out.println ("Masked Attribute Name Start:     " + _getFormatted (aMaskedAN1));
+    System.out.println ("Masked Attribute Name InBetween: " + _getFormatted (aMaskedAN2));
+    System.out.println ("Masked Attribute Value: " + _getFormatted (aMaskedAV));
+    System.out.println ("Masked Text Value:      " + _getFormatted (aMaskedTV));
+    System.out.println ("Masked CDATA Value:     " + _getFormatted (aMaskedCV));
   }
 }
