@@ -27,6 +27,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.phloc.commons.io.streams.NonBlockingStringWriter;
+import com.phloc.commons.regex.RegExHelper;
 import com.phloc.commons.xml.EXMLVersion;
 import com.phloc.commons.xml.XMLCharHelper;
 import com.phloc.commons.xml.XMLFactory;
@@ -87,6 +88,13 @@ public class MainFindMaskedXMLChars
     return ret.toString ();
   }
 
+  private static boolean _containsER (final String s, final int c)
+  {
+    if (s.contains ("&#x" + Integer.toString (c, 16) + ";") || s.contains ("&#" + c + ";"))
+      return true;
+    return RegExHelper.stringMatchesPattern (".+&[a-z]+;.+", s);
+  }
+
   /**
    * XML 1.0:
    * 
@@ -95,8 +103,8 @@ public class MainFindMaskedXMLChars
    * Masked Element Name InBetween:   false
    * Masked Attribute Name Start:     false
    * Masked Attribute Name InBetween: false
-   * Masked Attribute Value: (c >= 0x9 && c <= 0xa)
-   * Masked Text Value:      (c == 0xd) || (c >= 0x7f && c <= 0x9f)
+   * Masked Attribute Value: (c >= 0x9 && c <= 0xa) || (c == 0xd) || (c == 0x22) || (c == 0x26) || (c == 0x3c)
+   * Masked Text Value:      (c == 0xd) || (c == 0x26) || (c == 0x3c) || (c == 0x3e) || (c >= 0x7f && c <= 0x9f)
    * Masked CDATA Value:     false
    * </pre>
    * 
@@ -107,8 +115,8 @@ public class MainFindMaskedXMLChars
    * Masked Element Name InBetween:   false
    * Masked Attribute Name Start:     false
    * Masked Attribute Name InBetween: false
-   * Masked Attribute Value: (c >= 0x1 && c <= 0x1f)
-   * Masked Text Value:      (c >= 0x1 && c <= 0x8) || (c >= 0xb && c <= 0x1f) || (c >= 0x7f && c <= 0x9f)
+   * Masked Attribute Value: (c >= 0x1 && c <= 0x1f) || (c == 0x22) || (c == 0x26) || (c == 0x3c)
+   * Masked Text Value:      (c >= 0x1 && c <= 0x8) || (c >= 0xb && c <= 0x1f) || (c == 0x26) || (c == 0x3c) || (c == 0x3e) || (c >= 0x7f && c <= 0x9f)
    * Masked CDATA Value:     (c >= 0x1 && c <= 0x8) || (c >= 0xb && c <= 0xc) || (c >= 0xe && c <= 0x1f)
    * </pre>
    * 
@@ -117,7 +125,14 @@ public class MainFindMaskedXMLChars
    */
   public static void main (final String [] args) throws Exception
   {
-    final EXMLVersion eXMLVersion = EXMLVersion.XML_11;
+    if (true)
+    {
+      for (int i = 0x1; i <= 0x1f; ++i)
+        System.out.println ("0x" + Integer.toString (i, 16) + ",");
+      return;
+    }
+
+    final EXMLVersion eXMLVersion = EXMLVersion.XML_10;
     final int nMax = Character.MAX_VALUE + 1;
     final List <Integer> aMaskedE1 = new ArrayList <Integer> ();
     for (int i = 0; i < nMax; ++i)
@@ -127,7 +142,7 @@ public class MainFindMaskedXMLChars
         aDoc.appendChild (aDoc.createElement (Character.toString ((char) i)));
         final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
         XMLTransformerFactory.newTransformer ().transform (new DOMSource (aDoc), new StreamResult (aSW));
-        if (aSW.getAsString ().indexOf ((char) i) == -1)
+        if (_containsER (aSW.getAsString (), i))
           aMaskedE1.add (Integer.valueOf (i));
       }
     final List <Integer> aMaskedE2 = new ArrayList <Integer> ();
@@ -138,7 +153,7 @@ public class MainFindMaskedXMLChars
         aDoc.appendChild (aDoc.createElement ("a" + Character.toString ((char) i)));
         final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
         XMLTransformerFactory.newTransformer ().transform (new DOMSource (aDoc), new StreamResult (aSW));
-        if (aSW.getAsString ().indexOf ((char) i) == -1)
+        if (_containsER (aSW.getAsString (), i))
           aMaskedE2.add (Integer.valueOf (i));
       }
     final List <Integer> aMaskedAN1 = new ArrayList <Integer> ();
@@ -150,7 +165,7 @@ public class MainFindMaskedXMLChars
         aElement.setAttribute (Character.toString ((char) i), "xyz");
         final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
         XMLTransformerFactory.newTransformer ().transform (new DOMSource (aDoc), new StreamResult (aSW));
-        if (aSW.getAsString ().indexOf ((char) i) == -1)
+        if (_containsER (aSW.getAsString (), i))
           aMaskedAN1.add (Integer.valueOf (i));
       }
     final List <Integer> aMaskedAN2 = new ArrayList <Integer> ();
@@ -162,7 +177,7 @@ public class MainFindMaskedXMLChars
         aElement.setAttribute ("a" + Character.toString ((char) i), "xyz");
         final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
         XMLTransformerFactory.newTransformer ().transform (new DOMSource (aDoc), new StreamResult (aSW));
-        if (aSW.getAsString ().indexOf ((char) i) == -1)
+        if (_containsER (aSW.getAsString (), i))
           aMaskedAN2.add (Integer.valueOf (i));
       }
     final List <Integer> aMaskedAV = new ArrayList <Integer> ();
@@ -174,7 +189,7 @@ public class MainFindMaskedXMLChars
         aElement.setAttribute ("a", Character.toString ((char) i));
         final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
         XMLTransformerFactory.newTransformer ().transform (new DOMSource (aDoc), new StreamResult (aSW));
-        if (aSW.getAsString ().indexOf ((char) i) == -1)
+        if (_containsER (aSW.getAsString (), i))
           aMaskedAV.add (Integer.valueOf (i));
       }
     final List <Integer> aMaskedTV = new ArrayList <Integer> ();
@@ -186,7 +201,7 @@ public class MainFindMaskedXMLChars
         aElement.appendChild (aDoc.createTextNode (Character.toString ((char) i)));
         final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
         XMLTransformerFactory.newTransformer ().transform (new DOMSource (aDoc), new StreamResult (aSW));
-        if (aSW.getAsString ().indexOf ((char) i) == -1)
+        if (_containsER (aSW.getAsString (), i))
           aMaskedTV.add (Integer.valueOf (i));
       }
     final List <Integer> aMaskedCV = new ArrayList <Integer> ();
@@ -198,7 +213,7 @@ public class MainFindMaskedXMLChars
         aElement.appendChild (aDoc.createCDATASection (Character.toString ((char) i)));
         final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
         XMLTransformerFactory.newTransformer ().transform (new DOMSource (aDoc), new StreamResult (aSW));
-        if (aSW.getAsString ().indexOf ((char) i) == -1)
+        if (_containsER (aSW.getAsString (), i))
           aMaskedCV.add (Integer.valueOf (i));
       }
     System.out.println ("Masked Element Name Start:       " + _getFormatted (aMaskedE1));
