@@ -40,6 +40,7 @@ import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.io.streams.NonBlockingStringWriter;
 import com.phloc.commons.xml.EXMLIncorrectCharacterHandling;
 import com.phloc.commons.xml.EXMLVersion;
+import com.phloc.commons.xml.XMLCharHelper;
 import com.phloc.commons.xml.XMLFactory;
 import com.phloc.commons.xml.serialize.XMLReader;
 import com.phloc.commons.xml.serialize.XMLWriter;
@@ -184,21 +185,20 @@ public final class XMLTransformerFactoryTest
   @Test
   public void testSpecialChars () throws Exception
   {
-    final Document aDoc = XMLFactory.newDocument (EXMLVersion.XML_11);
+    final EXMLVersion eXMLVersion = EXMLVersion.XML_10;
+    final Document aDoc = XMLFactory.newDocument (eXMLVersion);
     final Node aRoot = aDoc.appendChild (aDoc.createElement ("root"));
-    final char [] aChars = new char [256];
-    for (int i = 0; i < 256; ++i)
-      if (i == 0 || (i >= 127 && i <= 159))
-      {
-        // Not in attrs
-        aChars[i] = '.';
-      }
-      else
-        aChars[i] = (char) i;
-    final String sAll = new String (aChars);
-    if (true)
-      ((Element) aRoot).setAttribute ("test", sAll);
-    aRoot.appendChild (aDoc.createTextNode (sAll));
+    final StringBuilder aAttrVal = new StringBuilder ();
+    final StringBuilder aText = new StringBuilder ();
+    for (char i = 0; i < 256; ++i)
+    {
+      if (!XMLCharHelper.isInvalidXMLAttributeValueChar (eXMLVersion, i))
+        aAttrVal.append (i);
+      if (!XMLCharHelper.isInvalidXMLTextChar (eXMLVersion, i))
+        aText.append (i);
+    }
+    ((Element) aRoot).setAttribute ("test", aAttrVal.toString ());
+    aRoot.appendChild (aDoc.createTextNode (aText.toString ()));
     final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
     XMLTransformerFactory.newTransformer ().transform (new DOMSource (aDoc), new StreamResult (aSW));
     final String sTransform = aSW.getAsString ();
