@@ -907,6 +907,7 @@ public final class XMLHelper
   }
 
   @Nonnull
+  @Deprecated
   public static char [] getMaskedXMLText (@Nonnull final EXMLVersion eXMLVersion,
                                           @Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharHandling,
                                           @Nullable final String s)
@@ -930,6 +931,7 @@ public final class XMLHelper
   }
 
   @Nonnegative
+  @Deprecated
   public static int getMaskedXMLTextLength (@Nonnull final EXMLVersion eXMLVersion,
                                             @Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharHandling,
                                             @Nullable final String s)
@@ -959,6 +961,7 @@ public final class XMLHelper
     return nResLen == CGlobal.ILLEGAL_UINT ? s.length () : nResLen;
   }
 
+  @Deprecated
   public static void maskXMLTextTo (@Nonnull final EXMLVersion eXMLVersion,
                                     @Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharHandling,
                                     @Nullable final String sText,
