@@ -115,16 +115,16 @@ public final class XMLMaskHelperTest extends AbstractPhlocTestCase
                                                        "1 & \u0000"));
 
     // Special chars
-    assertArrayEquals ("ab&lt;cd>ef".toCharArray (),
+    assertArrayEquals ("ab&lt;cd>ef&amp;gh&quot;ij".toCharArray (),
                        XMLMaskHelper.getMaskedXMLText (EXMLVersion.XML_10,
                                                        EXMLCharMode.ATTRIBUTE_VALUE,
                                                        EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING,
-                                                       "ab<cd>ef"));
-    assertArrayEquals ("ab&lt;cd>ef".toCharArray (),
+                                                       "ab<cd>ef&gh\"ij"));
+    assertArrayEquals ("ab&lt;cd>ef&amp;gh&quot;ij".toCharArray (),
                        XMLMaskHelper.getMaskedXMLText (EXMLVersion.XML_11,
                                                        EXMLCharMode.ATTRIBUTE_VALUE,
                                                        EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING,
-                                                       "ab<cd>ef"));
+                                                       "ab<cd>ef&gh\"ij"));
   }
 
   @Test

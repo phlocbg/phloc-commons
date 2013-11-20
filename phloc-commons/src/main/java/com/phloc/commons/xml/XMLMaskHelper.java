@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.string.StringHelper;
@@ -191,8 +192,17 @@ public final class XMLMaskHelper
   private static final char [][] MASK_TEXT_XML11_REPLACE = new char [MASK_TEXT_XML11.length] [];
   private static final char [][] MASK_CDATA_XML11_REPLACE = new char [MASK_CDATA_XML11.length] [];
 
+  /**
+   * Get the entity reference for the specified character. This returns e.g.
+   * &amp;lt; for '&lt;' etc.
+   * 
+   * @param c
+   *        Character to use.
+   * @return The entity reference string. Never <code>null</code> nor empty.
+   */
   @Nonnull
-  private static String _getReplacement (final char c)
+  @Nonempty
+  public static String getEntityReferenceString (final char c)
   {
     if (c == '<')
       return "&lt;";
@@ -200,23 +210,23 @@ public final class XMLMaskHelper
       return "&gt;";
     if (c == '&')
       return "&amp;";
-    if (c == '$')
-      return "%quot;";
+    if (c == '"')
+      return "&quot;";
     return "&#" + (int) c + ";";
   }
 
   static
   {
     for (int i = 0; i < MASK_ATTRIBUTE_VALUE_XML10.length; ++i)
-      MASK_ATTRIBUTE_VALUE_XML10_REPLACE[i] = _getReplacement (MASK_ATTRIBUTE_VALUE_XML10[i]).toCharArray ();
+      MASK_ATTRIBUTE_VALUE_XML10_REPLACE[i] = getEntityReferenceString (MASK_ATTRIBUTE_VALUE_XML10[i]).toCharArray ();
     for (int i = 0; i < MASK_TEXT_XML10.length; ++i)
-      MASK_TEXT_XML10_REPLACE[i] = _getReplacement (MASK_TEXT_XML10[i]).toCharArray ();
+      MASK_TEXT_XML10_REPLACE[i] = getEntityReferenceString (MASK_TEXT_XML10[i]).toCharArray ();
     for (int i = 0; i < MASK_ATTRIBUTE_VALUE_XML11.length; ++i)
-      MASK_ATTRIBUTE_VALUE_XML11_REPLACE[i] = _getReplacement (MASK_ATTRIBUTE_VALUE_XML11[i]).toCharArray ();
+      MASK_ATTRIBUTE_VALUE_XML11_REPLACE[i] = getEntityReferenceString (MASK_ATTRIBUTE_VALUE_XML11[i]).toCharArray ();
     for (int i = 0; i < MASK_TEXT_XML11.length; ++i)
-      MASK_TEXT_XML11_REPLACE[i] = _getReplacement (MASK_TEXT_XML11[i]).toCharArray ();
+      MASK_TEXT_XML11_REPLACE[i] = getEntityReferenceString (MASK_TEXT_XML11[i]).toCharArray ();
     for (int i = 0; i < MASK_CDATA_XML11.length; ++i)
-      MASK_CDATA_XML11_REPLACE[i] = _getReplacement (MASK_CDATA_XML11[i]).toCharArray ();
+      MASK_CDATA_XML11_REPLACE[i] = getEntityReferenceString (MASK_CDATA_XML11[i]).toCharArray ();
   }
 
   @SuppressWarnings ("unused")
@@ -239,6 +249,8 @@ public final class XMLMaskHelper
             return MASK_ATTRIBUTE_VALUE_XML10;
           case TEXT:
             return MASK_TEXT_XML10;
+          default:
+            break;
         }
         break;
       case XML_11:
@@ -250,6 +262,8 @@ public final class XMLMaskHelper
             return MASK_TEXT_XML11;
           case CDATA:
             return MASK_CDATA_XML11;
+          default:
+            break;
         }
         break;
     }
@@ -269,6 +283,8 @@ public final class XMLMaskHelper
             return MASK_ATTRIBUTE_VALUE_XML10_REPLACE;
           case TEXT:
             return MASK_TEXT_XML10_REPLACE;
+          default:
+            break;
         }
         break;
       case XML_11:
@@ -280,16 +296,28 @@ public final class XMLMaskHelper
             return MASK_TEXT_XML11_REPLACE;
           case CDATA:
             return MASK_CDATA_XML11_REPLACE;
+          default:
+            break;
         }
         break;
     }
     return null;
   }
 
+  /**
+   * Convert the passed set to an array
+   * 
+   * @param aChars
+   *        Character set to use. May not be <code>null</code>.
+   * @return A new array with the same length as the source set.
+   */
   @Nonnull
   @ReturnsMutableCopy
-  private static char [] _toCharArray (@Nonnull final Set <Character> aChars)
+  public static char [] getAsCharArray (@Nonnull final Set <Character> aChars)
   {
+    if (aChars == null)
+      throw new NullPointerException ("chars");
+
     final char [] ret = new char [aChars.size ()];
     int nIndex = 0;
     for (final Character aChar : aChars)
@@ -318,6 +346,8 @@ public final class XMLMaskHelper
       return new char [0];
 
     char [] aChars = s.toCharArray ();
+
+    // 1. do incorrect character handling
     if (eIncorrectCharHandling.isTestRequired ())
     {
       if (XMLCharHelper.containsInvalidXMLChar (eXMLVersion, eXMLCharMode, aChars))
@@ -326,16 +356,20 @@ public final class XMLMaskHelper
         eIncorrectCharHandling.notifyOnInvalidXMLCharacter (s, aAllInvalidChars);
         if (eIncorrectCharHandling.isReplaceWithNothing ())
         {
-          final char [] aSrcMap = _toCharArray (aAllInvalidChars);
+          final char [] aSrcMap = getAsCharArray (aAllInvalidChars);
           final char [][] aDstMap = _createEmptyReplacement (aSrcMap);
           aChars = StringHelper.replaceMultiple (s, aSrcMap, aDstMap);
         }
       }
     }
 
+    // 2. perform entity replacements if necessary
     final char [] aSrcMap = _findSourceMap (eXMLVersion, eXMLCharMode);
     if (aSrcMap == null)
+    {
+      // Nothing to replace
       return aChars;
+    }
     final char [][] aDstMap = _findReplaceMap (eXMLVersion, eXMLCharMode);
     return StringHelper.replaceMultiple (aChars, aSrcMap, aDstMap);
   }
@@ -350,6 +384,8 @@ public final class XMLMaskHelper
       return 0;
 
     char [] aChars = s.toCharArray ();
+
+    // 1. do incorrect character handling
     if (eIncorrectCharHandling.isTestRequired () &&
         XMLCharHelper.containsInvalidXMLChar (eXMLVersion, eXMLCharMode, aChars))
     {
@@ -357,15 +393,19 @@ public final class XMLMaskHelper
       eIncorrectCharHandling.notifyOnInvalidXMLCharacter (s, aAllInvalidChars);
       if (eIncorrectCharHandling.isReplaceWithNothing ())
       {
-        final char [] aSrcMap = _toCharArray (aAllInvalidChars);
+        final char [] aSrcMap = getAsCharArray (aAllInvalidChars);
         final char [][] aDstMap = _createEmptyReplacement (aSrcMap);
         aChars = StringHelper.replaceMultiple (s, aSrcMap, aDstMap);
       }
     }
 
+    // 2. perform entity replacements if necessary
     final char [] aSrcMap = _findSourceMap (eXMLVersion, eXMLCharMode);
     if (aSrcMap == null)
+    {
+      // Nothing to replace
       return aChars.length;
+    }
     final char [][] aDstMap = _findReplaceMap (eXMLVersion, eXMLCharMode);
     final int nResLen = StringHelper.getReplaceMultipleResultLength (aChars, aSrcMap, aDstMap);
     return nResLen == CGlobal.ILLEGAL_UINT ? aChars.length : nResLen;
@@ -381,6 +421,8 @@ public final class XMLMaskHelper
       return;
 
     char [] aChars = s.toCharArray ();
+
+    // 1. do incorrect character handling
     if (eIncorrectCharHandling.isTestRequired ())
     {
       if (XMLCharHelper.containsInvalidXMLChar (eXMLVersion, eXMLCharMode, aChars))
@@ -389,13 +431,14 @@ public final class XMLMaskHelper
         eIncorrectCharHandling.notifyOnInvalidXMLCharacter (s, aAllInvalidChars);
         if (eIncorrectCharHandling.isReplaceWithNothing ())
         {
-          final char [] aSrcMap = _toCharArray (aAllInvalidChars);
+          final char [] aSrcMap = getAsCharArray (aAllInvalidChars);
           final char [][] aDstMap = _createEmptyReplacement (aSrcMap);
           aChars = StringHelper.replaceMultiple (s, aSrcMap, aDstMap);
         }
       }
     }
 
+    // 2. perform entity replacements if necessary
     final char [] aSrcMap = _findSourceMap (eXMLVersion, eXMLCharMode);
     if (aSrcMap == null)
     {
