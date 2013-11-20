@@ -33,6 +33,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.resource.ClassPathResource;
@@ -209,16 +210,28 @@ public final class XMLTransformerFactoryTest
     final Element e3 = (Element) eRoot.appendChild (aDoc.createElement ("c"));
     e3.appendChild (aDoc.createCDATASection ("]]>"));
 
+    if (false)
+      e3.appendChild (aDoc.createComment ("<!--"));
+    e3.appendChild (aDoc.createTextNode ("abc"));
+    if (false)
+      e3.appendChild (aDoc.createComment ("-->"));
+
     final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
     XMLTransformerFactory.newTransformer ().transform (new DOMSource (aDoc), new StreamResult (aSW));
     final String sTransform = aSW.getAsString ();
+    System.out.println (sTransform);
+    System.out.println ();
+
+    final Document aDoc2 = XMLReader.readXMLDOM (sTransform);
+    final Node e3a = aDoc2.getDocumentElement ().getChildNodes ().item (2);
+    aSW.reset ();
+    XMLTransformerFactory.newTransformer ().transform (new DOMSource (e3a), new StreamResult (aSW));
+    System.out.println (aSW.getAsString ());
+
     final String sXML = XMLWriter.getNodeAsString (aDoc,
                                                    new XMLWriterSettings ().setIncorrectCharacterHandling (EXMLIncorrectCharacterHandling.WRITE_TO_FILE_NO_LOG)
                                                                            .setIndent (EXMLSerializeIndent.NONE));
-    System.out.println (sTransform);
-    System.out.println ();
     System.out.println (sXML);
-    XMLReader.readXMLDOM (sTransform);
     XMLReader.readXMLDOM (sXML);
   }
 }
