@@ -152,6 +152,7 @@ public final class XMLHelperTest extends AbstractPhlocTestCase
     assertEquals (nCount, 1);
   }
 
+  @SuppressWarnings ("deprecation")
   @Test
   public void testGetMaskedXMLText ()
   {
@@ -241,6 +242,7 @@ public final class XMLHelperTest extends AbstractPhlocTestCase
                                                    "ab\u2028c"));
   }
 
+  @SuppressWarnings ("deprecation")
   @Test
   public void testGetMaskedXMLTextLength ()
   {
