@@ -226,42 +226,43 @@ public class FileMonitorManager implements Runnable
    */
   public void run ()
   {
-    mainloop: while (!m_aMonitorThread.isInterrupted () && m_bShouldRun)
-    {
-      final StopWatch aSW = new StopWatch (true);
-
-      // Create a copy to avoid concurrent modification
-      int nFileNameIndex = 0;
-      for (final FileMonitor aMonitor : getAllFileMonitors ())
+    if (m_aMonitorThread != null)
+      mainloop: while (!m_aMonitorThread.isInterrupted () && m_bShouldRun)
       {
-        // Remove listener for all deleted files
-        aMonitor.applyPendingRemovals ();
+        final StopWatch aSW = new StopWatch (true);
 
-        // For all monitored files
-        for (final FileMonitorAgent aAgent : aMonitor.getAllAgents ())
+        // Create a copy to avoid concurrent modification
+        int nFileNameIndex = 0;
+        for (final FileMonitor aMonitor : getAllFileMonitors ())
         {
-          aAgent.checkForModifications ();
+          // Remove listener for all deleted files
+          aMonitor.applyPendingRemovals ();
 
-          final int nChecksPerRun = getChecksPerRun ();
+          // For all monitored files
+          for (final FileMonitorAgent aAgent : aMonitor.getAllAgents ())
+          {
+            aAgent.checkForModifications ();
 
-          if (nChecksPerRun > 0 && (nFileNameIndex % nChecksPerRun) == 0)
-            ThreadUtils.sleep (getDelay ());
+            final int nChecksPerRun = getChecksPerRun ();
 
-          if (m_aMonitorThread.isInterrupted () || !m_bShouldRun)
-            continue mainloop;
+            if (nChecksPerRun > 0 && (nFileNameIndex % nChecksPerRun) == 0)
+              ThreadUtils.sleep (getDelay ());
 
-          ++nFileNameIndex;
+            if (m_aMonitorThread.isInterrupted () || !m_bShouldRun)
+              continue mainloop;
+
+            ++nFileNameIndex;
+          }
+
+          // Add listener for all added files
+          aMonitor.applyPendingAdds ();
         }
 
-        // Add listener for all added files
-        aMonitor.applyPendingAdds ();
+        ThreadUtils.sleep (getDelay ());
+
+        if (s_aLogger.isDebugEnabled ())
+          s_aLogger.debug ("Checking for file modifications took " + aSW.stopAndGetMillis () + " ms");
       }
-
-      ThreadUtils.sleep (getDelay ());
-
-      if (s_aLogger.isDebugEnabled ())
-        s_aLogger.debug ("Checking for file modifications took " + aSW.stopAndGetMillis () + " ms");
-    }
 
     // Allow for restart
     m_bShouldRun = true;
