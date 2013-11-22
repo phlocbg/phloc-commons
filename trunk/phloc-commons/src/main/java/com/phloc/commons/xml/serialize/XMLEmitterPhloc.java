@@ -44,7 +44,7 @@ import com.phloc.commons.xml.XMLMaskHelper;
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
+public class XMLEmitterPhloc extends DefaultXMLIterationHandler
 {
   /** By default an exception is thrown for nested comments */
   public static final boolean DEFAULT_THROW_EXCEPTION_ON_NESTED_COMMENTS = true;
@@ -327,7 +327,9 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
       else
       {
         // No special handling required
+        _append (CDATA_START);
         _appendMasked (EXMLCharMode.CDATA, sText);
+        _append (CDATA_END);
       }
     }
   }

@@ -283,17 +283,17 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
     // Containing the forbidden CDATA end marker
     Element e = doc.createElement ("a");
     e.appendChild (doc.createCDATASection ("a]]>b"));
-    assertEquals ("<a><![CDATA[a]]>]]&gt;<![CDATA[b]]></a>" + CRLF, XMLWriter.getXMLString (e));
+    assertEquals ("<a><![CDATA[a]]]]><![CDATA[>b]]></a>" + CRLF, XMLWriter.getXMLString (e));
 
     // Containing more than one forbidden CDATA end marker
     e = doc.createElement ("a");
     e.appendChild (doc.createCDATASection ("a]]>b]]>c"));
-    assertEquals ("<a><![CDATA[a]]>]]&gt;<![CDATA[b]]>]]&gt;<![CDATA[c]]></a>" + CRLF, XMLWriter.getXMLString (e));
+    assertEquals ("<a><![CDATA[a]]]]><![CDATA[>b]]]]><![CDATA[>c]]></a>" + CRLF, XMLWriter.getXMLString (e));
 
     // Containing a complete CDATA section
     e = doc.createElement ("a");
     e.appendChild (doc.createCDATASection ("a<![CDATA[x]]>b"));
-    assertEquals ("<a><![CDATA[a<![CDATA[x]]>]]&gt;<![CDATA[b]]></a>" + CRLF, XMLWriter.getXMLString (e));
+    assertEquals ("<a><![CDATA[a<![CDATA[x]]]]><![CDATA[>b]]></a>" + CRLF, XMLWriter.getXMLString (e));
   }
 
   @Test
