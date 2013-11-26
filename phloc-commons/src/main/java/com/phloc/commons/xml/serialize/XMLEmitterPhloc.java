@@ -36,7 +36,6 @@ import com.phloc.commons.xml.DefaultXMLIterationHandler;
 import com.phloc.commons.xml.EXMLCharMode;
 import com.phloc.commons.xml.EXMLIncorrectCharacterHandling;
 import com.phloc.commons.xml.EXMLVersion;
-import com.phloc.commons.xml.XMLMaskHelper;
 
 /**
  * Converts XML constructs into a string representation.
@@ -64,6 +63,7 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
   private final IXMLWriterSettings m_aSettings;
   private EXMLVersion m_eXMLVersion = EXMLVersion.DEFAULT;
   private final char m_cAttrValueBoundary;
+  private final EXMLCharMode m_eAttrValueCharMode;
 
   public XMLEmitterPhloc (@Nonnull @WillNotClose final Writer aWriter, @Nonnull final IXMLWriterSettings aSettings)
   {
@@ -74,6 +74,8 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
     m_aWriter = aWriter;
     m_aSettings = aSettings;
     m_cAttrValueBoundary = aSettings.isUseDoubleQuotesForAttributes () ? '"' : '\'';
+    m_eAttrValueCharMode = aSettings.isUseDoubleQuotesForAttributes () ? EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES
+                                                                      : EXMLCharMode.ATTRIBUTE_VALUE_SINGLE_QUOTES;
   }
 
   /**
@@ -146,8 +148,7 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
   @Nonnull
   private XMLEmitterPhloc _appendAttrValue (@Nullable final String sValue)
   {
-    return _append (m_cAttrValueBoundary)._appendMasked (EXMLCharMode.ATTRIBUTE_VALUE, sValue)
-                                         ._append (m_cAttrValueBoundary);
+    return _append (m_cAttrValueBoundary)._appendMasked (m_eAttrValueCharMode, sValue)._append (m_cAttrValueBoundary);
   }
 
   @Override
@@ -219,12 +220,12 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
       // Public and system ID present
       aSB.append (" PUBLIC \"")
          .append (XMLMaskHelper.getMaskedXMLText (eXMLVersion,
-                                                  EXMLCharMode.ATTRIBUTE_VALUE,
+                                                  EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES,
                                                   eIncorrectCharHandling,
                                                   sPublicID))
          .append ("\" \"")
          .append (XMLMaskHelper.getMaskedXMLText (eXMLVersion,
-                                                  EXMLCharMode.ATTRIBUTE_VALUE,
+                                                  EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES,
                                                   eIncorrectCharHandling,
                                                   sSystemID))
          .append ('"');
@@ -235,7 +236,7 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
         // Only system ID present
         aSB.append (" SYSTEM \"")
            .append (XMLMaskHelper.getMaskedXMLText (eXMLVersion,
-                                                    EXMLCharMode.ATTRIBUTE_VALUE,
+                                                    EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES,
                                                     eIncorrectCharHandling,
                                                     sSystemID))
            .append ('"');

@@ -895,7 +895,8 @@ public final class XMLCharHelper
       case ELEMENT_NAME:
       case ATTRIBUTE_NAME:
         return containsInvalidXMLNameChar (eXMLVersion, aChars);
-      case ATTRIBUTE_VALUE:
+      case ATTRIBUTE_VALUE_DOUBLE_QUOTES:
+      case ATTRIBUTE_VALUE_SINGLE_QUOTES:
         return containsInvalidXMLAttributeValueChar (eXMLVersion, aChars);
       case TEXT:
         return containsInvalidXMLTextChar (eXMLVersion, aChars);
@@ -924,7 +925,8 @@ public final class XMLCharHelper
       case ELEMENT_NAME:
       case ATTRIBUTE_NAME:
         return getAllInvalidXMLNameChars (eXMLVersion, aChars);
-      case ATTRIBUTE_VALUE:
+      case ATTRIBUTE_VALUE_DOUBLE_QUOTES:
+      case ATTRIBUTE_VALUE_SINGLE_QUOTES:
         return getAllInvalidXMLAttributeValueChars (eXMLVersion, aChars);
       case TEXT:
         return getAllInvalidXMLTextChars (eXMLVersion, aChars);
