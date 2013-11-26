@@ -40,9 +40,14 @@ public final class XMLCharHelper
   private static final BitSet INVALID_NAME_START_CHAR_XML11 = new BitSet (0x10000);
   private static final BitSet INVALID_NAME_CHAR_XML10 = new BitSet (0x10000);
   private static final BitSet INVALID_NAME_CHAR_XML11 = new BitSet (0x10000);
+  /** This is used for XML 1.0 text, CDATA and attribute value */
   private static final BitSet INVALID_VALUE_CHAR_XML10 = new BitSet (0x10000);
+  /** This is used for XML 1.1 text values */
   private static final BitSet INVALID_TEXT_VALUE_CHAR_XML11 = new BitSet (0x10000);
-  private static final BitSet INVALID_ATTRCDATA_VALUE_CHAR_XML11 = new BitSet (0x10000);
+  /** This is used for XML 1.1 CDATA and attribute values */
+  private static final BitSet INVALID_ATTR_AND_CDATA_VALUE_CHAR_XML11 = new BitSet (0x10000);
+  /** For all HTML values */
+  private static final BitSet INVALID_CHAR_HTML = new BitSet (0x10000);
 
   static
   {
@@ -581,11 +586,18 @@ public final class XMLCharHelper
                                        (c >= 0xd800 && c <= 0xdfff) ||
                                        (c >= 0xfffe && c <= 0xffff));
       INVALID_TEXT_VALUE_CHAR_XML11.set (c, (c == 0x0) || (c >= 0xd800 && c <= 0xdfff) || (c >= 0xfffe && c <= 0xffff));
-      INVALID_ATTRCDATA_VALUE_CHAR_XML11.set (c, (c == 0x0) ||
-                                                 (c >= 0x7f && c <= 0x84) ||
-                                                 (c >= 0x86 && c <= 0x9f) ||
-                                                 (c >= 0xd800 && c <= 0xdfff) ||
-                                                 (c >= 0xfffe && c <= 0xffff));
+      INVALID_ATTR_AND_CDATA_VALUE_CHAR_XML11.set (c, (c == 0x0) ||
+                                                      (c >= 0x7f && c <= 0x84) ||
+                                                      (c >= 0x86 && c <= 0x9f) ||
+                                                      (c >= 0xd800 && c <= 0xdfff) ||
+                                                      (c >= 0xfffe && c <= 0xffff));
+      /** Source: http://www.w3.org/TR/REC-html40/sgml/sgmldecl.html */
+      INVALID_CHAR_HTML.set (c, (c >= 0x0 && c <= 0x8) ||
+                                (c >= 0xb && c <= 0xc) ||
+                                (c >= 0xe && c <= 0x1f) ||
+                                (c >= 0x7f && c <= 0x9f) ||
+                                (c >= 0xd800 && c <= 0xdfff) ||
+                                (c >= 0xfffe && c <= 0xffff));
     }
   }
 
@@ -778,7 +790,7 @@ public final class XMLCharHelper
       case XML_10:
         return INVALID_VALUE_CHAR_XML10.get (c);
       case XML_11:
-        return INVALID_ATTRCDATA_VALUE_CHAR_XML11.get (c);
+        return INVALID_ATTR_AND_CDATA_VALUE_CHAR_XML11.get (c);
       default:
         throw new IllegalArgumentException ("Unsupported XML version " + eXMLVersion + "!");
     }
@@ -836,7 +848,7 @@ public final class XMLCharHelper
       case XML_10:
         return INVALID_VALUE_CHAR_XML10.get (c);
       case XML_11:
-        return INVALID_ATTRCDATA_VALUE_CHAR_XML11.get (c);
+        return INVALID_ATTR_AND_CDATA_VALUE_CHAR_XML11.get (c);
       default:
         throw new IllegalArgumentException ("Unsupported XML version " + eXMLVersion + "!");
     }

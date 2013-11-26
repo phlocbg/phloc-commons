@@ -272,6 +272,33 @@ public final class XMLMaskHelper
     return "&#" + (int) c + ";";
   }
 
+  /**
+   * Get the entity reference for the specified character. This returns e.g.
+   * <code>&amp;lt;</code> for '<code>&lt;</code>' etc. This method has special
+   * handling for &lt;, &gt;, &amp; and &quot;. All other chars are encoded by
+   * their numeric value (e.g. <code>&amp;#200;</code>). In contrast to
+   * {@link #getXMLEntityReferenceString(char)} this method does not handle
+   * <code>&amp;apos;</code>
+   * 
+   * @param c
+   *        Character to use.
+   * @return The entity reference string. Never <code>null</code> nor empty.
+   */
+  @Nonnull
+  @Nonempty
+  public static String getHTMLEntityReferenceString (final char c)
+  {
+    if (c == LT)
+      return "&lt;";
+    if (c == GT)
+      return "&gt;";
+    if (c == AMPERSAND)
+      return "&amp;";
+    if (c == DOUBLE_QUOTE)
+      return "&quot;";
+    return "&#" + (int) c + ";";
+  }
+
   static
   {
     for (int i = 0; i < MASK_ATTRIBUTE_VALUE_XML10_DQ.length; ++i)
