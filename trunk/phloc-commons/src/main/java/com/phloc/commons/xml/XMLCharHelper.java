@@ -948,4 +948,49 @@ public final class XMLCharHelper
         throw new IllegalArgumentException ("Unsupported XML character mode " + eXMLCharMode + "!");
     }
   }
+
+  /**
+   * Check if the passed character is invalid for a HTML value node.
+   * 
+   * @param c
+   *        char to check
+   * @return <code>true</code> if the char is invalid
+   */
+  public static boolean isInvalidHTMLChar (final int c)
+  {
+    return INVALID_CHAR_HTML.get (c);
+  }
+
+  public static boolean containsInvalidHTMLChar (@Nullable final String s)
+  {
+    return s != null && containsInvalidHTMLChar (s.toCharArray ());
+  }
+
+  public static boolean containsInvalidHTMLChar (@Nullable final char [] aChars)
+  {
+    if (aChars != null)
+      for (final char c : aChars)
+        if (isInvalidHTMLChar (c))
+          return true;
+    return false;
+  }
+
+  @Nullable
+  public static Set <Character> getAllInvalidHTMLChars (@Nullable final String s)
+  {
+    return s == null ? null : getAllInvalidHTMLChars (s.toCharArray ());
+  }
+
+  @Nullable
+  public static Set <Character> getAllInvalidHTMLChars (@Nullable final char [] aChars)
+  {
+    if (ArrayHelper.isEmpty (aChars))
+      return null;
+
+    final Set <Character> aRes = new LinkedHashSet <Character> ();
+    for (final char c : aChars)
+      if (isInvalidHTMLChar (c))
+        aRes.add (Character.valueOf (c));
+    return aRes;
+  }
 }
