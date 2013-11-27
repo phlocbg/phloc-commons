@@ -209,6 +209,7 @@ public final class XMLMaskHelper
                                                               0x9f,
                                                               0x2028 };
 
+  // HTML
   private static final char [] MASK_TEXT_HTML_DQ = new char [] { AMPERSAND,
                                                                 DOUBLE_QUOTE,
                                                                 LT,
@@ -283,12 +284,17 @@ public final class XMLMaskHelper
                                                                 0x9e,
                                                                 0x9f };
 
+  // XML 1.0
   private static final char [][] MASK_ATTRIBUTE_VALUE_XML10_DQ_REPLACE = new char [MASK_ATTRIBUTE_VALUE_XML10_DQ.length] [];
   private static final char [][] MASK_ATTRIBUTE_VALUE_XML10_SQ_REPLACE = new char [MASK_ATTRIBUTE_VALUE_XML10_SQ.length] [];
   private static final char [][] MASK_TEXT_XML10_REPLACE = new char [MASK_TEXT_XML10.length] [];
+
+  // XML 1.1
   private static final char [][] MASK_ATTRIBUTE_VALUE_XML11_DQ_REPLACE = new char [MASK_ATTRIBUTE_VALUE_XML11_DQ.length] [];
   private static final char [][] MASK_ATTRIBUTE_VALUE_XML11_SQ_REPLACE = new char [MASK_ATTRIBUTE_VALUE_XML11_SQ.length] [];
   private static final char [][] MASK_TEXT_XML11_REPLACE = new char [MASK_TEXT_XML11.length] [];
+
+  // HTML
   private static final char [][] MASK_TEXT_HTML_DQ_REPLACE = new char [MASK_TEXT_HTML_DQ.length] [];
   private static final char [][] MASK_TEXT_HTML_SQ_REPLACE = new char [MASK_TEXT_HTML_SQ.length] [];
 
