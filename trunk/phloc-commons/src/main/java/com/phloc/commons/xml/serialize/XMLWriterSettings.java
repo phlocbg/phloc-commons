@@ -473,9 +473,9 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
                                        .append ("doubleQuotesForAttrs", m_bUseDoubleQuotesForAttributes)
                                        .append ("spaceOnSelfClosedElement", m_bSpaceOnSelfClosedElement)
                                        .append ("newlineString",
-                                                StringHelper.getHexEncoded (m_sNewlineString.getBytes ()))
+                                                StringHelper.getHexEncoded (m_sNewlineString.getBytes (CCharset.CHARSET_ISO_8859_1_OBJ)))
                                        .append ("indentationString",
-                                                StringHelper.getHexEncoded (m_sIndentationString.getBytes ()))
+                                                StringHelper.getHexEncoded (m_sIndentationString.getBytes (CCharset.CHARSET_ISO_8859_1_OBJ)))
                                        .append ("emitNamespaces", m_bEmitNamespaces)
                                        .append ("putNamespaceContextPrefixesInRoot",
                                                 m_bPutNamespaceContextPrefixesInRoot)
