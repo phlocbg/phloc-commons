@@ -21,7 +21,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.phloc.commons.CGlobal;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.io.EAppend;
 import com.phloc.commons.io.streamprovider.ByteArrayOutputStreamProvider;
@@ -40,11 +39,11 @@ public final class XMLEmitterPhlocTest extends AbstractPhlocTestCase
   @Test
   public void testMisc ()
   {
-    assertEquals ("<!DOCTYPE qname PUBLIC \"pubid\" \"sysid\">" + CGlobal.LINE_SEPARATOR,
+    assertEquals ("<!DOCTYPE qname PUBLIC \"pubid\" \"sysid\">",
                   XMLEmitterPhloc.getDocTypeHTMLRepresentation (EXMLSerializeVersion.XML_10,
                                                                 EXMLIncorrectCharacterHandling.DEFAULT,
                                                                 new MicroDocumentType ("qname", "pubid", "sysid")));
-    assertEquals ("<!DOCTYPE qname PUBLIC \"pubid\" \"sysid\">" + CGlobal.LINE_SEPARATOR,
+    assertEquals ("<!DOCTYPE qname PUBLIC \"pubid\" \"sysid\">",
                   XMLEmitterPhloc.getDocTypeHTMLRepresentation (EXMLSerializeVersion.XML_11,
                                                                 EXMLIncorrectCharacterHandling.DEFAULT,
                                                                 new MicroDocumentType ("qname", "pubid", "sysid")));
