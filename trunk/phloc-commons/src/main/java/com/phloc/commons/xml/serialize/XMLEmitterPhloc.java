@@ -55,7 +55,7 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
   private static final char ER_END = ';';
   private static final String PI_START = "<?";
   private static final String PI_END = "?>";
-  private static final String CRLF = CGlobal.LINE_SEPARATOR;
+  private static final String NEWLINE = CGlobal.LINE_SEPARATOR;
 
   private static boolean s_bThrowExceptionOnNestedComments = DEFAULT_THROW_EXCEPTION_ON_NESTED_COMMENTS;
 
@@ -174,7 +174,7 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
         _append (" standalone=")._appendAttrValue ("yes");
       _append (PI_END);
       if (m_aSettings.getIndent ().isAlign ())
-        _append (CRLF);
+        _append (NEWLINE);
     }
   }
 
@@ -253,7 +253,7 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
                                                     sSystemID))
            .append ('"');
       }
-    return aSB.append ('>').append (CRLF).toString ();
+    return aSB.append ('>').toString ();
   }
 
   @Override
@@ -270,6 +270,8 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
                                                           sPublicID,
                                                           sSystemID);
     _append (sDocType);
+    if (m_aSettings.getIndent ().isAlign ())
+      _append (NEWLINE);
   }
 
   @Override
@@ -278,7 +280,9 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
     _append (PI_START)._append (sTarget);
     if (StringHelper.hasText (sData))
       _append (' ')._append (sData);
-    _append (PI_END)._append (CRLF);
+    _append (PI_END);
+    if (m_aSettings.getIndent ().isAlign ())
+      _append (NEWLINE);
   }
 
   @Override

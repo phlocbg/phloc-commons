@@ -306,69 +306,62 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
     final XMLWriterSettings aSettings = new XMLWriterSettings ().setCharset (CCharset.CHARSET_ISO_8859_1_OBJ)
                                                                 .setIndent (EXMLSerializeIndent.NONE);
     String s = XMLWriter.getNodeAsString (aDoc, aSettings);
-    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>" +
-                  CRLF +
-                  "<root xmlns=\"ns1url\">" +
-                  "<ns0:child1 xmlns:ns0=\"ns2url\" />" +
-                  "<ns0:child2 xmlns:ns0=\"ns2url\" />" +
-                  "</root>", s);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>"
+                  + "<root xmlns=\"ns1url\">"
+                  + "<ns0:child1 xmlns:ns0=\"ns2url\" />"
+                  + "<ns0:child2 xmlns:ns0=\"ns2url\" />"
+                  + "</root>", s);
 
     final MapBasedNamespaceContext aCtx = new MapBasedNamespaceContext ();
     aCtx.addMapping ("a", "ns1url");
     aSettings.setNamespaceContext (aCtx);
     s = XMLWriter.getNodeAsString (aDoc, aSettings);
-    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>" +
-                  CRLF +
-                  "<a:root xmlns:a=\"ns1url\">" +
-                  "<ns0:child1 xmlns:ns0=\"ns2url\" />" +
-                  "<ns0:child2 xmlns:ns0=\"ns2url\" />" +
-                  "</a:root>", s);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>"
+                  + "<a:root xmlns:a=\"ns1url\">"
+                  + "<ns0:child1 xmlns:ns0=\"ns2url\" />"
+                  + "<ns0:child2 xmlns:ns0=\"ns2url\" />"
+                  + "</a:root>", s);
 
     aCtx.addMapping ("xy", "ns2url");
     s = XMLWriter.getNodeAsString (aDoc, aSettings);
-    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>" +
-                  CRLF +
-                  "<a:root xmlns:a=\"ns1url\">" +
-                  "<xy:child1 xmlns:xy=\"ns2url\" />" +
-                  "<xy:child2 xmlns:xy=\"ns2url\" />" +
-                  "</a:root>", s);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>"
+                  + "<a:root xmlns:a=\"ns1url\">"
+                  + "<xy:child1 xmlns:xy=\"ns2url\" />"
+                  + "<xy:child2 xmlns:xy=\"ns2url\" />"
+                  + "</a:root>", s);
 
     aSettings.setUseDoubleQuotesForAttributes (false);
     s = XMLWriter.getNodeAsString (aDoc, aSettings);
-    assertEquals ("<?xml version='1.0' encoding='ISO-8859-1' standalone='yes'?>" +
-                  CRLF +
-                  "<a:root xmlns:a='ns1url'>" +
-                  "<xy:child1 xmlns:xy='ns2url' />" +
-                  "<xy:child2 xmlns:xy='ns2url' />" +
-                  "</a:root>", s);
+    assertEquals ("<?xml version='1.0' encoding='ISO-8859-1' standalone='yes'?>"
+                  + "<a:root xmlns:a='ns1url'>"
+                  + "<xy:child1 xmlns:xy='ns2url' />"
+                  + "<xy:child2 xmlns:xy='ns2url' />"
+                  + "</a:root>", s);
 
     aSettings.setSpaceOnSelfClosedElement (false);
     s = XMLWriter.getNodeAsString (aDoc, aSettings);
-    assertEquals ("<?xml version='1.0' encoding='ISO-8859-1' standalone='yes'?>" +
-                  CRLF +
-                  "<a:root xmlns:a='ns1url'>" +
-                  "<xy:child1 xmlns:xy='ns2url'/>" +
-                  "<xy:child2 xmlns:xy='ns2url'/>" +
-                  "</a:root>", s);
+    assertEquals ("<?xml version='1.0' encoding='ISO-8859-1' standalone='yes'?>"
+                  + "<a:root xmlns:a='ns1url'>"
+                  + "<xy:child1 xmlns:xy='ns2url'/>"
+                  + "<xy:child2 xmlns:xy='ns2url'/>"
+                  + "</a:root>", s);
 
     aSettings.setPutNamespaceContextPrefixesInRoot (true);
     s = XMLWriter.getNodeAsString (aDoc, aSettings);
-    assertEquals ("<?xml version='1.0' encoding='ISO-8859-1' standalone='yes'?>" +
-                  CRLF +
-                  "<a:root xmlns:a='ns1url' xmlns:xy='ns2url'>" +
-                  "<xy:child1/>" +
-                  "<xy:child2/>" +
-                  "</a:root>", s);
+    assertEquals ("<?xml version='1.0' encoding='ISO-8859-1' standalone='yes'?>"
+                  + "<a:root xmlns:a='ns1url' xmlns:xy='ns2url'>"
+                  + "<xy:child1/>"
+                  + "<xy:child2/>"
+                  + "</a:root>", s);
 
     eRoot.appendChild (aDoc.createElementNS ("ns3url", "zz"));
     s = XMLWriter.getNodeAsString (aDoc, aSettings);
-    assertEquals ("<?xml version='1.0' encoding='ISO-8859-1' standalone='yes'?>" +
-                  CRLF +
-                  "<a:root xmlns:a='ns1url' xmlns:xy='ns2url'>" +
-                  "<xy:child1/>" +
-                  "<xy:child2/>" +
-                  "<ns0:zz xmlns:ns0='ns3url'/>" +
-                  "</a:root>", s);
+    assertEquals ("<?xml version='1.0' encoding='ISO-8859-1' standalone='yes'?>"
+                  + "<a:root xmlns:a='ns1url' xmlns:xy='ns2url'>"
+                  + "<xy:child1/>"
+                  + "<xy:child2/>"
+                  + "<ns0:zz xmlns:ns0='ns3url'/>"
+                  + "</a:root>", s);
   }
 
   @Test
@@ -382,30 +375,27 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
     final XMLWriterSettings aSettings = new XMLWriterSettings ().setCharset (CCharset.CHARSET_ISO_8859_1_OBJ)
                                                                 .setIndent (EXMLSerializeIndent.NONE);
     String s = XMLWriter.getNodeAsString (aDoc, aSettings);
-    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>" +
-                  CRLF +
-                  "<root xmlns=\"ns1url\">" +
-                  "<ns0:child1 xmlns:ns0=\"ns2url\" />" +
-                  "<ns0:child2 xmlns:ns0=\"ns2url\" />" +
-                  "</root>", s);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>"
+                  + "<root xmlns=\"ns1url\">"
+                  + "<ns0:child1 xmlns:ns0=\"ns2url\" />"
+                  + "<ns0:child2 xmlns:ns0=\"ns2url\" />"
+                  + "</root>", s);
 
     aSettings.setEmitNamespaces (false);
     s = XMLWriter.getNodeAsString (aDoc, aSettings);
-    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>" +
-                  CRLF +
-                  "<root>" +
-                  "<child1 />" +
-                  "<child2 />" +
-                  "</root>", s);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>"
+                  + "<root>"
+                  + "<child1 />"
+                  + "<child2 />"
+                  + "</root>", s);
 
     aSettings.setPutNamespaceContextPrefixesInRoot (true);
     s = XMLWriter.getNodeAsString (aDoc, aSettings);
-    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>" +
-                  CRLF +
-                  "<root>" +
-                  "<child1 />" +
-                  "<child2 />" +
-                  "</root>", s);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\" standalone=\"yes\"?>"
+                  + "<root>"
+                  + "<child1 />"
+                  + "<child2 />"
+                  + "</root>", s);
   }
 
   @Test
