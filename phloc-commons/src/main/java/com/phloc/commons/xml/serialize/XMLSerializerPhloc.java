@@ -151,7 +151,13 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
   private void _writeComment (@Nonnull final IXMLIterationHandler aXMLWriter, @Nonnull final Comment aComment)
   {
     if (m_aSettings.getSerializeComments ().isEmit ())
+    {
+      if (m_aSettings.getIndent ().isIndent () && m_aIndent.length () > 0)
+        aXMLWriter.onContentElementWhitespace (m_aIndent);
       aXMLWriter.onComment (aComment.getData ());
+      if (m_aSettings.getIndent ().isAlign ())
+        aXMLWriter.onContentElementWhitespace (XMLEmitterPhloc.DEFAULT_NEWLINE);
+    }
   }
 
   private static void _writeText (@Nonnull final IXMLIterationHandler aXMLWriter, @Nonnull final Text aText)
@@ -237,7 +243,7 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
       {
         // do we have enclosing elements?
         if (m_aSettings.getIndent ().isAlign () && bHasChildElement)
-          aXMLWriter.onContentElementWhitespace (NEWLINE);
+          aXMLWriter.onContentElementWhitespace (XMLEmitterPhloc.DEFAULT_NEWLINE);
 
         // increment indent
         m_aIndent.append (INDENT);
@@ -256,7 +262,7 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
       aXMLWriter.onElementEnd (sNSPrefix, sTagName, bHasChildren);
 
       if (m_aSettings.getIndent ().isAlign () && bIndentNext)
-        aXMLWriter.onContentElementWhitespace (NEWLINE);
+        aXMLWriter.onContentElementWhitespace (XMLEmitterPhloc.DEFAULT_NEWLINE);
     }
     finally
     {

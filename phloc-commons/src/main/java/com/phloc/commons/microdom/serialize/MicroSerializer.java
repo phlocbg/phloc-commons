@@ -39,6 +39,7 @@ import com.phloc.commons.xml.IXMLIterationHandler;
 import com.phloc.commons.xml.XMLHelper;
 import com.phloc.commons.xml.serialize.AbstractSerializerPhloc;
 import com.phloc.commons.xml.serialize.IXMLWriterSettings;
+import com.phloc.commons.xml.serialize.XMLEmitterPhloc;
 import com.phloc.commons.xml.serialize.XMLWriterSettings;
 
 /**
@@ -172,7 +173,7 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
         aXMLWriter.onContentElementWhitespace (m_aIndent);
       aXMLWriter.onComment (aComment.getData ().toString ());
       if (m_aSettings.getIndent ().isAlign ())
-        aXMLWriter.onContentElementWhitespace (NEWLINE);
+        aXMLWriter.onContentElementWhitespace (XMLEmitterPhloc.DEFAULT_NEWLINE);
     }
   }
 
@@ -259,7 +260,7 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
       {
         // do we have enclosing elements?
         if (m_aSettings.getIndent ().isAlign () && bHasChildElement)
-          aXMLWriter.onContentElementWhitespace (NEWLINE);
+          aXMLWriter.onContentElementWhitespace (XMLEmitterPhloc.DEFAULT_NEWLINE);
 
         // increment indent
         m_aIndent.append (INDENT);
@@ -279,7 +280,7 @@ public final class MicroSerializer extends AbstractSerializerPhloc <IMicroNode>
       aXMLWriter.onElementEnd (sNSPrefix, sTagName, bHasChildren);
 
       if (m_aSettings.getIndent ().isAlign () && bIndentNext)
-        aXMLWriter.onContentElementWhitespace (NEWLINE);
+        aXMLWriter.onContentElementWhitespace (XMLEmitterPhloc.DEFAULT_NEWLINE);
     }
     finally
     {

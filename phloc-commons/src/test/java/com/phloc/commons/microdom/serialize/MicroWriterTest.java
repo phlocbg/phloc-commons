@@ -24,7 +24,6 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-import com.phloc.commons.CGlobal;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.microdom.IMicroDocument;
@@ -235,53 +234,48 @@ public final class MicroWriterTest
     eRoot.appendElement ("ns2url", "child2");
 
     String s = MicroWriter.getNodeAsString (aDoc, aSettings);
-    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
-                  CGlobal.LINE_SEPARATOR +
-                  "<root xmlns=\"ns1url\">" +
-                  "<ns0:child1 xmlns:ns0=\"ns2url\" />" +
-                  "<ns0:child2 xmlns:ns0=\"ns2url\" />" +
-                  "</root>", s);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"
+                  + "<root xmlns=\"ns1url\">"
+                  + "<ns0:child1 xmlns:ns0=\"ns2url\" />"
+                  + "<ns0:child2 xmlns:ns0=\"ns2url\" />"
+                  + "</root>", s);
 
     final MapBasedNamespaceContext aCtx = new MapBasedNamespaceContext ();
     aCtx.addMapping ("a", "ns1url");
     aSettings.setNamespaceContext (aCtx);
     s = MicroWriter.getNodeAsString (aDoc, aSettings);
-    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
-                  CGlobal.LINE_SEPARATOR +
-                  "<a:root xmlns:a=\"ns1url\">" +
-                  "<ns0:child1 xmlns:ns0=\"ns2url\" />" +
-                  "<ns0:child2 xmlns:ns0=\"ns2url\" />" +
-                  "</a:root>", s);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"
+                  + "<a:root xmlns:a=\"ns1url\">"
+                  + "<ns0:child1 xmlns:ns0=\"ns2url\" />"
+                  + "<ns0:child2 xmlns:ns0=\"ns2url\" />"
+                  + "</a:root>", s);
 
     // Add mapping to namespace context
     aCtx.addMapping ("xy", "ns2url");
     s = MicroWriter.getNodeAsString (aDoc, aSettings);
-    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
-                  CGlobal.LINE_SEPARATOR +
-                  "<a:root xmlns:a=\"ns1url\">" +
-                  "<xy:child1 xmlns:xy=\"ns2url\" />" +
-                  "<xy:child2 xmlns:xy=\"ns2url\" />" +
-                  "</a:root>", s);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"
+                  + "<a:root xmlns:a=\"ns1url\">"
+                  + "<xy:child1 xmlns:xy=\"ns2url\" />"
+                  + "<xy:child2 xmlns:xy=\"ns2url\" />"
+                  + "</a:root>", s);
 
     // Put namespace context mappings in root
     aSettings.setPutNamespaceContextPrefixesInRoot (true);
     s = MicroWriter.getNodeAsString (aDoc, aSettings);
-    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
-                  CGlobal.LINE_SEPARATOR +
-                  "<a:root xmlns:a=\"ns1url\" xmlns:xy=\"ns2url\">" +
-                  "<xy:child1 />" +
-                  "<xy:child2 />" +
-                  "</a:root>", s);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"
+                  + "<a:root xmlns:a=\"ns1url\" xmlns:xy=\"ns2url\">"
+                  + "<xy:child1 />"
+                  + "<xy:child2 />"
+                  + "</a:root>", s);
 
     eRoot.appendElement ("ns3url", "zz");
     s = MicroWriter.getNodeAsString (aDoc, aSettings);
-    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
-                  CGlobal.LINE_SEPARATOR +
-                  "<a:root xmlns:a=\"ns1url\" xmlns:xy=\"ns2url\">" +
-                  "<xy:child1 />" +
-                  "<xy:child2 />" +
-                  "<ns0:zz xmlns:ns0=\"ns3url\" />" +
-                  "</a:root>", s);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"
+                  + "<a:root xmlns:a=\"ns1url\" xmlns:xy=\"ns2url\">"
+                  + "<xy:child1 />"
+                  + "<xy:child2 />"
+                  + "<ns0:zz xmlns:ns0=\"ns3url\" />"
+                  + "</a:root>", s);
   }
 
   @Test
@@ -295,30 +289,27 @@ public final class MicroWriterTest
     eRoot.appendElement ("ns2url", "child2");
 
     String s = MicroWriter.getNodeAsString (aDoc, aSettings);
-    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
-                  CGlobal.LINE_SEPARATOR +
-                  "<root xmlns=\"ns1url\">" +
-                  "<ns0:child1 xmlns:ns0=\"ns2url\" />" +
-                  "<ns0:child2 xmlns:ns0=\"ns2url\" />" +
-                  "</root>", s);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"
+                  + "<root xmlns=\"ns1url\">"
+                  + "<ns0:child1 xmlns:ns0=\"ns2url\" />"
+                  + "<ns0:child2 xmlns:ns0=\"ns2url\" />"
+                  + "</root>", s);
 
     aSettings.setEmitNamespaces (false);
     s = MicroWriter.getNodeAsString (aDoc, aSettings);
-    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
-                  CGlobal.LINE_SEPARATOR +
-                  "<root>" +
-                  "<child1 />" +
-                  "<child2 />" +
-                  "</root>", s);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"
+                  + "<root>"
+                  + "<child1 />"
+                  + "<child2 />"
+                  + "</root>", s);
 
     aSettings.setPutNamespaceContextPrefixesInRoot (true);
     s = MicroWriter.getNodeAsString (aDoc, aSettings);
-    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>" +
-                  CGlobal.LINE_SEPARATOR +
-                  "<root>" +
-                  "<child1 />" +
-                  "<child2 />" +
-                  "</root>", s);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"
+                  + "<root>"
+                  + "<child1 />"
+                  + "<child2 />"
+                  + "</root>", s);
   }
 
   @Test
