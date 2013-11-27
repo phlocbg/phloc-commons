@@ -61,7 +61,7 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
 
   private final Writer m_aWriter;
   private final IXMLWriterSettings m_aSettings;
-  private EXMLVersion m_eXMLVersion = EXMLVersion.DEFAULT;
+  private EXMLSerializeVersion m_eXMLVersion;
   private final char m_cAttrValueBoundary;
   private final EXMLCharMode m_eAttrValueCharMode;
 
@@ -73,6 +73,13 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
       throw new NullPointerException ("settings");
     m_aWriter = aWriter;
     m_aSettings = aSettings;
+    if (aSettings.getFormat ().isHTML ())
+      m_eXMLVersion = EXMLSerializeVersion.HTML;
+    else
+      if (aSettings.getFormat ().isXHTML ())
+        m_eXMLVersion = EXMLSerializeVersion.XHTML;
+      else
+        m_eXMLVersion = EXMLSerializeVersion.getFromXMLVersionOrThrow (aSettings.getXMLVersion ());
     m_cAttrValueBoundary = aSettings.isUseDoubleQuotesForAttributes () ? '"' : '\'';
     m_eAttrValueCharMode = aSettings.isUseDoubleQuotesForAttributes () ? EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES
                                                                       : EXMLCharMode.ATTRIBUTE_VALUE_SINGLE_QUOTES;
@@ -156,14 +163,17 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
                                @Nullable final String sEncoding,
                                final boolean bStandalone)
   {
-    if (eVersion != null)
-      m_eXMLVersion = eVersion;
-    _append (PI_START)._append ("xml version=")._appendAttrValue (m_eXMLVersion.getVersion ());
-    if (sEncoding != null)
-      _append (" encoding=")._appendAttrValue (sEncoding);
-    if (bStandalone)
-      _append (" standalone=")._appendAttrValue ("yes");
-    _append (PI_END)._append (CRLF);
+    if (eVersion != null && m_eXMLVersion.isXML ())
+      m_eXMLVersion = EXMLSerializeVersion.getFromXMLVersionOrThrow (eVersion);
+    if (m_eXMLVersion.requiresXMLDeclaration ())
+    {
+      _append (PI_START)._append ("xml version=")._appendAttrValue (m_eXMLVersion.getXMLVersionString ());
+      if (sEncoding != null)
+        _append (" encoding=")._appendAttrValue (sEncoding);
+      if (bStandalone)
+        _append (" standalone=")._appendAttrValue ("yes");
+      _append (PI_END)._append (CRLF);
+    }
   }
 
   /**
@@ -178,7 +188,7 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
    * @return The string DOCTYPE representation.
    */
   @Nonnull
-  public static String getDocTypeHTMLRepresentation (@Nonnull final EXMLVersion eXMLVersion,
+  public static String getDocTypeHTMLRepresentation (@Nonnull final EXMLSerializeVersion eXMLVersion,
                                                      @Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharHandling,
                                                      @Nonnull final IMicroDocumentType aDocType)
   {
@@ -206,7 +216,7 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
    * @return The string DOCTYPE representation.
    */
   @Nonnull
-  public static String getDocTypeHTMLRepresentation (@Nonnull final EXMLVersion eXMLVersion,
+  public static String getDocTypeHTMLRepresentation (@Nonnull final EXMLSerializeVersion eXMLVersion,
                                                      @Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharHandling,
                                                      @Nonnull final String sQualifiedName,
                                                      @Nullable final String sPublicID,
@@ -318,19 +328,17 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
         {
           _append (CDATA_START);
           if (i > 0)
-            _appendMasked (EXMLCharMode.CDATA, ">");
-          _appendMasked (EXMLCharMode.CDATA, aParts.get (i));
+            _append ('>');
+          _append (aParts.get (i));
           if (i < nParts - 1)
-            _appendMasked (EXMLCharMode.CDATA, "]]");
+            _append ("]]");
           _append (CDATA_END);
         }
       }
       else
       {
         // No special handling required
-        _append (CDATA_START);
-        _appendMasked (EXMLCharMode.CDATA, sText);
-        _append (CDATA_END);
+        _append (CDATA_START)._append (sText)._append (CDATA_END);
       }
     }
   }

@@ -29,7 +29,6 @@ import com.phloc.commons.microdom.impl.MicroDocumentType;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 import com.phloc.commons.mock.PhlocTestUtils;
 import com.phloc.commons.xml.EXMLIncorrectCharacterHandling;
-import com.phloc.commons.xml.EXMLVersion;
 
 /**
  * Test class for {@link XMLEmitterPhloc}
@@ -42,11 +41,11 @@ public final class XMLEmitterPhlocTest extends AbstractPhlocTestCase
   public void testMisc ()
   {
     assertEquals ("<!DOCTYPE qname PUBLIC \"pubid\" \"sysid\">" + CGlobal.LINE_SEPARATOR,
-                  XMLEmitterPhloc.getDocTypeHTMLRepresentation (EXMLVersion.XML_10,
+                  XMLEmitterPhloc.getDocTypeHTMLRepresentation (EXMLSerializeVersion.XML_10,
                                                                 EXMLIncorrectCharacterHandling.DEFAULT,
                                                                 new MicroDocumentType ("qname", "pubid", "sysid")));
     assertEquals ("<!DOCTYPE qname PUBLIC \"pubid\" \"sysid\">" + CGlobal.LINE_SEPARATOR,
-                  XMLEmitterPhloc.getDocTypeHTMLRepresentation (EXMLVersion.XML_11,
+                  XMLEmitterPhloc.getDocTypeHTMLRepresentation (EXMLSerializeVersion.XML_11,
                                                                 EXMLIncorrectCharacterHandling.DEFAULT,
                                                                 new MicroDocumentType ("qname", "pubid", "sysid")));
     PhlocTestUtils.testToStringImplementation (new XMLEmitterPhloc (new ByteArrayOutputStreamProvider ().getWriter (CCharset.CHARSET_ISO_8859_1_OBJ,

@@ -38,7 +38,6 @@ import com.phloc.commons.mock.AbstractPhlocTestCase;
 import com.phloc.commons.mock.PhlocTestUtils;
 import com.phloc.commons.xml.DefaultXMLIterationHandler;
 import com.phloc.commons.xml.EXMLVersion;
-import com.phloc.commons.xml.XMLCharHelper;
 import com.phloc.commons.xml.XMLFactory;
 import com.phloc.commons.xml.namespace.MapBasedNamespaceContext;
 import com.phloc.commons.xml.transform.StringStreamResult;
@@ -427,7 +426,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
   public void testNumericReferencesXML10 () throws SAXException, TransformerException
   {
     for (int i = Character.MIN_VALUE; i <= Character.MAX_VALUE; ++i)
-      if (!XMLCharHelper.isInvalidXMLTextChar (EXMLVersion.XML_10, (char) i))
+      if (!XMLCharHelper.isInvalidXMLTextChar (EXMLSerializeVersion.XML_10, (char) i))
       {
         final String sText = "abc" + (char) i + "def";
         final Document aDoc = XMLFactory.newDocument (EXMLVersion.XML_10);
@@ -452,7 +451,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
   public void testNumericReferencesXML11 () throws SAXException, TransformerException
   {
     for (int i = Character.MIN_VALUE; i <= Character.MAX_VALUE; ++i)
-      if (!XMLCharHelper.isInvalidXMLTextChar (EXMLVersion.XML_11, (char) i))
+      if (!XMLCharHelper.isInvalidXMLTextChar (EXMLSerializeVersion.XML_11, (char) i))
       {
         final String sText = "abc" + (char) i + "def";
         final Document aDoc = XMLFactory.newDocument (EXMLVersion.XML_11);

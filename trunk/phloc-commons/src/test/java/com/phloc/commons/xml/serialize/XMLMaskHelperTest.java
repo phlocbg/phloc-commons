@@ -26,7 +26,6 @@ import org.junit.Test;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
 import com.phloc.commons.xml.EXMLCharMode;
 import com.phloc.commons.xml.EXMLIncorrectCharacterHandling;
-import com.phloc.commons.xml.EXMLVersion;
 
 /**
  * Test class for class {@link XMLMaskHelper}.
@@ -40,34 +39,34 @@ public final class XMLMaskHelperTest extends AbstractPhlocTestCase
   {
     // Emit as usual
     assertArrayEquals (new char [] { 1 },
-                       XMLMaskHelper.getMaskedXMLText (EXMLVersion.XML_10,
+                       XMLMaskHelper.getMaskedXMLText (EXMLSerializeVersion.XML_10,
                                                        EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES,
                                                        EXMLIncorrectCharacterHandling.WRITE_TO_FILE_NO_LOG,
                                                        "\u0001"));
     assertEquals ("&#1;",
-                  new String (XMLMaskHelper.getMaskedXMLText (EXMLVersion.XML_11,
+                  new String (XMLMaskHelper.getMaskedXMLText (EXMLSerializeVersion.XML_11,
                                                               EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES,
                                                               EXMLIncorrectCharacterHandling.WRITE_TO_FILE_NO_LOG,
                                                               "\u0001")));
 
     // Replace with ""
     assertArrayEquals (new char [0],
-                       XMLMaskHelper.getMaskedXMLText (EXMLVersion.XML_10,
+                       XMLMaskHelper.getMaskedXMLText (EXMLSerializeVersion.XML_10,
                                                        EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES,
                                                        EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING,
                                                        "\u0001"));
     assertArrayEquals (new char [0],
-                       XMLMaskHelper.getMaskedXMLText (EXMLVersion.XML_11,
+                       XMLMaskHelper.getMaskedXMLText (EXMLSerializeVersion.XML_11,
                                                        EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES,
                                                        EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING,
                                                        "\u0000"));
     assertArrayEquals ("abc".toCharArray (),
-                       XMLMaskHelper.getMaskedXMLText (EXMLVersion.XML_10,
+                       XMLMaskHelper.getMaskedXMLText (EXMLSerializeVersion.XML_10,
                                                        EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES,
                                                        EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING,
                                                        "ab\u0001c"));
     assertArrayEquals ("abc".toCharArray (),
-                       XMLMaskHelper.getMaskedXMLText (EXMLVersion.XML_11,
+                       XMLMaskHelper.getMaskedXMLText (EXMLSerializeVersion.XML_11,
                                                        EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES,
                                                        EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING,
                                                        "ab\u0000c"));
@@ -75,7 +74,7 @@ public final class XMLMaskHelperTest extends AbstractPhlocTestCase
     // Throw exception
     try
     {
-      XMLMaskHelper.getMaskedXMLText (EXMLVersion.XML_10,
+      XMLMaskHelper.getMaskedXMLText (EXMLSerializeVersion.XML_10,
                                       EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES,
                                       EXMLIncorrectCharacterHandling.THROW_EXCEPTION,
                                       "\u0001");
@@ -85,7 +84,7 @@ public final class XMLMaskHelperTest extends AbstractPhlocTestCase
     {}
     try
     {
-      XMLMaskHelper.getMaskedXMLText (EXMLVersion.XML_11,
+      XMLMaskHelper.getMaskedXMLText (EXMLSerializeVersion.XML_11,
                                       EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES,
                                       EXMLIncorrectCharacterHandling.THROW_EXCEPTION,
                                       "\u0000");
@@ -96,68 +95,68 @@ public final class XMLMaskHelperTest extends AbstractPhlocTestCase
 
     // Emit as usual
     assertArrayEquals ("1 &amp; \u0001".toCharArray (),
-                       XMLMaskHelper.getMaskedXMLText (EXMLVersion.XML_10,
+                       XMLMaskHelper.getMaskedXMLText (EXMLSerializeVersion.XML_10,
                                                        EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES,
                                                        EXMLIncorrectCharacterHandling.WRITE_TO_FILE_NO_LOG,
                                                        "1 & \u0001"));
     assertArrayEquals ("1 &amp; &#1;".toCharArray (),
-                       XMLMaskHelper.getMaskedXMLText (EXMLVersion.XML_11,
+                       XMLMaskHelper.getMaskedXMLText (EXMLSerializeVersion.XML_11,
                                                        EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES,
                                                        EXMLIncorrectCharacterHandling.WRITE_TO_FILE_NO_LOG,
                                                        "1 & \u0001"));
     // Emit as usual
     assertArrayEquals ("1 &amp; \u0001".toCharArray (),
-                       XMLMaskHelper.getMaskedXMLText (EXMLVersion.XML_10,
+                       XMLMaskHelper.getMaskedXMLText (EXMLSerializeVersion.XML_10,
                                                        EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES,
                                                        EXMLIncorrectCharacterHandling.WRITE_TO_FILE_LOG_WARNING,
                                                        "1 & \u0001"));
     assertArrayEquals ("1 &amp; &#1;".toCharArray (),
-                       XMLMaskHelper.getMaskedXMLText (EXMLVersion.XML_11,
+                       XMLMaskHelper.getMaskedXMLText (EXMLSerializeVersion.XML_11,
                                                        EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES,
                                                        EXMLIncorrectCharacterHandling.WRITE_TO_FILE_LOG_WARNING,
                                                        "1 & \u0001"));
     // Emit as usual
     assertArrayEquals ("1 &amp; ".toCharArray (),
-                       XMLMaskHelper.getMaskedXMLText (EXMLVersion.XML_10,
+                       XMLMaskHelper.getMaskedXMLText (EXMLSerializeVersion.XML_10,
                                                        EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES,
                                                        EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING,
                                                        "1 & \u0001"));
     assertArrayEquals ("1 &amp; ".toCharArray (),
-                       XMLMaskHelper.getMaskedXMLText (EXMLVersion.XML_11,
+                       XMLMaskHelper.getMaskedXMLText (EXMLSerializeVersion.XML_11,
                                                        EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES,
                                                        EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING,
                                                        "1 & \u0000"));
 
     // Special chars
     assertArrayEquals ("ab&lt;cd>ef&amp;gh&quot;ij".toCharArray (),
-                       XMLMaskHelper.getMaskedXMLText (EXMLVersion.XML_10,
+                       XMLMaskHelper.getMaskedXMLText (EXMLSerializeVersion.XML_10,
                                                        EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES,
                                                        EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING,
                                                        "ab<cd>ef&gh\"ij"));
     assertArrayEquals ("ab&lt;cd>ef&amp;gh&quot;ij".toCharArray (),
-                       XMLMaskHelper.getMaskedXMLText (EXMLVersion.XML_11,
+                       XMLMaskHelper.getMaskedXMLText (EXMLSerializeVersion.XML_11,
                                                        EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES,
                                                        EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING,
                                                        "ab<cd>ef&gh\"ij"));
 
     // Different quotes
     assertArrayEquals ("'ab'&quot;cd&quot;".toCharArray (),
-                       XMLMaskHelper.getMaskedXMLText (EXMLVersion.XML_10,
+                       XMLMaskHelper.getMaskedXMLText (EXMLSerializeVersion.XML_10,
                                                        EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES,
                                                        EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING,
                                                        "'ab'\"cd\""));
     assertArrayEquals ("'ab'&quot;cd&quot;".toCharArray (),
-                       XMLMaskHelper.getMaskedXMLText (EXMLVersion.XML_11,
+                       XMLMaskHelper.getMaskedXMLText (EXMLSerializeVersion.XML_11,
                                                        EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES,
                                                        EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING,
                                                        "'ab'\"cd\""));
     assertArrayEquals ("&apos;ab&apos;\"cd\"".toCharArray (),
-                       XMLMaskHelper.getMaskedXMLText (EXMLVersion.XML_10,
+                       XMLMaskHelper.getMaskedXMLText (EXMLSerializeVersion.XML_10,
                                                        EXMLCharMode.ATTRIBUTE_VALUE_SINGLE_QUOTES,
                                                        EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING,
                                                        "'ab'\"cd\""));
     assertArrayEquals ("&apos;ab&apos;\"cd\"".toCharArray (),
-                       XMLMaskHelper.getMaskedXMLText (EXMLVersion.XML_11,
+                       XMLMaskHelper.getMaskedXMLText (EXMLSerializeVersion.XML_11,
                                                        EXMLCharMode.ATTRIBUTE_VALUE_SINGLE_QUOTES,
                                                        EXMLIncorrectCharacterHandling.DO_NOT_WRITE_LOG_WARNING,
                                                        "'ab'\"cd\""));
@@ -166,21 +165,21 @@ public final class XMLMaskHelperTest extends AbstractPhlocTestCase
   @Test
   public void testGetMaskedXMLTextLength ()
   {
-    assertEquals (1, XMLMaskHelper.getMaskedXMLTextLength (EXMLVersion.XML_10,
+    assertEquals (1, XMLMaskHelper.getMaskedXMLTextLength (EXMLSerializeVersion.XML_10,
                                                            EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES,
                                                            EXMLIncorrectCharacterHandling.WRITE_TO_FILE_NO_LOG,
                                                            "\u0001"));
-    assertEquals (4, XMLMaskHelper.getMaskedXMLTextLength (EXMLVersion.XML_11,
+    assertEquals (4, XMLMaskHelper.getMaskedXMLTextLength (EXMLSerializeVersion.XML_11,
                                                            EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES,
                                                            EXMLIncorrectCharacterHandling.WRITE_TO_FILE_NO_LOG,
                                                            "\u0001"));
     assertEquals (2 + 5 + 1 + 1,
-                  XMLMaskHelper.getMaskedXMLTextLength (EXMLVersion.XML_10,
+                  XMLMaskHelper.getMaskedXMLTextLength (EXMLSerializeVersion.XML_10,
                                                         EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES,
                                                         EXMLIncorrectCharacterHandling.WRITE_TO_FILE_NO_LOG,
                                                         "1 & \u0001"));
     assertEquals (2 + 5 + 1 + 4,
-                  XMLMaskHelper.getMaskedXMLTextLength (EXMLVersion.XML_11,
+                  XMLMaskHelper.getMaskedXMLTextLength (EXMLSerializeVersion.XML_11,
                                                         EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES,
                                                         EXMLIncorrectCharacterHandling.WRITE_TO_FILE_NO_LOG,
                                                         "1 & \u0001"));
