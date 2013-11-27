@@ -25,11 +25,9 @@ import static org.junit.Assert.assertTrue;
 import java.io.InputStream;
 import java.io.Reader;
 
-
 import org.junit.Test;
 import org.xml.sax.InputSource;
 
-import com.phloc.commons.CGlobal;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.io.IInputStreamProvider;
@@ -56,7 +54,7 @@ import com.phloc.commons.xml.serialize.XMLWriterSettings;
  */
 public final class MicroReaderTest
 {
-  private static final String CRLF = CGlobal.LINE_SEPARATOR;
+  private static final String CRLF = XMLWriterSettings.DEFAULT_NEWLINE_STRING;
 
   @Test
   public void testNull ()
@@ -137,15 +135,14 @@ public final class MicroReaderTest
     final String sResult = MicroWriter.getNodeAsString (docXHTML,
                                                         new XMLWriterSettings ().setIndent (EXMLSerializeIndent.NONE));
 
-    assertEquals ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
-                  CRLF +
-                  "<content>" +
-                  "<div class=\"css1\">" +
-                  "<span class=\"css2\"><span>Text1 <span>Text1b</span></span> <span>Text1c</span>" +
-                  "<span class=\"css3\"><span>Text2</span></span>" +
-                  "</span>" +
-                  "</div>" +
-                  "</content>", sResult);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+                  + "<content>"
+                  + "<div class=\"css1\">"
+                  + "<span class=\"css2\"><span>Text1 <span>Text1b</span></span> <span>Text1c</span>"
+                  + "<span class=\"css3\"><span>Text2</span></span>"
+                  + "</span>"
+                  + "</div>"
+                  + "</content>", sResult);
   }
 
   /**
@@ -171,15 +168,14 @@ public final class MicroReaderTest
     final NonBlockingByteArrayOutputStream baos = new NonBlockingByteArrayOutputStream ();
     new MicroSerializer (xs).write (aDoc, baos);
     final String sXML = baos.getAsString (CCharset.CHARSET_UTF_8_OBJ);
-    assertEquals ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
-                  CRLF +
-                  "<verrryoot>" +
-                  "<root xmlns=\"myuri\">" +
-                  "<ns0:child xmlns:ns0=\"\">" +
-                  "<ns1:child2 xmlns:ns1=\"foo\">Value text - no entities!</ns1:child2>" +
-                  "</ns0:child>" +
-                  "</root>" +
-                  "</verrryoot>", sXML);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+                  + "<verrryoot>"
+                  + "<root xmlns=\"myuri\">"
+                  + "<ns0:child xmlns:ns0=\"\">"
+                  + "<ns1:child2 xmlns:ns1=\"foo\">Value text - no entities!</ns1:child2>"
+                  + "</ns0:child>"
+                  + "</root>"
+                  + "</verrryoot>", sXML);
   }
 
   /**
@@ -205,15 +201,14 @@ public final class MicroReaderTest
     final NonBlockingByteArrayOutputStream baos = new NonBlockingByteArrayOutputStream ();
     new MicroSerializer (xs).write (aDoc, baos);
     final String sXML = baos.getAsString (CCharset.CHARSET_UTF_8_OBJ);
-    assertEquals ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
-                  CRLF +
-                  "<verrryoot xmlns=\"uri1\">" +
-                  "<root>" +
-                  "<ns0:child xmlns:ns0=\"uri2\">" +
-                  "<ns0:child2>Value text - no entities!</ns0:child2>" +
-                  "</ns0:child>" +
-                  "</root>" +
-                  "</verrryoot>", sXML);
+    assertEquals ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+                  + "<verrryoot xmlns=\"uri1\">"
+                  + "<root>"
+                  + "<ns0:child xmlns:ns0=\"uri2\">"
+                  + "<ns0:child2>Value text - no entities!</ns0:child2>"
+                  + "</ns0:child>"
+                  + "</root>"
+                  + "</verrryoot>", sXML);
   }
 
   /**
@@ -241,15 +236,14 @@ public final class MicroReaderTest
     final NonBlockingByteArrayOutputStream baos = new NonBlockingByteArrayOutputStream ();
     new MicroSerializer (xs).write (aDoc, baos);
     final String sXML = baos.getAsString (CCharset.CHARSET_UTF_8_OBJ);
-    assertEquals ("<?xml version='1.0' encoding='UTF-8'?>" +
-                  CRLF +
-                  "<verrryoot xmlns='uri1'>" +
-                  "<root>" +
-                  "<ns0:child xmlns:ns0='uri2'>" +
-                  "<ns0:child2>Value text - no entities!</ns0:child2>" +
-                  "</ns0:child>" +
-                  "</root>" +
-                  "</verrryoot>", sXML);
+    assertEquals ("<?xml version='1.0' encoding='UTF-8'?>"
+                  + "<verrryoot xmlns='uri1'>"
+                  + "<root>"
+                  + "<ns0:child xmlns:ns0='uri2'>"
+                  + "<ns0:child2>Value text - no entities!</ns0:child2>"
+                  + "</ns0:child>"
+                  + "</root>"
+                  + "</verrryoot>", sXML);
   }
 
   /**
@@ -277,29 +271,27 @@ public final class MicroReaderTest
     final NonBlockingStringWriter aWriter = new NonBlockingStringWriter ();
     new MicroSerializer (xs).write (aDoc, aWriter);
     String sXML = aWriter.getAsString ();
-    assertEquals ("<?xml version='1.0' encoding='UTF-8'?>" +
-                  CRLF +
-                  "<a1:verrryoot xmlns:a1='uri1'>" +
-                  "<a1:root>" +
-                  "<a2:child xmlns:a2='uri2'>" +
-                  "<a2:child2>Value text - no entities!</a2:child2>" +
-                  "</a2:child>" +
-                  "</a1:root>" +
-                  "</a1:verrryoot>", sXML);
+    assertEquals ("<?xml version='1.0' encoding='UTF-8'?>"
+                  + "<a1:verrryoot xmlns:a1='uri1'>"
+                  + "<a1:root>"
+                  + "<a2:child xmlns:a2='uri2'>"
+                  + "<a2:child2>Value text - no entities!</a2:child2>"
+                  + "</a2:child>"
+                  + "</a1:root>"
+                  + "</a1:verrryoot>", sXML);
 
     xs.setPutNamespaceContextPrefixesInRoot (true);
     aWriter.reset ();
     new MicroSerializer (xs).write (aDoc, aWriter);
     sXML = aWriter.getAsString ();
-    assertEquals ("<?xml version='1.0' encoding='UTF-8'?>" +
-                  CRLF +
-                  "<a1:verrryoot xmlns:a1='uri1' xmlns:a2='uri2'>" +
-                  "<a1:root>" +
-                  "<a2:child>" +
-                  "<a2:child2>Value text - no entities!</a2:child2>" +
-                  "</a2:child>" +
-                  "</a1:root>" +
-                  "</a1:verrryoot>", sXML);
+    assertEquals ("<?xml version='1.0' encoding='UTF-8'?>"
+                  + "<a1:verrryoot xmlns:a1='uri1' xmlns:a2='uri2'>"
+                  + "<a1:root>"
+                  + "<a2:child>"
+                  + "<a2:child2>Value text - no entities!</a2:child2>"
+                  + "</a2:child>"
+                  + "</a1:root>"
+                  + "</a1:verrryoot>", sXML);
   }
 
   @Test
