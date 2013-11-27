@@ -40,6 +40,7 @@ import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.error.EErrorLevel;
 import com.phloc.commons.microdom.EMicroNodeType;
+import com.phloc.commons.microdom.IMicroCDATA;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroDocumentType;
 import com.phloc.commons.microdom.IMicroElement;
@@ -149,7 +150,19 @@ final class MicroSAXHandler implements EntityResolver, DTDHandler, ContentHandle
     if (m_bCDATAMode)
     {
       // CDATA mode
-      m_aParent.appendCDATA (aChars, nStart, nLength);
+      final IMicroNode aLastChild = m_aParent.getLastChild ();
+      if (aLastChild != null && aLastChild.getType () == EMicroNodeType.CDATA)
+      {
+        final IMicroCDATA aLastDATA = (IMicroCDATA) aLastChild;
+        // Merge directly following text nodes to one node!
+        // This may happen when compiling with JDK 1.6.0_04
+        aLastDATA.appendData (aChars, nStart, nLength);
+      }
+      else
+      {
+        // Add to parent
+        m_aParent.appendCDATA (aChars, nStart, nLength);
+      }
     }
     else
     {

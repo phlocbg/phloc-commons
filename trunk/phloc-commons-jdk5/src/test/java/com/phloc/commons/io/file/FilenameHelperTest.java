@@ -684,4 +684,18 @@ public final class FilenameHelperTest
     catch (final NullPointerException ex)
     {}
   }
+
+  @Test
+  public void testGetAbsoluteWithEnsuredParentDirectoryAbsolute ()
+  {
+    final File aRelativeParentDir = new File ("");
+    final File aAbsoluteParentDir = aRelativeParentDir.getAbsoluteFile ();
+    final File aChildDir = new File (aAbsoluteParentDir.getAbsolutePath () + "/pom.xml");
+    assertNull (FilenameHelper.getAbsoluteWithEnsuredParentDirectory (aRelativeParentDir, aChildDir.getAbsolutePath ()));
+    assertEquals (FilenameHelper.getCleanPath (aChildDir.getAbsolutePath ()),
+                  FilenameHelper.getAbsoluteWithEnsuredParentDirectory (aAbsoluteParentDir,
+                                                                        aChildDir.getAbsolutePath ()));
+    assertNull (FilenameHelper.getAbsoluteWithEnsuredParentDirectory (aAbsoluteParentDir,
+                                                                      aAbsoluteParentDir.getParent ()));
+  }
 }

@@ -33,9 +33,9 @@ import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.xml.CXML;
 import com.phloc.commons.xml.DefaultXMLIterationHandler;
+import com.phloc.commons.xml.EXMLCharMode;
 import com.phloc.commons.xml.EXMLIncorrectCharacterHandling;
 import com.phloc.commons.xml.EXMLVersion;
-import com.phloc.commons.xml.XMLHelper;
 
 /**
  * Converts XML constructs into a string representation.
@@ -43,7 +43,7 @@ import com.phloc.commons.xml.XMLHelper;
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
+public class XMLEmitterPhloc extends DefaultXMLIterationHandler
 {
   /** By default an exception is thrown for nested comments */
   public static final boolean DEFAULT_THROW_EXCEPTION_ON_NESTED_COMMENTS = true;
@@ -55,14 +55,15 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   private static final char ER_END = ';';
   private static final String PI_START = "<?";
   private static final String PI_END = "?>";
-  private static final String CRLF = CGlobal.LINE_SEPARATOR;
+  private static final String NEWLINE = CGlobal.LINE_SEPARATOR;
 
   private static boolean s_bThrowExceptionOnNestedComments = DEFAULT_THROW_EXCEPTION_ON_NESTED_COMMENTS;
 
   private final Writer m_aWriter;
   private final IXMLWriterSettings m_aSettings;
-  private EXMLVersion m_eXMLVersion = EXMLVersion.DEFAULT;
+  private EXMLSerializeVersion m_eXMLVersion;
   private final char m_cAttrValueBoundary;
+  private final EXMLCharMode m_eAttrValueCharMode;
 
   public XMLEmitterPhloc (@Nonnull @WillNotClose final Writer aWriter, @Nonnull final IXMLWriterSettings aSettings)
   {
@@ -72,7 +73,16 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
       throw new NullPointerException ("settings");
     m_aWriter = aWriter;
     m_aSettings = aSettings;
+    if (aSettings.getFormat ().isHTML ())
+      m_eXMLVersion = EXMLSerializeVersion.HTML;
+    else
+      if (aSettings.getFormat ().isXHTML ())
+        m_eXMLVersion = EXMLSerializeVersion.XHTML;
+      else
+        m_eXMLVersion = EXMLSerializeVersion.getFromXMLVersionOrThrow (aSettings.getXMLVersion ());
     m_cAttrValueBoundary = aSettings.isUseDoubleQuotesForAttributes () ? '"' : '\'';
+    m_eAttrValueCharMode = aSettings.isUseDoubleQuotesForAttributes () ? EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES
+                                                                      : EXMLCharMode.ATTRIBUTE_VALUE_SINGLE_QUOTES;
   }
 
   /**
@@ -125,11 +135,15 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   }
 
   @Nonnull
-  private XMLEmitterPhloc _appendMasked (@Nullable final String sValue)
+  private XMLEmitterPhloc _appendMasked (@Nonnull final EXMLCharMode eXMLCharMode, @Nullable final String sValue)
   {
     try
     {
-      XMLHelper.maskXMLTextTo (m_eXMLVersion, m_aSettings.getIncorrectCharacterHandling (), sValue, m_aWriter);
+      XMLMaskHelper.maskXMLTextTo (m_eXMLVersion,
+                                   eXMLCharMode,
+                                   m_aSettings.getIncorrectCharacterHandling (),
+                                   sValue,
+                                   m_aWriter);
       return this;
     }
     catch (final IOException ex)
@@ -141,7 +155,7 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   @Nonnull
   private XMLEmitterPhloc _appendAttrValue (@Nullable final String sValue)
   {
-    return _append (m_cAttrValueBoundary)._appendMasked (sValue)._append (m_cAttrValueBoundary);
+    return _append (m_cAttrValueBoundary)._appendMasked (m_eAttrValueCharMode, sValue)._append (m_cAttrValueBoundary);
   }
 
   @Override
@@ -149,14 +163,19 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
                                @Nullable final String sEncoding,
                                final boolean bStandalone)
   {
-    if (eVersion != null)
-      m_eXMLVersion = eVersion;
-    _append (PI_START)._append ("xml version=")._appendAttrValue (m_eXMLVersion.getVersion ());
-    if (sEncoding != null)
-      _append (" encoding=")._appendAttrValue (sEncoding);
-    if (bStandalone)
-      _append (" standalone=")._appendAttrValue ("yes");
-    _append (PI_END)._append (CRLF);
+    if (eVersion != null && m_eXMLVersion.isXML ())
+      m_eXMLVersion = EXMLSerializeVersion.getFromXMLVersionOrThrow (eVersion);
+    if (m_eXMLVersion.requiresXMLDeclaration ())
+    {
+      _append (PI_START)._append ("xml version=")._appendAttrValue (m_eXMLVersion.getXMLVersionString ());
+      if (sEncoding != null)
+        _append (" encoding=")._appendAttrValue (sEncoding);
+      if (bStandalone)
+        _append (" standalone=")._appendAttrValue ("yes");
+      _append (PI_END);
+      if (m_aSettings.getIndent ().isAlign ())
+        _append (NEWLINE);
+    }
   }
 
   /**
@@ -171,7 +190,7 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
    * @return The string DOCTYPE representation.
    */
   @Nonnull
-  public static String getDocTypeHTMLRepresentation (@Nonnull final EXMLVersion eXMLVersion,
+  public static String getDocTypeHTMLRepresentation (@Nonnull final EXMLSerializeVersion eXMLVersion,
                                                      @Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharHandling,
                                                      @Nonnull final IMicroDocumentType aDocType)
   {
@@ -199,7 +218,7 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
    * @return The string DOCTYPE representation.
    */
   @Nonnull
-  public static String getDocTypeHTMLRepresentation (@Nonnull final EXMLVersion eXMLVersion,
+  public static String getDocTypeHTMLRepresentation (@Nonnull final EXMLSerializeVersion eXMLVersion,
                                                      @Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharHandling,
                                                      @Nonnull final String sQualifiedName,
                                                      @Nullable final String sPublicID,
@@ -212,9 +231,15 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
     {
       // Public and system ID present
       aSB.append (" PUBLIC \"")
-         .append (XMLHelper.getMaskedXMLText (eXMLVersion, eIncorrectCharHandling, sPublicID))
+         .append (XMLMaskHelper.getMaskedXMLText (eXMLVersion,
+                                                  EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES,
+                                                  eIncorrectCharHandling,
+                                                  sPublicID))
          .append ("\" \"")
-         .append (XMLHelper.getMaskedXMLText (eXMLVersion, eIncorrectCharHandling, sSystemID))
+         .append (XMLMaskHelper.getMaskedXMLText (eXMLVersion,
+                                                  EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES,
+                                                  eIncorrectCharHandling,
+                                                  sSystemID))
          .append ('"');
     }
     else
@@ -222,10 +247,13 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
       {
         // Only system ID present
         aSB.append (" SYSTEM \"")
-           .append (XMLHelper.getMaskedXMLText (eXMLVersion, eIncorrectCharHandling, sSystemID))
+           .append (XMLMaskHelper.getMaskedXMLText (eXMLVersion,
+                                                    EXMLCharMode.ATTRIBUTE_VALUE_DOUBLE_QUOTES,
+                                                    eIncorrectCharHandling,
+                                                    sSystemID))
            .append ('"');
       }
-    return aSB.append ('>').append (CRLF).toString ();
+    return aSB.append ('>').toString ();
   }
 
   @Override
@@ -242,6 +270,8 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
                                                           sPublicID,
                                                           sSystemID);
     _append (sDocType);
+    if (m_aSettings.getIndent ().isAlign ())
+      _append (NEWLINE);
   }
 
   @Override
@@ -250,7 +280,9 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
     _append (PI_START)._append (sTarget);
     if (StringHelper.hasText (sData))
       _append (' ')._append (sData);
-    _append (PI_END)._append (CRLF);
+    _append (PI_END);
+    if (m_aSettings.getIndent ().isAlign ())
+      _append (NEWLINE);
   }
 
   @Override
@@ -283,7 +315,7 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   public void onText (@Nullable final String sText, final boolean bEscape)
   {
     if (bEscape)
-      _appendMasked (sText);
+      _appendMasked (EXMLCharMode.TEXT, sText);
     else
       _append (sText);
   }
@@ -293,17 +325,26 @@ public final class XMLEmitterPhloc extends DefaultXMLIterationHandler
   {
     if (StringHelper.hasText (sText))
     {
-      // Split CDATA sections if they contain the illegal "]]>" marker
-      final List <String> aParts = StringHelper.getExploded (CDATA_END, sText);
-      final int nParts = aParts.size ();
-      for (int i = 0; i < nParts; ++i)
+      if (sText.indexOf (CDATA_END) >= 0)
       {
-        _append (CDATA_START)._append (aParts.get (i))._append (CDATA_END);
-        if (i < (nParts - 1))
+        // Split CDATA sections if they contain the illegal "]]>" marker
+        final List <String> aParts = StringHelper.getExploded (CDATA_END, sText);
+        final int nParts = aParts.size ();
+        for (int i = 0; i < nParts; ++i)
         {
-          // Add the CDATA separator as a text element :)
-          _appendMasked (CDATA_END);
+          _append (CDATA_START);
+          if (i > 0)
+            _append ('>');
+          _append (aParts.get (i));
+          if (i < nParts - 1)
+            _append ("]]");
+          _append (CDATA_END);
         }
+      }
+      else
+      {
+        // No special handling required
+        _append (CDATA_START)._append (sText)._append (CDATA_END);
       }
     }
   }

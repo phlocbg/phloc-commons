@@ -126,9 +126,14 @@ public final class XMLReader
   private static final Map <EXMLParserFeature, Boolean> s_aSAXDefaultParserFeatures = new EnumMap <EXMLParserFeature, Boolean> (EXMLParserFeature.class)
   {
     {
-      put (EXMLParserFeature.NAMESPACES, Boolean.TRUE);
-      put (EXMLParserFeature.SAX_NAMESPACE_PREFIXES, Boolean.TRUE);
-      put (EXMLParserFeature.AUGMENT_PSVI, Boolean.FALSE);
+      // By default enabled in XMLFactory
+      if (false)
+      {
+        put (EXMLParserFeature.NAMESPACES, Boolean.TRUE);
+        put (EXMLParserFeature.SAX_NAMESPACE_PREFIXES, Boolean.TRUE);
+      }
+      if (false)
+        put (EXMLParserFeature.AUGMENT_PSVI, Boolean.FALSE);
     }
   };
 
@@ -630,13 +635,18 @@ public final class XMLReader
                                      final boolean bSchemaValidating)
   {
     final Map <EXMLParserFeature, Boolean> aFeatures = new EnumMap <EXMLParserFeature, Boolean> (EXMLParserFeature.class);
-    aFeatures.put (EXMLParserFeature.VALIDATION, Boolean.valueOf (bDTDValidating));
-    aFeatures.put (EXMLParserFeature.SCHEMA, Boolean.valueOf (bSchemaValidating));
+    if (bDTDValidating)
+      aFeatures.put (EXMLParserFeature.VALIDATION, Boolean.valueOf (bDTDValidating));
+    if (bSchemaValidating)
+      aFeatures.put (EXMLParserFeature.SCHEMA, Boolean.valueOf (bSchemaValidating));
     if (false)
       aFeatures.put (EXMLParserFeature.SCHEMA_FULL_CHECKING, Boolean.valueOf (bSchemaValidating));
-    aFeatures.put (EXMLParserFeature.WARN_ON_DUPLICATE_ATTDEF, Boolean.valueOf (bDTDValidating || bSchemaValidating));
+    if (false)
+      aFeatures.put (EXMLParserFeature.WARN_ON_DUPLICATE_ATTDEF, Boolean.valueOf (bDTDValidating || bSchemaValidating));
     // WARN_ON_UNDECLARED_ELEMDEF is not supported by JDK 1.6.0_35
-    aFeatures.put (EXMLParserFeature.WARN_ON_DUPLICATE_ENTITYDEF, Boolean.valueOf (bDTDValidating || bSchemaValidating));
+    if (false)
+      aFeatures.put (EXMLParserFeature.WARN_ON_DUPLICATE_ENTITYDEF,
+                     Boolean.valueOf (bDTDValidating || bSchemaValidating));
     return readXMLSAX (aIS, aEntityResolver, aDTDHdl, aContentHdl, aErrorHdl, aLexicalHdl, aFeatures);
   }
 

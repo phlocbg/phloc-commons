@@ -37,11 +37,12 @@ import com.phloc.commons.microdom.impl.MicroDocument;
 import com.phloc.commons.microdom.impl.MicroElement;
 import com.phloc.commons.microdom.impl.MicroEntityReference;
 import com.phloc.commons.xml.EXMLVersion;
-import com.phloc.commons.xml.XMLHelper;
 import com.phloc.commons.xml.namespace.MapBasedNamespaceContext;
 import com.phloc.commons.xml.serialize.EXMLSerializeDocType;
 import com.phloc.commons.xml.serialize.EXMLSerializeFormat;
 import com.phloc.commons.xml.serialize.EXMLSerializeIndent;
+import com.phloc.commons.xml.serialize.EXMLSerializeVersion;
+import com.phloc.commons.xml.serialize.XMLCharHelper;
 import com.phloc.commons.xml.serialize.XMLWriterSettings;
 
 /**
@@ -202,21 +203,25 @@ public final class MicroWriterTest
   {
     final XMLWriterSettings aSettings = new XMLWriterSettings ().setIndent (EXMLSerializeIndent.NONE);
 
-    // Containing the forbidden CDATA end marker
+    // Simple CDATA
     IMicroElement e = new MicroElement ("a");
+    e.appendCDATA ("foobar");
+    assertEquals ("<a><![CDATA[foobar]]></a>", MicroWriter.getNodeAsString (e, aSettings));
+
+    // Containing the forbidden CDATA end marker
+    e = new MicroElement ("a");
     e.appendCDATA ("a]]>b");
-    assertEquals ("<a><![CDATA[a]]>]]&gt;<![CDATA[b]]></a>", MicroWriter.getNodeAsString (e, aSettings));
+    assertEquals ("<a><![CDATA[a]]]]><![CDATA[>b]]></a>", MicroWriter.getNodeAsString (e, aSettings));
 
     // Containing more than one forbidden CDATA end marker
     e = new MicroElement ("a");
     e.appendCDATA ("a]]>b]]>c");
-    assertEquals ("<a><![CDATA[a]]>]]&gt;<![CDATA[b]]>]]&gt;<![CDATA[c]]></a>",
-                  MicroWriter.getNodeAsString (e, aSettings));
+    assertEquals ("<a><![CDATA[a]]]]><![CDATA[>b]]]]><![CDATA[>c]]></a>", MicroWriter.getNodeAsString (e, aSettings));
 
     // Containing a complete CDATA section
     e = new MicroElement ("a");
     e.appendCDATA ("a<![CDATA[x]]>b");
-    assertEquals ("<a><![CDATA[a<![CDATA[x]]>]]&gt;<![CDATA[b]]></a>", MicroWriter.getNodeAsString (e, aSettings));
+    assertEquals ("<a><![CDATA[a<![CDATA[x]]]]><![CDATA[>b]]></a>", MicroWriter.getNodeAsString (e, aSettings));
   }
 
   @Test
@@ -317,46 +322,112 @@ public final class MicroWriterTest
   }
 
   @Test
-  public void testSpecialCharactersXML10 ()
+  public void testSpecialCharactersXML10Text ()
   {
-    final XMLWriterSettings aSettings = new XMLWriterSettings ().setXMLVersion (EXMLVersion.XML_10);
-    for (char i = Character.MIN_VALUE; i < Character.MAX_VALUE; ++i)
-      if (!XMLHelper.isInvalidXMLCharacter (i))
+    final EXMLVersion eXMLVersion = EXMLVersion.XML_10;
+    final EXMLSerializeVersion eXMLSerializeVersion = EXMLSerializeVersion.getFromXMLVersionOrThrow (eXMLVersion);
+
+    final XMLWriterSettings aSettings = new XMLWriterSettings ().setXMLVersion (eXMLVersion);
+    for (int i = Character.MIN_VALUE; i <= Character.MAX_VALUE; ++i)
+      if (!XMLCharHelper.isInvalidXMLTextChar (eXMLSerializeVersion, (char) i))
       {
-        final String sText = "abc" + i + "def";
+        final String sText = "abc" + (char) i + "def";
         assertEquals (7, sText.length ());
         final IMicroDocument aDoc = new MicroDocument ();
         aDoc.appendElement ("root").appendText (sText);
         final String sXML = MicroWriter.getNodeAsString (aDoc, aSettings);
         final IMicroDocument aDoc2 = MicroReader.readMicroXML (sXML);
-        assertNotNull ("Failed to read with byte " + (int) i, aDoc2);
-        assertEquals (i == 0 ? 6 : 7, aDoc2.getDocumentElement ().getTextContent ().length ());
-
-        // Wont work for \u0000 because it is mapped to ""
-        if (i > 0 && i != 13)
-          assertTrue ("Difference in byte 0x" + Integer.toHexString (i), aDoc.isEqualContent (aDoc2));
+        assertNotNull ("Failed to read with byte " + i + "\n" + sXML, aDoc2);
+        assertEquals ("Length for byte " + i, i == 0 ? 6 : 7, aDoc2.getDocumentElement ().getTextContent ().length ());
+        assertTrue ("Difference in byte 0x" + Integer.toHexString (i), aDoc.isEqualContent (aDoc2));
       }
   }
 
   @Test
-  public void testSpecialCharactersXML11 ()
+  public void testSpecialCharactersXML10CDATA ()
   {
-    final XMLWriterSettings aSettings = new XMLWriterSettings ().setXMLVersion (EXMLVersion.XML_11);
-    for (char i = Character.MIN_VALUE; i < Character.MAX_VALUE; ++i)
-      if (!XMLHelper.isInvalidXMLCharacter (i))
+    final EXMLVersion eXMLVersion = EXMLVersion.XML_10;
+    final EXMLSerializeVersion eXMLSerializeVersion = EXMLSerializeVersion.getFromXMLVersionOrThrow (eXMLVersion);
+
+    final XMLWriterSettings aSettings = new XMLWriterSettings ().setXMLVersion (eXMLVersion);
+    for (int i = Character.MIN_VALUE; i <= Character.MAX_VALUE; ++i)
+      if (!XMLCharHelper.isInvalidXMLCDATAChar (eXMLSerializeVersion, (char) i))
       {
-        final String sText = "abc" + i + "def";
+        final String sText = "abc" + (char) i + "def";
+        assertEquals (7, sText.length ());
+        final IMicroDocument aDoc = new MicroDocument ();
+        aDoc.appendElement ("root").appendCDATA (sText);
+        final String sXML = MicroWriter.getNodeAsString (aDoc, aSettings);
+        final IMicroDocument aDoc2 = MicroReader.readMicroXML (sXML);
+        assertNotNull ("Failed to read with byte " + i + "\n" + sXML, aDoc2);
+        assertEquals ("Length for byte " + i, i == 0 ? 6 : 7, aDoc2.getDocumentElement ().getTextContent ().length ());
+
+        // Difference between created "\r" and read "\n"
+        if (i != '\r')
+          if (!aDoc.isEqualContent (aDoc2))
+          {
+            final String sXML2 = MicroWriter.getNodeAsString (aDoc2, aSettings);
+            fail ("0x" + Integer.toHexString (i) + "\n" + sXML + "\n" + sXML2);
+          }
+      }
+  }
+
+  @Test
+  public void testSpecialCharactersXML11Text ()
+  {
+    final EXMLVersion eXMLVersion = EXMLVersion.XML_11;
+    final EXMLSerializeVersion eXMLSerializeVersion = EXMLSerializeVersion.getFromXMLVersionOrThrow (eXMLVersion);
+
+    final XMLWriterSettings aSettings = new XMLWriterSettings ().setXMLVersion (eXMLVersion);
+    for (int i = Character.MIN_VALUE; i <= Character.MAX_VALUE; ++i)
+      if (!XMLCharHelper.isInvalidXMLTextChar (eXMLSerializeVersion, (char) i))
+      {
+        final String sText = "abc" + (char) i + "def";
         assertEquals (7, sText.length ());
         final IMicroDocument aDoc = new MicroDocument ();
         aDoc.appendElement ("root").appendText (sText);
         final String sXML = MicroWriter.getNodeAsString (aDoc, aSettings);
         final IMicroDocument aDoc2 = MicroReader.readMicroXML (sXML);
-        assertNotNull ("Failed to read with byte " + (int) i, aDoc2);
-        assertEquals (i == 0 ? 6 : 7, aDoc2.getDocumentElement ().getTextContent ().length ());
+        assertNotNull ("Failed to read with byte " + i + "\n" + sXML, aDoc2);
+        assertEquals ("Length for byte " + i, i == 0 ? 6 : 7, aDoc2.getDocumentElement ().getTextContent ().length ());
 
-        // Wont work for \u0000 because it is mapped to ""
-        if (i > 0 && i != 13)
-          assertTrue ("0x" + Integer.toHexString (i), aDoc.isEqualContent (aDoc2));
+        // Difference between created "0x2028" and read "\n"
+        if (i != 0x2028)
+          if (!aDoc.isEqualContent (aDoc2))
+          {
+            final String sXML2 = MicroWriter.getNodeAsString (aDoc2, aSettings);
+            fail ("0x" + Integer.toHexString (i) + "\n" + sXML + "\n" + sXML2);
+          }
+      }
+  }
+
+  @Test
+  public void testSpecialCharactersXML11CDATA ()
+  {
+    final EXMLVersion eXMLVersion = EXMLVersion.XML_11;
+    final EXMLSerializeVersion eXMLSerializeVersion = EXMLSerializeVersion.getFromXMLVersionOrThrow (eXMLVersion);
+
+    final XMLWriterSettings aSettings = new XMLWriterSettings ().setXMLVersion (eXMLVersion);
+    for (int i = Character.MIN_VALUE; i <= Character.MAX_VALUE; ++i)
+      if (!XMLCharHelper.isInvalidXMLCDATAChar (eXMLSerializeVersion, (char) i))
+      {
+        final String sText = "abc" + (char) i + "def";
+        assertEquals (7, sText.length ());
+        final IMicroDocument aDoc = new MicroDocument ();
+        aDoc.appendElement ("root").appendCDATA (sText);
+        final String sXML = MicroWriter.getNodeAsString (aDoc, aSettings);
+        final IMicroDocument aDoc2 = MicroReader.readMicroXML (sXML);
+        assertNotNull ("Failed to read with byte " + i + "\n" + sXML, aDoc2);
+        assertEquals ("Length for byte " + i, i == 0 ? 6 : 7, aDoc2.getDocumentElement ().getTextContent ().length ());
+
+        // Difference between created "\r" and read "\n"
+        // Difference between created "0x2028" and read "\n"
+        if (i != '\r' && i != 0x2028)
+          if (!aDoc.isEqualContent (aDoc2))
+          {
+            final String sXML2 = MicroWriter.getNodeAsString (aDoc2, aSettings);
+            fail ("0x" + Integer.toHexString (i) + "\n" + sXML + "\n" + sXML2);
+          }
       }
   }
 }

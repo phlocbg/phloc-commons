@@ -2723,6 +2723,33 @@ public final class StringHelper
                                          @Nonnull final char [] aSearchChars,
                                          @Nonnull final char [][] aReplacementStrings)
   {
+    // Any input text?
+    if (hasNoText (sInputString))
+      return new char [0];
+
+    return replaceMultiple (sInputString.toCharArray (), aSearchChars, aReplacementStrings);
+  }
+
+  /**
+   * Optimized replace method that replaces a set of characters with a set of
+   * strings. This method was created for efficient XML special character
+   * replacements!
+   * 
+   * @param aInput
+   *        The input string.
+   * @param aSearchChars
+   *        The characters to replace.
+   * @param aReplacementStrings
+   *        The new strings to be inserted instead. Must have the same array
+   *        length as aPatterns.
+   * @return The replaced version of the string or an empty char array if the
+   *         input string was <code>null</code>.
+   */
+  @Nonnull
+  public static char [] replaceMultiple (@Nullable final char [] aInput,
+                                         @Nonnull final char [] aSearchChars,
+                                         @Nonnull final char [][] aReplacementStrings)
+  {
     if (aSearchChars == null)
       throw new NullPointerException ("search");
     if (aReplacementStrings == null)
@@ -2731,11 +2758,8 @@ public final class StringHelper
       throw new IllegalArgumentException ("array length mismatch");
 
     // Any input text?
-    if (hasNoText (sInputString))
+    if (aInput == null || aInput.length == 0)
       return new char [0];
-
-    // Get char array
-    final char [] aInput = sInputString.toCharArray ();
 
     // Any replacement patterns?
     if (aSearchChars.length == 0)
@@ -2804,6 +2828,38 @@ public final class StringHelper
                                        @Nonnull final char [][] aReplacementStrings,
                                        @Nonnull final Writer aTarget) throws IOException
   {
+    if (hasNoText (sInputString))
+      return 0;
+
+    return replaceMultipleTo (sInputString.toCharArray (), aSearchChars, aReplacementStrings, aTarget);
+  }
+
+  /**
+   * Specialized version of {@link #replaceMultiple(String, char[], char[][])}
+   * where the object where the output should be appended is passed in as a
+   * parameter. This has the advantage, that not length calculation needs to
+   * take place!
+   * 
+   * @param aInput
+   *        The input string.
+   * @param aSearchChars
+   *        The characters to replace.
+   * @param aReplacementStrings
+   *        The new strings to be inserted instead. Must have the same array
+   *        length as aPatterns.
+   * @param aTarget
+   *        Where the replaced objects should be written to. May not be
+   *        <code>null</code>.
+   * @return The number of replacements performed. Always &ge; 0.
+   * @throws IOException
+   *         In case writing to the Writer fails
+   */
+  @Nonnegative
+  public static int replaceMultipleTo (@Nullable final char [] aInput,
+                                       @Nonnull final char [] aSearchChars,
+                                       @Nonnull final char [][] aReplacementStrings,
+                                       @Nonnull final Writer aTarget) throws IOException
+  {
     if (aSearchChars == null)
       throw new NullPointerException ("patterns");
     if (aReplacementStrings == null)
@@ -2813,17 +2869,15 @@ public final class StringHelper
     if (aTarget == null)
       throw new NullPointerException ("target");
 
-    if (hasNoText (sInputString))
+    if (aInput == null || aInput.length == 0)
       return 0;
 
     if (aSearchChars.length == 0)
     {
       // No modifications required
-      aTarget.write (sInputString);
+      aTarget.write (aInput);
       return 0;
     }
-
-    final char [] aInput = sInputString.toCharArray ();
 
     // for all input string characters
     int nFirstNonReplace = 0;

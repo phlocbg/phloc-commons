@@ -56,11 +56,17 @@ public enum EXMLSerializeIndent implements IHasID <String>
     return m_sID;
   }
 
+  /**
+   * @return <code>true</code> if newlines should be emitted
+   */
   public boolean isAlign ()
   {
     return m_bAlign;
   }
 
+  /**
+   * @return <code>true</code> if the XML output should be formatted nicely
+   */
   public boolean isIndent ()
   {
     return m_bIndent;
