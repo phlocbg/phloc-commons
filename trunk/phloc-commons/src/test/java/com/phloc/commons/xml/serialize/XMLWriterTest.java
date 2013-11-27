@@ -31,7 +31,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
-import com.phloc.commons.CGlobal;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
@@ -54,7 +53,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
 {
   private static final String DOCTYPE_XHTML10_QNAME = "-//W3C//DTD XHTML 1.0 Strict//EN";
   private static final String DOCTYPE_XHTML10_URI = "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd";
-  private static final String CRLF = CGlobal.LINE_SEPARATOR;
+  private static final String CRLF = XMLEmitterPhloc.DEFAULT_NEWLINE;
 
   /**
    * Test the method getXHTMLString

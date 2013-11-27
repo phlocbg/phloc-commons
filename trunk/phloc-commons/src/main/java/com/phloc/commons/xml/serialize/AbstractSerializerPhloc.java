@@ -33,7 +33,6 @@ import javax.xml.namespace.NamespaceContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.io.streams.NonBlockingBufferedWriter;
@@ -60,7 +59,6 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
    * "ns1")
    */
   public static final String DEFAULT_NAMESPACE_PREFIX_PREFIX = "ns";
-  public static final String NEWLINE = CGlobal.LINE_SEPARATOR;
   public static final String INDENT = "  ";
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractSerializerPhloc.class);

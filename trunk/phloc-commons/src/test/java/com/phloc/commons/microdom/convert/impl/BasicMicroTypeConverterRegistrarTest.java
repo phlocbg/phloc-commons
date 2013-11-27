@@ -26,7 +26,6 @@ import java.math.BigInteger;
 
 import org.junit.Test;
 
-import com.phloc.commons.CGlobal;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.equals.EqualsUtils;
@@ -44,6 +43,7 @@ import com.phloc.commons.state.ESuccess;
 import com.phloc.commons.state.ETopBottom;
 import com.phloc.commons.state.ETriState;
 import com.phloc.commons.state.EValidity;
+import com.phloc.commons.xml.serialize.XMLEmitterPhloc;
 
 /**
  * Test class for class {@link BasicMicroTypeConverterRegistrar}.
@@ -117,7 +117,7 @@ public final class BasicMicroTypeConverterRegistrarTest
       assertNotNull (aElement);
       final String sXML = MicroWriter.getXMLString (aElement);
       assertTrue (sXML.startsWith ("<any>"));
-      assertTrue (sXML.endsWith ("</any>" + CGlobal.LINE_SEPARATOR));
+      assertTrue (sXML.endsWith ("</any>" + XMLEmitterPhloc.DEFAULT_NEWLINE));
       System.out.print (sXML);
 
       // Convert back to native
@@ -136,7 +136,7 @@ public final class BasicMicroTypeConverterRegistrarTest
       assertNotNull (aElement);
       final String sXML = MicroWriter.getXMLString (aElement);
       assertTrue (sXML.startsWith ("<any>"));
-      assertTrue (sXML.endsWith ("</any>" + CGlobal.LINE_SEPARATOR));
+      assertTrue (sXML.endsWith ("</any>" + XMLEmitterPhloc.DEFAULT_NEWLINE));
       System.out.print (sXML);
 
       // Convert back to native
