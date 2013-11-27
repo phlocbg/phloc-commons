@@ -239,16 +239,17 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
       {
         // do we have enclosing elements?
         if (m_aSettings.getIndent ().isAlign () && bHasChildElement)
-          aXMLWriter.onContentElementWhitespace (XMLEmitterPhloc.DEFAULT_NEWLINE);
+          aXMLWriter.onContentElementWhitespace (m_aSettings.getNewlineString ());
 
         // increment indent
-        m_aIndent.append (INDENT);
+        final String sIndent = m_aSettings.getIndentationString ();
+        m_aIndent.append (sIndent);
 
         // recursively process child nodes
         _writeNodeList (aXMLWriter, aChildNodeList);
 
         // decrement indent
-        m_aIndent.delete (m_aIndent.length () - INDENT.length (), m_aIndent.length ());
+        m_aIndent.delete (m_aIndent.length () - sIndent.length (), m_aIndent.length ());
 
         // add closing tag
         if (m_aSettings.getIndent ().isIndent () && bHasChildElement && m_aIndent.length () > 0)
@@ -258,7 +259,7 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
       aXMLWriter.onElementEnd (sNSPrefix, sTagName, bHasChildren);
 
       if (m_aSettings.getIndent ().isAlign () && bIndentNext)
-        aXMLWriter.onContentElementWhitespace (XMLEmitterPhloc.DEFAULT_NEWLINE);
+        aXMLWriter.onContentElementWhitespace (m_aSettings.getNewlineString ());
     }
     finally
     {

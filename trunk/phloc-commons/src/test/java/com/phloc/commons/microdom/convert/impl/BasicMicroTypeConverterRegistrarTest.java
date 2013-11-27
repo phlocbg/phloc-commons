@@ -43,7 +43,7 @@ import com.phloc.commons.state.ESuccess;
 import com.phloc.commons.state.ETopBottom;
 import com.phloc.commons.state.ETriState;
 import com.phloc.commons.state.EValidity;
-import com.phloc.commons.xml.serialize.XMLEmitterPhloc;
+import com.phloc.commons.xml.serialize.XMLWriterSettings;
 
 /**
  * Test class for class {@link BasicMicroTypeConverterRegistrar}.
@@ -117,7 +117,7 @@ public final class BasicMicroTypeConverterRegistrarTest
       assertNotNull (aElement);
       final String sXML = MicroWriter.getXMLString (aElement);
       assertTrue (sXML.startsWith ("<any>"));
-      assertTrue (sXML.endsWith ("</any>" + XMLEmitterPhloc.DEFAULT_NEWLINE));
+      assertTrue (sXML.endsWith ("</any>" + XMLWriterSettings.DEFAULT_NEWLINE_STRING));
       System.out.print (sXML);
 
       // Convert back to native
@@ -136,7 +136,7 @@ public final class BasicMicroTypeConverterRegistrarTest
       assertNotNull (aElement);
       final String sXML = MicroWriter.getXMLString (aElement);
       assertTrue (sXML.startsWith ("<any>"));
-      assertTrue (sXML.endsWith ("</any>" + XMLEmitterPhloc.DEFAULT_NEWLINE));
+      assertTrue (sXML.endsWith ("</any>" + XMLWriterSettings.DEFAULT_NEWLINE_STRING));
       System.out.print (sXML);
 
       // Convert back to native
