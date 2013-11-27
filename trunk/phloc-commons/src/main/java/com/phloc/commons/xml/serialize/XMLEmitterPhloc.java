@@ -335,7 +335,7 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
           _append (CDATA_START);
           if (i > 0)
             _append ('>');
-          _append (aParts.get (i));
+          _appendMasked (EXMLCharMode.CDATA, aParts.get (i));
           if (i < nParts - 1)
             _append ("]]");
           _append (CDATA_END);
@@ -344,7 +344,7 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
       else
       {
         // No special handling required
-        _append (CDATA_START)._append (sText)._append (CDATA_END);
+        _append (CDATA_START)._appendMasked (EXMLCharMode.CDATA, sText)._append (CDATA_END);
       }
     }
   }
