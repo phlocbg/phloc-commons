@@ -56,7 +56,7 @@ public enum EXMLParserFeature implements IHasName
 
   /**
    * When set: Validate the document and report validity errors.
-   * (http://xml.org/sax/features/validation).
+   * (http://xml.org/sax/features/validation). Default: false
    */
   VALIDATION (EXMLParserFeatureType.GENERAL, "http://xml.org/sax/features/validation"),
 
@@ -69,7 +69,7 @@ public enum EXMLParserFeature implements IHasName
   /**
    * When set: Turn on XML Schema validation by inserting an XML Schema
    * validator into the pipeline.
-   * (http://apache.org/xml/features/validation/schema).
+   * (http://apache.org/xml/features/validation/schema). Default: false
    */
   SCHEMA (EXMLParserFeatureType.GENERAL, "http://apache.org/xml/features/validation/schema"),
 
@@ -78,7 +78,8 @@ public enum EXMLParserFeature implements IHasName
    * checking which may be time-consuming or memory intensive. Currently, unique
    * particle attribution constraint checking and particle derivation
    * restriction checking are controlled by this option.
-   * (http://apache.org/xml/features/validation/schema-full-checking).
+   * (http://apache.org/xml/features/validation/schema-full-checking). Default:
+   * false
    */
   SCHEMA_FULL_CHECKING (EXMLParserFeatureType.GENERAL, "http://apache.org/xml/features/validation/schema-full-checking"),
 
@@ -275,6 +276,9 @@ public enum EXMLParserFeature implements IHasName
 
     try
     {
+      // This call is very slow as it might throw an XMLConfigurationException
+      // which internally calls Throwable.fillStackTrace which takes approx. 50%
+      // of the parsing time for small documents
       aParser.setFeature (m_sName, bValue);
     }
     catch (final SAXNotRecognizedException ex)
