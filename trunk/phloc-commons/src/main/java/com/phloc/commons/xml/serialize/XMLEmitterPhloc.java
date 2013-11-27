@@ -172,7 +172,9 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
         _append (" encoding=")._appendAttrValue (sEncoding);
       if (bStandalone)
         _append (" standalone=")._appendAttrValue ("yes");
-      _append (PI_END)._append (CRLF);
+      _append (PI_END);
+      if (m_aSettings.getIndent ().isAlign ())
+        _append (CRLF);
     }
   }
 

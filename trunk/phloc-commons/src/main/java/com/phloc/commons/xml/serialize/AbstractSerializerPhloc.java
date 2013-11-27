@@ -60,8 +60,9 @@ public abstract class AbstractSerializerPhloc <NODETYPE> implements IXMLSerializ
    * "ns1")
    */
   public static final String DEFAULT_NAMESPACE_PREFIX_PREFIX = "ns";
-  protected static final String NEWLINE = CGlobal.LINE_SEPARATOR;
-  protected static final String INDENT = "  ";
+  public static final String NEWLINE = CGlobal.LINE_SEPARATOR;
+  public static final String INDENT = "  ";
+
   private static final Logger s_aLogger = LoggerFactory.getLogger (AbstractSerializerPhloc.class);
 
   /**
