@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.xml;
+package com.phloc.commons.xml.serialize;
 
 import java.util.BitSet;
 import java.util.LinkedHashSet;
@@ -27,6 +27,7 @@ import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.collections.ArrayHelper;
+import com.phloc.commons.xml.EXMLCharMode;
 
 /**
  * This class contains XML utility methods for character handling.
@@ -44,8 +45,10 @@ public final class XMLCharHelper
   private static final BitSet INVALID_VALUE_CHAR_XML10 = new BitSet (0x10000);
   /** This is used for XML 1.1 text values */
   private static final BitSet INVALID_TEXT_VALUE_CHAR_XML11 = new BitSet (0x10000);
+  /** This is used for XML 1.1 CDATA values */
+  private static final BitSet INVALID_CDATA_VALUE_CHAR_XML11 = new BitSet (0x10000);
   /** This is used for XML 1.1 CDATA and attribute values */
-  private static final BitSet INVALID_ATTR_AND_CDATA_VALUE_CHAR_XML11 = new BitSet (0x10000);
+  private static final BitSet INVALID_ATTR_VALUE_CHAR_XML11 = new BitSet (0x10000);
   /** For all HTML values */
   private static final BitSet INVALID_CHAR_HTML = new BitSet (0x10000);
 
@@ -586,16 +589,26 @@ public final class XMLCharHelper
                                        (c >= 0xd800 && c <= 0xdfff) ||
                                        (c >= 0xfffe && c <= 0xffff));
       INVALID_TEXT_VALUE_CHAR_XML11.set (c, (c == 0x0) || (c >= 0xd800 && c <= 0xdfff) || (c >= 0xfffe && c <= 0xffff));
-      INVALID_ATTR_AND_CDATA_VALUE_CHAR_XML11.set (c, (c == 0x0) ||
-                                                      (c >= 0x7f && c <= 0x84) ||
-                                                      (c >= 0x86 && c <= 0x9f) ||
-                                                      (c >= 0xd800 && c <= 0xdfff) ||
-                                                      (c >= 0xfffe && c <= 0xffff));
-      /** Source: http://www.w3.org/TR/REC-html40/sgml/sgmldecl.html */
+      INVALID_CDATA_VALUE_CHAR_XML11.set (c, (c >= 0x0 && c <= 0x8) ||
+                                             (c >= 0xb && c <= 0xc) ||
+                                             (c >= 0xe && c <= 0x1f) ||
+                                             (c >= 0x7f && c <= 0x9f) ||
+                                             (c >= 0xd800 && c <= 0xdfff) ||
+                                             (c >= 0xfffe && c <= 0xffff));
+      INVALID_ATTR_VALUE_CHAR_XML11.set (c, (c == 0x0) ||
+                                            (c >= 0x7f && c <= 0x84) ||
+                                            (c >= 0x86 && c <= 0x9f) ||
+                                            (c >= 0xd800 && c <= 0xdfff) ||
+                                            (c >= 0xfffe && c <= 0xffff));
+      /**
+       * Source: http://www.w3.org/TR/REC-html40/sgml/sgmldecl.html with sanity
+       * handling for 0x80 - 0x9f
+       */
       INVALID_CHAR_HTML.set (c, (c >= 0x0 && c <= 0x8) ||
                                 (c >= 0xb && c <= 0xc) ||
                                 (c >= 0xe && c <= 0x1f) ||
-                                (c >= 0x7f && c <= 0x9f) ||
+                                (c == 0x7f) ||
+                                // (c >= 0x80 && c <= 0x9f) ||
                                 (c >= 0xd800 && c <= 0xdfff) ||
                                 (c >= 0xfffe && c <= 0xffff));
     }
@@ -618,7 +631,7 @@ public final class XMLCharHelper
    *        char to check
    * @return <code>true</code> if the char is invalid
    */
-  public static boolean isInvalidXMLNameStartChar (@Nonnull final EXMLVersion eXMLVersion, final int c)
+  public static boolean isInvalidXMLNameStartChar (@Nonnull final EXMLSerializeVersion eXMLVersion, final int c)
   {
     switch (eXMLVersion)
     {
@@ -626,6 +639,9 @@ public final class XMLCharHelper
         return INVALID_NAME_START_CHAR_XML10.get (c);
       case XML_11:
         return INVALID_NAME_START_CHAR_XML11.get (c);
+      case HTML:
+      case XHTML:
+        return INVALID_CHAR_HTML.get (c);
       default:
         throw new IllegalArgumentException ("Unsupported XML version " + eXMLVersion + "!");
     }
@@ -641,7 +657,7 @@ public final class XMLCharHelper
    *        char to check
    * @return <code>true</code> if the char is invalid
    */
-  public static boolean isInvalidXMLNameChar (@Nonnull final EXMLVersion eXMLVersion, final int c)
+  public static boolean isInvalidXMLNameChar (@Nonnull final EXMLSerializeVersion eXMLVersion, final int c)
   {
     switch (eXMLVersion)
     {
@@ -649,17 +665,21 @@ public final class XMLCharHelper
         return INVALID_NAME_CHAR_XML10.get (c);
       case XML_11:
         return INVALID_NAME_CHAR_XML11.get (c);
+      case HTML:
+      case XHTML:
+        return INVALID_CHAR_HTML.get (c);
       default:
         throw new IllegalArgumentException ("Unsupported XML version " + eXMLVersion + "!");
     }
   }
 
-  public static boolean containsInvalidXMLNameChar (@Nonnull final EXMLVersion eXMLVersion, @Nullable final String s)
+  public static boolean containsInvalidXMLNameChar (@Nonnull final EXMLSerializeVersion eXMLVersion,
+                                                    @Nullable final String s)
   {
     return s != null && containsInvalidXMLNameChar (eXMLVersion, s.toCharArray ());
   }
 
-  public static boolean containsInvalidXMLNameChar (@Nonnull final EXMLVersion eXMLVersion,
+  public static boolean containsInvalidXMLNameChar (@Nonnull final EXMLSerializeVersion eXMLVersion,
                                                     @Nullable final char [] aChars)
   {
     if (aChars != null)
@@ -684,14 +704,14 @@ public final class XMLCharHelper
   }
 
   @Nullable
-  public static Set <Character> getAllInvalidXMLNameChars (@Nonnull final EXMLVersion eXMLVersion,
+  public static Set <Character> getAllInvalidXMLNameChars (@Nonnull final EXMLSerializeVersion eXMLVersion,
                                                            @Nullable final String s)
   {
     return s == null ? null : getAllInvalidXMLNameChars (eXMLVersion, s.toCharArray ());
   }
 
   @Nullable
-  public static Set <Character> getAllInvalidXMLNameChars (@Nonnull final EXMLVersion eXMLVersion,
+  public static Set <Character> getAllInvalidXMLNameChars (@Nonnull final EXMLSerializeVersion eXMLVersion,
                                                            @Nullable final char [] aChars)
   {
     if (ArrayHelper.isEmpty (aChars))
@@ -725,7 +745,7 @@ public final class XMLCharHelper
    *        char to check
    * @return <code>true</code> if the char is invalid
    */
-  public static boolean isInvalidXMLTextChar (@Nonnull final EXMLVersion eXMLVersion, final int c)
+  public static boolean isInvalidXMLTextChar (@Nonnull final EXMLSerializeVersion eXMLVersion, final int c)
   {
     switch (eXMLVersion)
     {
@@ -733,17 +753,21 @@ public final class XMLCharHelper
         return INVALID_VALUE_CHAR_XML10.get (c);
       case XML_11:
         return INVALID_TEXT_VALUE_CHAR_XML11.get (c);
+      case HTML:
+      case XHTML:
+        return INVALID_CHAR_HTML.get (c);
       default:
         throw new IllegalArgumentException ("Unsupported XML version " + eXMLVersion + "!");
     }
   }
 
-  public static boolean containsInvalidXMLTextChar (@Nonnull final EXMLVersion eXMLVersion, @Nullable final String s)
+  public static boolean containsInvalidXMLTextChar (@Nonnull final EXMLSerializeVersion eXMLVersion,
+                                                    @Nullable final String s)
   {
     return s != null && containsInvalidXMLTextChar (eXMLVersion, s.toCharArray ());
   }
 
-  public static boolean containsInvalidXMLTextChar (@Nonnull final EXMLVersion eXMLVersion,
+  public static boolean containsInvalidXMLTextChar (@Nonnull final EXMLSerializeVersion eXMLVersion,
                                                     @Nullable final char [] aChars)
   {
     if (aChars != null)
@@ -754,14 +778,14 @@ public final class XMLCharHelper
   }
 
   @Nullable
-  public static Set <Character> getAllInvalidXMLTextChars (@Nonnull final EXMLVersion eXMLVersion,
+  public static Set <Character> getAllInvalidXMLTextChars (@Nonnull final EXMLSerializeVersion eXMLVersion,
                                                            @Nullable final String s)
   {
     return s == null ? null : getAllInvalidXMLTextChars (eXMLVersion, s.toCharArray ());
   }
 
   @Nullable
-  public static Set <Character> getAllInvalidXMLTextChars (@Nonnull final EXMLVersion eXMLVersion,
+  public static Set <Character> getAllInvalidXMLTextChars (@Nonnull final EXMLSerializeVersion eXMLVersion,
                                                            @Nullable final char [] aChars)
   {
     if (ArrayHelper.isEmpty (aChars))
@@ -783,25 +807,29 @@ public final class XMLCharHelper
    *        char to check
    * @return <code>true</code> if the char is invalid
    */
-  public static boolean isInvalidXMLCDATAChar (@Nonnull final EXMLVersion eXMLVersion, final int c)
+  public static boolean isInvalidXMLCDATAChar (@Nonnull final EXMLSerializeVersion eXMLVersion, final int c)
   {
     switch (eXMLVersion)
     {
       case XML_10:
         return INVALID_VALUE_CHAR_XML10.get (c);
       case XML_11:
-        return INVALID_ATTR_AND_CDATA_VALUE_CHAR_XML11.get (c);
+        return INVALID_CDATA_VALUE_CHAR_XML11.get (c);
+      case HTML:
+      case XHTML:
+        return INVALID_CHAR_HTML.get (c);
       default:
         throw new IllegalArgumentException ("Unsupported XML version " + eXMLVersion + "!");
     }
   }
 
-  public static boolean containsInvalidXMLCDATAChar (@Nonnull final EXMLVersion eXMLVersion, @Nullable final String s)
+  public static boolean containsInvalidXMLCDATAChar (@Nonnull final EXMLSerializeVersion eXMLVersion,
+                                                     @Nullable final String s)
   {
     return s != null && containsInvalidXMLCDATAChar (eXMLVersion, s.toCharArray ());
   }
 
-  public static boolean containsInvalidXMLCDATAChar (@Nonnull final EXMLVersion eXMLVersion,
+  public static boolean containsInvalidXMLCDATAChar (@Nonnull final EXMLSerializeVersion eXMLVersion,
                                                      @Nullable final char [] aChars)
   {
     if (aChars != null)
@@ -812,14 +840,14 @@ public final class XMLCharHelper
   }
 
   @Nullable
-  public static Set <Character> getAllInvalidXMLCDATAChars (@Nonnull final EXMLVersion eXMLVersion,
+  public static Set <Character> getAllInvalidXMLCDATAChars (@Nonnull final EXMLSerializeVersion eXMLVersion,
                                                             @Nullable final String s)
   {
     return s == null ? null : getAllInvalidXMLCDATAChars (eXMLVersion, s.toCharArray ());
   }
 
   @Nullable
-  public static Set <Character> getAllInvalidXMLCDATAChars (@Nonnull final EXMLVersion eXMLVersion,
+  public static Set <Character> getAllInvalidXMLCDATAChars (@Nonnull final EXMLSerializeVersion eXMLVersion,
                                                             @Nullable final char [] aChars)
   {
     if (ArrayHelper.isEmpty (aChars))
@@ -841,26 +869,29 @@ public final class XMLCharHelper
    *        char to check
    * @return <code>true</code> if the char is invalid
    */
-  public static boolean isInvalidXMLAttributeValueChar (@Nonnull final EXMLVersion eXMLVersion, final int c)
+  public static boolean isInvalidXMLAttributeValueChar (@Nonnull final EXMLSerializeVersion eXMLVersion, final int c)
   {
     switch (eXMLVersion)
     {
       case XML_10:
         return INVALID_VALUE_CHAR_XML10.get (c);
       case XML_11:
-        return INVALID_ATTR_AND_CDATA_VALUE_CHAR_XML11.get (c);
+        return INVALID_ATTR_VALUE_CHAR_XML11.get (c);
+      case HTML:
+      case XHTML:
+        return INVALID_CHAR_HTML.get (c);
       default:
         throw new IllegalArgumentException ("Unsupported XML version " + eXMLVersion + "!");
     }
   }
 
-  public static boolean containsInvalidXMLAttributeValueChar (@Nonnull final EXMLVersion eXMLVersion,
+  public static boolean containsInvalidXMLAttributeValueChar (@Nonnull final EXMLSerializeVersion eXMLVersion,
                                                               @Nullable final String s)
   {
     return s != null && containsInvalidXMLAttributeValueChar (eXMLVersion, s.toCharArray ());
   }
 
-  public static boolean containsInvalidXMLAttributeValueChar (@Nonnull final EXMLVersion eXMLVersion,
+  public static boolean containsInvalidXMLAttributeValueChar (@Nonnull final EXMLSerializeVersion eXMLVersion,
                                                               @Nullable final char [] aChars)
   {
     if (aChars != null)
@@ -871,14 +902,14 @@ public final class XMLCharHelper
   }
 
   @Nullable
-  public static Set <Character> getAllInvalidXMLAttributeValueChars (@Nonnull final EXMLVersion eXMLVersion,
+  public static Set <Character> getAllInvalidXMLAttributeValueChars (@Nonnull final EXMLSerializeVersion eXMLVersion,
                                                                      @Nullable final String s)
   {
     return s == null ? null : getAllInvalidXMLAttributeValueChars (eXMLVersion, s.toCharArray ());
   }
 
   @Nullable
-  public static Set <Character> getAllInvalidXMLAttributeValueChars (@Nonnull final EXMLVersion eXMLVersion,
+  public static Set <Character> getAllInvalidXMLAttributeValueChars (@Nonnull final EXMLSerializeVersion eXMLVersion,
                                                                      @Nullable final char [] aChars)
   {
     if (ArrayHelper.isEmpty (aChars))
@@ -891,14 +922,14 @@ public final class XMLCharHelper
     return aRes;
   }
 
-  public static boolean containsInvalidXMLChar (@Nonnull final EXMLVersion eXMLVersion,
+  public static boolean containsInvalidXMLChar (@Nonnull final EXMLSerializeVersion eXMLVersion,
                                                 @Nonnull final EXMLCharMode eXMLCharMode,
                                                 @Nullable final String s)
   {
     return s != null && containsInvalidXMLChar (eXMLVersion, eXMLCharMode, s.toCharArray ());
   }
 
-  public static boolean containsInvalidXMLChar (@Nonnull final EXMLVersion eXMLVersion,
+  public static boolean containsInvalidXMLChar (@Nonnull final EXMLSerializeVersion eXMLVersion,
                                                 @Nonnull final EXMLCharMode eXMLCharMode,
                                                 @Nullable final char [] aChars)
   {
@@ -920,7 +951,7 @@ public final class XMLCharHelper
   }
 
   @Nullable
-  public static Set <Character> getAllInvalidXMLChars (@Nonnull final EXMLVersion eXMLVersion,
+  public static Set <Character> getAllInvalidXMLChars (@Nonnull final EXMLSerializeVersion eXMLVersion,
                                                        @Nonnull final EXMLCharMode eXMLCharMode,
                                                        @Nullable final String s)
   {
@@ -928,7 +959,7 @@ public final class XMLCharHelper
   }
 
   @Nullable
-  public static Set <Character> getAllInvalidXMLChars (@Nonnull final EXMLVersion eXMLVersion,
+  public static Set <Character> getAllInvalidXMLChars (@Nonnull final EXMLSerializeVersion eXMLVersion,
                                                        @Nonnull final EXMLCharMode eXMLCharMode,
                                                        @Nullable final char [] aChars)
   {
@@ -947,50 +978,5 @@ public final class XMLCharHelper
       default:
         throw new IllegalArgumentException ("Unsupported XML character mode " + eXMLCharMode + "!");
     }
-  }
-
-  /**
-   * Check if the passed character is invalid for a HTML value node.
-   * 
-   * @param c
-   *        char to check
-   * @return <code>true</code> if the char is invalid
-   */
-  public static boolean isInvalidHTMLChar (final int c)
-  {
-    return INVALID_CHAR_HTML.get (c);
-  }
-
-  public static boolean containsInvalidHTMLChar (@Nullable final String s)
-  {
-    return s != null && containsInvalidHTMLChar (s.toCharArray ());
-  }
-
-  public static boolean containsInvalidHTMLChar (@Nullable final char [] aChars)
-  {
-    if (aChars != null)
-      for (final char c : aChars)
-        if (isInvalidHTMLChar (c))
-          return true;
-    return false;
-  }
-
-  @Nullable
-  public static Set <Character> getAllInvalidHTMLChars (@Nullable final String s)
-  {
-    return s == null ? null : getAllInvalidHTMLChars (s.toCharArray ());
-  }
-
-  @Nullable
-  public static Set <Character> getAllInvalidHTMLChars (@Nullable final char [] aChars)
-  {
-    if (ArrayHelper.isEmpty (aChars))
-      return null;
-
-    final Set <Character> aRes = new LinkedHashSet <Character> ();
-    for (final char c : aChars)
-      if (isInvalidHTMLChar (c))
-        aRes.add (Character.valueOf (c));
-    return aRes;
   }
 }

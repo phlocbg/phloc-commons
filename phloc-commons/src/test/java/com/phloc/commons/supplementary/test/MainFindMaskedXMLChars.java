@@ -29,8 +29,9 @@ import org.w3c.dom.Element;
 import com.phloc.commons.io.streams.NonBlockingStringWriter;
 import com.phloc.commons.regex.RegExHelper;
 import com.phloc.commons.xml.EXMLVersion;
-import com.phloc.commons.xml.XMLCharHelper;
 import com.phloc.commons.xml.XMLFactory;
+import com.phloc.commons.xml.serialize.EXMLSerializeVersion;
+import com.phloc.commons.xml.serialize.XMLCharHelper;
 import com.phloc.commons.xml.transform.XMLTransformerFactory;
 
 public class MainFindMaskedXMLChars
@@ -90,7 +91,9 @@ public class MainFindMaskedXMLChars
 
   private static boolean _containsER (final String s, final int c)
   {
-    if (s.contains ("&#x" + Integer.toString (c, 16) + ";") || s.contains ("&#" + c + ";"))
+    if (s.indexOf ("&#" + c + ";") >= 0)
+      return true;
+    if (s.indexOf ("&#x" + Integer.toString (c, 16) + ";") >= 0)
       return true;
     return RegExHelper.stringMatchesPattern (".+&[a-z]+;.+", s);
   }
@@ -125,18 +128,13 @@ public class MainFindMaskedXMLChars
    */
   public static void main (final String [] args) throws Exception
   {
-    if (true)
-    {
-      for (int i = 0x1; i <= 0x1f; ++i)
-        System.out.println ("0x" + Integer.toString (i, 16) + ",");
-      return;
-    }
-
-    final EXMLVersion eXMLVersion = EXMLVersion.XML_10;
+    final EXMLVersion eXMLVersion = EXMLVersion.XML_11;
+    final EXMLSerializeVersion eXMLSerializeVersion = EXMLSerializeVersion.getFromXMLVersionOrThrow (eXMLVersion);
     final int nMax = Character.MAX_VALUE + 1;
+
     final List <Integer> aMaskedE1 = new ArrayList <Integer> ();
     for (int i = 0; i < nMax; ++i)
-      if (!XMLCharHelper.isInvalidXMLNameStartChar (eXMLVersion, (char) i))
+      if (!XMLCharHelper.isInvalidXMLNameStartChar (eXMLSerializeVersion, (char) i))
       {
         final Document aDoc = XMLFactory.newDocument (eXMLVersion);
         aDoc.appendChild (aDoc.createElement (Character.toString ((char) i)));
@@ -147,7 +145,7 @@ public class MainFindMaskedXMLChars
       }
     final List <Integer> aMaskedE2 = new ArrayList <Integer> ();
     for (int i = 0; i < nMax; ++i)
-      if (!XMLCharHelper.isInvalidXMLNameChar (eXMLVersion, (char) i))
+      if (!XMLCharHelper.isInvalidXMLNameChar (eXMLSerializeVersion, (char) i))
       {
         final Document aDoc = XMLFactory.newDocument (eXMLVersion);
         aDoc.appendChild (aDoc.createElement ("a" + Character.toString ((char) i)));
@@ -158,7 +156,7 @@ public class MainFindMaskedXMLChars
       }
     final List <Integer> aMaskedAN1 = new ArrayList <Integer> ();
     for (int i = 0; i < nMax; ++i)
-      if (!XMLCharHelper.isInvalidXMLNameStartChar (eXMLVersion, (char) i))
+      if (!XMLCharHelper.isInvalidXMLNameStartChar (eXMLSerializeVersion, (char) i))
       {
         final Document aDoc = XMLFactory.newDocument (eXMLVersion);
         final Element aElement = (Element) aDoc.appendChild (aDoc.createElement ("abc"));
@@ -170,7 +168,7 @@ public class MainFindMaskedXMLChars
       }
     final List <Integer> aMaskedAN2 = new ArrayList <Integer> ();
     for (int i = 0; i < nMax; ++i)
-      if (!XMLCharHelper.isInvalidXMLNameChar (eXMLVersion, (char) i))
+      if (!XMLCharHelper.isInvalidXMLNameChar (eXMLSerializeVersion, (char) i))
       {
         final Document aDoc = XMLFactory.newDocument (eXMLVersion);
         final Element aElement = (Element) aDoc.appendChild (aDoc.createElement ("abc"));
@@ -182,7 +180,7 @@ public class MainFindMaskedXMLChars
       }
     final List <Integer> aMaskedAV = new ArrayList <Integer> ();
     for (int i = 0; i < nMax; ++i)
-      if (!XMLCharHelper.isInvalidXMLAttributeValueChar (eXMLVersion, (char) i))
+      if (!XMLCharHelper.isInvalidXMLAttributeValueChar (eXMLSerializeVersion, (char) i))
       {
         final Document aDoc = XMLFactory.newDocument (eXMLVersion);
         final Element aElement = (Element) aDoc.appendChild (aDoc.createElement ("abc"));
@@ -194,7 +192,7 @@ public class MainFindMaskedXMLChars
       }
     final List <Integer> aMaskedTV = new ArrayList <Integer> ();
     for (int i = 0; i < nMax; ++i)
-      if (!XMLCharHelper.isInvalidXMLTextChar (eXMLVersion, (char) i))
+      if (!XMLCharHelper.isInvalidXMLTextChar (eXMLSerializeVersion, (char) i))
       {
         final Document aDoc = XMLFactory.newDocument (eXMLVersion);
         final Element aElement = (Element) aDoc.appendChild (aDoc.createElement ("abc"));
@@ -206,16 +204,16 @@ public class MainFindMaskedXMLChars
       }
     final List <Integer> aMaskedCV = new ArrayList <Integer> ();
     for (int i = 0; i < nMax; ++i)
-      if (!XMLCharHelper.isInvalidXMLCDATAChar (eXMLVersion, (char) i))
-      {
-        final Document aDoc = XMLFactory.newDocument (eXMLVersion);
-        final Element aElement = (Element) aDoc.appendChild (aDoc.createElement ("abc"));
-        aElement.appendChild (aDoc.createCDATASection (Character.toString ((char) i)));
-        final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
-        XMLTransformerFactory.newTransformer ().transform (new DOMSource (aDoc), new StreamResult (aSW));
-        if (_containsER (aSW.getAsString (), i))
-          aMaskedCV.add (Integer.valueOf (i));
-      }
+    {
+      final Document aDoc = XMLFactory.newDocument (eXMLVersion);
+      final Element aElement = (Element) aDoc.appendChild (aDoc.createElement ("abc"));
+      aElement.appendChild (aDoc.createCDATASection (Character.toString ((char) i)));
+      final NonBlockingStringWriter aSW = new NonBlockingStringWriter ();
+      XMLTransformerFactory.newTransformer ().transform (new DOMSource (aDoc), new StreamResult (aSW));
+      final String sXML = aSW.getAsString ();
+      if (sXML.indexOf ("<[CDATA[") >= 0 && _containsER (sXML, i))
+        aMaskedCV.add (Integer.valueOf (i));
+    }
     System.out.println ("Masked Element Name Start:       " + _getFormatted (aMaskedE1));
     System.out.println ("Masked Element Name InBetween:   " + _getFormatted (aMaskedE2));
     System.out.println ("Masked Attribute Name Start:     " + _getFormatted (aMaskedAN1));

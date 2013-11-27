@@ -40,9 +40,10 @@ import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.io.streams.NonBlockingStringWriter;
 import com.phloc.commons.xml.EXMLIncorrectCharacterHandling;
 import com.phloc.commons.xml.EXMLVersion;
-import com.phloc.commons.xml.XMLCharHelper;
 import com.phloc.commons.xml.XMLFactory;
 import com.phloc.commons.xml.serialize.EXMLSerializeIndent;
+import com.phloc.commons.xml.serialize.EXMLSerializeVersion;
+import com.phloc.commons.xml.serialize.XMLCharHelper;
 import com.phloc.commons.xml.serialize.XMLReader;
 import com.phloc.commons.xml.serialize.XMLWriter;
 import com.phloc.commons.xml.serialize.XMLWriterSettings;
@@ -187,13 +188,14 @@ public final class XMLTransformerFactoryTest
   public void testSpecialChars () throws Exception
   {
     final EXMLVersion eXMLVersion = EXMLVersion.XML_10;
+    final EXMLSerializeVersion eXMLSerializeVersion = EXMLSerializeVersion.getFromXMLVersionOrThrow (eXMLVersion);
     final StringBuilder aAttrVal = new StringBuilder ();
     final StringBuilder aText = new StringBuilder ();
     for (char i = 0; i < 256; ++i)
     {
-      if (!XMLCharHelper.isInvalidXMLAttributeValueChar (eXMLVersion, i))
+      if (!XMLCharHelper.isInvalidXMLAttributeValueChar (eXMLSerializeVersion, i))
         aAttrVal.append (i);
-      if (!XMLCharHelper.isInvalidXMLTextChar (eXMLVersion, i))
+      if (!XMLCharHelper.isInvalidXMLTextChar (eXMLSerializeVersion, i))
         aText.append (i);
     }
 

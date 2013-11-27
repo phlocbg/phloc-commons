@@ -15,8 +15,6 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.xml.EXMLCharMode;
 import com.phloc.commons.xml.EXMLIncorrectCharacterHandling;
-import com.phloc.commons.xml.EXMLVersion;
-import com.phloc.commons.xml.XMLCharHelper;
 
 /**
  * This class contains all the methods for masking XML content.
@@ -208,42 +206,91 @@ public final class XMLMaskHelper
                                                               0x9c,
                                                               0x9d,
                                                               0x9e,
-                                                              0x9f };
-  private static final char [] MASK_CDATA_XML11 = new char [] { 0x1,
-                                                               0x2,
-                                                               0x3,
-                                                               0x4,
-                                                               0x5,
-                                                               0x6,
-                                                               0x7,
-                                                               0x8,
-                                                               0xb,
-                                                               0xc,
-                                                               0xe,
-                                                               0xf,
-                                                               0x10,
-                                                               0x11,
-                                                               0x12,
-                                                               0x13,
-                                                               0x14,
-                                                               0x15,
-                                                               0x16,
-                                                               0x17,
-                                                               0x18,
-                                                               0x19,
-                                                               0x1a,
-                                                               0x1b,
-                                                               0x1c,
-                                                               0x1d,
-                                                               0x1e,
-                                                               0x1f };
+                                                              0x9f,
+                                                              0x2028 };
+
+  private static final char [] MASK_TEXT_HTML_DQ = new char [] { AMPERSAND,
+                                                                DOUBLE_QUOTE,
+                                                                LT,
+                                                                GT,
+                                                                APOS,
+                                                                0x80,
+                                                                0x81,
+                                                                0x82,
+                                                                0x83,
+                                                                0x84,
+                                                                0x85,
+                                                                0x86,
+                                                                0x87,
+                                                                0x88,
+                                                                0x89,
+                                                                0x8a,
+                                                                0x8b,
+                                                                0x8c,
+                                                                0x8d,
+                                                                0x8e,
+                                                                0x8f,
+                                                                0x90,
+                                                                0x91,
+                                                                0x92,
+                                                                0x93,
+                                                                0x94,
+                                                                0x95,
+                                                                0x96,
+                                                                0x97,
+                                                                0x98,
+                                                                0x99,
+                                                                0x9a,
+                                                                0x9b,
+                                                                0x9c,
+                                                                0x9d,
+                                                                0x9e,
+                                                                0x9f };
+  private static final char [] MASK_TEXT_HTML_SQ = new char [] { AMPERSAND,
+                                                                LT,
+                                                                GT,
+                                                                APOS,
+                                                                0x80,
+                                                                0x81,
+                                                                0x82,
+                                                                0x83,
+                                                                0x84,
+                                                                0x85,
+                                                                0x86,
+                                                                0x87,
+                                                                0x88,
+                                                                0x89,
+                                                                0x8a,
+                                                                0x8b,
+                                                                0x8c,
+                                                                0x8d,
+                                                                0x8e,
+                                                                0x8f,
+                                                                0x90,
+                                                                0x91,
+                                                                0x92,
+                                                                0x93,
+                                                                0x94,
+                                                                0x95,
+                                                                0x96,
+                                                                0x97,
+                                                                0x98,
+                                                                0x99,
+                                                                0x9a,
+                                                                0x9b,
+                                                                0x9c,
+                                                                0x9d,
+                                                                0x9e,
+                                                                0x9f };
+
   private static final char [][] MASK_ATTRIBUTE_VALUE_XML10_DQ_REPLACE = new char [MASK_ATTRIBUTE_VALUE_XML10_DQ.length] [];
   private static final char [][] MASK_ATTRIBUTE_VALUE_XML10_SQ_REPLACE = new char [MASK_ATTRIBUTE_VALUE_XML10_SQ.length] [];
   private static final char [][] MASK_TEXT_XML10_REPLACE = new char [MASK_TEXT_XML10.length] [];
   private static final char [][] MASK_ATTRIBUTE_VALUE_XML11_DQ_REPLACE = new char [MASK_ATTRIBUTE_VALUE_XML11_DQ.length] [];
   private static final char [][] MASK_ATTRIBUTE_VALUE_XML11_SQ_REPLACE = new char [MASK_ATTRIBUTE_VALUE_XML11_SQ.length] [];
   private static final char [][] MASK_TEXT_XML11_REPLACE = new char [MASK_TEXT_XML11.length] [];
-  private static final char [][] MASK_CDATA_XML11_REPLACE = new char [MASK_CDATA_XML11.length] [];
+  private static final char [][] MASK_TEXT_HTML_DQ_REPLACE = new char [MASK_TEXT_HTML_DQ.length] [];
+  private static final char [][] MASK_TEXT_HTML_SQ_REPLACE = new char [MASK_TEXT_HTML_SQ.length] [];
 
   /**
    * Get the entity reference for the specified character. This returns e.g.
@@ -257,7 +304,7 @@ public final class XMLMaskHelper
    */
   @Nonnull
   @Nonempty
-  public static String getXMLEntityReferenceString (final char c)
+  public static String getXML10EntityReferenceString (final char c)
   {
     if (c == LT)
       return "&lt;";
@@ -274,10 +321,39 @@ public final class XMLMaskHelper
 
   /**
    * Get the entity reference for the specified character. This returns e.g.
+   * &amp;lt; for '&lt;' etc. This method has special handling for &lt;, &gt;,
+   * &amp;, &quot; and &apos;. All other chars are encoded by their numeric
+   * value (e.g. &amp;#200;)
+   * 
+   * @param c
+   *        Character to use.
+   * @return The entity reference string. Never <code>null</code> nor empty.
+   */
+  @Nonnull
+  @Nonempty
+  public static String getXML11EntityReferenceString (final char c)
+  {
+    if (c == LT)
+      return "&lt;";
+    if (c == GT)
+      return "&gt;";
+    if (c == AMPERSAND)
+      return "&amp;";
+    if (c == DOUBLE_QUOTE)
+      return "&quot;";
+    if (c == APOS)
+      return "&apos;";
+    if (c == '\u2028')
+      return "\n";
+    return "&#" + (int) c + ";";
+  }
+
+  /**
+   * Get the entity reference for the specified character. This returns e.g.
    * <code>&amp;lt;</code> for '<code>&lt;</code>' etc. This method has special
    * handling for &lt;, &gt;, &amp; and &quot;. All other chars are encoded by
    * their numeric value (e.g. <code>&amp;#200;</code>). In contrast to
-   * {@link #getXMLEntityReferenceString(char)} this method does not handle
+   * {@link #getXML10EntityReferenceString(char)} this method does not handle
    * <code>&amp;apos;</code>
    * 
    * @param c
@@ -296,25 +372,34 @@ public final class XMLMaskHelper
       return "&amp;";
     if (c == DOUBLE_QUOTE)
       return "&quot;";
+    // Use of &apos; in XHTML should generally be avoided for compatibility
+    // reasons. &#39; or &#x0027; may be used instead.
     return "&#" + (int) c + ";";
   }
 
   static
   {
+    // XML 1.0
     for (int i = 0; i < MASK_ATTRIBUTE_VALUE_XML10_DQ.length; ++i)
-      MASK_ATTRIBUTE_VALUE_XML10_DQ_REPLACE[i] = getXMLEntityReferenceString (MASK_ATTRIBUTE_VALUE_XML10_DQ[i]).toCharArray ();
+      MASK_ATTRIBUTE_VALUE_XML10_DQ_REPLACE[i] = getXML10EntityReferenceString (MASK_ATTRIBUTE_VALUE_XML10_DQ[i]).toCharArray ();
     for (int i = 0; i < MASK_ATTRIBUTE_VALUE_XML10_SQ.length; ++i)
-      MASK_ATTRIBUTE_VALUE_XML10_SQ_REPLACE[i] = getXMLEntityReferenceString (MASK_ATTRIBUTE_VALUE_XML10_SQ[i]).toCharArray ();
+      MASK_ATTRIBUTE_VALUE_XML10_SQ_REPLACE[i] = getXML10EntityReferenceString (MASK_ATTRIBUTE_VALUE_XML10_SQ[i]).toCharArray ();
     for (int i = 0; i < MASK_TEXT_XML10.length; ++i)
-      MASK_TEXT_XML10_REPLACE[i] = getXMLEntityReferenceString (MASK_TEXT_XML10[i]).toCharArray ();
+      MASK_TEXT_XML10_REPLACE[i] = getXML10EntityReferenceString (MASK_TEXT_XML10[i]).toCharArray ();
+
+    // XML 1.1
     for (int i = 0; i < MASK_ATTRIBUTE_VALUE_XML11_DQ.length; ++i)
-      MASK_ATTRIBUTE_VALUE_XML11_DQ_REPLACE[i] = getXMLEntityReferenceString (MASK_ATTRIBUTE_VALUE_XML11_DQ[i]).toCharArray ();
+      MASK_ATTRIBUTE_VALUE_XML11_DQ_REPLACE[i] = getXML11EntityReferenceString (MASK_ATTRIBUTE_VALUE_XML11_DQ[i]).toCharArray ();
     for (int i = 0; i < MASK_ATTRIBUTE_VALUE_XML11_SQ.length; ++i)
-      MASK_ATTRIBUTE_VALUE_XML11_SQ_REPLACE[i] = getXMLEntityReferenceString (MASK_ATTRIBUTE_VALUE_XML11_SQ[i]).toCharArray ();
+      MASK_ATTRIBUTE_VALUE_XML11_SQ_REPLACE[i] = getXML11EntityReferenceString (MASK_ATTRIBUTE_VALUE_XML11_SQ[i]).toCharArray ();
     for (int i = 0; i < MASK_TEXT_XML11.length; ++i)
-      MASK_TEXT_XML11_REPLACE[i] = getXMLEntityReferenceString (MASK_TEXT_XML11[i]).toCharArray ();
-    for (int i = 0; i < MASK_CDATA_XML11.length; ++i)
-      MASK_CDATA_XML11_REPLACE[i] = getXMLEntityReferenceString (MASK_CDATA_XML11[i]).toCharArray ();
+      MASK_TEXT_XML11_REPLACE[i] = getXML11EntityReferenceString (MASK_TEXT_XML11[i]).toCharArray ();
+
+    // HTML
+    for (int i = 0; i < MASK_TEXT_HTML_DQ.length; ++i)
+      MASK_TEXT_HTML_DQ_REPLACE[i] = getHTMLEntityReferenceString (MASK_TEXT_HTML_DQ[i]).toCharArray ();
+    for (int i = 0; i < MASK_TEXT_HTML_SQ.length; ++i)
+      MASK_TEXT_HTML_SQ_REPLACE[i] = getHTMLEntityReferenceString (MASK_TEXT_HTML_SQ[i]).toCharArray ();
   }
 
   @SuppressWarnings ("unused")
@@ -325,7 +410,7 @@ public final class XMLMaskHelper
   {}
 
   @Nullable
-  private static char [] _findSourceMap (@Nonnull final EXMLVersion eXMLVersion,
+  private static char [] _findSourceMap (@Nonnull final EXMLSerializeVersion eXMLVersion,
                                          @Nonnull final EXMLCharMode eXMLCharMode)
   {
     switch (eXMLVersion)
@@ -352,18 +437,31 @@ public final class XMLMaskHelper
             return MASK_ATTRIBUTE_VALUE_XML11_SQ;
           case TEXT:
             return MASK_TEXT_XML11;
-          case CDATA:
-            return MASK_CDATA_XML11;
           default:
             break;
         }
         break;
+      case HTML:
+      case XHTML:
+        switch (eXMLCharMode)
+        {
+          case ATTRIBUTE_VALUE_SINGLE_QUOTES:
+            return MASK_TEXT_HTML_SQ;
+          case ATTRIBUTE_VALUE_DOUBLE_QUOTES:
+          case TEXT:
+            return MASK_TEXT_HTML_DQ;
+          default:
+            break;
+        }
+        break;
+      default:
+        throw new IllegalArgumentException ("Unsupported XML version " + eXMLVersion + "!");
     }
     return null;
   }
 
   @Nullable
-  private static char [][] _findReplaceMap (@Nonnull final EXMLVersion eXMLVersion,
+  private static char [][] _findReplaceMap (@Nonnull final EXMLSerializeVersion eXMLVersion,
                                             @Nonnull final EXMLCharMode eXMLCharMode)
   {
     switch (eXMLVersion)
@@ -390,12 +488,25 @@ public final class XMLMaskHelper
             return MASK_ATTRIBUTE_VALUE_XML11_SQ_REPLACE;
           case TEXT:
             return MASK_TEXT_XML11_REPLACE;
-          case CDATA:
-            return MASK_CDATA_XML11_REPLACE;
           default:
             break;
         }
         break;
+      case HTML:
+      case XHTML:
+        switch (eXMLCharMode)
+        {
+          case ATTRIBUTE_VALUE_SINGLE_QUOTES:
+            return MASK_TEXT_HTML_SQ_REPLACE;
+          case ATTRIBUTE_VALUE_DOUBLE_QUOTES:
+          case TEXT:
+            return MASK_TEXT_HTML_DQ_REPLACE;
+          default:
+            break;
+        }
+        break;
+      default:
+        throw new IllegalArgumentException ("Unsupported XML version " + eXMLVersion + "!");
     }
     return null;
   }
@@ -433,7 +544,7 @@ public final class XMLMaskHelper
   }
 
   @Nonnull
-  public static char [] getMaskedXMLText (@Nonnull final EXMLVersion eXMLVersion,
+  public static char [] getMaskedXMLText (@Nonnull final EXMLSerializeVersion eXMLVersion,
                                           @Nonnull final EXMLCharMode eXMLCharMode,
                                           @Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharHandling,
                                           @Nullable final String s)
@@ -471,7 +582,7 @@ public final class XMLMaskHelper
   }
 
   @Nonnegative
-  public static int getMaskedXMLTextLength (@Nonnull final EXMLVersion eXMLVersion,
+  public static int getMaskedXMLTextLength (@Nonnull final EXMLSerializeVersion eXMLVersion,
                                             @Nonnull final EXMLCharMode eXMLCharMode,
                                             @Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharHandling,
                                             @Nullable final String s)
@@ -507,7 +618,7 @@ public final class XMLMaskHelper
     return nResLen == CGlobal.ILLEGAL_UINT ? aChars.length : nResLen;
   }
 
-  public static void maskXMLTextTo (@Nonnull final EXMLVersion eXMLVersion,
+  public static void maskXMLTextTo (@Nonnull final EXMLSerializeVersion eXMLVersion,
                                     @Nonnull final EXMLCharMode eXMLCharMode,
                                     @Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharHandling,
                                     @Nullable final String s,
