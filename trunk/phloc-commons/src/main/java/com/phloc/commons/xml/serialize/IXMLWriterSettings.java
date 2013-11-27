@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.xml.namespace.NamespaceContext;
 
+import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.xml.EXMLIncorrectCharacterHandling;
 import com.phloc.commons.xml.EXMLVersion;
 
@@ -104,6 +105,21 @@ public interface IXMLWriterSettings
    *         if no space should be emitted.
    */
   boolean isSpaceOnSelfClosedElement ();
+
+  /**
+   * @return The newline string to be used. By default it is the platform
+   *         specific newline string. Never <code>null</code> nor empty.
+   */
+  @Nonnull
+  @Nonempty
+  String getNewlineString ();
+
+  /**
+   * @return The string to be used for indentation. By default it is 2 spaces.
+   */
+  @Nonnull
+  @Nonempty
+  String getIndentationString ();
 
   /**
    * Determine if namespaces should be emitted or not.

@@ -152,11 +152,7 @@ public final class XMLSerializerPhloc extends AbstractSerializerPhloc <Node>
   {
     if (m_aSettings.getSerializeComments ().isEmit ())
     {
-      if (m_aSettings.getIndent ().isIndent () && m_aIndent.length () > 0)
-        aXMLWriter.onContentElementWhitespace (m_aIndent);
       aXMLWriter.onComment (aComment.getData ());
-      if (m_aSettings.getIndent ().isAlign ())
-        aXMLWriter.onContentElementWhitespace (XMLEmitterPhloc.DEFAULT_NEWLINE);
     }
   }
 

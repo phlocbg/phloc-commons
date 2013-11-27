@@ -26,6 +26,7 @@ import java.nio.charset.Charset;
 
 import org.junit.Test;
 
+import com.phloc.commons.CGlobal;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.mock.PhlocTestUtils;
@@ -53,6 +54,8 @@ public final class XMLWriterSettingsTest
     assertEquals (CCharset.CHARSET_UTF_8_OBJ, mws.getCharsetObj ());
     assertTrue (mws.isSpaceOnSelfClosedElement ());
     assertTrue (mws.isUseDoubleQuotesForAttributes ());
+    assertEquals (CGlobal.LINE_SEPARATOR, mws.getNewlineString ());
+    assertEquals ("  ", mws.getIndentationString ());
     assertTrue (mws.isEmitNamespaces ());
     assertFalse (mws.isPutNamespaceContextPrefixesInRoot ());
 
@@ -85,6 +88,10 @@ public final class XMLWriterSettingsTest
                                                                         new XMLWriterSettings ().setSpaceOnSelfClosedElement (false));
     PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (mws,
                                                                         new XMLWriterSettings ().setUseDoubleQuotesForAttributes (false));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (mws,
+                                                                        new XMLWriterSettings ().setNewlineString ("abc"));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (mws,
+                                                                        new XMLWriterSettings ().setIndentationString ("\t"));
     PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (mws,
                                                                         new XMLWriterSettings ().setEmitNamespaces (false));
     PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (mws,
@@ -125,27 +132,41 @@ public final class XMLWriterSettingsTest
                   {
                     aXWS.setSpaceOnSelfClosedElement (bSpaceOnSelfClosedElement);
                     assertTrue (bSpaceOnSelfClosedElement == aXWS.isSpaceOnSelfClosedElement ());
-                    for (final boolean bEmitNamespaces : BOOLS)
+                    for (final String sNewline : new String [] { "\r\n", "\n" })
                     {
-                      aXWS.setEmitNamespaces (bEmitNamespaces);
-                      assertTrue (bEmitNamespaces == aXWS.isEmitNamespaces ());
-                      for (final boolean bPutNamespaceContextPrefixesInRoot : BOOLS)
+                      aXWS.setNewlineString (sNewline);
+                      assertEquals (sNewline, aXWS.getNewlineString ());
+                      for (final String sIndentation : new String [] { "\t", "  " })
                       {
-                        aXWS.setPutNamespaceContextPrefixesInRoot (bPutNamespaceContextPrefixesInRoot);
-                        assertTrue (bPutNamespaceContextPrefixesInRoot == aXWS.isPutNamespaceContextPrefixesInRoot ());
-                        PhlocTestUtils.testDefaultImplementationWithEqualContentObject (aXWS,
-                                                                                        new XMLWriterSettings ().setSerializeDocType (eDocType)
-                                                                                                                .setSerializeComments (eComments)
-                                                                                                                .setFormat (eFormat)
-                                                                                                                .setIndent (eIndent)
-                                                                                                                .setIncorrectCharacterHandling (eIncorrectCharHandling)
-                                                                                                                .setCharset (aCS)
-                                                                                                                .setUseDoubleQuotesForAttributes (bUseDoubleQuotesForAttributes)
-                                                                                                                .setSpaceOnSelfClosedElement (bSpaceOnSelfClosedElement)
-                                                                                                                .setEmitNamespaces (bEmitNamespaces)
-                                                                                                                .setPutNamespaceContextPrefixesInRoot (bPutNamespaceContextPrefixesInRoot));
+                        aXWS.setIndentationString (sIndentation);
+                        assertEquals (sIndentation, aXWS.getIndentationString ());
+                        for (final boolean bEmitNamespaces : BOOLS)
+                        {
+                          aXWS.setEmitNamespaces (bEmitNamespaces);
+                          assertTrue (bEmitNamespaces == aXWS.isEmitNamespaces ());
+                          for (final boolean bPutNamespaceContextPrefixesInRoot : BOOLS)
+                          {
+                            aXWS.setPutNamespaceContextPrefixesInRoot (bPutNamespaceContextPrefixesInRoot);
+                            assertTrue (bPutNamespaceContextPrefixesInRoot == aXWS.isPutNamespaceContextPrefixesInRoot ());
+                            PhlocTestUtils.testDefaultImplementationWithEqualContentObject (aXWS,
+                                                                                            new XMLWriterSettings ().setSerializeDocType (eDocType)
+                                                                                                                    .setSerializeComments (eComments)
+                                                                                                                    .setFormat (eFormat)
+                                                                                                                    .setIndent (eIndent)
+                                                                                                                    .setIncorrectCharacterHandling (eIncorrectCharHandling)
+                                                                                                                    .setCharset (aCS)
+                                                                                                                    .setUseDoubleQuotesForAttributes (bUseDoubleQuotesForAttributes)
+                                                                                                                    .setSpaceOnSelfClosedElement (bSpaceOnSelfClosedElement)
+                                                                                                                    .setNewlineString (sNewline)
+                                                                                                                    .setIndentationString (sIndentation)
+                                                                                                                    .setEmitNamespaces (bEmitNamespaces)
+                                                                                                                    .setPutNamespaceContextPrefixesInRoot (bPutNamespaceContextPrefixesInRoot));
+                          }
+                          assertTrue (bEmitNamespaces == aXWS.isEmitNamespaces ());
+                        }
+                        assertEquals (sIndentation, aXWS.getIndentationString ());
                       }
-                      assertTrue (bEmitNamespaces == aXWS.isEmitNamespaces ());
+                      assertEquals (sNewline, aXWS.getNewlineString ());
                     }
                     assertTrue (bSpaceOnSelfClosedElement == aXWS.isSpaceOnSelfClosedElement ());
                   }
