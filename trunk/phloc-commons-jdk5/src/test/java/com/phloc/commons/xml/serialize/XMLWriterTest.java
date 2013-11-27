@@ -31,7 +31,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
-import com.phloc.commons.CGlobal;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.mock.AbstractPhlocTestCase;
@@ -54,7 +53,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
 {
   private static final String DOCTYPE_XHTML10_QNAME = "-//W3C//DTD XHTML 1.0 Strict//EN";
   private static final String DOCTYPE_XHTML10_URI = "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd";
-  private static final String CRLF = CGlobal.LINE_SEPARATOR;
+  private static final String CRLF = XMLWriterSettings.DEFAULT_NEWLINE_STRING;
 
   /**
    * Test the method getXHTMLString
@@ -64,7 +63,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
   public void testGetXHTMLString ()
   {
     final String sSPACER = " ";
-    final String sINDENT = "  ";
+    final String sINDENT = XMLWriterSettings.DEFAULT_INDENTATION_STRING;
     final String sTAGNAME = "notext";
 
     // Java 1.6 JAXP handles things differently
@@ -218,6 +217,47 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
                     CRLF, sResult);
     }
 
+    // test as XML (without doc type and comments but indented) with different
+    // newline String
+    {
+      final String sResult = XMLWriter.getNodeAsString (doc,
+                                                        new XMLWriterSettings ().setSerializeDocType (EXMLSerializeDocType.IGNORE)
+                                                                                .setSerializeComments (EXMLSerializeComments.IGNORE)
+                                                                                .setIndent (EXMLSerializeIndent.INDENT_AND_ALIGN)
+                                                                                .setNewlineString ("\n"));
+      assertEquals ("<?xml version=\"1.0\" encoding=\"" +
+                    CCharset.CHARSET_UTF_8 +
+                    "\"?>\n" +
+                    "<html xmlns=\"" +
+                    DOCTYPE_XHTML10_URI +
+                    "\">\n" +
+                    sINDENT +
+                    "<head>Hallo</head>\n" +
+                    sINDENT +
+                    "<notext>Hallo <strong>Welt</strong><![CDATA[!!!]]></notext>\n" +
+                    "</html>\n", sResult);
+    }
+
+    // test as XML (without doc type and comments but indented) with different
+    // newline String and different indent
+    {
+      final String sResult = XMLWriter.getNodeAsString (doc,
+                                                        new XMLWriterSettings ().setSerializeDocType (EXMLSerializeDocType.IGNORE)
+                                                                                .setSerializeComments (EXMLSerializeComments.IGNORE)
+                                                                                .setIndent (EXMLSerializeIndent.INDENT_AND_ALIGN)
+                                                                                .setNewlineString ("\n")
+                                                                                .setIndentationString ("\t"));
+      assertEquals ("<?xml version=\"1.0\" encoding=\"" +
+                    CCharset.CHARSET_UTF_8 +
+                    "\"?>\n" +
+                    "<html xmlns=\"" +
+                    DOCTYPE_XHTML10_URI +
+                    "\">\n" +
+                    "\t<head>Hallo</head>\n" +
+                    "\t<notext>Hallo <strong>Welt</strong><![CDATA[!!!]]></notext>\n" +
+                    "</html>\n", sResult);
+    }
+
     assertTrue (XMLWriter.writeToStream (doc, new NonBlockingByteArrayOutputStream ()).isSuccess ());
     new XMLSerializerPhloc ().write (doc, new DefaultXMLIterationHandler ());
   }
@@ -226,7 +266,7 @@ public final class XMLWriterTest extends AbstractPhlocTestCase
   public void testWriteXMLMultiThreaded ()
   {
     final String sSPACER = " ";
-    final String sINDENT = "  ";
+    final String sINDENT = XMLWriterSettings.DEFAULT_INDENTATION_STRING;
     final String sTAGNAME = "notext";
 
     PhlocTestUtils.testInParallel (1000, new Runnable ()

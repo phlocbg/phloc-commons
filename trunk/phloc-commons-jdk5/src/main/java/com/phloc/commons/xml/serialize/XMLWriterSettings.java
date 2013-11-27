@@ -24,11 +24,14 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 import javax.xml.namespace.NamespaceContext;
 
+import com.phloc.commons.CGlobal;
 import com.phloc.commons.ICloneable;
+import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
+import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.xml.EXMLIncorrectCharacterHandling;
 import com.phloc.commons.xml.EXMLVersion;
@@ -55,6 +58,10 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
    * <code>&lt;b /&gt;</code> in contrast to <code>&lt;b/&gt;</code>).
    */
   public static final boolean DEFAULT_SPACE_ON_SELF_CLOSED_ELEMENT = true;
+  /** By default the platform newline string is used. */
+  public static final String DEFAULT_NEWLINE_STRING = CGlobal.LINE_SEPARATOR;
+  /** By default indentation happens with 2 spaces */
+  public static final String DEFAULT_INDENTATION_STRING = "  ";
   /**
    * By default namespaces are written.
    */
@@ -78,6 +85,8 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
   private NamespaceContext m_aNamespaceContext;
   private boolean m_bUseDoubleQuotesForAttributes = DEFAULT_USE_DOUBLE_QUOTES_FOR_ATTRIBUTES;
   private boolean m_bSpaceOnSelfClosedElement = DEFAULT_SPACE_ON_SELF_CLOSED_ELEMENT;
+  private String m_sNewlineString = DEFAULT_NEWLINE_STRING;
+  private String m_sIndentationString = DEFAULT_INDENTATION_STRING;
   private boolean m_bEmitNamespaces = DEFAULT_EMIT_NAMESPACES;
   private boolean m_bPutNamespaceContextPrefixesInRoot = DEFAULT_PUT_NAMESPACE_CONTEXT_PREFIXES_IN_ROOT;
 
@@ -118,6 +127,8 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
     setNamespaceContext (aOther.getNamespaceContext ());
     setUseDoubleQuotesForAttributes (aOther.isUseDoubleQuotesForAttributes ());
     setSpaceOnSelfClosedElement (aOther.isSpaceOnSelfClosedElement ());
+    setNewlineString (aOther.getNewlineString ());
+    setIndentationString (aOther.getIndentationString ());
     setEmitNamespaces (aOther.isEmitNamespaces ());
     setPutNamespaceContextPrefixesInRoot (aOther.isPutNamespaceContextPrefixesInRoot ());
   }
@@ -341,6 +352,38 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
   }
 
   @Nonnull
+  public XMLWriterSettings setNewlineString (@Nonnull @Nonempty final String sNewlineString)
+  {
+    if (StringHelper.hasNoText (sNewlineString))
+      throw new IllegalArgumentException ("NewlineString");
+    m_sNewlineString = sNewlineString;
+    return this;
+  }
+
+  @Nonnull
+  @Nonempty
+  public String getNewlineString ()
+  {
+    return m_sNewlineString;
+  }
+
+  @Nonnull
+  public XMLWriterSettings setIndentationString (@Nonnull @Nonempty final String sIndentationString)
+  {
+    if (StringHelper.hasNoText (sIndentationString))
+      throw new IllegalArgumentException ("IndentationString");
+    m_sIndentationString = sIndentationString;
+    return this;
+  }
+
+  @Nonnull
+  @Nonempty
+  public String getIndentationString ()
+  {
+    return m_sIndentationString;
+  }
+
+  @Nonnull
   public XMLWriterSettings setEmitNamespaces (final boolean bEmitNamespaces)
   {
     m_bEmitNamespaces = bEmitNamespaces;
@@ -389,6 +432,8 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
            EqualsUtils.equals (m_aNamespaceContext, rhs.m_aNamespaceContext) &&
            m_bUseDoubleQuotesForAttributes == rhs.m_bUseDoubleQuotesForAttributes &&
            m_bSpaceOnSelfClosedElement == rhs.m_bSpaceOnSelfClosedElement &&
+           m_sNewlineString.equals (rhs.m_sNewlineString) &&
+           m_sIndentationString.equals (rhs.m_sIndentationString) &&
            m_bEmitNamespaces == rhs.m_bEmitNamespaces &&
            m_bPutNamespaceContextPrefixesInRoot == rhs.m_bPutNamespaceContextPrefixesInRoot;
   }
@@ -407,6 +452,8 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
                                        .append (m_aNamespaceContext)
                                        .append (m_bUseDoubleQuotesForAttributes)
                                        .append (m_bSpaceOnSelfClosedElement)
+                                       .append (m_sNewlineString)
+                                       .append (m_sIndentationString)
                                        .append (m_bEmitNamespaces)
                                        .append (m_bPutNamespaceContextPrefixesInRoot)
                                        .getHashCode ();
@@ -425,6 +472,10 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
                                        .append ("namespaceContext", m_aNamespaceContext)
                                        .append ("doubleQuotesForAttrs", m_bUseDoubleQuotesForAttributes)
                                        .append ("spaceOnSelfClosedElement", m_bSpaceOnSelfClosedElement)
+                                       .append ("newlineString",
+                                                StringHelper.getHexEncoded (m_sNewlineString.getBytes ()))
+                                       .append ("indentationString",
+                                                StringHelper.getHexEncoded (m_sIndentationString.getBytes ()))
                                        .append ("emitNamespaces", m_bEmitNamespaces)
                                        .append ("putNamespaceContextPrefixesInRoot",
                                                 m_bPutNamespaceContextPrefixesInRoot)

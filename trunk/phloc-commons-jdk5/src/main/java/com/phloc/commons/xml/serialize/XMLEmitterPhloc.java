@@ -27,7 +27,6 @@ import javax.annotation.Nullable;
 import javax.annotation.WillNotClose;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import com.phloc.commons.CGlobal;
 import com.phloc.commons.microdom.IMicroDocumentType;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
@@ -47,15 +46,14 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
 {
   /** By default an exception is thrown for nested comments */
   public static final boolean DEFAULT_THROW_EXCEPTION_ON_NESTED_COMMENTS = true;
-  private static final String CDATA_START = "<![CDATA[";
-  private static final String CDATA_END = "]]>";
-  private static final String COMMENT_START = "<!--";
-  private static final String COMMENT_END = "-->";
-  private static final char ER_START = '&';
-  private static final char ER_END = ';';
-  private static final String PI_START = "<?";
-  private static final String PI_END = "?>";
-  private static final String NEWLINE = CGlobal.LINE_SEPARATOR;
+  public static final String CDATA_START = "<![CDATA[";
+  public static final String CDATA_END = "]]>";
+  public static final String COMMENT_START = "<!--";
+  public static final String COMMENT_END = "-->";
+  public static final char ER_START = '&';
+  public static final char ER_END = ';';
+  public static final String PI_START = "<?";
+  public static final String PI_END = "?>";
 
   private static boolean s_bThrowExceptionOnNestedComments = DEFAULT_THROW_EXCEPTION_ON_NESTED_COMMENTS;
 
@@ -174,7 +172,7 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
         _append (" standalone=")._appendAttrValue ("yes");
       _append (PI_END);
       if (m_aSettings.getIndent ().isAlign ())
-        _append (NEWLINE);
+        _append (m_aSettings.getNewlineString ());
     }
   }
 
@@ -271,7 +269,7 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
                                                           sSystemID);
     _append (sDocType);
     if (m_aSettings.getIndent ().isAlign ())
-      _append (NEWLINE);
+      _append (m_aSettings.getNewlineString ());
   }
 
   @Override
@@ -282,7 +280,7 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
       _append (' ')._append (sData);
     _append (PI_END);
     if (m_aSettings.getIndent ().isAlign ())
-      _append (NEWLINE);
+      _append (m_aSettings.getNewlineString ());
   }
 
   @Override
@@ -335,7 +333,7 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
           _append (CDATA_START);
           if (i > 0)
             _append ('>');
-          _append (aParts.get (i));
+          _appendMasked (EXMLCharMode.CDATA, aParts.get (i));
           if (i < nParts - 1)
             _append ("]]");
           _append (CDATA_END);
@@ -344,7 +342,7 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
       else
       {
         // No special handling required
-        _append (CDATA_START)._append (sText)._append (CDATA_END);
+        _append (CDATA_START)._appendMasked (EXMLCharMode.CDATA, sText)._append (CDATA_END);
       }
     }
   }
