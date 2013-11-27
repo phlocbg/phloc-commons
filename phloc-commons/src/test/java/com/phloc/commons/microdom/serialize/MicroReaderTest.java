@@ -44,7 +44,6 @@ import com.phloc.commons.xml.sax.EmptyEntityResolver;
 import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
 import com.phloc.commons.xml.sax.StringSAXInputSource;
 import com.phloc.commons.xml.serialize.EXMLSerializeIndent;
-import com.phloc.commons.xml.serialize.XMLEmitterPhloc;
 import com.phloc.commons.xml.serialize.XMLReader;
 import com.phloc.commons.xml.serialize.XMLWriterSettings;
 
@@ -55,7 +54,7 @@ import com.phloc.commons.xml.serialize.XMLWriterSettings;
  */
 public final class MicroReaderTest
 {
-  private static final String CRLF = XMLEmitterPhloc.DEFAULT_NEWLINE;
+  private static final String CRLF = XMLWriterSettings.DEFAULT_NEWLINE_STRING;
 
   @Test
   public void testNull ()
