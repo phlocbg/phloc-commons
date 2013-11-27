@@ -38,11 +38,17 @@ import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
 
 /**
  * Utility class for creating XML DOM documents.
- *
+ * 
  * @author Philip Helger
  */
 public final class XMLFactory
 {
+  public static final boolean DEFAULT_DOM_COALESCING = true;
+  public static final boolean DEFAULT_DOM_IGNORING_COMMENTS = true;
+  public static final boolean DEFAULT_DOM_NAMESPACE_AWARE = true;
+
+  public static final boolean DEFAULT_SAX_NAMESPACE_AWARE = true;
+
   /** The DOM DocumentBuilderFactory. */
   private static final DocumentBuilderFactory s_aDefaultDocBuilderFactory;
 
@@ -70,11 +76,12 @@ public final class XMLFactory
     {
       // Not validating
       s_aSaxFactoryNonValidating = SAXParserFactory.newInstance ();
-      s_aSaxFactoryNonValidating.setNamespaceAware (true);
+      s_aSaxFactoryNonValidating.setNamespaceAware (DEFAULT_SAX_NAMESPACE_AWARE);
+      s_aSaxFactoryNonValidating.setValidating (false);
 
       // Validating
       s_aSaxFactoryValidating = SAXParserFactory.newInstance ();
-      s_aSaxFactoryValidating.setNamespaceAware (true);
+      s_aSaxFactoryValidating.setNamespaceAware (DEFAULT_SAX_NAMESPACE_AWARE);
       s_aSaxFactoryValidating.setValidating (true);
     }
     catch (final FactoryConfigurationError ex)
@@ -93,7 +100,7 @@ public final class XMLFactory
   /**
    * Create a new {@link DocumentBuilderFactory} with the following settings:
    * coalescing, comment ignoring and namespace aware.
-   *
+   * 
    * @return Never <code>null</code>.
    */
   @Nonnull
@@ -101,16 +108,18 @@ public final class XMLFactory
   {
     final DocumentBuilderFactory aDocumentBuilderFactory = DocumentBuilderFactory.newInstance ();
     // convert CDATA to text node?
-    aDocumentBuilderFactory.setCoalescing (true);
-    aDocumentBuilderFactory.setIgnoringComments (true);
-    aDocumentBuilderFactory.setNamespaceAware (true);
+    aDocumentBuilderFactory.setCoalescing (DEFAULT_DOM_COALESCING);
+    // Ignore comments?
+    aDocumentBuilderFactory.setIgnoringComments (DEFAULT_DOM_IGNORING_COMMENTS);
+    // Namespace aware?
+    aDocumentBuilderFactory.setNamespaceAware (DEFAULT_DOM_NAMESPACE_AWARE);
     return aDocumentBuilderFactory;
   }
 
   /**
    * Create a new {@link DocumentBuilderFactory} for the specified schema, with
    * the following settings: coalescing, comment ignoring and namespace aware.
-   *
+   * 
    * @param aSchema
    *        The schema to use. May not be <code>null</code>.
    * @return Never <code>null</code>.
@@ -159,7 +168,7 @@ public final class XMLFactory
   /**
    * Create a document builder without a certain schema, using the default
    * {@link DocumentBuilderFactory}.
-   *
+   * 
    * @return The created document builder. Never <code>null</code>.
    */
   @Nonnull
@@ -170,7 +179,7 @@ public final class XMLFactory
 
   /**
    * Create a document builder for a certain schema.
-   *
+   * 
    * @param aSchema
    *        The schema to use. May not be <code>null</code>.
    * @return The created document builder. Never <code>null</code>.
@@ -184,7 +193,7 @@ public final class XMLFactory
   /**
    * Create a document builder without a certain schema, using the passed
    * {@link DocumentBuilderFactory}.
-   *
+   * 
    * @param aDocBuilderFactory
    *        The document builder factory to be used. May not be
    *        <code>null</code>.
@@ -212,7 +221,7 @@ public final class XMLFactory
 
   /**
    * Get the default SAX parser factory.
-   *
+   * 
    * @param bValidating
    *        if <code>true</code> the validating factory is returned, else the
    *        non-validating factory is returned.
@@ -226,7 +235,7 @@ public final class XMLFactory
 
   /**
    * Create a new SAX parser.
-   *
+   * 
    * @param bValidating
    *        if <code>true</code> a validating parser is returned, else the
    *        non-validating parser is returned.
@@ -248,19 +257,19 @@ public final class XMLFactory
   /**
    * Create a new XML document without document type using version
    * {@link EXMLVersion#DEFAULT}. The default document builder is used.
-   *
+   * 
    * @return The created document. Never <code>null</code>.
    */
   @Nonnull
   public static Document newDocument ()
   {
-    return newDocument (s_aDefaultDocBuilder, null);
+    return newDocument (s_aDefaultDocBuilder, (EXMLVersion) null);
   }
 
   /**
    * Create a new XML document without document type using version
    * {@link EXMLVersion#DEFAULT}. A custom document builder is used.
-   *
+   * 
    * @param aDocBuilder
    *        The document builder to use. May not be <code>null</code>.
    * @return The created document. Never <code>null</code>.
@@ -268,13 +277,13 @@ public final class XMLFactory
   @Nonnull
   public static Document newDocument (@Nonnull final DocumentBuilder aDocBuilder)
   {
-    return newDocument (aDocBuilder, null);
+    return newDocument (aDocBuilder, (EXMLVersion) null);
   }
 
   /**
    * Create a new XML document without document type using the default document
    * builder.
-   *
+   * 
    * @param eVersion
    *        The XML version to use. If <code>null</code> is passed,
    *        {@link EXMLVersion#DEFAULT} will be used.
@@ -289,7 +298,7 @@ public final class XMLFactory
   /**
    * Create a new XML document without document type using a custom document
    * builder.
-   *
+   * 
    * @param aDocBuilder
    *        The document builder to use. May not be <code>null</code>.
    * @param eVersion
@@ -303,15 +312,15 @@ public final class XMLFactory
     if (aDocBuilder == null)
       throw new NullPointerException ("docBuilder");
 
-    final Document doc = aDocBuilder.newDocument ();
-    doc.setXmlVersion ((eVersion != null ? eVersion : EXMLVersion.DEFAULT).getVersion ());
-    return doc;
+    final Document aDoc = aDocBuilder.newDocument ();
+    aDoc.setXmlVersion ((eVersion != null ? eVersion : EXMLVersion.DEFAULT).getVersion ());
+    return aDoc;
   }
 
   /**
    * Create a new document with a document type using version
    * {@link EXMLVersion#DEFAULT}.
-   *
+   * 
    * @param sQualifiedName
    *        The qualified name to use.
    * @param sPublicId
@@ -325,13 +334,13 @@ public final class XMLFactory
                                       @Nullable final String sPublicId,
                                       @Nullable final String sSystemId)
   {
-    return newDocument (null, sQualifiedName, sPublicId, sSystemId);
+    return newDocument ((EXMLVersion) null, sQualifiedName, sPublicId, sSystemId);
   }
 
   /**
    * Create a new document with a document type using the default document
    * builder.
-   *
+   * 
    * @param eVersion
    *        The XML version to use. If <code>null</code> is passed,
    *        {@link EXMLVersion#DEFAULT} will be used.
@@ -354,7 +363,7 @@ public final class XMLFactory
 
   /**
    * Create a new document with a document type using a custom document builder.
-   *
+   * 
    * @param aDocBuilder
    *        the document builder to be used. May not be <code>null</code>.
    * @param eVersion
@@ -381,8 +390,8 @@ public final class XMLFactory
     final DOMImplementation aDomImpl = aDocBuilder.getDOMImplementation ();
     final DocumentType aDocType = aDomImpl.createDocumentType (sQualifiedName, sPublicId, sSystemId);
 
-    final Document doc = aDomImpl.createDocument (sSystemId, sQualifiedName, aDocType);
-    doc.setXmlVersion ((eVersion != null ? eVersion : EXMLVersion.DEFAULT).getVersion ());
-    return doc;
+    final Document aDoc = aDomImpl.createDocument (sSystemId, sQualifiedName, aDocType);
+    aDoc.setXmlVersion ((eVersion != null ? eVersion : EXMLVersion.DEFAULT).getVersion ());
+    return aDoc;
   }
 }

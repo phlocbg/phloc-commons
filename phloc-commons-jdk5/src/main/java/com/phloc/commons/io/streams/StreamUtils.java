@@ -180,8 +180,8 @@ public final class StreamUtils
       }
       catch (final NullPointerException ex)
       {
-        // Happens if a java.io.FilterOutputStream has no underlying output
-        // stream!
+        // Happens if a java.io.FilterInputStream or java.io.FilterOutputStream
+        // has no underlying stream!
       }
       catch (final IOException ex)
       {
