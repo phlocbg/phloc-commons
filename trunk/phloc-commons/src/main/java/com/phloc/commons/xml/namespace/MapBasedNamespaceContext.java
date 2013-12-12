@@ -22,6 +22,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
@@ -129,6 +130,17 @@ public class MapBasedNamespaceContext extends AbstractNamespaceContext
   public Map <String, String> getPrefixToNamespaceURIMap ()
   {
     return ContainerHelper.newOrderedMap (m_aPrefix2NS);
+  }
+
+  public boolean hasAnyMapping ()
+  {
+    return !m_aPrefix2NS.isEmpty ();
+  }
+
+  @Nonnegative
+  public int getMappingCount ()
+  {
+    return m_aPrefix2NS.size ();
   }
 
   @Override
