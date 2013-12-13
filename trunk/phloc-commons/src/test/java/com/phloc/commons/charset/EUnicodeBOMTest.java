@@ -60,6 +60,9 @@ public final class EUnicodeBOMTest
       assertFalse (eBOM.isPresent (new byte [(int) eBOM.getSizeInBytes () + 1]));
       assertTrue (eBOM.isPresent (eBOM.getBytes ()));
       assertSame (eBOM, EUnicodeBOM.valueOf (eBOM.name ()));
+      assertSame (eBOM, EUnicodeBOM.getFromBytesOrNull (eBOM.getBytes ()));
     }
+
+    assertEquals (4, EUnicodeBOM.getMaximumByteCount ());
   }
 }
