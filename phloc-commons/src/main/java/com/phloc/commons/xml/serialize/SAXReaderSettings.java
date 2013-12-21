@@ -48,9 +48,9 @@ public final class SAXReaderSettings
 {
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
 
-  // Default SAX parser features
+  // Default parser features
   @GuardedBy ("s_aRWLock")
-  private static final EnumMap <EXMLParserFeature, Boolean> s_aDefaultSAXParserFeatures = new EnumMap <EXMLParserFeature, Boolean> (EXMLParserFeature.class)
+  private static final EnumMap <EXMLParserFeature, Boolean> s_aDefaultParserFeatures = new EnumMap <EXMLParserFeature, Boolean> (EXMLParserFeature.class)
   {
     {
       // By default enabled in XMLFactory
@@ -64,9 +64,9 @@ public final class SAXReaderSettings
     }
   };
 
-  // Default SAX exception handler
+  // Default exception handler
   @GuardedBy ("s_aRWLock")
-  private static IExceptionHandler <Throwable> s_aDefaultSAXExceptionHandler = new XMLLoggingExceptionHandler ();
+  private static IExceptionHandler <Throwable> s_aDefaultExceptionHandler = new XMLLoggingExceptionHandler ();
 
   private EntityResolver m_aEntityResolver;
   private DTDHandler m_aDTDHandler;
@@ -240,7 +240,7 @@ public final class SAXReaderSettings
     s_aRWLock.readLock ().lock ();
     try
     {
-      return s_aDefaultSAXParserFeatures.get (eFeature);
+      return s_aDefaultParserFeatures.get (eFeature);
     }
     finally
     {
@@ -260,7 +260,7 @@ public final class SAXReaderSettings
     s_aRWLock.readLock ().lock ();
     try
     {
-      return new EnumMap <EXMLParserFeature, Boolean> (s_aDefaultSAXParserFeatures);
+      return new EnumMap <EXMLParserFeature, Boolean> (s_aDefaultParserFeatures);
     }
     finally
     {
@@ -269,7 +269,8 @@ public final class SAXReaderSettings
   }
 
   /**
-   * Set a default SAX parser feature
+   * Set a default parser feature that is automatically applied to all SAX
+   * readings
    * 
    * @param eFeature
    *        The feature to set.
@@ -286,9 +287,9 @@ public final class SAXReaderSettings
     try
     {
       if (aValue == null)
-        s_aDefaultSAXParserFeatures.remove (eFeature);
+        s_aDefaultParserFeatures.remove (eFeature);
       else
-        s_aDefaultSAXParserFeatures.put (eFeature, aValue);
+        s_aDefaultParserFeatures.put (eFeature, aValue);
     }
     finally
     {
@@ -306,7 +307,7 @@ public final class SAXReaderSettings
     s_aRWLock.readLock ().lock ();
     try
     {
-      return s_aDefaultSAXExceptionHandler;
+      return s_aDefaultExceptionHandler;
     }
     finally
     {
@@ -315,7 +316,7 @@ public final class SAXReaderSettings
   }
 
   /**
-   * Set a new global exception handler.
+   * Set a new default SAX exception handler.
    * 
    * @param aExceptionHandler
    *        The new handler to be set. May not be <code>null</code>.
@@ -328,7 +329,7 @@ public final class SAXReaderSettings
     s_aRWLock.writeLock ().lock ();
     try
     {
-      s_aDefaultSAXExceptionHandler = aExceptionHandler;
+      s_aDefaultExceptionHandler = aExceptionHandler;
     }
     finally
     {
