@@ -39,30 +39,62 @@ import com.phloc.commons.xml.EXMLParserFeature;
  */
 public interface ISAXReaderSettings
 {
+  /**
+   * @return The special entity resolver to be used. May be <code>null</code>.
+   */
   @Nullable
   EntityResolver getEntityResolver ();
 
+  /**
+   * @return The special DTD handler to be used. May be <code>null</code>.
+   */
   @Nullable
   DTDHandler getDTDHandler ();
 
+  /**
+   * @return The special content handler to be used. May be <code>null</code>.
+   */
   @Nullable
   ContentHandler getContentHandler ();
 
+  /**
+   * @return The special error handler to be used. May be <code>null</code>.
+   */
   @Nullable
   ErrorHandler getErrorHandler ();
 
+  /**
+   * @return The special lexical handler to be used. May be <code>null</code>.
+   */
   @Nullable
   LexicalHandler getLexicalHandler ();
 
+  /**
+   * Get the value of the specified parser feature
+   * 
+   * @param eFeature
+   *        The feature to search. May be <code>null</code>.
+   * @return <code>null</code> if this feature is undefined.
+   */
   @Nullable
   Boolean getParserFeatureValue (@Nullable EXMLParserFeature eFeature);
 
+  /**
+   * @return <code>true</code> if at least one parser feature is defined,
+   *         <code>false</code> if not
+   */
   boolean hasParserFeatureValues ();
 
+  /**
+   * @return A copy of all defined parser features at the associated values.
+   */
   @Nonnull
   @ReturnsMutableCopy
   Map <EXMLParserFeature, Boolean> getAllParserFeatureValues ();
 
+  /**
+   * @return The exception handler to be used.
+   */
   @Nonnull
   IExceptionHandler <Throwable> getExceptionHandler ();
 }
