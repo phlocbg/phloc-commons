@@ -30,6 +30,7 @@ import javax.xml.validation.Schema;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
 
+import com.phloc.commons.ICloneable;
 import com.phloc.commons.callback.IExceptionHandler;
 import com.phloc.commons.callback.LoggingExceptionHandler;
 import com.phloc.commons.xml.XMLFactory;
@@ -40,7 +41,7 @@ import com.phloc.commons.xml.XMLFactory;
  * @author Philip Helger
  */
 @ThreadSafe
-public final class DOMReaderSettings
+public final class DOMReaderSettings implements ICloneable <DOMReaderSettings>
 {
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
 
@@ -62,12 +63,28 @@ public final class DOMReaderSettings
   private EntityResolver m_aEntityResolver;
   private ErrorHandler m_aErrorHandler;
 
+  // Handling properties
   private IExceptionHandler <Throwable> m_aExceptionHandler;
 
   public DOMReaderSettings ()
   {
     // Set default values
     setExceptionHandler (getDefaultExceptionHandler ());
+  }
+
+  public DOMReaderSettings (@Nonnull final DOMReaderSettings aOther)
+  {
+    setNamespaceAware (aOther.isNamespaceAware ());
+    setValidating (aOther.isValidating ());
+    setIgnoringElementContentWhitespace (aOther.isIgnoringElementContentWhitespace ());
+    setExpandEntityReferences (aOther.isExpandEntityReferences ());
+    setIgnoringComments (aOther.isIgnoringComments ());
+    setCoalescing (aOther.isCoalescing ());
+    setSchema (aOther.getSchema ());
+    setXIncludeAware (aOther.isXIncludeAware ());
+    setEntityResolver (aOther.getEntityResolver ());
+    setErrorHandler (aOther.getErrorHandler ());
+    setExceptionHandler (aOther.getExceptionHandler ());
   }
 
   public boolean isNamespaceAware ()
@@ -266,5 +283,11 @@ public final class DOMReaderSettings
     {
       s_aRWLock.writeLock ().unlock ();
     }
+  }
+
+  @Nonnull
+  public DOMReaderSettings getClone ()
+  {
+    return new DOMReaderSettings (this);
   }
 }
