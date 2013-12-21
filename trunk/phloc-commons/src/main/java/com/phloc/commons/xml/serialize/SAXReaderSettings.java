@@ -38,6 +38,8 @@ import com.phloc.commons.callback.IExceptionHandler;
 import com.phloc.commons.callback.LoggingExceptionHandler;
 import com.phloc.commons.xml.EXMLParserFeature;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * SAX reader settings
  * 
@@ -226,6 +228,7 @@ public final class SAXReaderSettings implements ISAXReaderSettings
    * @return <code>null</code> if nothing is specified.
    */
   @Nullable
+  @SuppressFBWarnings ("NP_BOOLEAN_RETURN_NULL")
   public static Boolean getDefaultParserFeatureValue (@Nullable final EXMLParserFeature eFeature)
   {
     if (eFeature == null)
