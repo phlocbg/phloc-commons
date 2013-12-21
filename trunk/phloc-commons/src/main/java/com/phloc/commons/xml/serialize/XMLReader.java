@@ -22,13 +22,10 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.WillClose;
-import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.validation.Schema;
@@ -40,14 +37,11 @@ import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 import org.xml.sax.ext.LexicalHandler;
-import org.xml.sax.helpers.XMLReaderFactory;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.callback.IExceptionHandler;
 import com.phloc.commons.callback.LoggingExceptionHandler;
-import com.phloc.commons.exceptions.InitializationException;
 import com.phloc.commons.factory.IFactory;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.streams.StreamUtils;
@@ -59,7 +53,6 @@ import com.phloc.commons.stats.IStatisticsHandlerTimer;
 import com.phloc.commons.stats.StatisticsManager;
 import com.phloc.commons.timing.StopWatch;
 import com.phloc.commons.xml.EXMLParserFeature;
-import com.phloc.commons.xml.EXMLParserProperty;
 import com.phloc.commons.xml.XMLFactory;
 import com.phloc.commons.xml.sax.CollectingSAXErrorHandler;
 import com.phloc.commons.xml.sax.InputSourceFactory;
@@ -73,24 +66,6 @@ import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
 @ThreadSafe
 public final class XMLReader
 {
-  static final class SAXReaderFactory implements IFactory <org.xml.sax.XMLReader>
-  {
-    @Nonnull
-    public org.xml.sax.XMLReader create ()
-    {
-      try
-      {
-        final org.xml.sax.XMLReader ret = XMLReaderFactory.createXMLReader ();
-        ret.setErrorHandler (LoggingSAXErrorHandler.getInstance ());
-        return ret;
-      }
-      catch (final SAXException ex)
-      {
-        throw new InitializationException ("Failed to instantiate XML reader!", ex);
-      }
-    }
-  }
-
   static final class DOMReaderFactory implements IFactory <DocumentBuilder>
   {
     @Nonnull
@@ -100,10 +75,6 @@ public final class XMLReader
     }
   }
 
-  private static final IStatisticsHandlerTimer s_aSaxTimerHdl = StatisticsManager.getTimerHandler (XMLReader.class.getName () +
-                                                                                                   "$SAX");
-  private static final IStatisticsHandlerCounter s_aSaxErrorCounterHdl = StatisticsManager.getCounterHandler (XMLReader.class.getName () +
-                                                                                                              "$SAXERRORS");
   private static final IStatisticsHandlerTimer s_aDomTimerHdl = StatisticsManager.getTimerHandler (XMLReader.class.getName () +
                                                                                                    "$DOM");
   private static final IStatisticsHandlerTimer s_aDomSchemaTimerHdl = StatisticsManager.getTimerHandler (XMLReader.class.getName () +
@@ -112,34 +83,8 @@ public final class XMLReader
                                                                                                               "$DOMERRORS");
 
   // In practice no more than 5 readers are required (even 3 would be enough)
-  private static final IObjectPool <org.xml.sax.XMLReader> s_aSAXPool = new ObjectPool <org.xml.sax.XMLReader> (5,
-                                                                                                                new SAXReaderFactory ());
-
-  // In practice no more than 5 readers are required (even 3 would be enough)
   private static final IObjectPool <DocumentBuilder> s_aDOMPool = new ObjectPool <DocumentBuilder> (5,
                                                                                                     new DOMReaderFactory ());
-
-  private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
-
-  // Default SAX parser features
-  @GuardedBy ("s_aRWLock")
-  private static final Map <EXMLParserFeature, Boolean> s_aSAXDefaultParserFeatures = new EnumMap <EXMLParserFeature, Boolean> (EXMLParserFeature.class)
-  {
-    {
-      // By default enabled in XMLFactory
-      if (false)
-      {
-        put (EXMLParserFeature.NAMESPACES, Boolean.TRUE);
-        put (EXMLParserFeature.SAX_NAMESPACE_PREFIXES, Boolean.TRUE);
-      }
-      if (false)
-        put (EXMLParserFeature.AUGMENT_PSVI, Boolean.FALSE);
-    }
-  };
-
-  // Default SAX exception handler
-  @GuardedBy ("s_aRWLock")
-  private static IExceptionHandler <Throwable> s_aSAXExceptionHandler = new XMLLoggingExceptionHandler ();
 
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")
@@ -517,8 +462,10 @@ public final class XMLReader
    *        The content handler to use. May be <code>null</code>.
    * @return {@link ESuccess#SUCCESS} if reading succeeded,
    *         {@link ESuccess#FAILURE} otherwise
+   * @deprecated Use {@link SAXReader} instead
    */
   @Nonnull
+  @Deprecated
   public static ESuccess readXMLSAX (@WillClose @Nonnull final InputStream aIS,
                                      @Nullable final ContentHandler aContentHdl)
   {
@@ -539,7 +486,9 @@ public final class XMLReader
    *        The content handler to use. May be <code>null</code>.
    * @return {@link ESuccess#SUCCESS} if reading succeeded,
    *         {@link ESuccess#FAILURE} otherwise
+   * @deprecated Use {@link SAXReader} instead
    */
+  @Deprecated
   @Nonnull
   public static ESuccess readXMLSAX (@WillClose @Nonnull final InputSource aIS,
                                      @Nullable final ContentHandler aContentHdl)
@@ -574,7 +523,9 @@ public final class XMLReader
    *        If true, validation against an XML schema is enabled.
    * @return {@link ESuccess#SUCCESS} if reading succeeded,
    *         {@link ESuccess#FAILURE} otherwise
+   * @deprecated Use {@link SAXReader} instead
    */
+  @Deprecated
   @Nonnull
   public static ESuccess readXMLSAX (@WillClose @Nonnull final InputStream aIS,
                                      @Nullable final EntityResolver aEntityResolver,
@@ -623,7 +574,9 @@ public final class XMLReader
    *        If <code>true</code>, validation against an XML schema is enabled.
    * @return {@link ESuccess#SUCCESS} if reading succeeded,
    *         {@link ESuccess#FAILURE} otherwise
+   * @deprecated Use {@link SAXReader} instead
    */
+  @Deprecated
   @Nonnull
   public static ESuccess readXMLSAX (@WillClose @Nonnull final InputSource aIS,
                                      @Nullable final EntityResolver aEntityResolver,
@@ -673,7 +626,9 @@ public final class XMLReader
    *        contained values must be non-<code>null</code>.
    * @return {@link ESuccess#SUCCESS} if reading succeeded,
    *         {@link ESuccess#FAILURE} otherwise
+   * @deprecated Use {@link SAXReader} instead
    */
+  @Deprecated
   @Nonnull
   public static ESuccess readXMLSAX (@WillClose @Nonnull final InputSource aIS,
                                      @Nullable final EntityResolver aEntityResolver,
@@ -683,87 +638,13 @@ public final class XMLReader
                                      @Nullable final LexicalHandler aLexicalHdl,
                                      @Nullable final Map <EXMLParserFeature, Boolean> aFeatures)
   {
-    if (aIS == null)
-      throw new NullPointerException ("inputStream");
-
-    try
-    {
-      // use parser from pool
-      final org.xml.sax.XMLReader aParser = s_aSAXPool.borrowObject ();
-
-      try
-      {
-        final StopWatch aSW = new StopWatch (true);
-        aParser.setContentHandler (aContentHdl);
-        aParser.setDTDHandler (aDTDHdl);
-        aParser.setEntityResolver (aEntityResolver);
-        aParser.setErrorHandler (aErrorHdl);
-
-        // Set all features
-        {
-          // 1. all global default features
-          s_aRWLock.readLock ().lock ();
-          try
-          {
-            for (final Map.Entry <EXMLParserFeature, Boolean> aEntry : s_aSAXDefaultParserFeatures.entrySet ())
-              aEntry.getKey ().applyTo (aParser, aEntry.getValue ().booleanValue ());
-          }
-          finally
-          {
-            s_aRWLock.readLock ().unlock ();
-          }
-
-          // 2. all custom features
-          if (aFeatures != null)
-            for (final Map.Entry <EXMLParserFeature, Boolean> aEntry : aFeatures.entrySet ())
-              aEntry.getKey ().applyTo (aParser, aEntry.getValue ().booleanValue ());
-        }
-
-        // Set optional properties
-        if (aLexicalHdl != null)
-          EXMLParserProperty.SAX_FEATURE_LEXICAL_HANDLER.applyTo (aParser, aLexicalHdl);
-
-        // Start parsing
-        aParser.parse (aIS);
-        s_aSaxTimerHdl.addTime (aSW.stopAndGetMillis ());
-        return ESuccess.SUCCESS;
-      }
-      finally
-      {
-        // Return parser to pool
-        s_aSAXPool.returnObject (aParser);
-      }
-    }
-    catch (final SAXParseException ex)
-    {
-      boolean bHandled = false;
-      if (aErrorHdl != null)
-        try
-        {
-          aErrorHdl.fatalError (ex);
-          bHandled = true;
-        }
-        catch (final SAXException ex2)
-        {
-          // fall-through
-        }
-
-      if (!bHandled)
-        getDefaultSAXExceptionHandler ().onException (ex);
-    }
-    catch (final Exception ex)
-    {
-      getDefaultSAXExceptionHandler ().onException (ex);
-    }
-    finally
-    {
-      // Close both byte stream and character stream, as we don't know which one
-      // was used
-      StreamUtils.close (aIS.getByteStream ());
-      StreamUtils.close (aIS.getCharacterStream ());
-    }
-    s_aSaxErrorCounterHdl.increment ();
-    return ESuccess.FAILURE;
+    return SAXReader.readXMLSAX (aIS,
+                                 new SAXReaderSettings ().setEntityResolver (aEntityResolver)
+                                                         .setDTDHandler (aDTDHdl)
+                                                         .setContentHandler (aContentHdl)
+                                                         .setErrorHandler (aErrorHdl)
+                                                         .setLexicalHandler (aLexicalHdl)
+                                                         .setParserFeatureValues (aFeatures));
   }
 
   /**
@@ -774,17 +655,10 @@ public final class XMLReader
    * @return <code>null</code> if nothing is specified.
    */
   @Nullable
+  @Deprecated
   public static Boolean getDefaultSaxParserFeatureValue (@Nullable final EXMLParserFeature eFeature)
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_aSAXDefaultParserFeatures.get (eFeature);
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    return SAXReaderSettings.getDefaultParserFeatureValue (eFeature);
   }
 
   /**
@@ -795,24 +669,11 @@ public final class XMLReader
    * @param aValue
    *        Use <code>null</code> to remove a feature.
    */
+  @Deprecated
   public static void setDefaultSaxParserFeatureValue (@Nonnull final EXMLParserFeature eFeature,
                                                       @Nullable final Boolean aValue)
   {
-    if (eFeature == null)
-      throw new NullPointerException ("feature");
-
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
-      if (aValue == null)
-        s_aSAXDefaultParserFeatures.remove (eFeature);
-      else
-        s_aSAXDefaultParserFeatures.put (eFeature, aValue);
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    SAXReaderSettings.setDefaultParserFeatureValue (eFeature, aValue);
   }
 
   /**
@@ -820,17 +681,10 @@ public final class XMLReader
    *         of {@link LoggingExceptionHandler}. Never <code>null</code>.
    */
   @Nonnull
+  @Deprecated
   public static IExceptionHandler <Throwable> getDefaultSAXExceptionHandler ()
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_aSAXExceptionHandler;
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
+    return SAXReaderSettings.getDefaultExceptionHandler ();
   }
 
   /**
@@ -839,19 +693,9 @@ public final class XMLReader
    * @param aExceptionHandler
    *        The new handler to be set. May not be <code>null</code>.
    */
+  @Deprecated
   public static void setDefaultSAXExceptionHandler (@Nonnull final IExceptionHandler <Throwable> aExceptionHandler)
   {
-    if (aExceptionHandler == null)
-      throw new NullPointerException ("ExceptionHandler");
-
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
-      s_aSAXExceptionHandler = aExceptionHandler;
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    SAXReaderSettings.setDefaultExceptionHandler (aExceptionHandler);
   }
 }

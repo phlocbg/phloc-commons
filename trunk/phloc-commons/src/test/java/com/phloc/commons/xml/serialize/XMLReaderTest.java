@@ -19,7 +19,6 @@ package com.phloc.commons.xml.serialize;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.InputStream;
@@ -27,8 +26,6 @@ import java.io.Reader;
 
 import javax.xml.validation.Schema;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +33,6 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import com.phloc.commons.callback.DoNothingExceptionHandler;
 import com.phloc.commons.callback.IThrowingRunnable;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.io.IReadableResource;
@@ -61,18 +57,6 @@ public final class XMLReaderTest
 {
   @SuppressWarnings ("unused")
   private static final Logger s_aLogger = LoggerFactory.getLogger (XMLReaderTest.class);
-
-  @BeforeClass
-  public static void bc ()
-  {
-    XMLReader.setDefaultSAXExceptionHandler (new DoNothingExceptionHandler ());
-  }
-
-  @AfterClass
-  public static void ac ()
-  {
-    XMLReader.setDefaultSAXExceptionHandler (new XMLLoggingExceptionHandler ());
-  }
 
   /**
    * Test method readXMLDOM
@@ -332,33 +316,6 @@ public final class XMLReaderTest
   {
     assertNotNull (XMLReader.readXMLDOM (new CachingSAXInputSource (new ClassPathResource ("xml/buildinfo.xml"))));
     assertNotNull (XMLReader.readXMLDOM (new ReadableResourceSAXInputSource (new ClassPathResource ("xml/buildinfo.xml"))));
-  }
-
-  @Test
-  public void testMultithreadedSAX_CachingSAXInputSource ()
-  {
-    PhlocTestUtils.testInParallel (1000, new IThrowingRunnable ()
-    {
-      public void run () throws Exception
-      {
-        assertTrue (XMLReader.readXMLSAX (new CachingSAXInputSource (new ClassPathResource ("xml/buildinfo.xml")), null)
-                             .isSuccess ());
-      }
-    });
-  }
-
-  @Test
-  public void testMultithreadedSAX_ReadableResourceSAXInputSource ()
-  {
-    PhlocTestUtils.testInParallel (1000, new IThrowingRunnable ()
-    {
-      public void run () throws Exception
-      {
-        assertTrue (XMLReader.readXMLSAX (new ReadableResourceSAXInputSource (new ClassPathResource ("xml/buildinfo.xml")),
-                                          null)
-                             .isSuccess ());
-      }
-    });
   }
 
   @Test
