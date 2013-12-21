@@ -27,7 +27,6 @@ import java.util.Map;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.WillClose;
 import javax.annotation.concurrent.ThreadSafe;
 
@@ -175,15 +174,37 @@ public final class SAXReader
   }
 
   @Nonnull
-  public static ESuccess readXMLSAX (@Nullable final InputStream aIS, @Nonnull final SAXReaderSettings aSettings)
+  public static ESuccess readXMLSAX (@Nonnull @WillClose final InputStream aIS,
+                                     @Nonnull final SAXReaderSettings aSettings)
   {
-    return readXMLSAX (InputSourceFactory.create (aIS), aSettings);
+    if (aIS == null)
+      throw new NullPointerException ("IS");
+
+    try
+    {
+      return readXMLSAX (InputSourceFactory.create (aIS), aSettings);
+    }
+    finally
+    {
+      StreamUtils.close (aIS);
+    }
   }
 
   @Nonnull
-  public static ESuccess readXMLSAX (@Nullable final Reader aReader, @Nonnull final SAXReaderSettings aSettings)
+  public static ESuccess readXMLSAX (@Nonnull @WillClose final Reader aReader,
+                                     @Nonnull final SAXReaderSettings aSettings)
   {
-    return readXMLSAX (InputSourceFactory.create (aReader), aSettings);
+    if (aReader == null)
+      throw new NullPointerException ("Reader");
+
+    try
+    {
+      return readXMLSAX (InputSourceFactory.create (aReader), aSettings);
+    }
+    finally
+    {
+      StreamUtils.close (aReader);
+    }
   }
 
   /**
