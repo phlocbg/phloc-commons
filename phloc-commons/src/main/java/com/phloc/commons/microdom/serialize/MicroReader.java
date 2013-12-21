@@ -33,8 +33,10 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.io.IInputStreamProvider;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.microdom.IMicroDocument;
+import com.phloc.commons.xml.EXMLParserFeature;
 import com.phloc.commons.xml.sax.InputSourceFactory;
-import com.phloc.commons.xml.serialize.XMLReader;
+import com.phloc.commons.xml.serialize.SAXReader;
+import com.phloc.commons.xml.serialize.SAXReaderSettings;
 
 /**
  * Utility class to read an XML stream into an {@link IMicroDocument}.
@@ -76,21 +78,25 @@ public final class MicroReader
   public static IMicroDocument readMicroXML (@WillClose @Nullable final InputSource aInputSource,
                                              @Nullable final EntityResolver aSpecialEntityResolver,
                                              @Nullable final ErrorHandler aSpecialErrorHdl,
-                                             final boolean bDTDValidation,
+                                             final boolean bDTDValidating,
                                              final boolean bSchemaValidation)
   {
     if (aInputSource == null)
       return null;
 
     final MicroSAXHandler aHdl = new MicroSAXHandler (false, aSpecialEntityResolver);
-    if (XMLReader.readXMLSAX (aInputSource,
-                              aHdl,
-                              aHdl,
-                              aHdl,
-                              aSpecialErrorHdl != null ? aSpecialErrorHdl : aHdl,
-                              aHdl,
-                              bDTDValidation,
-                              bSchemaValidation).isFailure ())
+    final SAXReaderSettings aSettings = new SAXReaderSettings ().setEntityResolver (aHdl)
+                                                                .setDTDHandler (aHdl)
+                                                                .setContentHandler (aHdl)
+                                                                .setErrorHandler (aSpecialErrorHdl != null ? aSpecialErrorHdl
+                                                                                                          : aHdl)
+                                                                .setLexicalHandler (aHdl);
+    if (bDTDValidating)
+      aSettings.setParserFeatureValue (EXMLParserFeature.VALIDATION, true);
+    if (bSchemaValidation)
+      aSettings.setParserFeatureValue (EXMLParserFeature.SCHEMA, true);
+
+    if (SAXReader.readXMLSAX (aInputSource, aSettings).isFailure ())
       return null;
     return aHdl.getDocument ();
   }
