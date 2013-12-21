@@ -151,7 +151,7 @@ public final class SAXReaderSettings
   @Nullable
   public Boolean getParserFeatureValue (@Nullable final EXMLParserFeature eFeature)
   {
-    return m_aParserFeatures.get (eFeature);
+    return eFeature == null ? null : m_aParserFeatures.get (eFeature);
   }
 
   public boolean hasParserFeatureValues ()
@@ -234,6 +234,9 @@ public final class SAXReaderSettings
   @Nullable
   public static Boolean getDefaultParserFeatureValue (@Nullable final EXMLParserFeature eFeature)
   {
+    if (eFeature == null)
+      return null;
+
     s_aRWLock.readLock ().lock ();
     try
     {
