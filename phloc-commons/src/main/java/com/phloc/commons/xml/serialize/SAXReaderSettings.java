@@ -44,29 +44,29 @@ import com.phloc.commons.xml.EXMLParserFeature;
  * @author Philip Helger
  */
 @ThreadSafe
-public final class SAXReaderSettings
+public final class SAXReaderSettings implements ISAXReaderSettings
 {
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
 
   // Default parser features
   @GuardedBy ("s_aRWLock")
-  private static final EnumMap <EXMLParserFeature, Boolean> s_aDefaultParserFeatures = new EnumMap <EXMLParserFeature, Boolean> (EXMLParserFeature.class)
-  {
-    {
-      // By default enabled in XMLFactory
-      if (false)
-      {
-        put (EXMLParserFeature.NAMESPACES, Boolean.TRUE);
-        put (EXMLParserFeature.SAX_NAMESPACE_PREFIXES, Boolean.TRUE);
-      }
-      if (false)
-        put (EXMLParserFeature.AUGMENT_PSVI, Boolean.FALSE);
-    }
-  };
+  private static final EnumMap <EXMLParserFeature, Boolean> s_aDefaultParserFeatures = new EnumMap <EXMLParserFeature, Boolean> (EXMLParserFeature.class);
 
   // Default exception handler
   @GuardedBy ("s_aRWLock")
   private static IExceptionHandler <Throwable> s_aDefaultExceptionHandler = new XMLLoggingExceptionHandler ();
+
+  static
+  {
+    // By default enabled in XMLFactory
+    if (false)
+    {
+      s_aDefaultParserFeatures.put (EXMLParserFeature.NAMESPACES, Boolean.TRUE);
+      s_aDefaultParserFeatures.put (EXMLParserFeature.SAX_NAMESPACE_PREFIXES, Boolean.TRUE);
+    }
+    if (false)
+      s_aDefaultParserFeatures.put (EXMLParserFeature.AUGMENT_PSVI, Boolean.FALSE);
+  }
 
   private EntityResolver m_aEntityResolver;
   private DTDHandler m_aDTDHandler;
@@ -83,7 +83,6 @@ public final class SAXReaderSettings
     m_aParserFeatures.putAll (getAllDefaultParserFeatureValues ());
   }
 
-  @Nullable
   public EntityResolver getEntityResolver ()
   {
     return m_aEntityResolver;
@@ -96,7 +95,6 @@ public final class SAXReaderSettings
     return this;
   }
 
-  @Nullable
   public DTDHandler getDTDHandler ()
   {
     return m_aDTDHandler;
@@ -109,7 +107,6 @@ public final class SAXReaderSettings
     return this;
   }
 
-  @Nullable
   public ContentHandler getContentHandler ()
   {
     return m_aContentHandler;
@@ -122,7 +119,6 @@ public final class SAXReaderSettings
     return this;
   }
 
-  @Nullable
   public ErrorHandler getErrorHandler ()
   {
     return m_aErrorHandler;
@@ -135,7 +131,6 @@ public final class SAXReaderSettings
     return this;
   }
 
-  @Nullable
   public LexicalHandler getLexicalHandler ()
   {
     return m_aLexicalHandler;
@@ -148,8 +143,7 @@ public final class SAXReaderSettings
     return this;
   }
 
-  @Nullable
-  public Boolean getParserFeatureValue (@Nullable final EXMLParserFeature eFeature)
+  public Boolean getParserFeatureValue (final EXMLParserFeature eFeature)
   {
     return eFeature == null ? null : m_aParserFeatures.get (eFeature);
   }

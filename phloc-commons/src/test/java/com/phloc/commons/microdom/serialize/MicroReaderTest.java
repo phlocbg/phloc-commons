@@ -45,6 +45,7 @@ import com.phloc.commons.xml.sax.InputSourceFactory;
 import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
 import com.phloc.commons.xml.sax.StringSAXInputSource;
 import com.phloc.commons.xml.serialize.EXMLSerializeIndent;
+import com.phloc.commons.xml.serialize.ISAXReaderSettings;
 import com.phloc.commons.xml.serialize.SAXReader;
 import com.phloc.commons.xml.serialize.SAXReaderSettings;
 import com.phloc.commons.xml.serialize.XMLWriterSettings;
@@ -334,11 +335,11 @@ public final class MicroReaderTest
     assertNotNull (doc);
 
     final MicroSAXHandler aHdl = new MicroSAXHandler (true, new EmptyEntityResolver ());
-    final SAXReaderSettings aSettings = new SAXReaderSettings ().setEntityResolver (aHdl)
-                                                                .setDTDHandler (aHdl)
-                                                                .setContentHandler (aHdl)
-                                                                .setErrorHandler (aHdl)
-                                                                .setLexicalHandler (aHdl);
+    final ISAXReaderSettings aSettings = new SAXReaderSettings ().setEntityResolver (aHdl)
+                                                                 .setDTDHandler (aHdl)
+                                                                 .setContentHandler (aHdl)
+                                                                 .setErrorHandler (aHdl)
+                                                                 .setLexicalHandler (aHdl);
     assertTrue (SAXReader.readXMLSAX (InputSourceFactory.create (ClassPathResource.getInputStream ("xml/xml-entity-public.xml")),
                                       aSettings)
                          .isSuccess ());
