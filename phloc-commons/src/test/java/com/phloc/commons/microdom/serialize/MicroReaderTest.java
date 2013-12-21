@@ -41,6 +41,7 @@ import com.phloc.commons.io.streams.NonBlockingStringWriter;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.xml.namespace.MapBasedNamespaceContext;
 import com.phloc.commons.xml.sax.EmptyEntityResolver;
+import com.phloc.commons.xml.sax.InputSourceFactory;
 import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
 import com.phloc.commons.xml.sax.StringSAXInputSource;
 import com.phloc.commons.xml.serialize.EXMLSerializeIndent;
@@ -338,7 +339,8 @@ public final class MicroReaderTest
                                                                 .setContentHandler (aHdl)
                                                                 .setErrorHandler (aHdl)
                                                                 .setLexicalHandler (aHdl);
-    assertTrue (SAXReader.readXMLSAX (ClassPathResource.getInputStream ("xml/xml-entity-public.xml"), aSettings)
+    assertTrue (SAXReader.readXMLSAX (InputSourceFactory.create (ClassPathResource.getInputStream ("xml/xml-entity-public.xml")),
+                                      aSettings)
                          .isSuccess ());
     assertNotNull (aHdl.getDocument ());
 
