@@ -21,10 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.FactoryConfigurationError;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 import javax.xml.validation.Schema;
 
 import org.w3c.dom.DOMImplementation;
@@ -47,17 +44,11 @@ public final class XMLFactory
   public static final boolean DEFAULT_DOM_IGNORING_COMMENTS = true;
   public static final boolean DEFAULT_DOM_NAMESPACE_AWARE = true;
 
-  public static final boolean DEFAULT_SAX_NAMESPACE_AWARE = true;
-
   /** The DOM DocumentBuilderFactory. */
   private static final DocumentBuilderFactory s_aDefaultDocBuilderFactory;
 
   /** The DOM DocumentBuilder. */
   private static final DocumentBuilder s_aDefaultDocBuilder;
-
-  /** The SAX parser factory. */
-  private static final SAXParserFactory s_aSaxFactoryNonValidating;
-  private static final SAXParserFactory s_aSaxFactoryValidating;
 
   static
   {
@@ -70,24 +61,6 @@ public final class XMLFactory
     // create DOM document builder
     s_aDefaultDocBuilderFactory = createDefaultDocumentBuilderFactory ();
     s_aDefaultDocBuilder = createDocumentBuilder (s_aDefaultDocBuilderFactory);
-
-    // init SAX factory
-    try
-    {
-      // Not validating
-      s_aSaxFactoryNonValidating = SAXParserFactory.newInstance ();
-      s_aSaxFactoryNonValidating.setNamespaceAware (DEFAULT_SAX_NAMESPACE_AWARE);
-      s_aSaxFactoryNonValidating.setValidating (false);
-
-      // Validating
-      s_aSaxFactoryValidating = SAXParserFactory.newInstance ();
-      s_aSaxFactoryValidating.setNamespaceAware (DEFAULT_SAX_NAMESPACE_AWARE);
-      s_aSaxFactoryValidating.setValidating (true);
-    }
-    catch (final FactoryConfigurationError ex)
-    {
-      throw new InitializationException ("Failed to create SAX parser factory", ex);
-    }
   }
 
   @PresentForCodeCoverage
@@ -216,41 +189,6 @@ public final class XMLFactory
     catch (final ParserConfigurationException ex)
     {
       throw new InitializationException ("Failed to create document builder", ex);
-    }
-  }
-
-  /**
-   * Get the default SAX parser factory.
-   * 
-   * @param bValidating
-   *        if <code>true</code> the validating factory is returned, else the
-   *        non-validating factory is returned.
-   * @return The matching SAX parser factory. Never <code>null</code>.
-   */
-  @Nonnull
-  public static SAXParserFactory getSaxParserFactory (final boolean bValidating)
-  {
-    return bValidating ? s_aSaxFactoryValidating : s_aSaxFactoryNonValidating;
-  }
-
-  /**
-   * Create a new SAX parser.
-   * 
-   * @param bValidating
-   *        if <code>true</code> a validating parser is returned, else the
-   *        non-validating parser is returned.
-   * @return Never <code>null</code>.
-   */
-  @Nonnull
-  public static SAXParser createSaxParser (final boolean bValidating)
-  {
-    try
-    {
-      return getSaxParserFactory (bValidating).newSAXParser ();
-    }
-    catch (final Throwable t)
-    {
-      throw new IllegalStateException ("Failed to create new SAX parser", t);
     }
   }
 
