@@ -24,6 +24,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.validation.Schema;
 
 import org.xml.sax.EntityResolver;
@@ -31,6 +32,7 @@ import org.xml.sax.ErrorHandler;
 
 import com.phloc.commons.callback.IExceptionHandler;
 import com.phloc.commons.callback.LoggingExceptionHandler;
+import com.phloc.commons.xml.XMLFactory;
 
 /**
  * DOM reader settings
@@ -40,14 +42,6 @@ import com.phloc.commons.callback.LoggingExceptionHandler;
 @ThreadSafe
 public final class DOMReaderSettings
 {
-  public static final boolean DEFAULT_NAMESPACE_AWARE = true;
-  public static final boolean DEFAULT_VALIDATING = true;
-  public static final boolean DEFAULT_IGNORING_ELEMENT_CONTENT_WHITESPACE = false;
-  public static final boolean DEFAULT_EXPAND_ENTITY_REFERENCES = true;
-  public static final boolean DEFAULT_IGNORING_COMMENTS = true;
-  public static final boolean DEFAULT_COALESCING = true;
-  public static final boolean DEFAULT_XINCLUDE_AWARE = false;
-
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
 
   // Default exception handler
@@ -55,14 +49,14 @@ public final class DOMReaderSettings
   private static IExceptionHandler <Throwable> s_aDefaultExceptionHandler = new XMLLoggingExceptionHandler ();
 
   // DocumentBuilderFactory properties
-  private boolean m_bNamespaceAware = DEFAULT_NAMESPACE_AWARE;
-  private boolean m_bValidating = DEFAULT_VALIDATING;
-  private boolean m_bIgnoringElementContentWhitespace = DEFAULT_IGNORING_ELEMENT_CONTENT_WHITESPACE;
-  private boolean m_bExpandEntityReferences = DEFAULT_EXPAND_ENTITY_REFERENCES;
-  private boolean m_bIgnoringComments = DEFAULT_IGNORING_COMMENTS;
-  private boolean m_bCoalescing = DEFAULT_COALESCING;
+  private boolean m_bNamespaceAware = XMLFactory.DEFAULT_DOM_NAMESPACE_AWARE;
+  private boolean m_bValidating = XMLFactory.DEFAULT_DOM_VALIDATING;
+  private boolean m_bIgnoringElementContentWhitespace = XMLFactory.DEFAULT_DOM_IGNORING_ELEMENT_CONTENT_WHITESPACE;
+  private boolean m_bExpandEntityReferences = XMLFactory.DEFAULT_DOM_EXPAND_ENTITY_REFERENCES;
+  private boolean m_bIgnoringComments = XMLFactory.DEFAULT_DOM_IGNORING_COMMENTS;
+  private boolean m_bCoalescing = XMLFactory.DEFAULT_DOM_COALESCING;
   private Schema m_aSchema;
-  private boolean m_bXIncludeAware = DEFAULT_XINCLUDE_AWARE;
+  private boolean m_bXIncludeAware = XMLFactory.DEFAULT_DOM_XINCLUDE_AWARE;
 
   // DocumentBuilder properties
   private EntityResolver m_aEntityResolver;
@@ -171,6 +165,25 @@ public final class DOMReaderSettings
   {
     m_bXIncludeAware = bXIncludeAware;
     return this;
+  }
+
+  /**
+   * Check if the current settings require a separate
+   * {@link DocumentBuilderFactory} or if a pooled default object can be used.
+   * 
+   * @return <code>true</code> if a separate {@link DocumentBuilderFactory} is
+   *         required, <code>false</code> if not.
+   */
+  public boolean requiresSeparateDocumentBuilderFactory ()
+  {
+    return m_bNamespaceAware != XMLFactory.DEFAULT_DOM_NAMESPACE_AWARE ||
+           m_bValidating != XMLFactory.DEFAULT_DOM_VALIDATING ||
+           m_bIgnoringElementContentWhitespace != XMLFactory.DEFAULT_DOM_IGNORING_ELEMENT_CONTENT_WHITESPACE ||
+           m_bExpandEntityReferences != XMLFactory.DEFAULT_DOM_EXPAND_ENTITY_REFERENCES ||
+           m_bIgnoringComments != XMLFactory.DEFAULT_DOM_IGNORING_COMMENTS ||
+           m_bCoalescing != XMLFactory.DEFAULT_DOM_COALESCING ||
+           m_aSchema != null ||
+           m_bXIncludeAware != XMLFactory.DEFAULT_DOM_XINCLUDE_AWARE;
   }
 
   @Nullable
