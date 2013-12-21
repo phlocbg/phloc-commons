@@ -40,9 +40,23 @@ import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
  */
 public final class XMLFactory
 {
-  public static final boolean DEFAULT_DOM_COALESCING = true;
-  public static final boolean DEFAULT_DOM_IGNORING_COMMENTS = true;
+  /** DocumentBuilderFactory is by default namespace aware */
   public static final boolean DEFAULT_DOM_NAMESPACE_AWARE = true;
+  /** DocumentBuilderFactory is by default validating */
+  public static final boolean DEFAULT_DOM_VALIDATING = true;
+  /**
+   * DocumentBuilderFactory is by default not ignoring element content
+   * whitespace
+   */
+  public static final boolean DEFAULT_DOM_IGNORING_ELEMENT_CONTENT_WHITESPACE = false;
+  /** DocumentBuilderFactory is by default entity reference expanding */
+  public static final boolean DEFAULT_DOM_EXPAND_ENTITY_REFERENCES = true;
+  /** DocumentBuilderFactory is by default ignoring comments */
+  public static final boolean DEFAULT_DOM_IGNORING_COMMENTS = true;
+  /** DocumentBuilderFactory is by default coalescing */
+  public static final boolean DEFAULT_DOM_COALESCING = true;
+  /** DocumentBuilderFactory is by default not XInclude aware */
+  public static final boolean DEFAULT_DOM_XINCLUDE_AWARE = false;
 
   /** The DOM DocumentBuilderFactory. */
   private static final DocumentBuilderFactory s_aDefaultDocBuilderFactory;
@@ -71,8 +85,9 @@ public final class XMLFactory
   {}
 
   /**
-   * Create a new {@link DocumentBuilderFactory} with the following settings:
-   * coalescing, comment ignoring and namespace aware.
+   * Create a new {@link DocumentBuilderFactory} using the defaults defined in
+   * this class ({@link #DEFAULT_DOM_NAMESPACE_AWARE},
+   * {@link #DEFAULT_DOM_VALIDATING} etc.).
    * 
    * @return Never <code>null</code>.
    */
@@ -80,12 +95,20 @@ public final class XMLFactory
   public static DocumentBuilderFactory createDefaultDocumentBuilderFactory ()
   {
     final DocumentBuilderFactory aDocumentBuilderFactory = DocumentBuilderFactory.newInstance ();
-    // convert CDATA to text node?
-    aDocumentBuilderFactory.setCoalescing (DEFAULT_DOM_COALESCING);
-    // Ignore comments?
-    aDocumentBuilderFactory.setIgnoringComments (DEFAULT_DOM_IGNORING_COMMENTS);
-    // Namespace aware?
     aDocumentBuilderFactory.setNamespaceAware (DEFAULT_DOM_NAMESPACE_AWARE);
+    aDocumentBuilderFactory.setValidating (DEFAULT_DOM_VALIDATING);
+    aDocumentBuilderFactory.setIgnoringElementContentWhitespace (DEFAULT_DOM_IGNORING_ELEMENT_CONTENT_WHITESPACE);
+    aDocumentBuilderFactory.setExpandEntityReferences (DEFAULT_DOM_EXPAND_ENTITY_REFERENCES);
+    aDocumentBuilderFactory.setIgnoringComments (DEFAULT_DOM_IGNORING_COMMENTS);
+    aDocumentBuilderFactory.setCoalescing (DEFAULT_DOM_COALESCING);
+    try
+    {
+      aDocumentBuilderFactory.setXIncludeAware (DEFAULT_DOM_XINCLUDE_AWARE);
+    }
+    catch (final UnsupportedOperationException ex)
+    {
+      // Ignore
+    }
     return aDocumentBuilderFactory;
   }
 
