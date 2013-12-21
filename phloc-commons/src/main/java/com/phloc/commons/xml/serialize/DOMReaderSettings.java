@@ -40,15 +40,34 @@ import com.phloc.commons.callback.LoggingExceptionHandler;
 @ThreadSafe
 public final class DOMReaderSettings
 {
+  public static final boolean DEFAULT_NAMESPACE_AWARE = true;
+  public static final boolean DEFAULT_VALIDATING = true;
+  public static final boolean DEFAULT_IGNORING_ELEMENT_CONTENT_WHITESPACE = false;
+  public static final boolean DEFAULT_EXPAND_ENTITY_REFERENCES = true;
+  public static final boolean DEFAULT_IGNORING_COMMENTS = true;
+  public static final boolean DEFAULT_COALESCING = true;
+  public static final boolean DEFAULT_XINCLUDE_AWARE = false;
+
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
 
   // Default exception handler
   @GuardedBy ("s_aRWLock")
   private static IExceptionHandler <Throwable> s_aDefaultExceptionHandler = new XMLLoggingExceptionHandler ();
 
-  private EntityResolver m_aEntityResolver;
+  // DocumentBuilderFactory properties
+  private boolean m_bNamespaceAware = DEFAULT_NAMESPACE_AWARE;
+  private boolean m_bValidating = DEFAULT_VALIDATING;
+  private boolean m_bIgnoringElementContentWhitespace = DEFAULT_IGNORING_ELEMENT_CONTENT_WHITESPACE;
+  private boolean m_bExpandEntityReferences = DEFAULT_EXPAND_ENTITY_REFERENCES;
+  private boolean m_bIgnoringComments = DEFAULT_IGNORING_COMMENTS;
+  private boolean m_bCoalescing = DEFAULT_COALESCING;
   private Schema m_aSchema;
+  private boolean m_bXIncludeAware = DEFAULT_XINCLUDE_AWARE;
+
+  // DocumentBuilder properties
+  private EntityResolver m_aEntityResolver;
   private ErrorHandler m_aErrorHandler;
+
   private IExceptionHandler <Throwable> m_aExceptionHandler;
 
   public DOMReaderSettings ()
@@ -57,16 +76,75 @@ public final class DOMReaderSettings
     setExceptionHandler (getDefaultExceptionHandler ());
   }
 
-  @Nullable
-  public EntityResolver getEntityResolver ()
+  public boolean isNamespaceAware ()
   {
-    return m_aEntityResolver;
+    return m_bNamespaceAware;
   }
 
   @Nonnull
-  public DOMReaderSettings setEntityResolver (@Nullable final EntityResolver aEntityResolver)
+  public DOMReaderSettings setNamespaceAware (final boolean bNamespaceAware)
   {
-    m_aEntityResolver = aEntityResolver;
+    m_bNamespaceAware = bNamespaceAware;
+    return this;
+  }
+
+  public boolean isValidating ()
+  {
+    return m_bValidating;
+  }
+
+  @Nonnull
+  public DOMReaderSettings setValidating (final boolean bValidating)
+  {
+    m_bValidating = bValidating;
+    return this;
+  }
+
+  public boolean isIgnoringElementContentWhitespace ()
+  {
+    return m_bIgnoringElementContentWhitespace;
+  }
+
+  @Nonnull
+  public DOMReaderSettings setIgnoringElementContentWhitespace (final boolean bIgnoringElementContentWhitespace)
+  {
+    m_bIgnoringElementContentWhitespace = bIgnoringElementContentWhitespace;
+    return this;
+  }
+
+  public boolean isExpandEntityReferences ()
+  {
+    return m_bExpandEntityReferences;
+  }
+
+  @Nonnull
+  public DOMReaderSettings setExpandEntityReferences (final boolean bExpandEntityReferences)
+  {
+    m_bExpandEntityReferences = bExpandEntityReferences;
+    return this;
+  }
+
+  public boolean isIgnoringComments ()
+  {
+    return m_bIgnoringComments;
+  }
+
+  @Nonnull
+  public DOMReaderSettings setIgnoringComments (final boolean bIgnoringComments)
+  {
+    m_bIgnoringComments = bIgnoringComments;
+    return this;
+  }
+
+  public boolean isCoalescing ()
+  {
+    return m_bCoalescing;
+  }
+
+  @Nonnull
+  public DOMReaderSettings setCoalescing (final boolean bCoalescing)
+  {
+    m_bCoalescing = bCoalescing;
     return this;
   }
 
@@ -80,6 +158,31 @@ public final class DOMReaderSettings
   public DOMReaderSettings setSchema (@Nullable final Schema aSchema)
   {
     m_aSchema = aSchema;
+    return this;
+  }
+
+  public boolean isXIncludeAware ()
+  {
+    return m_bXIncludeAware;
+  }
+
+  @Nonnull
+  public DOMReaderSettings setXIncludeAware (final boolean bXIncludeAware)
+  {
+    m_bXIncludeAware = bXIncludeAware;
+    return this;
+  }
+
+  @Nullable
+  public EntityResolver getEntityResolver ()
+  {
+    return m_aEntityResolver;
+  }
+
+  @Nonnull
+  public DOMReaderSettings setEntityResolver (@Nullable final EntityResolver aEntityResolver)
+  {
+    m_aEntityResolver = aEntityResolver;
     return this;
   }
 
