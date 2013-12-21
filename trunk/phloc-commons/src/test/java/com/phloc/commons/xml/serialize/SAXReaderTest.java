@@ -31,7 +31,6 @@ import com.phloc.commons.callback.IThrowingRunnable;
 import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.mock.PhlocTestUtils;
 import com.phloc.commons.xml.sax.CachingSAXInputSource;
-import com.phloc.commons.xml.sax.ReadableResourceSAXInputSource;
 
 /**
  * Test class for {@link SAXReader}
@@ -76,7 +75,7 @@ public final class SAXReaderTest
     {
       public void run () throws Exception
       {
-        assertTrue (SAXReader.readXMLSAX (new ReadableResourceSAXInputSource (new ClassPathResource ("xml/buildinfo.xml")),
+        assertTrue (SAXReader.readXMLSAX (new ClassPathResource ("xml/buildinfo.xml"),
                                           new SAXReaderSettings ().setContentHandler (new DefaultHandler ()))
                              .isSuccess ());
       }
