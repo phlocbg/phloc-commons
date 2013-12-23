@@ -24,7 +24,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.validation.Schema;
 
 import org.xml.sax.EntityResolver;
@@ -41,8 +40,10 @@ import com.phloc.commons.xml.XMLFactory;
  * @author Philip Helger
  */
 @ThreadSafe
-public final class DOMReaderSettings implements ICloneable <DOMReaderSettings>
+public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMReaderSettings
 {
+  public static final IDOMReaderSettings DEFAULT_SETTINGS = new DOMReaderSettings ();
+
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
 
   // Default exception handler
@@ -184,13 +185,6 @@ public final class DOMReaderSettings implements ICloneable <DOMReaderSettings>
     return this;
   }
 
-  /**
-   * Check if the current settings require a separate
-   * {@link DocumentBuilderFactory} or if a pooled default object can be used.
-   * 
-   * @return <code>true</code> if a separate {@link DocumentBuilderFactory} is
-   *         required, <code>false</code> if not.
-   */
   public boolean requiresSeparateDocumentBuilderFactory ()
   {
     return m_bNamespaceAware != XMLFactory.DEFAULT_DOM_NAMESPACE_AWARE ||
@@ -245,6 +239,12 @@ public final class DOMReaderSettings implements ICloneable <DOMReaderSettings>
     return this;
   }
 
+  @Nonnull
+  public DOMReaderSettings getClone ()
+  {
+    return new DOMReaderSettings (this);
+  }
+
   /**
    * @return The default exception handler. By default it is an implementation
    *         of {@link LoggingExceptionHandler}. Never <code>null</code>.
@@ -283,11 +283,5 @@ public final class DOMReaderSettings implements ICloneable <DOMReaderSettings>
     {
       s_aRWLock.writeLock ().unlock ();
     }
-  }
-
-  @Nonnull
-  public DOMReaderSettings getClone ()
-  {
-    return new DOMReaderSettings (this);
   }
 }
