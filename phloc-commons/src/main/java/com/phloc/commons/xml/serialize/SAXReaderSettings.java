@@ -85,6 +85,7 @@ public final class SAXReaderSettings implements ISAXReaderSettings
     m_aParserFeatures.putAll (getAllDefaultParserFeatureValues ());
   }
 
+  @Nullable
   public EntityResolver getEntityResolver ()
   {
     return m_aEntityResolver;
@@ -97,6 +98,7 @@ public final class SAXReaderSettings implements ISAXReaderSettings
     return this;
   }
 
+  @Nullable
   public DTDHandler getDTDHandler ()
   {
     return m_aDTDHandler;
@@ -109,6 +111,7 @@ public final class SAXReaderSettings implements ISAXReaderSettings
     return this;
   }
 
+  @Nullable
   public ContentHandler getContentHandler ()
   {
     return m_aContentHandler;
@@ -121,6 +124,7 @@ public final class SAXReaderSettings implements ISAXReaderSettings
     return this;
   }
 
+  @Nullable
   public ErrorHandler getErrorHandler ()
   {
     return m_aErrorHandler;
@@ -133,6 +137,7 @@ public final class SAXReaderSettings implements ISAXReaderSettings
     return this;
   }
 
+  @Nullable
   public LexicalHandler getLexicalHandler ()
   {
     return m_aLexicalHandler;
@@ -145,7 +150,8 @@ public final class SAXReaderSettings implements ISAXReaderSettings
     return this;
   }
 
-  public Boolean getParserFeatureValue (final EXMLParserFeature eFeature)
+  @Nullable
+  public Boolean getParserFeatureValue (@Nullable final EXMLParserFeature eFeature)
   {
     return eFeature == null ? null : m_aParserFeatures.get (eFeature);
   }
