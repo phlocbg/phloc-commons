@@ -37,6 +37,7 @@ import com.phloc.commons.mock.PhlocTestUtils;
 import com.phloc.commons.version.Version;
 import com.phloc.commons.xml.sax.ReadableResourceSAXInputSource;
 import com.phloc.commons.xml.schema.XMLSchemaCache;
+import com.phloc.commons.xml.serialize.DOMReaderSettings;
 import com.phloc.commons.xml.serialize.XMLReader;
 import com.phloc.commons.xml.serialize.XMLWriterSettings;
 
@@ -66,8 +67,8 @@ public final class ChangeLogSerializerTest
 
     // Read with XML Schema
     final Document aW3CDoc = XMLReader.readXMLDOM (new ClassPathResource (CChangeLog.CHANGELOG_XML_FILENAME),
-                                                   XMLSchemaCache.getInstance ()
-                                                                 .getSchema (new ClassPathResource (CChangeLog.CHANGELOG_XSD_10)));
+                                                   new DOMReaderSettings ().setSchema (XMLSchemaCache.getInstance ()
+                                                                                                     .getSchema (new ClassPathResource (CChangeLog.CHANGELOG_XSD_10))));
     assertNotNull (aW3CDoc);
 
     // Read invalid
@@ -111,8 +112,8 @@ public final class ChangeLogSerializerTest
     final Document aW3CDoc = XMLReader.readXMLDOM (new ReadableResourceSAXInputSource (new MicroDOMInputStreamProvider (aDoc,
                                                                                                                         XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ),
                                                                                        null),
-                                                   XMLSchemaCache.getInstance ()
-                                                                 .getSchema (new ClassPathResource (CChangeLog.CHANGELOG_XSD_10)));
+                                                   new DOMReaderSettings ().setSchema (XMLSchemaCache.getInstance ()
+                                                                                                     .getSchema (new ClassPathResource (CChangeLog.CHANGELOG_XSD_10))));
     assertNotNull (aW3CDoc);
 
     PhlocTestUtils.testDefaultImplementationWithEqualContentObject (aCL, aCL2);

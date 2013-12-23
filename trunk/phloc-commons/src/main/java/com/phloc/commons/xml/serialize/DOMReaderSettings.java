@@ -42,13 +42,14 @@ import com.phloc.commons.xml.XMLFactory;
 @ThreadSafe
 public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMReaderSettings
 {
-  public static final IDOMReaderSettings DEFAULT_SETTINGS = new DOMReaderSettings ();
-
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
 
   // Default exception handler
   @GuardedBy ("s_aRWLock")
   private static IExceptionHandler <Throwable> s_aDefaultExceptionHandler = new XMLLoggingExceptionHandler ();
+
+  // Must be after RWLock!
+  public static final IDOMReaderSettings DEFAULT_SETTINGS = new DOMReaderSettings ();
 
   // DocumentBuilderFactory properties
   private boolean m_bNamespaceAware = XMLFactory.DEFAULT_DOM_NAMESPACE_AWARE;

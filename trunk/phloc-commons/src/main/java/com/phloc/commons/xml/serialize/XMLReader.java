@@ -28,8 +28,11 @@ import javax.annotation.Nullable;
 import javax.annotation.WillClose;
 import javax.annotation.concurrent.ThreadSafe;
 import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.validation.Schema;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.DTDHandler;
@@ -75,6 +78,7 @@ public final class XMLReader
     }
   }
 
+  private static final Logger s_aLogger = LoggerFactory.getLogger (XMLReader.class);
   private static final IStatisticsHandlerTimer s_aDomTimerHdl = StatisticsManager.getTimerHandler (XMLReader.class.getName () +
                                                                                                    "$DOM");
   private static final IStatisticsHandlerTimer s_aDomSchemaTimerHdl = StatisticsManager.getTimerHandler (XMLReader.class.getName () +
@@ -96,88 +100,154 @@ public final class XMLReader
   @Nullable
   public static Document readXMLDOM (@WillClose @Nonnull final InputSource aIS) throws SAXException
   {
-    return readXMLDOM (aIS, (Schema) null, (ErrorHandler) null, (EntityResolver) null);
+    return readXMLDOM (aIS, DOMReaderSettings.DEFAULT_SETTINGS);
   }
 
   @Nullable
   public static Document readXMLDOM (@Nonnull @WillClose final InputStream aIS) throws SAXException
   {
-    return readXMLDOM (aIS, (Schema) null, (ErrorHandler) null, (EntityResolver) null);
-  }
-
-  @Nullable
-  public static Document readXMLDOM (@Nonnull final File aFile) throws SAXException
-  {
-    return readXMLDOM (aFile, (Schema) null, (ErrorHandler) null, (EntityResolver) null);
-  }
-
-  @Nullable
-  public static Document readXMLDOM (@Nonnull final IReadableResource aIIS) throws SAXException
-  {
-    return readXMLDOM (aIIS, (Schema) null, (ErrorHandler) null, (EntityResolver) null);
+    return readXMLDOM (aIS, DOMReaderSettings.DEFAULT_SETTINGS);
   }
 
   @Nullable
   public static Document readXMLDOM (@WillClose @Nonnull final Reader aReader) throws SAXException
   {
-    return readXMLDOM (aReader, (Schema) null, (ErrorHandler) null, (EntityResolver) null);
+    return readXMLDOM (aReader, DOMReaderSettings.DEFAULT_SETTINGS);
+  }
+
+  @Nullable
+  public static Document readXMLDOM (@Nonnull final File aFile) throws SAXException
+  {
+    return readXMLDOM (aFile, DOMReaderSettings.DEFAULT_SETTINGS);
+  }
+
+  @Nullable
+  public static Document readXMLDOM (@Nonnull final IReadableResource aIIS) throws SAXException
+  {
+    return readXMLDOM (aIIS, DOMReaderSettings.DEFAULT_SETTINGS);
   }
 
   @Nullable
   public static Document readXMLDOM (@Nonnull final String sXML) throws SAXException
   {
-    return readXMLDOM (sXML, (Schema) null, (ErrorHandler) null, (EntityResolver) null);
+    return readXMLDOM (sXML, DOMReaderSettings.DEFAULT_SETTINGS);
   }
 
   @Nullable
   public static Document readXMLDOM (@Nonnull final byte [] aXML) throws SAXException
   {
-    return readXMLDOM (aXML, (Schema) null, (ErrorHandler) null, (EntityResolver) null);
+    return readXMLDOM (aXML, DOMReaderSettings.DEFAULT_SETTINGS);
   }
 
   @Nullable
+  public static Document readXMLDOM (@Nonnull @WillClose final InputStream aIS,
+                                     @Nonnull final IDOMReaderSettings aSettings) throws SAXException
+  {
+    if (aIS == null)
+      throw new NullPointerException ("IS");
+
+    try
+    {
+      return readXMLDOM (InputSourceFactory.create (aIS), aSettings);
+    }
+    finally
+    {
+      StreamUtils.close (aIS);
+    }
+  }
+
+  @Nullable
+  public static Document readXMLDOM (@WillClose @Nonnull final Reader aReader,
+                                     @Nonnull final IDOMReaderSettings aSettings) throws SAXException
+  {
+    if (aReader == null)
+      throw new NullPointerException ("Reader");
+
+    try
+    {
+      return readXMLDOM (InputSourceFactory.create (aReader), aSettings);
+    }
+    finally
+    {
+      StreamUtils.close (aReader);
+    }
+  }
+
+  @Nullable
+  public static Document readXMLDOM (@Nonnull final File aFile, @Nonnull final IDOMReaderSettings aSettings) throws SAXException
+  {
+    return readXMLDOM (InputSourceFactory.create (aFile), aSettings);
+  }
+
+  @Nullable
+  public static Document readXMLDOM (@Nonnull final IReadableResource aIIS, @Nonnull final IDOMReaderSettings aSettings) throws SAXException
+  {
+    return readXMLDOM (InputSourceFactory.create (aIIS), aSettings);
+  }
+
+  @Nullable
+  public static Document readXMLDOM (@Nonnull final String sXML, @Nonnull final IDOMReaderSettings aSettings) throws SAXException
+  {
+    return readXMLDOM (InputSourceFactory.create (sXML), aSettings);
+  }
+
+  @Nullable
+  public static Document readXMLDOM (@Nonnull final byte [] aXML, @Nonnull final IDOMReaderSettings aSettings) throws SAXException
+  {
+    return readXMLDOM (InputSourceFactory.create (aXML), aSettings);
+  }
+
+  @Nullable
+  @Deprecated
   public static Document readXMLDOM (@WillClose @Nonnull final InputSource aIS, @Nullable final Schema aSchema) throws SAXException
   {
     return readXMLDOM (aIS, aSchema, (ErrorHandler) null, (EntityResolver) null);
   }
 
   @Nullable
+  @Deprecated
   public static Document readXMLDOM (@WillClose @Nonnull final InputStream aIS, @Nullable final Schema aSchema) throws SAXException
   {
     return readXMLDOM (aIS, aSchema, (ErrorHandler) null, (EntityResolver) null);
   }
 
   @Nullable
+  @Deprecated
   public static Document readXMLDOM (@Nonnull final File aFile, @Nullable final Schema aSchema) throws SAXException
   {
     return readXMLDOM (aFile, aSchema, (ErrorHandler) null, (EntityResolver) null);
   }
 
   @Nullable
+  @Deprecated
   public static Document readXMLDOM (@Nonnull final IReadableResource aISP, @Nullable final Schema aSchema) throws SAXException
   {
     return readXMLDOM (aISP, aSchema, (ErrorHandler) null, (EntityResolver) null);
   }
 
   @Nullable
+  @Deprecated
   public static Document readXMLDOM (@WillClose @Nonnull final Reader aReader, @Nullable final Schema aSchema) throws SAXException
   {
     return readXMLDOM (aReader, aSchema, (ErrorHandler) null, (EntityResolver) null);
   }
 
   @Nullable
+  @Deprecated
   public static Document readXMLDOM (@Nonnull final String sXML, @Nullable final Schema aSchema) throws SAXException
   {
     return readXMLDOM (sXML, aSchema, (ErrorHandler) null, (EntityResolver) null);
   }
 
   @Nullable
+  @Deprecated
   public static Document readXMLDOM (@Nonnull final byte [] aXML, @Nullable final Schema aSchema) throws SAXException
   {
     return readXMLDOM (aXML, aSchema, (ErrorHandler) null, (EntityResolver) null);
   }
 
   @Nullable
+  @Deprecated
   public static Document readXMLDOM (@WillClose @Nonnull final InputSource aIS,
                                      @Nullable final ErrorHandler aCustomErrorHandler) throws SAXException
   {
@@ -185,6 +255,7 @@ public final class XMLReader
   }
 
   @Nullable
+  @Deprecated
   public static Document readXMLDOM (@WillClose @Nonnull final InputStream aIS,
                                      @Nullable final ErrorHandler aCustomErrorHandler) throws SAXException
   {
@@ -192,12 +263,14 @@ public final class XMLReader
   }
 
   @Nullable
+  @Deprecated
   public static Document readXMLDOM (@Nonnull final File aFile, @Nullable final ErrorHandler aCustomErrorHandler) throws SAXException
   {
     return readXMLDOM (aFile, (Schema) null, aCustomErrorHandler, (EntityResolver) null);
   }
 
   @Nullable
+  @Deprecated
   public static Document readXMLDOM (@Nonnull final IReadableResource aISP,
                                      @Nullable final ErrorHandler aCustomErrorHandler) throws SAXException
   {
@@ -205,6 +278,7 @@ public final class XMLReader
   }
 
   @Nullable
+  @Deprecated
   public static Document readXMLDOM (@WillClose @Nonnull final Reader aReader,
                                      @Nullable final ErrorHandler aCustomErrorHandler) throws SAXException
   {
@@ -212,18 +286,21 @@ public final class XMLReader
   }
 
   @Nullable
+  @Deprecated
   public static Document readXMLDOM (@Nonnull final String sXML, @Nullable final ErrorHandler aCustomErrorHandler) throws SAXException
   {
     return readXMLDOM (sXML, (Schema) null, aCustomErrorHandler, (EntityResolver) null);
   }
 
   @Nullable
+  @Deprecated
   public static Document readXMLDOM (@Nonnull final byte [] aXML, @Nullable final ErrorHandler aCustomErrorHandler) throws SAXException
   {
     return readXMLDOM (aXML, (Schema) null, aCustomErrorHandler, (EntityResolver) null);
   }
 
   @Nullable
+  @Deprecated
   public static Document readXMLDOM (@WillClose @Nonnull final InputSource aInputSource,
                                      @Nullable final Schema aSchema,
                                      @Nullable final ErrorHandler aCustomErrorHandler) throws SAXException
@@ -232,6 +309,7 @@ public final class XMLReader
   }
 
   @Nullable
+  @Deprecated
   public static Document readXMLDOM (@Nonnull @WillClose final InputStream aIS,
                                      @Nullable final Schema aSchema,
                                      @Nullable final ErrorHandler aCustomErrorHandler) throws SAXException
@@ -240,6 +318,7 @@ public final class XMLReader
   }
 
   @Nullable
+  @Deprecated
   public static Document readXMLDOM (@Nonnull final File aFile,
                                      @Nullable final Schema aSchema,
                                      @Nullable final ErrorHandler aCustomErrorHandler) throws SAXException
@@ -248,6 +327,7 @@ public final class XMLReader
   }
 
   @Nullable
+  @Deprecated
   public static Document readXMLDOM (@Nonnull final IReadableResource aResource,
                                      @Nullable final Schema aSchema,
                                      @Nullable final ErrorHandler aCustomErrorHandler) throws SAXException
@@ -256,6 +336,7 @@ public final class XMLReader
   }
 
   @Nullable
+  @Deprecated
   public static Document readXMLDOM (@Nonnull @WillClose final Reader aReader,
                                      @Nullable final Schema aSchema,
                                      @Nullable final ErrorHandler aCustomErrorHandler) throws SAXException
@@ -264,6 +345,7 @@ public final class XMLReader
   }
 
   @Nullable
+  @Deprecated
   public static Document readXMLDOM (@Nonnull final String sXML,
                                      @Nullable final Schema aSchema,
                                      @Nullable final ErrorHandler aCustomErrorHandler) throws SAXException
@@ -272,6 +354,7 @@ public final class XMLReader
   }
 
   @Nullable
+  @Deprecated
   public static Document readXMLDOM (@Nonnull final byte [] aXML,
                                      @Nullable final Schema aSchema,
                                      @Nullable final ErrorHandler aCustomErrorHandler) throws SAXException
@@ -280,92 +363,7 @@ public final class XMLReader
   }
 
   @Nullable
-  public static Document readXMLDOM (@WillClose @Nonnull final InputSource aInputSource,
-                                     @Nullable final Schema aSchema,
-                                     @Nullable final ErrorHandler aCustomErrorHandler,
-                                     @Nullable final EntityResolver aEntityResolver) throws SAXException
-  {
-    if (aInputSource == null)
-      throw new NullPointerException ("inputSource");
-
-    Document doc = null;
-    try
-    {
-      final StopWatch aSW = new StopWatch (true);
-      DocumentBuilder aDocumentBuilder;
-      boolean bFromPool = false;
-      if (aSchema == null)
-      {
-        // Use one from the pool
-        aDocumentBuilder = s_aDOMPool.borrowObject ();
-        bFromPool = true;
-      }
-      else
-      {
-        // We need to create a new DocumentBuilder
-        aDocumentBuilder = XMLFactory.createDocumentBuilder (aSchema);
-      }
-
-      try
-      {
-        // Ensure a collecting error handler is present
-        CollectingSAXErrorHandler aCEH;
-        if (aCustomErrorHandler instanceof CollectingSAXErrorHandler)
-          aCEH = (CollectingSAXErrorHandler) aCustomErrorHandler;
-        else
-          aCEH = new CollectingSAXErrorHandler (aCustomErrorHandler != null ? aCustomErrorHandler
-                                                                           : LoggingSAXErrorHandler.getInstance ());
-        aDocumentBuilder.setErrorHandler (aCEH);
-
-        // Set optional entity resolver
-        aDocumentBuilder.setEntityResolver (aEntityResolver);
-
-        // Main parsing
-        doc = aDocumentBuilder.parse (aInputSource);
-
-        // Statistics update
-        if (aSchema == null)
-          s_aDomTimerHdl.addTime (aSW.stopAndGetMillis ());
-        else
-          s_aDomSchemaTimerHdl.addTime (aSW.stopAndGetMillis ());
-
-        // By default, a document is returned, even if does not match the schema
-        // (if errors occurred), so I'm handling this manually by check for
-        // collected errors
-        if (aCEH.getResourceErrors ().containsAtLeastOneError ())
-          return null;
-      }
-      finally
-      {
-        if (bFromPool)
-        {
-          // Return to the pool
-          s_aDOMPool.returnObject (aDocumentBuilder);
-        }
-      }
-    }
-    catch (final SAXException ex)
-    {
-      getDefaultSAXExceptionHandler ().onException (ex);
-      s_aDomErrorCounterHdl.increment ();
-      throw ex;
-    }
-    catch (final Exception ex)
-    {
-      getDefaultSAXExceptionHandler ().onException (ex);
-      s_aDomErrorCounterHdl.increment ();
-    }
-    finally
-    {
-      // Close both byte stream and character stream, as we don't know which one
-      // was used
-      StreamUtils.close (aInputSource.getByteStream ());
-      StreamUtils.close (aInputSource.getCharacterStream ());
-    }
-    return doc;
-  }
-
-  @Nullable
+  @Deprecated
   public static Document readXMLDOM (@Nonnull @WillClose final InputStream aIS,
                                      @Nullable final Schema aSchema,
                                      @Nullable final ErrorHandler aCustomErrorHandler,
@@ -385,6 +383,7 @@ public final class XMLReader
   }
 
   @Nullable
+  @Deprecated
   public static Document readXMLDOM (@Nonnull final File aFile,
                                      @Nullable final Schema aSchema,
                                      @Nullable final ErrorHandler aCustomErrorHandler,
@@ -397,6 +396,7 @@ public final class XMLReader
   }
 
   @Nullable
+  @Deprecated
   public static Document readXMLDOM (@Nonnull final IReadableResource aResource,
                                      @Nullable final Schema aSchema,
                                      @Nullable final ErrorHandler aCustomErrorHandler,
@@ -409,6 +409,7 @@ public final class XMLReader
   }
 
   @Nullable
+  @Deprecated
   public static Document readXMLDOM (@Nonnull @WillClose final Reader aReader,
                                      @Nullable final Schema aSchema,
                                      @Nullable final ErrorHandler aCustomErrorHandler,
@@ -428,6 +429,7 @@ public final class XMLReader
   }
 
   @Nullable
+  @Deprecated
   public static Document readXMLDOM (@Nonnull final String sXML,
                                      @Nullable final Schema aSchema,
                                      @Nullable final ErrorHandler aCustomErrorHandler,
@@ -440,6 +442,7 @@ public final class XMLReader
   }
 
   @Nullable
+  @Deprecated
   public static Document readXMLDOM (@Nonnull final byte [] aXML,
                                      @Nullable final Schema aSchema,
                                      @Nullable final ErrorHandler aCustomErrorHandler,
@@ -449,6 +452,133 @@ public final class XMLReader
       throw new NullPointerException ("xml");
 
     return readXMLDOM (InputSourceFactory.create (aXML), aSchema, aCustomErrorHandler, aEntityResolver);
+  }
+
+  @Nullable
+  @Deprecated
+  public static Document readXMLDOM (@WillClose @Nonnull final InputSource aInputSource,
+                                     @Nullable final Schema aSchema,
+                                     @Nullable final ErrorHandler aCustomErrorHandler,
+                                     @Nullable final EntityResolver aEntityResolver) throws SAXException
+  {
+    if (aInputSource == null)
+      throw new NullPointerException ("inputSource");
+
+    return readXMLDOM (aInputSource, new DOMReaderSettings ().setSchema (aSchema)
+                                                             .setErrorHandler (aCustomErrorHandler)
+                                                             .setEntityResolver (aEntityResolver));
+  }
+
+  @Nullable
+  public static Document readXMLDOM (@WillClose @Nonnull final InputSource aInputSource,
+                                     @Nonnull final IDOMReaderSettings aSettings) throws SAXException
+  {
+    if (aInputSource == null)
+      throw new NullPointerException ("inputSource");
+    if (aSettings == null)
+      throw new NullPointerException ("settings");
+
+    Document aDoc = null;
+    try
+    {
+      final StopWatch aSW = new StopWatch (true);
+      DocumentBuilder aDocumentBuilder;
+      boolean bFromPool = false;
+      if (aSettings.requiresSeparateDocumentBuilderFactory ())
+      {
+        // We need to create a new DocumentBuilder
+        final DocumentBuilderFactory aDocumentBuilderFactory = DocumentBuilderFactory.newInstance ();
+        aDocumentBuilderFactory.setNamespaceAware (aSettings.isNamespaceAware ());
+        aDocumentBuilderFactory.setValidating (aSettings.isValidating ());
+        aDocumentBuilderFactory.setIgnoringElementContentWhitespace (aSettings.isIgnoringElementContentWhitespace ());
+        aDocumentBuilderFactory.setExpandEntityReferences (aSettings.isExpandEntityReferences ());
+        aDocumentBuilderFactory.setIgnoringComments (aSettings.isIgnoringComments ());
+        aDocumentBuilderFactory.setCoalescing (aSettings.isCoalescing ());
+        try
+        {
+          aDocumentBuilderFactory.setSchema (aSettings.getSchema ());
+        }
+        catch (final UnsupportedOperationException ex)
+        {
+          s_aLogger.warn ("DocumentBuilderFactory does not support XML Schema: " + ex.getMessage ());
+        }
+        try
+        {
+          aDocumentBuilderFactory.setXIncludeAware (aSettings.isXIncludeAware ());
+        }
+        catch (final UnsupportedOperationException ex)
+        {
+          s_aLogger.warn ("DocumentBuilderFactory does not support XInclude setting: " + ex.getMessage ());
+        }
+
+        // Ready to create document builder
+        aDocumentBuilder = aDocumentBuilderFactory.newDocumentBuilder ();
+      }
+      else
+      {
+        // Use one from the pool
+        aDocumentBuilder = s_aDOMPool.borrowObject ();
+        bFromPool = true;
+      }
+
+      try
+      {
+        // Ensure a collecting error handler is present
+        CollectingSAXErrorHandler aCEH;
+        final ErrorHandler aCustomErrorHandler = aSettings.getErrorHandler ();
+        if (aCustomErrorHandler instanceof CollectingSAXErrorHandler)
+          aCEH = (CollectingSAXErrorHandler) aCustomErrorHandler;
+        else
+          aCEH = new CollectingSAXErrorHandler (aCustomErrorHandler != null ? aCustomErrorHandler
+                                                                           : LoggingSAXErrorHandler.getInstance ());
+        aDocumentBuilder.setErrorHandler (aCEH);
+
+        // Set optional entity resolver
+        aDocumentBuilder.setEntityResolver (aSettings.getEntityResolver ());
+
+        // Main parsing
+        aDoc = aDocumentBuilder.parse (aInputSource);
+
+        // Statistics update
+        if (aSettings.getSchema () == null)
+          s_aDomTimerHdl.addTime (aSW.stopAndGetMillis ());
+        else
+          s_aDomSchemaTimerHdl.addTime (aSW.stopAndGetMillis ());
+
+        // By default, a document is returned, even if does not match the schema
+        // (if errors occurred), so I'm handling this manually by checking for
+        // collected errors
+        if (aCEH.getResourceErrors ().containsAtLeastOneError ())
+          return null;
+      }
+      finally
+      {
+        if (bFromPool)
+        {
+          // Return to the pool
+          s_aDOMPool.returnObject (aDocumentBuilder);
+        }
+      }
+    }
+    catch (final SAXException ex)
+    {
+      aSettings.getExceptionHandler ().onException (ex);
+      s_aDomErrorCounterHdl.increment ();
+      throw ex;
+    }
+    catch (final Exception ex)
+    {
+      aSettings.getExceptionHandler ().onException (ex);
+      s_aDomErrorCounterHdl.increment ();
+    }
+    finally
+    {
+      // Close both byte stream and character stream, as we don't know which one
+      // was used
+      StreamUtils.close (aInputSource.getByteStream ());
+      StreamUtils.close (aInputSource.getCharacterStream ());
+    }
+    return aDoc;
   }
 
   /**

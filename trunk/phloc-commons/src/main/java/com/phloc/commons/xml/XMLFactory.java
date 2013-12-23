@@ -43,7 +43,7 @@ public final class XMLFactory
   /** DocumentBuilderFactory is by default namespace aware */
   public static final boolean DEFAULT_DOM_NAMESPACE_AWARE = true;
   /** DocumentBuilderFactory is by default validating */
-  public static final boolean DEFAULT_DOM_VALIDATING = true;
+  public static final boolean DEFAULT_DOM_VALIDATING = false;
   /**
    * DocumentBuilderFactory is by default not ignoring element content
    * whitespace
