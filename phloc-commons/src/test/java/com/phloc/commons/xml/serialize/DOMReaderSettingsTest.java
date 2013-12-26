@@ -19,6 +19,7 @@ package com.phloc.commons.xml.serialize;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.AfterClass;
@@ -53,5 +54,15 @@ public final class DOMReaderSettingsTest
     assertNotNull (DOMReaderSettings.DEFAULT_SETTINGS);
     assertFalse (DOMReaderSettings.DEFAULT_SETTINGS.requiresSeparateDocumentBuilderFactory ());
     assertTrue (XMLFactory.DEFAULT_DOM_NAMESPACE_AWARE == DOMReaderSettings.DEFAULT_SETTINGS.isNamespaceAware ());
+    assertTrue (XMLFactory.DEFAULT_DOM_VALIDATING == DOMReaderSettings.DEFAULT_SETTINGS.isValidating ());
+    assertTrue (XMLFactory.DEFAULT_DOM_IGNORING_ELEMENT_CONTENT_WHITESPACE == DOMReaderSettings.DEFAULT_SETTINGS.isIgnoringElementContentWhitespace ());
+    assertTrue (XMLFactory.DEFAULT_DOM_EXPAND_ENTITY_REFERENCES == DOMReaderSettings.DEFAULT_SETTINGS.isExpandEntityReferences ());
+    assertTrue (XMLFactory.DEFAULT_DOM_IGNORING_COMMENTS == DOMReaderSettings.DEFAULT_SETTINGS.isIgnoringComments ());
+    assertTrue (XMLFactory.DEFAULT_DOM_COALESCING == DOMReaderSettings.DEFAULT_SETTINGS.isCoalescing ());
+    assertNull (DOMReaderSettings.DEFAULT_SETTINGS.getSchema ());
+    assertTrue (XMLFactory.DEFAULT_DOM_XINCLUDE_AWARE == DOMReaderSettings.DEFAULT_SETTINGS.isXIncludeAware ());
+    assertNull (DOMReaderSettings.DEFAULT_SETTINGS.getEntityResolver ());
+    assertNull (DOMReaderSettings.DEFAULT_SETTINGS.getErrorHandler ());
+    assertNotNull (DOMReaderSettings.DEFAULT_SETTINGS.getExceptionHandler ());
   }
 }

@@ -48,6 +48,7 @@ public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMRe
   @GuardedBy ("s_aRWLock")
   private static IExceptionHandler <Throwable> s_aDefaultExceptionHandler = new XMLLoggingExceptionHandler ();
 
+  /** A constant object representing the default settings. */
   // Must be after RWLock!
   public static final IDOMReaderSettings DEFAULT_SETTINGS = new DOMReaderSettings ();
 
@@ -68,14 +69,27 @@ public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMRe
   // Handling properties
   private IExceptionHandler <Throwable> m_aExceptionHandler;
 
+  /**
+   * Constructor using the default settings.
+   */
   public DOMReaderSettings ()
   {
     // Set default values
     setExceptionHandler (getDefaultExceptionHandler ());
   }
 
-  public DOMReaderSettings (@Nonnull final DOMReaderSettings aOther)
+  /**
+   * Copy constructor.
+   * 
+   * @param aOther
+   *        The settings object to copy from. May not be <code>null</code>.
+   */
+  public DOMReaderSettings (@Nonnull final IDOMReaderSettings aOther)
   {
+    if (aOther == null)
+      throw new NullPointerException ("other");
+
+    // DocumentBuilderFactory
     setNamespaceAware (aOther.isNamespaceAware ());
     setValidating (aOther.isValidating ());
     setIgnoringElementContentWhitespace (aOther.isIgnoringElementContentWhitespace ());
@@ -84,8 +98,10 @@ public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMRe
     setCoalescing (aOther.isCoalescing ());
     setSchema (aOther.getSchema ());
     setXIncludeAware (aOther.isXIncludeAware ());
+    // DocumentBuilder
     setEntityResolver (aOther.getEntityResolver ());
     setErrorHandler (aOther.getErrorHandler ());
+    // Custom
     setExceptionHandler (aOther.getExceptionHandler ());
   }
 
