@@ -560,16 +560,13 @@ public final class XMLReader
         }
       }
     }
-    catch (final SAXException ex)
+    catch (final Throwable t)
     {
-      aSettings.getExceptionHandler ().onException (ex);
+      aSettings.getExceptionHandler ().onException (t);
       s_aDomErrorCounterHdl.increment ();
-      throw ex;
-    }
-    catch (final Exception ex)
-    {
-      aSettings.getExceptionHandler ().onException (ex);
-      s_aDomErrorCounterHdl.increment ();
+
+      if (t instanceof SAXException)
+        throw (SAXException) t;
     }
     finally
     {
