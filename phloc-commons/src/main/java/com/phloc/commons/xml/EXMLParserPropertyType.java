@@ -18,21 +18,18 @@
 package com.phloc.commons.xml;
 
 /**
- * Contains the types of XML parser features.
+ * Contains the types of XML parser properties.
  * 
  * @author Philip Helger
  */
-public enum EXMLParserFeatureType
+public enum EXMLParserPropertyType
 {
-  /** General Features */
+  /** General properties */
   GENERAL,
 
-  /** DOM Features */
+  /** DOM properties */
   DOM,
 
-  /** SAX Features */
-  SAX,
-
-  /** XInclude Features */
-  XINCLUDE;
+  /** SAX properties */
+  SAX;
 }

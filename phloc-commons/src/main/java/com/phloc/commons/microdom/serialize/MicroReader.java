@@ -92,9 +92,9 @@ public final class MicroReader
                                                                                                           : aHdl)
                                                                 .setLexicalHandler (aHdl);
     if (bDTDValidating)
-      aSettings.setParserFeatureValue (EXMLParserFeature.VALIDATION, true);
+      aSettings.setFeatureValue (EXMLParserFeature.VALIDATION, true);
     if (bSchemaValidation)
-      aSettings.setParserFeatureValue (EXMLParserFeature.SCHEMA, true);
+      aSettings.setFeatureValue (EXMLParserFeature.SCHEMA, true);
 
     if (SAXReader.readXMLSAX (aInputSource, aSettings).isFailure ())
       return null;

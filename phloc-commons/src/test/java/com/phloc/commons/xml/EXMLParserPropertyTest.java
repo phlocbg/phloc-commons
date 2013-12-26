@@ -17,22 +17,27 @@
  */
 package com.phloc.commons.xml;
 
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import com.phloc.commons.string.StringHelper;
+
 /**
- * Contains the types of XML parser features.
+ * Test class for class {@link EXMLParserProperty}.
  * 
  * @author Philip Helger
  */
-public enum EXMLParserFeatureType
+public final class EXMLParserPropertyTest
 {
-  /** General Features */
-  GENERAL,
-
-  /** DOM Features */
-  DOM,
-
-  /** SAX Features */
-  SAX,
-
-  /** XInclude Features */
-  XINCLUDE;
+  @Test
+  public void testAll ()
+  {
+    for (final EXMLParserProperty e : EXMLParserProperty.values ())
+    {
+      assertTrue (StringHelper.hasText (e.getName ()));
+      assertSame (e, EXMLParserProperty.valueOf (e.name ()));
+    }
+  }
 }
