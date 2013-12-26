@@ -36,6 +36,7 @@ import org.xml.sax.ext.LexicalHandler;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.callback.IExceptionHandler;
 import com.phloc.commons.callback.LoggingExceptionHandler;
+import com.phloc.commons.state.EChange;
 import com.phloc.commons.xml.EXMLParserFeature;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -52,7 +53,7 @@ public final class SAXReaderSettings implements ISAXReaderSettings
 
   // Default parser features
   @GuardedBy ("s_aRWLock")
-  private static final EnumMap <EXMLParserFeature, Boolean> s_aDefaultParserFeatures = new EnumMap <EXMLParserFeature, Boolean> (EXMLParserFeature.class);
+  private static final EnumMap <EXMLParserFeature, Boolean> s_aDefaultFeatures = new EnumMap <EXMLParserFeature, Boolean> (EXMLParserFeature.class);
 
   // Default exception handler
   @GuardedBy ("s_aRWLock")
@@ -63,11 +64,11 @@ public final class SAXReaderSettings implements ISAXReaderSettings
     // By default enabled in XMLFactory
     if (false)
     {
-      s_aDefaultParserFeatures.put (EXMLParserFeature.NAMESPACES, Boolean.TRUE);
-      s_aDefaultParserFeatures.put (EXMLParserFeature.SAX_NAMESPACE_PREFIXES, Boolean.TRUE);
+      s_aDefaultFeatures.put (EXMLParserFeature.NAMESPACES, Boolean.TRUE);
+      s_aDefaultFeatures.put (EXMLParserFeature.SAX_NAMESPACE_PREFIXES, Boolean.TRUE);
     }
     if (false)
-      s_aDefaultParserFeatures.put (EXMLParserFeature.AUGMENT_PSVI, Boolean.FALSE);
+      s_aDefaultFeatures.put (EXMLParserFeature.AUGMENT_PSVI, Boolean.FALSE);
   }
 
   private EntityResolver m_aEntityResolver;
@@ -75,14 +76,14 @@ public final class SAXReaderSettings implements ISAXReaderSettings
   private ContentHandler m_aContentHandler;
   private ErrorHandler m_aErrorHandler;
   private LexicalHandler m_aLexicalHandler;
-  private final EnumMap <EXMLParserFeature, Boolean> m_aParserFeatures = new EnumMap <EXMLParserFeature, Boolean> (EXMLParserFeature.class);
+  private final EnumMap <EXMLParserFeature, Boolean> m_aFeatures = new EnumMap <EXMLParserFeature, Boolean> (EXMLParserFeature.class);
   private IExceptionHandler <Throwable> m_aExceptionHandler;
 
   public SAXReaderSettings ()
   {
     // Set default values
     setExceptionHandler (getDefaultExceptionHandler ());
-    m_aParserFeatures.putAll (getAllDefaultParserFeatureValues ());
+    m_aFeatures.putAll (getAllDefaultFeatureValues ());
   }
 
   @Nullable
@@ -150,64 +151,68 @@ public final class SAXReaderSettings implements ISAXReaderSettings
     return this;
   }
 
-  @Nullable
-  public Boolean getParserFeatureValue (@Nullable final EXMLParserFeature eFeature)
+  public boolean hasAnyFeature ()
   {
-    return eFeature == null ? null : m_aParserFeatures.get (eFeature);
+    return !m_aFeatures.isEmpty ();
   }
 
-  public boolean hasParserFeatureValues ()
+  @Nullable
+  public Boolean getFeatureValue (@Nullable final EXMLParserFeature eFeature)
   {
-    return !m_aParserFeatures.isEmpty ();
+    return eFeature == null ? null : m_aFeatures.get (eFeature);
   }
 
   @Nonnull
   @ReturnsMutableCopy
-  public Map <EXMLParserFeature, Boolean> getAllParserFeatureValues ()
+  public Map <EXMLParserFeature, Boolean> getAllFeatures ()
   {
-    return new EnumMap <EXMLParserFeature, Boolean> (m_aParserFeatures);
+    return new EnumMap <EXMLParserFeature, Boolean> (m_aFeatures);
   }
 
   @Nonnull
-  public SAXReaderSettings setParserFeatureValue (@Nonnull final EXMLParserFeature eFeature, final boolean bValue)
+  public SAXReaderSettings setFeatureValue (@Nonnull final EXMLParserFeature eFeature, final boolean bValue)
   {
     if (eFeature == null)
       throw new NullPointerException ("feature");
 
-    m_aParserFeatures.put (eFeature, Boolean.valueOf (bValue));
+    m_aFeatures.put (eFeature, Boolean.valueOf (bValue));
     return this;
   }
 
   @Nonnull
-  public SAXReaderSettings setParserFeatureValue (@Nonnull final EXMLParserFeature eFeature,
-                                                  @Nullable final Boolean aValue)
+  public SAXReaderSettings setFeatureValue (@Nonnull final EXMLParserFeature eFeature, @Nullable final Boolean aValue)
   {
     if (eFeature == null)
       throw new NullPointerException ("feature");
 
     if (aValue == null)
-      m_aParserFeatures.remove (eFeature);
+      m_aFeatures.remove (eFeature);
     else
-      m_aParserFeatures.put (eFeature, aValue);
+      m_aFeatures.put (eFeature, aValue);
     return this;
   }
 
   @Nonnull
-  public SAXReaderSettings setParserFeatureValues (@Nullable final Map <EXMLParserFeature, Boolean> aValues)
+  public SAXReaderSettings setFeatureValues (@Nullable final Map <EXMLParserFeature, Boolean> aValues)
   {
     if (aValues != null)
-      m_aParserFeatures.putAll (aValues);
+      m_aFeatures.putAll (aValues);
     return this;
   }
 
   @Nonnull
-  public SAXReaderSettings removeParserFeatureValue (@Nonnull final EXMLParserFeature eFeature)
+  public EChange removeFeature (@Nullable final EXMLParserFeature eFeature)
   {
-    if (eFeature == null)
-      throw new NullPointerException ("feature");
+    return EChange.valueOf (eFeature != null && m_aFeatures.remove (eFeature) != null);
+  }
 
-    m_aParserFeatures.remove (eFeature);
-    return this;
+  @Nonnull
+  public EChange removeAllFeatures ()
+  {
+    if (m_aFeatures.isEmpty ())
+      return EChange.UNCHANGED;
+    m_aFeatures.clear ();
+    return EChange.CHANGED;
   }
 
   @Nonnull
@@ -243,7 +248,7 @@ public final class SAXReaderSettings implements ISAXReaderSettings
     s_aRWLock.readLock ().lock ();
     try
     {
-      return s_aDefaultParserFeatures.get (eFeature);
+      return s_aDefaultFeatures.get (eFeature);
     }
     finally
     {
@@ -258,12 +263,12 @@ public final class SAXReaderSettings implements ISAXReaderSettings
    */
   @Nonnull
   @ReturnsMutableCopy
-  public static Map <EXMLParserFeature, Boolean> getAllDefaultParserFeatureValues ()
+  public static Map <EXMLParserFeature, Boolean> getAllDefaultFeatureValues ()
   {
     s_aRWLock.readLock ().lock ();
     try
     {
-      return new EnumMap <EXMLParserFeature, Boolean> (s_aDefaultParserFeatures);
+      return new EnumMap <EXMLParserFeature, Boolean> (s_aDefaultFeatures);
     }
     finally
     {
@@ -280,8 +285,7 @@ public final class SAXReaderSettings implements ISAXReaderSettings
    * @param aValue
    *        Use <code>null</code> to remove a feature.
    */
-  public static void setDefaultParserFeatureValue (@Nonnull final EXMLParserFeature eFeature,
-                                                   @Nullable final Boolean aValue)
+  public static void setDefaultFeatureValue (@Nonnull final EXMLParserFeature eFeature, @Nullable final Boolean aValue)
   {
     if (eFeature == null)
       throw new NullPointerException ("feature");
@@ -290,9 +294,9 @@ public final class SAXReaderSettings implements ISAXReaderSettings
     try
     {
       if (aValue == null)
-        s_aDefaultParserFeatures.remove (eFeature);
+        s_aDefaultFeatures.remove (eFeature);
       else
-        s_aDefaultParserFeatures.put (eFeature, aValue);
+        s_aDefaultFeatures.put (eFeature, aValue);
     }
     finally
     {

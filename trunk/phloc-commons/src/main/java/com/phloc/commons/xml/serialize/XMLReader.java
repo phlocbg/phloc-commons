@@ -771,7 +771,7 @@ public final class XMLReader
                                                          .setContentHandler (aContentHdl)
                                                          .setErrorHandler (aErrorHdl)
                                                          .setLexicalHandler (aLexicalHdl)
-                                                         .setParserFeatureValues (aFeatures));
+                                                         .setFeatureValues (aFeatures));
   }
 
   /**
@@ -800,7 +800,7 @@ public final class XMLReader
   public static void setDefaultSaxParserFeatureValue (@Nonnull final EXMLParserFeature eFeature,
                                                       @Nullable final Boolean aValue)
   {
-    SAXReaderSettings.setDefaultParserFeatureValue (eFeature, aValue);
+    SAXReaderSettings.setDefaultFeatureValue (eFeature, aValue);
   }
 
   /**

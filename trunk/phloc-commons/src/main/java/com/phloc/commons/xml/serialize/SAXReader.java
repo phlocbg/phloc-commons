@@ -245,13 +245,13 @@ public final class SAXReader
         aParser.setErrorHandler (aSettings.getErrorHandler ());
 
         // Set all features
-        if (aSettings.hasParserFeatureValues ())
-          for (final Map.Entry <EXMLParserFeature, Boolean> aEntry : aSettings.getAllParserFeatureValues ().entrySet ())
+        if (aSettings.hasAnyFeature ())
+          for (final Map.Entry <EXMLParserFeature, Boolean> aEntry : aSettings.getAllFeatures ().entrySet ())
             aEntry.getKey ().applyTo (aParser, aEntry.getValue ().booleanValue ());
 
         // Set optional properties
         if (aSettings.getLexicalHandler () != null)
-          EXMLParserProperty.SAX_FEATURE_LEXICAL_HANDLER.applyTo (aParser, aSettings.getLexicalHandler ());
+          EXMLParserProperty.SAX_LEXICAL_HANDLER.applyTo (aParser, aSettings.getLexicalHandler ());
 
         // Start parsing
         aParser.parse (aIS);

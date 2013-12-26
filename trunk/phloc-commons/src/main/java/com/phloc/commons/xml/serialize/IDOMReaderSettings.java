@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.xml.serialize;
 
+import java.util.Map;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -25,7 +27,9 @@ import javax.xml.validation.Schema;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
 
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.callback.IExceptionHandler;
+import com.phloc.commons.xml.EXMLParserProperty;
 
 /**
  * Read-only interface for DOM reader settings.
@@ -82,6 +86,15 @@ public interface IDOMReaderSettings
    *         <code>false</code> if not.
    */
   boolean isXIncludeAware ();
+
+  boolean hasAnyProperties ();
+
+  @Nullable
+  Object getPropertyValue (@Nullable EXMLParserProperty eProperty);
+
+  @Nonnull
+  @ReturnsMutableCopy
+  Map <EXMLParserProperty, Object> getAllPropertyValues ();
 
   /**
    * Check if the current settings require a separate

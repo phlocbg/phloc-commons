@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.xml.serialize;
 
+import java.util.EnumMap;
+import java.util.Map;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -30,9 +32,13 @@ import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
 
 import com.phloc.commons.ICloneable;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.callback.IExceptionHandler;
 import com.phloc.commons.callback.LoggingExceptionHandler;
+import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
+import com.phloc.commons.xml.EXMLParserFeature;
+import com.phloc.commons.xml.EXMLParserProperty;
 import com.phloc.commons.xml.XMLFactory;
 
 /**
@@ -62,10 +68,8 @@ public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMRe
   private boolean m_bCoalescing = XMLFactory.DEFAULT_DOM_COALESCING;
   private Schema m_aSchema;
   private boolean m_bXIncludeAware = XMLFactory.DEFAULT_DOM_XINCLUDE_AWARE;
-  // private final Map<String,Object> m_aAttributes = new HashMap <String,
-  // Object> ();
-  // private final Map<String, Boolean> m_aFeatures = new HashMap<String,
-  // Boolean> ();
+  private final Map <EXMLParserProperty, Object> m_aProperties = new EnumMap <EXMLParserProperty, Object> (EXMLParserProperty.class);
+  private final Map <EXMLParserFeature, Boolean> m_aFeatures = new EnumMap <EXMLParserFeature, Boolean> (EXMLParserFeature.class);
 
   // DocumentBuilder properties
   private EntityResolver m_aEntityResolver;
@@ -207,6 +211,61 @@ public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMRe
     return this;
   }
 
+  public boolean hasAnyProperties ()
+  {
+    return !m_aProperties.isEmpty ();
+  }
+
+  @Nullable
+  public Object getPropertyValue (@Nullable final EXMLParserProperty eProperty)
+  {
+    return eProperty == null ? null : m_aProperties.get (eProperty);
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public Map <EXMLParserProperty, Object> getAllPropertyValues ()
+  {
+    return new EnumMap <EXMLParserProperty, Object> (m_aProperties);
+  }
+
+  @Nonnull
+  public DOMReaderSettings setPropertyValue (@Nonnull final EXMLParserProperty eProperty,
+                                             @Nullable final Object aPropertyValue)
+  {
+    if (eProperty == null)
+      throw new NullPointerException ("property");
+
+    if (aPropertyValue != null)
+      m_aProperties.put (eProperty, aPropertyValue);
+    else
+      m_aProperties.remove (eProperty);
+    return this;
+  }
+
+  @Nonnull
+  public DOMReaderSettings setAllPropertyValues (@Nullable final Map <EXMLParserProperty, ?> aProperties)
+  {
+    if (aProperties != null)
+      m_aProperties.putAll (aProperties);
+    return this;
+  }
+
+  @Nonnull
+  public EChange removePropertyValue (@Nullable final EXMLParserProperty eProperty)
+  {
+    return EChange.valueOf (eProperty != null && m_aProperties.remove (eProperty) != null);
+  }
+
+  @Nonnull
+  public EChange removeAllPropertyValues ()
+  {
+    if (m_aProperties.isEmpty ())
+      return EChange.UNCHANGED;
+    m_aProperties.clear ();
+    return EChange.CHANGED;
+  }
+
   public boolean requiresSeparateDocumentBuilderFactory ()
   {
     return m_bNamespaceAware != XMLFactory.DEFAULT_DOM_NAMESPACE_AWARE ||
@@ -216,7 +275,9 @@ public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMRe
            m_bIgnoringComments != XMLFactory.DEFAULT_DOM_IGNORING_COMMENTS ||
            m_bCoalescing != XMLFactory.DEFAULT_DOM_COALESCING ||
            m_aSchema != null ||
-           m_bXIncludeAware != XMLFactory.DEFAULT_DOM_XINCLUDE_AWARE;
+           m_bXIncludeAware != XMLFactory.DEFAULT_DOM_XINCLUDE_AWARE ||
+           !m_aProperties.isEmpty () ||
+           !m_aFeatures.isEmpty ();
   }
 
   @Nullable
@@ -278,6 +339,8 @@ public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMRe
                                        .append ("coalescing", m_bCoalescing)
                                        .append ("schema", m_aSchema)
                                        .append ("XIncludeAware", m_bXIncludeAware)
+                                       .append ("properties", m_aProperties)
+                                       .append ("features", m_aFeatures)
                                        .append ("entityResolver", m_aEntityResolver)
                                        .append ("errorHandler", m_aErrorHandler)
                                        .append ("exceptionHandler", m_aExceptionHandler)

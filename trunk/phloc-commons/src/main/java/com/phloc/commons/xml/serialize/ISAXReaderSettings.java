@@ -70,6 +70,12 @@ public interface ISAXReaderSettings
   LexicalHandler getLexicalHandler ();
 
   /**
+   * @return <code>true</code> if at least one parser feature is defined,
+   *         <code>false</code> if not
+   */
+  boolean hasAnyFeature ();
+
+  /**
    * Get the value of the specified parser feature
    * 
    * @param eFeature
@@ -77,20 +83,14 @@ public interface ISAXReaderSettings
    * @return <code>null</code> if this feature is undefined.
    */
   @Nullable
-  Boolean getParserFeatureValue (@Nullable EXMLParserFeature eFeature);
-
-  /**
-   * @return <code>true</code> if at least one parser feature is defined,
-   *         <code>false</code> if not
-   */
-  boolean hasParserFeatureValues ();
+  Boolean getFeatureValue (@Nullable EXMLParserFeature eFeature);
 
   /**
    * @return A copy of all defined parser features at the associated values.
    */
   @Nonnull
   @ReturnsMutableCopy
-  Map <EXMLParserFeature, Boolean> getAllParserFeatureValues ();
+  Map <EXMLParserFeature, Boolean> getAllFeatures ();
 
   /**
    * @return The exception handler to be used.
