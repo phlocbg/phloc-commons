@@ -32,6 +32,7 @@ import org.xml.sax.ErrorHandler;
 import com.phloc.commons.ICloneable;
 import com.phloc.commons.callback.IExceptionHandler;
 import com.phloc.commons.callback.LoggingExceptionHandler;
+import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.xml.XMLFactory;
 
 /**
@@ -61,6 +62,10 @@ public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMRe
   private boolean m_bCoalescing = XMLFactory.DEFAULT_DOM_COALESCING;
   private Schema m_aSchema;
   private boolean m_bXIncludeAware = XMLFactory.DEFAULT_DOM_XINCLUDE_AWARE;
+  // private final Map<String,Object> m_aAttributes = new HashMap <String,
+  // Object> ();
+  // private final Map<String, Boolean> m_aFeatures = new HashMap<String,
+  // Boolean> ();
 
   // DocumentBuilder properties
   private EntityResolver m_aEntityResolver;
@@ -260,6 +265,23 @@ public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMRe
   public DOMReaderSettings getClone ()
   {
     return new DOMReaderSettings (this);
+  }
+
+  @Override
+  public String toString ()
+  {
+    return new ToStringGenerator (this).append ("namespaceAware", m_bNamespaceAware)
+                                       .append ("validating", m_bValidating)
+                                       .append ("ignoringElementContentWhitespace", m_bIgnoringElementContentWhitespace)
+                                       .append ("expandEntityReferences", m_bExpandEntityReferences)
+                                       .append ("ignoringComments", m_bIgnoringComments)
+                                       .append ("coalescing", m_bCoalescing)
+                                       .append ("schema", m_aSchema)
+                                       .append ("XIncludeAware", m_bXIncludeAware)
+                                       .append ("entityResolver", m_aEntityResolver)
+                                       .append ("errorHandler", m_aErrorHandler)
+                                       .append ("exceptionHandler", m_aExceptionHandler)
+                                       .toString ();
   }
 
   /**
