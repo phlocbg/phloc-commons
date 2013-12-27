@@ -244,7 +244,12 @@ public final class SAXReader
         aParser.setEntityResolver (aSettings.getEntityResolver ());
         aParser.setErrorHandler (aSettings.getErrorHandler ());
 
-        // Set all features
+        // Apply properties
+        if (aSettings.hasAnyProperties ())
+          for (final Map.Entry <EXMLParserProperty, Object> aEntry : aSettings.getAllPropertyValues ().entrySet ())
+            aEntry.getKey ().applyTo (aParser, aEntry.getValue ());
+
+        // Apply features
         if (aSettings.hasAnyFeature ())
           for (final Map.Entry <EXMLParserFeature, Boolean> aEntry : aSettings.getAllFeatureValues ().entrySet ())
             aEntry.getKey ().applyTo (aParser, aEntry.getValue ().booleanValue ());

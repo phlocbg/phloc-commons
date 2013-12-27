@@ -56,6 +56,7 @@ import com.phloc.commons.stats.IStatisticsHandlerTimer;
 import com.phloc.commons.stats.StatisticsManager;
 import com.phloc.commons.timing.StopWatch;
 import com.phloc.commons.xml.EXMLParserFeature;
+import com.phloc.commons.xml.EXMLParserProperty;
 import com.phloc.commons.xml.XMLFactory;
 import com.phloc.commons.xml.sax.CollectingSAXErrorHandler;
 import com.phloc.commons.xml.sax.InputSourceFactory;
@@ -510,6 +511,16 @@ public final class XMLReader
         {
           s_aLogger.warn ("DocumentBuilderFactory does not support XInclude setting: " + ex.getMessage ());
         }
+
+        // Apply properties
+        if (aSettings.hasAnyProperties ())
+          for (final Map.Entry <EXMLParserProperty, Object> aEntry : aSettings.getAllPropertyValues ().entrySet ())
+            aEntry.getKey ().applyTo (aDocumentBuilderFactory, aEntry.getValue ());
+
+        // Apply features
+        if (aSettings.hasAnyFeature ())
+          for (final Map.Entry <EXMLParserFeature, Boolean> aEntry : aSettings.getAllFeatureValues ().entrySet ())
+            aEntry.getKey ().applyTo (aDocumentBuilderFactory, aEntry.getValue ().booleanValue ());
 
         // Ready to create document builder
         aDocumentBuilder = aDocumentBuilderFactory.newDocumentBuilder ();
