@@ -19,12 +19,9 @@ package com.phloc.commons.xml.serialize;
 
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import org.xml.sax.ContentHandler;
@@ -36,12 +33,10 @@ import org.xml.sax.ext.LexicalHandler;
 
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.callback.IExceptionHandler;
-import com.phloc.commons.callback.LoggingExceptionHandler;
 import com.phloc.commons.state.EChange;
+import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.xml.EXMLParserFeature;
 import com.phloc.commons.xml.EXMLParserProperty;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * SAX reader settings
@@ -51,28 +46,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 @NotThreadSafe
 public class SAXReaderSettings implements ISAXReaderSettings
 {
-  private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
-
-  // Default parser features
-  @GuardedBy ("s_aRWLock")
-  private static final EnumMap <EXMLParserFeature, Boolean> s_aDefaultFeatures = new EnumMap <EXMLParserFeature, Boolean> (EXMLParserFeature.class);
-
-  // Default exception handler
-  @GuardedBy ("s_aRWLock")
-  private static IExceptionHandler <Throwable> s_aDefaultExceptionHandler = new XMLLoggingExceptionHandler ();
-
-  static
-  {
-    // By default enabled in XMLFactory
-    if (false)
-    {
-      s_aDefaultFeatures.put (EXMLParserFeature.NAMESPACES, Boolean.TRUE);
-      s_aDefaultFeatures.put (EXMLParserFeature.SAX_NAMESPACE_PREFIXES, Boolean.TRUE);
-    }
-    if (false)
-      s_aDefaultFeatures.put (EXMLParserFeature.AUGMENT_PSVI, Boolean.FALSE);
-  }
-
   private EntityResolver m_aEntityResolver;
   private DTDHandler m_aDTDHandler;
   private ContentHandler m_aContentHandler;
@@ -87,8 +60,13 @@ public class SAXReaderSettings implements ISAXReaderSettings
   public SAXReaderSettings ()
   {
     // Set default values
-    setExceptionHandler (getDefaultExceptionHandler ());
-    m_aFeatures.putAll (getAllDefaultFeatureValues ());
+    setEntityResolver (SAXReaderDefaultSettings.getEntityResolver ());
+    setDTDHandler (SAXReaderDefaultSettings.getDTDHandler ());
+    setContentHandler (SAXReaderDefaultSettings.getContentHandler ());
+    setErrorHandler (SAXReaderDefaultSettings.getErrorHandler ());
+    setPropertyValues (SAXReaderDefaultSettings.getAllPropertyValues ());
+    setFeatureValues (SAXReaderDefaultSettings.getAllFeatureValues ());
+    setExceptionHandler (SAXReaderDefaultSettings.getExceptionHandler ());
   }
 
   @Nullable
@@ -146,27 +124,25 @@ public class SAXReaderSettings implements ISAXReaderSettings
   @Nullable
   public LexicalHandler getLexicalHandler ()
   {
-    return (LexicalHandler) m_aProperties.get (EXMLParserProperty.SAX_LEXICAL_HANDLER);
+    return (LexicalHandler) getPropertyValue (EXMLParserProperty.SAX_LEXICAL_HANDLER);
   }
 
   @Nonnull
   public SAXReaderSettings setLexicalHandler (@Nullable final LexicalHandler aLexicalHandler)
   {
-    m_aProperties.put (EXMLParserProperty.SAX_LEXICAL_HANDLER, aLexicalHandler);
-    return this;
+    return setPropertyValue (EXMLParserProperty.SAX_LEXICAL_HANDLER, aLexicalHandler);
   }
 
   @Nullable
   public DeclHandler getDeclarationHandler ()
   {
-    return (DeclHandler) m_aProperties.get (EXMLParserProperty.SAX_DECLARATION_HANDLER);
+    return (DeclHandler) getPropertyValue (EXMLParserProperty.SAX_DECLARATION_HANDLER);
   }
 
   @Nonnull
   public SAXReaderSettings setDeclarationHandler (@Nullable final DeclHandler aDeclHandler)
   {
-    m_aProperties.put (EXMLParserProperty.SAX_DECLARATION_HANDLER, aDeclHandler);
-    return this;
+    return setPropertyValue (EXMLParserProperty.SAX_DECLARATION_HANDLER, aDeclHandler);
   }
 
   public boolean hasAnyProperties ()
@@ -304,116 +280,16 @@ public class SAXReaderSettings implements ISAXReaderSettings
     return this;
   }
 
-  /**
-   * Check if the specified XML Parser feature is enabled by default or not.
-   * 
-   * @param eFeature
-   *        Feature to check.
-   * @return <code>null</code> if nothing is specified.
-   */
-  @Nullable
-  @SuppressFBWarnings ("NP_BOOLEAN_RETURN_NULL")
-  public static Boolean getDefaultParserFeatureValue (@Nullable final EXMLParserFeature eFeature)
+  @Override
+  public String toString ()
   {
-    if (eFeature == null)
-      return null;
-
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_aDefaultFeatures.get (eFeature);
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
-  }
-
-  /**
-   * Get all default parser features
-   * 
-   * @return Never <code>null</code>
-   */
-  @Nonnull
-  @ReturnsMutableCopy
-  public static Map <EXMLParserFeature, Boolean> getAllDefaultFeatureValues ()
-  {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return new EnumMap <EXMLParserFeature, Boolean> (s_aDefaultFeatures);
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
-  }
-
-  /**
-   * Set a default parser feature that is automatically applied to all SAX
-   * readings
-   * 
-   * @param eFeature
-   *        The feature to set.
-   * @param aValue
-   *        Use <code>null</code> to remove a feature.
-   */
-  public static void setDefaultFeatureValue (@Nonnull final EXMLParserFeature eFeature, @Nullable final Boolean aValue)
-  {
-    if (eFeature == null)
-      throw new NullPointerException ("feature");
-
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
-      if (aValue == null)
-        s_aDefaultFeatures.remove (eFeature);
-      else
-        s_aDefaultFeatures.put (eFeature, aValue);
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
-  }
-
-  /**
-   * @return The default exception handler. By default it is an implementation
-   *         of {@link LoggingExceptionHandler}. Never <code>null</code>.
-   */
-  @Nonnull
-  public static IExceptionHandler <Throwable> getDefaultExceptionHandler ()
-  {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_aDefaultExceptionHandler;
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
-  }
-
-  /**
-   * Set a new default SAX exception handler.
-   * 
-   * @param aExceptionHandler
-   *        The new handler to be set. May not be <code>null</code>.
-   */
-  public static void setDefaultExceptionHandler (@Nonnull final IExceptionHandler <Throwable> aExceptionHandler)
-  {
-    if (aExceptionHandler == null)
-      throw new NullPointerException ("ExceptionHandler");
-
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
-      s_aDefaultExceptionHandler = aExceptionHandler;
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
+    return new ToStringGenerator (this).append ("entityResolver", m_aEntityResolver)
+                                       .append ("dtdHandler", m_aDTDHandler)
+                                       .append ("contentHandler", m_aContentHandler)
+                                       .append ("errorHandler", m_aErrorHandler)
+                                       .append ("properties", m_aProperties)
+                                       .append ("features", m_aFeatures)
+                                       .append ("exceptionHandler", m_aExceptionHandler)
+                                       .toString ();
   }
 }
