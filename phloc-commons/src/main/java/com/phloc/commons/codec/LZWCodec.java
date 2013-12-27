@@ -404,7 +404,7 @@ public class LZWCodec extends AbstractCodec
     {
       // Always the same
       aBOS.writeBits (AbstractLZWDictionary.CODE_CLEARTABLE, aDict.getCodeLength ());
-      byte [] aByteSeq = new byte [0];
+      byte [] aByteSeq = ArrayHelper.EMPTY_BYTE_ARRAY;
       for (int nIndex = 0; nIndex < aBuffer.length; ++nIndex)
       {
         // Append current byte
@@ -426,7 +426,7 @@ public class LZWCodec extends AbstractCodec
         {
           // No -> write down
           aBOS.writeBits (aCurNode.getTableIndex (), nCodeLength);
-          aByteSeq = new byte [0];
+          aByteSeq = ArrayHelper.EMPTY_BYTE_ARRAY;
         }
 
         if (aDict.getNextFreeCode () == AbstractLZWDictionary.MAX_CODE - 1)
@@ -441,7 +441,7 @@ public class LZWCodec extends AbstractCodec
           aDict.reset ();
           // ESCA-JAVA0119:
           nIndex -= aByteSeq.length;
-          aByteSeq = new byte [0];
+          aByteSeq = ArrayHelper.EMPTY_BYTE_ARRAY;
         }
       }
 

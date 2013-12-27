@@ -42,6 +42,8 @@ public final class GenericReflection
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (GenericReflection.class);
 
+  private static final Class <?> [] EMPTY_CLASS_ARRAY = new Class <?> [0];
+
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")
   private static final GenericReflection s_aInstance = new GenericReflection ();
@@ -95,7 +97,7 @@ public final class GenericReflection
   public static Class <?> [] getClassArray (@Nullable final Object... aObjs)
   {
     if (ArrayHelper.isEmpty (aObjs))
-      return new Class <?> [0];
+      return EMPTY_CLASS_ARRAY;
 
     final Class <?> [] ret = new Class <?> [aObjs.length];
     for (int i = 0; i < aObjs.length; ++i)
