@@ -254,10 +254,6 @@ public final class SAXReader
           for (final Map.Entry <EXMLParserFeature, Boolean> aEntry : aSettings.getAllFeatureValues ().entrySet ())
             aEntry.getKey ().applyTo (aParser, aEntry.getValue ().booleanValue ());
 
-        // Set optional properties
-        if (aSettings.getLexicalHandler () != null)
-          EXMLParserProperty.SAX_LEXICAL_HANDLER.applyTo (aParser, aSettings.getLexicalHandler ());
-
         // Start parsing
         aParser.parse (aIS);
 
