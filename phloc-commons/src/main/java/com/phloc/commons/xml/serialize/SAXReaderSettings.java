@@ -25,7 +25,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import org.xml.sax.ContentHandler;
 import org.xml.sax.DTDHandler;
@@ -48,8 +48,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * 
  * @author Philip Helger
  */
-@ThreadSafe
-public final class SAXReaderSettings implements ISAXReaderSettings
+@NotThreadSafe
+public class SAXReaderSettings implements ISAXReaderSettings
 {
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
 
@@ -81,6 +81,9 @@ public final class SAXReaderSettings implements ISAXReaderSettings
   private final EnumMap <EXMLParserFeature, Boolean> m_aFeatures = new EnumMap <EXMLParserFeature, Boolean> (EXMLParserFeature.class);
   private IExceptionHandler <Throwable> m_aExceptionHandler;
 
+  /**
+   * Default constructor
+   */
   public SAXReaderSettings ()
   {
     // Set default values
@@ -154,13 +157,13 @@ public final class SAXReaderSettings implements ISAXReaderSettings
   }
 
   @Nullable
-  public DeclHandler getDeclHandler ()
+  public DeclHandler getDeclarationHandler ()
   {
     return (DeclHandler) m_aProperties.get (EXMLParserProperty.SAX_DECLARATION_HANDLER);
   }
 
   @Nonnull
-  public SAXReaderSettings setDeclHandler (@Nullable final DeclHandler aDeclHandler)
+  public SAXReaderSettings setDeclarationHandler (@Nullable final DeclHandler aDeclHandler)
   {
     m_aProperties.put (EXMLParserProperty.SAX_DECLARATION_HANDLER, aDeclHandler);
     return this;

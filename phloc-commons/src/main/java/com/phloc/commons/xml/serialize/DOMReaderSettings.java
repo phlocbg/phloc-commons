@@ -25,7 +25,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
-import javax.annotation.concurrent.ThreadSafe;
+import javax.annotation.concurrent.NotThreadSafe;
 import javax.xml.validation.Schema;
 
 import org.xml.sax.EntityResolver;
@@ -46,7 +46,7 @@ import com.phloc.commons.xml.XMLFactory;
  * 
  * @author Philip Helger
  */
-@ThreadSafe
+@NotThreadSafe
 public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMReaderSettings
 {
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
