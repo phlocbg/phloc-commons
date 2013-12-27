@@ -19,12 +19,9 @@ package com.phloc.commons.xml.serialize;
 
 import java.util.EnumMap;
 import java.util.Map;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.NotThreadSafe;
 import javax.xml.validation.Schema;
 
@@ -34,7 +31,6 @@ import org.xml.sax.ErrorHandler;
 import com.phloc.commons.ICloneable;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.callback.IExceptionHandler;
-import com.phloc.commons.callback.LoggingExceptionHandler;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.xml.EXMLParserFeature;
@@ -49,25 +45,15 @@ import com.phloc.commons.xml.XMLFactory;
 @NotThreadSafe
 public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMReaderSettings
 {
-  private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
-
-  // Default exception handler
-  @GuardedBy ("s_aRWLock")
-  private static IExceptionHandler <Throwable> s_aDefaultExceptionHandler = new XMLLoggingExceptionHandler ();
-
-  /** A constant object representing the default settings. */
-  // Must be after RWLock!
-  public static final IDOMReaderSettings DEFAULT_SETTINGS = new DOMReaderSettings ();
-
   // DocumentBuilderFactory properties
-  private boolean m_bNamespaceAware = XMLFactory.DEFAULT_DOM_NAMESPACE_AWARE;
-  private boolean m_bValidating = XMLFactory.DEFAULT_DOM_VALIDATING;
-  private boolean m_bIgnoringElementContentWhitespace = XMLFactory.DEFAULT_DOM_IGNORING_ELEMENT_CONTENT_WHITESPACE;
-  private boolean m_bExpandEntityReferences = XMLFactory.DEFAULT_DOM_EXPAND_ENTITY_REFERENCES;
-  private boolean m_bIgnoringComments = XMLFactory.DEFAULT_DOM_IGNORING_COMMENTS;
-  private boolean m_bCoalescing = XMLFactory.DEFAULT_DOM_COALESCING;
+  private boolean m_bNamespaceAware;
+  private boolean m_bValidating;
+  private boolean m_bIgnoringElementContentWhitespace;
+  private boolean m_bExpandEntityReferences;
+  private boolean m_bIgnoringComments;
+  private boolean m_bCoalescing;
   private Schema m_aSchema;
-  private boolean m_bXIncludeAware = XMLFactory.DEFAULT_DOM_XINCLUDE_AWARE;
+  private boolean m_bXIncludeAware;
   private final EnumMap <EXMLParserProperty, Object> m_aProperties = new EnumMap <EXMLParserProperty, Object> (EXMLParserProperty.class);
   private final EnumMap <EXMLParserFeature, Boolean> m_aFeatures = new EnumMap <EXMLParserFeature, Boolean> (EXMLParserFeature.class);
 
@@ -79,12 +65,27 @@ public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMRe
   private IExceptionHandler <Throwable> m_aExceptionHandler;
 
   /**
-   * Constructor using the default settings.
+   * Constructor using the default settings from
+   * {@link DOMReaderDefaultSettings}.
    */
   public DOMReaderSettings ()
   {
-    // Set default values
-    setExceptionHandler (getDefaultExceptionHandler ());
+    // DocumentBuilderFactory
+    setNamespaceAware (DOMReaderDefaultSettings.isNamespaceAware ());
+    setValidating (DOMReaderDefaultSettings.isValidating ());
+    setIgnoringElementContentWhitespace (DOMReaderDefaultSettings.isIgnoringElementContentWhitespace ());
+    setExpandEntityReferences (DOMReaderDefaultSettings.isExpandEntityReferences ());
+    setIgnoringComments (DOMReaderDefaultSettings.isIgnoringComments ());
+    setCoalescing (DOMReaderDefaultSettings.isCoalescing ());
+    setSchema (DOMReaderDefaultSettings.getSchema ());
+    setXIncludeAware (DOMReaderDefaultSettings.isXIncludeAware ());
+    setPropertyValues (DOMReaderDefaultSettings.getAllPropertyValues ());
+    setFeatureValues (DOMReaderDefaultSettings.getAllFeatureValues ());
+    // DocumentBuilder
+    setEntityResolver (DOMReaderDefaultSettings.getEntityResolver ());
+    setErrorHandler (DOMReaderDefaultSettings.getErrorHandler ());
+    // Custom
+    setExceptionHandler (DOMReaderDefaultSettings.getExceptionHandler ());
   }
 
   /**
@@ -411,45 +412,5 @@ public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMRe
                                        .append ("errorHandler", m_aErrorHandler)
                                        .append ("exceptionHandler", m_aExceptionHandler)
                                        .toString ();
-  }
-
-  /**
-   * @return The default exception handler. By default it is an implementation
-   *         of {@link LoggingExceptionHandler}. Never <code>null</code>.
-   */
-  @Nonnull
-  public static IExceptionHandler <Throwable> getDefaultExceptionHandler ()
-  {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_aDefaultExceptionHandler;
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
-  }
-
-  /**
-   * Set a new global exception handler.
-   * 
-   * @param aExceptionHandler
-   *        The new handler to be set. May not be <code>null</code>.
-   */
-  public static void setDefaultExceptionHandler (@Nonnull final IExceptionHandler <Throwable> aExceptionHandler)
-  {
-    if (aExceptionHandler == null)
-      throw new NullPointerException ("ExceptionHandler");
-
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
-      s_aDefaultExceptionHandler = aExceptionHandler;
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
   }
 }

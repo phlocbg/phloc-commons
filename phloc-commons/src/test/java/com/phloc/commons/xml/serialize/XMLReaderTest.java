@@ -285,28 +285,28 @@ public final class XMLReaderTest
 
     try
     {
-      XMLReader.readXMLDOM ((Reader) null, DOMReaderSettings.DEFAULT_SETTINGS);
+      XMLReader.readXMLDOM ((Reader) null, new DOMReaderSettings ());
       fail ();
     }
     catch (final NullPointerException ex)
     {}
     try
     {
-      XMLReader.readXMLDOM ((InputStream) null, DOMReaderSettings.DEFAULT_SETTINGS);
+      XMLReader.readXMLDOM ((InputStream) null, new DOMReaderSettings ());
       fail ();
     }
     catch (final NullPointerException ex)
     {}
     try
     {
-      XMLReader.readXMLDOM ((InputSource) null, DOMReaderSettings.DEFAULT_SETTINGS);
+      XMLReader.readXMLDOM ((InputSource) null, new DOMReaderSettings ());
       fail ();
     }
     catch (final NullPointerException ex)
     {}
     try
     {
-      XMLReader.readXMLDOM ((IReadableResource) null, DOMReaderSettings.DEFAULT_SETTINGS);
+      XMLReader.readXMLDOM ((IReadableResource) null, new DOMReaderSettings ());
       fail ();
     }
     catch (final NullPointerException ex)

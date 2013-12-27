@@ -26,13 +26,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
+import javax.xml.validation.Schema;
 
-import org.xml.sax.ContentHandler;
-import org.xml.sax.DTDHandler;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
-import org.xml.sax.ext.DeclHandler;
-import org.xml.sax.ext.LexicalHandler;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
@@ -40,58 +37,63 @@ import com.phloc.commons.callback.IExceptionHandler;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.xml.EXMLParserFeature;
 import com.phloc.commons.xml.EXMLParserProperty;
+import com.phloc.commons.xml.XMLFactory;
 
 /**
- * SAX reader default settings
+ * DOM reader default settings
  * 
  * @author Philip Helger
  */
 @ThreadSafe
-public final class SAXReaderDefaultSettings
+public final class DOMReaderDefaultSettings
 {
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
 
+  // DocumentBuilderFactory properties
   @GuardedBy ("s_aRWLock")
-  private static EntityResolver s_aDefaultEntityResolver;
+  private static boolean s_bDefaultNamespaceAware = XMLFactory.DEFAULT_DOM_NAMESPACE_AWARE;
   @GuardedBy ("s_aRWLock")
-  private static DTDHandler s_aDefaultDTDHandler;
+  private static boolean s_bDefaultValidating = XMLFactory.DEFAULT_DOM_VALIDATING;
   @GuardedBy ("s_aRWLock")
-  private static ContentHandler s_aDefaultContentHandler;
+  private static boolean s_bDefaultIgnoringElementContentWhitespace = XMLFactory.DEFAULT_DOM_IGNORING_ELEMENT_CONTENT_WHITESPACE;
   @GuardedBy ("s_aRWLock")
-  private static ErrorHandler s_aDefaultErrorHandler;
+  private static boolean s_bDefaultExpandEntityReferences = XMLFactory.DEFAULT_DOM_EXPAND_ENTITY_REFERENCES;
+  @GuardedBy ("s_aRWLock")
+  private static boolean s_bDefaultIgnoringComments = XMLFactory.DEFAULT_DOM_IGNORING_COMMENTS;
+  @GuardedBy ("s_aRWLock")
+  private static boolean s_bDefaultCoalescing = XMLFactory.DEFAULT_DOM_COALESCING;
+  @GuardedBy ("s_aRWLock")
+  private static Schema s_aDefaultSchema;
+  @GuardedBy ("s_aRWLock")
+  private static boolean s_bDefaultXIncludeAware = XMLFactory.DEFAULT_DOM_XINCLUDE_AWARE;
   @GuardedBy ("s_aRWLock")
   private static final EnumMap <EXMLParserProperty, Object> s_aDefaultProperties = new EnumMap <EXMLParserProperty, Object> (EXMLParserProperty.class);
   @GuardedBy ("s_aRWLock")
   private static final EnumMap <EXMLParserFeature, Boolean> s_aDefaultFeatures = new EnumMap <EXMLParserFeature, Boolean> (EXMLParserFeature.class);
+
+  // DocumentBuilder properties
+  @GuardedBy ("s_aRWLock")
+  private static EntityResolver s_aDefaultEntityResolver;
+  @GuardedBy ("s_aRWLock")
+  private static ErrorHandler s_aDefaultErrorHandler;
+
+  // Handling properties
   @GuardedBy ("s_aRWLock")
   private static IExceptionHandler <Throwable> s_aDefaultExceptionHandler = new XMLLoggingExceptionHandler ();
 
-  static
-  {
-    // By default enabled in XMLFactory
-    if (false)
-    {
-      s_aDefaultFeatures.put (EXMLParserFeature.NAMESPACES, Boolean.TRUE);
-      s_aDefaultFeatures.put (EXMLParserFeature.SAX_NAMESPACE_PREFIXES, Boolean.TRUE);
-    }
-    if (false)
-      s_aDefaultFeatures.put (EXMLParserFeature.AUGMENT_PSVI, Boolean.FALSE);
-  }
-
   @SuppressWarnings ("unused")
   @PresentForCodeCoverage
-  private static final SAXReaderDefaultSettings s_aInstance = new SAXReaderDefaultSettings ();
+  private static final DOMReaderDefaultSettings s_aInstance = new DOMReaderDefaultSettings ();
 
-  private SAXReaderDefaultSettings ()
+  private DOMReaderDefaultSettings ()
   {}
 
-  @Nullable
-  public static EntityResolver getEntityResolver ()
+  public static boolean isNamespaceAware ()
   {
     s_aRWLock.readLock ().lock ();
     try
     {
-      return s_aDefaultEntityResolver;
+      return s_bDefaultNamespaceAware;
     }
     finally
     {
@@ -99,12 +101,142 @@ public final class SAXReaderDefaultSettings
     }
   }
 
-  public static void setEntityResolver (@Nullable final EntityResolver aEntityResolver)
+  public static void setNamespaceAware (final boolean bNamespaceAware)
   {
     s_aRWLock.writeLock ().lock ();
     try
     {
-      s_aDefaultEntityResolver = aEntityResolver;
+      s_bDefaultNamespaceAware = bNamespaceAware;
+    }
+    finally
+    {
+      s_aRWLock.writeLock ().unlock ();
+    }
+  }
+
+  public static boolean isValidating ()
+  {
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      return s_bDefaultValidating;
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  public static void setValidating (final boolean bValidating)
+  {
+    s_aRWLock.writeLock ().lock ();
+    try
+    {
+      s_bDefaultValidating = bValidating;
+    }
+    finally
+    {
+      s_aRWLock.writeLock ().unlock ();
+    }
+  }
+
+  public static boolean isIgnoringElementContentWhitespace ()
+  {
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      return s_bDefaultIgnoringElementContentWhitespace;
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  public static void setIgnoringElementContentWhitespace (final boolean bIgnoringElementContentWhitespace)
+  {
+    s_aRWLock.writeLock ().lock ();
+    try
+    {
+      s_bDefaultIgnoringElementContentWhitespace = bIgnoringElementContentWhitespace;
+    }
+    finally
+    {
+      s_aRWLock.writeLock ().unlock ();
+    }
+  }
+
+  public static boolean isExpandEntityReferences ()
+  {
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      return s_bDefaultExpandEntityReferences;
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  public static void setExpandEntityReferences (final boolean bExpandEntityReferences)
+  {
+    s_aRWLock.writeLock ().lock ();
+    try
+    {
+      s_bDefaultExpandEntityReferences = bExpandEntityReferences;
+    }
+    finally
+    {
+      s_aRWLock.writeLock ().unlock ();
+    }
+  }
+
+  public static boolean isIgnoringComments ()
+  {
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      return s_bDefaultIgnoringComments;
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  public static void setIgnoringComments (final boolean bIgnoringComments)
+  {
+    s_aRWLock.writeLock ().lock ();
+    try
+    {
+      s_bDefaultIgnoringComments = bIgnoringComments;
+    }
+    finally
+    {
+      s_aRWLock.writeLock ().unlock ();
+    }
+  }
+
+  public static boolean isCoalescing ()
+  {
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      return s_bDefaultCoalescing;
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  public static void setCoalescing (final boolean bCoalescing)
+  {
+    s_aRWLock.writeLock ().lock ();
+    try
+    {
+      s_bDefaultCoalescing = bCoalescing;
     }
     finally
     {
@@ -113,12 +245,12 @@ public final class SAXReaderDefaultSettings
   }
 
   @Nullable
-  public static DTDHandler getDTDHandler ()
+  public static Schema getSchema ()
   {
     s_aRWLock.readLock ().lock ();
     try
     {
-      return s_aDefaultDTDHandler;
+      return s_aDefaultSchema;
     }
     finally
     {
@@ -126,12 +258,12 @@ public final class SAXReaderDefaultSettings
     }
   }
 
-  public static void setDTDHandler (@Nullable final DTDHandler aDTDHandler)
+  public static void setSchema (@Nullable final Schema aSchema)
   {
     s_aRWLock.writeLock ().lock ();
     try
     {
-      s_aDefaultDTDHandler = aDTDHandler;
+      s_aDefaultSchema = aSchema;
     }
     finally
     {
@@ -139,13 +271,12 @@ public final class SAXReaderDefaultSettings
     }
   }
 
-  @Nullable
-  public static ContentHandler getContentHandler ()
+  public static boolean isXIncludeAware ()
   {
     s_aRWLock.readLock ().lock ();
     try
     {
-      return s_aDefaultContentHandler;
+      return s_bDefaultXIncludeAware;
     }
     finally
     {
@@ -153,66 +284,17 @@ public final class SAXReaderDefaultSettings
     }
   }
 
-  public static void setContentHandler (@Nullable final ContentHandler aContentHandler)
+  public static void setXIncludeAware (final boolean bXIncludeAware)
   {
     s_aRWLock.writeLock ().lock ();
     try
     {
-      s_aDefaultContentHandler = aContentHandler;
+      s_bDefaultXIncludeAware = bXIncludeAware;
     }
     finally
     {
       s_aRWLock.writeLock ().unlock ();
     }
-  }
-
-  @Nullable
-  public static ErrorHandler getErrorHandler ()
-  {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_aDefaultErrorHandler;
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
-  }
-
-  public static void setErrorHandler (@Nullable final ErrorHandler aErrorHandler)
-  {
-    s_aRWLock.writeLock ().lock ();
-    try
-    {
-      s_aDefaultErrorHandler = aErrorHandler;
-    }
-    finally
-    {
-      s_aRWLock.writeLock ().unlock ();
-    }
-  }
-
-  @Nullable
-  public static LexicalHandler getLexicalHandler ()
-  {
-    return (LexicalHandler) getPropertyValue (EXMLParserProperty.SAX_LEXICAL_HANDLER);
-  }
-
-  public static void setLexicalHandler (@Nullable final LexicalHandler aLexicalHandler)
-  {
-    setPropertyValue (EXMLParserProperty.SAX_LEXICAL_HANDLER, aLexicalHandler);
-  }
-
-  @Nullable
-  public static DeclHandler getDeclarationHandler ()
-  {
-    return (DeclHandler) getPropertyValue (EXMLParserProperty.SAX_DECLARATION_HANDLER);
-  }
-
-  public static void setDeclarationHandler (@Nullable final DeclHandler aDeclHandler)
-  {
-    setPropertyValue (EXMLParserProperty.SAX_DECLARATION_HANDLER, aDeclHandler);
   }
 
   public static boolean hasAnyProperties ()
@@ -282,7 +364,7 @@ public final class SAXReaderDefaultSettings
 
   public static void setPropertyValues (@Nullable final Map <EXMLParserProperty, ?> aProperties)
   {
-    if (aProperties != null && !aProperties.isEmpty ())
+    if (aProperties != null)
     {
       s_aRWLock.writeLock ().lock ();
       try
@@ -412,7 +494,7 @@ public final class SAXReaderDefaultSettings
 
   public static void setFeatureValues (@Nullable final Map <EXMLParserFeature, Boolean> aValues)
   {
-    if (aValues != null && !aValues.isEmpty ())
+    if (aValues != null)
     {
       s_aRWLock.writeLock ().lock ();
       try
@@ -460,6 +542,82 @@ public final class SAXReaderDefaultSettings
     }
   }
 
+  public static boolean requiresSeparateDocumentBuilderFactory ()
+  {
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      return s_bDefaultNamespaceAware != XMLFactory.DEFAULT_DOM_NAMESPACE_AWARE ||
+             s_bDefaultValidating != XMLFactory.DEFAULT_DOM_VALIDATING ||
+             s_bDefaultIgnoringElementContentWhitespace != XMLFactory.DEFAULT_DOM_IGNORING_ELEMENT_CONTENT_WHITESPACE ||
+             s_bDefaultExpandEntityReferences != XMLFactory.DEFAULT_DOM_EXPAND_ENTITY_REFERENCES ||
+             s_bDefaultIgnoringComments != XMLFactory.DEFAULT_DOM_IGNORING_COMMENTS ||
+             s_bDefaultCoalescing != XMLFactory.DEFAULT_DOM_COALESCING ||
+             s_aDefaultSchema != null ||
+             s_bDefaultXIncludeAware != XMLFactory.DEFAULT_DOM_XINCLUDE_AWARE ||
+             !s_aDefaultProperties.isEmpty () ||
+             !s_aDefaultFeatures.isEmpty ();
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  @Nullable
+  public static EntityResolver getEntityResolver ()
+  {
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      return s_aDefaultEntityResolver;
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  public static void setEntityResolver (@Nullable final EntityResolver aEntityResolver)
+  {
+    s_aRWLock.writeLock ().lock ();
+    try
+    {
+      s_aDefaultEntityResolver = aEntityResolver;
+    }
+    finally
+    {
+      s_aRWLock.writeLock ().unlock ();
+    }
+  }
+
+  @Nullable
+  public static ErrorHandler getErrorHandler ()
+  {
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      return s_aDefaultErrorHandler;
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  public static void setErrorHandler (@Nullable final ErrorHandler aErrorHandler)
+  {
+    s_aRWLock.writeLock ().lock ();
+    try
+    {
+      s_aDefaultErrorHandler = aErrorHandler;
+    }
+    finally
+    {
+      s_aRWLock.writeLock ().unlock ();
+    }
+  }
+
   @Nonnull
   public static IExceptionHandler <Throwable> getExceptionHandler ()
   {
@@ -474,15 +632,15 @@ public final class SAXReaderDefaultSettings
     }
   }
 
-  public static void setExceptionHandler (@Nonnull final IExceptionHandler <Throwable> aDefaultExceptionHandler)
+  public static void setExceptionHandler (@Nonnull final IExceptionHandler <Throwable> aExceptionHandler)
   {
-    if (aDefaultExceptionHandler == null)
+    if (aExceptionHandler == null)
       throw new NullPointerException ("ExceptionHandler");
 
     s_aRWLock.writeLock ().lock ();
     try
     {
-      s_aDefaultExceptionHandler = aDefaultExceptionHandler;
+      s_aDefaultExceptionHandler = aExceptionHandler;
     }
     finally
     {

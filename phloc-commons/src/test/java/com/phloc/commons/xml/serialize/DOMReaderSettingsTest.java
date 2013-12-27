@@ -39,30 +39,31 @@ public final class DOMReaderSettingsTest
   @BeforeClass
   public static void bc ()
   {
-    DOMReaderSettings.setDefaultExceptionHandler (new DoNothingExceptionHandler ());
+    DOMReaderDefaultSettings.setExceptionHandler (new DoNothingExceptionHandler ());
   }
 
   @AfterClass
   public static void ac ()
   {
-    DOMReaderSettings.setDefaultExceptionHandler (new XMLLoggingExceptionHandler ());
+    DOMReaderDefaultSettings.setExceptionHandler (new XMLLoggingExceptionHandler ());
   }
 
   @Test
   public void testDefault ()
   {
-    assertNotNull (DOMReaderSettings.DEFAULT_SETTINGS);
-    assertFalse (DOMReaderSettings.DEFAULT_SETTINGS.requiresSeparateDocumentBuilderFactory ());
-    assertTrue (XMLFactory.DEFAULT_DOM_NAMESPACE_AWARE == DOMReaderSettings.DEFAULT_SETTINGS.isNamespaceAware ());
-    assertTrue (XMLFactory.DEFAULT_DOM_VALIDATING == DOMReaderSettings.DEFAULT_SETTINGS.isValidating ());
-    assertTrue (XMLFactory.DEFAULT_DOM_IGNORING_ELEMENT_CONTENT_WHITESPACE == DOMReaderSettings.DEFAULT_SETTINGS.isIgnoringElementContentWhitespace ());
-    assertTrue (XMLFactory.DEFAULT_DOM_EXPAND_ENTITY_REFERENCES == DOMReaderSettings.DEFAULT_SETTINGS.isExpandEntityReferences ());
-    assertTrue (XMLFactory.DEFAULT_DOM_IGNORING_COMMENTS == DOMReaderSettings.DEFAULT_SETTINGS.isIgnoringComments ());
-    assertTrue (XMLFactory.DEFAULT_DOM_COALESCING == DOMReaderSettings.DEFAULT_SETTINGS.isCoalescing ());
-    assertNull (DOMReaderSettings.DEFAULT_SETTINGS.getSchema ());
-    assertTrue (XMLFactory.DEFAULT_DOM_XINCLUDE_AWARE == DOMReaderSettings.DEFAULT_SETTINGS.isXIncludeAware ());
-    assertNull (DOMReaderSettings.DEFAULT_SETTINGS.getEntityResolver ());
-    assertNull (DOMReaderSettings.DEFAULT_SETTINGS.getErrorHandler ());
-    assertNotNull (DOMReaderSettings.DEFAULT_SETTINGS.getExceptionHandler ());
+    final DOMReaderSettings aDRS = new DOMReaderSettings ();
+    assertNotNull (aDRS);
+    assertFalse (aDRS.requiresSeparateDocumentBuilderFactory ());
+    assertTrue (XMLFactory.DEFAULT_DOM_NAMESPACE_AWARE == aDRS.isNamespaceAware ());
+    assertTrue (XMLFactory.DEFAULT_DOM_VALIDATING == aDRS.isValidating ());
+    assertTrue (XMLFactory.DEFAULT_DOM_IGNORING_ELEMENT_CONTENT_WHITESPACE == aDRS.isIgnoringElementContentWhitespace ());
+    assertTrue (XMLFactory.DEFAULT_DOM_EXPAND_ENTITY_REFERENCES == aDRS.isExpandEntityReferences ());
+    assertTrue (XMLFactory.DEFAULT_DOM_IGNORING_COMMENTS == aDRS.isIgnoringComments ());
+    assertTrue (XMLFactory.DEFAULT_DOM_COALESCING == aDRS.isCoalescing ());
+    assertNull (aDRS.getSchema ());
+    assertTrue (XMLFactory.DEFAULT_DOM_XINCLUDE_AWARE == aDRS.isXIncludeAware ());
+    assertNull (aDRS.getEntityResolver ());
+    assertNull (aDRS.getErrorHandler ());
+    assertNotNull (aDRS.getExceptionHandler ());
   }
 }
