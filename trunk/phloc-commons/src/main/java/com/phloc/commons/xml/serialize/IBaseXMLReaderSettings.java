@@ -31,19 +31,19 @@ import com.phloc.commons.xml.EXMLParserFeature;
 import com.phloc.commons.xml.EXMLParserProperty;
 
 /**
- * Read-only interface for DOM and SAX reader settings.
+ * Base Read-only interface for DOM and SAX reader settings.
  * 
  * @author Philip Helger
  */
 public interface IBaseXMLReaderSettings
 {
   /**
-   * @return <code>true</code> if at least one property is defined
+   * @return <code>true</code> if at least one parser property is defined
    */
   boolean hasAnyProperties ();
 
   /**
-   * Get the value of the specified property
+   * Get the value of the specified parser property
    * 
    * @param eProperty
    *        The property to use. May be <code>null</code>.
@@ -53,7 +53,8 @@ public interface IBaseXMLReaderSettings
   Object getPropertyValue (@Nullable EXMLParserProperty eProperty);
 
   /**
-   * @return A copy of all contained property values. Never <code>null</code>.
+   * @return A copy of all contained parser property values. Never
+   *         <code>null</code>.
    */
   @Nonnull
   @ReturnsMutableCopy

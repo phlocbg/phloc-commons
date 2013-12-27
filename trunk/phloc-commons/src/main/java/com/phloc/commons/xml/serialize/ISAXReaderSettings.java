@@ -21,6 +21,7 @@ import javax.annotation.Nullable;
 
 import org.xml.sax.ContentHandler;
 import org.xml.sax.DTDHandler;
+import org.xml.sax.ext.DeclHandler;
 import org.xml.sax.ext.LexicalHandler;
 
 /**
@@ -47,4 +48,11 @@ public interface ISAXReaderSettings extends IBaseXMLReaderSettings
    */
   @Nullable
   LexicalHandler getLexicalHandler ();
+
+  /**
+   * @return The special DTD declaration event handler to be used. May be
+   *         <code>null</code>.
+   */
+  @Nullable
+  DeclHandler getDeclarationHandler ();
 }

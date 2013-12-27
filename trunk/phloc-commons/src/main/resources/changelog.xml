@@ -25,6 +25,11 @@
       <text locale="en">EXMLSerializeVersion now implements IHasID&lt;String></text>
     </change>
   </entry>
+  <entry date="2013-12-26" category="api" action="add">
+    <change>
+      <text locale="en">Added new class DOMReaderSettings to specify all settings for DOM reading</text>
+    </change>
+  </entry>
   <entry date="2013-12-21" category="api" action="remove">
     <change>
       <text locale="en">Removed SAX stuff from XMLFactory because it was not used</text>
