@@ -29,6 +29,7 @@ import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
+import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.xml.EXMLCharMode;
 import com.phloc.commons.xml.EXMLIncorrectCharacterHandling;
@@ -560,9 +561,8 @@ public final class XMLMaskHelper
   private static char [][] _createEmptyReplacement (@Nonnull final char [] aSrcMap)
   {
     final char [][] ret = new char [aSrcMap.length] [];
-    final char [] aEmpty = new char [0];
     for (int i = 0; i < aSrcMap.length; ++i)
-      ret[i] = aEmpty;
+      ret[i] = ArrayHelper.EMPTY_CHAR_ARRAY;
     return ret;
   }
 
@@ -573,7 +573,7 @@ public final class XMLMaskHelper
                                           @Nullable final String s)
   {
     if (StringHelper.hasNoText (s))
-      return new char [0];
+      return ArrayHelper.EMPTY_CHAR_ARRAY;
 
     char [] aChars = s.toCharArray ();
 

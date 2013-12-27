@@ -1075,7 +1075,7 @@ public final class StringHelper
     if (nMaxItems == 1)
       return new String [] { sElements };
     if (hasNoText (sElements))
-      return new String [0];
+      return ArrayHelper.EMPTY_STRING_ARRAY;
 
     final int nMaxResultElements = 1 + getCharCount (sElements, cSep);
     if (nMaxResultElements == 1)
@@ -2725,7 +2725,7 @@ public final class StringHelper
   {
     // Any input text?
     if (hasNoText (sInputString))
-      return new char [0];
+      return ArrayHelper.EMPTY_CHAR_ARRAY;
 
     return replaceMultiple (sInputString.toCharArray (), aSearchChars, aReplacementStrings);
   }
@@ -2759,7 +2759,7 @@ public final class StringHelper
 
     // Any input text?
     if (aInput == null || aInput.length == 0)
-      return new char [0];
+      return ArrayHelper.EMPTY_CHAR_ARRAY;
 
     // Any replacement patterns?
     if (aSearchChars.length == 0)
@@ -2928,7 +2928,7 @@ public final class StringHelper
 
     // Any input text?
     if (hasNoText (sInputString))
-      return new char [0];
+      return ArrayHelper.EMPTY_CHAR_ARRAY;
 
     // Get char array
     final char [] aInput = sInputString.toCharArray ();
