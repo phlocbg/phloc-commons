@@ -101,43 +101,43 @@ public final class XMLReader
   @Nullable
   public static Document readXMLDOM (@WillClose @Nonnull final InputSource aIS) throws SAXException
   {
-    return readXMLDOM (aIS, DOMReaderSettings.DEFAULT_SETTINGS);
+    return readXMLDOM (aIS, new DOMReaderSettings ());
   }
 
   @Nullable
   public static Document readXMLDOM (@Nonnull @WillClose final InputStream aIS) throws SAXException
   {
-    return readXMLDOM (aIS, DOMReaderSettings.DEFAULT_SETTINGS);
+    return readXMLDOM (aIS, new DOMReaderSettings ());
   }
 
   @Nullable
   public static Document readXMLDOM (@WillClose @Nonnull final Reader aReader) throws SAXException
   {
-    return readXMLDOM (aReader, DOMReaderSettings.DEFAULT_SETTINGS);
+    return readXMLDOM (aReader, new DOMReaderSettings ());
   }
 
   @Nullable
   public static Document readXMLDOM (@Nonnull final File aFile) throws SAXException
   {
-    return readXMLDOM (aFile, DOMReaderSettings.DEFAULT_SETTINGS);
+    return readXMLDOM (aFile, new DOMReaderSettings ());
   }
 
   @Nullable
   public static Document readXMLDOM (@Nonnull final IReadableResource aIIS) throws SAXException
   {
-    return readXMLDOM (aIIS, DOMReaderSettings.DEFAULT_SETTINGS);
+    return readXMLDOM (aIIS, new DOMReaderSettings ());
   }
 
   @Nullable
   public static Document readXMLDOM (@Nonnull final String sXML) throws SAXException
   {
-    return readXMLDOM (sXML, DOMReaderSettings.DEFAULT_SETTINGS);
+    return readXMLDOM (sXML, new DOMReaderSettings ());
   }
 
   @Nullable
   public static Document readXMLDOM (@Nonnull final byte [] aXML) throws SAXException
   {
-    return readXMLDOM (aXML, DOMReaderSettings.DEFAULT_SETTINGS);
+    return readXMLDOM (aXML, new DOMReaderSettings ());
   }
 
   @Nullable
