@@ -45,13 +45,13 @@ public final class SAXReaderTest
   @BeforeClass
   public static void bc ()
   {
-    SAXReaderSettings.setDefaultExceptionHandler (new DoNothingExceptionHandler ());
+    SAXReaderDefaultSettings.setExceptionHandler (new DoNothingExceptionHandler ());
   }
 
   @AfterClass
   public static void ac ()
   {
-    SAXReaderSettings.setDefaultExceptionHandler (new XMLLoggingExceptionHandler ());
+    SAXReaderDefaultSettings.setExceptionHandler (new XMLLoggingExceptionHandler ());
   }
 
   @Test

@@ -796,7 +796,7 @@ public final class XMLReader
   @Deprecated
   public static Boolean getDefaultSaxParserFeatureValue (@Nullable final EXMLParserFeature eFeature)
   {
-    return SAXReaderSettings.getDefaultParserFeatureValue (eFeature);
+    return SAXReaderDefaultSettings.getFeatureValue (eFeature);
   }
 
   /**
@@ -811,7 +811,7 @@ public final class XMLReader
   public static void setDefaultSaxParserFeatureValue (@Nonnull final EXMLParserFeature eFeature,
                                                       @Nullable final Boolean aValue)
   {
-    SAXReaderSettings.setDefaultFeatureValue (eFeature, aValue);
+    SAXReaderDefaultSettings.setFeatureValue (eFeature, aValue);
   }
 
   /**
@@ -822,7 +822,7 @@ public final class XMLReader
   @Deprecated
   public static IExceptionHandler <Throwable> getDefaultSAXExceptionHandler ()
   {
-    return SAXReaderSettings.getDefaultExceptionHandler ();
+    return SAXReaderDefaultSettings.getExceptionHandler ();
   }
 
   /**
@@ -834,6 +834,6 @@ public final class XMLReader
   @Deprecated
   public static void setDefaultSAXExceptionHandler (@Nonnull final IExceptionHandler <Throwable> aExceptionHandler)
   {
-    SAXReaderSettings.setDefaultExceptionHandler (aExceptionHandler);
+    SAXReaderDefaultSettings.setExceptionHandler (aExceptionHandler);
   }
 }
