@@ -31,6 +31,7 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.DTDHandler;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.ErrorHandler;
+import org.xml.sax.ext.DeclHandler;
 import org.xml.sax.ext.LexicalHandler;
 
 import com.phloc.commons.annotations.ReturnsMutableCopy;
@@ -76,7 +77,6 @@ public final class SAXReaderSettings implements ISAXReaderSettings
   private DTDHandler m_aDTDHandler;
   private ContentHandler m_aContentHandler;
   private ErrorHandler m_aErrorHandler;
-  private LexicalHandler m_aLexicalHandler;
   private final EnumMap <EXMLParserProperty, Object> m_aProperties = new EnumMap <EXMLParserProperty, Object> (EXMLParserProperty.class);
   private final EnumMap <EXMLParserFeature, Boolean> m_aFeatures = new EnumMap <EXMLParserFeature, Boolean> (EXMLParserFeature.class);
   private IExceptionHandler <Throwable> m_aExceptionHandler;
@@ -143,13 +143,26 @@ public final class SAXReaderSettings implements ISAXReaderSettings
   @Nullable
   public LexicalHandler getLexicalHandler ()
   {
-    return m_aLexicalHandler;
+    return (LexicalHandler) m_aProperties.get (EXMLParserProperty.SAX_LEXICAL_HANDLER);
   }
 
   @Nonnull
   public SAXReaderSettings setLexicalHandler (@Nullable final LexicalHandler aLexicalHandler)
   {
-    m_aLexicalHandler = aLexicalHandler;
+    m_aProperties.put (EXMLParserProperty.SAX_LEXICAL_HANDLER, aLexicalHandler);
+    return this;
+  }
+
+  @Nullable
+  public DeclHandler getDeclHandler ()
+  {
+    return (DeclHandler) m_aProperties.get (EXMLParserProperty.SAX_DECLARATION_HANDLER);
+  }
+
+  @Nonnull
+  public SAXReaderSettings setDeclHandler (@Nullable final DeclHandler aDeclHandler)
+  {
+    m_aProperties.put (EXMLParserProperty.SAX_DECLARATION_HANDLER, aDeclHandler);
     return this;
   }
 
