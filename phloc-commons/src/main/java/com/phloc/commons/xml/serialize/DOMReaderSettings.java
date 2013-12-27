@@ -68,8 +68,8 @@ public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMRe
   private boolean m_bCoalescing = XMLFactory.DEFAULT_DOM_COALESCING;
   private Schema m_aSchema;
   private boolean m_bXIncludeAware = XMLFactory.DEFAULT_DOM_XINCLUDE_AWARE;
-  private final Map <EXMLParserProperty, Object> m_aProperties = new EnumMap <EXMLParserProperty, Object> (EXMLParserProperty.class);
-  private final Map <EXMLParserFeature, Boolean> m_aFeatures = new EnumMap <EXMLParserFeature, Boolean> (EXMLParserFeature.class);
+  private final EnumMap <EXMLParserProperty, Object> m_aProperties = new EnumMap <EXMLParserProperty, Object> (EXMLParserProperty.class);
+  private final EnumMap <EXMLParserFeature, Boolean> m_aFeatures = new EnumMap <EXMLParserFeature, Boolean> (EXMLParserFeature.class);
 
   // DocumentBuilder properties
   private EntityResolver m_aEntityResolver;
@@ -107,6 +107,8 @@ public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMRe
     setCoalescing (aOther.isCoalescing ());
     setSchema (aOther.getSchema ());
     setXIncludeAware (aOther.isXIncludeAware ());
+    setPropertyValues (aOther.getAllPropertyValues ());
+    setFeatureValues (aOther.getAllFeatureValues ());
     // DocumentBuilder
     setEntityResolver (aOther.getEntityResolver ());
     setErrorHandler (aOther.getErrorHandler ());
@@ -244,7 +246,7 @@ public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMRe
   }
 
   @Nonnull
-  public DOMReaderSettings setAllPropertyValues (@Nullable final Map <EXMLParserProperty, ?> aProperties)
+  public DOMReaderSettings setPropertyValues (@Nullable final Map <EXMLParserProperty, ?> aProperties)
   {
     if (aProperties != null)
       m_aProperties.putAll (aProperties);
@@ -263,6 +265,70 @@ public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMRe
     if (m_aProperties.isEmpty ())
       return EChange.UNCHANGED;
     m_aProperties.clear ();
+    return EChange.CHANGED;
+  }
+
+  public boolean hasAnyFeature ()
+  {
+    return !m_aFeatures.isEmpty ();
+  }
+
+  @Nullable
+  public Boolean getFeatureValue (@Nullable final EXMLParserFeature eFeature)
+  {
+    return eFeature == null ? null : m_aFeatures.get (eFeature);
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public Map <EXMLParserFeature, Boolean> getAllFeatureValues ()
+  {
+    return new EnumMap <EXMLParserFeature, Boolean> (m_aFeatures);
+  }
+
+  @Nonnull
+  public DOMReaderSettings setFeatureValue (@Nonnull final EXMLParserFeature eFeature, final boolean bValue)
+  {
+    if (eFeature == null)
+      throw new NullPointerException ("feature");
+
+    m_aFeatures.put (eFeature, Boolean.valueOf (bValue));
+    return this;
+  }
+
+  @Nonnull
+  public DOMReaderSettings setFeatureValue (@Nonnull final EXMLParserFeature eFeature, @Nullable final Boolean aValue)
+  {
+    if (eFeature == null)
+      throw new NullPointerException ("feature");
+
+    if (aValue == null)
+      m_aFeatures.remove (eFeature);
+    else
+      m_aFeatures.put (eFeature, aValue);
+    return this;
+  }
+
+  @Nonnull
+  public DOMReaderSettings setFeatureValues (@Nullable final Map <EXMLParserFeature, Boolean> aValues)
+  {
+    if (aValues != null)
+      m_aFeatures.putAll (aValues);
+    return this;
+  }
+
+  @Nonnull
+  public EChange removeFeature (@Nullable final EXMLParserFeature eFeature)
+  {
+    return EChange.valueOf (eFeature != null && m_aFeatures.remove (eFeature) != null);
+  }
+
+  @Nonnull
+  public EChange removeAllFeatures ()
+  {
+    if (m_aFeatures.isEmpty ())
+      return EChange.UNCHANGED;
+    m_aFeatures.clear ();
     return EChange.CHANGED;
   }
 

@@ -17,26 +17,16 @@
  */
 package com.phloc.commons.xml.serialize;
 
-import java.util.Map;
-
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.validation.Schema;
-
-import org.xml.sax.EntityResolver;
-import org.xml.sax.ErrorHandler;
-
-import com.phloc.commons.annotations.ReturnsMutableCopy;
-import com.phloc.commons.callback.IExceptionHandler;
-import com.phloc.commons.xml.EXMLParserProperty;
 
 /**
  * Read-only interface for DOM reader settings.
  * 
  * @author Philip Helger
  */
-public interface IDOMReaderSettings
+public interface IDOMReaderSettings extends IBaseXMLReaderSettings
 {
   /**
    * @return <code>true</code> if the parser should be namespace aware,
@@ -87,15 +77,6 @@ public interface IDOMReaderSettings
    */
   boolean isXIncludeAware ();
 
-  boolean hasAnyProperties ();
-
-  @Nullable
-  Object getPropertyValue (@Nullable EXMLParserProperty eProperty);
-
-  @Nonnull
-  @ReturnsMutableCopy
-  Map <EXMLParserProperty, Object> getAllPropertyValues ();
-
   /**
    * Check if the current settings require a separate
    * {@link DocumentBuilderFactory} or if a pooled default object can be used.
@@ -104,24 +85,4 @@ public interface IDOMReaderSettings
    *         required, <code>false</code> if not.
    */
   boolean requiresSeparateDocumentBuilderFactory ();
-
-  /**
-   * @return A special entity resolver to be used or <code>null</code> if no
-   *         special resolver is needed.
-   */
-  @Nullable
-  EntityResolver getEntityResolver ();
-
-  /**
-   * @return A special error handler to be used or <code>null</code> if no
-   *         special error handler is needed.
-   */
-  @Nullable
-  ErrorHandler getErrorHandler ();
-
-  /**
-   * @return A special exception handler to be used. Never <code>null</code>.
-   */
-  @Nonnull
-  IExceptionHandler <Throwable> getExceptionHandler ();
 }

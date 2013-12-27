@@ -38,6 +38,7 @@ import com.phloc.commons.callback.IExceptionHandler;
 import com.phloc.commons.callback.LoggingExceptionHandler;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.xml.EXMLParserFeature;
+import com.phloc.commons.xml.EXMLParserProperty;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -76,6 +77,7 @@ public final class SAXReaderSettings implements ISAXReaderSettings
   private ContentHandler m_aContentHandler;
   private ErrorHandler m_aErrorHandler;
   private LexicalHandler m_aLexicalHandler;
+  private final EnumMap <EXMLParserProperty, Object> m_aProperties = new EnumMap <EXMLParserProperty, Object> (EXMLParserProperty.class);
   private final EnumMap <EXMLParserFeature, Boolean> m_aFeatures = new EnumMap <EXMLParserFeature, Boolean> (EXMLParserFeature.class);
   private IExceptionHandler <Throwable> m_aExceptionHandler;
 
@@ -151,6 +153,61 @@ public final class SAXReaderSettings implements ISAXReaderSettings
     return this;
   }
 
+  public boolean hasAnyProperties ()
+  {
+    return !m_aProperties.isEmpty ();
+  }
+
+  @Nullable
+  public Object getPropertyValue (@Nullable final EXMLParserProperty eProperty)
+  {
+    return eProperty == null ? null : m_aProperties.get (eProperty);
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public Map <EXMLParserProperty, Object> getAllPropertyValues ()
+  {
+    return new EnumMap <EXMLParserProperty, Object> (m_aProperties);
+  }
+
+  @Nonnull
+  public SAXReaderSettings setPropertyValue (@Nonnull final EXMLParserProperty eProperty,
+                                             @Nullable final Object aPropertyValue)
+  {
+    if (eProperty == null)
+      throw new NullPointerException ("property");
+
+    if (aPropertyValue != null)
+      m_aProperties.put (eProperty, aPropertyValue);
+    else
+      m_aProperties.remove (eProperty);
+    return this;
+  }
+
+  @Nonnull
+  public SAXReaderSettings setPropertyValues (@Nullable final Map <EXMLParserProperty, ?> aProperties)
+  {
+    if (aProperties != null)
+      m_aProperties.putAll (aProperties);
+    return this;
+  }
+
+  @Nonnull
+  public EChange removePropertyValue (@Nullable final EXMLParserProperty eProperty)
+  {
+    return EChange.valueOf (eProperty != null && m_aProperties.remove (eProperty) != null);
+  }
+
+  @Nonnull
+  public EChange removeAllPropertyValues ()
+  {
+    if (m_aProperties.isEmpty ())
+      return EChange.UNCHANGED;
+    m_aProperties.clear ();
+    return EChange.CHANGED;
+  }
+
   public boolean hasAnyFeature ()
   {
     return !m_aFeatures.isEmpty ();
@@ -164,7 +221,7 @@ public final class SAXReaderSettings implements ISAXReaderSettings
 
   @Nonnull
   @ReturnsMutableCopy
-  public Map <EXMLParserFeature, Boolean> getAllFeatures ()
+  public Map <EXMLParserFeature, Boolean> getAllFeatureValues ()
   {
     return new EnumMap <EXMLParserFeature, Boolean> (m_aFeatures);
   }
