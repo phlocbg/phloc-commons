@@ -246,7 +246,7 @@ public final class SAXReader
 
         // Set all features
         if (aSettings.hasAnyFeature ())
-          for (final Map.Entry <EXMLParserFeature, Boolean> aEntry : aSettings.getAllFeatures ().entrySet ())
+          for (final Map.Entry <EXMLParserFeature, Boolean> aEntry : aSettings.getAllFeatureValues ().entrySet ())
             aEntry.getKey ().applyTo (aParser, aEntry.getValue ().booleanValue ());
 
         // Set optional properties
