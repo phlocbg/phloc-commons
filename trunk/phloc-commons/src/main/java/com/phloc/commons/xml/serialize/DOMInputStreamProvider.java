@@ -42,7 +42,7 @@ public class DOMInputStreamProvider extends StringInputStreamProvider
    */
   public DOMInputStreamProvider (@Nonnull final Node aNode)
   {
-    this (aNode, XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ);
+    this (aNode, XMLWriterSettings.DEFAULT_XML_SETTINGS);
   }
 
   /**
@@ -56,7 +56,7 @@ public class DOMInputStreamProvider extends StringInputStreamProvider
   @Deprecated
   public DOMInputStreamProvider (@Nonnull final Node aNode, @Nonnull @Nonempty final String sCharset)
   {
-    super (XMLWriter.getNodeAsString (aNode, new XMLWriterSettings ().setCharset (sCharset)), sCharset);
+    this (aNode, new XMLWriterSettings ().setCharset (sCharset));
   }
 
   /**
@@ -69,6 +69,19 @@ public class DOMInputStreamProvider extends StringInputStreamProvider
    */
   public DOMInputStreamProvider (@Nonnull final Node aNode, @Nonnull final Charset aCharset)
   {
-    super (XMLWriter.getNodeAsString (aNode, new XMLWriterSettings ().setCharset (aCharset)), aCharset);
+    this (aNode, new XMLWriterSettings ().setCharset (aCharset));
+  }
+
+  /**
+   * Constructor for W3C nodes.
+   * 
+   * @param aNode
+   *        The node to be streamed. May not be <code>null</code>.
+   * @param aSettings
+   *        The settings to use. May not be <code>null</code>.
+   */
+  public DOMInputStreamProvider (@Nonnull final Node aNode, @Nonnull final IXMLWriterSettings aSettings)
+  {
+    super (XMLWriter.getNodeAsString (aNode, aSettings), aSettings.getCharsetObj ());
   }
 }
