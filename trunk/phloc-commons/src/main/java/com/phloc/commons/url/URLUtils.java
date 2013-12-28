@@ -338,13 +338,15 @@ public final class URLUtils
         {
           final List <String> aParts = StringHelper.getExploded (EQUALS, sKeyValuePair, 2);
           final String sKey = aParts.get (0);
-          if (StringHelper.hasNoText (sKey))
-            throw new IllegalArgumentException ("parameter name may not be empty!");
-          final String sValue = aParts.size () == 2 ? aParts.get (1) : "";
-          if (sValue == null)
-            throw new NullPointerException ("parameter value may not be null");
-          // Now decode the parameters
-          aMap.put (aParameterDecoder.decode (sKey), aParameterDecoder.decode (sValue));
+          // Maybe empty when passing something like "url?=value"
+          if (StringHelper.hasText (sKey))
+          {
+            final String sValue = aParts.size () == 2 ? aParts.get (1) : "";
+            if (sValue == null)
+              throw new NullPointerException ("parameter value may not be null");
+            // Now decode the parameters
+            aMap.put (aParameterDecoder.decode (sKey), aParameterDecoder.decode (sValue));
+          }
         }
     }
     return aMap;
