@@ -27,7 +27,7 @@
   </entry>
   <entry date="2013-12-28" category="api" action="add">
     <change>
-      <text locale="en">Updated MicroReader API to use SAXReaderSettins instead of several parameters.</text>
+      <text locale="en">Updated MicroReader API to use SAXReaderSettings instead of several parameters.</text>
     </change>
   </entry>
   <entry date="2013-12-27" category="api" action="add">
