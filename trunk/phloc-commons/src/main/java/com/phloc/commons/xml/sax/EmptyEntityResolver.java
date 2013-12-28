@@ -22,12 +22,18 @@ import javax.annotation.Nonnull;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 
-
-public final class EmptyEntityResolver implements EntityResolver
+/**
+ * Special {@link EntityResolver} implementation that always delivers an empty
+ * document.
+ * 
+ * @author Philip Helger
+ */
+public class EmptyEntityResolver implements EntityResolver
 {
   @Nonnull
   public InputSource resolveEntity (final String sPublicId, final String sSystemId)
   {
+    // Create an empty document
     return InputSourceFactory.create ("");
   }
 }

@@ -33,6 +33,7 @@ import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.xml.EXMLCharMode;
 import com.phloc.commons.xml.EXMLIncorrectCharacterHandling;
+import com.phloc.commons.xml.EXMLVersion;
 
 /**
  * This class contains all the methods for masking XML content.
@@ -602,6 +603,18 @@ public final class XMLMaskHelper
     }
     final char [][] aDstMap = _findReplaceMap (eXMLVersion, eXMLCharMode);
     return StringHelper.replaceMultiple (aChars, aSrcMap, aDstMap);
+  }
+
+  @Nonnegative
+  public static int getMaskedXMLTextLength (@Nonnull final EXMLVersion eXMLVersion,
+                                            @Nonnull final EXMLCharMode eXMLCharMode,
+                                            @Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharHandling,
+                                            @Nullable final String s)
+  {
+    return getMaskedXMLTextLength (EXMLSerializeVersion.getFromXMLVersionOrThrow (eXMLVersion),
+                                   eXMLCharMode,
+                                   eIncorrectCharHandling,
+                                   s);
   }
 
   @Nonnegative

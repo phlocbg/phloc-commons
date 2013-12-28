@@ -57,7 +57,7 @@ public final class InputSourceFactory
   private InputSourceFactory ()
   {}
 
-  @Nonnull
+  @Nullable
   public static InputSource create (@Nonnull final File aFile)
   {
     return create (new FileSystemResource (aFile));
@@ -75,7 +75,7 @@ public final class InputSourceFactory
     return create (new URLResource (aURL));
   }
 
-  @Nonnull
+  @Nullable
   public static InputSource create (@Nonnull final IInputStreamProvider aISP)
   {
     if (aISP instanceof IReadableResource)
@@ -83,7 +83,7 @@ public final class InputSourceFactory
     return create (aISP.getInputStream ());
   }
 
-  @Nonnull
+  @Nullable
   public static InputSource create (@Nonnull final IReadableResource aResource)
   {
     if (aResource instanceof FileSystemResource)

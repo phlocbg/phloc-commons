@@ -85,5 +85,13 @@ public final class URLUtilsTest
     assertEquals ("y", aData.getAllParams ().get ("x"));
     assertEquals ("b", aData.getAllParams ().get ("a"));
     assertEquals ("c", aData.getAnchor ());
+
+    aData = URLUtils.getAsURLData ("?x=y&=b#c");
+    assertNotNull (aData);
+    assertNull (aData.getProtocol ());
+    assertEquals ("", aData.getPath ());
+    assertEquals (1, aData.getParamCount ());
+    assertEquals ("y", aData.getAllParams ().get ("x"));
+    assertEquals ("c", aData.getAnchor ());
   }
 }
