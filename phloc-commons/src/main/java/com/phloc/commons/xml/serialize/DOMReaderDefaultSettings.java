@@ -38,6 +38,7 @@ import com.phloc.commons.state.EChange;
 import com.phloc.commons.xml.EXMLParserFeature;
 import com.phloc.commons.xml.EXMLParserProperty;
 import com.phloc.commons.xml.XMLFactory;
+import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -77,7 +78,7 @@ public final class DOMReaderDefaultSettings
   @GuardedBy ("s_aRWLock")
   private static EntityResolver s_aDefaultEntityResolver;
   @GuardedBy ("s_aRWLock")
-  private static ErrorHandler s_aDefaultErrorHandler;
+  private static ErrorHandler s_aDefaultErrorHandler = LoggingSAXErrorHandler.getInstance ();
 
   // Handling properties
   @GuardedBy ("s_aRWLock")

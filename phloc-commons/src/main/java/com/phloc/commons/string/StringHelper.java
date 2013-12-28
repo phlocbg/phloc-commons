@@ -2883,9 +2883,10 @@ public final class StringHelper
     int nFirstNonReplace = 0;
     int nInputIndex = 0;
     int nTotalReplacements = 0;
+    final int nMaxSearchChars = aSearchChars.length;
     for (final char cInput : aInput)
     {
-      for (int nPatternIndex = 0; nPatternIndex < aSearchChars.length; nPatternIndex++)
+      for (int nPatternIndex = 0; nPatternIndex < nMaxSearchChars; nPatternIndex++)
       {
         if (cInput == aSearchChars[nPatternIndex])
         {

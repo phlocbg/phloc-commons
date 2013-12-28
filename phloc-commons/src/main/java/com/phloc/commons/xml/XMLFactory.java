@@ -31,7 +31,7 @@ import org.w3c.dom.DocumentType;
 import com.phloc.commons.SystemProperties;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.exceptions.InitializationException;
-import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
+import com.phloc.commons.xml.serialize.DOMReaderDefaultSettings;
 
 /**
  * Utility class for creating XML DOM documents.
@@ -206,7 +206,7 @@ public final class XMLFactory
     try
     {
       final DocumentBuilder aDocBuilder = aDocBuilderFactory.newDocumentBuilder ();
-      aDocBuilder.setErrorHandler (LoggingSAXErrorHandler.getInstance ());
+      aDocBuilder.setErrorHandler (DOMReaderDefaultSettings.getErrorHandler ());
       return aDocBuilder;
     }
     catch (final ParserConfigurationException ex)

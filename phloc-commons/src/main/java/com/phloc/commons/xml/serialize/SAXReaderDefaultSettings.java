@@ -40,6 +40,7 @@ import com.phloc.commons.callback.IExceptionHandler;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.xml.EXMLParserFeature;
 import com.phloc.commons.xml.EXMLParserProperty;
+import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
@@ -60,7 +61,7 @@ public final class SAXReaderDefaultSettings
   @GuardedBy ("s_aRWLock")
   private static ContentHandler s_aDefaultContentHandler;
   @GuardedBy ("s_aRWLock")
-  private static ErrorHandler s_aDefaultErrorHandler;
+  private static ErrorHandler s_aDefaultErrorHandler = LoggingSAXErrorHandler.getInstance ();
   @GuardedBy ("s_aRWLock")
   private static final EnumMap <EXMLParserProperty, Object> s_aDefaultProperties = new EnumMap <EXMLParserProperty, Object> (EXMLParserProperty.class);
   @GuardedBy ("s_aRWLock")

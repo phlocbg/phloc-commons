@@ -31,6 +31,7 @@ import org.xml.sax.ErrorHandler;
 import org.xml.sax.ext.DeclHandler;
 import org.xml.sax.ext.LexicalHandler;
 
+import com.phloc.commons.ICloneable;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.callback.IExceptionHandler;
 import com.phloc.commons.state.EChange;
@@ -44,7 +45,7 @@ import com.phloc.commons.xml.EXMLParserProperty;
  * @author Philip Helger
  */
 @NotThreadSafe
-public class SAXReaderSettings implements ISAXReaderSettings
+public class SAXReaderSettings implements ISAXReaderSettings, ICloneable <SAXReaderSettings>
 {
   private EntityResolver m_aEntityResolver;
   private DTDHandler m_aDTDHandler;
@@ -67,6 +68,27 @@ public class SAXReaderSettings implements ISAXReaderSettings
     setPropertyValues (SAXReaderDefaultSettings.getAllPropertyValues ());
     setFeatureValues (SAXReaderDefaultSettings.getAllFeatureValues ());
     setExceptionHandler (SAXReaderDefaultSettings.getExceptionHandler ());
+  }
+
+  /**
+   * Copy constructor
+   * 
+   * @param aOther
+   *        the object to copy the settings from. May not be <code>null</code>.
+   */
+  public SAXReaderSettings (@Nonnull final ISAXReaderSettings aOther)
+  {
+    if (aOther == null)
+      throw new NullPointerException ("other");
+
+    // Set default values
+    setEntityResolver (aOther.getEntityResolver ());
+    setDTDHandler (aOther.getDTDHandler ());
+    setContentHandler (aOther.getContentHandler ());
+    setErrorHandler (aOther.getErrorHandler ());
+    setPropertyValues (aOther.getAllPropertyValues ());
+    setFeatureValues (aOther.getAllFeatureValues ());
+    setExceptionHandler (aOther.getExceptionHandler ());
   }
 
   @Nullable
@@ -280,6 +302,12 @@ public class SAXReaderSettings implements ISAXReaderSettings
     return this;
   }
 
+  @Nonnull
+  public SAXReaderSettings getClone ()
+  {
+    return new SAXReaderSettings (this);
+  }
+
   @Override
   public String toString ()
   {
@@ -291,5 +319,27 @@ public class SAXReaderSettings implements ISAXReaderSettings
                                        .append ("features", m_aFeatures)
                                        .append ("exceptionHandler", m_aExceptionHandler)
                                        .toString ();
+  }
+
+  /**
+   * Create a clone of the passed settings, depending on the parameter. If the
+   * parameter is <code>null</code> a new empty {@link SAXReaderSettings} object
+   * is created, otherwise a copy of the parameter is created.
+   * 
+   * @param aOther
+   *        The parameter to be used. May be <code>null</code>.
+   * @return Never <code>null</code>.
+   */
+  @Nonnull
+  public static SAXReaderSettings createCloneOnDemand (@Nullable final ISAXReaderSettings aOther)
+  {
+    if (aOther == null)
+    {
+      // Create plain object
+      return new SAXReaderSettings ();
+    }
+
+    // Create a clone
+    return new SAXReaderSettings (aOther);
   }
 }
