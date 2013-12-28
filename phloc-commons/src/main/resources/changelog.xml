@@ -22,6 +22,11 @@
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
   <entry date="2013-12-28" category="api" action="add">
     <change>
+      <text locale="en">Extended DOMInputStreamProvider and MicroDOMInputStreamProvider to take an arbitrary IXMLWriterSettings object.</text>
+    </change>
+  </entry>
+  <entry date="2013-12-28" category="api" action="add">
+    <change>
       <text locale="en">Updated MicroReader API to use SAXReaderSettins instead of several parameters.</text>
     </change>
   </entry>

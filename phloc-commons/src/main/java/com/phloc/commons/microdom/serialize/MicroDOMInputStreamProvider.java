@@ -24,6 +24,7 @@ import javax.annotation.Nonnull;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.io.streamprovider.StringInputStreamProvider;
 import com.phloc.commons.microdom.IMicroNode;
+import com.phloc.commons.xml.serialize.IXMLWriterSettings;
 import com.phloc.commons.xml.serialize.XMLWriterSettings;
 
 /**
@@ -43,7 +44,7 @@ public class MicroDOMInputStreamProvider extends StringInputStreamProvider
    */
   public MicroDOMInputStreamProvider (@Nonnull final IMicroNode aNode)
   {
-    this (aNode, XMLWriterSettings.DEFAULT_XML_CHARSET_OBJ);
+    this (aNode, XMLWriterSettings.DEFAULT_XML_SETTINGS);
   }
 
   /**
@@ -57,7 +58,7 @@ public class MicroDOMInputStreamProvider extends StringInputStreamProvider
   @Deprecated
   public MicroDOMInputStreamProvider (@Nonnull final IMicroNode aNode, @Nonnull @Nonempty final String sCharset)
   {
-    super (MicroWriter.getNodeAsString (aNode, new XMLWriterSettings ().setCharset (sCharset)), sCharset);
+    this (aNode, new XMLWriterSettings ().setCharset (sCharset));
   }
 
   /**
@@ -70,6 +71,19 @@ public class MicroDOMInputStreamProvider extends StringInputStreamProvider
    */
   public MicroDOMInputStreamProvider (@Nonnull final IMicroNode aNode, @Nonnull final Charset aCharset)
   {
-    super (MicroWriter.getNodeAsString (aNode, new XMLWriterSettings ().setCharset (aCharset)), aCharset);
+    this (aNode, new XMLWriterSettings ().setCharset (aCharset));
+  }
+
+  /**
+   * Constructor for micro nodes.
+   * 
+   * @param aNode
+   *        The node to be streamed. May not be <code>null</code>.
+   * @param aSettings
+   *        The settings to use. May not be <code>null</code>.
+   */
+  public MicroDOMInputStreamProvider (@Nonnull final IMicroNode aNode, @Nonnull final IXMLWriterSettings aSettings)
+  {
+    super (MicroWriter.getNodeAsString (aNode, aSettings), aSettings.getCharsetObj ());
   }
 }
