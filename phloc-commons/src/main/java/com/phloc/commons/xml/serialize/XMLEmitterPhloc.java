@@ -366,8 +366,8 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
   {
     _append ('<');
     if (StringHelper.hasText (sNamespacePrefix))
-      _append (sNamespacePrefix)._append (CXML.XML_PREFIX_NAMESPACE_SEP);
-    _append (sTagName);
+      _appendMasked (EXMLCharMode.ELEMENT_NAME, sNamespacePrefix)._append (CXML.XML_PREFIX_NAMESPACE_SEP);
+    _appendMasked (EXMLCharMode.ELEMENT_NAME, sTagName);
     if (aAttrs != null && !aAttrs.isEmpty ())
     {
       // assuming that the order of the passed attributes is consistent!
@@ -376,7 +376,9 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
       {
         final String sAttrName = aEntry.getKey ();
         final String sAttrValue = aEntry.getValue ();
-        _append (' ')._append (sAttrName)._append ('=')._appendAttrValue (sAttrValue);
+        _append (' ')._appendMasked (EXMLCharMode.ATTRIBUTE_NAME, sAttrName)
+                     ._append ('=')
+                     ._appendAttrValue (sAttrValue);
       }
     }
 
@@ -412,8 +414,8 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
     {
       _append ("</");
       if (StringHelper.hasText (sNamespacePrefix))
-        _append (sNamespacePrefix)._append (CXML.XML_PREFIX_NAMESPACE_SEP);
-      _append (sTagName)._append ('>');
+        _appendMasked (EXMLCharMode.ELEMENT_NAME, sNamespacePrefix)._append (CXML.XML_PREFIX_NAMESPACE_SEP);
+      _appendMasked (EXMLCharMode.ELEMENT_NAME, sTagName)._append ('>');
     }
   }
 
