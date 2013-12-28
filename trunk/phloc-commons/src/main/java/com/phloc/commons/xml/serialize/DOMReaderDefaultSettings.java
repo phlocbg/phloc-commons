@@ -39,6 +39,8 @@ import com.phloc.commons.xml.EXMLParserFeature;
 import com.phloc.commons.xml.EXMLParserProperty;
 import com.phloc.commons.xml.XMLFactory;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * DOM reader default settings
  * 
@@ -426,6 +428,7 @@ public final class DOMReaderDefaultSettings
   }
 
   @Nullable
+  @SuppressFBWarnings ("NP_BOOLEAN_RETURN_NULL")
   public static Boolean getFeatureValue (@Nullable final EXMLParserFeature eFeature)
   {
     if (eFeature == null)
