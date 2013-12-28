@@ -33,6 +33,7 @@ import com.phloc.commons.annotations.CodingStyleguideUnaware;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.lang.EnumHelper;
+import com.phloc.commons.lang.GenericReflection;
 import com.phloc.commons.name.IHasName;
 
 /**
@@ -152,7 +153,7 @@ public enum EXMLParserProperty implements IHasName
    * this property is set. By default, this property is not set; Xerces's
    * behaviour is therefore strictly spec-compliant by default.
    */
-  GENERAL_SECURITY_MANAGER (EXMLParserPropertyType.GENERAL, "http://apache.org/xml/properties/security-manager", org.apache.xerces.util.SecurityManager.class),
+  GENERAL_SECURITY_MANAGER (EXMLParserPropertyType.GENERAL, "http://apache.org/xml/properties/security-manager", "org.apache.xerces.util.SecurityManager"),
 
   /**
    * The current DOM element node while parsing.<br/>
@@ -198,6 +199,18 @@ public enum EXMLParserProperty implements IHasName
   private Class <?> m_aValueClass;
   @CodingStyleguideUnaware
   private boolean m_bWarnedOnce = false;
+  private final String m_sValueClassName;
+
+  private EXMLParserProperty (@Nonnull final EXMLParserPropertyType ePropertyType,
+                              @Nonnull @Nonempty final String sName,
+                              @Nonnull @Nonempty final String sValueClassName)
+  {
+    m_ePropertyType = ePropertyType;
+    m_sName = sName;
+    // May be null
+    m_aValueClass = GenericReflection.getClassFromNameSafe (sValueClassName);
+    m_sValueClassName = sValueClassName;
+  }
 
   private EXMLParserProperty (@Nonnull final EXMLParserPropertyType ePropertyType,
                               @Nonnull @Nonempty final String sName,
@@ -206,6 +219,7 @@ public enum EXMLParserProperty implements IHasName
     m_ePropertyType = ePropertyType;
     m_sName = sName;
     m_aValueClass = aValueClass;
+    m_sValueClassName = aValueClass.getName ();
   }
 
   @Nonnull
@@ -221,10 +235,17 @@ public enum EXMLParserProperty implements IHasName
     return m_sName;
   }
 
-  @Nonnull
+  @Nullable
   public Class <?> getValueClass ()
   {
     return m_aValueClass;
+  }
+
+  @Nonnull
+  @Nonempty
+  public String getValueClassName ()
+  {
+    return m_sValueClassName;
   }
 
   public void applyTo (@Nonnull final org.xml.sax.XMLReader aParser, final Object aValue)
