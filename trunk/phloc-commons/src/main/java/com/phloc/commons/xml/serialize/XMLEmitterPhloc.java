@@ -376,9 +376,10 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
       {
         final String sAttrName = aEntry.getKey ();
         final String sAttrValue = aEntry.getValue ();
-        _append (' ')._appendMasked (EXMLCharMode.ATTRIBUTE_NAME, sAttrName)
-                     ._append ('=')
-                     ._appendAttrValue (sAttrValue);
+        // TODO sAttrName may contain a namespace prefix and therefore no
+        // masking can be used, as ":" is an invalid character in attribute
+        // names!
+        _append (' ')._append (sAttrName)._append ('=')._appendAttrValue (sAttrValue);
       }
     }
 
