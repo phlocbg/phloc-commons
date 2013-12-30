@@ -19,6 +19,7 @@ package com.phloc.commons.string;//NOPMD
 
 import java.io.IOException;
 import java.io.Writer;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -43,6 +44,7 @@ import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
+import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.math.MathHelper;
 
@@ -337,6 +339,26 @@ public final class StringHelper
   public static char getHexChar (final int n)
   {
     return Character.forDigit (n, CGlobal.HEX_RADIX);
+  }
+
+  /**
+   * Convert a string to a byte array and than to a hexadecimal encoded string.
+   * 
+   * @param sInput
+   *        The source string. May not be <code>null</code>.
+   * @param aCharset
+   *        The charset to use. May not be <code>null</code>.
+   * @return The String representation of the byte array of the string.
+   */
+  @Nonnull
+  public static String getHexEncoded (@Nonnull final String sInput, @Nonnull final Charset aCharset)
+  {
+    if (sInput == null)
+      throw new NullPointerException ("input");
+    if (aCharset == null)
+      throw new NullPointerException ("charset");
+
+    return getHexEncoded (CharsetManager.getAsBytes (sInput, aCharset));
   }
 
   /**
