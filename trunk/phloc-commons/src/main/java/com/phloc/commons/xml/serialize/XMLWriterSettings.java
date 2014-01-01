@@ -141,7 +141,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
    * @return this
    */
   @Nonnull
-  public XMLWriterSettings setFormat (@Nonnull final EXMLSerializeFormat eFormat)
+  public final XMLWriterSettings setFormat (@Nonnull final EXMLSerializeFormat eFormat)
   {
     if (eFormat == null)
       throw new NullPointerException ("format");
@@ -163,7 +163,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
    * @return this
    */
   @Nonnull
-  public XMLWriterSettings setXMLVersion (@Nonnull final EXMLVersion eVersion)
+  public final XMLWriterSettings setXMLVersion (@Nonnull final EXMLVersion eVersion)
   {
     if (eVersion == null)
       throw new NullPointerException ("version");
@@ -185,7 +185,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
    * @return this
    */
   @Nonnull
-  public XMLWriterSettings setSerializeDocType (@Nonnull final EXMLSerializeDocType eSerializeDocType)
+  public final XMLWriterSettings setSerializeDocType (@Nonnull final EXMLSerializeDocType eSerializeDocType)
   {
     if (eSerializeDocType == null)
       throw new NullPointerException ("serializeDocType");
@@ -207,7 +207,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
    * @return this
    */
   @Nonnull
-  public XMLWriterSettings setSerializeComments (@Nonnull final EXMLSerializeComments eSerializeComments)
+  public final XMLWriterSettings setSerializeComments (@Nonnull final EXMLSerializeComments eSerializeComments)
   {
     if (eSerializeComments == null)
       throw new NullPointerException ("serializeComments");
@@ -229,7 +229,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
    * @return this
    */
   @Nonnull
-  public XMLWriterSettings setIndent (@Nonnull final EXMLSerializeIndent eIndent)
+  public final XMLWriterSettings setIndent (@Nonnull final EXMLSerializeIndent eIndent)
   {
     if (eIndent == null)
       throw new NullPointerException ("indent");
@@ -251,7 +251,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
    * @return this
    */
   @Nonnull
-  public XMLWriterSettings setIncorrectCharacterHandling (@Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharacterHandling)
+  public final XMLWriterSettings setIncorrectCharacterHandling (@Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharacterHandling)
   {
     if (eIncorrectCharacterHandling == null)
       throw new NullPointerException ("inccorectCharacterHandling");
@@ -273,7 +273,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
    * @return this
    */
   @Nonnull
-  public XMLWriterSettings setCharset (@Nonnull final Charset aCharset)
+  public final XMLWriterSettings setCharset (@Nonnull final Charset aCharset)
   {
     if (aCharset == null)
       throw new NullPointerException ("charset");
@@ -290,7 +290,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
    */
   @Nonnull
   @Deprecated
-  public XMLWriterSettings setCharset (@Nonnull final String sCharset)
+  public final XMLWriterSettings setCharset (@Nonnull final String sCharset)
   {
     return setCharset (CharsetManager.getCharsetFromName (sCharset));
   }
@@ -315,7 +315,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
    * @return this
    */
   @Nonnull
-  public XMLWriterSettings setNamespaceContext (@Nullable final NamespaceContext aNamespaceContext)
+  public final XMLWriterSettings setNamespaceContext (@Nullable final NamespaceContext aNamespaceContext)
   {
     m_aNamespaceContext = aNamespaceContext;
     return this;
@@ -328,7 +328,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
   }
 
   @Nonnull
-  public XMLWriterSettings setUseDoubleQuotesForAttributes (final boolean bUseDoubleQuotesForAttributes)
+  public final XMLWriterSettings setUseDoubleQuotesForAttributes (final boolean bUseDoubleQuotesForAttributes)
   {
     m_bUseDoubleQuotesForAttributes = bUseDoubleQuotesForAttributes;
     return this;
@@ -340,7 +340,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
   }
 
   @Nonnull
-  public XMLWriterSettings setSpaceOnSelfClosedElement (final boolean bSpaceOnSelfClosedElement)
+  public final XMLWriterSettings setSpaceOnSelfClosedElement (final boolean bSpaceOnSelfClosedElement)
   {
     m_bSpaceOnSelfClosedElement = bSpaceOnSelfClosedElement;
     return this;
@@ -352,7 +352,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
   }
 
   @Nonnull
-  public XMLWriterSettings setNewlineString (@Nonnull @Nonempty final String sNewlineString)
+  public final XMLWriterSettings setNewlineString (@Nonnull @Nonempty final String sNewlineString)
   {
     if (StringHelper.hasNoText (sNewlineString))
       throw new IllegalArgumentException ("NewlineString");
@@ -368,7 +368,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
   }
 
   @Nonnull
-  public XMLWriterSettings setIndentationString (@Nonnull @Nonempty final String sIndentationString)
+  public final XMLWriterSettings setIndentationString (@Nonnull @Nonempty final String sIndentationString)
   {
     if (StringHelper.hasNoText (sIndentationString))
       throw new IllegalArgumentException ("IndentationString");
@@ -384,7 +384,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
   }
 
   @Nonnull
-  public XMLWriterSettings setEmitNamespaces (final boolean bEmitNamespaces)
+  public final XMLWriterSettings setEmitNamespaces (final boolean bEmitNamespaces)
   {
     m_bEmitNamespaces = bEmitNamespaces;
     return this;
@@ -396,7 +396,7 @@ public class XMLWriterSettings implements IXMLWriterSettings, ICloneable <XMLWri
   }
 
   @Nonnull
-  public XMLWriterSettings setPutNamespaceContextPrefixesInRoot (final boolean bPutNamespaceContextPrefixesInRoot)
+  public final XMLWriterSettings setPutNamespaceContextPrefixesInRoot (final boolean bPutNamespaceContextPrefixesInRoot)
   {
     m_bPutNamespaceContextPrefixesInRoot = bPutNamespaceContextPrefixesInRoot;
     return this;

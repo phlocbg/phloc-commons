@@ -46,7 +46,7 @@ public final class DOMReaderDefaultSettingsTest
     assertNull (DOMReaderDefaultSettings.getSchema ());
     assertTrue (XMLFactory.DEFAULT_DOM_XINCLUDE_AWARE == DOMReaderDefaultSettings.isXIncludeAware ());
     assertNull (DOMReaderDefaultSettings.getEntityResolver ());
-    assertNull (DOMReaderDefaultSettings.getErrorHandler ());
+    assertNotNull (DOMReaderDefaultSettings.getErrorHandler ());
     assertNotNull (DOMReaderDefaultSettings.getExceptionHandler ());
   }
 }
