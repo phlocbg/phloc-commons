@@ -63,7 +63,7 @@ public final class DOMReaderSettingsTest
     assertNull (aDRS.getSchema ());
     assertTrue (XMLFactory.DEFAULT_DOM_XINCLUDE_AWARE == aDRS.isXIncludeAware ());
     assertNull (aDRS.getEntityResolver ());
-    assertNull (aDRS.getErrorHandler ());
+    assertNotNull (aDRS.getErrorHandler ());
     assertNotNull (aDRS.getExceptionHandler ());
   }
 }

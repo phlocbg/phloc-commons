@@ -55,7 +55,7 @@ public class ResourceLSInput implements LSInput
     if (aISP == null)
       throw new NullPointerException ("inputStreamProvider");
     m_aISP = aISP;
-    setSystemId (sSystemID);
+    m_sSystemId = sSystemID;
   }
 
   @Nullable

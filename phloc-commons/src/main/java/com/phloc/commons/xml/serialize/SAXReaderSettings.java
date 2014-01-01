@@ -98,7 +98,7 @@ public class SAXReaderSettings implements ISAXReaderSettings, ICloneable <SAXRea
   }
 
   @Nonnull
-  public SAXReaderSettings setEntityResolver (@Nullable final EntityResolver aEntityResolver)
+  public final SAXReaderSettings setEntityResolver (@Nullable final EntityResolver aEntityResolver)
   {
     m_aEntityResolver = aEntityResolver;
     return this;
@@ -111,7 +111,7 @@ public class SAXReaderSettings implements ISAXReaderSettings, ICloneable <SAXRea
   }
 
   @Nonnull
-  public SAXReaderSettings setDTDHandler (@Nullable final DTDHandler aDTDHandler)
+  public final SAXReaderSettings setDTDHandler (@Nullable final DTDHandler aDTDHandler)
   {
     m_aDTDHandler = aDTDHandler;
     return this;
@@ -124,7 +124,7 @@ public class SAXReaderSettings implements ISAXReaderSettings, ICloneable <SAXRea
   }
 
   @Nonnull
-  public SAXReaderSettings setContentHandler (@Nullable final ContentHandler aContentHandler)
+  public final SAXReaderSettings setContentHandler (@Nullable final ContentHandler aContentHandler)
   {
     m_aContentHandler = aContentHandler;
     return this;
@@ -137,7 +137,7 @@ public class SAXReaderSettings implements ISAXReaderSettings, ICloneable <SAXRea
   }
 
   @Nonnull
-  public SAXReaderSettings setErrorHandler (@Nullable final ErrorHandler aErrorHandler)
+  public final SAXReaderSettings setErrorHandler (@Nullable final ErrorHandler aErrorHandler)
   {
     m_aErrorHandler = aErrorHandler;
     return this;
@@ -150,7 +150,7 @@ public class SAXReaderSettings implements ISAXReaderSettings, ICloneable <SAXRea
   }
 
   @Nonnull
-  public SAXReaderSettings setLexicalHandler (@Nullable final LexicalHandler aLexicalHandler)
+  public final SAXReaderSettings setLexicalHandler (@Nullable final LexicalHandler aLexicalHandler)
   {
     return setPropertyValue (EXMLParserProperty.SAX_LEXICAL_HANDLER, aLexicalHandler);
   }
@@ -162,7 +162,7 @@ public class SAXReaderSettings implements ISAXReaderSettings, ICloneable <SAXRea
   }
 
   @Nonnull
-  public SAXReaderSettings setDeclarationHandler (@Nullable final DeclHandler aDeclHandler)
+  public final SAXReaderSettings setDeclarationHandler (@Nullable final DeclHandler aDeclHandler)
   {
     return setPropertyValue (EXMLParserProperty.SAX_DECLARATION_HANDLER, aDeclHandler);
   }
@@ -186,8 +186,8 @@ public class SAXReaderSettings implements ISAXReaderSettings, ICloneable <SAXRea
   }
 
   @Nonnull
-  public SAXReaderSettings setPropertyValue (@Nonnull final EXMLParserProperty eProperty,
-                                             @Nullable final Object aPropertyValue)
+  public final SAXReaderSettings setPropertyValue (@Nonnull final EXMLParserProperty eProperty,
+                                                   @Nullable final Object aPropertyValue)
   {
     if (eProperty == null)
       throw new NullPointerException ("property");
@@ -200,7 +200,7 @@ public class SAXReaderSettings implements ISAXReaderSettings, ICloneable <SAXRea
   }
 
   @Nonnull
-  public SAXReaderSettings setPropertyValues (@Nullable final Map <EXMLParserProperty, ?> aProperties)
+  public final SAXReaderSettings setPropertyValues (@Nullable final Map <EXMLParserProperty, ?> aProperties)
   {
     if (aProperties != null)
       m_aProperties.putAll (aProperties);
@@ -208,13 +208,13 @@ public class SAXReaderSettings implements ISAXReaderSettings, ICloneable <SAXRea
   }
 
   @Nonnull
-  public EChange removePropertyValue (@Nullable final EXMLParserProperty eProperty)
+  public final EChange removePropertyValue (@Nullable final EXMLParserProperty eProperty)
   {
     return EChange.valueOf (eProperty != null && m_aProperties.remove (eProperty) != null);
   }
 
   @Nonnull
-  public EChange removeAllPropertyValues ()
+  public final EChange removeAllPropertyValues ()
   {
     if (m_aProperties.isEmpty ())
       return EChange.UNCHANGED;
@@ -241,7 +241,7 @@ public class SAXReaderSettings implements ISAXReaderSettings, ICloneable <SAXRea
   }
 
   @Nonnull
-  public SAXReaderSettings setFeatureValue (@Nonnull final EXMLParserFeature eFeature, final boolean bValue)
+  public final SAXReaderSettings setFeatureValue (@Nonnull final EXMLParserFeature eFeature, final boolean bValue)
   {
     if (eFeature == null)
       throw new NullPointerException ("feature");
@@ -251,7 +251,8 @@ public class SAXReaderSettings implements ISAXReaderSettings, ICloneable <SAXRea
   }
 
   @Nonnull
-  public SAXReaderSettings setFeatureValue (@Nonnull final EXMLParserFeature eFeature, @Nullable final Boolean aValue)
+  public final SAXReaderSettings setFeatureValue (@Nonnull final EXMLParserFeature eFeature,
+                                                  @Nullable final Boolean aValue)
   {
     if (eFeature == null)
       throw new NullPointerException ("feature");
@@ -264,7 +265,7 @@ public class SAXReaderSettings implements ISAXReaderSettings, ICloneable <SAXRea
   }
 
   @Nonnull
-  public SAXReaderSettings setFeatureValues (@Nullable final Map <EXMLParserFeature, Boolean> aValues)
+  public final SAXReaderSettings setFeatureValues (@Nullable final Map <EXMLParserFeature, Boolean> aValues)
   {
     if (aValues != null)
       m_aFeatures.putAll (aValues);
@@ -272,13 +273,13 @@ public class SAXReaderSettings implements ISAXReaderSettings, ICloneable <SAXRea
   }
 
   @Nonnull
-  public EChange removeFeature (@Nullable final EXMLParserFeature eFeature)
+  public final EChange removeFeature (@Nullable final EXMLParserFeature eFeature)
   {
     return EChange.valueOf (eFeature != null && m_aFeatures.remove (eFeature) != null);
   }
 
   @Nonnull
-  public EChange removeAllFeatures ()
+  public final EChange removeAllFeatures ()
   {
     if (m_aFeatures.isEmpty ())
       return EChange.UNCHANGED;
@@ -293,7 +294,7 @@ public class SAXReaderSettings implements ISAXReaderSettings, ICloneable <SAXRea
   }
 
   @Nonnull
-  public SAXReaderSettings setExceptionHandler (@Nonnull final IExceptionHandler <Throwable> aExceptionHandler)
+  public final SAXReaderSettings setExceptionHandler (@Nonnull final IExceptionHandler <Throwable> aExceptionHandler)
   {
     if (aExceptionHandler == null)
       throw new NullPointerException ("ExceptionHandler");
