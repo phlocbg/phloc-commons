@@ -123,7 +123,7 @@ public class LZWCodec extends AbstractCodec
     }
   }
 
-  protected static abstract class AbstractLZWDictionary
+  protected abstract static class AbstractLZWDictionary
   {
     @SuppressWarnings ("hiding")
     protected static final Logger s_aLogger = LoggerFactory.getLogger (AbstractLZWDictionary.class);

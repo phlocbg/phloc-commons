@@ -281,7 +281,7 @@ public final class BaseTypeConverterRegistrar implements ITypeConverterRegistrar
     aRegistry.registerTypeConverterRule (new AbstractTypeConverterRuleAssignableSourceFixedDestination (Number.class,
                                                                                                         Short.class)
     {
-      public final Short convert (@Nonnull final Object aSource)
+      public Short convert (@Nonnull final Object aSource)
       {
         return Short.valueOf (((Number) aSource).shortValue ());
       }
