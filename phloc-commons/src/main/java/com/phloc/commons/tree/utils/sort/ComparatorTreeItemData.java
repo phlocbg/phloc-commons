@@ -25,13 +25,12 @@ import javax.annotation.Nullable;
 import com.phloc.commons.compare.AbstractPartComparator;
 import com.phloc.commons.compare.ESortOrder;
 import com.phloc.commons.tree.IBasicTreeItem;
-import com.phloc.commons.tree.simple.ITreeItem;
-import com.phloc.commons.tree.withid.ITreeItemWithID;
 
 /**
  * Comparator for sorting {@link IBasicTreeItem} items by their data using an
  * explicit {@link Comparator}.<br>
- * Works for {@link ITreeItem} and {@link ITreeItemWithID}.
+ * Works for {@link com.phloc.commons.tree.simple.ITreeItem} and
+ * {@link com.phloc.commons.tree.withid.ITreeItemWithID}.
  * 
  * @author Philip Helger
  * @param <DATATYPE>
@@ -39,8 +38,7 @@ import com.phloc.commons.tree.withid.ITreeItemWithID;
  * @param <ITEMTYPE>
  *        tree item implementation type
  */
-public class ComparatorTreeItemData <DATATYPE, ITEMTYPE extends IBasicTreeItem <DATATYPE, ITEMTYPE>> extends
-                                                                                                     AbstractPartComparator <ITEMTYPE, DATATYPE>
+public class ComparatorTreeItemData <DATATYPE, ITEMTYPE extends IBasicTreeItem <DATATYPE, ITEMTYPE>> extends AbstractPartComparator <ITEMTYPE, DATATYPE>
 {
   /**
    * Constructor with default sort order.
