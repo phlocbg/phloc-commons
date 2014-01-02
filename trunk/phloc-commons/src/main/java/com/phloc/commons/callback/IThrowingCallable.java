@@ -20,8 +20,8 @@ package com.phloc.commons.callback;
 import java.util.concurrent.Callable;
 
 /**
- * This is the same as the {@link Callable} interface but following our naming
- * conventions.
+ * This is the same as the {@link java.util.concurrent.Callable} interface but
+ * following our naming conventions.
  * 
  * @author Philip Helger
  * @param <DATATYPE>

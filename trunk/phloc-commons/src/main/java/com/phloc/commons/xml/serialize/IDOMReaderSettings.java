@@ -18,7 +18,6 @@
 package com.phloc.commons.xml.serialize;
 
 import javax.annotation.Nullable;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.validation.Schema;
 
 /**
@@ -79,10 +78,12 @@ public interface IDOMReaderSettings extends IBaseXMLReaderSettings
 
   /**
    * Check if the current settings require a separate
-   * {@link DocumentBuilderFactory} or if a pooled default object can be used.
+   * {@link javax.xml.parsers.DocumentBuilderFactory} or if a pooled default
+   * object can be used.
    * 
-   * @return <code>true</code> if a separate {@link DocumentBuilderFactory} is
-   *         required, <code>false</code> if not.
+   * @return <code>true</code> if a separate
+   *         {@link javax.xml.parsers.DocumentBuilderFactory} is required,
+   *         <code>false</code> if not.
    */
   boolean requiresSeparateDocumentBuilderFactory ();
 }

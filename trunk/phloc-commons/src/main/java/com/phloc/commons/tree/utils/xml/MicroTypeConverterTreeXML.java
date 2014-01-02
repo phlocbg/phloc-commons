@@ -24,12 +24,12 @@ import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.microdom.IMicroElement;
 import com.phloc.commons.microdom.convert.MicroTypeConverter;
-import com.phloc.commons.microdom.convert.MicroTypeConverterRegistry;
 import com.phloc.commons.string.StringHelper;
 
 /**
  * A special implementation of {@link IConverterTreeXML} that uses the
- * conversion rules stored in the {@link MicroTypeConverterRegistry}.
+ * conversion rules stored in the
+ * {@link com.phloc.commons.microdom.convert.MicroTypeConverterRegistry}.
  * 
  * @author Philip Helger
  * @param <DATATYPE>

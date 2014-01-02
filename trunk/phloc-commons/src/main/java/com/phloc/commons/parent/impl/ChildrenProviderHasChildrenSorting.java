@@ -26,12 +26,12 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.collections.ContainerHelper;
-import com.phloc.commons.parent.IChildrenProvider;
 import com.phloc.commons.parent.IHasChildren;
 
 /**
- * An implementation of the {@link IChildrenProvider} interface that works with
- * all types that implement {@link IHasChildren}. It automatically sorts the
+ * An implementation of the {@link com.phloc.commons.parent.IChildrenProvider}
+ * interface that works with all types that implement
+ * {@link com.phloc.commons.parent.IHasChildren}. It automatically sorts the
  * returned children by the specified comparator.
  * 
  * @author Philip Helger
@@ -39,8 +39,7 @@ import com.phloc.commons.parent.IHasChildren;
  *        The data type of the child objects.
  */
 @Immutable
-public class ChildrenProviderHasChildrenSorting <CHILDTYPE extends IHasChildren <CHILDTYPE>> extends
-                                                                                             ChildrenProviderHasChildren <CHILDTYPE>
+public class ChildrenProviderHasChildrenSorting <CHILDTYPE extends IHasChildren <CHILDTYPE>> extends ChildrenProviderHasChildren <CHILDTYPE>
 {
   private final Comparator <? super CHILDTYPE> m_aComparator;
 

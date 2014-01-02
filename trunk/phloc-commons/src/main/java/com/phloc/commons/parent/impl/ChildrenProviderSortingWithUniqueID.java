@@ -22,12 +22,11 @@ import java.util.Comparator;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.phloc.commons.parent.IChildrenProviderWithID;
 import com.phloc.commons.parent.IChildrenProviderWithUniqueID;
 
 /**
- * An {@link IChildrenProviderWithID} with ID that returns the children in
- * {@link #getChildren(Object)} sorted.
+ * An {@link com.phloc.commons.parent.IChildrenProviderWithID} with ID that
+ * returns the children in {@link #getChildren(Object)} sorted.
  * 
  * @author Philip Helger
  * @param <KEYTYPE>
@@ -35,8 +34,7 @@ import com.phloc.commons.parent.IChildrenProviderWithUniqueID;
  * @param <CHILDTYPE>
  *        The data type of the child objects.
  */
-public class ChildrenProviderSortingWithUniqueID <KEYTYPE, CHILDTYPE> extends ChildrenProviderSorting <CHILDTYPE> implements
-                                                                                                                 IChildrenProviderWithUniqueID <KEYTYPE, CHILDTYPE>
+public class ChildrenProviderSortingWithUniqueID <KEYTYPE, CHILDTYPE> extends ChildrenProviderSorting <CHILDTYPE> implements IChildrenProviderWithUniqueID <KEYTYPE, CHILDTYPE>
 {
   public ChildrenProviderSortingWithUniqueID (@Nonnull final IChildrenProviderWithUniqueID <KEYTYPE, CHILDTYPE> aCP,
                                               @Nonnull final Comparator <? super CHILDTYPE> aComparator)

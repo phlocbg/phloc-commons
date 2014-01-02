@@ -17,8 +17,6 @@
  */
 package com.phloc.commons.state;
 
-import com.phloc.commons.error.EErrorLevel;
-
 /**
  * Very simple interface for an object that has error/noError indication.
  * 
@@ -28,12 +26,13 @@ public interface IErrorIndicator
 {
   /**
    * @return <code>true</code> if this level is at least
-   *         {@link EErrorLevel#ERROR}.
+   *         {@link com.phloc.commons.error.EErrorLevel#ERROR} or worse.
    */
   boolean isError ();
 
   /**
-   * @return <code>true</code> if this level is below {@link EErrorLevel#ERROR}.
+   * @return <code>true</code> if this level is below
+   *         {@link com.phloc.commons.error.EErrorLevel#ERROR}.
    */
   boolean isNoError ();
 }

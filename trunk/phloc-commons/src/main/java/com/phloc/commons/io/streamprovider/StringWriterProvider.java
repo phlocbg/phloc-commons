@@ -17,8 +17,6 @@
  */
 package com.phloc.commons.io.streamprovider;
 
-import java.io.Writer;
-
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.io.IWriterProvider;
@@ -26,7 +24,7 @@ import com.phloc.commons.io.streams.NonBlockingStringWriter;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * An {@link Writer} provider based on a {@link String}.
+ * An {@link java.io.Writer} provider based on a {@link String}.
  * 
  * @author Philip Helger
  */

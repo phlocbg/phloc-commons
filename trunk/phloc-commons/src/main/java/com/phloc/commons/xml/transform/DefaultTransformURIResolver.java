@@ -26,7 +26,7 @@ import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.xml.ls.SimpleLSResourceResolver;
 
 /**
- * Implementation of the {@link URIResolver} interface using
+ * Implementation of the {@link javax.xml.transform.URIResolver} interface using
  * {@link SimpleLSResourceResolver} to resolve resources.
  * 
  * @author Philip Helger
