@@ -19,13 +19,13 @@ package com.phloc.commons.collections.multimap;
 
 import java.util.Map;
 import java.util.Set;
-import java.util.WeakHashMap;
 
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 /**
- * Abstract multi map based on {@link WeakHashMap} and {@link Set} values.<br>
+ * Abstract multi map based on {@link java.util.WeakHashMap} and
+ * {@link java.util.Set} values.<br>
  * 
  * @author Philip Helger
  * @param <KEYTYPE>
@@ -34,9 +34,7 @@ import javax.annotation.concurrent.NotThreadSafe;
  *        value type
  */
 @NotThreadSafe
-public abstract class AbstractMultiWeakHashMapSetBased <KEYTYPE, VALUETYPE> extends
-                                                                            AbstractMultiWeakHashMap <KEYTYPE, VALUETYPE, Set <VALUETYPE>> implements
-                                                                                                                                          IMultiMapSetBased <KEYTYPE, VALUETYPE>
+public abstract class AbstractMultiWeakHashMapSetBased <KEYTYPE, VALUETYPE> extends AbstractMultiWeakHashMap <KEYTYPE, VALUETYPE, Set <VALUETYPE>> implements IMultiMapSetBased <KEYTYPE, VALUETYPE>
 {
   public AbstractMultiWeakHashMapSetBased ()
   {}

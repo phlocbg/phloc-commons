@@ -21,14 +21,14 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 /**
- * Multi map based on {@link TreeMap} and {@link HashSet} values.<br>
+ * Multi map based on {@link java.util.TreeMap} and {@link java.util.HashSet}
+ * values.<br>
  * 
  * @author Philip Helger
  * @param <KEYTYPE>

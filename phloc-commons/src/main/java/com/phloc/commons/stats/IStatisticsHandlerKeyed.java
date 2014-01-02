@@ -23,8 +23,6 @@ import javax.annotation.CheckForSigned;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.phloc.commons.CGlobal;
-
 /**
  * Base interface for keyed statistic handlers
  * 
@@ -45,7 +43,8 @@ public interface IStatisticsHandlerKeyed extends IStatisticsHandler
    * @param sKey
    *        The key to be queried. May be <code>null</code>.
    * @return The invocation count for a single key or
-   *         {@link CGlobal#ILLEGAL_UINT} if no such key exists
+   *         {@link com.phloc.commons.CGlobal#ILLEGAL_UINT} if no such key
+   *         exists
    */
   @CheckForSigned
   int getInvocationCount (@Nullable String sKey);

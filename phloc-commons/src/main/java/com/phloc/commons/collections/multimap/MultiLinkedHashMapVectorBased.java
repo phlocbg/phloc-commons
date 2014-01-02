@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.collections.multimap;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
@@ -27,7 +26,8 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 /**
- * Multi map based on {@link LinkedHashMap} and {@link Vector} values.<br>
+ * Multi map based on {@link java.util.LinkedHashMap} and
+ * {@link java.util.Vector} values.<br>
  * 
  * @author Philip Helger
  * @param <KEYTYPE>
@@ -36,8 +36,7 @@ import javax.annotation.concurrent.NotThreadSafe;
  *        value type
  */
 @NotThreadSafe
-public class MultiLinkedHashMapVectorBased <KEYTYPE, VALUETYPE> extends
-                                                                AbstractMultiLinkedHashMapListBased <KEYTYPE, VALUETYPE>
+public class MultiLinkedHashMapVectorBased <KEYTYPE, VALUETYPE> extends AbstractMultiLinkedHashMapListBased <KEYTYPE, VALUETYPE>
 {
   public MultiLinkedHashMapVectorBased ()
   {}

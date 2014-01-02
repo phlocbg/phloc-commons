@@ -20,14 +20,14 @@ package com.phloc.commons.collections.multimap;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
-import java.util.WeakHashMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 /**
- * Multi map based on {@link WeakHashMap} and {@link Vector} values.<br>
+ * Multi map based on {@link java.util.WeakHashMap} and {@link java.util.Vector}
+ * values.<br>
  * 
  * @author Philip Helger
  * @param <KEYTYPE>
@@ -36,8 +36,7 @@ import javax.annotation.concurrent.NotThreadSafe;
  *        value type
  */
 @NotThreadSafe
-public class MultiWeakHashMapVectorBased <KEYTYPE, VALUETYPE> extends
-                                                              AbstractMultiWeakHashMapListBased <KEYTYPE, VALUETYPE>
+public class MultiWeakHashMapVectorBased <KEYTYPE, VALUETYPE> extends AbstractMultiWeakHashMapListBased <KEYTYPE, VALUETYPE>
 {
   public MultiWeakHashMapVectorBased ()
   {}
