@@ -257,12 +257,12 @@ public final class ClassPathResourceTest
     // Must be a folder from a resource that is only available as a JAR file
 
     // With a trailing slash it is recognized as a folder
-    ClassPathResource aCP = new ClassPathResource ("META-INF/maven/com.phloc/phloc-jdk5/");
+    ClassPathResource aCP = new ClassPathResource ("META-INF/maven/org.slf4j/slf4j-api/");
     assertTrue (aCP.exists ());
     assertNull (aCP.getInputStream ());
 
     // Without a trailing slash it is not recognized as a folder
-    aCP = new ClassPathResource ("META-INF/maven/com.phloc/phloc-jdk5");
+    aCP = new ClassPathResource ("META-INF/maven/org.slf4j/slf4j-api");
     assertTrue (aCP.exists ());
     assertNull (aCP.getInputStream ());
   }
