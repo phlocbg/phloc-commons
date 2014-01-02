@@ -17,11 +17,10 @@
  */
 package com.phloc.commons.callback;
 
-import java.util.concurrent.Callable;
 
 /**
- * Like the {@link Callable} interface but not throwing an exception and
- * including a parameter!
+ * Like the {@link java.util.concurrent.Callable} interface but not throwing an
+ * exception and including a parameter!
  * 
  * @author Philip Helger
  * @param <DATATYPE>
@@ -29,8 +28,7 @@ import java.util.concurrent.Callable;
  * @param <PARAMTYPE>
  *        The parameter type.
  */
-public interface INonThrowingCallableWithParameter <DATATYPE, PARAMTYPE> extends
-                                                                         IThrowingCallableWithParameter <DATATYPE, PARAMTYPE>
+public interface INonThrowingCallableWithParameter <DATATYPE, PARAMTYPE> extends IThrowingCallableWithParameter <DATATYPE, PARAMTYPE>
 {
   /**
    * The call back method to be called.

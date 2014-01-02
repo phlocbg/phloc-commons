@@ -17,8 +17,6 @@
  */
 package com.phloc.commons.io.streamprovider;
 
-import java.io.Reader;
-
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
@@ -27,7 +25,7 @@ import com.phloc.commons.io.streams.NonBlockingStringReader;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * An {@link Reader} provider based on a {@link String}.
+ * An {@link java.io.Reader} provider based on a {@link String}.
  * 
  * @author Philip Helger
  */

@@ -19,7 +19,6 @@ package com.phloc.commons.collections.multimap;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -29,8 +28,8 @@ import javax.annotation.concurrent.ThreadSafe;
 import com.phloc.commons.state.EChange;
 
 /**
- * Abstract multi map based on {@link ConcurrentHashMap} and {@link List}
- * values.<br>
+ * Abstract multi map based on {@link java.util.concurrent.ConcurrentHashMap}
+ * and {@link java.util.List} values.<br>
  * Important note: <code>null</code> keys are not allowed here!
  * 
  * @author Philip Helger

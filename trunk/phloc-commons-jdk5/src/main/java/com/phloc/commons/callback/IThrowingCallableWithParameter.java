@@ -17,10 +17,10 @@
  */
 package com.phloc.commons.callback;
 
-import java.util.concurrent.Callable;
 
 /**
- * Like the {@link Callable} interface but including a parameter!
+ * Like the {@link java.util.concurrent.Callable} interface but including a
+ * parameter!
  * 
  * @author Philip Helger
  * @param <DATATYPE>

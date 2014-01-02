@@ -42,6 +42,43 @@ import com.phloc.commons.lang.GenericReflection;
 @Immutable
 public final class ArrayHelper
 {
+  /** Constant empty boolean array */
+  public static final boolean [] EMPTY_BOOLEAN_ARRAY = new boolean [0];
+  /** Constant empty byte array */
+  public static final byte [] EMPTY_BYTE_ARRAY = new byte [0];
+  /** Constant empty char array */
+  public static final char [] EMPTY_CHAR_ARRAY = new char [0];
+  /** Constant empty double array */
+  public static final double [] EMPTY_DOUBLE_ARRAY = new double [0];
+  /** Constant empty float array */
+  public static final float [] EMPTY_FLOAT_ARRAY = new float [0];
+  /** Constant empty int array */
+  public static final int [] EMPTY_INT_ARRAY = new int [0];
+  /** Constant empty long array */
+  public static final long [] EMPTY_LONG_ARRAY = new long [0];
+  /** Constant empty short array */
+  public static final short [] EMPTY_SHORT_ARRAY = new short [0];
+  /** Constant empty boolean array */
+  public static final Boolean [] EMPTY_BOOLEAN_OBJ_ARRAY = new Boolean [0];
+  /** Constant empty byte array */
+  public static final Byte [] EMPTY_BYTE_OBJ_ARRAY = new Byte [0];
+  /** Constant empty char array */
+  public static final Character [] EMPTY_CHAR_OBJ_ARRAY = new Character [0];
+  /** Constant empty double array */
+  public static final Double [] EMPTY_DOUBLE_OBJ_ARRAY = new Double [0];
+  /** Constant empty float array */
+  public static final Float [] EMPTY_FLOAT_OBJ_ARRAY = new Float [0];
+  /** Constant empty int array */
+  public static final Integer [] EMPTY_INT_OBJ_ARRAY = new Integer [0];
+  /** Constant empty long array */
+  public static final Long [] EMPTY_LONG_OBJ_ARRAY = new Long [0];
+  /** Constant empty short array */
+  public static final Short [] EMPTY_SHORT_OBJ_ARRAY = new Short [0];
+  /** Constant empty Object array */
+  public static final Object [] EMPTY_OBJECT_ARRAY = new Object [0];
+  /** Constant empty String array */
+  public static final String [] EMPTY_STRING_ARRAY = new String [0];
+
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")
   private static final ArrayHelper s_aInstance = new ArrayHelper ();

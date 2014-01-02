@@ -148,19 +148,19 @@ public final class XMLWriterSettingsTest
                           {
                             aXWS.setPutNamespaceContextPrefixesInRoot (bPutNamespaceContextPrefixesInRoot);
                             assertTrue (bPutNamespaceContextPrefixesInRoot == aXWS.isPutNamespaceContextPrefixesInRoot ());
-                            PhlocTestUtils.testDefaultImplementationWithEqualContentObject (aXWS,
-                                                                                            new XMLWriterSettings ().setSerializeDocType (eDocType)
-                                                                                                                    .setSerializeComments (eComments)
-                                                                                                                    .setFormat (eFormat)
-                                                                                                                    .setIndent (eIndent)
-                                                                                                                    .setIncorrectCharacterHandling (eIncorrectCharHandling)
-                                                                                                                    .setCharset (aCS)
-                                                                                                                    .setUseDoubleQuotesForAttributes (bUseDoubleQuotesForAttributes)
-                                                                                                                    .setSpaceOnSelfClosedElement (bSpaceOnSelfClosedElement)
-                                                                                                                    .setNewlineString (sNewline)
-                                                                                                                    .setIndentationString (sIndentation)
-                                                                                                                    .setEmitNamespaces (bEmitNamespaces)
-                                                                                                                    .setPutNamespaceContextPrefixesInRoot (bPutNamespaceContextPrefixesInRoot));
+                            final XMLWriterSettings aXWS2 = new XMLWriterSettings ().setSerializeDocType (eDocType)
+                                                                                    .setSerializeComments (eComments)
+                                                                                    .setFormat (eFormat)
+                                                                                    .setIndent (eIndent)
+                                                                                    .setIncorrectCharacterHandling (eIncorrectCharHandling)
+                                                                                    .setCharset (aCS)
+                                                                                    .setUseDoubleQuotesForAttributes (bUseDoubleQuotesForAttributes)
+                                                                                    .setSpaceOnSelfClosedElement (bSpaceOnSelfClosedElement)
+                                                                                    .setNewlineString (sNewline)
+                                                                                    .setIndentationString (sIndentation)
+                                                                                    .setEmitNamespaces (bEmitNamespaces)
+                                                                                    .setPutNamespaceContextPrefixesInRoot (bPutNamespaceContextPrefixesInRoot);
+                            PhlocTestUtils.testDefaultImplementationWithEqualContentObject (aXWS, aXWS2);
                           }
                           assertTrue (bEmitNamespaces == aXWS.isEmitNamespaces ());
                         }

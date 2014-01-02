@@ -68,12 +68,11 @@ public class XMLLoggingExceptionHandler extends LoggingExceptionHandler
     {
       // Must be checked before IOException because it is an IOException
       // Caught if entity resolver failed
-      final UnknownHostException ex = (UnknownHostException) t;
-      return "Failed to resolve entity host: " + ex.getMessage ();
+      return "Failed to resolve entity host: " + t.getMessage ();
     }
     if (t instanceof IOException)
     {
-      return "Error reading XML document";
+      return "Error reading XML document: " + t.getMessage ();
     }
     return super.getLogMessage (t);
   }

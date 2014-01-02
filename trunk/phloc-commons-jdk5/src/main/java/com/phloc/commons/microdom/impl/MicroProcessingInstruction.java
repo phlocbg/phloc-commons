@@ -24,14 +24,13 @@ import javax.annotation.concurrent.Immutable;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.microdom.EMicroNodeType;
-import com.phloc.commons.microdom.IMicroEntityReference;
 import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.microdom.IMicroProcessingInstruction;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * Default implementation of the {@link IMicroEntityReference} interface.
+ * Default implementation of the {@link IMicroProcessingInstruction} interface.
  * 
  * @author Philip Helger
  */

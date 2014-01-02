@@ -24,7 +24,6 @@ import java.io.Writer;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
-import javax.xml.transform.Result;
 import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.stream.StreamResult;
 
@@ -34,8 +33,8 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.io.IWritableResource;
 
 /**
- * Factory class to create the correct {@link Result} objects for different
- * output types.
+ * Factory class to create the correct {@link javax.xml.transform.Result}
+ * objects for different output types.
  * 
  * @author Philip Helger
  */

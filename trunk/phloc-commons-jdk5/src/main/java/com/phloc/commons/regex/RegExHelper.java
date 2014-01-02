@@ -29,6 +29,7 @@ import javax.annotation.RegEx;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
+import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.string.StringHelper;
 
@@ -67,7 +68,7 @@ public final class RegExHelper
   public static String [] getSplitToArray (@Nullable final CharSequence sText, @Nonnull @RegEx final String sRegEx)
   {
     if (sText == null)
-      return new String [0];
+      return ArrayHelper.EMPTY_STRING_ARRAY;
     return RegExPool.getPattern (sRegEx).split (sText);
   }
 
@@ -97,7 +98,7 @@ public final class RegExHelper
     if (sRegEx == null)
       throw new IllegalArgumentException ("regexp");
     if (sText == null)
-      return new String [0];
+      return ArrayHelper.EMPTY_STRING_ARRAY;
     return RegExPool.getPattern (sRegEx).split (sText, nLimit);
   }
 

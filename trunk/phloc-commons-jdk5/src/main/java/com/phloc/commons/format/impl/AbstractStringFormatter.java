@@ -22,7 +22,6 @@ import javax.annotation.Nullable;
 
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.format.IFormatter;
-import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.typeconvert.TypeConverter;
 
@@ -55,9 +54,7 @@ public abstract class AbstractStringFormatter implements IFormatter
   }
 
   /**
-   * Convert the source value to a string. The first try is the usage of a type
-   * converter. If this fails, the regular {@link StringHelper#toString()}
-   * method is invoked.
+   * Convert the source value to a string by using the {@link TypeConverter}.
    * 
    * @param aValue
    *        The value to be converted to a string

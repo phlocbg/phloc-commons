@@ -30,7 +30,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.phloc.commons.state.EChange;
 
 /**
- * Abstract multi map based on {@link TreeMap}.
+ * Abstract multi map based on {@link java.util.TreeMap}.
  * 
  * @author Philip Helger
  * @param <KEYTYPE>

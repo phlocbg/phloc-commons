@@ -34,8 +34,8 @@ import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * An implementation of the JAXB {@link ValidationEventHandler} interface. It
- * collects all events that occurred!
+ * An implementation of the JAXB {@link javax.xml.bind.ValidationEventHandler}
+ * interface. It collects all events that occurred!
  * 
  * @author Philip Helger
  */

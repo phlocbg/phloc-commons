@@ -131,8 +131,8 @@ public final class MimeTypeParser
   {
     if (eQuotingAlgorithm == EMimeQuoting.QUOTED_STRING)
     {
-      final char SEPARATOR = EMimeQuoting.QUOTED_STRING_SEPARATOR_CHAR;
-      final char MASK = EMimeQuoting.QUOTED_STRING_MASK_CHAR;
+      final char cSep = EMimeQuoting.QUOTED_STRING_SEPARATOR_CHAR;
+      final char cMask = EMimeQuoting.QUOTED_STRING_MASK_CHAR;
       final char [] aParamChars = sParameters.toCharArray ();
       final int nMax = aParamChars.length;
       int nIndex = 0;
@@ -153,12 +153,12 @@ public final class MimeTypeParser
         ++nIndex;
 
         // Search the start of the value
-        while (nIndex < nMax && aParamChars[nIndex] != SEPARATOR && !isTokenChar (aParamChars[nIndex]))
+        while (nIndex < nMax && aParamChars[nIndex] != cSep && !isTokenChar (aParamChars[nIndex]))
           ++nIndex;
         if (nIndex == nMax)
           throw new MimeTypeParserException ("Missing parameter value start separator of: " + sParameters);
         final StringBuilder aSB = new StringBuilder ();
-        if (aParamChars[nIndex] == SEPARATOR)
+        if (aParamChars[nIndex] == cSep)
         {
           // Quoted string!
 
@@ -167,12 +167,12 @@ public final class MimeTypeParser
           for (; nIndex < nMax; ++nIndex)
           {
             final char c = aParamChars[nIndex];
-            if (c == SEPARATOR)
+            if (c == cSep)
             {
               // End of quoted string
               break;
             }
-            if (c == MASK)
+            if (c == cMask)
             {
               // Unmask char
               if (nIndex == nMax - 1)
@@ -203,7 +203,11 @@ public final class MimeTypeParser
         }
         catch (final Exception ex)
         {
-          throw new MimeTypeParserException (ex.getMessage ());
+          throw new MimeTypeParserException ("Failed to add parameter '" +
+                                             sParameterName +
+                                             "' with value '" +
+                                             sParameterValue +
+                                             "'", ex);
         }
 
         // Search for separator of next parameter
@@ -262,7 +266,11 @@ public final class MimeTypeParser
         }
         catch (final Exception ex)
         {
-          throw new MimeTypeParserException (ex.getMessage ());
+          throw new MimeTypeParserException ("Failed to add parameter '" +
+                                             sParameterName +
+                                             "' with value '" +
+                                             sParameterValue +
+                                             "'", ex);
         }
       }
     }

@@ -22,8 +22,6 @@ import java.math.BigInteger;
 import javax.annotation.CheckForSigned;
 import javax.annotation.Nullable;
 
-import com.phloc.commons.CGlobal;
-
 /**
  * Base interface for size and timer handler.
  * 
@@ -43,8 +41,9 @@ public interface IStatisticsHandlerKeyedNumeric extends IStatisticsHandlerKeyed
   /**
    * @param sKey
    *        The key to be queried.
-   * @return The smallest value. Returns {@link CGlobal#ILLEGAL_ULONG} if no
-   *         such key exists.
+   * @return The smallest value. Returns
+   *         {@link com.phloc.commons.CGlobal#ILLEGAL_ULONG} if no such key
+   *         exists.
    */
   @CheckForSigned
   long getMin (@Nullable String sKey);
@@ -53,7 +52,8 @@ public interface IStatisticsHandlerKeyedNumeric extends IStatisticsHandlerKeyed
    * @param sKey
    *        The key to be queried.
    * @return The average value (=sum/invocationCount). Returns
-   *         {@link CGlobal#ILLEGAL_ULONG} if no such key exists.
+   *         {@link com.phloc.commons.CGlobal#ILLEGAL_ULONG} if no such key
+   *         exists.
    */
   @CheckForSigned
   long getAverage (@Nullable String sKey);
@@ -61,8 +61,9 @@ public interface IStatisticsHandlerKeyedNumeric extends IStatisticsHandlerKeyed
   /**
    * @param sKey
    *        The key to be queried.
-   * @return The biggest value. Returns {@link CGlobal#ILLEGAL_ULONG} if no such
-   *         key exists.
+   * @return The biggest value. Returns
+   *         {@link com.phloc.commons.CGlobal#ILLEGAL_ULONG} if no such key
+   *         exists.
    */
   @CheckForSigned
   long getMax (@Nullable String sKey);

@@ -19,6 +19,7 @@ package com.phloc.commons.string;//NOPMD
 
 import java.io.IOException;
 import java.io.Writer;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -43,6 +44,7 @@ import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
+import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.math.MathHelper;
 
@@ -337,6 +339,26 @@ public final class StringHelper
   public static char getHexChar (final int n)
   {
     return Character.forDigit (n, CGlobal.HEX_RADIX);
+  }
+
+  /**
+   * Convert a string to a byte array and than to a hexadecimal encoded string.
+   * 
+   * @param sInput
+   *        The source string. May not be <code>null</code>.
+   * @param aCharset
+   *        The charset to use. May not be <code>null</code>.
+   * @return The String representation of the byte array of the string.
+   */
+  @Nonnull
+  public static String getHexEncoded (@Nonnull final String sInput, @Nonnull final Charset aCharset)
+  {
+    if (sInput == null)
+      throw new NullPointerException ("input");
+    if (aCharset == null)
+      throw new NullPointerException ("charset");
+
+    return getHexEncoded (CharsetManager.getAsBytes (sInput, aCharset));
   }
 
   /**
@@ -1075,7 +1097,7 @@ public final class StringHelper
     if (nMaxItems == 1)
       return new String [] { sElements };
     if (hasNoText (sElements))
-      return new String [0];
+      return ArrayHelper.EMPTY_STRING_ARRAY;
 
     final int nMaxResultElements = 1 + getCharCount (sElements, cSep);
     if (nMaxResultElements == 1)
@@ -2725,7 +2747,7 @@ public final class StringHelper
   {
     // Any input text?
     if (hasNoText (sInputString))
-      return new char [0];
+      return ArrayHelper.EMPTY_CHAR_ARRAY;
 
     return replaceMultiple (sInputString.toCharArray (), aSearchChars, aReplacementStrings);
   }
@@ -2759,7 +2781,7 @@ public final class StringHelper
 
     // Any input text?
     if (aInput == null || aInput.length == 0)
-      return new char [0];
+      return ArrayHelper.EMPTY_CHAR_ARRAY;
 
     // Any replacement patterns?
     if (aSearchChars.length == 0)
@@ -2883,9 +2905,10 @@ public final class StringHelper
     int nFirstNonReplace = 0;
     int nInputIndex = 0;
     int nTotalReplacements = 0;
+    final int nMaxSearchChars = aSearchChars.length;
     for (final char cInput : aInput)
     {
-      for (int nPatternIndex = 0; nPatternIndex < aSearchChars.length; nPatternIndex++)
+      for (int nPatternIndex = 0; nPatternIndex < nMaxSearchChars; nPatternIndex++)
       {
         if (cInput == aSearchChars[nPatternIndex])
         {
@@ -2928,7 +2951,7 @@ public final class StringHelper
 
     // Any input text?
     if (hasNoText (sInputString))
-      return new char [0];
+      return ArrayHelper.EMPTY_CHAR_ARRAY;
 
     // Get char array
     final char [] aInput = sInputString.toCharArray ();

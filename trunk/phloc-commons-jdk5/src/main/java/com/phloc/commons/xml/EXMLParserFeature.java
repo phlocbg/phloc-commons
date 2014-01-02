@@ -17,8 +17,13 @@
  */
 package com.phloc.commons.xml;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +32,7 @@ import org.xml.sax.SAXNotSupportedException;
 
 import com.phloc.commons.annotations.CodingStyleguideUnaware;
 import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.lang.EnumHelper;
 import com.phloc.commons.name.IHasName;
 
@@ -271,8 +277,11 @@ public enum EXMLParserFeature implements IHasName
 
   public void applyTo (@Nonnull final org.xml.sax.XMLReader aParser, final boolean bValue)
   {
+    if (aParser == null)
+      throw new NullPointerException ("Reader");
+
     if (m_eType != EXMLParserFeatureType.GENERAL && m_eType != EXMLParserFeatureType.SAX)
-      s_aLogger.warn ("Parser feature type of '" + name () + "' is not applicable for SAX parsers!");
+      s_aLogger.warn ("Parser feature '" + name () + "' is not applicable for SAX parsers!");
 
     try
     {
@@ -295,9 +304,41 @@ public enum EXMLParserFeature implements IHasName
     }
   }
 
+  public void applyTo (@Nonnull final DocumentBuilderFactory aDocumentBuilderFactory, final boolean bValue)
+  {
+    if (aDocumentBuilderFactory == null)
+      throw new NullPointerException ("DocumentBuilderFactory");
+
+    if (m_eType != EXMLParserFeatureType.GENERAL && m_eType != EXMLParserFeatureType.DOM)
+      s_aLogger.warn ("Parser feature '" + name () + "' is not applicable for DOM parsers!");
+
+    try
+    {
+      aDocumentBuilderFactory.setFeature (m_sName, bValue);
+    }
+    catch (final ParserConfigurationException ex)
+    {
+      s_aLogger.warn ("DOM parser does not support feature '" + name () + "'");
+    }
+  }
+
   @Nullable
   public static EXMLParserFeature getFromNameOrNull (@Nullable final String sName)
   {
     return EnumHelper.getFromNameOrNull (EXMLParserFeature.class, sName);
+  }
+
+  @Nonnull
+  @ReturnsMutableCopy
+  public static List <EXMLParserFeature> getAllFeaturesOfType (@Nonnull final EXMLParserFeatureType eFeatureType)
+  {
+    if (eFeatureType == null)
+      throw new NullPointerException ("featureType");
+
+    final List <EXMLParserFeature> ret = new ArrayList <EXMLParserFeature> ();
+    for (final EXMLParserFeature eFeature : values ())
+      if (eFeature.getFeatureType () == eFeatureType)
+        ret.add (eFeature);
+    return ret;
   }
 }

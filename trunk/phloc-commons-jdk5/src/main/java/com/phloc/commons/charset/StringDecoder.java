@@ -159,9 +159,9 @@ public final class StringDecoder
 
     final CoderResult aResult = m_aDecoder.flush (m_aBuffer);
     if (aResult == CoderResult.OVERFLOW)
-      throw new RuntimeException ("TODO: Handle overflow?");
+      throw new IllegalStateException ("TODO: Handle overflow?");
     if (aResult != CoderResult.UNDERFLOW)
-      throw new RuntimeException ("TODO: Handle errors?");
+      throw new IllegalStateException ("TODO: Handle errors?");
 
     // Copy out the string
     final String sRet = new String (m_aBuffer.array (), 0, m_aBuffer.position ());

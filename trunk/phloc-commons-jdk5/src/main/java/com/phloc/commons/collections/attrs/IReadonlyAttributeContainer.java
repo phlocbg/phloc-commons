@@ -27,7 +27,6 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 
 /**
@@ -185,8 +184,9 @@ public interface IReadonlyAttributeContainer extends Serializable
    * 
    * @param sName
    *        the attribute name
-   * @return The attribute value or {@link CGlobal#ILLEGAL_UINT} if no such
-   *         attribute exists
+   * @return The attribute value or
+   *         {@link com.phloc.commons.CGlobal#ILLEGAL_UINT} if no such attribute
+   *         exists
    */
   int getAttributeAsInt (@Nullable String sName);
 
@@ -207,7 +207,8 @@ public interface IReadonlyAttributeContainer extends Serializable
    * 
    * @param sName
    *        the attribute name
-   * @return The attribute value or {@link CGlobal#ILLEGAL_ULONG} if no such
+   * @return The attribute value or
+   *         {@link com.phloc.commons.CGlobal#ILLEGAL_ULONG} if no such
    *         attribute exists
    */
   long getAttributeAsLong (@Nullable String sName);
@@ -229,8 +230,9 @@ public interface IReadonlyAttributeContainer extends Serializable
    * 
    * @param sName
    *        the attribute name
-   * @return The attribute value or {@link CGlobal#ILLEGAL_UINT} if no such
-   *         attribute exists
+   * @return The attribute value or
+   *         {@link com.phloc.commons.CGlobal#ILLEGAL_UINT} if no such attribute
+   *         exists
    */
   double getAttributeAsDouble (@Nullable String sName);
 

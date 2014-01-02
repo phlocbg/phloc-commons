@@ -22,14 +22,13 @@ import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.hierarchy.IHierarchyWalkerCallback;
-import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.parent.IChildrenProvider;
 import com.phloc.commons.parent.impl.ChildrenProviderHasChildren;
 
 /**
- * Helper class that walks an {@link IMicroDocument} or {@link IMicroNode} with
- * a callback.
+ * Helper class that walks an {@link com.phloc.commons.microdom.IMicroDocument}
+ * or {@link com.phloc.commons.microdom.IMicroNode} with a callback.
  * 
  * @author Philip Helger
  */

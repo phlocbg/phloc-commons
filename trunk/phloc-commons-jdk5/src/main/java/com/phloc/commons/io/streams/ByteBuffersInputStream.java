@@ -30,8 +30,9 @@ import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.lang.ByteBufferUtils;
 
 /**
- * {@link InputStream} wrapped around one or more {@link ByteBuffer} objects.
- *
+ * {@link java.io.InputStream} wrapped around one or more
+ * {@link java.nio.ByteBuffer} objects.
+ * 
  * @author Philip Helger
  */
 @NotThreadSafe
@@ -43,7 +44,7 @@ public final class ByteBuffersInputStream extends InputStream
 
   /**
    * Constructor
-   *
+   * 
    * @param aBuffers
    *        Array of {@link ByteBuffer}. May neither be <code>null</code> nor
    *        empty and may not contain <code>null</code> elements.
@@ -238,7 +239,7 @@ public final class ByteBuffersInputStream extends InputStream
 
   /**
    * Reads as much as possible into the destination buffer.
-   *
+   * 
    * @param aDestByteBuffer
    *        The destination byte buffer to use. May not be <code>null</code>.
    * @return The number of bytes read. Always &ge; 0.

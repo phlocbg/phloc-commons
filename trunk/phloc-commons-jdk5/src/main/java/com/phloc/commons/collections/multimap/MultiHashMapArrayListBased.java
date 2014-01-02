@@ -18,7 +18,6 @@
 package com.phloc.commons.collections.multimap;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +26,8 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 /**
- * Multi map based on {@link HashMap} and {@link ArrayList} values.<br>
+ * Multi map based on {@link java.util.HashMap} and {@link java.util.ArrayList}
+ * values.<br>
  * 
  * @author Philip Helger
  * @param <KEYTYPE>

@@ -20,7 +20,11 @@ package com.phloc.commons.microdom.serialize;
 import java.io.File;
 import java.io.InputStream;
 import java.io.Reader;
+import java.net.URI;
+import java.net.URL;
+import java.nio.ByteBuffer;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nullable;
 import javax.annotation.WillClose;
 import javax.annotation.concurrent.Immutable;
@@ -32,9 +36,13 @@ import org.xml.sax.InputSource;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.io.IInputStreamProvider;
 import com.phloc.commons.io.IReadableResource;
+import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.microdom.IMicroDocument;
+import com.phloc.commons.xml.EXMLParserFeature;
 import com.phloc.commons.xml.sax.InputSourceFactory;
-import com.phloc.commons.xml.serialize.XMLReader;
+import com.phloc.commons.xml.serialize.ISAXReaderSettings;
+import com.phloc.commons.xml.serialize.SAXReader;
+import com.phloc.commons.xml.serialize.SAXReaderSettings;
 
 /**
  * Utility class to read an XML stream into an {@link IMicroDocument}.
@@ -54,10 +62,11 @@ public final class MicroReader
   @Nullable
   public static IMicroDocument readMicroXML (@WillClose @Nullable final InputSource aInputSource)
   {
-    return readMicroXML (aInputSource, null);
+    return readMicroXML (aInputSource, (ISAXReaderSettings) null);
   }
 
   @Nullable
+  @Deprecated
   public static IMicroDocument readMicroXML (@WillClose @Nullable final InputSource aInputSource,
                                              @Nullable final EntityResolver aSpecialEntityResolver)
   {
@@ -65,6 +74,7 @@ public final class MicroReader
   }
 
   @Nullable
+  @Deprecated
   public static IMicroDocument readMicroXML (@WillClose @Nullable final InputSource aInputSource,
                                              @Nullable final EntityResolver aSpecialEntityResolver,
                                              @Nullable final ErrorHandler aSpecialErrorHdl)
@@ -73,50 +83,117 @@ public final class MicroReader
   }
 
   @Nullable
+  @Deprecated
   public static IMicroDocument readMicroXML (@WillClose @Nullable final InputSource aInputSource,
                                              @Nullable final EntityResolver aSpecialEntityResolver,
                                              @Nullable final ErrorHandler aSpecialErrorHdl,
-                                             final boolean bDTDValidation,
+                                             final boolean bDTDValidating,
                                              final boolean bSchemaValidation)
+  {
+    final SAXReaderSettings aSettings = new SAXReaderSettings ().setEntityResolver (aSpecialEntityResolver)
+                                                                .setErrorHandler (aSpecialErrorHdl);
+    if (bDTDValidating)
+      aSettings.setFeatureValue (EXMLParserFeature.VALIDATION, true);
+    if (bSchemaValidation)
+      aSettings.setFeatureValue (EXMLParserFeature.SCHEMA, true);
+
+    return readMicroXML (aInputSource, aSettings);
+  }
+
+  /**
+   * Read the passed input source as MicroXML.
+   * 
+   * @param aInputSource
+   *        The input source to use. May be <code>null</code> in which case
+   *        <code>null</code> is directly returned.
+   * @param aSettings
+   *        The settings to use. If <code>null</code> the default settings will
+   *        be used.
+   * @return <code>null</code> if either the input source is <code>null</code>
+   *         or if the input was invalid XML.
+   */
+  @Nullable
+  public static IMicroDocument readMicroXML (@WillClose @Nullable final InputSource aInputSource,
+                                             @Nullable final ISAXReaderSettings aSettings)
   {
     if (aInputSource == null)
       return null;
 
-    final MicroSAXHandler aHdl = new MicroSAXHandler (false, aSpecialEntityResolver);
-    if (XMLReader.readXMLSAX (aInputSource,
-                              aHdl,
-                              aHdl,
-                              aHdl,
-                              aSpecialErrorHdl != null ? aSpecialErrorHdl : aHdl,
-                              aHdl,
-                              bDTDValidation,
-                              bSchemaValidation).isFailure ())
+    final MicroSAXHandler aMicroHandler = new MicroSAXHandler (false, aSettings == null ? null
+                                                                                       : aSettings.getEntityResolver ());
+
+    // Copy and modify settings
+    final SAXReaderSettings aRealSettings = SAXReaderSettings.createCloneOnDemand (aSettings);
+    aRealSettings.setEntityResolver (aMicroHandler)
+                 .setDTDHandler (aMicroHandler)
+                 .setContentHandler (aMicroHandler)
+                 .setLexicalHandler (aMicroHandler);
+    if (aRealSettings.getErrorHandler () == null)
+      aRealSettings.setErrorHandler (aMicroHandler);
+
+    if (SAXReader.readXMLSAX (aInputSource, aRealSettings).isFailure ())
       return null;
-    return aHdl.getDocument ();
+    return aMicroHandler.getDocument ();
   }
 
   @Nullable
   public static IMicroDocument readMicroXML (@WillClose @Nullable final InputStream aIS)
   {
-    return readMicroXML (aIS, (EntityResolver) null);
+    return readMicroXML (aIS, (ISAXReaderSettings) null);
   }
 
   @Nullable
+  public static IMicroDocument readMicroXML (@WillClose @Nullable final InputStream aIS,
+                                             @Nullable final ISAXReaderSettings aSettings)
+  {
+    if (aIS == null)
+      return null;
+
+    try
+    {
+      return readMicroXML (InputSourceFactory.create (aIS), aSettings);
+    }
+    finally
+    {
+      StreamUtils.close (aIS);
+    }
+  }
+
+  @Nullable
+  @Deprecated
   public static IMicroDocument readMicroXML (@WillClose @Nullable final InputStream aIS,
                                              @Nullable final EntityResolver aSpecialEntityResolver)
   {
     if (aIS == null)
       return null;
-    return readMicroXML (InputSourceFactory.create (aIS), aSpecialEntityResolver);
+
+    try
+    {
+      return readMicroXML (InputSourceFactory.create (aIS), aSpecialEntityResolver);
+    }
+    finally
+    {
+      StreamUtils.close (aIS);
+    }
   }
 
   @Nullable
   public static IMicroDocument readMicroXML (@Nullable final File aFile)
   {
-    return readMicroXML (aFile, (EntityResolver) null);
+    return readMicroXML (aFile, (ISAXReaderSettings) null);
   }
 
   @Nullable
+  public static IMicroDocument readMicroXML (@Nullable final File aFile, @Nullable final ISAXReaderSettings aSettings)
+  {
+    if (aFile == null)
+      return null;
+
+    return readMicroXML (InputSourceFactory.create (aFile), aSettings);
+  }
+
+  @Nullable
+  @Deprecated
   public static IMicroDocument readMicroXML (@Nullable final File aFile,
                                              @Nullable final EntityResolver aSpecialEntityResolver)
   {
@@ -128,10 +205,21 @@ public final class MicroReader
   @Nullable
   public static IMicroDocument readMicroXML (@Nullable final IReadableResource aRes)
   {
-    return readMicroXML (aRes, (EntityResolver) null);
+    return readMicroXML (aRes, (ISAXReaderSettings) null);
   }
 
   @Nullable
+  public static IMicroDocument readMicroXML (@Nullable final IReadableResource aRes,
+                                             @Nullable final ISAXReaderSettings aSettings)
+  {
+    if (aRes == null)
+      return null;
+
+    return readMicroXML (InputSourceFactory.create (aRes), aSettings);
+  }
+
+  @Nullable
+  @Deprecated
   public static IMicroDocument readMicroXML (@Nullable final IReadableResource aRes,
                                              @Nullable final EntityResolver aSpecialEntityResolver)
   {
@@ -143,10 +231,21 @@ public final class MicroReader
   @Nullable
   public static IMicroDocument readMicroXML (@Nullable final IInputStreamProvider aISP)
   {
-    return readMicroXML (aISP, (EntityResolver) null);
+    return readMicroXML (aISP, (ISAXReaderSettings) null);
   }
 
   @Nullable
+  public static IMicroDocument readMicroXML (@Nullable final IInputStreamProvider aISP,
+                                             @Nullable final ISAXReaderSettings aSettings)
+  {
+    if (aISP == null)
+      return null;
+
+    return readMicroXML (InputSourceFactory.create (aISP), aSettings);
+  }
+
+  @Nullable
+  @Deprecated
   public static IMicroDocument readMicroXML (@Nullable final IInputStreamProvider aISP,
                                              @Nullable final EntityResolver aSpecialEntityResolver)
   {
@@ -158,25 +257,61 @@ public final class MicroReader
   @Nullable
   public static IMicroDocument readMicroXML (@WillClose @Nullable final Reader aReader)
   {
-    return readMicroXML (aReader, (EntityResolver) null);
+    return readMicroXML (aReader, (ISAXReaderSettings) null);
   }
 
   @Nullable
+  public static IMicroDocument readMicroXML (@WillClose @Nullable final Reader aReader,
+                                             @Nullable final ISAXReaderSettings aSettings)
+  {
+    if (aReader == null)
+      return null;
+
+    try
+    {
+      return readMicroXML (InputSourceFactory.create (aReader), aSettings);
+    }
+    finally
+    {
+      StreamUtils.close (aReader);
+    }
+  }
+
+  @Nullable
+  @Deprecated
   public static IMicroDocument readMicroXML (@WillClose @Nullable final Reader aReader,
                                              @Nullable final EntityResolver aSpecialEntityResolver)
   {
     if (aReader == null)
       return null;
-    return readMicroXML (InputSourceFactory.create (aReader), aSpecialEntityResolver);
+
+    try
+    {
+      return readMicroXML (InputSourceFactory.create (aReader), aSpecialEntityResolver);
+    }
+    finally
+    {
+      StreamUtils.close (aReader);
+    }
   }
 
   @Nullable
   public static IMicroDocument readMicroXML (@Nullable final String sXML)
   {
-    return readMicroXML (sXML, (EntityResolver) null);
+    return readMicroXML (sXML, (ISAXReaderSettings) null);
   }
 
   @Nullable
+  public static IMicroDocument readMicroXML (@Nullable final String sXML, @Nullable final ISAXReaderSettings aSettings)
+  {
+    if (sXML == null)
+      return null;
+
+    return readMicroXML (InputSourceFactory.create (sXML), aSettings);
+  }
+
+  @Nullable
+  @Deprecated
   public static IMicroDocument readMicroXML (@Nullable final String sXML,
                                              @Nullable final EntityResolver aSpecialEntityResolver)
   {
@@ -186,17 +321,144 @@ public final class MicroReader
   }
 
   @Nullable
-  public static IMicroDocument readMicroXML (@Nullable final byte [] aXML)
+  public static IMicroDocument readMicroXML (@Nullable final CharSequence sXML)
   {
-    return readMicroXML (aXML, (EntityResolver) null);
+    return readMicroXML (sXML, (ISAXReaderSettings) null);
   }
 
   @Nullable
+  public static IMicroDocument readMicroXML (@Nullable final CharSequence sXML,
+                                             @Nullable final ISAXReaderSettings aSettings)
+  {
+    if (sXML == null)
+      return null;
+
+    return readMicroXML (InputSourceFactory.create (sXML), aSettings);
+  }
+
+  @Nullable
+  public static IMicroDocument readMicroXML (@Nullable final byte [] aXML)
+  {
+    return readMicroXML (aXML, (ISAXReaderSettings) null);
+  }
+
+  @Nullable
+  public static IMicroDocument readMicroXML (@Nullable final byte [] aXML, @Nullable final ISAXReaderSettings aSettings)
+  {
+    if (aXML == null)
+      return null;
+
+    return readMicroXML (InputSourceFactory.create (aXML), aSettings);
+  }
+
+  @Nullable
+  @Deprecated
   public static IMicroDocument readMicroXML (@Nullable final byte [] aXML,
                                              @Nullable final EntityResolver aSpecialEntityResolver)
   {
     if (aXML == null)
       return null;
     return readMicroXML (InputSourceFactory.create (aXML), aSpecialEntityResolver);
+  }
+
+  @Nullable
+  public static IMicroDocument readMicroXML (@Nullable final byte [] aXML,
+                                             @Nonnegative final int nOfs,
+                                             @Nonnegative final int nLen)
+  {
+    return readMicroXML (aXML, nOfs, nLen, (ISAXReaderSettings) null);
+  }
+
+  @Nullable
+  public static IMicroDocument readMicroXML (@Nullable final byte [] aXML,
+                                             @Nonnegative final int nOfs,
+                                             @Nonnegative final int nLen,
+                                             @Nullable final ISAXReaderSettings aSettings)
+  {
+    if (aXML == null)
+      return null;
+
+    return readMicroXML (InputSourceFactory.create (aXML, nOfs, nLen), aSettings);
+  }
+
+  @Nullable
+  public static IMicroDocument readMicroXML (@Nullable final char [] aXML)
+  {
+    return readMicroXML (aXML, (ISAXReaderSettings) null);
+  }
+
+  @Nullable
+  public static IMicroDocument readMicroXML (@Nullable final char [] aXML, @Nullable final ISAXReaderSettings aSettings)
+  {
+    if (aXML == null)
+      return null;
+
+    return readMicroXML (InputSourceFactory.create (aXML), aSettings);
+  }
+
+  @Nullable
+  public static IMicroDocument readMicroXML (@Nullable final char [] aXML,
+                                             @Nonnegative final int nOfs,
+                                             @Nonnegative final int nLen)
+  {
+    return readMicroXML (aXML, nOfs, nLen, (ISAXReaderSettings) null);
+  }
+
+  @Nullable
+  public static IMicroDocument readMicroXML (@Nullable final char [] aXML,
+                                             @Nonnegative final int nOfs,
+                                             @Nonnegative final int nLen,
+                                             @Nullable final ISAXReaderSettings aSettings)
+  {
+    if (aXML == null)
+      return null;
+
+    return readMicroXML (InputSourceFactory.create (aXML, nOfs, nLen), aSettings);
+  }
+
+  @Nullable
+  public static IMicroDocument readMicroXML (@Nullable final ByteBuffer aXML)
+  {
+    return readMicroXML (aXML, (ISAXReaderSettings) null);
+  }
+
+  @Nullable
+  public static IMicroDocument readMicroXML (@Nullable final ByteBuffer aXML,
+                                             @Nullable final ISAXReaderSettings aSettings)
+  {
+    if (aXML == null)
+      return null;
+
+    return readMicroXML (InputSourceFactory.create (aXML), aSettings);
+  }
+
+  @Nullable
+  public static IMicroDocument readMicroXML (@Nullable final URI aXML)
+  {
+    return readMicroXML (aXML, (ISAXReaderSettings) null);
+  }
+
+  @Nullable
+  public static IMicroDocument readMicroXML (@Nullable final URI aXML, @Nullable final ISAXReaderSettings aSettings)
+  {
+    if (aXML == null)
+      return null;
+
+    return readMicroXML (InputSourceFactory.create (aXML), aSettings);
+  }
+
+  @Nullable
+  public static IMicroDocument readMicroXML (@Nullable final URL aXML)
+  {
+    return readMicroXML (aXML, (ISAXReaderSettings) null);
+  }
+
+  @Nullable
+  public static IMicroDocument readMicroXML (@Nullable final URL aXML, @Nullable final ISAXReaderSettings aSettings)
+  {
+    if (aXML == null)
+      return null;
+
+    return readMicroXML (InputSourceFactory.create (aXML), aSettings);
   }
 }

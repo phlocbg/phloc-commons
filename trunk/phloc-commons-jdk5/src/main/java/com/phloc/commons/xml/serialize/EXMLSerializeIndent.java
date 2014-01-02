@@ -34,8 +34,11 @@ import com.phloc.commons.lang.EnumHelper;
  */
 public enum EXMLSerializeIndent implements IHasID <String>
 {
+  /** Neither indent nor align */
   NONE ("none", false, false),
+  /** No indent but align */
   ALIGN_ONLY ("align", true, false),
+  /** Both indent and align. */
   INDENT_AND_ALIGN ("indentalign", true, true);
 
   private final String m_sID;

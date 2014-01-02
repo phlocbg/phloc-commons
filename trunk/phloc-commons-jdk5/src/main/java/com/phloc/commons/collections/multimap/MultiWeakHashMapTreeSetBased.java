@@ -20,14 +20,14 @@ package com.phloc.commons.collections.multimap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.WeakHashMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 /**
- * Multi map based on {@link WeakHashMap} and {@link TreeSet} values.<br>
+ * Multi map based on {@link java.util.WeakHashMap} and
+ * {@link java.util.TreeSet} values.<br>
  * 
  * @author Philip Helger
  * @param <KEYTYPE>
@@ -36,8 +36,7 @@ import javax.annotation.concurrent.NotThreadSafe;
  *        value type
  */
 @NotThreadSafe
-public class MultiWeakHashMapTreeSetBased <KEYTYPE, VALUETYPE extends Comparable <? super VALUETYPE>> extends
-                                                                                                      AbstractMultiWeakHashMapSetBased <KEYTYPE, VALUETYPE>
+public class MultiWeakHashMapTreeSetBased <KEYTYPE, VALUETYPE extends Comparable <? super VALUETYPE>> extends AbstractMultiWeakHashMapSetBased <KEYTYPE, VALUETYPE>
 {
   public MultiWeakHashMapTreeSetBased ()
   {}

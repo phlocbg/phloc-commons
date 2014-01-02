@@ -19,8 +19,6 @@ package com.phloc.commons.microdom;
 
 import javax.annotation.Nonnull;
 
-import com.phloc.commons.microdom.impl.MicroEvent;
-
 /**
  * Interface for MicroDOM event handlers.
  * 
@@ -29,7 +27,7 @@ import com.phloc.commons.microdom.impl.MicroEvent;
 public interface IMicroEventTarget
 {
   /**
-   * Called when a {@link MicroEvent} is triggered.
+   * Called when a {@link IMicroEvent} is triggered.
    * 
    * @param aEvent
    *        The event. Never <code>null</code>.

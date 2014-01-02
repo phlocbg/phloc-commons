@@ -20,14 +20,14 @@ package com.phloc.commons.collections.multimap;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
 /**
- * Multi map based on {@link ConcurrentHashMap} and {@link Vector} values.<br>
+ * Multi map based on {@link java.util.concurrent.ConcurrentHashMap} and
+ * {@link Vector} values.<br>
  * Important note: <code>null</code> keys are not allowed here!
  * 
  * @author Philip Helger
@@ -37,8 +37,7 @@ import javax.annotation.concurrent.ThreadSafe;
  *        value type
  */
 @ThreadSafe
-public class MultiConcurrentHashMapVectorBased <KEYTYPE, VALUETYPE> extends
-                                                                    AbstractMultiConcurrentHashMapListBased <KEYTYPE, VALUETYPE>
+public class MultiConcurrentHashMapVectorBased <KEYTYPE, VALUETYPE> extends AbstractMultiConcurrentHashMapListBased <KEYTYPE, VALUETYPE>
 {
   public MultiConcurrentHashMapVectorBased ()
   {}
