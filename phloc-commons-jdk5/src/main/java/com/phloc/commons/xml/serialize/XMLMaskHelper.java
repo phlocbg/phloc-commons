@@ -1,3 +1,20 @@
+/**
+ * Copyright (C) 2006-2013 phloc systems
+ * http://www.phloc.com
+ * office[at]phloc[dot]com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.phloc.commons.xml.serialize;
 
 import java.io.IOException;
@@ -12,9 +29,11 @@ import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
+import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.xml.EXMLCharMode;
 import com.phloc.commons.xml.EXMLIncorrectCharacterHandling;
+import com.phloc.commons.xml.EXMLVersion;
 
 /**
  * This class contains all the methods for masking XML content.
@@ -543,9 +562,8 @@ public final class XMLMaskHelper
   private static char [][] _createEmptyReplacement (@Nonnull final char [] aSrcMap)
   {
     final char [][] ret = new char [aSrcMap.length] [];
-    final char [] aEmpty = new char [0];
     for (int i = 0; i < aSrcMap.length; ++i)
-      ret[i] = aEmpty;
+      ret[i] = ArrayHelper.EMPTY_CHAR_ARRAY;
     return ret;
   }
 
@@ -556,7 +574,7 @@ public final class XMLMaskHelper
                                           @Nullable final String s)
   {
     if (StringHelper.hasNoText (s))
-      return new char [0];
+      return ArrayHelper.EMPTY_CHAR_ARRAY;
 
     char [] aChars = s.toCharArray ();
 
@@ -585,6 +603,18 @@ public final class XMLMaskHelper
     }
     final char [][] aDstMap = _findReplaceMap (eXMLVersion, eXMLCharMode);
     return StringHelper.replaceMultiple (aChars, aSrcMap, aDstMap);
+  }
+
+  @Nonnegative
+  public static int getMaskedXMLTextLength (@Nonnull final EXMLVersion eXMLVersion,
+                                            @Nonnull final EXMLCharMode eXMLCharMode,
+                                            @Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharHandling,
+                                            @Nullable final String s)
+  {
+    return getMaskedXMLTextLength (EXMLSerializeVersion.getFromXMLVersionOrThrow (eXMLVersion),
+                                   eXMLCharMode,
+                                   eIncorrectCharHandling,
+                                   s);
   }
 
   @Nonnegative

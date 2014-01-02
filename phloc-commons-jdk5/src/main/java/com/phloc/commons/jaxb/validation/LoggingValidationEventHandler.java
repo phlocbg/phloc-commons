@@ -31,9 +31,9 @@ import com.phloc.commons.error.EErrorLevel;
 import com.phloc.commons.error.IResourceError;
 
 /**
- * An implementation of the JAXB {@link ValidationEventHandler} interface. It
- * simply prints the messages to a logger before the original handler handles
- * them.
+ * An implementation of the JAXB {@link javax.xml.bind.ValidationEventHandler}
+ * interface. It simply prints the messages to a logger before the original
+ * handler handles them.
  * 
  * @author Philip Helger
  */

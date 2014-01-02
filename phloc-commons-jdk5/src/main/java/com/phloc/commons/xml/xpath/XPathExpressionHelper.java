@@ -33,6 +33,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.string.StringHelper;
 
 /**
@@ -43,6 +44,10 @@ import com.phloc.commons.string.StringHelper;
 @NotThreadSafe
 public final class XPathExpressionHelper
 {
+  @SuppressWarnings ("unused")
+  @PresentForCodeCoverage
+  private static final XPathExpressionHelper s_aInstance = new XPathExpressionHelper ();
+
   private XPathExpressionHelper ()
   {}
 

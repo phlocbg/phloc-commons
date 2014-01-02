@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.io.streamprovider;
 
-import java.io.InputStream;
 import java.nio.charset.Charset;
 
 import javax.annotation.Nonnegative;
@@ -32,7 +31,7 @@ import com.phloc.commons.io.streams.StringInputStream;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * An {@link InputStream} provider based on a {@link String}.
+ * An {@link java.io.InputStream} provider based on a {@link String}.
  * 
  * @author Philip Helger
  */

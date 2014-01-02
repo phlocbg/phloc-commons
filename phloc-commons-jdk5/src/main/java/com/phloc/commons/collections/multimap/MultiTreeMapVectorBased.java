@@ -20,7 +20,6 @@ package com.phloc.commons.collections.multimap;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.Vector;
 
 import javax.annotation.Nonnull;
@@ -28,7 +27,8 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 /**
- * Multi map based on {@link TreeMap} and {@link Vector} values.<br>
+ * Multi map based on {@link java.util.TreeMap} and {@link java.util.Vector}
+ * values.<br>
  * 
  * @author Philip Helger
  * @param <KEYTYPE>

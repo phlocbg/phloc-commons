@@ -26,12 +26,11 @@ import javax.annotation.Nullable;
 
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.microdom.IMicroElement;
-import com.phloc.commons.microdom.IMicroNode;
 import com.phloc.commons.parent.IChildrenProvider;
 import com.phloc.commons.string.StringHelper;
 
 /**
- * Implementation of the {@link IChildrenProvider} for {@link IMicroNode}
+ * Implementation of the {@link IChildrenProvider} for {@link IMicroElement}
  * objects considering only elements with a certain element name (and optionally
  * a namespace URI).
  * 

@@ -27,7 +27,8 @@ import com.phloc.commons.id.ComparatorHasIDComparable;
 import com.phloc.commons.tree.withid.ITreeItemWithID;
 
 /**
- * Comparator for sorting {@link ITreeItemWithID} items by their comparable ID.
+ * Comparator for sorting {@link com.phloc.commons.tree.withid.ITreeItemWithID}
+ * items by their comparable ID.
  * 
  * @author Philip Helger
  * @param <KEYTYPE>
@@ -37,8 +38,7 @@ import com.phloc.commons.tree.withid.ITreeItemWithID;
  * @param <ITEMTYPE>
  *        tree item implementation type
  */
-public class ComparatorTreeItemIDComparable <KEYTYPE extends Comparable <? super KEYTYPE>, DATATYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>> extends
-                                                                                                                                                                     ComparatorHasIDComparable <KEYTYPE, ITEMTYPE>
+public class ComparatorTreeItemIDComparable <KEYTYPE extends Comparable <? super KEYTYPE>, DATATYPE, ITEMTYPE extends ITreeItemWithID <KEYTYPE, DATATYPE, ITEMTYPE>> extends ComparatorHasIDComparable <KEYTYPE, ITEMTYPE>
 {
   /**
    * Comparator with default sort order and no nested comparator.

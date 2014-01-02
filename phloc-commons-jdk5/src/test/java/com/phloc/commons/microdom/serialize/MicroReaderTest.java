@@ -24,6 +24,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.InputStream;
 import java.io.Reader;
+import java.nio.ByteBuffer;
 
 import org.junit.Test;
 import org.xml.sax.InputSource;
@@ -41,10 +42,13 @@ import com.phloc.commons.io.streams.NonBlockingStringWriter;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.xml.namespace.MapBasedNamespaceContext;
 import com.phloc.commons.xml.sax.EmptyEntityResolver;
+import com.phloc.commons.xml.sax.InputSourceFactory;
 import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
 import com.phloc.commons.xml.sax.StringSAXInputSource;
 import com.phloc.commons.xml.serialize.EXMLSerializeIndent;
-import com.phloc.commons.xml.serialize.XMLReader;
+import com.phloc.commons.xml.serialize.ISAXReaderSettings;
+import com.phloc.commons.xml.serialize.SAXReader;
+import com.phloc.commons.xml.serialize.SAXReaderSettings;
 import com.phloc.commons.xml.serialize.XMLWriterSettings;
 
 /**
@@ -55,6 +59,7 @@ import com.phloc.commons.xml.serialize.XMLWriterSettings;
 public final class MicroReaderTest
 {
   private static final String CRLF = XMLWriterSettings.DEFAULT_NEWLINE_STRING;
+  private static final String INDENT = XMLWriterSettings.DEFAULT_INDENTATION_STRING;
 
   @Test
   public void testNull ()
@@ -65,6 +70,9 @@ public final class MicroReaderTest
     assertNull (MicroReader.readMicroXML ((IInputStreamProvider) null));
     assertNull (MicroReader.readMicroXML ((Reader) null));
     assertNull (MicroReader.readMicroXML ((String) null));
+    assertNull (MicroReader.readMicroXML ((CharSequence) null));
+    assertNull (MicroReader.readMicroXML ((ByteBuffer) null));
+    assertNull (MicroReader.readMicroXML ((byte []) null));
   }
 
   @Test
@@ -94,7 +102,8 @@ public final class MicroReaderTest
                                                                                                      CCharset.CHARSET_ISO_8859_1_OBJ)));
     assertNotNull (aDoc);
 
-    aDoc = MicroReader.readMicroXML (new StringSAXInputSource (s), null, LoggingSAXErrorHandler.getInstance ());
+    aDoc = MicroReader.readMicroXML (s,
+                                     new SAXReaderSettings ().setErrorHandler (LoggingSAXErrorHandler.getInstance ()));
     assertNotNull (aDoc);
 
     final NonBlockingByteArrayOutputStream baos = new NonBlockingByteArrayOutputStream ();
@@ -103,15 +112,24 @@ public final class MicroReaderTest
                   CRLF +
                   "<verrryoot>" +
                   CRLF +
-                  "  <root xmlns=\"myuri\">" +
+                  INDENT +
+                  "<root xmlns=\"myuri\">" +
                   CRLF +
-                  "    <ns0:child xmlns:ns0=\"\">" +
+                  INDENT +
+                  INDENT +
+                  "<ns0:child xmlns:ns0=\"\">" +
                   CRLF +
-                  "      <ns1:child2 xmlns:ns1=\"foo\">Value text - no entities!</ns1:child2>" +
+                  INDENT +
+                  INDENT +
+                  INDENT +
+                  "<ns1:child2 xmlns:ns1=\"foo\">Value text - no entities!</ns1:child2>" +
                   CRLF +
-                  "    </ns0:child>" +
+                  INDENT +
+                  INDENT +
+                  "</ns0:child>" +
                   CRLF +
-                  "  </root>" +
+                  INDENT +
+                  "</root>" +
                   CRLF +
                   "</verrryoot>" +
                   CRLF, baos.getAsString (CCharset.CHARSET_UTF_8_OBJ));
@@ -328,18 +346,18 @@ public final class MicroReaderTest
   {
     // Read file with notation
     final IMicroDocument doc = MicroReader.readMicroXML (new ClassPathResource ("xml/xml-entity-public.xml"),
-                                                         new EmptyEntityResolver ());
+                                                         new SAXReaderSettings ().setEntityResolver (new EmptyEntityResolver ()));
     assertNotNull (doc);
 
     final MicroSAXHandler aHdl = new MicroSAXHandler (true, new EmptyEntityResolver ());
-    assertTrue (XMLReader.readXMLSAX (ClassPathResource.getInputStream ("xml/xml-entity-public.xml"),
-                                      aHdl,
-                                      aHdl,
-                                      aHdl,
-                                      aHdl,
-                                      aHdl,
-                                      false,
-                                      false).isSuccess ());
+    final ISAXReaderSettings aSettings = new SAXReaderSettings ().setEntityResolver (aHdl)
+                                                                 .setDTDHandler (aHdl)
+                                                                 .setContentHandler (aHdl)
+                                                                 .setErrorHandler (aHdl)
+                                                                 .setLexicalHandler (aHdl);
+    assertTrue (SAXReader.readXMLSAX (InputSourceFactory.create (ClassPathResource.getInputStream ("xml/xml-entity-public.xml")),
+                                      aSettings)
+                         .isSuccess ());
     assertNotNull (aHdl.getDocument ());
 
     // Write again
@@ -355,19 +373,24 @@ public final class MicroReaderTest
   @Test
   public void testIsEqualContent ()
   {
-    final String s = "<?xml version=\"1.1\"?>\n"
-                     + "<!DOCTYPE root [ <!ENTITY sc \"value\"> ]>"
-                     + "<root>"
-                     + "<![CDATA[x<>]]>"
-                     + "  <l1>"
-                     + "     <l2>x</l2>"
-                     + "text"
-                     + "<b opt='true'><!--because who cares-->c</b>"
-                     + "end"
-                     + "&sc;"
-                     + "  </l1>"
-                     + "   <?important value?>"
-                     + "</root>";
+    final String s = "<?xml version=\"1.1\"?>\n" +
+                     "<!DOCTYPE root [ <!ENTITY sc \"value\"> ]>" +
+                     "<root>" +
+                     "<![CDATA[x<>]]>" +
+                     INDENT +
+                     "<l1>" +
+                     INDENT +
+                     INDENT +
+                     "<l2>x</l2>" +
+                     "text" +
+                     "<b opt='true'><!--because who cares-->c</b>" +
+                     "end" +
+                     "&sc;" +
+                     INDENT +
+                     "</l1>" +
+                     INDENT +
+                     "<?important value?>" +
+                     "</root>";
     assertTrue (MicroReader.readMicroXML (s).isEqualContent (MicroReader.readMicroXML (s)));
   }
 }

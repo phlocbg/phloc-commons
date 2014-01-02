@@ -22,7 +22,7 @@ import javax.xml.bind.ValidationEventHandler;
 
 /**
  * Implementation of {@link IValidationEventHandlerFactory} using a constant
- * {@link ValidationEventHandler} object.
+ * {@link javax.xml.bind.ValidationEventHandler} object.
  * 
  * @author Philip Helger
  */

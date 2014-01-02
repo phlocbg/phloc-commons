@@ -43,7 +43,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * Implementation of the {@link List} interface handling exactly one element and
  * no more!
- *
+ * 
  * @author Philip Helger
  * @param <ELEMENTTYPE>
  *        The type of the element in the list
@@ -243,7 +243,7 @@ public class SingleElementList <ELEMENTTYPE> implements List <ELEMENTTYPE>, IHas
       aObjects[0] = m_aElement;
       return aObjects;
     }
-    return new Object [0];
+    return ArrayHelper.EMPTY_OBJECT_ARRAY;
   }
 
   @Nonnull

@@ -80,7 +80,8 @@ public enum EXMLVersion
    * @param eDefault
    *        The default version to be returned, if no such enum value is
    *        present. May be <code>null</code>.
-   * @return <code>null</code> if no such {@link EXMLVersion} object is present.
+   * @return The provided default version (which may be <code>null</code>) if no
+   *         such {@link EXMLVersion} object is present.
    */
   @Nullable
   public static EXMLVersion getFromVersionOrDefault (@Nullable final String sVersion,

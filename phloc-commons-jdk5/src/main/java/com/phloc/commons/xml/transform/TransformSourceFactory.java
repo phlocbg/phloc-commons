@@ -28,7 +28,6 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
-import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
 
@@ -43,8 +42,8 @@ import com.phloc.commons.io.streams.NonBlockingByteArrayInputStream;
 import com.phloc.commons.url.URLUtils;
 
 /**
- * Factory class to create the correct {@link Source} objects for different
- * input types.
+ * Factory class to create the correct {@link javax.xml.transform.Source}
+ * objects for different input types.
  * 
  * @author Philip Helger
  */

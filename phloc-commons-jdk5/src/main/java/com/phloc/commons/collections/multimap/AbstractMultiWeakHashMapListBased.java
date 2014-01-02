@@ -19,7 +19,6 @@ package com.phloc.commons.collections.multimap;
 
 import java.util.List;
 import java.util.Map;
-import java.util.WeakHashMap;
 
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
@@ -29,7 +28,8 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.phloc.commons.state.EChange;
 
 /**
- * Abstract multi map based on {@link WeakHashMap} and {@link List} values.<br>
+ * Abstract multi map based on {@link java.util.WeakHashMap} and
+ * {@link java.util.List} values.<br>
  * 
  * @author Philip Helger
  * @param <KEYTYPE>

@@ -21,10 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.FactoryConfigurationError;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 import javax.xml.validation.Schema;
 
 import org.w3c.dom.DOMImplementation;
@@ -34,7 +31,7 @@ import org.w3c.dom.DocumentType;
 import com.phloc.commons.SystemProperties;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.exceptions.InitializationException;
-import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
+import com.phloc.commons.xml.serialize.DOMReaderDefaultSettings;
 
 /**
  * Utility class for creating XML DOM documents.
@@ -43,21 +40,29 @@ import com.phloc.commons.xml.sax.LoggingSAXErrorHandler;
  */
 public final class XMLFactory
 {
-  public static final boolean DEFAULT_DOM_COALESCING = true;
-  public static final boolean DEFAULT_DOM_IGNORING_COMMENTS = true;
+  /** DocumentBuilderFactory is by default namespace aware */
   public static final boolean DEFAULT_DOM_NAMESPACE_AWARE = true;
-
-  public static final boolean DEFAULT_SAX_NAMESPACE_AWARE = true;
+  /** DocumentBuilderFactory is by default not DTD validating */
+  public static final boolean DEFAULT_DOM_VALIDATING = false;
+  /**
+   * DocumentBuilderFactory is by default not ignoring element content
+   * whitespace
+   */
+  public static final boolean DEFAULT_DOM_IGNORING_ELEMENT_CONTENT_WHITESPACE = false;
+  /** DocumentBuilderFactory is by default entity reference expanding */
+  public static final boolean DEFAULT_DOM_EXPAND_ENTITY_REFERENCES = true;
+  /** DocumentBuilderFactory is by default ignoring comments */
+  public static final boolean DEFAULT_DOM_IGNORING_COMMENTS = true;
+  /** DocumentBuilderFactory is by default coalescing */
+  public static final boolean DEFAULT_DOM_COALESCING = true;
+  /** DocumentBuilderFactory is by default not XInclude aware */
+  public static final boolean DEFAULT_DOM_XINCLUDE_AWARE = false;
 
   /** The DOM DocumentBuilderFactory. */
   private static final DocumentBuilderFactory s_aDefaultDocBuilderFactory;
 
   /** The DOM DocumentBuilder. */
   private static final DocumentBuilder s_aDefaultDocBuilder;
-
-  /** The SAX parser factory. */
-  private static final SAXParserFactory s_aSaxFactoryNonValidating;
-  private static final SAXParserFactory s_aSaxFactoryValidating;
 
   static
   {
@@ -70,24 +75,6 @@ public final class XMLFactory
     // create DOM document builder
     s_aDefaultDocBuilderFactory = createDefaultDocumentBuilderFactory ();
     s_aDefaultDocBuilder = createDocumentBuilder (s_aDefaultDocBuilderFactory);
-
-    // init SAX factory
-    try
-    {
-      // Not validating
-      s_aSaxFactoryNonValidating = SAXParserFactory.newInstance ();
-      s_aSaxFactoryNonValidating.setNamespaceAware (DEFAULT_SAX_NAMESPACE_AWARE);
-      s_aSaxFactoryNonValidating.setValidating (false);
-
-      // Validating
-      s_aSaxFactoryValidating = SAXParserFactory.newInstance ();
-      s_aSaxFactoryValidating.setNamespaceAware (DEFAULT_SAX_NAMESPACE_AWARE);
-      s_aSaxFactoryValidating.setValidating (true);
-    }
-    catch (final FactoryConfigurationError ex)
-    {
-      throw new InitializationException ("Failed to create SAX parser factory", ex);
-    }
   }
 
   @PresentForCodeCoverage
@@ -98,8 +85,9 @@ public final class XMLFactory
   {}
 
   /**
-   * Create a new {@link DocumentBuilderFactory} with the following settings:
-   * coalescing, comment ignoring and namespace aware.
+   * Create a new {@link DocumentBuilderFactory} using the defaults defined in
+   * this class ({@link #DEFAULT_DOM_NAMESPACE_AWARE},
+   * {@link #DEFAULT_DOM_VALIDATING} etc.).
    * 
    * @return Never <code>null</code>.
    */
@@ -107,12 +95,20 @@ public final class XMLFactory
   public static DocumentBuilderFactory createDefaultDocumentBuilderFactory ()
   {
     final DocumentBuilderFactory aDocumentBuilderFactory = DocumentBuilderFactory.newInstance ();
-    // convert CDATA to text node?
-    aDocumentBuilderFactory.setCoalescing (DEFAULT_DOM_COALESCING);
-    // Ignore comments?
-    aDocumentBuilderFactory.setIgnoringComments (DEFAULT_DOM_IGNORING_COMMENTS);
-    // Namespace aware?
     aDocumentBuilderFactory.setNamespaceAware (DEFAULT_DOM_NAMESPACE_AWARE);
+    aDocumentBuilderFactory.setValidating (DEFAULT_DOM_VALIDATING);
+    aDocumentBuilderFactory.setIgnoringElementContentWhitespace (DEFAULT_DOM_IGNORING_ELEMENT_CONTENT_WHITESPACE);
+    aDocumentBuilderFactory.setExpandEntityReferences (DEFAULT_DOM_EXPAND_ENTITY_REFERENCES);
+    aDocumentBuilderFactory.setIgnoringComments (DEFAULT_DOM_IGNORING_COMMENTS);
+    aDocumentBuilderFactory.setCoalescing (DEFAULT_DOM_COALESCING);
+    try
+    {
+      aDocumentBuilderFactory.setXIncludeAware (DEFAULT_DOM_XINCLUDE_AWARE);
+    }
+    catch (final UnsupportedOperationException ex)
+    {
+      // Ignore
+    }
     return aDocumentBuilderFactory;
   }
 
@@ -210,47 +206,12 @@ public final class XMLFactory
     try
     {
       final DocumentBuilder aDocBuilder = aDocBuilderFactory.newDocumentBuilder ();
-      aDocBuilder.setErrorHandler (LoggingSAXErrorHandler.getInstance ());
+      aDocBuilder.setErrorHandler (DOMReaderDefaultSettings.getErrorHandler ());
       return aDocBuilder;
     }
     catch (final ParserConfigurationException ex)
     {
       throw new InitializationException ("Failed to create document builder", ex);
-    }
-  }
-
-  /**
-   * Get the default SAX parser factory.
-   * 
-   * @param bValidating
-   *        if <code>true</code> the validating factory is returned, else the
-   *        non-validating factory is returned.
-   * @return The matching SAX parser factory. Never <code>null</code>.
-   */
-  @Nonnull
-  public static SAXParserFactory getSaxParserFactory (final boolean bValidating)
-  {
-    return bValidating ? s_aSaxFactoryValidating : s_aSaxFactoryNonValidating;
-  }
-
-  /**
-   * Create a new SAX parser.
-   * 
-   * @param bValidating
-   *        if <code>true</code> a validating parser is returned, else the
-   *        non-validating parser is returned.
-   * @return Never <code>null</code>.
-   */
-  @Nonnull
-  public static SAXParser createSaxParser (final boolean bValidating)
-  {
-    try
-    {
-      return getSaxParserFactory (bValidating).newSAXParser ();
-    }
-    catch (final Throwable t)
-    {
-      throw new IllegalStateException ("Failed to create new SAX parser", t);
     }
   }
 

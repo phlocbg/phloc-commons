@@ -24,7 +24,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 import javax.xml.namespace.QName;
-import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathVariableResolver;
 
 import com.phloc.commons.annotations.ReturnsMutableCopy;
@@ -35,9 +34,9 @@ import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * Class is used in conjunction with {@link XPathExpression} to resolve variable
- * values used in XPath queries at runtime. The local part of the QName to
- * resolve is used as the key in the map.
+ * Class is used in conjunction with {@link javax.xml.xpath.XPathExpression} to
+ * resolve variable values used in XPath queries at runtime. The local part of
+ * the QName to resolve is used as the key in the map.
  * 
  * @author Philip Helger
  */

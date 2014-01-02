@@ -19,7 +19,6 @@ package com.phloc.commons.io.streams;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.nio.BufferOverflowException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
@@ -32,7 +31,8 @@ import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.collections.ArrayHelper;
 
 /**
- * Wrapper for an {@link OutputStream} around a {@link ByteBuffer}.
+ * Wrapper for an {@link java.io.OutputStream} around a
+ * {@link java.nio.ByteBuffer}.
  * 
  * @author Philip Helger
  */
@@ -45,8 +45,8 @@ public class ByteBufferOutputStream extends OutputStream
   private final boolean m_bCanGrow;
 
   /**
-   * Create a new object with the {@link #DEFAULT_BUF_SIZE} buf size and it can
-   * grow.
+   * Create a new object with the {@link #DEFAULT_BUF_SIZE} buffer size and it
+   * can grow.
    */
   public ByteBufferOutputStream ()
   {
@@ -180,8 +180,8 @@ public class ByteBufferOutputStream extends OutputStream
 
   /**
    * Write everything currently contained to the specified buffer. If the passed
-   * buffer is too small, a {@link BufferOverflowException} is thrown. The
-   * copied elements are removed from this streams buffer.
+   * buffer is too small, a {@link java.nio.BufferOverflowException} is thrown.
+   * The copied elements are removed from this streams buffer.
    * 
    * @param aDestBuffer
    *        The destination buffer to write to. May not be <code>null</code>.

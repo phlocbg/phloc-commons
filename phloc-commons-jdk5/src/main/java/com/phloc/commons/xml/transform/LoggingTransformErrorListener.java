@@ -28,11 +28,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.annotations.CodingStyleguideUnaware;
+import com.phloc.commons.error.EErrorLevel;
 import com.phloc.commons.error.IResourceError;
 import com.phloc.commons.log.LogUtils;
 
 /**
- * java.xml.transform error listener that simply logs data to a logger.
+ * {@link javax.xml.transform.ErrorListener} that simply logs data to a logger.
  * 
  * @author Philip Helger
  */
@@ -61,6 +62,8 @@ public class LoggingTransformErrorListener extends AbstractTransformErrorListene
   @Override
   protected void internalLog (@Nonnull final IResourceError aResError)
   {
-    LogUtils.log (s_aLogger, aResError.getErrorLevel (), aResError.getAsString (m_aDisplayLocale));
+    final EErrorLevel eErrorLevel = aResError.getErrorLevel ();
+    final String sText = aResError.getAsString (m_aDisplayLocale);
+    LogUtils.log (s_aLogger, eErrorLevel, sText);
   }
 }

@@ -26,6 +26,7 @@ import org.junit.Test;
 import org.xml.sax.SAXException;
 
 import com.phloc.commons.io.resource.ClassPathResource;
+import com.phloc.commons.xml.serialize.DOMReaderSettings;
 import com.phloc.commons.xml.serialize.XMLReader;
 
 /**
@@ -39,14 +40,15 @@ public final class CollectingSAXErrorHandlerTest
   public void testAll () throws SAXException
   {
     CollectingSAXErrorHandler aCEH = new CollectingSAXErrorHandler ();
-    assertNotNull (XMLReader.readXMLDOM (new ClassPathResource ("xml/buildinfo.xml"), null, aCEH));
+    assertNotNull (XMLReader.readXMLDOM (new ClassPathResource ("xml/buildinfo.xml"),
+                                         new DOMReaderSettings ().setErrorHandler (aCEH)));
     assertTrue (aCEH.getResourceErrors ().isEmpty ());
     assertNotNull (aCEH.toString ());
 
     aCEH = new CollectingSAXErrorHandler ();
     try
     {
-      XMLReader.readXMLDOM (new ClassPathResource ("test1.txt"), null, aCEH);
+      XMLReader.readXMLDOM (new ClassPathResource ("test1.txt"), new DOMReaderSettings ().setErrorHandler (aCEH));
       fail ();
     }
     catch (final SAXException ex)

@@ -28,11 +28,11 @@ import com.phloc.commons.name.IHasDisplayName;
 import com.phloc.commons.name.IHasDisplayText;
 import com.phloc.commons.name.IHasName;
 import com.phloc.commons.string.ToStringGenerator;
-import com.phloc.commons.text.ITextProvider;
 
 /**
- * An implementation of the {@link ITextProvider} interface that always returns
- * a constant string. Use this only for texts that never need to be translated!<br>
+ * An implementation of the {@link com.phloc.commons.text.ITextProvider}
+ * interface that always returns a constant string. Use this only for texts that
+ * never need to be translated!<br>
  * {@link IHasDisplayText}, {@link IHasDisplayName} and {@link IHasName} are
  * only implemented, so that instances of this class can also be used as valid
  * substitutes for these interfaces.

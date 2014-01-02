@@ -43,11 +43,11 @@ import com.phloc.commons.regex.RegExHelper;
 import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.text.ISimpleMultiLingualText;
-import com.phloc.commons.text.ITextProvider;
 
 /**
- * An in-memory implementation of the {@link ITextProvider} interface.
- *
+ * An in-memory implementation of the
+ * {@link com.phloc.commons.text.ITextProvider} interface.
+ * 
  * @author Philip Helger
  */
 public class TextProvider extends AbstractTextProvider implements ISimpleMultiLingualText
@@ -56,6 +56,7 @@ public class TextProvider extends AbstractTextProvider implements ISimpleMultiLi
   public static final Locale DE = LocaleCache.getLocale ("de");
   /** English locale used */
   public static final Locale EN = LocaleCache.getLocale ("en");
+
   private static final Logger s_aLogger = LoggerFactory.getLogger (TextProvider.class);
   private static final AtomicBoolean s_aConsistencyChecksEnabled = new AtomicBoolean (GlobalDebug.isDebugMode ());
 
@@ -66,7 +67,7 @@ public class TextProvider extends AbstractTextProvider implements ISimpleMultiLi
 
   /**
    * Enable or disable the internal consistency checks.
-   *
+   * 
    * @param bPerformConsistencyChecks
    *        <code>true</code> to enable them, <code>false</code> to disable
    *        them.

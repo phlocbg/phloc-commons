@@ -20,6 +20,67 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <release date="2014-01-02" version="4.1.0" />
+  <entry date="2013-12-28" category="api" action="add">
+    <change>
+      <text locale="en">Extended DOMInputStreamProvider and MicroDOMInputStreamProvider to take an arbitrary IXMLWriterSettings object.</text>
+    </change>
+  </entry>
+  <entry date="2013-12-28" category="api" action="add">
+    <change>
+      <text locale="en">Updated MicroReader API to use SAXReaderSettings instead of several parameters.</text>
+    </change>
+  </entry>
+  <entry date="2013-12-27" category="api" action="add">
+    <change>
+      <text locale="en">Added new empty array constants to ArrayHelper</text>
+    </change>
+  </entry>
+  <entry date="2013-12-27" category="api" action="add">
+    <change>
+      <text locale="en">Added new class DOMReaderDefaultSettings to handle the default values for DOMReaderSettings</text>
+    </change>
+  </entry>
+  <entry date="2013-12-27" category="api" action="add">
+    <change>
+      <text locale="en">Added new class SAXReaderDefaultSettings to handle the default values for SAXReaderSettings</text>
+    </change>
+  </entry>
+  <entry date="2013-12-26" category="api" action="add">
+    <change>
+      <text locale="en">EXMLSerializeVersion now implements IHasID&lt;String&gt;</text>
+    </change>
+  </entry>
+  <entry date="2013-12-26" category="api" action="add">
+    <change>
+      <text locale="en">Extended EXMLParserProperty enum and added EXMLParserPropertyType</text>
+    </change>
+  </entry>
+  <entry date="2013-12-26" category="api" action="add">
+    <change>
+      <text locale="en">Added new class DOMReaderSettings to specify all settings for DOM reading</text>
+    </change>
+  </entry>
+  <entry date="2013-12-21" category="api" action="remove">
+    <change>
+      <text locale="en">Removed SAX stuff from XMLFactory because it was not used</text>
+    </change>
+  </entry>
+  <entry date="2013-12-21" category="api" action="add">
+    <change>
+      <text locale="en">Added new class SAXReader and SAXReaderSettings and therefore deprecated the SAX methods in class XMLReader</text>
+    </change>
+  </entry>
+  <entry date="2013-12-13" category="api" action="add">
+    <change>
+      <text locale="en">Extended EUnicodeBOM for better usability</text>
+    </change>
+  </entry>
+  <entry date="2013-12-12" category="api" action="add">
+    <change>
+      <text locale="en">Extended MapBasedNamespaceContext API slightly</text>
+    </change>
+  </entry>
   <entry date="2013-11-27" category="api" action="add" incompatible="true">
     <change>
       <text locale="en">Added support for customizable newline and indentation string in IXMLWriterSettings.</text>

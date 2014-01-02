@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.CGlobal;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
+import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.id.IHasID;
 import com.phloc.commons.id.IHasSimpleIntID;
 import com.phloc.commons.name.IHasName;
@@ -46,7 +47,7 @@ import com.phloc.commons.string.StringHelper;
 public final class EnumHelper
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (EnumHelper.class);
-  private static final Object [] NOT_CACHABLE = new Object [0];
+  private static final Object [] NOT_CACHABLE = ArrayHelper.EMPTY_OBJECT_ARRAY;
   private static final ReadWriteLock s_aRWLockInt = new ReentrantReadWriteLock ();
   private static final Map <String, Object []> s_aIntCache = new HashMap <String, Object []> ();
 

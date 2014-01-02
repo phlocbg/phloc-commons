@@ -176,6 +176,17 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
     }
   }
 
+  @Nonnull
+  @Deprecated
+  public static String getDocTypeHTMLRepresentation (@Nonnull final EXMLVersion eXMLVersion,
+                                                     @Nonnull final EXMLIncorrectCharacterHandling eIncorrectCharHandling,
+                                                     @Nonnull final IMicroDocumentType aDocType)
+  {
+    return getDocTypeHTMLRepresentation (EXMLSerializeVersion.getFromXMLVersionOrThrow (eXMLVersion),
+                                         eIncorrectCharHandling,
+                                         aDocType);
+  }
+
   /**
    * Get the XML representation of a document type.
    * 
@@ -355,8 +366,8 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
   {
     _append ('<');
     if (StringHelper.hasText (sNamespacePrefix))
-      _append (sNamespacePrefix)._append (CXML.XML_PREFIX_NAMESPACE_SEP);
-    _append (sTagName);
+      _appendMasked (EXMLCharMode.ELEMENT_NAME, sNamespacePrefix)._append (CXML.XML_PREFIX_NAMESPACE_SEP);
+    _appendMasked (EXMLCharMode.ELEMENT_NAME, sTagName);
     if (aAttrs != null && !aAttrs.isEmpty ())
     {
       // assuming that the order of the passed attributes is consistent!
@@ -365,6 +376,9 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
       {
         final String sAttrName = aEntry.getKey ();
         final String sAttrValue = aEntry.getValue ();
+        // TODO sAttrName may contain a namespace prefix and therefore no
+        // masking can be used, as ":" is an invalid character in attribute
+        // names!
         _append (' ')._append (sAttrName)._append ('=')._appendAttrValue (sAttrValue);
       }
     }
@@ -401,8 +415,8 @@ public class XMLEmitterPhloc extends DefaultXMLIterationHandler
     {
       _append ("</");
       if (StringHelper.hasText (sNamespacePrefix))
-        _append (sNamespacePrefix)._append (CXML.XML_PREFIX_NAMESPACE_SEP);
-      _append (sTagName)._append ('>');
+        _appendMasked (EXMLCharMode.ELEMENT_NAME, sNamespacePrefix)._append (CXML.XML_PREFIX_NAMESPACE_SEP);
+      _appendMasked (EXMLCharMode.ELEMENT_NAME, sTagName)._append ('>');
     }
   }
 

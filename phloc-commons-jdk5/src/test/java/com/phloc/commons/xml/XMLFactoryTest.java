@@ -88,23 +88,6 @@ public final class XMLFactoryTest extends AbstractPhlocTestCase
   }
 
   @Test
-  public void testGetSaxParserFactory ()
-  {
-    assertNotNull (XMLFactory.getSaxParserFactory (false));
-    assertNotNull (XMLFactory.getSaxParserFactory (true));
-    assertSame (XMLFactory.getSaxParserFactory (false), XMLFactory.getSaxParserFactory (false));
-    assertSame (XMLFactory.getSaxParserFactory (true), XMLFactory.getSaxParserFactory (true));
-    assertTrue (XMLFactory.getSaxParserFactory (false) != XMLFactory.getSaxParserFactory (true));
-  }
-
-  @Test
-  public void testCreateSaxParser ()
-  {
-    assertNotNull (XMLFactory.createSaxParser (false));
-    assertNotNull (XMLFactory.createSaxParser (true));
-  }
-
-  @Test
   public void testNewDocument ()
   {
     Document doc = XMLFactory.newDocument ();

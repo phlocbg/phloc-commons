@@ -52,6 +52,7 @@ public enum EXMLSerializeFormat implements IHasID <String>
   /**
    * @return <code>true</code> if the XML header (&lt;?xml ...?>) should be
    *         emitted
+   * @deprecated Use {@link #isXML()} instead
    */
   @Deprecated
   public boolean hasXMLHeader ()

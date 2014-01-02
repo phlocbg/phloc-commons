@@ -29,6 +29,7 @@ import javax.xml.xpath.XPathFunctionResolver;
 import javax.xml.xpath.XPathVariableResolver;
 
 import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.string.StringHelper;
 
 /**
@@ -41,6 +42,10 @@ import com.phloc.commons.string.StringHelper;
 public final class XPathHelper
 {
   private static final XPathFactory s_aXPathFactory = XPathFactory.newInstance ();
+
+  @SuppressWarnings ("unused")
+  @PresentForCodeCoverage
+  private static final XPathHelper s_aInstance = new XPathHelper ();
 
   private XPathHelper ()
   {}

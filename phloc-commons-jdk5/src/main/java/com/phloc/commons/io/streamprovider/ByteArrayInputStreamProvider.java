@@ -32,7 +32,7 @@ import com.phloc.commons.string.ToStringGenerator;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
- * An input stream provider based on a byte array.
+ * An {@link java.io.InputStream} provider based on a byte array.
  * 
  * @author Philip Helger
  */

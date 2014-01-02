@@ -68,6 +68,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 @Immutable
 public final class FileUtils
 {
+  private static final boolean USE_MEMORY_MAPPED_FILES = false;
   private static final Logger s_aLogger = LoggerFactory.getLogger (FileUtils.class);
 
   @PresentForCodeCoverage
@@ -314,6 +315,7 @@ public final class FileUtils
     }
     catch (final IOException ex)
     {
+      s_aLogger.warn ("Failed to create memory mapped input stream for " + aFile + ": " + ex.getMessage ());
       return null;
     }
   }
@@ -347,7 +349,7 @@ public final class FileUtils
       throw new NullPointerException ("file");
 
     final FileInputStream aFIS = _getFileInputStream (aFile);
-    if (false && aFIS != null)
+    if (USE_MEMORY_MAPPED_FILES && aFIS != null)
     {
       // Check if using a memory mapped file makes sense (file size > 1MB)
       final FileChannel aChannel = aFIS.getChannel ();
@@ -427,6 +429,7 @@ public final class FileUtils
     }
     catch (final IOException ex)
     {
+      s_aLogger.warn ("Failed to create memory mapped output stream for " + aFile + ": " + ex.getMessage ());
       return null;
     }
   }

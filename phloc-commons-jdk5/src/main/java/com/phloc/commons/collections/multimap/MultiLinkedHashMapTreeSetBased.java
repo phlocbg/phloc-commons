@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.collections.multimap;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -27,7 +26,8 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 /**
- * Multi map based on {@link LinkedHashMap} and {@link TreeSet} values.<br>
+ * Multi map based on {@link java.util.LinkedHashMap} and
+ * {@link java.util.TreeSet} values.<br>
  * 
  * @author Philip Helger
  * @param <KEYTYPE>
@@ -36,8 +36,7 @@ import javax.annotation.concurrent.NotThreadSafe;
  *        value type
  */
 @NotThreadSafe
-public class MultiLinkedHashMapTreeSetBased <KEYTYPE, VALUETYPE> extends
-                                                                 AbstractMultiLinkedHashMapSetBased <KEYTYPE, VALUETYPE>
+public class MultiLinkedHashMapTreeSetBased <KEYTYPE, VALUETYPE> extends AbstractMultiLinkedHashMapSetBased <KEYTYPE, VALUETYPE>
 {
   public MultiLinkedHashMapTreeSetBased ()
   {}
