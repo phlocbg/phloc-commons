@@ -25,7 +25,7 @@ import javax.xml.transform.ErrorListener;
 import com.phloc.commons.error.IResourceError;
 
 /**
- * java.xml.transform error listener that does nothing.
+ * {@link javax.xml.transform.ErrorListener} that does nothing.
  * 
  * @author Philip Helger
  */

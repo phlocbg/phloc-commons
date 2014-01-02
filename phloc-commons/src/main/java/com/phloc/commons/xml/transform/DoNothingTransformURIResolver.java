@@ -20,10 +20,9 @@ package com.phloc.commons.xml.transform;
 import javax.annotation.concurrent.NotThreadSafe;
 import javax.xml.transform.Source;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.URIResolver;
 
 /**
- * java.xml.transform {@link URIResolver} that does nothing.
+ * {@link javax.xml.transform.URIResolver} that does nothing.
  * 
  * @author Philip Helger
  */
@@ -31,13 +30,12 @@ import javax.xml.transform.URIResolver;
 public class DoNothingTransformURIResolver extends AbstractTransformURIResolver
 {
   public DoNothingTransformURIResolver ()
-  {
-    super ();
-  }
+  {}
 
   @Override
   protected Source internalResolve (final String sHref, final String sBase) throws TransformerException
   {
+    // Always resolve to null
     return null;
   }
 }

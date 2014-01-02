@@ -48,7 +48,6 @@ import org.xml.sax.ext.LexicalHandler;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.callback.IExceptionHandler;
-import com.phloc.commons.callback.LoggingExceptionHandler;
 import com.phloc.commons.factory.IFactory;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.streams.StreamUtils;
@@ -887,6 +886,7 @@ public final class XMLReader
    * @param eFeature
    *        Feature to check.
    * @return <code>null</code> if nothing is specified.
+   * @deprecated Use {@link SAXReaderDefaultSettings} instead
    */
   @Nullable
   @Deprecated
@@ -902,6 +902,7 @@ public final class XMLReader
    *        The feature to set.
    * @param aValue
    *        Use <code>null</code> to remove a feature.
+   * @deprecated Use {@link SAXReaderDefaultSettings} instead
    */
   @Deprecated
   public static void setDefaultSaxParserFeatureValue (@Nonnull final EXMLParserFeature eFeature,
@@ -911,8 +912,8 @@ public final class XMLReader
   }
 
   /**
-   * @return The default exception handler. By default it is an implementation
-   *         of {@link LoggingExceptionHandler}. Never <code>null</code>.
+   * @return The default exception handler. Never <code>null</code>.
+   * @deprecated Use {@link SAXReaderDefaultSettings} instead
    */
   @Nonnull
   @Deprecated
@@ -926,6 +927,7 @@ public final class XMLReader
    * 
    * @param aExceptionHandler
    *        The new handler to be set. May not be <code>null</code>.
+   * @deprecated Use {@link SAXReaderDefaultSettings} instead
    */
   @Deprecated
   public static void setDefaultSAXExceptionHandler (@Nonnull final IExceptionHandler <Throwable> aExceptionHandler)

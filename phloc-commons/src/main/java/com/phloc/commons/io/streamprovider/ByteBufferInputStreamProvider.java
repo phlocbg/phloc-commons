@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.io.streamprovider;
 
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
@@ -30,7 +29,8 @@ import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * An {@link InputStream} provider based on a {@link ByteBuffer}.
+ * An {@link java.io.InputStream} provider based on a
+ * {@link java.nio.ByteBuffer}.
  * 
  * @author Philip Helger
  */

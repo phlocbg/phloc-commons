@@ -26,12 +26,11 @@ import javax.annotation.concurrent.Immutable;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.hierarchy.DefaultHierarchyWalkerCallback;
 import com.phloc.commons.tree.IBasicTree;
-import com.phloc.commons.tree.simple.ITree;
 import com.phloc.commons.tree.simple.ITreeItem;
 import com.phloc.commons.tree.utils.walk.TreeWalker;
 
 /**
- * Sort {@link ITree} instances recursively.
+ * Sort {@link com.phloc.commons.tree.simple.ITree} instances recursively.
  * 
  * @author Philip Helger
  */

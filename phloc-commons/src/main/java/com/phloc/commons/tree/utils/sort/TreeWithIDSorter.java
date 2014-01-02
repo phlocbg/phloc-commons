@@ -28,10 +28,10 @@ import com.phloc.commons.hierarchy.DefaultHierarchyWalkerCallback;
 import com.phloc.commons.tree.IBasicTree;
 import com.phloc.commons.tree.utils.walk.TreeWalker;
 import com.phloc.commons.tree.withid.ITreeItemWithID;
-import com.phloc.commons.tree.withid.ITreeWithID;
 
 /**
- * Sort {@link ITreeWithID} instances recursively - either by ID or by value
+ * Sort {@link com.phloc.commons.tree.withid.ITreeWithID} instances recursively
+ * - either by ID or by value
  * 
  * @author Philip Helger
  */

@@ -22,8 +22,6 @@ import java.math.BigInteger;
 import javax.annotation.CheckForSigned;
 import javax.annotation.Nonnull;
 
-import com.phloc.commons.CGlobal;
-
 /**
  * Base interface for size and timer handler.
  * 
@@ -38,23 +36,25 @@ public interface IStatisticsHandlerNumeric extends IStatisticsHandler
   BigInteger getSum ();
 
   /**
-   * @return The smallest value. Returns {@link CGlobal#ILLEGAL_ULONG} if the
-   *         invocation count is 0.
+   * @return The smallest value. Returns
+   *         {@link com.phloc.commons.CGlobal#ILLEGAL_ULONG} if the invocation
+   *         count is 0.
    */
   @CheckForSigned
   long getMin ();
 
   /**
    * @return The average value (=sum/invocationCount). Returns
-   *         {@link CGlobal#ILLEGAL_ULONG} if the invocation count is 0 to avoid
-   *         a division by 0.
+   *         {@link com.phloc.commons.CGlobal#ILLEGAL_ULONG} if the invocation
+   *         count is 0 to avoid a division by 0.
    */
   @CheckForSigned
   long getAverage ();
 
   /**
-   * @return The biggest value. Returns {@link CGlobal#ILLEGAL_ULONG} if the
-   *         invocation count is 0.
+   * @return The biggest value. Returns
+   *         {@link com.phloc.commons.CGlobal#ILLEGAL_ULONG} if the invocation
+   *         count is 0.
    */
   @CheckForSigned
   long getMax ();

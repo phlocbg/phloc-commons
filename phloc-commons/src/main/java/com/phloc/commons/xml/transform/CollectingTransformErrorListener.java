@@ -34,8 +34,8 @@ import com.phloc.commons.state.EChange;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * This implementation of {@link ErrorListener} saves all occurred
- * warnings/errors/fatals in a list for later evaluation.
+ * This implementation of {@link javax.xml.transform.ErrorListener} saves all
+ * occurred warnings/errors/fatals in a list for later evaluation.
  * 
  * @author Philip Helger
  */

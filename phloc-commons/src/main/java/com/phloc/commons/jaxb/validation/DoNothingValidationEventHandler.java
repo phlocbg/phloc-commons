@@ -19,13 +19,12 @@ package com.phloc.commons.jaxb.validation;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
-import javax.xml.bind.ValidationEventHandler;
 
 import com.phloc.commons.error.IResourceError;
 
 /**
- * An implementation of the JAXB {@link ValidationEventHandler} interface that
- * does nothing an swallows all errors.
+ * An implementation of the JAXB {@link javax.xml.bind.ValidationEventHandler}
+ * interface that does nothing an swallows all errors.
  * 
  * @author Philip Helger
  */
