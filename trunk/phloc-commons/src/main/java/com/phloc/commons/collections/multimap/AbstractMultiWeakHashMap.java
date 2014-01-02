@@ -29,8 +29,8 @@ import javax.annotation.concurrent.NotThreadSafe;
 import com.phloc.commons.state.EChange;
 
 /**
- * Abstract multi map based on {@link WeakHashMap}.
- *
+ * Abstract multi map based on {@link java.util.WeakHashMap}.
+ * 
  * @author Philip Helger
  * @param <KEYTYPE>
  *        key type

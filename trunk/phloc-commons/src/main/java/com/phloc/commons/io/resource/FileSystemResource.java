@@ -38,8 +38,6 @@ import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.io.EAppend;
 import com.phloc.commons.io.IReadWriteResource;
-import com.phloc.commons.io.IReadableResource;
-import com.phloc.commons.io.IWritableResource;
 import com.phloc.commons.io.file.FileUtils;
 import com.phloc.commons.io.file.FilenameHelper;
 import com.phloc.commons.io.streams.StreamUtils;
@@ -47,8 +45,9 @@ import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * Implementation of the {@link IReadableResource} and {@link IWritableResource}
- * interfaces for file system objects.
+ * Implementation of the {@link com.phloc.commons.io.IReadableResource} and
+ * {@link com.phloc.commons.io.IWritableResource} interfaces for file system
+ * objects.
  * 
  * @author Philip Helger
  */

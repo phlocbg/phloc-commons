@@ -34,13 +34,13 @@ import org.slf4j.LoggerFactory;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.lang.ClassHierarchyCache;
 import com.phloc.commons.lang.ServiceLoaderUtils;
-import com.phloc.commons.microdom.IMicroElement;
-import com.phloc.commons.typeconvert.TypeConverterRegistry;
 
 /**
- * A utility class for converting objects from and to {@link IMicroElement}.<br>
- * The functionality is a special case of the {@link TypeConverterRegistry} as
- * we need a parameter for conversion in this case.
+ * A utility class for converting objects from and to
+ * {@link com.phloc.commons.microdom.IMicroElement}.<br>
+ * The functionality is a special case of the
+ * {@link com.phloc.commons.typeconvert.TypeConverterRegistry} as we need a
+ * parameter for conversion in this case.
  * 
  * @author Philip Helger
  */
