@@ -203,7 +203,11 @@ public final class MimeTypeParser
         }
         catch (final Exception ex)
         {
-          throw new MimeTypeParserException (ex.getMessage ());
+          throw new MimeTypeParserException ("Failed to add parameter '" +
+                                             sParameterName +
+                                             "' with value '" +
+                                             sParameterValue +
+                                             "'", ex);
         }
 
         // Search for separator of next parameter
@@ -262,7 +266,11 @@ public final class MimeTypeParser
         }
         catch (final Exception ex)
         {
-          throw new MimeTypeParserException (ex.getMessage ());
+          throw new MimeTypeParserException ("Failed to add parameter '" +
+                                             sParameterName +
+                                             "' with value '" +
+                                             sParameterValue +
+                                             "'", ex);
         }
       }
     }
