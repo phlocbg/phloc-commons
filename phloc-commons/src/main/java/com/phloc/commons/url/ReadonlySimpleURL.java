@@ -31,7 +31,7 @@ import javax.annotation.Nullable;
 public final class ReadonlySimpleURL extends AbstractSimpleURL
 {
   /** Empty URL */
-  public static final ReadonlySimpleURL EMPTY_URL = new ReadonlySimpleURL (EMPTY_URL_STRING);
+  public static final ReadonlySimpleURL EMPTY_URL = new ReadonlySimpleURL (URLData.EMPTY_URL_DATA);
 
   public ReadonlySimpleURL (@Nonnull final String sHref)
   {

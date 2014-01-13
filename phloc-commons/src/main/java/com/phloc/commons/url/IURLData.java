@@ -73,7 +73,8 @@ public interface IURLData extends Serializable
   Map <String, String> directGetParams ();
 
   /**
-   * @return A map of all query string parameters. Never <code>null</code>.
+   * @return A map of all query string parameters in the order they were passed
+   *         on. Never <code>null</code>.
    */
   @Nonnull
   @ReturnsMutableCopy

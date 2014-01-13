@@ -32,11 +32,11 @@ import com.phloc.commons.annotations.DevelopersNote;
  * A special URL parameter map that is made for best inline usage. It's simply a
  * Map&lt;String,String&gt; with more nifty API :)<br>
  * SMap is short for String-Map
- *
+ * 
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class SMap extends LinkedHashMap <String, String> implements ICloneable <SMap>
+public class SMap extends LinkedHashMap <String, String> implements ICloneable <SMap>
 {
   /**
    * Create an empty map.
@@ -46,7 +46,7 @@ public final class SMap extends LinkedHashMap <String, String> implements IClone
 
   /**
    * Create a map base on the given map. Kind of a copy-constructor.
-   *
+   * 
    * @param rhs
    *        The map to add. May not be <code>null</code>.
    */
@@ -74,7 +74,7 @@ public final class SMap extends LinkedHashMap <String, String> implements IClone
   /**
    * Important: this method must be present, because the underlying AbstractMap
    * otherwise throws an exception if this method is not overridden!!!
-   *
+   * 
    * @param sName
    *        Key
    * @param sValue

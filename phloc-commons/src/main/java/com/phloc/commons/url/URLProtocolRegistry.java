@@ -25,6 +25,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.Immutable;
 
 import org.slf4j.Logger;
@@ -48,6 +49,7 @@ public final class URLProtocolRegistry
   private static final Logger s_aLogger = LoggerFactory.getLogger (URLProtocolRegistry.class);
 
   private static final ReentrantReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
+  @GuardedBy ("s_aRWLock")
   private static final Map <String, IURLProtocol> s_aProtocols = new HashMap <String, IURLProtocol> ();
 
   static
