@@ -23,7 +23,6 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.charset.CharsetManager;
-import com.phloc.commons.string.StringHelper;
 
 /**
  * Contains some utility methods for handling MIME types.
@@ -63,19 +62,6 @@ public final class MimeTypeUtils
   public static Charset getCharsetFromMimeType (@Nullable final IMimeType aMimeType)
   {
     final String sCharsetName = getCharsetNameFromMimeType (aMimeType);
-
-    Charset ret = null;
-    if (StringHelper.hasText (sCharsetName))
-    {
-      try
-      {
-        ret = CharsetManager.getCharsetFromName (sCharsetName);
-      }
-      catch (final IllegalArgumentException ex)
-      {
-        // Illegal charset name
-      }
-    }
-    return ret;
+    return CharsetManager.getCharsetFromNameOrNull (sCharsetName);
   }
 }
