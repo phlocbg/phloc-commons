@@ -38,6 +38,7 @@ public final class TypeConverterException extends RuntimeException
   {
     CONVERSION_FAILED (2, "Conversion from type {0} to type {1} failed!"),
     NO_CONVERTER_FOUND (2, "No converter found to convert an object of type {0} to type {1}"),
+    NO_CONVERTER_FOUND_SINGLE (1, "No converter found to convert an object of type {0}"),
     NULL_SOURCE_NOT_ALLOWED (1, "A null source object cannot be converted to type {0}");
 
     private final int m_nParamCount;

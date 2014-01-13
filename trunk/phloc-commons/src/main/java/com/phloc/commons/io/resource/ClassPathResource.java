@@ -122,17 +122,17 @@ public class ClassPathResource implements IReadableResource
     m_aClassLoader = aClassLoader == null ? null : new WeakReference <ClassLoader> (aClassLoader);
   }
 
-  private void readObject (@Nonnull final ObjectInputStream aOIS) throws IOException
-  {
-    m_sPath = aOIS.readUTF ();
-  }
-
   private void writeObject (@Nonnull final ObjectOutputStream aOOS) throws IOException
   {
     if (m_aClassLoader != null)
       throw new IOException ("Cannot serialize a ClassPathResource that has a specific ClassLoader!");
     aOOS.writeUTF (m_sPath);
     // Don't write the rest! After serialization the URL must be resolved again!
+  }
+
+  private void readObject (@Nonnull final ObjectInputStream aOIS) throws IOException
+  {
+    m_sPath = aOIS.readUTF ();
   }
 
   @Nullable

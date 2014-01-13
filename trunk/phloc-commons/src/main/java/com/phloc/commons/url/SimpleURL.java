@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.url;
 
+import java.math.BigInteger;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -33,7 +34,7 @@ import com.phloc.commons.string.StringHelper;
  * 
  * @author Philip Helger
  */
-public final class SimpleURL extends AbstractSimpleURL implements ICloneable <SimpleURL>
+public class SimpleURL extends AbstractSimpleURL implements ICloneable <SimpleURL>
 {
   public SimpleURL ()
   {
@@ -80,6 +81,18 @@ public final class SimpleURL extends AbstractSimpleURL implements ICloneable <Si
   public SimpleURL add (@Nonnull final String sKey, final int nValue)
   {
     return add (sKey, Integer.toString (nValue));
+  }
+
+  @Nonnull
+  public SimpleURL add (@Nonnull final String sKey, final long nValue)
+  {
+    return add (sKey, Long.toString (nValue));
+  }
+
+  @Nonnull
+  public SimpleURL add (@Nonnull final String sKey, @Nonnull final BigInteger aValue)
+  {
+    return add (sKey, aValue.toString ());
   }
 
   @Nonnull

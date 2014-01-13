@@ -21,6 +21,7 @@ import java.io.Serializable;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.io.IWriterProvider;
 import com.phloc.commons.io.streams.NonBlockingStringWriter;
 import com.phloc.commons.string.ToStringGenerator;
@@ -39,6 +40,23 @@ public class StringWriterProvider implements IWriterProvider, Serializable
   public final NonBlockingStringWriter getWriter ()
   {
     return new NonBlockingStringWriter ();
+  }
+
+  @Override
+  public boolean equals (final Object o)
+  {
+    if (o == this)
+      return true;
+    if (o == null || !getClass ().equals (o.getClass ()))
+      return false;
+
+    return true;
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    return new HashCodeGenerator (this).getHashCode ();
   }
 
   @Override
