@@ -21,9 +21,18 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import java.io.InputStream;
+import java.net.URL;
+
+import org.junit.Ignore;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.charset.CCharset;
+import com.phloc.commons.charset.CharsetManager;
+import com.phloc.commons.io.streams.StreamUtils;
+import com.phloc.commons.mime.CMimeType;
 
 /**
  * Test class for class {@link URLUtils}.
@@ -32,6 +41,8 @@ import com.phloc.commons.charset.CCharset;
  */
 public final class URLUtilsTest
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (URLUtilsTest.class);
+
   @Test
   public void testGetCleanURL ()
   {
@@ -93,5 +104,49 @@ public final class URLUtilsTest
     assertEquals (1, aData.getParamCount ());
     assertEquals ("y", aData.getAllParams ().get ("x"));
     assertEquals ("c", aData.getAnchor ());
+  }
+
+  @Test
+  @Ignore
+  public void testGetInputStream ()
+  {
+    try
+    {
+      final InputStream aIS = URLUtils.getInputStream (new URL ("http://www.orf.at"), 3000, -1, null, null);
+      final byte [] aContent = StreamUtils.getAllBytes (aIS);
+      s_aLogger.info ("Read " + aContent.length + " bytes");
+    }
+    catch (final Throwable t)
+    {
+      // ignore
+      s_aLogger.info ("Failed to GET: " + t.getMessage ());
+    }
+  }
+
+  @Test
+  @Ignore
+  public void testPosttInputStream ()
+  {
+    try
+    {
+      final InputStream aIS = URLUtils.postAndGetInputStream (new URL ("http://localhost:8080/view/?menuitem=e2p"),
+                                                              1000,
+                                                              -1,
+                                                              CMimeType.APPLICATION_X_WWW_FORM_URLENCODED,
+                                                              "sender=true".getBytes (CCharset.CHARSET_UTF_8_OBJ),
+                                                              null,
+                                                              null,
+                                                              null);
+      final byte [] aContent = StreamUtils.getAllBytes (aIS);
+      s_aLogger.info ("Read " +
+                      aContent.length +
+                      " bytes: " +
+                      CharsetManager.getAsString (aContent, CCharset.CHARSET_UTF_8_OBJ));
+    }
+    catch (final Throwable t)
+    {
+      // ignore
+      s_aLogger.info ("Failed to POST: " + t.getMessage ());
+    }
   }
 }

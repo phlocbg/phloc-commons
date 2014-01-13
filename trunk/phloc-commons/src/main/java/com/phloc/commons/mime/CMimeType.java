@@ -83,6 +83,9 @@ public final class CMimeType
   /** HTML document. */
   public static final IMimeType APPLICATION_TEXT_HTML = EMimeContentType.APPLICATION.buildMimeType ("text+html");
 
+  /** For URL posting */
+  public static final IMimeType APPLICATION_X_WWW_FORM_URLENCODED = EMimeContentType.APPLICATION.buildMimeType ("x-www-form-urlencoded");
+
   /** For MP3 files */
   public static final IMimeType AUDIO_MP3 = EMimeContentType.AUDIO.buildMimeType ("mpeg");
 
