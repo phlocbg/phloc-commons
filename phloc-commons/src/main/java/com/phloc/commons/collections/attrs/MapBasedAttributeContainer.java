@@ -28,11 +28,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.EChange;
+import com.phloc.commons.state.EContinue;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -88,6 +90,24 @@ public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContain
     return sName == null ? null : m_aAttrs.get (sName);
   }
 
+  /**
+   * Internal callback method that can be used to check constraints on an
+   * attribute name or value.
+   * 
+   * @param sName
+   *        The attribute name. Never <code>null</code>.
+   * @param aValue
+   *        The attribute value. Never <code>null</code>.
+   * @return {@link EContinue#CONTINUE} to indicate that the name-value-pair is
+   *         OK. May not be <code>null</code>.
+   */
+  @OverrideOnDemand
+  @Nonnull
+  protected EContinue onBeforeSetAttributeValue (@Nonnull final String sName, @Nonnull final Object aValue)
+  {
+    return EContinue.CONTINUE;
+  }
+
   @Nonnull
   public EChange setAttribute (@Nonnull final String sName, @Nullable final Object aValue)
   {
@@ -96,6 +116,10 @@ public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContain
 
     if (aValue == null)
       return removeAttribute (sName);
+
+    // Callback for checks etc.
+    if (onBeforeSetAttributeValue (sName, aValue).isBreak ())
+      return EChange.UNCHANGED;
 
     final Object aOldValue = m_aAttrs.put (sName, aValue);
     return EChange.valueOf (!EqualsUtils.equals (aValue, aOldValue));
@@ -135,11 +159,33 @@ public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContain
     return ret;
   }
 
+  /**
+   * Internal callback method that can be used to avoid removal of an attribute.
+   * 
+   * @param sName
+   *        The attribute name. Never <code>null</code>.
+   * @return {@link EContinue#CONTINUE} to indicate that the name-value-pair is
+   *         OK. May not be <code>null</code>.
+   */
+  @OverrideOnDemand
+  @Nonnull
+  protected EContinue onBeforeRemoveAttribute (@Nonnull final String sName)
+  {
+    return EContinue.CONTINUE;
+  }
+
   @Nonnull
   public EChange removeAttribute (@Nullable final String sName)
   {
+    if (sName == null)
+      return EChange.UNCHANGED;
+
+    // Callback method
+    if (onBeforeRemoveAttribute (sName).isBreak ())
+      return EChange.UNCHANGED;
+
     // Returned value may be null
-    return EChange.valueOf (sName != null && m_aAttrs.remove (sName) != null);
+    return EChange.valueOf (m_aAttrs.remove (sName) != null);
   }
 
   @Nonnull
