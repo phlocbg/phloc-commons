@@ -18,12 +18,13 @@
 package com.phloc.commons.io.streamprovider;
 
 import java.io.InputStream;
+import java.io.Serializable;
 
 import javax.annotation.Nullable;
 
 import com.phloc.commons.io.IInputStreamProvider;
 
-public final class MockNullInputStreamProvider implements IInputStreamProvider
+public final class MockNullInputStreamProvider implements IInputStreamProvider, Serializable
 {
   @Nullable
   public InputStream getInputStream ()

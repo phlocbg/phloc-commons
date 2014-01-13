@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.io.streamprovider;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
@@ -29,7 +31,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author Philip Helger
  */
-public class StringReaderProvider implements IReaderProvider
+public class StringReaderProvider implements IReaderProvider, Serializable
 {
   private final String m_sData;
 
