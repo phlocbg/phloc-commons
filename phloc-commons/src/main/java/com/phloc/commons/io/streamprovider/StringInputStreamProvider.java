@@ -17,6 +17,10 @@
  */
 package com.phloc.commons.io.streamprovider;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.nio.charset.Charset;
 
 import javax.annotation.Nonnegative;
@@ -35,10 +39,10 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author Philip Helger
  */
-public class StringInputStreamProvider implements IInputStreamAndReaderProvider, IReaderProvider
+public class StringInputStreamProvider implements IInputStreamAndReaderProvider, IReaderProvider, Serializable
 {
-  private final String m_sData;
-  private final Charset m_aCharset;
+  private String m_sData;
+  private Charset m_aCharset;
 
   @Deprecated
   public StringInputStreamProvider (@Nonnull final char [] aChars, @Nonnull @Nonempty final String sCharset)
@@ -93,6 +97,18 @@ public class StringInputStreamProvider implements IInputStreamAndReaderProvider,
       throw new NullPointerException ("charset");
     m_sData = sData;
     m_aCharset = aCharset;
+  }
+
+  private void readObject (@Nonnull final ObjectInputStream aOIS) throws IOException
+  {
+    m_sData = aOIS.readUTF ();
+    m_aCharset = CharsetManager.getCharsetFromName (aOIS.readUTF ());
+  }
+
+  private void writeObject (@Nonnull final ObjectOutputStream aOOS) throws IOException
+  {
+    aOOS.writeUTF (m_sData);
+    aOOS.writeUTF (m_aCharset.name ());
   }
 
   @Nonnull

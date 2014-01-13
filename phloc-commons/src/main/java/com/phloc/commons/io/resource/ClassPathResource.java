@@ -122,8 +122,7 @@ public class ClassPathResource implements IReadableResource
     m_aClassLoader = aClassLoader == null ? null : new WeakReference <ClassLoader> (aClassLoader);
   }
 
-  @SuppressWarnings ("unchecked")
-  private void readObject (final ObjectInputStream aOIS) throws IOException
+  private void readObject (@Nonnull final ObjectInputStream aOIS) throws IOException
   {
     m_sPath = aOIS.readUTF ();
   }
