@@ -46,6 +46,7 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.GlobalDebug;
 import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.callback.INonThrowingRunnableWithParameter;
 import com.phloc.commons.charset.CCharset;
@@ -88,6 +89,10 @@ public final class URLUtils
 
   private static char [] s_aCleanURLOld;
   private static char [][] s_aCleanURLNew;
+
+  @PresentForCodeCoverage
+  @SuppressWarnings ("unused")
+  private static final URLUtils s_aInstance = new URLUtils ();
 
   private URLUtils ()
   {}
