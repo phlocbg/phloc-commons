@@ -28,6 +28,7 @@ import com.phloc.commons.stats.IStatisticsHandlerKeyedSize;
 import com.phloc.commons.stats.IStatisticsHandlerKeyedTimer;
 import com.phloc.commons.stats.IStatisticsHandlerSize;
 import com.phloc.commons.stats.IStatisticsHandlerTimer;
+import com.phloc.commons.stats.visit.DefaultStatisticsVisitor;
 import com.phloc.commons.stats.visit.IStatisticsVisitor;
 
 /**
@@ -36,7 +37,7 @@ import com.phloc.commons.stats.visit.IStatisticsVisitor;
  * 
  * @author Philip Helger
  */
-public final class StatisticsVisitorToXML implements IStatisticsVisitor
+public class StatisticsVisitorToXML extends DefaultStatisticsVisitor
 {
   private final IMicroElement m_eRoot;
 
@@ -47,6 +48,17 @@ public final class StatisticsVisitorToXML implements IStatisticsVisitor
     m_eRoot = eRoot;
   }
 
+  /**
+   * @return The root element passed in the constructor. Never <code>null</code>
+   *         .
+   */
+  @Nonnull
+  public IMicroElement getRoot ()
+  {
+    return m_eRoot;
+  }
+
+  @Override
   public void onCache (final String sName, final IStatisticsHandlerCache aHandler)
   {
     if (aHandler.getInvocationCount () > 0)
@@ -57,6 +69,7 @@ public final class StatisticsVisitorToXML implements IStatisticsVisitor
              .setAttribute (StatisticsExporter.ATTR_MISSES, Integer.toString (aHandler.getMisses ()));
   }
 
+  @Override
   public void onTimer (final String sName, final IStatisticsHandlerTimer aHandler)
   {
     if (aHandler.getInvocationCount () > 0)
@@ -69,6 +82,7 @@ public final class StatisticsVisitorToXML implements IStatisticsVisitor
              .setAttribute (StatisticsExporter.ATTR_SUM, aHandler.getSum ().toString ());
   }
 
+  @Override
   public void onKeyedTimer (final String sName, final IStatisticsHandlerKeyedTimer aHandler)
   {
     if (aHandler.getInvocationCount () > 0)
@@ -91,6 +105,7 @@ public final class StatisticsVisitorToXML implements IStatisticsVisitor
     }
   }
 
+  @Override
   public void onSize (final String sName, final IStatisticsHandlerSize aHandler)
   {
     if (aHandler.getInvocationCount () > 0)
@@ -103,6 +118,7 @@ public final class StatisticsVisitorToXML implements IStatisticsVisitor
              .setAttribute (StatisticsExporter.ATTR_SUM, aHandler.getSum ().toString ());
   }
 
+  @Override
   public void onKeyedSize (final String sName, final IStatisticsHandlerKeyedSize aHandler)
   {
     if (aHandler.getInvocationCount () > 0)
@@ -125,6 +141,7 @@ public final class StatisticsVisitorToXML implements IStatisticsVisitor
     }
   }
 
+  @Override
   public void onCounter (final String sName, final IStatisticsHandlerCounter aHandler)
   {
     if (aHandler.getInvocationCount () > 0)
@@ -134,6 +151,7 @@ public final class StatisticsVisitorToXML implements IStatisticsVisitor
              .setAttribute (StatisticsExporter.ATTR_COUNT, Long.toString (aHandler.getCount ()));
   }
 
+  @Override
   public void onKeyedCounter (final String sName, final IStatisticsHandlerKeyedCounter aHandler)
   {
     if (aHandler.getInvocationCount () > 0)

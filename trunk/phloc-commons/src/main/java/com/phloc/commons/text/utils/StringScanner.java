@@ -49,6 +49,16 @@ public final class StringScanner
     return m_nCurIndex;
   }
 
+  public void setCurrentIndex (@Nonnegative final int nCurIndex)
+  {
+    if (nCurIndex < 0 || nCurIndex > m_nMaxIndex)
+      throw new IllegalArgumentException ("Invalid index " +
+                                          nCurIndex +
+                                          " provided! Must be >= 0 and <= " +
+                                          m_nMaxIndex);
+    m_nCurIndex = nCurIndex;
+  }
+
   @Nonnegative
   public int getRemainingChars ()
   {
@@ -194,8 +204,8 @@ public final class StringScanner
   public String toString ()
   {
     return new ToStringGenerator (this).append ("input", m_sInput)
-                                       .append ("curIndex", m_nCurIndex)
                                        .append ("maxIndex", m_nMaxIndex)
+                                       .append ("curIndex", m_nCurIndex)
                                        .toString ();
   }
 }
