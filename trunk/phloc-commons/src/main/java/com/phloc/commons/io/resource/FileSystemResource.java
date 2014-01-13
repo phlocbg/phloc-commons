@@ -52,7 +52,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @Immutable
-public final class FileSystemResource implements IReadWriteResource
+public class FileSystemResource implements IReadWriteResource
 {
   private static final Logger s_aLogger = LoggerFactory.getLogger (FileSystemResource.class);
 
