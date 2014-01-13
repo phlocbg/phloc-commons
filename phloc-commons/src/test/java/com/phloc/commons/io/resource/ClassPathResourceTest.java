@@ -33,6 +33,7 @@ import org.junit.Test;
 
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.io.streams.StreamUtils;
+import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.mock.PhlocTestUtils;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -249,6 +250,16 @@ public final class ClassPathResourceTest
                                                                     new ClassPathResource ("classpath:folder/test2.txt"));
     PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (aCPISP1a, aCPISP2);
     PhlocTestUtils.testDefaultSerialization (aCPISP1a);
+    PhlocTestUtils.testDefaultSerialization (new ClassPathResource ("folder/test2.txt"));
+    try
+    {
+      // Can't serialize with class loader
+      PhlocTestUtils.testDefaultSerialization (new ClassPathResource ("folder/test2.txt",
+                                                                      ClassHelper.getDefaultClassLoader ()));
+      fail ();
+    }
+    catch (final IllegalStateException ex)
+    {}
   }
 
   @Test

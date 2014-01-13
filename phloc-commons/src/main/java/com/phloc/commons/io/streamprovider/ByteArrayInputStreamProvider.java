@@ -19,6 +19,7 @@ package com.phloc.commons.io.streamprovider;
 
 import java.io.InputStream;
 import java.io.Reader;
+import java.io.Serializable;
 import java.nio.charset.Charset;
 
 import javax.annotation.Nonnegative;
@@ -36,7 +37,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * 
  * @author Philip Helger
  */
-public class ByteArrayInputStreamProvider implements IInputStreamAndReaderProvider
+public class ByteArrayInputStreamProvider implements IInputStreamAndReaderProvider, Serializable
 {
   private final byte [] m_aData;
   private final int m_nOfs;
