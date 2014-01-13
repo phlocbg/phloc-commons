@@ -176,7 +176,7 @@ public final class RomanNumeral
   }
 
   @Nonnull
-  private static String _asRomanString (final int nValue)
+  private static String _getAsRomanString (final int nValue)
   {
     // Return the standard representation of this Roman numeral.
     final StringBuilder aSB = new StringBuilder ();
@@ -198,7 +198,7 @@ public final class RomanNumeral
   @Nonnull
   private String _asRomanString ()
   {
-    return _asRomanString (m_nValue);
+    return _getAsRomanString (m_nValue);
   }
 
   private int _asInt ()
