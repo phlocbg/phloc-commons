@@ -31,6 +31,7 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.lang.ServiceLoaderUtils;
@@ -56,6 +57,10 @@ public final class URLProtocolRegistry
   {
     reinitialize ();
   }
+
+  @PresentForCodeCoverage
+  @SuppressWarnings ("unused")
+  private static final URLProtocolRegistry s_aInstance = new URLProtocolRegistry ();
 
   private URLProtocolRegistry ()
   {}

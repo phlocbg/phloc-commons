@@ -51,10 +51,10 @@ import com.phloc.commons.tree.withid.unique.DefaultTreeWithGlobalUniqueID;
 @Immutable
 public final class TreeXMLConverter
 {
-  private static final String ELEMENT_ROOT = "root";
-  private static final String ELEMENT_ITEM = "item";
-  private static final String ATTR_ID = "id";
-  private static final String ELEMENT_DATA = "data";
+  public static final String ELEMENT_ROOT = "root";
+  public static final String ELEMENT_ITEM = "item";
+  public static final String ATTR_ID = "id";
+  public static final String ELEMENT_DATA = "data";
 
   @PresentForCodeCoverage
   @SuppressWarnings ("unused")
