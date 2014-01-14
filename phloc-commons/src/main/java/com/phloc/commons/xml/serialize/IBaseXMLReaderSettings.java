@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.xml.serialize;
 
+import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -59,6 +60,14 @@ public interface IBaseXMLReaderSettings
   @Nonnull
   @ReturnsMutableCopy
   Map <EXMLParserProperty, Object> getAllPropertyValues ();
+
+  /**
+   * @return The locale to be used for error messages. By default it is
+   *         <code>null</code> and therefore the XML parser will use the system
+   *         default locale.
+   */
+  @Nullable
+  Locale getLocale ();
 
   /**
    * @return <code>true</code> if at least one parser feature is defined,

@@ -18,12 +18,15 @@
 package com.phloc.commons.xml.serialize;
 
 import java.util.EnumMap;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.DTDHandler;
 import org.xml.sax.EntityResolver;
@@ -47,6 +50,8 @@ import com.phloc.commons.xml.EXMLParserProperty;
 @NotThreadSafe
 public class SAXReaderSettings implements ISAXReaderSettings, ICloneable <SAXReaderSettings>
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (SAXReaderSettings.class);
+
   private EntityResolver m_aEntityResolver;
   private DTDHandler m_aDTDHandler;
   private ContentHandler m_aContentHandler;
@@ -192,6 +197,15 @@ public class SAXReaderSettings implements ISAXReaderSettings, ICloneable <SAXRea
     if (eProperty == null)
       throw new NullPointerException ("property");
 
+    if (aPropertyValue != null &&
+        eProperty.getValueClass () != null &&
+        !eProperty.getValueClass ().isAssignableFrom (aPropertyValue.getClass ()))
+      s_aLogger.warn ("Setting the XML parser property '" +
+                      eProperty +
+                      "' to a value of " +
+                      aPropertyValue.getClass () +
+                      " will most likely not be interpreted!");
+
     if (aPropertyValue != null)
       m_aProperties.put (eProperty, aPropertyValue);
     else
@@ -220,6 +234,17 @@ public class SAXReaderSettings implements ISAXReaderSettings, ICloneable <SAXRea
       return EChange.UNCHANGED;
     m_aProperties.clear ();
     return EChange.CHANGED;
+  }
+
+  @Nullable
+  public Locale getLocale ()
+  {
+    return (Locale) getPropertyValue (EXMLParserProperty.GENERAL_LOCALE);
+  }
+
+  public SAXReaderSettings setLocale (@Nullable final Locale aLocale)
+  {
+    return setPropertyValue (EXMLParserProperty.GENERAL_LOCALE, aLocale);
   }
 
   public boolean hasAnyFeature ()

@@ -20,6 +20,16 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2014-01-14" category="tech" action="add">
+    <change>
+      <text locale="en">Added warning in (DOM|SAX)ReaderSettings.setPropertyValue if the type of the value is unexpected</text>
+    </change>
+  </entry>
+  <entry date="2014-01-14" category="api" action="add">
+    <change>
+      <text locale="en">Extended IBaseXMLReaderSettings with a getLocale() method</text>
+    </change>
+  </entry>
   <entry date="2014-01-13" category="api" action="add">
     <change>
       <text locale="en">Extended URLUtils with method to POST something to the server.</text>
