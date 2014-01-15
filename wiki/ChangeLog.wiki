@@ -3,6 +3,8 @@
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
 <table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody>
+<tr border="1"><td>1/15/14</td><td colspan="4">_Release *4.1.2*_</td></tr>
+<tr><td>1/15/14</td><td>fix</td><td>tech</td><td></td><td>Fixed error serializing the default SimpleURL</td></tr>
 <tr border="1"><td>1/15/14</td><td colspan="4">_Release *4.1.1*_</td></tr>
 <tr><td>1/14/14</td><td>add</td><td>tech</td><td></td><td>Added warning in (DOM|SAX)ReaderSettings.setPropertyValue if the type of the value is unexpected</td></tr>
 <tr><td>1/14/14</td><td>add</td><td>api</td><td></td><td>Extended IBaseXMLReaderSettings with a getLocale() method</td></tr>
