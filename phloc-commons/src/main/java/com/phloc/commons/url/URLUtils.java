@@ -52,6 +52,7 @@ import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.callback.INonThrowingRunnableWithParameter;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.charset.CharsetManager;
+import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.encode.IDecoder;
 import com.phloc.commons.encode.IEncoder;
 import com.phloc.commons.encode.IdentityDecoder;
@@ -833,12 +834,15 @@ public final class URLUtils
   }
 
   /**
-   * Create a parameter string suitable for POST body.
+   * Create a parameter string suitable for POST body (e.g. for web form
+   * submission).
    * 
    * @param aParams
-   *        Parameter map
+   *        Parameter map. May be <code>null</code> or empty.
    * @param aParameterEncoder
-   *        The encoder to be used.
+   *        The encoder to be used to encode parameter names and parameter
+   *        values. May not be <code>null</code>. This may be e.g. a
+   *        {@link URLParameterEncoder}.
    * @return A non-<code>null</code> string
    */
   @Nonnull
@@ -848,15 +852,23 @@ public final class URLUtils
     if (aParameterEncoder == null)
       throw new NullPointerException ("ParameterEncoder");
 
+    if (ContainerHelper.isEmpty (aParams))
+      return "";
+
     final StringBuilder aSB = new StringBuilder ();
     if (aParams != null)
       for (final Map.Entry <String, String> aEntry : aParams.entrySet ())
       {
+        // Separator
         if (aSB.length () > 0)
           aSB.append (AMPERSAND);
+
+        // Key
         final String sKey = aEntry.getKey ();
-        final String sValue = aEntry.getValue ();
         aSB.append (aParameterEncoder.encode (sKey));
+
+        // Value
+        final String sValue = aEntry.getValue ();
         if (StringHelper.hasText (sValue))
           aSB.append (EQUALS).append (aParameterEncoder.encode (sValue));
       }

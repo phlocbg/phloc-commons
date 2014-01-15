@@ -31,8 +31,10 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.charset.CharsetManager;
+import com.phloc.commons.encode.IdentityEncoder;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.mime.CMimeType;
+import com.phloc.commons.url.encode.URLParameterEncoder;
 
 /**
  * Test class for class {@link URLUtils}.
@@ -148,5 +150,23 @@ public final class URLUtilsTest
       // ignore
       s_aLogger.info ("Failed to POST: " + t.getMessage ());
     }
+  }
+
+  @Test
+  public void testGetApplicationFormEncoded ()
+  {
+    final URLParameterEncoder enc = new URLParameterEncoder (CCharset.CHARSET_UTF_8_OBJ);
+    assertEquals ("", URLUtils.getApplicationFormEncoded (null, enc));
+    assertEquals ("", URLUtils.getApplicationFormEncoded (new SMap (), enc));
+    assertEquals ("a=b", URLUtils.getApplicationFormEncoded (new SMap ().add ("a", "b"), enc));
+    assertEquals ("a=b&c=d", URLUtils.getApplicationFormEncoded (new SMap ().add ("a", "b").add ("c", "d"), enc));
+    assertEquals ("a=b&c=d&e=f+g",
+                  URLUtils.getApplicationFormEncoded (new SMap ().add ("a", "b").add ("c", "d").add ("e", "f g"), enc));
+    assertEquals ("a=b&c=d%26e", URLUtils.getApplicationFormEncoded (new SMap ().add ("a", "b").add ("c", "d&e"), enc));
+
+    // Using identity encoder
+    assertEquals ("a=b&c=d&e",
+                  URLUtils.getApplicationFormEncoded (new SMap ().add ("a", "b").add ("c", "d&e"),
+                                                      IdentityEncoder.<String> create ()));
   }
 }
