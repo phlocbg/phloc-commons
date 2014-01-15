@@ -831,4 +831,35 @@ public final class URLUtils
       StreamUtils.close (aOpenedOS.get ());
     }
   }
+
+  /**
+   * Create a parameter string suitable for POST body.
+   * 
+   * @param aParams
+   *        Parameter map
+   * @param aParameterEncoder
+   *        The encoder to be used.
+   * @return A non-<code>null</code> string
+   */
+  @Nonnull
+  public static String getApplicationFormEncoded (@Nullable final Map <String, String> aParams,
+                                                  @Nonnull final IEncoder <String> aParameterEncoder)
+  {
+    if (aParameterEncoder == null)
+      throw new NullPointerException ("ParameterEncoder");
+
+    final StringBuilder aSB = new StringBuilder ();
+    if (aParams != null)
+      for (final Map.Entry <String, String> aEntry : aParams.entrySet ())
+      {
+        if (aSB.length () > 0)
+          aSB.append (AMPERSAND);
+        final String sKey = aEntry.getKey ();
+        final String sValue = aEntry.getValue ();
+        aSB.append (aParameterEncoder.encode (sKey));
+        if (StringHelper.hasText (sValue))
+          aSB.append (EQUALS).append (aParameterEncoder.encode (sValue));
+      }
+    return aSB.toString ();
+  }
 }
