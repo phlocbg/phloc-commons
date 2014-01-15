@@ -52,7 +52,7 @@ import com.phloc.commons.url.URLUtils;
  * @author Philip Helger
  */
 @Immutable
-public final class URLResource implements IReadableResource
+public class URLResource implements IReadableResource
 {
   /** The protocol for file resources */
   public static final String PROTOCOL_FILE = "file";

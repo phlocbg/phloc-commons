@@ -19,6 +19,7 @@ package com.phloc.commons.tree.utils.xml;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.equals.EqualsUtils;
@@ -35,6 +36,7 @@ import com.phloc.commons.string.StringHelper;
  * @param <DATATYPE>
  *        The data type to be converted
  */
+@NotThreadSafe
 public final class MicroTypeConverterTreeXML <DATATYPE> implements IConverterTreeXML <DATATYPE>
 {
   private String m_sNamespaceURI;

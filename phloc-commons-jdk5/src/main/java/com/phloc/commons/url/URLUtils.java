@@ -19,6 +19,7 @@ package com.phloc.commons.url;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.JarURLConnection;
@@ -46,10 +47,12 @@ import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.GlobalDebug;
 import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.callback.INonThrowingRunnableWithParameter;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.charset.CharsetManager;
+import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.encode.IDecoder;
 import com.phloc.commons.encode.IEncoder;
 import com.phloc.commons.encode.IdentityDecoder;
@@ -58,7 +61,9 @@ import com.phloc.commons.exceptions.InitializationException;
 import com.phloc.commons.io.resource.ClassPathResource;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.microdom.reader.XMLMapHandler;
+import com.phloc.commons.mime.IMimeType;
 import com.phloc.commons.mutable.IWrapper;
+import com.phloc.commons.mutable.Wrapper;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.url.encode.URLParameterEncoder;
 
@@ -74,20 +79,31 @@ public final class URLUtils
   public static final String CHARSET_URL = CCharset.CHARSET_UTF_8;
   /** Default URL charset is UTF-8 */
   public static final Charset CHARSET_URL_OBJ = CCharset.CHARSET_UTF_8_OBJ;
+
   /** Separator before first param: ? */
   public static final char QUESTIONMARK = '?';
+  public static final String QUESTIONMARK_STR = Character.toString (QUESTIONMARK);
+
   /** Separator between params: &amp; */
   public static final char AMPERSAND = '&';
+  public static final String AMPERSAND_STR = Character.toString (AMPERSAND);
+
   /** Separator between param name and param value: = */
   public static final char EQUALS = '=';
+  public static final String EQUALS_STR = Character.toString (EQUALS);
+
   /** Separator between URL path and anchor name: # */
   public static final char HASH = '#';
+  public static final String HASH_STR = Character.toString (HASH);
 
   private static final Logger s_aLogger = LoggerFactory.getLogger (URLUtils.class);
-  private static final String QUESTIONMARK_STR = Character.toString (QUESTIONMARK);
 
   private static char [] s_aCleanURLOld;
   private static char [][] s_aCleanURLNew;
+
+  @PresentForCodeCoverage
+  @SuppressWarnings ("unused")
+  private static final URLUtils s_aInstance = new URLUtils ();
 
   private URLUtils ()
   {}
@@ -248,7 +264,8 @@ public final class URLUtils
   {
     if (s_aCleanURLOld == null)
       _initCleanURL ();
-    return new String (StringHelper.replaceMultiple (sURLPart, s_aCleanURLOld, s_aCleanURLNew));
+    final char [] ret = StringHelper.replaceMultiple (sURLPart, s_aCleanURLOld, s_aCleanURLNew);
+    return new String (ret);
   }
 
   @Nonnull
@@ -344,7 +361,7 @@ public final class URLUtils
             final String sValue = aParts.size () == 2 ? aParts.get (1) : "";
             if (sValue == null)
               throw new NullPointerException ("parameter value may not be null");
-            // Now decode the parameters
+            // Now decode the name and the value
             aMap.put (aParameterDecoder.decode (sKey), aParameterDecoder.decode (sValue));
           }
         }
@@ -596,6 +613,7 @@ public final class URLUtils
 
   /**
    * Get an input stream from the specified URL. By default caching is disabled.
+   * This method only handles GET requests - POST requests are not possible.
    * 
    * @param aURL
    *        The URL to use. May not be <code>null</code>.
@@ -726,5 +744,134 @@ public final class URLUtils
       }
     }
     return null;
+  }
+
+  /**
+   * POST something to a URL.
+   * 
+   * @param aURL
+   *        The destination URL. May not be <code>null</code>.
+   * @param nConnectTimeoutMS
+   *        Connect timeout milliseconds. 0 == infinite. &lt; 0: ignored.
+   * @param nReadTimeoutMS
+   *        Read timeout milliseconds. 0 == infinite. &lt; 0: ignored.
+   * @param aContentType
+   *        The MIME type to be send as the <code>Content-Type</code> header.
+   *        May be <code>null</code>.
+   * @param aContentBytes
+   *        The main content to be send via POST. May not be <code>null</code>
+   *        but maybe empty. The <code>Content-Length</code> HTTP header is
+   *        automatically filled with the specified byte length.
+   * @param aAdditionalHTTPHeaders
+   *        An optional map of HTTP headers to be send. This map should not
+   *        contain the <code>Content-Type</code> and the
+   *        <code>Content-Length</code> headers. May be <code>null</code>.
+   * @param aConnectionModifier
+   *        An optional callback object to modify the URLConnection before it is
+   *        opened.
+   * @param aExceptionHolder
+   *        An optional exception holder for further outside investigation.
+   * @return <code>null</code> if the input stream could not be opened.
+   */
+  @Nullable
+  public static InputStream postAndGetInputStream (@Nonnull final URL aURL,
+                                                   final int nConnectTimeoutMS,
+                                                   final int nReadTimeoutMS,
+                                                   @Nullable final IMimeType aContentType,
+                                                   @Nonnull final byte [] aContentBytes,
+                                                   @Nullable final Map <String, String> aAdditionalHTTPHeaders,
+                                                   @Nullable final INonThrowingRunnableWithParameter <URLConnection> aConnectionModifier,
+                                                   @Nullable final IWrapper <IOException> aExceptionHolder)
+  {
+    if (aURL == null)
+      throw new NullPointerException ("URL");
+    if (aContentBytes == null)
+      throw new NullPointerException ("ContentBytes");
+
+    final Wrapper <OutputStream> aOpenedOS = new Wrapper <OutputStream> ();
+    final INonThrowingRunnableWithParameter <URLConnection> aPOSTModifier = new INonThrowingRunnableWithParameter <URLConnection> ()
+    {
+      public void run (@Nonnull final URLConnection aURLConnection)
+      {
+        final HttpURLConnection aHTTPURLConnection = (HttpURLConnection) aURLConnection;
+        try
+        {
+          aHTTPURLConnection.setRequestMethod ("POST");
+          aHTTPURLConnection.setDoInput (true);
+          aHTTPURLConnection.setDoOutput (true);
+          if (aContentType != null)
+            aHTTPURLConnection.setRequestProperty ("Content-Type", aContentType.getAsString ());
+          aHTTPURLConnection.setRequestProperty ("Content-Length", Integer.toString (aContentBytes.length));
+          if (aAdditionalHTTPHeaders != null)
+            for (final Map.Entry <String, String> aEntry : aAdditionalHTTPHeaders.entrySet ())
+              aHTTPURLConnection.setRequestProperty (aEntry.getKey (), aEntry.getValue ());
+
+          final OutputStream aOS = aHTTPURLConnection.getOutputStream ();
+          aOpenedOS.set (aOS);
+          aOS.write (aContentBytes);
+          aOS.flush ();
+        }
+        catch (final IOException ex)
+        {
+          throw new IllegalStateException ("Failed to POST data to " + aURL.toExternalForm (), ex);
+        }
+
+        // Run provided modifier (if any)
+        if (aConnectionModifier != null)
+          aConnectionModifier.run (aURLConnection);
+      }
+    };
+
+    try
+    {
+      return getInputStream (aURL, nConnectTimeoutMS, nReadTimeoutMS, aPOSTModifier, aExceptionHolder);
+    }
+    finally
+    {
+      // Close the OutputStream opened for POSTing
+      StreamUtils.close (aOpenedOS.get ());
+    }
+  }
+
+  /**
+   * Create a parameter string suitable for POST body (e.g. for web form
+   * submission).
+   * 
+   * @param aParams
+   *        Parameter map. May be <code>null</code> or empty.
+   * @param aParameterEncoder
+   *        The encoder to be used to encode parameter names and parameter
+   *        values. May not be <code>null</code>. This may be e.g. a
+   *        {@link URLParameterEncoder}.
+   * @return A non-<code>null</code> string
+   */
+  @Nonnull
+  public static String getApplicationFormEncoded (@Nullable final Map <String, String> aParams,
+                                                  @Nonnull final IEncoder <String> aParameterEncoder)
+  {
+    if (aParameterEncoder == null)
+      throw new NullPointerException ("ParameterEncoder");
+
+    if (ContainerHelper.isEmpty (aParams))
+      return "";
+
+    final StringBuilder aSB = new StringBuilder ();
+    if (aParams != null)
+      for (final Map.Entry <String, String> aEntry : aParams.entrySet ())
+      {
+        // Separator
+        if (aSB.length () > 0)
+          aSB.append (AMPERSAND);
+
+        // Key
+        final String sKey = aEntry.getKey ();
+        aSB.append (aParameterEncoder.encode (sKey));
+
+        // Value
+        final String sValue = aEntry.getValue ();
+        if (StringHelper.hasText (sValue))
+          aSB.append (EQUALS).append (aParameterEncoder.encode (sValue));
+      }
+    return aSB.toString ();
   }
 }

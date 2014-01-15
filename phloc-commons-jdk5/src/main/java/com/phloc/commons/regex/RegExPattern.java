@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.regex;
 
+import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -38,7 +39,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @Immutable
-public final class RegExPattern
+public final class RegExPattern implements Serializable
 {
   private static final AtomicBoolean s_aCheckConsistencyEnabled = new AtomicBoolean (false);
 

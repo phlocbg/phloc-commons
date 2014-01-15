@@ -24,6 +24,7 @@ import java.util.Map;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.annotations.ReturnsMutableObject;
@@ -39,6 +40,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author Philip Helger
  */
+@NotThreadSafe
 public abstract class AbstractSimpleURL implements ISimpleURL
 {
   private final String m_sPath;
@@ -47,7 +49,7 @@ public abstract class AbstractSimpleURL implements ISimpleURL
 
   public AbstractSimpleURL ()
   {
-    this (EMPTY_URL_STRING, null, null);
+    this (URLData.EMPTY_URL_DATA);
   }
 
   public AbstractSimpleURL (@Nonnull final String sHref)
@@ -82,8 +84,8 @@ public abstract class AbstractSimpleURL implements ISimpleURL
       throw new NullPointerException ("URL");
 
     m_sPath = aURL.getPath ();
-    if (aURL.directGetParams () != null)
-      m_aParams = new LinkedHashMap <String, String> (aURL.directGetParams ());
+    if (aURL.hasParams ())
+      m_aParams = aURL.getAllParams ();
     m_sAnchor = aURL.getAnchor ();
   }
 

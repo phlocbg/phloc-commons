@@ -20,6 +20,47 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <release date="2014-01-15" version="4.1.1" />
+  <entry date="2014-01-14" category="tech" action="add">
+    <change>
+      <text locale="en">Added warning in (DOM|SAX)ReaderSettings.setPropertyValue if the type of the value is unexpected</text>
+    </change>
+  </entry>
+  <entry date="2014-01-14" category="api" action="add">
+    <change>
+      <text locale="en">Extended IBaseXMLReaderSettings with a getLocale() method</text>
+    </change>
+  </entry>
+  <entry date="2014-01-13" category="api" action="add">
+    <change>
+      <text locale="en">Extended URLUtils with method to POST something to the server.</text>
+    </change>
+  </entry>
+  <entry date="2014-01-13" category="api" action="add">
+    <change>
+      <text locale="en">Added new class SerializationConverter for better serialization handling</text>
+    </change>
+  </entry>
+  <entry date="2014-01-13" category="api" action="add">
+    <change>
+      <text locale="en">StringInputStreamProvider, StringReaderProvider and StringWriterProvider now implement equals and hashCode</text>
+    </change>
+  </entry>
+  <entry date="2014-01-13" category="tech" action="add">
+    <change>
+      <text locale="en">Made most IInputStreamProvider implementations serializable</text>
+    </change>
+  </entry>
+  <entry date="2014-01-13" category="api" action="add">
+    <change>
+      <text locale="en">Extended MapBasedAttributeContainer with protected callback methods for set and remove</text>
+    </change>
+  </entry>
+  <entry date="2014-01-12" category="api" action="add">
+    <change>
+      <text locale="en">Added new method CharsetManager.getCharsetFromNameOrNull</text>
+    </change>
+  </entry>
   <release date="2014-01-02" version="4.1.0" />
   <entry date="2013-12-28" category="api" action="add">
     <change>

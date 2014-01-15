@@ -15,19 +15,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.microdom.convert;
+package com.phloc.commons.serialize.convert;
 
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.state.EContinue;
 
 /**
- * A callback interface that is used to iterate all available micro type
+ * A callback interface that is used to iterate all available serialization
  * converters.
  * 
  * @author Philip Helger
  */
-public interface IMicroTypeConverterCallback
+public interface ISerializationConverterCallback
 {
   /**
    * Invoked for each converter.
@@ -40,5 +40,5 @@ public interface IMicroTypeConverterCallback
    *         {@link EContinue#BREAK} to stop iteration.
    */
   @Nonnull
-  EContinue call (@Nonnull Class <?> aClass, @Nonnull IMicroTypeConverter aConverter);
+  EContinue call (@Nonnull Class <?> aClass, @Nonnull ISerializationConverter aConverter);
 }

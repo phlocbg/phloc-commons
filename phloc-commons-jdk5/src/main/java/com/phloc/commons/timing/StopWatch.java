@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.timing;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -31,7 +33,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class StopWatch implements IStoppable
+public final class StopWatch implements IStoppable, Serializable
 {
   /** By default the stop watch is not started automatically */
   public static final boolean DEFAULT_START = false;

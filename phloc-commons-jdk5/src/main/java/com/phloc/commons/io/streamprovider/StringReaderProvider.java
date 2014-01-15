@@ -17,9 +17,12 @@
  */
 package com.phloc.commons.io.streamprovider;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.io.IReaderProvider;
 import com.phloc.commons.io.streams.NonBlockingStringReader;
 import com.phloc.commons.string.ToStringGenerator;
@@ -29,7 +32,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author Philip Helger
  */
-public class StringReaderProvider implements IReaderProvider
+public class StringReaderProvider implements IReaderProvider, Serializable
 {
   private final String m_sData;
 
@@ -67,6 +70,24 @@ public class StringReaderProvider implements IReaderProvider
   public final NonBlockingStringReader getReader ()
   {
     return new NonBlockingStringReader (m_sData);
+  }
+
+  @Override
+  public boolean equals (final Object o)
+  {
+    if (o == this)
+      return true;
+    if (o == null || !getClass ().equals (o.getClass ()))
+      return false;
+
+    final StringReaderProvider rhs = (StringReaderProvider) o;
+    return m_sData.equals (rhs.m_sData);
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    return new HashCodeGenerator (this).append (m_sData).getHashCode ();
   }
 
   @Override

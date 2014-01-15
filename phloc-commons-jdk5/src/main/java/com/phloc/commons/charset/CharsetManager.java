@@ -88,6 +88,30 @@ public final class CharsetManager
   }
 
   /**
+   * Resolve the charset by the specified name. The difference to
+   * {@link Charset#forName(String)} is, that this method throws no exceptions.
+   * 
+   * @param sCharsetName
+   *        The charset to be resolved. May be <code>null</code> or empty.
+   * @return The Charset object or <code>null</code> if no such charset was
+   *         found.
+   */
+  @Nullable
+  public static Charset getCharsetFromNameOrNull (@Nullable final String sCharsetName)
+  {
+    if (StringHelper.hasText (sCharsetName))
+      try
+      {
+        return getCharsetFromName (sCharsetName);
+      }
+      catch (final IllegalArgumentException ex)
+      {
+        // Fall through
+      }
+    return null;
+  }
+
+  /**
    * @return An immutable collection of all available charsets from the standard
    *         charset provider.
    */

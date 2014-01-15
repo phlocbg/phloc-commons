@@ -15,8 +15,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.microdom.convert;
+package com.phloc.commons.serialize.convert;
 
+import java.io.Serializable;
 import java.lang.ref.WeakReference;
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -26,6 +27,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
 import org.slf4j.Logger;
@@ -36,48 +38,45 @@ import com.phloc.commons.lang.ClassHierarchyCache;
 import com.phloc.commons.lang.ServiceLoaderUtils;
 
 /**
- * A utility class for converting objects from and to
- * {@link com.phloc.commons.microdom.IMicroElement}.<br>
- * The functionality is a special case of the
- * {@link com.phloc.commons.typeconvert.TypeConverterRegistry} as we need a
- * parameter for conversion in this case.
+ * The registry that keeps the mappings for serialization converters.
  * 
  * @author Philip Helger
  */
 @ThreadSafe
-public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegistry
+public final class SerializationConverterRegistry implements ISerializationConverterRegistry
 {
-  private static final MicroTypeConverterRegistry s_aInstance = new MicroTypeConverterRegistry ();
-  private static final Logger s_aLogger = LoggerFactory.getLogger (MicroTypeConverterRegistry.class);
+  private static final SerializationConverterRegistry s_aInstance = new SerializationConverterRegistry ();
+  private static final Logger s_aLogger = LoggerFactory.getLogger (SerializationConverterRegistry.class);
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
 
   // WeakHashMap because key is a class
-  private static final Map <Class <?>, IMicroTypeConverter> s_aMap = new WeakHashMap <Class <?>, IMicroTypeConverter> ();
+  @GuardedBy ("s_aRWLock")
+  private static final Map <Class <?>, ISerializationConverter> s_aMap = new WeakHashMap <Class <?>, ISerializationConverter> ();
 
   static
   {
     // Register all custom micro type converter
-    for (final IMicroTypeConverterRegistrarSPI aSPI : ServiceLoaderUtils.getAllSPIImplementations (IMicroTypeConverterRegistrarSPI.class))
-      aSPI.registerMicroTypeConverter (s_aInstance);
-    s_aLogger.info (getRegisteredMicroTypeConverterCount () + " micro type converters registered");
+    for (final ISerializationConverterRegistrarSPI aSPI : ServiceLoaderUtils.getAllSPIImplementations (ISerializationConverterRegistrarSPI.class))
+      aSPI.registerSerializationConverter (s_aInstance);
+    s_aLogger.info (getRegisteredSerializationConverterCount () + " serialization converters registered");
   }
 
-  private MicroTypeConverterRegistry ()
+  private SerializationConverterRegistry ()
   {}
 
   /**
    * @return The singleton instance of this class. Never <code>null</code>.
    */
   @Nonnull
-  public static MicroTypeConverterRegistry getInstance ()
+  public static SerializationConverterRegistry getInstance ()
   {
     return s_aInstance;
   }
 
-  public void registerMicroElementTypeConverter (@Nonnull final Class <?> aClass,
-                                                 @Nonnull final IMicroTypeConverter aConverter)
+  public void registerSerializationConverter (@Nonnull final Class <?> aClass,
+                                              @Nonnull final ISerializationConverter aConverter)
   {
-    _registerMicroElementTypeConverter (aClass, aConverter);
+    _registerSerializationConverter (aClass, aConverter);
   }
 
   /**
@@ -88,15 +87,17 @@ public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegi
    * @param aClass
    *        The class to be registered.
    * @param aConverter
-   *        The type converter from and to XML
+   *        The type converter
    */
-  private static void _registerMicroElementTypeConverter (@Nonnull final Class <?> aClass,
-                                                          @Nonnull final IMicroTypeConverter aConverter)
+  private static void _registerSerializationConverter (@Nonnull final Class <?> aClass,
+                                                       @Nonnull final ISerializationConverter aConverter)
   {
     if (aClass == null)
       throw new NullPointerException ("class");
     if (aConverter == null)
       throw new NullPointerException ("converter");
+    if (Serializable.class.isAssignableFrom (aClass))
+      throw new IllegalArgumentException ("The provided " + aClass.toString () + " is already Serializable!");
 
     s_aRWLock.writeLock ().lock ();
     try
@@ -114,7 +115,7 @@ public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegi
           {
             s_aMap.put (aCurSrcClass, aConverter);
             if (s_aLogger.isDebugEnabled ())
-              s_aLogger.debug ("Registered micro type converter for '" + aCurSrcClass.toString () + "'");
+              s_aLogger.debug ("Registered serialization converter for '" + aCurSrcClass.toString () + "'");
           }
       }
     }
@@ -125,30 +126,13 @@ public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegi
   }
 
   @Nullable
-  public static IMicroTypeConverter getConverterToMicroElement (@Nullable final Class <?> aSrcClass)
+  public static ISerializationConverter getConverter (@Nullable final Class <?> aDstClass)
   {
-    s_aRWLock.readLock ().lock ();
-    try
-    {
-      return s_aMap.get (aSrcClass);
-    }
-    finally
-    {
-      s_aRWLock.readLock ().unlock ();
-    }
-  }
-
-  @Nullable
-  public static IMicroTypeConverter getConverterToNative (@Nonnull final Class <?> aDstClass)
-  {
-    if (aDstClass == null)
-      throw new NullPointerException ("dstClass");
-
     s_aRWLock.readLock ().lock ();
     try
     {
       // Check for an exact match first
-      IMicroTypeConverter ret = s_aMap.get (aDstClass);
+      ISerializationConverter ret = s_aMap.get (aDstClass);
       if (ret == null)
       {
         // No exact match found - try fuzzy
@@ -161,7 +145,7 @@ public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegi
             if (ret != null)
             {
               if (s_aLogger.isDebugEnabled ())
-                s_aLogger.debug ("Using micro type converter " +
+                s_aLogger.debug ("Using serialization converter " +
                                  ret +
                                  " for class " +
                                  aDstClass +
@@ -181,16 +165,16 @@ public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegi
   }
 
   /**
-   * Iterate all registered micro type converters. For informational purposes
+   * Iterate all registered serialization converters. For informational purposes
    * only.
    * 
    * @param aCallback
    *        The callback invoked for all iterations.
    */
-  public static void iterateAllRegisteredMicroTypeConverters (@Nonnull final IMicroTypeConverterCallback aCallback)
+  public static void iterateAllRegisteredSerializationConverters (@Nonnull final ISerializationConverterCallback aCallback)
   {
     // Create a copy of the map
-    Map <Class <?>, IMicroTypeConverter> aCopy;
+    Map <Class <?>, ISerializationConverter> aCopy;
     s_aRWLock.readLock ().lock ();
     try
     {
@@ -202,13 +186,13 @@ public final class MicroTypeConverterRegistry implements IMicroTypeConverterRegi
     }
 
     // And iterate the copy
-    for (final Map.Entry <Class <?>, IMicroTypeConverter> aEntry : aCopy.entrySet ())
+    for (final Map.Entry <Class <?>, ISerializationConverter> aEntry : aCopy.entrySet ())
       if (aCallback.call (aEntry.getKey (), aEntry.getValue ()).isBreak ())
         break;
   }
 
   @Nonnegative
-  public static int getRegisteredMicroTypeConverterCount ()
+  public static int getRegisteredSerializationConverterCount ()
   {
     s_aRWLock.readLock ().lock ();
     try
