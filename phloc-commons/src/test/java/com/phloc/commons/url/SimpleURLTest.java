@@ -96,6 +96,21 @@ public final class SimpleURLTest
     SimpleURL aURL = new SimpleURL ();
     assertEquals ("?", aURL.getAsString ());
 
+    aURL = new SimpleURL ("");
+    assertEquals ("", aURL.getAsString ());
+
+    aURL = new SimpleURL ("#");
+    assertEquals ("", aURL.getAsString ());
+
+    aURL = new SimpleURL ("?");
+    assertEquals ("", aURL.getAsString ());
+
+    aURL = new SimpleURL ("?#");
+    assertEquals ("", aURL.getAsString ());
+
+    aURL = new SimpleURL ("  ?  #  ");
+    assertEquals ("", aURL.getAsString ());
+
     aURL = new SimpleURL ("http://www.phloc.com");
     assertEquals ("http://www.phloc.com", aURL.getAsString ());
 
