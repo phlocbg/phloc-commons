@@ -25,11 +25,13 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.Immutable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.lang.ServiceLoaderUtils;
@@ -48,12 +50,17 @@ public final class URLProtocolRegistry
   private static final Logger s_aLogger = LoggerFactory.getLogger (URLProtocolRegistry.class);
 
   private static final ReentrantReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
+  @GuardedBy ("s_aRWLock")
   private static final Map <String, IURLProtocol> s_aProtocols = new HashMap <String, IURLProtocol> ();
 
   static
   {
     reinitialize ();
   }
+
+  @PresentForCodeCoverage
+  @SuppressWarnings ("unused")
+  private static final URLProtocolRegistry s_aInstance = new URLProtocolRegistry ();
 
   private URLProtocolRegistry ()
   {}

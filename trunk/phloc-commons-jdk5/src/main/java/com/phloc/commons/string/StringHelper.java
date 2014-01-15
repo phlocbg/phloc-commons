@@ -3516,13 +3516,13 @@ public final class StringHelper
   @Nullable
   private static String _getFromFirst (@Nullable final String sStr,
                                        @Nullable final String sSearch,
-                                       final boolean bIncludingSearchChar)
+                                       final boolean bIncludingSearchString)
   {
     if (hasNoText (sSearch))
       return sStr;
 
     final int nIndex = getIndexOf (sStr, sSearch);
-    return nIndex == STRING_NOT_FOUND ? null : sStr.substring (nIndex + (bIncludingSearchChar ? 0 : sSearch.length ()));
+    return nIndex == STRING_NOT_FOUND ? null : sStr.substring (nIndex + (bIncludingSearchString ? 0 : sSearch.length ()));
   }
 
   /**
@@ -3603,13 +3603,13 @@ public final class StringHelper
   @Nullable
   private static String _getFromLast (@Nullable final String sStr,
                                       @Nullable final String sSearch,
-                                      final boolean bIncludingSearchChar)
+                                      final boolean bIncludingSearchString)
   {
     if (hasNoText (sSearch))
       return sStr;
 
     final int nIndex = getLastIndexOf (sStr, sSearch);
-    return nIndex == STRING_NOT_FOUND ? null : sStr.substring (nIndex + (bIncludingSearchChar ? 0 : sSearch.length ()));
+    return nIndex == STRING_NOT_FOUND ? null : sStr.substring (nIndex + (bIncludingSearchString ? 0 : sSearch.length ()));
   }
 
   /**

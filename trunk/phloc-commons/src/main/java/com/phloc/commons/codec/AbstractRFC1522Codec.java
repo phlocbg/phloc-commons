@@ -131,7 +131,7 @@ public abstract class AbstractRFC1522Codec extends AbstractCodec implements IStr
       throw new DecoderException ("RFC 1522 violation: charset not specified");
     final Charset aCharset = CharsetManager.getCharsetFromNameOrNull (sCharset);
     if (aCharset == null)
-      throw new DecoderException ("Failed to resolved charset '" + sCharset + "'");
+      throw new DecoderException ("Failed to resolve charset '" + sCharset + "'");
     nFrom = nTo + 1;
     nTo = sText.indexOf (SEP, nFrom);
     if (nTo == nTerminator)

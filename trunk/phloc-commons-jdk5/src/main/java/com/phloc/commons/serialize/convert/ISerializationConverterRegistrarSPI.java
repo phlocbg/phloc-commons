@@ -15,20 +15,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.io.streamprovider;
+package com.phloc.commons.serialize.convert;
 
-import java.io.InputStream;
-import java.io.Serializable;
+import javax.annotation.Nonnull;
 
-import javax.annotation.Nullable;
+import com.phloc.commons.annotations.IsSPIInterface;
 
-import com.phloc.commons.io.IInputStreamProvider;
-
-public final class MockNullInputStreamProvider implements IInputStreamProvider, Serializable
+/**
+ * SPI interface to be implemented by other modules wishing to register their
+ * own serialization converters.
+ * 
+ * @author Philip Helger
+ */
+@IsSPIInterface
+public interface ISerializationConverterRegistrarSPI
 {
-  @Nullable
-  public InputStream getInputStream ()
-  {
-    return null;
-  }
+  /**
+   * Register all your serialization converters in the passed interface
+   * 
+   * @param aRegistry
+   *        The registry to register your converters. Never <code>null</code>.
+   */
+  void registerSerializationConverter (@Nonnull ISerializationConverterRegistry aRegistry);
 }

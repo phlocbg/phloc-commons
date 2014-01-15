@@ -2,6 +2,15 @@
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
 <table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody>
+<tr border="1"><td>1/15/14</td><td colspan="4">_Release *4.1.1*_</td></tr>
+<tr><td>1/14/14</td><td>add</td><td>tech</td><td></td><td>Added warning in (DOM|SAX)ReaderSettings.setPropertyValue if the type of the value is unexpected</td></tr>
+<tr><td>1/14/14</td><td>add</td><td>api</td><td></td><td>Extended IBaseXMLReaderSettings with a getLocale() method</td></tr>
+<tr><td>1/13/14</td><td>add</td><td>api</td><td></td><td>Extended URLUtils with method to POST something to the server.</td></tr>
+<tr><td>1/13/14</td><td>add</td><td>api</td><td></td><td>Added new class SerializationConverter for better serialization handling</td></tr>
+<tr><td>1/13/14</td><td>add</td><td>api</td><td></td><td>StringInputStreamProvider, StringReaderProvider and StringWriterProvider now implement equals and hashCode</td></tr>
+<tr><td>1/13/14</td><td>add</td><td>tech</td><td></td><td>Made most IInputStreamProvider implementations serializable</td></tr>
+<tr><td>1/13/14</td><td>add</td><td>api</td><td></td><td>Extended MapBasedAttributeContainer with protected callback methods for set and remove</td></tr>
+<tr><td>1/12/14</td><td>add</td><td>api</td><td></td><td>Added new method CharsetManager.getCharsetFromNameOrNull</td></tr>
 <tr border="1"><td>1/2/14</td><td colspan="4">_Release *4.1.0*_</td></tr>
 <tr><td>12/28/13</td><td>add</td><td>api</td><td></td><td>Extended DOMInputStreamProvider and MicroDOMInputStreamProvider to take an arbitrary IXMLWriterSettings object.</td></tr>
 <tr><td>12/28/13</td><td>add</td><td>api</td><td></td><td>Updated MicroReader API to use SAXReaderSettings instead of several parameters.</td></tr>

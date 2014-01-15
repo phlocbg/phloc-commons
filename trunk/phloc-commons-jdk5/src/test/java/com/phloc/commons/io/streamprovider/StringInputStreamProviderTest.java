@@ -25,6 +25,7 @@ import org.junit.Test;
 
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.io.streams.StreamUtils;
+import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
  * Test class for class {@link StringInputStreamProvider}.
@@ -68,5 +69,11 @@ public final class StringInputStreamProviderTest
     // CharSequence constructor
     aIS = new StringInputStreamProvider (new StringBuilder (s), CCharset.CHARSET_UTF_8_OBJ).getInputStream ();
     assertEquals (s, StreamUtils.getAllBytesAsString (aIS, CCharset.CHARSET_UTF_8_OBJ));
+  }
+
+  @Test
+  public void testSerialization ()
+  {
+    PhlocTestUtils.testDefaultSerialization (new StringInputStreamProvider ("Hallo Weltäöü", CCharset.CHARSET_UTF_8_OBJ));
   }
 }

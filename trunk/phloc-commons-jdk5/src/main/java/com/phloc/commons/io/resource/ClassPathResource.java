@@ -18,7 +18,10 @@
 package com.phloc.commons.io.resource;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Reader;
 import java.lang.ref.WeakReference;
 import java.net.URL;
@@ -43,18 +46,15 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @Immutable
-public final class ClassPathResource implements IReadableResource
+public class ClassPathResource implements IReadableResource
 {
-  // Because of transient field
-  private static final long serialVersionUID = 8864321231897321L;
-
   /** Use this prefix to uniquely identify classpath resources */
   public static final String CLASSPATH_PREFIX_LONG = "classpath:";
   /** Use this prefix to uniquely identify classpath resources - alternative */
   public static final String CLASSPATH_PREFIX_SHORT = "cp:";
 
-  private final String m_sPath;
-  private final transient WeakReference <ClassLoader> m_aClassLoader;
+  private String m_sPath;
+  private final WeakReference <ClassLoader> m_aClassLoader;
   private boolean m_bURLResolved = false;
   private URL m_aURL;
 
@@ -120,6 +120,19 @@ public final class ClassPathResource implements IReadableResource
 
     // Ensure the ClassLoader can be garbage collected if necessary
     m_aClassLoader = aClassLoader == null ? null : new WeakReference <ClassLoader> (aClassLoader);
+  }
+
+  private void writeObject (@Nonnull final ObjectOutputStream aOOS) throws IOException
+  {
+    if (m_aClassLoader != null)
+      throw new IOException ("Cannot serialize a ClassPathResource that has a specific ClassLoader!");
+    aOOS.writeUTF (m_sPath);
+    // Don't write the rest! After serialization the URL must be resolved again!
+  }
+
+  private void readObject (@Nonnull final ObjectInputStream aOIS) throws IOException
+  {
+    m_sPath = aOIS.readUTF ();
   }
 
   @Nullable

@@ -15,30 +15,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.microdom.convert;
+package com.phloc.commons.serialize.convert;
 
 import javax.annotation.Nonnull;
 
-import com.phloc.commons.state.EContinue;
-
 /**
- * A callback interface that is used to iterate all available micro type
- * converters.
+ * This is the callback interface implemented by
+ * {@link SerializationConverterRegistry} for registration via the SPI
+ * interface.
  * 
  * @author Philip Helger
  */
-public interface IMicroTypeConverterCallback
+public interface ISerializationConverterRegistry
 {
   /**
-   * Invoked for each converter.
+   * Register a new serialization converter.
    * 
    * @param aClass
-   *        The class for which the converter was registered.
+   *        The class for which the converter is meant. May not be
+   *        <code>null</code>.
    * @param aConverter
-   *        The main converter object. Never <code>null</code>.
-   * @return {@link EContinue#CONTINUE} to continue iteration,
-   *         {@link EContinue#BREAK} to stop iteration.
+   *        The converter to be registered. May not be <code>null</code>.
+   * @throws IllegalArgumentException
+   *         If the passed class already implements the java.io.Serializable
+   *         interface.
    */
-  @Nonnull
-  EContinue call (@Nonnull Class <?> aClass, @Nonnull IMicroTypeConverter aConverter);
+  void registerSerializationConverter (@Nonnull Class <?> aClass, @Nonnull ISerializationConverter aConverter);
 }

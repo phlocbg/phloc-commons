@@ -18,6 +18,7 @@
 package com.phloc.commons.io.streamprovider;
 
 import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.nio.charset.Charset;
 
 import javax.annotation.Nonnull;
@@ -35,7 +36,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author Philip Helger
  */
-public class ByteArrayOutputStreamProvider implements IOutputStreamAndWriterProvider
+public class ByteArrayOutputStreamProvider implements IOutputStreamAndWriterProvider, Serializable
 {
   private final NonBlockingByteArrayOutputStream m_aOS = new NonBlockingByteArrayOutputStream ();
 

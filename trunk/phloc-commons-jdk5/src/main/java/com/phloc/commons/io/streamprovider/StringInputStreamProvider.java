@@ -17,6 +17,10 @@
  */
 package com.phloc.commons.io.streamprovider;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.nio.charset.Charset;
 
 import javax.annotation.Nonnegative;
@@ -24,10 +28,12 @@ import javax.annotation.Nonnull;
 
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.charset.CharsetManager;
+import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.io.IInputStreamAndReaderProvider;
 import com.phloc.commons.io.IReaderProvider;
 import com.phloc.commons.io.streams.NonBlockingStringReader;
 import com.phloc.commons.io.streams.StringInputStream;
+import com.phloc.commons.serialize.convert.SerializationConverter;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -35,10 +41,10 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author Philip Helger
  */
-public class StringInputStreamProvider implements IInputStreamAndReaderProvider, IReaderProvider
+public class StringInputStreamProvider implements IInputStreamAndReaderProvider, IReaderProvider, Serializable
 {
-  private final String m_sData;
-  private final Charset m_aCharset;
+  private String m_sData;
+  private Charset m_aCharset;
 
   @Deprecated
   public StringInputStreamProvider (@Nonnull final char [] aChars, @Nonnull @Nonempty final String sCharset)
@@ -95,6 +101,18 @@ public class StringInputStreamProvider implements IInputStreamAndReaderProvider,
     m_aCharset = aCharset;
   }
 
+  private void writeObject (@Nonnull final ObjectOutputStream aOOS) throws IOException
+  {
+    aOOS.writeUTF (m_sData);
+    SerializationConverter.writeConvertedObject (m_aCharset, aOOS);
+  }
+
+  private void readObject (@Nonnull final ObjectInputStream aOIS) throws IOException
+  {
+    m_sData = aOIS.readUTF ();
+    m_aCharset = SerializationConverter.readConvertedObject (aOIS, Charset.class);
+  }
+
   @Nonnull
   public String getData ()
   {
@@ -130,6 +148,24 @@ public class StringInputStreamProvider implements IInputStreamAndReaderProvider,
   public final NonBlockingStringReader getReader ()
   {
     return new NonBlockingStringReader (m_sData);
+  }
+
+  @Override
+  public boolean equals (final Object o)
+  {
+    if (o == this)
+      return true;
+    if (o == null || !getClass ().equals (o.getClass ()))
+      return false;
+
+    final StringInputStreamProvider rhs = (StringInputStreamProvider) o;
+    return m_sData.equals (rhs.m_sData) && m_aCharset.equals (rhs.m_aCharset);
+  }
+
+  @Override
+  public int hashCode ()
+  {
+    return new HashCodeGenerator (this).append (m_sData).append (m_aCharset).getHashCode ();
   }
 
   @Override

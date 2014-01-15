@@ -28,6 +28,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
 import org.slf4j.Logger;
@@ -58,8 +59,10 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
 
   // Use a weak hash map, because the key is a class
+  @GuardedBy ("s_aRWLock")
   private static final Map <Class <?>, Map <Class <?>, ITypeConverter>> s_aConverter = new WeakHashMap <Class <?>, Map <Class <?>, ITypeConverter>> ();
   // ESCA-JAVA0261:
+  @GuardedBy ("s_aRWLock")
   private static final IMultiMapListBased <ITypeConverterRule.ESubType, ITypeConverterRule> s_aRules = new MultiTreeMapArrayListBased <ITypeConverterRule.ESubType, ITypeConverterRule> ();
 
   static
@@ -164,8 +167,17 @@ public final class TypeConverterRegistry implements ITypeConverterRegistry
         final Class <?> aCurDstClass = aCurWRDstClass.get ();
         if (aCurDstClass != null)
           if (!aSrcMap.containsKey (aCurDstClass))
+          {
             if (aSrcMap.put (aCurDstClass, aConverter) != null)
               s_aLogger.warn ("Overwriting converter from " + aSrcClass + " to " + aCurDstClass);
+            else
+              if (s_aLogger.isDebugEnabled ())
+                s_aLogger.debug ("Registered type converter from '" +
+                                 aSrcClass.toString () +
+                                 "' to '" +
+                                 aCurDstClass.toString () +
+                                 "'");
+          }
       }
     }
     finally

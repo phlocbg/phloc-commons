@@ -135,7 +135,8 @@ public final class URLUtilsTest
                                                               1000,
                                                               -1,
                                                               CMimeType.APPLICATION_X_WWW_FORM_URLENCODED,
-                                                              "sender=true".getBytes (CCharset.CHARSET_UTF_8_OBJ),
+                                                              CharsetManager.getAsBytes ("sender=true",
+                                                                                         CCharset.CHARSET_UTF_8_OBJ),
                                                               null,
                                                               null,
                                                               null);
