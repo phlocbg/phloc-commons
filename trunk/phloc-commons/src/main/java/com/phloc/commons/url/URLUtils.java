@@ -291,20 +291,22 @@ public final class URLUtils
     if (aParameterDecoder == null)
       throw new NullPointerException ("parameterDecoder");
 
+    final String sRealHref = sHref.trim ();
+
     // Is it a protocol that does not allow for query parameters?
-    final IURLProtocol eProtocol = URLProtocolRegistry.getProtocol (sHref);
+    final IURLProtocol eProtocol = URLProtocolRegistry.getProtocol (sRealHref);
     if (eProtocol != null && !eProtocol.allowsForQueryParameters ())
-      return new URLData (sHref, null, null);
+      return new URLData (sRealHref, null, null);
 
     if (GlobalDebug.isDebugMode ())
       if (eProtocol != null)
         try
         {
-          new URL (sHref);
+          new URL (sRealHref);
         }
         catch (final MalformedURLException ex)
         {
-          s_aLogger.warn ("java.net.URL claims URL '" + sHref + "' to be invalid: " + ex.getMessage ());
+          s_aLogger.warn ("java.net.URL claims URL '" + sRealHref + "' to be invalid: " + ex.getMessage ());
         }
 
     String sPath;
@@ -312,13 +314,13 @@ public final class URLUtils
     String sAnchor;
 
     // First get the anchor out
-    String sRemainingHref = sHref;
+    String sRemainingHref = sRealHref;
     final int nIndexAnchor = sRemainingHref.indexOf (HASH);
     if (nIndexAnchor >= 0)
     {
       // Extract anchor
-      sAnchor = sRemainingHref.substring (nIndexAnchor + 1);
-      sRemainingHref = sRemainingHref.substring (0, nIndexAnchor);
+      sAnchor = sRemainingHref.substring (nIndexAnchor + 1).trim ();
+      sRemainingHref = sRemainingHref.substring (0, nIndexAnchor).trim ();
     }
     else
       sAnchor = null;
@@ -328,13 +330,13 @@ public final class URLUtils
     if (nQuestionIndex >= 0)
     {
       // Use everything after the '?'
-      final String sQueryString = sRemainingHref.substring (nQuestionIndex + 1);
+      final String sQueryString = sRemainingHref.substring (nQuestionIndex + 1).trim ();
 
       // Maybe empty, if the URL ends with a '?'
       if (StringHelper.hasText (sQueryString))
         aParams = _getQueryStringAsMap (sQueryString, aParameterDecoder);
 
-      sPath = sRemainingHref.substring (0, nQuestionIndex);
+      sPath = sRemainingHref.substring (0, nQuestionIndex).trim ();
     }
     else
       sPath = sRemainingHref;
