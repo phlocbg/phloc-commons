@@ -93,7 +93,25 @@ public final class SimpleURLTest
   public void testCtor ()
   {
     // only href
-    SimpleURL aURL = new SimpleURL ("http://www.phloc.com");
+    SimpleURL aURL = new SimpleURL ();
+    assertEquals ("?", aURL.getAsString ());
+
+    aURL = new SimpleURL ("");
+    assertEquals ("", aURL.getAsString ());
+
+    aURL = new SimpleURL ("#");
+    assertEquals ("", aURL.getAsString ());
+
+    aURL = new SimpleURL ("?");
+    assertEquals ("", aURL.getAsString ());
+
+    aURL = new SimpleURL ("?#");
+    assertEquals ("", aURL.getAsString ());
+
+    aURL = new SimpleURL ("  ?  #  ");
+    assertEquals ("", aURL.getAsString ());
+
+    aURL = new SimpleURL ("http://www.phloc.com");
     assertEquals ("http://www.phloc.com", aURL.getAsString ());
 
     // params

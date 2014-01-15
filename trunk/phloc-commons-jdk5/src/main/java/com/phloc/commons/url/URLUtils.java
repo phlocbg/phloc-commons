@@ -291,20 +291,22 @@ public final class URLUtils
     if (aParameterDecoder == null)
       throw new NullPointerException ("parameterDecoder");
 
+    final String sRealHref = sHref.trim ();
+
     // Is it a protocol that does not allow for query parameters?
-    final IURLProtocol eProtocol = URLProtocolRegistry.getProtocol (sHref);
+    final IURLProtocol eProtocol = URLProtocolRegistry.getProtocol (sRealHref);
     if (eProtocol != null && !eProtocol.allowsForQueryParameters ())
-      return new URLData (sHref, null, null);
+      return new URLData (sRealHref, null, null);
 
     if (GlobalDebug.isDebugMode ())
       if (eProtocol != null)
         try
         {
-          new URL (sHref);
+          new URL (sRealHref);
         }
         catch (final MalformedURLException ex)
         {
-          s_aLogger.warn ("java.net.URL claims URL '" + sHref + "' to be invalid: " + ex.getMessage ());
+          s_aLogger.warn ("java.net.URL claims URL '" + sRealHref + "' to be invalid: " + ex.getMessage ());
         }
 
     String sPath;
@@ -312,13 +314,13 @@ public final class URLUtils
     String sAnchor;
 
     // First get the anchor out
-    String sRemainingHref = sHref;
+    String sRemainingHref = sRealHref;
     final int nIndexAnchor = sRemainingHref.indexOf (HASH);
     if (nIndexAnchor >= 0)
     {
       // Extract anchor
-      sAnchor = sRemainingHref.substring (nIndexAnchor + 1);
-      sRemainingHref = sRemainingHref.substring (0, nIndexAnchor);
+      sAnchor = sRemainingHref.substring (nIndexAnchor + 1).trim ();
+      sRemainingHref = sRemainingHref.substring (0, nIndexAnchor).trim ();
     }
     else
       sAnchor = null;
@@ -328,13 +330,13 @@ public final class URLUtils
     if (nQuestionIndex >= 0)
     {
       // Use everything after the '?'
-      final String sQueryString = sRemainingHref.substring (nQuestionIndex + 1);
+      final String sQueryString = sRemainingHref.substring (nQuestionIndex + 1).trim ();
 
       // Maybe empty, if the URL ends with a '?'
       if (StringHelper.hasText (sQueryString))
         aParams = _getQueryStringAsMap (sQueryString, aParameterDecoder);
 
-      sPath = sRemainingHref.substring (0, nQuestionIndex);
+      sPath = sRemainingHref.substring (0, nQuestionIndex).trim ();
     }
     else
       sPath = sRemainingHref;
@@ -400,7 +402,8 @@ public final class URLUtils
    *        An optional anchor to be added. May be <code>null</code>.
    * @param aParameterEncoder
    *        The parameters encoding to be used. May not be <code>null</code>.
-   * @return May be <code>null</code> if all parameters are <code>null</code>.
+   * @return May be <code>null</code> if path, anchor and parameters are
+   *         <code>null</code>.
    */
   @SuppressWarnings ("null")
   @Nullable
@@ -409,27 +412,28 @@ public final class URLUtils
                                      @Nullable final String sAnchor,
                                      @Nonnull final IEncoder <String> aParameterEncoder)
   {
-    if (sPath != null)
-    {
-      if (sPath.indexOf (QUESTIONMARK) >= 0)
-        throw new IllegalArgumentException ("Path contains a '?': " + sPath);
-      if (sPath.indexOf (HASH) >= 0)
-        throw new IllegalArgumentException ("Path contains a '#': " + sPath);
-    }
     if (aParameterEncoder == null)
       throw new NullPointerException ("parameterEncoder");
 
-    final boolean bHasParams = aParams != null && !aParams.isEmpty ();
+    final boolean bHasParams = ContainerHelper.isNotEmpty (aParams);
     final boolean bHasAnchor = StringHelper.hasText (sAnchor);
 
     // return URL as is?
     if (!bHasParams && !bHasAnchor)
+    {
+      // Return URL as is
       return sPath;
+    }
 
-    final StringBuilder aSB = new StringBuilder (sPath);
+    final StringBuilder aSB = new StringBuilder ();
+    if (StringHelper.hasText (sPath))
+      aSB.append (sPath);
+
     if (bHasParams)
     {
-      if (aSB.indexOf (QUESTIONMARK_STR) >= 0)
+      final boolean bHasQuestionMark = aSB.indexOf (QUESTIONMARK_STR) >= 0;
+
+      if (bHasQuestionMark)
       {
         // Only if the "?" is not the last char otherwise the base href already
         // contains a parameter!
@@ -438,17 +442,25 @@ public final class URLUtils
           aSB.append (AMPERSAND);
       }
       else
+      {
+        // First parameter
         aSB.append (QUESTIONMARK);
+      }
 
       // ESCA-JAVA0285:
       // add all values
       for (final Map.Entry <String, String> aEntry : aParams.entrySet ())
       {
+        // Key
         final String sKey = aEntry.getKey ();
-        final String sValue = aEntry.getValue ();
         aSB.append (aParameterEncoder.encode (sKey));
+
+        // Value
+        final String sValue = aEntry.getValue ();
         if (StringHelper.hasText (sValue))
           aSB.append (EQUALS).append (aParameterEncoder.encode (sValue));
+
+        // Separator
         aSB.append (AMPERSAND);
       }
 
@@ -458,7 +470,15 @@ public final class URLUtils
 
     // Append anchor
     if (bHasAnchor)
-      aSB.append (HASH).append (sAnchor);
+    {
+      if (StringHelper.getLastChar (aSB) != HASH)
+        aSB.append (HASH);
+      aSB.append (sAnchor);
+    }
+
+    // Avoid empty URLs
+    if (aSB.length () == 0)
+      return QUESTIONMARK_STR;
 
     return aSB.toString ();
   }
