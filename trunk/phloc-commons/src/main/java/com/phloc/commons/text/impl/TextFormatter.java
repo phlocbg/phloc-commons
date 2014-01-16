@@ -18,7 +18,9 @@
 package com.phloc.commons.text.impl;
 
 import java.text.MessageFormat;
+import java.util.Locale;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
@@ -45,5 +47,20 @@ public final class TextFormatter
     if (sText == null)
       return null;
     return MessageFormat.format (sText, aArgs);
+  }
+
+  @Nullable
+  public static String getFormattedText (@Nonnull final Locale aDisplayLocale,
+                                         @Nullable final String sText,
+                                         @Nullable final Object... aArgs)
+  {
+    if (aDisplayLocale == null)
+      throw new NullPointerException ("DisplayLocale");
+
+    if (sText == null)
+      return null;
+
+    final MessageFormat aMF = new MessageFormat (sText, aDisplayLocale);
+    return aMF.format (aArgs);
   }
 }
