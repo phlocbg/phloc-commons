@@ -105,6 +105,9 @@ public final class GlobalDebug
     // Enable javax.activation debugging
     SystemProperties.setPropertyValue ("javax.activation.debug", Boolean.toString (bDebugMode));
 
+    // Enable javax.mail debugging
+    SystemProperties.setPropertyValue ("mail.debug", Boolean.toString (bDebugMode));
+
     // If disabling debug mode, also disable trace mode
     if (!bDebugMode)
       setTraceModeDirect (false);
