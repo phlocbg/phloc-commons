@@ -39,6 +39,6 @@ public final class TextFormatterTest
     assertEquals ("ab", TextFormatter.getFormattedText ("a{0}", "b"));
     assertEquals ("ab{1}", TextFormatter.getFormattedText ("a{0}{1}", "b"));
     assertEquals ("anull{1}", TextFormatter.getFormattedText ("a{0}{1}", (Object) null));
-    assertNull (TextFormatter.getFormattedText (null, "b"));
+    assertNull (TextFormatter.getFormattedText ((String) null, "b"));
   }
 }
