@@ -30,47 +30,10 @@ import com.phloc.commons.text.ITextProvider;
  * 
  * @author Philip Helger
  */
-public abstract class AbstractTextProvider implements ITextProvider
+public abstract class AbstractTextProvider extends AbstractSimpleTextProvider implements ITextProvider
 {
   protected AbstractTextProvider ()
   {}
-
-  /**
-   * Main text resolving
-   * 
-   * @param aContentLocale
-   *        locale to use
-   * @return <code>null</code> if no such text present in the passed locale
-   */
-  @Nullable
-  protected abstract String internalGetText (@Nonnull Locale aContentLocale);
-
-  /**
-   * Determine the locale to use.
-   * 
-   * @param aContentLocale
-   *        Requested locale
-   * @return The locale to use. May be <code>null</code>.
-   */
-  @Nullable
-  protected abstract Locale internalGetLocaleToUseWithFallback (@Nonnull Locale aContentLocale);
-
-  @Nullable
-  public final String getText (@Nonnull final Locale aContentLocale)
-  {
-    if (aContentLocale == null)
-      throw new NullPointerException ("locale");
-    return internalGetText (aContentLocale);
-  }
-
-  @Nullable
-  public final String getTextWithLocaleFallback (@Nonnull final Locale aContentLocale)
-  {
-    if (aContentLocale == null)
-      throw new NullPointerException ("locale");
-    final Locale aLocaleToUse = internalGetLocaleToUseWithFallback (aContentLocale);
-    return aLocaleToUse == null ? null : internalGetText (aLocaleToUse);
-  }
 
   @Nullable
   public final String getTextWithArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)

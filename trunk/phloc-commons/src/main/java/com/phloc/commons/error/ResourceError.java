@@ -114,10 +114,16 @@ public class ResourceError implements IResourceError
   public String getAsString (@Nonnull final Locale aDisplayLocale)
   {
     String ret = "[" + m_eErrorLevel.getID () + "] ";
+
+    // Location
     final String sLocation = m_aLocation.getAsString ();
     if (StringHelper.hasText (sLocation))
       ret += sLocation + ": ";
+
+    // Message
     ret += getDisplayText (aDisplayLocale);
+
+    // Linked exception
     if (m_aLinkedException != null)
       ret += " (" + m_aLinkedException.getMessage () + ")";
     return ret;
