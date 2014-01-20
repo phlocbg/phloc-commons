@@ -165,6 +165,20 @@ public class MultiLingualTextThreadSafe implements IMultiLingualText
     }
   }
 
+  @Nonnegative
+  public int getLocaleCount ()
+  {
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return m_aMLT.getLocaleCount ();
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+  }
+
   public boolean containsLocale (@Nullable final Locale aContentLocale)
   {
     m_aRWLock.readLock ().lock ();

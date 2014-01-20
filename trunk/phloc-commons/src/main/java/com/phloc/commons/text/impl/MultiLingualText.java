@@ -58,6 +58,11 @@ public class MultiLingualText extends TextProvider implements IMultiLingualText
   public MultiLingualText ()
   {}
 
+  public MultiLingualText (@Nonnull final Locale aContentLocale, @Nonnull final String sValue)
+  {
+    internalAddText (aContentLocale, sValue);
+  }
+
   /**
    * Constructor especially for the static TextProvider.createXXX methods
    * 
