@@ -45,12 +45,6 @@ public interface IResourceError extends IHasErrorLevel, IHasDisplayText, ISucces
   IResourceLocation getLocation ();
 
   /**
-   * @return The error level. Never <code>null</code>.
-   */
-  @Nonnull
-  EErrorLevel getErrorLevel ();
-
-  /**
    * @return The linked exception or <code>null</code> if no such exception is
    *         available.
    */

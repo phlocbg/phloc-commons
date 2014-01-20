@@ -20,6 +20,7 @@ package com.phloc.commons;
 import java.util.Collection;
 import java.util.Locale;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -35,6 +36,12 @@ public interface IHasLocales
    */
   @Nonnull
   Collection <Locale> getAllLocales ();
+
+  /**
+   * @return The number of contained locales. Always &ge; 0.
+   */
+  @Nonnegative
+  int getLocaleCount ();
 
   /**
    * Check if the passed locale is directly contained.

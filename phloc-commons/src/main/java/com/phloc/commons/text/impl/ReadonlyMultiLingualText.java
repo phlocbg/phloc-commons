@@ -42,6 +42,11 @@ public class ReadonlyMultiLingualText extends TextProvider implements IReadonlyM
   public ReadonlyMultiLingualText ()
   {}
 
+  public ReadonlyMultiLingualText (@Nonnull final Locale aContentLocale, @Nonnull final String sValue)
+  {
+    internalAddText (aContentLocale, sValue);
+  }
+
   public ReadonlyMultiLingualText (@Nonnull final Map <Locale, String> aContent)
   {
     if (aContent == null)
