@@ -19,8 +19,6 @@ package com.phloc.commons.error;
 
 import javax.annotation.Nullable;
 
-import com.phloc.commons.error.IResourceLocation;
-
 /**
  * Base interface for an object that has an error field.
  * 
@@ -32,20 +30,11 @@ public interface IHasErrorField
    * @return The field for which the error occurred. May be <code>null</code>.
    */
   @Nullable
-  String getErrorFieldName ();
+  String getErrorField ();
 
   /**
    * @return <code>true</code> if a field name is present, <code>false</code>
    *         otherwise
    */
-  boolean hasErrorFieldName ();
-
-  /**
-   * @return The error field name of this object as an {@link IResourceLocation}
-   *         . If no error field name is present, <code>null</code> is returned,
-   *         else an {@link IResourceLocation} with the field name set is
-   *         returned.
-   */
-  @Nullable
-  IResourceLocation getAsResourceLocation ();
+  boolean hasErrorField ();
 }
