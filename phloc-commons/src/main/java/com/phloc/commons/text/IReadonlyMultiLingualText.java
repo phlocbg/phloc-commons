@@ -21,6 +21,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Readonly interface for a multilingual text
@@ -37,7 +38,7 @@ public interface IReadonlyMultiLingualText extends ISimpleMultiLingualText
    * @return <code>true</code> if a text in the given locale is present,
    *         <code>false</code> otherwise.
    */
-  boolean containsLocale (@Nonnull Locale aContentLocale);
+  boolean containsLocale (@Nullable Locale aContentLocale);
 
   /**
    * Checks whether a text with the given locale is contained including fallback
@@ -48,7 +49,7 @@ public interface IReadonlyMultiLingualText extends ISimpleMultiLingualText
    * @return <code>true</code> if a text in the given locale (or one of its
    *         fallbacks) is present, <code>false</code> otherwise.
    */
-  boolean containsLocaleWithFallback (@Nonnull Locale aContentLocale);
+  boolean containsLocaleWithFallback (@Nullable Locale aContentLocale);
 
   /**
    * @return A map over all contained locale/text pairs. Never <code>null</code>

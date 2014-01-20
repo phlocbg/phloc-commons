@@ -359,7 +359,7 @@ public final class LocaleUtils
   {
     if (StringHelper.hasText (sCode) && RegExHelper.stringMatchesPattern ("[a-zA-Z]{2}|[0-9]{3}", sCode))
     {
-      return sCode.toUpperCase (Locale.US);
+      return sCode.toUpperCase (CGlobal.LOCALE_FIXED_NUMBER_FORMAT);
     }
     return null;
   }

@@ -44,7 +44,7 @@ import com.phloc.commons.text.ISimpleMultiLingualText;
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class MultiLingualText extends TextProvider implements IMultiLingualText
+public class MultiLingualText extends TextProvider implements IMultiLingualText
 {
   // Because of the transient field
   private static final long serialVersionUID = 136888667633487L;

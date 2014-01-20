@@ -62,7 +62,7 @@ public class TextProvider extends AbstractTextProvider implements ISimpleMultiLi
 
   private final Map <Locale, String> m_aTexts = new HashMap <Locale, String> ();
 
-  protected TextProvider ()
+  public TextProvider ()
   {}
 
   /**
