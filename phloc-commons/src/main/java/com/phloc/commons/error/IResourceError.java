@@ -31,7 +31,8 @@ import com.phloc.commons.state.ISuccessIndicator;
 /**
  * Interface for an error that can be drilled down to a certain resource (e.g. a
  * document). The name is a bit misleading, as an "IResourceError" can also
- * contain an INFO or a WARNING message!
+ * contain an INFO or a WARNING message! It has an error level, a multi lingual
+ * error message, a location and a linked exception.
  * 
  * @author Philip Helger
  */
@@ -57,7 +58,8 @@ public interface IResourceError extends IHasErrorLevel, IHasDisplayText, ISucces
   Throwable getLinkedException ();
 
   /**
-   * Get the error as a string representation
+   * Get the error as a string representation, including error ID, error
+   * location, error text and the linked exception.
    * 
    * @param aDisplayLocale
    *        Locale to resolve the error text
