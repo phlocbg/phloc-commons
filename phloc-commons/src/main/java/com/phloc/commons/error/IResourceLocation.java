@@ -35,7 +35,8 @@ public interface IResourceLocation extends IHasStringRepresentation, Serializabl
   int ILLEGAL_NUMBER = CGlobal.ILLEGAL_UINT;
 
   /**
-   * @return The ID of the resource where the error occurred.
+   * @return The ID of the resource where the error occurred. May be
+   *         <code>null</code>.
    */
   @Nullable
   String getResourceID ();
@@ -54,7 +55,8 @@ public interface IResourceLocation extends IHasStringRepresentation, Serializabl
 
   /**
    * @return The field where the error occurred. Sometimes this field is
-   *         available instead of the line- and column numbers.
+   *         available instead of the line- and column numbers. May be
+   *         <code>null</code>.
    */
   @Nullable
   String getField ();
