@@ -33,7 +33,7 @@ import com.phloc.commons.text.ISimpleMultiLingualText;
  * @author Philip Helger
  */
 @Immutable
-public final class ReadonlyMultiLingualText extends TextProvider implements IReadonlyMultiLingualText
+public class ReadonlyMultiLingualText extends TextProvider implements IReadonlyMultiLingualText
 {
   /**
    * Create an empty read-only multilingual text. Handle with care, as this type
