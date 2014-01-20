@@ -45,7 +45,17 @@ public final class TextFormatter
   public static String getFormattedText (@Nullable final String sText, @Nullable final Object... aArgs)
   {
     if (sText == null)
+    {
+      // Avoid NPE in MessageFormat
       return null;
+    }
+
+    if (aArgs == null || aArgs.length == 0)
+    {
+      // Return text unchanged
+      return sText;
+    }
+
     return MessageFormat.format (sText, aArgs);
   }
 
@@ -58,7 +68,16 @@ public final class TextFormatter
       throw new NullPointerException ("DisplayLocale");
 
     if (sText == null)
+    {
+      // Avoid NPE in MessageFormat
       return null;
+    }
+
+    if (aArgs == null || aArgs.length == 0)
+    {
+      // Return text unchanged
+      return sText;
+    }
 
     final MessageFormat aMF = new MessageFormat (sText, aDisplayLocale);
     return aMF.format (aArgs);
