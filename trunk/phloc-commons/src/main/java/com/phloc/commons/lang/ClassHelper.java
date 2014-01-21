@@ -419,4 +419,17 @@ public final class ClassHelper
     // Not convertible
     return false;
   }
+
+  /**
+   * <code>null</code>-safe helper method to determine the class of an object.
+   * 
+   * @param aObject
+   *        The object to query. May be <code>null</code>.
+   * @return <code>null</code> if the passed object is <code>null</code>.
+   */
+  @Nullable
+  public static Class <?> getClass (@Nullable final Object aObject)
+  {
+    return aObject == null ? null : aObject.getClass ();
+  }
 }
