@@ -25,6 +25,9 @@ import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.Session;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.string.StringHelper;
@@ -38,6 +41,8 @@ import com.phloc.jms.JMSUtils;
  */
 public class JMSSimpleReceiver
 {
+  private static final Logger s_aLogger = LoggerFactory.getLogger (JMSSimpleReceiver.class);
+
   private final IJMSFactory m_aFactory;
 
   public JMSSimpleReceiver (@Nonnull final IJMSFactory aFactory)
@@ -47,16 +52,25 @@ public class JMSSimpleReceiver
     m_aFactory = aFactory;
   }
 
+  /**
+   * @return The JMS factory from the constructor.
+   */
   @Nonnull
   protected final IJMSFactory getJMSFactory ()
   {
     return m_aFactory;
   }
 
+  /**
+   * Overridable method that is invoked for JMS exceptions.
+   * 
+   * @param ex
+   *        The exception. Never <code>null</code>.
+   */
   @OverrideOnDemand
   protected void onException (@Nonnull final JMSException ex)
   {
-    ex.printStackTrace ();
+    s_aLogger.error (ex.getMessage (), ex.getCause ());
   }
 
   public void receiveNonTransactional (@Nonnull @Nonempty final String sQueueName,

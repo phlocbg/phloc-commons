@@ -53,6 +53,8 @@ public class JMSMessageListenerPool implements Closeable
 
     // Create a Session
     m_aSession = m_aConnection.createSession (false, Session.AUTO_ACKNOWLEDGE);
+    if (m_aSession == null)
+      throw new IllegalStateException ("Failed to create JMS session from " + m_aConnection);
   }
 
   public void close ()
@@ -62,11 +64,35 @@ public class JMSMessageListenerPool implements Closeable
   }
 
   /**
+   * @return The underlying JMS connection created in the constructor. Never
+   *         <code>null</code>.
+   */
+  @Nonnull
+  public Connection getConnection ()
+  {
+    return m_aConnection;
+  }
+
+  /**
+   * @return The underlying JMS session created in the constructor. Never
+   *         <code>null</code>.
+   */
+  @Nonnull
+  public Session getSession ()
+  {
+    return m_aSession;
+  }
+
+  /**
+   * Register a new message listener to a certain JMS queue.
+   * 
    * @param sQueueName
-   *        Queue name to listen
+   *        JMS Queue name to listen. May neither be <code>null</code> nor
+   *        empty.
    * @param aListener
-   *        The main listener
-   * @return The destination and the message consumer used
+   *        The main listener to register. May not be <code>null</code>.
+   * @return The destination and the message consumer used. Never
+   *         <code>null</code>.
    */
   @Nonnull
   public JMSDestinationAndConsumer registerMessageListener (@Nonnull @Nonempty final String sQueueName,
@@ -91,21 +117,28 @@ public class JMSMessageListenerPool implements Closeable
     }
     catch (final JMSException ex)
     {
-      throw new IllegalStateException ("Failed to register listener for queue '" + sQueueName + "'", ex);
+      throw new IllegalStateException ("Failed to register listener " + aListener + " for queue '" + sQueueName + "'",
+                                       ex);
     }
   }
 
   /**
+   * Register a new message listener to a certain JMS queue but with a special
+   * JMS correlation ID.
+   * 
    * @param sQueueName
-   *        Queue name to listen
+   *        JMS Queue name to listen. May neither be <code>null</code> nor
+   *        empty.
    * @param sCorrelationID
-   *        JMS correlation ID to match
+   *        JMS correlation ID to match. May neither be <code>null</code> nor
+   *        empty.
    * @param aListener
-   *        The main listener
+   *        The main listener to register. May not be <code>null</code>.
    * @param bOnce
    *        <code>true</code> if this is a one-time action in which case the
    *        created destination can be closed after the first retrieval.
-   * @return The destination and the message consumer used
+   * @return The destination and the message consumer used. Never
+   *         <code>null</code>.
    */
   @Nonnull
   public JMSDestinationAndConsumer registerMessageListenerForCorrelationID (@Nonnull @Nonempty final String sQueueName,
@@ -137,6 +170,7 @@ public class JMSMessageListenerPool implements Closeable
           {
             try
             {
+              // Invoke the passed listener
               aListener.onMessage (aMessage);
             }
             finally
@@ -162,7 +196,9 @@ public class JMSMessageListenerPool implements Closeable
     }
     catch (final JMSException ex)
     {
-      throw new IllegalStateException ("Failed to register listener for queue '" +
+      throw new IllegalStateException ("Failed to register listener " +
+                                       aListener +
+                                       " for queue '" +
                                        sQueueName +
                                        "' and correlation ID '" +
                                        sCorrelationID +

@@ -26,6 +26,9 @@ import javax.jms.MessageProducer;
 import javax.jms.Queue;
 import javax.jms.Session;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.state.ESuccess;
@@ -41,6 +44,8 @@ import com.phloc.jms.JMSUtils;
 public class JMSSimpleSender
 {
   public static final boolean DEFAULT_PERSISTENT = false;
+
+  private static final Logger s_aLogger = LoggerFactory.getLogger (JMSSimpleSender.class);
 
   private final IJMSFactory m_aFactory;
   private final boolean m_bPersistent;
@@ -58,21 +63,34 @@ public class JMSSimpleSender
     m_bPersistent = bPersistent;
   }
 
+  /**
+   * @return The JMS factory from the constructor.
+   */
   @Nonnull
   protected final IJMSFactory getJMSFactory ()
   {
     return m_aFactory;
   }
 
+  /**
+   * @return <code>true</code> if this sender sends persistent messages,
+   *         <code>false</code> if not.
+   */
   public final boolean isPersistent ()
   {
     return m_bPersistent;
   }
 
+  /**
+   * Overridable method that is invoked for JMS exceptions.
+   * 
+   * @param ex
+   *        The exception. Never <code>null</code>.
+   */
   @OverrideOnDemand
   protected void onException (@Nonnull final JMSException ex)
   {
-    ex.printStackTrace ();
+    s_aLogger.error (ex.getMessage (), ex.getCause ());
   }
 
   @Nonnull

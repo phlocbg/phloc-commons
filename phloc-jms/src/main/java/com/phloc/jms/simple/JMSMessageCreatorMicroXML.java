@@ -42,6 +42,15 @@ public class JMSMessageCreatorMicroXML implements IJMSMessageCreator
     m_aNode = aNode;
   }
 
+  /**
+   * @return The micro node passed in the constructor. Never <code>null</code>.
+   */
+  @Nonnull
+  public IMicroNode getNode ()
+  {
+    return m_aNode;
+  }
+
   @Nonnull
   public BytesMessage createMessage (@Nonnull final Session aSession) throws JMSException
   {
