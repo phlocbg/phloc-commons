@@ -78,7 +78,7 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
   public MicroElement (@Nullable final String sNamespaceURI, @Nonnull @Nonempty final String sTagName)
   {
     if (StringHelper.hasNoText (sTagName))
-      throw new IllegalArgumentException ("No valid tag name specified");
+      throw new IllegalArgumentException ("TagName may not be empty");
     m_sNamespaceURI = sNamespaceURI;
 
     // Store only the local name (cut the prefix) if a namespace is present

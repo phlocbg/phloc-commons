@@ -29,6 +29,8 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.WillClose;
 import javax.annotation.concurrent.ThreadSafe;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -67,8 +69,19 @@ public final class SAXReader
     {
       try
       {
-        final org.xml.sax.XMLReader ret = XMLReaderFactory.createXMLReader ();
+        org.xml.sax.XMLReader ret;
+        if (true)
+          ret = XMLReaderFactory.createXMLReader ();
+        else
+        {
+          // This fails with Xerces on the classpath
+          ret = SAXParserFactory.newInstance ().newSAXParser ().getXMLReader ();
+        }
         return ret;
+      }
+      catch (final ParserConfigurationException ex)
+      {
+        throw new InitializationException ("Failed to instantiate XML reader!", ex);
       }
       catch (final SAXException ex)
       {
