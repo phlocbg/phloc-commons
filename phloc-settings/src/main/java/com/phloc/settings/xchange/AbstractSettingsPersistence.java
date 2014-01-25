@@ -30,10 +30,22 @@ import com.phloc.commons.state.ESuccess;
 import com.phloc.settings.IReadonlySettings;
 import com.phloc.settings.ISettings;
 
+/**
+ * Base implementation of {@link ISettingsPersistence} that handles the special
+ * typed implementations with String and File.
+ * 
+ * @author Philip Helger
+ */
 public abstract class AbstractSettingsPersistence implements ISettingsPersistence
 {
   private final Charset m_aCharset;
 
+  /**
+   * Constructor
+   * 
+   * @param aCharset
+   *        The charset to use. May not be <code>null</code>.
+   */
   public AbstractSettingsPersistence (@Nonnull final Charset aCharset)
   {
     if (aCharset == null)
@@ -41,8 +53,11 @@ public abstract class AbstractSettingsPersistence implements ISettingsPersistenc
     m_aCharset = aCharset;
   }
 
+  /**
+   * @return The charset passed in the constructor. Never <code>null</code>.
+   */
   @Nonnull
-  public Charset getCharset ()
+  public final Charset getCharset ()
   {
     return m_aCharset;
   }
