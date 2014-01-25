@@ -2,6 +2,9 @@
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
 <table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody>
+<tr><td>1/25/14</td><td>add</td><td>api</td><td></td><td>Added new class FileSystemCharStreamResolver based on IReaderResolver and IWriterResolver</td></tr>
+<tr><td>1/25/14</td><td>change</td><td>api</td><td></td><td>Renamed class FileSystemStreamResolver to FileSystemByteStreamResolver and deprecated old name</td></tr>
+<tr><td>1/25/14</td><td>add</td><td>api</td><td></td><td>Added classes IReaderResolver and IWriterResolver</td></tr>
 <tr><td>1/20/14</td><td>add</td><td>api</td><td></td><td>Added classes IHasErrorField and ComparatorHasErrorID</td></tr>
 <tr><td>1/20/14</td><td>add</td><td>api</td><td></td><td>Extracted interface ISimpleTextProvider from ITextProvider containing the methods without arguments.</td></tr>
 <tr><td>1/20/14</td><td>add</td><td>api</td><td>*yes*</td><td>Extended IHasLocales with containsLocale methods</td></tr>
