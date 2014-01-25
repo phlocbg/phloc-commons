@@ -8,13 +8,10 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
 import com.phloc.commons.charset.CCharset;
-import com.phloc.commons.collections.iterate.EnumerationFromIterator;
 import com.phloc.commons.string.StringHelper;
 
 /**
@@ -882,42 +879,5 @@ public class NonBlockingProperties extends TreeMap <String, String>
   {
     final String val = getProperty (key);
     return (val == null) ? defaultValue : val;
-  }
-
-  /**
-   * Returns an enumeration of all the keys in this property list, including
-   * distinct keys in the default property list if a key of the same name has
-   * not already been found from the main properties list.
-   * 
-   * @return an enumeration of all the keys in this property list, including the
-   *         keys in the default property list.
-   * @throws ClassCastException
-   *         if any key in this property list is not a string.
-   * @see java.util.Enumeration
-   * @see #stringPropertyNames
-   */
-  public Enumeration <String> propertyNames ()
-  {
-    return new EnumerationFromIterator <String> (keySet ());
-  }
-
-  /**
-   * Returns a set of keys in this property list where the key and its
-   * corresponding value are strings, including distinct keys in the default
-   * property list if a key of the same name has not already been found from the
-   * main properties list. Properties whose key or value is not of type
-   * <tt>String</tt> are omitted.
-   * <p>
-   * The returned set is not backed by the <tt>Properties</tt> object. Changes
-   * to this <tt>Properties</tt> are not reflected in the set, or vice versa.
-   * 
-   * @return a set of keys in this property list where the key and its
-   *         corresponding value are strings, including the keys in the default
-   *         property list.
-   * @since 1.6
-   */
-  public Set <String> stringPropertyNames ()
-  {
-    return keySet ();
   }
 }
