@@ -17,23 +17,22 @@
  */
 package com.phloc.settings.xchange.xml;
 
-import java.io.File;
-
 import javax.annotation.Nonnull;
 
-import com.phloc.commons.io.resolver.FileSystemStreamResolver;
+import com.phloc.commons.io.IInputStreamResolver;
+import com.phloc.settings.factory.xchange.PersistenceSettingsFactory;
 
 /**
  * A settings resolver that uses the standard XML settings persistence interface
  * to read settings. The determination of {@link java.io.InputStream} objects is
- * performed by an {@link FileSystemStreamResolver}.
+ * performed by an {@link IInputStreamResolver}.
  * 
  * @author philip
  */
-public class FileSystemXMLPersistenceSettingsFactory extends PersistenceSettingsFactoryXML
+public class PersistenceSettingsFactoryXML extends PersistenceSettingsFactory
 {
-  public FileSystemXMLPersistenceSettingsFactory (@Nonnull final File aBasePath)
+  public PersistenceSettingsFactoryXML (@Nonnull final IInputStreamResolver aISResolver)
   {
-    super (new FileSystemStreamResolver (aBasePath));
+    super (new SettingsPersistenceXML (), aISResolver);
   }
 }
