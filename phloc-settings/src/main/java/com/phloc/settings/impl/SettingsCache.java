@@ -25,25 +25,25 @@ import com.phloc.settings.ISettings;
 import com.phloc.settings.factory.ISettingsFactory;
 
 /**
- * A pool of settings based on a cache.
+ * A cache for the Settings
  * 
  * @author Philip Helger
  */
-public class SettingsPool extends AbstractNotifyingCache <String, ISettings>
+public class SettingsCache extends AbstractNotifyingCache <String, ISettings>
 {
-  private final ISettingsFactory m_aFactory;
+  private final ISettingsFactory m_aSettingsFactory;
 
-  public SettingsPool (@Nonnull final ISettingsFactory aFactory)
+  public SettingsCache (@Nonnull final ISettingsFactory aSettingsFactory)
   {
-    super ("SettingsPool");
-    if (aFactory == null)
-      throw new NullPointerException ("factory");
-    m_aFactory = aFactory;
+    super ("SettingsCache");
+    if (aSettingsFactory == null)
+      throw new NullPointerException ("SettingsFactory");
+    m_aSettingsFactory = aSettingsFactory;
   }
 
   @Override
   protected ISettings getValueToCache (@Nonnull @Nonempty final String sSettingName)
   {
-    return m_aFactory.create (sSettingName);
+    return m_aSettingsFactory.create (sSettingName);
   }
 }
