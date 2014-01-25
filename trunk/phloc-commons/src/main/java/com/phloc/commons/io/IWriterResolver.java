@@ -15,34 +15,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.io.resolver;
+package com.phloc.commons.io;
 
-import java.io.File;
+import java.io.Writer;
 
 import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
-
-import com.phloc.commons.io.IInputStreamResolver;
-import com.phloc.commons.io.IOutputStreamResolver;
+import javax.annotation.Nullable;
 
 /**
- * Implementation of the {@link IInputStreamResolver} and
- * {@link IOutputStreamResolver} interfaces for {@link File} objects.
+ * A callback interface to retrieve {@link Writer} objects from a given name.
  * 
  * @author Philip Helger
- * @deprecated Use {@link FileSystemByteStreamResolver} instead
  */
-@Immutable
-@Deprecated
-public final class FileSystemStreamResolver extends FileSystemByteStreamResolver
+public interface IWriterResolver
 {
-  public FileSystemStreamResolver (@Nonnull final String sBasePath)
-  {
-    super (sBasePath);
-  }
-
-  public FileSystemStreamResolver (@Nonnull final File aBasePath)
-  {
-    super (aBasePath);
-  }
+  /**
+   * Get the writer from the given name.
+   * 
+   * @param sName
+   *        The name to be resolved. May not be <code>null</code>.
+   * @param eAppend
+   *        Appending mode. May not be <code>null</code>.
+   * @return <code>null</code> if resolving failed.
+   */
+  @Nullable
+  Writer getWriter (@Nonnull String sName, @Nonnull EAppend eAppend);
 }
