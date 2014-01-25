@@ -28,7 +28,7 @@ import com.phloc.commons.microdom.convert.MicroTypeConverter;
 import com.phloc.commons.microdom.impl.MicroElement;
 import com.phloc.settings.IReadonlySettings;
 import com.phloc.settings.ISettings;
-import com.phloc.settings.impl.Settings;
+import com.phloc.settings.factory.ISettingsFactory;
 
 public class SettingsMicroDocumentConverter implements IMicroTypeConverter
 {
@@ -38,6 +38,7 @@ public class SettingsMicroDocumentConverter implements IMicroTypeConverter
   private static final String ELEMENT_VALUE = "value";
 
   private final boolean m_bMarshalTypes;
+  private final ISettingsFactory m_aSettingFactory;
 
   /**
    * Constructor that uses the default settings factory.
@@ -47,9 +48,12 @@ public class SettingsMicroDocumentConverter implements IMicroTypeConverter
    *        persistence unit. Use <code>false</code> to have a maximum
    *        interoperability.
    */
-  public SettingsMicroDocumentConverter (final boolean bMarshalTypes)
+  public SettingsMicroDocumentConverter (final boolean bMarshalTypes, @Nonnull final ISettingsFactory aSettingsFactory)
   {
+    if (aSettingsFactory == null)
+      throw new NullPointerException ("Factory");
     m_bMarshalTypes = bMarshalTypes;
+    m_aSettingFactory = aSettingsFactory;
   }
 
   @Nonnull
@@ -62,7 +66,8 @@ public class SettingsMicroDocumentConverter implements IMicroTypeConverter
   public ISettings convertToNative (final IMicroElement aElement)
   {
     // Create new settings object
-    final ISettings aSettings = new Settings (aElement.getAttribute (ATTR_NAME));
+    final String sSettingsName = aElement.getAttribute (ATTR_NAME);
+    final ISettings aSettings = m_aSettingFactory.create (sSettingsName);
 
     // settings are only on the top-level
     for (final IMicroElement eSetting : aElement.getAllChildElements ())

@@ -15,13 +15,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.settings.xchange.xml.factory;
+package com.phloc.settings.xchange.xml;
 
 import javax.annotation.Nonnull;
 
 import com.phloc.commons.io.IInputStreamResolver;
 import com.phloc.settings.factory.xchange.PersistenceSettingsFactory;
-import com.phloc.settings.xchange.xml.SettingsPersistenceXML;
 
 /**
  * A settings resolver that uses the standard XML settings persistence interface

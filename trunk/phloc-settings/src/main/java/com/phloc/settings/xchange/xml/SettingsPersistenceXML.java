@@ -21,8 +21,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.WillClose;
 
+import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.microdom.IMicroDocument;
 import com.phloc.commons.microdom.impl.MicroDocument;
@@ -33,6 +36,8 @@ import com.phloc.commons.xml.serialize.IXMLWriterSettings;
 import com.phloc.commons.xml.serialize.XMLWriterSettings;
 import com.phloc.settings.IReadonlySettings;
 import com.phloc.settings.ISettings;
+import com.phloc.settings.factory.DefaultSettingsFactory;
+import com.phloc.settings.factory.ISettingsFactory;
 import com.phloc.settings.xchange.AbstractSettingsPersistence;
 
 public class SettingsPersistenceXML extends AbstractSettingsPersistence
@@ -41,6 +46,7 @@ public class SettingsPersistenceXML extends AbstractSettingsPersistence
 
   private final boolean m_bMarshalTypes;
   private final IXMLWriterSettings m_aXWS;
+  private final ISettingsFactory m_aSettingsFactory;
 
   public SettingsPersistenceXML ()
   {
@@ -49,14 +55,19 @@ public class SettingsPersistenceXML extends AbstractSettingsPersistence
 
   public SettingsPersistenceXML (final boolean bMarshalTypes)
   {
-    this (bMarshalTypes, XMLWriterSettings.DEFAULT_XML_SETTINGS);
+    this (bMarshalTypes, XMLWriterSettings.DEFAULT_XML_SETTINGS, DefaultSettingsFactory.getInstance ());
   }
 
-  public SettingsPersistenceXML (final boolean bMarshalTypes, @Nonnull final IXMLWriterSettings aXWS)
+  public SettingsPersistenceXML (final boolean bMarshalTypes,
+                                 @Nonnull final IXMLWriterSettings aXWS,
+                                 @Nonnull final ISettingsFactory aSettingsFactory)
   {
     super (aXWS.getCharsetObj ());
+    if (aSettingsFactory == null)
+      throw new NullPointerException ("SettingsFactory");
     m_bMarshalTypes = bMarshalTypes;
     m_aXWS = aXWS;
+    m_aSettingsFactory = aSettingsFactory;
   }
 
   @Nonnull
@@ -70,8 +81,24 @@ public class SettingsPersistenceXML extends AbstractSettingsPersistence
       throw new IllegalArgumentException ("Passed XML document is illegal");
 
     // read items
-    final SettingsMicroDocumentConverter aConverter = new SettingsMicroDocumentConverter (m_bMarshalTypes);
+    final SettingsMicroDocumentConverter aConverter = new SettingsMicroDocumentConverter (m_bMarshalTypes,
+                                                                                          m_aSettingsFactory);
     return aConverter.convertToNative (aDoc.getDocumentElement ());
+  }
+
+  @Nullable
+  @OverrideOnDemand
+  protected String getWriteNamespaceURI ()
+  {
+    return null;
+  }
+
+  @Nonnull
+  @Nonempty
+  @OverrideOnDemand
+  protected String getWriteElementName ()
+  {
+    return "settings";
   }
 
   @Nonnull
@@ -87,9 +114,10 @@ public class SettingsPersistenceXML extends AbstractSettingsPersistence
         throw new NullPointerException ("settings");
 
       // No event manager invocation on writing
-      final SettingsMicroDocumentConverter aConverter = new SettingsMicroDocumentConverter (m_bMarshalTypes);
+      final SettingsMicroDocumentConverter aConverter = new SettingsMicroDocumentConverter (m_bMarshalTypes,
+                                                                                            m_aSettingsFactory);
       final IMicroDocument aDoc = new MicroDocument ();
-      aDoc.appendChild (aConverter.convertToMicroElement (aSettings, null, "settings"));
+      aDoc.appendChild (aConverter.convertToMicroElement (aSettings, getWriteNamespaceURI (), getWriteElementName ()));
 
       // auto-closes the stream
       return MicroWriter.writeToStream (aDoc, aOS, m_aXWS);

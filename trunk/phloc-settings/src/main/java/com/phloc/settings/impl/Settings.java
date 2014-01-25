@@ -86,6 +86,13 @@ public class Settings implements ISettings
     return ContainerHelper.newSet (m_aMap.keySet ());
   }
 
+  @Nonnull
+  @ReturnsMutableCopy
+  public Map <String, Object> getAllEntries ()
+  {
+    return ContainerHelper.newMap (m_aMap);
+  }
+
   public final boolean containsField (@Nullable final String sFieldName)
   {
     return m_aMap.containsKey (sFieldName);

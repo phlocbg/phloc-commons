@@ -19,6 +19,7 @@ package com.phloc.settings;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.Nonnull;
@@ -46,6 +47,13 @@ public interface IReadonlySettings extends IHasName, IHasSize
   @Nonnull
   @ReturnsMutableCopy
   Set <String> getAllFieldNames ();
+
+  /**
+   * @return A non-<code>null</code> map with all key-value-pairs.
+   */
+  @Nonnull
+  @ReturnsMutableCopy
+  Map <String, Object> getAllEntries ();
 
   /**
    * Check if a value is present for the given field name.
