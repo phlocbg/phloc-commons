@@ -24,6 +24,7 @@ import com.phloc.commons.annotations.IsSPIImplementation;
 import com.phloc.commons.microdom.convert.IMicroTypeConverter;
 import com.phloc.commons.microdom.convert.IMicroTypeConverterRegistrarSPI;
 import com.phloc.commons.microdom.convert.IMicroTypeConverterRegistry;
+import com.phloc.settings.factory.DefaultSettingsFactory;
 import com.phloc.settings.impl.Settings;
 import com.phloc.settings.xchange.xml.SettingsMicroDocumentConverter;
 
@@ -39,6 +40,8 @@ public final class SettingsMicroTypeConverterRegistrarSPI implements IMicroTypeC
   public void registerMicroTypeConverter (@Nonnull final IMicroTypeConverterRegistry aRegistry)
   {
     // Register all available converters here!
-    aRegistry.registerMicroElementTypeConverter (Settings.class, new SettingsMicroDocumentConverter (true));
+    aRegistry.registerMicroElementTypeConverter (Settings.class,
+                                                 new SettingsMicroDocumentConverter (true,
+                                                                                     DefaultSettingsFactory.getInstance ()));
   }
 }
