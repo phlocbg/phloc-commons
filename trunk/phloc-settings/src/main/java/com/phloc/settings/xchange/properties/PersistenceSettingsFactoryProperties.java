@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.settings.xchange.xml;
+package com.phloc.settings.xchange.properties;
 
 import javax.annotation.Nonnull;
 
@@ -29,10 +29,10 @@ import com.phloc.settings.factory.xchange.PersistenceSettingsFactory;
  * 
  * @author philip
  */
-public class XMLPersistenceSettingsFactory extends PersistenceSettingsFactory
+public class PersistenceSettingsFactoryProperties extends PersistenceSettingsFactory
 {
-  public XMLPersistenceSettingsFactory (@Nonnull final IInputStreamResolver aISResolver)
+  public PersistenceSettingsFactoryProperties (@Nonnull final IInputStreamResolver aISResolver)
   {
-    super (new SettingsPersistenceXML (), aISResolver);
+    super (new SettingsPersistenceProperties (), aISResolver);
   }
 }

@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Map;
-import java.util.Properties;
 
 import javax.annotation.Nonnull;
 import javax.annotation.WillClose;
@@ -33,8 +32,10 @@ import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.state.ESuccess;
+import com.phloc.commons.typeconvert.TypeConverter;
 import com.phloc.settings.IReadonlySettings;
 import com.phloc.settings.ISettings;
+import com.phloc.settings.factory.DefaultSettingsFactory;
 import com.phloc.settings.factory.ISettingsFactory;
 import com.phloc.settings.xchange.AbstractSettingsPersistence;
 
@@ -43,6 +44,11 @@ public class SettingsPersistenceProperties extends AbstractSettingsPersistence
   private static final Logger s_aLogger = LoggerFactory.getLogger (SettingsPersistenceProperties.class);
 
   private final ISettingsFactory m_aSettingsFactory;
+
+  public SettingsPersistenceProperties ()
+  {
+    this (DefaultSettingsFactory.getInstance ());
+  }
 
   public SettingsPersistenceProperties (@Nonnull final ISettingsFactory aSettingsFactory)
   {
@@ -65,7 +71,7 @@ public class SettingsPersistenceProperties extends AbstractSettingsPersistence
     if (aIS == null)
       throw new NullPointerException ("inputStream");
 
-    final Properties aProps = new Properties ();
+    final NonBlockingProperties aProps = new NonBlockingProperties ();
     try
     {
       // Does not close IS!
@@ -81,8 +87,8 @@ public class SettingsPersistenceProperties extends AbstractSettingsPersistence
     }
 
     final ISettings aSettings = m_aSettingsFactory.create (getReadSettingsName ());
-    for (final Map.Entry <Object, Object> aEntry : aProps.entrySet ())
-      aSettings.setValue ((String) aEntry.getKey (), aEntry.getValue ());
+    for (final Map.Entry <String, String> aEntry : aProps.entrySet ())
+      aSettings.setValue (aEntry.getKey (), aEntry.getValue ());
     return aSettings;
   }
 
@@ -94,11 +100,19 @@ public class SettingsPersistenceProperties extends AbstractSettingsPersistence
 
     try
     {
-      final Properties aProps = new Properties ();
+      final NonBlockingProperties aProps = new NonBlockingProperties ();
+      // Must not be sorted, as Properties sorts them as it wishes...
       for (final Map.Entry <String, Object> aEntry : aSettings.getAllEntries ().entrySet ())
-        aProps.put (aEntry.getKey (), aEntry.getValue ());
+      {
+        final String sName = aEntry.getKey ();
+        final Object aValue = aEntry.getValue ();
+        if (aValue instanceof IReadonlySettings)
+          throw new IllegalArgumentException ("When saving settings to a Properties object, it may not contained nested settings!");
+        final String sValue = TypeConverter.convertIfNecessary (aValue, String.class);
+        aProps.put (sName, sValue);
+      }
       // Does not close the output stream!
-      aProps.store (aOS, null);
+      aProps.store (aOS, aSettings.getName ());
       return ESuccess.SUCCESS;
     }
     catch (final IOException ex)
