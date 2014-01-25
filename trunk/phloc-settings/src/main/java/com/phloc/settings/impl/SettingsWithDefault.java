@@ -20,6 +20,7 @@ package com.phloc.settings.impl;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.state.EChange;
@@ -39,8 +40,36 @@ public class SettingsWithDefault extends Settings implements ISettingsWithDefaul
 
   public SettingsWithDefault (@Nonnull final IReadonlySettings aDefaultSettings)
   {
-    super (aDefaultSettings.getName ());
+    this (aDefaultSettings.getName (), aDefaultSettings);
+  }
+
+  public SettingsWithDefault (@Nonnull @Nonempty final String sName, @Nonnull final IReadonlySettings aDefaultSettings)
+  {
+    super (sName);
+    if (aDefaultSettings == null)
+      throw new NullPointerException ("DefaultSettings");
     m_aDefaultSettings = aDefaultSettings;
+  }
+
+  @Override
+  public boolean containsField (@Nullable final String sFieldName)
+  {
+    if (super.containsField (sFieldName))
+      return true;
+    return m_aDefaultSettings.containsField (sFieldName);
+  }
+
+  @Override
+  @Nullable
+  public Object getValue (@Nullable final String sFieldName)
+  {
+    Object aValue = super.getValue (sFieldName);
+    if (aValue == null)
+    {
+      // Value not found - query default
+      aValue = m_aDefaultSettings.getValue (sFieldName);
+    }
+    return aValue;
   }
 
   @Nonnull
@@ -62,8 +91,8 @@ public class SettingsWithDefault extends Settings implements ISettingsWithDefaul
 
   public boolean isSetToDefault (@Nullable final String sFieldName)
   {
-    return containsField (sFieldName) &&
-           EqualsUtils.equals (getValue (sFieldName), m_aDefaultSettings.getValue (sFieldName));
+    return super.containsField (sFieldName) &&
+           EqualsUtils.equals (super.getValue (sFieldName), m_aDefaultSettings.getValue (sFieldName));
   }
 
   @Override

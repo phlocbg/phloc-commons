@@ -93,7 +93,7 @@ public class Settings implements ISettings
     return ContainerHelper.newMap (m_aMap);
   }
 
-  public final boolean containsField (@Nullable final String sFieldName)
+  public boolean containsField (@Nullable final String sFieldName)
   {
     return m_aMap.containsKey (sFieldName);
   }
