@@ -17,6 +17,7 @@
  */
 package com.phloc.settings.xchange.xml;
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -126,5 +127,23 @@ public class SettingsPersistenceXML extends AbstractSettingsPersistence
     {
       StreamUtils.close (aOS);
     }
+  }
+
+  @Nonnull
+  public static ISettings readSettingsFromString (@Nonnull final String sSettings)
+  {
+    return new SettingsPersistenceXML ().readSettings (sSettings);
+  }
+
+  @Nonnull
+  public static ISettings readSettingsFromFile (@Nonnull final File aFile)
+  {
+    return new SettingsPersistenceXML ().readSettings (aFile);
+  }
+
+  @Nonnull
+  public static ISettings readSettingsFromStream (@Nonnull @WillClose final InputStream aIS)
+  {
+    return new SettingsPersistenceXML ().readSettings (aIS);
   }
 }
