@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import com.phloc.commons.charset.CCharset;
 import com.phloc.commons.collections.iterate.EnumerationFromIterator;
 import com.phloc.commons.string.StringHelper;
 
@@ -101,7 +102,7 @@ public class NonBlockingProperties extends TreeMap <String, String>
    * @see #getProperty
    * @since 1.2
    */
-  public Object setProperty (final String key, final String value)
+  public String setProperty (final String key, final String value)
   {
     return put (key, value);
   }
@@ -349,13 +350,13 @@ public class NonBlockingProperties extends TreeMap <String, String>
   {
     public LineReader (final InputStream inStream)
     {
-      this.m_aIIS = inStream;
+      m_aIS = inStream;
       m_aInByteBuf = new byte [8192];
     }
 
     public LineReader (final Reader reader)
     {
-      this.m_aReader = reader;
+      m_aReader = reader;
       m_aInCharBuf = new char [8192];
     }
 
@@ -364,7 +365,7 @@ public class NonBlockingProperties extends TreeMap <String, String>
     char [] lineBuf = new char [1024];
     int inLimit = 0;
     int inOff = 0;
-    InputStream m_aIIS;
+    InputStream m_aIS;
     Reader m_aReader;
 
     int readLine () throws IOException
@@ -383,7 +384,7 @@ public class NonBlockingProperties extends TreeMap <String, String>
       {
         if (inOff >= inLimit)
         {
-          inLimit = (m_aIIS == null) ? m_aReader.read (m_aInCharBuf) : m_aIIS.read (m_aInByteBuf);
+          inLimit = (m_aIS == null) ? m_aReader.read (m_aInCharBuf) : m_aIS.read (m_aInByteBuf);
           inOff = 0;
           if (inLimit <= 0)
           {
@@ -394,7 +395,7 @@ public class NonBlockingProperties extends TreeMap <String, String>
             return len;
           }
         }
-        if (m_aIIS != null)
+        if (m_aIS != null)
         {
           // The line below is equivalent to calling a
           // ISO8859-1 decoder.
@@ -472,7 +473,7 @@ public class NonBlockingProperties extends TreeMap <String, String>
           }
           if (inOff >= inLimit)
           {
-            inLimit = (m_aIIS == null) ? m_aReader.read (m_aInCharBuf) : m_aIIS.read (m_aInByteBuf);
+            inLimit = (m_aIS == null) ? m_aReader.read (m_aInCharBuf) : m_aIS.read (m_aInByteBuf);
             inOff = 0;
             if (inLimit <= 0)
             {
@@ -818,7 +819,7 @@ public class NonBlockingProperties extends TreeMap <String, String>
    */
   public void store (final OutputStream out, final String comments) throws IOException
   {
-    _store0 (new BufferedWriter (new OutputStreamWriter (out, "8859_1")), comments, true);
+    _store0 (new BufferedWriter (new OutputStreamWriter (out, CCharset.CHARSET_ISO_8859_1_OBJ)), comments, true);
   }
 
   private void _store0 (final BufferedWriter bw, final String comments, final boolean escUnicode) throws IOException
@@ -859,9 +860,8 @@ public class NonBlockingProperties extends TreeMap <String, String>
    */
   public String getProperty (final String key)
   {
-    final Object oval = super.get (key);
-    final String sval = (oval instanceof String) ? (String) oval : null;
-    return ((sval == null) && (m_aDefaults != null)) ? m_aDefaults.getProperty (key) : sval;
+    final String sval = super.get (key);
+    return (sval == null) && (m_aDefaults != null) ? m_aDefaults.getProperty (key) : sval;
   }
 
   /**
