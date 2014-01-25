@@ -37,7 +37,7 @@ import com.phloc.commons.string.StringParser;
 import com.phloc.datetime.PDTFactory;
 import com.phloc.settings.IReadonlySettings;
 import com.phloc.settings.ISettings;
-import com.phloc.settings.factory.DefaultSettingsFactory;
+import com.phloc.settings.factory.SettingsFactoryNewInstance;
 import com.phloc.settings.impl.Settings;
 
 public final class SettingsMicroDocumentConverterTest
@@ -70,7 +70,7 @@ public final class SettingsMicroDocumentConverterTest
     aSrc.setValue ("fieldxh", aNestedSettings);
 
     final SettingsMicroDocumentConverter aConverter = new SettingsMicroDocumentConverter (true,
-                                                                                          DefaultSettingsFactory.getInstance ());
+                                                                                          SettingsFactoryNewInstance.getInstance ());
     final IMicroElement eSrcElement = aConverter.convertToMicroElement (aSrc, null, "root");
     assertNotNull (eSrcElement);
 

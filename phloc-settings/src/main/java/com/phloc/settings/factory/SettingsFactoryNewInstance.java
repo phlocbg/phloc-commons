@@ -11,18 +11,18 @@ import com.phloc.settings.impl.Settings;
  * 
  * @author Philip Helger
  */
-public class DefaultSettingsFactory implements ISettingsFactory
+public class SettingsFactoryNewInstance implements ISettingsFactory
 {
   private static final class SingletonHolder
   {
-    static final DefaultSettingsFactory s_aInstance = new DefaultSettingsFactory ();
+    static final SettingsFactoryNewInstance s_aInstance = new SettingsFactoryNewInstance ();
   }
 
-  public DefaultSettingsFactory ()
+  public SettingsFactoryNewInstance ()
   {}
 
   @Nonnull
-  public static DefaultSettingsFactory getInstance ()
+  public static SettingsFactoryNewInstance getInstance ()
   {
     return SingletonHolder.s_aInstance;
   }

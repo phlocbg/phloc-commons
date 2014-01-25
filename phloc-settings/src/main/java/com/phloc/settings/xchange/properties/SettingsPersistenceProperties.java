@@ -36,7 +36,7 @@ import com.phloc.commons.state.ESuccess;
 import com.phloc.commons.typeconvert.TypeConverter;
 import com.phloc.settings.IReadonlySettings;
 import com.phloc.settings.ISettings;
-import com.phloc.settings.factory.DefaultSettingsFactory;
+import com.phloc.settings.factory.SettingsFactoryNewInstance;
 import com.phloc.settings.factory.ISettingsFactory;
 import com.phloc.settings.xchange.AbstractSettingsPersistence;
 
@@ -48,7 +48,7 @@ public class SettingsPersistenceProperties extends AbstractSettingsPersistence
 
   public SettingsPersistenceProperties ()
   {
-    this (DefaultSettingsFactory.getInstance ());
+    this (SettingsFactoryNewInstance.getInstance ());
   }
 
   public SettingsPersistenceProperties (@Nonnull final ISettingsFactory aSettingsFactory)

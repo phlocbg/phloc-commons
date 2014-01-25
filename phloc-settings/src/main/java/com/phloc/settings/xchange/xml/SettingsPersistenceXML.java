@@ -37,38 +37,48 @@ import com.phloc.commons.xml.serialize.IXMLWriterSettings;
 import com.phloc.commons.xml.serialize.XMLWriterSettings;
 import com.phloc.settings.IReadonlySettings;
 import com.phloc.settings.ISettings;
-import com.phloc.settings.factory.DefaultSettingsFactory;
 import com.phloc.settings.factory.ISettingsFactory;
+import com.phloc.settings.factory.SettingsFactoryNewInstance;
 import com.phloc.settings.xchange.AbstractSettingsPersistence;
 
 public class SettingsPersistenceXML extends AbstractSettingsPersistence
 {
   public static final boolean DEFAULT_MARSHAL_TYPES = true;
 
+  private final ISettingsFactory m_aSettingsFactory;
   private final boolean m_bMarshalTypes;
   private final IXMLWriterSettings m_aXWS;
-  private final ISettingsFactory m_aSettingsFactory;
 
   public SettingsPersistenceXML ()
   {
     this (DEFAULT_MARSHAL_TYPES);
   }
 
-  public SettingsPersistenceXML (final boolean bMarshalTypes)
+  public SettingsPersistenceXML (@Nonnull final ISettingsFactory aSettingsFactory)
   {
-    this (bMarshalTypes, XMLWriterSettings.DEFAULT_XML_SETTINGS, DefaultSettingsFactory.getInstance ());
+    this (aSettingsFactory, DEFAULT_MARSHAL_TYPES);
   }
 
-  public SettingsPersistenceXML (final boolean bMarshalTypes,
-                                 @Nonnull final IXMLWriterSettings aXWS,
-                                 @Nonnull final ISettingsFactory aSettingsFactory)
+  public SettingsPersistenceXML (final boolean bMarshalTypes)
+  {
+    this (SettingsFactoryNewInstance.getInstance (), bMarshalTypes);
+  }
+
+  public SettingsPersistenceXML (@Nonnull final ISettingsFactory aSettingsFactory, final boolean bMarshalTypes)
+  {
+    this (aSettingsFactory, bMarshalTypes, XMLWriterSettings.DEFAULT_XML_SETTINGS);
+  }
+
+  public SettingsPersistenceXML (@Nonnull final ISettingsFactory aSettingsFactory,
+                                 final boolean bMarshalTypes,
+                                 @Nonnull final IXMLWriterSettings aXWS)
   {
     super (aXWS.getCharsetObj ());
     if (aSettingsFactory == null)
       throw new NullPointerException ("SettingsFactory");
+    m_aSettingsFactory = aSettingsFactory;
     m_bMarshalTypes = bMarshalTypes;
     m_aXWS = aXWS;
-    m_aSettingsFactory = aSettingsFactory;
   }
 
   @Nonnull
