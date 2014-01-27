@@ -30,11 +30,11 @@ import com.phloc.settings.impl.SettingsWithDefault;
  * 
  * @author Philip Helger
  */
-public class SettingsFactoryWithDefault implements ISettingsFactory
+public class SettingsFactoryNewInstanceWithDefault implements ISettingsFactory
 {
   private final IReadonlySettings m_aDefaultSettings;
 
-  public SettingsFactoryWithDefault (@Nonnull final IReadonlySettings aDefaultSettings)
+  public SettingsFactoryNewInstanceWithDefault (@Nonnull final IReadonlySettings aDefaultSettings)
   {
     if (aDefaultSettings == null)
       throw new NullPointerException ("DefaultSettings");
