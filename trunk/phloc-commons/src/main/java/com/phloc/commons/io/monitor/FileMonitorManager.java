@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -188,6 +189,23 @@ public class FileMonitorManager implements Runnable
     try
     {
       return ContainerHelper.newList (m_aMonitorList);
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  /**
+   * @return The number of contained {@link FileMonitor} objects. Always &ge; 0.
+   */
+  @Nonnegative
+  public int getFileMonitorCount ()
+  {
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return m_aMonitorList.size ();
     }
     finally
     {
