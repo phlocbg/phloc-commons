@@ -8,7 +8,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>phloc-settings</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1-SNAPSHOT</version>
   <packaging>bundle</packaging>
   <name>phloc-settings</name>
   <description>phloc configuration, settings and preferences library</description>
@@ -22,9 +22,9 @@
   </licenses>
        
   <scm>
-    <url>http://code.google.com/p/phloc-commons/source/browse/tags/phloc-settings-1.0.0</url>
-    <connection>scm:svn:http://phloc-commons.googlecode.com/svn/tags/phloc-settings-1.0.0</connection>
-    <developerConnection>scm:svn:https://phloc-commons.googlecode.com/svn/tags/phloc-settings-1.0.0</developerConnection>
+    <url>http://code.google.com/p/phloc-commons/source/browse/</url>
+    <connection>scm:svn:http://phloc-commons.googlecode.com/svn/trunk/phloc-settings</connection>
+    <developerConnection>scm:svn:https://phloc-commons.googlecode.com/svn/trunk/phloc-settings</developerConnection>
   </scm>
 
   <organization>
