@@ -128,7 +128,7 @@ public final class LocaleFormatter
   @Nonnull
   public static String getFormatted (@Nonnull final BigDecimal aValue, @Nonnull final Locale aDisplayLocale)
   {
-    return NumberFormat.getIntegerInstance (aDisplayLocale).format (aValue);
+    return NumberFormat.getInstance (aDisplayLocale).format (aValue);
   }
 
   /**
