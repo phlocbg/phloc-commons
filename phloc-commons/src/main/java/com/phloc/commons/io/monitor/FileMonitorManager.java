@@ -47,14 +47,10 @@ public class FileMonitorManager implements Runnable
 
   private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
 
-  /**
-   * Map from FileName to File being monitored.
-   */
+  /** All FileMonitors contained */
   private final List <FileMonitor> m_aMonitorList = new ArrayList <FileMonitor> ();
 
-  /**
-   * The low priority thread used for checking the files being monitored.
-   */
+  /** The low priority thread used for checking the files being monitored. */
   private Thread m_aMonitorThread;
 
   /**
@@ -63,14 +59,10 @@ public class FileMonitorManager implements Runnable
    */
   private volatile boolean m_bShouldRun = true;
 
-  /**
-   * Set the delay between checks
-   */
+  /** Set the delay between checks in milli seconds. */
   private long m_nDelay = DEFAULT_DELAY;
 
-  /**
-   * Set the number of files to check until a delay will be inserted
-   */
+  /** Set the number of files to check until a delay will be inserted */
   private int m_nChecksPerRun = DEFAULT_MAX_FILES;
 
   public FileMonitorManager ()
@@ -79,7 +71,7 @@ public class FileMonitorManager implements Runnable
   /**
    * Get the delay between runs.
    * 
-   * @return The delay period.
+   * @return The delay period in milliseconds.
    */
   public long getDelay ()
   {
@@ -90,7 +82,7 @@ public class FileMonitorManager implements Runnable
    * Set the delay between runs.
    * 
    * @param nDelay
-   *        The delay period.
+   *        The delay period in milliseconds.
    * @return this
    */
   @Nonnull
@@ -257,6 +249,7 @@ public class FileMonitorManager implements Runnable
         aMonitor.applyPendingAdds ();
       }
 
+      // Wait some time
       ThreadUtils.sleep (getDelay ());
 
       if (s_aLogger.isDebugEnabled ())
