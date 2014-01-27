@@ -23,6 +23,7 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -117,6 +118,14 @@ public class FileMonitorManager implements Runnable
     return this;
   }
 
+  /**
+   * Create a new {@link FileMonitor} based on the passed file listener.
+   * 
+   * @param aListener
+   *        The listener to be used. May not be <code>null</code>.
+   * @return The created {@link FileMonitor} that was already added.
+   * @see #addFileMonitor(FileMonitor)
+   */
   @Nonnull
   public FileMonitor createFileMonitor (@Nonnull final IFileListener aListener)
   {
@@ -125,6 +134,12 @@ public class FileMonitorManager implements Runnable
     return aMonitor;
   }
 
+  /**
+   * Add a new {@link FileMonitor}.
+   * 
+   * @param aMonitor
+   *        The monitor to be added. May not be <code>null</code>.
+   */
   public void addFileMonitor (@Nonnull final FileMonitor aMonitor)
   {
     if (aMonitor == null)
@@ -141,9 +156,19 @@ public class FileMonitorManager implements Runnable
     }
   }
 
+  /**
+   * Remove a {@link FileMonitor}.
+   * 
+   * @param aMonitor
+   *        The monitor to be remove. May be <code>null</code>.
+   * @return {@link EChange}
+   */
   @Nonnull
-  public EChange removeFileMonitor (@Nonnull final FileMonitor aMonitor)
+  public EChange removeFileMonitor (@Nullable final FileMonitor aMonitor)
   {
+    if (aMonitor == null)
+      return EChange.UNCHANGED;
+
     m_aRWLock.writeLock ().lock ();
     try
     {
