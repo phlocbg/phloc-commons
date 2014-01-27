@@ -17,7 +17,6 @@
  */
 package com.phloc.settings.xchange.properties;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -36,8 +35,8 @@ import com.phloc.commons.state.ESuccess;
 import com.phloc.commons.typeconvert.TypeConverter;
 import com.phloc.settings.IReadonlySettings;
 import com.phloc.settings.ISettings;
-import com.phloc.settings.factory.SettingsFactoryNewInstance;
 import com.phloc.settings.factory.ISettingsFactory;
+import com.phloc.settings.factory.SettingsFactoryNewInstance;
 import com.phloc.settings.xchange.AbstractSettingsPersistence;
 
 public class SettingsPersistenceProperties extends AbstractSettingsPersistence
@@ -125,23 +124,5 @@ public class SettingsPersistenceProperties extends AbstractSettingsPersistence
     {
       StreamUtils.close (aOS);
     }
-  }
-
-  @Nonnull
-  public static ISettings readSettingsFromString (@Nonnull final String sSettings)
-  {
-    return new SettingsPersistenceProperties ().readSettings (sSettings);
-  }
-
-  @Nonnull
-  public static ISettings readSettingsFromFile (@Nonnull final File aFile)
-  {
-    return new SettingsPersistenceProperties ().readSettings (aFile);
-  }
-
-  @Nonnull
-  public static ISettings readSettingsFromStream (@Nonnull @WillClose final InputStream aIS)
-  {
-    return new SettingsPersistenceProperties ().readSettings (aIS);
   }
 }

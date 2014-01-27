@@ -23,6 +23,7 @@ import java.nio.charset.Charset;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.file.FileUtils;
 import com.phloc.commons.io.streams.NonBlockingByteArrayOutputStream;
 import com.phloc.commons.io.streams.StringInputStream;
@@ -65,13 +66,28 @@ public abstract class AbstractSettingsPersistence implements ISettingsPersistenc
   @Nonnull
   public ISettings readSettings (@Nonnull final String sSettings)
   {
+    if (sSettings == null)
+      throw new NullPointerException ("Settings");
+
     return readSettings (new StringInputStream (sSettings, m_aCharset));
   }
 
   @Nonnull
   public ISettings readSettings (@Nonnull final File aFile)
   {
+    if (aFile == null)
+      throw new NullPointerException ("File");
+
     return readSettings (FileUtils.getInputStream (aFile));
+  }
+
+  @Nonnull
+  public ISettings readSettings (@Nonnull final IReadableResource aRes)
+  {
+    if (aRes == null)
+      throw new NullPointerException ("Res");
+
+    return readSettings (aRes.getInputStream ());
   }
 
   @Nullable
