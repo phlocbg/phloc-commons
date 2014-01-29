@@ -17,6 +17,7 @@
  */
 package com.phloc.fonts;
 
+import java.io.InputStream;
 import java.util.EnumSet;
 import java.util.Set;
 
@@ -114,6 +115,12 @@ public enum EFontResource
   public ClassPathResource getResource ()
   {
     return new ClassPathResource (m_sPath);
+  }
+
+  @Nonnull
+  public InputStream getInputStream ()
+  {
+    return ClassPathResource.getInputStream (m_sPath);
   }
 
   @Nonnull
