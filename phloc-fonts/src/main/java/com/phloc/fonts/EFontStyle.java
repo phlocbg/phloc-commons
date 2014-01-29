@@ -24,14 +24,16 @@ import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.id.IHasID;
 import com.phloc.commons.lang.EnumHelper;
 
-public enum EFontType implements IHasID <String>
+public enum EFontStyle implements IHasID <String>
 {
-  OTF ("otf"),
-  TTF ("ttf");
+  REGULAR ("regular"),
+  BOLD ("bold"),
+  ITALIC ("italic"),
+  BOLD_ITALIC ("bold-italic");
 
   private final String m_sID;
 
-  private EFontType (@Nonnull @Nonempty final String sID)
+  private EFontStyle (@Nonnull @Nonempty final String sID)
   {
     m_sID = sID;
   }
@@ -43,9 +45,24 @@ public enum EFontType implements IHasID <String>
     return m_sID;
   }
 
-  @Nullable
-  public static EFontType getFromIDOrNull (@Nullable final String sID)
+  public boolean isRegular ()
   {
-    return EnumHelper.getFromIDOrNull (EFontType.class, sID);
+    return this == REGULAR;
+  }
+
+  public boolean isBold ()
+  {
+    return this == BOLD || this == BOLD_ITALIC;
+  }
+
+  public boolean isItalic ()
+  {
+    return this == ITALIC || this == BOLD_ITALIC;
+  }
+
+  @Nullable
+  public static EFontStyle getFromIDOrNull (@Nullable final String sID)
+  {
+    return EnumHelper.getFromIDOrNull (EFontStyle.class, sID);
   }
 }
