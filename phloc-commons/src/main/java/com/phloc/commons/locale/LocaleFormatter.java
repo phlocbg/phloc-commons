@@ -47,9 +47,9 @@ public final class LocaleFormatter
   {}
 
   /**
-   * Format the passed double value according to the rules specified by the
-   * given locale. All calls to {@link Double#toString(double)} that are
-   * displayed to the user should instead use this method.
+   * Format the passed value according to the rules specified by the given
+   * locale. All calls to {@link Double#toString(double)} that are displayed to
+   * the user should instead use this method.
    * 
    * @param dValue
    *        The value to be formatted.
@@ -60,11 +60,14 @@ public final class LocaleFormatter
   @Nonnull
   public static String getFormatted (final double dValue, @Nonnull final Locale aDisplayLocale)
   {
+    if (aDisplayLocale == null)
+      throw new NullPointerException ("DisplayLocale");
+
     return NumberFormat.getNumberInstance (aDisplayLocale).format (dValue);
   }
 
   /**
-   * Format the passed int value according to the rules specified by the given
+   * Format the passed value according to the rules specified by the given
    * locale. All calls to {@link Integer#toString(int)} that are displayed to
    * the user should instead use this method.
    * 
@@ -77,11 +80,14 @@ public final class LocaleFormatter
   @Nonnull
   public static String getFormatted (final int nValue, @Nonnull final Locale aDisplayLocale)
   {
+    if (aDisplayLocale == null)
+      throw new NullPointerException ("DisplayLocale");
+
     return NumberFormat.getIntegerInstance (aDisplayLocale).format (nValue);
   }
 
   /**
-   * Format the passed int value according to the rules specified by the given
+   * Format the passed value according to the rules specified by the given
    * locale. All calls to {@link Long#toString(long)} that are displayed to the
    * user should instead use this method.
    * 
@@ -94,11 +100,14 @@ public final class LocaleFormatter
   @Nonnull
   public static String getFormatted (final long nValue, @Nonnull final Locale aDisplayLocale)
   {
+    if (aDisplayLocale == null)
+      throw new NullPointerException ("DisplayLocale");
+
     return NumberFormat.getIntegerInstance (aDisplayLocale).format (nValue);
   }
 
   /**
-   * Format the passed int value according to the rules specified by the given
+   * Format the passed value according to the rules specified by the given
    * locale. All calls to {@link BigInteger#toString()} that are displayed to
    * the user should instead use this method.
    * 
@@ -111,16 +120,22 @@ public final class LocaleFormatter
   @Nonnull
   public static String getFormatted (@Nonnull final BigInteger aValue, @Nonnull final Locale aDisplayLocale)
   {
+    if (aValue == null)
+      throw new NullPointerException ("Value");
+    if (aDisplayLocale == null)
+      throw new NullPointerException ("DisplayLocale");
+
     return NumberFormat.getIntegerInstance (aDisplayLocale).format (aValue);
   }
 
   /**
-   * Format the passed int value according to the rules specified by the given
+   * Format the passed value according to the rules specified by the given
    * locale. All calls to {@link BigDecimal#toString()} that are displayed to
-   * the user should instead use this method.
+   * the user should instead use this method. By default a maximum of 3 fraction
+   * digits are shown.
    * 
    * @param aValue
-   *        The value to be formatted. MAy not be <code>null</code>.
+   *        The value to be formatted. May not be <code>null</code>.
    * @param aDisplayLocale
    *        The locale to be used. May not be <code>null</code>.
    * @return The formatted string.
@@ -128,7 +143,64 @@ public final class LocaleFormatter
   @Nonnull
   public static String getFormatted (@Nonnull final BigDecimal aValue, @Nonnull final Locale aDisplayLocale)
   {
+    if (aValue == null)
+      throw new NullPointerException ("Value");
+    if (aDisplayLocale == null)
+      throw new NullPointerException ("DisplayLocale");
+
     return NumberFormat.getInstance (aDisplayLocale).format (aValue);
+  }
+
+  /**
+   * Format the passed value according to the rules specified by the given
+   * locale.
+   * 
+   * @param aValue
+   *        The value to be formatted. May not be <code>null</code>.
+   * @param nFractionDigits
+   *        The number of fractional digits to use. Must be >= 0.
+   * @param aDisplayLocale
+   *        The locale to be used. May not be <code>null</code>.
+   * @return The formatted string.
+   */
+  @Nonnull
+  public static String getFormatted (@Nonnull final BigDecimal aValue,
+                                     @Nonnegative final int nFractionDigits,
+                                     @Nonnull final Locale aDisplayLocale)
+  {
+    if (aValue == null)
+      throw new NullPointerException ("Value");
+    if (aDisplayLocale == null)
+      throw new NullPointerException ("DisplayLocale");
+
+    final NumberFormat aNF = NumberFormat.getInstance (aDisplayLocale);
+    aNF.setMinimumFractionDigits (nFractionDigits);
+    aNF.setMaximumFractionDigits (nFractionDigits);
+    return aNF.format (aValue);
+  }
+
+  /**
+   * Format the passed value according to the rules specified by the given
+   * locale. All fraction digits of the passed value are displayed.
+   * 
+   * @param aValue
+   *        The value to be formatted. May not be <code>null</code>.
+   * @param aDisplayLocale
+   *        The locale to be used. May not be <code>null</code>.
+   * @return The formatted string.
+   */
+  @Nonnull
+  public static String getFormattedWithAllFractionDigits (@Nonnull final BigDecimal aValue,
+                                                          @Nonnull final Locale aDisplayLocale)
+  {
+    if (aValue == null)
+      throw new NullPointerException ("Value");
+    if (aDisplayLocale == null)
+      throw new NullPointerException ("DisplayLocale");
+
+    final NumberFormat aNF = NumberFormat.getInstance (aDisplayLocale);
+    aNF.setMaximumFractionDigits (aValue.scale ());
+    return aNF.format (aValue);
   }
 
   /**
@@ -146,6 +218,9 @@ public final class LocaleFormatter
   @Nonnull
   public static String getFormattedPercent (final double dValue, @Nonnull final Locale aDisplayLocale)
   {
+    if (aDisplayLocale == null)
+      throw new NullPointerException ("DisplayLocale");
+
     return NumberFormat.getPercentInstance (aDisplayLocale).format (dValue);
   }
 
@@ -157,7 +232,7 @@ public final class LocaleFormatter
    *        The value to be used. E.g. "0.125" will result in something like
    *        "12.5%"
    * @param nFractionDigits
-   *        The number of maximum fractional digits. Must be >= 0.
+   *        The number of fractional digits to use. Must be >= 0.
    * @param aDisplayLocale
    *        The locale to use.
    * @return The non-<code>null</code> formatted string.
@@ -167,6 +242,9 @@ public final class LocaleFormatter
                                             @Nonnegative final int nFractionDigits,
                                             @Nonnull final Locale aDisplayLocale)
   {
+    if (aDisplayLocale == null)
+      throw new NullPointerException ("DisplayLocale");
+
     final NumberFormat aNF = NumberFormat.getPercentInstance (aDisplayLocale);
     aNF.setMinimumFractionDigits (nFractionDigits);
     aNF.setMaximumFractionDigits (nFractionDigits);
