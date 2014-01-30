@@ -3522,7 +3522,8 @@ public final class StringHelper
       return sStr;
 
     final int nIndex = getIndexOf (sStr, sSearch);
-    return nIndex == STRING_NOT_FOUND ? null : sStr.substring (nIndex + (bIncludingSearchString ? 0 : sSearch.length ()));
+    return nIndex == STRING_NOT_FOUND ? null : sStr.substring (nIndex +
+                                                               (bIncludingSearchString ? 0 : sSearch.length ()));
   }
 
   /**
@@ -3609,7 +3610,8 @@ public final class StringHelper
       return sStr;
 
     final int nIndex = getLastIndexOf (sStr, sSearch);
-    return nIndex == STRING_NOT_FOUND ? null : sStr.substring (nIndex + (bIncludingSearchString ? 0 : sSearch.length ()));
+    return nIndex == STRING_NOT_FOUND ? null : sStr.substring (nIndex +
+                                                               (bIncludingSearchString ? 0 : sSearch.length ()));
   }
 
   /**
@@ -3644,6 +3646,74 @@ public final class StringHelper
   public static String getFromLastExcl (@Nullable final String sStr, @Nullable final String sSearch)
   {
     return _getFromLast (sStr, sSearch, false);
+  }
+
+  /**
+   * Get the first token up to (and excluding) the separating character.
+   * 
+   * @param sStr
+   *        The string to search. May be <code>null</code>.
+   * @param cSearch
+   *        The search character.
+   * @return The passed string if no such separator token was found.
+   */
+  @Nullable
+  public static String getFirstToken (@Nullable final String sStr, final char cSearch)
+  {
+    final int nIndex = getIndexOf (sStr, cSearch);
+    return nIndex == StringHelper.STRING_NOT_FOUND ? sStr : sStr.substring (0, nIndex);
+  }
+
+  /**
+   * Get the first token up to (and excluding) the separating string.
+   * 
+   * @param sStr
+   *        The string to search. May be <code>null</code>.
+   * @param sSearch
+   *        The search string. May be <code>null</code>.
+   * @return The passed string if no such separator token was found.
+   */
+  @Nullable
+  public static String getFirstToken (@Nullable final String sStr, @Nullable final String sSearch)
+  {
+    if (StringHelper.hasNoText (sSearch))
+      return sStr;
+    final int nIndex = getIndexOf (sStr, sSearch);
+    return nIndex == StringHelper.STRING_NOT_FOUND ? sStr : sStr.substring (0, nIndex);
+  }
+
+  /**
+   * Get the last token from (and excluding) the separating character.
+   * 
+   * @param sStr
+   *        The string to search. May be <code>null</code>.
+   * @param cSearch
+   *        The search character.
+   * @return The passed string if no such separator token was found.
+   */
+  @Nullable
+  public static String getLastToken (@Nullable final String sStr, final char cSearch)
+  {
+    final int nIndex = getLastIndexOf (sStr, cSearch);
+    return nIndex == StringHelper.STRING_NOT_FOUND ? sStr : sStr.substring (nIndex + 1);
+  }
+
+  /**
+   * Get the last token from (and excluding) the separating string.
+   * 
+   * @param sStr
+   *        The string to search. May be <code>null</code>.
+   * @param sSearch
+   *        The search string. May be <code>null</code>.
+   * @return The passed string if no such separator token was found.
+   */
+  @Nullable
+  public static String getLastToken (@Nullable final String sStr, @Nullable final String sSearch)
+  {
+    if (StringHelper.hasNoText (sSearch))
+      return sStr;
+    final int nIndex = getLastIndexOf (sStr, sSearch);
+    return nIndex == StringHelper.STRING_NOT_FOUND ? sStr : sStr.substring (nIndex + getLength (sSearch));
   }
 
   @Nullable
