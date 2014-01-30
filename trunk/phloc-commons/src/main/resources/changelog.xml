@@ -22,6 +22,11 @@
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
   <entry date="2014-01-30" category="api" action="add">
     <change>
+      <text locale="en">Extended LocaleFormatter API slightly</text>
+    </change>
+  </entry>
+  <entry date="2014-01-30" category="api" action="add">
+    <change>
       <text locale="en">Added new StringHelper methods getFirstToken and getLastToken</text>
     </change>
   </entry>
