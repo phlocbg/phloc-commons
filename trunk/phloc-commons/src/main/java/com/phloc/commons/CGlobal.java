@@ -189,7 +189,7 @@ public final class CGlobal
   public static final BigInteger BIGINT_MIN_LONG = BigInteger.valueOf (Long.MIN_VALUE);
 
   /** The BigInteger representation of -1 */
-  public static final BigInteger BIGINT_MINUS_ONE = BigInteger.valueOf (-1L);
+  public static final BigInteger BIGINT_MINUS_ONE = BigInteger.ONE.negate ();
 
   /** The BigInteger representation of 100 */
   public static final BigInteger BIGINT_100 = BigInteger.valueOf (100);
@@ -207,7 +207,7 @@ public final class CGlobal
   public static final BigDecimal BIGDEC_MIN_DOUBLE = BigDecimal.valueOf (Double.MIN_VALUE);
 
   /** The BigDecimal representation of -1 */
-  public static final BigDecimal BIGDEC_MINUS_ONE = new BigDecimal ("-1");
+  public static final BigDecimal BIGDEC_MINUS_ONE = BigDecimal.ONE.negate ();
 
   /** The BigDecimal representation of 100 */
   public static final BigDecimal BIGDEC_100 = new BigDecimal ("100");
