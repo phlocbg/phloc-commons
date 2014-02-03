@@ -21,7 +21,6 @@ import java.io.InputStream;
 import java.util.EnumSet;
 import java.util.Set;
 
-import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -36,53 +35,56 @@ import com.phloc.commons.io.resource.ClassPathResource;
  */
 public enum EFontResource
 {
-  ALGREYA_SANS_THIN (EFontType.TTF, EFontStyle.REGULAR, 100, "fonts/ttf/AlegreyaSans/AlegreyaSans-Thin.ttf"),
-  ALGREYA_SANS_THIN_ITALIC (EFontType.TTF, EFontStyle.ITALIC, 100, "fonts/ttf/AlegreyaSans/AlegreyaSans-ThinItalic.ttf"),
-  ALGREYA_SANS_LIGHT (EFontType.TTF, EFontStyle.REGULAR, 300, "fonts/ttf/AlegreyaSans/AlegreyaSans-Light.ttf"),
-  ALGREYA_SANS_LIGHT_ITALIC (EFontType.TTF, EFontStyle.ITALIC, 300, "fonts/ttf/AlegreyaSans/AlegreyaSans-LightItalic.ttf"),
-  ALGREYA_SANS_NORMAL (EFontType.TTF, EFontStyle.REGULAR, 400, "fonts/ttf/AlegreyaSans/AlegreyaSans-Regular.ttf"),
-  ALGREYA_SANS_NORMAL_ITALIC (EFontType.TTF, EFontStyle.ITALIC, 400, "fonts/ttf/AlegreyaSans/AlegreyaSans-Italic.ttf"),
-  ALGREYA_SANS_MEDIUM (EFontType.TTF, EFontStyle.REGULAR, 500, "fonts/ttf/AlegreyaSans/AlegreyaSans-Medium.ttf"),
-  ALGREYA_SANS_MEDIUM_ITALIC (EFontType.TTF, EFontStyle.ITALIC, 500, "fonts/ttf/AlegreyaSans/AlegreyaSans-MediumItalic.ttf"),
-  ALGREYA_SANS_BOLD (EFontType.TTF, EFontStyle.REGULAR, 700, "fonts/ttf/AlegreyaSans/AlegreyaSans-Bold.ttf"),
-  ALGREYA_SANS_BOLD_ITALIC (EFontType.TTF, EFontStyle.ITALIC, 700, "fonts/ttf/AlegreyaSans/AlegreyaSans-BoldItalic.ttf"),
-  ALGREYA_SANS_EXTRA_BOLD (EFontType.TTF, EFontStyle.REGULAR, 800, "fonts/ttf/AlegreyaSans/AlegreyaSans-ExtraBold.ttf"),
-  ALGREYA_SANS_EXTRA_BOLD_ITALIC (EFontType.TTF, EFontStyle.ITALIC, 800, "fonts/ttf/AlegreyaSans/AlegreyaSans-ExtraBoldItalic.ttf"),
-  ALGREYA_SANS_BLACK (EFontType.TTF, EFontStyle.REGULAR, 900, "fonts/ttf/AlegreyaSans/AlegreyaSans-Black.ttf"),
-  ALGREYA_SANS_BLACK_ITALIC (EFontType.TTF, EFontStyle.ITALIC, 900, "fonts/ttf/AlegreyaSans/AlegreyaSans-BlackItalic.ttf"),
-  ANAHEIM_REGULAR (EFontType.TTF, EFontStyle.REGULAR, 400, "fonts/ttf/Anaheim/Anaheim-Regular.ttf"),
-  EXO2_THIN (EFontType.OTF, EFontStyle.REGULAR, 100, "fonts/ttf/Exo2/Exo2.0-Thin.otf"),
-  EXO2_THIN_ITALIC (EFontType.OTF, EFontStyle.ITALIC, 100, "fonts/ttf/Exo2/Exo2.0-ThinItalic.otf"),
-  EXO2_EXTRA_LIGHT (EFontType.OTF, EFontStyle.REGULAR, 200, "fonts/ttf/Exo2/Exo2.0-ExtraLight.otf"),
-  EXO2_EXTRA_LIGHT_ITALIC (EFontType.OTF, EFontStyle.ITALIC, 200, "fonts/ttf/Exo2/Exo2.0-ExtraLightItalic.otf"),
-  EXO2_LIGHT (EFontType.OTF, EFontStyle.REGULAR, 300, "fonts/ttf/Exo2/Exo2.0-Light.otf"),
-  EXO2_LIGHT_ITALIC (EFontType.OTF, EFontStyle.ITALIC, 300, "fonts/ttf/Exo2/Exo2.0-LightItalic.otf"),
-  EXO2_NORMAL (EFontType.OTF, EFontStyle.REGULAR, 400, "fonts/ttf/Exo2/Exo2.0-Regular.otf"),
-  EXO2_NORMAL_ITALIC (EFontType.OTF, EFontStyle.ITALIC, 400, "fonts/ttf/Exo2/Exo2.0-Italic.otf"),
-  EXO2_MEDIUM (EFontType.OTF, EFontStyle.REGULAR, 500, "fonts/ttf/Exo2/Exo2.0-Medium.otf"),
-  EXO2_MEDIUM_ITALIC (EFontType.OTF, EFontStyle.ITALIC, 500, "fonts/ttf/Exo2/Exo2.0-MediumItalic.otf"),
-  EXO2_SEMI_BOLD (EFontType.OTF, EFontStyle.REGULAR, 600, "fonts/ttf/Exo2/Exo2.0-SemiBold.otf"),
-  EXO2_SEMI_BOLD_ITALIC (EFontType.OTF, EFontStyle.ITALIC, 600, "fonts/ttf/Exo2/Exo2.0-SemiBoldItalic.otf"),
-  EXO2_BOLD (EFontType.OTF, EFontStyle.REGULAR, 700, "fonts/ttf/Exo2/Exo2.0-Bold.otf"),
-  EXO2_BOLD_ITALIC (EFontType.OTF, EFontStyle.ITALIC, 700, "fonts/ttf/Exo2/Exo2.0-BoldItalic.otf"),
-  EXO2_EXTRA_BOLD (EFontType.OTF, EFontStyle.REGULAR, 800, "fonts/ttf/Exo2/Exo2.0-ExtraBold.otf"),
-  EXO2_EXTRA_BOLD_ITALIC (EFontType.OTF, EFontStyle.ITALIC, 800, "fonts/ttf/Exo2/Exo2.0-ExtraBoldItalic.otf"),
-  EXO2_BLACK (EFontType.OTF, EFontStyle.REGULAR, 900, "fonts/ttf/Exo2/Exo2.0-Black.otf"),
-  EXO2_BLACK_ITALIC (EFontType.OTF, EFontStyle.ITALIC, 900, "fonts/ttf/Exo2/Exo2.0-BlackItalic.otf");
+  // Algrey Sans
+  ALGREYA_SANS_THIN (EFontType.TTF, EFontStyle.REGULAR, EFontWeight.THIN, "fonts/ttf/AlegreyaSans/AlegreyaSans-Thin.ttf"),
+  ALGREYA_SANS_THIN_ITALIC (EFontType.TTF, EFontStyle.ITALIC, EFontWeight.THIN, "fonts/ttf/AlegreyaSans/AlegreyaSans-ThinItalic.ttf"),
+  ALGREYA_SANS_LIGHT (EFontType.TTF, EFontStyle.REGULAR, EFontWeight.LIGHT, "fonts/ttf/AlegreyaSans/AlegreyaSans-Light.ttf"),
+  ALGREYA_SANS_LIGHT_ITALIC (EFontType.TTF, EFontStyle.ITALIC, EFontWeight.LIGHT, "fonts/ttf/AlegreyaSans/AlegreyaSans-LightItalic.ttf"),
+  ALGREYA_SANS_NORMAL (EFontType.TTF, EFontStyle.REGULAR, EFontWeight.REGULAR, "fonts/ttf/AlegreyaSans/AlegreyaSans-Regular.ttf"),
+  ALGREYA_SANS_NORMAL_ITALIC (EFontType.TTF, EFontStyle.ITALIC, EFontWeight.REGULAR, "fonts/ttf/AlegreyaSans/AlegreyaSans-Italic.ttf"),
+  ALGREYA_SANS_MEDIUM (EFontType.TTF, EFontStyle.REGULAR, EFontWeight.MEDIUM, "fonts/ttf/AlegreyaSans/AlegreyaSans-Medium.ttf"),
+  ALGREYA_SANS_MEDIUM_ITALIC (EFontType.TTF, EFontStyle.ITALIC, EFontWeight.MEDIUM, "fonts/ttf/AlegreyaSans/AlegreyaSans-MediumItalic.ttf"),
+  ALGREYA_SANS_BOLD (EFontType.TTF, EFontStyle.REGULAR, EFontWeight.BOLD, "fonts/ttf/AlegreyaSans/AlegreyaSans-Bold.ttf"),
+  ALGREYA_SANS_BOLD_ITALIC (EFontType.TTF, EFontStyle.ITALIC, EFontWeight.BOLD, "fonts/ttf/AlegreyaSans/AlegreyaSans-BoldItalic.ttf"),
+  ALGREYA_SANS_EXTRA_BOLD (EFontType.TTF, EFontStyle.REGULAR, EFontWeight.EXTRA_BOLD, "fonts/ttf/AlegreyaSans/AlegreyaSans-ExtraBold.ttf"),
+  ALGREYA_SANS_EXTRA_BOLD_ITALIC (EFontType.TTF, EFontStyle.ITALIC, EFontWeight.EXTRA_BOLD, "fonts/ttf/AlegreyaSans/AlegreyaSans-ExtraBoldItalic.ttf"),
+  ALGREYA_SANS_BLACK (EFontType.TTF, EFontStyle.REGULAR, EFontWeight.BLACK, "fonts/ttf/AlegreyaSans/AlegreyaSans-Black.ttf"),
+  ALGREYA_SANS_BLACK_ITALIC (EFontType.TTF, EFontStyle.ITALIC, EFontWeight.BLACK, "fonts/ttf/AlegreyaSans/AlegreyaSans-BlackItalic.ttf"),
+  // Anaheim Regular
+  ANAHEIM_REGULAR (EFontType.TTF, EFontStyle.REGULAR, EFontWeight.REGULAR, "fonts/ttf/Anaheim/Anaheim-Regular.ttf"),
+  // Exo 2.0
+  EXO2_THIN (EFontType.OTF, EFontStyle.REGULAR, EFontWeight.THIN, "fonts/ttf/Exo2/Exo2.0-Thin.otf"),
+  EXO2_THIN_ITALIC (EFontType.OTF, EFontStyle.ITALIC, EFontWeight.THIN, "fonts/ttf/Exo2/Exo2.0-ThinItalic.otf"),
+  EXO2_EXTRA_LIGHT (EFontType.OTF, EFontStyle.REGULAR, EFontWeight.EXTRA_LIGHT, "fonts/ttf/Exo2/Exo2.0-ExtraLight.otf"),
+  EXO2_EXTRA_LIGHT_ITALIC (EFontType.OTF, EFontStyle.ITALIC, EFontWeight.EXTRA_LIGHT, "fonts/ttf/Exo2/Exo2.0-ExtraLightItalic.otf"),
+  EXO2_LIGHT (EFontType.OTF, EFontStyle.REGULAR, EFontWeight.LIGHT, "fonts/ttf/Exo2/Exo2.0-Light.otf"),
+  EXO2_LIGHT_ITALIC (EFontType.OTF, EFontStyle.ITALIC, EFontWeight.LIGHT, "fonts/ttf/Exo2/Exo2.0-LightItalic.otf"),
+  EXO2_NORMAL (EFontType.OTF, EFontStyle.REGULAR, EFontWeight.REGULAR, "fonts/ttf/Exo2/Exo2.0-Regular.otf"),
+  EXO2_NORMAL_ITALIC (EFontType.OTF, EFontStyle.ITALIC, EFontWeight.REGULAR, "fonts/ttf/Exo2/Exo2.0-Italic.otf"),
+  EXO2_MEDIUM (EFontType.OTF, EFontStyle.REGULAR, EFontWeight.MEDIUM, "fonts/ttf/Exo2/Exo2.0-Medium.otf"),
+  EXO2_MEDIUM_ITALIC (EFontType.OTF, EFontStyle.ITALIC, EFontWeight.MEDIUM, "fonts/ttf/Exo2/Exo2.0-MediumItalic.otf"),
+  EXO2_SEMI_BOLD (EFontType.OTF, EFontStyle.REGULAR, EFontWeight.SEMI_BOLD, "fonts/ttf/Exo2/Exo2.0-SemiBold.otf"),
+  EXO2_SEMI_BOLD_ITALIC (EFontType.OTF, EFontStyle.ITALIC, EFontWeight.SEMI_BOLD, "fonts/ttf/Exo2/Exo2.0-SemiBoldItalic.otf"),
+  EXO2_BOLD (EFontType.OTF, EFontStyle.REGULAR, EFontWeight.BOLD, "fonts/ttf/Exo2/Exo2.0-Bold.otf"),
+  EXO2_BOLD_ITALIC (EFontType.OTF, EFontStyle.ITALIC, EFontWeight.BOLD, "fonts/ttf/Exo2/Exo2.0-BoldItalic.otf"),
+  EXO2_EXTRA_BOLD (EFontType.OTF, EFontStyle.REGULAR, EFontWeight.EXTRA_BOLD, "fonts/ttf/Exo2/Exo2.0-ExtraBold.otf"),
+  EXO2_EXTRA_BOLD_ITALIC (EFontType.OTF, EFontStyle.ITALIC, EFontWeight.EXTRA_BOLD, "fonts/ttf/Exo2/Exo2.0-ExtraBoldItalic.otf"),
+  EXO2_BLACK (EFontType.OTF, EFontStyle.REGULAR, EFontWeight.BLACK, "fonts/ttf/Exo2/Exo2.0-Black.otf"),
+  EXO2_BLACK_ITALIC (EFontType.OTF, EFontStyle.ITALIC, EFontWeight.BLACK, "fonts/ttf/Exo2/Exo2.0-BlackItalic.otf");
 
   private final EFontType m_eFontType;
   private final EFontStyle m_eFontStyle;
-  private final int m_nWeight;
+  private final EFontWeight m_eWeight;
   private final String m_sPath;
 
   private EFontResource (@Nonnull final EFontType eFontType,
                          @Nonnull final EFontStyle eFontStyle,
-                         @Nonnegative final int nWeight,
+                         @Nonnull final EFontWeight eWeight,
                          @Nonnull @Nonempty final String sPath)
   {
     m_eFontType = eFontType;
     m_eFontStyle = eFontStyle;
-    m_nWeight = nWeight;
+    m_eWeight = eWeight;
     m_sPath = sPath;
   }
 
@@ -98,10 +100,10 @@ public enum EFontResource
     return m_eFontStyle;
   }
 
-  @Nonnegative
-  public int getFontWeight ()
+  @Nonnull
+  public EFontWeight getFontWeight ()
   {
-    return m_nWeight;
+    return m_eWeight;
   }
 
   @Nonnull
@@ -136,11 +138,11 @@ public enum EFontResource
 
   @Nonnull
   @ReturnsMutableCopy
-  public static Set <EFontResource> getAllResourcesOfFontWeight (final int nFontWeight)
+  public static Set <EFontResource> getAllResourcesOfFontWeight (@Nullable final EFontWeight eFontWeight)
   {
     final Set <EFontResource> ret = EnumSet.noneOf (EFontResource.class);
     for (final EFontResource e : values ())
-      if (e.getFontWeight () == nFontWeight)
+      if (e.getFontWeight ().equals (eFontWeight))
         ret.add (e);
     return ret;
   }
