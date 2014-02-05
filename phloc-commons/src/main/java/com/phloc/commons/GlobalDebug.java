@@ -87,16 +87,19 @@ public final class GlobalDebug
   }
 
   /**
-   * Enable or disable debug mode. If debug mode is disabled, also trace mode is
-   * disabled.
+   * Set the debug mode for the common Java components:
+   * <ul>
+   * <li>JAXP</li>
+   * <li>Javax Activation</li>
+   * <li>Javax Mail</li>
+   * </ul>
    * 
    * @param bDebugMode
-   *        <code>true</code> to enable, <code>false</code> to disable
+   *        <code>true</code> to enable debug mode, <code>false</code> to
+   *        disable it
    */
-  public static void setDebugModeDirect (final boolean bDebugMode)
+  public static void setJavaCommonComponentsDebugMode (final boolean bDebugMode)
   {
-    s_aDebugMode.set (bDebugMode);
-
     // Enable or disable JAXP debugging!
     // Note: this property is read only on Ubuntu, defined by the following
     // policy file: /etc/tomcat6/policy.d/04webapps.policy
@@ -107,6 +110,20 @@ public final class GlobalDebug
 
     // Enable javax.mail debugging
     SystemProperties.setPropertyValue ("mail.debug", Boolean.toString (bDebugMode));
+  }
+
+  /**
+   * Enable or disable debug mode. If debug mode is disabled, also trace mode is
+   * disabled.
+   * 
+   * @param bDebugMode
+   *        <code>true</code> to enable, <code>false</code> to disable
+   */
+  public static void setDebugModeDirect (final boolean bDebugMode)
+  {
+    s_aDebugMode.set (bDebugMode);
+
+    setJavaCommonComponentsDebugMode (bDebugMode);
 
     // If disabling debug mode, also disable trace mode
     if (!bDebugMode)
