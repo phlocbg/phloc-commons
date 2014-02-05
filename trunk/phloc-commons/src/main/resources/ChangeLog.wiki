@@ -2,6 +2,7 @@
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
 <table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody>
+<tr><td>2/3/14</td><td>add</td><td>api</td><td></td><td>Added new classes MutableBigDecimal and MutableBigInteger</td></tr>
 <tr><td>1/30/14</td><td>add</td><td>api</td><td></td><td>Extended LocaleFormatter API slightly</td></tr>
 <tr><td>1/30/14</td><td>add</td><td>api</td><td></td><td>Added new StringHelper methods getFirstToken and getLastToken</td></tr>
 <tr><td>1/25/14</td><td>add</td><td>api</td><td></td><td>Added new class FileSystemCharStreamResolver based on IReaderResolver and IWriterResolver</td></tr>
