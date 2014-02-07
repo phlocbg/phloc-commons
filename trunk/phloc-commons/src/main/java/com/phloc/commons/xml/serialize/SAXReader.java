@@ -29,17 +29,12 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.WillClose;
 import javax.annotation.concurrent.ThreadSafe;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-import org.xml.sax.helpers.XMLReaderFactory;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
-import com.phloc.commons.exceptions.InitializationException;
-import com.phloc.commons.factory.IFactory;
 import com.phloc.commons.io.IInputStreamProvider;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.io.streams.StreamUtils;
@@ -62,34 +57,6 @@ import com.phloc.commons.xml.sax.InputSourceFactory;
 @ThreadSafe
 public final class SAXReader
 {
-  public static final class SAXReaderFactory implements IFactory <org.xml.sax.XMLReader>
-  {
-    @Nonnull
-    public org.xml.sax.XMLReader create ()
-    {
-      try
-      {
-        org.xml.sax.XMLReader ret;
-        if (true)
-          ret = XMLReaderFactory.createXMLReader ();
-        else
-        {
-          // This fails with Xerces on the classpath
-          ret = SAXParserFactory.newInstance ().newSAXParser ().getXMLReader ();
-        }
-        return ret;
-      }
-      catch (final ParserConfigurationException ex)
-      {
-        throw new InitializationException ("Failed to instantiate XML reader!", ex);
-      }
-      catch (final SAXException ex)
-      {
-        throw new InitializationException ("Failed to instantiate XML reader!", ex);
-      }
-    }
-  }
-
   private static final IStatisticsHandlerTimer s_aSaxTimerHdl = StatisticsManager.getTimerHandler (SAXReader.class.getName ());
   private static final IStatisticsHandlerCounter s_aSaxSuccessCounterHdl = StatisticsManager.getCounterHandler (SAXReader.class.getName () +
                                                                                                                 "$success");
@@ -247,8 +214,19 @@ public final class SAXReader
 
     try
     {
-      // use parser from pool
-      final org.xml.sax.XMLReader aParser = s_aSAXPool.borrowObject ();
+      boolean bFromPool = false;
+      org.xml.sax.XMLReader aParser;
+      if (aSettings.requiresNewXMLParser ())
+      {
+        aParser = SAXReaderFactory.createXMLReader ();
+      }
+      else
+      {
+        // use parser from pool
+        aParser = s_aSAXPool.borrowObject ();
+        bFromPool = true;
+      }
+
       try
       {
         final StopWatch aSW = new StopWatch (true);
@@ -270,15 +248,18 @@ public final class SAXReader
         // Start parsing
         aParser.parse (aIS);
 
-        // Stats
+        // Statistics
         s_aSaxSuccessCounterHdl.increment ();
         s_aSaxTimerHdl.addTime (aSW.stopAndGetMillis ());
         return ESuccess.SUCCESS;
       }
       finally
       {
-        // Return parser to pool
-        s_aSAXPool.returnObject (aParser);
+        if (bFromPool)
+        {
+          // Return parser to pool
+          s_aSAXPool.returnObject (aParser);
+        }
       }
     }
     catch (final SAXParseException ex)
