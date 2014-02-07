@@ -464,6 +464,24 @@ public final class SAXReaderDefaultSettings
     }
   }
 
+  public static boolean requiresNewXMLParser ()
+  {
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      if (!s_aDefaultProperties.isEmpty () || !s_aDefaultFeatures.isEmpty ())
+        return true;
+
+      // Special case for JDK > 1.7.0_45 because of maximum entity expansion
+      // See http://docs.oracle.com/javase/tutorial/jaxp/limits/limits.html
+      return s_aDefaultEntityResolver != null;
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
+
   @Nonnull
   public static IExceptionHandler <Throwable> getExceptionHandler ()
   {

@@ -312,6 +312,16 @@ public class SAXReaderSettings implements ISAXReaderSettings, ICloneable <SAXRea
     return EChange.CHANGED;
   }
 
+  public boolean requiresNewXMLParser ()
+  {
+    if (!m_aProperties.isEmpty () || !m_aFeatures.isEmpty ())
+      return true;
+
+    // Special case for JDK > 1.7.0_45 because of maximum entity expansion
+    // See http://docs.oracle.com/javase/tutorial/jaxp/limits/limits.html
+    return m_aEntityResolver != null;
+  }
+
   @Nonnull
   public IExceptionHandler <Throwable> getExceptionHandler ()
   {

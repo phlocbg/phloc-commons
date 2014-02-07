@@ -84,6 +84,19 @@ public class CollectingSAXErrorHandler extends AbstractSAXErrorHandler implement
     }
   }
 
+  public boolean containsAtLeastOneError ()
+  {
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return m_aErrors.containsAtLeastOneError ();
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+  }
+
   /**
    * Clear all currently stored errors.
    * 

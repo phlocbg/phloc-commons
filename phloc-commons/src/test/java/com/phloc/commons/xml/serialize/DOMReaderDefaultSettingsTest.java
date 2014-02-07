@@ -36,7 +36,7 @@ public final class DOMReaderDefaultSettingsTest
   @Test
   public void testDefault ()
   {
-    assertFalse (DOMReaderDefaultSettings.requiresSeparateDocumentBuilderFactory ());
+    assertFalse (DOMReaderDefaultSettings.requiresNewXMLParser ());
     assertTrue (XMLFactory.DEFAULT_DOM_NAMESPACE_AWARE == DOMReaderDefaultSettings.isNamespaceAware ());
     assertTrue (XMLFactory.DEFAULT_DOM_VALIDATING == DOMReaderDefaultSettings.isValidating ());
     assertTrue (XMLFactory.DEFAULT_DOM_IGNORING_ELEMENT_CONTENT_WHITESPACE == DOMReaderDefaultSettings.isIgnoringElementContentWhitespace ());
