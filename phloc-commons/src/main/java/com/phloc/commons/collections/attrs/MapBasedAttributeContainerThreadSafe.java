@@ -241,6 +241,13 @@ public class MapBasedAttributeContainerThreadSafe extends MapBasedAttributeConta
   }
 
   @Override
+  @Nonnull
+  public MapBasedAttributeContainerThreadSafe getClone ()
+  {
+    return new MapBasedAttributeContainerThreadSafe (this);
+  }
+
+  @Override
   public boolean equals (final Object o)
   {
     m_aRWLock.readLock ().lock ();
