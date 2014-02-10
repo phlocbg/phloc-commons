@@ -121,6 +121,18 @@ public interface IAttributeContainer extends IReadonlyAttributeContainer, IClear
   EChange setAttributes (@Nullable Map <String, ?> aValues);
 
   /**
+   * Set/overwrite an arbitrary number of attribute values.
+   * 
+   * @param aValues
+   *        The attributes to be set. May be <code>null</code>.
+   * @return {@link EChange#CHANGED} if something changed,
+   *         {@link EChange#UNCHANGED} otherwise.
+   * @see #setAttribute(String,Object)
+   */
+  @Nonnull
+  EChange setAttributes (@Nullable IReadonlyAttributeContainer aValues);
+
+  /**
    * Remove the specified attribute from the container.
    * 
    * @param sName
