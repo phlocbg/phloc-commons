@@ -2,6 +2,11 @@
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
 <table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody>
+<tr><td>2/7/14</td><td>update</td><td>tech</td><td></td><td>SAXReader now also has the possibility to explicitly create a new object</td></tr>
+<tr><td>2/7/14</td><td>update</td><td>tech</td><td></td><td>Improved implementation of requiresNewXMLParser so that it returns true if an entity resolver is present - see http://docs.oracle.com/javase/tutorial/jaxp/limits/limits.html</td></tr>
+<tr><td>2/7/14</td><td>add</td><td>api</td><td></td><td>Added method IBaseXMLReaderSettings.requiresNewXMLParser so that is is available for SAX parsers as well</td></tr>
+<tr><td>2/7/14</td><td>change</td><td>api</td><td>*yes*</td><td>Renamed DOMReaderDefaultSettings.requiresSeparateDocumentBuilderFactory to requiresNewXMLParser</td></tr>
+<tr><td>2/7/14</td><td>change</td><td>api</td><td>*yes*</td><td>Renamed DOMReaderSettings.requiresSeparateDocumentBuilderFactory to requiresNewXMLParser</td></tr>
 <tr><td>2/3/14</td><td>add</td><td>api</td><td></td><td>Added new classes MutableBigDecimal and MutableBigInteger</td></tr>
 <tr><td>1/30/14</td><td>add</td><td>api</td><td></td><td>Extended LocaleFormatter API slightly</td></tr>
 <tr><td>1/30/14</td><td>add</td><td>api</td><td></td><td>Added new StringHelper methods getFirstToken and getLastToken</td></tr>
