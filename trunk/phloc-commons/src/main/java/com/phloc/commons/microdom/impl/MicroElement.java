@@ -309,6 +309,28 @@ public final class MicroElement extends AbstractMicroNodeWithChildren implements
     return m_sTagName;
   }
 
+  @Nonnegative
+  public int getChildElementCount ()
+  {
+    int ret = 0;
+    if (hasChildren ())
+      for (final IMicroNode aChild : directGetChildren ())
+      {
+        if (aChild.isElement ())
+        {
+          ++ret;
+        }
+        else
+          if (aChild.isContainer () && aChild.hasChildren ())
+          {
+            for (final IMicroNode aContChild : aChild.getChildren ())
+              if (aContChild.isElement ())
+                ++ret;
+          }
+      }
+    return ret;
+  }
+
   /**
    * @deprecated Use {@link #getAllChildElements()} instead
    */
