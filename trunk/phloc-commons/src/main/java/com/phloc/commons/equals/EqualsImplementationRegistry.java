@@ -107,10 +107,21 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
     m_aRWLock.writeLock ().lock ();
     try
     {
-      if (m_aMap.containsKey (aClass))
-        s_aLogger.warn ("Another equals implementation for class " + aClass + " is already implemented!");
-      else
+      final IEqualsImplementation aOldImpl = m_aMap.get (aClass);
+      if (aOldImpl == null)
         m_aMap.put (aClass, aImpl);
+      else
+      {
+        // Avoid the warning when the passed implementation equals the stored
+        // implementation
+        if (aOldImpl != aImpl)
+          s_aLogger.warn ("Another equals implementation for class " +
+                          aClass +
+                          " is already registered (" +
+                          aOldImpl.toString () +
+                          ") so it is not overwritten with " +
+                          aImpl.toString ());
+      }
     }
     finally
     {
