@@ -105,10 +105,21 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
     m_aRWLock.writeLock ().lock ();
     try
     {
-      if (m_aMap.containsKey (aClass))
-        s_aLogger.warn ("Another hashCode implementation for class " + aClass + " is already registered!");
-      else
+      final IHashCodeImplementation aOldImpl = m_aMap.get (aClass);
+      if (aOldImpl == null)
         m_aMap.put (aClass, aImpl);
+      else
+        if (aOldImpl != aImpl)
+        {
+          // Avoid the warning when the passed implementation equals the stored
+          // implementation
+          s_aLogger.warn ("Another hashCode implementation for class " +
+                          aClass +
+                          " is already registered (" +
+                          aOldImpl.toString () +
+                          ") so it is not overwritten with " +
+                          aImpl.toString ());
+        }
     }
     finally
     {
