@@ -21,6 +21,8 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Locale;
+
 import org.junit.Test;
 
 import com.phloc.commons.string.StringHelper;
@@ -39,8 +41,10 @@ public final class EMessageDigestAlgorithmTest
     {
       assertTrue (StringHelper.hasText (eAlgo.getAlgorithm ()));
       assertSame (eAlgo, EMessageDigestAlgorithm.getFromStringIgnoreCase (eAlgo.getAlgorithm ()));
-      assertSame (eAlgo, EMessageDigestAlgorithm.getFromStringIgnoreCase (eAlgo.getAlgorithm ().toLowerCase ()));// NOPMD
-      assertSame (eAlgo, EMessageDigestAlgorithm.getFromStringIgnoreCase (eAlgo.getAlgorithm ().toUpperCase ()));// NOPMD
+      assertSame (eAlgo,
+                  EMessageDigestAlgorithm.getFromStringIgnoreCase (eAlgo.getAlgorithm ().toLowerCase (Locale.US)));
+      assertSame (eAlgo,
+                  EMessageDigestAlgorithm.getFromStringIgnoreCase (eAlgo.getAlgorithm ().toUpperCase (Locale.US)));
       assertSame (eAlgo, EMessageDigestAlgorithm.valueOf (eAlgo.name ()));
     }
     assertNull (EMessageDigestAlgorithm.getFromStringIgnoreCase (null));

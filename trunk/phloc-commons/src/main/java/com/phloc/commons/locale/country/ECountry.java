@@ -531,7 +531,7 @@ public enum ECountry implements IHasDisplayText, IHasID <String>
   {
     if (StringHelper.hasText (sISO))
     {
-      final String sRealISO = sISO.toLowerCase ();
+      final String sRealISO = sISO.toLowerCase (Locale.US);
       for (final ECountry eCountry : values ())
         if (!eCountry.isCountrySub ())
           if (eCountry.m_sISOCountryCode.equals (sRealISO))

@@ -22,6 +22,8 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.fail;
 
+import java.util.Locale;
+
 import org.junit.Test;
 
 import com.phloc.commons.compare.ESortOrder;
@@ -102,10 +104,10 @@ public final class EnumHelperTest
       assertNull (EnumHelper.getFromIDCaseInsensitiveOrNull (EErrorLevel.class, 'X' + e.getID ()));
       assertSame (e, EnumHelper.getFromIDCaseInsensitiveOrDefault (EErrorLevel.class, e.getID (), EErrorLevel.INFO));
       assertSame (e, EnumHelper.getFromIDCaseInsensitiveOrDefault (EErrorLevel.class,
-                                                                   e.getID ().toLowerCase (),
+                                                                   e.getID ().toLowerCase (Locale.US),
                                                                    EErrorLevel.INFO));
       assertSame (e, EnumHelper.getFromIDCaseInsensitiveOrDefault (EErrorLevel.class,
-                                                                   e.getID ().toUpperCase (),
+                                                                   e.getID ().toUpperCase (Locale.US),
                                                                    EErrorLevel.INFO));
       assertSame (EErrorLevel.INFO,
                   EnumHelper.getFromIDCaseInsensitiveOrDefault (EErrorLevel.class, e.getID () + 'X', EErrorLevel.INFO));
