@@ -249,17 +249,17 @@ public final class LocaleUtils
 
     // Unify elements
     if (sLanguage.length () == 2)
-      sLanguage = sLanguage.toLowerCase ();// NOPMD
+      sLanguage = sLanguage.toLowerCase (Locale.US);
     else
       sLanguage = "";
 
     if (sCountry.length () == 2)
-      sCountry = sCountry.toUpperCase ();// NOPMD
+      sCountry = sCountry.toUpperCase (Locale.US);
     else
       sCountry = "";
 
     if (sVariant.length () > 0 && (sLanguage.length () == 2 || sCountry.length () == 2))
-      sVariant = sVariant.toUpperCase ();// NOPMD
+      sVariant = sVariant.toUpperCase (Locale.US);
     else
       sVariant = "";
 

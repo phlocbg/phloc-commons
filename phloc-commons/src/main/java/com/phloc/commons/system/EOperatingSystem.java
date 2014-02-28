@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.system;
 
+import java.util.Locale;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -28,7 +30,7 @@ import com.phloc.commons.name.IHasDisplayName;
 
 /**
  * This enumeration is used to determine the currently running Operating system.
- *
+ * 
  * @author Philip Helger
  */
 public enum EOperatingSystem implements IHasDisplayName
@@ -88,7 +90,7 @@ public enum EOperatingSystem implements IHasDisplayName
 
   /**
    * Creates a new operating system value with the provided name.
-   *
+   * 
    * @param sDisplayName
    *        The human-readable name for the operating system.
    * @param bUnixBased
@@ -119,7 +121,7 @@ public enum EOperatingSystem implements IHasDisplayName
    * <li>Mac OS X</li>
    * <li>Solaris</li>
    * </ul>
-   *
+   * 
    * @return <code>true</code> if the provided operating system is UNIX-based,
    *         or <code>false</code> if not.
    */
@@ -139,7 +141,7 @@ public enum EOperatingSystem implements IHasDisplayName
   /**
    * Retrieves the operating system for the provided name. The name provided
    * should come from the <code>os.name</code> system property.
-   *
+   * 
    * @param sOSName
    *        The name for which to retrieve the corresponding operating system.
    * @return The operating system for the provided name. If the operating system
@@ -152,7 +154,7 @@ public enum EOperatingSystem implements IHasDisplayName
     if (sOSName == null)
       return UNKNOWN;
 
-    final String sLowerName = sOSName.toLowerCase ();// NOPMD
+    final String sLowerName = sOSName.toLowerCase (Locale.US);
     if (sLowerName.contains ("solaris") || sLowerName.contains ("sunos"))
       return SOLARIS;
     if (sLowerName.contains ("linux"))
