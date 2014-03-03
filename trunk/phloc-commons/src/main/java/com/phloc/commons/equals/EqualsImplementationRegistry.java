@@ -33,6 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.annotations.UseDirectEqualsAndHashCode;
+import com.phloc.commons.cache.AnnotationUsageCache;
 import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.lang.ClassHierarchyCache;
 import com.phloc.commons.lang.ServiceLoaderUtils;
@@ -76,7 +77,7 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
   private final Map <Class <?>, IEqualsImplementation> m_aMap = new WeakHashMap <Class <?>, IEqualsImplementation> ();
 
   // Cache for classes where direct implementation should be used
-  private final Map <String, Boolean> m_aDirectEquals = new HashMap <String, Boolean> ();
+  private final AnnotationUsageCache m_aDirectEquals = new AnnotationUsageCache (UseDirectEqualsAndHashCode.class);
 
   // Cache for classes that implement equals directly
   private final Map <String, Boolean> m_aImplementsEquals = new HashMap <String, Boolean> ();
@@ -145,41 +146,7 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
 
   private boolean _isUseDirectEquals (@Nonnull final Class <?> aClass)
   {
-    final String sClassName = aClass.getName ();
-
-    Boolean aUseDirectEquals;
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      aUseDirectEquals = m_aDirectEquals.get (sClassName);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
-
-    if (aUseDirectEquals == null)
-    {
-      m_aRWLock.writeLock ().lock ();
-      try
-      {
-        // Try again in write lock
-        aUseDirectEquals = m_aDirectEquals.get (sClassName);
-        if (aUseDirectEquals == null)
-        {
-          // Determine
-          final boolean bHasAnnotation = aClass.getAnnotation (UseDirectEqualsAndHashCode.class) != null;
-          aUseDirectEquals = Boolean.valueOf (bHasAnnotation);
-          m_aDirectEquals.put (sClassName, aUseDirectEquals);
-        }
-      }
-      finally
-      {
-        m_aRWLock.writeLock ().unlock ();
-      }
-    }
-
-    return aUseDirectEquals.booleanValue ();
+    return m_aDirectEquals.hasAnnotation (aClass);
   }
 
   private boolean _implementsEqualsItself (@Nonnull final Class <?> aClass)
@@ -290,15 +257,7 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
         if (ClassHelper.isInterface (aMatchingClass) && _implementsEqualsItself (aClass))
         {
           // Remember to use direct implementation
-          m_aRWLock.writeLock ().lock ();
-          try
-          {
-            m_aDirectEquals.put (aClass.getName (), Boolean.TRUE);
-          }
-          finally
-          {
-            m_aRWLock.writeLock ().unlock ();
-          }
+          m_aDirectEquals.setAnnotation (aClass, true);
           return null;
         }
 
@@ -318,15 +277,7 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
         return new ArrayEqualsImplementation ();
 
       // Remember to use direct implementation
-      m_aRWLock.writeLock ().lock ();
-      try
-      {
-        m_aDirectEquals.put (aClass.getName (), Boolean.TRUE);
-      }
-      finally
-      {
-        m_aRWLock.writeLock ().unlock ();
-      }
+      m_aDirectEquals.setAnnotation (aClass, true);
     }
 
     // No special handler found

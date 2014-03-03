@@ -20,6 +20,16 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2014-03-03" category="tech" action="fix">
+    <change>
+      <text locale="en">Fixed an error when using the XMLReaderFactory from JDK 1.6 by cloning and fixing the class to XMLReaderFactoryPhloc</text>
+    </change>
+  </entry>
+  <entry date="2014-03-03" category="api" action="add">
+    <change>
+      <text locale="en">Added new class AnnotationUsageCache</text>
+    </change>
+  </entry>
   <entry date="2014-03-03" category="api" action="add">
     <change>
       <text locale="en">Extended IMicroDataAware API with new appendData/prependData overloads</text>

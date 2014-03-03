@@ -22,7 +22,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.XMLReaderFactory;
 
 import com.phloc.commons.exceptions.InitializationException;
 import com.phloc.commons.factory.IFactory;
@@ -42,7 +41,7 @@ public final class SAXReaderFactory implements IFactory <org.xml.sax.XMLReader>
     {
       org.xml.sax.XMLReader ret;
       if (true)
-        ret = XMLReaderFactory.createXMLReader ();
+        ret = XMLReaderFactoryPhloc.createXMLReader ();
       else
       {
         // This fails with Xerces on the classpath
