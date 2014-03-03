@@ -239,7 +239,7 @@ public final class XMLReaderFactoryPhloc
             reader = new BufferedReader (new InputStreamReader (in, "UTF8"));
             className = reader.readLine ();
             in.close ();
-            // Remember the read class name
+            // [phloc] Remember the read class name
             _jarreadClassname = className;
           }
         }
@@ -248,7 +248,7 @@ public final class XMLReaderFactoryPhloc
       }
       else
       {
-        // Use the previously read class name - may be null!
+        // [phloc] Use the previously read class name - may be null!
         className = _jarreadClassname;
       }
     }
