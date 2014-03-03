@@ -32,7 +32,6 @@ import com.phloc.commons.microdom.serialize.MicroReader;
 import com.phloc.commons.microdom.serialize.MicroWriter;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.xml.EXMLVersion;
-import com.phloc.commons.xml.XMLFactory;
 
 /**
  * Test whether reading of XML 1.1 documents is valid.<br>
@@ -77,11 +76,18 @@ public final class FuncTestReadWriteXML11
     final IMicroDocument aDoc2 = MicroReader.readMicroXML (new File (sFilename2));
     assertNotNull (aDoc2);
 
-    // When using JAXP with Java 1.6.0_22 or 1.6.0_29 (tested only with this
+    // When using JAXP with Java 1.6.0_22, 1.6.0_29 or 1.6.0_45 (tested only
+    // with this
     // version) the following test fails. That's why xerces must be included!
-    assertTrue ("Documents are different when written to XML 1.1!\nUsed document builder: " +
-                XMLFactory.getDocumentBuilder ().getClass ().toString () +
+    // The bogus XMLReader is
+    // com.sun.org.apache.xerces.internal.parsers.SAXParser
+    assertTrue ("Documents are different when written to XML 1.1!\nUsed SAX XML reader: " +
+                SAXReaderFactory.createXMLReader ().getClass ().getName () +
                 "\nJava version: " +
-                SystemProperties.getJavaVersion (), aDoc.isEqualContent (aDoc2));
+                SystemProperties.getJavaVersion () +
+                "\n" +
+                MicroWriter.getXMLString (aDoc) +
+                "\n\n" +
+                MicroWriter.getXMLString (aDoc2), aDoc.isEqualContent (aDoc2));
   }
 }
