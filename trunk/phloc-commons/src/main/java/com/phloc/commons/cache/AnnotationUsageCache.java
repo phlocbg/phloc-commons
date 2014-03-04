@@ -1,6 +1,8 @@
 package com.phloc.commons.cache;
 
 import java.lang.annotation.Annotation;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -28,13 +30,33 @@ public class AnnotationUsageCache
   @GuardedBy ("m_aRWLock")
   private final Map <String, Boolean> m_aMap = new HashMap <String, Boolean> ();
 
+  /**
+   * Constructor
+   * 
+   * @param aAnnotationClass
+   *        The annotation class to store the existance of. It must have the
+   *        {@link RetentionPolicy#RUNTIME} to be usable within this class!
+   */
   public AnnotationUsageCache (@Nonnull final Class <? extends Annotation> aAnnotationClass)
   {
     if (aAnnotationClass == null)
       throw new NullPointerException ("AnnotationClass");
+
+    // Check retention policy
+    final Retention aRetention = aAnnotationClass.getAnnotation (Retention.class);
+    final RetentionPolicy eRetentionPolicy = aRetention == null ? RetentionPolicy.CLASS : aRetention.value ();
+    if (eRetentionPolicy != RetentionPolicy.RUNTIME)
+      throw new IllegalArgumentException ("RetentionPolicy must be of type RUNTIME to be used within this cache. The current value ist " +
+                                          eRetentionPolicy);
+
+    // Save to members
     m_aAnnotationClass = aAnnotationClass;
   }
 
+  /**
+   * @return The annotation class passed in the constructor. Never
+   *         <code>null</code>.
+   */
   @Nonnull
   public final Class <? extends Annotation> getAnnotationClass ()
   {
