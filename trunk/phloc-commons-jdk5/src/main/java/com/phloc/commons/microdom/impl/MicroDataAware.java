@@ -72,9 +72,24 @@ final class MicroDataAware implements IMicroDataAware, ICloneable <MicroDataAwar
     m_aSB.append (aChars, nOfs, nLen);
   }
 
+  public void appendData (final char cChar)
+  {
+    m_aSB.append (cChar);
+  }
+
   public void prependData (@Nullable final CharSequence sData)
   {
     m_aSB.insert (0, sData);
+  }
+
+  public void prependData (@Nonnull final char [] aChars, @Nonnegative final int nOfs, @Nonnegative final int nLen)
+  {
+    m_aSB.insert (0, aChars, nOfs, nLen);
+  }
+
+  public void prependData (final char cChar)
+  {
+    m_aSB.insert (0, cChar);
   }
 
   @Nonnull

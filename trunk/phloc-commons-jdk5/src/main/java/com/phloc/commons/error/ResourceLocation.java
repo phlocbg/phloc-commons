@@ -23,6 +23,7 @@ import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
+import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -91,7 +92,7 @@ public class ResourceLocation implements IResourceLocation
   public String getAsString ()
   {
     String ret = "";
-    if (m_sResourceID != null)
+    if (StringHelper.hasText (m_sResourceID))
       ret += m_sResourceID;
     if (m_nLineNumber != ILLEGAL_NUMBER)
     {
@@ -100,7 +101,7 @@ public class ResourceLocation implements IResourceLocation
       else
         ret += "(" + m_nLineNumber + ":?)";
     }
-    if (m_sField != null)
+    if (StringHelper.hasText (m_sField))
     {
       if (ret.length () > 0)
         ret += " @ ";

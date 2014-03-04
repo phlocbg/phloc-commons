@@ -110,4 +110,15 @@ public interface IBaseXMLReaderSettings
    */
   @Nonnull
   IExceptionHandler <Throwable> getExceptionHandler ();
+
+  /**
+   * Check if the current settings require a separate DOM
+   * {@link javax.xml.parsers.DocumentBuilderFactory}/SAX
+   * {@link org.xml.sax.XMLReader} object or if a pooled default object can be
+   * used.
+   * 
+   * @return <code>true</code> if a separate parser object is required,
+   *         <code>false</code> if not.
+   */
+  boolean requiresNewXMLParser ();
 }

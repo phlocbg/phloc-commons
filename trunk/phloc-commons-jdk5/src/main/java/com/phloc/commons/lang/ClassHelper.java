@@ -21,7 +21,6 @@ import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.AccessController;
-import java.security.PrivilegedAction;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
@@ -36,6 +35,9 @@ import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
+import com.phloc.commons.priviledged.PrivilegedActionGetClassLoader;
+import com.phloc.commons.priviledged.PrivilegedActionGetContextClassLoader;
+import com.phloc.commons.priviledged.PrivilegedActionGetSystemClassLoader;
 
 /**
  * Small class helper utility stuff class.
@@ -81,13 +83,7 @@ public final class ClassHelper
     if (System.getSecurityManager () == null)
       return ClassLoader.getSystemClassLoader ();
 
-    return AccessController.doPrivileged (new PrivilegedAction <ClassLoader> ()
-    {
-      public ClassLoader run ()
-      {
-        return ClassLoader.getSystemClassLoader ();
-      }
-    });
+    return AccessController.doPrivileged (new PrivilegedActionGetSystemClassLoader ());
   }
 
   @Nonnull
@@ -96,13 +92,7 @@ public final class ClassHelper
     if (System.getSecurityManager () == null)
       return Thread.currentThread ().getContextClassLoader ();
 
-    return AccessController.doPrivileged (new PrivilegedAction <ClassLoader> ()
-    {
-      public ClassLoader run ()
-      {
-        return Thread.currentThread ().getContextClassLoader ();
-      }
-    });
+    return AccessController.doPrivileged (new PrivilegedActionGetContextClassLoader ());
   }
 
   @Nonnull
@@ -111,13 +101,7 @@ public final class ClassHelper
     if (System.getSecurityManager () == null)
       return aClass.getClassLoader ();
 
-    return AccessController.doPrivileged (new PrivilegedAction <ClassLoader> ()
-    {
-      public ClassLoader run ()
-      {
-        return aClass.getClassLoader ();
-      }
-    });
+    return AccessController.doPrivileged (new PrivilegedActionGetClassLoader (aClass));
   }
 
   @Nonnull
@@ -418,5 +402,18 @@ public final class ClassHelper
 
     // Not convertible
     return false;
+  }
+
+  /**
+   * <code>null</code>-safe helper method to determine the class of an object.
+   * 
+   * @param aObject
+   *        The object to query. May be <code>null</code>.
+   * @return <code>null</code> if the passed object is <code>null</code>.
+   */
+  @Nullable
+  public static Class <?> getClass (@Nullable final Object aObject)
+  {
+    return aObject == null ? null : aObject.getClass ();
   }
 }

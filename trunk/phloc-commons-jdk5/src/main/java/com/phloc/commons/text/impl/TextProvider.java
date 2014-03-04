@@ -62,7 +62,7 @@ public class TextProvider extends AbstractTextProvider implements ISimpleMultiLi
 
   private final Map <Locale, String> m_aTexts = new HashMap <Locale, String> ();
 
-  protected TextProvider ()
+  public TextProvider ()
   {}
 
   /**
@@ -124,6 +124,9 @@ public class TextProvider extends AbstractTextProvider implements ISimpleMultiLi
   @Nonnull
   protected final TextProvider internalSetText (@Nonnull final Locale aContentLocale, @Nullable final String sValue)
   {
+    if (aContentLocale == null)
+      throw new NullPointerException ("contentLocale");
+
     if (sValue != null && s_aConsistencyChecksEnabled.get ())
       _performConsistencyChecks (sValue);
 
@@ -192,6 +195,12 @@ public class TextProvider extends AbstractTextProvider implements ISimpleMultiLi
   public final Set <Locale> getAllLocales ()
   {
     return ContainerHelper.newSet (m_aTexts.keySet ());
+  }
+
+  @Nonnegative
+  public final int getLocaleCount ()
+  {
+    return m_aTexts.size ();
   }
 
   public final boolean containsLocale (@Nullable final Locale aLocale)

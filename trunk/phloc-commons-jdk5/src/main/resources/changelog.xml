@@ -20,6 +20,116 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <entry date="2014-03-04" category="api" action="add">
+    <change>
+      <text locale="en">Added new class ENewLineMode to determine the different newline modes</text>
+    </change>
+  </entry>
+  <entry date="2014-03-03" category="api" action="add">
+    <change>
+      <text locale="en">Added new classes PrivilegedAction* for classloader handling</text>
+    </change>
+  </entry>
+  <entry date="2014-03-03" category="tech" action="fix">
+    <change>
+      <text locale="en">Fixed an error when using the XMLReaderFactory from JDK 1.6 by cloning and fixing the class to XMLReaderFactoryPhloc</text>
+    </change>
+  </entry>
+  <entry date="2014-03-03" category="api" action="add">
+    <change>
+      <text locale="en">Added new class AnnotationUsageCache</text>
+    </change>
+  </entry>
+  <entry date="2014-03-03" category="api" action="add">
+    <change>
+      <text locale="en">Extended IMicroDataAware API with new appendData/prependData overloads</text>
+    </change>
+  </entry>
+  <entry date="2014-02-26" category="api" action="add">
+    <change>
+      <text locale="en">Added new annotation @Until which can be considered the counterpart to @Since</text>
+    </change>
+  </entry>
+  <entry date="2014-02-24" category="api" action="add">
+    <change>
+      <text locale="en">Added new method IMicroElement.getChildElementCount</text>
+    </change>
+  </entry>
+  <entry date="2014-02-07" category="tech" action="update">
+    <change>
+      <text locale="en">SAXReader now also has the possibility to explicitly create a new object</text>
+    </change>
+  </entry>
+  <entry date="2014-02-07" category="tech" action="update">
+    <change>
+      <text locale="en">Improved implementation of requiresNewXMLParser so that it returns true if an entity resolver is present - see http://docs.oracle.com/javase/tutorial/jaxp/limits/limits.html</text>
+    </change>
+  </entry>
+  <entry date="2014-02-07" category="api" action="add">
+    <change>
+      <text locale="en">Added method IBaseXMLReaderSettings.requiresNewXMLParser so that is is available for SAX parsers as well</text>
+    </change>
+  </entry>
+  <entry date="2014-02-07" category="api" action="change" incompatible="true">
+    <change>
+      <text locale="en">Renamed DOMReaderDefaultSettings.requiresSeparateDocumentBuilderFactory to requiresNewXMLParser</text>
+    </change>
+  </entry>
+  <entry date="2014-02-07" category="api" action="change" incompatible="true">
+    <change>
+      <text locale="en">Renamed DOMReaderSettings.requiresSeparateDocumentBuilderFactory to requiresNewXMLParser</text>
+    </change>
+  </entry>
+  <entry date="2014-02-03" category="api" action="add">
+    <change>
+      <text locale="en">Added new classes MutableBigDecimal and MutableBigInteger</text>
+    </change>
+  </entry>
+  <entry date="2014-01-30" category="api" action="add">
+    <change>
+      <text locale="en">Extended LocaleFormatter API slightly</text>
+    </change>
+  </entry>
+  <entry date="2014-01-30" category="api" action="add">
+    <change>
+      <text locale="en">Added new StringHelper methods getFirstToken and getLastToken</text>
+    </change>
+  </entry>
+  <entry date="2014-01-25" category="api" action="add">
+    <change>
+      <text locale="en">Added new class FileSystemCharStreamResolver based on IReaderResolver and IWriterResolver</text>
+    </change>
+  </entry>
+  <entry date="2014-01-25" category="api" action="change">
+    <change>
+      <text locale="en">Renamed class FileSystemStreamResolver to FileSystemByteStreamResolver and deprecated old name</text>
+    </change>
+  </entry>
+  <entry date="2014-01-25" category="api" action="add">
+    <change>
+      <text locale="en">Added classes IReaderResolver and IWriterResolver</text>
+    </change>
+  </entry>
+  <entry date="2014-01-20" category="api" action="add">
+    <change>
+      <text locale="en">Added classes IHasErrorField and ComparatorHasErrorID</text>
+    </change>
+  </entry>
+  <entry date="2014-01-20" category="api" action="add">
+    <change>
+      <text locale="en">Extracted interface ISimpleTextProvider from ITextProvider containing the methods without arguments.</text>
+    </change>
+  </entry>
+  <entry date="2014-01-20" category="api" action="add" incompatible="true">
+    <change>
+      <text locale="en">Extended IHasLocales with containsLocale methods</text>
+    </change>
+  </entry>
+  <entry date="2014-01-16" category="api" action="add">
+    <change>
+      <text locale="en">Extended TextFormatter class</text>
+    </change>
+  </entry>
   <release date="2014-01-15" version="4.1.2" />
   <entry date="2014-01-15" category="tech" action="fix">
     <change>

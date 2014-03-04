@@ -32,16 +32,16 @@ import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.mock.PhlocTestUtils;
 
 /**
- * Test class for class {@link FileSystemStreamResolver}.
+ * Test class for class {@link FileSystemByteStreamResolver}.
  * 
  * @author Philip Helger
  */
-public final class FileSystemStreamResolverTest
+public final class FileSystemByteStreamResolverTest
 {
   @Test
   public void testAll ()
   {
-    final FileSystemStreamResolver aFSSR = new FileSystemStreamResolver (new File ("."));
+    final FileSystemByteStreamResolver aFSSR = new FileSystemByteStreamResolver (new File ("."));
     final InputStream aIS = aFSSR.getInputStream ("pom.xml");
     assertNotNull (aIS);
     StreamUtils.close (aIS);
@@ -51,11 +51,11 @@ public final class FileSystemStreamResolverTest
     StreamUtils.close (aOS);
     assertTrue (FileOperations.deleteFile (new File ("$deleteme.txt")).isSuccess ());
 
-    PhlocTestUtils.testDefaultImplementationWithEqualContentObject (new FileSystemStreamResolver (new File (".")),
-                                                                    new FileSystemStreamResolver (new File (".")));
-    PhlocTestUtils.testDefaultImplementationWithEqualContentObject (new FileSystemStreamResolver (new File (".")),
-                                                                    new FileSystemStreamResolver ("."));
-    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (new FileSystemStreamResolver (new File (".")),
-                                                                        new FileSystemStreamResolver (new File ("..")));
+    PhlocTestUtils.testDefaultImplementationWithEqualContentObject (new FileSystemByteStreamResolver (new File (".")),
+                                                                    new FileSystemByteStreamResolver (new File (".")));
+    PhlocTestUtils.testDefaultImplementationWithEqualContentObject (new FileSystemByteStreamResolver (new File (".")),
+                                                                    new FileSystemByteStreamResolver ("."));
+    PhlocTestUtils.testDefaultImplementationWithDifferentContentObject (new FileSystemByteStreamResolver (new File (".")),
+                                                                        new FileSystemByteStreamResolver (new File ("..")));
   }
 }

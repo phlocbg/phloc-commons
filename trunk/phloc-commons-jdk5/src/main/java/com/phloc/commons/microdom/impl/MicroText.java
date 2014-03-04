@@ -116,9 +116,24 @@ public final class MicroText extends AbstractMicroNode implements IMicroText
     m_aData.appendData (aChars, nOfs, nLen);
   }
 
+  public void appendData (final char cChar)
+  {
+    m_aData.appendData (cChar);
+  }
+
   public void prependData (@Nullable final CharSequence sData)
   {
     m_aData.prependData (sData);
+  }
+
+  public void prependData (@Nonnull final char [] aChars, @Nonnegative final int nOfs, @Nonnegative final int nLen)
+  {
+    m_aData.prependData (aChars, nOfs, nLen);
+  }
+
+  public void prependData (final char cChar)
+  {
+    m_aData.prependData (cChar);
   }
 
   public void setData (@Nullable final CharSequence sData)

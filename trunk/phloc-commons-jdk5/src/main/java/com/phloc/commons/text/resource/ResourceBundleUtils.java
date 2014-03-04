@@ -40,6 +40,7 @@ import com.phloc.commons.lang.ClassHelper;
 @Immutable
 public final class ResourceBundleUtils
 {
+  @SuppressWarnings ("unused")
   private static final Logger s_aLogger = LoggerFactory.getLogger (ResourceBundleUtils.class);
 
   @SuppressWarnings ("unused")
@@ -151,13 +152,19 @@ public final class ResourceBundleUtils
     clearCache (ClassHelper.getDefaultClassLoader ());
   }
 
+  /**
+   * Clear the complete resource bundle cache using the specified class loader!
+   * 
+   * @param aClassLoader
+   *        The class loader to be used. May not be <code>null</code>.
+   */
   public static void clearCache (@Nonnull final ClassLoader aClassLoader)
   {
     // IFJDK5
     // ELSE
 //    ResourceBundle.clearCache (aClassLoader);
+//    if (s_aLogger.isDebugEnabled ())
+//      s_aLogger.debug ("Cache was cleared: " + ResourceBundle.class.getName () + "; classloader=" + aClassLoader);
     // ENDIF
-    if (s_aLogger.isDebugEnabled ())
-      s_aLogger.debug ("Cache was cleared: " + ResourceBundle.class.getName () + "; classloader=" + aClassLoader);
   }
 }

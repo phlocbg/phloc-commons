@@ -33,6 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.annotations.UseDirectEqualsAndHashCode;
+import com.phloc.commons.cache.AnnotationUsageCache;
 import com.phloc.commons.lang.ClassHelper;
 import com.phloc.commons.lang.ClassHierarchyCache;
 import com.phloc.commons.lang.ServiceLoaderUtils;
@@ -73,7 +74,7 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
   private final Map <Class <?>, IHashCodeImplementation> m_aMap = new WeakHashMap <Class <?>, IHashCodeImplementation> ();
 
   // Cache for classes where direct implementation should be used
-  private final Map <String, Boolean> m_aDirectHashCode = new HashMap <String, Boolean> ();
+  private final AnnotationUsageCache m_aDirectHashCode = new AnnotationUsageCache (UseDirectEqualsAndHashCode.class);
 
   // Cache for classes that implement hashCode directly
   private final Map <String, Boolean> m_aImplementsHashCode = new HashMap <String, Boolean> ();
@@ -105,10 +106,21 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
     m_aRWLock.writeLock ().lock ();
     try
     {
-      if (m_aMap.containsKey (aClass))
-        s_aLogger.warn ("Another hashCode implementation for class " + aClass + " is already registered!");
-      else
+      final IHashCodeImplementation aOldImpl = m_aMap.get (aClass);
+      if (aOldImpl == null)
         m_aMap.put (aClass, aImpl);
+      else
+        if (aOldImpl != aImpl)
+        {
+          // Avoid the warning when the passed implementation equals the stored
+          // implementation
+          s_aLogger.warn ("Another hashCode implementation for class " +
+                          aClass +
+                          " is already registered (" +
+                          aOldImpl.toString () +
+                          ") so it is not overwritten with " +
+                          aImpl.toString ());
+        }
     }
     finally
     {
@@ -132,41 +144,7 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
 
   private boolean _isUseDirectHashCode (@Nonnull final Class <?> aClass)
   {
-    final String sClassName = aClass.getName ();
-
-    Boolean aUseDirectHashCode;
-    m_aRWLock.readLock ().lock ();
-    try
-    {
-      aUseDirectHashCode = m_aDirectHashCode.get (sClassName);
-    }
-    finally
-    {
-      m_aRWLock.readLock ().unlock ();
-    }
-
-    if (aUseDirectHashCode == null)
-    {
-      m_aRWLock.writeLock ().lock ();
-      try
-      {
-        // Try again in write lock
-        aUseDirectHashCode = m_aDirectHashCode.get (sClassName);
-        if (aUseDirectHashCode == null)
-        {
-          // Determine
-          final boolean bHasAnnotation = aClass.getAnnotation (UseDirectEqualsAndHashCode.class) != null;
-          aUseDirectHashCode = Boolean.valueOf (bHasAnnotation);
-          m_aDirectHashCode.put (sClassName, aUseDirectHashCode);
-        }
-      }
-      finally
-      {
-        m_aRWLock.writeLock ().unlock ();
-      }
-    }
-
-    return aUseDirectHashCode.booleanValue ();
+    return m_aDirectHashCode.hasAnnotation (aClass);
   }
 
   private boolean _implementsHashCodeItself (@Nonnull final Class <?> aClass)
@@ -217,6 +195,7 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
     return aImplementsHashCodeItself.booleanValue ();
   }
 
+  @SuppressWarnings ("null")
   @Nullable
   public IHashCodeImplementation getBestMatchingHashCodeImplementation (@Nullable final Class <?> aClass)
   {
@@ -275,15 +254,7 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
         if (ClassHelper.isInterface (aMatchingClass) && _implementsHashCodeItself (aClass))
         {
           // Remember to use direct implementation
-          m_aRWLock.writeLock ().lock ();
-          try
-          {
-            m_aDirectHashCode.put (aClass.getName (), Boolean.TRUE);
-          }
-          finally
-          {
-            m_aRWLock.writeLock ().unlock ();
-          }
+          m_aDirectHashCode.setAnnotation (aClass, true);
           return null;
         }
 
@@ -303,15 +274,7 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
         return new ArrayHashCodeImplementation ();
 
       // Remember to use direct implementation
-      m_aRWLock.writeLock ().lock ();
-      try
-      {
-        m_aDirectHashCode.put (aClass.getName (), Boolean.TRUE);
-      }
-      finally
-      {
-        m_aRWLock.writeLock ().unlock ();
-      }
+      m_aDirectHashCode.setAnnotation (aClass, true);
     }
 
     // No special handler found

@@ -2,6 +2,23 @@
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
 <table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody>
+<tr><td>2/26/14</td><td>add</td><td>api</td><td></td><td>Added new annotation @Until which can be considered the counterpart to @Since</td></tr>
+<tr><td>2/24/14</td><td>add</td><td>api</td><td></td><td>Added new method IMicroElement.getChildElementCount</td></tr>
+<tr><td>2/7/14</td><td>update</td><td>tech</td><td></td><td>SAXReader now also has the possibility to explicitly create a new object</td></tr>
+<tr><td>2/7/14</td><td>update</td><td>tech</td><td></td><td>Improved implementation of requiresNewXMLParser so that it returns true if an entity resolver is present - see http://docs.oracle.com/javase/tutorial/jaxp/limits/limits.html</td></tr>
+<tr><td>2/7/14</td><td>add</td><td>api</td><td></td><td>Added method IBaseXMLReaderSettings.requiresNewXMLParser so that is is available for SAX parsers as well</td></tr>
+<tr><td>2/7/14</td><td>change</td><td>api</td><td>*yes*</td><td>Renamed DOMReaderDefaultSettings.requiresSeparateDocumentBuilderFactory to requiresNewXMLParser</td></tr>
+<tr><td>2/7/14</td><td>change</td><td>api</td><td>*yes*</td><td>Renamed DOMReaderSettings.requiresSeparateDocumentBuilderFactory to requiresNewXMLParser</td></tr>
+<tr><td>2/3/14</td><td>add</td><td>api</td><td></td><td>Added new classes MutableBigDecimal and MutableBigInteger</td></tr>
+<tr><td>1/30/14</td><td>add</td><td>api</td><td></td><td>Extended LocaleFormatter API slightly</td></tr>
+<tr><td>1/30/14</td><td>add</td><td>api</td><td></td><td>Added new StringHelper methods getFirstToken and getLastToken</td></tr>
+<tr><td>1/25/14</td><td>add</td><td>api</td><td></td><td>Added new class FileSystemCharStreamResolver based on IReaderResolver and IWriterResolver</td></tr>
+<tr><td>1/25/14</td><td>change</td><td>api</td><td></td><td>Renamed class FileSystemStreamResolver to FileSystemByteStreamResolver and deprecated old name</td></tr>
+<tr><td>1/25/14</td><td>add</td><td>api</td><td></td><td>Added classes IReaderResolver and IWriterResolver</td></tr>
+<tr><td>1/20/14</td><td>add</td><td>api</td><td></td><td>Added classes IHasErrorField and ComparatorHasErrorID</td></tr>
+<tr><td>1/20/14</td><td>add</td><td>api</td><td></td><td>Extracted interface ISimpleTextProvider from ITextProvider containing the methods without arguments.</td></tr>
+<tr><td>1/20/14</td><td>add</td><td>api</td><td>*yes*</td><td>Extended IHasLocales with containsLocale methods</td></tr>
+<tr><td>1/16/14</td><td>add</td><td>api</td><td></td><td>Extended TextFormatter class</td></tr>
 <tr border="1"><td>1/15/14</td><td colspan="4">_Release *4.1.2*_</td></tr>
 <tr><td>1/15/14</td><td>fix</td><td>tech</td><td></td><td>Fixed error serializing the default SimpleURL</td></tr>
 <tr border="1"><td>1/15/14</td><td colspan="4">_Release *4.1.1*_</td></tr>

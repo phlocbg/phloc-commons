@@ -18,7 +18,6 @@
 package com.phloc.commons.xml.transform;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -55,7 +54,9 @@ public final class CollectingTransformErrorListenerTest extends AbstractPhlocTes
     // Read valid XSLT
     Templates t1 = XMLTransformerFactory.newTemplates (fac, new ClassPathResource ("xml/test1.xslt"));
     assertNotNull (t1);
-    assertTrue (el.getResourceErrors ().isEmpty ());
+    // May contain warning in JDK 1.7
+    // (http://javax.xml.XMLConstants/property/accessExternalDTD is unknown)
+    assertTrue (el.getResourceErrors ().containsNoError ());
 
     // Try a real transformation
     {
@@ -70,11 +71,13 @@ public final class CollectingTransformErrorListenerTest extends AbstractPhlocTes
     // Read valid XSLT (with import)
     t1 = XMLTransformerFactory.newTemplates (fac, new ClassPathResource ("xml/test2.xslt"));
     assertNotNull (t1);
-    assertTrue (el.getResourceErrors ().isEmpty ());
+    // May contain warning in JDK 1.7
+    // (http://javax.xml.XMLConstants/property/accessExternalDTD is unknown)
+    assertTrue (el.getResourceErrors ().containsNoError ());
 
     // Read invalid XSLT
     assertNull (XMLTransformerFactory.newTemplates (fac, new ClassPathResource ("test1.txt")));
-    assertFalse (el.getResourceErrors ().isEmpty ());
+    assertTrue (el.getResourceErrors ().containsAtLeastOneError ());
 
     PhlocTestUtils.testToStringImplementation (el);
   }

@@ -546,26 +546,37 @@ public final class DOMReaderDefaultSettings
     }
   }
 
-  public static boolean requiresSeparateDocumentBuilderFactory ()
+  public static boolean requiresNewXMLParser ()
   {
     s_aRWLock.readLock ().lock ();
     try
     {
-      return s_bDefaultNamespaceAware != XMLFactory.DEFAULT_DOM_NAMESPACE_AWARE ||
-             s_bDefaultValidating != XMLFactory.DEFAULT_DOM_VALIDATING ||
-             s_bDefaultIgnoringElementContentWhitespace != XMLFactory.DEFAULT_DOM_IGNORING_ELEMENT_CONTENT_WHITESPACE ||
-             s_bDefaultExpandEntityReferences != XMLFactory.DEFAULT_DOM_EXPAND_ENTITY_REFERENCES ||
-             s_bDefaultIgnoringComments != XMLFactory.DEFAULT_DOM_IGNORING_COMMENTS ||
-             s_bDefaultCoalescing != XMLFactory.DEFAULT_DOM_COALESCING ||
-             s_aDefaultSchema != null ||
-             s_bDefaultXIncludeAware != XMLFactory.DEFAULT_DOM_XINCLUDE_AWARE ||
-             !s_aDefaultProperties.isEmpty () ||
-             !s_aDefaultFeatures.isEmpty ();
+      if (s_bDefaultNamespaceAware != XMLFactory.DEFAULT_DOM_NAMESPACE_AWARE ||
+          s_bDefaultValidating != XMLFactory.DEFAULT_DOM_VALIDATING ||
+          s_bDefaultIgnoringElementContentWhitespace != XMLFactory.DEFAULT_DOM_IGNORING_ELEMENT_CONTENT_WHITESPACE ||
+          s_bDefaultExpandEntityReferences != XMLFactory.DEFAULT_DOM_EXPAND_ENTITY_REFERENCES ||
+          s_bDefaultIgnoringComments != XMLFactory.DEFAULT_DOM_IGNORING_COMMENTS ||
+          s_bDefaultCoalescing != XMLFactory.DEFAULT_DOM_COALESCING ||
+          s_aDefaultSchema != null ||
+          s_bDefaultXIncludeAware != XMLFactory.DEFAULT_DOM_XINCLUDE_AWARE ||
+          !s_aDefaultProperties.isEmpty () ||
+          !s_aDefaultFeatures.isEmpty ())
+        return true;
+
+      // Special case for JDK > 1.7.0_45 because of maximum entity expansion
+      // See http://docs.oracle.com/javase/tutorial/jaxp/limits/limits.html
+      return s_aDefaultEntityResolver != null;
     }
     finally
     {
       s_aRWLock.readLock ().unlock ();
     }
+  }
+
+  @Deprecated
+  public static boolean requiresSeparateDocumentBuilderFactory ()
+  {
+    return requiresNewXMLParser ();
   }
 
   @Nullable

@@ -22,7 +22,9 @@ import java.util.List;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,14 +49,10 @@ public class FileMonitorManager implements Runnable
 
   private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
 
-  /**
-   * Map from FileName to File being monitored.
-   */
+  /** All FileMonitors contained */
   private final List <FileMonitor> m_aMonitorList = new ArrayList <FileMonitor> ();
 
-  /**
-   * The low priority thread used for checking the files being monitored.
-   */
+  /** The low priority thread used for checking the files being monitored. */
   private Thread m_aMonitorThread;
 
   /**
@@ -63,14 +61,10 @@ public class FileMonitorManager implements Runnable
    */
   private volatile boolean m_bShouldRun = true;
 
-  /**
-   * Set the delay between checks
-   */
+  /** Set the delay between checks in milli seconds. */
   private long m_nDelay = DEFAULT_DELAY;
 
-  /**
-   * Set the number of files to check until a delay will be inserted
-   */
+  /** Set the number of files to check until a delay will be inserted */
   private int m_nChecksPerRun = DEFAULT_MAX_FILES;
 
   public FileMonitorManager ()
@@ -79,7 +73,7 @@ public class FileMonitorManager implements Runnable
   /**
    * Get the delay between runs.
    * 
-   * @return The delay period.
+   * @return The delay period in milliseconds.
    */
   public long getDelay ()
   {
@@ -90,7 +84,7 @@ public class FileMonitorManager implements Runnable
    * Set the delay between runs.
    * 
    * @param nDelay
-   *        The delay period.
+   *        The delay period in milliseconds.
    * @return this
    */
   @Nonnull
@@ -125,6 +119,14 @@ public class FileMonitorManager implements Runnable
     return this;
   }
 
+  /**
+   * Create a new {@link FileMonitor} based on the passed file listener.
+   * 
+   * @param aListener
+   *        The listener to be used. May not be <code>null</code>.
+   * @return The created {@link FileMonitor} that was already added.
+   * @see #addFileMonitor(FileMonitor)
+   */
   @Nonnull
   public FileMonitor createFileMonitor (@Nonnull final IFileListener aListener)
   {
@@ -133,6 +135,12 @@ public class FileMonitorManager implements Runnable
     return aMonitor;
   }
 
+  /**
+   * Add a new {@link FileMonitor}.
+   * 
+   * @param aMonitor
+   *        The monitor to be added. May not be <code>null</code>.
+   */
   public void addFileMonitor (@Nonnull final FileMonitor aMonitor)
   {
     if (aMonitor == null)
@@ -149,9 +157,19 @@ public class FileMonitorManager implements Runnable
     }
   }
 
+  /**
+   * Remove a {@link FileMonitor}.
+   * 
+   * @param aMonitor
+   *        The monitor to be remove. May be <code>null</code>.
+   * @return {@link EChange}
+   */
   @Nonnull
-  public EChange removeFileMonitor (@Nonnull final FileMonitor aMonitor)
+  public EChange removeFileMonitor (@Nullable final FileMonitor aMonitor)
   {
+    if (aMonitor == null)
+      return EChange.UNCHANGED;
+
     m_aRWLock.writeLock ().lock ();
     try
     {
@@ -171,6 +189,23 @@ public class FileMonitorManager implements Runnable
     try
     {
       return ContainerHelper.newList (m_aMonitorList);
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  /**
+   * @return The number of contained {@link FileMonitor} objects. Always &ge; 0.
+   */
+  @Nonnegative
+  public int getFileMonitorCount ()
+  {
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return m_aMonitorList.size ();
     }
     finally
     {
@@ -257,6 +292,7 @@ public class FileMonitorManager implements Runnable
         aMonitor.applyPendingAdds ();
       }
 
+      // Wait some time
       ThreadUtils.sleep (getDelay ());
 
       if (s_aLogger.isDebugEnabled ())

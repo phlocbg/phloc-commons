@@ -39,7 +39,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author Philip Helger
  */
-public final class ConstantTextProvider extends AbstractTextProvider implements IHasDisplayText, IHasDisplayName, IHasName
+public class ConstantTextProvider extends AbstractTextProvider implements IHasDisplayText, IHasDisplayName, IHasName
 {
   private final String m_sFixedText;
 
@@ -86,7 +86,7 @@ public final class ConstantTextProvider extends AbstractTextProvider implements 
   {
     if (o == this)
       return true;
-    if (!(o instanceof ConstantTextProvider))
+    if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final ConstantTextProvider rhs = (ConstantTextProvider) o;
     return EqualsUtils.equals (m_sFixedText, rhs.m_sFixedText);

@@ -284,6 +284,12 @@ public interface IMicroElement extends IMicroNodeWithChildren
   String getTagName ();
 
   /**
+   * @return The number of all direct child elements. Always &ge; 0.
+   */
+  @Nonnegative
+  int getChildElementCount ();
+
+  /**
    * Get a list of all direct child elements. Text nodes and other other child
    * nodes are not returned with this call. Micro container children are
    * inlined.

@@ -27,13 +27,14 @@ import com.phloc.commons.lang.EnumHelper;
 import com.phloc.commons.stats.IStatisticsHandlerCounter;
 import com.phloc.commons.stats.IStatisticsHandlerKeyedCounter;
 import com.phloc.commons.stats.StatisticsManager;
+import com.phloc.commons.text.ISimpleTextProvider;
 import com.phloc.commons.text.ITextProvider;
 import com.phloc.commons.text.impl.TextFormatter;
 
 /**
  * Resolves texts either from an override, a text provider or otherwise uses a
  * fallback, based on the given enum constant.
- *
+ * 
  * @author Philip Helger
  */
 @ThreadSafe
@@ -50,7 +51,7 @@ public abstract class AbstractEnumTextResolverWithOverrideAndFallback implements
 
   /**
    * This method must return the override string for the passed parameters.
-   *
+   * 
    * @param sID
    *        Unique string ID
    * @param aContentLocale
@@ -62,7 +63,7 @@ public abstract class AbstractEnumTextResolverWithOverrideAndFallback implements
 
   /**
    * This method must return the fallback string for the passed parameters.
-   *
+   * 
    * @param sID
    *        Unique string ID
    * @param aContentLocale
@@ -74,7 +75,7 @@ public abstract class AbstractEnumTextResolverWithOverrideAndFallback implements
 
   @Nullable
   private String _getText (@Nonnull final Enum <?> aEnum,
-                           @Nonnull final ITextProvider aTP,
+                           @Nonnull final ISimpleTextProvider aTP,
                            @Nonnull final Locale aContentLocale,
                            final boolean bIsWithArgs)
   {
@@ -108,7 +109,7 @@ public abstract class AbstractEnumTextResolverWithOverrideAndFallback implements
 
   @Nullable
   public final String getText (@Nonnull final Enum <?> aEnum,
-                               @Nonnull final ITextProvider aTP,
+                               @Nonnull final ISimpleTextProvider aTP,
                                @Nonnull final Locale aContentLocale)
   {
     return _getText (aEnum, aTP, aContentLocale, false);

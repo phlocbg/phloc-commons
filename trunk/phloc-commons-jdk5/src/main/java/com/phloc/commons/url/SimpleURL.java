@@ -25,6 +25,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.ICloneable;
+import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.string.StringHelper;
 
@@ -63,8 +64,22 @@ public class SimpleURL extends AbstractSimpleURL implements ICloneable <SimpleUR
     super (aURL);
   }
 
+  /**
+   * Add a parameter without a value
+   * 
+   * @param sKey
+   *        The name of the parameter. May neither be <code>null</code> nor
+   *        empty.
+   * @return this
+   */
   @Nonnull
-  public SimpleURL add (@Nonnull final String sKey, @Nonnull final String sValue)
+  public SimpleURL add (@Nonnull @Nonempty final String sKey)
+  {
+    return add (sKey, "");
+  }
+
+  @Nonnull
+  public SimpleURL add (@Nonnull @Nonempty final String sKey, @Nonnull final String sValue)
   {
     if (StringHelper.hasNoText (sKey))
       throw new IllegalArgumentException ("key may not be empty!");
@@ -78,25 +93,25 @@ public class SimpleURL extends AbstractSimpleURL implements ICloneable <SimpleUR
   }
 
   @Nonnull
-  public SimpleURL add (@Nonnull final String sKey, final int nValue)
+  public SimpleURL add (@Nonnull @Nonempty final String sKey, final int nValue)
   {
     return add (sKey, Integer.toString (nValue));
   }
 
   @Nonnull
-  public SimpleURL add (@Nonnull final String sKey, final long nValue)
+  public SimpleURL add (@Nonnull @Nonempty final String sKey, final long nValue)
   {
     return add (sKey, Long.toString (nValue));
   }
 
   @Nonnull
-  public SimpleURL add (@Nonnull final String sKey, @Nonnull final BigInteger aValue)
+  public SimpleURL add (@Nonnull @Nonempty final String sKey, @Nonnull final BigInteger aValue)
   {
     return add (sKey, aValue.toString ());
   }
 
   @Nonnull
-  public SimpleURL addIfNonNull (@Nonnull final String sKey, @Nullable final String sValue)
+  public SimpleURL addIfNonNull (@Nonnull @Nonempty final String sKey, @Nullable final String sValue)
   {
     if (sValue != null)
       add (sKey, sValue);
