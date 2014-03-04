@@ -139,6 +139,19 @@ public enum EOperatingSystem implements IHasDisplayName
   }
 
   /**
+   * @return Thew newline mode matching this operating system.
+   */
+  @Nonnull
+  public ENewLineMode getNewLineMode ()
+  {
+    if (this == MACOS)
+      return ENewLineMode.MAC;
+    if (this == WINDOWS)
+      return ENewLineMode.WINDOWS;
+    return ENewLineMode.UNIX;
+  }
+
+  /**
    * Retrieves the operating system for the provided name. The name provided
    * should come from the <code>os.name</code> system property.
    * 

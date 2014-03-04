@@ -15,35 +15,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.phloc.commons.priviledged;
+package com.phloc.commons.system;
 
-import java.security.PrivilegedAction;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.junit.Test;
 
-import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.string.StringHelper;
 
 /**
- * A special privileged object, that calls <code>System.getProperty</code>
+ * Test class for class {@link ENewLineMode}.
  * 
  * @author Philip Helger
  */
-public final class PrivilegedActionSystemGetProperty implements PrivilegedAction <String>
+public final class ENewLineModeTest
 {
-  private final String m_sKey;
-
-  public PrivilegedActionSystemGetProperty (@Nonnull @Nonempty final String sKey)
+  @Test
+  public void testAll ()
   {
-    if (StringHelper.hasNoText (sKey))
-      throw new IllegalArgumentException ("key");
-    m_sKey = sKey;
-  }
+    for (final ENewLineMode e : ENewLineMode.values ())
+    {
+      assertTrue (StringHelper.hasText (e.getText ()));
+      assertSame (e, ENewLineMode.valueOf (e.name ()));
+      assertSame (e, ENewLineMode.getFromTextOrNull (e.getText ()));
+    }
 
-  @Nullable
-  public String run ()
-  {
-    return System.getProperty (m_sKey);
+    assertNotNull (ENewLineMode.DEFAULT);
   }
 }

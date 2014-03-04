@@ -11,6 +11,7 @@ import javax.annotation.Nonnull;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
+import com.phloc.commons.io.streams.StreamUtils;
 import com.phloc.commons.priviledged.PrivilegedActionSystemGetProperty;
 
 /**
@@ -236,11 +237,24 @@ public final class XMLReaderFactoryPhloc
 
           if (in != null)
           {
-            reader = new BufferedReader (new InputStreamReader (in, "UTF8"));
-            className = reader.readLine ();
-            in.close ();
-            // [phloc] Remember the read class name
-            _jarreadClassname = className;
+            try
+            {
+              reader = new BufferedReader (new InputStreamReader (in, "UTF8"));
+              try
+              {
+                className = reader.readLine ();
+              }
+              finally
+              {
+                StreamUtils.close (reader);
+              }
+              // [phloc] Remember the read class name
+              _jarreadClassname = className;
+            }
+            finally
+            {
+              StreamUtils.close (in);
+            }
           }
         }
         catch (final Exception e)
