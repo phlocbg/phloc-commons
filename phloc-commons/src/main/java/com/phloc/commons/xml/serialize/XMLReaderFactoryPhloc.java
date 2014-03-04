@@ -257,7 +257,7 @@ public final class XMLReaderFactoryPhloc
             }
           }
         }
-        catch (final Exception e)
+        catch (final Throwable t)
         {}
       }
       else
