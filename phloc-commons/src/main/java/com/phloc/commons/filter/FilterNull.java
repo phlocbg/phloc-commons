@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.filter;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
@@ -33,7 +35,7 @@ import com.phloc.commons.string.ToStringGenerator;
  *        The data type to filter.
  */
 @Immutable
-public final class FilterNull <DATATYPE> implements IFilter <DATATYPE>
+public final class FilterNull <DATATYPE> implements IFilter <DATATYPE>, Serializable
 {
   private static final FilterNull <Object> s_aInstance = new FilterNull <Object> ();
 
