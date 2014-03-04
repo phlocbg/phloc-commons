@@ -359,18 +359,29 @@ public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMRe
     return EChange.CHANGED;
   }
 
+  public boolean requiresNewXMLParser ()
+  {
+    if (m_bNamespaceAware != XMLFactory.DEFAULT_DOM_NAMESPACE_AWARE ||
+        m_bValidating != XMLFactory.DEFAULT_DOM_VALIDATING ||
+        m_bIgnoringElementContentWhitespace != XMLFactory.DEFAULT_DOM_IGNORING_ELEMENT_CONTENT_WHITESPACE ||
+        m_bExpandEntityReferences != XMLFactory.DEFAULT_DOM_EXPAND_ENTITY_REFERENCES ||
+        m_bIgnoringComments != XMLFactory.DEFAULT_DOM_IGNORING_COMMENTS ||
+        m_bCoalescing != XMLFactory.DEFAULT_DOM_COALESCING ||
+        m_aSchema != null ||
+        m_bXIncludeAware != XMLFactory.DEFAULT_DOM_XINCLUDE_AWARE ||
+        !m_aProperties.isEmpty () ||
+        !m_aFeatures.isEmpty ())
+      return true;
+
+    // Special case for JDK > 1.7.0_45 because of maximum entity expansion
+    // See http://docs.oracle.com/javase/tutorial/jaxp/limits/limits.html
+    return m_aEntityResolver != null;
+  }
+
+  @Deprecated
   public boolean requiresSeparateDocumentBuilderFactory ()
   {
-    return m_bNamespaceAware != XMLFactory.DEFAULT_DOM_NAMESPACE_AWARE ||
-           m_bValidating != XMLFactory.DEFAULT_DOM_VALIDATING ||
-           m_bIgnoringElementContentWhitespace != XMLFactory.DEFAULT_DOM_IGNORING_ELEMENT_CONTENT_WHITESPACE ||
-           m_bExpandEntityReferences != XMLFactory.DEFAULT_DOM_EXPAND_ENTITY_REFERENCES ||
-           m_bIgnoringComments != XMLFactory.DEFAULT_DOM_IGNORING_COMMENTS ||
-           m_bCoalescing != XMLFactory.DEFAULT_DOM_COALESCING ||
-           m_aSchema != null ||
-           m_bXIncludeAware != XMLFactory.DEFAULT_DOM_XINCLUDE_AWARE ||
-           !m_aProperties.isEmpty () ||
-           !m_aFeatures.isEmpty ();
+    return requiresNewXMLParser ();
   }
 
   @Nullable

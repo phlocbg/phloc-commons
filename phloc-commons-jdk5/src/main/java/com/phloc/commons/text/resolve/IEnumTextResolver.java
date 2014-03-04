@@ -22,6 +22,7 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.text.ISimpleTextProvider;
 import com.phloc.commons.text.ITextProvider;
 
 /**
@@ -44,7 +45,7 @@ public interface IEnumTextResolver
    * @return <code>null</code> if no text could be resolved.
    */
   @Nullable
-  String getText (@Nonnull Enum <?> aEnum, @Nonnull ITextProvider aTP, @Nonnull Locale aContentLocale);
+  String getText (@Nonnull Enum <?> aEnum, @Nonnull ISimpleTextProvider aTP, @Nonnull Locale aContentLocale);
 
   /**
    * Get the text of an enumeration item with placeholder texts being replaced.

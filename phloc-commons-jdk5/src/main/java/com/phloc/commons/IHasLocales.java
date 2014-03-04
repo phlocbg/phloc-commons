@@ -20,7 +20,9 @@ package com.phloc.commons;
 import java.util.Collection;
 import java.util.Locale;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Base interface for objects having zero or more locales.
@@ -34,4 +36,32 @@ public interface IHasLocales
    */
   @Nonnull
   Collection <Locale> getAllLocales ();
+
+  /**
+   * @return The number of contained locales. Always &ge; 0.
+   */
+  @Nonnegative
+  int getLocaleCount ();
+
+  /**
+   * Check if the passed locale is directly contained.
+   * 
+   * @param aLocale
+   *        The locale to check. May be <code>null</code>.
+   * @return <code>true</code> if the locale is directly contained,
+   *         <code>false</code> if not.
+   */
+  boolean containsLocale (@Nullable Locale aLocale);
+
+  /**
+   * Check if the passed locale is directly or by fallback contained. The
+   * implementation class MUST add locale-generalisation when resolving the text
+   * ("de_DE" => "de" => <i>default</i>).
+   * 
+   * @param aLocale
+   *        The locale to check. May be <code>null</code>.
+   * @return <code>true</code> if the locale is contained, <code>false</code> if
+   *         not.
+   */
+  boolean containsLocaleWithFallback (@Nullable Locale aLocale);
 }

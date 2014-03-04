@@ -17,43 +17,19 @@
  */
 package com.phloc.commons.text;
 
-import java.io.Serializable;
 import java.util.Locale;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
- * Basic interface for object providing multilingual texts.
+ * Basic interface for object providing multilingual texts with and without
+ * arguments.
  * 
  * @author Philip Helger
  */
-public interface ITextProvider extends Serializable
+public interface ITextProvider extends ISimpleTextProvider
 {
-  /**
-   * Get the text specific for the passed locale. The implementation class MUST
-   * NOT add locale-generalisation when resolving the text ("de_DE" => "de" =>
-   * <i>default</i>).
-   * 
-   * @param aContentLocale
-   *        The locale to use. May not be <code>null</code>.
-   * @return <code>null</code> if no text for the given locale was found.
-   */
-  @Nullable
-  String getText (@Nonnull Locale aContentLocale);
-
-  /**
-   * Get the text specific for the passed locale. The implementation class MUST
-   * add locale-generalisation when resolving the text ("de_DE" => "de" =>
-   * <i>default</i>).
-   * 
-   * @param aContentLocale
-   *        The locale to use. May not be <code>null</code>.
-   * @return <code>null</code> if no text for the given locale was found.
-   */
-  @Nullable
-  String getTextWithLocaleFallback (@Nonnull Locale aContentLocale);
-
   /**
    * Get the text specific for the passed locale. The implementation class MUST
    * NOT add locale-generalisation when resolving the text ("de_DE" => "de" =>
@@ -82,6 +58,7 @@ public interface ITextProvider extends Serializable
    *        The arguments to be added into the string. May be <code>null</code>
    *        but this makes no sense.
    * @return <code>null</code> if no text for the given locale was found.
+   * @see com.phloc.commons.locale.LocaleUtils#getCalculatedLocaleListForResolving(Locale)
    */
   @Nullable
   String getTextWithLocaleFallbackAndArgs (@Nonnull Locale aContentLocale, @Nullable Object... aArgs);

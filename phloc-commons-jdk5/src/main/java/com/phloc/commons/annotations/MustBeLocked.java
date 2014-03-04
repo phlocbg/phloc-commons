@@ -29,8 +29,11 @@ import javax.annotation.Nonnull;
  * Just to indicate that a method must be called inside a lock. When using
  * read-write locks (class ReadWriteLock), please choose the lock type
  * carefully. When using exclusive locks (class Lock) use the lock type
- * <code>WRITE</code>.
- *
+ * <code>WRITE</code>. The constraint of this annotation is also fulfilled when
+ * a method is called inside the constructor of the owning class, as
+ * constructor-calls of a single object are not accessed by multiple threads in
+ * parallel.
+ * 
  * @author Philip Helger
  */
 @Retention (RetentionPolicy.CLASS)

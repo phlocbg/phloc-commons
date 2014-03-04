@@ -18,7 +18,6 @@
 package com.phloc.commons.cache;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
 import com.phloc.commons.annotations.IsLocked;
@@ -49,16 +48,17 @@ public abstract class AbstractNotifyingCache <KEYTYPE, VALUETYPE> extends Abstra
    * cache. This method is invoked within a locked section.
    * 
    * @param aKey
-   *        The key for which the value to cache is required.
+   *        The key for which the value to cache is required. May be
+   *        <code>null</code>able or not - depends upon the implementation.
    * @return The value to be cached. May not be <code>null</code>.
    */
   @Nonnull
   @IsLocked (ELockType.WRITE)
-  protected abstract VALUETYPE getValueToCache (@Nullable KEYTYPE aKey);
+  protected abstract VALUETYPE getValueToCache (KEYTYPE aKey);
 
   @Override
   @SuppressFBWarnings ("RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE")
-  public final VALUETYPE getFromCache (@Nullable final KEYTYPE aKey)
+  public final VALUETYPE getFromCache (final KEYTYPE aKey)
   {
     // read existing value
     VALUETYPE aValue = super.getFromCacheNoStats (aKey);

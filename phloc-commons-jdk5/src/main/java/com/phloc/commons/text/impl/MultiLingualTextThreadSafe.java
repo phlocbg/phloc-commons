@@ -47,9 +47,9 @@ import com.phloc.commons.text.ISimpleMultiLingualText;
  * @author Philip Helger
  */
 @ThreadSafe
-public final class MultiLingualTextThreadSafe implements IMultiLingualText
+public class MultiLingualTextThreadSafe implements IMultiLingualText
 {
-  private final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
+  protected final ReadWriteLock m_aRWLock = new ReentrantReadWriteLock ();
   private final MultiLingualText m_aMLT;
 
   public MultiLingualTextThreadSafe ()
@@ -82,7 +82,7 @@ public final class MultiLingualTextThreadSafe implements IMultiLingualText
   }
 
   @Nullable
-  public String getText (final Locale aContentLocale)
+  public String getText (@Nonnull final Locale aContentLocale)
   {
     m_aRWLock.readLock ().lock ();
     try
@@ -96,7 +96,7 @@ public final class MultiLingualTextThreadSafe implements IMultiLingualText
   }
 
   @Nullable
-  public String getTextWithLocaleFallback (final Locale aContentLocale)
+  public String getTextWithLocaleFallback (@Nonnull final Locale aContentLocale)
   {
     m_aRWLock.readLock ().lock ();
     try
@@ -110,7 +110,7 @@ public final class MultiLingualTextThreadSafe implements IMultiLingualText
   }
 
   @Nullable
-  public String getTextWithArgs (final Locale aContentLocale, @Nullable final Object... aArgs)
+  public String getTextWithArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)
   {
     m_aRWLock.readLock ().lock ();
     try
@@ -124,7 +124,7 @@ public final class MultiLingualTextThreadSafe implements IMultiLingualText
   }
 
   @Nullable
-  public String getTextWithLocaleFallbackAndArgs (final Locale aContentLocale, @Nullable final Object... aArgs)
+  public String getTextWithLocaleFallbackAndArgs (@Nonnull final Locale aContentLocale, @Nullable final Object... aArgs)
   {
     m_aRWLock.readLock ().lock ();
     try
@@ -138,7 +138,7 @@ public final class MultiLingualTextThreadSafe implements IMultiLingualText
   }
 
   @Nonnull
-  public EChange addText (final Locale aContentLocale, @Nullable final String sText)
+  public EChange addText (@Nonnull final Locale aContentLocale, @Nullable final String sText)
   {
     m_aRWLock.writeLock ().lock ();
     try
@@ -152,7 +152,7 @@ public final class MultiLingualTextThreadSafe implements IMultiLingualText
   }
 
   @Nonnull
-  public EChange setText (final Locale aContentLocale, @Nullable final String sText)
+  public EChange setText (@Nonnull final Locale aContentLocale, @Nullable final String sText)
   {
     m_aRWLock.writeLock ().lock ();
     try
@@ -165,7 +165,21 @@ public final class MultiLingualTextThreadSafe implements IMultiLingualText
     }
   }
 
-  public boolean containsLocale (final Locale aContentLocale)
+  @Nonnegative
+  public int getLocaleCount ()
+  {
+    m_aRWLock.readLock ().lock ();
+    try
+    {
+      return m_aMLT.getLocaleCount ();
+    }
+    finally
+    {
+      m_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  public boolean containsLocale (@Nullable final Locale aContentLocale)
   {
     m_aRWLock.readLock ().lock ();
     try
@@ -178,7 +192,7 @@ public final class MultiLingualTextThreadSafe implements IMultiLingualText
     }
   }
 
-  public boolean containsLocaleWithFallback (final Locale aContentLocale)
+  public boolean containsLocaleWithFallback (@Nullable final Locale aContentLocale)
   {
     m_aRWLock.readLock ().lock ();
     try
@@ -308,7 +322,7 @@ public final class MultiLingualTextThreadSafe implements IMultiLingualText
   {
     if (o == this)
       return true;
-    if (!(o instanceof MultiLingualTextThreadSafe))
+    if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final MultiLingualTextThreadSafe rhs = (MultiLingualTextThreadSafe) o;
     return m_aMLT.equals (rhs.m_aMLT);

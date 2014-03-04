@@ -53,7 +53,7 @@ public final class DOMReaderSettingsTest
   {
     final DOMReaderSettings aDRS = new DOMReaderSettings ();
     assertNotNull (aDRS);
-    assertFalse (aDRS.requiresSeparateDocumentBuilderFactory ());
+    assertFalse (aDRS.requiresNewXMLParser ());
     assertTrue (XMLFactory.DEFAULT_DOM_NAMESPACE_AWARE == aDRS.isNamespaceAware ());
     assertTrue (XMLFactory.DEFAULT_DOM_VALIDATING == aDRS.isValidating ());
     assertTrue (XMLFactory.DEFAULT_DOM_IGNORING_ELEMENT_CONTENT_WHITESPACE == aDRS.isIgnoringElementContentWhitespace ());

@@ -38,20 +38,22 @@ public interface ISimpleCache <KEYTYPE, VALUETYPE> extends SimpleCacheMBean, IHa
    * Get the cached value associated with the passed key.
    * 
    * @param aKey
-   *        The key to be looked up.
+   *        The key to be looked up. May be <code>null</code>able or not -
+   *        depends upon the implementation.
    * @return <code>null</code> if no such value is in the cache.
    */
   @Nullable
-  VALUETYPE getFromCache (@Nullable KEYTYPE aKey);
+  VALUETYPE getFromCache (KEYTYPE aKey);
 
   /**
    * Remove the given key from the cache.
    * 
    * @param aKey
-   *        The key to be removed.
+   *        The key to be removed. May be <code>null</code>able or not - depends
+   *        upon the implementation.
    * @return {@link EChange#CHANGED} upon success, {@link EChange#UNCHANGED} if
    *         the key was not within the cache,
    */
   @Nonnull
-  EChange removeFromCache (@Nullable KEYTYPE aKey);
+  EChange removeFromCache (KEYTYPE aKey);
 }

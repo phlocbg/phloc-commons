@@ -44,7 +44,7 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * Abstract base implementation of {@link ISimpleCache}
- *
+ * 
  * @author Philip Helger
  * @param <KEYTYPE>
  *        The cache key type
@@ -101,7 +101,7 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
 
   /**
    * Create a new cache map.
-   *
+   * 
    * @return Never <code>null</code>.
    */
   @Nonnull
@@ -113,7 +113,7 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
 
   /**
    * Put a new value into the cache.
-   *
+   * 
    * @param aKey
    *        The cache key. May not be <code>null</code>.
    * @param aValue
@@ -140,7 +140,7 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
 
   /**
    * Put a new value into the cache.
-   *
+   * 
    * @param aKey
    *        The cache key. May not be <code>null</code>.
    * @param aValue
@@ -205,7 +205,7 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
 
   @Nullable
   @OverridingMethodsMustInvokeSuper
-  public VALUETYPE getFromCache (@Nullable final KEYTYPE aKey)
+  public VALUETYPE getFromCache (final KEYTYPE aKey)
   {
     final VALUETYPE aValue = getFromCacheNoStats (aKey);
     _updateStats (aValue == null);
@@ -214,7 +214,7 @@ public abstract class AbstractCache <KEYTYPE, VALUETYPE> implements ISimpleCache
 
   @Nonnull
   @OverridingMethodsMustInvokeSuper
-  public EChange removeFromCache (@Nullable final KEYTYPE aKey)
+  public EChange removeFromCache (final KEYTYPE aKey)
   {
     m_aRWLock.writeLock ().lock ();
     try

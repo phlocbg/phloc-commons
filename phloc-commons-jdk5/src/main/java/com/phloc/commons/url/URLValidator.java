@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.url;
 
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 import javax.annotation.Nullable;
@@ -71,7 +72,7 @@ public final class URLValidator
   @Nullable
   public static String getUnifiedURL (@Nullable final String sURL)
   {
-    return sURL == null ? null : sURL.trim ().toLowerCase ();
+    return sURL == null ? null : sURL.trim ().toLowerCase (Locale.US);
   }
 
   /**

@@ -22,6 +22,9 @@ import java.security.PrivilegedAction;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.annotations.Nonempty;
+import com.phloc.commons.string.StringHelper;
+
 /**
  * A special privileged object, that calls <code>System.getProperty</code>
  * 
@@ -31,10 +34,10 @@ public final class PrivilegedActionSystemGetProperty implements PrivilegedAction
 {
   private final String m_sKey;
 
-  public PrivilegedActionSystemGetProperty (@Nonnull final String sKey)
+  public PrivilegedActionSystemGetProperty (@Nonnull @Nonempty final String sKey)
   {
-    if (sKey == null)
-      throw new NullPointerException ("key");
+    if (StringHelper.hasNoText (sKey))
+      throw new IllegalArgumentException ("key");
     m_sKey = sKey;
   }
 

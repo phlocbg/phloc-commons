@@ -28,6 +28,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.ICloneable;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
@@ -44,7 +45,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @NotThreadSafe
-public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContainer implements IAttributeContainer
+public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContainer implements IAttributeContainer, ICloneable <MapBasedAttributeContainer>
 {
   /**
    * attribute storage.
@@ -67,7 +68,8 @@ public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContain
   {
     if (aCont == null)
       throw new NullPointerException ("cont");
-    m_aAttrs = ContainerHelper.newMap (aCont.getAllAttributes ());
+    // Must already be a copy!
+    m_aAttrs = aCont.getAllAttributes ();
   }
 
   public boolean containsAttribute (@Nullable final String sName)
@@ -159,6 +161,14 @@ public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContain
     return ret;
   }
 
+  @Nonnull
+  public final EChange setAttributes (@Nullable final IReadonlyAttributeContainer aValues)
+  {
+    if (aValues == null)
+      return EChange.UNCHANGED;
+    return setAttributes (aValues.getAllAttributes ());
+  }
+
   /**
    * Internal callback method that can be used to avoid removal of an attribute.
    * 
@@ -240,6 +250,12 @@ public class MapBasedAttributeContainer extends AbstractReadonlyAttributeContain
       return EChange.UNCHANGED;
     m_aAttrs.clear ();
     return EChange.CHANGED;
+  }
+
+  @Nonnull
+  public MapBasedAttributeContainer getClone ()
+  {
+    return new MapBasedAttributeContainer (m_aAttrs);
   }
 
   @Override

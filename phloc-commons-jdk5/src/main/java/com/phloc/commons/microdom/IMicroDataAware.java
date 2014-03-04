@@ -67,10 +67,38 @@ public interface IMicroDataAware extends Serializable
   void appendData (@Nonnull char [] aChars, @Nonnegative int nOfs, @Nonnegative int nLen);
 
   /**
-   * Add characters to the beginning of the current data
+   * Append a character to the string.
+   * 
+   * @param cChar
+   *        The character to append
+   */
+  void appendData (char cChar);
+
+  /**
+   * Add characters to the beginning of the current data.
    * 
    * @param sData
    *        The characters to be added at the front.
    */
   void prependData (@Nullable CharSequence sData);
+
+  /**
+   * Add characters to the beginning of the current data.
+   * 
+   * @param aChars
+   *        Base character array. May not be <code>null</code>.
+   * @param nOfs
+   *        Offset to start copying. Must be &ge; 0.
+   * @param nLen
+   *        Number of chars to take. Must be &ge; 0.
+   */
+  void prependData (@Nonnull char [] aChars, @Nonnegative int nOfs, @Nonnegative int nLen);
+
+  /**
+   * Add a character to the beginning of the current data.
+   * 
+   * @param cChar
+   *        The character to preprend
+   */
+  void prependData (char cChar);
 }

@@ -581,7 +581,7 @@ public final class XMLReader
       final StopWatch aSW = new StopWatch (true);
       DocumentBuilder aDocumentBuilder;
       boolean bFromPool = false;
-      if (aSettings.requiresSeparateDocumentBuilderFactory ())
+      if (aSettings.requiresNewXMLParser ())
       {
         // We need to create a new DocumentBuilder
         final DocumentBuilderFactory aDocumentBuilderFactory = DocumentBuilderFactory.newInstance ();
@@ -654,7 +654,7 @@ public final class XMLReader
         // By default, a document is returned, even if does not match the schema
         // (if errors occurred), so I'm handling this manually by checking for
         // collected errors
-        if (aCEH.getResourceErrors ().containsAtLeastOneError ())
+        if (aCEH.containsAtLeastOneError ())
           return null;
       }
       finally

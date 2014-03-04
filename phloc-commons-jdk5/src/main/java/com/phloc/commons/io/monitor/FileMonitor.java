@@ -39,7 +39,8 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * A polling file monitor implementation. Use
  * {@link FileMonitorManager#createFileMonitor(IFileListener)} to use this class
- * effectively.
+ * effectively. All files that have the same callback ({@link IFileListener})
+ * can be encapsulated in the same {@link FileMonitor}.
  * 
  * @author Philip Helger
  */

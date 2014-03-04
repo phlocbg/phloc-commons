@@ -1957,6 +1957,66 @@ public final class StringHelperTest extends AbstractPhlocTestCase
   }
 
   @Test
+  public void testGetFirstTokenChar ()
+  {
+    assertEquals ("abc", StringHelper.getFirstToken ("abc", ' '));
+    assertEquals ("", StringHelper.getFirstToken ("abc", 'a'));
+    assertEquals ("a", StringHelper.getFirstToken ("abc", 'b'));
+    assertEquals ("a", StringHelper.getFirstToken ("abcdcba", 'b'));
+    assertEquals ("ab", StringHelper.getFirstToken ("abc", 'c'));
+    assertEquals ("", StringHelper.getFirstToken ("", 'a'));
+    assertNull (StringHelper.getFirstToken (null, 'c'));
+  }
+
+  @Test
+  public void testGetFirstTokenString ()
+  {
+    assertEquals ("abc", StringHelper.getFirstToken ("abc", " "));
+    assertEquals ("", StringHelper.getFirstToken ("abc", "a"));
+    assertEquals ("a", StringHelper.getFirstToken ("abc", "b"));
+    assertEquals ("a", StringHelper.getFirstToken ("abcdcba", "b"));
+    assertEquals ("abcd", StringHelper.getFirstToken ("abcdcba", "cb"));
+    assertEquals ("ab", StringHelper.getFirstToken ("abc", "c"));
+    assertEquals ("", StringHelper.getFirstToken ("", "a"));
+    assertNull (StringHelper.getFirstToken (null, "c"));
+    assertNull (StringHelper.getFirstToken (null, ""));
+    assertNull (StringHelper.getFirstToken (null, null));
+    assertEquals ("abc", StringHelper.getFirstToken ("abc", null));
+    assertEquals ("abc", StringHelper.getFirstToken ("abc", ""));
+    assertEquals ("abc", StringHelper.getFirstToken ("abc", "        "));
+  }
+
+  @Test
+  public void testGetLastTokenChar ()
+  {
+    assertEquals ("abc", StringHelper.getLastToken ("abc", ' '));
+    assertEquals ("bc", StringHelper.getLastToken ("abc", 'a'));
+    assertEquals ("c", StringHelper.getLastToken ("abc", 'b'));
+    assertEquals ("a", StringHelper.getLastToken ("abcdcba", 'b'));
+    assertEquals ("", StringHelper.getLastToken ("abc", 'c'));
+    assertEquals ("", StringHelper.getLastToken ("", 'a'));
+    assertNull (StringHelper.getLastToken (null, 'c'));
+  }
+
+  @Test
+  public void testGetLastTokenString ()
+  {
+    assertEquals ("abc", StringHelper.getLastToken ("abc", " "));
+    assertEquals ("bc", StringHelper.getLastToken ("abc", "a"));
+    assertEquals ("c", StringHelper.getLastToken ("abc", "b"));
+    assertEquals ("a", StringHelper.getLastToken ("abcdcba", "b"));
+    assertEquals ("a", StringHelper.getLastToken ("abcdcba", "cb"));
+    assertEquals ("", StringHelper.getLastToken ("abc", "c"));
+    assertEquals ("", StringHelper.getLastToken ("", "a"));
+    assertNull (StringHelper.getLastToken (null, "c"));
+    assertNull (StringHelper.getLastToken (null, ""));
+    assertNull (StringHelper.getLastToken (null, null));
+    assertEquals ("abc", StringHelper.getLastToken ("abc", null));
+    assertEquals ("abc", StringHelper.getLastToken ("abc", ""));
+    assertEquals ("abc", StringHelper.getLastToken ("abc", "        "));
+  }
+
+  @Test
   public void testGetReverse ()
   {
     assertNull (StringHelper.getReverse (null));

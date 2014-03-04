@@ -31,7 +31,7 @@ import com.phloc.commons.text.impl.AbstractTextProvider;
  * 
  * @author Philip Helger
  */
-public final class ResourceBundleTextProvider extends AbstractTextProvider
+public class ResourceBundleTextProvider extends AbstractTextProvider
 {
   private final ResourceBundleKey m_aResBundleKey;
 
@@ -66,7 +66,7 @@ public final class ResourceBundleTextProvider extends AbstractTextProvider
   {
     if (o == this)
       return true;
-    if (!(o instanceof ResourceBundleTextProvider))
+    if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final ResourceBundleTextProvider rhs = (ResourceBundleTextProvider) o;
     return m_aResBundleKey.equals (rhs.m_aResBundleKey);
