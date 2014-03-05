@@ -52,6 +52,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 @ThreadSafe
 public final class SAXReaderDefaultSettings
 {
+  public static final boolean DEFAULT_REQUIRES_NEW_XML_PARSER_EXPLICITLY = false;
+
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
 
   @GuardedBy ("s_aRWLock")
@@ -68,6 +70,8 @@ public final class SAXReaderDefaultSettings
   private static final EnumMap <EXMLParserFeature, Boolean> s_aDefaultFeatures = new EnumMap <EXMLParserFeature, Boolean> (EXMLParserFeature.class);
   @GuardedBy ("s_aRWLock")
   private static IExceptionHandler <Throwable> s_aDefaultExceptionHandler = new XMLLoggingExceptionHandler ();
+  @GuardedBy ("s_aRWLock")
+  private static boolean s_bDefaultRequiresNewXMLParserExplicitly = DEFAULT_REQUIRES_NEW_XML_PARSER_EXPLICITLY;
 
   static
   {
@@ -469,6 +473,10 @@ public final class SAXReaderDefaultSettings
     s_aRWLock.readLock ().lock ();
     try
     {
+      // Force a new XML parser?
+      if (s_bDefaultRequiresNewXMLParserExplicitly)
+        return true;
+
       if (!s_aDefaultProperties.isEmpty () || !s_aDefaultFeatures.isEmpty ())
         return true;
 
@@ -505,6 +513,32 @@ public final class SAXReaderDefaultSettings
     try
     {
       s_aDefaultExceptionHandler = aDefaultExceptionHandler;
+    }
+    finally
+    {
+      s_aRWLock.writeLock ().unlock ();
+    }
+  }
+
+  public static boolean isRequiresNewXMLParserExplicitly ()
+  {
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      return s_bDefaultRequiresNewXMLParserExplicitly;
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  public static void setRequiresNewXMLParserExplicitly (final boolean bDefaultRequiresNewXMLParserExplicitly)
+  {
+    s_aRWLock.writeLock ().lock ();
+    try
+    {
+      s_bDefaultRequiresNewXMLParserExplicitly = bDefaultRequiresNewXMLParserExplicitly;
     }
     finally
     {
