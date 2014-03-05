@@ -65,5 +65,14 @@ public final class DOMReaderSettingsTest
     assertNull (aDRS.getEntityResolver ());
     assertNotNull (aDRS.getErrorHandler ());
     assertNotNull (aDRS.getExceptionHandler ());
+    assertFalse (aDRS.isRequiresNewXMLParserExplicitly ());
+
+    assertFalse (aDRS.requiresNewXMLParser ());
+    aDRS.setRequiresNewXMLParserExplicitly (true);
+    assertTrue (aDRS.isRequiresNewXMLParserExplicitly ());
+    assertTrue (aDRS.requiresNewXMLParser ());
+    aDRS.setRequiresNewXMLParserExplicitly (false);
+    assertFalse (aDRS.isRequiresNewXMLParserExplicitly ());
+    assertFalse (aDRS.requiresNewXMLParser ());
   }
 }
