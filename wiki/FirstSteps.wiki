@@ -33,7 +33,7 @@ To use phloc-commons put the following to your pom.xml:
     <dependency>
       <groupId>com.phloc</groupId>
       <artifactId>phloc-commons</artifactId>
-      <version>4.0.3</version>
+      <version>4.2.0</version>
     </dependency>
   </dependencies>
 ...
