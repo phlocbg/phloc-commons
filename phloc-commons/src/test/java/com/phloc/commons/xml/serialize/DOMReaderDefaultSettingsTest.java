@@ -48,5 +48,14 @@ public final class DOMReaderDefaultSettingsTest
     assertNull (DOMReaderDefaultSettings.getEntityResolver ());
     assertNotNull (DOMReaderDefaultSettings.getErrorHandler ());
     assertNotNull (DOMReaderDefaultSettings.getExceptionHandler ());
+    assertFalse (DOMReaderDefaultSettings.isRequiresNewXMLParserExplicitly ());
+
+    assertFalse (DOMReaderDefaultSettings.requiresNewXMLParser ());
+    DOMReaderDefaultSettings.setRequiresNewXMLParserExplicitly (true);
+    assertTrue (DOMReaderDefaultSettings.isRequiresNewXMLParserExplicitly ());
+    assertTrue (DOMReaderDefaultSettings.requiresNewXMLParser ());
+    DOMReaderDefaultSettings.setRequiresNewXMLParserExplicitly (false);
+    assertFalse (DOMReaderDefaultSettings.isRequiresNewXMLParserExplicitly ());
+    assertFalse (DOMReaderDefaultSettings.requiresNewXMLParser ());
   }
 }

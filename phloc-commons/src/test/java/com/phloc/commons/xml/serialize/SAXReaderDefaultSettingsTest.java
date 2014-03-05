@@ -20,6 +20,7 @@ package com.phloc.commons.xml.serialize;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
@@ -41,5 +42,14 @@ public final class SAXReaderDefaultSettingsTest
     assertFalse (SAXReaderDefaultSettings.hasAnyFeature ());
     assertFalse (SAXReaderDefaultSettings.hasAnyProperties ());
     assertNotNull (SAXReaderDefaultSettings.getExceptionHandler ());
+    assertFalse (SAXReaderDefaultSettings.isRequiresNewXMLParserExplicitly ());
+
+    assertFalse (SAXReaderDefaultSettings.requiresNewXMLParser ());
+    SAXReaderDefaultSettings.setRequiresNewXMLParserExplicitly (true);
+    assertTrue (SAXReaderDefaultSettings.isRequiresNewXMLParserExplicitly ());
+    assertTrue (SAXReaderDefaultSettings.requiresNewXMLParser ());
+    SAXReaderDefaultSettings.setRequiresNewXMLParserExplicitly (false);
+    assertFalse (SAXReaderDefaultSettings.isRequiresNewXMLParserExplicitly ());
+    assertFalse (SAXReaderDefaultSettings.requiresNewXMLParser ());
   }
 }

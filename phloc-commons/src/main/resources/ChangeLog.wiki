@@ -2,6 +2,14 @@
 = Change log =
 <wiki:comment>This content is generated. Do not modify!</wiki:comment>
 <table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody>
+<tr border="1"><td>3/5/14</td><td colspan="4">_Release *4.2.0*_</td></tr>
+<tr><td>3/5/14</td><td>add</td><td>api</td><td></td><td>Explicitly allowing to create a new parser instance (DOM|SAX)Reader(Default)Settings.(set|is)RequiresNewXMLParserExplicitly</td></tr>
+<tr><td>3/5/14</td><td>add</td><td>api</td><td></td><td>Added new special serializable filters (ISerializableFilter etc.)</td></tr>
+<tr><td>3/4/14</td><td>add</td><td>api</td><td></td><td>Added new class ENewLineMode to determine the different newline modes</td></tr>
+<tr><td>3/3/14</td><td>add</td><td>api</td><td></td><td>Added new classes PrivilegedAction`*` for classloader handling</td></tr>
+<tr><td>3/3/14</td><td>fix</td><td>tech</td><td></td><td>Fixed an error when using the XMLReaderFactory from JDK 1.6 by cloning and fixing the class to XMLReaderFactoryPhloc</td></tr>
+<tr><td>3/3/14</td><td>add</td><td>api</td><td></td><td>Added new class AnnotationUsageCache</td></tr>
+<tr><td>3/3/14</td><td>add</td><td>api</td><td></td><td>Extended IMicroDataAware API with new appendData/prependData overloads</td></tr>
 <tr><td>2/26/14</td><td>add</td><td>api</td><td></td><td>Added new annotation @Until which can be considered the counterpart to @Since</td></tr>
 <tr><td>2/24/14</td><td>add</td><td>api</td><td></td><td>Added new method IMicroElement.getChildElementCount</td></tr>
 <tr><td>2/7/14</td><td>update</td><td>tech</td><td></td><td>SAXReader now also has the possibility to explicitly create a new object</td></tr>
