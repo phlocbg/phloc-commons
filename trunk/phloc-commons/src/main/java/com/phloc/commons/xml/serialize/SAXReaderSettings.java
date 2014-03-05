@@ -59,6 +59,7 @@ public class SAXReaderSettings implements ISAXReaderSettings, ICloneable <SAXRea
   private final EnumMap <EXMLParserProperty, Object> m_aProperties = new EnumMap <EXMLParserProperty, Object> (EXMLParserProperty.class);
   private final EnumMap <EXMLParserFeature, Boolean> m_aFeatures = new EnumMap <EXMLParserFeature, Boolean> (EXMLParserFeature.class);
   private IExceptionHandler <Throwable> m_aExceptionHandler;
+  private boolean m_bRequiresNewXMLParserExplicitly;
 
   /**
    * Default constructor
@@ -73,6 +74,7 @@ public class SAXReaderSettings implements ISAXReaderSettings, ICloneable <SAXRea
     setPropertyValues (SAXReaderDefaultSettings.getAllPropertyValues ());
     setFeatureValues (SAXReaderDefaultSettings.getAllFeatureValues ());
     setExceptionHandler (SAXReaderDefaultSettings.getExceptionHandler ());
+    setRequiresNewXMLParserExplicitly (SAXReaderDefaultSettings.isRequiresNewXMLParserExplicitly ());
   }
 
   /**
@@ -94,6 +96,7 @@ public class SAXReaderSettings implements ISAXReaderSettings, ICloneable <SAXRea
     setPropertyValues (aOther.getAllPropertyValues ());
     setFeatureValues (aOther.getAllFeatureValues ());
     setExceptionHandler (aOther.getExceptionHandler ());
+    setRequiresNewXMLParserExplicitly (aOther.isRequiresNewXMLParserExplicitly ());
   }
 
   @Nullable
@@ -314,6 +317,10 @@ public class SAXReaderSettings implements ISAXReaderSettings, ICloneable <SAXRea
 
   public boolean requiresNewXMLParser ()
   {
+    // Force a new XML parser?
+    if (m_bRequiresNewXMLParserExplicitly)
+      return true;
+
     if (!m_aProperties.isEmpty () || !m_aFeatures.isEmpty ())
       return true;
 
@@ -338,6 +345,18 @@ public class SAXReaderSettings implements ISAXReaderSettings, ICloneable <SAXRea
     return this;
   }
 
+  public boolean isRequiresNewXMLParserExplicitly ()
+  {
+    return m_bRequiresNewXMLParserExplicitly;
+  }
+
+  @Nonnull
+  public final SAXReaderSettings setRequiresNewXMLParserExplicitly (final boolean bRequiresNewXMLParserExplicitly)
+  {
+    m_bRequiresNewXMLParserExplicitly = bRequiresNewXMLParserExplicitly;
+    return this;
+  }
+
   @Nonnull
   public SAXReaderSettings getClone ()
   {
@@ -354,6 +373,7 @@ public class SAXReaderSettings implements ISAXReaderSettings, ICloneable <SAXRea
                                        .append ("properties", m_aProperties)
                                        .append ("features", m_aFeatures)
                                        .append ("exceptionHandler", m_aExceptionHandler)
+                                       .append ("requiresNewXMLParserExplicitly", m_bRequiresNewXMLParserExplicitly)
                                        .toString ();
   }
 

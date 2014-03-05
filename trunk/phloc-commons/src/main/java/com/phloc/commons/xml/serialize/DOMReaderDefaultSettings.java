@@ -50,6 +50,8 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 @ThreadSafe
 public final class DOMReaderDefaultSettings
 {
+  public static final boolean DEFAULT_REQUIRES_NEW_XML_PARSER_EXPLICITLY = false;
+
   private static final ReadWriteLock s_aRWLock = new ReentrantReadWriteLock ();
 
   // DocumentBuilderFactory properties
@@ -83,6 +85,8 @@ public final class DOMReaderDefaultSettings
   // Handling properties
   @GuardedBy ("s_aRWLock")
   private static IExceptionHandler <Throwable> s_aDefaultExceptionHandler = new XMLLoggingExceptionHandler ();
+  @GuardedBy ("s_aRWLock")
+  private static boolean s_bDefaultRequiresNewXMLParserExplicitly = DEFAULT_REQUIRES_NEW_XML_PARSER_EXPLICITLY;
 
   @SuppressWarnings ("unused")
   @PresentForCodeCoverage
@@ -551,6 +555,10 @@ public final class DOMReaderDefaultSettings
     s_aRWLock.readLock ().lock ();
     try
     {
+      // Force a new XML parser?
+      if (s_bDefaultRequiresNewXMLParserExplicitly)
+        return true;
+
       if (s_bDefaultNamespaceAware != XMLFactory.DEFAULT_DOM_NAMESPACE_AWARE ||
           s_bDefaultValidating != XMLFactory.DEFAULT_DOM_VALIDATING ||
           s_bDefaultIgnoringElementContentWhitespace != XMLFactory.DEFAULT_DOM_IGNORING_ELEMENT_CONTENT_WHITESPACE ||
@@ -656,6 +664,32 @@ public final class DOMReaderDefaultSettings
     try
     {
       s_aDefaultExceptionHandler = aExceptionHandler;
+    }
+    finally
+    {
+      s_aRWLock.writeLock ().unlock ();
+    }
+  }
+
+  public static boolean isRequiresNewXMLParserExplicitly ()
+  {
+    s_aRWLock.readLock ().lock ();
+    try
+    {
+      return s_bDefaultRequiresNewXMLParserExplicitly;
+    }
+    finally
+    {
+      s_aRWLock.readLock ().unlock ();
+    }
+  }
+
+  public static void setRequiresNewXMLParserExplicitly (final boolean bDefaultRequiresNewXMLParserExplicitly)
+  {
+    s_aRWLock.writeLock ().lock ();
+    try
+    {
+      s_bDefaultRequiresNewXMLParserExplicitly = bDefaultRequiresNewXMLParserExplicitly;
     }
     finally
     {
