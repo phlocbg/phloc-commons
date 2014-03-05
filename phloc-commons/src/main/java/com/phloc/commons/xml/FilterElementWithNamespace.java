@@ -17,25 +17,24 @@
  */
 package com.phloc.commons.xml;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import org.w3c.dom.Element;
 
 import com.phloc.commons.equals.EqualsUtils;
-import com.phloc.commons.filter.IFilter;
+import com.phloc.commons.filter.ISerializableFilter;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * An implementation of {@link IFilter} on {@link Element} objects that will
- * only return elements with a certain namespace URI.
+ * An implementation of {@link ISerializableFilter} on {@link Element} objects
+ * that will only return elements with a certain namespace URI.
  * 
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class FilterElementWithNamespace implements IFilter <Element>
+public final class FilterElementWithNamespace implements ISerializableFilter <Element>
 {
   private final String m_sNamespaceURI;
 
@@ -44,9 +43,9 @@ public final class FilterElementWithNamespace implements IFilter <Element>
     m_sNamespaceURI = sNamespaceURI;
   }
 
-  public boolean matchesFilter (@Nonnull final Element aElement)
+  public boolean matchesFilter (@Nullable final Element aElement)
   {
-    return XMLHelper.hasNamespaceURI (aElement, m_sNamespaceURI);
+    return aElement != null && XMLHelper.hasNamespaceURI (aElement, m_sNamespaceURI);
   }
 
   @Override

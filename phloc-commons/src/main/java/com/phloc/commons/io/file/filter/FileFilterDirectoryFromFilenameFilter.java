@@ -43,6 +43,12 @@ public final class FileFilterDirectoryFromFilenameFilter extends AbstractFileFil
     m_aFilenameFilter = aFilenameFilter;
   }
 
+  @Nonnull
+  public final FilenameFilter getFilenameFilter ()
+  {
+    return m_aFilenameFilter;
+  }
+
   public boolean accept (@Nullable final File aFile)
   {
     return aFile != null && aFile.isDirectory () && m_aFilenameFilter.accept (aFile.getParentFile (), aFile.getName ());

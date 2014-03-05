@@ -18,31 +18,39 @@
 package com.phloc.commons.filter;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.hash.HashCodeGenerator;
-import com.phloc.commons.lang.GenericReflection;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * A filter implementation that always returns <code>false</code>.
+ * A filter implementation that inverts the result of another filter.
  * 
  * @author Philip Helger
  * @param <DATATYPE>
  *        The data type to filter
  */
 @Immutable
-public final class FilterFalse <DATATYPE> implements ISerializableFilter <DATATYPE>
+public final class SerializableFilterInverted <DATATYPE> implements ISerializableFilter <DATATYPE>
 {
-  private static final FilterFalse <Object> s_aInstance = new FilterFalse <Object> ();
+  private final ISerializableFilter <DATATYPE> m_aOriginalFilter;
 
-  private FilterFalse ()
-  {}
-
-  public boolean matchesFilter (@Nullable final DATATYPE aValue)
+  public SerializableFilterInverted (@Nonnull final ISerializableFilter <DATATYPE> aOriginalFilter)
   {
-    return false;
+    if (aOriginalFilter == null)
+      throw new NullPointerException ("originalFilter");
+    m_aOriginalFilter = aOriginalFilter;
+  }
+
+  @Nonnull
+  public ISerializableFilter <DATATYPE> getOriginalFilter ()
+  {
+    return m_aOriginalFilter;
+  }
+
+  public boolean matchesFilter (final DATATYPE aValue)
+  {
+    return !m_aOriginalFilter.matchesFilter (aValue);
   }
 
   @Override
@@ -50,26 +58,21 @@ public final class FilterFalse <DATATYPE> implements ISerializableFilter <DATATY
   {
     if (o == this)
       return true;
-    if (!(o instanceof FilterFalse <?>))
+    if (!(o instanceof SerializableFilterInverted <?>))
       return false;
-    return true;
+    final SerializableFilterInverted <?> rhs = (SerializableFilterInverted <?>) o;
+    return m_aOriginalFilter.equals (rhs.m_aOriginalFilter);
   }
 
   @Override
   public int hashCode ()
   {
-    return new HashCodeGenerator (this).getHashCode ();
+    return new HashCodeGenerator (this).append (m_aOriginalFilter).getHashCode ();
   }
 
   @Override
   public String toString ()
   {
-    return new ToStringGenerator (this).toString ();
-  }
-
-  @Nonnull
-  public static <DATATYPE> FilterFalse <DATATYPE> getInstance ()
-  {
-    return GenericReflection.<FilterFalse <Object>, FilterFalse <DATATYPE>> uncheckedCast (s_aInstance);
+    return new ToStringGenerator (this).append ("originalFilter", m_aOriginalFilter).toString ();
   }
 }
