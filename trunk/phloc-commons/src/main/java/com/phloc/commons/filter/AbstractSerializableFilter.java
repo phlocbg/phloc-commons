@@ -24,24 +24,24 @@ import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * An abstract implementation of {@link IFilter} that has an optional nested
- * filter.
+ * An abstract implementation of {@link ISerializableFilter} that has an
+ * optional nested filter.
  * 
  * @author Philip Helger
  * @param <DATATYPE>
  *        The type of object to filter.
  */
 @NotThreadSafe
-public abstract class AbstractFilter <DATATYPE> implements IFilter <DATATYPE>
+public abstract class AbstractSerializableFilter <DATATYPE> implements ISerializableFilter <DATATYPE>
 {
-  private final IFilter <DATATYPE> m_aNestedFilter;
+  private final ISerializableFilter <DATATYPE> m_aNestedFilter;
 
-  public AbstractFilter ()
+  public AbstractSerializableFilter ()
   {
     this (null);
   }
 
-  public AbstractFilter (@Nullable final IFilter <DATATYPE> aCustomFilter)
+  public AbstractSerializableFilter (@Nullable final ISerializableFilter <DATATYPE> aCustomFilter)
   {
     m_aNestedFilter = aCustomFilter;
   }
@@ -68,7 +68,7 @@ public abstract class AbstractFilter <DATATYPE> implements IFilter <DATATYPE>
    * @return The nested filter. May be <code>null</code>.
    */
   @Nullable
-  public IFilter <DATATYPE> getNestedFilter ()
+  public ISerializableFilter <DATATYPE> getNestedFilter ()
   {
     return m_aNestedFilter;
   }
@@ -80,7 +80,7 @@ public abstract class AbstractFilter <DATATYPE> implements IFilter <DATATYPE>
       return true;
     if (o == null || !getClass ().equals (o.getClass ()))
       return false;
-    final AbstractFilter <?> rhs = (AbstractFilter <?>) o;
+    final AbstractSerializableFilter <?> rhs = (AbstractSerializableFilter <?>) o;
     return m_aNestedFilter.equals (rhs.m_aNestedFilter);
   }
 

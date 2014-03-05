@@ -18,11 +18,13 @@
 package com.phloc.commons.xml;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import org.w3c.dom.Element;
 
 import com.phloc.commons.filter.IFilter;
+import com.phloc.commons.filter.ISerializableFilter;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -33,16 +35,22 @@ import com.phloc.commons.string.ToStringGenerator;
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class FilterElementWithoutNamespace implements IFilter <Element>
+public final class FilterElementWithoutNamespace implements ISerializableFilter <Element>
 {
   private static final FilterElementWithoutNamespace s_aInstance = new FilterElementWithoutNamespace ();
 
   private FilterElementWithoutNamespace ()
   {}
 
-  public boolean matchesFilter (@Nonnull final Element aElement)
+  @Nonnull
+  public static FilterElementWithoutNamespace getInstance ()
   {
-    return aElement.getNamespaceURI () == null;
+    return s_aInstance;
+  }
+
+  public boolean matchesFilter (@Nullable final Element aElement)
+  {
+    return aElement != null && aElement.getNamespaceURI () == null;
   }
 
   @Override
@@ -65,11 +73,5 @@ public final class FilterElementWithoutNamespace implements IFilter <Element>
   public String toString ()
   {
     return new ToStringGenerator (this).toString ();
-  }
-
-  @Nonnull
-  public static FilterElementWithoutNamespace getInstance ()
-  {
-    return s_aInstance;
   }
 }

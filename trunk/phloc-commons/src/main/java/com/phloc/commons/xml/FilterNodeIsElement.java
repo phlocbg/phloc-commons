@@ -17,7 +17,6 @@
  */
 package com.phloc.commons.xml;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
@@ -31,7 +30,7 @@ import com.phloc.commons.string.ToStringGenerator;
 /**
  * An implementation of {@link IFilter} on {@link Node} objects that will only
  * return {@link Element} nodes.
- *
+ * 
  * @author Philip Helger
  */
 @NotThreadSafe
@@ -49,9 +48,9 @@ public final class FilterNodeIsElement implements IFilter <Node>
     m_aNestedElementFilter = aNestedElementFilter;
   }
 
-  public boolean matchesFilter (@Nonnull final Node aNode)
+  public boolean matchesFilter (@Nullable final Node aNode)
   {
-    if (aNode.getNodeType () != Node.ELEMENT_NODE)
+    if (aNode == null || aNode.getNodeType () != Node.ELEMENT_NODE)
       return false;
     return m_aNestedElementFilter == null || m_aNestedElementFilter.matchesFilter ((Element) aNode);
   }
