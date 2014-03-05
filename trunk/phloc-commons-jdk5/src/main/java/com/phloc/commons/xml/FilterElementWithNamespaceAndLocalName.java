@@ -25,19 +25,20 @@ import org.w3c.dom.Element;
 
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.equals.EqualsUtils;
-import com.phloc.commons.filter.IFilter;
+import com.phloc.commons.filter.ISerializableFilter;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * An implementation of {@link IFilter} on {@link Element} objects that will
- * only return elements with a certain namespace URI and a certain local name.
+ * An implementation of {@link ISerializableFilter} on {@link Element} objects
+ * that will only return elements with a certain namespace URI and a certain
+ * local name.
  * 
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class FilterElementWithNamespaceAndLocalName implements IFilter <Element>
+public final class FilterElementWithNamespaceAndLocalName implements ISerializableFilter <Element>
 {
   private final String m_sNamespaceURI;
   private final String m_sLocalName;
@@ -51,9 +52,11 @@ public final class FilterElementWithNamespaceAndLocalName implements IFilter <El
     m_sLocalName = sLocalName;
   }
 
-  public boolean matchesFilter (@Nonnull final Element aElement)
+  public boolean matchesFilter (@Nullable final Element aElement)
   {
-    return XMLHelper.hasNamespaceURI (aElement, m_sNamespaceURI) && aElement.getLocalName ().equals (m_sLocalName);
+    return aElement != null &&
+           XMLHelper.hasNamespaceURI (aElement, m_sNamespaceURI) &&
+           aElement.getLocalName ().equals (m_sLocalName);
   }
 
   @Override

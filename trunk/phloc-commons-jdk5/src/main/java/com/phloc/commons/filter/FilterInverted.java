@@ -42,6 +42,12 @@ public final class FilterInverted <DATATYPE> implements IFilter <DATATYPE>
     m_aOriginalFilter = aOriginalFilter;
   }
 
+  @Nonnull
+  public IFilter <DATATYPE> getOriginalFilter ()
+  {
+    return m_aOriginalFilter;
+  }
+
   public boolean matchesFilter (final DATATYPE aValue)
   {
     return !m_aOriginalFilter.matchesFilter (aValue);

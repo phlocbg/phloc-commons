@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.changelog;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +42,7 @@ import com.phloc.commons.version.Version;
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class ChangeLog
+public final class ChangeLog implements Serializable
 {
   private final String m_sOriginalVersion;
   private final Version m_aVersion;

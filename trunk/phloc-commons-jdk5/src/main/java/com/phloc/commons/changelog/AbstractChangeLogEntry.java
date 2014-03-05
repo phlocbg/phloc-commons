@@ -17,6 +17,7 @@
  */
 package com.phloc.commons.changelog;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.annotation.Nonnull;
@@ -27,16 +28,16 @@ import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * Base class for all changelog entries
- *
+ * 
  * @author Philip Helger
  */
-public abstract class AbstractChangeLogEntry
+public abstract class AbstractChangeLogEntry implements Serializable
 {
   private final Date m_aDate;
 
   /**
    * Constructor.
-   *
+   * 
    * @param aDate
    *        The release date. May not be <code>null</code>.
    */

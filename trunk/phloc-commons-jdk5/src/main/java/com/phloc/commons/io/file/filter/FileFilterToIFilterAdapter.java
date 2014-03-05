@@ -58,7 +58,7 @@ public final class FileFilterToIFilterAdapter implements IFilter <File>
 
   public boolean matchesFilter (@Nullable final File aFile)
   {
-    return m_aFileFilter.accept (aFile);
+    return aFile != null && m_aFileFilter.accept (aFile);
   }
 
   @Override

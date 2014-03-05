@@ -44,6 +44,12 @@ public final class FileFilterFileFromFilenameFilter extends AbstractFileFilter
     m_aFilenameFilter = aFilenameFilter;
   }
 
+  @Nonnull
+  public final FilenameFilter getFilenameFilter ()
+  {
+    return m_aFilenameFilter;
+  }
+
   public boolean accept (@Nullable final File aFile)
   {
     return aFile != null &&
