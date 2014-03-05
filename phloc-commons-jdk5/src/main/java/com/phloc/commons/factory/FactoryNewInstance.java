@@ -17,6 +17,8 @@
  */
 package com.phloc.commons.factory;
 
+import java.io.Serializable;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -34,7 +36,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * @param <DATATYPE>
  *        The return type of the factory
  */
-public final class FactoryNewInstance <DATATYPE> implements IFactory <DATATYPE>
+public final class FactoryNewInstance <DATATYPE> implements IFactory <DATATYPE>, Serializable
 {
   private final Class <? extends DATATYPE> m_aClass;
 

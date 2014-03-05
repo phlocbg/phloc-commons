@@ -20,6 +20,17 @@
 -->
 <changelog xmlns="http://www.phloc.com/ns/changelog/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.phloc.com/ns/changelog/1.0 schemas/changelog-1.0.xsd" version="1.0" component="phloc-commons">
+  <release date="2014-03-05" version="4.2.0" />
+  <entry date="2014-03-05" category="api" action="add">
+    <change>
+      <text locale="en">Explicitly allowing to create a new parser instance (DOM|SAX)Reader(Default)Settings.(set|is)RequiresNewXMLParserExplicitly</text>
+    </change>
+  </entry>
+  <entry date="2014-03-05" category="api" action="add">
+    <change>
+      <text locale="en">Added new special serializable filters (ISerializableFilter etc.)</text>
+    </change>
+  </entry>
   <entry date="2014-03-04" category="api" action="add">
     <change>
       <text locale="en">Added new class ENewLineMode to determine the different newline modes</text>

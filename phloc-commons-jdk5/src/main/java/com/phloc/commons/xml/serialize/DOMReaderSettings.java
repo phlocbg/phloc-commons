@@ -68,6 +68,7 @@ public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMRe
 
   // Handling properties
   private IExceptionHandler <Throwable> m_aExceptionHandler;
+  private boolean m_bRequiresNewXMLParserExplicitly;
 
   /**
    * Constructor using the default settings from
@@ -91,6 +92,7 @@ public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMRe
     setErrorHandler (DOMReaderDefaultSettings.getErrorHandler ());
     // Custom
     setExceptionHandler (DOMReaderDefaultSettings.getExceptionHandler ());
+    setRequiresNewXMLParserExplicitly (DOMReaderDefaultSettings.isRequiresNewXMLParserExplicitly ());
   }
 
   /**
@@ -120,6 +122,7 @@ public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMRe
     setErrorHandler (aOther.getErrorHandler ());
     // Custom
     setExceptionHandler (aOther.getExceptionHandler ());
+    setRequiresNewXMLParserExplicitly (aOther.isRequiresNewXMLParserExplicitly ());
   }
 
   public boolean isNamespaceAware ()
@@ -361,6 +364,10 @@ public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMRe
 
   public boolean requiresNewXMLParser ()
   {
+    // Force a new XML parser?
+    if (m_bRequiresNewXMLParserExplicitly)
+      return true;
+
     if (m_bNamespaceAware != XMLFactory.DEFAULT_DOM_NAMESPACE_AWARE ||
         m_bValidating != XMLFactory.DEFAULT_DOM_VALIDATING ||
         m_bIgnoringElementContentWhitespace != XMLFactory.DEFAULT_DOM_IGNORING_ELEMENT_CONTENT_WHITESPACE ||
@@ -426,6 +433,18 @@ public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMRe
     return this;
   }
 
+  public boolean isRequiresNewXMLParserExplicitly ()
+  {
+    return m_bRequiresNewXMLParserExplicitly;
+  }
+
+  @Nonnull
+  public final DOMReaderSettings setRequiresNewXMLParserExplicitly (final boolean bRequiresNewXMLParserExplicitly)
+  {
+    m_bRequiresNewXMLParserExplicitly = bRequiresNewXMLParserExplicitly;
+    return this;
+  }
+
   @Nonnull
   public DOMReaderSettings getClone ()
   {
@@ -448,6 +467,7 @@ public class DOMReaderSettings implements ICloneable <DOMReaderSettings>, IDOMRe
                                        .append ("entityResolver", m_aEntityResolver)
                                        .append ("errorHandler", m_aErrorHandler)
                                        .append ("exceptionHandler", m_aExceptionHandler)
+                                       .append ("requiresNewXMLParserExplicitly", m_bRequiresNewXMLParserExplicitly)
                                        .toString ();
   }
 }

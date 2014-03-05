@@ -18,24 +18,26 @@
 package com.phloc.commons.xml;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import org.w3c.dom.Element;
 
 import com.phloc.commons.annotations.Nonempty;
-import com.phloc.commons.filter.IFilter;
+import com.phloc.commons.filter.ISerializableFilter;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
- * An implementation of {@link IFilter} on {@link Element} objects that will
- * only return elements with a certain tag name and without a namespace URI.
+ * An implementation of {@link ISerializableFilter} on {@link Element} objects
+ * that will only return elements with a certain tag name and without a
+ * namespace URI.
  * 
  * @author Philip Helger
  */
 @NotThreadSafe
-public final class FilterElementWithTagName implements IFilter <Element>
+public final class FilterElementWithTagName implements ISerializableFilter <Element>
 {
   private final String m_sTagName;
 
@@ -46,9 +48,16 @@ public final class FilterElementWithTagName implements IFilter <Element>
     m_sTagName = sTagName;
   }
 
-  public boolean matchesFilter (@Nonnull final Element aElement)
+  @Nonnull
+  @Nonempty
+  public String getTagName ()
   {
-    return aElement.getNamespaceURI () == null && aElement.getTagName ().equals (m_sTagName);
+    return m_sTagName;
+  }
+
+  public boolean matchesFilter (@Nullable final Element aElement)
+  {
+    return aElement != null && aElement.getNamespaceURI () == null && aElement.getTagName ().equals (m_sTagName);
   }
 
   @Override
