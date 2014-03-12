@@ -21,7 +21,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * ====================================================================
  */
-package com.phloc.commons.charset.utf7;
+package com.phloc.charset.utf7;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -35,6 +35,10 @@ import java.util.Locale;
 import java.util.Set;
 
 import org.junit.Test;
+
+import com.phloc.charset.utf7.CharsetProvider;
+import com.phloc.charset.utf7.ModifiedUTF7Charset;
+import com.phloc.charset.utf7.UTF7Charset;
 
 public final class CharsetProviderTest
 {

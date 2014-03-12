@@ -21,22 +21,30 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * ====================================================================
  */
-package com.phloc.commons.charset.utf7;
+package com.phloc.charset.utf7;
 
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
+import java.nio.ByteBuffer;
 
-abstract class AbstractCharsetTest
+abstract class AbstractCharsetTestUtil
 {
-  protected Charset tested;
-
-  protected String decode (final String string) throws UnsupportedEncodingException
+  static void outToSB (final ByteBuffer out, final StringBuffer sb) throws UnsupportedEncodingException
   {
-    return tested.decode (AbstractCharsetTestUtil.wrap (string)).toString ();
+    out.flip ();
+    sb.append (AbstractCharsetTestUtil.asString (out));
+    out.clear ();
   }
 
-  protected String encode (final String string) throws UnsupportedEncodingException
+  static String asString (final ByteBuffer buffer) throws UnsupportedEncodingException
   {
-    return AbstractCharsetTestUtil.asString (tested.encode (string));
+    final byte [] bytes = new byte [buffer.limit ()];
+    buffer.get (bytes);
+    return new String (bytes, "US-ASCII");
+  }
+
+  static ByteBuffer wrap (final String string) throws UnsupportedEncodingException
+  {
+    final byte [] bytes = string.getBytes ("US-ASCII");
+    return ByteBuffer.wrap (bytes);
   }
 }

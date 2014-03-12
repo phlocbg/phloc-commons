@@ -21,30 +21,38 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * ====================================================================
  */
-package com.phloc.commons.charset.utf7;
+package com.phloc.charset.utf7;
 
-import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
+import static org.junit.Assert.assertEquals;
 
-abstract class AbstractCharsetTestUtil
+import org.junit.Before;
+import org.junit.Test;
+
+import com.phloc.charset.utf7.UTF7Charset;
+
+public final class UTF7oTest extends AbstractCharsetTest
 {
-  static void outToSB (final ByteBuffer out, final StringBuffer sb) throws UnsupportedEncodingException
+  @Before
+  public void setUp () throws Exception
   {
-    out.flip ();
-    sb.append (AbstractCharsetTestUtil.asString (out));
-    out.clear ();
+    tested = new UTF7Charset ("X-UTF-7-Optional", new String [] {}, true);
   }
 
-  static String asString (final ByteBuffer buffer) throws UnsupportedEncodingException
+  @Test
+  public void testDecodeOptionalCharsUTF7 () throws Exception
   {
-    final byte [] bytes = new byte [buffer.limit ()];
-    buffer.get (bytes);
-    return new String (bytes, "US-ASCII");
+    assertEquals ("~!@", decode ("+AH4AIQBA-"));
   }
 
-  static ByteBuffer wrap (final String string) throws UnsupportedEncodingException
+  @Test
+  public void testDecodeOptionalCharsPlain () throws Exception
   {
-    final byte [] bytes = string.getBytes ("US-ASCII");
-    return ByteBuffer.wrap (bytes);
+    assertEquals ("!\"#$%*;<=>@[]^_'{|}", decode ("!\"#$%*;<=>@[]^_'{|}"));
+  }
+
+  @Test
+  public void testEncodeOptionalCharsUTF7 () throws Exception
+  {
+    assertEquals ("!\"#$%*;<=>@[]^_`{|}", encode ("!\"#$%*;<=>@[]^_`{|}"));
   }
 }
