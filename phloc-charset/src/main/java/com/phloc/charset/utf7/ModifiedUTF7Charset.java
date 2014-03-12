@@ -21,36 +21,50 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * ====================================================================
  */
-package com.phloc.commons.charset.utf7;
+package com.phloc.charset.utf7;
 
-import static org.junit.Assert.assertEquals;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
-import org.junit.Before;
-import org.junit.Test;
+import com.phloc.commons.annotations.Nonempty;
 
-public final class UTF7oTest extends AbstractCharsetTest
+/**
+ * <p>
+ * The character set specified in RFC 3501 to use for IMAP4rev1 mailbox name
+ * encoding.
+ * </p>
+ * 
+ * @see <a href="http://tools.ietf.org/html/rfc3501">RFC 3501</a>
+ * @author Jaap Beetstra
+ */
+final class ModifiedUTF7Charset extends UTF7StyleCharset
 {
-  @Before
-  public void setUp () throws Exception
+  private static final String MODIFIED_BASE64_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                                         + "abcdefghijklmnopqrstuvwxyz"
+                                                         + "0123456789+,";
+
+  ModifiedUTF7Charset (@Nonnull @Nonempty final String sName, @Nullable final String [] aAliases)
   {
-    tested = new UTF7Charset ("X-UTF-7-Optional", new String [] {}, true);
+    super (sName, aAliases, MODIFIED_BASE64_ALPHABET, true);
   }
 
-  @Test
-  public void testDecodeOptionalCharsUTF7 () throws Exception
+  @Override
+  boolean canEncodeDirectly (final char ch)
   {
-    assertEquals ("~!@", decode ("+AH4AIQBA-"));
+    if (ch == shift ())
+      return false;
+    return ch >= 0x20 && ch <= 0x7E;
   }
 
-  @Test
-  public void testDecodeOptionalCharsPlain () throws Exception
+  @Override
+  byte shift ()
   {
-    assertEquals ("!\"#$%*;<=>@[]^_'{|}", decode ("!\"#$%*;<=>@[]^_'{|}"));
+    return '&';
   }
 
-  @Test
-  public void testEncodeOptionalCharsUTF7 () throws Exception
+  @Override
+  byte unshift ()
   {
-    assertEquals ("!\"#$%*;<=>@[]^_`{|}", encode ("!\"#$%*;<=>@[]^_`{|}"));
+    return '-';
   }
 }

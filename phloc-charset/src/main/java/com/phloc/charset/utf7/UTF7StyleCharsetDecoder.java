@@ -21,7 +21,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * ====================================================================
  */
-package com.phloc.commons.charset.utf7;
+package com.phloc.charset.utf7;
 
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;

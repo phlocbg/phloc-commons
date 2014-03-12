@@ -21,50 +21,22 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * ====================================================================
  */
-package com.phloc.commons.charset.utf7;
+package com.phloc.charset.utf7;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 
-import com.phloc.commons.annotations.Nonempty;
-
-/**
- * <p>
- * The character set specified in RFC 3501 to use for IMAP4rev1 mailbox name
- * encoding.
- * </p>
- * 
- * @see <a href="http://tools.ietf.org/html/rfc3501">RFC 3501</a>
- * @author Jaap Beetstra
- */
-final class ModifiedUTF7Charset extends UTF7StyleCharset
+abstract class AbstractCharsetTest
 {
-  private static final String MODIFIED_BASE64_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                                         + "abcdefghijklmnopqrstuvwxyz"
-                                                         + "0123456789+,";
+  protected Charset tested;
 
-  ModifiedUTF7Charset (@Nonnull @Nonempty final String sName, @Nullable final String [] aAliases)
+  protected String decode (final String string) throws UnsupportedEncodingException
   {
-    super (sName, aAliases, MODIFIED_BASE64_ALPHABET, true);
+    return tested.decode (AbstractCharsetTestUtil.wrap (string)).toString ();
   }
 
-  @Override
-  boolean canEncodeDirectly (final char ch)
+  protected String encode (final String string) throws UnsupportedEncodingException
   {
-    if (ch == shift ())
-      return false;
-    return ch >= 0x20 && ch <= 0x7E;
-  }
-
-  @Override
-  byte shift ()
-  {
-    return '&';
-  }
-
-  @Override
-  byte unshift ()
-  {
-    return '-';
+    return AbstractCharsetTestUtil.asString (tested.encode (string));
   }
 }

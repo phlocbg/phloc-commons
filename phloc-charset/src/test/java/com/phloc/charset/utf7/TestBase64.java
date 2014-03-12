@@ -21,7 +21,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * ====================================================================
  */
-package com.phloc.commons.charset.utf7;
+package com.phloc.charset.utf7;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -30,6 +30,8 @@ import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import com.phloc.charset.utf7.Base64Util;
 
 public final class TestBase64
 {
