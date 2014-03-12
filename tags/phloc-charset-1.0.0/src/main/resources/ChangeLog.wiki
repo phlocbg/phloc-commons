@@ -1,0 +1,6 @@
+#summary Change log of phloc-charset
+= Change log =
+<wiki:comment>This content is generated. Do not modify!</wiki:comment>
+<table border="1" cellspacing="0"><thead><tr><th>Date</th><th>Action</th><th>Category</th><th>Incompatible?</th><th>Description</th></tr></thead><tbody>
+<tr><td>3/12/14</td><td>add</td><td>feature</td><td></td><td>Added support for UTF-7 Charset - based on https://sourceforge.net/projects/jutf7/</td></tr>
+</tbody></table>
