@@ -24,6 +24,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.phloc.commons.string.StringHelper;
+
 /**
  * Test class for class {@link EUnicodeBOM}.
  * 
@@ -70,6 +72,8 @@ public final class EUnicodeBOMTest
       assertTrue (eBOM.isPresent (eBOM.getBytes ()));
       assertSame (eBOM, EUnicodeBOM.valueOf (eBOM.name ()));
       assertSame (eBOM, EUnicodeBOM.getFromBytesOrNull (eBOM.getBytes ()));
+      if (eBOM.getCharset () != null)
+        assertTrue (StringHelper.hasText (eBOM.getCharsetName ()));
     }
 
     assertEquals (4, EUnicodeBOM.getMaximumByteCount ());

@@ -43,10 +43,10 @@ public enum EUnicodeBOM implements IHasByteSize
   // 4 bytes
   BOM_UTF_32_BIG_ENDIAN (new byte [] { 0x00, 0x00, (byte) 0xfe, (byte) 0xff }, "utf-32be"),
   BOM_UTF_32_LITTLE_ENDIAN (new byte [] { (byte) 0xff, (byte) 0xfe, 0x00, 0x00 }, "utf-32le"),
-  BOM_UTF_7 (new byte [] { 0x2b, 0x2f, 0x76, 0x38 }, null),
-  BOM_UTF_7_ALT2 (new byte [] { 0x2b, 0x2f, 0x76, 0x39 }, null),
-  BOM_UTF_7_ALT3 (new byte [] { 0x2b, 0x2f, 0x76, 0x2b }, null),
-  BOM_UTF_7_ALT4 (new byte [] { 0x2b, 0x2f, 0x76, 0x2f }, null),
+  BOM_UTF_7 (new byte [] { 0x2b, 0x2f, 0x76, 0x38 }, "utf-7"),
+  BOM_UTF_7_ALT2 (new byte [] { 0x2b, 0x2f, 0x76, 0x39 }, "utf-7"),
+  BOM_UTF_7_ALT3 (new byte [] { 0x2b, 0x2f, 0x76, 0x2b }, "utf-7"),
+  BOM_UTF_7_ALT4 (new byte [] { 0x2b, 0x2f, 0x76, 0x2f }, "utf-7"),
   BOM_UTF_EBCDIC (new byte [] { (byte) 0xdd, 0x73, 0x66, 0x73 }, null),
   BOM_BOCU_1_ALT2 (new byte [] { (byte) 0xfb, (byte) 0xee, 0x28, (byte) 0xff }, null),
   BOM_GB_18030 (new byte [] { (byte) 0x84, 0x31, (byte) 0x95, 0x33 }, "gb18030"),
@@ -71,6 +71,7 @@ public enum EUnicodeBOM implements IHasByteSize
   private static final int MAXIMUM_BOM_BYTE_COUNT = 4;
 
   private final byte [] m_aBOMBytes;
+  private final String m_sCharsetName;
   private final Charset m_aCharset;
 
   private EUnicodeBOM (@Nonnull @Nonempty final byte [] aBytes, @Nullable final String sCharset)// NOPMD
@@ -78,7 +79,8 @@ public enum EUnicodeBOM implements IHasByteSize
     if (aBytes.length <= 0 || aBytes.length > MAXIMUM_BOM_BYTE_COUNT)
       throw new InitializationException ("Byte count is invalid!");
     m_aBOMBytes = aBytes;
-    m_aCharset = sCharset == null ? null : Charset.forName (sCharset);
+    m_sCharsetName = sCharset;
+    m_aCharset = CharsetManager.getCharsetFromNameOrNull (sCharset);
   }
 
   /**
@@ -125,6 +127,18 @@ public enum EUnicodeBOM implements IHasByteSize
     return aBytes != null &&
            aBytes.length >= nLength &&
            Arrays.equals (m_aBOMBytes, ArrayHelper.getCopy (aBytes, 0, nLength));
+  }
+
+  /**
+   * @return The name of the charset. This may be <code>null</code> if no known
+   *         charset exists for Java. This string may be present, even if
+   *         {@link #getCharset()} returns <code>null</code>. To support e.g.
+   *         "utf-7" you need to add additional chars.
+   */
+  @Nullable
+  public String getCharsetName ()
+  {
+    return m_sCharsetName;
   }
 
   /**
