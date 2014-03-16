@@ -33,7 +33,10 @@ import com.phloc.commons.exceptions.InitializationException;
 /**
  * Defines the most common Byte Order Markers for Unicode encoded text files.<br>
  * Source: http://de.wikipedia.org/wiki/Byte_Order_Mark<br>
- * Important: BOMS with more bytes should come first to avoid wrong detections.
+ * Important: BOMS with more bytes should come first to avoid wrong detections.<br>
+ * Note: SCSU = A Standard Compression Scheme for Unicode:
+ * http://www.unicode.org/reports/tr6/<br>
+ * Note: BOCU = Binary Ordered Compression for Unicode<br>
  * 
  * @author Philip Helger
  */
@@ -41,31 +44,57 @@ import com.phloc.commons.exceptions.InitializationException;
 public enum EUnicodeBOM implements IHasByteSize
 {
   // 4 bytes
+  /** UTF-32 Big Endian */
   BOM_UTF_32_BIG_ENDIAN (new byte [] { 0x00, 0x00, (byte) 0xfe, (byte) 0xff }, "utf-32be"),
+  /** UTF-32 Little Endian */
   BOM_UTF_32_LITTLE_ENDIAN (new byte [] { (byte) 0xff, (byte) 0xfe, 0x00, 0x00 }, "utf-32le"),
+  /** UTF-7 */
   BOM_UTF_7 (new byte [] { 0x2b, 0x2f, 0x76, 0x38 }, "utf-7"),
+  /** UTF-7 */
   BOM_UTF_7_ALT2 (new byte [] { 0x2b, 0x2f, 0x76, 0x39 }, "utf-7"),
+  /** UTF-7 */
   BOM_UTF_7_ALT3 (new byte [] { 0x2b, 0x2f, 0x76, 0x2b }, "utf-7"),
+  /** UTF-7 */
   BOM_UTF_7_ALT4 (new byte [] { 0x2b, 0x2f, 0x76, 0x2f }, "utf-7"),
+  /** UTF-EBCDIC */
   BOM_UTF_EBCDIC (new byte [] { (byte) 0xdd, 0x73, 0x66, 0x73 }, null),
+  /** BOCU */
   BOM_BOCU_1_ALT2 (new byte [] { (byte) 0xfb, (byte) 0xee, 0x28, (byte) 0xff }, null),
+  /** GB 18030 */
   BOM_GB_18030 (new byte [] { (byte) 0x84, 0x31, (byte) 0x95, 0x33 }, "gb18030"),
+
   // 3 bytes
+  /** UTF-8 */
   BOM_UTF_8 (new byte [] { (byte) 0xef, (byte) 0xbb, (byte) 0xbf }, "utf-8"),
-  BOM_UTF_1 (new byte [] { (byte) 0xf7, 0x64, 0x4c }, null),
+  /** UTF-1 */
+  BOM_UTF_1 (new byte [] { (byte) 0xf7, 0x64, 0x4c }, "utf-1"),
+  /** BOCU */
   BOM_BOCU_1 (new byte [] { (byte) 0xfb, (byte) 0xee, 0x28 }, null),
+  /** SCSU - Single-byte mode Quote Unicode */
   BOM_SCSU (new byte [] { 0x0e, (byte) 0xfe, (byte) 0xff }, null),
+  /** SCSU - Single-byte mode Change to Unicode */
   BOM_SCSU_TO_UCS (new byte [] { 0x0f, (byte) 0xfe, (byte) 0xff }, null),
+  /** SCSU - Single-byte mode Define dynamic window 0 to 0xFE80 */
   BOM_SCSU_W0_TO_FE80 (new byte [] { 0x18, (byte) 0xa5, (byte) 0xff }, null),
+  /** SCSU - Single-byte mode Define dynamic window 1 to 0xFE80 */
   BOM_SCSU_W1_TO_FE80 (new byte [] { 0x19, (byte) 0xa5, (byte) 0xff }, null),
+  /** SCSU - Single-byte mode Define dynamic window 2 to 0xFE80 */
   BOM_SCSU_W2_TO_FE80 (new byte [] { 0x1a, (byte) 0xa5, (byte) 0xff }, null),
+  /** SCSU - Single-byte mode Define dynamic window 3 to 0xFE80 */
   BOM_SCSU_W3_TO_FE80 (new byte [] { 0x1b, (byte) 0xa5, (byte) 0xff }, null),
+  /** SCSU - Single-byte mode Define dynamic window 4 to 0xFE80 */
   BOM_SCSU_W4_TO_FE80 (new byte [] { 0x1c, (byte) 0xa5, (byte) 0xff }, null),
+  /** SCSU - Single-byte mode Define dynamic window 5 to 0xFE80 */
   BOM_SCSU_W5_TO_FE80 (new byte [] { 0x1d, (byte) 0xa5, (byte) 0xff }, null),
+  /** SCSU - Single-byte mode Define dynamic window 6 to 0xFE80 */
   BOM_SCSU_W6_TO_FE80 (new byte [] { 0x1e, (byte) 0xa5, (byte) 0xff }, null),
+  /** SCSU - Single-byte mode Define dynamic window 7 to 0xFE80 */
   BOM_SCSU_W7_TO_FE80 (new byte [] { 0x1f, (byte) 0xa5, (byte) 0xff }, null),
+
   // 2 bytes
+  /** UTF-16 Big Endian */
   BOM_UTF_16_BIG_ENDIAN (new byte [] { (byte) 0xfe, (byte) 0xff }, "utf-16be"),
+  /** UTF-16 Little Endian */
   BOM_UTF_16_LITTLE_ENDIAN (new byte [] { (byte) 0xff, (byte) 0xfe }, "utf-16le");
 
   private static final int MAXIMUM_BOM_BYTE_COUNT = 4;
@@ -133,7 +162,7 @@ public enum EUnicodeBOM implements IHasByteSize
    * @return The name of the charset. This may be <code>null</code> if no known
    *         charset exists for Java. This string may be present, even if
    *         {@link #getCharset()} returns <code>null</code>. To support e.g.
-   *         "utf-7" you need to add additional chars.
+   *         "utf-7" you need to add additional JAR files.
    */
   @Nullable
   public String getCharsetName ()
