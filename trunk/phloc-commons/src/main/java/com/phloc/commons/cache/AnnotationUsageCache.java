@@ -30,6 +30,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.GuardedBy;
 import javax.annotation.concurrent.ThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -52,13 +53,12 @@ public class AnnotationUsageCache implements Serializable
    * Constructor
    * 
    * @param aAnnotationClass
-   *        The annotation class to store the existance of. It must have the
+   *        The annotation class to store the existence of. It must have the
    *        {@link RetentionPolicy#RUNTIME} to be usable within this class!
    */
   public AnnotationUsageCache (@Nonnull final Class <? extends Annotation> aAnnotationClass)
   {
-    if (aAnnotationClass == null)
-      throw new NullPointerException ("AnnotationClass");
+    ValueEnforcer.notNull (aAnnotationClass, "AnnotationClass");
 
     // Check retention policy
     final Retention aRetention = aAnnotationClass.getAnnotation (Retention.class);
@@ -83,16 +83,14 @@ public class AnnotationUsageCache implements Serializable
 
   public boolean hasAnnotation (@Nonnull final Object aObject)
   {
-    if (aObject == null)
-      throw new NullPointerException ("Object");
+    ValueEnforcer.notNull (aObject, "Object");
 
     return hasAnnotation (aObject.getClass ());
   }
 
   public boolean hasAnnotation (@Nonnull final Class <?> aClass)
   {
-    if (aClass == null)
-      throw new NullPointerException ("Class");
+    ValueEnforcer.notNull (aClass, "Class");
 
     final String sClassName = aClass.getName ();
 
@@ -129,8 +127,7 @@ public class AnnotationUsageCache implements Serializable
 
   public void setAnnotation (@Nonnull final Class <?> aClass, final boolean bHasAnnotation)
   {
-    if (aClass == null)
-      throw new NullPointerException ("Class");
+    ValueEnforcer.notNull (aClass, "Class");
 
     final String sClassName = aClass.getName ();
 
@@ -138,6 +135,19 @@ public class AnnotationUsageCache implements Serializable
     try
     {
       m_aMap.put (sClassName, Boolean.valueOf (bHasAnnotation));
+    }
+    finally
+    {
+      m_aRWLock.writeLock ().unlock ();
+    }
+  }
+
+  public void clearCache ()
+  {
+    m_aRWLock.writeLock ().lock ();
+    try
+    {
+      m_aMap.clear ();
     }
     finally
     {

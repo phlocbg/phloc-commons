@@ -34,6 +34,7 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.callback.INonThrowingRunnableWithParameter;
@@ -55,7 +56,7 @@ import com.phloc.commons.xml.XMLHelper;
 
 /**
  * This class handles the reading and writing of changelog objects.
- *
+ * 
  * @author Philip Helger
  */
 @Immutable
@@ -93,7 +94,7 @@ public final class ChangeLogSerializer
   /**
    * Read the change log resource specified by the input stream provider using
    * the default logging callback.
-   *
+   * 
    * @param aISP
    *        The ISP to read from. Maybe <code>null</code> resulting in a
    *        <code>null</code> return.
@@ -107,7 +108,7 @@ public final class ChangeLogSerializer
 
   /**
    * Read the change log resource specified by the input stream provider.
-   *
+   * 
    * @param aISP
    *        The ISP to read from. Maybe <code>null</code> resulting in a
    *        <code>null</code> return.
@@ -119,8 +120,7 @@ public final class ChangeLogSerializer
   public static ChangeLog readChangeLog (@Nullable final IInputStreamProvider aISP,
                                          @Nonnull final INonThrowingRunnableWithParameter <String> aErrorCallback)
   {
-    if (aErrorCallback == null)
-      throw new NullPointerException ("errorCallback");
+    ValueEnforcer.notNull (aErrorCallback, "ErrorCallback");
 
     final IMicroDocument aDoc = MicroReader.readMicroXML (aISP);
     if (aDoc == null)
@@ -194,7 +194,8 @@ public final class ChangeLogSerializer
           continue;
         }
         aEntry.setText (aMLT);
-        for (final IMicroElement eIssue : eElement.getAllChildElements (CChangeLog.CHANGELOG_NAMESPACE_10, ELEMENT_ISSUE))
+        for (final IMicroElement eIssue : eElement.getAllChildElements (CChangeLog.CHANGELOG_NAMESPACE_10,
+                                                                        ELEMENT_ISSUE))
           aEntry.addIssue (eIssue.getTextContent ());
       }
       else
@@ -246,10 +247,8 @@ public final class ChangeLogSerializer
   public static Map <URI, ChangeLog> readAllChangeLogs (@Nonnull final INonThrowingRunnableWithParameter <String> aErrorCallback,
                                                         @Nonnull final ClassLoader aClassLoader)
   {
-    if (aErrorCallback == null)
-      throw new NullPointerException ("errorCallback");
-    if (aClassLoader == null)
-      throw new NullPointerException ("classLoader");
+    ValueEnforcer.notNull (aErrorCallback, "ErrorCallback");
+    ValueEnforcer.notNull (aClassLoader, "ClassLoader");
 
     try
     {
@@ -276,8 +275,7 @@ public final class ChangeLogSerializer
   @Nonnull
   public static IMicroDocument writeChangeLog (@Nonnull final ChangeLog aChangeLog)
   {
-    if (aChangeLog == null)
-      throw new NullPointerException ("changeLog");
+    ValueEnforcer.notNull (aChangeLog, "ChangeLog");
 
     final DateFormat aDF = new SimpleDateFormat (DATE_FORMAT);
     final IMicroDocument ret = new MicroDocument ();

@@ -28,6 +28,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsImmutableObject;
@@ -125,10 +126,8 @@ public final class CharsetManager
   @Nonnull
   public static byte [] getAsBytes (@Nonnull final String sText, @Nonnull final Charset aCharset)
   {
-    if (sText == null)
-      throw new NullPointerException ("text");
-    if (aCharset == null)
-      throw new NullPointerException ("charset");
+    ValueEnforcer.notNull (sText, "Text");
+    ValueEnforcer.notNull (aCharset, "Charset");
     if (!aCharset.canEncode ())
       throw new IllegalArgumentException ("Cannot encode to " + aCharset);
 
@@ -143,10 +142,8 @@ public final class CharsetManager
   @Deprecated
   public static byte [] getAsBytes (@Nonnull final String sText, @Nonnull @Nonempty final String sCharsetName)
   {
-    if (sText == null)
-      throw new NullPointerException ("text");
-    if (StringHelper.hasNoText (sCharsetName))
-      throw new IllegalArgumentException ("empty charset");
+    ValueEnforcer.notNull (sText, "Text");
+    ValueEnforcer.notEmpty (sCharsetName, "CharsetName");
 
     try
     {
@@ -161,13 +158,12 @@ public final class CharsetManager
   @Nullable
   @Deprecated
   public static String getAsStringInOtherCharset (@Nullable final String sText,
-                                                  @Nonnull final String sCurrentCharset,
-                                                  @Nonnull final String sNewCharset)
+                                                  @Nonnull @Nonempty final String sCurrentCharset,
+                                                  @Nonnull @Nonempty final String sNewCharset)
   {
-    if (sCurrentCharset == null)
-      throw new NullPointerException ("currentCharset");
-    if (sNewCharset == null)
-      throw new NullPointerException ("newCharset");
+    ValueEnforcer.notEmpty (sCurrentCharset, "CurrentCharset");
+    ValueEnforcer.notEmpty (sNewCharset, "NewCharset");
+
     if (sText == null || sCurrentCharset.equals (sNewCharset))
       return sText;
 
@@ -179,10 +175,9 @@ public final class CharsetManager
                                                   @Nonnull final Charset aCurrentCharset,
                                                   @Nonnull final Charset aNewCharset)
   {
-    if (aCurrentCharset == null)
-      throw new NullPointerException ("currentCharset");
-    if (aNewCharset == null)
-      throw new NullPointerException ("newCharset");
+    ValueEnforcer.notNull (aCurrentCharset, "CurrentCharset");
+    ValueEnforcer.notNull (aNewCharset, "NewCharset");
+
     if (sText == null || aCurrentCharset.equals (aNewCharset))
       return sText;
 
@@ -191,8 +186,10 @@ public final class CharsetManager
 
   @Nonnull
   @Deprecated
-  public static String getAsString (@Nonnull final byte [] aBuffer, @Nonnull final String sCharsetName)
+  public static String getAsString (@Nonnull final byte [] aBuffer, @Nonnull @Nonempty final String sCharsetName)
   {
+    ValueEnforcer.notNull (aBuffer, "Buffer");
+
     return getAsString (aBuffer, 0, aBuffer.length, sCharsetName);
   }
 
@@ -201,8 +198,13 @@ public final class CharsetManager
   public static String getAsString (@Nonnull final byte [] aBuffer,
                                     @Nonnegative final int nOfs,
                                     @Nonnegative final int nLength,
-                                    @Nonnull final String sCharsetName)
+                                    @Nonnull @Nonempty final String sCharsetName)
   {
+    ValueEnforcer.notNull (aBuffer, "Buffer");
+    ValueEnforcer.isGE0 (nOfs, "Offset");
+    ValueEnforcer.isGE0 (nLength, "Length");
+    ValueEnforcer.notEmpty (sCharsetName, "CharsetName");
+
     try
     {
       return new String (aBuffer, nOfs, nLength, sCharsetName);
@@ -216,8 +218,7 @@ public final class CharsetManager
   @Nonnull
   public static String getAsString (@Nonnull final byte [] aBuffer, @Nonnull final Charset aCharset)
   {
-    if (aBuffer == null)
-      throw new NullPointerException ("buffer");
+    ValueEnforcer.notNull (aBuffer, "Buffer");
 
     return getAsString (aBuffer, 0, aBuffer.length, aCharset);
   }
@@ -228,10 +229,10 @@ public final class CharsetManager
                                     @Nonnegative final int nLength,
                                     @Nonnull final Charset aCharset)
   {
-    if (aBuffer == null)
-      throw new NullPointerException ("buffer");
-    if (aCharset == null)
-      throw new NullPointerException ("charset");
+    ValueEnforcer.notNull (aBuffer, "Buffer");
+    ValueEnforcer.isGE0 (nOfs, "Offset");
+    ValueEnforcer.isGE0 (nLength, "Length");
+    ValueEnforcer.notNull (aCharset, "Charset");
 
     // IFJDK5
     // return getAsString (aBuffer, nOfs, nLength, aCharset.name ());
@@ -289,8 +290,7 @@ public final class CharsetManager
   @Nonnegative
   public static int getUTF8ByteCount (@Nonnegative final int c)
   {
-    if (c < Character.MIN_VALUE || c > Character.MAX_VALUE)
-      throw new IllegalArgumentException ("Invalid parameter: " + c);
+    ValueEnforcer.isBetweenInclusive (c, "c", Character.MIN_VALUE, Character.MAX_VALUE);
 
     // see JVM spec 4.4.7, p 111
     // http://java.sun.com/docs/books/jvms/second_edition/html/ClassFile.doc.html

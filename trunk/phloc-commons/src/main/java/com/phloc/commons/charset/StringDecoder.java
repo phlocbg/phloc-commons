@@ -28,6 +28,8 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
+
 /**
  * A special string decoder that can be used to convert a byte source to a
  * String in a certain charset. This class is not thread-safe!
@@ -47,8 +49,7 @@ public final class StringDecoder
 
   public StringDecoder (@Nonnull final Charset aCharset)
   {
-    if (aCharset == null)
-      throw new NullPointerException ("charset");
+    ValueEnforcer.notNull (aCharset, "Charset");
 
     m_aDecoder = aCharset.newDecoder ();
     // This matches the default behaviour for String(byte[], "UTF-8");
@@ -65,8 +66,7 @@ public final class StringDecoder
    */
   public void reserve (@Nonnegative final int nExpectedLength)
   {
-    if (nExpectedLength < 0)
-      throw new IllegalArgumentException ("expectedLength cannot be negative (= " + nExpectedLength + ")");
+    ValueEnforcer.isGE0 (nExpectedLength, "ExpectedLength");
     if (m_aBuffer.position () != 0)
       throw new IllegalStateException ("cannot be called except after finish()");
 
@@ -119,17 +119,17 @@ public final class StringDecoder
 
   public void decode (@Nonnull final byte [] aBuf)
   {
-    if (aBuf == null)
-      throw new NullPointerException ("buf");
+    ValueEnforcer.notNull (aBuf, "Buffer");
 
     _decode (ByteBuffer.wrap (aBuf, 0, aBuf.length), false);
   }
 
   public void decode (@Nonnull final byte [] aBuf, @Nonnegative final int nOfs, @Nonnegative final int nLen)
   {
-    if (aBuf == null)
-      throw new NullPointerException ("buf");
-    if (nOfs < 0 || nLen < 0 || (nOfs + nLen) > aBuf.length)
+    ValueEnforcer.notNull (aBuf, "Buffer");
+    ValueEnforcer.isGE0 (nOfs, "Offset");
+    ValueEnforcer.isGE0 (nLen, "Length");
+    if (nOfs + nLen > aBuf.length)
       throw new IllegalArgumentException ("ofs:" + nOfs + ";len=" + nLen + ";bufLen=" + aBuf.length);
 
     _decode (ByteBuffer.wrap (aBuf, nOfs, nLen), false);
@@ -137,8 +137,7 @@ public final class StringDecoder
 
   public void decode (@Nonnull final ByteBuffer aByteBuffer)
   {
-    if (aByteBuffer == null)
-      throw new NullPointerException ("byteBuffer");
+    ValueEnforcer.notNull (aByteBuffer, "ByteBuffer");
 
     _decode (aByteBuffer, false);
   }
@@ -152,8 +151,7 @@ public final class StringDecoder
   @Nonnull
   public String finish (@Nonnull final ByteBuffer aByteBuffer)
   {
-    if (aByteBuffer == null)
-      throw new NullPointerException ("byteBuffer");
+    ValueEnforcer.notNull (aByteBuffer, "ByteBuffer");
 
     _decode (aByteBuffer, true);
 
