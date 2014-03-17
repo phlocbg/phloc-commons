@@ -20,15 +20,18 @@ package com.phloc.commons.aggregate;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
  * Implementation if {@link IAggregatorFactory} with a constant instance
+ * 
  * @author Philip Helger
- *
- * @param <SRCTYPE> Aggregator source type
- * @param <DSTTYPE> Aggregator destination type
+ * @param <SRCTYPE>
+ *        Aggregator source type
+ * @param <DSTTYPE>
+ *        Aggregator destination type
  */
 @NotThreadSafe
 public final class AggregatorFactoryConst <SRCTYPE, DSTTYPE> implements IAggregatorFactory <SRCTYPE, DSTTYPE>
@@ -37,10 +40,7 @@ public final class AggregatorFactoryConst <SRCTYPE, DSTTYPE> implements IAggrega
 
   public AggregatorFactoryConst (@Nonnull final IAggregator <SRCTYPE, DSTTYPE> aAggregator)
   {
-    if (aAggregator == null)
-      throw new NullPointerException ("inst");
-
-    m_aAggregator = aAggregator;
+    m_aAggregator = ValueEnforcer.notNull (aAggregator, "aAggregator");
   }
 
   @Nonnull

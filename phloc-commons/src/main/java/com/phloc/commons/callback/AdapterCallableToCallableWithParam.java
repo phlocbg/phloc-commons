@@ -22,6 +22,7 @@ import java.util.concurrent.Callable;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -41,9 +42,7 @@ public class AdapterCallableToCallableWithParam <DATATYPE, PARAMTYPE> implements
 
   public AdapterCallableToCallableWithParam (@Nonnull final Callable <DATATYPE> aCallable)
   {
-    if (aCallable == null)
-      throw new NullPointerException ("Callable");
-    m_aCallable = aCallable;
+    m_aCallable = ValueEnforcer.notNull (aCallable, "Callable");
   }
 
   @Nonnull

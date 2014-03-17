@@ -20,6 +20,7 @@ package com.phloc.commons.callback;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -37,9 +38,7 @@ public class AdapterRunnableToRunnableWithParameter <PARAMTYPE> implements IThro
 
   public AdapterRunnableToRunnableWithParameter (@Nonnull final Runnable aRunnable)
   {
-    if (aRunnable == null)
-      throw new NullPointerException ("runnable");
-    m_aRunnable = aRunnable;
+    m_aRunnable = ValueEnforcer.notNull (aRunnable, "Runnable");
   }
 
   public void run (final PARAMTYPE aParam) throws Exception

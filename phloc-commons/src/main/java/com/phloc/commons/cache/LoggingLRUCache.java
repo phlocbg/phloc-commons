@@ -26,10 +26,10 @@ import javax.annotation.concurrent.NotThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.collections.LRUCache;
 import com.phloc.commons.hash.HashCodeGenerator;
-import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -51,9 +51,7 @@ public final class LoggingLRUCache <KEYTYPE, VALUETYPE> extends LRUCache <KEYTYP
   public LoggingLRUCache (@Nonnull @Nonempty final String sCacheName, @Nonnegative final int nMaxSize)
   {
     super (nMaxSize);
-    if (StringHelper.hasNoText (sCacheName))
-      throw new IllegalArgumentException ("cacheName");
-    m_sCacheName = sCacheName;
+    m_sCacheName = ValueEnforcer.notEmpty (sCacheName, "CacheName");
   }
 
   @Nonnull

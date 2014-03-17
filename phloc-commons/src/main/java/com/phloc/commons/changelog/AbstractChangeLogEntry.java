@@ -22,6 +22,7 @@ import java.util.Date;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
@@ -43,8 +44,7 @@ public abstract class AbstractChangeLogEntry implements Serializable
    */
   public AbstractChangeLogEntry (@Nonnull final Date aDate)
   {
-    if (aDate == null)
-      throw new NullPointerException ("date");
+    ValueEnforcer.notNull (aDate, "Date");
     m_aDate = (Date) aDate.clone ();
   }
 

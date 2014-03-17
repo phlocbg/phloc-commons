@@ -22,6 +22,7 @@ import java.util.Date;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 import com.phloc.commons.version.Version;
@@ -47,9 +48,7 @@ public final class ChangeLogRelease extends AbstractChangeLogEntry
   public ChangeLogRelease (@Nonnull final Date aDate, @Nonnull final Version aVersion)
   {
     super (aDate);
-    if (aVersion == null)
-      throw new NullPointerException ("version");
-    m_aVersion = aVersion;
+    m_aVersion = ValueEnforcer.notNull (aVersion, "Version");
   }
 
   /**

@@ -25,10 +25,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.IHasByteSize;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ArrayHelper;
-import com.phloc.commons.exceptions.InitializationException;
 
 /**
  * Defines the most common Byte Order Markers for Unicode encoded text files.<br>
@@ -105,8 +105,7 @@ public enum EUnicodeBOM implements IHasByteSize
 
   private EUnicodeBOM (@Nonnull @Nonempty final byte [] aBytes, @Nullable final String sCharset)// NOPMD
   {
-    if (aBytes.length <= 0 || aBytes.length > MAXIMUM_BOM_BYTE_COUNT)
-      throw new InitializationException ("Byte count is invalid!");
+    ValueEnforcer.isBetweenInclusive (aBytes.length, "Byte count", 1, MAXIMUM_BOM_BYTE_COUNT);
     m_aBOMBytes = aBytes;
     m_sCharsetName = sCharset;
     m_aCharset = CharsetManager.getCharsetFromNameOrNull (sCharset);

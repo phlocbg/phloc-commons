@@ -23,6 +23,7 @@ import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.OverrideOnDemand;
 import com.phloc.commons.error.EErrorLevel;
@@ -50,9 +51,7 @@ public class LoggingExceptionHandler implements IExceptionHandler <Throwable>, I
 
   public LoggingExceptionHandler (@Nonnull final EErrorLevel eErrorLevel)
   {
-    if (eErrorLevel == null)
-      throw new NullPointerException ("errorLevel");
-    m_eErrorLevel = eErrorLevel;
+    m_eErrorLevel = ValueEnforcer.notNull (eErrorLevel, "ErrorLevel");
   }
 
   /**

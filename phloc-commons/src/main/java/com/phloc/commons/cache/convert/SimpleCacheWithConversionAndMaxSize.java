@@ -23,6 +23,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.cache.LoggingLRUCache;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -44,9 +45,7 @@ public class SimpleCacheWithConversionAndMaxSize <KEYTYPE, VALUETYPE> extends Si
   public SimpleCacheWithConversionAndMaxSize (@Nonnull final String sCacheName, @Nonnegative final int nMaxSize)
   {
     super (sCacheName);
-    if (nMaxSize <= 0)
-      throw new IllegalArgumentException ("MaxSize must be > 0!");
-    m_nMaxSize = nMaxSize;
+    m_nMaxSize = ValueEnforcer.isGT0 (nMaxSize, "MaxSize");
   }
 
   /**
