@@ -60,4 +60,11 @@ public enum EChangeLogCategory implements IHasID <String>
   {
     return EnumHelper.getFromIDOrNull (EChangeLogCategory.class, sID);
   }
+
+  @Nullable
+  public static EChangeLogCategory getFromIDOrDefault (@Nullable final String sID,
+                                                       @Nullable final EChangeLogCategory eDefault)
+  {
+    return EnumHelper.getFromIDOrDefault (EChangeLogCategory.class, sID, eDefault);
+  }
 }
