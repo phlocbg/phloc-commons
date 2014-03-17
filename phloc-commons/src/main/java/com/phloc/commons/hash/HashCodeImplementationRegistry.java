@@ -295,4 +295,9 @@ public final class HashCodeImplementationRegistry implements IHashCodeImplementa
     final IHashCodeImplementation aImpl = s_aInstance.getBestMatchingHashCodeImplementation (aClass);
     return aImpl == null ? aObj.hashCode () : aImpl.getHashCode (aObj);
   }
+
+  public static void clearCache ()
+  {
+    s_aInstance.m_aDirectHashCode.clearCache ();
+  }
 }
