@@ -27,6 +27,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.annotations.ReturnsMutableObject;
@@ -99,8 +100,7 @@ public final class ArrayHelper
   @Nonnull
   public static <DATATYPE> Class <? extends DATATYPE> getComponentType (@Nonnull final DATATYPE [] aArray)
   {
-    if (aArray == null)
-      throw new NullPointerException ("array");
+    ValueEnforcer.notNull (aArray, "Array");
     final Class <?> aComponentType = aArray.getClass ().getComponentType ();
     return GenericReflection.<Class <?>, Class <? extends DATATYPE>> uncheckedCast (aComponentType);
   }
@@ -2744,8 +2744,7 @@ public final class ArrayHelper
   public static <ELEMENTTYPE> ELEMENTTYPE [] getAllExceptFirst (@Nullable final ELEMENTTYPE [] aArray,
                                                                 @Nonnegative final int nElementsToSkip)
   {
-    if (nElementsToSkip < 0)
-      throw new IllegalArgumentException ("The number of elements to skip is invalid: " + nElementsToSkip);
+    ValueEnforcer.isGE0 (nElementsToSkip, "ElementsToSkip");
 
     if (nElementsToSkip == 0)
       return aArray;
@@ -3031,8 +3030,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static boolean [] getAllExceptFirst (@Nullable final boolean [] aArray, @Nonnegative final int nElementsToSkip)
   {
-    if (nElementsToSkip < 0)
-      throw new IllegalArgumentException ("The number of elements to skip is invalid: " + nElementsToSkip);
+    ValueEnforcer.isGE0 (nElementsToSkip, "ElementsToSkip");
 
     if (nElementsToSkip == 0)
       return aArray;
@@ -3073,8 +3071,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static byte [] getAllExceptFirst (@Nullable final byte [] aArray, @Nonnegative final int nElementsToSkip)
   {
-    if (nElementsToSkip < 0)
-      throw new IllegalArgumentException ("The number of elements to skip is invalid: " + nElementsToSkip);
+    ValueEnforcer.isGE0 (nElementsToSkip, "ElementsToSkip");
 
     if (nElementsToSkip == 0)
       return aArray;
@@ -3115,8 +3112,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static char [] getAllExceptFirst (@Nullable final char [] aArray, @Nonnegative final int nElementsToSkip)
   {
-    if (nElementsToSkip < 0)
-      throw new IllegalArgumentException ("The number of elements to skip is invalid: " + nElementsToSkip);
+    ValueEnforcer.isGE0 (nElementsToSkip, "ElementsToSkip");
 
     if (nElementsToSkip == 0)
       return aArray;
@@ -3157,8 +3153,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static double [] getAllExceptFirst (@Nullable final double [] aArray, @Nonnegative final int nElementsToSkip)
   {
-    if (nElementsToSkip < 0)
-      throw new IllegalArgumentException ("The number of elements to skip is invalid: " + nElementsToSkip);
+    ValueEnforcer.isGE0 (nElementsToSkip, "ElementsToSkip");
 
     if (nElementsToSkip == 0)
       return aArray;
@@ -3199,8 +3194,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static float [] getAllExceptFirst (@Nullable final float [] aArray, @Nonnegative final int nElementsToSkip)
   {
-    if (nElementsToSkip < 0)
-      throw new IllegalArgumentException ("The number of elements to skip is invalid: " + nElementsToSkip);
+    ValueEnforcer.isGE0 (nElementsToSkip, "ElementsToSkip");
 
     if (nElementsToSkip == 0)
       return aArray;
@@ -3241,8 +3235,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static int [] getAllExceptFirst (@Nullable final int [] aArray, @Nonnegative final int nElementsToSkip)
   {
-    if (nElementsToSkip < 0)
-      throw new IllegalArgumentException ("The number of elements to skip is invalid: " + nElementsToSkip);
+    ValueEnforcer.isGE0 (nElementsToSkip, "ElementsToSkip");
 
     if (nElementsToSkip == 0)
       return aArray;
@@ -3283,8 +3276,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static long [] getAllExceptFirst (@Nullable final long [] aArray, @Nonnegative final int nElementsToSkip)
   {
-    if (nElementsToSkip < 0)
-      throw new IllegalArgumentException ("The number of elements to skip is invalid: " + nElementsToSkip);
+    ValueEnforcer.isGE0 (nElementsToSkip, "ElementsToSkip");
 
     if (nElementsToSkip == 0)
       return aArray;
@@ -3325,8 +3317,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static short [] getAllExceptFirst (@Nullable final short [] aArray, @Nonnegative final int nElementsToSkip)
   {
-    if (nElementsToSkip < 0)
-      throw new IllegalArgumentException ("The number of elements to skip is invalid: " + nElementsToSkip);
+    ValueEnforcer.isGE0 (nElementsToSkip, "ElementsToSkip");
 
     if (nElementsToSkip == 0)
       return aArray;
@@ -3368,8 +3359,7 @@ public final class ArrayHelper
   public static <ELEMENTTYPE> ELEMENTTYPE [] getAllExceptLast (@Nullable final ELEMENTTYPE [] aArray,
                                                                @Nonnegative final int nElementsToSkip)
   {
-    if (nElementsToSkip < 0)
-      throw new IllegalArgumentException ("The number of elements to skip is invalid: " + nElementsToSkip);
+    ValueEnforcer.isGE0 (nElementsToSkip, "ElementsToSkip");
 
     if (nElementsToSkip == 0)
       return aArray;
@@ -3410,8 +3400,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static boolean [] getAllExceptLast (@Nullable final boolean [] aArray, @Nonnegative final int nElementsToSkip)
   {
-    if (nElementsToSkip < 0)
-      throw new IllegalArgumentException ("The number of elements to skip is invalid: " + nElementsToSkip);
+    ValueEnforcer.isGE0 (nElementsToSkip, "ElementsToSkip");
 
     if (nElementsToSkip == 0)
       return aArray;
@@ -3452,8 +3441,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static byte [] getAllExceptLast (@Nullable final byte [] aArray, @Nonnegative final int nElementsToSkip)
   {
-    if (nElementsToSkip < 0)
-      throw new IllegalArgumentException ("The number of elements to skip is invalid: " + nElementsToSkip);
+    ValueEnforcer.isGE0 (nElementsToSkip, "ElementsToSkip");
 
     if (nElementsToSkip == 0)
       return aArray;
@@ -3494,8 +3482,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static char [] getAllExceptLast (@Nullable final char [] aArray, @Nonnegative final int nElementsToSkip)
   {
-    if (nElementsToSkip < 0)
-      throw new IllegalArgumentException ("The number of elements to skip is invalid: " + nElementsToSkip);
+    ValueEnforcer.isGE0 (nElementsToSkip, "ElementsToSkip");
 
     if (nElementsToSkip == 0)
       return aArray;
@@ -3536,8 +3523,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static double [] getAllExceptLast (@Nullable final double [] aArray, @Nonnegative final int nElementsToSkip)
   {
-    if (nElementsToSkip < 0)
-      throw new IllegalArgumentException ("The number of elements to skip is invalid: " + nElementsToSkip);
+    ValueEnforcer.isGE0 (nElementsToSkip, "ElementsToSkip");
 
     if (nElementsToSkip == 0)
       return aArray;
@@ -3578,8 +3564,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static float [] getAllExceptLast (@Nullable final float [] aArray, @Nonnegative final int nElementsToSkip)
   {
-    if (nElementsToSkip < 0)
-      throw new IllegalArgumentException ("The number of elements to skip is invalid: " + nElementsToSkip);
+    ValueEnforcer.isGE0 (nElementsToSkip, "ElementsToSkip");
 
     if (nElementsToSkip == 0)
       return aArray;
@@ -3620,8 +3605,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static int [] getAllExceptLast (@Nullable final int [] aArray, @Nonnegative final int nElementsToSkip)
   {
-    if (nElementsToSkip < 0)
-      throw new IllegalArgumentException ("The number of elements to skip is invalid: " + nElementsToSkip);
+    ValueEnforcer.isGE0 (nElementsToSkip, "ElementsToSkip");
 
     if (nElementsToSkip == 0)
       return aArray;
@@ -3662,8 +3646,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static long [] getAllExceptLast (@Nullable final long [] aArray, @Nonnegative final int nElementsToSkip)
   {
-    if (nElementsToSkip < 0)
-      throw new IllegalArgumentException ("The number of elements to skip is invalid: " + nElementsToSkip);
+    ValueEnforcer.isGE0 (nElementsToSkip, "ElementsToSkip");
 
     if (nElementsToSkip == 0)
       return aArray;
@@ -3704,8 +3687,7 @@ public final class ArrayHelper
   @ReturnsMutableCopy
   public static short [] getAllExceptLast (@Nullable final short [] aArray, @Nonnegative final int nElementsToSkip)
   {
-    if (nElementsToSkip < 0)
-      throw new IllegalArgumentException ("The number of elements to skip is invalid: " + nElementsToSkip);
+    ValueEnforcer.isGE0 (nElementsToSkip, "ElementsToSkip");
 
     if (nElementsToSkip == 0)
       return aArray;
@@ -3838,12 +3820,10 @@ public final class ArrayHelper
   public static <ELEMENTTYPE> ELEMENTTYPE [] newArray (@Nonnull final Class <? extends ELEMENTTYPE> aClass,
                                                        @Nonnegative final int nSize)
   {
-    if (aClass == null)
-      throw new NullPointerException ("class");
+    ValueEnforcer.notNull (aClass, "class");
     if (aClass.isPrimitive ())
       throw new IllegalArgumentException ("Argument cannot be primitive: " + aClass);
-    if (nSize < 0)
-      throw new IllegalArgumentException ("Array size must be >= 0: " + nSize);
+    ValueEnforcer.isGE0 (nSize, "Size");
 
     final Object aArray = Array.newInstance (aClass, nSize);
     return GenericReflection.<Object, ELEMENTTYPE []> uncheckedCast (aArray);
@@ -3883,8 +3863,7 @@ public final class ArrayHelper
   public static <ELEMENTTYPE> ELEMENTTYPE [] newArray (@Nullable final Collection <? extends ELEMENTTYPE> aCollection,
                                                        @Nonnull final Class <ELEMENTTYPE> aClass)
   {
-    if (aClass == null)
-      throw new NullPointerException ("class");
+    ValueEnforcer.notNull (aClass, "class");
 
     if (ContainerHelper.isEmpty (aCollection))
       return newArray (aClass, 0);
@@ -3911,8 +3890,7 @@ public final class ArrayHelper
   public static <ELEMENTTYPE> ELEMENTTYPE [] newArraySingleElement (@Nullable final ELEMENTTYPE aElement,
                                                                     @Nonnull final Class <ELEMENTTYPE> aClass)
   {
-    if (aClass == null)
-      throw new NullPointerException ("class");
+    ValueEnforcer.notNull (aClass, "class");
 
     final ELEMENTTYPE [] ret = newArray (aClass, 1);
     ret[0] = aElement;
@@ -3935,8 +3913,7 @@ public final class ArrayHelper
   @ReturnsMutableObject (reason = "use getCopy otherwise")
   public static <ELEMENTTYPE> ELEMENTTYPE [] newArray (@Nonnull final ELEMENTTYPE... aArray)
   {
-    if (aArray == null)
-      throw new NullPointerException ("array");
+    ValueEnforcer.notNull (aArray, "Array");
     return aArray;
   }
 
@@ -3962,10 +3939,8 @@ public final class ArrayHelper
                                                        @Nonnull final ELEMENTTYPE aValue,
                                                        @Nonnull final Class <ELEMENTTYPE> aClass)
   {
-    if (nArraySize < 0)
-      throw new IllegalArgumentException ("Passed array size must be >= 0");
-    if (aClass == null)
-      throw new NullPointerException ("class");
+    ValueEnforcer.isGE0 (nArraySize, "ArraySize");
+    ValueEnforcer.notNull (aClass, "class");
 
     final ELEMENTTYPE [] ret = newArray (aClass, nArraySize);
     Arrays.fill (ret, aValue);
