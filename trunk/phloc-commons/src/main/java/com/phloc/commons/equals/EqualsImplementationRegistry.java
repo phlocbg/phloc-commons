@@ -324,4 +324,9 @@ public final class EqualsImplementationRegistry implements IEqualsImplementation
     }
     return bAreEqual;
   }
+
+  public static void clearCache ()
+  {
+    s_aInstance.m_aDirectEquals.clearCache ();
+  }
 }

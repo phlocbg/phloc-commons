@@ -21,7 +21,9 @@ import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.compare.CollatorUtils;
+import com.phloc.commons.equals.EqualsImplementationRegistry;
 import com.phloc.commons.gfx.ImageDataManager;
+import com.phloc.commons.hash.HashCodeImplementationRegistry;
 import com.phloc.commons.jaxb.JAXBContextCache;
 import com.phloc.commons.lang.ClassHierarchyCache;
 import com.phloc.commons.lang.EnumHelper;
@@ -77,6 +79,8 @@ public final class CommonsCleanup
     if (XMLSchemaCache.isInstantiated ())
       XMLSchemaCache.getInstance ().clearCache ();
     StatisticsManager.clearCache ();
+    EqualsImplementationRegistry.clearCache ();
+    HashCodeImplementationRegistry.clearCache ();
 
     // Clean this one last as it is used in equals and hashCode implementations!
     ClassHierarchyCache.clearCache ();
