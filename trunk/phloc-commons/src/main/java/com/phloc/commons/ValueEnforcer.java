@@ -12,6 +12,15 @@ public final class ValueEnforcer
   private ValueEnforcer ()
   {}
 
+  /**
+   * Check that the passed value is not <code>null</code>.
+   * 
+   * @param aValue
+   *        The value to check.
+   * @param sName
+   *        The name of the value (e.g. the parameter name)
+   * @return The passed value and never <code>null</code>.
+   */
   @Nonnull
   public static <T> T notNull (final T aValue, final String sName)
   {
