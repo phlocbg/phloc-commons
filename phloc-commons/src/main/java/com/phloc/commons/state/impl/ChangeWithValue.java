@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.mutable.IReadonlyWrapper;
@@ -51,8 +52,7 @@ public class ChangeWithValue <DATATYPE> implements IChangeIndicator, IReadonlyWr
    */
   public ChangeWithValue (@Nonnull final IChangeIndicator aChangeIndicator, @Nullable final DATATYPE aObj)
   {
-    if (aChangeIndicator == null)
-      throw new NullPointerException ("changeIndicator");
+    ValueEnforcer.notNull (aChangeIndicator, "ChangeIndicator");
 
     // Wrap in EChange so that equals works for sure
     m_eChange = EChange.valueOf (aChangeIndicator);

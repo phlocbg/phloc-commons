@@ -41,6 +41,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
@@ -353,10 +354,8 @@ public final class StringHelper
   @Nonnull
   public static String getHexEncoded (@Nonnull final String sInput, @Nonnull final Charset aCharset)
   {
-    if (sInput == null)
-      throw new NullPointerException ("input");
-    if (aCharset == null)
-      throw new NullPointerException ("charset");
+    ValueEnforcer.notNull (sInput, "Input");
+    ValueEnforcer.notNull (aCharset, "Charset");
 
     return getHexEncoded (CharsetManager.getAsBytes (sInput, aCharset));
   }
@@ -372,8 +371,7 @@ public final class StringHelper
   @Nonnull
   public static String getHexEncoded (@Nonnull final byte [] aInput)
   {
-    if (aInput == null)
-      throw new NullPointerException ("input");
+    ValueEnforcer.notNull (aInput, "Input");
 
     return getHexEncoded (aInput, 0, aInput.length);
   }
@@ -393,10 +391,7 @@ public final class StringHelper
   @Nonnull
   public static String getHexEncoded (@Nonnull final byte [] aInput, final int nOfs, final int nLen)
   {
-    if (aInput == null)
-      throw new NullPointerException ("input");
-    if (nOfs < 0 || nLen < 0 || (nOfs + nLen) > aInput.length)
-      throw new IllegalArgumentException ("ofs:" + nOfs + ";len=" + nLen + ";bufLen=" + aInput.length);
+    ValueEnforcer.isArrayOfsLen (aInput, nOfs, nLen);
 
     final StringBuilder aSB = new StringBuilder (nLen * 2);
     for (int i = nOfs; i < (nOfs + nLen); ++i)
@@ -441,8 +436,7 @@ public final class StringHelper
   @Nonnull
   public static byte [] getHexDecoded (@Nonnull final String sInput)
   {
-    if (sInput == null)
-      throw new NullPointerException ("input");
+    ValueEnforcer.notNull (sInput, "Input");
 
     return getHexDecoded (sInput.toCharArray (), 0, sInput.length ());
   }
@@ -450,8 +444,7 @@ public final class StringHelper
   @Nonnull
   public static byte [] getHexDecoded (@Nonnull final char [] aInput)
   {
-    if (aInput == null)
-      throw new NullPointerException ("input");
+    ValueEnforcer.notNull (aInput, "Input");
 
     return getHexDecoded (aInput, 0, aInput.length);
   }
@@ -461,10 +454,7 @@ public final class StringHelper
                                        @Nonnegative final int nOfs,
                                        @Nonnegative final int nLen)
   {
-    if (aInput == null)
-      throw new NullPointerException ("input");
-    if (nOfs < 0 || nLen < 0 || (nOfs + nLen) > aInput.length)
-      throw new IllegalArgumentException ("ofs:" + nOfs + ";len=" + nLen + ";bufLen=" + aInput.length);
+    ValueEnforcer.isArrayOfsLen (aInput, nOfs, nLen);
     if ((nLen % 2) > 0)
       throw new IllegalArgumentException ("Passed chars have no even length: " + nLen);
 
@@ -667,8 +657,7 @@ public final class StringHelper
   @Nonnull
   public static String getImploded (@Nonnull final String sSep, @Nullable final Iterable <?> aElements)
   {
-    if (sSep == null)
-      throw new NullPointerException ("separator");
+    ValueEnforcer.notNull (sSep, "serparator");
 
     final StringBuilder aSB = new StringBuilder ();
     if (aElements != null)
@@ -720,10 +709,8 @@ public final class StringHelper
                                     @Nonnull final String sSepInner,
                                     @Nullable final Map <?, ?> aElements)
   {
-    if (sSepOuter == null)
-      throw new NullPointerException ("outerSeparator");
-    if (sSepInner == null)
-      throw new NullPointerException ("innerSeparator");
+    ValueEnforcer.notNull (sSepOuter, "SepOuter");
+    ValueEnforcer.notNull (sSepInner, "SepInner");
 
     final StringBuilder aSB = new StringBuilder ();
     if (aElements != null)
@@ -794,8 +781,7 @@ public final class StringHelper
                                                   @Nonnegative final int nOfs,
                                                   @Nonnegative final int nLen)
   {
-    if (nOfs < 0 || nLen < 0 || (aElements != null && (nOfs + nLen) > aElements.length))
-      throw new IllegalArgumentException ("ofs:" + nOfs + ";len=" + nLen + ";bufLen=" + ArrayHelper.getSize (aElements));
+    ValueEnforcer.isArrayOfsLen (aElements, nOfs, nLen);
 
     final StringBuilder aSB = new StringBuilder ();
     if (aElements != null)
@@ -819,8 +805,8 @@ public final class StringHelper
   @Nonnull
   public static <ELEMENTTYPE> String getImploded (@Nonnull final String sSep, @Nullable final ELEMENTTYPE... aElements)
   {
-    if (sSep == null)
-      throw new NullPointerException ("separator");
+    ValueEnforcer.notNull (sSep, "Separator");
+
     if (ArrayHelper.isEmpty (aElements))
       return "";
     return getImploded (sSep, aElements, 0, aElements.length);
@@ -866,10 +852,8 @@ public final class StringHelper
                                                   @Nonnegative final int nOfs,
                                                   @Nonnegative final int nLen)
   {
-    if (sSep == null)
-      throw new NullPointerException ("separator");
-    if (nOfs < 0 || nLen < 0 || (aElements != null && (nOfs + nLen) > aElements.length))
-      throw new IllegalArgumentException ("ofs:" + nOfs + ";len=" + nLen + ";bufLen=" + ArrayHelper.getSize (aElements));
+    ValueEnforcer.notNull (sSep, "Separator");
+    ValueEnforcer.isArrayOfsLen (aElements, nOfs, nLen);
 
     final StringBuilder aSB = new StringBuilder ();
     if (aElements != null)
@@ -926,8 +910,7 @@ public final class StringHelper
   @Nonnull
   public static String getImplodedNonEmpty (@Nonnull final String sSep, @Nullable final Iterable <String> aElements)
   {
-    if (sSep == null)
-      throw new NullPointerException ("separator");
+    ValueEnforcer.notNull (sSep, "Separator");
 
     final StringBuilder aSB = new StringBuilder ();
     if (aElements != null)
@@ -978,8 +961,8 @@ public final class StringHelper
   @Nonnull
   public static String getImplodedNonEmpty (@Nonnull final String sSep, @Nullable final String... aElements)
   {
-    if (sSep == null)
-      throw new NullPointerException ("separator");
+    ValueEnforcer.notNull (sSep, "Separator");
+
     if (ArrayHelper.isEmpty (aElements))
       return "";
     return getImplodedNonEmpty (sSep, aElements, 0, aElements.length);
@@ -1025,10 +1008,8 @@ public final class StringHelper
                                             @Nonnegative final int nOfs,
                                             @Nonnegative final int nLen)
   {
-    if (sSep == null)
-      throw new NullPointerException ("separator");
-    if (nOfs < 0 || nLen < 0 || (aElements != null && (nOfs + nLen) > aElements.length))
-      throw new IllegalArgumentException ("ofs:" + nOfs + ";len=" + nLen + ";bufLen=" + ArrayHelper.getSize (aElements));
+    ValueEnforcer.notNull (sSep, "Separator");
+    ValueEnforcer.isArrayOfsLen (aElements, nOfs, nLen);
 
     final StringBuilder aSB = new StringBuilder ();
     if (aElements != null)
@@ -1172,8 +1153,7 @@ public final class StringHelper
                                                                              final int nMaxItems,
                                                                              @Nonnull final COLLTYPE aCollection)
   {
-    if (aCollection == null)
-      throw new NullPointerException ("collection");
+    ValueEnforcer.notNull (aCollection, "Collection");
 
     if (nMaxItems == 1)
       aCollection.add (sElements);
@@ -1274,10 +1254,8 @@ public final class StringHelper
                                                                              final int nMaxItems,
                                                                              @Nonnull final COLLTYPE aCollection)
   {
-    if (sSep == null)
-      throw new NullPointerException ("separator");
-    if (aCollection == null)
-      throw new NullPointerException ("collection");
+    ValueEnforcer.notNull (sSep, "Separator");
+    ValueEnforcer.notNull (aCollection, "Collection");
 
     if (nMaxItems == 1)
       aCollection.add (sElements);
@@ -1437,8 +1415,7 @@ public final class StringHelper
   @Nonnull
   public static String getRepeated (final char cElement, @Nonnegative final int nRepeats)
   {
-    if (nRepeats < 0)
-      throw new IllegalArgumentException ("Repeat count must be >= 0.");
+    ValueEnforcer.isGE0 (nRepeats, "Repeats");
 
     if (nRepeats == 0)
       return "";
@@ -1464,10 +1441,8 @@ public final class StringHelper
   @Nonnull
   public static String getRepeated (@Nonnull final String sElement, @Nonnegative final int nRepeats)
   {
-    if (sElement == null)
-      throw new NullPointerException ("element");
-    if (nRepeats < 0)
-      throw new IllegalArgumentException ("Repeat count must be >= 0");
+    ValueEnforcer.notNull (sElement, "Element");
+    ValueEnforcer.isGE0 (nRepeats, "Repeats");
 
     if (sElement.length () == 0 || nRepeats == 0)
       return "";
@@ -2085,8 +2060,7 @@ public final class StringHelper
    */
   public static boolean containsAny (@Nullable final char [] aInput, @Nonnull final char [] aSearchChars)
   {
-    if (aSearchChars == null)
-      throw new NullPointerException ("searchChars");
+    ValueEnforcer.notNull (aSearchChars, "SearchChars");
 
     if (aInput != null)
       for (final char cIn : aInput)
@@ -2489,10 +2463,8 @@ public final class StringHelper
                                           @Nonnegative final int nMaxLength,
                                           @Nullable final String sNewSuffix)
   {
-    if (sValue == null)
-      throw new NullPointerException ("value");
-    if (nMaxLength < 0)
-      throw new IllegalArgumentException ("Illegal max length: " + nMaxLength);
+    ValueEnforcer.notNull (sValue, "Value");
+    ValueEnforcer.isGE0 (nMaxLength, "MaxLength");
 
     if (sValue.length () <= nMaxLength)
       return sValue;
@@ -2550,10 +2522,8 @@ public final class StringHelper
                                    @Nonnull final String sSearchText,
                                    @Nonnull final CharSequence aReplacementText)
   {
-    if (hasNoText (sSearchText))
-      throw new IllegalArgumentException ("Value to replace may not be empty!");
-    if (aReplacementText == null)
-      throw new NullPointerException ("newText");
+    ValueEnforcer.notEmpty (sSearchText, "SearchText");
+    ValueEnforcer.notNull (aReplacementText, "ReplacementText");
 
     // Is input string empty?
     if (hasNoText (sInputString))
@@ -2667,10 +2637,8 @@ public final class StringHelper
                                              @Nonnull final String sSearchText,
                                              @Nonnull final String sReplacementText)
   {
-    if (hasNoText (sSearchText))
-      throw new IllegalArgumentException ("searchText");
-    if (sReplacementText == null)
-      throw new NullPointerException ("replacementText");
+    ValueEnforcer.notEmpty (sSearchText, "SearchText");
+    ValueEnforcer.notNull (sReplacementText, "ReplacementText");
     if (sReplacementText.contains (sSearchText))
       throw new IllegalArgumentException ("Loop detection: replacementText must not contain searchText");
 
@@ -2772,10 +2740,8 @@ public final class StringHelper
                                          @Nonnull final char [] aSearchChars,
                                          @Nonnull final char [][] aReplacementStrings)
   {
-    if (aSearchChars == null)
-      throw new NullPointerException ("search");
-    if (aReplacementStrings == null)
-      throw new NullPointerException ("replacements");
+    ValueEnforcer.notNull (aSearchChars, "SearchChars");
+    ValueEnforcer.notNull (aReplacementStrings, "ReplacementStrings");
     if (aSearchChars.length != aReplacementStrings.length)
       throw new IllegalArgumentException ("array length mismatch");
 
@@ -2882,14 +2848,11 @@ public final class StringHelper
                                        @Nonnull final char [][] aReplacementStrings,
                                        @Nonnull final Writer aTarget) throws IOException
   {
-    if (aSearchChars == null)
-      throw new NullPointerException ("patterns");
-    if (aReplacementStrings == null)
-      throw new NullPointerException ("replacements");
+    ValueEnforcer.notNull (aSearchChars, "SearchChars");
+    ValueEnforcer.notNull (aReplacementStrings, "ReplacementStrings");
     if (aSearchChars.length != aReplacementStrings.length)
       throw new IllegalArgumentException ("array length mismatch");
-    if (aTarget == null)
-      throw new NullPointerException ("target");
+    ValueEnforcer.notNull (aTarget, "Target");
 
     if (aInput == null || aInput.length == 0)
       return 0;
@@ -2946,8 +2909,7 @@ public final class StringHelper
                                          @Nonnull final char [] aSearchChars,
                                          final char cReplacementChar)
   {
-    if (aSearchChars == null)
-      throw new NullPointerException ("search");
+    ValueEnforcer.notNull (aSearchChars, "SearchChars");
 
     // Any input text?
     if (hasNoText (sInputString))
@@ -3230,8 +3192,8 @@ public final class StringHelper
   @Nonnull
   public static String getWithoutLeadingChars (@Nullable final String sStr, @Nonnegative final int nCount)
   {
-    if (nCount < 0)
-      throw new IllegalArgumentException ("Count may not be negative: " + nCount);
+    ValueEnforcer.isGE0 (nCount, "Count");
+
     if (nCount == 0)
       return sStr;
     return getLength (sStr) <= nCount ? "" : sStr.substring (nCount);
@@ -3264,8 +3226,8 @@ public final class StringHelper
   @Nonnull
   public static String getWithoutTrailingChars (@Nullable final String sStr, @Nonnegative final int nCount)
   {
-    if (nCount < 0)
-      throw new IllegalArgumentException ("Count may not be negative: " + nCount);
+    ValueEnforcer.isGE0 (nCount, "Count");
+
     if (nCount == 0)
       return sStr;
     final int nLength = getLength (sStr);
@@ -3746,8 +3708,7 @@ public final class StringHelper
   @Nonnull
   public static String removeMultiple (@Nullable final String sInputString, @Nonnull final char [] aRemoveChars)
   {
-    if (aRemoveChars == null)
-      throw new NullPointerException ("RemoveChars");
+    ValueEnforcer.notNull (aRemoveChars, "RemoveChars");
 
     // Any input text?
     if (hasNoText (sInputString))
