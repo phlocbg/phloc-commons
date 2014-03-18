@@ -24,6 +24,7 @@ import javax.annotation.Nullable;
 import javax.annotation.concurrent.NotThreadSafe;
 import javax.xml.transform.stream.StreamSource;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.io.IInputStreamProvider;
 import com.phloc.commons.io.IReadableResource;
 import com.phloc.commons.string.ToStringGenerator;
@@ -48,9 +49,7 @@ public class ResourceStreamSource extends StreamSource
 
   public ResourceStreamSource (@Nonnull final IInputStreamProvider aISP, @Nullable final String sSystemID)
   {
-    if (aISP == null)
-      throw new NullPointerException ("resource");
-    m_aISP = aISP;
+    m_aISP = ValueEnforcer.notNull (aISP, "InputStreamProvider");
     setSystemId (sSystemID);
   }
 
