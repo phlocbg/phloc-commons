@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ArrayHelper;
 import com.phloc.commons.string.ToStringGenerator;
@@ -43,12 +44,8 @@ public final class ThreadDeadlockInfo
                              @Nonnull final Thread aThread,
                              @Nullable final StackTraceElement [] aStackTrace)
   {
-    if (aThreadInfo == null)
-      throw new NullPointerException ("threadInfo");
-    if (aThread == null)
-      throw new NullPointerException ("thread");
-    m_aThreadInfo = aThreadInfo;
-    m_aThread = aThread;
+    m_aThreadInfo = ValueEnforcer.notNull (aThreadInfo, "ThreadInfo");
+    m_aThread = ValueEnforcer.notNull (aThread, "Thread");
     m_aStackTrace = ArrayHelper.getCopy (aStackTrace);
   }
 

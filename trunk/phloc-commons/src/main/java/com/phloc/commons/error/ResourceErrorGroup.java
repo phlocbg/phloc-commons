@@ -26,6 +26,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.ICloneable;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.hash.HashCodeGenerator;
@@ -48,8 +49,7 @@ public class ResourceErrorGroup implements IResourceErrorGroup, ICloneable <Reso
 
   public ResourceErrorGroup (@Nonnull final IResourceError... aResourceErrors)
   {
-    if (aResourceErrors == null)
-      throw new NullPointerException ("resourceErrors");
+    ValueEnforcer.notNull (aResourceErrors, "ResourceErrors");
     for (final IResourceError aResourceError : aResourceErrors)
     {
       if (aResourceError == null)

@@ -321,10 +321,8 @@ public final class ContainerConversionHelper
   public static <SRCTYPE, DSTTYPE extends Comparable <? super DSTTYPE>> List <DSTTYPE> getSorted (@Nonnull final Iterable <? extends SRCTYPE> aCont,
                                                                                                   @Nonnull final IUnidirectionalConverter <? super SRCTYPE, ? extends DSTTYPE> aConverter)
   {
-    if (aCont == null)
-      throw new NullPointerException ("container");
-    if (aConverter == null)
-      throw new NullPointerException ("converter");
+    ValueEnforcer.notNull (aCont, "Container");
+    ValueEnforcer.notNull (aConverter, "Converter");
 
     final List <DSTTYPE> ret = new ArrayList <DSTTYPE> ();
     for (final SRCTYPE aSrc : aCont)
@@ -354,12 +352,9 @@ public final class ContainerConversionHelper
                                                              @Nonnull final IUnidirectionalConverter <? super SRCTYPE, ? extends DSTTYPE> aConverter,
                                                              @Nonnull final Comparator <? super DSTTYPE> aComparator)
   {
-    if (aCont == null)
-      throw new NullPointerException ("container");
-    if (aConverter == null)
-      throw new NullPointerException ("converter");
-    if (aComparator == null)
-      throw new NullPointerException ("comparator");
+    ValueEnforcer.notNull (aCont, "Container");
+    ValueEnforcer.notNull (aConverter, "Converter");
+    ValueEnforcer.notNull (aComparator, "Comparator");
 
     final List <DSTTYPE> ret = new ArrayList <DSTTYPE> ();
     for (final SRCTYPE aSrc : aCont)
@@ -371,10 +366,8 @@ public final class ContainerConversionHelper
   public static <SRCTYPE, DSTTYPE> Iterator <DSTTYPE> getIterator (@Nonnull final Iterable <SRCTYPE> aCont,
                                                                    @Nonnull final IUnidirectionalConverter <? super SRCTYPE, ? extends DSTTYPE> aConverter)
   {
-    if (aCont == null)
-      throw new NullPointerException ("cont");
-    if (aConverter == null)
-      throw new NullPointerException ("converter");
+    ValueEnforcer.notNull (aCont, "Container");
+    ValueEnforcer.notNull (aConverter, "Converter");
 
     return new Iterator <DSTTYPE> ()
     {

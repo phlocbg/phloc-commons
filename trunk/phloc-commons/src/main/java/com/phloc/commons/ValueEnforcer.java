@@ -2,6 +2,7 @@ package com.phloc.commons;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Collection;
 
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
@@ -29,12 +30,57 @@ public final class ValueEnforcer
     return aValue;
   }
 
+  /**
+   * Check that the passed String is neither <code>null</code> nor empty.
+   * 
+   * @param aValue
+   *        The String to check.
+   * @param sName
+   *        The name of the value (e.g. the parameter name)
+   * @return The passed value and never <code>null</code>.
+   */
   @Nonnull
   public static <T extends CharSequence> T notEmpty (final T aValue, final String sName)
   {
     notNull (aValue, sName);
     if (aValue.length () == 0)
-      throw new IllegalArgumentException ("The value of '" + sName + "' may not be empty!");
+      throw new IllegalArgumentException ("The value of the string '" + sName + "' may not be empty!");
+    return aValue;
+  }
+
+  /**
+   * Check that the passed Array is neither <code>null</code> nor empty.
+   * 
+   * @param aValue
+   *        The String to check.
+   * @param sName
+   *        The name of the value (e.g. the parameter name)
+   * @return The passed value and never <code>null</code>.
+   */
+  @Nonnull
+  public static <T> T [] notEmpty (final T [] aValue, final String sName)
+  {
+    notNull (aValue, sName);
+    if (aValue.length == 0)
+      throw new IllegalArgumentException ("The value of the array '" + sName + "' may not be empty!");
+    return aValue;
+  }
+
+  /**
+   * Check that the passed Collection is neither <code>null</code> nor empty.
+   * 
+   * @param aValue
+   *        The String to check.
+   * @param sName
+   *        The name of the value (e.g. the parameter name)
+   * @return The passed value and never <code>null</code>.
+   */
+  @Nonnull
+  public static <T extends Collection <?>> T notEmpty (final T aValue, final String sName)
+  {
+    notNull (aValue, sName);
+    if (aValue.isEmpty ())
+      throw new IllegalArgumentException ("The value of the array '" + sName + "' may not be empty!");
     return aValue;
   }
 
