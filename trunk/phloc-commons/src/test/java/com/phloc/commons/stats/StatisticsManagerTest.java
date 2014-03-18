@@ -27,7 +27,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Test class for class {@link StatisticsManager}.
- *
+ * 
  * @author Philip Helger
  */
 public final class StatisticsManagerTest
@@ -49,6 +49,13 @@ public final class StatisticsManagerTest
     try
     {
       StatisticsManager.getCacheHandler ((String) null);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+    try
+    {
+      StatisticsManager.getCacheHandler ("");
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -74,6 +81,13 @@ public final class StatisticsManagerTest
       StatisticsManager.getTimerHandler ((String) null);
       fail ();
     }
+    catch (final NullPointerException ex)
+    {}
+    try
+    {
+      StatisticsManager.getTimerHandler ("");
+      fail ();
+    }
     catch (final IllegalArgumentException ex)
     {}
   }
@@ -95,6 +109,13 @@ public final class StatisticsManagerTest
     try
     {
       StatisticsManager.getKeyedTimerHandler ((String) null);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+    try
+    {
+      StatisticsManager.getKeyedTimerHandler ("");
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -120,6 +141,13 @@ public final class StatisticsManagerTest
       StatisticsManager.getSizeHandler ((String) null);
       fail ();
     }
+    catch (final NullPointerException ex)
+    {}
+    try
+    {
+      StatisticsManager.getSizeHandler ("");
+      fail ();
+    }
     catch (final IllegalArgumentException ex)
     {}
   }
@@ -141,6 +169,13 @@ public final class StatisticsManagerTest
     try
     {
       StatisticsManager.getKeyedSizeHandler ((String) null);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+    try
+    {
+      StatisticsManager.getKeyedSizeHandler ("");
       fail ();
     }
     catch (final IllegalArgumentException ex)
@@ -166,6 +201,13 @@ public final class StatisticsManagerTest
       StatisticsManager.getCounterHandler ((String) null);
       fail ();
     }
+    catch (final NullPointerException ex)
+    {}
+    try
+    {
+      StatisticsManager.getCounterHandler ("");
+      fail ();
+    }
     catch (final IllegalArgumentException ex)
     {}
   }
@@ -187,6 +229,13 @@ public final class StatisticsManagerTest
     try
     {
       StatisticsManager.getKeyedCounterHandler ((String) null);
+      fail ();
+    }
+    catch (final NullPointerException ex)
+    {}
+    try
+    {
+      StatisticsManager.getKeyedCounterHandler ("");
       fail ();
     }
     catch (final IllegalArgumentException ex)

@@ -144,7 +144,7 @@ public final class XMLSchemaCacheTest
       sc.getSchema ((IReadableResource []) null);
       fail ();
     }
-    catch (final IllegalArgumentException ex)
+    catch (final NullPointerException ex)
     {}
     try
     {
