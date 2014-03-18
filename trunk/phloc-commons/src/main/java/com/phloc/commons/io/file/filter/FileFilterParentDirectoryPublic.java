@@ -23,7 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.phloc.commons.hash.HashCodeGenerator;
-import com.phloc.commons.string.StringHelper;
+import com.phloc.commons.io.file.FilenameHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -48,7 +48,7 @@ public final class FileFilterParentDirectoryPublic extends AbstractFileFilter
   public boolean accept (@Nullable final File aFile)
   {
     final File aParentFile = aFile != null ? aFile.getAbsoluteFile ().getParentFile () : null;
-    return aParentFile != null && !StringHelper.startsWith (aParentFile.getName (), '.');
+    return aParentFile != null && !FilenameHelper.isHiddenFilename (aParentFile);
   }
 
   @Override

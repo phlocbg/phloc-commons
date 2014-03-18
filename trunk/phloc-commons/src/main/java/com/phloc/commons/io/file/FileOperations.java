@@ -29,6 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.phloc.commons.CGlobal;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.io.EAppend;
@@ -77,8 +78,7 @@ public final class FileOperations
   @Nonnull
   public static FileIOError createDir (@Nonnull final File aDir)
   {
-    if (aDir == null)
-      throw new NullPointerException ("directory");
+    ValueEnforcer.notNull (aDir, "Directory");
 
     // Does the directory already exist?
     if (aDir.exists ())
@@ -129,8 +129,7 @@ public final class FileOperations
   @Nonnull
   public static FileIOError createDirRecursive (@Nonnull final File aDir)
   {
-    if (aDir == null)
-      throw new NullPointerException ("directory");
+    ValueEnforcer.notNull (aDir, "Directory");
 
     // Does the directory already exist?
     if (aDir.exists ())
@@ -181,8 +180,7 @@ public final class FileOperations
   @Nonnull
   public static FileIOError deleteDir (@Nonnull final File aDir)
   {
-    if (aDir == null)
-      throw new NullPointerException ("directory");
+    ValueEnforcer.notNull (aDir, "Directory");
 
     // Does the directory not exist?
     if (!FileUtils.existsDir (aDir))
@@ -240,8 +238,7 @@ public final class FileOperations
   @Nonnull
   public static FileIOError deleteDirRecursive (@Nonnull final File aDir)
   {
-    if (aDir == null)
-      throw new NullPointerException ("directory");
+    ValueEnforcer.notNull (aDir, "Directory");
 
     // Non-existing directory?
     if (!FileUtils.existsDir (aDir))
@@ -319,8 +316,7 @@ public final class FileOperations
   @Nonnull
   public static FileIOError deleteFile (@Nonnull final File aFile)
   {
-    if (aFile == null)
-      throw new NullPointerException ("file");
+    ValueEnforcer.notNull (aFile, "File");
 
     if (!FileUtils.existsFile (aFile))
       return EFileIOErrorCode.SOURCE_DOES_NOT_EXIST.getAsIOError (EFileIOOperation.DELETE_FILE, aFile);
@@ -371,10 +367,8 @@ public final class FileOperations
   @Nonnull
   public static FileIOError renameFile (@Nonnull final File aSourceFile, @Nonnull final File aTargetFile)
   {
-    if (aSourceFile == null)
-      throw new NullPointerException ("sourceFile");
-    if (aTargetFile == null)
-      throw new NullPointerException ("targetFile");
+    ValueEnforcer.notNull (aSourceFile, "SourceFile");
+    ValueEnforcer.notNull (aTargetFile, "TargetFile");
 
     // Does the source file exist?
     if (!FileUtils.existsFile (aSourceFile))
@@ -425,10 +419,8 @@ public final class FileOperations
   @Nonnull
   public static FileIOError renameDir (@Nonnull final File aSourceDir, @Nonnull final File aTargetDir)
   {
-    if (aSourceDir == null)
-      throw new NullPointerException ("sourceDirectory");
-    if (aTargetDir == null)
-      throw new NullPointerException ("targetDirectory");
+    ValueEnforcer.notNull (aSourceDir, "SourceDirectory");
+    ValueEnforcer.notNull (aTargetDir, "TargetDirectory");
 
     // Does the source directory exist?
     if (!FileUtils.existsDir (aSourceDir))
@@ -557,10 +549,8 @@ public final class FileOperations
   @Nonnull
   public static FileIOError copyFile (@Nonnull final File aSourceFile, @Nonnull final File aTargetFile)
   {
-    if (aSourceFile == null)
-      throw new NullPointerException ("sourceFile");
-    if (aTargetFile == null)
-      throw new NullPointerException ("targetFile");
+    ValueEnforcer.notNull (aSourceFile, "SourceFile");
+    ValueEnforcer.notNull (aTargetFile, "TargetFile");
 
     // Does the source file exist?
     if (!FileUtils.existsFile (aSourceFile))
@@ -605,10 +595,8 @@ public final class FileOperations
   @Nonnull
   public static FileIOError copyDirRecursive (@Nonnull final File aSourceDir, @Nonnull final File aTargetDir)
   {
-    if (aSourceDir == null)
-      throw new NullPointerException ("sourceDirectory");
-    if (aTargetDir == null)
-      throw new NullPointerException ("targetDirectory");
+    ValueEnforcer.notNull (aSourceDir, "SourceDirectory");
+    ValueEnforcer.notNull (aTargetDir, "TargetDirectory");
 
     // Does the source directory exist?
     if (!FileUtils.existsDir (aSourceDir))

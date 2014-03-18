@@ -19,6 +19,7 @@ package com.phloc.commons.idfactory;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -28,7 +29,7 @@ import com.phloc.commons.string.ToStringGenerator;
  * 
  * @author Philip Helger
  */
-public final class StringIDFromGlobalIntIDFactory implements IStringIDFactory
+public class StringIDFromGlobalIntIDFactory implements IStringIDFactory
 {
   private final String m_sPrefix;
 
@@ -39,9 +40,7 @@ public final class StringIDFromGlobalIntIDFactory implements IStringIDFactory
 
   public StringIDFromGlobalIntIDFactory (@Nonnull final String sPrefix)
   {
-    if (sPrefix == null)
-      throw new NullPointerException ("prefix");
-    m_sPrefix = sPrefix;
+    m_sPrefix = ValueEnforcer.notNull (sPrefix, "Prefix");
   }
 
   @Nonnull
@@ -61,7 +60,7 @@ public final class StringIDFromGlobalIntIDFactory implements IStringIDFactory
   {
     if (o == this)
       return true;
-    if (!(o instanceof StringIDFromGlobalIntIDFactory))
+    if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final StringIDFromGlobalIntIDFactory rhs = (StringIDFromGlobalIntIDFactory) o;
     return m_sPrefix.equals (rhs.m_sPrefix);

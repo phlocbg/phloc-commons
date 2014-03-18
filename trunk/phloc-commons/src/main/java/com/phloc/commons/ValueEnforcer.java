@@ -225,7 +225,25 @@ public final class ValueEnforcer
   {
     notNull (aValue, sName);
     if (aValue.isEmpty ())
-      throw new IllegalArgumentException ("The value of the array '" + sName + "' may not be empty!");
+      throw new IllegalArgumentException ("The value of the collection '" + sName + "' may not be empty!");
+    return aValue;
+  }
+
+  /**
+   * Check that the passed Iterable is neither <code>null</code> nor empty.
+   * 
+   * @param aValue
+   *        The String to check.
+   * @param sName
+   *        The name of the value (e.g. the parameter name)
+   * @return The passed value and never <code>null</code>.
+   */
+  @Nonnull
+  public static <T extends Iterable <?>> T notEmpty (final T aValue, final String sName)
+  {
+    notNull (aValue, sName);
+    if (!aValue.iterator ().hasNext ())
+      throw new IllegalArgumentException ("The value of the iterable '" + sName + "' may not be empty!");
     return aValue;
   }
 
@@ -243,7 +261,7 @@ public final class ValueEnforcer
   {
     notNull (aValue, sName);
     if (aValue.isEmpty ())
-      throw new IllegalArgumentException ("The value of the array '" + sName + "' may not be empty!");
+      throw new IllegalArgumentException ("The value of the map '" + sName + "' may not be empty!");
     return aValue;
   }
 
@@ -266,6 +284,30 @@ public final class ValueEnforcer
     {
       if (aItem == null)
         throw new IllegalArgumentException ("Item " + nIndex + " of array '" + sName + "' may not be null!");
+      ++nIndex;
+    }
+    return aValue;
+  }
+
+  /**
+   * Check that the passed collection is neither <code>null</code> nor empty and
+   * that no <code>null</code> value is contained.
+   * 
+   * @param aValue
+   *        The collection to check.
+   * @param sName
+   *        The name of the value (e.g. the parameter name)
+   * @return The passed value and never <code>null</code>.
+   */
+  @Nonnull
+  public static <T extends Iterable <?>> T notEmptyNoNullValue (final T aValue, final String sName)
+  {
+    notEmpty (aValue, sName);
+    int nIndex = 0;
+    for (final Object aItem : aValue)
+    {
+      if (aItem == null)
+        throw new IllegalArgumentException ("Item " + nIndex + " of iterable '" + sName + "' may not be null!");
       ++nIndex;
     }
     return aValue;

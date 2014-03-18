@@ -29,6 +29,7 @@ import javax.annotation.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ContainerHelper;
 import com.phloc.commons.concurrent.ThreadUtils;
@@ -143,8 +144,7 @@ public class FileMonitorManager implements Runnable
    */
   public void addFileMonitor (@Nonnull final FileMonitor aMonitor)
   {
-    if (aMonitor == null)
-      throw new NullPointerException ("Monitor");
+    ValueEnforcer.notNull (aMonitor, "Monitor");
 
     m_aRWLock.writeLock ().lock ();
     try

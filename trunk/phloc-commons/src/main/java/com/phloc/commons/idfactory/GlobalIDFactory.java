@@ -28,6 +28,7 @@ import javax.annotation.concurrent.ThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.state.EChange;
@@ -406,8 +407,7 @@ public final class GlobalIDFactory
    */
   public static int [] getBulkNewIntIDs (@Nonnegative final int nCount)
   {
-    if (nCount <= 0)
-      throw new IllegalArgumentException ("At least 1 ID must be created!");
+    ValueEnforcer.isGT0 (nCount, "Count");
 
     s_aRWLock.readLock ().lock ();
     try
@@ -432,8 +432,7 @@ public final class GlobalIDFactory
    */
   public static int [] getBulkNewPersistentIntIDs (@Nonnegative final int nCount)
   {
-    if (nCount <= 0)
-      throw new IllegalArgumentException ("At least 1 ID must be created!");
+    ValueEnforcer.isGT0 (nCount, "Count");
 
     s_aRWLock.readLock ().lock ();
     try
@@ -458,8 +457,7 @@ public final class GlobalIDFactory
    */
   public static long [] getBulkNewLongIDs (@Nonnegative final int nCount)
   {
-    if (nCount <= 0)
-      throw new IllegalArgumentException ("At least 1 ID must be created!");
+    ValueEnforcer.isGT0 (nCount, "Count");
 
     s_aRWLock.readLock ().lock ();
     try
@@ -484,8 +482,7 @@ public final class GlobalIDFactory
    */
   public static long [] getBulkNewPersistentLongIDs (@Nonnegative final int nCount)
   {
-    if (nCount <= 0)
-      throw new IllegalArgumentException ("At least 1 ID must be created!");
+    ValueEnforcer.isGT0 (nCount, "Count");
 
     s_aRWLock.readLock ().lock ();
     try
@@ -511,8 +508,7 @@ public final class GlobalIDFactory
   @Nonnull
   public static String [] getBulkNewStringIDs (@Nonnegative final int nCount)
   {
-    if (nCount <= 0)
-      throw new IllegalArgumentException ("At least 1 ID must be created!");
+    ValueEnforcer.isGT0 (nCount, "Count");
 
     s_aRWLock.readLock ().lock ();
     try
@@ -538,8 +534,7 @@ public final class GlobalIDFactory
   @Nonnull
   public static String [] getBulkNewPersistentStringIDs (@Nonnegative final int nCount)
   {
-    if (nCount <= 0)
-      throw new IllegalArgumentException ("At least 1 ID must be created!");
+    ValueEnforcer.isGT0 (nCount, "Count");
 
     s_aRWLock.readLock ().lock ();
     try

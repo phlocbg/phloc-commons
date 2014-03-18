@@ -19,6 +19,7 @@ package com.phloc.commons.idfactory;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.hash.HashCodeGenerator;
 import com.phloc.commons.string.ToStringGenerator;
 
@@ -40,12 +41,14 @@ public class StringIDFromIntIDFactory implements IStringIDFactory
 
   public StringIDFromIntIDFactory (@Nonnull final IIntIDFactory aIntIDFactory, @Nonnull final String sPrefix)
   {
-    if (aIntIDFactory == null)
-      throw new NullPointerException ("intIDFactory");
-    if (sPrefix == null)
-      throw new NullPointerException ("prefix");
-    m_aIntIDFactory = aIntIDFactory;
-    m_sPrefix = sPrefix;
+    m_aIntIDFactory = ValueEnforcer.notNull (aIntIDFactory, "IntIDFactory");
+    m_sPrefix = ValueEnforcer.notNull (sPrefix, "Prefix");
+  }
+
+  @Nonnull
+  public IIntIDFactory getIntIDFactory ()
+  {
+    return m_aIntIDFactory;
   }
 
   @Nonnull
@@ -65,7 +68,7 @@ public class StringIDFromIntIDFactory implements IStringIDFactory
   {
     if (o == this)
       return true;
-    if (!(o instanceof StringIDFromIntIDFactory))
+    if (o == null || !getClass ().equals (o.getClass ()))
       return false;
     final StringIDFromIntIDFactory rhs = (StringIDFromIntIDFactory) o;
     return m_aIntIDFactory.equals (rhs.m_aIntIDFactory) && m_sPrefix.equals (rhs.m_sPrefix);

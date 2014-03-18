@@ -24,9 +24,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.ThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.io.file.FilenameHelper;
-import com.phloc.commons.string.StringHelper;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -47,9 +47,13 @@ public final class FilenameFilterEquals implements FilenameFilter
    */
   public FilenameFilterEquals (@Nonnull @Nonempty final String sFilename)
   {
-    if (StringHelper.hasNoText (sFilename))
-      throw new IllegalArgumentException ("filename");
-    m_sFilename = sFilename;
+    m_sFilename = ValueEnforcer.notEmpty (sFilename, "Filename");
+  }
+
+  @Nonnull
+  public String getFilename ()
+  {
+    return m_sFilename;
   }
 
   public boolean accept (@Nullable final File aDir, @Nullable final String sName)

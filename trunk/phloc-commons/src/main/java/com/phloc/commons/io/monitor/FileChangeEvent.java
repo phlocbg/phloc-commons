@@ -21,6 +21,7 @@ import java.io.File;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -39,9 +40,7 @@ public class FileChangeEvent
 
   public FileChangeEvent (@Nonnull final File aFile)
   {
-    if (aFile == null)
-      throw new NullPointerException ("file");
-    m_aFile = aFile;
+    m_aFile = ValueEnforcer.notNull (aFile, "File");
   }
 
   /**

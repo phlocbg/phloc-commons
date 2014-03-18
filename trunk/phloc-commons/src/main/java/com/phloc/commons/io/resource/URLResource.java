@@ -36,6 +36,7 @@ import javax.annotation.concurrent.Immutable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.callback.INonThrowingRunnableWithParameter;
 import com.phloc.commons.equals.EqualsUtils;
 import com.phloc.commons.hash.HashCodeGenerator;
@@ -81,9 +82,7 @@ public class URLResource implements IReadableResource
 
   public URLResource (@Nonnull final URL aURL)
   {
-    if (aURL == null)
-      throw new NullPointerException ("URL");
-    m_aURL = aURL;
+    m_aURL = ValueEnforcer.notNull (aURL, "URL");
   }
 
   /**
@@ -256,8 +255,7 @@ public class URLResource implements IReadableResource
   @Nonnull
   public static File getAsFile (@Nonnull final URL aURL)
   {
-    if (aURL == null)
-      throw new NullPointerException ("URL");
+    ValueEnforcer.notNull (aURL, "URL");
     if (!PROTOCOL_FILE.equals (aURL.getProtocol ()))
       throw new IllegalArgumentException ("Not a file URL: " + aURL);
 
