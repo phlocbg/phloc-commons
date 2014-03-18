@@ -200,9 +200,7 @@ public final class CharsetManager
                                     @Nonnegative final int nLength,
                                     @Nonnull @Nonempty final String sCharsetName)
   {
-    ValueEnforcer.notNull (aBuffer, "Buffer");
-    ValueEnforcer.isGE0 (nOfs, "Offset");
-    ValueEnforcer.isGE0 (nLength, "Length");
+    ValueEnforcer.isArrayOfsLen (aBuffer, nOfs, nLength);
     ValueEnforcer.notEmpty (sCharsetName, "CharsetName");
 
     try
@@ -229,9 +227,7 @@ public final class CharsetManager
                                     @Nonnegative final int nLength,
                                     @Nonnull final Charset aCharset)
   {
-    ValueEnforcer.notNull (aBuffer, "Buffer");
-    ValueEnforcer.isGE0 (nOfs, "Offset");
-    ValueEnforcer.isGE0 (nLength, "Length");
+    ValueEnforcer.isArrayOfsLen (aBuffer, nOfs, nLength);
     ValueEnforcer.notNull (aCharset, "Charset");
 
     // IFJDK5

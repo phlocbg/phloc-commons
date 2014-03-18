@@ -28,6 +28,7 @@ import javax.annotation.WillClose;
 import javax.annotation.WillNotClose;
 
 import com.phloc.commons.IHasSize;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.charset.CharsetManager;
 import com.phloc.commons.collections.ArrayHelper;
@@ -71,8 +72,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
    */
   public NonBlockingByteArrayOutputStream (@Nonnegative final int nSize)
   {
-    if (nSize < 0)
-      throw new IllegalArgumentException ("Negative initial size: " + nSize);
+    ValueEnforcer.isGE0 (nSize, "Size");
     m_aBuf = new byte [nSize];
   }
 
@@ -124,10 +124,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
   @Override
   public void write (@Nonnull final byte [] aBuf, final int nOfs, final int nLen)
   {
-    if (aBuf == null)
-      throw new NullPointerException ("buf");
-    if (nOfs < 0 || nLen < 0 || (nOfs + nLen) > aBuf.length)
-      throw new IllegalArgumentException ("ofs:" + nOfs + ";len=" + nLen + ";bufLen=" + aBuf.length);
+    ValueEnforcer.isArrayOfsLen (aBuf, nOfs, nLen);
     if (nLen > 0)
     {
       final int nNewCount = m_nCount + nLen;
@@ -214,8 +211,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
    */
   public byte getByteAt (@Nonnegative final int nIndex)
   {
-    if (nIndex < 0 || nIndex >= m_nCount)
-      throw new IllegalArgumentException ("Illegal index passed!");
+    ValueEnforcer.isBetweenInclusive (nIndex, "Index", 0, m_nCount - 1);
     return m_aBuf[nIndex];
   }
 
@@ -310,8 +306,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
   @Deprecated
   public String getAsString (@Nonnegative final int nLength, @Nonnull final String sCharset)
   {
-    if (nLength < 0 || nLength > m_nCount)
-      throw new IllegalArgumentException ("Invalid length: " + nLength);
+    ValueEnforcer.isBetweenInclusive (nLength, "Length", 0, m_nCount);
     return CharsetManager.getAsString (m_aBuf, 0, nLength, sCharset);
   }
 
@@ -341,10 +336,8 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
                              @Nonnegative final int nLength,
                              @Nonnull final String sCharset)
   {
-    if (nIndex < 0)
-      throw new IllegalArgumentException ("Invalid index: " + nIndex);
-    if (nLength < 0 || nLength > m_nCount)
-      throw new IllegalArgumentException ("Invalid length: " + nLength);
+    ValueEnforcer.isGE0 (nIndex, "Index");
+    ValueEnforcer.isBetweenInclusive (nLength, "Length", 0, m_nCount);
     return CharsetManager.getAsString (m_aBuf, nIndex, nLength, sCharset);
   }
 
@@ -389,8 +382,7 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
   @Nonnull
   public String getAsString (@Nonnegative final int nLength, @Nonnull final Charset aCharset)
   {
-    if (nLength < 0 || nLength > m_nCount)
-      throw new IllegalArgumentException ("Invalid length: " + nLength);
+    ValueEnforcer.isBetweenInclusive (nLength, "Length", 0, m_nCount);
     return CharsetManager.getAsString (m_aBuf, 0, nLength, aCharset);
   }
 
@@ -418,10 +410,8 @@ public class NonBlockingByteArrayOutputStream extends OutputStream implements IH
                              @Nonnegative final int nLength,
                              @Nonnull final Charset aCharset)
   {
-    if (nIndex < 0)
-      throw new IllegalArgumentException ("Invalid index: " + nIndex);
-    if (nLength < 0 || nLength > m_nCount)
-      throw new IllegalArgumentException ("Invalid length: " + nLength);
+    ValueEnforcer.isGE0 (nIndex, "Index");
+    ValueEnforcer.isBetweenInclusive (nLength, "Length", 0, m_nCount);
     return CharsetManager.getAsString (m_aBuf, nIndex, nLength, aCharset);
   }
 

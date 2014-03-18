@@ -21,6 +21,7 @@ import java.nio.charset.Charset;
 
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.charset.CharsetManager;
 
 /**
@@ -31,7 +32,7 @@ import com.phloc.commons.charset.CharsetManager;
 public class StringInputStream extends NonBlockingByteArrayInputStream
 {
   @Deprecated
-  public StringInputStream (@Nonnull final String sInput, @Nonnull final String sCharset)
+  public StringInputStream (@Nonnull final String sInput, @Nonnull @Nonempty final String sCharset)
   {
     super (CharsetManager.getAsBytes (sInput, sCharset));
   }

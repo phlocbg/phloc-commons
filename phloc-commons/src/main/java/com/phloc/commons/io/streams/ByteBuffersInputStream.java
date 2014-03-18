@@ -24,6 +24,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.NotThreadSafe;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.collections.ArrayHelper;
@@ -51,8 +52,7 @@ public final class ByteBuffersInputStream extends InputStream
    */
   public ByteBuffersInputStream (@Nonnull @Nonempty final ByteBuffer... aBuffers)
   {
-    if (ArrayHelper.isEmpty (aBuffers))
-      throw new IllegalArgumentException ("buffers");
+    ValueEnforcer.notEmpty (aBuffers, "Buffers");
 
     m_aBuffers = ArrayHelper.getCopy (aBuffers);
   }
@@ -176,10 +176,7 @@ public final class ByteBuffersInputStream extends InputStream
   @Override
   public int read (@Nonnull final byte [] aBuf, @Nonnegative final int nOfs, @Nonnegative final int nLen)
   {
-    if (aBuf == null)
-      throw new NullPointerException ("buffer");
-    if (nOfs < 0 || nLen < 0 || (nOfs + nLen) > aBuf.length)
-      throw new IllegalArgumentException ("ofs:" + nOfs + ";len=" + nLen + ";bufLen=" + aBuf.length);
+    ValueEnforcer.isArrayOfsLen (aBuf, nOfs, nLen);
 
     _checkClosed ();
     if (m_nBufferIndex >= m_aBuffers.length)
@@ -247,8 +244,7 @@ public final class ByteBuffersInputStream extends InputStream
   @Nonnegative
   public long read (@Nonnull final ByteBuffer aDestByteBuffer)
   {
-    if (aDestByteBuffer == null)
-      throw new NullPointerException ("destByteBuffer");
+    ValueEnforcer.notNull (aDestByteBuffer, "DestByteBuffer");
 
     _checkClosed ();
     long nBytesRead = 0;

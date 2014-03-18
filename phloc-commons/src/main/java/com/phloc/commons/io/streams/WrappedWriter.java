@@ -24,6 +24,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.string.ToStringGenerator;
 
 /**
@@ -38,9 +39,7 @@ public class WrappedWriter extends Writer
 
   public WrappedWriter (@Nonnull final Writer aWrappedWriter)
   {
-    if (aWrappedWriter == null)
-      throw new NullPointerException ("wrappedWriter");
-    m_aWrappedWriter = aWrappedWriter;
+    m_aWrappedWriter = ValueEnforcer.notNull (aWrappedWriter, "WrappedWriter");
   }
 
   @Nonnull

@@ -27,6 +27,7 @@ import javax.annotation.concurrent.NotThreadSafe;
 
 import com.phloc.commons.IHasSize;
 import com.phloc.commons.IHasStringRepresentation;
+import com.phloc.commons.ValueEnforcer;
 import com.phloc.commons.annotations.DevelopersNote;
 import com.phloc.commons.annotations.ReturnsMutableCopy;
 import com.phloc.commons.annotations.ReturnsMutableObject;
@@ -64,8 +65,7 @@ public class NonBlockingStringWriter extends Writer implements IHasStringReprese
    */
   public NonBlockingStringWriter (@Nonnegative final int nInitialSize)
   {
-    if (nInitialSize < 0)
-      throw new IllegalArgumentException ("Negative buffer size");
+    ValueEnforcer.isGE0 (nInitialSize, "InitialSize");
     m_aSB = new StringBuilder (nInitialSize);
     lock = m_aSB;
   }
@@ -94,8 +94,7 @@ public class NonBlockingStringWriter extends Writer implements IHasStringReprese
   @Override
   public void write (@Nonnull final char [] aBuf, @Nonnegative final int nOfs, @Nonnegative final int nLen)
   {
-    if (nOfs < 0 || nLen < 0 || (nOfs + nLen) > aBuf.length)
-      throw new IllegalArgumentException ("ofs:" + nOfs + ";len=" + nLen + ";bufLen=" + aBuf.length);
+    ValueEnforcer.isArrayOfsLen (aBuf, nOfs, nLen);
     if (nLen > 0)
       m_aSB.append (aBuf, nOfs, nLen);
   }

@@ -87,7 +87,7 @@ public class DebugInputStream extends WrappedInputStream
   }
 
   @Override
-  public final int read (final byte b[], final int nOffset, final int nLength) throws IOException
+  public final int read (final byte [] b, final int nOffset, final int nLength) throws IOException
   {
     final int ret = super.read (b, nOffset, nLength);
     if (ret != -1)

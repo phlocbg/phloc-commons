@@ -23,6 +23,8 @@ import java.io.Serializable;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
+import com.phloc.commons.ValueEnforcer;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 // ESCA-JAVA0143:
@@ -103,10 +105,7 @@ public class NonBlockingByteArrayInputStream extends InputStream implements Seri
   @SuppressFBWarnings ({ "EI_EXPOSE_REP2" })
   public NonBlockingByteArrayInputStream (final byte [] aBuf, final int nOfs, final int nLen)
   {
-    if (aBuf == null)
-      throw new NullPointerException ("buf");
-    if (nOfs < 0 || nLen < 0 || (nOfs + nLen) > aBuf.length)
-      throw new IllegalArgumentException ("ofs:" + nOfs + ";len=" + nLen + ";bufLen=" + aBuf.length);
+    ValueEnforcer.isArrayOfsLen (aBuf, nOfs, nLen);
     m_aBuf = aBuf;
     m_nPos = nOfs;
     m_nCount = Math.min (nOfs + nLen, aBuf.length);
@@ -161,10 +160,7 @@ public class NonBlockingByteArrayInputStream extends InputStream implements Seri
   @Override
   public int read (final byte [] aBuf, final int nOfs, final int nLen)
   {
-    if (aBuf == null)
-      throw new NullPointerException ("buf");
-    if (nOfs < 0 || nLen < 0 || (nOfs + nLen) > aBuf.length)
-      throw new IllegalArgumentException ("ofs:" + nOfs + ";len=" + nLen + ";bufLen=" + aBuf.length);
+    ValueEnforcer.isArrayOfsLen (aBuf, nOfs, nLen);
 
     if (m_nPos >= m_nCount)
       return -1;

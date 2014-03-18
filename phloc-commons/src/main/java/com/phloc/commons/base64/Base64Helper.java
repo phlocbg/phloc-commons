@@ -23,6 +23,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
+import com.phloc.commons.annotations.Nonempty;
 import com.phloc.commons.annotations.PresentForCodeCoverage;
 import com.phloc.commons.charset.CharsetManager;
 
@@ -182,7 +183,7 @@ public final class Base64Helper
    */
   @Nullable
   @Deprecated
-  public static String safeEncode (@Nonnull final String s, @Nonnull final String sCharset)
+  public static String safeEncode (@Nonnull final String s, @Nonnull @Nonempty final String sCharset)
   {
     return Base64.encodeBytes (CharsetManager.getAsBytes (s, sCharset));
   }
